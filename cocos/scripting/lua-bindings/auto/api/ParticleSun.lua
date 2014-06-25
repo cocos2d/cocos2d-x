@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParticleSun
 -- @extend ParticleSystemQuad
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParticleSun] create 

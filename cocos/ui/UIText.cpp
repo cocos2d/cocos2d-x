@@ -302,15 +302,15 @@ void Text::labelScaleChangedWithSize()
     }
     else
     {
-        _labelRenderer->setDimensions(_size.width,_size.height);
+        _labelRenderer->setDimensions(_contentSize.width,_contentSize.height);
         Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _labelRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _labelRenderer->setScaleX(scaleX);
         _labelRenderer->setScaleY(scaleY);
         _normalScaleValueX = scaleX;

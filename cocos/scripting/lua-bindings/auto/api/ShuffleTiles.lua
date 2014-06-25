@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ShuffleTiles
 -- @extend TiledGrid3DAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ShuffleTiles] getDelta 

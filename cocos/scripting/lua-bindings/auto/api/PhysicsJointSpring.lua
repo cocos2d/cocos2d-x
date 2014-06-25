@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointSpring
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointSpring] setAnchr2 

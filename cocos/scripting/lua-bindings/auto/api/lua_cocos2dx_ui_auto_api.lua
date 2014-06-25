@@ -116,4 +116,19 @@
 -- @field [parent=#ccui] RichText#RichText RichText preloaded module
 
 
+--------------------------------------------------------
+-- the ccui HBox
+-- @field [parent=#ccui] HBox#HBox HBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui VBox
+-- @field [parent=#ccui] VBox#VBox VBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RelativeBox
+-- @field [parent=#ccui] RelativeBox#RelativeBox RelativeBox preloaded module
+
+
 return nil

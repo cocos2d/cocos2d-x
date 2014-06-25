@@ -111,6 +111,12 @@ void Scene::addChild(Node* child, int zOrder, int tag)
     addChildToPhysicsWorld(child);
 }
 
+void Scene::addChild(Node* child, int zOrder, const std::string &name)
+{
+    Node::addChild(child, zOrder, name);
+    addChildToPhysicsWorld(child);
+}
+
 void Scene::update(float delta)
 {
     Node::update(delta);

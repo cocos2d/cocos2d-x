@@ -8,21 +8,19 @@ const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 UIListViewTest_Vertical::UIListViewTest_Vertical()
 : _displayValueLabel(nullptr)
-, _array(nullptr)
 {
     
 }
 
 UIListViewTest_Vertical::~UIListViewTest_Vertical()
 {
-    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Vertical::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         _displayValueLabel = Text::create("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
@@ -34,7 +32,7 @@ bool UIListViewTest_Vertical::init()
         Text* alert = Text::create("ListView vertical", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -44,12 +42,11 @@ bool UIListViewTest_Vertical::init()
         
         
         // create list view ex data
-        _array = Array::create();
-        CC_SAFE_RETAIN(_array);
+       
         for (int i = 0; i < 20; ++i)
         {
-            __String* ccstr = __String::createWithFormat("listview_item_%d", i);
-            _array->addObject(ccstr);
+            std::string ccstr = StringUtils::format("listview_item_%d", i);
+            _array.push_back(ccstr);
         }
         
         
@@ -62,9 +59,9 @@ bool UIListViewTest_Vertical::init()
         listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(Size(240, 130));
         listView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                    (backgroundSize.width - listView->getSize().width) / 2.0f,
+                                    (backgroundSize.width - listView->getContentSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
-                                    (backgroundSize.height - listView->getSize().height) / 2.0f));
+                                    (backgroundSize.height - listView->getContentSize().height) / 2.0f));
         listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEvent, this));
         listView->addEventListener((ui::ListView::ccScrollViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEventScrollView,this));
         
@@ -77,16 +74,16 @@ bool UIListViewTest_Vertical::init()
         
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
-        default_item->setSize(default_button->getSize());
-        default_button->setPosition(Vec2(default_item->getSize().width / 2.0f,
-                                          default_item->getSize().height / 2.0f));
+        default_item->setSize(default_button->getContentSize());
+        default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f,
+                                          default_item->getContentSize().height / 2.0f));
         default_item->addChild(default_button);
         
         // set model
         listView->setItemModel(default_item);
         
         // add default item
-        ssize_t count = _array->count();
+        ssize_t count = _array.size();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -109,11 +106,11 @@ bool UIListViewTest_Vertical::init()
             Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
             custom_button->setScale9Enabled(true);
-            custom_button->setSize(default_button->getSize());
+            custom_button->setSize(default_button->getContentSize());
             
             Layout *custom_item = Layout::create();
-            custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Vec2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_item->setSize(custom_button->getContentSize());
+            custom_button->setPosition(Vec2(custom_item->getContentSize().width / 2.0f, custom_item->getContentSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->addChild(custom_item);
@@ -126,11 +123,11 @@ bool UIListViewTest_Vertical::init()
             Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
             custom_button->setScale9Enabled(true);
-            custom_button->setSize(default_button->getSize());
+            custom_button->setSize(default_button->getContentSize());
             
             Layout *custom_item = Layout::create();
-            custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Vec2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_item->setSize(custom_button->getContentSize());
+            custom_button->setPosition(Vec2(custom_item->getContentSize().width / 2.0f, custom_item->getContentSize().height / 2.0f));
             custom_item->addChild(custom_button);
             custom_item->setTag(1);
             
@@ -144,7 +141,7 @@ bool UIListViewTest_Vertical::init()
             Widget* item = listView->getItem(i);
             Button* button = static_cast<Button*>(item->getChildByName("Title Button"));
             ssize_t index = listView->getIndex(item);
-            button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
+            button->setTitleText(_array[index]);
         }
         
         // remove last item
@@ -208,20 +205,18 @@ void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::Scro
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
 : _displayValueLabel(nullptr)
-, _array(nullptr)
 {
 }
 
 UIListViewTest_Horizontal::~UIListViewTest_Horizontal()
 {
-    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Horizontal::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
@@ -234,7 +229,7 @@ bool UIListViewTest_Horizontal::init()
         
         Text* alert = Text::create("ListView horizontal", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -244,12 +239,11 @@ bool UIListViewTest_Horizontal::init()
         
         
         // create list view ex data
-        _array = Array::create();
-        CC_SAFE_RETAIN(_array);
+      
         for (int i = 0; i < 20; ++i)
         {
-            __String* ccstr = __String::createWithFormat("listview_item_%d", i);
-            _array->addObject(ccstr);
+            std::string ccstr = StringUtils::format("listview_item_%d", i);
+            _array.push_back(ccstr);
         }
         
         
@@ -263,9 +257,9 @@ bool UIListViewTest_Horizontal::init()
         listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(Size(240, 130));
         listView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                    (backgroundSize.width - listView->getSize().width) / 2.0f,
+                                    (backgroundSize.width - listView->getContentSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
-                                    (backgroundSize.height - listView->getSize().height) / 2.0f));
+                                    (backgroundSize.height - listView->getContentSize().height) / 2.0f));
         listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
         _uiLayer->addChild(listView);
         
@@ -276,15 +270,15 @@ bool UIListViewTest_Horizontal::init()
         
         Layout *default_item = Layout::create();
         default_item->setTouchEnabled(true);
-        default_item->setSize(default_button->getSize());
-        default_button->setPosition(Vec2(default_item->getSize().width / 2.0f, default_item->getSize().height / 2.0f));
+        default_item->setSize(default_button->getContentSize());
+        default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f, default_item->getContentSize().height / 2.0f));
         default_item->addChild(default_button);
         
         // set model
         listView->setItemModel(default_item);
         
         // add default item
-        ssize_t count = _array->count();
+        ssize_t count = _array.size();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -301,11 +295,11 @@ bool UIListViewTest_Horizontal::init()
             Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
             custom_button->setScale9Enabled(true);
-            custom_button->setSize(default_button->getSize());
+            custom_button->setSize(default_button->getContentSize());
             
             Layout* custom_item = Layout::create();
-            custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Vec2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_item->setSize(custom_button->getContentSize());
+            custom_button->setPosition(Vec2(custom_item->getContentSize().width / 2.0f, custom_item->getContentSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->pushBackCustomItem(custom_item);
@@ -318,11 +312,11 @@ bool UIListViewTest_Horizontal::init()
             Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
             custom_button->setName("Title Button");
             custom_button->setScale9Enabled(true);
-            custom_button->setSize(default_button->getSize());
+            custom_button->setSize(default_button->getContentSize());
             
             Layout* custom_item = Layout::create();
-            custom_item->setSize(custom_button->getSize());
-            custom_button->setPosition(Vec2(custom_item->getSize().width / 2.0f, custom_item->getSize().height / 2.0f));
+            custom_item->setSize(custom_button->getContentSize());
+            custom_button->setPosition(Vec2(custom_item->getContentSize().width / 2.0f, custom_item->getContentSize().height / 2.0f));
             custom_item->addChild(custom_button);
             
             listView->insertCustomItem(custom_item, items_count);
@@ -335,7 +329,7 @@ bool UIListViewTest_Horizontal::init()
             Widget *item = listView->getItem(i);
             Button *button = static_cast<Button*>(item->getChildByName("Title Button"));
             ssize_t index = listView->getIndex(item);
-            button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
+            button->setTitleText(_array[index]);
         }
         // remove last item
         listView->removeLastItem();

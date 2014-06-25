@@ -257,7 +257,7 @@ static int lua_cocos2dx_ui_LayoutParameter_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_LayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LayoutParameter");
-    tolua_cclass(tolua_S,"LayoutParameter","ccui.LayoutParameter","cc.Ref",nullptr);
+    tolua_cclass(tolua_S,"LayoutParameter","ccui.LayoutParameter","cc.Ref",nullptr);    
 
     tolua_beginmodule(tolua_S,"LayoutParameter");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_LayoutParameter_constructor);
@@ -437,7 +437,7 @@ static int lua_cocos2dx_ui_LinearLayoutParameter_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_LinearLayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LinearLayoutParameter");
-    tolua_cclass(tolua_S,"LinearLayoutParameter","ccui.LinearLayoutParameter","ccui.LayoutParameter",nullptr);
+    tolua_cclass(tolua_S,"LinearLayoutParameter","ccui.LinearLayoutParameter","ccui.LayoutParameter",nullptr);    
 
     tolua_beginmodule(tolua_S,"LinearLayoutParameter");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_LinearLayoutParameter_constructor);
@@ -795,7 +795,7 @@ static int lua_cocos2dx_ui_RelativeLayoutParameter_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RelativeLayoutParameter(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RelativeLayoutParameter");
-    tolua_cclass(tolua_S,"RelativeLayoutParameter","ccui.RelativeLayoutParameter","ccui.LayoutParameter",nullptr);
+    tolua_cclass(tolua_S,"RelativeLayoutParameter","ccui.RelativeLayoutParameter","ccui.LayoutParameter",nullptr);    
 
     tolua_beginmodule(tolua_S,"RelativeLayoutParameter");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RelativeLayoutParameter_constructor);
@@ -1039,7 +1039,7 @@ int lua_cocos2dx_ui_Widget_getVirtualRenderer(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Widget_getSize(lua_State* tolua_S)
+int lua_cocos2dx_ui_Widget_getSizePercent(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::Widget* cobj = nullptr;
@@ -1059,7 +1059,7 @@ int lua_cocos2dx_ui_Widget_getSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_getSize'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_getSizePercent'", nullptr);
         return 0;
     }
 #endif
@@ -1069,16 +1069,16 @@ int lua_cocos2dx_ui_Widget_getSize(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Size& ret = cobj->getSize();
-        size_to_luaval(tolua_S, ret);
+        const cocos2d::Vec2& ret = cobj->getSizePercent();
+        vec2_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSize",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSizePercent",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_getSize'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_getSizePercent'.",&tolua_err);
 #endif
 
     return 0;
@@ -2567,50 +2567,6 @@ int lua_cocos2dx_ui_Widget_updateSizeAndPosition(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Widget_getSizePercent(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::Widget* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::Widget*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_getSizePercent'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        const cocos2d::Vec2& ret = cobj->getSizePercent();
-        vec2_to_luaval(tolua_S, ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSizePercent",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_getSizePercent'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_ui_Widget_getTouchMovePosition(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3065,52 +3021,6 @@ int lua_cocos2dx_ui_Widget_setSizeType(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Widget_setSize(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::Widget* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::Widget*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_setSize'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Size arg0;
-
-        ok &= luaval_to_size(tolua_S, 2, &arg0);
-        if(!ok)
-            return 0;
-        cobj->setSize(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSize",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_setSize'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_ui_Widget_setBright(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3307,7 +3217,7 @@ static int lua_cocos2dx_ui_Widget_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Widget");
-    tolua_cclass(tolua_S,"Widget","ccui.Widget","cc.ProtectedNode",nullptr);
+    tolua_cclass(tolua_S,"Widget","ccui.Widget","cc.ProtectedNode",nullptr);    
 
     tolua_beginmodule(tolua_S,"Widget");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Widget_constructor);
@@ -3316,7 +3226,7 @@ int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
         tolua_function(tolua_S,"setFlippedY",lua_cocos2dx_ui_Widget_setFlippedY);
         tolua_function(tolua_S,"setFlippedX",lua_cocos2dx_ui_Widget_setFlippedX);
         tolua_function(tolua_S,"getVirtualRenderer",lua_cocos2dx_ui_Widget_getVirtualRenderer);
-        tolua_function(tolua_S,"getSize",lua_cocos2dx_ui_Widget_getSize);
+        tolua_function(tolua_S,"getSizePercent",lua_cocos2dx_ui_Widget_getSizePercent);
         tolua_function(tolua_S,"setPositionPercent",lua_cocos2dx_ui_Widget_setPositionPercent);
         tolua_function(tolua_S,"getLayoutSize",lua_cocos2dx_ui_Widget_getLayoutSize);
         tolua_function(tolua_S,"setHighlighted",lua_cocos2dx_ui_Widget_setHighlighted);
@@ -3350,7 +3260,6 @@ int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
         tolua_function(tolua_S,"getCurrentFocusedWidget",lua_cocos2dx_ui_Widget_getCurrentFocusedWidget);
         tolua_function(tolua_S,"requestFocus",lua_cocos2dx_ui_Widget_requestFocus);
         tolua_function(tolua_S,"updateSizeAndPosition",lua_cocos2dx_ui_Widget_updateSizeAndPosition);
-        tolua_function(tolua_S,"getSizePercent",lua_cocos2dx_ui_Widget_getSizePercent);
         tolua_function(tolua_S,"getTouchMovePosition",lua_cocos2dx_ui_Widget_getTouchMovePosition);
         tolua_function(tolua_S,"getSizeType",lua_cocos2dx_ui_Widget_getSizeType);
         tolua_function(tolua_S,"addTouchEventListener",lua_cocos2dx_ui_Widget_addTouchEventListener);
@@ -3361,7 +3270,6 @@ int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
         tolua_function(tolua_S,"isFlippedY",lua_cocos2dx_ui_Widget_isFlippedY);
         tolua_function(tolua_S,"isClippingParentContainsPoint",lua_cocos2dx_ui_Widget_isClippingParentContainsPoint);
         tolua_function(tolua_S,"setSizeType",lua_cocos2dx_ui_Widget_setSizeType);
-        tolua_function(tolua_S,"setSize",lua_cocos2dx_ui_Widget_setSize);
         tolua_function(tolua_S,"setBright",lua_cocos2dx_ui_Widget_setBright);
         tolua_function(tolua_S,"isFocusEnabled",lua_cocos2dx_ui_Widget_isFocusEnabled);
         tolua_function(tolua_S,"enableDpadNavigation", lua_cocos2dx_ui_Widget_enableDpadNavigation);
@@ -4936,7 +4844,7 @@ static int lua_cocos2dx_ui_Layout_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_Layout(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Layout");
-    tolua_cclass(tolua_S,"Layout","ccui.Layout","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"Layout","ccui.Layout","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"Layout");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Layout_constructor);
@@ -6230,7 +6138,7 @@ static int lua_cocos2dx_ui_Button_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_Button(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Button");
-    tolua_cclass(tolua_S,"Button","ccui.Button","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"Button","ccui.Button","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"Button");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Button_constructor);
@@ -6942,7 +6850,7 @@ static int lua_cocos2dx_ui_CheckBox_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_CheckBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.CheckBox");
-    tolua_cclass(tolua_S,"CheckBox","ccui.CheckBox","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"CheckBox","ccui.CheckBox","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"CheckBox");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_CheckBox_constructor);
@@ -7384,7 +7292,7 @@ static int lua_cocos2dx_ui_ImageView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_ImageView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.ImageView");
-    tolua_cclass(tolua_S,"ImageView","ccui.ImageView","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"ImageView","ccui.ImageView","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"ImageView");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_ImageView_constructor);
@@ -8476,7 +8384,7 @@ static int lua_cocos2dx_ui_Text_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Text");
-    tolua_cclass(tolua_S,"Text","ccui.Text","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"Text","ccui.Text","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"Text");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Text_constructor);
@@ -8875,7 +8783,7 @@ static int lua_cocos2dx_ui_TextAtlas_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_TextAtlas(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.TextAtlas");
-    tolua_cclass(tolua_S,"TextAtlas","ccui.TextAtlas","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"TextAtlas","ccui.TextAtlas","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"TextAtlas");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_TextAtlas_constructor);
@@ -9447,7 +9355,7 @@ static int lua_cocos2dx_ui_LoadingBar_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_LoadingBar(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.LoadingBar");
-    tolua_cclass(tolua_S,"LoadingBar","ccui.LoadingBar","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"LoadingBar","ccui.LoadingBar","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"LoadingBar");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_LoadingBar_constructor);
@@ -11058,7 +10966,7 @@ static int lua_cocos2dx_ui_ScrollView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_ScrollView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.ScrollView");
-    tolua_cclass(tolua_S,"ScrollView","ccui.ScrollView","ccui.Layout",nullptr);
+    tolua_cclass(tolua_S,"ScrollView","ccui.ScrollView","ccui.Layout",nullptr);    
 
     tolua_beginmodule(tolua_S,"ScrollView");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_ScrollView_constructor);
@@ -12067,7 +11975,7 @@ static int lua_cocos2dx_ui_ListView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_ListView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.ListView");
-    tolua_cclass(tolua_S,"ListView","ccui.ListView","ccui.ScrollView",nullptr);
+    tolua_cclass(tolua_S,"ListView","ccui.ListView","ccui.ScrollView",nullptr);    
 
     tolua_beginmodule(tolua_S,"ListView");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_ListView_constructor);
@@ -13026,7 +12934,7 @@ static int lua_cocos2dx_ui_Slider_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_Slider(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.Slider");
-    tolua_cclass(tolua_S,"Slider","ccui.Slider","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"Slider","ccui.Slider","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"Slider");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_Slider_constructor);
@@ -14761,7 +14669,7 @@ static int lua_cocos2dx_ui_TextField_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_TextField(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.TextField");
-    tolua_cclass(tolua_S,"TextField","ccui.TextField","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"TextField","ccui.TextField","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"TextField");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_TextField_constructor);
@@ -15111,7 +15019,7 @@ static int lua_cocos2dx_ui_TextBMFont_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_TextBMFont(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.TextBMFont");
-    tolua_cclass(tolua_S,"TextBMFont","ccui.TextBMFont","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"TextBMFont","ccui.TextBMFont","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"TextBMFont");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_TextBMFont_constructor);
@@ -15746,7 +15654,7 @@ static int lua_cocos2dx_ui_PageView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_PageView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.PageView");
-    tolua_cclass(tolua_S,"PageView","ccui.PageView","ccui.Layout",nullptr);
+    tolua_cclass(tolua_S,"PageView","ccui.PageView","ccui.Layout",nullptr);    
 
     tolua_beginmodule(tolua_S,"PageView");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_PageView_constructor);
@@ -15993,7 +15901,7 @@ static int lua_cocos2dx_ui_RichElement_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RichElement(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElement");
-    tolua_cclass(tolua_S,"RichElement","ccui.RichElement","cc.Ref",nullptr);
+    tolua_cclass(tolua_S,"RichElement","ccui.RichElement","cc.Ref",nullptr);    
 
     tolua_beginmodule(tolua_S,"RichElement");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElement_constructor);
@@ -16153,7 +16061,7 @@ static int lua_cocos2dx_ui_RichElementText_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RichElementText(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElementText");
-    tolua_cclass(tolua_S,"RichElementText","ccui.RichElementText","ccui.RichElement",nullptr);
+    tolua_cclass(tolua_S,"RichElementText","ccui.RichElementText","ccui.RichElement",nullptr);    
 
     tolua_beginmodule(tolua_S,"RichElementText");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElementText_constructor);
@@ -16304,7 +16212,7 @@ static int lua_cocos2dx_ui_RichElementImage_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RichElementImage(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElementImage");
-    tolua_cclass(tolua_S,"RichElementImage","ccui.RichElementImage","ccui.RichElement",nullptr);
+    tolua_cclass(tolua_S,"RichElementImage","ccui.RichElementImage","ccui.RichElement",nullptr);    
 
     tolua_beginmodule(tolua_S,"RichElementImage");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElementImage_constructor);
@@ -16455,7 +16363,7 @@ static int lua_cocos2dx_ui_RichElementCustomNode_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RichElementCustomNode(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichElementCustomNode");
-    tolua_cclass(tolua_S,"RichElementCustomNode","ccui.RichElementCustomNode","ccui.RichElement",nullptr);
+    tolua_cclass(tolua_S,"RichElementCustomNode","ccui.RichElementCustomNode","ccui.RichElement",nullptr);    
 
     tolua_beginmodule(tolua_S,"RichElementCustomNode");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichElementCustomNode_constructor);
@@ -16871,7 +16779,7 @@ static int lua_cocos2dx_ui_RichText_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_ui_RichText(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"ccui.RichText");
-    tolua_cclass(tolua_S,"RichText","ccui.RichText","ccui.Widget",nullptr);
+    tolua_cclass(tolua_S,"RichText","ccui.RichText","ccui.Widget",nullptr);    
 
     tolua_beginmodule(tolua_S,"RichText");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_RichText_constructor);
@@ -16889,6 +16797,306 @@ int lua_register_cocos2dx_ui_RichText(lua_State* tolua_S)
     g_typeCast["RichText"] = "ccui.RichText";
     return 1;
 }
+
+int lua_cocos2dx_ui_HBox_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.HBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 1)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0);
+            if (!ok) { break; }
+            cocos2d::ui::HBox* ret = cocos2d::ui::HBox::create(arg0);
+            object_to_luaval<cocos2d::ui::HBox>(tolua_S, "ccui.HBox",(cocos2d::ui::HBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 0)
+        {
+            cocos2d::ui::HBox* ret = cocos2d::ui::HBox::create();
+            object_to_luaval<cocos2d::ui::HBox>(tolua_S, "ccui.HBox",(cocos2d::ui::HBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_HBox_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ui_HBox_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::HBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj = new cocos2d::ui::HBox();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccui.HBox");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "HBox",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_HBox_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_ui_HBox_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (HBox)");
+    return 0;
+}
+
+int lua_register_cocos2dx_ui_HBox(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccui.HBox");
+    tolua_cclass(tolua_S,"HBox","ccui.HBox","ccui.Layout",nullptr);    
+
+    tolua_beginmodule(tolua_S,"HBox");
+        tolua_function(tolua_S,"new",lua_cocos2dx_ui_HBox_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_ui_HBox_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::ui::HBox).name();
+    g_luaType[typeName] = "ccui.HBox";
+    g_typeCast["HBox"] = "ccui.HBox";
+    return 1;
+}
+
+int lua_cocos2dx_ui_VBox_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.VBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 1)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0);
+            if (!ok) { break; }
+            cocos2d::ui::VBox* ret = cocos2d::ui::VBox::create(arg0);
+            object_to_luaval<cocos2d::ui::VBox>(tolua_S, "ccui.VBox",(cocos2d::ui::VBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 0)
+        {
+            cocos2d::ui::VBox* ret = cocos2d::ui::VBox::create();
+            object_to_luaval<cocos2d::ui::VBox>(tolua_S, "ccui.VBox",(cocos2d::ui::VBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_VBox_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ui_VBox_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::VBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj = new cocos2d::ui::VBox();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccui.VBox");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "VBox",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_VBox_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_ui_VBox_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (VBox)");
+    return 0;
+}
+
+int lua_register_cocos2dx_ui_VBox(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccui.VBox");
+    tolua_cclass(tolua_S,"VBox","ccui.VBox","ccui.Layout",nullptr);    
+
+    tolua_beginmodule(tolua_S,"VBox");
+        tolua_function(tolua_S,"new",lua_cocos2dx_ui_VBox_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_ui_VBox_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::ui::VBox).name();
+    g_luaType[typeName] = "ccui.VBox";
+    g_typeCast["VBox"] = "ccui.VBox";
+    return 1;
+}
+
+int lua_cocos2dx_ui_RelativeBox_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.RelativeBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 1)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0);
+            if (!ok) { break; }
+            cocos2d::ui::RelativeBox* ret = cocos2d::ui::RelativeBox::create(arg0);
+            object_to_luaval<cocos2d::ui::RelativeBox>(tolua_S, "ccui.RelativeBox",(cocos2d::ui::RelativeBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 0)
+        {
+            cocos2d::ui::RelativeBox* ret = cocos2d::ui::RelativeBox::create();
+            object_to_luaval<cocos2d::ui::RelativeBox>(tolua_S, "ccui.RelativeBox",(cocos2d::ui::RelativeBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RelativeBox_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ui_RelativeBox_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RelativeBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj = new cocos2d::ui::RelativeBox();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccui.RelativeBox");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "RelativeBox",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RelativeBox_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_ui_RelativeBox_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (RelativeBox)");
+    return 0;
+}
+
+int lua_register_cocos2dx_ui_RelativeBox(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccui.RelativeBox");
+    tolua_cclass(tolua_S,"RelativeBox","ccui.RelativeBox","ccui.Layout",nullptr);    
+
+    tolua_beginmodule(tolua_S,"RelativeBox");
+        tolua_function(tolua_S,"new",lua_cocos2dx_ui_RelativeBox_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_ui_RelativeBox_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::ui::RelativeBox).name();
+    g_luaType[typeName] = "ccui.RelativeBox";
+    g_typeCast["RelativeBox"] = "ccui.RelativeBox";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx_ui(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -16897,12 +17105,14 @@ TOLUA_API int register_all_cocos2dx_ui(lua_State* tolua_S)
 	tolua_beginmodule(tolua_S,"ccui");
 
 	lua_register_cocos2dx_ui_Widget(tolua_S);
-	lua_register_cocos2dx_ui_CheckBox(tolua_S);
 	lua_register_cocos2dx_ui_Layout(tolua_S);
+	lua_register_cocos2dx_ui_RelativeBox(tolua_S);
+	lua_register_cocos2dx_ui_CheckBox(tolua_S);
 	lua_register_cocos2dx_ui_TextAtlas(tolua_S);
 	lua_register_cocos2dx_ui_TextBMFont(tolua_S);
 	lua_register_cocos2dx_ui_LoadingBar(tolua_S);
 	lua_register_cocos2dx_ui_TextField(tolua_S);
+	lua_register_cocos2dx_ui_VBox(tolua_S);
 	lua_register_cocos2dx_ui_RichElement(tolua_S);
 	lua_register_cocos2dx_ui_RichElementCustomNode(tolua_S);
 	lua_register_cocos2dx_ui_Slider(tolua_S);
@@ -16912,6 +17122,7 @@ TOLUA_API int register_all_cocos2dx_ui(lua_State* tolua_S)
 	lua_register_cocos2dx_ui_LayoutParameter(tolua_S);
 	lua_register_cocos2dx_ui_LinearLayoutParameter(tolua_S);
 	lua_register_cocos2dx_ui_ImageView(tolua_S);
+	lua_register_cocos2dx_ui_HBox(tolua_S);
 	lua_register_cocos2dx_ui_RichElementText(tolua_S);
 	lua_register_cocos2dx_ui_PageView(tolua_S);
 	lua_register_cocos2dx_ui_Helper(tolua_S);

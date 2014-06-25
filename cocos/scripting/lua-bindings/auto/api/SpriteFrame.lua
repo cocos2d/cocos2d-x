@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SpriteFrame
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#SpriteFrame] clone 

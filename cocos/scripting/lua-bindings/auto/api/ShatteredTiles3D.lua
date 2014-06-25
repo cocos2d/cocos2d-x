@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ShatteredTiles3D
 -- @extend TiledGrid3DAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ShatteredTiles3D] create 
