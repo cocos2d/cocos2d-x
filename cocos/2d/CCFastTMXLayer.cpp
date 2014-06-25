@@ -118,8 +118,9 @@ FastTMXLayer::FastTMXLayer()
 ,_verticesToDraw(0)
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
-,_dirty(false)
-{}
+,_dirty(true)
+{
+}
 
 FastTMXLayer::~FastTMXLayer()
 {
@@ -145,10 +146,9 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         rect = RectApplyTransform(rect, inv);
         
         _verticesToDraw = updateTiles(rect);
-        std::sort(_quads.begin(), _quads.end(), sortQuadCommand);
+        std::stable_sort(_quads.begin(), _quads.end(), sortQuadCommand);
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
-        
         _dirty = false;
         
     }
