@@ -55,7 +55,6 @@ namespace
 }
 
 // FastTMXLayer - init & alloc & dealloc
-
 FastTMXLayer * FastTMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     FastTMXLayer *ret = new FastTMXLayer();
@@ -66,6 +65,7 @@ FastTMXLayer * FastTMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *l
     }
     return nullptr;
 }
+
 bool FastTMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {    
 
@@ -635,7 +635,6 @@ void FastTMXLayer::parseInternalProperties()
     }
 }
 
-
 //CCTMXLayer2 - obtaining positions, offset
 Vec2 FastTMXLayer::calculateLayerOffset(const Vec2& pos)
 {
@@ -776,4 +775,3 @@ std::string FastTMXLayer::getDescription() const
 }
 
 NS_CC_END
-

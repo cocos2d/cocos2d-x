@@ -252,4 +252,3 @@ protected:
 NS_CC_END
 
 #endif //__CCTMX_LAYER2_H__
-
