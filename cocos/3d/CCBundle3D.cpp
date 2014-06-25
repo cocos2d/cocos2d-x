@@ -577,6 +577,8 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     
     skindata->resetData();
     
+    std::string boneName = _binaryReader.readString();
+    
     // transform
     float bindShape[16];
     if (!_binaryReader.readMatrix(bindShape))
@@ -597,7 +599,8 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     float bindpos[16];
     for (unsigned int i = 0; i < boneNum; i++)
     {
-        skindata->skinBoneNames.push_back(_binaryReader.readString());
+        std::string skinBoneName = _binaryReader.readString();
+        skindata->skinBoneNames.push_back(skinBoneName);
         if (!_binaryReader.readMatrix(bindpos))
         {
             CCLOGINFO("Failed to load SkinData: bindpos '%s'.", _path.c_str());
@@ -608,8 +611,24 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     
     skindata->skinBoneOriginMatrices.resize(boneNum);
     
+    boneName = _binaryReader.readString();
+    
     // bind shape
     _binaryReader.readMatrix(bindShape);
+    int rootIndex = skindata->getSkinBoneNameIndex(boneName);
+    if(rootIndex < 0)
+    {
+        skindata->addNodeBoneNames(boneName);
+        rootIndex = skindata->getBoneNameIndex(boneName);
+        skindata->nodeBoneOriginMatrices.push_back(bindShape);
+    }
+    else
+    {
+        skindata->skinBoneOriginMatrices[rootIndex] = bindShape;
+    }
+    
+    // set root bone index
+    skindata->rootBoneIndex = rootIndex;
     
     // read parent and child relationship map
     float transform[16];
@@ -619,6 +638,16 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     {
         std::string id = _binaryReader.readString();
         int index = skindata->getSkinBoneNameIndex(id);
+
+        
+        std::string parentid = _binaryReader.readString();
+        
+        if (!_binaryReader.readMatrix(transform))
+        {
+            CCLOGINFO("Failed to load SkinData: transform '%s'.", _path.c_str());
+            return nullptr;
+        }
+        
         if(index < 0)
         {
             skindata->addNodeBoneNames(id);
@@ -630,30 +659,13 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
             skindata->skinBoneOriginMatrices[index] = transform;
         }
         
-        // set root bone index
-        if (skindata->rootBoneIndex < 0)
-            skindata->rootBoneIndex = index;
-        
-        std::string parentid = _binaryReader.readString();
-        
-        if (!_binaryReader.readMatrix(transform))
-        {
-            CCLOGINFO("Failed to load SkinData: transform '%s'.", _path.c_str());
-            return nullptr;
-        }
-        
         int parentIndex = skindata->getSkinBoneNameIndex(parentid);
         if(parentIndex < 0)
         {
             skindata->addNodeBoneNames(parentid);
             parentIndex = skindata->getBoneNameIndex(parentid);
-            skindata->nodeBoneOriginMatrices.push_back(transform);
         }
-        else
-        {
-            skindata->skinBoneOriginMatrices[parentIndex] = transform;
-        }
-        
+      
         skindata->boneChild[parentIndex].push_back(index);
         
     }
