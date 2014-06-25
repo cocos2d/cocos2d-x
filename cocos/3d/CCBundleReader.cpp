@@ -3,26 +3,40 @@
 
 NS_CC_BEGIN
 
-BundleReader::~BundleReader() 
+BundleReader::BundleReader()
 {
-    close();
+    m_buffer = NULL;
+    m_position = 0;
+    m_length = 0;
 };
 
-BundleReader* BundleReader::create(char* lpbuffer, unsigned int length)
+BundleReader::~BundleReader()
 {
-    if (lpbuffer)
-    {
-        BundleReader* stream = new BundleReader();
-        stream->init(lpbuffer, length);
-        return stream;
-    }
-    return NULL;
+    //close();
+};
+
+void BundleReader::init(char* lpbuffer, unsigned int length)
+{
+    m_position = 0;
+    m_buffer  = lpbuffer;
+    m_length = length;
 }
 
-void BundleReader::close()
-{
-    CC_SAFE_DELETE(m_buffer);
-}
+//BundleReader* BundleReader::create(char* lpbuffer, unsigned int length)
+//{
+//    if (lpbuffer)
+//    {
+//        BundleReader* stream = new BundleReader();
+//        stream->init(lpbuffer, length);
+//        return stream;
+//    }
+//    return NULL;
+//}
+
+//void BundleReader::close()
+//{
+//    CC_SAFE_DELETE(m_buffer);
+//}
 
 size_t BundleReader::read(void* ptr, size_t size, size_t count)
 {
@@ -158,20 +172,6 @@ std::string BundleReader::readString()
 bool BundleReader::readMatrix(float* m)
 {
     return (read(m, sizeof(float), 16) == 16);
-}
-
-BundleReader::BundleReader()
-{
-    m_buffer = NULL;
-    m_position = 0;
-    m_length = 0;
-};
-
-void BundleReader::init(char* lpbuffer, unsigned int length)
-{
-    m_position = 0;
-    m_buffer  = lpbuffer;
-    m_length = length;
 }
 
 }
