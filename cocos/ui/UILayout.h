@@ -232,7 +232,6 @@ public:
     
     virtual  Type getLayoutType() const;
 
-    using Node::addChild;
     /**
      * Adds a child to the container with z order and tag
      *
@@ -242,6 +241,8 @@ public:
      * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
+    virtual void addChild(Node* child)override;
+    virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
