@@ -274,7 +274,6 @@
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\CocoLoader.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
-    <ClInclude Include="..\ObjectFactory.h" />
     <ClInclude Include="..\TriggerBase.h" />
     <ClInclude Include="..\TriggerMng.h" />
     <ClInclude Include="..\TriggerObj.h" />
