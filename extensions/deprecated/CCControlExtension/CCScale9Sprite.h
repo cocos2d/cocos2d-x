@@ -53,21 +53,21 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class Scale9Sprite : public Node
+class __Scale9Sprite : public Node
 {
 public:
     /**
      * @js ctor
      */
-    Scale9Sprite();
+    __Scale9Sprite();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~Scale9Sprite();
+    virtual ~__Scale9Sprite();
 
 public:
-    static Scale9Sprite* create();
+    static __Scale9Sprite* create();
 
     /**
      * Creates a 9-slice sprite with a texture file, a delimitation zone and
@@ -75,7 +75,7 @@ public:
      *
      * @see initWithFile(const char *file, const Rect& rect, const Rect& capInsets)
      */
-    static Scale9Sprite* create(const std::string& file, const Rect& rect,  const Rect& capInsets);
+    static __Scale9Sprite* create(const std::string& file, const Rect& rect,  const Rect& capInsets);
 
     /**
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -83,7 +83,7 @@ public:
      *
      * @see initWithFile(const Rect& capInsets, const char *file)
      */
-    static Scale9Sprite* create(const Rect& capInsets, const std::string& file);
+    static __Scale9Sprite* create(const Rect& capInsets, const std::string& file);
 
     /**
      * Creates a 9-slice sprite with a texture file and a delimitation zone. The
@@ -91,7 +91,7 @@ public:
      *
      * @see initWithFile(const char *file, const Rect& rect)
      */
-    static Scale9Sprite* create(const std::string& file, const Rect& rect);
+    static __Scale9Sprite* create(const std::string& file, const Rect& rect);
 
     /**
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -99,7 +99,7 @@ public:
      *
      * @see initWithFile(const char *file)
      */
-    static Scale9Sprite* create(const std::string& file);
+    static __Scale9Sprite* create(const std::string& file);
 
     /**
      * Creates a 9-slice sprite with an sprite frame.
@@ -109,7 +109,7 @@ public:
      *
      * @see initWithSpriteFrame(SpriteFrame *spriteFrame)
      */
-    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame);
+    static __Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame);
 
     /**
      * Creates a 9-slice sprite with an sprite frame and the centre of its zone.
@@ -119,7 +119,7 @@ public:
      *
      * @see initWithSpriteFrame(SpriteFrame *spriteFrame, const Rect& capInsets)
      */
-    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets);
+    static __Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets);
 
     /**
      * Creates a 9-slice sprite with an sprite frame name.
@@ -129,7 +129,7 @@ public:
      *
      * @see initWithSpriteFrameName(const char *spriteFrameName)
      */
-    static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
+    static __Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
     /**
      * Creates a 9-slice sprite with an sprite frame name and the centre of its
@@ -140,7 +140,7 @@ public:
      *
      * @see initWithSpriteFrameName(const char *spriteFrameName, const Rect& capInsets)
      */
-    static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
+    static __Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
@@ -250,7 +250,7 @@ public:
      *
      * @param capInsets The values to use for the cap insets.
      */
-    Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets);
+    __Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets);
     
     virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
     virtual void setSpriteFrame(SpriteFrame * spriteFrame);

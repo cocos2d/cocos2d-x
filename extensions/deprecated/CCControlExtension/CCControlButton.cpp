@@ -64,10 +64,10 @@ __ControlButton::~__ControlButton()
 
 bool __ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), __Scale9Sprite::create());
 }
 
-bool __ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
+bool __ControlButton::initWithLabelAndBackgroundSprite(Node* node, __Scale9Sprite* backgroundSprite)
 {
     if (__Control::init())
     {
@@ -121,7 +121,7 @@ bool __ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite*
     }
 }
 
-__ControlButton* __ControlButton::create(Node* label, Scale9Sprite* backgroundSprite)
+__ControlButton* __ControlButton::create(Node* label, __Scale9Sprite* backgroundSprite)
 {
     __ControlButton *pRet = new __ControlButton();
     pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
@@ -131,7 +131,7 @@ __ControlButton* __ControlButton::create(Node* label, Scale9Sprite* backgroundSp
 
 bool __ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), Scale9Sprite::create());
+    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), __Scale9Sprite::create());
 }
 
 __ControlButton* __ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
@@ -142,13 +142,13 @@ __ControlButton* __ControlButton::create(const std::string& title, const std::st
     return pRet;
 }
 
-bool __ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
+bool __ControlButton::initWithBackgroundSprite(__Scale9Sprite* sprite)
 {
     Label *label = Label::createWithSystemFont("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
-__ControlButton* __ControlButton::create(Scale9Sprite* sprite)
+__ControlButton* __ControlButton::create(__Scale9Sprite* sprite)
 {
     __ControlButton *pRet = new __ControlButton();
     pRet->initWithBackgroundSprite(sprite);
@@ -423,7 +423,7 @@ const std::string& __ControlButton::getTitleBMFontForState(State state)
 }
 
 
-Scale9Sprite* __ControlButton::getBackgroundSpriteForState(State state)
+__Scale9Sprite* __ControlButton::getBackgroundSpriteForState(State state)
 {
     auto backgroundSprite = _backgroundSpriteDispatchTable.at((int)state);
     if (backgroundSprite)
@@ -434,7 +434,7 @@ Scale9Sprite* __ControlButton::getBackgroundSpriteForState(State state)
 }
 
 
-void __ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State state)
+void __ControlButton::setBackgroundSpriteForState(__Scale9Sprite* sprite, State state)
 {
     Size oldPreferredSize = _preferredSize;
 
@@ -470,7 +470,7 @@ void __ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State st
 
 void __ControlButton::setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, State state)
 {
-    Scale9Sprite * sprite = Scale9Sprite::createWithSpriteFrame(spriteFrame);
+    __Scale9Sprite * sprite = __Scale9Sprite::createWithSpriteFrame(spriteFrame);
     this->setBackgroundSpriteForState(sprite, state);
 }
 
@@ -566,7 +566,7 @@ void __ControlButton::needsLayout()
         rectBackground = _backgroundSprite->getBoundingBox();
     }
 
-    Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);
+    Rect maxRect = __ControlUtils::RectUnion(rectTitle, rectBackground);
     setContentSize(Size(maxRect.size.width, maxRect.size.height));        
     
     if (_titleLabel != nullptr)

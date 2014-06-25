@@ -76,7 +76,7 @@ bool __ControlColourPicker::init()
         _hsv.v = 0;
         
         // Add image
-        _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, Vec2::ZERO, Vec2(0.5f, 0.5f));
+        _background=__ControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, Vec2::ZERO, Vec2(0.5f, 0.5f));
         if(!_background) return false;
         CC_SAFE_RETAIN(_background);
         
@@ -86,9 +86,9 @@ bool __ControlColourPicker::init()
         float hueShift                = 8;
         float colourShift             = 28;
         
-        _huePicker = new ControlHuePicker();
+        _huePicker = new __ControlHuePicker();
         _huePicker->initWithTargetAndPos(spriteSheet, Vec2(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
-        _colourPicker = new ControlSaturationBrightnessPicker();
+        _colourPicker = new __ControlSaturationBrightnessPicker();
         _colourPicker->initWithTargetAndPos(spriteSheet, Vec2(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
@@ -128,7 +128,7 @@ void __ControlColourPicker::setColor(const Color3B& color)
     rgba.b      = color.b / 255.0f;
     rgba.a      = 1.0f;
     
-    _hsv=ControlUtils::HSVfromRGB(rgba);
+    _hsv=__ControlUtils::HSVfromRGB(rgba);
     updateHueAndControlPicker();
 }
 
@@ -163,10 +163,10 @@ void __ControlColourPicker::updateHueAndControlPicker()
 
 void __ControlColourPicker::hueSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
 {
-    _hsv.h      = ((ControlHuePicker*)sender)->getHue();
+    _hsv.h      = ((__ControlHuePicker*)sender)->getHue();
 
     // Update the value
-    RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
+    RGBA rgb    = __ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
     __Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
@@ -177,12 +177,12 @@ void __ControlColourPicker::hueSliderValueChanged(Ref * sender, __Control::Event
 
 void __ControlColourPicker::colourSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
 {
-    _hsv.s=((ControlSaturationBrightnessPicker*)sender)->getSaturation();
-    _hsv.v=((ControlSaturationBrightnessPicker*)sender)->getBrightness();
+    _hsv.s=((__ControlSaturationBrightnessPicker*)sender)->getSaturation();
+    _hsv.v=((__ControlSaturationBrightnessPicker*)sender)->getBrightness();
 
 
      // Update the value
-    RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
+    RGBA rgb    = __ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
     __Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     

@@ -45,19 +45,19 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlHuePicker : public __Control
+class __ControlHuePicker : public __Control
 {
 public:
-    static ControlHuePicker* create(Node* target, Vec2 pos);
+    static __ControlHuePicker* create(Node* target, Vec2 pos);
     /**
      * @js ctor
      */
-    ControlHuePicker();
+    __ControlHuePicker();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlHuePicker();
+    virtual ~__ControlHuePicker();
     virtual bool initWithTargetAndPos(Node* target, Vec2 pos);
 
     virtual void setEnabled(bool enabled);

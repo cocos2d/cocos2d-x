@@ -40,22 +40,22 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class ControlPotentiometer Potentiometer control for Cocos2D. */
-class ControlPotentiometer : public __Control
+class __ControlPotentiometer : public __Control
 {
 public:
     /**
      * Creates potentiometer with a track filename and a progress filename.
      */
-    static ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
+    static __ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
     /**
      * @js ctor
      */
-    ControlPotentiometer();
+    __ControlPotentiometer();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlPotentiometer();
+    virtual ~__ControlPotentiometer();
 
     /** 
      * Initializes a potentiometer with a track sprite and a progress bar.

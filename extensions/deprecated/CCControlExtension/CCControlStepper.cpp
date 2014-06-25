@@ -38,7 +38,7 @@ NS_CC_EXT_BEGIN
 #define kAutorepeatDeltaTime                0.15f
 #define kAutorepeatIncreaseTimeIncrement    12
 
-ControlStepper::ControlStepper()
+__ControlStepper::__ControlStepper()
 : _value(0.0)
 , _continuous(false)
 , _autorepeat(false)
@@ -57,7 +57,7 @@ ControlStepper::ControlStepper()
 
 }
 
-ControlStepper::~ControlStepper()
+__ControlStepper::~__ControlStepper()
 {
     unscheduleAllSelectors();
     
@@ -67,7 +67,7 @@ ControlStepper::~ControlStepper()
     CC_SAFE_RELEASE(_plusLabel);
 }
 
-bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite)
+bool __ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite)
 {
     if (__Control::init())
     {
@@ -108,16 +108,16 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
-        Rect maxRect = ControlUtils::RectUnion(_minusSprite->getBoundingBox(), _plusSprite->getBoundingBox());
+        Rect maxRect = __ControlUtils::RectUnion(_minusSprite->getBoundingBox(), _plusSprite->getBoundingBox());
         this->setContentSize( Size(_minusSprite->getContentSize().width + _plusSprite->getContentSize().height, maxRect.size.height) );
         return true;
     }
     return false;
 }
 
-ControlStepper* ControlStepper::create(Sprite *minusSprite, Sprite *plusSprite)
+__ControlStepper* __ControlStepper::create(Sprite *minusSprite, Sprite *plusSprite)
 {
-    ControlStepper* pRet = new ControlStepper();
+    __ControlStepper* pRet = new __ControlStepper();
     if (pRet != NULL && pRet->initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite))
     {
         pRet->autorelease();
@@ -131,7 +131,7 @@ ControlStepper* ControlStepper::create(Sprite *minusSprite, Sprite *plusSprite)
 
 //// Properties
 
-void ControlStepper::setWraps(bool wraps)
+void __ControlStepper::setWraps(bool wraps)
 {
     _wraps = wraps;
     
@@ -144,7 +144,7 @@ void ControlStepper::setWraps(bool wraps)
     this->setValue( _value );
 }
 
-void ControlStepper::setMinimumValue(double minimumValue)
+void __ControlStepper::setMinimumValue(double minimumValue)
 {
     if (minimumValue >= _maximumValue)
     {
@@ -155,7 +155,7 @@ void ControlStepper::setMinimumValue(double minimumValue)
     this->setValue( _value );
 }
 
-void ControlStepper::setMaximumValue(double maximumValue)
+void __ControlStepper::setMaximumValue(double maximumValue)
 {
     if (maximumValue <= _minimumValue)
     {
@@ -166,17 +166,17 @@ void ControlStepper::setMaximumValue(double maximumValue)
     this->setValue(_value);
 }
 
-void ControlStepper::setValue(double value)
+void __ControlStepper::setValue(double value)
 {
     this->setValueWithSendingEvent(value, true);
 }
 
-double ControlStepper::getValue() const
+double __ControlStepper::getValue() const
 {
     return _value;
 }
 
-void ControlStepper::setStepValue(double stepValue)
+void __ControlStepper::setStepValue(double stepValue)
 {
     if (stepValue <= 0)
     {
@@ -186,14 +186,14 @@ void ControlStepper::setStepValue(double stepValue)
     _stepValue  = stepValue;
 }
 
-bool ControlStepper::isContinuous() const
+bool __ControlStepper::isContinuous() const
 {
     return _continuous;
 }
 //
 //// ControlStepper Public Methods
 
-void ControlStepper::setValueWithSendingEvent(double value, bool send)
+void __ControlStepper::setValueWithSendingEvent(double value, bool send)
 {
     if (value < _minimumValue)
     {
@@ -217,20 +217,20 @@ void ControlStepper::setValueWithSendingEvent(double value, bool send)
     }
 }
 
-void ControlStepper::startAutorepeat()
+void __ControlStepper::startAutorepeat()
 {
     _autorepeatCount    = -1;
     
-    this->schedule(schedule_selector(ControlStepper::update), kAutorepeatDeltaTime, kRepeatForever, kAutorepeatDeltaTime * 3);
+    this->schedule(schedule_selector(__ControlStepper::update), kAutorepeatDeltaTime, kRepeatForever, kAutorepeatDeltaTime * 3);
 }
 
 /** Stop the autorepeat. */
-void ControlStepper::stopAutorepeat()
+void __ControlStepper::stopAutorepeat()
 {
-    this->unschedule(schedule_selector(ControlStepper::update));
+    this->unschedule(schedule_selector(__ControlStepper::update));
 }
 
-void ControlStepper::update(float dt)
+void __ControlStepper::update(float dt)
 {
     _autorepeatCount++;
     
@@ -248,7 +248,7 @@ void ControlStepper::update(float dt)
 
 //// ControlStepper Private Methods
 
-void ControlStepper::updateLayoutUsingTouchLocation(Vec2 location)
+void __ControlStepper::updateLayoutUsingTouchLocation(Vec2 location)
 {
     if (location.x < _minusSprite->getContentSize().width
         && _value > _minimumValue)
@@ -274,7 +274,7 @@ void ControlStepper::updateLayoutUsingTouchLocation(Vec2 location)
 }
 
 
-bool ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool __ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
@@ -294,7 +294,7 @@ bool ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
+void __ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     if (this->isTouchInside(pTouch))
     {
@@ -327,7 +327,7 @@ void ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
     }
 }
 
-void ControlStepper::onTouchEnded(Touch *pTouch, Event *pEvent)
+void __ControlStepper::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     _minusSprite->setColor(Color3B::WHITE);
     _plusSprite->setColor(Color3B::WHITE);

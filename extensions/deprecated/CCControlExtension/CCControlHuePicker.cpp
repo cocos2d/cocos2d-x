@@ -33,7 +33,7 @@
 
 NS_CC_EXT_BEGIN
 
-ControlHuePicker::ControlHuePicker()
+__ControlHuePicker::__ControlHuePicker()
 : _hue(0.0f)
 , _huePercentage(0.0f)
 , _background(nullptr)
@@ -42,29 +42,29 @@ ControlHuePicker::ControlHuePicker()
 
 }
 
-ControlHuePicker::~ControlHuePicker()
+__ControlHuePicker::~__ControlHuePicker()
 {
     removeAllChildrenWithCleanup(true);
     CC_SAFE_RELEASE(_background);
     CC_SAFE_RELEASE(_slider);
 }
 
-ControlHuePicker* ControlHuePicker::create(Node* target, Vec2 pos)
+__ControlHuePicker* __ControlHuePicker::create(Node* target, Vec2 pos)
 {
-    ControlHuePicker *pRet = new ControlHuePicker();
+    __ControlHuePicker *pRet = new __ControlHuePicker();
     pRet->initWithTargetAndPos(target, pos);
     pRet->autorelease();
     return pRet;
 }
 
 
-bool ControlHuePicker::initWithTargetAndPos(Node* target, Vec2 pos)
+bool __ControlHuePicker::initWithTargetAndPos(Node* target, Vec2 pos)
 {
     if (__Control::init())
     {
         // Add background and slider sprites
-        this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Vec2(0.0f, 0.0f)));
-        this->setSlider(ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Vec2(0.5f, 0.5f)));
+        this->setBackground(__ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Vec2(0.0f, 0.0f)));
+        this->setSlider(__ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Vec2(0.5f, 0.5f)));
         
         _slider->setPosition(Vec2(pos.x, pos.y + _background->getBoundingBox().size.height * 0.5f));
         _startPos=pos;
@@ -80,7 +80,7 @@ bool ControlHuePicker::initWithTargetAndPos(Node* target, Vec2 pos)
     }
 }
 
-void ControlHuePicker::setHue(float hueValue)
+void __ControlHuePicker::setHue(float hueValue)
 {
     _hue=hueValue;
     // Set the position of the slider to the correct hue
@@ -89,7 +89,7 @@ void ControlHuePicker::setHue(float hueValue)
     setHuePercentage(huePercentage);
 }
 
-void ControlHuePicker::setHuePercentage(float hueValueInPercent)
+void __ControlHuePicker::setHuePercentage(float hueValueInPercent)
 {
     _huePercentage=hueValueInPercent;
     _hue=_huePercentage*360.0f;
@@ -115,7 +115,7 @@ void ControlHuePicker::setHuePercentage(float hueValueInPercent)
 
 }
 
-void ControlHuePicker::setEnabled(bool enabled)
+void __ControlHuePicker::setEnabled(bool enabled)
 {
     __Control::setEnabled(enabled);
     if (_slider != NULL)
@@ -124,7 +124,7 @@ void ControlHuePicker::setEnabled(bool enabled)
     }
 }
 
-void ControlHuePicker::updateSliderPosition(Vec2 location)
+void __ControlHuePicker::updateSliderPosition(Vec2 location)
 {
 
     // Clamp the position of the icon within the circle
@@ -149,7 +149,7 @@ void ControlHuePicker::updateSliderPosition(Vec2 location)
     sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
 }
 
-bool ControlHuePicker::checkSliderPosition(Vec2 location)
+bool __ControlHuePicker::checkSliderPosition(Vec2 location)
 {
     // compute the distance between the current location and the center
     double distance = sqrt(pow (location.x + 10, 2) + pow(location.y, 2));
@@ -163,7 +163,7 @@ bool ControlHuePicker::checkSliderPosition(Vec2 location)
     return false;
 }
 
-bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
+bool __ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -178,7 +178,7 @@ bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlHuePicker::onTouchMoved(Touch* touch, Event* event)
+void __ControlHuePicker::onTouchMoved(Touch* touch, Event* event)
 {
     // Get the touch location
     Vec2 touchLocation=getTouchLocation(touch);

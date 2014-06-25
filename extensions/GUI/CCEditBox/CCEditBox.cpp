@@ -62,7 +62,7 @@ void EditBox::touchDownAction(Ref *sender, __Control::EventType controlEvent)
     _editBoxImpl->openKeyboard();
 }
 
-EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg/* = NULL*/, Scale9Sprite* pDisabled9SpriteBg/* = NULL*/)
+EditBox* EditBox::create(const Size& size, __Scale9Sprite* pNormal9SpriteBg, __Scale9Sprite* pPressed9SpriteBg/* = NULL*/, __Scale9Sprite* pDisabled9SpriteBg/* = NULL*/)
 {
     EditBox* pRet = new EditBox();
     
@@ -87,7 +87,7 @@ EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale
     return pRet;
 }
 
-bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pPressed9SpriteBg)
+bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, __Scale9Sprite* pPressed9SpriteBg)
 {
     if (__ControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
     {

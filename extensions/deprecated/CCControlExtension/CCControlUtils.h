@@ -62,7 +62,7 @@ typedef struct
  */
 
 //helper class to store Color3B's in mutable arrays
-class Color3bObject : public Ref
+class __Color3bObject : public Ref
 {
 public:
     Color3B value;
@@ -70,10 +70,10 @@ public:
      * @js NA
      * @lua NA
      */
-    Color3bObject(Color3B s_value):value(s_value){}
+    __Color3bObject(Color3B s_value):value(s_value){}
 };
 
-class ControlUtils
+class __ControlUtils
 {
 public:
     /**

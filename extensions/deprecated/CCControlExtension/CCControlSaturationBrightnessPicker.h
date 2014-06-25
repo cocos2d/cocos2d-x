@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlSaturationBrightnessPicker : public __Control
+class __ControlSaturationBrightnessPicker : public __Control
 {
     /** Contains the receiver's current saturation value. */
     CC_SYNTHESIZE_READONLY(float, _saturation, Saturation);
@@ -67,15 +67,15 @@ public:
     /**
      * @js ctor
      */
-    ControlSaturationBrightnessPicker();
+    __ControlSaturationBrightnessPicker();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlSaturationBrightnessPicker();
+    virtual ~__ControlSaturationBrightnessPicker();
     virtual bool initWithTargetAndPos(Node* target, Vec2 pos);
 
-    static ControlSaturationBrightnessPicker* create(Node* target, Vec2 pos);
+    static __ControlSaturationBrightnessPicker* create(Node* target, Vec2 pos);
 
     virtual void setEnabled(bool enabled);
     /**

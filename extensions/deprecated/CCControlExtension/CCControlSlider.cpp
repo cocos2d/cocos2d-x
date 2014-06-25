@@ -33,7 +33,7 @@
 
 NS_CC_EXT_BEGIN
 
-ControlSlider::ControlSlider()
+__ControlSlider::__ControlSlider()
 : _value(0.0f)
 , _minimumValue(0.0f)
 , _maximumValue(0.0f)
@@ -47,7 +47,7 @@ ControlSlider::ControlSlider()
 
 }
 
-ControlSlider::~ControlSlider()
+__ControlSlider::~__ControlSlider()
 {
     CC_SAFE_RELEASE(_thumbSprite);
     CC_SAFE_RELEASE(_selectedThumbSprite);
@@ -55,7 +55,7 @@ ControlSlider::~ControlSlider()
     CC_SAFE_RELEASE(_backgroundSprite);
 }
 
-ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
+__ControlSlider* __ControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
 {
     // Prepare background for slider
     Sprite *backgroundSprite      = Sprite::create(bgFile);
@@ -66,10 +66,10 @@ ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFil
     // Prepare thumb (menuItem) for slider
     Sprite *thumbSprite           = Sprite::create(thumbFile);
 
-    return ControlSlider::create(backgroundSprite, progressSprite, thumbSprite);
+    return __ControlSlider::create(backgroundSprite, progressSprite, thumbSprite);
 }
 
-ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile,
+__ControlSlider* __ControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile,
 		const char* selectedThumbSpriteFile)
 {
     // Prepare background for slider
@@ -84,27 +84,27 @@ ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFil
     // Prepare selected thumb (menuItem) for slider
     Sprite *selectedThumbSprite   = Sprite::create(selectedThumbSpriteFile);
 
-    return ControlSlider::create(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
+    return __ControlSlider::create(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
 }
 
-ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite)
+__ControlSlider* __ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite)
 {
-    ControlSlider *pRet = new ControlSlider();
+    __ControlSlider *pRet = new __ControlSlider();
     pRet->initWithSprites(backgroundSprite, pogressSprite, thumbSprite);
     pRet->autorelease();
     return pRet;
 }
 
-ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
+__ControlSlider* __ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
         Sprite* selectedThumbSprite)
 {
-    ControlSlider *pRet = new ControlSlider();
+    __ControlSlider *pRet = new __ControlSlider();
     pRet->initWithSprites(backgroundSprite, pogressSprite, thumbSprite, selectedThumbSprite);
     pRet->autorelease();
     return pRet;
 }
 
-bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite)
+bool __ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite)
 {
     Sprite* selectedThumbSprite = Sprite::createWithTexture(thumbSprite->getTexture(),
         thumbSprite->getTextureRect());
@@ -112,7 +112,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
     return this->initWithSprites(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
 }
 
- bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
+ bool __ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
         Sprite* selectedThumbSprite)
  {
      if (__Control::init())
@@ -130,7 +130,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
         this->setSelectedThumbSprite(selectedThumbSprite);
 
         // Defines the content size
-        Rect maxRect   = ControlUtils::RectUnion(backgroundSprite->getBoundingBox(), thumbSprite->getBoundingBox());
+        Rect maxRect   = __ControlUtils::RectUnion(backgroundSprite->getBoundingBox(), thumbSprite->getBoundingBox());
 
         setContentSize(Size(maxRect.size.width, maxRect.size.height));
         
@@ -166,7 +166,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
  }
 
 
-void ControlSlider::setEnabled(bool enabled)
+void __ControlSlider::setEnabled(bool enabled)
 {
     __Control::setEnabled(enabled);
     if (_thumbSprite != NULL) 
@@ -175,7 +175,7 @@ void ControlSlider::setEnabled(bool enabled)
     }
 }
 
- void ControlSlider::setValue(float value)
+ void __ControlSlider::setValue(float value)
  {
      // set new value with sentinel
      if (value < _minimumValue)
@@ -195,7 +195,7 @@ void ControlSlider::setEnabled(bool enabled)
      this->sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
  }
 
- void ControlSlider::setMinimumValue(float minimumValue)
+ void __ControlSlider::setMinimumValue(float minimumValue)
  {
      _minimumValue=minimumValue;
      _minimumAllowedValue = minimumValue;
@@ -206,7 +206,7 @@ void ControlSlider::setEnabled(bool enabled)
      setValue(_value);
  }
 
- void ControlSlider::setMaximumValue(float maximumValue)
+ void __ControlSlider::setMaximumValue(float maximumValue)
  {
      _maximumValue=maximumValue;
      _maximumAllowedValue = maximumValue;
@@ -217,7 +217,7 @@ void ControlSlider::setEnabled(bool enabled)
      setValue(_value);
  }
 
-bool ControlSlider::isTouchInside(Touch * touch)
+bool __ControlSlider::isTouchInside(Touch * touch)
 {
   Vec2 touchLocation   = touch->getLocation();
   touchLocation           = this->getParent()->convertToNodeSpace(touchLocation);
@@ -229,7 +229,7 @@ bool ControlSlider::isTouchInside(Touch * touch)
   return rect.containsPoint(touchLocation);
 }
 
-Vec2 ControlSlider::locationFromTouch(Touch* touch)
+Vec2 __ControlSlider::locationFromTouch(Touch* touch)
 {
   Vec2 touchLocation   = touch->getLocation();                      // Get the touch position
   touchLocation           = this->convertToNodeSpace(touchLocation);                  // Convert to the node space of this class
@@ -246,7 +246,7 @@ Vec2 ControlSlider::locationFromTouch(Touch* touch)
 }
 
 
-bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
+bool __ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
 {
     if (!isTouchInside(touch) || !isEnabled() || !isVisible())
     {
@@ -258,18 +258,18 @@ bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
     return true;
 }
 
-void ControlSlider::onTouchMoved(Touch *pTouch, Event *pEvent)
+void __ControlSlider::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     Vec2 location = locationFromTouch(pTouch);
     sliderMoved(location);
 }
 
-void ControlSlider::onTouchEnded(Touch *pTouch, Event *pEvent)
+void __ControlSlider::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     sliderEnded(Vec2::ZERO);
 }
 
-void ControlSlider::needsLayout()
+void __ControlSlider::needsLayout()
 {
     if (NULL == _thumbSprite || NULL == _selectedThumbSprite || NULL == _backgroundSprite
     		|| NULL == _progressSprite)
@@ -290,7 +290,7 @@ void ControlSlider::needsLayout()
     _progressSprite->setTextureRect(textureRect, _progressSprite->isTextureRectRotated(), textureRect.size);
 }
 
-void ControlSlider::sliderBegan(Vec2 location)
+void __ControlSlider::sliderBegan(Vec2 location)
 {
     this->setSelected(true);
     _thumbSprite->setVisible(false);
@@ -298,12 +298,12 @@ void ControlSlider::sliderBegan(Vec2 location)
     setValue(valueForLocation(location));
 }
 
-void ControlSlider::sliderMoved(Vec2 location)
+void __ControlSlider::sliderMoved(Vec2 location)
 {
     setValue(valueForLocation(location));
 }
 
-void ControlSlider::sliderEnded(Vec2 location)
+void __ControlSlider::sliderEnded(Vec2 location)
 {
     if (this->isSelected())
     {
@@ -314,7 +314,7 @@ void ControlSlider::sliderEnded(Vec2 location)
     this->setSelected(false);
 }
 
-float ControlSlider::valueForLocation(Vec2 location)
+float __ControlSlider::valueForLocation(Vec2 location)
 {
     float percent = location.x/ _backgroundSprite->getContentSize().width;
     return MAX(MIN(_minimumValue + percent * (_maximumValue - _minimumValue), _maximumAllowedValue), _minimumAllowedValue);

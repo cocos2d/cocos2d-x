@@ -36,11 +36,11 @@
 NS_CC_EXT_BEGIN
 // ControlSwitchSprite
 
-class ControlSwitchSprite : public Sprite, public ActionTweenDelegate
+class __ControlSwitchSprite : public Sprite, public ActionTweenDelegate
 {
 public:
     /** creates an autorelease instance of ControlSwitchSprite */
-    static ControlSwitchSprite* create(
+    static __ControlSwitchSprite* create(
                             Sprite *maskSprite,
                             Sprite *onSprite,
                             Sprite *offSprite,
@@ -101,12 +101,12 @@ protected:
      * @js NA
      * @lua NA
      */
-    ControlSwitchSprite();
+    __ControlSwitchSprite();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlSwitchSprite();
+    virtual ~__ControlSwitchSprite();
     /**
      * @js NA
      * @lua NA
@@ -119,23 +119,23 @@ protected:
                             Label* onLabel, 
                             Label* offLabel);
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(ControlSwitchSprite);
+    CC_DISALLOW_COPY_AND_ASSIGN(__ControlSwitchSprite);
 };
 
-ControlSwitchSprite* ControlSwitchSprite::create(Sprite *maskSprite,
+__ControlSwitchSprite* __ControlSwitchSprite::create(Sprite *maskSprite,
                                             Sprite *onSprite,
                                             Sprite *offSprite,
                                             Sprite *thumbSprite,
                                             Label* onLabel,
                                             Label* offLabel)
 {
-    auto ret = new ControlSwitchSprite();
+    auto ret = new __ControlSwitchSprite();
     ret->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
     ret->autorelease();
     return ret;
 }
 
-ControlSwitchSprite::ControlSwitchSprite()
+__ControlSwitchSprite::__ControlSwitchSprite()
 : _sliderXPosition(0.0f)
 , _onPosition(0.0f)
 , _offPosition(0.0f)
@@ -152,7 +152,7 @@ ControlSwitchSprite::ControlSwitchSprite()
 
 }
 
-ControlSwitchSprite::~ControlSwitchSprite()
+__ControlSwitchSprite::~__ControlSwitchSprite()
 {
     CC_SAFE_RELEASE(_onSprite);
     CC_SAFE_RELEASE(_offSprite);
@@ -163,7 +163,7 @@ ControlSwitchSprite::~ControlSwitchSprite()
     CC_SAFE_RELEASE(_clipperStencil);
 }
 
-bool ControlSwitchSprite::initWithMaskSprite(
+bool __ControlSwitchSprite::initWithMaskSprite(
     Sprite *maskSprite, 
     Sprite *onSprite, 
     Sprite *offSprite,
@@ -210,13 +210,13 @@ bool ControlSwitchSprite::initWithMaskSprite(
     return false;
 }
 
-void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
+void __ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
 {
     CCLOGINFO("key = %s, value = %f", key.c_str(), value);
     setSliderXPosition(value);
 }
 
-void ControlSwitchSprite::needsLayout()
+void __ControlSwitchSprite::needsLayout()
 {
     _onSprite->setPosition(Vec2(_onSprite->getContentSize().width / 2 + _sliderXPosition,
         _onSprite->getContentSize().height / 2));
@@ -244,7 +244,7 @@ void ControlSwitchSprite::needsLayout()
     setFlippedY(true);
 }
 
-void ControlSwitchSprite::setSliderXPosition(float sliderXPosition)
+void __ControlSwitchSprite::setSliderXPosition(float sliderXPosition)
 {
     if (sliderXPosition <= _offPosition)
     {
@@ -262,12 +262,12 @@ void ControlSwitchSprite::setSliderXPosition(float sliderXPosition)
 }
 
 
-float ControlSwitchSprite::onSideWidth()
+float __ControlSwitchSprite::onSideWidth()
 {
     return _onSprite->getContentSize().width;
 }
 
-float ControlSwitchSprite::offSideWidth()
+float __ControlSwitchSprite::offSideWidth()
 {
     return _offSprite->getContentSize().height;
 }
@@ -275,7 +275,7 @@ float ControlSwitchSprite::offSideWidth()
 
 // ControlSwitch
 
-ControlSwitch::ControlSwitch()
+__ControlSwitch::__ControlSwitch()
 : _switchSprite(nullptr)
 , _initialTouchXPosition(0.0f)
 , _moved(false)
@@ -284,19 +284,19 @@ ControlSwitch::ControlSwitch()
 
 }
 
-ControlSwitch::~ControlSwitch()
+__ControlSwitch::~__ControlSwitch()
 {
     CC_SAFE_RELEASE(_switchSprite);
 }
 
-bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
+bool __ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
 {
     return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL);
 }
 
-ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
+__ControlSwitch* __ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
 {
-    ControlSwitch* pRet = new ControlSwitch();
+    __ControlSwitch* pRet = new __ControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL))
     {
         pRet->autorelease();
@@ -308,7 +308,7 @@ ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Spri
     return pRet;
 }
 
-bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
+bool __ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
 {
     if (__Control::init())
     {
@@ -319,7 +319,7 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
         
         _on = true;
 
-        _switchSprite = ControlSwitchSprite::create(maskSprite,
+        _switchSprite = __ControlSwitchSprite::create(maskSprite,
                                         onSprite,
                                         offSprite,
                                         thumbSprite,
@@ -337,9 +337,9 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
     return false;
 }
 
-ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
+__ControlSwitch* __ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
 {
-    ControlSwitch* pRet = new ControlSwitch();
+    __ControlSwitch* pRet = new __ControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel))
     {
         pRet->autorelease();
@@ -351,12 +351,12 @@ ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Spri
     return pRet;
 }
 
-void ControlSwitch::setOn(bool isOn)
+void __ControlSwitch::setOn(bool isOn)
 {
     setOn(isOn, false);
 }
 
-void ControlSwitch::setOn(bool isOn, bool animated)
+void __ControlSwitch::setOn(bool isOn, bool animated)
 {
     _on = isOn;
     
@@ -379,7 +379,7 @@ void ControlSwitch::setOn(bool isOn, bool animated)
     sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
 }
 
-void ControlSwitch::setEnabled(bool enabled)
+void __ControlSwitch::setEnabled(bool enabled)
 {
     _enabled = enabled;
     if (_switchSprite != NULL)
@@ -388,7 +388,7 @@ void ControlSwitch::setEnabled(bool enabled)
     } 
 }
 
-Vec2 ControlSwitch::locationFromTouch(Touch* pTouch)
+Vec2 __ControlSwitch::locationFromTouch(Touch* pTouch)
 {
     Vec2 touchLocation   = pTouch->getLocation();                      // Get the touch position
     touchLocation           = this->convertToNodeSpace(touchLocation);                  // Convert to the node space of this class
@@ -396,7 +396,7 @@ Vec2 ControlSwitch::locationFromTouch(Touch* pTouch)
     return touchLocation;
 }
 
-bool ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool __ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
@@ -415,7 +415,7 @@ bool ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlSwitch::onTouchMoved(Touch *pTouch, Event *pEvent)
+void __ControlSwitch::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
     Vec2 location    = this->locationFromTouch(pTouch);
     location            = Vec2(location.x - _initialTouchXPosition, 0);
@@ -425,7 +425,7 @@ void ControlSwitch::onTouchMoved(Touch *pTouch, Event *pEvent)
     _switchSprite->setSliderXPosition(location.x);
 }
 
-void ControlSwitch::onTouchEnded(Touch *pTouch, Event *pEvent)
+void __ControlSwitch::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     Vec2 location   = this->locationFromTouch(pTouch);
     
@@ -441,7 +441,7 @@ void ControlSwitch::onTouchEnded(Touch *pTouch, Event *pEvent)
     }
 }
 
-void ControlSwitch::onTouchCancelled(Touch *pTouch, Event *pEvent)
+void __ControlSwitch::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
     Vec2 location   = this->locationFromTouch(pTouch);
     

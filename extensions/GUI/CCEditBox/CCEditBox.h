@@ -186,7 +186,7 @@ public:
      * create a edit box with size.
      * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
      */
-    static EditBox* create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg = NULL, Scale9Sprite* pDisabled9SpriteBg = NULL);
+    static EditBox* create(const Size& size, __Scale9Sprite* pNormal9SpriteBg, __Scale9Sprite* pPressed9SpriteBg = NULL, __Scale9Sprite* pDisabled9SpriteBg = NULL);
 
     /**
      * Constructor.
@@ -205,7 +205,7 @@ public:
      * Init edit box with specified size. This method should be invoked right after constructor.
      * @param size The size of edit box.
      */
-    bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pNormal9SpriteBg);
+    bool initWithSizeAndBackgroundSprite(const Size& size, __Scale9Sprite* pNormal9SpriteBg);
     
     /**
      * Gets/Sets the delegate for edit box.

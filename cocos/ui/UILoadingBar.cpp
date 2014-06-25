@@ -136,7 +136,7 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         case TextureResType::LOCAL:
             if (_scale9Enabled)
             {
-                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+                extension::__Scale9Sprite* barRendererScale9 = static_cast<extension::__Scale9Sprite*>(_barRenderer);
                 barRendererScale9->initWithFile(texture);
                 barRendererScale9->setCapInsets(_capInsets);
             }
@@ -148,7 +148,7 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         case TextureResType::PLIST:
             if (_scale9Enabled)
             {
-                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+                extension::__Scale9Sprite* barRendererScale9 = static_cast<extension::__Scale9Sprite*>(_barRenderer);
                 barRendererScale9->initWithSpriteFrameName(texture);
                 barRendererScale9->setCapInsets(_capInsets);
             }
@@ -198,7 +198,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
     _barRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _barRenderer = extension::Scale9Sprite::create();
+        _barRenderer = extension::__Scale9Sprite::create();
     }
     else
     {
@@ -232,7 +232,7 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     {
         return;
     }
-    static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    static_cast<extension::__Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
 const Rect& LoadingBar::getCapInsets()const
@@ -353,7 +353,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100.0f * _totalLength;
-    static_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _contentSize.height));
+    static_cast<extension::__Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _contentSize.height));
 }
 
 std::string LoadingBar::getDescription() const

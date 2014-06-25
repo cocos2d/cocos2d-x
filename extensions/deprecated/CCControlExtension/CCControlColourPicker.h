@@ -76,8 +76,8 @@ protected:
     virtual bool onTouchBegan(Touch* touch, Event* pEvent);
 
     HSV _hsv;
-    CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
-    CC_SYNTHESIZE_RETAIN(ControlHuePicker*, _huePicker, HuePicker)
+    CC_SYNTHESIZE_RETAIN(__ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
+    CC_SYNTHESIZE_RETAIN(__ControlHuePicker*, _huePicker, HuePicker)
     CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background)
 };
 

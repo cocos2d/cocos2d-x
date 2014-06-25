@@ -577,7 +577,7 @@ void Layout::onSizeChanged()
         _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
+            static_cast<extension::__Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
         }
     }
     if (_colorRender)
@@ -623,7 +623,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     _bgImageTexType = texType;
     if (_backGroundScale9Enabled)
     {
-        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
+        extension::__Scale9Sprite* bgiScale9 = static_cast<extension::__Scale9Sprite*>(_backGroundImage);
         switch (_bgImageTexType)
         {
             case TextureResType::LOCAL:
@@ -661,7 +661,7 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     _backGroundImageCapInsets = capInsets;
     if (_backGroundScale9Enabled && _backGroundImage)
     {
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
+        static_cast<extension::__Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
     
@@ -708,9 +708,9 @@ void Layout::addBackGroundImage()
 {
     if (_backGroundScale9Enabled)
     {
-        _backGroundImage = extension::Scale9Sprite::create();
+        _backGroundImage = extension::__Scale9Sprite::create();
         addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
+        static_cast<extension::__Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
     }
     else
     {

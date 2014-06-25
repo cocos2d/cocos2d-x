@@ -1,6 +1,6 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
-#include "extensions/deprecated/CCControlExtension/CCControlSlider.h"
+#include "extensions/cocos-ext.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -214,7 +214,7 @@ private:
     }
 
     Direction _direction;
-    extension::ControlSlider *_slider;
+    extension::__ControlSlider *_slider;
     Label *_lblMinValue;
     Label *_lblMaxValue;
 };
