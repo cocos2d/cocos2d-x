@@ -6,8 +6,6 @@ end)
 local random = math.random
 
 function BenchmarkScene:ctor()
-
-    print("htl benchmark ctor")
     self.layer = display.newNode()
     self.layer:setContentSize(cc.size(display.width, display.height))
     self:addChild(self.layer)
@@ -27,14 +25,12 @@ function BenchmarkScene:ctor()
         :pos(display.right - 100, display.top - 100)
         :addTo(self)
 
-print("htl benchmark ctor1")
     self.label = ui.newBMFontLabel({
         text = "00000",
         font = "UIFont.fnt",
         x = display.cx,
         y = display.top - 40,
     })
-        print("htl benchmark ctor2")
     self:addChild(self.label)
 
     self.coins = {}
@@ -49,8 +45,6 @@ print("htl benchmark ctor1")
     self.right  = display.right  - display.width / 4
     self.top    = display.top    - display.height / 3
     self.bottom = display.bottom + display.height / 3
-
-    print("htl benchmark ctor end")
 end
 
 function BenchmarkScene:onTouch(event, x, y)

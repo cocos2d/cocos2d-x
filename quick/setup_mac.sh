@@ -12,12 +12,16 @@ fi
 if [ "$2" != "" ]; then
     CALL_BY_PKG=YES
     DIR=$2
+    QUICK_V3_ROOT="$DIR"
+else
+    QUICK_V3_ROOT="$DIR/.."
 fi;
 
-QUICK_V3_ROOT="$DIR"
+QUICK_V3_CORE_PATH="$QUICK_V3_ROOT/quick"
 
 echo ""
 echo "QUICK_V3_ROOT = \"$QUICK_V3_ROOT\""
+echo "QUICK_V3_CORE_PATH = \"$QUICK_V3_CORE_PATH\""
 echo ""
 
 # set Xcode
@@ -57,15 +61,15 @@ echo ""
 
 if [ "$CALL_BY_PKG" != "" ]; then
 
-    $QUICK_V3_ROOT/bin/install_luajit.sh
-    ln -s $QUICK_V3_ROOT/player/mac/player.app $QUICK_V3_ROOT/player.app
+    $QUICK_V3_CORE_PATH/bin/install_luajit.sh
+    ln -s $QUICK_V3_CORE_PATH/player/mac/player.app $QUICK_V3_CORE_PATH/player.app
 
 else
 
     while true; do
         read -p "Do you wish to install LuaJIT (Y/N) ? " yn
         case $yn in
-            [Yy]* ) echo ""; $QUICK_V3_ROOT/bin/install_luajit.sh; break;;
+            [Yy]* ) echo ""; $QUICK_V3_CORE_PATH/bin/install_luajit.sh; break;;
             [Nn]* ) exit;;
             * ) echo "Please answer yes or no.";;
         esac

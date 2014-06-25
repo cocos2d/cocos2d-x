@@ -38,10 +38,6 @@ THE SOFTWARE.
 -   cc.ACCELERATE_EVENT - 重力感应事件
 -   cc.KEYPAD_EVENT - 硬件按键事件
 
-预定义的菜单事件：
-
--   cc.MENU_ITEM_CLICKED_EVENT - CCMenu 菜单项点击事件
-
 预定义的触摸模式：
 
 -   cc.TOUCH_MODE_ALL_AT_ONCE - 多点触摸
@@ -54,18 +50,14 @@ local p = cc.PACKAGE_NAME .. ".cocos2dx."
 require(p .. "Cocos2dConstants")
 require (p .. "OpenglConstants")
 require (p .. "Cocos2d")
+require (p .. "Cocos2dExtral")
+
 cc.c3 = cc.c3b
-kResolutionExactFit = cc.ResolutionPolicy.EXACT_FIT
-kResolutionNoBorder = cc.ResolutionPolicy.NO_BORDER
-kResolutionShowAll  = cc.ResolutionPolicy.SHOW_ALL
-kResolutionFixedHeight   = cc.ResolutionPolicy.FIXED_HEIGHT
-kResolutionFixedWidth    = cc.ResolutionPolicy.FIXED_WIDTH
-kResolutionUnKnown       = cc.ResolutionPolicy.UNKNOWN
 
 -- require(p .. "Global")
 -- require(p .. "ObjectBinding")
-require(p .. "OpenGL")
-require(p .. "Geometry")
+-- require(p .. "OpenGL")
+-- require(p .. "Geometry")
 require(p .. "Event")
 require(p .. "NodeEx")
 require(p .. "LayerEx")

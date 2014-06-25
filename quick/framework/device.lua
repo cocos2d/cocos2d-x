@@ -57,15 +57,15 @@ device.model       = "unknown"
 
 local sharedApplication = cc.Application:getInstance()
 local target = sharedApplication:getTargetPlatform()
-if target == kTargetWindows then
+if target == cc.PLATFORM_OS_WINDOWS then
     device.platform = "windows"
-elseif target == kTargetMacOS then
+elseif target == cc.PLATFORM_OS_MAC then
     device.platform = "mac"
-elseif target == kTargetAndroid then
+elseif target == cc.PLATFORM_OS_ANDROID then
     device.platform = "android"
-elseif target == kTargetIphone or target == kTargetIpad then
+elseif target == cc.PLATFORM_OS_IPHONE or target == cc.PLATFORM_OS_IPAD then
     device.platform = "ios"
-    if target == kTargetIphone then
+    if target == cc.PLATFORM_OS_IPHONE then
         device.model = "iphone"
     else
         device.model = "ipad"
@@ -73,20 +73,28 @@ elseif target == kTargetIphone or target == kTargetIpad then
 end
 
 local language_ = sharedApplication:getCurrentLanguage()
-if language_ == kLanguageChinese then
+if language_ == cc.LANGUAGE_CHINESE then
     language_ = "cn"
-elseif language_ == kLanguageChineseTW then
-    language_ = "tw"
-elseif language_ == kLanguageFrench then
+elseif language_ == cc.LANGUAGE_FRENCH then
     language_ = "fr"
-elseif language_ == kLanguageItalian then
+elseif language_ == cc.LANGUAGE_ITALIAN then
     language_ = "it"
-elseif language_ == kLanguageGerman then
+elseif language_ == cc.LANGUAGE_GERMAN then
     language_ = "gr"
-elseif language_ == kLanguageSpanish then
+elseif language_ == cc.LANGUAGE_SPANISH then
     language_ = "sp"
-elseif language_ == kLanguageRussian then
+elseif language_ == cc.LANGUAGE_RUSSIAN then
     language_ = "ru"
+elseif language_ == cc.LANGUAGE_KOREAN then
+    language_ = "kr"
+elseif language_ == cc.LANGUAGE_JAPANESE then
+    language_ = "jp"
+elseif language_ == cc.LANGUAGE_HUNGARIAN then
+    language_ = "hu"
+elseif language_ == cc.LANGUAGE_PORTUGUESE then
+    language_ = "pt"
+elseif language_ == cc.LANGUAGE_ARABIC then
+    language_ = "ar"
 else
     language_ = "en"
 end
@@ -121,7 +129,7 @@ function device.showActivityIndicator()
     if DEBUG > 1 then
         printInfo("device.showActivityIndicator()")
     end
-    CCNative:showActivityIndicator()
+    cc.Native:showActivityIndicator()
 end
 
 --[[--
@@ -133,7 +141,7 @@ function device.hideActivityIndicator()
     if DEBUG > 1 then
         printInfo("device.hideActivityIndicator()")
     end
-    CCNative:hideActivityIndicator()
+    cc.Native:hideActivityIndicator()
 end
 
 --[[--
@@ -192,16 +200,16 @@ function device.showAlert(title, message, buttonLabels, listener)
 	        table.remove(buttonLabels, 1)
 	    end
 
-	    CCNative:createAlert(title, message, defaultLabel)
+	    cc.Native:createAlert(title, message, defaultLabel)
 	    for i, label in ipairs(buttonLabels) do
-	        CCNative:addAlertButton(label)
+	        cc.Native:addAlertButton(label)
 	    end
 
 	    if type(listener) ~= "function" then
 	        listener = function() end
 	    end
 
-	    CCNative:showAlert(listener)
+	    cc.Native:showAlert(listener)
 	end
 end
 
@@ -216,7 +224,7 @@ function device.cancelAlert()
     if DEBUG > 1 then
         printInfo("device.cancelAlert()")
     end
-    CCNative:cancelAlert()
+    cc.Native:cancelAlert()
 end
 
 --[[--
@@ -234,7 +242,7 @@ OpenUDID 是为设备仿造的 UDID（唯一设备识别码），可以用来识
 
 ]]
 function device.getOpenUDID()
-    local ret = CCNative:getOpenUDID()
+    local ret = cc.Native:getOpenUDID()
     if DEBUG > 1 then
         printInfo("device.getOpenUDID() - Open UDID: %s", tostring(ret))
     end
@@ -269,7 +277,7 @@ function device.openURL(url)
     if DEBUG > 1 then
         printInfo("device.openURL() - url: %s", tostring(url))
     end
-    CCNative:openURL(url)
+    cc.Native:openURL(url)
 end
 
 --[[--
@@ -294,7 +302,7 @@ function device.showInputBox(title, message, defaultValue)
         printInfo("    message: %s", tostring(message))
         printInfo("    defaultValue: %s", tostring(defaultValue))
     end
-    return CCNative:getInputText(title, message, defaultValue)
+    return cc.Native:getInputText(title, message, defaultValue)
 end
 
 return device

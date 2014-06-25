@@ -147,3 +147,6 @@ tests/lua-tests/proj.android/.classpath
 tests/lua-tests/proj.android/.project
 tests/lua-tests/proj.android/.settings/org.eclipse.jdt.core.prefs
 tests/lua-tests/project/proj.android/.settings/org.eclipse.jdt.core.prefs
+
+
+quick/player/mac/

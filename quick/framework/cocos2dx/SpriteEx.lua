@@ -35,14 +35,14 @@ end
 
 -- NOTE!!! The method is very slowly! Please use it in carefully.
 -- The memory will leak if you don't release it manually.
--- @return A CCImage pointer.
-function Sprite:getCCImage()
+-- @return A Image pointer.
+function Sprite:getImage()
 	-- Create a new Texture to get the pixel datas.
 	local __size = self:getContentSize()
-	local __rt = CCRenderTexture:create(__size.width, __size.height)
+	local __rt = cc.RenderTexture:create(__size.width, __size.height)
 	-- Hold the old anchor and position to restore it late on.
 	local __oldAnchor = self:getAnchorPoint()
-	local __oldPos = self:getPositionInCCPoint()
+	local __oldPos = self:getPosition()
 	-- Move the sprite to left bottom.
 	self:align(display.LEFT_BOTTOM, 0,0)
 	--print("getColor:", __point.x, __point.y, __size.width, __size.height)
@@ -53,7 +53,7 @@ function Sprite:getCCImage()
 	-- Restore the original anchor and position.
 	self:setAnchorPoint(__oldAnchor)
 	self:setPosition(__oldPos)
-	return __rt:newCCImage(false)
+	return __rt:newImage(false)
 end
 
 -- NOTE!!! The method is very slowly! Please use it in carefully.
@@ -67,7 +67,7 @@ function Sprite:getColor(__point, __convertToNodeSpace, __isFloat)
 	if __convertToNodeSpace then
 		__point = self:convertToNodeSpace(__point)
 	end
-	local __img = self:getCCImage()
+	local __img = self:getImage()
 	local __color = nil
 	if __isFloat then
 		__color = __img:getColor4F(__point.x, __point.y)
