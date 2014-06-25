@@ -35,7 +35,7 @@ public:
     virtual ~ControlStepperTest();
     bool init();
     /** Creates and returns a new ControlStepper. */
-    ControlStepper* makeControlStepper();
+    __ControlStepper* makeControlStepper();
 
     /** Callback for the change value. */
     void valueChanged(Ref *sender, Control::EventType controlEvent);

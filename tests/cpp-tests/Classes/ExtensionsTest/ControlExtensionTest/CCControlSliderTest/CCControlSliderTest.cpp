@@ -50,7 +50,7 @@ bool ControlSliderTest::init()
         addChild(_displayValueLabel);
 
         // Add the slider
-        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        __ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         slider->setAnchorPoint(Vec2(0.5f, 1.0f));
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
@@ -60,7 +60,7 @@ bool ControlSliderTest::init()
         // When the value of the slider will change, the given selector will be call
         slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSliderTest::valueChanged), Control::EventType::VALUE_CHANGED);
 
-		ControlSlider *restrictSlider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+		__ControlSlider *restrictSlider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         restrictSlider->setAnchorPoint(Vec2(0.5f, 1.0f));
         restrictSlider->setMinimumValue(0.0f); // Sets the min value of range
         restrictSlider->setMaximumValue(5.0f); // Sets the max value of range
@@ -82,7 +82,7 @@ bool ControlSliderTest::init()
 
 void ControlSliderTest::valueChanged(Ref *sender, Control::EventType controlEvent)
 {
-    ControlSlider* pSlider = (ControlSlider*)sender;
+    __ControlSlider* pSlider = (__ControlSlider*)sender;
     // Change value of label.
 	if(pSlider->getTag() == 1)
 		_displayValueLabel->setString(String::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  

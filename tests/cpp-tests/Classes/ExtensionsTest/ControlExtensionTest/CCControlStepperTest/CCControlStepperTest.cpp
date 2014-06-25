@@ -61,7 +61,7 @@ bool ControlStepperTest::init()
         
         layer_width                 += background->getContentSize().width;
         
-        ControlStepper *stepper   = this->makeControlStepper();
+        __ControlStepper *stepper   = this->makeControlStepper();
         stepper->setPosition(Vec2(layer_width + 10 + stepper->getContentSize().width / 2, 0));
         stepper->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlStepperTest::valueChanged), Control::EventType::VALUE_CHANGED);
         layer->addChild(stepper);
@@ -79,7 +79,7 @@ bool ControlStepperTest::init()
     return false;
 }
 
-ControlStepper *ControlStepperTest::makeControlStepper()
+__ControlStepper *ControlStepperTest::makeControlStepper()
 {
     auto minusSprite       = Sprite::create("extensions/stepper-minus.png");
     auto plusSprite        = Sprite::create("extensions/stepper-plus.png");
@@ -89,7 +89,7 @@ ControlStepper *ControlStepperTest::makeControlStepper()
 
 void ControlStepperTest::valueChanged(Ref *sender, Control::EventType controlEvent)
 {
-    ControlStepper* pControl = (ControlStepper*)sender;
+    __ControlStepper* pControl = (__ControlStepper*)sender;
     // Change value of label.
     _displayValueLabel->setString(String::createWithFormat("%0.02f", (float)pControl->getValue())->getCString());	
 }

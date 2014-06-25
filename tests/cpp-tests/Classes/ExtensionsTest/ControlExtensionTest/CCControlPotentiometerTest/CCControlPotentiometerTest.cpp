@@ -61,7 +61,7 @@ bool ControlPotentiometerTest::init()
         layer->addChild(_displayValueLabel);
 		
         // Add the slider
-        ControlPotentiometer *potentiometer = ControlPotentiometer::create("extensions/potentiometerTrack.png"
+        __ControlPotentiometer *potentiometer = ControlPotentiometer::create("extensions/potentiometerTrack.png"
                                                                                 ,"extensions/potentiometerProgress.png"
                                                                                 ,"extensions/potentiometerButton.png");
         potentiometer->setPosition(Vec2(layer_width + 10 + potentiometer->getContentSize().width / 2, 0));
@@ -86,7 +86,7 @@ bool ControlPotentiometerTest::init()
 
 void ControlPotentiometerTest::valueChanged(Ref *sender, Control::EventType controlEvent)
 {
-    ControlPotentiometer* pControl = (ControlPotentiometer*)sender;
+    __ControlPotentiometer* pControl = (__ControlPotentiometer*)sender;
 	// Change value of label.
     _displayValueLabel->setString(String::createWithFormat("%.02f", pControl->getValue())->getCString());	
 }

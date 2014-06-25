@@ -98,8 +98,8 @@ public:
     
 protected:
     SpriteBlur* _blurSprite;
-    ControlSlider* _sliderRadiusCtl;
-    ControlSlider* _sliderNumCtrl;
+    __ControlSlider* _sliderRadiusCtl;
+    __ControlSlider* _sliderNumCtrl;
 };
 
 class ShaderRetroEffect : public ShaderTestDemo

@@ -818,9 +818,9 @@ void SchedulerDelayAndRepeat::update(float dt)
 
 // SchedulerTimeScale
 
-ControlSlider* SchedulerTimeScale::sliderCtl()
+__ControlSlider* SchedulerTimeScale::sliderCtl()
 {
-    ControlSlider * slider = ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    __ControlSlider * slider = __ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
 
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), Control::EventType::VALUE_CHANGED);
 
@@ -833,7 +833,7 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
 
 void SchedulerTimeScale::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
-    ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
+    __ControlSlider* pSliderCtl = static_cast<__ControlSlider*>(sender);
     float scale;
     scale = pSliderCtl->getValue();
 
@@ -905,10 +905,10 @@ std::string SchedulerTimeScale::subtitle() const
 
 //TwoSchedulers
 
-ControlSlider *TwoSchedulers::sliderCtl()
+__ControlSlider *TwoSchedulers::sliderCtl()
 {
    // auto frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
-    ControlSlider *slider = ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    __ControlSlider *slider = __ControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
         //[[UISlider alloc] initWithFrame:frame];
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), Control::EventType::VALUE_CHANGED);
 
@@ -927,7 +927,7 @@ void TwoSchedulers::sliderAction(Ref* sender, Control::EventType controlEvent)
 {
     float scale;
 
-    ControlSlider *slider = static_cast<ControlSlider*>(sender);
+    __ControlSlider *slider = static_cast<__ControlSlider*>(sender);
     scale = slider->getValue();
 
     if( sender == sliderCtl1 )
