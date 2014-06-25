@@ -53,10 +53,11 @@ void Bone::setOriPose(const Mat4& m)
 
 void Bone::resetPose()
 {
-    if (_parent)
-        _world = _parent->_world * _oriPose;
-    else
-        _world = _oriPose;
+    _local =_oriPose;
+//    if (_parent)
+//        _world = _parent->_world * _oriPose;
+//    else
+//        _world = _oriPose;
     
     for (auto it : _children) {
         it->resetPose();
