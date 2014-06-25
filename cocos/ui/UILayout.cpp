@@ -152,6 +152,16 @@ bool Layout::init()
     }
     return false;
 }
+    
+void Layout::addChild(Node* child)
+{
+    Layout::addChild(child, child->getLocalZOrder(), child->getTag());
+}
+    
+void Layout::addChild(Node * child, int localZOrder)
+{
+    Layout::addChild(child, localZOrder, child->getTag());
+}
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
