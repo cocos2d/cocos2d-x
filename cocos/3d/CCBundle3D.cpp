@@ -606,6 +606,8 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         skindata->inverseBindPoseMatrices.push_back(bindpos);
     }
     
+    skindata->skinBoneOriginMatrices.resize(boneNum);
+    
     // bind shape
     _binaryReader.readMatrix(bindShape);
     
@@ -625,7 +627,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         }
         else
         {
-            skindata->skinBoneOriginMatrices.push_back(transform);
+            skindata->skinBoneOriginMatrices[index] = transform;
         }
         
         // set root bone index
@@ -640,7 +642,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
             return nullptr;
         }
         
-        int parentIndex = skindata->getBoneNameIndex(parentid);
+        int parentIndex = skindata->getSkinBoneNameIndex(parentid);
         if(parentIndex < 0)
         {
             skindata->addNodeBoneNames(parentid);
@@ -649,7 +651,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         }
         else
         {
-            skindata->skinBoneOriginMatrices.push_back(transform);
+            skindata->skinBoneOriginMatrices[parentIndex] = transform;
         }
         
         skindata->boneChild[parentIndex].push_back(index);
