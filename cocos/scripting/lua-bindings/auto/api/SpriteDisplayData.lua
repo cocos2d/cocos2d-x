@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SpriteDisplayData
 -- @extend DisplayData
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#SpriteDisplayData] copy 

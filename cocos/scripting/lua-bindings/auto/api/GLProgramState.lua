@@ -2,6 +2,7 @@
 --------------------------------
 -- @module GLProgramState
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- overload function: setUniformTexture(string, unsigned int)

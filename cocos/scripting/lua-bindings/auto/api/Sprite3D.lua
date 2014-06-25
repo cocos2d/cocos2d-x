@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Sprite3D
 -- @extend Node,BlendProtocol
+-- @parent_module cc
 
 --------------------------------
 -- overload function: setTexture(cc.Texture2D)

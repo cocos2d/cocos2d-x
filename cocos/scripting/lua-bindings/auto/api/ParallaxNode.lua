@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParallaxNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParallaxNode] addChild 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ListView
 -- @extend ScrollView
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ListView] getIndex 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Layout
 -- @extend Widget,LayoutProtocol
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 

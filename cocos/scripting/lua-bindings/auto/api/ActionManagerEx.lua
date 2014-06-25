@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionManagerEx
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- overload function: playActionByName(char, char, cc.CallFunc)

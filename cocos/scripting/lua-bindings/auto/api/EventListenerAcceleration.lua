@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventListenerAcceleration
 -- @extend EventListener
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventListenerAcceleration] clone 

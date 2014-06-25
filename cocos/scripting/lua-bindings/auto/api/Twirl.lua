@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Twirl
 -- @extend Grid3DAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Twirl] setAmplitudeRate 
