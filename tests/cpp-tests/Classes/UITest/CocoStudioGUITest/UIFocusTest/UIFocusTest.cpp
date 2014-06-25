@@ -598,7 +598,7 @@ bool UIFocusTestListView::init()
         _listView->setBounceEnabled(true);
         _listView->setBackGroundImage("cocosui/green_edit.png");
         _listView->setBackGroundImageScale9Enabled(true);
-        _listView->setSize(Size(240, 130));
+        _listView->setContentSize(Size(240, 130));
         
         _listView->setPosition(Vec2(40, 70));
         _uiLayer->addChild(_listView);
