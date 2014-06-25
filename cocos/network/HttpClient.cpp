@@ -181,8 +181,7 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
     processResponse(response, errorBuffer);
 
     auto scheduler = Director::getInstance()->getScheduler();
-    scheduler->performFunctionInCocosThread([response]{
-        auto request = response->getHttpRequest();
+    scheduler->performFunctionInCocosThread([response, request]{
         const ccHttpRequestCallback& callback = request->getCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
