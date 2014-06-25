@@ -2169,7 +2169,7 @@ static int lua_cocos2dx_physics_PhysicsShape_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShape(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShape");
-    tolua_cclass(tolua_S,"PhysicsShape","cc.PhysicsShape","cc.Ref",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShape","cc.PhysicsShape","cc.Ref",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShape");
         tolua_function(tolua_S,"getFriction",lua_cocos2dx_physics_PhysicsShape_getFriction);
@@ -2402,7 +2402,7 @@ static int lua_cocos2dx_physics_PhysicsShapeCircle_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapeCircle(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeCircle");
-    tolua_cclass(tolua_S,"PhysicsShapeCircle","cc.PhysicsShapeCircle","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapeCircle","cc.PhysicsShapeCircle","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapeCircle");
         tolua_function(tolua_S,"getRadius",lua_cocos2dx_physics_PhysicsShapeCircle_getRadius);
@@ -2654,7 +2654,7 @@ static int lua_cocos2dx_physics_PhysicsShapeBox_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapeBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeBox");
-    tolua_cclass(tolua_S,"PhysicsShapeBox","cc.PhysicsShapeBox","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapeBox","cc.PhysicsShapeBox","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapeBox");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeBox_getPointsCount);
@@ -2769,7 +2769,7 @@ static int lua_cocos2dx_physics_PhysicsShapePolygon_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapePolygon(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapePolygon");
-    tolua_cclass(tolua_S,"PhysicsShapePolygon","cc.PhysicsShapePolygon","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapePolygon","cc.PhysicsShapePolygon","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapePolygon");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapePolygon_getPointsCount);
@@ -2943,7 +2943,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgeSegment_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeSegment(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeSegment");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeSegment","cc.PhysicsShapeEdgeSegment","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeSegment","cc.PhysicsShapeEdgeSegment","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeSegment");
         tolua_function(tolua_S,"getPointB",lua_cocos2dx_physics_PhysicsShapeEdgeSegment_getPointB);
@@ -3084,7 +3084,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgeBox_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeBox");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeBox","cc.PhysicsShapeEdgeBox","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeBox","cc.PhysicsShapeEdgeBox","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeBox");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPointsCount);
@@ -3149,7 +3149,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsShapeEdgePolygon(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgePolygon");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgePolygon","cc.PhysicsShapeEdgePolygon","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgePolygon","cc.PhysicsShapeEdgePolygon","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgePolygon");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPointsCount);
@@ -3213,7 +3213,7 @@ static int lua_cocos2dx_physics_PhysicsShapeEdgeChain_finalize(lua_State* tolua_
 int lua_register_cocos2dx_physics_PhysicsShapeEdgeChain(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsShapeEdgeChain");
-    tolua_cclass(tolua_S,"PhysicsShapeEdgeChain","cc.PhysicsShapeEdgeChain","cc.PhysicsShape",nullptr);
+    tolua_cclass(tolua_S,"PhysicsShapeEdgeChain","cc.PhysicsShapeEdgeChain","cc.PhysicsShape",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsShapeEdgeChain");
         tolua_function(tolua_S,"getPointsCount",lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPointsCount);
@@ -6386,7 +6386,7 @@ static int lua_cocos2dx_physics_PhysicsBody_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsBody(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsBody");
-    tolua_cclass(tolua_S,"PhysicsBody","cc.PhysicsBody","cc.Ref",nullptr);
+    tolua_cclass(tolua_S,"PhysicsBody","cc.PhysicsBody","cc.Ref",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsBody");
         tolua_function(tolua_S,"isGravityEnabled",lua_cocos2dx_physics_PhysicsBody_isGravityEnabled);
@@ -6691,7 +6691,7 @@ static int lua_cocos2dx_physics_PhysicsContact_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsContact(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsContact");
-    tolua_cclass(tolua_S,"PhysicsContact","cc.PhysicsContact","cc.EventCustom",nullptr);
+    tolua_cclass(tolua_S,"PhysicsContact","cc.PhysicsContact","cc.EventCustom",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsContact");
         tolua_function(tolua_S,"getContactData",lua_cocos2dx_physics_PhysicsContact_getContactData);
@@ -7239,7 +7239,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContact_finalize(lua_State* 
 int lua_register_cocos2dx_physics_EventListenerPhysicsContact(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContact");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContact","cc.EventListenerPhysicsContact","cc.EventListenerCustom",nullptr);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContact","cc.EventListenerPhysicsContact","cc.EventListenerCustom",nullptr);    
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContact");
         tolua_function(tolua_S,"create", lua_cocos2dx_physics_EventListenerPhysicsContact_create);
@@ -7344,7 +7344,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_finalize(l
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithBodies(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithBodies");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContact",nullptr);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContactWithBodies","cc.EventListenerPhysicsContact",nullptr);    
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithBodies");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest);
@@ -7450,7 +7450,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_finalize(l
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithShapes(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithShapes");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContact",nullptr);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContactWithShapes","cc.EventListenerPhysicsContact",nullptr);    
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithShapes");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest);
@@ -7554,7 +7554,7 @@ static int lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_finalize(lu
 int lua_register_cocos2dx_physics_EventListenerPhysicsContactWithGroup(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EventListenerPhysicsContactWithGroup");
-    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContact",nullptr);
+    tolua_cclass(tolua_S,"EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContactWithGroup","cc.EventListenerPhysicsContact",nullptr);    
 
     tolua_beginmodule(tolua_S,"EventListenerPhysicsContactWithGroup");
         tolua_function(tolua_S,"hitTest",lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest);
@@ -8211,7 +8211,7 @@ static int lua_cocos2dx_physics_PhysicsJointFixed_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointFixed(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointFixed");
-    tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointFixed");
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointFixed_construct);
@@ -8663,7 +8663,7 @@ static int lua_cocos2dx_physics_PhysicsJointLimit_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointLimit(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointLimit");
-    tolua_cclass(tolua_S,"PhysicsJointLimit","cc.PhysicsJointLimit","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointLimit","cc.PhysicsJointLimit","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointLimit");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2);
@@ -8728,7 +8728,7 @@ static int lua_cocos2dx_physics_PhysicsJointPin_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointPin(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointPin");
-    tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointPin");
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointPin_construct);
@@ -8877,7 +8877,7 @@ static int lua_cocos2dx_physics_PhysicsJointDistance_finalize(lua_State* tolua_S
 int lua_register_cocos2dx_physics_PhysicsJointDistance(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointDistance");
-    tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointDistance");
         tolua_function(tolua_S,"setDistance",lua_cocos2dx_physics_PhysicsJointDistance_setDistance);
@@ -9392,7 +9392,7 @@ static int lua_cocos2dx_physics_PhysicsJointSpring_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointSpring(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointSpring");
-    tolua_cclass(tolua_S,"PhysicsJointSpring","cc.PhysicsJointSpring","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointSpring","cc.PhysicsJointSpring","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointSpring");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2);
@@ -9733,7 +9733,7 @@ static int lua_cocos2dx_physics_PhysicsJointGroove_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointGroove(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointGroove");
-    tolua_cclass(tolua_S,"PhysicsJointGroove","cc.PhysicsJointGroove","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointGroove","cc.PhysicsJointGroove","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointGroove");
         tolua_function(tolua_S,"setAnchr2",lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2);
@@ -10068,7 +10068,7 @@ static int lua_cocos2dx_physics_PhysicsJointRotarySpring_finalize(lua_State* tol
 int lua_register_cocos2dx_physics_PhysicsJointRotarySpring(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRotarySpring");
-    tolua_cclass(tolua_S,"PhysicsJointRotarySpring","cc.PhysicsJointRotarySpring","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointRotarySpring","cc.PhysicsJointRotarySpring","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointRotarySpring");
         tolua_function(tolua_S,"getDamping",lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping);
@@ -10334,7 +10334,7 @@ static int lua_cocos2dx_physics_PhysicsJointRotaryLimit_finalize(lua_State* tolu
 int lua_register_cocos2dx_physics_PhysicsJointRotaryLimit(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRotaryLimit");
-    tolua_cclass(tolua_S,"PhysicsJointRotaryLimit","cc.PhysicsJointRotaryLimit","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointRotaryLimit","cc.PhysicsJointRotaryLimit","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointRotaryLimit");
         tolua_function(tolua_S,"getMax",lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax);
@@ -10667,7 +10667,7 @@ static int lua_cocos2dx_physics_PhysicsJointRatchet_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointRatchet(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointRatchet");
-    tolua_cclass(tolua_S,"PhysicsJointRatchet","cc.PhysicsJointRatchet","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointRatchet","cc.PhysicsJointRatchet","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointRatchet");
         tolua_function(tolua_S,"getAngle",lua_cocos2dx_physics_PhysicsJointRatchet_getAngle);
@@ -10912,7 +10912,7 @@ static int lua_cocos2dx_physics_PhysicsJointGear_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointGear(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointGear");
-    tolua_cclass(tolua_S,"PhysicsJointGear","cc.PhysicsJointGear","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointGear","cc.PhysicsJointGear","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointGear");
         tolua_function(tolua_S,"setRatio",lua_cocos2dx_physics_PhysicsJointGear_setRatio);
@@ -11063,7 +11063,7 @@ static int lua_cocos2dx_physics_PhysicsJointMotor_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_physics_PhysicsJointMotor(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.PhysicsJointMotor");
-    tolua_cclass(tolua_S,"PhysicsJointMotor","cc.PhysicsJointMotor","cc.PhysicsJoint",nullptr);
+    tolua_cclass(tolua_S,"PhysicsJointMotor","cc.PhysicsJointMotor","cc.PhysicsJoint",nullptr);    
 
     tolua_beginmodule(tolua_S,"PhysicsJointMotor");
         tolua_function(tolua_S,"setRate",lua_cocos2dx_physics_PhysicsJointMotor_setRate);
