@@ -897,6 +897,9 @@ Developers:
         
     gin0606
         Add a new line at the end of a file
+        
+    billtt
+        Fixed a bug that Node::setScale(float) may not work properly
     
 Retired Core Developers:
     WenSheng Yang

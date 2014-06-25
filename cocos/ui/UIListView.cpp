@@ -42,7 +42,7 @@ _curSelectedIndex(0),
 _refreshViewDirty(true),
 _eventCallback(nullptr)
 {
-    
+    this->setTouchEnabled(true);
 }
 
 ListView::~ListView()
@@ -279,16 +279,6 @@ void ListView::pushBackCustomItem(Widget* item)
     _refreshViewDirty = true;
 }
     
-void ListView::addChild(cocos2d::Node *child)
-{
-    ListView::addChild(child, child->getZOrder(), child->getTag());
-}
-    
-void ListView::addChild(cocos2d::Node *child, int zOrder)
-{
-    ListView::addChild(child, zOrder, child->getTag());
-}
-    
 void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
 {
     ScrollView::addChild(child, zOrder, tag);
@@ -298,7 +288,17 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     {
         _items.pushBack(widget);
     }
-
+}
+ 
+void ListView::addChild(Node* child, int zOrder, const std::string &name)
+{
+    ScrollView::addChild(child, zOrder, name);
+    
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        _items.pushBack(widget);
+    }
 }
     
 void ListView::removeChild(cocos2d::Node *child, bool cleaup)
@@ -505,7 +505,9 @@ void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* 
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent(event);
+        if (sender->isHighlighted()) {
+            selectedItemEvent(event);
+        }
     }
 }
     

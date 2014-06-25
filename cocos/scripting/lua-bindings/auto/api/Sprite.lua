@@ -188,12 +188,16 @@
 -- @param #unsigned int int
         
 --------------------------------
--- @function [parent=#Sprite] addChild 
+-- overload function: addChild(cc.Node, int, string)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#Sprite] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#Sprite] setScaleY 
 -- @param self

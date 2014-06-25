@@ -1,6 +1,7 @@
 require "src/CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest"
 require "src/CocoStudioTest/CocoStudioSceneTest/CocoStudioSceneTest"
 require "src/CocoStudioTest/CocoStudioArmatureTest/CocoStudioArmatureTest"
+require "src/CocoStudioTest/CocoStudioUIEditorTest/CocoStudioUIEditorTest"
 
 local LINE_SPACE = 40
 local ITEM_TAG_BASIC = 1000
@@ -25,6 +26,13 @@ local cocoStudioTestItemNames =
         itemTitle = "CocoStudioSceneTest",
         testScene = function () 
             runCocosSceneTestScene()
+        end
+    },
+
+    {
+        itemTitle = "CocoStudioUIEditorTest",
+        testScene = function()
+            runCocoStudioUIEditorTestScene()
         end
     },
 } 

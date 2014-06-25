@@ -414,6 +414,7 @@ public:
     virtual void reorderChild(Node *child, int zOrder) override;
     using Node::addChild;
     virtual void addChild(Node *child, int zOrder, int tag) override;
+    virtual void addChild(Node *child, int zOrder, const std::string &name) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
