@@ -42,7 +42,7 @@ _curSelectedIndex(0),
 _refreshViewDirty(true),
 _eventCallback(nullptr)
 {
-    
+    this->setTouchEnabled(true);
 }
 
 ListView::~ListView()
@@ -505,7 +505,9 @@ void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* 
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent(event);
+        if (sender->isHighlighted()) {
+            selectedItemEvent(event);
+        }
     }
 }
     
