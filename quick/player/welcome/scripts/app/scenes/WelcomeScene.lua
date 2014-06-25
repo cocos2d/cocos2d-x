@@ -4,7 +4,7 @@ local WelcomeScene = class("WelcomeScene", function()
 end)
 
 function WelcomeScene:ctor()
-    local bg = CCLayerColor:create(cc.c4b(255, 255, 255, 255))
+    local bg = cc.LayerColor:create(cc.c4b(255, 255, 255, 255))
     self:addChild(bg)
 
     self:createLogo()
@@ -81,7 +81,7 @@ function WelcomeScene:createBannderAds()
 end
 
 function WelcomeScene:createLine()
-    local line = CCLayerColor:create(cc.c4b(153, 153, 153, 255), 1, 240)
+    local line = cc.LayerColor:create(cc.c4b(153, 153, 153, 255), 1, 240)
     line:setPosition(display.left + 640, display.top - 580)
     self:addChild(line)
 end

@@ -6,7 +6,7 @@ end)
 function SampleScene:ctor()
     self.samples     = dofile(__G__QUICK_PATH__ .. "/samples/samples.lua")
     self.sampleIndex = 1
-    local bg         = CCLayerColor:create(cc.c4b(255, 255, 255, 255))
+    local bg         = cc.LayerColor:create(cc.c4b(255, 255, 255, 255))
     self:addChild(bg)
 
     self:createLogo()
