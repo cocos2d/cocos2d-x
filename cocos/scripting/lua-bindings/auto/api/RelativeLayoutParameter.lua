@@ -2,6 +2,7 @@
 --------------------------------
 -- @module RelativeLayoutParameter
 -- @extend LayoutParameter
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setAlign 

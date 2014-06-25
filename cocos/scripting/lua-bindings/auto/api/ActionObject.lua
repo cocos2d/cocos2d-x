@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionObject
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ActionObject] setCurrentTime 
@@ -59,6 +60,13 @@
 -- @function [parent=#ActionObject] getLoop 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ActionObject] initWithBinary 
+-- @param self
+-- @param #ccs.CocoLoader cocoloader
+-- @param #ccs.stExpCocoNode stexpcoconode
+-- @param #cc.Ref ref
         
 --------------------------------
 -- @function [parent=#ActionObject] addActionNode 

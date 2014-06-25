@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ArmatureDisplayData
 -- @extend DisplayData
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ArmatureDisplayData] create 

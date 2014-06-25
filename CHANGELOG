@@ -1,8 +1,23 @@
 cocos2d-x-3.2 ???
-    [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren()
     [NEW]           Label: support setting line height and additional kerning of label that not using system font
+    [NEW]           Lua-binding: Animation3D supported
+    [NEW]           Lua-binding: UIEditor test cases added
+    [NEW]           Lua-binding: UI focus test cases added
+    [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren() 
+    and addChild(Node* node, int localZOrder, const std::string &name)
+    [NEW]           Node: physical body supports rotation
+    
 
+    [FIX]           FileUtils: getStringFromFile may return a unterminated string
+    [FIX]           Lua-binding: Sequence:create will cause drop-dead issue
+    [FIX]           Node: Node::setScale(float) may not work properly
+    [FIX]           Studio support: NodeReader may cause crash
     [FIX]           UIButton: doesn't support TTF font
+    [FIX]           UIButton: `getTitleColor()` doesn't equal to the value set by `setTitleColor()`
+    [FIX]           UIListView: addEventListener can not work
+    [FIX]           UIListView: element position is changed a little when you click and up a list view without move
+    [FIX]           UIListView: element will respond to item_end event when end of scrolling a list view
+    [FIX]           UIVideo: crash when try to remove videoView(STATE_PLAYBACK_COMPLETED) on android
 
 cocos2d-x-3.2-alpha0 Jun.17 2014
     [NEW]           Console: add a command to show engine version

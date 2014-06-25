@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Texture2D
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Texture2D] getMaxT 

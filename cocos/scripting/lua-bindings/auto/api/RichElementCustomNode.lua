@@ -2,6 +2,7 @@
 --------------------------------
 -- @module RichElementCustomNode
 -- @extend RichElement
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#RichElementCustomNode] init 

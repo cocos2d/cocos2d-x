@@ -752,7 +752,9 @@ Developers:
         
     hanjukim
         Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
-        
+        Fixed the bug that FileUtils:getStringFromFile() may return a unterminated string
+        Skip BOM in DataReaderHelper::addDataFromJsonCache()
+
     bagobor
         Fixed a memory leak in AssetsManager::uncompress.
         Code format fix and small optimizations in cocostudio/CCActionNode.cpp.
@@ -892,6 +894,13 @@ Developers:
     kyokomi
         Fix the bug that UIButton doesn't support TTF font
         Fix a but of TextReader
+        
+    gin0606
+        Add a new line at the end of a file
+        Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        
+    billtt
+        Fixed a bug that Node::setScale(float) may not work properly
     
 Retired Core Developers:
     WenSheng Yang
@@ -905,7 +914,8 @@ Retired Core Developers:
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
         
-
+    timur-losev
+        Fix a bug that GLProgramCache::addGLProgram() can not replace existing program
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

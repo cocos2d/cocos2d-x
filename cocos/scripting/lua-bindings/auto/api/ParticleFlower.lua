@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParticleFlower
 -- @extend ParticleSystemQuad
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParticleFlower] create 

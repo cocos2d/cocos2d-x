@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointLimit
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointLimit] setAnchr2 

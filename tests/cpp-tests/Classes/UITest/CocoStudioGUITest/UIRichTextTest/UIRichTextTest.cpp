@@ -18,19 +18,19 @@ bool UIRichTextTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add the alert
         Text *alert = Text::create("RichText", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.125));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.125));
         _widget->addChild(alert);
         
         
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
 //        button->addTouchEventListener(this, toucheventselector(UIRichTextTest::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::touchEvent, this));
         button->setLocalZOrder(10);
@@ -40,7 +40,7 @@ bool UIRichTextTest::init()
         // RichText
         _richText = RichText::create();
         _richText->ignoreContentAdaptWithSize(false);
-        _richText->setSize(Size(100, 100));
+        _richText->setContentSize(Size(100, 100));
         
         RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, "This color is white. ", "Helvetica", 10);
         RichElementText* re2 = RichElementText::create(2, Color3B::YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
@@ -85,7 +85,7 @@ void UIRichTextTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             if (_richText->isIgnoreContentAdaptWithSize())
             {
                 _richText->ignoreContentAdaptWithSize(false);
-                _richText->setSize(Size(100, 100));
+                _richText->setContentSize(Size(100, 100));
             }
             else
             {

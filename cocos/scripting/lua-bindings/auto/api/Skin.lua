@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Skin
 -- @extend Sprite
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#Skin] getBone 

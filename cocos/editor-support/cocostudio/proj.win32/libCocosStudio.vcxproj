@@ -11,6 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCFrame.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -41,6 +46,7 @@
     <ClCompile Include="..\CCTransformHelp.cpp" />
     <ClCompile Include="..\CCTween.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
+    <ClCompile Include="..\CocoLoader.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\TriggerBase.cpp" />
     <ClCompile Include="..\TriggerMng.cpp" />
@@ -71,6 +77,12 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\ActionTimeline\CCActionTimeline.h" />
+    <ClInclude Include="..\ActionTimeline\CCFrame.h" />
+    <ClInclude Include="..\ActionTimeline\CCNodeReader.h" />
+    <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="..\ActionTimeline\CCTimeLine.h" />
+    <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />
@@ -102,8 +114,9 @@
     <ClInclude Include="..\CCTransformHelp.h" />
     <ClInclude Include="..\CCTween.h" />
     <ClInclude Include="..\CCUtilMath.h" />
+    <ClInclude Include="..\CocoLoader.h" />
+    <ClInclude Include="..\CocoStudio.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
-    <ClInclude Include="..\ObjectFactory.h" />
     <ClInclude Include="..\TriggerBase.h" />
     <ClInclude Include="..\TriggerMng.h" />
     <ClInclude Include="..\TriggerObj.h" />
@@ -189,13 +202,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

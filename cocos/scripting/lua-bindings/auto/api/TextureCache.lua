@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TextureCache
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TextureCache] reloadTexture 

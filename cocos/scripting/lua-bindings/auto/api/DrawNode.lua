@@ -2,6 +2,7 @@
 --------------------------------
 -- @module DrawNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#DrawNode] drawQuadraticBezier 

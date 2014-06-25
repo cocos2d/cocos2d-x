@@ -132,6 +132,7 @@ public:
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void addChild(Node * child, int zOrder, const std::string &name) override;
     
     virtual void onEnter() override;
     virtual void onExit() override;

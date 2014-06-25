@@ -804,6 +804,10 @@
 		29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D89191B595E0066F8DF /* UIWidgetAddNodeTest.cpp */; };
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
+		38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
+		38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
+		38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
+		38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		3E92EA821921A1400094CD21 /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */; };
 		3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */; };
 		3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
@@ -1840,6 +1844,9 @@
 		29080D8A191B595E0066F8DF /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
+		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
+		38FA2E72194AEBE100FF2BE4 /* ActionTimelineTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTimelineTestScene.h; sourceTree = "<group>"; };
+		38FA2E75194AECF800FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ActionTimeline; path = "../tests/cpp-tests/Resources/ActionTimeline"; sourceTree = "<group>"; };
 		3E92EA801921A1400094CD21 /* Sprite3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DTest.cpp; path = Sprite3DTest/Sprite3DTest.cpp; sourceTree = "<group>"; };
 		3E92EA811921A1400094CD21 /* Sprite3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DTest.h; path = Sprite3DTest/Sprite3DTest.h; sourceTree = "<group>"; };
 		3E92EA841921A7720094CD21 /* Sprite3DTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sprite3DTest; path = "../tests/cpp-tests/Resources/Sprite3DTest"; sourceTree = "<group>"; };
@@ -2541,6 +2548,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
 				1AC359DF18CECF0B00F37B72 /* CocoStudioComponentsTest */,
@@ -3240,6 +3248,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				38FA2E75194AECF800FF2BE4 /* ActionTimeline */,
 				B2507B6A192589AF00FA4972 /* Shaders3D */,
 				3E92EA841921A7720094CD21 /* Sprite3DTest */,
 				3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */,
@@ -3755,6 +3764,15 @@
 				1ABCA28818CD91510087CE3A /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */ = {
+			isa = PBXGroup;
+			children = (
+				38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */,
+				38FA2E72194AEBE100FF2BE4 /* ActionTimelineTestScene.h */,
+			);
+			path = CocoStudioActionTimelineTest;
 			sourceTree = "<group>";
 		};
 		3E92EA7D1921A0C60094CD21 /* Sprite3DTest */ = {
@@ -4383,6 +4401,7 @@
 				1AC35CE018CED84500F37B72 /* configs in Resources */,
 				1AC35CE618CED84500F37B72 /* effect2.ogg in Resources */,
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
+				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
@@ -4451,6 +4470,7 @@
 				1AC35CF318CED84500F37B72 /* Hello.png in Resources */,
 				1AC35C8F18CECF1400F37B72 /* Icon-152.png in Resources */,
 				1AC35CE718CED84500F37B72 /* effect2.ogg in Resources */,
+				38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35C9718CECF1400F37B72 /* Icon-80.png in Resources */,
 				1AC35CEB18CED84500F37B72 /* fileLookup.plist in Resources */,
 				1AC35CFD18CED84500F37B72 /* music.mid in Resources */,
@@ -4686,6 +4706,7 @@
 				1AC35C2B18CECF0C00F37B72 /* PerformanceLabelTest.cpp in Sources */,
 				1AC35C0118CECF0C00F37B72 /* TableViewTestScene.cpp in Sources */,
 				1AC35C4B18CECF0C00F37B72 /* ShaderTest2.cpp in Sources */,
+				38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				1AC35C6518CECF0C00F37B72 /* UnitTest.cpp in Sources */,
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
@@ -4729,6 +4750,7 @@
 				29080D8E191B595E0066F8DF /* CocosGUIScene.cpp in Sources */,
 				1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
 				1AC35BF218CECF0C00F37B72 /* EditBoxTest.cpp in Sources */,
+				38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				1AC35B3A18CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
 				1AC35BE418CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DD4191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
@@ -5454,6 +5476,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -5470,6 +5493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
