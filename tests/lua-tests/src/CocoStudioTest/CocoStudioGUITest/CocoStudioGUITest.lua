@@ -2960,8 +2960,896 @@ function UIRichTextTest.create()
     return scene   
 end
 
+local UIFocusTestHorizontal = class("UIFocusTestHorizontal",UIScene)
+function UIFocusTestHorizontal.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestHorizontal)
+    return target
+end
+
+function UIFocusTestHorizontal:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+    self._horizontalLayout = ccui.HBox:create()
+    self._horizontalLayout:setPosition(cc.p(20, winSize.height / 2 + 40))
+    self._uiLayer:addChild(self._horizontalLayout)
+
+    self._horizontalLayout:setFocused(true)
+    self._horizontalLayout:setLoopFocus(true)
+    self._horizontalLayout:setTag(100)
+    self._firstFocusedWidget = self._horizontalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count = 3
+    for i = 1, count do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._horizontalLayout:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._horizontalLayout:setLoopFocus(not self._horizontalLayout:isLoopFocus())
+            if self._horizontalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestHorizontal.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestHorizontal.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestVertical = class("UIFocusTestVertical",UIScene)
+
+function UIFocusTestVertical.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestVertical)
+    return target
+end
+
+function UIFocusTestVertical:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+    self._verticalLayout = ccui.VBox:create()
+    self._verticalLayout:setPosition(cc.p(winSize.width/2 - 100, winSize.height - 70))
+    self._uiLayer:addChild(self._verticalLayout)
+
+    self._verticalLayout:setFocused(true)
+    self._verticalLayout:setLoopFocus(true)
+    self._verticalLayout:setTag(100)
+    self._verticalLayout:setScale(0.5)
+    self._firstFocusedWidget = self._verticalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count = 3
+    for i = 1, count do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._verticalLayout:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._verticalLayout:setLoopFocus(not self._verticalLayout:isLoopFocus())
+            if self._verticalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestVertical.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestVertical.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestNestedLayout1 = class("UIFocusTestNestedLayout1",UIScene)
+
+function UIFocusTestNestedLayout1.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestNestedLayout1)
+    return target
+end
+
+function UIFocusTestNestedLayout1:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    self._verticalLayout = ccui.VBox:create()
+    self._verticalLayout:setPosition(cc.p(winSize.width/2 - 80, winSize.height - 70))
+    self._uiLayer:addChild(self._verticalLayout)
+    self._verticalLayout:setScale(0.5)
+
+    self._verticalLayout:setFocused(true)
+    self._verticalLayout:setLoopFocus(true)
+    self._verticalLayout:setTag(100)
+    self._firstFocusedWidget = self._verticalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count1 = 1
+    for i = 1, count1 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 0))
+        imageView:setTouchEnabled(true)
+        imageView:setScaleX(2.5)
+        imageView:setTag(i - 1 + count1)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._verticalLayout:addChild(imageView)
+    end
+
+    local hbox = ccui.HBox:create()
+    hbox:setScale(0.8)
+    hbox:setTag(101)
+    self._verticalLayout:addChild(hbox)
+
+    local count2 = 2
+    for i = 1, count2 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 1))
+        imageView:setScaleY(2.0)
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2)
+        imageView:addTouchEventListener(onImageViewClicked)
+        hbox:addChild(imageView)
+    end
+
+    local innerVBox = ccui.VBox:create()
+    hbox:addChild(innerVBox)
+    innerVBox:setTag(102)
+
+    local count3 = 2
+    for i = 1, count3 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2 + count3)
+        imageView:addTouchEventListener(onImageViewClicked)
+        innerVBox:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._verticalLayout:setLoopFocus(not self._verticalLayout:isLoopFocus())
+            if self._verticalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestNestedLayout1.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestNestedLayout1.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestNestedLayout2 = class("UIFocusTestNestedLayout2",UIScene)
+
+function UIFocusTestNestedLayout2.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestNestedLayout2)
+    return target
+end
+
+function UIFocusTestNestedLayout2:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    self._horizontalLayout = ccui.HBox:create()
+    self._horizontalLayout:setPosition(cc.p(winSize.width/2 - 200, winSize.height - 70))
+    self._uiLayer:addChild(self._horizontalLayout)
+    self._horizontalLayout:setScale(0.6)
+
+    self._horizontalLayout:setFocused(true)
+    self._horizontalLayout:setLoopFocus(true)
+    self._horizontalLayout:setTag(100)
+    self._firstFocusedWidget = self._horizontalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count1 = 2
+    for i = 1, count1 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 1))
+        imageView:setTouchEnabled(true)
+        imageView:setScaleY(2.4)
+        imageView:setTag(i - 1 + count1)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._horizontalLayout:addChild(imageView)
+    end
+
+    local vbox = ccui.VBox:create()
+    vbox:setScale(0.8)
+    vbox:setTag(101)
+    self._horizontalLayout:addChild(vbox)
+
+    local count2 = 2
+    for i = 1, count2 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 1))
+        imageView:setScaleX(2.0)
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2)
+        imageView:addTouchEventListener(onImageViewClicked)
+        vbox:addChild(imageView)
+    end
+
+    local innerVBox = ccui.HBox:create()
+    vbox:addChild(innerVBox)
+    innerVBox:setTag(102)
+
+    local count3 = 2
+    for i = 1, count3 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2 + count3)
+        imageView:addTouchEventListener(onImageViewClicked)
+        innerVBox:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._horizontalLayout:setLoopFocus(not self._horizontalLayout:isLoopFocus())
+            if self._horizontalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestNestedLayout2.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestNestedLayout2.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestNestedLayout3 = class("UIFocusTestNestedLayout3",UIScene)
+
+function UIFocusTestNestedLayout3.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestNestedLayout3)
+    return target
+end
+
+function UIFocusTestNestedLayout3:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    self._verticalLayout = ccui.VBox:create()
+    self._verticalLayout:setPosition(cc.p(40, winSize.height - 70))
+    self._uiLayer:addChild(self._verticalLayout)
+    self._verticalLayout:setScale(0.8)
+
+    self._verticalLayout:setFocused(true)
+    self._verticalLayout:setLoopFocus(true)
+    self._verticalLayout:setTag(-1000)
+    self._firstFocusedWidget = self._verticalLayout
+
+    local upperHBox = ccui.HBox:create()
+    upperHBox:setTag(-200)
+    self._verticalLayout:addChild(upperHBox)
+
+    local params = ccui.LinearLayoutParameter:create()
+    params:setMargin({left = 0, top = 0, right = 50, bottom = 0})
+        
+    local vparams = ccui.LinearLayoutParameter:create()
+    vparams:setMargin({left = 10, top = 0, right = 0, bottom = 140})
+    upperHBox:setLayoutParameter(vparams)
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count = 3
+    for i = 1, count do
+        local firstVbox = ccui.VBox:create()
+        firstVbox:setScale(0.5)
+        firstVbox:setLayoutParameter(params)
+        firstVbox:setTag(i * 100)
+
+        local count1 = 3
+        for j = 1, count1 do
+            local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+            imageView:setTouchEnabled(true)
+            imageView:setTag(j + firstVbox:getTag())
+            imageView:addTouchEventListener(onImageViewClicked)
+            firstVbox:addChild(imageView)
+        end
+
+        upperHBox:addChild(firstVbox)
+    end
+
+    local bottomHBox = ccui.HBox:create()
+    bottomHBox:setScale(0.5)
+    bottomHBox:setTag(600)
+    bottomHBox:setLayoutParameter(vparams)
+
+    count = 3
+    local bottomParams = ccui.LinearLayoutParameter:create()
+    bottomParams:setMargin({left = 0, top = 0, right = 8, bottom = 0})
+    for i = 1, count do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setLayoutParameter(bottomParams)
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i + 600)
+        imageView:addTouchEventListener(onImageViewClicked)
+        bottomHBox:addChild(imageView)
+    end
+
+    self._verticalLayout:addChild(bottomHBox)
+
+    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._verticalLayout:setLoopFocus(not self._verticalLayout:isLoopFocus())
+            if self._verticalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestNestedLayout3.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestNestedLayout3.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
 local cocoStudioGuiArray = 
 {
+    {
+        title = "UIFocusTestHorizontal",
+        func  = function () 
+            return UIFocusTestHorizontal.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestVertical",
+        func  = function () 
+            return UIFocusTestVertical.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestNestedLayout1",
+        func  = function () 
+            return UIFocusTestNestedLayout1.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestNestedLayout2",
+        func  = function () 
+            return UIFocusTestNestedLayout2.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestNestedLayout3",
+        func  = function () 
+            return UIFocusTestNestedLayout3.create()
+        end,
+    },
+
     {
         title = "UIButtonTest",
         func  = function () 
