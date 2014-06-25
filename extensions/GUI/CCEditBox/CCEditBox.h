@@ -28,7 +28,7 @@
 
 #include "base/CCIMEDelegate.h"
 #include "extensions/ExtensionMacros.h"
-#include "../CCControlExtension/CCControlExtensions.h"
+#include "../../deprecated/CCControlExtension/CCControlExtensions.h"
 
 NS_CC_EXT_BEGIN
 

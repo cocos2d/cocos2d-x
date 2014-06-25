@@ -4,7 +4,7 @@
 #include "ExtensionMacros.h"
 
 
-#include "GUI/CCControlExtension/CCControlExtensions.h"
+#include "deprecated/CCControlExtension/CCControlExtensions.h"
 #include "GUI/CCScrollView/CCScrollView.h"
 #include "GUI/CCScrollView/CCTableView.h"
 #include "GUI/CCEditBox/CCEditBox.h"

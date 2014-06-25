@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "extensions/deprecated/CCControlExtension/CCScale9Sprite.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCDirector.h"

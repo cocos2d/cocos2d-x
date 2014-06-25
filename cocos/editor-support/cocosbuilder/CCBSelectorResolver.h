@@ -1,7 +1,7 @@
 #ifndef _CCB_CCBSELECTORRESOLVER_H_
 #define _CCB_CCBSELECTORRESOLVER_H_
 
-#include "extensions//GUI/CCControlExtension/CCInvocation.h"
+#include "extensions/deprecated/CCControlExtension/CCInvocation.h"
 
 
 namespace cocosbuilder {

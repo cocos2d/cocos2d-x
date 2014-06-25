@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UILoadingBar.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "extensions/deprecated/CCControlExtension/CCScale9Sprite.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN

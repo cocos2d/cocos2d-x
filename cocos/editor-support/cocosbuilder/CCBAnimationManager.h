@@ -9,7 +9,7 @@
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
 #include "CCBSequenceProperty.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "extensions/deprecated/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
 

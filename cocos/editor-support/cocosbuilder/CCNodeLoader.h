@@ -1,9 +1,9 @@
 #ifndef _CCB_CCNODELOADER_H_
 #define _CCB_CCNODELOADER_H_
 
-#include "extensions/GUI/CCControlExtension/CCInvocation.h"
+#include "extensions/deprecated/CCControlExtension/CCInvocation.h"
 #include "CCBReader.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "extensions/deprecated/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
 

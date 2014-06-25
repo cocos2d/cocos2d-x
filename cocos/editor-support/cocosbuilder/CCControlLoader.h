@@ -2,7 +2,7 @@
 #define _CCB_CCCONTROLLOADER_H_
 
 #include "CCNodeLoader.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "extensions/deprecated/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
 
