@@ -87,9 +87,6 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     if (!skinData)
         return;
     
-    if (!val.HasMember(SKINDATA_CHILDREN))
-        return;
-    
     // get transform matrix
     Mat4 transform;
     const rapidjson::Value& parent_tranform = val[SKINDATA_TRANSFORM];
@@ -104,19 +101,24 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     if (parent_name_index < 0)
     {
         skinData->addNodeBoneNames(parent_name);
-        parent_name_index = skinData->getBoneNameIndex(parent_name);
         skinData->nodeBoneOriginMatrices.push_back(transform);
     }
-    else
+    else if (parent_name_index < skinData->skinBoneNames.size())
     {
-        skinData->skinBoneOriginMatrices.push_back(transform);
+        skinData->skinBoneOriginMatrices[parent_name_index] = (transform);
     }
     
     // set root bone index
     if(skinData->rootBoneIndex < 0)
     {
+        if (parent_name_index < 0)
+            parent_name_index = skinData->getBoneNameIndex(parent_name);
+        
         skinData->rootBoneIndex = parent_name_index;
     }
+    
+    if (!val.HasMember(SKINDATA_CHILDREN))
+        return;
     
     const rapidjson::Value& children = val[SKINDATA_CHILDREN];
     for (rapidjson::SizeType i = 0; i < children.Size(); i++)
@@ -351,6 +353,8 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
     const rapidjson::Value& skin_data_1 = skin_data_array[1];
     
     // parent and child relationship map
+    skindata->skinBoneOriginMatrices.resize(skindata->skinBoneNames.size());
+    //skindata->nodeBoneOriginMatrices.resize(skindata->nodeBoneNames.size());
     getChildMap(skindata->boneChild, skindata, skin_data_1);
     return true;
 }
