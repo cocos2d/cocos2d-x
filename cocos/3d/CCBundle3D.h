@@ -34,9 +34,9 @@
 #include "base/ccTypes.h"
 
 #include "json/document.h"
+#include "CCBundleReader.h"
 
 NS_CC_BEGIN
-class BundleReader;
 class Animation3D;
 class Data;
 
@@ -54,7 +54,7 @@ public:
     
     static void destroyInstance();
     
-	void clearBuffer();
+	void clear();
 
     /**
      * load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
@@ -164,15 +164,17 @@ protected:
     static Bundle3D* _instance;
     
     std::string _modelRelativePath;
-
-    char* _jsonBuffer;
     std::string         _path;
-    rapidjson::Document _document;
+    
+    // for json reading
+    char* _jsonBuffer;
+    rapidjson::Document _jsonReader;
 
-    BundleReader* _bundleReader;
+    // for binary reading
+    Data* _binaryBuffer;
+    BundleReader _binaryReader;
     size_t _referenceCount;
     Reference* _references;
-    Data* _binaryBuffer;
 
     bool  _isBinary;
 };

@@ -41,20 +41,33 @@ class BundleReader: public cocos2d::Ref
 {
 public:
     /**
-     * Destructor
+     * Structor
+	 */
+    BundleReader();
+    
+    /**
+     * inicial
 	 */
     ~BundleReader();
+    
+    /**
+     * initialise
+     * @param lpbuffer The data buffer pointer
+     * @param length The data buffer size
+	 */
+    void init(char* lpbuffer, unsigned int length);
+    
 
     /** creates an BundleReader with lpbuffer and length 
      * @param lpbuffer The pointer to the file data 
      * @param length The size for lpbuffer in bytes
      */
-    static BundleReader* create(char* lpbuffer, unsigned int length);
+    //static BundleReader* create(char* lpbuffer, unsigned int length);
 
     /**
      * Close and delete buffer
 	 */
-    void close();
+    //void close();
 
 	/**
      * Reads an array of elements.
@@ -109,10 +122,6 @@ public:
 	*/
     std::string readString();
     bool readMatrix(float* m);
-
-private:
-    BundleReader();
-    void init(char* lpbuffer, unsigned int length);
 
 private:
     long int m_position;
