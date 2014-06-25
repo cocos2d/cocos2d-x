@@ -73,76 +73,76 @@ bool ComAudio::serialize(void* r)
 	do
 	{
 		CC_BREAK_IF(r == NULL);
-		SerData *pSerData = (SerData *)(r);
-		const rapidjson::Value *v = pSerData->_rData;
-		stExpCocoNode *pCocoNode = pSerData->_cocoNode;
-		const char *pClassName = NULL;
-		const char *pComName = NULL;
-		const char *pFile = NULL;
-		std::string strFilePath;
-		int nResType = 0;
-		bool bLoop = false;
+		SerData *serData = (SerData *)(r);
+		const rapidjson::Value *v = serData->_rData;
+		stExpCocoNode *cocoNode = serData->_cocoNode;
+		const char *className = NULL;
+		const char *comName = NULL;
+		const char *file = NULL;
+		std::string filePath;
+		int resType = 0;
+		bool loop = false;
 		if (v != NULL)
 		{
-			pClassName = DICTOOL->getStringValue_json(*v, "classname");
-			CC_BREAK_IF(pClassName == NULL);
-			pComName = DICTOOL->getStringValue_json(*v, "name");
+			className = DICTOOL->getStringValue_json(*v, "classname");
+			CC_BREAK_IF(className == NULL);
+			comName = DICTOOL->getStringValue_json(*v, "name");
 			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
 			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
-			pFile = DICTOOL->getStringValue_json(fileData, "path");
-			CC_BREAK_IF(pFile == NULL);
-			nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
-			CC_BREAK_IF(nResType != 0);
-			bLoop = DICTOOL->getIntValue_json(*v, "loop") != 0? true:false;
+			file = DICTOOL->getStringValue_json(fileData, "path");
+			CC_BREAK_IF(file == NULL);
+			resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+			CC_BREAK_IF(resType != 0);
+			loop = DICTOOL->getIntValue_json(*v, "loop") != 0? true:false;
 		}
-		else if (pCocoNode != NULL)
+		else if (cocoNode != NULL)
 		{
-			pClassName = pCocoNode[1].GetValue();
-			CC_BREAK_IF(pClassName == NULL);
-			pComName = pCocoNode[2].GetValue();
-			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray();
+			className = cocoNode[1].GetValue();
+			CC_BREAK_IF(className == NULL);
+			comName = cocoNode[2].GetValue();
+			stExpCocoNode *pfileData = cocoNode[4].GetChildArray();
 			CC_BREAK_IF(!pfileData);
-			pFile = pfileData[0].GetValue();
-			CC_BREAK_IF(pFile == NULL);
-			nResType = atoi(pfileData[2].GetValue());
-			CC_BREAK_IF(nResType != 0);
-			bLoop = atoi(pCocoNode[5].GetValue()) != 0? true:false;
+			file = pfileData[0].GetValue();
+			CC_BREAK_IF(file == NULL);
+			resType = atoi(pfileData[2].GetValue());
+			CC_BREAK_IF(resType != 0);
+			loop = atoi(cocoNode[5].GetValue()) != 0? true:false;
 			bRet = true;
 		}
-		if (pComName != NULL)
+		if (comName != NULL)
 		{
-			setName(pComName);
+			setName(comName);
 		}
 		else
 		{
-			setName(pClassName);
+			setName(className);
 		}
-		if (pFile != NULL)
+		if (file != NULL)
 		{
-            if (strcmp(pFile, "") == 0)
+            if (strcmp(file, "") == 0)
             {
                 continue;
             }
-			strFilePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(pFile));
+			filePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 		}
-		if (strcmp(pClassName, "CCBackgroundAudio") == 0)
+		if (strcmp(className, "CCBackgroundAudio") == 0)
 		{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 			// no MP3 support for CC_PLATFORM_WP8
-			std::string::size_type pos = strFilePath.find(".mp3");
-			if (pos  == strFilePath.npos)
+			std::string::size_type pos = filePath.find(".mp3");
+			if (pos  == filePath.npos)
 			{
 				continue;
 			}
-			strFilePath.replace(pos, strFilePath.length(), ".wav");
+			filePath.replace(pos, filePath.length(), ".wav");
 #endif
-			preloadBackgroundMusic(strFilePath.c_str());
-			setLoop(bLoop);
-			playBackgroundMusic(strFilePath.c_str(), bLoop);
+			preloadBackgroundMusic(filePath.c_str());
+			setLoop(loop);
+			playBackgroundMusic(filePath.c_str(), loop);
 		}
-		else if(strcmp(pClassName, "CCComAudio") == 0)
+		else if(strcmp(className, "CCComAudio") == 0)
 		{
-			preloadEffect(strFilePath.c_str());
+			preloadEffect(filePath.c_str());
 		}
 		else
 		{
