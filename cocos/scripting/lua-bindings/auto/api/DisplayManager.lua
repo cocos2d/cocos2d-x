@@ -2,6 +2,7 @@
 --------------------------------
 -- @module DisplayManager
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#DisplayManager] getDisplayRenderNode 

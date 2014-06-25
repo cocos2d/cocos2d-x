@@ -2,6 +2,7 @@
 --------------------------------
 -- @module BatchNode
 -- @extend Node
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#BatchNode] init 

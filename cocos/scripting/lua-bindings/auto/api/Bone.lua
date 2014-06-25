@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Bone
 -- @extend Node
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#Bone] isTransformDirty 

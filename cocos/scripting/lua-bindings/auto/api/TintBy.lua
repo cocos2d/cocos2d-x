@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TintBy
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TintBy] create 

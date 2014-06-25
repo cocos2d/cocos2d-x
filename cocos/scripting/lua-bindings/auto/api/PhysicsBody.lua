@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsBody
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsBody] isGravityEnabled 

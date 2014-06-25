@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsShapeEdgeChain
 -- @extend PhysicsShape
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeChain] getPointsCount 

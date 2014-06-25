@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ComAudio
 -- @extend Component
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ComAudio] stopAllEffects 
