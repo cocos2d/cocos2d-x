@@ -1312,7 +1312,7 @@ static int lua_cocos2dx_extension_Scale9Sprite_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_Scale9Sprite(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Scale9Sprite");
-    tolua_cclass(tolua_S,"Scale9Sprite","cc.Scale9Sprite","cc.Node",nullptr);
+    tolua_cclass(tolua_S,"Scale9Sprite","cc.Scale9Sprite","cc.Node",nullptr);    
 
     tolua_beginmodule(tolua_S,"Scale9Sprite");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_Scale9Sprite_constructor);
@@ -2125,7 +2125,7 @@ static int lua_cocos2dx_extension_Control_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_Control(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.Control");
-    tolua_cclass(tolua_S,"Control","cc.Control","cc.Layer",nullptr);
+    tolua_cclass(tolua_S,"Control","cc.Control","cc.Layer",nullptr);    
 
     tolua_beginmodule(tolua_S,"Control");
         tolua_function(tolua_S,"setEnabled",lua_cocos2dx_extension_Control_setEnabled);
@@ -4045,7 +4045,7 @@ static int lua_cocos2dx_extension_ControlButton_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_ControlButton(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlButton");
-    tolua_cclass(tolua_S,"ControlButton","cc.ControlButton","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlButton","cc.ControlButton","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlButton");
         tolua_function(tolua_S,"isPushed",lua_cocos2dx_extension_ControlButton_isPushed);
@@ -4673,7 +4673,7 @@ static int lua_cocos2dx_extension_ControlHuePicker_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_ControlHuePicker(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlHuePicker");
-    tolua_cclass(tolua_S,"ControlHuePicker","cc.ControlHuePicker","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlHuePicker","cc.ControlHuePicker","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlHuePicker");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlHuePicker_constructor);
@@ -5178,7 +5178,7 @@ static int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_finalize(lua
 int lua_register_cocos2dx_extension_ControlSaturationBrightnessPicker(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlSaturationBrightnessPicker");
-    tolua_cclass(tolua_S,"ControlSaturationBrightnessPicker","cc.ControlSaturationBrightnessPicker","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlSaturationBrightnessPicker","cc.ControlSaturationBrightnessPicker","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlSaturationBrightnessPicker");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor);
@@ -5777,7 +5777,7 @@ static int lua_cocos2dx_extension_ControlColourPicker_finalize(lua_State* tolua_
 int lua_register_cocos2dx_extension_ControlColourPicker(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlColourPicker");
-    tolua_cclass(tolua_S,"ControlColourPicker","cc.ControlColourPicker","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlColourPicker","cc.ControlColourPicker","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlColourPicker");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlColourPicker_constructor);
@@ -6717,7 +6717,7 @@ static int lua_cocos2dx_extension_ControlPotentiometer_finalize(lua_State* tolua
 int lua_register_cocos2dx_extension_ControlPotentiometer(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlPotentiometer");
-    tolua_cclass(tolua_S,"ControlPotentiometer","cc.ControlPotentiometer","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlPotentiometer","cc.ControlPotentiometer","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlPotentiometer");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlPotentiometer_constructor);
@@ -7962,7 +7962,7 @@ static int lua_cocos2dx_extension_ControlSlider_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_ControlSlider(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlSlider");
-    tolua_cclass(tolua_S,"ControlSlider","cc.ControlSlider","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlSlider","cc.ControlSlider","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlSlider");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlSlider_constructor);
@@ -9030,7 +9030,7 @@ static int lua_cocos2dx_extension_ControlStepper_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_ControlStepper(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlStepper");
-    tolua_cclass(tolua_S,"ControlStepper","cc.ControlStepper","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlStepper","cc.ControlStepper","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlStepper");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlStepper_constructor);
@@ -9503,7 +9503,7 @@ static int lua_cocos2dx_extension_ControlSwitch_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_ControlSwitch(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ControlSwitch");
-    tolua_cclass(tolua_S,"ControlSwitch","cc.ControlSwitch","cc.Control",nullptr);
+    tolua_cclass(tolua_S,"ControlSwitch","cc.ControlSwitch","cc.Control",nullptr);    
 
     tolua_beginmodule(tolua_S,"ControlSwitch");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ControlSwitch_constructor);
@@ -11176,7 +11176,7 @@ static int lua_cocos2dx_extension_ScrollView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.ScrollView");
-    tolua_cclass(tolua_S,"ScrollView","cc.ScrollView","cc.Layer",nullptr);
+    tolua_cclass(tolua_S,"ScrollView","cc.ScrollView","cc.Layer",nullptr);    
 
     tolua_beginmodule(tolua_S,"ScrollView");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_ScrollView_constructor);
@@ -11428,7 +11428,7 @@ static int lua_cocos2dx_extension_TableViewCell_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_TableViewCell(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TableViewCell");
-    tolua_cclass(tolua_S,"TableViewCell","cc.TableViewCell","cc.Node",nullptr);
+    tolua_cclass(tolua_S,"TableViewCell","cc.TableViewCell","cc.Node",nullptr);    
 
     tolua_beginmodule(tolua_S,"TableViewCell");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_TableViewCell_constructor);
@@ -12044,7 +12044,7 @@ static int lua_cocos2dx_extension_TableView_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_TableView(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.TableView");
-    tolua_cclass(tolua_S,"TableView","cc.TableView","cc.ScrollView",nullptr);
+    tolua_cclass(tolua_S,"TableView","cc.TableView","cc.ScrollView",nullptr);    
 
     tolua_beginmodule(tolua_S,"TableView");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_TableView_constructor);
@@ -13007,7 +13007,7 @@ static int lua_cocos2dx_extension_EditBox_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_EditBox(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EditBox");
-    tolua_cclass(tolua_S,"EditBox","cc.EditBox","cc.ControlButton",nullptr);
+    tolua_cclass(tolua_S,"EditBox","cc.EditBox","cc.ControlButton",nullptr);    
 
     tolua_beginmodule(tolua_S,"EditBox");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_EditBox_constructor);
@@ -13720,7 +13720,7 @@ static int lua_cocos2dx_extension_AssetsManager_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_AssetsManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.AssetsManager");
-    tolua_cclass(tolua_S,"AssetsManager","cc.AssetsManager","cc.Node",nullptr);
+    tolua_cclass(tolua_S,"AssetsManager","cc.AssetsManager","cc.Node",nullptr);    
 
     tolua_beginmodule(tolua_S,"AssetsManager");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_AssetsManager_constructor);
@@ -15438,7 +15438,7 @@ static int lua_cocos2dx_extension_CCBAnimationManager_finalize(lua_State* tolua_
 int lua_register_cocos2dx_extension_CCBAnimationManager(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CCBAnimationManager");
-    tolua_cclass(tolua_S,"CCBAnimationManager","cc.CCBAnimationManager","cc.Ref",nullptr);
+    tolua_cclass(tolua_S,"CCBAnimationManager","cc.CCBAnimationManager","cc.Ref",nullptr);    
 
     tolua_beginmodule(tolua_S,"CCBAnimationManager");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_CCBAnimationManager_constructor);
@@ -16466,7 +16466,7 @@ static int lua_cocos2dx_extension_CCBReader_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_extension_CCBReader(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.CCBReader");
-    tolua_cclass(tolua_S,"CCBReader","cc.CCBReader","cc.Ref",nullptr);
+    tolua_cclass(tolua_S,"CCBReader","cc.CCBReader","cc.Ref",nullptr);    
 
     tolua_beginmodule(tolua_S,"CCBReader");
         tolua_function(tolua_S,"new",lua_cocos2dx_extension_CCBReader_constructor);
