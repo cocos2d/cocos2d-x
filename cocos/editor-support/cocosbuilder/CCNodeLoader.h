@@ -34,9 +34,9 @@ struct BlockData {
 };
 
 struct BlockControlData {
-    cocos2d::extension::Control::Handler mSELControlHandler;
+    cocos2d::extension::__Control::Handler mSELControlHandler;
     cocos2d::Ref * _target;
-    cocos2d::extension::Control::EventType mControlEvents;
+    cocos2d::extension::__Control::EventType mControlEvents;
 };
 
 /* Forward declaration. */

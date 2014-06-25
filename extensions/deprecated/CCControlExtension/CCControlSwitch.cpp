@@ -310,7 +310,7 @@ ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Spri
 
 bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
 {
-    if (Control::init())
+    if (__Control::init())
     {
         CCASSERT(maskSprite,    "Mask must not be nil.");
         CCASSERT(onSprite,      "onSprite must not be nil.");
@@ -376,7 +376,7 @@ void ControlSwitch::setOn(bool isOn, bool animated)
         _switchSprite->setSliderXPosition((_on) ? _switchSprite->getOnPosition() : _switchSprite->getOffPosition());
     }
     
-    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+    sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
 }
 
 void ControlSwitch::setEnabled(bool enabled)

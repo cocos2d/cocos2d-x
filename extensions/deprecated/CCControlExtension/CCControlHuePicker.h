@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlHuePicker : public Control
+class ControlHuePicker : public __Control
 {
 public:
     static ControlHuePicker* create(Node* target, Vec2 pos);

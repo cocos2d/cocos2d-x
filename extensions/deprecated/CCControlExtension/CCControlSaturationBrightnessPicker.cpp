@@ -58,7 +58,7 @@ ControlSaturationBrightnessPicker::~ControlSaturationBrightnessPicker()
     
 bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Vec2 pos)
 {
-    if (Control::init())
+    if (__Control::init())
     {
         // Add background and slider sprites
         _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, Vec2(0.0f, 0.0f));
@@ -87,7 +87,7 @@ ControlSaturationBrightnessPicker* ControlSaturationBrightnessPicker::create(Nod
 
 void ControlSaturationBrightnessPicker::setEnabled(bool enabled)
 {
-    Control::setEnabled(enabled);
+    __Control::setEnabled(enabled);
     if (_slider != NULL)
     {
         _slider->setOpacity(enabled ? 255 : 128);
@@ -173,7 +173,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Vec2 location)
     if (dist <= _background->getBoundingBox().size.width*0.5f)
     {
         updateSliderPosition(location);
-        sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+        sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
         return true;
     }
     return false;

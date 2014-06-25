@@ -37,7 +37,7 @@
 
 NS_CC_EXT_BEGIN
 
-Control::Control()
+__Control::__Control()
 : _enabled(false)
 , _selected(false)
 , _highlighted(false)
@@ -48,9 +48,9 @@ Control::Control()
 
 }
 
-Control* Control::create()
+__Control* __Control::create()
 {
-    Control* pRet = new Control();
+    __Control* pRet = new __Control();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -63,12 +63,12 @@ Control* Control::create()
     }
 }
 
-bool Control::init()
+bool __Control::init()
 {
     if (Layer::init())
     {
         // Initialise instance variables
-        _state=Control::State::NORMAL;
+        _state=__Control::State::NORMAL;
         setEnabled(true);
         setSelected(false);
         setHighlighted(false);
@@ -76,10 +76,10 @@ bool Control::init()
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         auto touchListener = EventListenerTouchOneByOne::create();
         touchListener->setSwallowTouches(true);
-        touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);
-        touchListener->onTouchMoved = CC_CALLBACK_2(Control::onTouchMoved, this);
-        touchListener->onTouchEnded = CC_CALLBACK_2(Control::onTouchEnded, this);
-        touchListener->onTouchCancelled = CC_CALLBACK_2(Control::onTouchCancelled, this);
+        touchListener->onTouchBegan = CC_CALLBACK_2(__Control::onTouchBegan, this);
+        touchListener->onTouchMoved = CC_CALLBACK_2(__Control::onTouchMoved, this);
+        touchListener->onTouchEnded = CC_CALLBACK_2(__Control::onTouchEnded, this);
+        touchListener->onTouchCancelled = CC_CALLBACK_2(__Control::onTouchCancelled, this);
         
         dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
         
@@ -91,7 +91,7 @@ bool Control::init()
     }
 }
 
-Control::~Control()
+__Control::~__Control()
 {
     for (auto iter = _dispatchTable.begin(); iter != _dispatchTable.end(); ++iter)
     {
@@ -101,7 +101,7 @@ Control::~Control()
     _dispatchTable.clear();
 }
 
-void Control::sendActionsForControlEvents(EventType controlEvents)
+void __Control::sendActionsForControlEvents(EventType controlEvents)
 {
 	retain();
     // For each control events
@@ -111,7 +111,7 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
         if (((int)controlEvents & (1 << i)))
         {
             // Call invocations
-            const auto& invocationList = this->dispatchListforControlEvent((Control::EventType)(1<<i));
+            const auto& invocationList = this->dispatchListforControlEvent((__Control::EventType)(1<<i));
 
             for(const auto &invocation : invocationList) {
                 invocation->invoke(this);
@@ -130,7 +130,7 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
     }
 	release();
 }
-void Control::addTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents)
+void __Control::addTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents)
 {
     // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
@@ -158,17 +158,17 @@ void Control::addTargetWithActionForControlEvents(Ref* target, Handler action, E
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
-void Control::addTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent)
+void __Control::addTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent)
 {    
     // Create the invocation object
-    Invocation *invocation = Invocation::create(target, action, controlEvent);
+    __Invocation *invocation = __Invocation::create(target, action, controlEvent);
 
     // Add the invocation into the dispatch list for the given control event
     auto& eventInvocationList = this->dispatchListforControlEvent(controlEvent);
     eventInvocationList.pushBack(invocation);
 }
 
-void Control::removeTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents)
+void __Control::removeTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents)
 {
      // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
@@ -181,7 +181,7 @@ void Control::removeTargetWithActionForControlEvents(Ref* target, Handler action
     }
 }
 
-void Control::removeTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent)
+void __Control::removeTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent)
 {
     // Retrieve all invocations for the given control event
     //<Invocation*>
@@ -197,7 +197,7 @@ void Control::removeTargetWithActionForControlEvent(Ref* target, Handler action,
     } 
     else
     {
-        std::vector<Invocation*> tobeRemovedInvocations;
+        std::vector<__Invocation*> tobeRemovedInvocations;
         
         //normally we would use a predicate, but this won't work here. Have to do it manually
         for(const auto &invocation : eventInvocationList) {
@@ -225,7 +225,7 @@ void Control::removeTargetWithActionForControlEvent(Ref* target, Handler action,
 
 
 //CRGBA protocol
-void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
+void __Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     _isOpacityModifyRGB=bOpacityModifyRGB;
     
@@ -234,13 +234,13 @@ void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
     }
 }
 
-bool Control::isOpacityModifyRGB() const
+bool __Control::isOpacityModifyRGB() const
 {
     return _isOpacityModifyRGB;
 }
 
 
-Vec2 Control::getTouchLocation(Touch* touch)
+Vec2 __Control::getTouchLocation(Touch* touch)
 {
     Vec2 touchLocation = touch->getLocation();            // Get the touch position
     touchLocation = this->convertToNodeSpace(touchLocation);  // Convert to the node space of this class
@@ -248,7 +248,7 @@ Vec2 Control::getTouchLocation(Touch* touch)
     return touchLocation;
 }
 
-bool Control::isTouchInside(Touch* touch)
+bool __Control::isTouchInside(Touch* touch)
 {
     Vec2 touchLocation = touch->getLocation(); // Get the touch position
     touchLocation = this->getParent()->convertToNodeSpace(touchLocation);
@@ -256,15 +256,15 @@ bool Control::isTouchInside(Touch* touch)
     return bBox.containsPoint(touchLocation);
 }
 
-Vector<Invocation*>& Control::dispatchListforControlEvent(EventType controlEvent)
+Vector<__Invocation*>& __Control::dispatchListforControlEvent(EventType controlEvent)
 {
-    Vector<Invocation*>* invocationList = nullptr;
+    Vector<__Invocation*>* invocationList = nullptr;
     auto iter = _dispatchTable.find((int)controlEvent);
     
     // If the invocation list does not exist for the  dispatch table, we create it
     if (iter == _dispatchTable.end())
     {
-        invocationList = new Vector<Invocation*>();
+        invocationList = new Vector<__Invocation*>();
         _dispatchTable[(int)controlEvent] = invocationList;
     }
     else
@@ -274,50 +274,50 @@ Vector<Invocation*>& Control::dispatchListforControlEvent(EventType controlEvent
     return *invocationList;
 }
 
-void Control::needsLayout()
+void __Control::needsLayout()
 {
 }
 
-void Control::setEnabled(bool bEnabled)
+void __Control::setEnabled(bool bEnabled)
 {
     _enabled = bEnabled;
     if(_enabled) {
-        _state = Control::State::NORMAL;
+        _state = __Control::State::NORMAL;
     } else {
-        _state = Control::State::DISABLED;
+        _state = __Control::State::DISABLED;
     }
 
     this->needsLayout();
 }
 
-bool Control::isEnabled() const
+bool __Control::isEnabled() const
 {
     return _enabled;
 }
 
-void Control::setSelected(bool bSelected)
+void __Control::setSelected(bool bSelected)
 {
     _selected = bSelected;
     this->needsLayout();
 }
 
-bool Control::isSelected() const
+bool __Control::isSelected() const
 {
     return _selected;
 }
 
-void Control::setHighlighted(bool bHighlighted)
+void __Control::setHighlighted(bool bHighlighted)
 {
     _highlighted = bHighlighted;
     this->needsLayout();
 }
 
-bool Control::isHighlighted() const
+bool __Control::isHighlighted() const
 {
     return _highlighted;
 }
 
-bool Control::hasVisibleParents() const
+bool __Control::hasVisibleParents() const
 {
     auto parent = this->getParent();
     for( auto c = parent; c != NULL; c = c->getParent() )
@@ -330,8 +330,8 @@ bool Control::hasVisibleParents() const
     return true;
 }
 
-Control::EventType operator|(Control::EventType a, Control::EventType b) {
-    return static_cast<Control::EventType>(static_cast<int>(a) | static_cast<int>(b));
+__Control::EventType operator|(__Control::EventType a, __Control::EventType b) {
+    return static_cast<__Control::EventType>(static_cast<int>(a) | static_cast<int>(b));
 }
 
 NS_CC_EXT_END

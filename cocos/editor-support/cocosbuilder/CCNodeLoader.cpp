@@ -819,14 +819,14 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                 ccbReader->addDocumentCallbackNode(pNode);
                 ccbReader->addDocumentCallbackName(selectorName);
                 // Since there isn't a Control::EventType::NONE, add a TOUCH_DOWN type as a placeholder.
-                ccbReader->addDocumentCallbackControlEvents(Control::EventType::TOUCH_DOWN);
+                ccbReader->addDocumentCallbackControlEvents(__Control::EventType::TOUCH_DOWN);
             }
             else if (selectorTarget == CCBReader::TargetType::OWNER)
             {
                 ccbReader->addOwnerCallbackNode(pNode);
                 ccbReader->addOwnerCallbackName(selectorName);
                 // Since there isn't a Control::EventType::NONE, add a TOUCH_DOWN type as a placeholder.
-                ccbReader->addOwnerCallbackControlEvents(Control::EventType::TOUCH_DOWN);
+                ccbReader->addOwnerCallbackControlEvents(__Control::EventType::TOUCH_DOWN);
             }
         }
     }
@@ -858,7 +858,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
             {
                 if(selectorName.length() > 0)
                 {
-                    Control::Handler selControlHandler = 0;
+                    __Control::Handler selControlHandler = 0;
                     
                     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
                     
@@ -886,7 +886,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                         blockControlData->mSELControlHandler = selControlHandler;
                         
                         blockControlData->_target = target;
-                        blockControlData->mControlEvents = (Control::EventType)controlEvents;
+                        blockControlData->mControlEvents = (__Control::EventType)controlEvents;
                         
                         return blockControlData;
                     }
@@ -903,13 +903,13 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
             {
                 ccbReader->addDocumentCallbackNode(pNode);
                 ccbReader->addDocumentCallbackName(selectorName);
-                ccbReader->addDocumentCallbackControlEvents((Control::EventType)controlEvents);
+                ccbReader->addDocumentCallbackControlEvents((__Control::EventType)controlEvents);
             }
             else
             {
                 ccbReader->addOwnerCallbackNode(pNode);
                 ccbReader->addOwnerCallbackName(selectorName);
-                ccbReader->addOwnerCallbackControlEvents((Control::EventType)controlEvents);
+                ccbReader->addOwnerCallbackControlEvents((__Control::EventType)controlEvents);
             }
         }
     }

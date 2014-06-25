@@ -47,7 +47,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlColourPicker: public Control
+class ControlColourPicker: public __Control
 {
 public:
     static ControlColourPicker* create();
@@ -67,8 +67,8 @@ public:
     virtual void setEnabled(bool bEnabled);
 
     //virtual ~ControlColourPicker();
-    void hueSliderValueChanged(Ref * sender, Control::EventType controlEvent);
-    void colourSliderValueChanged(Ref * sender, Control::EventType controlEvent);
+    void hueSliderValueChanged(Ref * sender, __Control::EventType controlEvent);
+    void colourSliderValueChanged(Ref * sender, __Control::EventType controlEvent);
 
 protected:
     void updateControlPicker();

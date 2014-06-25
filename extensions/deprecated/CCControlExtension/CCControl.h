@@ -36,7 +36,7 @@
 NS_CC_EXT_BEGIN
 
 
-class Invocation;
+class __Invocation;
 
 /**
  * @addtogroup GUI
@@ -61,7 +61,7 @@ class Invocation;
  *
  * To use the Control you have to subclass it.
  */
-class Control : public Layer
+class __Control : public Layer
 {
 public:
     /** Kinds of possible events for the control objects. */
@@ -90,7 +90,7 @@ public:
     };
 
     /** Creates a Control object */
-    static Control* create();
+    static __Control* create();
 
     /** Tells whether the control is enabled. */
     virtual void setEnabled(bool bEnabled);
@@ -177,12 +177,12 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    Control();
+    __Control();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~Control();
+    virtual ~__Control();
 
     virtual bool init(void) override;
 
@@ -200,7 +200,7 @@ protected:
      * @return an Invocation object able to construct messages using a given 
      * target-action pair.
      */
-    Invocation* invocationWithTargetAndActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
+    __Invocation* invocationWithTargetAndActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
     /**
     * Returns the Invocation list for the given control event. If the list does
@@ -211,7 +211,7 @@ protected:
     *
     * @return the Invocation list for the given control event.
     */
-    Vector<Invocation*>& dispatchListforControlEvent(EventType controlEvent);
+    Vector<__Invocation*>& dispatchListforControlEvent(EventType controlEvent);
 
     /**
      * Adds a target and action for a particular event to an internal dispatch 
@@ -254,7 +254,7 @@ protected:
      * target-actions pairs. For each ButtonEvents a list of NSInvocation
      * (which contains the target-action pair) is linked.
      */
-    std::unordered_map<int, Vector<Invocation*>*> _dispatchTable;
+    std::unordered_map<int, Vector<__Invocation*>*> _dispatchTable;
 
     //CCRGBAProtocol
     bool _isOpacityModifyRGB;
@@ -263,10 +263,10 @@ protected:
     CC_SYNTHESIZE_READONLY(State, _state, State);
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(Control);
+    CC_DISALLOW_COPY_AND_ASSIGN(__Control);
 };
 
-Control::EventType operator|(Control::EventType a, Control::EventType b);
+__Control::EventType operator|(__Control::EventType a, __Control::EventType b);
 
 // end of GUI group
 /// @}

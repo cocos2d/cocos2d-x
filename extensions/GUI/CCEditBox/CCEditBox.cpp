@@ -57,7 +57,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
+void EditBox::touchDownAction(Ref *sender, __Control::EventType controlEvent)
 {
     _editBoxImpl->openKeyboard();
 }
@@ -70,12 +70,12 @@ EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale
     {
         if (pPressed9SpriteBg != NULL)
         {
-            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, Control::State::HIGH_LIGHTED);
+            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, __Control::State::HIGH_LIGHTED);
         }
         
         if (pDisabled9SpriteBg != NULL)
         {
-            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, Control::State::DISABLED);
+            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, __Control::State::DISABLED);
         }
         pRet->autorelease();
     }
@@ -89,7 +89,7 @@ EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale
 
 bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pPressed9SpriteBg)
 {
-    if (ControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
+    if (__ControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
@@ -98,7 +98,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
         this->setPosition(Vec2(0, 0));
-        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), Control::EventType::TOUCH_UP_INSIDE);
+        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), __Control::EventType::TOUCH_UP_INSIDE);
         
         return true;
     }
@@ -284,7 +284,7 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 /* override function */
 void EditBox::setPosition(const Vec2& pos)
 {
-    ControlButton::setPosition(pos);
+    __ControlButton::setPosition(pos);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setPosition(pos);
@@ -293,7 +293,7 @@ void EditBox::setPosition(const Vec2& pos)
 
 void EditBox::setVisible(bool visible)
 {
-    ControlButton::setVisible(visible);
+    __ControlButton::setVisible(visible);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setVisible(visible);
@@ -302,7 +302,7 @@ void EditBox::setVisible(bool visible)
 
 void EditBox::setContentSize(const Size& size)
 {
-    ControlButton::setContentSize(size);
+    __ControlButton::setContentSize(size);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setContentSize(size);
@@ -311,7 +311,7 @@ void EditBox::setContentSize(const Size& size)
 
 void EditBox::setAnchorPoint(const Vec2& anchorPoint)
 {
-    ControlButton::setAnchorPoint(anchorPoint);
+    __ControlButton::setAnchorPoint(anchorPoint);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setAnchorPoint(anchorPoint);
@@ -320,7 +320,7 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
 
 void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    ControlButton::visit(renderer, parentTransform, parentFlags);
+    __ControlButton::visit(renderer, parentTransform, parentFlags);
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->visit();
@@ -337,7 +337,7 @@ void EditBox::onEnter(void)
     }
 #endif
     
-    ControlButton::onEnter();
+    __ControlButton::onEnter();
     if (_editBoxImpl != NULL)
     {
         _editBoxImpl->onEnter();
@@ -357,7 +357,7 @@ void EditBox::updatePosition(float dt)
 
 void EditBox::onExit(void)
 {
-    ControlButton::onExit();
+    __ControlButton::onExit();
     if (_editBoxImpl != NULL)
     {
         // remove system edit control

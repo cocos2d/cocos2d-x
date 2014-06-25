@@ -52,7 +52,7 @@ ControlColourPicker::~ControlColourPicker()
 
 bool ControlColourPicker::init()
 {
-    if (Control::init())
+    if (__Control::init())
     {
         // Cache the sprites
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile("extensions/CCControlColourPickerSpriteSheet.plist");
@@ -92,8 +92,8 @@ bool ControlColourPicker::init()
         _colourPicker->initWithTargetAndPos(spriteSheet, Vec2(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
-        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::hueSliderValueChanged), Control::EventType::VALUE_CHANGED);
-        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::colourSliderValueChanged), Control::EventType::VALUE_CHANGED);
+        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::hueSliderValueChanged), __Control::EventType::VALUE_CHANGED);
+        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::colourSliderValueChanged), __Control::EventType::VALUE_CHANGED);
        
         // Set defaults
         updateHueAndControlPicker();
@@ -120,7 +120,7 @@ ControlColourPicker* ControlColourPicker::create()
 void ControlColourPicker::setColor(const Color3B& color)
 {
     // XXX fixed me if not correct
-    Control::setColor(color);
+    __Control::setColor(color);
     
     RGBA rgba;
     rgba.r      = color.r / 255.0f;
@@ -134,7 +134,7 @@ void ControlColourPicker::setColor(const Color3B& color)
 
 void ControlColourPicker::setEnabled(bool enabled)
 {
-    Control::setEnabled(enabled);
+    __Control::setEnabled(enabled);
     if (_huePicker != NULL)
     {
         _huePicker->setEnabled(enabled);
@@ -161,21 +161,21 @@ void ControlColourPicker::updateHueAndControlPicker()
 }
 
 
-void ControlColourPicker::hueSliderValueChanged(Ref * sender, Control::EventType controlEvent)
+void ControlColourPicker::hueSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
 {
     _hsv.h      = ((ControlHuePicker*)sender)->getHue();
 
     // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
-    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    __Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
-    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+    sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
     updateControlPicker();
 }
 
-void ControlColourPicker::colourSliderValueChanged(Ref * sender, Control::EventType controlEvent)
+void ControlColourPicker::colourSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
 {
     _hsv.s=((ControlSaturationBrightnessPicker*)sender)->getSaturation();
     _hsv.v=((ControlSaturationBrightnessPicker*)sender)->getBrightness();
@@ -184,10 +184,10 @@ void ControlColourPicker::colourSliderValueChanged(Ref * sender, Control::EventT
      // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
     // XXX fixed me if not correct
-    Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
+    __Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
-    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+    sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
 }
 
 //ignore all touches, handled by children

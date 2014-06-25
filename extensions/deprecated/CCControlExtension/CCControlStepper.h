@@ -40,7 +40,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlStepper : public Control
+class ControlStepper : public __Control
 {
 public:
     enum class Part

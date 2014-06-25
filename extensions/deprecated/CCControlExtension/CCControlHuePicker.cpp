@@ -60,7 +60,7 @@ ControlHuePicker* ControlHuePicker::create(Node* target, Vec2 pos)
 
 bool ControlHuePicker::initWithTargetAndPos(Node* target, Vec2 pos)
 {
-    if (Control::init())
+    if (__Control::init())
     {
         // Add background and slider sprites
         this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Vec2(0.0f, 0.0f)));
@@ -117,7 +117,7 @@ void ControlHuePicker::setHuePercentage(float hueValueInPercent)
 
 void ControlHuePicker::setEnabled(bool enabled)
 {
-    Control::setEnabled(enabled);
+    __Control::setEnabled(enabled);
     if (_slider != NULL)
     {
         _slider->setOpacity(enabled ? 255 : 128);
@@ -146,7 +146,7 @@ void ControlHuePicker::updateSliderPosition(Vec2 location)
     setHue(angleDeg);
     
     // send Control callback
-    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+    sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
 }
 
 bool ControlHuePicker::checkSliderPosition(Vec2 location)

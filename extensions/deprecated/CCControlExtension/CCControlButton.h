@@ -51,13 +51,13 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class ControlButton Button control for Cocos2D. */
-class ControlButton : public Control
+class __ControlButton : public __Control
 {        
 public:
-    static ControlButton* create();
-    static ControlButton* create(Scale9Sprite* sprite);
-    static ControlButton* create(Node* label, Scale9Sprite* backgroundSprite);
-    static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
+    static __ControlButton* create();
+    static __ControlButton* create(Scale9Sprite* sprite);
+    static __ControlButton* create(Node* label, Scale9Sprite* backgroundSprite);
+    static __ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
 
     virtual void needsLayout(void);
 
@@ -194,12 +194,12 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    ControlButton();
+    __ControlButton();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlButton();
+    virtual ~__ControlButton();
     
     virtual bool init() override;
     virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
@@ -245,7 +245,7 @@ protected:
     CC_SYNTHESIZE_READONLY(int, _marginH, HorizontalOrigin);
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(ControlButton);
+    CC_DISALLOW_COPY_AND_ASSIGN(__ControlButton);
 };
 
 // end of GUI group

@@ -43,21 +43,21 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::Control::Handler>(&_SELECTOR)
+#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::__Control::Handler>(&_SELECTOR)
 
-class Invocation : public Ref
+class __Invocation : public Ref
 {
 public:
     /**
      * @js NA
      * @lua NA
      */
-    static Invocation* create(Ref* target, Control::Handler action, Control::EventType controlEvent);
+    static __Invocation* create(Ref* target, __Control::Handler action, __Control::EventType controlEvent);
     /**
      * @js NA
      * @lua NA
      */
-    Invocation(Ref* target, Control::Handler action, Control::EventType controlEvent);
+    __Invocation(Ref* target, __Control::Handler action, __Control::EventType controlEvent);
     /**
      * @js NA
      * @lua NA
@@ -65,9 +65,9 @@ public:
     void invoke(Ref* sender);
 
 protected:
-    CC_SYNTHESIZE_READONLY(Control::Handler, _action, Action);
+    CC_SYNTHESIZE_READONLY(__Control::Handler, _action, Action);
     CC_SYNTHESIZE_READONLY(Ref*, _target, Target);
-    CC_SYNTHESIZE_READONLY(Control::EventType, _controlEvent, ControlEvent);
+    CC_SYNTHESIZE_READONLY(__Control::EventType, _controlEvent, ControlEvent);
 };
 
 // end of GUI group

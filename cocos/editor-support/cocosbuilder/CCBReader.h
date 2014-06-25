@@ -321,7 +321,7 @@ public:
      * @lua NA
      */
     void addOwnerCallbackNode(cocos2d::Node *node);
-    void addOwnerCallbackControlEvents(cocos2d::extension::Control::EventType type);
+    void addOwnerCallbackControlEvents(cocos2d::extension::__Control::EventType type);
     /**
      * @js NA
      * @lua NA
@@ -332,7 +332,7 @@ public:
      * @lua NA
      */
     void addDocumentCallbackNode(cocos2d::Node *node);
-    void addDocumentCallbackControlEvents(cocos2d::extension::Control::EventType eventType);
+    void addDocumentCallbackControlEvents(cocos2d::extension::__Control::EventType eventType);
     /**
      * @js NA
      * @lua NA

@@ -46,7 +46,7 @@ class ControlSwitchSprite;
  */
 
 /** @class ControlSwitch Switch control for Cocos2D. */
-class ControlSwitch : public Control
+class ControlSwitch : public __Control
 {
 public:
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */

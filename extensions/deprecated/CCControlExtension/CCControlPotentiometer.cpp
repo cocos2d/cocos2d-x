@@ -73,7 +73,7 @@ ControlPotentiometer* ControlPotentiometer::create(const char* backgroundFile, c
 
 bool ControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite* trackSprite, ProgressTimer* progressTimer, Sprite* thumbSprite)
 {
-    if (Control::init())
+    if (__Control::init())
     {
         setProgressTimer(progressTimer);
         setThumbSprite(thumbSprite);
@@ -96,7 +96,7 @@ bool ControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite*
 
 void ControlPotentiometer::setEnabled(bool enabled)
 {
-    Control::setEnabled(enabled);
+    __Control::setEnabled(enabled);
     if (_thumbSprite != NULL)
     {
         _thumbSprite->setOpacity((enabled) ? 255 : 128);
@@ -123,7 +123,7 @@ void ControlPotentiometer::setValue(float value)
     _progressTimer->setPercentage(percent * 100.0f);
     _thumbSprite->setRotation(percent * 360.0f);
     
-    sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);    
+    sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);    
 }
 
 float ControlPotentiometer::getValue()

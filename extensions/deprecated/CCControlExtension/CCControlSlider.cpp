@@ -115,7 +115,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
  bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
         Sprite* selectedThumbSprite)
  {
-     if (Control::init())
+     if (__Control::init())
      {
         CCASSERT(backgroundSprite,      "Background sprite must be not nil");
         CCASSERT(progressSprite,        "Progress sprite must be not nil");
@@ -168,7 +168,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
 
 void ControlSlider::setEnabled(bool enabled)
 {
-    Control::setEnabled(enabled);
+    __Control::setEnabled(enabled);
     if (_thumbSprite != NULL) 
     {
         _thumbSprite->setOpacity((enabled) ? 255 : 128);
@@ -192,7 +192,7 @@ void ControlSlider::setEnabled(bool enabled)
 
      this->needsLayout();
 
-     this->sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+     this->sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
  }
 
  void ControlSlider::setMinimumValue(float minimumValue)

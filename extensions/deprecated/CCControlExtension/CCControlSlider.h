@@ -42,7 +42,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlSlider: public Control
+class ControlSlider: public __Control
 {
 public:
     /**

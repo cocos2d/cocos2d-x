@@ -69,7 +69,7 @@ ControlStepper::~ControlStepper()
 
 bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite)
 {
-    if (Control::init())
+    if (__Control::init())
     {
         CCASSERT(minusSprite,   "Minus sprite must be not nil");
         CCASSERT(plusSprite,    "Plus sprite must be not nil");
@@ -213,7 +213,7 @@ void ControlStepper::setValueWithSendingEvent(double value, bool send)
     
     if (send)
     {
-        this->sendActionsForControlEvents(Control::EventType::VALUE_CHANGED);
+        this->sendActionsForControlEvents(__Control::EventType::VALUE_CHANGED);
     }
 }
 

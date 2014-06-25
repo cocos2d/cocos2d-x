@@ -89,7 +89,7 @@ public:
  */
  
 class EditBox
-: public ControlButton
+: public __ControlButton
 , public IMEDelegate
 {
 public:
@@ -415,7 +415,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void touchDownAction(Ref *sender, Control::EventType controlEvent);
+    void touchDownAction(Ref *sender, __Control::EventType controlEvent);
     
 protected:
     void updatePosition(float dt);
