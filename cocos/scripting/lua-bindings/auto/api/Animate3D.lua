@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Animate3D
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Animate3D] setPlayBack 

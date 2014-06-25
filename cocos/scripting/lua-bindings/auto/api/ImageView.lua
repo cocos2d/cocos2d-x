@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ImageView
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ImageView] loadTexture 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventFocus
 -- @extend Event
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventFocus] EventFocus 

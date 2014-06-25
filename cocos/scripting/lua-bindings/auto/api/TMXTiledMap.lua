@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TMXTiledMap
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TMXTiledMap] setObjectGroups 

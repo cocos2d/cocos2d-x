@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CatmullRomTo
 -- @extend CardinalSplineTo
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#CatmullRomTo] initWithDuration 

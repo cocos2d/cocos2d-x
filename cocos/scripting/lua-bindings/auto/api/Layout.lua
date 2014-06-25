@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Layout
 -- @extend Widget,LayoutProtocol
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
@@ -178,15 +179,19 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- overload function: addChild(cc.Node, int, string)
+-- overload function: addChild(cc.Node, int)
+--          
+-- overload function: addChild(cc.Node)
 --          
 -- overload function: addChild(cc.Node, int, int)
+--          
+-- overload function: addChild(cc.Node, int, string)
 --          
 -- @function [parent=#Layout] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#Layout] getDescription 
