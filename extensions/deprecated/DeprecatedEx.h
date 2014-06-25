@@ -14,6 +14,7 @@ NS_CC_EXT_BEGIN
 CC_DEPRECATED_ATTRIBUTE typedef __Invocation Invocation ;
 CC_DEPRECATED_ATTRIBUTE typedef __Control Control;
 CC_DEPRECATED_ATTRIBUTE typedef __ControlButton ControlButton;
+CC_DEPRECATED_ATTRIBUTE typedef __ControlColourPicker ControlColourPicker;
 
 NS_CC_EXT_END
 

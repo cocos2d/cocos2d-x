@@ -47,19 +47,19 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlColourPicker: public __Control
+class __ControlColourPicker: public __Control
 {
 public:
-    static ControlColourPicker* create();
+    static __ControlColourPicker* create();
     /**
      * @js ctor
      */
-    ControlColourPicker();
+    __ControlColourPicker();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlColourPicker();
+    virtual ~__ControlColourPicker();
 
     virtual bool init() override;
 

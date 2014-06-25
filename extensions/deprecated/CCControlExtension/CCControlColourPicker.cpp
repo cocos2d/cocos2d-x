@@ -35,7 +35,7 @@
 
 NS_CC_EXT_BEGIN
 
-ControlColourPicker::ControlColourPicker()
+__ControlColourPicker::__ControlColourPicker()
 : _colourPicker(nullptr)
 , _huePicker(nullptr)
 , _background(nullptr)
@@ -43,14 +43,14 @@ ControlColourPicker::ControlColourPicker()
 
 }
 
-ControlColourPicker::~ControlColourPicker()
+__ControlColourPicker::~__ControlColourPicker()
 {
     CC_SAFE_RELEASE(_background);
     CC_SAFE_RELEASE(_huePicker);
     CC_SAFE_RELEASE(_colourPicker);
 }
 
-bool ControlColourPicker::init()
+bool __ControlColourPicker::init()
 {
     if (__Control::init())
     {
@@ -92,8 +92,8 @@ bool ControlColourPicker::init()
         _colourPicker->initWithTargetAndPos(spriteSheet, Vec2(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
-        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::hueSliderValueChanged), __Control::EventType::VALUE_CHANGED);
-        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlColourPicker::colourSliderValueChanged), __Control::EventType::VALUE_CHANGED);
+        _huePicker->addTargetWithActionForControlEvents(this, cccontrol_selector(__ControlColourPicker::hueSliderValueChanged), __Control::EventType::VALUE_CHANGED);
+        _colourPicker->addTargetWithActionForControlEvents(this, cccontrol_selector(__ControlColourPicker::colourSliderValueChanged), __Control::EventType::VALUE_CHANGED);
        
         // Set defaults
         updateHueAndControlPicker();
@@ -108,16 +108,16 @@ bool ControlColourPicker::init()
         return false;
 }
 
-ControlColourPicker* ControlColourPicker::create()
+__ControlColourPicker* __ControlColourPicker::create()
 {
-    ControlColourPicker *pRet = new ControlColourPicker();
+    __ControlColourPicker *pRet = new __ControlColourPicker();
     pRet->init();
     pRet->autorelease();
     return pRet;
 }
 
 
-void ControlColourPicker::setColor(const Color3B& color)
+void __ControlColourPicker::setColor(const Color3B& color)
 {
     // XXX fixed me if not correct
     __Control::setColor(color);
@@ -132,7 +132,7 @@ void ControlColourPicker::setColor(const Color3B& color)
     updateHueAndControlPicker();
 }
 
-void ControlColourPicker::setEnabled(bool enabled)
+void __ControlColourPicker::setEnabled(bool enabled)
 {
     __Control::setEnabled(enabled);
     if (_huePicker != NULL)
@@ -147,13 +147,13 @@ void ControlColourPicker::setEnabled(bool enabled)
 
 
 //need two events to prevent an infinite loop! (can't update huePicker when the huePicker triggers the callback due to Control::EventType::VALUE_CHANGED)
-void ControlColourPicker::updateControlPicker()
+void __ControlColourPicker::updateControlPicker()
 {
     _huePicker->setHue(_hsv.h);
     _colourPicker->updateWithHSV(_hsv);
 }
 
-void ControlColourPicker::updateHueAndControlPicker()
+void __ControlColourPicker::updateHueAndControlPicker()
 {
     _huePicker->setHue(_hsv.h);
     _colourPicker->updateWithHSV(_hsv);
@@ -161,7 +161,7 @@ void ControlColourPicker::updateHueAndControlPicker()
 }
 
 
-void ControlColourPicker::hueSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
+void __ControlColourPicker::hueSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
 {
     _hsv.h      = ((ControlHuePicker*)sender)->getHue();
 
@@ -175,7 +175,7 @@ void ControlColourPicker::hueSliderValueChanged(Ref * sender, __Control::EventTy
     updateControlPicker();
 }
 
-void ControlColourPicker::colourSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
+void __ControlColourPicker::colourSliderValueChanged(Ref * sender, __Control::EventType controlEvent)
 {
     _hsv.s=((ControlSaturationBrightnessPicker*)sender)->getSaturation();
     _hsv.v=((ControlSaturationBrightnessPicker*)sender)->getBrightness();
@@ -191,7 +191,7 @@ void ControlColourPicker::colourSliderValueChanged(Ref * sender, __Control::Even
 }
 
 //ignore all touches, handled by children
-bool ControlColourPicker::onTouchBegan(Touch* touch, Event* pEvent)
+bool __ControlColourPicker::onTouchBegan(Touch* touch, Event* pEvent)
 {
     return false;
 }
