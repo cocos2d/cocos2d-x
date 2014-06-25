@@ -18,7 +18,7 @@ LOCAL_SRC_FILES := \
 
 LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/luajit/include \
                            $(COCOS2DX_ROOT)/external/tolua \
-                           $(QUICK_V3_LIB)/cocos2dx/cocos/scripting/lua-bindings/manual \
+                           $(QUICK_V3_LIB)/cocos2dx/lua-bindings/manual \
                            $(LOCAL_PATH)/ \
                            $(LOCAL_PATH)/cjson \
                            $(LOCAL_PATH)/zlib \
@@ -30,7 +30,7 @@ LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/luajit/include \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(COCOS2DX_ROOT)/external/lua/luajit/include \
                     $(COCOS2DX_ROOT)/external/lua/tolua \
-                    $(QUICK_V3_LIB)/cocos2dx/cocos/scripting/lua-bindings/manual \
+                    $(QUICK_V3_LIB)/cocos2dx/lua-bindings/manual \
                     $(LOCAL_PATH)/cjson \
                     $(LOCAL_PATH)/zlib \
                     $(LOCAL_PATH)/debugger \

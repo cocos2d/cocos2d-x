@@ -5,28 +5,28 @@ LOCAL_MODULE    := cocos_lua_static
 
 LOCAL_MODULE_FILENAME := liblua
 
-LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
-          manual/CCLuaEngine.cpp \
-          manual/CCLuaStack.cpp \
-          manual/lua_debugger.c \
-          manual/CCLuaValue.cpp \
-          manual/Cocos2dxLuaLoader.cpp \
-          manual/Lua_web_socket.cpp \
-          manual/LuaScriptHandlerMgr.cpp \
-          manual/LuaBasicConversions.cpp \
-          manual/lua_cocos2dx_manual.cpp \
-          manual/lua_cocos2dx_extension_manual.cpp \
-          manual/lua_cocos2dx_external_extra_manual.cpp \
-          manual/lua_cocos2dx_physics_manual.cpp \
-          manual/lua_cocos2dx_deprecated.cpp \
-          manual/platform/android/CCLuaJavaBridge.cpp \
-          manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
-          manual/tolua_fix.cpp \
-          manual/lua_extensions.c \
-          auto/lua_cocos2dx_auto.cpp \
-          auto/lua_cocos2dx_extension_auto.cpp \
-          auto/lua_cocos2dx_extra_auto.cpp \
-          auto/lua_cocos2dx_physics_auto.cpp \
+LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
+          $(LOCAL_PATH)/manual/CCLuaEngine.cpp \
+          $(LOCAL_PATH)/manual/CCLuaStack.cpp \
+          $(LOCAL_PATH)/manual/lua_debugger.c \
+          $(LOCAL_PATH)/manual/CCLuaValue.cpp \
+          $(LOCAL_PATH)/manual/Cocos2dxLuaLoader.cpp \
+          $(LOCAL_PATH)/manual/Lua_web_socket.cpp \
+          $(LOCAL_PATH)/manual/LuaScriptHandlerMgr.cpp \
+          $(LOCAL_PATH)/manual/LuaBasicConversions.cpp \
+          $(LOCAL_PATH)/manual/lua_cocos2dx_manual.cpp \
+          $(LOCAL_PATH)/manual/lua_cocos2dx_extension_manual.cpp \
+          $(LOCAL_PATH)/manual/lua_cocos2dx_external_extra_manual.cpp \
+          $(LOCAL_PATH)/manual/lua_cocos2dx_physics_manual.cpp \
+          $(LOCAL_PATH)/manual/lua_cocos2dx_deprecated.cpp \
+          $(LOCAL_PATH)/manual/platform/android/CCLuaJavaBridge.cpp \
+          $(LOCAL_PATH)/manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
+          $(LOCAL_PATH)/manual/tolua_fix.cpp \
+          $(LOCAL_PATH)/manual/lua_extensions.c \
+          $(LOCAL_PATH)/auto/lua_cocos2dx_auto.cpp \
+          $(LOCAL_PATH)/auto/lua_cocos2dx_extension_auto.cpp \
+          $(LOCAL_PATH)/auto/lua_cocos2dx_extra_auto.cpp \
+          $(LOCAL_PATH)/auto/lua_cocos2dx_physics_auto.cpp \
           $(COCOS2DX_ROOT)/external/lua/tolua/tolua_event.c \
           $(COCOS2DX_ROOT)/external/lua/tolua/tolua_is.c \
           $(COCOS2DX_ROOT)/external/lua/tolua/tolua_map.c \

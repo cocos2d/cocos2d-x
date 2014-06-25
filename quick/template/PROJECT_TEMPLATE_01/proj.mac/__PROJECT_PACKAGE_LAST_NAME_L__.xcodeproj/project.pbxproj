@@ -354,8 +354,8 @@
 					"\"$(QUICK_V3_ROOT)/external\"",
 					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
 					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/manual\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/auto\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -398,8 +398,8 @@
 					"\"$(QUICK_V3_ROOT)/external\"",
 					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
 					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/manual\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/auto\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";

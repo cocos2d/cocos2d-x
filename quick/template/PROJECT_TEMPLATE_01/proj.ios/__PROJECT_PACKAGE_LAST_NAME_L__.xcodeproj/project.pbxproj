@@ -427,8 +427,8 @@
 					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
 					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/auto\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/manual\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -478,8 +478,8 @@
 					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
 					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/auto\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/cocos/scripting/lua-bindings/manual\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/clua-bindings/manual\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

@@ -17,7 +17,7 @@ LOCAL_SRC_FILES := \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(QUICK_V3_LIB)/cocos2dx/cocos/scripting/lua-bindings/manual
+                           $(QUICK_V3_LIB)/cocos2dx/lua-bindings/manual
 
 LOCAL_C_INCLUDES := $(LOCAL_EXPORT_C_INCLUDES) \
                     $(COCOS2DX_CORE) \
