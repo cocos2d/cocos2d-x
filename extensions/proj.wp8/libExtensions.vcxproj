@@ -165,18 +165,18 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlColourPicker.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlPotentiometer.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlStepper.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlSwitch.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlUtils.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\deprecated\CCControlExtension\CCScale9Sprite.cpp" />
     <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp" />
     <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWp8.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
@@ -196,19 +196,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlColourPicker.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlPotentiometer.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlStepper.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlSwitch.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlUtils.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\deprecated\CCControlExtension\CCScale9Sprite.h" />
     <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h" />
     <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h" />
     <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWp8.h" />

@@ -4,9 +4,6 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{202b519b-b5e0-499f-b3b8-ed5da144b248}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\CCControlExtension">
-      <UniqueIdentifier>{c07abd14-e9dd-4e2d-85c4-a180070161b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI\CCScrollView">
       <UniqueIdentifier>{46797895-f71d-4ddb-b381-d0884e678d39}</UniqueIdentifier>
     </Filter>
@@ -19,6 +16,9 @@
     <Filter Include="AssetsManager">
       <UniqueIdentifier>{49487dbe-5758-436a-b014-8e2edc6b33ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\deprecated">
+      <UniqueIdentifier>{6cdc9d33-ddc5-4824-9bb6-c1197eec4be4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp">
@@ -29,42 +29,6 @@
     </ClCompile>
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp">
       <Filter>GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlHuePicker.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlPotentiometer.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSlider.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlStepper.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp">
-      <Filter>GUI\CCControlExtension</Filter>
     </ClCompile>
     <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWin.cpp">
       <Filter>GUI\CCEditBox</Filter>
@@ -84,6 +48,42 @@
     <ClCompile Include="..\physics-nodes\CCPhysicsSprite.cpp">
       <Filter>physics_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControl.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlButton.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlColourPicker.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlHuePicker.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlPotentiometer.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlSlider.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlStepper.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlSwitch.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCControlUtils.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCInvocation.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deprecated\CCControlExtension\CCScale9Sprite.cpp">
+      <Filter>GUI\deprecated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -96,45 +96,6 @@
     </ClInclude>
     <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h">
       <Filter>GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlColourPicker.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlExtensions.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlHuePicker.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlPotentiometer.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlSlider.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlStepper.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h">
-      <Filter>GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GUI\CCControlExtension\CCControl.h">
-      <Filter>GUI\CCControlExtension</Filter>
     </ClInclude>
     <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWin.h">
       <Filter>GUI\CCEditBox</Filter>
@@ -156,6 +117,45 @@
     </ClInclude>
     <ClInclude Include="..\physics-nodes\CCPhysicsSprite.h">
       <Filter>physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControl.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlButton.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlColourPicker.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlExtensions.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlHuePicker.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlPotentiometer.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlSaturationBrightnessPicker.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlSlider.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlStepper.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlSwitch.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCControlUtils.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCInvocation.h">
+      <Filter>GUI\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\deprecated\CCControlExtension\CCScale9Sprite.h">
+      <Filter>GUI\deprecated</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
