@@ -73,7 +73,8 @@ xcopy "xaml\App.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\
 xcopy "xaml\MainPage.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\MainPage.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\EditBox.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
-xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq</Command>
+xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
+xcopy "cpp" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\AppComponent\src\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,7 +95,8 @@ xcopy "xaml\App.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\
 xcopy "xaml\MainPage.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\MainPage.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\EditBox.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
-xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq</Command>
+xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
+xcopy "cpp" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\AppComponent\src\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -115,7 +117,8 @@ xcopy "xaml\App.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\
 xcopy "xaml\MainPage.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\MainPage.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\EditBox.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
-xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq</Command>
+xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
+xcopy "cpp" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\AppComponent\src\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -136,7 +139,8 @@ xcopy "xaml\App.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\
 xcopy "xaml\MainPage.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\MainPage.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
 xcopy "xaml\EditBox.xaml" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
-xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq</Command>
+xcopy "xaml\EditBox.xaml.cs" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\App\*" /eiycq
+xcopy "cpp" "..\..\..\templates\cpp-template-default\proj.wp8-xaml\AppComponent\src\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

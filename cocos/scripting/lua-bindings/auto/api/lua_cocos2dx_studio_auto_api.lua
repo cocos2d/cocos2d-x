@@ -2,6 +2,36 @@
 -- @module ccs
 
 --------------------------------------------------------
+-- the ccs ActionFrame
+-- @field [parent=#ccs] ActionFrame#ActionFrame ActionFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionMoveFrame
+-- @field [parent=#ccs] ActionMoveFrame#ActionMoveFrame ActionMoveFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionScaleFrame
+-- @field [parent=#ccs] ActionScaleFrame#ActionScaleFrame ActionScaleFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionRotationFrame
+-- @field [parent=#ccs] ActionRotationFrame#ActionRotationFrame ActionRotationFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionFadeFrame
+-- @field [parent=#ccs] ActionFadeFrame#ActionFadeFrame ActionFadeFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionTintFrame
+-- @field [parent=#ccs] ActionTintFrame#ActionTintFrame ActionTintFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs ActionObject
 -- @field [parent=#ccs] ActionObject#ActionObject ActionObject preloaded module
 
@@ -147,8 +177,93 @@
 
 
 --------------------------------------------------------
+-- the ccs NodeReader
+-- @field [parent=#ccs] NodeReader#NodeReader NodeReader preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionTimelineCache
+-- @field [parent=#ccs] ActionTimelineCache#ActionTimelineCache ActionTimelineCache preloaded module
+
+
+--------------------------------------------------------
+-- the ccs Frame
+-- @field [parent=#ccs] Frame#Frame Frame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs VisibleFrame
+-- @field [parent=#ccs] VisibleFrame#VisibleFrame VisibleFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs TextureFrame
+-- @field [parent=#ccs] TextureFrame#TextureFrame TextureFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs RotationFrame
+-- @field [parent=#ccs] RotationFrame#RotationFrame RotationFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs SkewFrame
+-- @field [parent=#ccs] SkewFrame#SkewFrame SkewFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs RotationSkewFrame
+-- @field [parent=#ccs] RotationSkewFrame#RotationSkewFrame RotationSkewFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs PositionFrame
+-- @field [parent=#ccs] PositionFrame#PositionFrame PositionFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ScaleFrame
+-- @field [parent=#ccs] ScaleFrame#ScaleFrame ScaleFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs AnchorPointFrame
+-- @field [parent=#ccs] AnchorPointFrame#AnchorPointFrame AnchorPointFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs InnerActionFrame
+-- @field [parent=#ccs] InnerActionFrame#InnerActionFrame InnerActionFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ColorFrame
+-- @field [parent=#ccs] ColorFrame#ColorFrame ColorFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs EventFrame
+-- @field [parent=#ccs] EventFrame#EventFrame EventFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ZOrderFrame
+-- @field [parent=#ccs] ZOrderFrame#ZOrderFrame ZOrderFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs Timeline
+-- @field [parent=#ccs] Timeline#Timeline Timeline preloaded module
+
+
+--------------------------------------------------------
 -- the ccs ActionTimelineData
 -- @field [parent=#ccs] ActionTimelineData#ActionTimelineData ActionTimelineData preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionTimeline
+-- @field [parent=#ccs] ActionTimeline#ActionTimeline ActionTimeline preloaded module
 
 
 return nil
