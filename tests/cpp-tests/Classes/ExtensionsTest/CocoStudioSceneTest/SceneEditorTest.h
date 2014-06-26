@@ -56,13 +56,13 @@ protected:
 	void loadFileChangeHelper(std::string& filePathName );  // switch json& csb
 
 private:
-	bool m_isCsbLoad;   // default is false
-    cocos2d::Label* m_loadtypelb;
-	static const char* m_loadtypeStr[2];
+	bool _isCsbLoad;   // default is false
+    cocos2d::Label* _loadtypelb;
+	static const char* _loadtypeStr[2];
     
 protected:
-    cocos2d::Node* m_rootNode;
-    std::string m_filePathName;
+    cocos2d::Node* _rootNode;
+    std::string _filePath;
 };
 
 class LoadSceneEdtiorFileTest : public SceneEditorTestLayer

@@ -106,7 +106,7 @@ void SceneEditorTestScene::MainMenuCallback(Ref *pSender)
     removeAllChildren();
 }
 
-const char* SceneEditorTestLayer::m_loadtypeStr[2] = {"change to load \nwith binary file","change to load \nwith json file"};
+const char* SceneEditorTestLayer::_loadtypeStr[2] = {"change to load \nwith binary file","change to load \nwith json file"};
 void SceneEditorTestLayer::onEnter()
 {
     CCLayer::onEnter();
@@ -127,10 +127,10 @@ void SceneEditorTestLayer::onEnter()
         addChild(l, 1, 10001);
         l->setPosition(Vec2(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
-	m_isCsbLoad = false;
-	m_loadtypelb = cocos2d::Label::createWithSystemFont(m_loadtypeStr[0], "Arial", 12);
+	_isCsbLoad = false;
+	_loadtypelb = cocos2d::Label::createWithSystemFont(_loadtypeStr[0], "Arial", 12);
 	// #endif        
-	MenuItemLabel* itemlb = CCMenuItemLabel::create(m_loadtypelb, CC_CALLBACK_1(SceneEditorTestLayer::changeLoadTypeCallback, this));
+	MenuItemLabel* itemlb = CCMenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestLayer::changeLoadTypeCallback, this));
 	Menu* loadtypemenu = CCMenu::create(itemlb, NULL);
 	loadtypemenu->setPosition(Point(VisibleRect::rightTop().x -50,VisibleRect::rightTop().y -20));
 	addChild(loadtypemenu,100);
@@ -208,20 +208,20 @@ void SceneEditorTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint3
 
 void SceneEditorTestLayer::changeLoadTypeCallback(cocos2d::Ref *pSender)
 {
-	m_isCsbLoad = !m_isCsbLoad;
-	m_loadtypelb->setString(m_loadtypeStr[(int)m_isCsbLoad]);
-	loadFileChangeHelper(m_filePathName);
+	_isCsbLoad = !_isCsbLoad;
+	_loadtypelb->setString(_loadtypeStr[(int)_isCsbLoad]);
+	loadFileChangeHelper(_filePath);
 	
-	if(m_rootNode != NULL)
+	if(_rootNode != NULL)
 	{
-		this->removeChild(m_rootNode);
-		m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-		if (m_rootNode == NULL)
+		this->removeChild(_rootNode);
+		_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+		if (_rootNode == NULL)
 		{
 			return ;
 		}
 		defaultPlay();
-		this->addChild(m_rootNode);
+		this->addChild(_rootNode);
 	}
 }
 
@@ -231,7 +231,7 @@ void SceneEditorTestLayer::loadFileChangeHelper(std::string& filePathName)
 	if(n == std::string::npos)
 		return;
 	filePathName = filePathName.substr(0,n);
-	if(m_isCsbLoad)
+	if(_isCsbLoad)
 		filePathName.append(".csb");
 	else
 		filePathName.append(".json");
@@ -275,14 +275,14 @@ void LoadSceneEdtiorFileTest::onExit()
 
 cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
 {
-    m_filePathName = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+    _filePath = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
 	defaultPlay();
-    return m_rootNode;
+    return _rootNode;
 }
 
 void LoadSceneEdtiorFileTest::defaultPlay()
@@ -327,16 +327,16 @@ void SpriteComponentTest::onExit()
 
 cocos2d::Node* SpriteComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/SpriteComponentTest/SpriteComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/SpriteComponentTest/SpriteComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
 
 	defaultPlay();
 
-    return m_rootNode;
+    return _rootNode;
 }
 
 
@@ -345,10 +345,10 @@ void SpriteComponentTest::defaultPlay()
 	ActionInterval*  action1 = CCBlink::create(2, 10);
 	ActionInterval*  action2 = CCBlink::create(2, 5);
 
-	ComRender *pSister1 = static_cast<ComRender*>(m_rootNode->getChildByTag(10003)->getComponent("CCSprite"));
+	ComRender *pSister1 = static_cast<ComRender*>(_rootNode->getChildByTag(10003)->getComponent("CCSprite"));
 	pSister1->getNode()->runAction(action1);
 
-	ComRender *pSister2 = static_cast<ComRender*>(m_rootNode->getChildByTag(10004)->getComponent("CCSprite"));
+	ComRender *pSister2 = static_cast<ComRender*>(_rootNode->getChildByTag(10004)->getComponent("CCSprite"));
 	pSister2->getNode()->runAction(action2);
 }
 
@@ -389,22 +389,22 @@ void ArmatureComponentTest::onExit()
 
 cocos2d::Node* ArmatureComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
 	defaultPlay();
-    return m_rootNode;
+    return _rootNode;
 }
 
 void ArmatureComponentTest::defaultPlay()
 {
-	ComRender *pBlowFish = static_cast<ComRender*>(m_rootNode->getChildByTag(10007)->getComponent("CCArmature"));
+	ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10007)->getComponent("CCArmature"));
 	pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Point(-1000.0f, 0)));
 
-	ComRender *pButterflyfish = static_cast<ComRender*>(m_rootNode->getChildByTag(10008)->getComponent("CCArmature"));
+	ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10008)->getComponent("CCArmature"));
 	pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Point(-1000.0f, 0)));
 
 }
@@ -445,15 +445,15 @@ void UIComponentTest::onExit()
 
 cocos2d::Node* UIComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/UIComponentTest/UIComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/UIComponentTest/UIComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
 	defaultPlay();
     
-    return m_rootNode;
+    return _rootNode;
 }
 
 void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
@@ -462,10 +462,10 @@ void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 	{
         case ui::Widget::TouchEventType::BEGAN:
 		{
-			ComRender *pBlowFish = static_cast<ComRender*>(m_rootNode->getChildByTag(10010)->getComponent("CCArmature"));
+			ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10010)->getComponent("CCArmature"));
 			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 
-			ComRender *pButterflyfish = static_cast<ComRender*>(m_rootNode->getChildByTag(10011)->getComponent("CCArmature"));
+			ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10011)->getComponent("CCArmature"));
 			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 		}
 		break;
@@ -477,7 +477,7 @@ void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 void UIComponentTest::defaultPlay()
 {
 
-    ComRender *render = static_cast<ComRender*>(m_rootNode->getChildByTag(10025)->getComponent("GUIComponent"));
+    ComRender *render = static_cast<ComRender*>(_rootNode->getChildByTag(10025)->getComponent("GUIComponent"));
 	Widget* widget = static_cast<cocos2d::ui::Widget*>(render->getNode());
 	Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
     button->addTouchEventListener(CC_CALLBACK_2(UIComponentTest::touchEvent, this));
@@ -520,19 +520,19 @@ void TmxMapComponentTest::onExit()
 
 cocos2d::Node* TmxMapComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
     defaultPlay();
-    return m_rootNode;
+    return _rootNode;
 }
 
 void TmxMapComponentTest::defaultPlay()
 {
-	ComRender *tmxMap = static_cast<ComRender*>(m_rootNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
+	ComRender *tmxMap = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
 	ActionInterval *actionTo = CCSkewTo::create(2, 0.f, 2.f);
 	ActionInterval *rotateTo = CCRotateTo::create(2, 61.0f);
 	ActionInterval *actionScaleTo = CCScaleTo::create(2, -0.44f, 0.47f);
@@ -582,19 +582,19 @@ void ParticleComponentTest::onExit()
 
 cocos2d::Node* ParticleComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/ParticleComponentTest/ParticleComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/ParticleComponentTest/ParticleComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
 	defaultPlay();
-    return m_rootNode;
+    return _rootNode;
 }
 
 void ParticleComponentTest::defaultPlay()
 {
-	ComRender* Particle = static_cast<ComRender*>(m_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
+	ComRender* Particle = static_cast<ComRender*>(_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
 	ActionInterval*  jump = CCJumpBy::create(5, Point(-500,0), 50, 4);
 	FiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), NULL);
 	Particle->getNode()->runAction(action);
@@ -637,14 +637,14 @@ void EffectComponentTest::onExit()
 
 cocos2d::Node* EffectComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/EffectComponentTest/EffectComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/EffectComponentTest/EffectComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
     defaultPlay();  
-	return m_rootNode;
+	return _rootNode;
 }
 
 void EffectComponentTest::animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
@@ -655,7 +655,7 @@ void EffectComponentTest::animationEvent(Armature *armature, MovementEventType m
 	{
 		if (id.compare("Fire") == 0)
 		{
-			ComAudio *pAudio = static_cast<ComAudio*>(m_rootNode->getChildByTag(10015)->getComponent("CCComAudio"));
+			ComAudio *pAudio = static_cast<ComAudio*>(_rootNode->getChildByTag(10015)->getComponent("CCComAudio"));
 			pAudio->playEffect();
 		}
 	}
@@ -663,7 +663,7 @@ void EffectComponentTest::animationEvent(Armature *armature, MovementEventType m
 
 void EffectComponentTest::defaultPlay()
 {
-    ComRender *render = static_cast<ComRender*>(m_rootNode->getChildByTag(10015)->getComponent("CCArmature"));
+    ComRender *render = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCArmature"));
 	Armature *pAr = static_cast<Armature*>(render->getNode());
 	pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(EffectComponentTest::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 }
@@ -704,19 +704,19 @@ void BackgroundComponentTest::onExit()
 
 cocos2d::Node* BackgroundComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
 	defaultPlay();
-    return m_rootNode;
+    return _rootNode;
 }
 
 void BackgroundComponentTest::defaultPlay()
 {
-	ComAudio *Audio = static_cast<ComAudio*>(m_rootNode->getComponent("CCBackgroundAudio"));
+	ComAudio *Audio = static_cast<ComAudio*>(_rootNode->getComponent("CCBackgroundAudio"));
 	Audio->playBackgroundMusic();
 }
 
@@ -761,8 +761,8 @@ bool AttributeComponentTest::initData()
 	bool bRet = false;
 	rapidjson::Document doc;
 	do {
-		CC_BREAK_IF(m_rootNode == nullptr);
-		ComAttribute *attribute = static_cast<ComAttribute*>(m_rootNode->getChildByTag(10015)->getComponent("CCComAttribute"));
+		CC_BREAK_IF(_rootNode == nullptr);
+		ComAttribute *attribute = static_cast<ComAttribute*>(_rootNode->getChildByTag(10015)->getComponent("CCComAttribute"));
 		CC_BREAK_IF(attribute == nullptr);
 		log("Name: %s, HP: %f, MP: %f", attribute->getString("name").c_str(), attribute->getFloat("maxHP"), attribute->getFloat("maxMP"));
 
@@ -773,13 +773,13 @@ bool AttributeComponentTest::initData()
 
 cocos2d::Node* AttributeComponentTest::createGameScene()
 {
-	m_filePathName = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
-    return m_rootNode;
+    return _rootNode;
 }
 
 void AttributeComponentTest::defaultPlay()
@@ -867,15 +867,15 @@ void TriggerTest::gameLogic(float dt)
 
 cocos2d::Node* TriggerTest::createGameScene()
 {
-	m_filePathName = "scenetest/TriggerTest/TriggerTest.json";
-    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
-	if (m_rootNode == NULL)
+	_filePath = "scenetest/TriggerTest/TriggerTest.json";
+    _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+	if (_rootNode == NULL)
 	{
 		return NULL;
 	}
     
 	defaultPlay();
-    return m_rootNode;
+    return _rootNode;
 }
 void TriggerTest::defaultPlay()
 {
