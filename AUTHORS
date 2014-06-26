@@ -656,6 +656,7 @@ Developers:
         
     lite3
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
+        Added HttpClient::sendImmediate()
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
