@@ -227,8 +227,8 @@ public:
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
     
     virtual bool init();
-    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
-    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets);
+    virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
+    virtual bool init(Sprite* sprite, const Rect& rect, const Rect& capInsets);
     /**
      * Creates and returns a new sprite object with the specified cap insets.
      * You use this method to add cap insets to a sprite or to change the existing
@@ -239,7 +239,7 @@ public:
      */
     Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets);
     
-    virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
+    virtual bool updateWithSprite(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
     virtual void setSpriteFrame(SpriteFrame * spriteFrame);
     
     // overrides
@@ -249,12 +249,6 @@ public:
      * @lua NA
      */
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-    virtual void setOpacityModifyRGB(bool bValue) override;
-    virtual bool isOpacityModifyRGB(void) const override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
     
 protected:
     void updateCapInset();
@@ -266,7 +260,7 @@ protected:
     Rect _capInsetsInternal;
     bool _positionsAreDirty;
     
-    SpriteBatchNode* _scale9Image;
+    Sprite* _scale9Image; //the original sprite
     Sprite* _topLeft;
     Sprite* _top;
     Sprite* _topRight;
@@ -277,7 +271,7 @@ protected:
     Sprite* _bottom;
     Sprite* _bottomRight;
     
-    bool _opacityModifyRGB;
+    bool _scale9Enabled;
     
     /** Original sprite's size. */
     CC_SYNTHESIZE_READONLY(Size, _originalSize, OriginalSize);

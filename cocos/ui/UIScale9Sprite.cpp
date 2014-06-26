@@ -43,11 +43,11 @@ namespace ui {
     , _bottomLeft(nullptr)
     , _bottom(nullptr)
     , _bottomRight(nullptr)
-    , _opacityModifyRGB(false)
     , _insetLeft(0)
     , _insetTop(0)
     , _insetRight(0)
-    , _insetBottom(0)
+    , _insetBottom(0),
+    _scale9Enabled(true)
     {
         
     }
@@ -68,19 +68,19 @@ namespace ui {
     
     bool Scale9Sprite::init()
     {
-        return this->initWithBatchNode(NULL, Rect::ZERO, Rect::ZERO);
+        return this->init(NULL, Rect::ZERO, Rect::ZERO);
     }
     
-    bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets)
+    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
     {
-        return this->initWithBatchNode(batchnode, rect, false, capInsets);
+        return this->init(sprite, rect, false, capInsets);
     }
     
-    bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets)
+    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets)
     {
-        if(batchnode)
+        if(sprite)
         {
-            this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
+            this->updateWithSprite(sprite, rect, rotated, capInsets);
         }
         this->setCascadeColorEnabled(true);
         this->setCascadeOpacityEnabled(true);
@@ -96,7 +96,7 @@ x+=xtranslate;                       \
 #define    TRANSLATE_Y(x, y, ytranslate) \
 y+=ytranslate;                       \
 
-    bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets)
+    bool Scale9Sprite::updateWithSprite(Sprite* sprite, const Rect& originalRect, bool rotated, const Rect& capInsets)
     {
         GLubyte opacity = getOpacity();
         Color3B color = getColor();
@@ -116,10 +116,10 @@ y+=ytranslate;                       \
         CC_SAFE_RELEASE(this->_bottomRight);
         
         
-        if(this->_scale9Image != batchnode)
+        if(this->_scale9Image != sprite)
         {
             CC_SAFE_RELEASE(this->_scale9Image);
-            _scale9Image = batchnode;
+            _scale9Image = sprite;
             CC_SAFE_RETAIN(_scale9Image);
         }
         
@@ -137,7 +137,7 @@ y+=ytranslate;                       \
         if ( rect.equals(Rect::ZERO) )
         {
             // Get the texture size as original
-            Size textureSize = _scale9Image->getTextureAtlas()->getTexture()->getContentSize();
+            Size textureSize = _scale9Image->getTexture()->getContentSize();
             
             rect = Rect(0, 0, textureSize.width, textureSize.height);
         }
@@ -445,8 +445,8 @@ y+=ytranslate;                       \
     
     bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
     {
-        SpriteBatchNode *batchnode = SpriteBatchNode::create(file, 9);
-        bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
+        Sprite *sprite = Sprite::create(file);
+        bool pReturn = this->init(sprite, rect, capInsets);
         return pReturn;
     }
     
@@ -523,10 +523,10 @@ y+=ytranslate;                       \
         Texture2D* texture = spriteFrame->getTexture();
         CCASSERT(texture != NULL, "CCTexture must be not nil");
         
-        SpriteBatchNode *batchnode = SpriteBatchNode::createWithTexture(texture, 9);
-        CCASSERT(batchnode != NULL, "CCSpriteBatchNode must be not nil");
+        Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
+        CCASSERT(sprite != NULL, "sprite must be not nil");
         
-        bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
+        bool pReturn = this->init(sprite, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
         return pReturn;
     }
     
@@ -609,7 +609,7 @@ y+=ytranslate;                       \
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
     {
         Scale9Sprite* pReturn = new Scale9Sprite();
-        if ( pReturn && pReturn->initWithBatchNode(_scale9Image, _spriteRect, capInsets) )
+        if ( pReturn && pReturn->init(_scale9Image, _spriteRect, capInsets) )
         {
             pReturn->autorelease();
             return pReturn;
@@ -649,7 +649,7 @@ y+=ytranslate;                       \
     void Scale9Sprite::setCapInsets(Rect capInsets)
     {
         Size contentSize = this->_contentSize;
-        this->updateWithBatchNode(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
+        this->updateWithSprite(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
         this->setContentSize(contentSize);
     }
     
@@ -675,28 +675,11 @@ y+=ytranslate;                       \
         this->setCapInsets(insets);
     }
     
-    void Scale9Sprite::setOpacityModifyRGB(bool var)
-    {
-        if (!_scale9Image)
-        {
-            return;
-        }
-        _opacityModifyRGB = var;
-        
-        for(auto child : _scale9Image->getChildren()){
-            child->setOpacityModifyRGB(_opacityModifyRGB);
-        }
-    }
-    
-    bool Scale9Sprite::isOpacityModifyRGB() const
-    {
-        return _opacityModifyRGB;
-    }
     
     void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame)
     {
-        SpriteBatchNode * batchnode = SpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
-        this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), Rect::ZERO);
+        Sprite * sprite = Sprite::createWithTexture(spriteFrame->getTexture());
+        this->updateWithSprite(sprite, spriteFrame->getRect(), spriteFrame->isRotated(), Rect::ZERO);
         
         // Reset insets
         this->_insetLeft = 0;
@@ -756,60 +739,16 @@ y+=ytranslate;                       \
             this->updatePositions();
             this->_positionsAreDirty = false;
         }
+        if (_scale9Enabled) {
+            if (_scale9Image) {
+                _scale9Image->setVisible(false);
+            }
+        }else{
+            if (_scale9Image) {
+                _scale9Image->setVisible(true);
+            }
+        }
         Node::visit(renderer, parentTransform, parentFlags);
-    }
-    
-    void Scale9Sprite::setColor(const Color3B& color)
-    {
-        if (!_scale9Image)
-        {
-            return;
-        }
-        
-        Node::setColor(color);
-        
-        for(auto child : _scale9Image->getChildren()){
-            child->setColor(color);
-        }
-    }
-    
-    void Scale9Sprite::setOpacity(GLubyte opacity)
-    {
-        if (!_scale9Image)
-        {
-            return;
-        }
-        Node::setOpacity(opacity);
-        
-        for(auto child : _scale9Image->getChildren()){
-            child->setOpacity(opacity);
-        }
-    }
-    
-    void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
-    {
-        if (!_scale9Image)
-        {
-            return;
-        }
-        Node::updateDisplayedColor(parentColor);
-        
-        for(auto child : _scale9Image->getChildren()){
-            child->updateDisplayedColor(parentColor);
-        }
-    }
-    
-    void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
-    {
-        if (!_scale9Image)
-        {
-            return;
-        }
-        Node::updateDisplayedOpacity(parentOpacity);
-        
-        for(auto child : _scale9Image->getChildren()){
-            child->updateDisplayedOpacity(parentOpacity);
-        }
     }
     
 }}
