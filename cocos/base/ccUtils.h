@@ -24,6 +24,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #ifndef __SUPPORT_CC_UTILS_H__
 #define __SUPPORT_CC_UTILS_H__
+
+#include <vector>
+#include <string>
+#include "2d/CCNode.h"
 #include "base/ccMacros.h"
 
 /** @file ccUtils.h
@@ -58,6 +62,8 @@ namespace utils
      * @since v3.2
      */
     void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+    
+    std::vector<Node*> findChildren(const Node &node, const std::string &name);
 }
 
 NS_CC_END
