@@ -1,7 +1,7 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT_DIR="`dirname $DIR`"
-LUAJIT_SRC_DIR="$ROOT_DIR/lib/cocos2d-x/scripting/lua/luajit/LuaJIT-2.0.3"
+LUAJIT_SRC_DIR="$QUICK_V3_CORE_PATH/lib/cocos2dx/lua_extensions/LuaJIT-2.0.3"
 
 cd $LUAJIT_SRC_DIR
 make

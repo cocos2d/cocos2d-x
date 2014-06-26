@@ -17,7 +17,7 @@ else
     QUICK_V3_ROOT="$DIR/.."
 fi;
 
-QUICK_V3_CORE_PATH="$QUICK_V3_ROOT/quick"
+export QUICK_V3_CORE_PATH="$QUICK_V3_ROOT/quick"
 
 echo ""
 echo "QUICK_V3_ROOT = \"$QUICK_V3_ROOT\""
