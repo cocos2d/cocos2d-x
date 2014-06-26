@@ -34,7 +34,6 @@
 		9F29B270194E90DF001A6981 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26A194E90DF001A6981 /* libcocos2dx Mac.a */; };
 		9F29B271194E90DF001A6981 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26B194E90DF001A6981 /* libcocos2dx-extensions Mac.a */; };
 		9F29B272194E90DF001A6981 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26C194E90DF001A6981 /* libCocosDenshion Mac.a */; };
-		9F29B273194E90DF001A6981 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F29B26D194E90DF001A6981 /* libluabindings Mac.a */; };
 		9F359E3D1953C8CD0052017E /* AppControllerBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F359E3C1953C8CD0052017E /* AppControllerBridge.mm */; };
 		9F3BF72C194E91380072B3D0 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */; };
 		9F3BF72E194E91900072B3D0 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3BF72D194E91900072B3D0 /* libcurl.dylib */; };
@@ -226,7 +225,6 @@
 				9F29B270194E90DF001A6981 /* libcocos2dx Mac.a in Frameworks */,
 				9F29B271194E90DF001A6981 /* libcocos2dx-extensions Mac.a in Frameworks */,
 				9F29B272194E90DF001A6981 /* libCocosDenshion Mac.a in Frameworks */,
-				9F29B273194E90DF001A6981 /* libluabindings Mac.a in Frameworks */,
 				9F1C8D33194DE61E0068C99B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
