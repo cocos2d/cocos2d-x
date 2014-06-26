@@ -329,7 +329,7 @@ static int lua_cocos2dx_spine_Skeleton_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_spine_Skeleton(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"sp.Skeleton");
-    tolua_cclass(tolua_S,"Skeleton","sp.Skeleton","cc.Node",nullptr);    
+    tolua_cclass(tolua_S,"Skeleton","sp.Skeleton","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Skeleton");
         tolua_function(tolua_S,"setToSetupPose",lua_cocos2dx_spine_Skeleton_setToSetupPose);
@@ -558,7 +558,7 @@ static int lua_cocos2dx_spine_SkeletonAnimation_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_spine_SkeletonAnimation(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"sp.SkeletonAnimation");
-    tolua_cclass(tolua_S,"SkeletonAnimation","sp.SkeletonAnimation","sp.Skeleton",nullptr);    
+    tolua_cclass(tolua_S,"SkeletonAnimation","sp.SkeletonAnimation","sp.Skeleton",nullptr);
 
     tolua_beginmodule(tolua_S,"SkeletonAnimation");
         tolua_function(tolua_S,"setMix",lua_cocos2dx_spine_SkeletonAnimation_setMix);
