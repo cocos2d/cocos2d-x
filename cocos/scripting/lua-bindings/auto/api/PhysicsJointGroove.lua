@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointGroove
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointGroove] setAnchr2 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CheckBox
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#CheckBox] getSelectedState 

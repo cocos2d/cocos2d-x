@@ -201,6 +201,8 @@ public:
      * It is a scaling factor that multiplies the width of the node and its children.
      *
      * @param scaleX   The scale factor on X axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleX(float scaleX);
     /**
@@ -219,6 +221,8 @@ public:
      * It is a scaling factor that multiplies the height of the node and its children.
      *
      * @param scaleY   The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleY(float scaleY);
     /**
@@ -236,6 +240,8 @@ public:
      * The Default value is 1.0 if you haven't changed it before.
      *
      * @param scaleY   The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleZ(float scaleZ);
     /**
@@ -254,6 +260,8 @@ public:
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
      *
      * @param scale     The scale factor for both X and Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scale);
     /**
@@ -273,6 +281,8 @@ public:
      *
      * @param scaleX     The scale factor on X axis.
      * @param scaleY     The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scaleX, float scaleY);
 
@@ -395,6 +405,8 @@ public:
      * The default skewX angle is 0. Positive values distort the node in a CW direction.
      *
      * @param skewX The X skew angle of the node in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setSkewX(float skewX);
     /**
@@ -418,6 +430,8 @@ public:
      * The default skewY angle is 0. Positive values distort the node in a CCW direction.
      *
      * @param skewY    The Y skew angle of the node in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setSkewY(float skewY);
     /**
@@ -520,6 +534,8 @@ public:
     /**
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotation3D(const Vec3& rotation);
     /**
@@ -537,6 +553,8 @@ public:
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
      * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotationSkewX(float rotationX);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
@@ -561,6 +579,8 @@ public:
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
      * @param rotationY    The Y rotation in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotationSkewY(float rotationY);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
@@ -657,16 +677,31 @@ public:
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * 
+     * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
-    virtual void addChild(Node* child, int localZOrder, int tag);
+     virtual void addChild(Node* child, int localZOrder, int tag);
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param name      A string to identify the node easily. Please refer to `setName(int)`
+     *
+     */
+    virtual void addChild(Node* child, int localZOrder, const std::string &name);
     /**
      * Gets a child from the container with its tag
      *
      * @param tag   An identifier to find the child node.
      *
      * @return a Node object whose tag equals to the input parameter
+     *
+     * Please use `getChildByName()` instead
      */
-    virtual Node * getChildByTag(int tag) const;
+     virtual Node * getChildByTag(int tag) const;
     /**
      * Gets a child from the container with its name
      *
@@ -771,8 +806,17 @@ public:
      *
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     *
+     * Please use `removeChildByName` instead.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+     virtual void removeChildByTag(int tag, bool cleanup = true);
+    /**
+     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     *
+     * @param name       A string that identifies a child node
+     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     */
+    virtual void removeChildByName(const std::string &name, bool cleanup = true);
     /**
      * Removes all children from the container with a cleanup.
      *
@@ -812,16 +856,20 @@ public:
      * Returns a tag that is used to identify the node easily.
      *
      * @return An integer that identifies the node.
+     *
+     * Please use `getTag()` instead.
      */
-    virtual int getTag() const;
+     virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *
      * Please refer to getTag for the sample code.
      *
      * @param tag   A integer that identifies the node.
+     *
+     * Please use `setName()` instead.
      */
-    virtual void setTag(int tag);
+     virtual void setTag(int tag);
     
     /** Returns a string that is used to identify the node.
      * @return A string that identifies the node.
@@ -1455,6 +1503,11 @@ protected:
     virtual void updatePhysicsBodyPosition(Scene* layer);
     virtual void updatePhysicsBodyRotation(Scene* layer);
 #endif // CC_USE_PHYSICS
+    
+private:
+    void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
+    
+protected:
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis

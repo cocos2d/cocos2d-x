@@ -2,6 +2,7 @@
 --------------------------------
 -- @module RepeatForever
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#RepeatForever] setInnerAction 

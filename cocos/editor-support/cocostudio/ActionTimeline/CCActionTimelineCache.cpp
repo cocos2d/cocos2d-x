@@ -332,7 +332,7 @@ Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
 
     const char* texture = DICTOOL->getStringValue_json(json, Value);
 
-    if(texture != NULL)
+    if(texture != nullptr)
     {
         std::string path = texture;
 
@@ -354,7 +354,7 @@ Frame* ActionTimelineCache::loadEventFrame(const rapidjson::Value& json)
 
     const char* evnt = DICTOOL->getStringValue_json(json, Value);
 
-    if(evnt != NULL)
+    if(evnt != nullptr)
         frame->setEvent(evnt);
 
     return frame;

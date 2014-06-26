@@ -139,7 +139,7 @@ void VideoPlayerTest::createVideo()
 {
     auto centerPos = Vec2(_visibleRect.origin.x + _visibleRect.size.width / 2,_visibleRect.origin.y + _visibleRect.size.height /2);
 
-    auto widgetSize = _widget->getSize();
+    auto widgetSize = _widget->getContentSize();
 
     _videoPlayer = VideoPlayer::create();
     _videoPlayer->setPosition(centerPos);

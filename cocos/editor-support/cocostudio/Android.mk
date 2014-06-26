@@ -39,6 +39,7 @@ CCSSceneReader.cpp \
 TriggerBase.cpp \
 TriggerMng.cpp \
 TriggerObj.cpp \
+CocoLoader.cpp \
 WidgetReader/WidgetReader.cpp \
 WidgetReader/ButtonReader/ButtonReader.cpp \
 WidgetReader/CheckBoxReader/CheckBoxReader.cpp \

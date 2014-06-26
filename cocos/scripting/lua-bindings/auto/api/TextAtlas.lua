@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TextAtlas
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#TextAtlas] getStringLength 

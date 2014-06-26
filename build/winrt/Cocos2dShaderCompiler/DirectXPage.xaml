@@ -9,14 +9,15 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <StackPanel Orientation="Horizontal" Margin="40,100,0,0" Height="50" VerticalAlignment="Top">
-            <TextBlock Text="Memory: " FontSize="36"/>
-            <TextBlock x:Name="MemoryTextBlock" FontSize="36"/>
-            <TextBlock Text=" MB" FontSize="36"/>
-            <TextBlock Text="  Peak: " FontSize="36"/>
-            <TextBlock x:Name="PeakMemoryTextBlock" FontSize="36"/>
-            <TextBlock Text=" MB" FontSize="36"/>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="40,100,0,0" Height="50" VerticalAlignment="Top">
+            <TextBlock Text="Save file to cocos\platform\wp8\shaders\precompiledshaders.h" FontSize="36"/>
         </StackPanel>
-        <Button Margin="40,10,0,0" x:Name="compileButton" Content="Compile" Width="150" Click="OnCompile" />
+        <StackPanel Orientation="Horizontal" Margin="40,100,0,0" Height="50" VerticalAlignment="Top">
+            <TextBlock Text="Result: " FontSize="36"/>
+            <TextBlock Text="" FontSize="36" x:Name="ResultText" />
+        </StackPanel>
+        <Button Margin="40,100,0,0" x:Name="compileButton" Content="Compile" Width="150" Click="OnCompile" />
+        </StackPanel>
     </Grid>
 </Page>

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionSplitCols
 -- @extend TransitionScene,TransitionEaseScene
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionSplitCols] action 

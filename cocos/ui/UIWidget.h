@@ -371,7 +371,8 @@ public:
      *
      * @param size that is widget's size
      */
-    virtual void setSize(const Size &size);
+    CC_DEPRECATED_ATTRIBUTE virtual void setSize(const Size &size);
+    virtual void setContentSize(const Size& contentSize) override;
 
     /**
      * Changes the percent that is widget's percent size
@@ -403,11 +404,11 @@ public:
      *
      * @return size
      */
-    const Size& getSize() const;
+    CC_DEPRECATED_ATTRIBUTE const Size& getSize() const;
     
     const Size& getCustomSize() const;
     
-    virtual const Size& getLayoutSize() {return _size;};
+    virtual const Size& getLayoutSize() {return _contentSize;};
 
     /**
      * Returns size percent of widget
@@ -603,7 +604,6 @@ CC_CONSTRUCTOR_ACCESS:
      *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
-
     
 protected:
     //call back function called when size changed.
@@ -659,7 +659,6 @@ protected:
     //use
     int _actionTag;
 
-    Size _size;
     Size _customSize;
 
     Vec2 _sizePercent;

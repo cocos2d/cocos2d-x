@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParticleGalaxy
 -- @extend ParticleSystemQuad
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParticleGalaxy] create 

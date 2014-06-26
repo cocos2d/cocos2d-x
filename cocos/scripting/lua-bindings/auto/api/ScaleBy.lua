@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ScaleBy
 -- @extend ScaleTo
+-- @parent_module cc
 
 --------------------------------
 -- overload function: create(float, float, float)
