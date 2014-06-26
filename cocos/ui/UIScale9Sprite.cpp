@@ -25,6 +25,8 @@
 #include "UIScale9Sprite.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteFrameCache.h"
+#include "base/CCVector.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 namespace ui {
@@ -108,7 +110,7 @@ y+=ytranslate;                       \
         Rect rect(originalRect);
         
         // Release old sprites
-        this->removeAllChildrenWithCleanup(true);
+        _protectedChildren.clear();
         
         this->cleanupSlicedSprites();
         
@@ -124,8 +126,6 @@ y+=ytranslate;                       \
         {
             return false;
         }
-        
-        _scale9Image->removeAllChildrenWithCleanup(true);
         
         _capInsets = capInsets;
         _spriteFrameRotated = rotated;
@@ -296,48 +296,48 @@ y+=ytranslate;                       \
         // Centre
         _centre = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbounds, rotated);
         _centre->retain();
-        this->addChild(_centre, 0);
+        this->insertProtectedChild(_centre, 0);
         
         
         // Top
         _top = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcentertopbounds, rotated);
         _top->retain();
-        this->addChild(_top, 1);
+        this->insertProtectedChild(_top, 1);
         
         // Bottom
         _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, rotated);
         _bottom->retain();
-        this->addChild(_bottom, 1);
+        this->insertProtectedChild(_bottom, 1);
         
         // Left
         _left = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftcenterbounds, rotated);
         _left->retain();
-        this->addChild(_left, 1);
+        this->insertProtectedChild(_left, 1);
         
         // Right
         _right = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightcenterbounds, rotated);
         _right->retain();
-        this->addChild(_right, 1);
+        this->insertProtectedChild(_right, 1);
         
         // Top left
         _topLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedlefttopbounds, rotated);
         _topLeft->retain();
-        this->addChild(_topLeft, 2);
+        this->insertProtectedChild(_topLeft, 2);
         
         // Top right
         _topRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrighttopbounds, rotated);
         _topRight->retain();
-        this->addChild(_topRight, 2);
+        this->insertProtectedChild(_topRight, 2);
         
         // Bottom left
         _bottomLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftbottombounds, rotated);
         _bottomLeft->retain();
-        this->addChild(_bottomLeft, 2);
+        this->insertProtectedChild(_bottomLeft, 2);
         
         // Bottom right
         _bottomRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, rotated);
         _bottomRight->retain();
-        this->addChild(_bottomRight, 2);
+        this->insertProtectedChild(_bottomRight, 2);
     }
     
     void Scale9Sprite::setContentSize(const Size &size)
@@ -670,26 +670,84 @@ y+=ytranslate;                       \
     
     void Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
     {
-
-        if(this->_positionsAreDirty)
+        
+        // quick return if not visible. children won't be drawn.
+        if (!_visible)
         {
-            this->updatePositions();
-            this->_positionsAreDirty = false;
+            return;
         }
         
-        Node::visit(renderer, parentTransform, parentFlags);
+        uint32_t flags = processParentFlags(parentTransform, parentFlags);
         
-        if (_scale9Enabled)
+        // IMPORTANT:
+        // To ease the migration to v3.0, we still support the Mat4 stack,
+        // but it is deprecated and your code should not rely on it
+        Director* director = Director::getInstance();
+        CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+        
+        int i = 0;      // used by _children
+        int j = 0;      // used by _protectedChildren
+        
+        sortAllChildren();
+        sortAllProtectedChildren();
+        
+        //
+        // draw children and protectedChildren zOrder < 0
+        //
+        for( ; i < _children.size(); i++ )
         {
-            //rendering the 9 sprites
+            auto node = _children.at(i);
+            
+            if ( node && node->getLocalZOrder() < 0 )
+                node->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
         }
-        else
-        {
-            if (_scale9Image)
+        
+        if (_scale9Enabled) {
+            for( ; j < _protectedChildren.size(); j++ )
             {
-                _scale9Image->visit(renderer, parentTransform, parentFlags);
+                auto node = _protectedChildren.at(j);
+                
+                if ( node && node->getLocalZOrder() < 0 )
+                    node->visit(renderer, _modelViewTransform, flags);
+                else
+                    break;
+            }
+        }else{
+            if (_scale9Image) {
+                _scale9Image->visit(renderer, _modelViewTransform, parentFlags);
             }
         }
+       
+        
+        //
+        // draw self
+        //
+        this->draw(renderer, _modelViewTransform, flags);
+        
+        //
+        // draw children and protectedChildren zOrder >= 0
+        //
+        if (_scale9Enabled) {
+            for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
+                (*it)->visit(renderer, _modelViewTransform, flags);
+        }else{
+            if (_scale9Image) {
+                _scale9Image->visit(renderer, _modelViewTransform, parentFlags);
+            }
+        }
+        
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit(renderer, _modelViewTransform, flags);
+        
+        // reset for next frame
+        _orderOfArrival = 0;
+        
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         
     }
     
@@ -738,5 +796,112 @@ y+=ytranslate;                       \
     bool Scale9Sprite::getScale9Enabled() const
     {
         return _scale9Enabled;
+    }
+    
+    void Scale9Sprite::insertProtectedChild(cocos2d::Node *child, int z)
+    {
+        _reorderProtectedChildDirty = true;
+        _protectedChildren.pushBack(child);
+        child->_setLocalZOrder(z);
+    }
+    
+    void Scale9Sprite::sortAllProtectedChildren()
+    {
+        if(this->_positionsAreDirty)
+        {
+            this->updatePositions();
+            this->_positionsAreDirty = false;
+        }
+        if( _reorderProtectedChildDirty ) {
+            std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
+            _reorderProtectedChildDirty = false;
+        }
+    }
+    
+    void Scale9Sprite::cleanup()
+    {
+        Node::cleanup();
+        // timers
+        for( const auto &child: _protectedChildren)
+            child->cleanup();
+    }
+    
+    void Scale9Sprite::onEnter()
+    {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+                return;
+        }
+#endif
+        Node::onEnter();
+        for( const auto &child: _protectedChildren)
+            child->onEnter();
+    }
+    
+    void Scale9Sprite::onExit()
+    {
+        Node::onExit();
+        for( const auto &child: _protectedChildren)
+            child->onExit();
+    }
+    
+    void Scale9Sprite::onEnterTransitionDidFinish()
+    {
+        Node::onEnterTransitionDidFinish();
+        for( const auto &child: _protectedChildren)
+            child->onEnterTransitionDidFinish();
+    }
+    
+    void Scale9Sprite::onExitTransitionDidStart()
+    {
+        Node::onExitTransitionDidStart();
+        for( const auto &child: _protectedChildren)
+            child->onExitTransitionDidStart();
+    }
+    
+    void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
+    {
+        _displayedColor.r = _realColor.r * parentColor.r/255.0;
+        _displayedColor.g = _realColor.g * parentColor.g/255.0;
+        _displayedColor.b = _realColor.b * parentColor.b/255.0;
+        updateColor();
+        
+        if (_cascadeColorEnabled)
+        {
+            for(const auto &child : _children){
+                child->updateDisplayedColor(_displayedColor);
+            }
+            for(const auto &child : _protectedChildren){
+                child->updateDisplayedColor(_displayedColor);
+            }
+        }
+    }
+    
+    void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
+    {
+        _displayedOpacity = _realOpacity * parentOpacity/255.0;
+        updateColor();
+        
+        if (_cascadeOpacityEnabled)
+        {
+            for(auto child : _children){
+                child->updateDisplayedOpacity(_displayedOpacity);
+            }
+            for(auto child : _protectedChildren){
+                child->updateDisplayedOpacity(_displayedOpacity);
+            }
+        }
+    }
+    
+    void Scale9Sprite::disableCascadeColor()
+    {
+        for(auto child : _children){
+            child->updateDisplayedColor(Color3B::WHITE);
+        }
+        for(auto child : _protectedChildren){
+            child->updateDisplayedColor(Color3B::WHITE);
+        }
     }
 }}

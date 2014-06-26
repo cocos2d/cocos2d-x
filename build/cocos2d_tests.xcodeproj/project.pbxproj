@@ -805,6 +805,8 @@
 		29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D89191B595E0066F8DF /* UIWidgetAddNodeTest.cpp */; };
 		29080DE5191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
+		292344BF195BFCED003150BD /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292344BD195BFCED003150BD /* UIScale9SpriteTest.cpp */; };
+		292344C0195BFCED003150BD /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292344BD195BFCED003150BD /* UIScale9SpriteTest.cpp */; };
 		38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
 		38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
 		38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
@@ -1845,6 +1847,8 @@
 		29080D8A191B595E0066F8DF /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
 		29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest_Editor.cpp; sourceTree = "<group>"; };
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
+		292344BD195BFCED003150BD /* UIScale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9SpriteTest.cpp; sourceTree = "<group>"; };
+		292344BE195BFCED003150BD /* UIScale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9SpriteTest.h; sourceTree = "<group>"; };
 		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
 		38FA2E72194AEBE100FF2BE4 /* ActionTimelineTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTimelineTestScene.h; sourceTree = "<group>"; };
 		38FA2E75194AECF800FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ActionTimeline; path = "../tests/cpp-tests/Resources/ActionTimeline"; sourceTree = "<group>"; };
@@ -3493,6 +3497,8 @@
 				29080D7E191B595E0066F8DF /* UITextFieldTest */,
 				29080D83191B595E0066F8DF /* UITextTest */,
 				29080D88191B595E0066F8DF /* UIWidgetAddNodeTest */,
+				292344BD195BFCED003150BD /* UIScale9SpriteTest.cpp */,
+				292344BE195BFCED003150BD /* UIScale9SpriteTest.h */,
 			);
 			name = CocoStudioGUITest;
 			path = UITest/CocoStudioGUITest;
@@ -4563,6 +4569,7 @@
 			files = (
 				1AC35B3118CECF0C00F37B72 /* GLES-Render.cpp in Sources */,
 				29080DE1191B595E0066F8DF /* UITextTest_Editor.cpp in Sources */,
+				292344BF195BFCED003150BD /* UIScale9SpriteTest.cpp in Sources */,
 				1AC35C5318CECF0C00F37B72 /* TextInputTest.cpp in Sources */,
 				1AC35B4518CECF0C00F37B72 /* Bug-886.cpp in Sources */,
 				29080DCB191B595E0066F8DF /* UIScrollViewTest.cpp in Sources */,
@@ -4865,6 +4872,7 @@
 				1AC35C2418CECF0C00F37B72 /* ParticleTest.cpp in Sources */,
 				1AC35C6218CECF0C00F37B72 /* TouchesTest.cpp in Sources */,
 				29080DB0191B595E0066F8DF /* UIImageViewTest_Editor.cpp in Sources */,
+				292344C0195BFCED003150BD /* UIScale9SpriteTest.cpp in Sources */,
 				1AC35C6418CECF0C00F37B72 /* TransitionsTest.cpp in Sources */,
 				1AC35C4418CECF0C00F37B72 /* RotateWorldTest.cpp in Sources */,
 				1AC35B2618CECF0C00F37B72 /* ActionsProgressTest.cpp in Sources */,
