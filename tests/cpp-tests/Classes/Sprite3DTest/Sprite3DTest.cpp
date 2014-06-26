@@ -44,7 +44,8 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
     CL(Sprite3DEffectTest),
-    CL(Sprite3DWithSkinTest)
+    CL(Sprite3DWithSkinTest),
+    CL(Animate3DTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -532,7 +533,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 }
 std::string Sprite3DWithSkinTest::title() const
 {
-    return "Testing Sprite3D for animation from c3t";
+    return "Testing Sprite3D";
 }
 std::string Sprite3DWithSkinTest::subtitle() const
 {
@@ -576,5 +577,104 @@ void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Ev
         auto location = touch->getLocation();
         
         addNewSpriteWithCoords( location );
+    }
+}
+
+Animate3DTest::Animate3DTest()
+{
+    addSprite3D();
+}
+
+std::string Animate3DTest::title() const
+{
+    return "Testing Animate3D";
+}
+
+std::string Animate3DTest::subtitle() const
+{
+    return "";
+}
+
+void Animate3DTest::addSprite3D()
+{
+    std::string fileName = "Sprite3DTest/haigui.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width / 2.f, s.height / 2.f));
+    addChild(sprite);
+    auto animation = Animation3D::getOrCreate(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        sprite->runAction(animate);
+    }
+}
+
+Animate3DTest::Animate3DTransition::Animate3DTransition(cocos2d::Sprite3D* sprite)
+: _running(nullptr)
+, _fadeTo(nullptr)
+, _sprite(sprite)
+, _transTime(0.f)
+, _elapseTransTime(0.f)
+{
+    
+}
+Animate3DTest::Animate3DTransition::~Animate3DTransition()
+{
+    
+}
+
+void Animate3DTest::Animate3DTransition::fadeTo(Animate3D* animate, float transTime)
+{
+    if (_running == nullptr)
+        _running = animate;
+    else
+        _fadeTo = animate;
+    
+    if (animate && _running != animate)
+    {
+        _sprite->runAction(animate);
+        animate->setWeight(0.0f);
+        _transTime = transTime;
+        _elapseTransTime = 0.f;
+    }
+}
+
+void Animate3DTest::Animate3DTransition::stopRunningAnimate3D()
+{
+    if (_running)
+    _sprite->stopAction(_running);
+    _running = _fadeTo;
+    _fadeTo = nullptr;
+    if (_running)
+    {
+        _running->setWeight(1.0f);
+    }
+}
+
+void Animate3DTest::Animate3DTransition::stopAllAnimate3D()
+{
+    if (_running)
+        _sprite->stopAction(_running);
+    if (_fadeTo)
+        _sprite->stopAction(_fadeTo);
+    _running = nullptr;
+    _fadeTo = nullptr;
+}
+
+void Animate3DTest::Animate3DTransition::update(float dt)
+{
+    if (_fadeTo)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        if (t > 1.0f)
+            t = 1.0f;
+        _running->setWeight(1.f - t);
+        _fadeTo->setWeight(t);
+        
+        if (t == 1)// finish fade
+            stopRunningAnimate3D();
     }
 }

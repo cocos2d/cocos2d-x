@@ -29,6 +29,11 @@
 #include "../BaseTest.h"
 #include <string>
 
+namespace cocos2d {
+    class Animate3D;
+    class Sprite3D;
+}
+
 class Sprite3DTestDemo : public BaseTest
 {
 public:
@@ -149,6 +154,45 @@ public:
     void addNewSpriteWithCoords(Vec2 p);
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class Animate3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DTest);
+    Animate3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    void addSprite3D();
+    
+    class Animate3DTransition
+    {
+    public:
+        Animate3DTransition(cocos2d::Sprite3D* sprite);
+        ~Animate3DTransition();
+        
+        void fadeTo(cocos2d::Animate3D* animate, float transTime = 0.1f);
+        
+        void stopRunningAnimate3D();
+        
+        void stopAllAnimate3D();
+        
+        void update(float dt);
+        
+    protected:
+        
+        float               _transTime;
+        float               _elapseTransTime;
+        
+        cocos2d::Animate3D* _running; //running animation
+        cocos2d::Animate3D* _fadeTo; // fading to animation
+        cocos2d::Sprite3D* _sprite;
+    };
+    
+    cocos2d::Sprite3D* _sprite;
+    Animate3DTransition* _animateTrans;
 };
 
 class Sprite3DTestScene : public TestScene

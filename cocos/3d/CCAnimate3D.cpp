@@ -55,6 +55,7 @@ Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float durat
     
     animate->_start = fromTime / fullDuration;
     animate->_last = duration / fullDuration;
+    animate->setDuration(duration);
     
     return  animate;
 }
@@ -71,6 +72,7 @@ Animate3D* Animate3D::clone() const
     copy->_start = _start;
     copy->_last = _last;
     copy->_playBack = _playBack;
+    copy->setDuration(animate->getDuration());
 
     return copy;
 }
