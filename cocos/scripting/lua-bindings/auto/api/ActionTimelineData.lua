@@ -18,6 +18,6 @@
 -- @function [parent=#ActionTimelineData] create 
 -- @param self
 -- @param #int int
--- @return timeline::ActionTimelineData#timeline::ActionTimelineData ret (return value: ccs.timeline::ActionTimelineData)
+-- @return ActionTimelineData#ActionTimelineData ret (return value: ccs.ActionTimelineData)
         
 return nil
