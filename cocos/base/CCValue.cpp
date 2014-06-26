@@ -362,10 +362,10 @@ bool Value::operator== (const Value& v) const
     {
     case Type::BYTE:    return v._field.byteVal   == this->_field.byteVal;
     case Type::INTEGER: return v._field.intVal    == this->_field.intVal;
-    case Type::FLOAT:   return v._field.floatVal  == this->_field.floatVal;
-    case Type::DOUBLE:  return v._field.doubleVal == this->_field.doubleVal;
     case Type::BOOLEAN: return v._field.boolVal   == this->_field.boolVal;
     case Type::STRING:  return *v._field.strVal   == *this->_field.strVal;
+    case Type::FLOAT:   return fabs(v._field.floatVal  - this->_field.floatVal)  <= FLT_EPSILON;
+    case Type::DOUBLE:  return fabs(v._field.doubleVal - this->_field.doubleVal) <= FLT_EPSILON;
     case Type::VECTOR:
     {
         const auto &v1 = *(this->_field.vectorVal);
