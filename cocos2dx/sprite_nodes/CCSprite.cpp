@@ -230,7 +230,7 @@ bool CCSprite::initWithFile(const char *pszFilename)
     }
 
     // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
+    // when load texture failed, it's better to get a "transparent" sprite than a crashed program
     // this->release(); 
     return false;
 }
@@ -246,7 +246,7 @@ bool CCSprite::initWithFile(const char *pszFilename, const CCRect& rect)
     }
 
     // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
+    // when load texture failed, it's better to get a "transparent" sprite than a crashed program
     // this->release(); 
     return false;
 }
