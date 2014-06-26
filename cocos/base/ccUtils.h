@@ -63,6 +63,15 @@ namespace utils
      */
     void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
     
+    /** Find children by name, it will return all child that has the same name.
+     * It supports c++ 11 regular expression. It is  a helper function of `Node::enumerateChildren()`.
+     * You can refer to `Node::enumerateChildren()` for detail information.
+     *
+     * @param node The node to find
+     * @param name The name to search for, it supports c++ 11 expression
+     * @return Array of Nodes that matches the name
+     * @since v3.2
+     */
     std::vector<Node*> findChildren(const Node &node, const std::string &name);
 }
 
