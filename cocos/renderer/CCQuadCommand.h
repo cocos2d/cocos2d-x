@@ -70,6 +70,8 @@ protected:
     bool _preMultiplyMV;
 };
 
+//This type of quad command will not multiply vertex by modelview matrix, so you need a shader together with modelview matrix
+//OR the rendering result will be not correct
 class NopreMultiplyMVQuadCommand : public QuadCommand
 {
 public:
