@@ -79,6 +79,7 @@ bool FastTMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo
     _layerName = layerInfo->_name;
     _layerSize = layerInfo->_layerSize;
     _tiles = layerInfo->_tiles;
+    _quadsDirty = true;
     setOpacity( layerInfo->_opacity );
     setProperties(layerInfo->getProperties());
 
@@ -119,6 +120,7 @@ FastTMXLayer::FastTMXLayer()
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
 ,_dirty(true)
+, _quadsDirty(true)
 {
 }
 
@@ -136,6 +138,8 @@ bool sortQuadCommand(const V3F_C4B_T2F_Quad& a, const V3F_C4B_T2F_Quad& b)
 
 void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
+    updateTotalQuads();
+    
     if( flags != 0 || _dirty )
     {
         Size s = Director::getInstance()->getWinSize();
@@ -146,28 +150,50 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         rect = RectApplyTransform(rect, inv);
         
         _verticesToDraw = updateTiles(rect);
-        std::stable_sort(_quads.begin(), _quads.end(), sortQuadCommand);
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
         _dirty = false;
-        
     }
     
-    auto glprogramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-    int index = 0;
-    for(const auto& quadNumberIter : _quadsNumber)
+    if(_renderCommands.size() < _quadsIndices.size())
     {
-        int z = quadNumberIter.first;
-        auto& quadCommand = _renderCommands2[quadNumberIter.first];
-        quadCommand.init(z, _texture->getName(), glprogramState, BlendFunc::ALPHA_PREMULTIPLIED, &_quads[index], quadNumberIter.second, transform);
-        index += quadNumberIter.second;
-        renderer->addCommand(&quadCommand);
+        _renderCommands.resize(_quadsIndices.size());
     }
+    
+    int index = 0;
+    for(const auto& iter : _quadsIndices)
+    {
+        auto& cmd = _renderCommands[index++];
+        
+        cmd.init(iter.first);
+        printf("in draw function of FastTMXLayer %d\n", iter.second.size());
+        cmd.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, &iter.second);
+        renderer->addCommand(&cmd);
+    }
+    
+}
+
+void FastTMXLayer::onDraw(const std::vector<int> *indices)
+{
+    GL::bindTexture2D(_texture->getName());
+    getGLProgramState()->apply(_modelViewTransform);
+    
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_totalQuads[0]);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), ((char*)&_totalQuads[0]) + offsetof(V3F_C4B_T2F, colors));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), ((char*)&_totalQuads[0]) + offsetof(V3F_C4B_T2F, texCoords));
+    printf("in onDraw function of FastTMXLayer  %d\n", indices->size());
+    glDrawElements(GL_TRIANGLES, (GLsizei)indices->size(), GL_UNSIGNED_INT, &(*indices)[0]);
 }
 
 int FastTMXLayer::updateTiles(const Rect& culledRect)
 {
-    int tilesUsed = 0;
 
     Rect visibleTiles = culledRect;
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
@@ -209,17 +235,11 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
         tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
     }
     
-    // doesn't support VBO
-    int quadsNeed = std::min(static_cast<int>((visibleTiles.size.width + 2 *tilesOverX) * (visibleTiles.size.height + 2 * tilesOverY)), MAX_QUADS_COUNT);
-    if (_quads.size() < quadsNeed)
-    {
-        _quads.resize(quadsNeed);
-    }
+    _quadsIndices.clear();
 
     //clear quadsNumber
-    _quadsNumber.clear();
-
-    Size texSize = _tileSet->_imageSize;
+    
+    int tilesUsed = 0;
     for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
     {
         if(y<0 || y >= _layerSize.height)
@@ -228,109 +248,25 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
         {
             if(x<0 || x >= _layerSize.width)
                 continue;
-
-            int tileGID = _tiles[x + y * (int)_layerSize.width];
-
-            // GID==0 empty tile
-            if(tileGID!=0)
+            
+            int tileIndex = getTileIndexByPos(x, y);
+            if(_tiles[tileIndex] == 0) continue;
+            
+            int vertexZ = getVertexZForPos(Vec2(x,y));
+            auto& indices = _quadsIndices[vertexZ];
+            if(indices.capacity() == indices.size())
             {
-
-                V3F_C4B_T2F_Quad *quad = &_quads[tilesUsed];
-                
-                Vec3 nodePos(static_cast<float>(x), static_cast<float>(y), 0);
-                _tileToNodeTransform.transformPoint(&nodePos);
-
-                float left, right, top, bottom, z;
-                
-                z = getVertexZForPos(Vec2(x, y));
-                
-                //add quadsNumber
-                auto quadsNumberIter = _quadsNumber.find(z);
-                if(quadsNumberIter == _quadsNumber.end())
-                {
-                    _quadsNumber.insert(std::make_pair(z, 1));
-                }
-                else
-                {
-                    quadsNumberIter->second += 1;
-                }
-                
-                // vertices
-                if (tileGID & kTMXTileDiagonalFlag)
-                {
-                    left = nodePos.x;
-                    right = nodePos.x + tileSize.height;
-                    bottom = nodePos.y + tileSize.width;
-                    top = nodePos.y;
-                }
-                else
-                {
-                    left = nodePos.x;
-                    right = nodePos.x + tileSize.width;
-                    bottom = nodePos.y + tileSize.height;
-                    top = nodePos.y;
-                }
-
-                if(tileGID & kTMXTileVerticalFlag)
-                    std::swap(top, bottom);
-                if(tileGID & kTMXTileHorizontalFlag)
-                    std::swap(left, right);
-
-                if(tileGID & kTMXTileDiagonalFlag)
-                {
-                    // XXX: not working correcly
-                    quad->bl.vertices.x = left;
-                    quad->bl.vertices.y = bottom;
-                    quad->bl.vertices.z = z;
-                    quad->br.vertices.x = left;
-                    quad->br.vertices.y = top;
-                    quad->br.vertices.z = z;
-                    quad->tl.vertices.x = right;
-                    quad->tl.vertices.y = bottom;
-                    quad->tl.vertices.z = z;
-                    quad->tr.vertices.x = right;
-                    quad->tr.vertices.y = top;
-                    quad->tr.vertices.z = z;
-                }
-                else
-                {
-                    quad->bl.vertices.x = left;
-                    quad->bl.vertices.y = bottom;
-                    quad->bl.vertices.z = z;
-                    quad->br.vertices.x = right;
-                    quad->br.vertices.y = bottom;
-                    quad->br.vertices.z = z;
-                    quad->tl.vertices.x = left;
-                    quad->tl.vertices.y = top;
-                    quad->tl.vertices.z = z;
-                    quad->tr.vertices.x = right;
-                    quad->tr.vertices.y = top;
-                    quad->tr.vertices.z = z;
-                }
-
-                // texcoords
-                Rect tileTexture = _tileSet->getRectForGID(tileGID);
-                left   = (tileTexture.origin.x / texSize.width);
-                right  = left + (tileTexture.size.width / texSize.width);
-                bottom = (tileTexture.origin.y / texSize.height);
-                top    = bottom + (tileTexture.size.height / texSize.height);
-
-                quad->bl.texCoords.u = left;
-                quad->bl.texCoords.v = bottom;
-                quad->br.texCoords.u = right;
-                quad->br.texCoords.v = bottom;
-                quad->tl.texCoords.u = left;
-                quad->tl.texCoords.v = top;
-                quad->tr.texCoords.u = right;
-                quad->tr.texCoords.v = top;
-                
-                quad->bl.colors = Color4B::WHITE;
-                quad->br.colors = Color4B::WHITE;
-                quad->tl.colors = Color4B::WHITE;
-                quad->tr.colors = Color4B::WHITE;
-                
-                tilesUsed++;
+                indices.reserve(indices.size() + 4096 * 6);
             }
+            
+            CC_ASSERT(_tileToQuadIndex.find(tileIndex) != _tileToQuadIndex.end() && _tileToQuadIndex[tileIndex] <= _totalQuads.size()-1);
+            int quadIndex = (int)_tileToQuadIndex[tileIndex];
+            indices.push_back(quadIndex * 4);
+            indices.push_back(quadIndex * 4 + 1);
+            indices.push_back(quadIndex * 4 + 2);
+            indices.push_back(quadIndex * 4 + 3);
+            indices.push_back(quadIndex * 4 + 2);
+            indices.push_back(quadIndex * 4 + 1);
             
             if (tilesUsed >= MAX_QUADS_COUNT)
             {
@@ -453,6 +389,120 @@ Mat4 FastTMXLayer::tileToNodeTransform()
     
 }
 
+void FastTMXLayer::updateTotalQuads()
+{
+    if(_quadsDirty)
+    {
+        Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
+        Size texSize = _tileSet->_imageSize;
+        _tileToQuadIndex.clear();
+        _totalQuads.resize(int(_layerSize.width * _layerSize.height));
+        
+        int quadIndex = 0;
+        for(int y = 0; y < _layerSize.height; ++y)
+        {
+            for(int x =0; x < _layerSize.width; ++x)
+            {
+                int tileIndex = getTileIndexByPos(x, y);
+                int tileGID = _tiles[tileIndex];
+                
+                if(tileGID == 0) continue;
+                
+                _tileToQuadIndex[tileIndex] = quadIndex;
+                
+                auto& quad = _totalQuads[quadIndex];
+                
+                Vec3 nodePos(float(x), float(y), 0);
+                _tileToNodeTransform.transformPoint(&nodePos);
+                
+                float left, right, top, bottom, z;
+                
+                z = getVertexZForPos(Vec2(x, y));
+                
+                // vertices
+                if (tileGID & kTMXTileDiagonalFlag)
+                {
+                    left = nodePos.x;
+                    right = nodePos.x + tileSize.height;
+                    bottom = nodePos.y + tileSize.width;
+                    top = nodePos.y;
+                }
+                else
+                {
+                    left = nodePos.x;
+                    right = nodePos.x + tileSize.width;
+                    bottom = nodePos.y + tileSize.height;
+                    top = nodePos.y;
+                }
+                
+                if(tileGID & kTMXTileVerticalFlag)
+                    std::swap(top, bottom);
+                if(tileGID & kTMXTileHorizontalFlag)
+                    std::swap(left, right);
+                
+                if(tileGID & kTMXTileDiagonalFlag)
+                {
+                    // XXX: not working correcly
+                    quad.bl.vertices.x = left;
+                    quad.bl.vertices.y = bottom;
+                    quad.bl.vertices.z = z;
+                    quad.br.vertices.x = left;
+                    quad.br.vertices.y = top;
+                    quad.br.vertices.z = z;
+                    quad.tl.vertices.x = right;
+                    quad.tl.vertices.y = bottom;
+                    quad.tl.vertices.z = z;
+                    quad.tr.vertices.x = right;
+                    quad.tr.vertices.y = top;
+                    quad.tr.vertices.z = z;
+                }
+                else
+                {
+                    quad.bl.vertices.x = left;
+                    quad.bl.vertices.y = bottom;
+                    quad.bl.vertices.z = z;
+                    quad.br.vertices.x = right;
+                    quad.br.vertices.y = bottom;
+                    quad.br.vertices.z = z;
+                    quad.tl.vertices.x = left;
+                    quad.tl.vertices.y = top;
+                    quad.tl.vertices.z = z;
+                    quad.tr.vertices.x = right;
+                    quad.tr.vertices.y = top;
+                    quad.tr.vertices.z = z;
+                }
+                
+                // texcoords
+                Rect tileTexture = _tileSet->getRectForGID(tileGID);
+                left   = (tileTexture.origin.x / texSize.width);
+                right  = left + (tileTexture.size.width / texSize.width);
+                bottom = (tileTexture.origin.y / texSize.height);
+                top    = bottom + (tileTexture.size.height / texSize.height);
+                
+                quad.bl.texCoords.u = left;
+                quad.bl.texCoords.v = bottom;
+                quad.br.texCoords.u = right;
+                quad.br.texCoords.v = bottom;
+                quad.tl.texCoords.u = left;
+                quad.tl.texCoords.v = top;
+                quad.tr.texCoords.u = right;
+                quad.tr.texCoords.v = top;
+                
+                quad.bl.colors = Color4B::WHITE;
+                quad.br.colors = Color4B::WHITE;
+                quad.tl.colors = Color4B::WHITE;
+                quad.tr.colors = Color4B::WHITE;
+                
+                ++quadIndex;
+            }
+        }
+        
+        //TODO: update VBOs
+        
+        _quadsDirty = false;
+    }
+}
+
 // removing / getting tiles
 Sprite* FastTMXLayer::getTileAt(const Vec2& tileCoordinate)
 {
@@ -488,7 +538,7 @@ Sprite* FastTMXLayer::getTileAt(const Vec2& tileCoordinate)
             _spriteContainer.insert(std::pair<int, std::pair<Sprite*, int> >(index, std::pair<Sprite*, int>(tile, gid)));
             
             // tile is converted to sprite.
-            setTileForGID(index, 0);
+            setFlaggedTileGIDByIndex(index, 0);
         }
     }
     return tile;
@@ -568,7 +618,7 @@ void FastTMXLayer::removeTileAt(const Vec2& tileCoordinate)
         int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
         
         // remove tile from GID map
-        setTileForGID(z, 0);
+        setFlaggedTileGIDByIndex(z, 0);
         
         // remove it from sprites
         auto it = _spriteContainer.find(z);
@@ -579,9 +629,11 @@ void FastTMXLayer::removeTileAt(const Vec2& tileCoordinate)
     }
 }
 
-void FastTMXLayer::setTileForGID(int index, int gid)
+void FastTMXLayer::setFlaggedTileGIDByIndex(int index, int gid)
 {
+    if(gid == _tiles[index]) return;
     _tiles[index] = gid;
+    _quadsDirty = true;
     _dirty = true;
 }
 
@@ -682,7 +734,7 @@ void FastTMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags 
     else if (currentGID == 0)
     {
         int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
-        setTileForGID(z, gidAndFlags);
+        setFlaggedTileGIDByIndex(z, gidAndFlags);
     }
     // modifying an existing tile with a non-empty tile
     else
@@ -706,7 +758,7 @@ void FastTMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags 
         }
         else
         {
-            setTileForGID(z, gidAndFlags);
+            setFlaggedTileGIDByIndex(z, gidAndFlags);
         }
     }
 }

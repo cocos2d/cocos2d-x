@@ -145,8 +145,8 @@ public:
      * @js NA
      * @lua NA
      */
-    uint32_t* getTiles() const { return _tiles; };
-    void setTiles(uint32_t* tiles) { _tiles = tiles; };
+    const uint32_t* getTiles() const { return _tiles; };
+    void setTiles(uint32_t* tiles) { _tiles = tiles; _quadsDirty = true;};
     
     /** Tileset information for the layer */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
@@ -163,7 +163,8 @@ public:
     /** properties from the layer. They can be added using Tiled */
     inline const ValueMap& getProperties() const { return _properties; };
     inline ValueMap& getProperties() { return _properties; };
-    inline void setProperties(const ValueMap& properties) {
+    inline void setProperties(const ValueMap& properties)
+    {
         _properties = properties;
     };
 
@@ -174,8 +175,6 @@ public:
      - layer->removeChild(sprite, cleanup);
      */
     Sprite* getTileAt(const Vec2& tileCoordinate);
-    
-    Sprite* updateTileForGID(int gid, const Vec2& pos);
 
     void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
 
@@ -201,9 +200,15 @@ protected:
     
     int getVertexZForPos(const Vec2& pos);
     
-    void insertTileForGID(int gid, const Vec2& pos);
-    void setTileForGID(int index, int gid);
+    //Flip flags is packed into gid
+    void setFlaggedTileGIDByIndex(int index, int gid);
     
+    //
+    void updateTotalQuads();
+    
+    void onDraw(const std::vector<int>* indices);
+    
+    inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
 protected:
     
     //! name of the layer
@@ -240,9 +245,13 @@ protected:
     /** tile coordinate to node coordinate transform */
     Mat4 _tileToNodeTransform;
     /** quads to be rendered */
+    bool _quadsDirty;
+    std::map<ssize_t, ssize_t> _tileToQuadIndex;
+    std::vector<V3F_C4B_T2F_Quad> _totalQuads;
+    std::map<int/*zorder*/, std::vector<int>> _quadsIndices;
     std::vector<V3F_C4B_T2F_Quad> _quads;
     std::map<int/*zorder*/, ssize_t/*number*/> _quadsNumber;
-    std::unordered_map<int/*zorder*/, NopreMultiplyMVQuadCommand> _renderCommands2;
+    std::vector<CustomCommand> _renderCommands;
     bool _dirty;
 };
 
