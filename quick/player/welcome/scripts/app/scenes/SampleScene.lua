@@ -107,10 +107,16 @@ function SampleScene:createDemoTitle(sample, x, y)
 end
 
 function SampleScene:createDemoDescription(sample, x, y)
+    local title =  sample.title
+    local color = cc.c3b(50,144,144)
+    if not cc.FileUtils:getInstance():isFileExist(__G__QUICK_PATH__ .. sample.path) then
+        title = title .. " (unfinished)"
+        color = cc.c3b(255,0,0)
+    end
     local label = ui.newTTFLabel({
-        text = sample.title,
+        text = title,
         align = ui.TEXT_ALIGNMENT_CENTER,
-        color = cc.c3b(50,144,144),
+        color = color,
         size = 12,
     })
     label:setPosition(cc.p(x, y))
