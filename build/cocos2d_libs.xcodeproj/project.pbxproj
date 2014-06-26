@@ -1053,6 +1053,10 @@
 		29E99D1F1957BA7000046604 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29E99D1C1957BA7000046604 /* CocoLoader.cpp */; };
 		29E99D201957BA7000046604 /* CocoLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 29E99D1D1957BA7000046604 /* CocoLoader.h */; };
 		29E99D211957BA7000046604 /* CocoLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 29E99D1D1957BA7000046604 /* CocoLoader.h */; };
+		29EF7470195BC8920017CC50 /* UIScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29EF746E195BC8920017CC50 /* UIScale9Sprite.cpp */; };
+		29EF7471195BC8920017CC50 /* UIScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29EF746E195BC8920017CC50 /* UIScale9Sprite.cpp */; };
+		29EF7472195BC8920017CC50 /* UIScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 29EF746F195BC8920017CC50 /* UIScale9Sprite.h */; };
+		29EF7473195BC8920017CC50 /* UIScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 29EF746F195BC8920017CC50 /* UIScale9Sprite.h */; };
 		2AC795DB1862870F005EC8E1 /* SkeletonBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */; };
 		2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D51862867D005EC8E1 /* Event.cpp */; };
 		2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC795D71862867D005EC8E1 /* EventData.cpp */; };
@@ -2341,6 +2345,8 @@
 		29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutManager.h; sourceTree = "<group>"; };
 		29E99D1C1957BA7000046604 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
 		29E99D1D1957BA7000046604 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
+		29EF746E195BC8920017CC50 /* UIScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9Sprite.cpp; sourceTree = "<group>"; };
+		29EF746F195BC8920017CC50 /* UIScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9Sprite.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
 		2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBoxAttachment.h; sourceTree = "<group>"; };
 		2AC795D51862867D005EC8E1 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
@@ -4079,6 +4085,8 @@
 				2905F9F418CF08D000240AA3 /* UIHelper.cpp */,
 				2905F9F518CF08D000240AA3 /* UIHelper.h */,
 				2905F9EB18CF08D000240AA3 /* GUIDefine.h */,
+				29EF746E195BC8920017CC50 /* UIScale9Sprite.cpp */,
+				29EF746F195BC8920017CC50 /* UIScale9Sprite.h */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -5233,6 +5241,7 @@
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
 				50ABBE2F1925AB6F00A911A9 /* ccConfig.h in Headers */,
+				29EF7472195BC8920017CC50 /* UIScale9Sprite.h in Headers */,
 				373B9129187891F400198F86 /* CCComBase.h in Headers */,
 				1AAF5378180E3374000584C8 /* WebSocket.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
@@ -5453,6 +5462,7 @@
 			files = (
 				2AC795E71862875D005EC8E1 /* SkeletonBounds.h in Headers */,
 				2AC795E81862875D005EC8E1 /* Event.h in Headers */,
+				29EF7473195BC8920017CC50 /* UIScale9Sprite.h in Headers */,
 				2AC795E91862875D005EC8E1 /* EventData.h in Headers */,
 				2AC795EA1862875D005EC8E1 /* BoundingBoxAttachment.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC.h in Headers */,
@@ -6443,6 +6453,7 @@
 				1A8C59CF180E930E00EF57C3 /* CCDatas.cpp in Sources */,
 				1A8C59D3180E930E00EF57C3 /* CCDecorativeDisplay.cpp in Sources */,
 				50FCEBB318C72017004AD434 /* SliderReader.cpp in Sources */,
+				29EF7470195BC8920017CC50 /* UIScale9Sprite.cpp in Sources */,
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				50ABBE9F1925AB6F00A911A9 /* CCScheduler.cpp in Sources */,
 				50ABC0151926664800A911A9 /* CCImage.cpp in Sources */,
@@ -6826,6 +6837,7 @@
 				1AD71EB6180E26E600808F54 /* BoneData.cpp in Sources */,
 				50FCEB9C18C72017004AD434 /* ImageViewReader.cpp in Sources */,
 				50ABBE521925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
+				29EF7471195BC8920017CC50 /* UIScale9Sprite.cpp in Sources */,
 				1AD71EBA180E26E600808F54 /* CCSkeleton.cpp in Sources */,
 				1A01C68B18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
 				1AD71EBE180E26E600808F54 /* CCSkeletonAnimation.cpp in Sources */,
