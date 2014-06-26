@@ -24,7 +24,19 @@
 
 #ifndef __cocos2d_tests__UIScale9SpriteTest__
 #define __cocos2d_tests__UIScale9SpriteTest__
+#include "UIScene.h"
 
+class UIScale9SpriteTest : public UIScene
+{
+public:
+    UIScale9SpriteTest();
+    ~UIScale9SpriteTest();
+    bool init();
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIScale9SpriteTest)
+};
 
 
 #endif /* defined(__cocos2d_tests__UIScale9SpriteTest__) */

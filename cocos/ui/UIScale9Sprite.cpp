@@ -51,7 +51,7 @@ namespace ui {
     , _insetBottom(0),
     _scale9Enabled(true)
     {
-        
+        this->setAnchorPoint(Vec2(0.5,0.5));
     }
     
     Scale9Sprite::~Scale9Sprite()
@@ -144,6 +144,7 @@ y+=ytranslate;                       \
         _originalSize = rect.size;
         _preferredSize = _originalSize;
         _capInsetsInternal = capInsets;
+        
         
         this->createSlicedSprites(rect, rotated);
         
@@ -705,7 +706,6 @@ y+=ytranslate;                       \
             else
                 break;
         }
-        
         if (_scale9Enabled) {
             for( ; j < _protectedChildren.size(); j++ )
             {
@@ -718,9 +718,12 @@ y+=ytranslate;                       \
             }
         }else{
             if (_scale9Image) {
-                _scale9Image->visit(renderer, _modelViewTransform, parentFlags);
+                _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
         }
+      
+        
+        
        
         
         //
@@ -736,9 +739,10 @@ y+=ytranslate;                       \
                 (*it)->visit(renderer, _modelViewTransform, flags);
         }else{
             if (_scale9Image) {
-                _scale9Image->visit(renderer, _modelViewTransform, parentFlags);
+                _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
         }
+       
         
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
@@ -791,6 +795,7 @@ y+=ytranslate;                       \
     void Scale9Sprite::setScale9Enabled(bool enabled)
     {
         _scale9Enabled = enabled;
+        _reorderProtectedChildDirty = true;
     }
     
     bool Scale9Sprite::getScale9Enabled() const
@@ -813,8 +818,18 @@ y+=ytranslate;                       \
             this->_positionsAreDirty = false;
         }
         if( _reorderProtectedChildDirty ) {
+            if (!_scale9Enabled) {
+                this->adjustScale9ImagePosition();
+            }
             std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
             _reorderProtectedChildDirty = false;
+        }
+    }
+    
+    void Scale9Sprite::adjustScale9ImagePosition()
+    {
+        if (_scale9Image) {
+            _scale9Image->setPosition(_scale9Image->getPosition() + Vec2(_originalSize.width/2, _originalSize.height/2));
         }
     }
     
@@ -876,6 +891,9 @@ y+=ytranslate;                       \
             for(const auto &child : _protectedChildren){
                 child->updateDisplayedColor(_displayedColor);
             }
+            if (_scale9Image) {
+                _scale9Image->updateDisplayedColor(_displayedColor);
+            }
         }
     }
     
@@ -892,6 +910,9 @@ y+=ytranslate;                       \
             for(auto child : _protectedChildren){
                 child->updateDisplayedOpacity(_displayedOpacity);
             }
+            if (_scale9Image) {
+                _scale9Image->updateDisplayedOpacity(_displayedOpacity);
+            }
         }
     }
     
@@ -902,6 +923,9 @@ y+=ytranslate;                       \
         }
         for(auto child : _protectedChildren){
             child->updateDisplayedColor(Color3B::WHITE);
+        }
+        if (_scale9Image) {
+            _scale9Image->updateDisplayedColor(Color3B::WHITE);
         }
     }
 }}

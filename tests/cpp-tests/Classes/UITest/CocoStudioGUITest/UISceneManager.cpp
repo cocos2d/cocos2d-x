@@ -21,6 +21,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #endif
+#include "UIScale9SpriteTest.h"
 /*
 #include "UISwitchTest/UISwitchTest.h"
  */
@@ -120,8 +121,9 @@ static const char* s_testArray[] =
     "UIFocusTest-NestedLayout3",
     "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    "UIVideoPlayerTest"
+    "UIVideoPlayerTest",
 #endif
+    "UIScale9SpriteTest",
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -388,6 +390,8 @@ Scene *UISceneManager::currentUIScene()
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
+        case kUIScale9SpriteTests:
+            return UIScale9SpriteTest::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return NULL;
 }

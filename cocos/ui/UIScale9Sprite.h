@@ -307,6 +307,7 @@ protected:
     void updatePositions();
     void createSlicedSprites(const Rect& rect, bool rotated);
     void cleanupSlicedSprites();
+    void adjustScale9ImagePosition();
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
      * This appraoch can improves the performance massively.
