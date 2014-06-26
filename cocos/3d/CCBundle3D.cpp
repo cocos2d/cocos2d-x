@@ -247,7 +247,6 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
         if ( bone.HasMember("keyframes"))
         {
             const rapidjson::Value& bone_keyframes =  bone["keyframes"];
-            rapidjson::SizeType keyframe_size = bone_keyframes.Size();
             for (rapidjson::SizeType j = 0; j < bone_keyframes.Size(); j++)
             {
                 const rapidjson::Value&  bone_keyframe =  bone_keyframes[j];
