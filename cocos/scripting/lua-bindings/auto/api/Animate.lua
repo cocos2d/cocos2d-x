@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Animate
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- overload function: getAnimation()

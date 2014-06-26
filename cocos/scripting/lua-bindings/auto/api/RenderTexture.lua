@@ -2,6 +2,7 @@
 --------------------------------
 -- @module RenderTexture
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 

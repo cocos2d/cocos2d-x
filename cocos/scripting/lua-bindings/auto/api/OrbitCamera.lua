@@ -2,14 +2,8 @@
 --------------------------------
 -- @module OrbitCamera
 -- @extend ActionCamera
+-- @parent_module cc
 
---------------------------------
--- @function [parent=#OrbitCamera] sphericalRadius 
--- @param self
--- @param #float float
--- @param #float float
--- @param #float float
-        
 --------------------------------
 -- @function [parent=#OrbitCamera] create 
 -- @param self

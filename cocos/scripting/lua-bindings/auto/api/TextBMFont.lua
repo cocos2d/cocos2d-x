@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TextBMFont
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#TextBMFont] setFntFile 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Mesh
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Mesh] restore 
@@ -54,19 +55,4 @@
 -- @param #int int
 -- @return bool#bool ret (return value: bool)
         
---------------------------------
--- overload function: create(array_table, int, array_table, int, array_table, int)
---          
--- overload function: create(array_table, array_table, array_table, array_table)
---          
--- @function [parent=#Mesh] create
--- @param self
--- @param #array_table array
--- @param #int int
--- @param #array_table vector<short, std::allocator<short> >
--- @param #int int
--- @param #array_table array
--- @param #int int
--- @return Mesh#Mesh ret (retunr value: cc.Mesh)
-
 return nil

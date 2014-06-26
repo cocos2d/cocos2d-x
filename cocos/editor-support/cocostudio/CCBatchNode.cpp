@@ -66,19 +66,23 @@ bool BatchNode::init()
     return ret;
 }
 
-void BatchNode::addChild(Node *pChild)
-{
-    Node::addChild(pChild);
-}
-
-void BatchNode::addChild(Node *child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
+    Armature *armature = dynamic_cast<Armature *>(child);
+    if (armature != nullptr)
+    {
+        armature->setBatchNode(this);
+        if (_groupCommand == nullptr)
+        {
+            _groupCommand = new GroupCommand();
+        }
+    }
+}
+
+void BatchNode::addChild(cocos2d::Node *child, int zOrder, const std::string &name)
+{
+    Node::addChild(child, zOrder, name);
     Armature *armature = dynamic_cast<Armature *>(child);
     if (armature != nullptr)
     {

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Label
 -- @extend SpriteBatchNode,LabelProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Label] isClipMarginEnabled 
@@ -42,11 +43,6 @@
 -- @function [parent=#Label] getTextColor 
 -- @param self
 -- @return color4b_table#color4b_table ret (return value: color4b_table)
-        
---------------------------------
--- @function [parent=#Label] getCommonLineHeight 
--- @param self
--- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Label] setWidth 
@@ -91,6 +87,11 @@
 -- @return FontAtlas#FontAtlas ret (return value: cc.FontAtlas)
         
 --------------------------------
+-- @function [parent=#Label] setLineHeight 
+-- @param self
+-- @param #float float
+        
+--------------------------------
 -- @function [parent=#Label] setSystemFontSize 
 -- @param self
 -- @param #float float
@@ -119,6 +120,11 @@
 -- @param self
 -- @param #color4b_table color4b
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#Label] getAdditionalKerning 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- overload function: setCharMap(cc.Texture2D, int, int, int)
@@ -156,6 +162,11 @@
 -- @param #cc.TextVAlignment textvalignment
         
 --------------------------------
+-- @function [parent=#Label] getLineHeight 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- @function [parent=#Label] getTTFConfig 
 -- @param self
 -- @return _ttfConfig#_ttfConfig ret (return value: cc._ttfConfig)
@@ -190,6 +201,11 @@
 -- @param self
 -- @param #int int
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- @function [parent=#Label] setAdditionalKerning 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Label] getSystemFontSize 

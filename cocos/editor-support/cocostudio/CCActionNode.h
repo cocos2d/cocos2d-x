@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
-
+    
+class CocoLoader;
+struct stExpCocoNode;
 /**
 *  @js NA
 *  @lua NA
@@ -149,6 +151,7 @@ public:
 
 	/*init properties with a json dictionary*/
 	virtual void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    virtual void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, Ref* root);
 
 	/**
 	* Gets if the action is done once time.
@@ -157,6 +160,10 @@ public:
 	*/
 	virtual bool isActionDoneOnce();
 protected:
+    int valueToInt(const std::string& value);
+    bool valueToBool(const std::string& value);
+    float valueToFloat(const std::string& value);
+    
 	int _currentFrameIndex;
 	int _destFrameIndex;
 

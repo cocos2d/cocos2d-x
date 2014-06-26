@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParticleExplosion
 -- @extend ParticleSystemQuad
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParticleExplosion] create 

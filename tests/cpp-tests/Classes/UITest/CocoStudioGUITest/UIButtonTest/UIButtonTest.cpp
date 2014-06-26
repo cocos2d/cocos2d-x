@@ -18,7 +18,7 @@ bool UIButtonTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",32);
@@ -31,7 +31,7 @@ bool UIButtonTest::init()
         alert->setColor(Color3B(159, 168, 176));                
         
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         
         _uiLayer->addChild(alert);        
         
@@ -90,7 +90,7 @@ bool UIButtonTest_Scale9::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
@@ -102,7 +102,7 @@ bool UIButtonTest_Scale9::init()
         Text* alert = Text::create("Button scale9 render", "fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
         // Create the button
@@ -110,7 +110,7 @@ bool UIButtonTest_Scale9::init()
         // open scale9 render
         button->setScale9Enabled(true);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        button->setSize(Size(150, 70));
+        button->setContentSize(Size(150, 70));
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9::touchEvent, this));
         _uiLayer->addChild(button);
@@ -159,7 +159,7 @@ bool UIButtonTest_PressedAction::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",32);
@@ -172,7 +172,7 @@ bool UIButtonTest_PressedAction::init()
         alert->setColor(Color3B(159, 168, 176));
         
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         
         _uiLayer->addChild(alert);
         
@@ -229,7 +229,7 @@ bool UIButtonTest_Title::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the text button events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
@@ -241,7 +241,7 @@ bool UIButtonTest_Title::init()
         Text* alert = Text::create("Button with title", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                 widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+                                 widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         
         _uiLayer->addChild(alert);
         
@@ -249,6 +249,8 @@ bool UIButtonTest_Title::init()
         Button* button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
         button->setTitleText("Title Button");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setTitleColor(Color3B::YELLOW);
+        CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);

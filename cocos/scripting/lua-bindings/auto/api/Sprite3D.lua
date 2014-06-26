@@ -2,12 +2,8 @@
 --------------------------------
 -- @module Sprite3D
 -- @extend Node,BlendProtocol
+-- @parent_module cc
 
---------------------------------
--- @function [parent=#Sprite3D] getSkin 
--- @param self
--- @return MeshSkin#MeshSkin ret (return value: cc.MeshSkin)
-        
 --------------------------------
 -- overload function: setTexture(cc.Texture2D)
 --          

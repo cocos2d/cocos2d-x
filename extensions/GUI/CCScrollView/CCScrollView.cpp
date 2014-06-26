@@ -490,6 +490,18 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
+void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
+{
+    if (_container != child)
+    {
+        _container->addChild(child, zOrder, name);
+    }
+    else
+    {
+        Layer::addChild(child, zOrder, name);
+    }
+}
+
 void ScrollView::beforeDraw()
 {
     _beforeDrawCommand.init(_globalZOrder);

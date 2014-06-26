@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Shaky3D
 -- @extend Grid3DAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Shaky3D] create 

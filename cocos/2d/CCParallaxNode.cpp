@@ -93,6 +93,14 @@ void ParallaxNode::addChild(Node * child, int zOrder, int tag)
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
+void ParallaxNode::addChild(Node * child, int zOrder, const std::string &name)
+{
+    CC_UNUSED_PARAM(zOrder);
+    CC_UNUSED_PARAM(child);
+    CC_UNUSED_PARAM(name);
+    CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
+}
+
 void ParallaxNode::addChild(Node *child, int z, const Vec2& ratio, const Vec2& offset)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
@@ -105,7 +113,7 @@ void ParallaxNode::addChild(Node *child, int z, const Vec2& ratio, const Vec2& o
     pos.y = -pos.y + pos.y * ratio.y + offset.y;
     child->setPosition(pos);
 
-    Node::addChild(child, z, child->getTag());
+    Node::addChild(child, z, child->getName());
 }
 
 void ParallaxNode::removeChild(Node* child, bool cleanup)

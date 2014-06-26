@@ -75,6 +75,9 @@ Layer *CreateLayer(int index)
     case TEST_CHANGE_ANIMATION_INTERNAL:
         pLayer = new TestChangeAnimationInternal();
         break;
+    case TEST_DIRECT_FROM_BINARY:
+        pLayer = new TestLoadFromBinary();
+        break;
     default:
         break;
     }
@@ -411,10 +414,10 @@ void TestPerformance::addArmature(int number)
 
         Armature *armature = nullptr;
         armature = new Armature();
-        armature->init("Knight_f/Knight");
+        armature->init("Cowboy");
         armature->getAnimation()->playWithIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
-        armature->setScale(0.6f);
+        armature->setScale(0.1f);
         addArmatureToParent(armature);
         armature->release();
     }
@@ -1486,4 +1489,102 @@ void TestChangeAnimationInternal::onTouchesEnded(const std::vector<Touch*>& touc
     {
         Director::getInstance()->setAnimationInterval(1/30.0f);
     }
+}
+
+
+
+//TestDirectFromBinay
+
+const  char* TestLoadFromBinary::m_binaryFilesNames[BINARYFILECOUNT] ={"armature/bear.csb","armature/horse.csb",
+	"armature/Cowboy.csb","armature/hero.csb",
+	"armature/HeroAnimation.csb","armature/testEasing.csb"};
+const  char* TestLoadFromBinary::m_armatureNames[BINARYFILECOUNT] ={"bear","horse",
+	"Cowboy","hero",
+	"HeroAnimation","testEasing"};
+
+
+void TestLoadFromBinary::onEnter()
+{
+	ArmatureTestLayer::onEnter();
+	
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestLoadFromBinary::onTouchesEnded, this);    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+	m_armatureIndex = -1; // none
+    
+	// remove json created
+	// remove sync resource
+	ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/bear.ExportJson");
+	ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+	// load from binary
+	ArmatureDataManager::getInstance()->addArmatureFileInfo(m_binaryFilesNames[0]);
+    
+	m_armature = Armature::create(m_armatureNames[0]);
+	m_armature->getAnimation()->playWithIndex(0);
+	m_armature->setScale(1.0f);
+    
+	m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+	addChild(m_armature);
+    
+}
+
+
+std::string TestLoadFromBinary::title() const
+{
+	return "Test load from binary file";
+}
+std::string TestLoadFromBinary::subtitle() const
+{
+	return "direct load.Touch to change to Asynchronous load.";
+}
+
+void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+	// remove json created
+	// remove sync resource
+	if(-1 == m_armatureIndex )
+	{
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/hero.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/horse.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.ExportJson");
+        
+		for( int i = 0; i < BINARYFILECOUNT; i++)
+		{
+			ArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
+		}
+        
+		m_armatureIndex = -2;    // is loading
+	}
+	else if(m_armatureIndex>=0 && m_armature != NULL)
+	{
+		this->removeChild(m_armature);
+		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;
+		m_armature = Armature::create(m_armatureNames[m_armatureIndex]);
+		m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+		if(m_armatureIndex == 2 )  // cowboy is 0.2
+			m_armature->setScale(0.2f);
+		m_armature->getAnimation()->playWithIndex(0);
+		addChild(m_armature);
+	}
+}
+
+
+void TestLoadFromBinary::dataLoaded( float percent )
+{
+	Label *label = (Label *)getChildByTag(10001);
+	if (label)
+	{
+		char pszPercent[255];
+		sprintf(pszPercent, "%s %f", "Asynchronous loading: ", percent * 100);
+		label->setString(pszPercent);
+	}
+    
+	if (percent >= 1)
+	{
+		label->setString("Touch to change armature");
+		m_armatureIndex = 0;
+	}
 }

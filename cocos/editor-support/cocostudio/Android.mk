@@ -39,6 +39,7 @@ CCSSceneReader.cpp \
 TriggerBase.cpp \
 TriggerMng.cpp \
 TriggerObj.cpp \
+CocoLoader.cpp \
 WidgetReader/WidgetReader.cpp \
 WidgetReader/ButtonReader/ButtonReader.cpp \
 WidgetReader/CheckBoxReader/CheckBoxReader.cpp \
@@ -53,6 +54,11 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
+ActionTimeline/CCNodeReader.cpp \
+ActionTimeline/CCActionTimelineCache.cpp \
+ActionTimeline/CCFrame.cpp \
+ActionTimeline/CCTimeline.cpp \
+ActionTimeline/CCActionTimeline.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
