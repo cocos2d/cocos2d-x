@@ -608,30 +608,29 @@ Value FastTMXLayer::getProperty(const std::string& propertyName) const
 void FastTMXLayer::parseInternalProperties()
 {
     auto vertexz = getProperty("cc_vertexz");
-    if (!vertexz.isNull())
+    if (vertexz.isNull()) return;
+    
+    std::string vertexZStr = vertexz.asString();
+    // If "automatic" is on, then parse the "cc_alpha_func" too
+    if (vertexZStr == "automatic")
     {
-        std::string vertexZStr = vertexz.asString();
-        // If "automatic" is on, then parse the "cc_alpha_func" too
-        if (vertexZStr == "automatic")
-        {
-            _useAutomaticVertexZ = true;
-            auto alphaFuncVal = getProperty("cc_alpha_func");
-            float alphaFuncValue = alphaFuncVal.asFloat();
-            setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
-            
-            GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-            
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            
-            // use shader program to set uniform
-            getGLProgram()->use();
-            getGLProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
-            CHECK_GL_ERROR_DEBUG();
-        }
-        else
-        {
-            _vertexZvalue = vertexz.asInt();
-        }
+        _useAutomaticVertexZ = true;
+        auto alphaFuncVal = getProperty("cc_alpha_func");
+        float alphaFuncValue = alphaFuncVal.asFloat();
+        setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
+        
+        GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+        
+        // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+        
+        // use shader program to set uniform
+        getGLProgram()->use();
+        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
+        CHECK_GL_ERROR_DEBUG();
+    }
+    else
+    {
+        _vertexZvalue = vertexz.asInt();
     }
 }
 
@@ -670,45 +669,44 @@ void FastTMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags 
     TMXTileFlags currentFlags;
     int currentGID = getTileGIDAt(tileCoordinate, &currentFlags);
     
-    if (currentGID != gid || currentFlags != flags)
+    if (currentGID == gid && currentFlags == flags) return;
+    
+    int gidAndFlags = gid | flags;
+    
+    // setting gid=0 is equal to remove the tile
+    if (gid == 0)
     {
-        int gidAndFlags = gid | flags;
-        
-        // setting gid=0 is equal to remove the tile
-        if (gid == 0)
+        removeTileAt(tileCoordinate);
+    }
+    // empty tile. create a new one
+    else if (currentGID == 0)
+    {
+        int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
+        setTileForGID(z, gidAndFlags);
+    }
+    // modifying an existing tile with a non-empty tile
+    else
+    {
+        int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
+        auto it = _spriteContainer.find(z);
+        if (it != _spriteContainer.end())
         {
-            removeTileAt(tileCoordinate);
+            Sprite *sprite = it->second.first;
+            Rect rect = _tileSet->getRectForGID(gid);
+            rect = CC_RECT_PIXELS_TO_POINTS(rect);
+            
+            sprite->setTextureRect(rect, false, rect.size);
+            this->reorderChild(sprite, z);
+            if (flags)
+            {
+                setupTileSprite(sprite, sprite->getPosition(), gidAndFlags);
+            }
+            
+            it->second.second = gidAndFlags;
         }
-        // empty tile. create a new one
-        else if (currentGID == 0)
-        {
-            int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
-            setTileForGID(z, gidAndFlags);
-        }
-        // modifying an existing tile with a non-empty tile
         else
         {
-            int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
-            auto it = _spriteContainer.find(z);
-            if (it != _spriteContainer.end())
-            {
-                Sprite *sprite = it->second.first;
-                Rect rect = _tileSet->getRectForGID(gid);
-                rect = CC_RECT_PIXELS_TO_POINTS(rect);
-                
-                sprite->setTextureRect(rect, false, rect.size);
-                this->reorderChild(sprite, z);
-                if (flags)
-                {
-                    setupTileSprite(sprite, sprite->getPosition(), gidAndFlags);
-                }
-                
-                it->second.second = gidAndFlags;
-            }
-            else
-            {
-                setTileForGID(z, gidAndFlags);
-            }
+            setTileForGID(z, gidAndFlags);
         }
     }
 }
