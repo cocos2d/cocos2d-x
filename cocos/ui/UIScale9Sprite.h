@@ -263,10 +263,14 @@ public:
     float getInsetRight()const;
     void setInsetBottom(float bottomInset);
     float getInsetBottom()const;
+    void setScale9Enabled(bool enabled);
+    bool getScale9Enabled()const;
     
 protected:
     void updateCapInset();
     void updatePositions();
+    void createSlicedSprites(const Rect& rect, bool rotated);
+    void cleanupSlicedSprites();
     
     bool _spritesGenerated;
     Rect _spriteRect;
