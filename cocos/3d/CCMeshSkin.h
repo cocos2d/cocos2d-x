@@ -189,8 +189,8 @@ public:
     /**create a new meshskin if do not want to share meshskin*/
     static MeshSkin* create(const std::string& filename, const std::string& name);
     
-    /**get skin bone count*/
-    ssize_t getSkinBoneCount() const;
+    /**get total bone count, skin bone + node bone*/
+    ssize_t getBoneCount() const;
     
     /**get bone*/
     Bone* getBoneByIndex(unsigned int index) const;

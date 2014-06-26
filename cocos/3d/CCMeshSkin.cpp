@@ -324,9 +324,9 @@ bool MeshSkin::initFromSkinData(const SkinData& skindata)
     return true;
 }
 
-ssize_t MeshSkin::getSkinBoneCount() const
+ssize_t MeshSkin::getBoneCount() const
 {
-    return _skinBones.size();
+    return _skinBones.size() + _nodeBones.size();
 }
 
 //get bone
