@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventMouse
 -- @extend Event
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventMouse] getMouseButton 

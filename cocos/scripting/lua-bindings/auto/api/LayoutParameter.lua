@@ -2,6 +2,7 @@
 --------------------------------
 -- @module LayoutParameter
 -- @extend Ref
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#LayoutParameter] clone 

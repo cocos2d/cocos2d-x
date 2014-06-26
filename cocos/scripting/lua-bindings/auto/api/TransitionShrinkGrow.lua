@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionShrinkGrow
 -- @extend TransitionScene,TransitionEaseScene
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionShrinkGrow] easeActionWithAction 

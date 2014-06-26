@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TextField
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#TextField] setAttachWithIME 

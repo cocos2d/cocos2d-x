@@ -272,6 +272,7 @@ void ListView::insertDefaultItem(ssize_t index)
     _refreshViewDirty = true;
 }
 
+
 void ListView::pushBackCustomItem(Widget* item)
 {
     remedyLayoutParameter(item);
@@ -288,6 +289,16 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     {
         _items.pushBack(widget);
     }
+}
+    
+void ListView::addChild(cocos2d::Node *child)
+{
+    ListView::addChild(child, child->getLocalZOrder(), child->getName());
+}
+
+void ListView::addChild(cocos2d::Node *child, int zOrder)
+{
+    ListView::addChild(child, zOrder, child->getName());
 }
  
 void ListView::addChild(Node* child, int zOrder, const std::string &name)

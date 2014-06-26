@@ -2,6 +2,7 @@
 --------------------------------
 -- @module FadeOutBLTiles
 -- @extend FadeOutTRTiles
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#FadeOutBLTiles] create 

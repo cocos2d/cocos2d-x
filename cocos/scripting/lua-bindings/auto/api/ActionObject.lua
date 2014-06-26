@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionObject
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ActionObject] setCurrentTime 

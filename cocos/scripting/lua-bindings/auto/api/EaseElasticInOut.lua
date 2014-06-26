@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EaseElasticInOut
 -- @extend EaseElastic
+-- @parent_module cc
 
 --------------------------------
 -- overload function: create(cc.ActionInterval)
