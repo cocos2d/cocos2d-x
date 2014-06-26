@@ -220,6 +220,11 @@ public:
      * Get the opengl view port rectangle.
      */
     const Rect& getViewPortRect() const;
+    
+    /**
+     * Get list of all active touches
+     */
+    std::vector<Touch*> getAllTouches() const;
 
     /**
      * Get scale factor of the horizontal direction.
