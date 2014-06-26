@@ -375,9 +375,6 @@
     <ClInclude Include="..\CCActionObject.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="..\ObjectFactory.h">
-      <Filter>trigger</Filter>
-    </ClInclude>
     <ClInclude Include="..\TriggerBase.h">
       <Filter>trigger</Filter>
     </ClInclude>
