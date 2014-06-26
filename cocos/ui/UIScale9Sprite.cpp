@@ -635,28 +635,7 @@ y+=ytranslate;                       \
      Values goes from 0 to 255, where 255 means fully opaque.
      */
     
-    void Scale9Sprite::setPreferredSize(Size preferedSize)
-    {
-        this->setContentSize(preferedSize);
-        this->_preferredSize = preferedSize;
-    }
-    
-    Size Scale9Sprite::getPreferredSize()
-    {
-        return this->_preferredSize;
-    }
-    
-    void Scale9Sprite::setCapInsets(Rect capInsets)
-    {
-        Size contentSize = this->_contentSize;
-        this->updateWithSprite(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
-        this->setContentSize(contentSize);
-    }
-    
-    Rect Scale9Sprite::getCapInsets()
-    {
-        return _capInsets;
-    }
+   
     
     void Scale9Sprite::updateCapInset()
     {
@@ -688,25 +667,20 @@ y+=ytranslate;                       \
         this->_insetBottom = 0;
     }
     
-    float Scale9Sprite::getInsetLeft()
+    void Scale9Sprite::setPreferredSize(const Size& preferedSize)
     {
-        return this->_insetLeft;
+        this->setContentSize(preferedSize);
+        this->_preferredSize = preferedSize;
     }
     
-    float Scale9Sprite::getInsetTop()
+    
+    void Scale9Sprite::setCapInsets(const Rect& capInsets)
     {
-        return this->_insetTop;
+        Size contentSize = this->_contentSize;
+        this->updateWithSprite(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
+        this->setContentSize(contentSize);
     }
     
-    float Scale9Sprite::getInsetRight()
-    {
-        return this->_insetRight;
-    }
-    
-    float Scale9Sprite::getInsetBottom()
-    {
-        return this->_insetBottom;
-    }
     
     void Scale9Sprite::setInsetLeft(float insetLeft)
     {
@@ -751,4 +725,40 @@ y+=ytranslate;                       \
         Node::visit(renderer, parentTransform, parentFlags);
     }
     
+    Size Scale9Sprite::getOriginalSize()const
+    {
+        return _originalSize;
+    }
+    
+    
+    Size Scale9Sprite::getPreferredSize() const
+    {
+        return _preferredSize;
+    }
+    
+    Rect Scale9Sprite::getCapInsets()const
+    {
+        return _capInsets;
+    }
+    
+    
+    float Scale9Sprite::getInsetLeft()const
+    {
+        return this->_insetLeft;
+    }
+    
+    float Scale9Sprite::getInsetTop()const
+    {
+        return this->_insetTop;
+    }
+    
+    float Scale9Sprite::getInsetRight()const
+    {
+        return this->_insetRight;
+    }
+    
+    float Scale9Sprite::getInsetBottom()const
+    {
+        return this->_insetBottom;
+    }
 }}

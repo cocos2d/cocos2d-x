@@ -250,6 +250,20 @@ public:
      */
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
+    Size getOriginalSize() const;
+    void setPreferredSize(const Size& size);
+    Size getPreferredSize() const;
+    void setCapInsets(const Rect& rect);
+    Rect getCapInsets()const;
+    void setInsetLeft(float leftInset);
+    float getInsetLeft()const;
+    void setInsetTop(float topInset);
+    float getInsetTop()const;
+    void setInsetRight(float rightInset);
+    float getInsetRight()const;
+    void setInsetBottom(float bottomInset);
+    float getInsetBottom()const;
+    
 protected:
     void updateCapInset();
     void updatePositions();
@@ -274,25 +288,25 @@ protected:
     bool _scale9Enabled;
     
     /** Original sprite's size. */
-    CC_SYNTHESIZE_READONLY(Size, _originalSize, OriginalSize);
+    Size _originalSize;
     /** Prefered sprite's size. By default the prefered size is the original size. */
     
     //if the preferredSize component is given as -1, it is ignored
-    CC_PROPERTY(Size, _preferredSize, PreferredSize);
+    Size _preferredSize;
     /**
      * The end-cap insets.
      * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite
      * does not use end caps and the entire sprite is subject to stretching.
      */
-    CC_PROPERTY(Rect, _capInsets, CapInsets);
+    Rect _capInsets;
     /** Sets the left side inset */
-    CC_PROPERTY(float, _insetLeft, InsetLeft);
+    float _insetLeft;
     /** Sets the top side inset */
-    CC_PROPERTY(float, _insetTop, InsetTop);
+    float _insetTop;
     /** Sets the right side inset */
-    CC_PROPERTY(float, _insetRight, InsetRight);
+    float _insetRight;
     /** Sets the bottom side inset */
-    CC_PROPERTY(float, _insetBottom, InsetBottom);
+    float _insetBottom;
 };
     
 }}  //end of namespace
