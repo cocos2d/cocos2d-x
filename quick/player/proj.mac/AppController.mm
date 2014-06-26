@@ -15,8 +15,11 @@
 #include "glfw3.h"
 #include "glfw3native.h"
 
+#include "native/CCNative.h"
+
 #include "cocos2d.h"
 USING_NS_CC;
+USING_NS_CC_EXTRA;
 
 
 #include "PlayerProtocol.h"
@@ -557,12 +560,12 @@ USING_NS_CC;
 
 - (void) welcomeGetStarted
 {
-//    CCNative::openURL("http://quick.cocoachina.com/wiki/doku.php?id=zh_cn");
+    Native::openURL("http://cn.cocos2d-x.org/tutorial/index?type=quick-cocos2d-x");
 }
 
 - (void) welcomeCommunity
 {
-//    CCNative::openURL("http://www.cocoachina.com/bbs/thread.php?fid=56");
+    Native::openURL("http://www.cocoachina.com/bbs/thread.php?fid=56");
 }
 
 - (void) welcomeOpenRecent:(cocos2d::CCObject *)object

@@ -669,6 +669,7 @@
 					"$(QUICK_V3_ROOT)/external/unzip",
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/extra",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -712,6 +713,7 @@
 					"$(QUICK_V3_ROOT)/external/unzip",
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/extra",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
