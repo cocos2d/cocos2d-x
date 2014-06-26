@@ -50,6 +50,7 @@ public:
 
     inline EventCode getEventCode() const { return _eventCode; };
     inline const std::vector<Touch*>& getTouches() const { return _touches; };
+    inline const std::vector<Touch*>& getAllTouches() const { return _allTouches; };
 
 #if TOUCH_PERF_DEBUG
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
@@ -59,6 +60,7 @@ public:
 private:
     EventCode _eventCode;
     std::vector<Touch*> _touches;
+    std::vector<Touch*> _allTouches;
 
     friend class GLViewProtocol;
 };
