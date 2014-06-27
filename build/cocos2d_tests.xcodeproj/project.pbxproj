@@ -64,6 +64,7 @@
 		15AECE22195D122400907DB0 /* experimentalConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */; };
 		15AECE23195D122600907DB0 /* experimentalConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */; };
 		15AECE24195D122700907DB0 /* experimentalConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */; };
+		15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15B0870D195AD52000D6F62B /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
@@ -1946,6 +1947,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */,
 				1A0EE42C18CDF799004CD58F /* libz.dylib in Frameworks */,
 				1A0EE42D18CDF799004CD58F /* CoreMotion.framework in Frameworks */,
 				1A0EE42E18CDF799004CD58F /* AudioToolbox.framework in Frameworks */,
