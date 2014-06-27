@@ -102,6 +102,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     {
         skinData->addNodeBoneNames(parent_name);
         skinData->nodeBoneOriginMatrices.push_back(transform);
+        parent_name_index = skinData->getBoneNameIndex(parent_name);
     }
     else if (parent_name_index < skinData->skinBoneNames.size())
     {
@@ -110,12 +111,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     
     // set root bone index
     if(skinData->rootBoneIndex < 0)
-    {
-        if (parent_name_index < 0)
-            parent_name_index = skinData->getBoneNameIndex(parent_name);
-        
         skinData->rootBoneIndex = parent_name_index;
-    }
     
     if (!val.HasMember(SKINDATA_CHILDREN))
         return;
@@ -485,7 +481,7 @@ bool Bundle3D::loadBinary(const std::string& path)
     // Read all refs
     CC_SAFE_DELETE_ARRAY(_references);
     _references = new Reference[_referenceCount];
-    for (size_t i = 0; i < _referenceCount; ++i)
+    for (ssize_t i = 0; i < _referenceCount; ++i)
     {
         if ((_references[i].id = _binaryReader.readString()).empty() ||
             _binaryReader.read(&_references[i].type, 4, 1) != 1 ||
@@ -546,12 +542,12 @@ bool Bundle3D::loadMeshDataBinary(MeshData* meshdata)
     }
 
     // Read index data
-    size_t meshPartCount = 1;
+    ssize_t meshPartCount = 1;
     //_binaryReader.read(&meshPartCount, 4, 1);
 
-    for (size_t i = 0; i < meshPartCount; ++i)
+    for (ssize_t i = 0; i < meshPartCount; ++i)
     {
-        size_t nIndexCount;
+        ssize_t nIndexCount;
         if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
         {
             CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
@@ -706,24 +702,24 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
         return false;
     }
 
-    size_t animNum;
+    ssize_t animNum;
     if (!_binaryReader.read(&animNum))
     {
         CCLOGINFO("Failed to read AnimationData: animNum '%s'.", _path.c_str());
         return false;
     }
 
-    for (size_t i = 0; i < animNum; ++i)
+    for (ssize_t i = 0; i < animNum; ++i)
     {
         std::string boneName = _binaryReader.readString();
-        size_t keyframeNum;
+        ssize_t keyframeNum;
         if (!_binaryReader.read(&keyframeNum))
         {
             CCLOGINFO("Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
             return false;
         }
 
-        for (size_t j = 0; j < keyframeNum; ++j)
+        for (ssize_t j = 0; j < keyframeNum; ++j)
         {
             float keytime;
             if (!_binaryReader.read(&keytime))
