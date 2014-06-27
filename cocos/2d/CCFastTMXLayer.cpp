@@ -356,7 +356,7 @@ Mat4 FastTMXLayer::tileToNodeTransform()
     
     switch(_layerOrientation)
     {
-		case FastTMXOrientationOrtho:
+        case FastTMXOrientationOrtho:
         {
             _tileToNodeTransform = Mat4
             (
@@ -368,7 +368,7 @@ Mat4 FastTMXLayer::tileToNodeTransform()
             
             return _tileToNodeTransform;
         }
-		case FastTMXOrientationIso:
+        case FastTMXOrientationIso:
         {
             float offX = (_layerSize.width - 1) * w / 2;
             _tileToNodeTransform = Mat4
@@ -378,8 +378,8 @@ Mat4 FastTMXLayer::tileToNodeTransform()
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f
             );
-			return _tileToNodeTransform;
-		}
+            return _tileToNodeTransform;
+        }
         case FastTMXOrientationHex:
         {
             _tileToNodeTransform = Mat4::IDENTITY;
