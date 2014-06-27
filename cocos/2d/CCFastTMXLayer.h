@@ -189,7 +189,6 @@ protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     int updateTiles(const Rect& culledRect);
-    void setupVBO();
     Vec2 calculateLayerOffset(const Vec2& offset);
 
     /* The layer recognizes some special properties, like cc_vertez */
@@ -209,6 +208,9 @@ protected:
     void onDraw(const std::vector<int>* indices);
     
     inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
+    
+    void updateVertexBuffer();
+    //void updateIndexBuffer();
 protected:
     
     //! name of the layer
@@ -232,7 +234,7 @@ protected:
     /** container for sprite children. map<index, pair<sprite, gid> > */
     std::map<int, std::pair<Sprite*, int> > _spriteContainer;
 
-    GLuint _buffersVBO[3]; //0: vertex, 1: tex coords,  2: indices
+    GLuint _buffersVBO[2]; //0: vertex, 1: indices
 
     Size _screenGridSize;
     Rect _screenGridRect;

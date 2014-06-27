@@ -109,19 +109,20 @@ bool FastTMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo
 }
 
 FastTMXLayer::FastTMXLayer()
-:_layerName("")
-,_layerSize(Size::ZERO)
-,_mapTileSize(Size::ZERO)
-,_tiles(nullptr)
-,_tileSet(nullptr)
-,_layerOrientation(FastTMXOrientationOrtho)
+: _layerName("")
+, _layerSize(Size::ZERO)
+, _mapTileSize(Size::ZERO)
+, _tiles(nullptr)
+, _tileSet(nullptr)
+, _layerOrientation(FastTMXOrientationOrtho)
 ,_texture(nullptr)
-,_verticesToDraw(0)
-,_vertexZvalue(0)
-,_useAutomaticVertexZ(false)
-,_dirty(true)
+, _verticesToDraw(0)
+, _vertexZvalue(0)
+, _useAutomaticVertexZ(false)
+, _dirty(true)
 , _quadsDirty(true)
 {
+    _buffersVBO[0] = _buffersVBO[1] = 0;
 }
 
 FastTMXLayer::~FastTMXLayer()
@@ -129,6 +130,15 @@ FastTMXLayer::~FastTMXLayer()
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_DELETE_ARRAY(_tiles);
+    if(glIsBuffer(_buffersVBO[0]))
+    {
+        glDeleteBuffers(1, &_buffersVBO[0]);
+    }
+    
+    if(glIsBuffer(_buffersVBO[1]))
+    {
+        glDeleteBuffers(1, &_buffersVBO[1]);
+    }
 }
 
 bool sortQuadCommand(const V3F_C4B_T2F_Quad& a, const V3F_C4B_T2F_Quad& b)
@@ -166,7 +176,6 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         auto& cmd = _renderCommands[index++];
         
         cmd.init(iter.first);
-        printf("in draw function of FastTMXLayer %d\n", iter.second.size());
         cmd.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, &iter.second);
         renderer->addCommand(&cmd);
     }
@@ -179,7 +188,7 @@ void FastTMXLayer::onDraw(const std::vector<int> *indices)
     getGLProgramState()->apply(_modelViewTransform);
     
     glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -188,7 +197,6 @@ void FastTMXLayer::onDraw(const std::vector<int> *indices)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_totalQuads[0]);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), ((char*)&_totalQuads[0]) + offsetof(V3F_C4B_T2F, colors));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), ((char*)&_totalQuads[0]) + offsetof(V3F_C4B_T2F, texCoords));
-    printf("in onDraw function of FastTMXLayer  %d\n", indices->size());
     glDrawElements(GL_TRIANGLES, (GLsizei)indices->size(), GL_UNSIGNED_INT, &(*indices)[0]);
 }
 
@@ -283,25 +291,42 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
     return tilesUsed * 6;
 }
 
-void FastTMXLayer::setupVBO()
+void FastTMXLayer::updateVertexBuffer()
 {
-    glGenBuffers(2, &_buffersVBO[0]);
-
-    // 10922 = 65536/6
-    int total = std::min(static_cast<int>(_layerSize.width * _layerSize.height), MAX_QUADS_COUNT);
-
-    // Vertex + Tex Coords
+    glBindVertexArray(0);
+    if(!glIsBuffer(_buffersVBO[0]))
+    {
+        glGenBuffers(1, &_buffersVBO[0]);
+    }
+    
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, total * sizeof(V3F_T2F_Quad), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * _quads.size(), (GLvoid*)&_quads[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // Indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, total * 6 * sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    CHECK_GL_ERROR_DEBUG();
 }
+
+//void FastTMXLayer::updateIndexBuffer()
+//{
+//}
+
+//void FastTMXLayer::setupVBO()
+//{
+//    glGenBuffers(2, &_buffersVBO[0]);
+//
+//    // 10922 = 65536/6
+//    int total = std::min(static_cast<int>(_layerSize.width * _layerSize.height), MAX_QUADS_COUNT);
+//
+//    // Vertex + Tex Coords
+//    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//    glBufferData(GL_ARRAY_BUFFER, total * sizeof(V3F_T2F_Quad), NULL, GL_DYNAMIC_DRAW);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//    // Indices
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, total * 6 * sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//
+//    CHECK_GL_ERROR_DEBUG();
+//}
 
 // FastTMXLayer - setup Tiles
 void FastTMXLayer::setupTiles()
@@ -340,7 +365,6 @@ void FastTMXLayer::setupTiles()
 
     _screenTileCount = _screenGridSize.width * _screenGridSize.height;
 
-    setupVBO();
 }
 
 Mat4 FastTMXLayer::tileToNodeTransform()
@@ -497,7 +521,7 @@ void FastTMXLayer::updateTotalQuads()
             }
         }
         
-        //TODO: update VBOs
+        updateVertexBuffer();
         
         _quadsDirty = false;
     }
