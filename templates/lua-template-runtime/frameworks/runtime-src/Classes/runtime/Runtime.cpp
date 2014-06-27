@@ -932,11 +932,14 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-
+        std::string argtmp = arg0;
         if (!FileUtils::getInstance()->isAbsolutePath(arg0))
             arg0 = g_resourcePath+arg0;
-
         cobj->addSearchPath(arg0);
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
+        cobj->addSearchPath(argtmp);
+#endif
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSearchPath",argc, 1);
@@ -983,14 +986,18 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
         ok &= luaval_to_std_vector_string(tolua_S, 2,&vecPaths);
         if(!ok)
             return 0;
-
+        std::vector<std::string> argtmp;
         for (int i = 0; i < vecPaths.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
+            {
+                argtmp.push_back(vecPaths[i]);
                 vecPaths[i] = g_resourcePath + vecPaths[i];
+            }
         }
-        
-
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        vecPaths.insert(vecPaths.end(),argtmp.begin(),argtmp.end());
+#endif
         cobj->setSearchPaths(vecPaths);
         return 0;
     }
