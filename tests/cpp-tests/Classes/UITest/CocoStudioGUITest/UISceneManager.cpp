@@ -123,7 +123,9 @@ static const char* s_testArray[] =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest",
 #endif
-    "UIScale9SpriteTest",
+    "UIScale9SpriteTest---Position&Color",
+    "UIScale9SpriteTest---Hierarchial",
+    "UIScale9SpriteTest---Touch",
 };
 
 static UISceneManager *sharedInstance = NULL;
@@ -392,6 +394,10 @@ Scene *UISceneManager::currentUIScene()
 #endif
         case kUIScale9SpriteTests:
             return UIScale9SpriteTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIScale9SpriteTestHierarchial:
+            return UIScale9SpriteHierarchialTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIScale9SpriteTouchTest:
+            return UIScale9SpriteTouchTest::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return NULL;
 }

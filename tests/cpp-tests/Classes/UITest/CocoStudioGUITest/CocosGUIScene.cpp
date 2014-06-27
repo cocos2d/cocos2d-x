@@ -37,7 +37,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScale9SpriteTests);
             sceneManager->setMinUISceneId(kUIScale9SpriteTests);
-            sceneManager->setMaxUISceneId(kUIScale9SpriteTests);
+            sceneManager->setMaxUISceneId(kUIScale9SpriteTouchTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

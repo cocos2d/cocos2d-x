@@ -32,10 +32,31 @@ public:
     UIScale9SpriteTest();
     ~UIScale9SpriteTest();
     bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScale9SpriteTest)
+};
+
+class UIScale9SpriteHierarchialTest : public UIScene
+{
+public:
+    UIScale9SpriteHierarchialTest();
+    ~UIScale9SpriteHierarchialTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIScale9SpriteHierarchialTest)
+};
+
+class UIScale9SpriteTouchTest : public UIScene
+{
+public:
+    UIScale9SpriteTouchTest();
+    ~UIScale9SpriteTouchTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIScale9SpriteTouchTest)
 };
 
 

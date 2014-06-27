@@ -302,6 +302,9 @@ public:
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void disableCascadeColor() override;
     
+    Sprite* getSprite()const;
+
+    
 protected:
     void updateCapInset();
     void updatePositions();

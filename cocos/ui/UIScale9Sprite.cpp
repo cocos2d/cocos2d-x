@@ -883,17 +883,21 @@ y+=ytranslate;                       \
         _displayedColor.b = _realColor.b * parentColor.b/255.0;
         updateColor();
         
+        if (_scale9Image) {
+            _scale9Image->updateDisplayedColor(_displayedColor);
+        }
+        
+        for(const auto &child : _protectedChildren){
+            child->updateDisplayedColor(_displayedColor);
+        }
+        
         if (_cascadeColorEnabled)
         {
             for(const auto &child : _children){
                 child->updateDisplayedColor(_displayedColor);
             }
-            for(const auto &child : _protectedChildren){
-                child->updateDisplayedColor(_displayedColor);
-            }
-            if (_scale9Image) {
-                _scale9Image->updateDisplayedColor(_displayedColor);
-            }
+         
+            
         }
     }
     
@@ -902,17 +906,21 @@ y+=ytranslate;                       \
         _displayedOpacity = _realOpacity * parentOpacity/255.0;
         updateColor();
         
+        if (_scale9Image) {
+            _scale9Image->updateDisplayedOpacity(_displayedOpacity);
+        }
+        
+        for(auto child : _protectedChildren){
+            child->updateDisplayedOpacity(_displayedOpacity);
+        }
+        
         if (_cascadeOpacityEnabled)
         {
             for(auto child : _children){
                 child->updateDisplayedOpacity(_displayedOpacity);
             }
-            for(auto child : _protectedChildren){
-                child->updateDisplayedOpacity(_displayedOpacity);
-            }
-            if (_scale9Image) {
-                _scale9Image->updateDisplayedOpacity(_displayedOpacity);
-            }
+           
+           
         }
     }
     
@@ -927,5 +935,10 @@ y+=ytranslate;                       \
         if (_scale9Image) {
             _scale9Image->updateDisplayedColor(Color3B::WHITE);
         }
+    }
+    
+    Sprite* Scale9Sprite::getSprite()const
+    {
+        return _scale9Image;
     }
 }}

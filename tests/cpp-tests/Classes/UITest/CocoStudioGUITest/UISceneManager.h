@@ -110,6 +110,8 @@ enum
     kUIVideoPlayerTest,
 #endif
     kUIScale9SpriteTests,
+    kUIScale9SpriteTestHierarchial,
+    kUIScale9SpriteTouchTest,
     kUITestMax
 };
 
