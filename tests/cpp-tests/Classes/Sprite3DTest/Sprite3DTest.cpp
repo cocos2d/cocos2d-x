@@ -542,8 +542,10 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    std::string fileName = "Sprite3DTest/girl.c3b";
+    std::string fileName = "Sprite3DTest/orc.c3b";
     auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(3);
+    sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y) );
 

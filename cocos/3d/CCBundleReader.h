@@ -42,94 +42,84 @@ class BundleReader: public cocos2d::Ref
 public:
     /**
      * Structor
-	 */
+     */
     BundleReader();
     
     /**
      * inicial
-	 */
+     */
     ~BundleReader();
     
     /**
      * initialise
      * @param lpbuffer The data buffer pointer
      * @param length The data buffer size
-	 */
-    void init(char* lpbuffer, unsigned int length);
-    
-
-    /** creates an BundleReader with lpbuffer and length 
-     * @param lpbuffer The pointer to the file data 
-     * @param length The size for lpbuffer in bytes
      */
-    //static BundleReader* create(char* lpbuffer, unsigned int length);
+    void init(char* lpbuffer, unsigned int length);
 
     /**
-     * Close and delete buffer
-	 */
-    //void close();
-
-	/**
      * Reads an array of elements.
-	 *
-	 * @param ptr   The pointer to the memory to copy into.
-	 *              The available size should be at least bytes.
-	 * @param size  The size of each element to be read, in bytes.
-	 * @param count The number of elements to read.
-	 *
-	 * @return The number of elements read.
+     *
+     * @param ptr   The pointer to the memory to copy into.
+     *              The available size should be at least bytes.
+     * @param size  The size of each element to be read, in bytes.
+     * @param count The number of elements to read.
+     *
+     * @return The number of elements read.
      */
-    size_t read(void* ptr, size_t size, size_t count);
+    ssize_t read(void* ptr, ssize_t size, ssize_t count);
 
-	/**
+    /**
      * Reads a line from the buffer.
      */
-	char* readLine(int num, char* line);
+    char* readLine(int num, char* line);
 
-	/**
+    /**
      * Returns true if the end of the buffer has been reached.
      */
     bool eof();
 
-	/**
+    /**
      * Returns the length of the buffer in bytes.
      */
-    size_t length();
+    ssize_t length();
 
-	/**
+    /**
      * Returns the position of the file pointer.
      */
     long int tell();
 
-	/**
+    /**
      * Sets the position of the file pointer.
      */
     bool seek(long int offset, int origin);
 
-	/**
-	 * Sets the file pointer at the start of the file.
-	 */
+    /**
+     * Sets the file pointer at the start of the file.
+     */
     bool rewind();
 
-	/**
-    * read binary typed value.
-    */
-	template<typename T> bool read(T* ptr);
-	template<typename T> bool readArray(unsigned int* length, std::vector<T>* values);
+    /**
+     * read binary typed value.
+     */
+    template<typename T> bool read(T* ptr);
+    template<typename T> bool readArray(unsigned int* length, std::vector<T>* values);
 
-	/**
-	* first read length, then read string text
-	*/
+    /**
+     * first read length, then read string text
+     */
     std::string readString();
     bool readMatrix(float* m);
 
 private:
     long int m_position;
-    size_t  m_length;
+    ssize_t  m_length;
     char* m_buffer;
 };
 
-// template read routines
+/**
+* template read routines
+*/
 template<typename T>
 inline bool BundleReader::read(T *ptr)
 {
