@@ -648,11 +648,12 @@ void Animate3DTest::update(float dt)
 
 void Animate3DTest::addSprite3D()
 {
-    std::string fileName = "Sprite3DTest/haigui.c3b";
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(0.1f);
     auto s = Director::getInstance()->getWinSize();
     sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
     _sprite = sprite;
     auto animation = Animation3D::getOrCreate(fileName);
     if (animation)
