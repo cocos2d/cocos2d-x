@@ -786,122 +786,127 @@ end
 
 --[[--
 
-Create a circle or a sector or a pie by DrawNode
+创建并返回一个 DrawNode（实心圆）对象。
 
-Creation: 2014-03-11
+~~~ lua
 
-@author zrong(zengrong.net)
+local circle = display.newSolidCircle(10, {x = 150, y = 150, color = cc.c4f(1, 1, 1, 1)})
+circle:addTo(scene)
 
-@param mixed filename As same a the first parameter for display.newSprite
-@param table params As same as the third parameter for display.newFilteredSprite
+~~~
 
-@return An instance of FilteredSprite
+
+@param number radius 实心圆的半径
+@param table params 创建圆的参数 x,y为圆点位置 color中圆的颜色
+
+@return DrawNode
+
+@see DrawNode
 
 ]]
 function display.newSolidCircle(radius, params)
 	local circle = display.newDrawNode()
-	circle:drawCircle(radius, params)
-	local x,y = 0,0
-	if params then
-		x = params.x or x
-		y = params.y or y
-	end
-	circle:pos(x,y)
+    circle:drawDot(cc.p(params.x or 0, params.y or 0),
+        radius or 0, params.color or cc.c4f(0, 0, 0, 1))
 	return circle
 end
 
 --[[--
 
-创建并返回一个 CircleShape （圆）对象。
+创建并返回一个 DrawNode （圆）对象。
+
+~~~ lua 
+
+--创建一个半径为50, 圆心在(100,100),中间填充为红色,边线为绿色,边线的宽度为2 的圆
+local circle = display.newCircle(50,
+        {x = 100, y = 100,
+        fillColor = cc.c4f(1, 0, 0, 1),
+        borderColor = cc.c4f(0, 1, 0, 1),
+        borderWidth = 2})
+
+~~~
 
 @param number radius
+@param table params 有参数，x,y 圆的位置 填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
 
-@return CircleShape
+@return DrawNode
 
-@see ShapeNode
+@see DrawNode
 
 ]]
 function display.newCircle(radius, params)
-    local circle = cc.CircleShape:create(radius)
-	local x,y = 0,0
-	local align=display.CENTER
-	if params then
-		x = params.x or x
-		y = params.y or y
-		align = params.align or align
-		if params.fill then circle:setFill(params.fill) end
-		if params.color then circle:setLineColor(params.color) end
-		if params.strippleEnabled then circle:setLineStippleEnabled(params.strippleEnabled) end
-		if params.lineStripple then circle:setLineStipple(params.lineStripple) end
-		local lineWidth = params.lineWidth or params.borderWidth
-		if lineWidth then circle:setLineWidth(lineWidth) end
-	end
-	circle:setContentSize(cc.size(radius*2,radius*2))
-	circle:align(align, x,y)
-	return circle
+    local segments = 32
+    local startRadian = 0
+    local endRadian = math.pi*2
+    local posX = 0
+    local posY = 0
+    if params then
+        if params.segments then segments = params.segments end
+        if params.startAngle then
+            startRadian = math.angle2Radian(params.startAngle)
+        end
+        if params.endAngle then
+            endRadian = startRadian+math.angle2Radian(params.endAngle)
+        end
+        if params.x then
+            posX =  params.x
+        end
+        if params.y then
+            posY =  params.y
+        end
+    end
+    local radianPerSegm = 2 * math.pi/segments
+    local points = {}
+    for i=1,segments do
+        local radii = startRadian+i*radianPerSegm
+        if radii > endRadian then break end
+        table.insert(points,
+            {posX + radius * math.cos(radii), posY + radius * math.sin(radii)})
+    end
+
+    return display.newPolygon(points, params)
 end
 
 --[[--
 
-创建并返回一个 RectShape （矩形）对象。
+创建并返回一个 DrawNode （矩形）对象。
 
 格式：
 
-shape = display.newRect(宽度, 高度 | Rect | Size)
+shape = display.newRect(rect表, [参数])
 
 ~~~ lua
-
--- 下面两行代码都创建一个宽度 200，高度 100 的矩形
-local shape1 = display.newRect(200, 100)
-local shape2 = display.newRect(cc.size(200, 100))
 
 -- 创建一个宽度 200，高度 100 的矩形，并且定位于 50, 80
 local shape3 = display.newRect(cc.rect(50, 80, 200, 100))
 
+-- 创建一个宽度 100, 高度 100 的矩形，并定位于 40,40
+-- 并设置它的中间填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
+local shape4 = display.newRect(cc.rect(100, 100, 40, 40),
+        {fillColor = cc.c4f(1,0,0,1), borderColor = cc.c4f(0,1,0,1), borderWidth = 5})
+
 ~~~
 
-@param [mixed ...] 宽度，高度 或 Rect 或 Size
+@param table rect table
+@param table params 有参数，填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
 
-@return RectShape
+@return DrawNode
 
 @see ShapeNode
 
 ]]
-function display.newRect(width, height, params)
-    local x, y = 0, 0
-    if type(width) == "userdata" then
-        local t = tolua.type(width)
-        if t == "Rect" then
-            x = width.origin.x
-            y = width.origin.y
-            height = width.size.height
-            width = width.size.width
-        elseif t == "Size" then
-            height = width.height
-            width = width.width
-        else
-            printError("display.newRect() - invalid parameters")
-            return
-        end
-    end
+function display.newRect(rect, params)
+    local x, y, width, height = 0, 0
+    x = rect.x or 0
+    y = rect.y or 0
+    height = rect.height
+    width = rect.width
 
-    local rect = cc.RectShape:create(cc.size(width, height))
-	local align=display.CENTER
-	if type(height) == "table" then params = hight end
-	if type(params) == "table" then
-		x = params.x or x
-		y = params.y or y
-		align = params.align or align
-		if params.color then rect:setLineColor(params.color) end
-		if params.strippleEnabled then rect:setLineStippleEnabled(params.strippleEnabled) end
-		if params.lineStripple then rect:setLineStipple(params.lineStripple) end
-		if params.fill then rect:setFill(params.fill) end
-		local lineWidth = params.lineWidth or params.borderWidth
-		if lineWidth then rect:setLineWidth(lineWidth) end
-	end
-	rect:setContentSize(cc.size(width, height))
-	rect:align(align, x,y)
-    return rect
+    local points = {{x,y},
+                    {x + width, y},
+                    {x + width, y + height},
+                    {x, y + height}}
+    return display.newPolygon(points, params)
 end
 
 --[[--
@@ -916,29 +921,47 @@ local points = {
     {100, 10}, -- point 3
 }
 local polygon = display.newPolygon(points)
-polygon:setClose(true) -- 将第一个点和最后一个点相连
 
 ~~~
 
 @param table points 包含多边形每一个点坐标的表格对象
 @param number scale 缩放比例
 
-@return PolygonShape PolygonShape对象
+@return DrawNode DrawNode
 
-@see ShapeNode
+@see DrawNode
 
 ]]
--- function display.newPolygon(points, scale)
---     if type(scale) ~= "number" then scale = 1 end
---     local arr = cc.PointArray:create(#points)
---     local ccp = cc.p
---     for i, p in ipairs(points) do
---         p = ccp(p[1] * scale, p[2] * scale)
---         arr:add(p)
---     end
+function display.newPolygon(points, params)
+    local scale
+    local fillColor
+    local borderWidth
+    local borderColor
 
---     return cc.PolygonShape:create(arr)
--- end
+    if not params then
+        scale = 1
+        fillColor = cc.c4f(1,1,1,0)
+        borderColor = cc.c4f(0,0,0,1)
+        borderWidth = 1
+    else
+        scale = params.scale or 1
+        fillColor = params.fillColor or cc.c4f(1,1,1,0)
+        borderColor = params.borderColor or cc.c4f(0,0,0,1)
+        borderWidth = params.borderWidth or 1
+    end
+
+    if type(scale) ~= "number" then scale = 1 end
+    local ccp = cc.p
+    for i, p in ipairs(points) do
+        p = ccp(p[1] * scale, p[2] * scale)
+        points[i] = p
+    end
+
+    local drawNode = cc.DrawNode:create()
+    drawNode:drawPolygon(points, #points, fillColor, borderWidth, borderColor)
+
+    return drawNode
+end
 
 --[[--
 
