@@ -149,7 +149,7 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(MarginZero);
+                    defaultLp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -161,7 +161,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(MarginZero);
+                    llp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(MarginZero);
+                    defaultLp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(MarginZero);
+                    llp->setMargin(Margin::ZERO);
                 }
                 else
                 {
