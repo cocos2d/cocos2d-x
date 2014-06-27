@@ -1,4 +1,5 @@
 cocos2d-x-3.2 ???
+    [NEW]           GLProgramState: can use uniform location to get/set uniform values
     [NEW]           HttpClient: added sendImmediate()
     [NEW]           Label: support setting line height and additional kerning of label that not using system font
     [NEW]           Lua-binding: Animation3D supported
