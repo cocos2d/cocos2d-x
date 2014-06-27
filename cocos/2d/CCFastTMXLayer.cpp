@@ -46,6 +46,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "deprecated/CCString.h"
 #include "renderer/CCGLProgramStateCache.h"
+#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -246,15 +247,15 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
         _indicesVertexZNumber[iter.first] = iter.second;
     }
     
-    for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
+    int yBegin = std::max(0.f,visibleTiles.origin.y - tilesOverY);
+    int yEnd = std::min(_layerSize.height,visibleTiles.origin.y + visibleTiles.size.height + tilesOverY);
+    int xBegin = std::max(0.f,visibleTiles.origin.x - tilesOverX);
+    int xEnd = std::min(_layerSize.width,visibleTiles.origin.x + visibleTiles.size.width + tilesOverX);
+    
+    for (int y =  yBegin; y < yEnd; ++y)
     {
-        if(y<0 || y >= _layerSize.height)
-            continue;
-        for (int x = visibleTiles.origin.x - tilesOverX; x < visibleTiles.origin.x + visibleTiles.size.width + tilesOverX; ++x)
+        for (int x = xBegin; x < xEnd; ++x)
         {
-            if(x<0 || x >= _layerSize.width)
-                continue;
-            
             int tileIndex = getTileIndexByPos(x, y);
             if(_tiles[tileIndex] == 0) continue;
             
