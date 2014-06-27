@@ -1078,7 +1078,7 @@ void Director::showStats()
     {
         char buffer[30];
 
-        if (_accumDt > CC_DIRECTOR_STATS_INTERVAL * 20)
+        if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
             _frameRate = _frames / _accumDt;
             _frames = 0;

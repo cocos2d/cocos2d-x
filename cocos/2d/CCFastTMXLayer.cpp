@@ -187,13 +187,11 @@ void FastTMXLayer::onDraw(int offset, int count)
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
-    glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6));
+    glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6 * sizeof(int)));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -302,7 +300,7 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
 
 void FastTMXLayer::updateVertexBuffer()
 {
-    glBindVertexArray(0);
+    GL::bindVAO(0);
     if(!glIsBuffer(_buffersVBO[0]))
     {
         glGenBuffers(1, &_buffersVBO[0]);
