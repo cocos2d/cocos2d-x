@@ -24,8 +24,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCTMX_TILE_MAP2_H__
-#define __CCTMX_TILE_MAP2_H__
+#ifndef __CC_FAST_TMX_TILEMAP_H__
+#define __CC_FAST_TMX_TILEMAP_H__
 
 #include "CCNode.h"
 #include "CCTMXObjectGroup.h"
@@ -37,24 +37,6 @@ class FastTMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
-
-/**
- * @addtogroup tilemap_parallax_nodes
- * @{
- */
-
-/** Possible orientations of the TMX map */
-enum
-{
-    /** Orthogonal orientation */
-    FastTMXOrientationOrtho,
-
-    /** Hexagonal orientation */
-    FastTMXOrientationHex,
-
-    /** Isometric orientation */
-    FastTMXOrientationIso,
-};
 
 /** @brief FastTMXTiledMap knows how to parse and render a TMX map.
 
@@ -105,7 +87,7 @@ layer->getProperty(name_of_the_property);
 objectGroup->getProperty(name_of_the_property);
 object->getProperty(name_of_the_property);
 
-@since v0.8.1
+@since v3.2
 */
 class CC_DLL FastTMXTiledMap : public Node
 {
@@ -118,31 +100,15 @@ public:
 
     /** return the FastTMXLayer for the specific layer */
     FastTMXLayer* getLayer(const std::string& layerName) const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE FastTMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
     Value getPropertiesForGID(int GID) const;
-    CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** the map's size property measured in tiles */
     inline const Size& getMapSize() const { return _mapSize; };
@@ -164,7 +130,7 @@ public:
     };
     
     /** properties */
-    inline ValueMap& getProperties() { return _properties; };
+    inline const ValueMap& getProperties() const { return _properties; };
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };

@@ -24,8 +24,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCTMX_LAYER2_H__
-#define __CCTMX_LAYER2_H__
+#ifndef __CC_FAST_TMX_LAYER_H__
+#define __CC_FAST_TMX_LAYER_H__
 
 #include "CCTMXObjectGroup.h"
 #include "CCTMXXMLParser.h"
@@ -73,10 +73,7 @@ For further information, please see the programming guide:
 
 http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
 
-@since v0.8.1
-Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in TMXXMLParser.h.
-
-@since 1.1
+@since v3.2
 */
 
 class CC_DLL FastTMXLayer : public Node
@@ -97,9 +94,6 @@ public:
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      */
     int getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
-        return getTileGIDAt(tileCoordinate, flags);
-    };
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -121,11 +115,9 @@ public:
 
     /** returns the position in points of a given tile coordinate */
     Vec2 getPositionAt(const Vec2& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** Creates the tiles */
     void setupTiles();
@@ -254,6 +246,12 @@ protected:
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<CustomCommand> _renderCommands;
     bool _dirty;
+    
+public:
+    /** Possible orientations of the TMX map */
+    static const int FAST_TMX_ORIENTATION_ORTHO;
+    static const int FAST_TMX_ORIENTATION_HEX;
+    static const int FAST_TMX_ORIENTATION_ISO;
 };
 
 // end of tilemap_parallax_nodes group

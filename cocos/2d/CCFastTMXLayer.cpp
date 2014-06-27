@@ -49,10 +49,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace
-{
-    static const int MAX_QUADS_COUNT = 65536 / 6;
-}
+const int FastTMXLayer::FAST_TMX_ORIENTATION_ORTHO = 0;
+const int FastTMXLayer::FAST_TMX_ORIENTATION_HEX = 1;
+const int FastTMXLayer::FAST_TMX_ORIENTATION_ISO = 2;
 
 // FastTMXLayer - init & alloc & dealloc
 FastTMXLayer * FastTMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
@@ -114,7 +113,7 @@ FastTMXLayer::FastTMXLayer()
 , _mapTileSize(Size::ZERO)
 , _tiles(nullptr)
 , _tileSet(nullptr)
-, _layerOrientation(FastTMXOrientationOrtho)
+, _layerOrientation(FAST_TMX_ORIENTATION_ORTHO)
 ,_texture(nullptr)
 , _vertexZvalue(0)
 , _useAutomaticVertexZ(false)
@@ -216,7 +215,7 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
     int tilesOverY = 0;
     // for diagonal oriention tiles
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
-    if (_layerOrientation == FastTMXOrientationOrtho)
+    if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
         tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
         tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
@@ -224,7 +223,7 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
         if (tilesOverX < 0) tilesOverX = 0;
         if (tilesOverY < 0) tilesOverY = 0;
     }
-    else if(_layerOrientation == FastTMXOrientationIso)
+    else if(_layerOrientation == FAST_TMX_ORIENTATION_ISO)
     {
         Rect overTileRect(0, 0, tileSizeMax - mapTileSize.width, tileSizeMax - mapTileSize.height);
         if (overTileRect.size.width < 0) overTileRect.size.width = 0;
@@ -233,6 +232,11 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
         
         tilesOverX = ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x);
         tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
+    }
+    else
+    {
+        //do nothing, do not support
+        CCASSERT(0, "TMX invalid value");
     }
     
     _indicesVertexZNumber.clear();
@@ -327,18 +331,18 @@ void FastTMXLayer::setupTiles()
 
     switch (_layerOrientation)
     {
-        case FastTMXOrientationOrtho:
+        case FAST_TMX_ORIENTATION_ORTHO:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
             _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
 
             // tiles could be bigger than the grid, add additional rows if needed
             _screenGridSize.height += _tileSet->_tileSize.height / _mapTileSize.height;
             break;
-        case FastTMXOrientationIso:
+        case FAST_TMX_ORIENTATION_ISO:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
             _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
             break;
-        case FastTMXOrientationHex:
+        case FAST_TMX_ORIENTATION_HEX:
         default:
             CCLOGERROR("FastTMX does not support type %d", _layerOrientation);
             break;
@@ -356,7 +360,7 @@ Mat4 FastTMXLayer::tileToNodeTransform()
     
     switch(_layerOrientation)
     {
-        case FastTMXOrientationOrtho:
+        case FAST_TMX_ORIENTATION_ORTHO:
         {
             _tileToNodeTransform = Mat4
             (
@@ -368,7 +372,7 @@ Mat4 FastTMXLayer::tileToNodeTransform()
             
             return _tileToNodeTransform;
         }
-        case FastTMXOrientationIso:
+        case FAST_TMX_ORIENTATION_ISO:
         {
             float offX = (_layerSize.width - 1) * w / 2;
             _tileToNodeTransform = Mat4
@@ -380,7 +384,7 @@ Mat4 FastTMXLayer::tileToNodeTransform()
             );
             return _tileToNodeTransform;
         }
-        case FastTMXOrientationHex:
+        case FAST_TMX_ORIENTATION_HEX:
         {
             _tileToNodeTransform = Mat4::IDENTITY;
             return _tileToNodeTransform;
@@ -604,14 +608,14 @@ int FastTMXLayer::getVertexZForPos(const Vec2& pos)
     {
         switch (_layerOrientation)
         {
-            case FastTMXOrientationIso:
+            case FAST_TMX_ORIENTATION_ISO:
                 maxVal = static_cast<int>(_layerSize.width + _layerSize.height);
                 ret = static_cast<int>(-(maxVal - (pos.x + pos.y)));
                 break;
-            case FastTMXOrientationOrtho:
+            case FAST_TMX_ORIENTATION_ORTHO:
                 ret = static_cast<int>(-(_layerSize.height-pos.y));
                 break;
-            case FastTMXOrientationHex:
+            case FAST_TMX_ORIENTATION_HEX:
                 CCASSERT(0, "TMX Hexa zOrder not supported");
                 break;
             default:
@@ -713,15 +717,16 @@ Vec2 FastTMXLayer::calculateLayerOffset(const Vec2& pos)
     Vec2 ret = Vec2::ZERO;
     switch (_layerOrientation) 
     {
-    case FastTMXOrientationOrtho:
+    case FAST_TMX_ORIENTATION_ORTHO:
         ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
-    case FastTMXOrientationIso:
+    case FAST_TMX_ORIENTATION_ISO:
         ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
-    case FastTMXOrientationHex:
-        CCASSERT(pos.equals(Vec2::ZERO), "offset for hexagonal map not implemented yet");
+    case FAST_TMX_ORIENTATION_HEX:
+    default:
+        CCASSERT(pos.equals(Vec2::ZERO), "offset for this map not implemented yet");
         break;
     }
     return ret;    

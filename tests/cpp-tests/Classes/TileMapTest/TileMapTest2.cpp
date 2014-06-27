@@ -30,8 +30,6 @@ namespace
     
     static int sceneIdx = -1;
     
-#define MAX_LAYER    27
-    
     static std::function<Layer*()> createFunctions[] = {
         CLN(TMXIsoZorderNew),
         CLN(TMXOrthoZorderNew),
@@ -45,7 +43,7 @@ namespace
         CLN(TMXIsoTest1New),
         CLN(TMXIsoTest2New),
         CLN(TMXUncompressedTestNew),
-        CLN(TMXHexTestNew),
+        //CLN(TMXHexTestNew),
         CLN(TMXReadWriteTestNew),
         CLN(TMXTilesetTestNew),
         CLN(TMXOrthoObjectsTestNew),
@@ -64,6 +62,8 @@ namespace
         CLN(TMXGIDObjectsTestNew),
         
     };
+
+#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
     
     Layer* createTileMalayer(int nIndex)
     {
