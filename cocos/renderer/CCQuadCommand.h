@@ -38,7 +38,7 @@ public:
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
 
     QuadCommand();
-    virtual ~QuadCommand();
+    ~QuadCommand();
 
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
      * quantity of quads, and the Model View transform to be used for the quads */
@@ -47,7 +47,6 @@ public:
 
     void useMaterial() const;
 
-
     inline uint32_t getMaterialID() const { return _materialID; }
     inline GLuint getTextureID() const { return _textureID; }
     inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
@@ -55,10 +54,9 @@ public:
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
     inline BlendFunc getBlendType() const { return _blendType; }
     inline const Mat4& getModelView() const { return _mv; }
-    inline bool getPremultiplyMV() const { return _preMultiplyMV; }
 
 protected:
-    virtual void generateMaterialID();
+    void generateMaterialID();
 
     uint32_t _materialID;
     GLuint _textureID;
@@ -67,29 +65,6 @@ protected:
     V3F_C4B_T2F_Quad* _quads;
     ssize_t _quadsCount;
     Mat4 _mv;
-    bool _preMultiplyMV;
-};
-
-//This type of quad command will not multiply vertex by modelview matrix, so you need a shader together with modelview matrix
-//OR the rendering result will be not correct
-class NopreMultiplyMVQuadCommand : public QuadCommand
-{
-public:
-    NopreMultiplyMVQuadCommand()
-    :QuadCommand()
-    {
-        _preMultiplyMV = false;
-    }
-    
-    virtual ~NopreMultiplyMVQuadCommand()
-    {
-    }
-    
-protected:
-    virtual void generateMaterialID()
-    {
-        _materialID = QuadCommand::MATERIAL_ID_DO_NOT_BATCH;
-    }
 };
 
 NS_CC_END
