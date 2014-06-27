@@ -116,7 +116,6 @@ FastTMXLayer::FastTMXLayer()
 , _tileSet(nullptr)
 , _layerOrientation(FastTMXOrientationOrtho)
 ,_texture(nullptr)
-, _verticesToDraw(0)
 , _vertexZvalue(0)
 , _useAutomaticVertexZ(false)
 , _dirty(true)
@@ -154,10 +153,8 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         inv.inverse();
         rect = RectApplyTransform(rect, inv);
         
-        _verticesToDraw = updateTiles(rect);
+        updateTiles(rect);
         updateIndexBuffer();
-        // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
-        _verticesToDraw = std::min(_verticesToDraw, 65535);
         _dirty = false;
     }
     
@@ -194,11 +191,11 @@ void FastTMXLayer::onDraw(int offset, int count)
     glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6 * sizeof(int)));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, count * 4);
 }
 
-int FastTMXLayer::updateTiles(const Rect& culledRect)
+void FastTMXLayer::updateTiles(const Rect& culledRect)
 {
-
     Rect visibleTiles = culledRect;
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
@@ -214,7 +211,6 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
     visibleTiles.origin.x = floor(visibleTiles.origin.x);
     visibleTiles.origin.y = floor(visibleTiles.origin.y);
 
-    
     // for the bigger tiles.
     int tilesOverX = 0;
     int tilesOverY = 0;
@@ -246,7 +242,6 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
         _indicesVertexZNumber[iter.first] = iter.second;
     }
     
-    int tilesUsed = 0;
     for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
     {
         if(y<0 || y >= _layerSize.height)
@@ -274,16 +269,7 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
             _indices[6 * offset + 4] = quadIndex * 4 + 2;
             _indices[6 * offset + 5] = quadIndex * 4 + 1;
             
-            if (tilesUsed >= MAX_QUADS_COUNT)
-            {
-                break;
-            }
         } // for x
-        
-        if (tilesUsed >= MAX_QUADS_COUNT)
-        {
-            break;
-        }
     } // for y
     
     for(const auto& iter : _indicesVertexZOffsets)
@@ -295,7 +281,6 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
         }
     }
     
-    return tilesUsed * 6;
 }
 
 void FastTMXLayer::updateVertexBuffer()
@@ -321,26 +306,6 @@ void FastTMXLayer::updateIndexBuffer()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.size(), &_indices[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-
-//void FastTMXLayer::setupVBO()
-//{
-//    glGenBuffers(2, &_buffersVBO[0]);
-//
-//    // 10922 = 65536/6
-//    int total = std::min(static_cast<int>(_layerSize.width * _layerSize.height), MAX_QUADS_COUNT);
-//
-//    // Vertex + Tex Coords
-//    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-//    glBufferData(GL_ARRAY_BUFFER, total * sizeof(V3F_T2F_Quad), NULL, GL_DYNAMIC_DRAW);
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//
-//    // Indices
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, total * 6 * sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//
-//    CHECK_GL_ERROR_DEBUG();
-//}
 
 // FastTMXLayer - setup Tiles
 void FastTMXLayer::setupTiles()
@@ -374,6 +339,8 @@ void FastTMXLayer::setupTiles()
             _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
             break;
         case FastTMXOrientationHex:
+        default:
+            CCLOGERROR("FastTMX does not support type %d", _layerOrientation);
             break;
     }
 

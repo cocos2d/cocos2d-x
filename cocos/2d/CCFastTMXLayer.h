@@ -188,7 +188,7 @@ public:
 protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    int updateTiles(const Rect& culledRect);
+    void updateTiles(const Rect& culledRect);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
     /* The layer recognizes some special properties, like cc_vertez */
@@ -239,14 +239,13 @@ protected:
     Size _screenGridSize;
     Rect _screenGridRect;
     int _screenTileCount;
-    int _verticesToDraw;
     
     int _vertexZvalue;
     bool _useAutomaticVertexZ;
     
     /** tile coordinate to node coordinate transform */
     Mat4 _tileToNodeTransform;
-    /** quads to be rendered */
+    /** data for rendering */
     bool _quadsDirty;
     std::unordered_map<ssize_t, ssize_t> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
