@@ -31,6 +31,7 @@ UIVBox.cpp \
 UIRelativeBox.cpp \
 UIVideoPlayerAndroid.cpp \
 UIScale9Sprite.cpp
+UIDeprecated.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support

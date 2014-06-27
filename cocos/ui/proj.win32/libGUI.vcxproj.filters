@@ -90,6 +90,9 @@
     <ClInclude Include="..\UIScale9Sprite.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
+    <ClInclude Include="..\UIDeprecated.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="..\UIScale9Sprite.cpp">
       <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIDeprecated.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

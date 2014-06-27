@@ -903,6 +903,9 @@ Developers:
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
+        
+    Teivaz
+        Custom uniform search optimization
     
 Retired Core Developers:
     WenSheng Yang

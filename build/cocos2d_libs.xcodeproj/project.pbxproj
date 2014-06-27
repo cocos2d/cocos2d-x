@@ -1045,6 +1045,8 @@
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
 		299754F7193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
+		29BDBA53195D597A003225C9 /* UIDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29BDBA52195D597A003225C9 /* UIDeprecated.cpp */; };
+		29BDBA54195D597A003225C9 /* UIDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29BDBA52195D597A003225C9 /* UIDeprecated.cpp */; };
 		29CB8F4C1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */; };
 		29CB8F4D1929D1BB00C841D6 /* UILayoutManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */; };
 		29CB8F4E1929D1BB00C841D6 /* UILayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */; };
@@ -2341,6 +2343,7 @@
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
 		299754F3193EC95400A54AC3 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFactory.h; path = ../base/ObjectFactory.h; sourceTree = "<group>"; };
+		29BDBA52195D597A003225C9 /* UIDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDeprecated.cpp; sourceTree = "<group>"; };
 		29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutManager.cpp; sourceTree = "<group>"; };
 		29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutManager.h; sourceTree = "<group>"; };
 		29E99D1C1957BA7000046604 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
@@ -4078,6 +4081,7 @@
 			isa = PBXGroup;
 			children = (
 				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
+				29BDBA52195D597A003225C9 /* UIDeprecated.cpp */,
 				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
 				2905FA1418CF08D100240AA3 /* UIWidget.h */,
 				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
@@ -6380,6 +6384,7 @@
 				503DD8F71926B0DB00CD74DD /* CCIMEDispatcher.cpp in Sources */,
 				1AD71EB1180E26E600808F54 /* Bone.cpp in Sources */,
 				1AD71EB5180E26E600808F54 /* BoneData.cpp in Sources */,
+				29BDBA53195D597A003225C9 /* UIDeprecated.cpp in Sources */,
 				1AD71EB9180E26E600808F54 /* CCSkeleton.cpp in Sources */,
 				50ABBE751925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				1AD71EBD180E26E600808F54 /* CCSkeletonAnimation.cpp in Sources */,
@@ -6877,6 +6882,7 @@
 				50ABBD5D1925AB0000A911A9 /* Vec3.cpp in Sources */,
 				50ABC0121926664800A911A9 /* CCGLViewProtocol.cpp in Sources */,
 				50ABC0021926664800A911A9 /* CCLock.cpp in Sources */,
+				29BDBA54195D597A003225C9 /* UIDeprecated.cpp in Sources */,
 				50FCEBAC18C72017004AD434 /* PageViewReader.cpp in Sources */,
 				1A8C598C180E930E00EF57C3 /* CCActionFrame.cpp in Sources */,
 				1A8C5990180E930E00EF57C3 /* CCActionFrameEasing.cpp in Sources */,
