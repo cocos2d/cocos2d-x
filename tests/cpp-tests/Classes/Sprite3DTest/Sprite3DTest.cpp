@@ -581,8 +581,27 @@ void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 }
 
 Animate3DTest::Animate3DTest()
+: _hurt(nullptr)
+, _swim(nullptr)
+, _sprite(nullptr)
+, _moveAction(nullptr)
+, _transTime(0.1f)
+, _elapseTransTime(0.f)
 {
     addSprite3D();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Animate3DTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    scheduleUpdate();
+}
+
+Animate3DTest::~Animate3DTest()
+{
+    CC_SAFE_RELEASE(_moveAction);
+    CC_SAFE_RELEASE(_hurt);
+    CC_SAFE_RELEASE(_swim);
 }
 
 std::string Animate3DTest::title() const
@@ -592,7 +611,37 @@ std::string Animate3DTest::title() const
 
 std::string Animate3DTest::subtitle() const
 {
-    return "";
+    return "Touch to beat the tortoise";
+}
+
+void Animate3DTest::update(float dt)
+{
+    if (_state == State::HURT_TO_SWIMMING)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        
+        if (t >= 1.f)
+        {
+            t = 1.f;
+            _sprite->stopAction(_hurt);
+            _state = State::SWIMMING;
+        }
+        _swim->setWeight(t);
+        _hurt->setWeight(1.f - t);
+    }
+    else if (_state == State::SWIMMING_TO_HURT)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        if (t >= 1.f)
+        {
+            t = 1.f;
+            _state = State::HURT;
+        }
+        _swim->setWeight(1.f - t);
+        _hurt->setWeight(t);
+    }
 }
 
 void Animate3DTest::addSprite3D()
@@ -601,80 +650,69 @@ void Animate3DTest::addSprite3D()
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(0.1f);
     auto s = Director::getInstance()->getWinSize();
-    sprite->setPosition(Vec2(s.width / 2.f, s.height / 2.f));
-    addChild(sprite);
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    _sprite = sprite;
     auto animation = Animation3D::getOrCreate(fileName);
     if (animation)
     {
-        auto animate = Animate3D::create(animation);
-        sprite->runAction(animate);
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+        _swim = animate;
+        _swim->retain();
+        _hurt = Animate3D::create(animation, 1.933f, 2.8f);
+        _hurt->retain();
+        _state = State::SWIMMING;
     }
-}
-
-Animate3DTest::Animate3DTransition::Animate3DTransition(cocos2d::Sprite3D* sprite)
-: _running(nullptr)
-, _fadeTo(nullptr)
-, _sprite(sprite)
-, _transTime(0.f)
-, _elapseTransTime(0.f)
-{
     
-}
-Animate3DTest::Animate3DTransition::~Animate3DTransition()
-{
-    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
 }
 
-void Animate3DTest::Animate3DTransition::fadeTo(Animate3D* animate, float transTime)
+void Animate3DTest::reachEndCallBack()
 {
-    if (_running == nullptr)
-        _running = animate;
-    else
-        _fadeTo = animate;
-    
-    if (animate && _running != animate)
+    _sprite->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Animate3DTest::renewCallBack()
+{
+    _sprite->stopActionByTag(101);
+    _state = State::HURT_TO_SWIMMING;
+}
+
+void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
     {
-        _sprite->runAction(animate);
-        animate->setWeight(0.0f);
-        _transTime = transTime;
-        _elapseTransTime = 0.f;
-    }
-}
-
-void Animate3DTest::Animate3DTransition::stopRunningAnimate3D()
-{
-    if (_running)
-    _sprite->stopAction(_running);
-    _running = _fadeTo;
-    _fadeTo = nullptr;
-    if (_running)
-    {
-        _running->setWeight(1.0f);
-    }
-}
-
-void Animate3DTest::Animate3DTransition::stopAllAnimate3D()
-{
-    if (_running)
-        _sprite->stopAction(_running);
-    if (_fadeTo)
-        _sprite->stopAction(_fadeTo);
-    _running = nullptr;
-    _fadeTo = nullptr;
-}
-
-void Animate3DTest::Animate3DTransition::update(float dt)
-{
-    if (_fadeTo)
-    {
-        _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
-        if (t > 1.0f)
-            t = 1.0f;
-        _running->setWeight(1.f - t);
-        _fadeTo->setWeight(t);
+        auto location = touch->getLocation();
         
-        if (t == 1)// finish fade
-            stopRunningAnimate3D();
+        if (_sprite)
+        {
+            float len = (_sprite->getPosition() - location).length();
+            if (len < 40)
+            {
+                //hurt the tortoise
+                if (_state == State::SWIMMING)
+                {
+                    _sprite->runAction(_hurt);
+                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), NULL);
+                    seq->setTag(101);
+                    _sprite->runAction(seq);
+                    _state = State::SWIMMING_TO_HURT;
+                }
+                return;
+            }
+        }
     }
 }

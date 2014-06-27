@@ -199,8 +199,6 @@ void MeshCommand::preBatchDraw()
 }
 void MeshCommand::batchDraw()
 {
-    auto glProgram = _glProgramState->getGLProgram();
-
     _glProgramState->setUniformVec4("u_color", _displayColor);
     
     if (_matrixPaletteSize && _matrixPalette)

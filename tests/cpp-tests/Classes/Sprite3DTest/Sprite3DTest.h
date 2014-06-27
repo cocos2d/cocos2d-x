@@ -32,6 +32,7 @@
 namespace cocos2d {
     class Animate3D;
     class Sprite3D;
+    class Delay;
 }
 
 class Sprite3DTestDemo : public BaseTest
@@ -161,38 +162,39 @@ class Animate3DTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Animate3DTest);
     Animate3DTest();
+    ~Animate3DTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+    virtual void update(float dt) override;
     
 protected:
     void addSprite3D();
     
-    class Animate3DTransition
+    enum class State
     {
-    public:
-        Animate3DTransition(cocos2d::Sprite3D* sprite);
-        ~Animate3DTransition();
-        
-        void fadeTo(cocos2d::Animate3D* animate, float transTime = 0.1f);
-        
-        void stopRunningAnimate3D();
-        
-        void stopAllAnimate3D();
-        
-        void update(float dt);
-        
-    protected:
-        
-        float               _transTime;
-        float               _elapseTransTime;
-        
-        cocos2d::Animate3D* _running; //running animation
-        cocos2d::Animate3D* _fadeTo; // fading to animation
-        cocos2d::Sprite3D* _sprite;
+        SWIMMING,
+        SWIMMING_TO_HURT,
+        HURT,
+        HURT_TO_SWIMMING,
     };
     
+    void reachEndCallBack();
+    
+    void renewCallBack();
+    
     cocos2d::Sprite3D* _sprite;
-    Animate3DTransition* _animateTrans;
+    
+    cocos2d::Animate3D* _swim;
+    cocos2d::Animate3D* _hurt;
+    float _transTime;
+    float _elapseTransTime;
+    
+    State   _state;
+    
+    MoveTo* _moveAction;
 };
 
 class Sprite3DTestScene : public TestScene
