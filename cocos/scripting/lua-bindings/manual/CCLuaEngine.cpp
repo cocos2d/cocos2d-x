@@ -26,7 +26,7 @@
 #include "CCLuaEngine.h"
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "extensions/deprecated/CCControlExtension/CCControl.h"
 #include "LuaOpengl.h"
 #include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
