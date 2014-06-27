@@ -846,6 +846,9 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1561,6 +1564,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

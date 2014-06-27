@@ -76,6 +76,7 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp
   Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp
   Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
+  Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
   Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp

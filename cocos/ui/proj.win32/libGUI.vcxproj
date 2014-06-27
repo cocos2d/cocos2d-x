@@ -26,6 +26,7 @@
     <ClInclude Include="..\UIPageView.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
     <ClInclude Include="..\UIRichText.h" />
+    <ClInclude Include="..\UIScale9Sprite.h" />
     <ClInclude Include="..\UIScrollView.h" />
     <ClInclude Include="..\UISlider.h" />
     <ClInclude Include="..\UIText.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="..\UIPageView.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
     <ClCompile Include="..\UIRichText.cpp" />
+    <ClCompile Include="..\UIScale9Sprite.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
     <ClCompile Include="..\UIText.cpp" />

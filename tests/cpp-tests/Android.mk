@@ -81,6 +81,7 @@ Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.cpp \
 Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp \
 Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp \
 Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
+Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp \
 Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
 Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp \
 Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp \

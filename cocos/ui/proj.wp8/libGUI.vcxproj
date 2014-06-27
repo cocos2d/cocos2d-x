@@ -187,6 +187,7 @@
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
+    <ClInclude Include="..\UIScale9Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\CCProtectedNode.cpp" />
@@ -212,5 +213,6 @@
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
+    <ClCompile Include="..\UIScale9Sprite.cpp" />
   </ItemGroup>
 </Project>
