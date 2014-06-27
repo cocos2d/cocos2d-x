@@ -25,7 +25,7 @@ V3.0在cocos2dx V3的最新版本基础之上，移植了原来quick-x的基本�
 
 在开始使用quick前，请你简单配置一下环境变量。
 
-你只需要进入到player目录，运行一下setup_mac.sh，所有的配置工作就可以完成了。(Windows下请运行setup_win.bat)
+你只需要进入到quick目录，运行一下setup_mac.sh，所有的配置工作就可以完成了。(Windows下请运行setup_win.bat)
 
 如果需要编译Android，请按照以前的教程配置好ADT+NDK开发环境。
     
