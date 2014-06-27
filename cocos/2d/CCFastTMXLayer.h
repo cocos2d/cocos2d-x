@@ -205,12 +205,12 @@ protected:
     //
     void updateTotalQuads();
     
-    void onDraw(const std::vector<int>* indices);
+    void onDraw(int offset, int count);
     
     inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
     
     void updateVertexBuffer();
-    //void updateIndexBuffer();
+    void updateIndexBuffer();
 protected:
     
     //! name of the layer
@@ -248,11 +248,11 @@ protected:
     Mat4 _tileToNodeTransform;
     /** quads to be rendered */
     bool _quadsDirty;
-    std::map<ssize_t, ssize_t> _tileToQuadIndex;
+    std::unordered_map<ssize_t, ssize_t> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
-    std::map<int/*zorder*/, std::vector<int>> _quadsIndices;
-    std::vector<V3F_C4B_T2F_Quad> _quads;
-    std::map<int/*zorder*/, ssize_t/*number*/> _quadsNumber;
+    std::vector<int> _indices;
+    std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
+    std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<CustomCommand> _renderCommands;
     bool _dirty;
 };

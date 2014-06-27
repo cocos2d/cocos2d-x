@@ -141,16 +141,11 @@ FastTMXLayer::~FastTMXLayer()
     }
 }
 
-bool sortQuadCommand(const V3F_C4B_T2F_Quad& a, const V3F_C4B_T2F_Quad& b)
-{
-    return a.bl.vertices.z < b.bl.vertices.z;
-}
-
 void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
     updateTotalQuads();
     
-    if( flags != 0 || _dirty )
+    if( flags != 0 || _dirty || _quadsDirty )
     {
         Size s = Director::getInstance()->getWinSize();
         auto rect = Rect(0, 0, s.width, s.height);
@@ -160,44 +155,47 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
         rect = RectApplyTransform(rect, inv);
         
         _verticesToDraw = updateTiles(rect);
+        updateIndexBuffer();
         // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
         _verticesToDraw = std::min(_verticesToDraw, 65535);
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _quadsIndices.size())
+    if(_renderCommands.size() < _indicesVertexZNumber.size())
     {
-        _renderCommands.resize(_quadsIndices.size());
+        _renderCommands.resize(_indicesVertexZNumber.size());
     }
     
     int index = 0;
-    for(const auto& iter : _quadsIndices)
+    for(const auto& iter : _indicesVertexZNumber)
     {
         auto& cmd = _renderCommands[index++];
         
         cmd.init(iter.first);
-        cmd.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, &iter.second);
+        cmd.func = CC_CALLBACK_0(FastTMXLayer::onDraw, this, _indicesVertexZOffsets[iter.first], iter.second);
         renderer->addCommand(&cmd);
     }
     
 }
 
-void FastTMXLayer::onDraw(const std::vector<int> *indices)
+void FastTMXLayer::onDraw(int offset, int count)
 {
     GL::bindTexture2D(_texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_totalQuads[0]);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), ((char*)&_totalQuads[0]) + offsetof(V3F_C4B_T2F, colors));
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), ((char*)&_totalQuads[0]) + offsetof(V3F_C4B_T2F, texCoords));
-    glDrawElements(GL_TRIANGLES, (GLsizei)indices->size(), GL_UNSIGNED_INT, &(*indices)[0]);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
+    glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6));
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 int FastTMXLayer::updateTiles(const Rect& culledRect)
@@ -243,9 +241,12 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
         tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
     }
     
-    _quadsIndices.clear();
-
-    //clear quadsNumber
+    _indicesVertexZNumber.clear();
+    
+    for(const auto& iter : _indicesVertexZOffsets)
+    {
+        _indicesVertexZNumber[iter.first] = iter.second;
+    }
     
     int tilesUsed = 0;
     for (int y =  visibleTiles.origin.y - tilesOverY; y < visibleTiles.origin.y + visibleTiles.size.height + tilesOverY; ++y)
@@ -261,20 +262,19 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
             if(_tiles[tileIndex] == 0) continue;
             
             int vertexZ = getVertexZForPos(Vec2(x,y));
-            auto& indices = _quadsIndices[vertexZ];
-            if(indices.capacity() == indices.size())
-            {
-                indices.reserve(indices.size() + 4096 * 6);
-            }
+            auto iter = _indicesVertexZNumber.find(vertexZ);
+            int offset = iter->second;
+            iter->second++;
             
-            CC_ASSERT(_tileToQuadIndex.find(tileIndex) != _tileToQuadIndex.end() && _tileToQuadIndex[tileIndex] <= _totalQuads.size()-1);
+            //CC_ASSERT(_tileToQuadIndex.find(tileIndex) != _tileToQuadIndex.end() && _tileToQuadIndex[tileIndex] <= _totalQuads.size()-1);
             int quadIndex = (int)_tileToQuadIndex[tileIndex];
-            indices.push_back(quadIndex * 4);
-            indices.push_back(quadIndex * 4 + 1);
-            indices.push_back(quadIndex * 4 + 2);
-            indices.push_back(quadIndex * 4 + 3);
-            indices.push_back(quadIndex * 4 + 2);
-            indices.push_back(quadIndex * 4 + 1);
+
+            _indices[6 * offset + 0] = quadIndex * 4 + 0;
+            _indices[6 * offset + 1] = quadIndex * 4 + 1;
+            _indices[6 * offset + 2] = quadIndex * 4 + 2;
+            _indices[6 * offset + 3] = quadIndex * 4 + 3;
+            _indices[6 * offset + 4] = quadIndex * 4 + 2;
+            _indices[6 * offset + 5] = quadIndex * 4 + 1;
             
             if (tilesUsed >= MAX_QUADS_COUNT)
             {
@@ -287,7 +287,16 @@ int FastTMXLayer::updateTiles(const Rect& culledRect)
             break;
         }
     } // for y
-
+    
+    for(const auto& iter : _indicesVertexZOffsets)
+    {
+        _indicesVertexZNumber[iter.first] -= iter.second;
+        if(_indicesVertexZNumber[iter.first] == 0)
+        {
+            _indicesVertexZNumber.erase(iter.first);
+        }
+    }
+    
     return tilesUsed * 6;
 }
 
@@ -300,13 +309,20 @@ void FastTMXLayer::updateVertexBuffer()
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * _quads.size(), (GLvoid*)&_quads[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * _totalQuads.size(), (GLvoid*)&_totalQuads[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-//void FastTMXLayer::updateIndexBuffer()
-//{
-//}
+void FastTMXLayer::updateIndexBuffer()
+{
+    if(!glIsBuffer(_buffersVBO[1]))
+    {
+        glGenBuffers(1, &_buffersVBO[1]);
+    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.size(), &_indices[0], GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
 
 //void FastTMXLayer::setupVBO()
 //{
@@ -421,6 +437,8 @@ void FastTMXLayer::updateTotalQuads()
         Size texSize = _tileSet->_imageSize;
         _tileToQuadIndex.clear();
         _totalQuads.resize(int(_layerSize.width * _layerSize.height));
+        _indices.resize(6 * int(_layerSize.width * _layerSize.height));
+        _indicesVertexZOffsets.clear();
         
         int quadIndex = 0;
         for(int y = 0; y < _layerSize.height; ++y)
@@ -442,7 +460,15 @@ void FastTMXLayer::updateTotalQuads()
                 float left, right, top, bottom, z;
                 
                 z = getVertexZForPos(Vec2(x, y));
-                
+                auto iter = _indicesVertexZOffsets.find(z);
+                if(iter == _indicesVertexZOffsets.end())
+                {
+                    _indicesVertexZOffsets[z] = 1;
+                }
+                else
+                {
+                    iter->second++;
+                }
                 // vertices
                 if (tileGID & kTMXTileDiagonalFlag)
                 {
@@ -521,6 +547,12 @@ void FastTMXLayer::updateTotalQuads()
             }
         }
         
+        int offset = 0;
+        for(auto iter = _indicesVertexZOffsets.begin(); iter != _indicesVertexZOffsets.end(); ++iter)
+        {
+            std::swap(offset, iter->second);
+            offset += iter->second;
+        }
         updateVertexBuffer();
         
         _quadsDirty = false;
