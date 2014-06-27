@@ -102,6 +102,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     {
         skinData->addNodeBoneNames(parent_name);
         skinData->nodeBoneOriginMatrices.push_back(transform);
+        parent_name_index = skinData->getBoneNameIndex(parent_name);
     }
     else if (parent_name_index < skinData->skinBoneNames.size())
     {
@@ -110,12 +111,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     
     // set root bone index
     if(skinData->rootBoneIndex < 0)
-    {
-        if (parent_name_index < 0)
-            parent_name_index = skinData->getBoneNameIndex(parent_name);
-        
         skinData->rootBoneIndex = parent_name_index;
-    }
     
     if (!val.HasMember(SKINDATA_CHILDREN))
         return;
