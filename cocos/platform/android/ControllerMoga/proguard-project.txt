@@ -18,3 +18,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-libraryjars com.bda.controller.jar
+-dontwarn com.bda.controller.*
+-keep class org.cocos2dx.lib.*{*;}

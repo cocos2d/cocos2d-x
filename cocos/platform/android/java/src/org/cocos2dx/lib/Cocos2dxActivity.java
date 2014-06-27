@@ -36,8 +36,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -55,38 +55,41 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
-	private Cocos2dxHandler mHandler;
+	private Cocos2dxHandler mHandler;	
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
 	private InputManagerCompat mInputManager = null;
 	
-	protected GameControllerDelegate mCocos2dxController = null;
+	protected GameControllerHelper mControllerHelper = null;
+	protected GameControllerDelegate mControllerDelegate = null;
 	
 	public static Context getContext() {
 		return sContext;
 	}
 	
-	
 	protected void onLoadNativeLibraries() {
 		try {
 			ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
 			Bundle bundle = ai.metaData;
-			try {
-        		String libName = bundle.getString("android.app.lib_name");
-        		System.loadLibrary(libName);
-			} catch (Exception e) {
-		 		// ERROR
-				e.printStackTrace();
-			}
-		} catch (PackageManager.NameNotFoundException e) {
-		 	// ERROR
+			String libName = bundle.getString("android.app.lib_name");
+    		System.loadLibrary(libName);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void setGameControllerInstance(GameControllerDelegate controllerDelegate) {
-		mCocos2dxController = controllerDelegate;
-		mCocos2dxController.setControllerEventListener(mControllerEventListener);
+		if (mControllerDelegate != null) {
+			mControllerDelegate.onDestroy();
+			mControllerDelegate = null;
+		}
+		mControllerDelegate = controllerDelegate;
+		mControllerDelegate.setControllerEventListener(mControllerEventListener);
+		mControllerDelegate.onCreate(this);
+	}
+	
+	public GameControllerDelegate getGameControllerInstance(){
+		return mControllerDelegate;
 	}
 	
 	ControllerEventListener mControllerEventListener = new ControllerEventListener() {
@@ -126,6 +129,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 		sContext = this;
     	this.mHandler = new Cocos2dxHandler(this);
+    	if (mControllerHelper == null) {
+    		mControllerHelper = new GameControllerHelper(this);
+		}
     	
     	Cocos2dxHelper.init(this);
     	
@@ -137,8 +143,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	mInputManager = InputManagerCompat.Factory.getInputManager(this);
     	mInputManager.registerInputDeviceListener(this, null);
     	
-    	if (mCocos2dxController != null) {
-			mCocos2dxController.onCreate(this);
+    	if (mControllerDelegate != null) {
+			mControllerDelegate.onCreate(this);
 		}
 	}
 	
@@ -151,36 +157,62 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 
 	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		boolean handled = false; 
+		if (mControllerDelegate != null) {
+			handled = mControllerDelegate.dispatchKeyEvent(event);
+		}
+		return handled || super.dispatchKeyEvent(event);
+	}
+	
+	@Override
+	public boolean dispatchGenericMotionEvent(MotionEvent ev) {
+		boolean handled = false; 
+		if (mControllerDelegate != null) {
+			handled = mControllerDelegate.dispatchGenericMotionEvent(ev);
+		}
+		return handled || super.dispatchGenericMotionEvent(ev);
+	}
+	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		boolean handled = false;
-        
-        int eventSource = event.getSource();
-        if (((eventSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) ||
-            ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK))
-        {
-        	GameControllerAdapter.onButtonEvent("Standard", event.getDeviceId(), keyCode, false, 0.0f, false);
-        	handled = true;
-        }
-        else if(mCocos2dxController != null){       	
-        	handled = mCocos2dxController.onKeyDown(keyCode, event);    	
+		Log.i(TAG, "onKeyDown:" + keyCode);
+        if(mControllerDelegate != null){               	
+        	handled = mControllerDelegate.onKeyDown(keyCode, event);    	
+		}
+        else {
+        	handled = mControllerHelper.onKeyDownEvent(keyCode, event);
 		}
         
 		return handled || super.onKeyDown(keyCode, event);
 	}
 	
 	@Override
-	public boolean onKeyUp(int keyCode, KeyEvent event) {
+	public boolean onGenericMotionEvent(MotionEvent event) {
 		boolean handled = false;
-        int eventSource = event.getSource();
-        
-        if (((eventSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) ||
-            ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK)){
-        	
-        	GameControllerAdapter.onButtonEvent("Standard", event.getDeviceId(), keyCode, true, 1.0f, false);
-        	handled = true;
-        }
-        else if(mCocos2dxController != null){       	
-        	handled = mCocos2dxController.onKeyUp(keyCode, event);    	
+		
+		if (mControllerDelegate != null) {
+			Log.d(TAG, "mControllerDelegate.onGenericMotionEvent(event)");
+			handled = mControllerDelegate.onGenericMotionEvent(event);
+		} else {
+			Log.d(TAG, "mControllerHelper.onGenericMotionEvent(event)");
+			handled = mControllerHelper.onGenericMotionEvent(event);
+		}
+		return handled || super.onGenericMotionEvent(event);
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		Log.i(TAG, "onKeyUp:" + keyCode);
+		
+		boolean handled = false;
+		
+        if(mControllerDelegate != null){
+        	handled = mControllerDelegate.onKeyUp(keyCode, event);  
+		}
+        else {
+        	handled = mControllerHelper.onKeyUpEvent(keyCode, event);
 		}
         
         return handled || super.onKeyUp(keyCode, event);
@@ -188,7 +220,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
 	@Override
 	public void onInputDeviceAdded(int deviceId) {
-		Log.d(TAG,"onInputDeviceAdded:" + deviceId);
+		Log.e(TAG,"onInputDeviceAdded:" + deviceId);
 		
 		GameControllerAdapter.onConnected("Standard", deviceId);
 	}
@@ -204,7 +236,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	 */
 	@Override
 	public void onInputDeviceChanged(int deviceId) {
-		Log.d(TAG,"onInputDeviceChanged:" + deviceId);
+		Log.e(TAG,"onInputDeviceChanged:" + deviceId);
 	}
 	
 	/*
@@ -216,7 +248,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	 */
 	@Override
 	public void onInputDeviceRemoved(int deviceId) {
-		Log.d(TAG,"onInputDeviceRemoved:" + deviceId);
+		Log.e(TAG,"onInputDeviceRemoved:" + deviceId);
 		GameControllerAdapter.onDisconnected("Standard", deviceId);
 	}
 
@@ -227,16 +259,17 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		Cocos2dxHelper.onResume();
 		this.mGLSurfaceView.onResume();
 		
-		if (mCocos2dxController != null) {
-			mCocos2dxController.onResume();
+		if (mControllerDelegate != null) {
+			mControllerDelegate.onResume();
 		}
 	}
 
 	@Override
 	protected void onPause() {
-		if (mCocos2dxController != null) {
-			mCocos2dxController.onPause();
+		if (mControllerDelegate != null) {
+			mControllerDelegate.onPause();
 		}
+		
 		super.onPause();
 		
 		Cocos2dxHelper.onPause();
@@ -245,9 +278,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
 	@Override
 	protected void onDestroy() {
-		if (mCocos2dxController != null) {
-			mCocos2dxController.onDestroy();
+		if (mControllerDelegate != null) {
+			mControllerDelegate.onDestroy();
 		}
+		mControllerHelper.destrory();
+		
 		super.onDestroy();
 	}
 

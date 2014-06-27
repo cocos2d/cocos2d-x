@@ -149,143 +149,49 @@ const std::vector<Controller*>& Controller::getControllers()
     return _controllers;
 }
 
-void Controller::startDiscoveryController()
+void registerControllerListener(GCController* gcController)
 {
-    CCNSLOG("startDiscoveryController...: %s", "hello");
-    
-    [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
-
-    [[GCControllerConnectionEventHandler getInstance] observerConnection: ^(GCController* gcController) {
-        auto controller = new Controller();
-        controller->_impl->_gcController = gcController;
-        
-        gcController.controllerPausedHandler = ^(GCController* gcCon){
-            
-            CCNSLOG("Controller(%p)'s paused handler was invoked.", gcCon);
-            auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcCon](Controller* c){ return c->_impl->_gcController == gcCon; });
-            
-            CCASSERT(iter != _controllers.end(), "Could not find the controller");
-            
-            auto button = (*iter)->getGamepad()->getButtonPause();
-            button->setPressed(true);
-            EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, (*iter), button);
-            Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
-            
-            // Reset the pause button status to unpressed.
-            button->setPressed(false);
-        };
-        
-        CCNSLOG("controller %p was connnected!", gcController);
-        _controllers.push_back(controller);
-        
-        
-        EventController evt(EventController::ControllerEventType::CONNECTION, controller, true);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
-        
-    } disconnection: ^(GCController* gcController) {
-        CCNSLOG("controller %p was disconnected!", gcController);
-        
-        auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; });
-        
-        CCASSERT(iter != _controllers.end(), "Could not find the controller");
-        
-        EventController evt(EventController::ControllerEventType::CONNECTION, *iter, false);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
-        
-        delete (*iter);
-        _controllers.erase(iter);
-    }];
-}
-
-void Controller::stopDiscoveryController()
-{
-    [GCController stopWirelessControllerDiscovery];
-}
-
-Controller::Controller()
-{
-    _playerIndex = PLAYER_INDEX_UNSET;
-    _gamepad = new Gamepad();
-    _gamepad->_controller = this;
-    _impl = new ControllerImpl(this);
-}
-
-Controller::~Controller()
-{
-    CC_SAFE_DELETE(_impl);
-    CC_SAFE_DELETE(_gamepad);
-}
-
-const std::string& Controller::getVendorName()
-{
-    if (_vendorName.empty())
-    {
-        _vendorName = [_impl->_gcController.vendorName UTF8String];
-    }
-    return _vendorName;
-}
-
-bool Controller::isConnected() const
-{
-    return _impl->_gcController.isAttachedToDevice == YES;
-}
-
-int Controller::getPlayerIndex() const
-{
-    return _playerIndex;
-}
-
-void Controller::setPlayerIndex(int playerIndex)
-{
-    _playerIndex = playerIndex;
-}
-
-Gamepad* Controller::getGamepad()
-{
-    if (_impl->_gcController == nil)
-        return nullptr;
-    
-    if (_impl->_gcController.gamepad != nil || _impl->_gcController.extendedGamepad != nil)
-    {
-        if (_impl->_gcController.extendedGamepad != nil)
+    if(gcController)
+	{
+	    if (gcController.extendedGamepad != nil)
         {
-            _impl->_gcController.extendedGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.extendedGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad up %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
             };
             
-            _impl->_gcController.extendedGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.extendedGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad down %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
             };
             
-            _impl->_gcController.extendedGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.extendedGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad left %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
             };
             
-            _impl->_gcController.extendedGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.extendedGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad right %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
             };
             
-            _impl->_gcController.extendedGamepad.leftThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+            gcController.extendedGamepad.leftThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
                 sendEventAxis(_gamepad->getLeftThumbstick()->getAxisX(), axis);
             };
             
-            _impl->_gcController.extendedGamepad.leftThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+            gcController.extendedGamepad.leftThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
                 sendEventAxis(_gamepad->getLeftThumbstick()->getAxisY(), axis);
             };
             
-            _impl->_gcController.extendedGamepad.rightThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+            gcController.extendedGamepad.rightThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
                 sendEventAxis(_gamepad->getRightThumbstick()->getAxisX(), axis);
             };
             
-            _impl->_gcController.extendedGamepad.rightThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+            gcController.extendedGamepad.rightThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
                 sendEventAxis(_gamepad->getRightThumbstick()->getAxisY(), axis);
             };
             
-            _impl->_gcController.extendedGamepad.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element){
+            gcController.extendedGamepad.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element){
                 if (element == gamepad.buttonA)
                 {
                     sendEventButton(_gamepad->getButtonA(), gamepad.buttonA);
@@ -320,29 +226,29 @@ Gamepad* Controller::getGamepad()
                 }
             };
         }
-        else
+        else if(gcController.gamepad != nil)
         {
-            _impl->_gcController.gamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.gamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad up %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
             };
 
-            _impl->_gcController.gamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.gamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad down %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
             };
             
-            _impl->_gcController.gamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.gamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad left %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
             };
             
-            _impl->_gcController.gamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            gcController.gamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
                 CCNSLOG("dpad right %d, %f", button.pressed, button.value);
                 sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
             };
             
-            _impl->_gcController.gamepad.valueChangedHandler = ^(GCGamepad *gamepad, GCControllerElement *element){
+            gcController.gamepad.valueChangedHandler = ^(GCGamepad *gamepad, GCControllerElement *element){
                 
                 if (element == gamepad.buttonA)
                 {
@@ -370,8 +276,106 @@ Gamepad* Controller::getGamepad()
                 }
             };
         }
+	}
+}
+
+void Controller::startDiscoveryController()
+{
+    CCNSLOG("startDiscoveryController...: %s", "hello");
+    
+    [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
+
+    [[GCControllerConnectionEventHandler getInstance] observerConnection: ^(GCController* gcController) {
+        auto controller = new Controller();
+        controller->_impl->_gcController = gcController;
+		registerControllerListener(gcController);
+        
+        gcController.controllerPausedHandler = ^(GCController* gcCon){
+            
+            CCNSLOG("Controller(%p)'s paused handler was invoked.", gcCon);
+            auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcCon](Controller* c){ return c->_impl->_gcController == gcCon; });
+            
+            CCASSERT(iter != _controllers.end(), "Could not find the controller");
+            
+            auto button = (*iter)->getGamepad()->getButtonPause();
+            button->setPressed(true);
+            EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, (*iter), button);
+            Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+            
+            // Reset the pause button status to unpressed.
+            button->setPressed(false);
+        };
+        
+        CCNSLOG("controller %p was connnected!", gcController);
+        _controllers.push_back(controller);      
+        
+        EventController evt(EventController::ControllerEventType::CONNECTION, controller, true);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+        
+    } disconnection: ^(GCController* gcController) {
+        CCNSLOG("controller %p was disconnected!", gcController);
+        
+        auto iter = std::find_if(_controllers.begin(), _controllers.end(), [gcController](Controller* c){ return c->_impl->_gcController == gcController; });
+        
+        CCASSERT(iter != _controllers.end(), "Could not find the controller");
+        
+        EventController evt(EventController::ControllerEventType::CONNECTION, *iter, false);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+        
+        delete (*iter);
+        _controllers.erase(iter);
+    }];
+}
+
+void Controller::stopDiscoveryController()
+{
+    [GCController stopWirelessControllerDiscovery];
+}
+
+Controller::Controller()
+    : _playerIndex(PLAYER_INDEX_UNSET)
+    , _gamepad(new Gamepad)
+    , _impl(new ControllerImpl(this))
+{
+    _gamepad->_controller = this;
+}
+
+Controller::~Controller()
+{
+    CC_SAFE_DELETE(_impl);
+    CC_SAFE_DELETE(_gamepad);
+}
+
+const std::string& Controller::getVendorName()
+{
+    if (_vendorName.empty())
+    {
+        _vendorName = [_impl->_gcController.vendorName UTF8String];
     }
-    else
+    return _vendorName;
+}
+
+bool Controller::isConnected() const
+{
+    return _impl->_gcController.isAttachedToDevice == YES;
+}
+
+int Controller::getPlayerIndex() const
+{
+    return _playerIndex;
+}
+
+void Controller::setPlayerIndex(int playerIndex)
+{
+    _playerIndex = playerIndex;
+}
+
+Gamepad* Controller::getGamepad() const
+{
+    if (_impl->_gcController == nil)
+        return nullptr;
+    
+    if (_impl->_gcController.gamepad == nil && _impl->_gcController.extendedGamepad == nil)
     {
         CCASSERT(false, "No gamepad was found!");
     }

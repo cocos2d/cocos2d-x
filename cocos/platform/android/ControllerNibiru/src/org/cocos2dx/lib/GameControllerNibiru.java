@@ -174,22 +174,7 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 		}
 		Log.d(TAG, "onRightStickChanged: playerOrder=" + playerOrder + ", x = " + x + ", y = " + y);
 	}
-
-	@Override
-	public void onControllerAccEvent(int playerOrder, AccEvent event) {
-		
-	}
-
-	@Override
-	public void onControllerGyroEvent(int playerOrder, GyroEvent event) {
-		
-	}
-
-	@Override
-	public void onBluetoothStateChanged(int state) {
-		Log.d(TAG, "onBluetoothStateChanged:"+state);
-	}
-
+	
 	@Override
 	public void onControllerStateChanged(int playerOrder, int state, ControllerDevice device) {
 		Log.d(TAG, "onControllerStateChanged:"+state);
@@ -205,15 +190,39 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 		}
 	}
 
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean dispatchGenericMotionEvent(MotionEvent event){
 		return mControllerService.handleExternalInput(event);
+	}
+	
+	public boolean dispatchKeyEvent(KeyEvent event){
+		return mControllerService.handleExternalInput(event);
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		return false;
 	}
 	
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		return mControllerService.handleExternalInput(event);
+		return false;
 	}
 	
 	public boolean onGenericMotionEvent(MotionEvent event) {
-		return mControllerService.handleExternalInput(event);
+		return false;
 	}
+	
+	@Override
+	public void onControllerAccEvent(int playerOrder, AccEvent event) {
+		
+	}
+
+	@Override
+	public void onControllerGyroEvent(int playerOrder, GyroEvent event) {
+		
+	}
+
+	@Override
+	public void onBluetoothStateChanged(int state) {
+		Log.d(TAG, "onBluetoothStateChanged:"+state);
+	}
+
 }

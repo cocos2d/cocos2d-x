@@ -54,7 +54,7 @@ public:
     int getPlayerIndex() const;
     void setPlayerIndex(int playerIndex);
 
-    Gamepad* getGamepad();
+    Gamepad* getGamepad() const;
 
     // For internal use only
     inline ControllerImpl* getImpl() const { return _impl; };

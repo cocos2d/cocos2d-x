@@ -28,6 +28,7 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_B, GameControllerDelegate.BUTTON_B);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_X, GameControllerDelegate.BUTTON_X);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_Y, GameControllerDelegate.BUTTON_Y);
+		
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_L1,
 				GameControllerDelegate.BUTTON_LEFT_SHOULDER);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_R1,
@@ -36,6 +37,7 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 				GameControllerDelegate.BUTTON_LEFT_TRIGGER);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_R2,
 				GameControllerDelegate.BUTTON_RIGHT_TRIGGER);
+		
 		mKeyMap.put(KeyEvent.KEYCODE_DPAD_UP,
 				GameControllerDelegate.BUTTON_DPAD_UP);
 		mKeyMap.put(KeyEvent.KEYCODE_DPAD_DOWN,
@@ -44,10 +46,13 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 				GameControllerDelegate.BUTTON_DPAD_LEFT);
 		mKeyMap.put(KeyEvent.KEYCODE_DPAD_RIGHT,
 				GameControllerDelegate.BUTTON_DPAD_RIGHT);
+		
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_START,
 				GameControllerDelegate.BUTTON_START);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_SELECT,
 				GameControllerDelegate.BUTTON_SELECT);
+		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_START,
+				GameControllerDelegate.BUTTON_START);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_THUMBL,
 				GameControllerDelegate.BUTTON_LEFT_THUMBSTICK);
 		mKeyMap.put(KeyEvent.KEYCODE_BUTTON_THUMBR,
@@ -168,19 +173,16 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 
 	@Override
 	public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean onKeyUp(int keyCode, android.view.KeyEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean onGenericMotionEvent(android.view.MotionEvent event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -188,6 +190,16 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 	@Override
 	public void setControllerEventListener(ControllerEventListener listener) {
 		mControllerEventListener = listener;
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(android.view.KeyEvent event) {
+		return false;
+	}
+
+	@Override
+	public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
+		return false;
 	}
 
 }

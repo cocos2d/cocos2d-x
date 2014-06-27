@@ -46,26 +46,29 @@ NS_CC_BEGIN
 
 enum class AndroidControllerCode
 {
-    THUMBSTICK_LEFT_X = 101,
-    THUMBSTICK_LEFT_Y = 102,
-    THUMBSTICK_RIGHT_X = 103,
-    THUMBSTICK_RIGHT_Y = 104,
-    BUTTON_A = 105,
-    BUTTON_B = 106,
-    BUTTON_X = 107,
-    BUTTON_Y = 108,
-    BUTTON_LEFT_SHOULDER = 109,
-    BUTTON_RIGHT_SHOULDER = 110,
-    BUTTON_DPAD_UP = 111,
-    BUTTON_DPAD_DOWN = 112,
-    BUTTON_DPAD_LEFT = 113,
-    BUTTON_DPAD_RIGHT = 114,
-    BUTTON_START = 115,
-    BUTTON_SELECT = 116,
-    BUTTON_LEFT_THUMBSTICK = 117,
-    BUTTON_RIGHT_THUMBSTICK = 118,
-    BUTTON_LEFT_TRIGGER = 119,
-    BUTTON_RIGHT_TRIGGER = 120,
+    THUMBSTICK_LEFT_X = 100,
+    THUMBSTICK_LEFT_Y = 101,
+    THUMBSTICK_RIGHT_X = 102,
+    THUMBSTICK_RIGHT_Y = 103,
+    BUTTON_A = 110,
+    BUTTON_B = 111,
+    BUTTON_C = 112,
+    BUTTON_X = 113,
+    BUTTON_Y = 114,
+    BUTTON_Z = 115,
+    BUTTON_LEFT_SHOULDER = 120,
+    BUTTON_RIGHT_SHOULDER = 121,
+    BUTTON_LEFT_TRIGGER = 122,
+    BUTTON_RIGHT_TRIGGER = 123,
+    BUTTON_DPAD_UP = 130,
+    BUTTON_DPAD_DOWN = 131,
+    BUTTON_DPAD_LEFT = 132,
+    BUTTON_DPAD_RIGHT = 133,
+    BUTTON_DPAD_CENTER = 134,
+    BUTTON_LEFT_THUMBSTICK = 140,
+    BUTTON_RIGHT_THUMBSTICK = 141,
+    BUTTON_START = 150,
+    BUTTON_SELECT = 151,
 };
 
 class ControllerImpl
@@ -309,17 +312,17 @@ void Controller::setPlayerIndex(int playerIndex)
     _playerIndex = playerIndex;
 }
 
-Gamepad* Controller::getGamepad()
+Gamepad* Controller::getGamepad() const
 {
     return _gamepad;
 }
 
 Controller::Controller()
+    : _playerIndex(PLAYER_INDEX_UNSET)
+    , _gamepad(new Gamepad)
+    , _impl(new ControllerImpl(this))
 {
-    _playerIndex = PLAYER_INDEX_UNSET;
-    _gamepad = new Gamepad();
     _gamepad->_controller = this;
-    _impl = new ControllerImpl(this);
 }
 
 Controller::~Controller()

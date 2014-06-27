@@ -32,7 +32,7 @@ bool GameControllerTest::init()
 
     _player1 = nullptr;
 
-    _statusLabel = Label::createWithTTF("status:", "fonts/en.ttf", 40);
+    _statusLabel = Label::createWithTTF("status:", "fonts/Marker Felt.ttf", 40);
     _statusLabel->setPosition(Vec2(visibleSize / 2) + origin + Vec2(0, 25));
     this->addChild(_statusLabel, 0, 100);
     
@@ -40,14 +40,6 @@ bool GameControllerTest::init()
     _actor->setPosition(Vec2(visibleSize / 2) + origin);
     this->addChild(_actor);
 
-    Controller::startDiscoveryController();
-    
-    auto controllers = Controller::getControllers();
-    if (!controllers.empty()) {
-        _player1 = controllers[0];
-        _statusLabel->setString("controller connected!");
-    }
-    
     _listener = EventListenerController::create();
     _listener->onConnected = [=](Controller* controller, Event* event){
         CCNSLOG("%p connected", controller);
@@ -67,12 +59,14 @@ bool GameControllerTest::init()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(_listener, this);
 
+    Controller::startDiscoveryController();
+
     auto bullet = Sprite::create("CloseSelected.png");
     bullet->setPosition(_actor->getPosition() + Vec2(0, _actor->getContentSize().height/2 + 20));
     this->addChild(bullet);
     bullet->setColor(Color3B::BLUE);
     
-    auto closeItem = MenuItemImage::create("", "", CC_CALLBACK_1(GameControllerTest::menuCloseCallback, this));
+    auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png", CC_CALLBACK_1(GameControllerTest::menuCloseCallback, this));
     closeItem->setPosition(origin + visibleSize - closeItem->getContentSize() / 2);
     
     auto menu = Menu::create(closeItem,nullptr);
