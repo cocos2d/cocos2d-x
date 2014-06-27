@@ -118,37 +118,33 @@ TMXTilesetInfo * FastTMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMa
 {
     Size size = layerInfo->_layerSize;
     auto& tilesets = mapInfo->getTilesets();
-    if (tilesets.size()>0)
+    
+    for (const auto& iter : tilesets)
     {
-        TMXTilesetInfo* tileset = nullptr;
-        for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
+        if (iter)
         {
-            tileset = *iter;
-            if (tileset)
+            for( int y=0; y < size.height; y++ )
             {
-                for( int y=0; y < size.height; y++ )
+                for( int x=0; x < size.width; x++ )
                 {
-                    for( int x=0; x < size.width; x++ )
+                    int pos = static_cast<int>(x + size.width * y);
+                    int gid = layerInfo->_tiles[ pos ];
+                    
+                    // gid are stored in little endian.
+                    // if host is big endian, then swap
+                    //if( o == CFByteOrderBigEndian )
+                    //    gid = CFSwapInt32( gid );
+                    /* We support little endian.*/
+                    
+                    // XXX: gid == 0 --> empty tile
+                    if( gid != 0 )
                     {
-                        int pos = static_cast<int>(x + size.width * y);
-                        int gid = layerInfo->_tiles[ pos ];
-
-                        // gid are stored in little endian.
-                        // if host is big endian, then swap
-                        //if( o == CFByteOrderBigEndian )
-                        //    gid = CFSwapInt32( gid );
-                        /* We support little endian.*/
-
-                        // XXX: gid == 0 --> empty tile
-                        if( gid != 0 ) 
-                        {
-                            // Optimization: quick return
-                            // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kTMXFlippedMask) >= tileset->_firstGid )
-                                return tileset;
-                        }
+                        // Optimization: quick return
+                        // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
+                        if( (gid & kTMXFlippedMask) >= iter->_firstGid )
+                            return iter;
                     }
-                }        
+                }
             }
         }
     }
