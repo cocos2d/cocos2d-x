@@ -147,7 +147,7 @@ CC_DEPRECATED_ATTRIBUTE typedef LoadingBar::Direction LoadingBarType;
 CC_DEPRECATED_ATTRIBUTE typedef PageView::TouchDirection PVTouchDir;
 CC_DEPRECATED_ATTRIBUTE typedef RichElement::Type RichElementType;
 CC_DEPRECATED_ATTRIBUTE typedef ScrollView::Direction SCROLLVIEW_DIR;
-
+CC_DEPRECATED_ATTRIBUTE const Margin MarginZero =  Margin::ZERO ;
 
 
 }
