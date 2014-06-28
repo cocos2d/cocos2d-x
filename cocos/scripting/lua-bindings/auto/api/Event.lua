@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Event
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Event] isStopped 

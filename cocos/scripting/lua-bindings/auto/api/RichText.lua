@@ -2,6 +2,7 @@
 --------------------------------
 -- @module RichText
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#RichText] insertElement 

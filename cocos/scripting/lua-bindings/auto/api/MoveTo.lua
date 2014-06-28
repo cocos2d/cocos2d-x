@@ -2,6 +2,7 @@
 --------------------------------
 -- @module MoveTo
 -- @extend MoveBy
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#MoveTo] create 

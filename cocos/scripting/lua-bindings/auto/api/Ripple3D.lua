@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Ripple3D
 -- @extend Grid3DAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Ripple3D] setAmplitudeRate 

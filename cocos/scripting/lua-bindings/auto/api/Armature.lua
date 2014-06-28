@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Armature
 -- @extend Node,BlendProtocol
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#Armature] getBone 

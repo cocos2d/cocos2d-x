@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Widget
 -- @extend ProtectedNode,LayoutParameterProtocol
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Widget] setSizePercent 

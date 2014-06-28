@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParticleMeteor
 -- @extend ParticleSystemQuad
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParticleMeteor] create 

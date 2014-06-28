@@ -22,5 +22,6 @@ set(COCOS_UI_SRC
   ui/UITextField.cpp
   ui/UIVBox.cpp
   ui/UIWidget.cpp
+  ui/UIDeprecated.cpp
 )
 

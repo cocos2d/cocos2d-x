@@ -60,7 +60,6 @@ _normalTextureSize(_contentSize),
 _pressedTextureSize(_contentSize),
 _disabledTextureSize(_contentSize),
 _pressedActionEnabled(false),
-_titleColor(Color3B::WHITE),
 _normalTextureScaleXInSize(1.0f),
 _normalTextureScaleYInSize(1.0f),
 _pressedTextureScaleXInSize(1.0f),
@@ -75,7 +74,7 @@ _fontName("Thonburi"),
 _fontSize(10),
 _type(FontType::SYSTEM)
 {
-
+    setTouchEnabled(true);
 }
 
 Button::~Button()
@@ -129,7 +128,6 @@ bool Button::init()
 {
     if (Widget::init())
     {
-        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -722,8 +720,7 @@ const std::string& Button::getTitleText() const
 
 void Button::setTitleColor(const Color3B& color)
 {
-    _titleColor = color;
-    _titleRenderer->updateDisplayedColor(color);
+    _titleRenderer->setColor(color);
 }
 
 const Color3B& Button::getTitleColor() const

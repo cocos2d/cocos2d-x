@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionManager
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ActionManager] getActionByTag 
