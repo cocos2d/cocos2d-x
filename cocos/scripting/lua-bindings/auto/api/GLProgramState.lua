@@ -29,9 +29,22 @@
 -- @param #mat4_table mat4
 
 --------------------------------
+-- @function [parent=#GLProgramState] applyUniforms 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#GLProgramState] applyGLProgram 
+-- @param self
+-- @param #mat4_table mat4
+        
+--------------------------------
 -- @function [parent=#GLProgramState] getUniformCount 
 -- @param self
 -- @return long#long ret (return value: long)
+        
+--------------------------------
+-- @function [parent=#GLProgramState] applyAttributes 
+-- @param self
         
 --------------------------------
 -- overload function: setUniformFloat(int, float)
@@ -54,9 +67,19 @@
 -- @param #vec3_table vec3
 
 --------------------------------
--- @function [parent=#GLProgramState] setGLProgram 
+-- overload function: setUniformInt(int, int)
+--          
+-- overload function: setUniformInt(string, int)
+--          
+-- @function [parent=#GLProgramState] setUniformInt
 -- @param self
--- @param #cc.GLProgram glprogram
+-- @param #string str
+-- @param #int int
+
+--------------------------------
+-- @function [parent=#GLProgramState] getVertexAttribCount 
+-- @param self
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- overload function: setUniformVec4(int, vec4_table)
@@ -69,20 +92,10 @@
 -- @param #vec4_table vec4
 
 --------------------------------
--- @function [parent=#GLProgramState] getVertexAttribCount 
+-- @function [parent=#GLProgramState] setGLProgram 
 -- @param self
--- @return long#long ret (return value: long)
+-- @param #cc.GLProgram glprogram
         
---------------------------------
--- overload function: setUniformInt(int, int)
---          
--- overload function: setUniformInt(string, int)
---          
--- @function [parent=#GLProgramState] setUniformInt
--- @param self
--- @param #string str
--- @param #int int
-
 --------------------------------
 -- overload function: setUniformVec2(int, vec2_table)
 --          
