@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionPageTurn
 -- @extend TransitionScene
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionPageTurn] actionWithSize 

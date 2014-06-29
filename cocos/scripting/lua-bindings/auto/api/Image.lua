@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Image
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Image] hasPremultipliedAlpha 

@@ -371,7 +371,7 @@ void RichText::formarRenderers()
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
             l->setPosition(Vec2(nextPosX, 0.0f));
-            _elementRenderersContainer->addChild(l, 1, (int)j);
+            _elementRenderersContainer->addChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
@@ -410,7 +410,7 @@ void RichText::formarRenderers()
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
                 l->setPosition(Vec2(nextPosX, nextPosY));
-                _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
+                _elementRenderersContainer->addChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }
         }

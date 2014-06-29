@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionFadeBL
 -- @extend TransitionFadeTR
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionFadeBL] create 

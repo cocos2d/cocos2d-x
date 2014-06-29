@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SpriteBatchNode
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#SpriteBatchNode] appendChild 
@@ -108,12 +109,16 @@
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
--- @function [parent=#SpriteBatchNode] addChild 
+-- overload function: addChild(cc.Node, int, string)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#SpriteBatchNode] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#SpriteBatchNode] draw 
 -- @param self

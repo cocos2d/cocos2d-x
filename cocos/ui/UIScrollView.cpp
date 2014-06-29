@@ -73,6 +73,7 @@ _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
+    setTouchEnabled(true);
 }
 
 ScrollView::~ScrollView()
@@ -229,19 +230,24 @@ const Size& ScrollView::getInnerContainerSize() const
 	return _innerContainer->getContentSize();
 }
     
-void ScrollView::addChild(Node *child)
+void ScrollView::addChild(Node* child)
 {
-    ScrollView::addChild(child, child->getZOrder(), child->getTag());
+    ScrollView::addChild(child, child->getLocalZOrder(), child->getTag());
 }
-
-void ScrollView::addChild(Node * child, int zOrder)
+    
+void ScrollView::addChild(Node * child, int localZOrder)
 {
-    ScrollView::addChild(child, zOrder, child->getTag());
+    ScrollView::addChild(child, localZOrder, child->getTag());
 }
 
 void ScrollView::addChild(Node *child, int zOrder, int tag)
 {
     _innerContainer->addChild(child, zOrder, tag);
+}
+    
+void ScrollView::addChild(Node* child, int zOrder, const std::string &name)
+{
+    _innerContainer->addChild(child, zOrder, name);
 }
 
 void ScrollView::removeAllChildren()
@@ -1544,6 +1550,7 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
     switch (event)
     {
         case TouchEventType::BEGAN:
+            _touchBeganPosition = touch->getLocation();
             handlePressLogic(touch);
             break;
             
@@ -1553,6 +1560,7 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
             if (offset > _childFocusCancelOffset)
             {
                 sender->setHighlighted(false);
+                _touchMovePosition = touch->getLocation();
                 handleMoveLogic(touch);
             }
         }
@@ -1560,6 +1568,7 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
             
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
+            _touchEndPosition = touch->getLocation();
             handleReleaseLogic(touch);
             break;
     }

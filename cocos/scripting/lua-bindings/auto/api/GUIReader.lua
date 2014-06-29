@@ -2,6 +2,7 @@
 --------------------------------
 -- @module GUIReader
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#GUIReader] setFilePath 

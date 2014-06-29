@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ContourData
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ContourData] init 

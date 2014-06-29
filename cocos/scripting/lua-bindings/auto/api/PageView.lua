@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PageView
 -- @extend Layout
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#PageView] getCurPageIndex 

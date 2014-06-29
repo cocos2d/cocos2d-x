@@ -34,7 +34,7 @@
  
 NS_CC_BEGIN
 
-//mesh vertex attribute
+/**mesh vertex attribute*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -47,6 +47,7 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+/**mesh data*/
 struct MeshData
 {
     std::vector<float> vertex;
@@ -78,41 +79,90 @@ public:
     }
 };
 
+/**skin data*/
 struct SkinData
 {
-    std::vector<std::string> boneNames;
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of bone
+    std::vector<std::string> skinBoneNames; //skin bones affect skin
+    std::vector<std::string> nodeBoneNames; //node bones don't affect skin, all bones [skinBone, nodeBone]
+    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone, only for skin bone
+    std::vector<Mat4>        skinBoneOriginMatrices; // original bone transform, for skin bone
+    std::vector<Mat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
     
+    //bone child info, both skinbone and node bone
     std::map<int, std::vector<int> > boneChild;//key parent, value child
     int                              rootBoneIndex;
     void resetData()
     {
-        boneNames.clear();
+        skinBoneNames.clear();
+        nodeBoneNames.clear();
         inverseBindPoseMatrices.clear();
+        skinBoneOriginMatrices.clear();
+        nodeBoneOriginMatrices.clear();
         boneChild.clear();
         rootBoneIndex = -1;
     }
 
+    void addSkinBoneNames(const std::string& name)
+    {
+        for (auto iter : skinBoneNames)
+        {
+            if ((iter) == name)
+                return;
+        }
+        
+        skinBoneNames.push_back(name);
+    }
+    
+    void addNodeBoneNames(const std::string& name)
+    {
+        for (auto iter : nodeBoneNames)
+        {
+            if ((iter) == name)
+                return;
+        }
+        
+        nodeBoneNames.push_back(name);
+    }
+    
+    int getSkinBoneNameIndex(const std::string& name)const
+    {
+        int i = 0;
+        for (auto iter : skinBoneNames)
+        {
+            if ((iter) == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+    
     int getBoneNameIndex(const std::string& name)const
     {
-        std::vector<std::string>::const_iterator iter = boneNames.begin();
-        for (int i = 0; iter != boneNames.end(); ++iter, ++i)
+        int i = 0;
+        for (auto iter : skinBoneNames)
         {
-            if ((*iter) == name)
-            {
+            if ((iter) == name)
                 return i;
-            }
+            i++;
+        }
+        for(auto iter : nodeBoneNames)
+        {
+            if (iter == name)
+                return i;
+            i++;
         }
         return -1;
     }
 
 };
 
+/**material data*/
 struct MaterialData
 {
     std::string texturePath;
 };
 
+/**animation data*/
 struct Animation3DData
 {
 public:
@@ -180,6 +230,19 @@ public:
         _rotationKeys.clear();
         _scaleKeys.clear();
     }
+};
+
+/**reference data*/
+struct Reference
+{
+public:
+    std::string id;
+    unsigned int type;
+    unsigned int offset;
+
+    Reference(){}
+
+    ~Reference(){}
 };
 
 NS_CC_END

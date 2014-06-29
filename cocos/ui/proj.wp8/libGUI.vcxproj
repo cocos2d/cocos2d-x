@@ -184,6 +184,7 @@
     <ClInclude Include="..\..\ui\UITextField.h" />
     <ClInclude Include="..\..\ui\UIVBox.h" />
     <ClInclude Include="..\..\ui\UIWidget.h" />
+    <ClInclude Include="..\UIDeprecated.h" />
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="..\..\ui\UITextField.cpp" />
     <ClCompile Include="..\..\ui\UIVBox.cpp" />
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />

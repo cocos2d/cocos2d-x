@@ -580,11 +580,8 @@
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="CCFastTMXLayer.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="CCFastTMXTiledMap.cpp">
-      <Filter>2d</Filter>
+    <ClCompile Include="..\3d\CCBundleReader.cpp">
+      <Filter>3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1186,11 +1183,8 @@
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="CCFastTMXLayer.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="CCFastTMXTiledMap.h">
-      <Filter>2d</Filter>
+    <ClInclude Include="..\3d\CCBundleReader.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

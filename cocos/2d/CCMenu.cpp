@@ -193,6 +193,12 @@ void Menu::addChild(Node * child, int zOrder, int tag)
     Layer::addChild(child, zOrder, tag);
 }
 
+void Menu::addChild(Node * child, int zOrder, const std::string &name)
+{
+    CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
+    Layer::addChild(child, zOrder, name);
+}
+
 void Menu::onEnter()
 {
     Layer::onEnter();

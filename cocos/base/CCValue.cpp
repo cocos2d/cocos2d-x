@@ -339,6 +339,82 @@ Value& Value::operator= (ValueMapIntKey&& v)
     return *this;
 }
 
+bool Value::operator!= (const Value& v)
+{
+    return !(*this == v);
+}
+bool Value::operator!= (const Value& v) const
+{
+    return !(*this == v);
+}
+
+bool Value::operator== (const Value& v)
+{
+    const auto &t = *this;
+    return t == v;
+}
+bool Value::operator== (const Value& v) const
+{
+    if (this == &v) return true;
+    if (v._type != this->_type) return false;
+    if (this->isNull()) return true;
+    switch (_type)
+    {
+    case Type::BYTE:    return v._field.byteVal   == this->_field.byteVal;
+    case Type::INTEGER: return v._field.intVal    == this->_field.intVal;
+    case Type::BOOLEAN: return v._field.boolVal   == this->_field.boolVal;
+    case Type::STRING:  return *v._field.strVal   == *this->_field.strVal;
+    case Type::FLOAT:   return fabs(v._field.floatVal  - this->_field.floatVal)  <= FLT_EPSILON;
+    case Type::DOUBLE:  return fabs(v._field.doubleVal - this->_field.doubleVal) <= FLT_EPSILON;
+    case Type::VECTOR:
+    {
+        const auto &v1 = *(this->_field.vectorVal);
+        const auto &v2 = *(v._field.vectorVal);
+        const auto size = v1.size();
+        if (size == v2.size())
+        {
+            for (size_t i = 0; i < size; i++)
+            {
+                if (v1[i] != v2[i]) return false;
+            }
+        }
+        return true;
+    }
+    case Type::MAP:
+    {
+        const auto &map1 = *(this->_field.mapVal);
+        const auto &map2 = *(v._field.mapVal);
+        for (const auto &kvp : map1)
+        {
+            auto it = map2.find(kvp.first);
+            if (it == map2.end() || it->second != kvp.second)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    case Type::INT_KEY_MAP:
+    {
+        const auto &map1 = *(this->_field.intKeyMapVal);
+        const auto &map2 = *(v._field.intKeyMapVal);
+        for (const auto &kvp : map1)
+        {
+            auto it = map2.find(kvp.first);
+            if (it == map2.end() || it->second != kvp.second)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    default:
+        break;
+    };
+
+    return false;
+}
+
 /// Convert value to a specified type
 unsigned char Value::asByte() const
 {

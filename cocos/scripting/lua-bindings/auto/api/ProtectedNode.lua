@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ProtectedNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- overload function: addProtectedChild(cc.Node, int)

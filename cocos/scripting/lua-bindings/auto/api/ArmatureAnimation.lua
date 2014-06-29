@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ArmatureAnimation
 -- @extend ProcessBase
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ArmatureAnimation] getSpeedScale 

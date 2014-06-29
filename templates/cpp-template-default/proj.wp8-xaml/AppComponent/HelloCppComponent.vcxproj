@@ -203,11 +203,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="pch.cpp">
@@ -216,17 +211,22 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Cocos2dRenderer.cpp" />
+    <ClCompile Include="src\Direct3DContentProvider.cpp" />
+    <ClCompile Include="src\Direct3DInterop.cpp" />
+    <ClCompile Include="src\DirectXBase.cpp" />
+    <ClCompile Include="src\EditBoxEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\AppDelegate.h" />
     <ClInclude Include="..\..\Classes\HelloWorldScene.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\Cocos2dRenderer.h" />
+    <ClInclude Include="src\Direct3DContentProvider.h" />
+    <ClInclude Include="src\Direct3DInterop.h" />
+    <ClInclude Include="src\DirectXBase.h" />
+    <ClInclude Include="src\DirectXHelper.h" />
+    <ClInclude Include="src\EditBoxEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\arm\libcurl.dll">

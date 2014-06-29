@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ControlPotentiometer
 -- @extend Control
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 

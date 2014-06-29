@@ -41,7 +41,7 @@ protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
     Text* _displayValueLabel;
     
-    __Array* _array;
+    std::vector<std::string> _array;
 };
 
 class UIListViewTest_Horizontal : public UIScene
@@ -57,7 +57,7 @@ protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
     Text* _displayValueLabel;
     
-    __Array* _array;
+    std::vector<std::string> _array;
 };
 
 #endif /* defined(__TestCpp__UIListViewTest__) */

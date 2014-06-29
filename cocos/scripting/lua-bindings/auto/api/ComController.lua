@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ComController
 -- @extend Component,InputDelegate
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ComController] create 

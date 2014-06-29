@@ -2,6 +2,7 @@
 --------------------------------
 -- @module RichElementImage
 -- @extend RichElement
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#RichElementImage] init 
