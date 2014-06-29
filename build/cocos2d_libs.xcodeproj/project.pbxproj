@@ -1025,6 +1025,10 @@
 		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3EA0FB6B191C841D00B170C8 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		3EA0FB6C191C841D00B170C8 /* UIVideoPlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */; };
+		3EA47870195478E00068D9D1 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */; };
+		3EA47871195478E00068D9D1 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */; };
+		3EA47872195478E00068D9D1 /* CCBundleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA4786F195478E00068D9D1 /* CCBundleReader.h */; };
+		3EA47873195478E00068D9D1 /* CCBundleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA4786F195478E00068D9D1 /* CCBundleReader.h */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E468218080836000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168321807AF4E005B8026 /* ExtensionMacros.h */; };
@@ -2339,6 +2343,8 @@
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
+		3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBundleReader.cpp; sourceTree = "<group>"; };
+		3EA4786F195478E00068D9D1 /* CCBundleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundleReader.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -4912,6 +4918,8 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */,
+				3EA4786F195478E00068D9D1 /* CCBundleReader.h */,
 				B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */,
 				B6AAF84019404E0D0069DE01 /* CCBundle3D.h */,
 				B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */,
@@ -5218,6 +5226,7 @@
 				1AD71EE3180E26E600808F54 /* SlotData.h in Headers */,
 				0634A4E2194B19E400E608AF /* CCTimeLine.h in Headers */,
 				1AD71EE7180E26E600808F54 /* spine-cocos2dx.h in Headers */,
+				3EA47872195478E00068D9D1 /* CCBundleReader.h in Headers */,
 				1AD71EE9180E26E600808F54 /* spine.h in Headers */,
 				1AAF536C180E3374000584C8 /* HttpClient.h in Headers */,
 				50ABBD9D1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
@@ -5774,6 +5783,7 @@
 				50ABC0201926664800A911A9 /* CCThread.h in Headers */,
 				1A01C69318F57BE800EFE3A6 /* CCDouble.h in Headers */,
 				50ABBE221925AB6F00A911A9 /* atitc.h in Headers */,
+				3EA47873195478E00068D9D1 /* CCBundleReader.h in Headers */,
 				1A8C59DA180E930E00EF57C3 /* CCDisplayFactory.h in Headers */,
 				1A8C59DE180E930E00EF57C3 /* CCDisplayManager.h in Headers */,
 				50FCEBB618C72017004AD434 /* SliderReader.h in Headers */,
@@ -6314,6 +6324,7 @@
 				1A57034B180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
 				1A570354180BD0B00088DEC7 /* ioapi.cpp in Sources */,
 				1A570358180BD0B00088DEC7 /* unzip.cpp in Sources */,
+				3EA47870195478E00068D9D1 /* CCBundleReader.cpp in Sources */,
 				1AD71DA9180E26E600808F54 /* CCBAnimationManager.cpp in Sources */,
 				1AD71DAD180E26E600808F54 /* CCBFileLoader.cpp in Sources */,
 				50E6D33418E174130051CA34 /* UIHBox.cpp in Sources */,
@@ -6634,6 +6645,7 @@
 				50ABC01A1926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				503DD8EE1926736A00CD74DD /* CCImage.mm in Sources */,
 				50FCEBC818C72017004AD434 /* WidgetReader.cpp in Sources */,
+				3EA47871195478E00068D9D1 /* CCBundleReader.cpp in Sources */,
 				46A170FC1807CECB005B8026 /* CCPhysicsBody.cpp in Sources */,
 				50ABBD941925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
 				50ABBE281925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
