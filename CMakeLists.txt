@@ -43,14 +43,8 @@ option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk etc from source" ON)
 option(BUILD_CppTests "Only build TestCpp sample" ON)
-
-if(NOT LINUX)
-  option(BUILD_LIBS_LUA "Build lua libraries" OFF)
-  option(BUILD_LuaTests "Only build TestLua sample" OFF)
-else()
-  option(BUILD_LIBS_LUA "Build lua libraries" ON)
-  option(BUILD_LuaTests "Only build TestLua sample" ON)
-endif()
+option(BUILD_LIBS_LUA "Build lua libraries" ON)
+option(BUILD_LuaTests "Only build TestLua sample" ON)
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -196,8 +190,10 @@ endif()
 # unzip library
 add_subdirectory(external/unzip)
 
+if(BUILD_EXTERN_LIBS)
 # tinyxml2 library
 add_subdirectory(external/tinyxml2)
+endif()
 
 # xxhash library
 add_subdirectory(external/xxhash)
