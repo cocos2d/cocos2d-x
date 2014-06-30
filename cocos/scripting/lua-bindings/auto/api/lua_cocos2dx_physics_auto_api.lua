@@ -22,13 +22,13 @@
 
 
 --------------------------------------------------------
--- the cc PhysicsShapeBox
--- @field [parent=#cc] PhysicsShapeBox#PhysicsShapeBox PhysicsShapeBox preloaded module
+-- the cc PhysicsShapePolygon
+-- @field [parent=#cc] PhysicsShapePolygon#PhysicsShapePolygon PhysicsShapePolygon preloaded module
 
 
 --------------------------------------------------------
--- the cc PhysicsShapePolygon
--- @field [parent=#cc] PhysicsShapePolygon#PhysicsShapePolygon PhysicsShapePolygon preloaded module
+-- the cc PhysicsShapeBox
+-- @field [parent=#cc] PhysicsShapeBox#PhysicsShapeBox PhysicsShapeBox preloaded module
 
 
 --------------------------------------------------------
@@ -37,13 +37,13 @@
 
 
 --------------------------------------------------------
--- the cc PhysicsShapeEdgeBox
--- @field [parent=#cc] PhysicsShapeEdgeBox#PhysicsShapeEdgeBox PhysicsShapeEdgeBox preloaded module
+-- the cc PhysicsShapeEdgePolygon
+-- @field [parent=#cc] PhysicsShapeEdgePolygon#PhysicsShapeEdgePolygon PhysicsShapeEdgePolygon preloaded module
 
 
 --------------------------------------------------------
--- the cc PhysicsShapeEdgePolygon
--- @field [parent=#cc] PhysicsShapeEdgePolygon#PhysicsShapeEdgePolygon PhysicsShapeEdgePolygon preloaded module
+-- the cc PhysicsShapeEdgeBox
+-- @field [parent=#cc] PhysicsShapeEdgeBox#PhysicsShapeEdgeBox PhysicsShapeEdgeBox preloaded module
 
 
 --------------------------------------------------------

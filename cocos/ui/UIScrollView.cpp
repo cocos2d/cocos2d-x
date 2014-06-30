@@ -894,7 +894,7 @@ bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
     
 bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY)
 {
-    bool scrollenabled;
+    bool scrollenabled = false;
     float realOffset = touchOffsetX;
     if (_bounceEnabled)
     {

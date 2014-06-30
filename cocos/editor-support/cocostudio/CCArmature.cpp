@@ -408,6 +408,10 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
+                else
+                {
+                    skin->setBlendFunc(_blendFunc);
+                }
                 skin->draw(renderer, transform, flags);
             }
             break;
