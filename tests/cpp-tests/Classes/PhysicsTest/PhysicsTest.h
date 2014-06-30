@@ -255,6 +255,18 @@ private:
     bool _bodyInA;
 };
 
+class PhysicsTransformTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsTransformTest);
+    
+    void onEnter() override;
+    virtual std::string title() const override;
+    
+    bool onTouchBegan(Touch* touch, Event* event);
+    
+};
+
 
 #endif
 #endif

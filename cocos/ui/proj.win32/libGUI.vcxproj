@@ -15,6 +15,7 @@
     <ClInclude Include="..\CocosGUI.h" />
     <ClInclude Include="..\UIButton.h" />
     <ClInclude Include="..\UICheckBox.h" />
+    <ClInclude Include="..\UIDeprecated.h" />
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
@@ -40,6 +41,7 @@
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
+    <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />

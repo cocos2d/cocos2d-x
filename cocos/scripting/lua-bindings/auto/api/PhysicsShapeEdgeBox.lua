@@ -1,14 +1,9 @@
 
 --------------------------------
 -- @module PhysicsShapeEdgeBox
--- @extend PhysicsShape
+-- @extend PhysicsShapeEdgePolygon
 -- @parent_module cc
 
---------------------------------
--- @function [parent=#PhysicsShapeEdgeBox] getPointsCount 
--- @param self
--- @return int#int ret (return value: int)
-        
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeBox] create 
 -- @param self
