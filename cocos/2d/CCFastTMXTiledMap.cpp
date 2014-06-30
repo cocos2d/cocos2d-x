@@ -119,9 +119,10 @@ TMXTilesetInfo * FastTMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMa
     Size size = layerInfo->_layerSize;
     auto& tilesets = mapInfo->getTilesets();
     
-    for (const auto& iter : tilesets)
+    for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
     {
-        if (iter)
+        TMXTilesetInfo* tilesetInfo = *iter;
+        if (tilesetInfo)
         {
             for( int y=0; y < size.height; y++ )
             {
@@ -141,8 +142,8 @@ TMXTilesetInfo * FastTMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMa
                     {
                         // Optimization: quick return
                         // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                        if( (gid & kTMXFlippedMask) >= iter->_firstGid )
-                            return iter;
+                        if( (gid & kTMXFlippedMask) >= tilesetInfo->_firstGid )
+                            return tilesetInfo;
                     }
                 }
             }
