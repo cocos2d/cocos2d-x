@@ -58,7 +58,7 @@ public class GameControllerHelper {
 	private static final String NIBIRU_DEP_PACKAGE = "com.nibiru";
 	private static final String MOGA__DEP_PACKAGE = "com.bda.pivot.mogapgp";
 	
-	private static Cocos2dxActivity sCocos2dxActivity;
+	private static GameControllerActivity sGameControllerActivity;
 	private static GameControllerHelper sControllerHelper;
 	
 	private List<String>  mNibiruSupportedDrives;
@@ -111,8 +111,17 @@ public class GameControllerHelper {
 		mControllerListener = listener;
 	}
 	
-	public GameControllerHelper(Cocos2dxActivity activity){
-		sCocos2dxActivity = activity;
+	private static final int AXIS_X = 0;
+	private static final int AXIS_Y = 1;
+	private static final int AXIS_Z = 11;
+	private static final int AXIS_RZ = 14;
+	public static final int AXIS_LTRIGGER = 17;
+	public static final int AXIS_RTRIGGER = 18;
+	public static final int AXIS_BRAKE = 23;
+	public static final int AXIS_THROTTLE = 19;
+	
+	public GameControllerHelper(GameControllerActivity activity){
+		sGameControllerActivity = activity;
 		sControllerHelper = this;
 		
 		ControllerKeyMap = new SparseIntArray(25);
@@ -137,10 +146,10 @@ public class GameControllerHelper {
 		ControllerKeyMap.put(KeyEvent.KEYCODE_BUTTON_L2, GameControllerDelegate.BUTTON_LEFT_TRIGGER);
 		ControllerKeyMap.put(KeyEvent.KEYCODE_BUTTON_R2, GameControllerDelegate.BUTTON_RIGHT_TRIGGER);
 				
-		ControllerKeyMap.put(MotionEvent.AXIS_X, GameControllerDelegate.THUMBSTICK_LEFT_X);
-		ControllerKeyMap.put(MotionEvent.AXIS_Y, GameControllerDelegate.THUMBSTICK_LEFT_Y);
-		ControllerKeyMap.put(MotionEvent.AXIS_Z, GameControllerDelegate.THUMBSTICK_RIGHT_X);
-		ControllerKeyMap.put(MotionEvent.AXIS_RZ, GameControllerDelegate.THUMBSTICK_RIGHT_Y);
+		ControllerKeyMap.put(AXIS_X, GameControllerDelegate.THUMBSTICK_LEFT_X);
+		ControllerKeyMap.put(AXIS_Y, GameControllerDelegate.THUMBSTICK_LEFT_Y);
+		ControllerKeyMap.put(AXIS_Z, GameControllerDelegate.THUMBSTICK_RIGHT_X);
+		ControllerKeyMap.put(AXIS_RZ, GameControllerDelegate.THUMBSTICK_RIGHT_Y);
 		
 		ControllerKeyMap.put(KeyEvent.KEYCODE_BUTTON_START, GameControllerDelegate.BUTTON_START);
 		ControllerKeyMap.put(KeyEvent.KEYCODE_BUTTON_SELECT, GameControllerDelegate.BUTTON_SELECT);
@@ -155,7 +164,7 @@ public class GameControllerHelper {
 			mOuyaSupportedDrives = new ArrayList<String>(5);
 			
 			mLocalSavePath = Environment.getExternalStorageDirectory() + File.separator + "CocosGameController" + File.separator;
-			mConfigFilePath = sCocos2dxActivity.getFilesDir().getAbsolutePath() + File.separator + COCOS_CONTROLLER_CONFIG;
+			mConfigFilePath = sGameControllerActivity.getFilesDir().getAbsolutePath() + File.separator + COCOS_CONTROLLER_CONFIG;
 			mDownDepsHttpClient = new AsyncHttpClient();
 			mDownDepsHttpClient.setTimeout(360 * 1000);
 		}
@@ -165,7 +174,7 @@ public class GameControllerHelper {
 		}
 		if (mLazyConfigInit) {
 			if (mDownDepsHttpClient != null) {
-				mDownDepsHttpClient.cancelRequests(sCocos2dxActivity, true);
+				mDownDepsHttpClient.cancelRequests(sGameControllerActivity, true);
 			}
 			requestControllerConfig();
 		}
@@ -187,7 +196,7 @@ public class GameControllerHelper {
 	
 	public void destrory(){
 		if (mDownDepsHttpClient != null) {
-			mDownDepsHttpClient.cancelRequests(sCocos2dxActivity, true);
+			mDownDepsHttpClient.cancelRequests(sGameControllerActivity, true);
 		}
 	}
 	
@@ -213,12 +222,12 @@ public class GameControllerHelper {
 			//filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
 			filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 			filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-			sCocos2dxActivity.registerReceiver(mBluetoothReceiver, filter);	
+			sGameControllerActivity.registerReceiver(mBluetoothReceiver, filter);	
 			
 			IntentFilter appFilter = new IntentFilter();
 			appFilter.addAction("android.intent.action.PACKAGE_ADDED");
 			appFilter.addDataScheme("package");
-			sCocos2dxActivity.registerReceiver(mAppReceiver, appFilter);
+			sGameControllerActivity.registerReceiver(mAppReceiver, appFilter);
 		}
 		
 		if (!mBluetoothAdapter.isEnabled()) {
@@ -254,18 +263,18 @@ public class GameControllerHelper {
 	}
 	
 	public static void installApplication(String filePath){
-		if (sCocos2dxActivity != null) {
+		if (sGameControllerActivity != null) {
 			Intent intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			sCocos2dxActivity.startActivity(intent);
+			sGameControllerActivity.startActivity(intent);
 		}
 	}
 	
 	public static boolean checkApplication(String packName){
 		try {
-			ApplicationInfo applicationInfo = sCocos2dxActivity.getPackageManager().getApplicationInfo(packName, PackageManager.GET_UNINSTALLED_PACKAGES);
+			ApplicationInfo applicationInfo = sGameControllerActivity.getPackageManager().getApplicationInfo(packName, PackageManager.GET_UNINSTALLED_PACKAGES);
 			Log.d(TAG, applicationInfo.toString());
 			return true;
 		} catch (NameNotFoundException e) {
@@ -485,19 +494,6 @@ public class GameControllerHelper {
 		}
 		
 		@Override
-		public void onSuccess(File file) {
-			Log.d(TAG, "Down file success:" + file.getName());
-			
-			depsCount -= 1;
-			if (depsCount == 0) {
-				if (mControllerListener != null) {
-					mControllerListener.onDownloadDepsFinished(true);
-				}
-				sControllerHelper.onDepsReady();
-			}
-		}
-		
-		@Override
 		public void onProgress(int bytesWritten, int totalSize) {
 			if (mFileType == FILETYPE_JAR) {
 				mLibDownloadCompletedSize = bytesWritten;
@@ -509,6 +505,19 @@ public class GameControllerHelper {
 				mControllerListener.onDownloadDepsProgress(mLibDownloadCompletedSize + mDepDownloadCompletedSize, mDownloadTotalSize);
 			}
 			Log.d(TAG, "totalSize:" + totalSize + ", bytesWritten:" + bytesWritten);
+		}
+
+		@Override
+		public void onSuccess(int arg0, Header[] arg1, File file) {
+			Log.d(TAG, "Down file success:" + file.getName());
+			
+			depsCount -= 1;
+			if (depsCount == 0) {
+				if (mControllerListener != null) {
+					mControllerListener.onDownloadDepsFinished(true);
+				}
+				sControllerHelper.onDepsReady();
+			}
 		}
 	}
 	
@@ -685,7 +694,7 @@ public class GameControllerHelper {
 	}
 	
 	private static void showToast(String message){
-		Toast.makeText(sCocos2dxActivity, message, Toast.LENGTH_SHORT).show();
+		Toast.makeText(sGameControllerActivity, message, Toast.LENGTH_SHORT).show();
 	}
 	
 	private static void createControllerInstance(String libFilePath,int sdkType) {
@@ -698,10 +707,10 @@ public class GameControllerHelper {
 		DexClassLoader classLoader = null;
 		
 		try {
-			File dexOutputDir = sCocos2dxActivity.getDir("dex", Context.MODE_PRIVATE);
+			File dexOutputDir = sGameControllerActivity.getDir("dex", Context.MODE_PRIVATE);
 	        
 			classLoader = new DexClassLoader(libFile.getCanonicalPath(), dexOutputDir.getCanonicalPath(), 
-					null, sCocos2dxActivity.getClassLoader());  
+					null, sGameControllerActivity.getClassLoader());  
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -721,7 +730,7 @@ public class GameControllerHelper {
 			if (mControllerListener != null) {
 				mControllerListener.onConnectController();
 			}
-			sCocos2dxActivity.setGameControllerInstance(instance);
+			sGameControllerActivity.setGameControllerInstance(instance);
 			if (sdkType == DRIVERTYPE_NIBIRU) {
 				Method method = controllerDelegate.getDeclaredMethod("onResume");
 				method.invoke(instance);
@@ -768,35 +777,35 @@ public class GameControllerHelper {
         	if (event.getAction() == MotionEvent.ACTION_MOVE) {
         		int devicedId = event.getDeviceId();
         		
-        		float newAXIS_LX = event.getAxisValue(MotionEvent.AXIS_X);
+        		float newAXIS_LX = event.getAxisValue(AXIS_X);
         		if (Float.compare(newAXIS_LX , mOldLeftThumbstickX) != 0) {
 					GameControllerAdapter.onAxisEvent(StandardControllerName, devicedId, GameControllerDelegate.THUMBSTICK_LEFT_X, newAXIS_LX, true);
 					mOldLeftThumbstickX = newAXIS_LX;
 					handled = true;
 				}
         		
-        		float newAXIS_LY = event.getAxisValue(MotionEvent.AXIS_Y);
+        		float newAXIS_LY = event.getAxisValue(AXIS_Y);
         		if (Float.compare(newAXIS_LY , mOldLeftThumbstickY) != 0) {
 					GameControllerAdapter.onAxisEvent(StandardControllerName, devicedId, GameControllerDelegate.THUMBSTICK_LEFT_Y, newAXIS_LY, true);
 					mOldLeftThumbstickY = newAXIS_LY;
 					handled = true;
 				}
         		
-        		float newAXIS_RX = event.getAxisValue(MotionEvent.AXIS_Z);
+        		float newAXIS_RX = event.getAxisValue(AXIS_Z);
         		if (Float.compare(newAXIS_RX , mOldRightThumbstickX) != 0) {
 					GameControllerAdapter.onAxisEvent(StandardControllerName, devicedId, GameControllerDelegate.THUMBSTICK_RIGHT_X, newAXIS_RX, true);
 					mOldRightThumbstickX = newAXIS_RX;
 					handled = true;
 				}
         		
-        		float newAXIS_RY = event.getAxisValue(MotionEvent.AXIS_RZ);
+        		float newAXIS_RY = event.getAxisValue(AXIS_RZ);
         		if (Float.compare(newAXIS_RY , mOldRightThumbstickY) != 0) {
 					GameControllerAdapter.onAxisEvent(StandardControllerName, devicedId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newAXIS_RY, true);
 					mOldRightThumbstickY = newAXIS_RY;
 					handled = true;
 				}
         		
-        		float newAXIS_LTRIGGER = event.getAxisValue(MotionEvent.AXIS_LTRIGGER);
+        		float newAXIS_LTRIGGER = event.getAxisValue(AXIS_LTRIGGER);
         		if (Float.compare(newAXIS_LTRIGGER , mOldLeftTrigger) != 0) {					
 					if (Float.compare(newAXIS_LTRIGGER, 0.0f) == 0) {
 						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, false, 0.0f, true);
@@ -807,7 +816,7 @@ public class GameControllerHelper {
 					handled = true;
 				}
         		
-        		float newAXIS_RTRIGGER = event.getAxisValue(MotionEvent.AXIS_RTRIGGER);
+        		float newAXIS_RTRIGGER = event.getAxisValue(AXIS_RTRIGGER);
         		if (Float.compare(newAXIS_RTRIGGER , mOldRightTrigger) != 0) {
         			if (Float.compare(newAXIS_RTRIGGER, 0.0f) == 0) {
 						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, false, 0.0f, true);
@@ -818,7 +827,7 @@ public class GameControllerHelper {
 					handled = true;
 				}
         		
-        		float newAXIS_BRAKE = event.getAxisValue(MotionEvent.AXIS_BRAKE);
+        		float newAXIS_BRAKE = event.getAxisValue(AXIS_BRAKE);
         		if (Float.compare(newAXIS_BRAKE , mOldBrake) != 0) {
         			if (Float.compare(newAXIS_BRAKE, 0.0f) == 0) {
 						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, false, 0.0f, true);
@@ -829,7 +838,7 @@ public class GameControllerHelper {
 					handled = true;
 				}
         		
-        		float newAXIS_THROTTLE = event.getAxisValue(MotionEvent.AXIS_THROTTLE);
+        		float newAXIS_THROTTLE = event.getAxisValue(AXIS_THROTTLE);
         		if (Float.compare(newAXIS_THROTTLE , mOldThrottle) != 0) {
         			if (Float.compare(newAXIS_THROTTLE, 0.0f) == 0) {
 						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, false, 0.0f, true);
