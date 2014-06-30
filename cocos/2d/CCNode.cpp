@@ -946,7 +946,8 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
     bool ret = false;
     for (const auto& child : _children)
     {
-        if(std::regex_match(child->_name, std::regex(searchName)))
+        // should add ::std::regex_constants::basic for std::regex to avoid crash on Android and windows
+        if(std::regex_match(child->_name, std::regex(searchName, ::std::regex_constants::basic)))
         {
             if (!needRecursive)
             {
