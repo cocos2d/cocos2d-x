@@ -57,8 +57,8 @@ WidgetReader/TextReader/TextReader.cpp \
 ActionTimeline/CCNodeReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
-ActionTimeline/CCTimeline.cpp \
-ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CCTimeLine.cpp \
+ActionTimeline/CCActionTimeline.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
