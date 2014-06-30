@@ -1,4 +1,5 @@
 cocos2d-x-3.2 ???
+    [NEW]           FastTMXTiledMap: added fast tmx, which is much more faster for static tiled map
     [NEW]           GLProgramState: can use uniform location to get/set uniform values
     [NEW]           HttpClient: added sendImmediate()
     [NEW]           Label: support setting line height and additional kerning of label that not using system font
@@ -8,14 +9,22 @@ cocos2d-x-3.2 ???
     [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren() 
     and addChild(Node* node, int localZOrder, const std::string &name)
     [NEW]           Node: physical body supports rotation
+    [NEW]           Sprite3D: support c3b binary format
     [NEW]           utils: added findChildren() to find all children by name
     [NEW]           Value: added operator == != 
     
 
+    [FIX]           Armature: blend func has no effect
+    [FIX]           Armature:  crashed when remove armature in frame event
+    [FIX]           Animation3D: doesn't load original pose, which leads to wrong effect if not playing animation
+    [FIX]           Animation3D: animation for unskined bones lost
     [FIX]           FileUtils: getStringFromFile may return a unterminated string
     [FIX]           Lua-binding: Sequence:create will cause drop-dead issue
     [FIX]           Lua-binding: lua-tests can’t be loaded on 64 bits iOS devices and Linux
     [FIX]           Node: Node::setScale(float) may not work properly
+    [FIX]           Physics integration: child node can move with its father
+    [FIX]           Physics integration: support scale
+    [FIX]           Sprite3D: 20% performce improved, simplify shader, use VAO and batch draw
     [FIX]           Studio support: NodeReader may cause crash
     [FIX]           UIButton: doesn't support TTF font
     [FIX]           UIButton: `getTitleColor()` doesn't equal to the value set by `setTitleColor()`

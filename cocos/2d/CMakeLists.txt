@@ -30,6 +30,8 @@ set(COCOS_2D_SRC
   2d/CCComponent.cpp
   2d/CCDrawingPrimitives.cpp
   2d/CCDrawNode.cpp
+  2d/CCFastTMXLayer.cpp
+  2d/CCFastTMXTiledMap.cpp
   2d/CCFontAtlasCache.cpp
   2d/CCFontAtlas.cpp
   2d/CCFontCharMap.cpp
