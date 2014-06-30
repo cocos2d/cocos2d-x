@@ -1943,7 +1943,6 @@
 		3E6176EF1960FA6300DE83F5 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		3E6176F01960FA6300DE83F5 /* RootViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		3E6177311960FAED00DE83F5 /* game-controller-test IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "game-controller-test IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E6177321960FAEE00DE83F5 /* cpp-empty-test iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cpp-empty-test iOS copy-Info.plist"; path = "/Users/lin/cocos_develop/build/cpp-empty-test iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		3E6177381960FBB800DE83F5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		3E61773A1960FBC300DE83F5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		3E61773C1960FBD100DE83F5 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
@@ -3855,7 +3854,6 @@
 				1ABCA36418CD9E060087CE3A /* Lua Common */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				1AC35E0318CEE78300F37B72 /* tests */,
-				3E6177321960FAEE00DE83F5 /* cpp-empty-test iOS copy-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
