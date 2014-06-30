@@ -616,6 +616,8 @@ CCRect CCArmature::boundingBox()
         if (CCBone *bone = dynamic_cast<CCBone *>(object))
         {
             CCRect r = bone->getDisplayManager()->getBoundingBox();
+            if (r.size.width == 0 || r.size.height == 0) 
+                continue;
 
             if(first)
             {
