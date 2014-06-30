@@ -90,45 +90,45 @@ void ComRender::setNode(cocos2d::Node *node)
 
 bool ComRender::serialize(void* r)
 {
-	bool bRet = false;
+	bool ret = false;
     do
     {
-        CC_BREAK_IF(r == NULL);
+        CC_BREAK_IF(r == nullptr);
 		SerData *serData = (SerData *)(r);
         const rapidjson::Value *v = serData->_rData;
 		stExpCocoNode *cocoNode = serData->_cocoNode;
-		const char *className = NULL;
-		const char *comName = NULL;
-		const char *file = NULL;
-		const char *plist = NULL;
+		const char *className = nullptr;
+		const char *comName = nullptr;
+		const char *file = nullptr;
+		const char *plist = nullptr;
 		std::string filePath;
 		std::string plistPath;
 		int resType = 0;
-		if (v != NULL)
+		if (v != nullptr)
 		{
 			className = DICTOOL->getStringValue_json(*v, "classname");
-			CC_BREAK_IF(className == NULL);
+			CC_BREAK_IF(className == nullptr);
 			comName = DICTOOL->getStringValue_json(*v, "name");
 			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
 			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
 			file = DICTOOL->getStringValue_json(fileData, "path");
 			plist = DICTOOL->getStringValue_json(fileData, "plistFile");
-			CC_BREAK_IF(file == NULL && plist == NULL);
+			CC_BREAK_IF(file == nullptr && plist == nullptr);
 			resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
 		}
-		else if(cocoNode != NULL)
+		else if(cocoNode != nullptr)
 		{
 			className = cocoNode[1].GetValue();
-			CC_BREAK_IF(className == NULL);
+			CC_BREAK_IF(className == nullptr);
 			comName = cocoNode[2].GetValue();
 			stExpCocoNode *pfileData = cocoNode[4].GetChildArray();
 			CC_BREAK_IF(!pfileData);
 			file = pfileData[0].GetValue();
 			plist = pfileData[1].GetValue();
-			CC_BREAK_IF(file == NULL && plist == NULL);
+			CC_BREAK_IF(file == nullptr && plist == nullptr);
 			resType = atoi(pfileData[2].GetValue());
 		}
-		if (comName != NULL)
+		if (comName != nullptr)
 		{
 			setName(comName);
 		}
@@ -137,11 +137,11 @@ bool ComRender::serialize(void* r)
 			setName(className);
 		}
         
-		if (file != NULL)
+		if (file != nullptr)
 		{
 			filePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 		}
-		if (plist != NULL)
+		if (plist != nullptr)
 		{
 			plistPath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(plist));
 		}
@@ -152,14 +152,14 @@ bool ComRender::serialize(void* r)
 				_render = CCSprite::create(filePath.c_str());
 				_render->retain();
                 
-                bRet = true;
+                ret = true;
 			}
 			else if(strcmp(className, "CCTMXTiledMap") == 0 && filePath.find(".tmx") != filePath.npos)
 			{
 				_render = CCTMXTiledMap::create(filePath.c_str());
 				_render->retain();
                 
-                bRet = true;
+                ret = true;
 			}
 			else if(strcmp(className, "CCParticleSystemQuad") == 0 && filePath.find(".plist") != filePath.npos)
 			{
@@ -167,7 +167,7 @@ bool ComRender::serialize(void* r)
 				_render->setPosition(Point(0.0f, 0.0f));
 				_render->retain();
                 
-                bRet = true;
+                ret = true;
 			}
 			else if(strcmp(className, "CCArmature") == 0)
 			{
@@ -192,8 +192,8 @@ bool ComRender::serialize(void* r)
 					Armature *pAr = Armature::create(name);
 					_render = pAr;
 					_render->retain();
-					const char *actionName = NULL;
-					if (cocoNode != NULL)
+					const char *actionName = nullptr;
+					if (cocoNode != nullptr)
 					{
 						actionName = cocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
 					}
@@ -201,19 +201,19 @@ bool ComRender::serialize(void* r)
 					{
 						actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
 					}
-					if (actionName != NULL && pAr->getAnimation() != NULL)
+					if (actionName != nullptr && pAr->getAnimation() != nullptr)
 					{
 						pAr->getAnimation()->play(actionName);
 					}
-                    bRet = true;
+                    ret = true;
 				}
 				else if (file_extension == ".CSB")
 				{
 					ssize_t size = 0;
-					unsigned char *pBytes = NULL;
+					unsigned char *pBytes = nullptr;
 					std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
 					pBytes = cocos2d::FileUtils::getInstance()->getFileData(binaryFilePath.c_str(), "rb", &size);
-					CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+					CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
 					CocoLoader tCocoLoader;
 					if (tCocoLoader.ReadCocoBinBuff((char*)pBytes))
 					{
@@ -243,14 +243,14 @@ bool ComRender::serialize(void* r)
                                         const char *str1 = armature_data[j].GetValue();
                                         if (key.compare("name") == 0)
                                         {
-                                            if (str1 != NULL)
+                                            if (str1 != nullptr)
                                             {
                                                 ArmatureDataManager::getInstance()->addArmatureFileInfo(filePath.c_str());
                                                 Armature *pAr = CCArmature::create(str1);
                                                 _render = pAr;
                                                 _render->retain();
-                                                const char *actionName = NULL;
-                                                if (cocoNode != NULL)
+                                                const char *actionName = nullptr;
+                                                if (cocoNode != nullptr)
                                                 {
                                                     actionName = cocoNode[6].GetValue();
                                                 }
@@ -258,11 +258,11 @@ bool ComRender::serialize(void* r)
                                                 {
                                                     actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
                                                 }
-                                                if (actionName != NULL && pAr->getAnimation() != NULL)
+                                                if (actionName != nullptr && pAr->getAnimation() != nullptr)
                                                 {
                                                     pAr->getAnimation()->play(actionName);
                                                 }
-                                                bRet = true;
+                                                ret = true;
                                             }
                                         }
                                     }
@@ -295,7 +295,7 @@ bool ComRender::serialize(void* r)
                     _render = widget;
                     _render->retain();
                     
-                    bRet = true;
+                    ret = true;
 				}
 				else if (file_extension == ".CSB")
 				{
@@ -303,7 +303,7 @@ bool ComRender::serialize(void* r)
                     _render = widget;
                     _render->retain();
                     
-                    bRet = true;
+                    ret = true;
 				}
 			}
 			else
@@ -326,7 +326,7 @@ bool ComRender::serialize(void* r)
 				_render = CCSprite::createWithSpriteFrameName(filePath.c_str());
 				_render->retain();
                 
-                bRet = true;
+                ret = true;
 			}
 			else
 			{
@@ -339,7 +339,7 @@ bool ComRender::serialize(void* r)
 		}
     } while (0);
     
-    return bRet;
+    return ret;
 }
 
 ComRender* ComRender::create(void)

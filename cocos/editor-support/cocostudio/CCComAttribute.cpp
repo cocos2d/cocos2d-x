@@ -144,43 +144,43 @@ ComAttribute* ComAttribute::create(void)
 
 bool ComAttribute::serialize(void* r) 
 {
-    bool bRet = false;
+    bool ret = false;
 	do
 	{
-		CC_BREAK_IF(r == NULL);
+		CC_BREAK_IF(r == nullptr);
 		SerData *serData = (SerData *)(r);
 		const rapidjson::Value *v = serData->_rData;
 		stExpCocoNode *cocoNode = serData->_cocoNode;
-		const char *className = NULL;
-		const char *comName = NULL;
-		const char *file = NULL;
+		const char *className = nullptr;
+		const char *comName = nullptr;
+		const char *file = nullptr;
 		std::string filePath;
 		int resType = 0;
-		if (v != NULL)
+		if (v != nullptr)
 		{
 			className = DICTOOL->getStringValue_json(*v, "classname");
-			CC_BREAK_IF(className == NULL);
+			CC_BREAK_IF(className == nullptr);
 			comName = DICTOOL->getStringValue_json(*v, "name");
 			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
 			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
 			file = DICTOOL->getStringValue_json(fileData, "path");
-			CC_BREAK_IF(file == NULL);
+			CC_BREAK_IF(file == nullptr);
 			resType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
 			CC_BREAK_IF(resType != 0);
 		}
-		else if (cocoNode != NULL)
+		else if (cocoNode != nullptr)
 		{
 			className = cocoNode[1].GetValue();
-			CC_BREAK_IF(className == NULL);
+			CC_BREAK_IF(className == nullptr);
 			comName = cocoNode[2].GetValue();
 			stExpCocoNode *fileData = cocoNode[3].GetChildArray();
 			CC_BREAK_IF(!fileData);
 			file = fileData[0].GetValue();
-			CC_BREAK_IF(file == NULL);
+			CC_BREAK_IF(file == nullptr);
 			resType = atoi(fileData[2].GetValue());
 			CC_BREAK_IF(resType != 0);
 		}
-		if (comName != NULL)
+		if (comName != nullptr)
 		{
 			setName(comName);
 		}
@@ -188,17 +188,17 @@ bool ComAttribute::serialize(void* r)
 		{
 			setName(className);
 		}
-		if (file != NULL)
+		if (file != nullptr)
 		{
 			filePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 		}
 		if (parse(filePath.c_str()))
 		{
-            bRet = true;
+            ret = true;
 		}
         
 	}while (0);
-	return bRet;
+	return ret;
 }
 
 bool ComAttribute::parse(const std::string &jsonFile)
