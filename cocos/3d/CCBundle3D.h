@@ -173,7 +173,7 @@ protected:
     // for binary reading
     Data* _binaryBuffer;
     BundleReader _binaryReader;
-    size_t _referenceCount;
+    unsigned int _referenceCount;
     Reference* _references;
 
     bool  _isBinary;

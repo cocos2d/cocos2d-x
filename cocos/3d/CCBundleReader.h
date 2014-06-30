@@ -55,7 +55,7 @@ public:
      * @param lpbuffer The data buffer pointer
      * @param length The data buffer size
      */
-    void init(char* lpbuffer, unsigned int length);
+    void init(char* lpbuffer, ssize_t length);
 
     /**
      * Reads an array of elements.
