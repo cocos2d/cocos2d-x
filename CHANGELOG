@@ -14,6 +14,8 @@ cocos2d-x-3.2 ???
     [NEW]           Value: added operator == != 
     
 
+    [FIX]           Armature: blend func has no effect
+    [FIX]           Armature:  crashed when remove armature in frame event
     [FIX]           Animation3D: doesn't load original pose, which leads to wrong effect if not playing animation
     [FIX]           Animation3D: animation for unskined bones lost
     [FIX]           FileUtils: getStringFromFile may return a unterminated string
