@@ -98,7 +98,7 @@ static GCControllerConnectionEventHandler* __instance = nil;
 }
 
 -(void) onControllerDisconnected :(NSNotification *)connectedNotification {
-
+    
     GCController *controller =(GCController *)[connectedNotification object];
     self._disconnectionBlock(controller);
 }
@@ -111,7 +111,7 @@ NS_CC_BEGIN
 dstID->setPressed(srcID.isPressed); \
 dstID->setValue(srcID.value); \
 dstID->setAnalog(srcID.isAnalog); \
-EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, this, dstID); \
+EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, _gamepad->_controller, dstID); \
 Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
 
 
@@ -120,7 +120,7 @@ Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
 dstID->setValue(srcID.value); \
 dstID->setAnalog(srcID.isAnalog); \
 \
-EventController evt(EventController::ControllerEventType::AXIS_STATUS_CHANGED, this, dstID); \
+EventController evt(EventController::ControllerEventType::AXIS_STATUS_CHANGED, _gamepad->_controller, dstID); \
 Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
 
 class ControllerImpl
@@ -129,17 +129,19 @@ public:
     ControllerImpl(Controller* controller)
     : _controller(controller)
     , _gcController(nil)
+    , _lazyRegisterListener(true)
     {
-
+        
     }
     
     ~ControllerImpl()
     {
-
+        
     }
     
     Controller* _controller;
     GCController* _gcController;
+    bool _lazyRegisterListener;
 };
 
 std::vector<Controller*> Controller::_controllers;
@@ -149,146 +151,15 @@ const std::vector<Controller*>& Controller::getControllers()
     return _controllers;
 }
 
-void registerControllerListener(GCController* gcController)
-{
-    if(gcController)
-	{
-	    if (gcController.extendedGamepad != nil)
-        {
-            gcController.extendedGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad up %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
-            };
-            
-            gcController.extendedGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad down %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
-            };
-            
-            gcController.extendedGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad left %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
-            };
-            
-            gcController.extendedGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad right %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
-            };
-            
-            gcController.extendedGamepad.leftThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
-                sendEventAxis(_gamepad->getLeftThumbstick()->getAxisX(), axis);
-            };
-            
-            gcController.extendedGamepad.leftThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
-                sendEventAxis(_gamepad->getLeftThumbstick()->getAxisY(), axis);
-            };
-            
-            gcController.extendedGamepad.rightThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
-                sendEventAxis(_gamepad->getRightThumbstick()->getAxisX(), axis);
-            };
-            
-            gcController.extendedGamepad.rightThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
-                sendEventAxis(_gamepad->getRightThumbstick()->getAxisY(), axis);
-            };
-            
-            gcController.extendedGamepad.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element){
-                if (element == gamepad.buttonA)
-                {
-                    sendEventButton(_gamepad->getButtonA(), gamepad.buttonA);
-                }
-                else if (element == gamepad.buttonB)
-                {
-                    sendEventButton(_gamepad->getButtonB(), gamepad.buttonB);
-                }
-                else if (element == gamepad.buttonX)
-                {
-                    sendEventButton(_gamepad->getButtonX(), gamepad.buttonX);
-                }
-                else if (element == gamepad.buttonY)
-                {
-                    sendEventButton(_gamepad->getButtonY(), gamepad.buttonY);
-                }
-                else if (element == gamepad.leftShoulder)
-                {
-                    sendEventButton(_gamepad->getLeftShoulder(), gamepad.leftShoulder);
-                }
-                else if (element == gamepad.rightShoulder)
-                {
-                    sendEventButton(_gamepad->getRightShoulder(), gamepad.rightShoulder);
-                }
-                else if (element == gamepad.leftTrigger)
-                {
-                    sendEventButton(_gamepad->getLeftTrigger(), gamepad.leftTrigger);
-                }
-                else if (element == gamepad.rightTrigger)
-                {
-                    sendEventButton(_gamepad->getRightTrigger(), gamepad.rightTrigger);
-                }
-            };
-        }
-        else if(gcController.gamepad != nil)
-        {
-            gcController.gamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad up %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
-            };
-
-            gcController.gamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad down %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
-            };
-            
-            gcController.gamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad left %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
-            };
-            
-            gcController.gamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
-                CCNSLOG("dpad right %d, %f", button.pressed, button.value);
-                sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
-            };
-            
-            gcController.gamepad.valueChangedHandler = ^(GCGamepad *gamepad, GCControllerElement *element){
-                
-                if (element == gamepad.buttonA)
-                {
-                    sendEventButton(_gamepad->getButtonA(), gamepad.buttonA);
-                }
-                else if (element == gamepad.buttonB)
-                {
-                    sendEventButton(_gamepad->getButtonB(), gamepad.buttonB);
-                }
-                else if (element == gamepad.buttonX)
-                {
-                    sendEventButton(_gamepad->getButtonX(), gamepad.buttonX);
-                }
-                else if (element == gamepad.buttonY)
-                {
-                    sendEventButton(_gamepad->getButtonY(), gamepad.buttonY);
-                }
-                else if (element == gamepad.leftShoulder)
-                {
-                    sendEventButton(_gamepad->getLeftShoulder(), gamepad.leftShoulder);
-                }
-                else if (element == gamepad.rightShoulder)
-                {
-                    sendEventButton(_gamepad->getRightShoulder(), gamepad.rightShoulder);
-                }
-            };
-        }
-	}
-}
-
 void Controller::startDiscoveryController()
 {
     CCNSLOG("startDiscoveryController...: %s", "hello");
     
     [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
-
+    
     [[GCControllerConnectionEventHandler getInstance] observerConnection: ^(GCController* gcController) {
         auto controller = new Controller();
         controller->_impl->_gcController = gcController;
-		registerControllerListener(gcController);
         
         gcController.controllerPausedHandler = ^(GCController* gcCon){
             
@@ -307,7 +178,8 @@ void Controller::startDiscoveryController()
         };
         
         CCNSLOG("controller %p was connnected!", gcController);
-        _controllers.push_back(controller);      
+        _controllers.push_back(controller);
+        
         
         EventController evt(EventController::ControllerEventType::CONNECTION, controller, true);
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
@@ -333,11 +205,11 @@ void Controller::stopDiscoveryController()
 }
 
 Controller::Controller()
-    : _playerIndex(PLAYER_INDEX_UNSET)
-    , _gamepad(new Gamepad)
-    , _impl(new ControllerImpl(this))
 {
+    _playerIndex = PLAYER_INDEX_UNSET;
+    _gamepad = new Gamepad();
     _gamepad->_controller = this;
+    _impl = new ControllerImpl(this);
 }
 
 Controller::~Controller()
@@ -374,10 +246,136 @@ Gamepad* Controller::getGamepad() const
 {
     if (_impl->_gcController == nil)
         return nullptr;
-    
-    if (_impl->_gcController.gamepad == nil && _impl->_gcController.extendedGamepad == nil)
+    if(_impl->_gcController.gamepad == nil && _impl->_gcController.extendedGamepad == nil)
     {
         CCASSERT(false, "No gamepad was found!");
+    }
+    else if (_impl->_lazyRegisterListener)
+    {
+        _impl->_lazyRegisterListener = false;
+        if (_impl->_gcController.extendedGamepad != nil)
+        {
+            _impl->_gcController.extendedGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad up %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
+            };
+            
+            _impl->_gcController.extendedGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad down %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
+            };
+            
+            _impl->_gcController.extendedGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad left %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
+            };
+            
+            _impl->_gcController.extendedGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad right %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
+            };
+            
+            _impl->_gcController.extendedGamepad.leftThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+                sendEventAxis(_gamepad->getLeftThumbstick()->getAxisX(), axis);
+            };
+            
+            _impl->_gcController.extendedGamepad.leftThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+                sendEventAxis(_gamepad->getLeftThumbstick()->getAxisY(), axis);
+            };
+            
+            _impl->_gcController.extendedGamepad.rightThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+                sendEventAxis(_gamepad->getRightThumbstick()->getAxisX(), axis);
+            };
+            
+            _impl->_gcController.extendedGamepad.rightThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
+                sendEventAxis(_gamepad->getRightThumbstick()->getAxisY(), axis);
+            };
+            
+            _impl->_gcController.extendedGamepad.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element){
+                if (element == gamepad.buttonA)
+                {
+                    sendEventButton(_gamepad->getButtonA(), gamepad.buttonA);
+                }
+                else if (element == gamepad.buttonB)
+                {
+                    sendEventButton(_gamepad->getButtonB(), gamepad.buttonB);
+                }
+                else if (element == gamepad.buttonX)
+                {
+                    sendEventButton(_gamepad->getButtonX(), gamepad.buttonX);
+                }
+                else if (element == gamepad.buttonY)
+                {
+                    sendEventButton(_gamepad->getButtonY(), gamepad.buttonY);
+                }
+                else if (element == gamepad.leftShoulder)
+                {
+                    sendEventButton(_gamepad->getLeftShoulder(), gamepad.leftShoulder);
+                }
+                else if (element == gamepad.rightShoulder)
+                {
+                    sendEventButton(_gamepad->getRightShoulder(), gamepad.rightShoulder);
+                }
+                else if (element == gamepad.leftTrigger)
+                {
+                    sendEventButton(_gamepad->getLeftTrigger(), gamepad.leftTrigger);
+                }
+                else if (element == gamepad.rightTrigger)
+                {
+                    sendEventButton(_gamepad->getRightTrigger(), gamepad.rightTrigger);
+                }
+            };
+        }
+        else
+        {
+            _impl->_gcController.gamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad up %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getUp(), button);
+            };
+            
+            _impl->_gcController.gamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad down %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getDown(), button);
+            };
+            
+            _impl->_gcController.gamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad left %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getLeft(), button);
+            };
+            
+            _impl->_gcController.gamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+                CCNSLOG("dpad right %d, %f", button.pressed, button.value);
+                sendEventButton(_gamepad->getDirectionPad()->getRight(), button);
+            };
+            
+            _impl->_gcController.gamepad.valueChangedHandler = ^(GCGamepad *gamepad, GCControllerElement *element){
+                
+                if (element == gamepad.buttonA)
+                {
+                    sendEventButton(_gamepad->getButtonA(), gamepad.buttonA);
+                }
+                else if (element == gamepad.buttonB)
+                {
+                    sendEventButton(_gamepad->getButtonB(), gamepad.buttonB);
+                }
+                else if (element == gamepad.buttonX)
+                {
+                    sendEventButton(_gamepad->getButtonX(), gamepad.buttonX);
+                }
+                else if (element == gamepad.buttonY)
+                {
+                    sendEventButton(_gamepad->getButtonY(), gamepad.buttonY);
+                }
+                else if (element == gamepad.leftShoulder)
+                {
+                    sendEventButton(_gamepad->getLeftShoulder(), gamepad.leftShoulder);
+                }
+                else if (element == gamepad.rightShoulder)
+                {
+                    sendEventButton(_gamepad->getRightShoulder(), gamepad.rightShoulder);
+                }
+            };
+        }
     }
     
     return _gamepad;
