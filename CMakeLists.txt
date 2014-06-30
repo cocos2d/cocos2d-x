@@ -41,6 +41,7 @@ option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk etc from source" ON)
 option(BUILD_CppTests "Only build TestCpp sample" ON)
 
 if(NOT LINUX)
@@ -184,11 +185,13 @@ elseif(LINUX)
 
 endif()
 
+if(BUILD_EXTERN_LIBS)
 # chipmunk library
 add_subdirectory(external/chipmunk/src)
 
 # box2d library
 add_subdirectory(external/Box2D)
+endif()
 
 # unzip library
 add_subdirectory(external/unzip)
