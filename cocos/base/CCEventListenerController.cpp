@@ -28,7 +28,6 @@
 #include "CCControllerButtonInput.h"
 #include "CCControllerAxisInput.h"
 #include "ccMacros.h"
-#include "CCNSLog.h"
 
 NS_CC_BEGIN
 
@@ -72,7 +71,6 @@ bool EventListenerController::init()
                     {
                         auto button = static_cast<ControllerButtonInput*>(evtController->getControllerElement());
 
-                        CCNSLOG("button event: %d, %d, %f", button->isPressed(), button->isPrevStatusPressed(), button->getValue());
                         if (this->onButtonPressed && button->isPressed() && !button->isPrevStatusPressed())
                         {
                             this->onButtonPressed(evtController->getController(), button, event);
