@@ -306,6 +306,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCComponentContainer.cpp" />
     <ClCompile Include="CCDrawingPrimitives.cpp" />
     <ClCompile Include="CCDrawNode.cpp" />
+    <ClCompile Include="CCFastTMXLayer.cpp" />
+    <ClCompile Include="CCFastTMXTiledMap.cpp" />
     <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
@@ -509,6 +511,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCComponentContainer.h" />
     <ClInclude Include="CCDrawingPrimitives.h" />
     <ClInclude Include="CCDrawNode.h" />
+    <ClInclude Include="CCFastTMXLayer.h" />
+    <ClInclude Include="CCFastTMXTiledMap.h" />
     <ClInclude Include="CCFont.h" />
     <ClInclude Include="CCFontAtlas.h" />
     <ClInclude Include="CCFontAtlasCache.h" />
