@@ -1,6 +1,5 @@
 #include "GameControllerTest.h"
 #include "AppMacros.h"
-#include "nslog/CCNSLog.h"
 #include "ui/CocosGUI.h"
 
 USING_NS_CC;
@@ -52,13 +51,11 @@ bool GameControllerTest::init()
 
     _listener = EventListenerController::create();
     _listener->onConnected = [=](Controller* controller, Event* event){
-        CCNSLOG("%p connected", controller);
         _player1 = controller;
         _statusLabel->setString("controller connected!");
     };
 
     _listener->onDisconnected = [=](Controller* controller, Event* event){
-        CCNSLOG("%p disconnected", controller);
         _player1 = nullptr;
         _statusLabel->setString("controller disconnected!");
     };
@@ -86,8 +83,6 @@ bool GameControllerTest::init()
 
 void GameControllerTest::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
 {
-    CCNSLOG("GameControllerTest::onButtonPressed: %p, %d, %f", button, button->isPressed(), button->getValue());
-    
     if (controller == nullptr)
     {
         return;
@@ -149,8 +144,6 @@ void GameControllerTest::onButtonPressed(cocos2d::Controller *controller, cocos2
 
 void GameControllerTest::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
 {
-    CCNSLOG("GameControllerTest::onButtonReleased: %p, %d, %f", button, button->isPressed(), button->getValue());
-    
     if (controller == nullptr)
     {
         return;
