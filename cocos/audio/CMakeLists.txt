@@ -39,6 +39,9 @@ if(LINUX)
   endif()
 
   target_link_libraries(audio ${FMOD_LIB})
+elseif(WINDOWS)
+  target_link_libraries(audio Winmm)
+endif()
 
 set_target_properties(audio
     PROPERTIES
@@ -46,6 +49,4 @@ set_target_properties(audio
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
-elseif(WINDOWS)
-  target_link_libraries(audio Winmm)
-endif()
+
