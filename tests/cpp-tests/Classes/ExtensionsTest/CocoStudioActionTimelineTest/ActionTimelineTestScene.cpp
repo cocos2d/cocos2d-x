@@ -111,8 +111,8 @@ void ActionTimelineTestLayer::onEnter()
 
     // add title and subtitle
     std::string str = title();
-    const char *pTitle = str.c_str();
-    LabelTTF *label = LabelTTF::create(pTitle, "Arial", 18);
+    const char *title = str.c_str();
+    auto label = Label::createWithSystemFont(title, "Arial", 18);
     label->setColor(Color3B(0, 0, 0));
     addChild(label, 1, 10000);
     label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
@@ -120,7 +120,7 @@ void ActionTimelineTestLayer::onEnter()
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
     {
-        LabelTTF *l = LabelTTF::create(strSubtitle.c_str(), "Arial", 18);
+        auto l = Label::createWithSystemFont(strSubtitle.c_str(), "Arial", 18);
         l->setColor(Color3B(0, 0, 0));
         addChild(l, 1, 10001);
         l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
@@ -140,7 +140,7 @@ void ActionTimelineTestLayer::onEnter()
 
     addChild(menu, 100);
 
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgram(ShaderCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
 }
 void ActionTimelineTestLayer::onExit()

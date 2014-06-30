@@ -656,6 +656,8 @@ Developers:
         
     lite3
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
+        Added HttpClient::sendImmediate()
+        Added operator == != for Value
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -901,6 +903,9 @@ Developers:
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
+        
+    Teivaz
+        Custom uniform search optimization
     
 Retired Core Developers:
     WenSheng Yang

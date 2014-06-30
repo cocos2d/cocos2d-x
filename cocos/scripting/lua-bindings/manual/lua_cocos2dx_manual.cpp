@@ -6312,6 +6312,67 @@ static void extendEventListenerFocus(lua_State* tolua_S)
 }
 
 
+int lua_cocos2dx_Application_isIOS64bit(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Application* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_isIOS64bit'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        bool isIOS64bit = false;
+        Application::Platform platform = cocos2d::Application::getInstance()->getTargetPlatform();
+        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform)
+        {
+#if defined(__LP64__)
+            isIOS64bit = true;
+#endif
+        }
+
+        tolua_pushboolean(tolua_S, isIOS64bit);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "isIOS64bit",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Application_isIOS64bit'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendApplication(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.Application");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "isIOS64bit", lua_cocos2dx_Application_isIOS64bit);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -6364,6 +6425,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendOrbitCamera(tolua_S);
     extendTMXLayer(tolua_S);
     extendEventListenerFocus(tolua_S);
+    extendApplication(tolua_S);
     
     return 0;
 }
