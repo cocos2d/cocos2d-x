@@ -91,6 +91,12 @@ public:
     Value& operator= (const ValueMapIntKey& v);
     Value& operator= (ValueMapIntKey&& v);
 
+    // equal operator
+    bool operator!= (const Value& v);
+    bool operator!= (const Value& v) const;
+    bool operator== (const Value& v);
+    bool operator== (const Value& v) const;
+
     unsigned char asByte() const;
     int asInt() const;
     float asFloat() const;

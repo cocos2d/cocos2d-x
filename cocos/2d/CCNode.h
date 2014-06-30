@@ -1500,8 +1500,10 @@ protected:
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
 #if CC_USE_PHYSICS
+    void updatePhysicsBodyTransform(Scene* layer);
     virtual void updatePhysicsBodyPosition(Scene* layer);
     virtual void updatePhysicsBodyRotation(Scene* layer);
+    virtual void updatePhysicsBodyScale(Scene* scene);
 #endif // CC_USE_PHYSICS
     
 private:
@@ -1589,6 +1591,8 @@ protected:
 
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
+    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
 #endif
     
     // opacity controls

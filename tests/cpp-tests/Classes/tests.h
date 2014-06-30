@@ -22,6 +22,7 @@
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
+#include "TileMapTest/TileMapTest2.h"
 #include "IntervalTest/IntervalTest.h"
 #include "LabelTest/LabelTest.h"
 #include "LabelTest/LabelTestNew.h"

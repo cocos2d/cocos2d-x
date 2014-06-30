@@ -188,7 +188,17 @@ public:
     void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     void setUniformTexture(const std::string &uniformName, GLuint textureId);
-    
+
+    void setUniformInt(GLint uniformLocation, int value);
+    void setUniformFloat(GLint uniformLocation, float value);
+    void setUniformVec2(GLint uniformLocation, const Vec2& value);
+    void setUniformVec3(GLint uniformLocation, const Vec3& value);
+    void setUniformVec4(GLint uniformLocation, const Vec4& value);
+    void setUniformMat4(GLint uniformLocation, const Mat4& value);
+    void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
+    void setUniformTexture(GLint uniformLocation, Texture2D *texture);
+    void setUniformTexture(GLint uniformLocation, GLuint textureId);
+
 protected:
     GLProgramState();
     ~GLProgramState();
@@ -196,9 +206,11 @@ protected:
     void resetGLProgram();
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
+    UniformValue* getUniformValue(GLint uniformLocation);
     
     bool _uniformAttributeValueDirty;
-    std::unordered_map<std::string, UniformValue> _uniforms;
+    std::unordered_map<std::string, GLint> _uniformsByName;
+    std::unordered_map<GLint, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
     std::unordered_map<std::string, int> _boundTextureUnits;
 

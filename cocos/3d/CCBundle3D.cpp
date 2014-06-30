@@ -471,7 +471,7 @@ bool Bundle3D::loadBinary(const std::string& path)
             return false;
         }
         
-        if (ver[1] < 0 || ver[1] > 2) {
+        if (ver[1] <= 0 || ver[1] > 2) {
             clear();
             CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
             return false;

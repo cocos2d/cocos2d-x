@@ -1,5 +1,9 @@
+local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+local isIOS64bit     = cc.Application:getInstance():isIOS64bit()
+if cc.PLATFORM_OS_LINUX ~= targetPlatform and isIOS64bit ~= true then
 require("src/ByteCodeEncryptTest/ByteCodeTest")
 require("src/ByteCodeEncryptTest/ByteCodeAndEncryptTest")
+end
 
 local LINE_SPACE = 40
 local ItemTagBasic = 1000
@@ -51,6 +55,9 @@ local function byteCodeEncryptMainLayer()
         item:registerScriptTapHandler(menuCallback)
         item:setPosition(size.width / 2, size.height - i * LINE_SPACE)
         menu:addChild(item, ItemTagBasic + i)
+        if cc.PLATFORM_OS_LINUX == targetPlatform or isIOS64bit == true then
+            item:setEnabled(false)
+        end
     end
 
     layer:addChild(menu)

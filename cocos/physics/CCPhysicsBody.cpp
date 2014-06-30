@@ -355,6 +355,38 @@ void PhysicsBody::setRotation(float rotation)
     cpBodySetAngle(_info->getBody(), -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
 }
 
+void PhysicsBody::setScale(float scale)
+{
+    for (auto shape : _shapes)
+    {
+        shape->setScale(scale);
+    }
+}
+
+void PhysicsBody::setScale(float scaleX, float scaleY)
+{
+    for (auto shape : _shapes)
+    {
+        shape->setScale(scaleX, scaleY);
+    }
+}
+
+void PhysicsBody::setScaleX(float scaleX)
+{
+    for (auto shape : _shapes)
+    {
+        shape->setScaleX(scaleX);
+    }
+}
+
+void PhysicsBody::setScaleY(float scaleY)
+{
+    for (auto shape : _shapes)
+    {
+        shape->setScaleY(scaleY);
+    }
+}
+
 Vec2 PhysicsBody::getPosition() const
 {
     cpVect vec = cpBodyGetPos(_info->getBody());
@@ -763,8 +795,13 @@ void PhysicsBody::update(float delta)
 {
     if (_node != nullptr)
     {
+        for (auto shape : _shapes)
+        {
+            shape->update(delta);
+        }
+        
         Node* parent = _node->getParent();
-        Scene* scene = &_world->getScene();
+        Node* scene = &_world->getScene();
         
         Vec2 position = parent != scene ? parent->convertToNodeSpace(scene->convertToWorldSpace(getPosition())) : getPosition();
         float rotation = getRotation();
