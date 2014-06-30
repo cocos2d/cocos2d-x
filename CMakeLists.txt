@@ -41,10 +41,10 @@ option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk etc from source" ON)
-option(BUILD_CppTests "Only build TestCpp sample" ON)
+option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk, Tinyxml2 from source" ON)
+option(BUILD_CppTests "Build TestCpp samples" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" ON)
-option(BUILD_LuaTests "Only build TestLua sample" ON)
+option(BUILD_LuaTests "Build TestLua samples" ON)
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -242,10 +242,8 @@ add_subdirectory(external/xxtea)
 endif(BUILD_LIBS_LUA)
 
 # build tests
-
-add_subdirectory(tests/cpp-empty-test)
-
 if(BUILD_CppTests)
+add_subdirectory(tests/cpp-empty-test)
 add_subdirectory(tests/cpp-tests)
 endif(BUILD_CppTests)
 
