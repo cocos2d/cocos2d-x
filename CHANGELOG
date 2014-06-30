@@ -1,4 +1,5 @@
 cocos2d-x-3.2 ???
+    [NEW]           FastTMXTiledMap: added fast tmx, which is much more faster for static tiled map
     [NEW]           GLProgramState: can use uniform location to get/set uniform values
     [NEW]           HttpClient: added sendImmediate()
     [NEW]           Label: support setting line height and additional kerning of label that not using system font
