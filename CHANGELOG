@@ -17,6 +17,8 @@ cocos2d-x-3.2 ???
     [FIX]           Lua-binding: Sequence:create will cause drop-dead issue
     [FIX]           Lua-binding: lua-tests can’t be loaded on 64 bits iOS devices and Linux
     [FIX]           Node: Node::setScale(float) may not work properly
+    [FIX]           Physics integration: child node can move with its father
+    [FIX]           Physics integration: support scale
     [FIX]           Studio support: NodeReader may cause crash
     [FIX]           UIButton: doesn't support TTF font
     [FIX]           UIButton: `getTitleColor()` doesn't equal to the value set by `setTitleColor()`
