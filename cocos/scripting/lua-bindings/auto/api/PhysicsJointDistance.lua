@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointDistance
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointDistance] setDistance 

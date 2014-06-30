@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SpriteFrameCache
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- overload function: addSpriteFramesWithFile(string, string)

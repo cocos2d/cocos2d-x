@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Button
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Button] getTitleText 

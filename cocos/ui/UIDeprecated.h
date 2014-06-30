@@ -26,6 +26,12 @@
 #define cocos2d_libs_UIDeprecated_h
 
 #include "base/CCPlatformMacros.h"
+#include "ui/UIWidget.h"
+#include "ui/UILayout.h"
+#include "ui/UIListView.h"
+#include "ui/UILoadingBar.h"
+#include "ui/UIPageView.h"
+#include "ui/UIRichText.h"
 
 NS_CC_BEGIN
 
@@ -147,7 +153,7 @@ CC_DEPRECATED_ATTRIBUTE typedef LoadingBar::Direction LoadingBarType;
 CC_DEPRECATED_ATTRIBUTE typedef PageView::TouchDirection PVTouchDir;
 CC_DEPRECATED_ATTRIBUTE typedef RichElement::Type RichElementType;
 CC_DEPRECATED_ATTRIBUTE typedef ScrollView::Direction SCROLLVIEW_DIR;
-
+CC_DEPRECATED_ATTRIBUTE extern const Margin MarginZero;
 
 
 }

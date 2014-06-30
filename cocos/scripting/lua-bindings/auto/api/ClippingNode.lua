@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ClippingNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ClippingNode] isInverted 

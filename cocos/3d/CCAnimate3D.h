@@ -39,15 +39,23 @@ NS_CC_BEGIN
 class Animation3D;
 class Bone;
 /**
- * Animate3D
+ * Animate3D, Animates a Sprite3D given with an Animation3D
  */
 class Animate3D: public ActionInterval
 {
 public:
     
-    //create Animate3D using Animation.
+    /**create Animate3D using Animation.*/
     static Animate3D* create(Animation3D* animation);
     
+    /**
+     * create Animate3D
+     * @param animation used to generate animate3D
+     * @param formTime 
+     * @param duration Time the Animate3D lasts
+     * @return Animate3D created using animate
+     */
+    static Animate3D* create(Animation3D* animation, float fromTime, float duration);
     //
     // Overrides
     //
@@ -58,9 +66,15 @@ public:
     
     virtual void update(float t) override;
     
+    /**get & set speed */
     float getSpeed() const { return _speed; }
     void setSpeed(float speed) { _speed = speed; }
     
+    /**get & set blend weight*/
+    float getWeight() const { return _weight; }
+    void setWeight(float weight) { _weight = weight; }
+    
+    /**get & set play back*/
     bool getPlayBack() const { return _playBack; }
     void setPlayBack(bool playBack) { _playBack = playBack; }
     
@@ -69,11 +83,14 @@ CC_CONSTRUCTOR_ACCESS:
     Animate3D();
     virtual ~Animate3D();
     
-    Animation3D* _animation;
+protected:
+    Animation3D* _animation; //animation data
 
-    float      _speed;
-    float      _weight;
-    bool       _playBack;
+    float      _speed; //playing speed
+    float      _weight; //blend weight
+    float      _start; //start time 0 - 1, used to generate sub Animate3D
+    float      _last; //last time 0 - 1, used to generate sub Animate3D
+    bool       _playBack; // is playing back
     std::map<Bone*, Animation3D::Curve*> _boneCurves; //weak ref
 };
 

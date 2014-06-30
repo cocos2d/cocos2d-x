@@ -237,7 +237,6 @@ protected:
     Size _pressedTextureSize;
     Size _disabledTextureSize;
     bool _pressedActionEnabled;
-    Color3B _titleColor;
     float _normalTextureScaleXInSize;
     float _normalTextureScaleYInSize;
     float _pressedTextureScaleXInSize;
