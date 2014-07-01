@@ -49,11 +49,11 @@ namespace cocostudio
         
         TextField* textField = static_cast<TextField*>(widget);
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER

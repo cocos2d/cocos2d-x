@@ -61,7 +61,7 @@ namespace cocostudio
         Layout* panel = static_cast<Layout*>(widget);
 
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         this->beginSetBasicProperties(widget);
         
         int cr=0, cg = 0, cb = 0;
@@ -74,7 +74,7 @@ namespace cocostudio
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -120,9 +120,9 @@ namespace cocostudio
                 panel->setBackGroundColorType(Layout::BackGroundColorType(valueToInt(value)));
             }else if (key == P_BackGroundImageData){
                 
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
                 if (backGroundChildren) {
-                    std::string resType = backGroundChildren[2].GetValue();;
+                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                     
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     

@@ -41,11 +41,11 @@ namespace cocostudio
         
         ListView* listView = static_cast<ListView*>(widget);
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             if (key == P_Direction) {
                 listView->setDirection((ScrollView::Direction)valueToInt(value));

@@ -246,11 +246,11 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         int length = pCocoNode->GetChildNum();
         int count = 0;
         int num = 0;
-        stExpCocoNode *pTriggerObjArray = pCocoNode->GetChildArray();
+        stExpCocoNode *pTriggerObjArray = pCocoNode->GetChildArray(pCocoLoader);
         for (int i = 0; i < length; ++i)
         {
             std::string key = pTriggerObjArray[i].GetName(pCocoLoader);
-            const char* str = pTriggerObjArray[i].GetValue();
+            const char* str = pTriggerObjArray[i].GetValue(pCocoLoader);
             if (key.compare("id") == 0)
             {
                 if (str != NULL)
@@ -261,12 +261,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             else if (key.compare("conditions") == 0)
             {
                 count = pTriggerObjArray[i].GetChildNum();
-                stExpCocoNode *pConditionsArray = pTriggerObjArray[i].GetChildArray();
+                stExpCocoNode *pConditionsArray = pTriggerObjArray[i].GetChildArray(pCocoLoader);
                 for (int i = 0; i < count; ++i)
                 {
                     num = pConditionsArray[i].GetChildNum();
-                    stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray();
-                    const char *classname = pConditionArray[0].GetValue();
+                    stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray(pCocoLoader);
+                    const char *classname = pConditionArray[0].GetValue(pCocoLoader);
                     if (classname == NULL)
                     {
                         continue;
@@ -281,12 +281,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             else if (key.compare("actions") == 0)
             {
                 count = pTriggerObjArray[i].GetChildNum();
-                stExpCocoNode *pActionsArray = pTriggerObjArray[i].GetChildArray();
+                stExpCocoNode *pActionsArray = pTriggerObjArray[i].GetChildArray(pCocoLoader);
                 for (int i = 0; i < count; ++i)
                 {
                     num = pActionsArray[i].GetChildNum();
-                    stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray();
-                    const char *classname = pActionArray[0].GetValue();
+                    stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray(pCocoLoader);
+                    const char *classname = pActionArray[0].GetValue(pCocoLoader);
                     if (classname == NULL)
                     {
                         continue;
@@ -301,12 +301,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             else if (key.compare("events") == 0)
             {
                 count = pTriggerObjArray[i].GetChildNum();
-                stExpCocoNode *pEventsArray = pTriggerObjArray[i].GetChildArray();
+                stExpCocoNode *pEventsArray = pTriggerObjArray[i].GetChildArray(pCocoLoader);
                 for (int i = 0; i < count; ++i)
                 {
                     num = pEventsArray[i].GetChildNum();
-                    stExpCocoNode *pEventArray = pEventsArray[i].GetChildArray();
-                    const char *str = pEventArray[0].GetValue();
+                    stExpCocoNode *pEventArray = pEventsArray[i].GetChildArray(pCocoLoader);
+                    const char *str = pEventArray[0].GetValue(pCocoLoader);
                     if (str == NULL)
                     {
                         continue;

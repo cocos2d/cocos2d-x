@@ -48,7 +48,7 @@ namespace cocostudio
         TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
 
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         Widget::TextureResType type;
         std::string charMapFileName;
         std::string stringValue;
@@ -57,7 +57,7 @@ namespace cocostudio
         float itemHeight;
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -68,8 +68,8 @@ namespace cocostudio
                 stringValue = value;
             }
             else if(key == P_CharMapFileData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 

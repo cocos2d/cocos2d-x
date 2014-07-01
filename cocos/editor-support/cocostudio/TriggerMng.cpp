@@ -111,7 +111,7 @@ void TriggerMng::parse(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCoc
     CCLOG("%s", triggerMngVersion());
     
     int count = pCocoNode[13].GetChildNum();
-    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray();
+    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray(pCocoLoader);
 
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -200,7 +200,7 @@ bool TriggerMng::isEmpty(void) const
     int extent = 0;
     int border = 0;
     std::string key;
-    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray();
+    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray(pCocoLoader);
     
     document.SetArray();
     
@@ -210,11 +210,11 @@ bool TriggerMng::isEmpty(void) const
         rapidjson::Value vElemItem(rapidjson::kObjectType);
         
         border = pTriggersArray[i].GetChildNum();
-        stExpCocoNode *pTriggerArray = pTriggersArray[i].GetChildArray();
+        stExpCocoNode *pTriggerArray = pTriggersArray[i].GetChildArray(pCocoLoader);
         for (int i = 0; i < border; ++i)
         {
             std::string key = pTriggerArray[i].GetName(pCocoLoader);
-            const char *str = pTriggerArray[i].GetValue();
+            const char *str = pTriggerArray[i].GetValue(pCocoLoader);
             rapidjson::Type type = pTriggerArray[i].GetType(pCocoLoader);
             
             if (key.compare("actions") == 0)
@@ -222,17 +222,17 @@ bool TriggerMng::isEmpty(void) const
                 rapidjson::Value actionsItem(rapidjson::kArrayType);
                 
                 length = pTriggerArray[i].GetChildNum();
-                stExpCocoNode *pActionsArray = pTriggerArray[i].GetChildArray();
+                stExpCocoNode *pActionsArray = pTriggerArray[i].GetChildArray(pCocoLoader);
                 for (int i = 0; i < length; ++i)
                 {
                     rapidjson::Value action(rapidjson::kObjectType);
                     
                     num = pActionsArray[i].GetChildNum();
-                    stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray();
+                    stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray(pCocoLoader);
                     for (int i = 0; i < num; ++i)
                     {
                         std::string key = pActionArray[i].GetName(pCocoLoader);
-                        const char *str = pActionArray[i].GetValue();
+                        const char *str = pActionArray[i].GetValue(pCocoLoader);
                         if (key.compare("classname") == 0)
                         {
                             if (str != NULL)
@@ -244,16 +244,16 @@ bool TriggerMng::isEmpty(void) const
                         {
                             rapidjson::Value dataitems(rapidjson::kArrayType);
                             size = pActionArray[i].GetChildNum();
-                            stExpCocoNode *pDataItemsArray = pActionArray[i].GetChildArray();
+                            stExpCocoNode *pDataItemsArray = pActionArray[i].GetChildArray(pCocoLoader);
                             for (int i = 0; i < size; ++i)
                             {
                                 rapidjson::Value dataitem(rapidjson::kObjectType);
                                 extent = pDataItemsArray[i].GetChildNum();
-                                stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
+                                stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
                                 for (int i = 0; i < extent; ++i)
                                 {
                                     std::string key = pDataItemArray[i].GetName(pCocoLoader);
-                                    const char *str = pDataItemArray[i].GetValue();
+                                    const char *str = pDataItemArray[i].GetValue(pCocoLoader);
                                     if (key.compare("key") == 0)
                                     {
                                         if (str != NULL)
@@ -298,17 +298,17 @@ bool TriggerMng::isEmpty(void) const
                 rapidjson::Value condsItem(rapidjson::kArrayType);
                 
                 length = pTriggerArray[i].GetChildNum();
-                stExpCocoNode *pConditionsArray = pTriggerArray[i].GetChildArray();
+                stExpCocoNode *pConditionsArray = pTriggerArray[i].GetChildArray(pCocoLoader);
                 for (int i = 0; i < length; ++i)
                 {
                     rapidjson::Value cond(rapidjson::kObjectType);
                     
                     num = pConditionsArray[i].GetChildNum();
-                    stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray();
+                    stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray(pCocoLoader);
                     for (int i = 0; i < num; ++i)
                     {
                         std::string key = pConditionArray[i].GetName(pCocoLoader);
-                        const char *str = pConditionArray[i].GetValue();
+                        const char *str = pConditionArray[i].GetValue(pCocoLoader);
                         if (key.compare("classname") == 0)
                         {
                             if (str != NULL)
@@ -320,16 +320,16 @@ bool TriggerMng::isEmpty(void) const
                         {
                             rapidjson::Value dataitems(rapidjson::kArrayType);
                             size = pConditionArray[i].GetChildNum();
-                            stExpCocoNode *pDataItemsArray = pConditionArray[i].GetChildArray();
+                            stExpCocoNode *pDataItemsArray = pConditionArray[i].GetChildArray(pCocoLoader);
                             for (int i = 0; i < size; ++i)
                             {
                                 rapidjson::Value dataitem(rapidjson::kObjectType);
                                 extent = pDataItemsArray[i].GetChildNum();
-                                stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
+                                stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
                                 for (int i = 0; i < extent; ++i)
                                 {
                                     std::string key = pDataItemArray[i].GetName(pCocoLoader);
-                                    const char *str = pDataItemArray[i].GetValue();
+                                    const char *str = pDataItemArray[i].GetValue(pCocoLoader);
                                     if (key.compare("key") == 0)
                                     {
                                         if (str != NULL)
@@ -374,13 +374,13 @@ bool TriggerMng::isEmpty(void) const
                 rapidjson::Value eventsItem(rapidjson::kArrayType);
                 
                 length = pTriggerArray[i].GetChildNum();
-                stExpCocoNode *pEventsArray = pTriggerArray[i].GetChildArray();
+                stExpCocoNode *pEventsArray = pTriggerArray[i].GetChildArray(pCocoLoader);
                 for (int i = 0; i < length; ++i)
                 {
                     rapidjson::Value event(rapidjson::kObjectType);
-                    stExpCocoNode *pEventArray = pEventsArray->GetChildArray();
+                    stExpCocoNode *pEventArray = pEventsArray->GetChildArray(pCocoLoader);
                     std::string key = pEventArray[0].GetName(pCocoLoader);
-                    const char *str = pEventArray[0].GetValue();
+                    const char *str = pEventArray[0].GetValue(pCocoLoader);
                     if (key.compare("id") == 0 && str != NULL)
                     {
                         event.AddMember("id", atoi(str), allocator);

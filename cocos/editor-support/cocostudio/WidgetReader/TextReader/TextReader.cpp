@@ -45,14 +45,14 @@ namespace cocostudio
     {
         this->beginSetBasicProperties(widget);
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         Text* label = static_cast<Text*>(widget);
     
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
             //read all color related properties of widget
