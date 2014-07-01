@@ -180,7 +180,7 @@ void FastTMXLayer::onDraw(int offset, int count)
     GL::bindTexture2D(_texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
-    glBindVertexArray(0);
+    GL::bindVAO(0);
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     
