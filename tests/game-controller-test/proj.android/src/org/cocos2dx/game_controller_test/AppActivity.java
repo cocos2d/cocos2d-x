@@ -25,14 +25,14 @@ package org.cocos2dx.game_controller_test;
 
 import java.util.ArrayList;
 
-import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.GameControllerActivity;
 import org.cocos2dx.lib.GameControllerHelper.ControllerListener;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.util.Log;
 
-public class AppActivity extends Cocos2dxActivity {
+public class AppActivity extends GameControllerActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
