@@ -1628,14 +1628,17 @@ const Mat4& Node::getNodeToParentTransform() const
 
         bool needsSkewMatrix = ( _skewX || _skewY );
 
+        Vec2 anchorPoint;
+        anchorPoint.x = _anchorPointInPoints.x * _scaleX;
+        anchorPoint.y = _anchorPointInPoints.y * _scaleY;
 
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
         if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
         {
-            x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-            y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+            x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
+            y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
         }
 
         // Build Transform Matrix
@@ -1650,7 +1653,7 @@ const Mat4& Node::getNodeToParentTransform() const
 
         if(!_ignoreAnchorPointForPosition)
         {
-            _transform.translate(_anchorPointInPoints.x * _scaleX, _anchorPointInPoints.y * _scaleY, 0);
+            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
         }
         
         // XXX
@@ -1669,7 +1672,7 @@ const Mat4& Node::getNodeToParentTransform() const
 
         if(!_ignoreAnchorPointForPosition)
         {
-            _transform.translate(-_anchorPointInPoints.x * _scaleX, -_anchorPointInPoints.y * _scaleY, 0);
+            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
         }
         
         // XXX: Try to inline skew
