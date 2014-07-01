@@ -146,7 +146,7 @@ namespace cocostudio
 
         
         bool bt = DICTOOL->checkObjectExist_json(options, P_BarFileName);
-        float barLength = DICTOOL->getFloatValue_json(options, P_Length);
+        float barLength = DICTOOL->getFloatValue_json(options, P_Length,290);
         if (bt)
         {
             const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_BarFileNameData);

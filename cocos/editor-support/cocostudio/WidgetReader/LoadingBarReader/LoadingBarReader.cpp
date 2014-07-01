@@ -121,8 +121,8 @@ namespace cocostudio
         {
             float cx = DICTOOL->getFloatValue_json(options, P_CapInsetsX);
             float cy = DICTOOL->getFloatValue_json(options, P_CapInsetsY);
-            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth);
-            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight);
+            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth,1);
+            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight,1);
             
             loadingBar->setCapInsets(Rect(cx, cy, cw, ch));
             
@@ -133,7 +133,7 @@ namespace cocostudio
         /**/
         
         loadingBar->setDirection(LoadingBar::Direction(DICTOOL->getIntValue_json(options, P_Direction)));
-        loadingBar->setPercent(DICTOOL->getIntValue_json(options, P_Percent));
+        loadingBar->setPercent(DICTOOL->getIntValue_json(options, P_Percent,100));
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);

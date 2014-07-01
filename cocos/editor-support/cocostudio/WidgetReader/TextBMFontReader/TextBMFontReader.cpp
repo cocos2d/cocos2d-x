@@ -98,7 +98,7 @@ namespace cocostudio
                 break;
         }
         
-        const char* text = DICTOOL->getStringValue_json(options, P_Text);
+        const char* text = DICTOOL->getStringValue_json(options, P_Text,"Text Label");
         labelBMFont->setString(text);
         
         

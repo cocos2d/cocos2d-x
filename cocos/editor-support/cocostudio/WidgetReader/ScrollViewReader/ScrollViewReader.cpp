@@ -72,10 +72,10 @@ namespace cocostudio
         
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
-        float innerWidth = DICTOOL->getFloatValue_json(options, P_InnerWidth);
-        float innerHeight = DICTOOL->getFloatValue_json(options, P_InnerHeight);
+        float innerWidth = DICTOOL->getFloatValue_json(options, P_InnerWidth,200);
+        float innerHeight = DICTOOL->getFloatValue_json(options, P_InnerHeight,200);
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
-        int direction = DICTOOL->getFloatValue_json(options, P_Direction);
+        int direction = DICTOOL->getFloatValue_json(options, P_Direction,1);
         scrollView->setDirection((ScrollView::Direction)direction);
         scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, P_BounceEnable));
         

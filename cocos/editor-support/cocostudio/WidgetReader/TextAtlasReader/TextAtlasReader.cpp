@@ -117,7 +117,11 @@ namespace cocostudio
                     std::string tp_c = jsonPath;
                     const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, P_Path);
                     const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                    labelAtlas->setProperty(DICTOOL->getStringValue_json(options, P_StringValue),cmf_tp,DICTOOL->getIntValue_json(options, P_ItemWidth),DICTOOL->getIntValue_json(options,P_ItemHeight), DICTOOL->getStringValue_json(options, P_StartCharMap));
+                    labelAtlas->setProperty(DICTOOL->getStringValue_json(options, P_StringValue,"12345678"),
+                                            cmf_tp,
+                                            DICTOOL->getIntValue_json(options, P_ItemWidth,24),
+                                            DICTOOL->getIntValue_json(options,P_ItemHeight,32),
+                                            DICTOOL->getStringValue_json(options, P_StartCharMap));
                     break;
                 }
                 case 1:

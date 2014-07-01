@@ -216,23 +216,18 @@ namespace cocostudio
             }
         }
         
-        bool cr = DICTOOL->checkObjectExist_json(options, P_TextColorR);
-        bool cg = DICTOOL->checkObjectExist_json(options, P_TextColorG);
-        bool cb = DICTOOL->checkObjectExist_json(options, P_TextColorB);
-        int cri = cr?DICTOOL->getIntValue_json(options, P_TextColorR):255;
-        int cgi = cg?DICTOOL->getIntValue_json(options, P_TextColorG):255;
-        int cbi = cb?DICTOOL->getIntValue_json(options, P_TextColorB):255;
+     
+        int cri = DICTOOL->getIntValue_json(options, P_TextColorR,255);
+        int cgi = DICTOOL->getIntValue_json(options, P_TextColorG,255);
+        int cbi = DICTOOL->getIntValue_json(options, P_TextColorB,255);
         button->setTitleColor(Color3B(cri,cgi,cbi));
-        bool fs = DICTOOL->checkObjectExist_json(options, P_FontSize);
-        if (fs)
-        {
-            button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize));
-        }
-        bool fn = DICTOOL->checkObjectExist_json(options, P_FontName);
-        if (fn)
-        {
-            button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName));
-        }
+  
+        
+        button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
+        
+
+        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
