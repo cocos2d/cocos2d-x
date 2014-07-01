@@ -128,12 +128,10 @@ static  int lua_isusertable (lua_State* L, int lo, const char* type)
         lua_rawget(L, -2);                  // stack: ... table class_flag
         if (!lua_isnil(L, -1)) {
             lua_pop(L, 1);                  // stack: ... table
-            if (lua_getmetatable(L, -1)) {
-                                            // stack: ... table mt
+            if (lua_getmetatable(L, -1)) {  // stack: ... table mt
                 lua_remove(L, -2);          // stack: ... mt
             }
-        }
-        else {
+        } else {
             lua_pop(L, 1);                  // stack: ... table
         }
     }

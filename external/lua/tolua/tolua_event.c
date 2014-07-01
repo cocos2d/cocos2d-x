@@ -134,31 +134,29 @@ static int class_table_get_index (lua_State* L)
 {
     // stack:  obj key ... obj
     
-    while (lua_getmetatable(L,-1))
-    {   /* stack: obj key obj mt */
+    while (lua_getmetatable(L,-1)) {   /* stack: obj key obj mt */
         lua_remove(L,-2);                      /* stack: ... mt */
-        {
-            lua_pushvalue(L,2);                    /* stack: ... mt key */
-            lua_rawget(L,-2);                      /* stack: ... mt value */
-            if (!lua_isnil(L,-1))
-                return 1;
-            else
-                lua_pop(L,1);
+        
+        lua_pushvalue(L,2);                    /* stack: ... mt key */
+        lua_rawget(L,-2);                      /* stack: ... mt value */
+        if (!lua_isnil(L,-1)) {
+            return 1;
+        } else {
+            lua_pop(L,1);
         }
+        
         /* try C/C++ variable */
         lua_pushstring(L,".get");
         lua_rawget(L,-2);                   /* stack: obj key ... mt tget */
-        if (lua_istable(L,-1))
-        {
+        if (lua_istable(L,-1)) {
             lua_pushvalue(L,2);  /* stack: obj key ... mt tget key */
             lua_rawget(L,-2);    /* stack: obj key ... mt tget value */
-            if (lua_iscfunction(L,-1))
-            {
+            if (lua_iscfunction(L,-1)) {
                 lua_call(L,0,1);
                 return 1;
-            }
-            else if (lua_istable(L,-1))
+            } else if (lua_istable(L,-1)) {
                 return 1;
+            }
             lua_pop(L, 2);
         }
     }
@@ -263,7 +261,6 @@ static int class_index_event (lua_State* L)
     }
     else if (t== LUA_TTABLE)
     {
-//        module_index_event(L);
         lua_pushvalue(L,1);
         class_table_get_index(L);
         return 1;
@@ -381,16 +378,13 @@ static int class_newindex_event (lua_State* L)
     }
     else if (t== LUA_TTABLE)
     {
-//        module_newindex_event(L);
         lua_getmetatable(L,1);  /* stack: t k v mt */
         lua_pushstring(L,".set");
         lua_rawget(L,-2);       /* stack: t k v mt tset */
-        if (lua_istable(L,-1))
-        {
+        if (lua_istable(L,-1)) {
             lua_pushvalue(L,2);  /* stack: t k v mt tset k */
             lua_rawget(L,-2);
-            if (lua_iscfunction(L,-1))  /* ... func */
-            {
+            if (lua_iscfunction(L,-1)) {  /* ... func */
                 lua_pushvalue(L,1); /* ... func t */
                 lua_pushvalue(L,3); /* ... func t v */
                 lua_call(L,2,0);
@@ -411,8 +405,7 @@ static int class_call_event(lua_State* L) {
 
     if (lua_istable(L, 1)) {
         //class is not a metatable now, so must get it's metatable to access ".call" function. 2014.6.5 by SunLightJuly
-        if (lua_getmetatable(L, 1))
-        {
+        if (lua_getmetatable(L, 1)) {
             lua_replace(L, 1);
             lua_pushstring(L, ".call");
             lua_rawget(L, 1);
@@ -422,10 +415,9 @@ static int class_call_event(lua_State* L) {
                 lua_call(L, lua_gettop(L)-1, 1);
                 
                 return 1;
-            };
+            }
         }
-        
-    };
+    }
     tolua_error(L,"Attempt to call a non-callable object.",NULL);
     return 0;
 };
