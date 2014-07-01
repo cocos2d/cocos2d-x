@@ -1078,6 +1078,11 @@
 		DAB2BFD919597BAE00ADD4E0 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFD019597A2600ADD4E0 /* CCBundle3D.cpp */; };
 		DAB2BFDA19597BAE00ADD4E0 /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFD319597A2600ADD4E0 /* CCMeshSkin.cpp */; };
 		DAB2BFDB19597BAE00ADD4E0 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFD519597A2600ADD4E0 /* CCSprite3DMaterial.cpp */; };
+		DAB7FEFC1962B3E900DCA0EF /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFD519597A2600ADD4E0 /* CCSprite3DMaterial.cpp */; };
+		DAB7FEFD1962B3F500DCA0EF /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFCA19597A2600ADD4E0 /* CCAnimate3D.cpp */; };
+		DAB7FEFE1962B40000DCA0EF /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFCC19597A2600ADD4E0 /* CCAnimation3D.cpp */; };
+		DAB7FEFF1962B40900DCA0EF /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFD019597A2600ADD4E0 /* CCBundle3D.cpp */; };
+		DAB7FF001962B41100DCA0EF /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAB2BFD319597A2600ADD4E0 /* CCMeshSkin.cpp */; };
 		DAEBA8721959803300C31FBB /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = DAEBA86B1959803300C31FBB /* fpconv.c */; };
 		DAEBA8731959803300C31FBB /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = DAEBA86B1959803300C31FBB /* fpconv.c */; };
 		DAEBA8741959803300C31FBB /* fpconv.h in Headers */ = {isa = PBXBuildFile; fileRef = DAEBA86C1959803300C31FBB /* fpconv.h */; };
@@ -4005,7 +4010,6 @@
 				50ABBE8D1925AB6F00A911A9 /* CCNS.h in Headers */,
 				DAEBAAD6195A9DF500C31FBB /* lua_debugger.h in Headers */,
 				50ABBEA51925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
-				B29594D01926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */,
 				DAEBA8781959803300C31FBB /* lua_cjson.h in Headers */,
 				DAEBA90C1959808A00C31FBB /* mime.h in Headers */,
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
@@ -4358,7 +4362,6 @@
 				DAEBAAAB195A9DF500C31FBB /* lua_cocos2dx_physics_auto.hpp in Headers */,
 				50ABBE7C1925AB6F00A911A9 /* CCEventMouse.h in Headers */,
 				DAEBA8E71959808A00C31FBB /* lauxlib.h in Headers */,
-				B29594D11926D61F003EEF37 /* CCSprite3DDataCache.h in Headers */,
 				46A171011807CECB005B8026 /* CCPhysicsJoint.h in Headers */,
 				46A170FD1807CECB005B8026 /* CCPhysicsBody.h in Headers */,
 				B29594C51926D61F003EEF37 /* CCMesh.h in Headers */,
@@ -5284,6 +5287,8 @@
 				DAEBAAD1195A9DF500C31FBB /* lua_cocos2dx_physics_manual.cpp in Sources */,
 				DAEBA8DF1959808A00C31FBB /* tolua_push.c in Sources */,
 				50ABBE621925AB6F00A911A9 /* CCEventListenerAcceleration.cpp in Sources */,
+				DAB7FEFF1962B40900DCA0EF /* CCBundle3D.cpp in Sources */,
+				DAB7FF001962B41100DCA0EF /* CCMeshSkin.cpp in Sources */,
 				DA045A821952900C00444A66 /* CCClippingRegionNode.cpp in Sources */,
 				9F6D895C1959709000B36BA2 /* ReachabilityIOSMac.m in Sources */,
 				B37510811823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
@@ -5297,6 +5302,7 @@
 				50ABBE5A1925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
+				DAB7FEFE1962B40000DCA0EF /* CCAnimation3D.cpp in Sources */,
 				50ABBD551925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				DAEBA8921959806C00C31FBB /* lsqlite3.c in Sources */,
@@ -5321,7 +5327,6 @@
 				DAEBAAE5195A9DF500C31FBB /* LuaScriptHandlerMgr.cpp in Sources */,
 				B37510831823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				DAEBAAA9195A9DF500C31FBB /* lua_cocos2dx_physics_auto.cpp in Sources */,
-				B29594CF1926D61F003EEF37 /* CCSprite3DDataCache.cpp in Sources */,
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				DAEBAAB5195A9DF500C31FBB /* CCLuaStack.cpp in Sources */,
 				1A570113180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
@@ -5341,6 +5346,7 @@
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */,
+				DAB7FEFD1962B3F500DCA0EF /* CCAnimate3D.cpp in Sources */,
 				B375107E1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				9F6D89581959707E00B36BA2 /* SBJsonParser.m in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
@@ -5369,6 +5375,7 @@
 				50ABBD491925AB0000A911A9 /* Mat4.cpp in Sources */,
 				1A570203180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
+				DAB7FEFC1962B3E900DCA0EF /* CCSprite3DMaterial.cpp in Sources */,
 				1A570211180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				503DD8ED1926736A00CD74DD /* CCGLView.mm in Sources */,
 				1A570215180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
