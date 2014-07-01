@@ -607,6 +607,19 @@ void GLView::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
     }
 
     EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    // Set current button
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+    {
+        event.setMouseButton(GLFW_MOUSE_BUTTON_LEFT);
+    }
+    else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+    {
+        event.setMouseButton(GLFW_MOUSE_BUTTON_RIGHT);
+    }
+    else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS)
+    {
+        event.setMouseButton(GLFW_MOUSE_BUTTON_MIDDLE);
+    }
     //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
     event.setCursorPosition(_mouseX, this->getViewPortRect().size.height - _mouseY);
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
