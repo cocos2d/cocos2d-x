@@ -1638,7 +1638,6 @@ const Mat4& Node::getNodeToParentTransform() const
             y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
         }
 
-
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
         float mat[] = {
@@ -1649,6 +1648,11 @@ const Mat4& Node::getNodeToParentTransform() const
         
         _transform.set(mat);
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(_anchorPointInPoints.x * _scaleX, _anchorPointInPoints.y * _scaleY, 0);
+        }
+        
         // XXX
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
@@ -1663,6 +1667,11 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform = _transform * rotX;
         }
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(-_anchorPointInPoints.x * _scaleX, -_anchorPointInPoints.y * _scaleY, 0);
+        }
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
