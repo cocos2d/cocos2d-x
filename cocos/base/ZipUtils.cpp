@@ -483,6 +483,7 @@ void ZipUtils::setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2,
 // --------------------- ZipFile ---------------------
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256
+
 static const std::string emptyFilename("");
 
 struct ZipEntryInfo
@@ -504,14 +505,10 @@ public:
 ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
 {
     ZipFile *zip = new ZipFile();
-    if (zip->initWithBuffer(buffer, size))
-    {
-//        zip->autorelease();
+    if (zip && zip->initWithBuffer(buffer, size)) {
         return zip;
-    }
-    else
-    {
-        delete zip;
+    } else {
+        if (zip) delete zip;
         return NULL;
     }
 }
@@ -598,24 +595,6 @@ bool ZipFile::fileExists(const std::string &fileName) const
     return ret;
 }
 
-const std::string ZipFile::getFirstFilename(void)
-{
-    if (unzGoToFirstFile(_data->zipFile) != UNZ_OK) return emptyFilename;
-    std::string path;
-    unz_file_info info;
-    getCurrentFileInfo(&path, &info);
-    return path;
-}
-
-const std::string ZipFile::getNextFilename(void)
-{
-    if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
-    std::string path;
-    unz_file_info info;
-    getCurrentFileInfo(&path, &info);
-    return path;
-}
-
 unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
@@ -652,16 +631,31 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
     return buffer;
 }
 
+const std::string ZipFile::getFirstFilename(void)
+{
+    if (unzGoToFirstFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
+const std::string ZipFile::getNextFilename(void)
+{
+    if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
 int ZipFile::getCurrentFileInfo(std::string *filename, unz_file_info *info)
 {
     char path[FILENAME_MAX + 1];
     int ret = unzGetCurrentFileInfo(_data->zipFile, info, path, sizeof(path), NULL, 0, NULL, 0);
-    if (ret != UNZ_OK)
-    {
+    if (ret != UNZ_OK) {
         *filename = emptyFilename;
-    }
-    else
-    {
+    } else {
         filename->assign(path);
     }
     return ret;

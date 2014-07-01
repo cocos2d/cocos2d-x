@@ -144,19 +144,15 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
-    virtual int loadChunksFromZIP(const char *zipFilePath);
-    
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
     virtual void cleanupXXTEAKeyAndSign();
     
-    int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
-    static int lua_loadChunksFromZIP(lua_State *L);
+    virtual const char *getXXTEAKey(int *len);
+    virtual const char *getXXTEASign(int *len);
     
-    bool  _xxteaEnabled;
-    char* _xxteaKey;
-    int   _xxteaKeyLen;
-    char* _xxteaSign;
-    int   _xxteaSignLen;
+    int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
+    int loadChunksFromZIP(const char *zipFilePath);
+    static int lua_loadChunksFromZIP(lua_State *L);
     
 protected:
     LuaStack(void)
@@ -178,6 +174,11 @@ protected:
     int _debuggerType;
     
     int _callFromLua;
+    bool  _xxteaEnabled;
+    char* _xxteaKey;
+    int   _xxteaKeyLen;
+    char* _xxteaSign;
+    int   _xxteaSignLen;
 };
 
 NS_CC_END

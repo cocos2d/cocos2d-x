@@ -3,7 +3,7 @@
 
 NS_CC_BEGIN
 
-class CZHelperFunc
+class HelperFunc
 {
 public:
     static int getFileData(const char *pPathFile);
