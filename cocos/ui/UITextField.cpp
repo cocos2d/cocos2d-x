@@ -622,11 +622,14 @@ bool TextField::isPasswordEnabled()const
 
 void TextField::setPasswordStyleText(const char *styleText)
 {
-    _textFieldRenderer->setPasswordStyleText(styleText);
+    if (nullptr != styleText) {
+        _textFieldRenderer->setPasswordStyleText(styleText);
+        _passwordStyleText = styleText;
+        
+        setText(getStringValue());
+    }
     
-    _passwordStyleText = styleText;
-    
-    setText(getStringValue());
+   
 }
     
 const char* TextField::getPasswordStyleText()const
