@@ -1183,6 +1183,7 @@ void ScheduleUpdatePriority::onEnter()
 
 void ScheduleUpdatePriority::onExit()
 {
+    Node::onExit();
     unscheduleUpdate();
 }
 
