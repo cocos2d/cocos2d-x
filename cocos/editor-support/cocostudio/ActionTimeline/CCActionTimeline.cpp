@@ -102,10 +102,16 @@ void ActionTimeline::gotoFrameAndPlay(int startIndex, bool loop)
 
 void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
 {
-    _startFrame = _currentFrame = startIndex;
-    _endFrame   = endIndex;
-    _loop       = loop;
-    _time       = _currentFrame * _frameInternal;
+    gotoFrameAndPlay(startIndex, endIndex, startIndex, loop);
+}
+
+void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop)
+{
+    _startFrame = startIndex;
+    _endFrame = endIndex;
+    _currentFrame = currentFrameIndex;
+    _loop = loop;
+    _time = _currentFrame*_frameInternal;
 
     resume();
     gotoFrame(_currentFrame);
@@ -133,6 +139,19 @@ void ActionTimeline::resume()
 bool ActionTimeline::isPlaying() const
 {
     return _playing;
+}
+
+void ActionTimeline::setCurrentFrame(int frameIndex)
+{
+    if (frameIndex >= _startFrame && frameIndex >= _endFrame)
+    {
+        _currentFrame = frameIndex;
+        _time = _currentFrame*_frameInternal;
+    }
+    else
+    {
+        CCLOG("frame index is not between start frame and end frame");
+    }
 }
 
 ActionTimeline* ActionTimeline::clone() const
@@ -171,7 +190,7 @@ void ActionTimeline::step(float delta)
         if(!_playing)
             _time = _endFrame * _frameInternal;
         else           
-            _time = _startFrame * _frameInternal;
+            gotoFrameAndPlay(_startFrame, _endFrame, _loop);
     }
 
 }

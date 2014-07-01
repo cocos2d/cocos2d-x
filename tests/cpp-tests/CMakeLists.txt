@@ -163,6 +163,7 @@ set(SAMPLE_SRC
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
   Classes/TextureCacheTest/TextureCacheTest.cpp
   Classes/TileMapTest/TileMapTest.cpp
+  Classes/TileMapTest/TileMapTest2.cpp
   Classes/TouchesTest/Ball.cpp
   Classes/TouchesTest/Paddle.cpp
   Classes/TouchesTest/TouchesTest.cpp

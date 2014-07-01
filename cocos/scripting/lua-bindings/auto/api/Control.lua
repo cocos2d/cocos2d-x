@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Control
 -- @extend Layer
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Control] setEnabled 

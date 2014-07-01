@@ -62,6 +62,7 @@ _frontCrossRendererAdaptDirty(true),
 _backGroundBoxDisabledRendererAdaptDirty(true),
 _frontCrossDisabledRendererAdaptDirty(true)
 {
+    setTouchEnabled(true);
 }
 
 CheckBox::~CheckBox()
@@ -128,7 +129,6 @@ bool CheckBox::init()
     if (Widget::init())
     {
         setSelectedState(false);
-        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -473,8 +473,8 @@ void CheckBox::backGroundTextureScaleChangedWithSize()
             _backGroundBoxRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _backGroundBoxRenderer->setScaleX(scaleX);
         _backGroundBoxRenderer->setScaleY(scaleY);
     }
@@ -495,8 +495,8 @@ void CheckBox::backGroundSelectedTextureScaleChangedWithSize()
             _backGroundSelectedBoxRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _backGroundSelectedBoxRenderer->setScaleX(scaleX);
         _backGroundSelectedBoxRenderer->setScaleY(scaleY);
     }
@@ -517,8 +517,8 @@ void CheckBox::frontCrossTextureScaleChangedWithSize()
             _frontCrossRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _frontCrossRenderer->setScaleX(scaleX);
         _frontCrossRenderer->setScaleY(scaleY);
     }
@@ -539,8 +539,8 @@ void CheckBox::backGroundDisabledTextureScaleChangedWithSize()
             _backGroundBoxDisabledRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _backGroundBoxDisabledRenderer->setScaleX(scaleX);
         _backGroundBoxDisabledRenderer->setScaleY(scaleY);
     }
@@ -561,8 +561,8 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
             _frontCrossDisabledRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _frontCrossDisabledRenderer->setScaleX(scaleX);
         _frontCrossDisabledRenderer->setScaleY(scaleY);
     }

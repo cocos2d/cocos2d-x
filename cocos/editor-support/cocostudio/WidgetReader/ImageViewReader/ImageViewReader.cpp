@@ -76,9 +76,9 @@ namespace cocostudio
                 
             }
             else if(key == P_Scale9Width){
-                imageView->setSize(Size(valueToFloat(value), imageView->getSize().height));
+                imageView->setContentSize(Size(valueToFloat(value), imageView->getContentSize().height));
             }else if(key == P_Scale9Height){
-                imageView->setSize(Size(imageView->getSize().width, valueToFloat(value)));
+                imageView->setContentSize(Size(imageView->getContentSize().width, valueToFloat(value)));
             }
             else if(key == P_CapInsetsX){
                 capsx = valueToFloat(value);

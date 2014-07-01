@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionCrossFade
 -- @extend TransitionScene
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionCrossFade] create 

@@ -219,7 +219,7 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
     Node* node = nullptr;
     std::string nodeType = DICTOOL->getStringValue_json(json, CLASSNAME);
 
-    NodeCreateFunc func = _funcs.at(nodeType);
+    NodeCreateFunc func = _funcs[nodeType];
     if (func != nullptr)
     {
         const rapidjson::Value& options = DICTOOL->getSubDictionary_json(json, OPTIONS);
@@ -382,9 +382,9 @@ Node* NodeReader::loadSprite(const rapidjson::Value& json)
     bool flipY          = DICTOOL->getBooleanValue_json(json, FLIPY);
 
     if(flipX != false)
-        sprite->setFlipX(flipX);
+        sprite->setFlippedX(flipX);
     if(flipY != false)
-        sprite->setFlipY(flipY);
+        sprite->setFlippedY(flipY);
 
     return sprite;
 }

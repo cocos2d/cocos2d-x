@@ -161,6 +161,8 @@ public:
         EVENT_PHYSICS_CONTACT_POSTSOLVE,
         EVENT_PHYSICS_CONTACT_SEPERATE,
         
+        EVENT_FOCUS,
+        
         EVENT_CUSTOM_BEGAN = 10000,
         EVENT_CUSTOM_ENDED = 11000,
     };

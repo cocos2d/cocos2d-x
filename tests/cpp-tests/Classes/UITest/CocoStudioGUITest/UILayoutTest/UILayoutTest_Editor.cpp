@@ -23,7 +23,7 @@ bool UILayoutTest_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                        (screenSize.height - rootSize.height) / 2));
         
@@ -36,8 +36,8 @@ bool UILayoutTest_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -45,8 +45,8 @@ bool UILayoutTest_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -79,7 +79,7 @@ bool UILayoutTest_Color_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -92,8 +92,8 @@ bool UILayoutTest_Color_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -101,8 +101,8 @@ bool UILayoutTest_Color_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -135,7 +135,7 @@ bool UILayoutTest_Gradient_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -148,8 +148,8 @@ bool UILayoutTest_Gradient_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -157,8 +157,8 @@ bool UILayoutTest_Gradient_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -191,7 +191,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -204,8 +204,8 @@ bool UILayoutTest_BackGroundImage_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -213,8 +213,8 @@ bool UILayoutTest_BackGroundImage_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -247,7 +247,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -260,8 +260,8 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -269,8 +269,8 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -303,7 +303,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -316,8 +316,8 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -325,8 +325,8 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -359,7 +359,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -372,8 +372,8 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -381,8 +381,8 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -416,7 +416,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -429,8 +429,8 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -438,8 +438,8 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
@@ -472,7 +472,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.csb"));
         _touchGroup->addChild(_layout);
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
+        Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
         
@@ -485,8 +485,8 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
         
         Button* left_button = Button::create();
         left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
-        left_button->setPosition(Vec2(_layout->getSize().width / 2 - left_button->getSize().width,
-                                     left_button->getSize().height * 0.625));
+        left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+                                     left_button->getContentSize().height * 0.625));
         left_button->setTouchEnabled(true);
         left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
         left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
@@ -494,8 +494,8 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
         
         Button* right_button = Button::create();
         right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
-        right_button->setPosition(Vec2(_layout->getSize().width / 2 + right_button->getSize().width,
-                                      right_button->getSize().height * 0.625));
+        right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+                                      right_button->getContentSize().height * 0.625));
         right_button->setTouchEnabled(true);
         right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
         right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));

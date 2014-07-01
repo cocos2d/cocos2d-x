@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointGear
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointGear] setRatio 

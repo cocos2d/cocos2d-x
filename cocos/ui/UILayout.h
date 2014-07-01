@@ -232,16 +232,6 @@ public:
     
     virtual  Type getLayoutType() const;
 
-    virtual void addChild(Node * child) override;
-    /**
-     * Adds a child to the container with a z-order
-     *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     */
-    virtual void addChild(Node * child, int zOrder) override;
     /**
      * Adds a child to the container with z order and tag
      *
@@ -251,7 +241,10 @@ public:
      * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
+    virtual void addChild(Node* child)override;
+    virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
@@ -383,7 +376,7 @@ protected:
      *@param the base widget which will be used to caculate the distance between the layout's children and itself
      *@return return the nearest distance between the baseWidget and the layout's children
      */
-    float caculateNearestDistance(Widget* baseWidget);
+    float calculateNearestDistance(Widget* baseWidget);
     
     /**
      * caculate the farest distance between the baseWidget and the children of the layout
@@ -391,7 +384,7 @@ protected:
      *@return return the farest distance between the baseWidget and the layout's children
      */
 
-    float caculateFarestDistance(Widget* baseWidget);
+    float calculateFarestDistance(Widget* baseWidget);
     
     /**
      *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farest distance algorithm or not

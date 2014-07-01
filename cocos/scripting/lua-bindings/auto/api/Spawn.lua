@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Spawn
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Spawn] startWithTarget 

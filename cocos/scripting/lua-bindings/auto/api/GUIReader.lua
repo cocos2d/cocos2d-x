@@ -2,6 +2,7 @@
 --------------------------------
 -- @module GUIReader
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#GUIReader] setFilePath 
@@ -18,6 +19,12 @@
 -- @function [parent=#GUIReader] getFilePath 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#GUIReader] widgetFromBinaryFile 
+-- @param self
+-- @param #char char
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#GUIReader] getVersionInteger 

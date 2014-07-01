@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TargetedAction
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- overload function: getForcedTarget()

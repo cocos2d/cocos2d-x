@@ -260,14 +260,6 @@ std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
     {
         readerName = "TextFieldReader";
     }
-    else if (dynamic_cast<Layout*>(widget))
-    {
-        readerName = "LayoutReader";
-    }
-    else if (dynamic_cast<ScrollView*>(widget))
-    {
-        readerName = "ScrollViewReader";
-    }
     else if (dynamic_cast<ListView*>(widget))
     {
         readerName = "ListViewReader";
@@ -275,6 +267,15 @@ std::string WidgetPropertiesReader::getWidgetReaderClassName(Widget* widget)
     else if (dynamic_cast<PageView*>(widget))
     {
         readerName = "PageViewReader";
+    }
+    else if (dynamic_cast<ScrollView*>(widget))
+    {
+        readerName = "ScrollViewReader";
+    }
+  
+    else if (dynamic_cast<Layout*>(widget))
+    {
+        readerName = "LayoutReader";
     }
     else if (dynamic_cast<Widget*>(widget))
     {

@@ -7,7 +7,7 @@ import os, os.path
 import shutil
 from optparse import OptionParser
 
-CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests']
+CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests', 'game-controller-test']
 LUA_SAMPLES = ['lua-empty-test', 'lua-tests']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
@@ -216,6 +216,7 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 
     target_proj_path_map = {
         "cpp-empty-test": "tests/cpp-empty-test/proj.android",
+        "game-controller-test": "tests/game-controller-test/proj.android",
         "cpp-tests": "tests/cpp-tests/proj.android",
         "lua-empty-test": "tests/lua-empty-test/project/proj.android",
         "lua-tests": "tests/lua-tests/project/proj.android"
