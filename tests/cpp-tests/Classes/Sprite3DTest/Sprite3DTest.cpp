@@ -341,7 +341,6 @@ Effect3DOutline::Effect3DOutline()
 
 Effect3DOutline::~Effect3DOutline()
 {
-    CC_SAFE_RELEASE_NULL(_sprite);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
@@ -371,8 +370,6 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     
     if(sprite != _sprite)
     {
-        CC_SAFE_RETAIN(sprite);
-        CC_SAFE_RELEASE_NULL(_sprite);
         _sprite = sprite;
         
         auto mesh = sprite->getMesh();
