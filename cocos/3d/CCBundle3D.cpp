@@ -447,8 +447,7 @@ bool Bundle3D::loadBinary(const std::string& path)
         return false;
     }
 
-    // Create bundle reader
-    //CC_SAFE_DELETE(_bundleReader);
+    // Initialise bundle reader
     _binaryReader.init( (char*)_binaryBuffer->getBytes(),  _binaryBuffer->getSize() );
 
     // Read identifier info
