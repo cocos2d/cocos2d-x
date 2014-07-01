@@ -26,7 +26,7 @@ package org.cocos2dx.game_controller_test;
 import java.util.ArrayList;
 
 import org.cocos2dx.lib.GameControllerActivity;
-import org.cocos2dx.lib.GameControllerHelper.ControllerListener;
+//import org.cocos2dx.lib.GameControllerHelper.ControllerListener;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -42,16 +42,16 @@ public class AppActivity extends GameControllerActivity {
 		
 		//Automatic adaptation for connect controller.
 		//Supported Platform: Nibiru / Moga / Ouya TV
-		//mControllerHelper.setControllerListener(controllerListener);
-		mControllerHelper.connectController();
+		this.connectController();
 		
 		//Manually specify an adapter.
-		//setGameControllerInstance(new GameControllerNibiru());
-		//setGameControllerInstance(new GameControllerMoga());
-		//setGameControllerInstance(new GameControllerOuya());
+		//Requirements: using libControllerDriveAdapter project 
+		//this.connectController(DRIVERTYPE_NIBIRU);
+		//this.connectController(DRIVERTYPE_MOGA);
+		//this.connectController(DRIVERTYPE_OUYA);
 	}
 	
-	ControllerListener controllerListener = new ControllerListener() {
+	/*ControllerListener controllerListener = new ControllerListener() {
 		
 		@Override
 		public void onDownloadConfigStarted() {
@@ -98,5 +98,5 @@ public class AppActivity extends GameControllerActivity {
 		public void onConnectController() {
 			Log.w("controllerListener", "onConnectController");
 		}
-	};
+	};*/
 }
