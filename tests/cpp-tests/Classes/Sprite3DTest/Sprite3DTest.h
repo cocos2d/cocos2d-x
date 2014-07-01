@@ -103,6 +103,7 @@ protected:
     
     Vec3 _outlineColor;
     float _outlineWidth;
+    //weak reference
     EffectSprite3D* _sprite;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     EventListenerCustom* _backToForegroundListener;
