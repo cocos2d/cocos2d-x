@@ -463,20 +463,23 @@ bool Bundle3D::loadBinary(const std::string& path)
 
     // Read version
     unsigned char ver[2];
-    if (_binaryReader.read(ver, 1, 2) == 2)
-    {
-        if (ver[0] != 0) {
-            clear();
-            CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
-            return false;
-        }
-        
-        if (ver[1] <= 0 || ver[1] > 2) {
-            clear();
-            CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
-            return false;
-        }
+    if (_binaryReader.read(ver, 1, 2)!= 2){
+        CCLOG("Failed to read version:");
+        return false;
     }
+    
+    if (ver[0] != 0) {
+        clear();
+        CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+        return false;
+    }
+    
+    if (ver[1] <= 0 || ver[1] > 2) {
+        clear();
+        CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+        return false;
+    }
+    
 
     // Read ref table size
     if (_binaryReader.read(&_referenceCount, 4, 1) != 1)
