@@ -113,11 +113,9 @@ namespace cocostudio
     
     void WidgetReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {        
-        bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, P_IgnoreSize);
-        if (ignoreSizeExsit)
-        {
-            widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, P_IgnoreSize));
-        }
+   
+        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, P_IgnoreSize,false));
+        
         
         widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, P_SizeType));
         widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, P_PositionType));
@@ -151,21 +149,15 @@ namespace cocostudio
         float x = DICTOOL->getFloatValue_json(options, P_X);
         float y = DICTOOL->getFloatValue_json(options, P_Y);
         widget->setPosition(Vec2(x,y));
-        bool sx = DICTOOL->checkObjectExist_json(options, P_ScaleX);
-        if (sx)
-        {
-            widget->setScaleX(DICTOOL->getFloatValue_json(options, P_ScaleX));
-        }
-        bool sy = DICTOOL->checkObjectExist_json(options, P_ScaleY);
-        if (sy)
-        {
-            widget->setScaleY(DICTOOL->getFloatValue_json(options, P_ScaleY));
-        }
-        bool rt = DICTOOL->checkObjectExist_json(options, P_Rotation);
-        if (rt)
-        {
-            widget->setRotation(DICTOOL->getFloatValue_json(options, P_Rotation));
-        }
+      
+        widget->setScaleX(DICTOOL->getFloatValue_json(options, P_ScaleX,1.0));
+        
+       
+        widget->setScaleY(DICTOOL->getFloatValue_json(options, P_ScaleY,1.0));
+        
+      
+        widget->setRotation(DICTOOL->getFloatValue_json(options, P_Rotation,0));
+        
         bool vb = DICTOOL->checkObjectExist_json(options, P_Visbile);
         if (vb)
         {
