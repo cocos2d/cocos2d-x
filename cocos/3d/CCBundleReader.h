@@ -136,6 +136,7 @@ inline bool BundleReader::readArray(unsigned int *length, std::vector<T> *values
     {
         return false;
     }
+    
     if (*length > 0 && values)
     {
         values->resize(*length);
