@@ -610,7 +610,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         if (!_binaryReader.readMatrix(bindpos))
         {
             CCLOGINFO("Failed to load SkinData: bindpos '%s'.", _path.c_str());
-            return nullptr;
+            return false;
         }
         skindata->inverseBindPoseMatrices.push_back(bindpos);
     }
@@ -651,7 +651,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         if (!_binaryReader.readMatrix(transform))
         {
             CCLOGINFO("Failed to load SkinData: transform '%s'.", _path.c_str());
-            return nullptr;
+            return false;
         }
         
         if(index < 0)
