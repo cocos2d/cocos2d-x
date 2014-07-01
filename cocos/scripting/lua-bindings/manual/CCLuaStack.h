@@ -132,7 +132,12 @@ public:
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
     virtual void cleanupXXTEAKeyAndSign();
     
+    virtual const char *getXXTEAKey(int *len);
+    virtual const char *getXXTEASign(int *len);
+    
     int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
+    int loadChunksFromZIP(const char *zipFilePath);
+    static int lua_loadChunksFromZIP(lua_State *L);
     
 protected:
     LuaStack(void)

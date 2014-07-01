@@ -707,6 +707,122 @@ void LuaStack::cleanupXXTEAKeyAndSign()
     }
 }
 
+const char* LuaStack::getXXTEAKey(int *len)
+{
+    if (_xxteaEnabled && _xxteaKey) {
+        if (len) {
+            *len = _xxteaKeyLen;
+        }
+        return _xxteaKey;
+    }
+    return nullptr;
+}
+
+const char* LuaStack::getXXTEASign(int *len)
+{
+    if (_xxteaEnabled && _xxteaSign) {
+        if (len) {
+            *len = _xxteaSignLen;
+        }
+        return _xxteaSign;
+    }
+    return nullptr;
+}
+
+static LuaStack *curStack = NULL;
+
+int LuaStack::loadChunksFromZIP(const char *zipFilePath)
+{
+    pushString(zipFilePath);
+    curStack = this;
+    lua_loadChunksFromZIP(_state);
+    int ret = lua_toboolean(_state, -1);
+    lua_pop(_state, 1);
+    return ret;
+}
+
+int LuaStack::lua_loadChunksFromZIP(lua_State *L)
+{
+    if (lua_gettop(L) < 1) {
+        CCLOG("lua_loadChunksFromZIP() - invalid arguments");
+        return 0;
+    }
+    
+    const char *zipFilename = lua_tostring(L, -1);
+    lua_settop(L, 0);
+    FileUtils *utils = FileUtils::getInstance();
+    string zipFilePath = utils->fullPathForFilename(zipFilename);
+    
+    LuaStack *stack = curStack;
+    
+    do {
+        ssize_t size = 0;
+        void *buffer = NULL;
+        unsigned char *zipFileData = utils->getFileData(zipFilePath.c_str(), "rb", &size);
+        ZipFile *zip = NULL;
+        
+        bool isXXTEA = stack && stack->_xxteaEnabled && zipFileData;
+        for (int i = 0; isXXTEA && i < stack->_xxteaSignLen && i < size; ++i) {
+            isXXTEA = zipFileData[i] == stack->_xxteaSign[i];
+        }
+        
+        if (isXXTEA) { // decrypt XXTEA
+            xxtea_long len = 0;
+            buffer = xxtea_decrypt(zipFileData + stack->_xxteaSignLen,
+                                   (xxtea_long)size - (xxtea_long)stack->_xxteaSignLen,
+                                   (unsigned char*)stack->_xxteaKey,
+                                   (xxtea_long)stack->_xxteaKeyLen,
+                                   &len);
+            delete []zipFileData;
+            zipFileData = NULL;
+            zip = ZipFile::createWithBuffer(buffer, len);
+        } else {
+            if (zipFileData) {
+                zip = ZipFile::createWithBuffer(zipFileData, size);
+            }
+        }
+        
+        if (zip) {
+            CCLOG("lua_loadChunksFromZIP() - load zip file: %s%s", zipFilePath.c_str(), isXXTEA ? "*" : "");
+            lua_getglobal(L, "package");
+            lua_getfield(L, -1, "preload");
+            
+            int count = 0;
+            string filename = zip->getFirstFilename();
+            while (filename.length()) {
+                ssize_t bufferSize = 0;
+                unsigned char *zbuffer = zip->getFileData(filename.c_str(), &bufferSize);
+                if (bufferSize) {
+                    if (stack->luaLoadBuffer(L, (char*)zbuffer, (int)bufferSize, filename.c_str()) == 0) {
+                        lua_setfield(L, -2, filename.c_str());
+                        ++count;
+                    }
+                    delete []zbuffer;
+                }
+                filename = zip->getNextFilename();
+            }
+            CCLOG("lua_loadChunksFromZIP() - loaded chunks count: %d", count);
+            lua_pop(L, 2);
+            lua_pushboolean(L, 1);
+            
+            delete zip;
+        } else {
+            CCLOG("lua_loadChunksFromZIP() - not found or invalid zip file: %s", zipFilePath.c_str());
+            lua_pushboolean(L, 0);
+        }
+        
+        if (zipFileData) {
+            delete []zipFileData;
+        }
+        
+        if (buffer) {
+            free(buffer);
+        }
+    } while (0);
+    
+    return 1;
+}
+
 int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
 {
     int r = 0;
