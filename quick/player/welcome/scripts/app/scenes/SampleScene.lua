@@ -26,7 +26,7 @@ end
 
 function SampleScene:createCopyright()
     local label = ui.newTTFLabel({
-        text = "Copyright (c) 2012-2014 chukong-inc.com, licensed under MIT.",
+        text = "Copyright 2012-2014 Chukong Technologies, Inc. Licensed under MIT License.",
         size = 14,
         color = cc.c3b(144, 144, 144),
         x = display.cx,
@@ -113,6 +113,7 @@ function SampleScene:createDemoDescription(sample, x, y)
         title = title .. " (unfinished)"
         color = cc.c3b(255,0,0)
     end
+
     local label = ui.newTTFLabel({
         text = title,
         align = ui.TEXT_ALIGNMENT_CENTER,
@@ -135,7 +136,7 @@ function SampleScene:createDemoButton(sample, x, y)
             "-" .. CONFIG_SCREEN_ORIENTATION,
         }
         local projectPath = __G__QUICK_PATH__ .. sample.path
-        local commandline = "-workdir," .. projectPath .. ",-size," .. CONFIG_SCREEN_WIDTH.."x"..CONFIG_SCREEN_HEIGHT .. ",-" .. CONFIG_SCREEN_ORIENTATION
+        local commandline = "-workdir," .. projectPath .. ",-size," .. CONFIG_SCREEN_WIDTH.."x"..CONFIG_SCREEN_HEIGHT .. ",-" .. CONFIG_SCREEN_ORIENTATION .. ',-new'
     
         local evt = cc.EventCustom:new("WELCOME_OPEN_PROJECT_ARGS")
         evt:setDataString(commandline)

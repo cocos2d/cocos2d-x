@@ -15,6 +15,8 @@ PLAYER_NS_BEGIN
 class PlayerFileDialogServiceProtocol : public PlayerServiceProtocol
 {
 public:
+    virtual ~PlayerFileDialogServiceProtocol(){}
+    
     virtual string openFile(const char *title,
         const char *directory = NULL,
         const char *extensions = NULL) = 0;

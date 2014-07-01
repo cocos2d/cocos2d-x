@@ -38,6 +38,8 @@ class AppControllerBridge;
 }
 //@property (assign) IBOutlet NSWindow *window;
 
+- (void) relaunch:(NSArray*)args;
+
 - (IBAction) onServicePreferences:(id)sender;
 
 - (IBAction) onFileNewProject:(id)sender;
@@ -59,4 +61,6 @@ class AppControllerBridge;
 
 - (IBAction) onWindowAlwaysOnTop:(id)sender;
 
+- (IBAction) fileBuildAndroid:(id)sender;
+- (IBAction) fileBuildIOS:(id)sender;
 @end
