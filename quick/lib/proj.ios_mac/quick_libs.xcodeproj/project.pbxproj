@@ -3558,7 +3558,7 @@
 				DAD445EB19592CA000D3A30C /* store */,
 			);
 			name = extra;
-			path = ../cocos2dx/extra;
+			path = extra;
 			sourceTree = "<group>";
 		};
 		DAD445A519592CA000D3A30C /* apptools */ = {
@@ -3772,7 +3772,7 @@
 				DAEBA8701959803300C31FBB /* strbuf.h */,
 			);
 			name = cjson;
-			path = ../cocos2dx/lua_extensions/cjson;
+			path = lua_extensions/cjson;
 			sourceTree = "<group>";
 		};
 		DAEBA8801959805300C31FBB /* filesystem */ = {
@@ -3782,7 +3782,7 @@
 				DAEBA87F1959805300C31FBB /* lfs.h */,
 			);
 			name = filesystem;
-			path = ../cocos2dx/lua_extensions/filesystem;
+			path = lua_extensions/filesystem;
 			sourceTree = "<group>";
 		};
 		DAEBA8871959806200C31FBB /* lpack */ = {
@@ -3792,7 +3792,7 @@
 				DAEBA8861959806200C31FBB /* lpack.h */,
 			);
 			name = lpack;
-			path = ../cocos2dx/lua_extensions/lpack;
+			path = lua_extensions/lpack;
 			sourceTree = "<group>";
 		};
 		DAEBA8901959806C00C31FBB /* lsqlite3 */ = {
@@ -3804,7 +3804,7 @@
 				DAEBA88F1959806C00C31FBB /* sqlite3.h */,
 			);
 			name = lsqlite3;
-			path = ../cocos2dx/lua_extensions/lsqlite3;
+			path = lua_extensions/lsqlite3;
 			sourceTree = "<group>";
 		};
 		DAEBA89B1959807D00C31FBB /* zlib */ = {
@@ -3814,7 +3814,7 @@
 				DAEBA89A1959807D00C31FBB /* lua_zlib.h */,
 			);
 			name = zlib;
-			path = ../cocos2dx/lua_extensions/zlib;
+			path = lua_extensions/zlib;
 			sourceTree = "<group>";
 		};
 		DAEBA8A71959808A00C31FBB /* tolua */ = {
@@ -3933,7 +3933,7 @@
 				DAEBAA70195A9DF500C31FBB /* lua_cocos2dx_physics_auto.hpp */,
 			);
 			name = auto;
-			path = "../cocos2dx/lua-bindings/auto";
+			path = "lua-bindings/auto";
 			sourceTree = "<group>";
 		};
 		DAEBAA71195A9DF500C31FBB /* manual */ = {
@@ -3974,7 +3974,7 @@
 				DAEBAA9B195A9DF500C31FBB /* tolua_fix.h */,
 			);
 			name = manual;
-			path = "../cocos2dx/lua-bindings/manual";
+			path = "lua-bindings/manual";
 			sourceTree = "<group>";
 		};
 		DAEBAA90195A9DF500C31FBB /* platform */ = {
@@ -5679,21 +5679,21 @@
 				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(QUICK_V3_ROOT)/external/glfw3/prebuilt/mac\"",
-					"\"$(QUICK_V3_ROOT)/external/png/prebuilt/mac\"",
-					"\"$(QUICK_V3_ROOT)/external/jpeg/prebuilt/mac\"",
-					"\"$(QUICK_V3_ROOT)/external/tiff/prebuilt/mac\"",
-					"$(QUICK_V3_ROOT)/external/webp/prebuilt/mac",
-					"$(QUICK_V3_ROOT)/external/freetype2/prebuilt/mac",
-					"$(QUICK_V3_ROOT)/external/websockets/prebuilt/mac",
-					"$(QUICK_V3_ROOT)/external/lua/luajit/prebuilt/mac",
+					"$(SRCROOT)/../../../external/glfw3/prebuilt/mac",
+					"$(SRCROOT)/../../../external/png/prebuilt/mac",
+					"$(SRCROOT)/../../../external/jpeg/prebuilt/mac",
+					"$(SRCROOT)/../../../external/tiff/prebuilt/mac",
+					"$(SRCROOT)/../../../external/webp/prebuilt/mac",
+					"$(SRCROOT)/../../../external/freetype2/prebuilt/mac",
+					"$(SRCROOT)/../../../external/websockets/prebuilt/mac",
+					"$(SRCROOT)/../../../external/lua/luajit/prebuilt/mac",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip $(SRCROOT)/../cocos2dx/extra $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/xxtea $(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx $(SRCROOT)/../cocos2dx/lua_extensions $(SRCROOT)/../../../external/lua";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip $(SRCROOT)/extra $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/xxtea $(SRCROOT)/lua-bindings/manual $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx $(SRCROOT)/lua_extensions $(SRCROOT)/../../../external/lua";
 			};
 			name = Debug;
 		};
@@ -5726,20 +5726,20 @@
 				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(QUICK_V3_ROOT)/external/glfw3/prebuilt/mac\"",
-					"\"$(QUICK_V3_ROOT)/external/png/prebuilt/mac\"",
-					"\"$(QUICK_V3_ROOT)/external/jpeg/prebuilt/mac\"",
-					"\"$(QUICK_V3_ROOT)/external/tiff/prebuilt/mac\"",
-					"$(QUICK_V3_ROOT)/external/webp/prebuilt/mac",
-					"$(QUICK_V3_ROOT)/external/freetype2/prebuilt/mac",
-					"$(QUICK_V3_ROOT)/external/websockets/prebuilt/mac",
-					"$(QUICK_V3_ROOT)/external/lua/luajit/prebuilt/mac",
+					"$(SRCROOT)/../../../external/glfw3/prebuilt/mac",
+					"$(SRCROOT)/../../../external/png/prebuilt/mac",
+					"$(SRCROOT)/../../../external/jpeg/prebuilt/mac",
+					"$(SRCROOT)/../../../external/tiff/prebuilt/mac",
+					"$(SRCROOT)/../../../external/webp/prebuilt/mac",
+					"$(SRCROOT)/../../../external/freetype2/prebuilt/mac",
+					"$(SRCROOT)/../../../external/websockets/prebuilt/mac",
+					"$(SRCROOT)/../../../external/lua/luajit/prebuilt/mac",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip $(SRCROOT)/../cocos2dx/extra $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/xxtea $(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx $(SRCROOT)/../cocos2dx/lua_extensions $(SRCROOT)/../../../external/lua";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/unzip $(SRCROOT)/extra $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/xxtea $(SRCROOT)/lua-bindings/manual $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../cocos2dx $(SRCROOT)/lua_extensions $(SRCROOT)/../../../external/lua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -5923,13 +5923,13 @@
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../external/png/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/jpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/tiff/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/webp/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/freetype2/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/websockets/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/curl/prebuilt/ios\"",
+					"$(SRCROOT)/../../../external/png/prebuilt/ios",
+					"$(SRCROOT)/../../../external/jpeg/prebuilt/ios",
+					"$(SRCROOT)/../../../external/tiff/prebuilt/ios",
+					"$(SRCROOT)/../../../external/webp/prebuilt/ios",
+					"$(SRCROOT)/../../../external/freetype2/prebuilt/ios",
+					"$(SRCROOT)/../../../external/websockets/prebuilt/ios",
+					"$(SRCROOT)/../../../external/curl/prebuilt/ios",
 					"/Users/zhujunfeng/quick-x-3/external/lua/luajit/prebuilt/ios",
 					"/Users/zhujunfeng/quick-x-3/external/lua/luajit/prebuilt/mac",
 				);
@@ -5965,13 +5965,13 @@
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../external/png/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/jpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/tiff/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/webp/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/freetype2/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/websockets/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../external/curl/prebuilt/ios\"",
+					"$(SRCROOT)/../../../external/png/prebuilt/ios",
+					"$(SRCROOT)/../../../external/jpeg/prebuilt/ios",
+					"$(SRCROOT)/../../../external/tiff/prebuilt/ios",
+					"$(SRCROOT)/../../../external/webp/prebuilt/ios",
+					"$(SRCROOT)/../../../external/freetype2/prebuilt/ios",
+					"$(SRCROOT)/../../../external/websockets/prebuilt/ios",
+					"$(SRCROOT)/../../../external/curl/prebuilt/ios",
 					"/Users/zhujunfeng/quick-x-3/external/lua/luajit/prebuilt/ios",
 					"/Users/zhujunfeng/quick-x-3/external/lua/luajit/prebuilt/mac",
 				);
