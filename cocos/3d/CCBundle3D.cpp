@@ -463,11 +463,19 @@ bool Bundle3D::loadBinary(const std::string& path)
 
     // Read version
     unsigned char ver[2];
-    if (_binaryReader.read(ver, 1, 2) != 2 || ver[0] != 0 || ver[1] != 1)
+    if (_binaryReader.read(ver, 1, 2) == 2)
     {
-        clear();
-        CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
-        return false;
+        if (ver[0] != 0) {
+            clear();
+            CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+            return false;
+        }
+        
+        if (ver[1] <= 0 || ver[1] > 2) {
+            clear();
+            CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+            return false;
+        }
     }
 
     // Read ref table size
@@ -542,12 +550,12 @@ bool Bundle3D::loadMeshDataBinary(MeshData* meshdata)
     }
 
     // Read index data
-    ssize_t meshPartCount = 1;
+    unsigned int meshPartCount = 1;
     //_binaryReader.read(&meshPartCount, 4, 1);
 
-    for (ssize_t i = 0; i < meshPartCount; ++i)
+    for (unsigned int i = 0; i < meshPartCount; ++i)
     {
-        ssize_t nIndexCount;
+        unsigned int nIndexCount;
         if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
         {
             CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
@@ -600,7 +608,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         if (!_binaryReader.readMatrix(bindpos))
         {
             CCLOGINFO("Failed to load SkinData: bindpos '%s'.", _path.c_str());
-            return nullptr;
+            return false;
         }
         skindata->inverseBindPoseMatrices.push_back(bindpos);
     }
@@ -641,7 +649,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         if (!_binaryReader.readMatrix(transform))
         {
             CCLOGINFO("Failed to load SkinData: transform '%s'.", _path.c_str());
-            return nullptr;
+            return false;
         }
         
         if(index < 0)
@@ -702,24 +710,24 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
         return false;
     }
 
-    ssize_t animNum;
+    unsigned int animNum;
     if (!_binaryReader.read(&animNum))
     {
         CCLOGINFO("Failed to read AnimationData: animNum '%s'.", _path.c_str());
         return false;
     }
 
-    for (ssize_t i = 0; i < animNum; ++i)
+    for (unsigned int i = 0; i < animNum; ++i)
     {
         std::string boneName = _binaryReader.readString();
-        ssize_t keyframeNum;
+        unsigned int keyframeNum;
         if (!_binaryReader.read(&keyframeNum))
         {
             CCLOGINFO("Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
             return false;
         }
 
-        for (ssize_t j = 0; j < keyframeNum; ++j)
+        for (unsigned int j = 0; j < keyframeNum; ++j)
         {
             float keytime;
             if (!_binaryReader.read(&keytime))
@@ -808,7 +816,7 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
 
 void Bundle3D::getModelRelativePath(const std::string& path)
 {
-    int index = path.find_last_of('/');
+    ssize_t index = path.find_last_of('/');
     std::string fullModelPath;
     fullModelPath = path.substr(0, index + 1);
 
