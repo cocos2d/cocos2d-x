@@ -208,7 +208,6 @@ void LuaMinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, n
     {
         CCLOG("response failed");
         CCLOG("error buffer: %s", response->getErrorBuffer());
-        return;
     }
     
     // set header
@@ -755,10 +754,22 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::POST);
             }
-            else
-            {
-                self->getHttpRequest()->setRequestType(network::HttpRequest::Type::GET);
+			else if (method.compare("delete") == 0 || method.compare("DELETE") == 0)
+			{
+				self->getHttpRequest()->setRequestType(network::HttpRequest::Type::DELETE);
             }
+			else if (method.compare("get") == 0 || method.compare("GET") == 0)
+			{
+				self->getHttpRequest()->setRequestType(network::HttpRequest::Type::GET);
+			}
+			else if (method.compare("put") == 0 || method.compare("PUT") == 0)
+			{
+				self->getHttpRequest()->setRequestType(network::HttpRequest::Type::PUT);
+			}
+			else if (method.compare("head") == 0 || method.compare("HEAD") == 0)
+			{
+				self->getHttpRequest()->setRequestType(network::HttpRequest::Type::HEAD);
+			}
             
             self->getHttpRequest()->setUrl(url.c_str());
             
@@ -969,9 +980,9 @@ static int lua_cocos2dx_XMLHttpRequest_getResponseHeader(lua_State* L)
         
         string value = streamData.str();
         
-        
-        auto iter = self->getHttpHeader().find(value);
-        if (iter != self->getHttpHeader().end())
+        map<string, string> httpHeader = self->getHttpHeader();
+        auto iter = httpHeader.find(value);
+        if (iter != httpHeader.end())
         {
             tolua_pushstring(L, (iter->second).c_str());
             return 1;
