@@ -39,62 +39,61 @@ void SliderReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     
     bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
     slider->setScale9Enabled(barTextureScale9Enable);
-    bool bt = DICTOOL->checkObjectExist_json(options, "barFileName");
-    float barLength = DICTOOL->getFloatValue_json(options, "length");
-    if (bt)
+    
+    float barLength = DICTOOL->getFloatValue_json(options, "length",290);
+  
+    if (barTextureScale9Enable)
     {
-        if (barTextureScale9Enable)
+        
+        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
+        int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+        switch (imageFileType)
         {
-            
-            const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
-            int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-            switch (imageFileType)
+            case 0:
             {
-                case 0:
-                {
-                    std::string tp_b = jsonPath;
-                    const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-                    slider->loadBarTexture(imageFileName_tp);
-                    break;
-                }
-                case 1:
-                {
-                    const char* imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    slider->loadBarTexture(imageFileName, ui::UI_TEX_TYPE_PLIST);
-                    break;
-                }
-                default:
-                    break;
+                std::string tp_b = jsonPath;
+                const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+                slider->loadBarTexture(imageFileName_tp);
+                break;
             }
-            
-            slider->setSize(CCSizeMake(barLength, slider->getContentSize().height));
+            case 1:
+            {
+                const char* imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                slider->loadBarTexture(imageFileName, ui::UI_TEX_TYPE_PLIST);
+                break;
+            }
+            default:
+                break;
         }
-        else
+        
+        slider->setSize(CCSizeMake(barLength, slider->getContentSize().height));
+    }
+    else
+    {
+        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
+        int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
+        switch (imageFileType)
         {
-            const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "barFileNameData");
-            int imageFileType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
-            switch (imageFileType)
+            case 0:
             {
-                case 0:
-                {
-                    std::string tp_b = jsonPath;
-                    const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-                    slider->loadBarTexture(imageFileName_tp);
-                    break;
-                }
-                case 1:
-                {
-                    const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    slider->loadBarTexture(imageFileName, ui::UI_TEX_TYPE_PLIST);
-                    break;
-                }
-                default:
-                    break;
+                std::string tp_b = jsonPath;
+                const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+                slider->loadBarTexture(imageFileName_tp);
+                break;
             }
+            case 1:
+            {
+                const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
+                slider->loadBarTexture(imageFileName, ui::UI_TEX_TYPE_PLIST);
+                break;
+            }
+            default:
+                break;
         }
     }
+    
     
     const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, "ballNormalData");
     int normalType = DICTOOL->getIntValue_json(normalDic, "resourceType");

@@ -74,19 +74,16 @@ void ImageViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
     
     if (scale9Enable)
     {
-        bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
-        bool sh = DICTOOL->checkObjectExist_json(options, "scale9Height");
-        if (sw && sh)
-        {
-            float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
-            float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            imageView->setSize(CCSizeMake(swf, shf));
-        }
+        
+        float swf = DICTOOL->getFloatValue_json(options, "scale9Width", 80.0f);
+        float shf = DICTOOL->getFloatValue_json(options, "scale9Height", 80.0f);
+        imageView->setSize(CCSizeMake(swf, shf));
+        
         
         float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
         float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-        float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-        float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+        float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth", 1.0);
+        float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight", 1.0);
         
         imageView->setCapInsets(CCRectMake(cx, cy, cw, ch));
         

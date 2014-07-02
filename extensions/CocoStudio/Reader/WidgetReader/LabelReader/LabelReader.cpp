@@ -40,18 +40,15 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
     ui::Label* label = (ui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-    const char* text = DICTOOL->getStringValue_json(options, "text");
+    const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
     label->setText(text);
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
-    if (fs)
-    {
-        label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
-    }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
-    if (fn)
-    {
-        label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    }
+   
+    label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
+    
+    std::string fontName = DICTOOL->getStringValue_json(options, "fontName","微软雅黑");
+    std::string fontFilePath = jsonPath.append(fontName);
+    label->setFontName(fontFilePath);
+    
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
     bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
     if (aw && ah)

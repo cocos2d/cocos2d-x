@@ -70,8 +70,8 @@ void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
         {
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
             float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth",1);
+            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight",1);
             
             loadingBar->setCapInsets(CCRectMake(cx, cy, cw, ch));
             
@@ -81,7 +81,7 @@ void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
         }
         
         loadingBar->setDirection(ui::LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
-        loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+        loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent",100));
     }
     
     

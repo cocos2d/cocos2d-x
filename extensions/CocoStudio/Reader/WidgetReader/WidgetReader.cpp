@@ -61,11 +61,8 @@ void WidgetReader::purge()
 
 void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
-    if (ignoreSizeExsit)
-    {
-        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize"));
-    }
+    
+    widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize",false));
     
     widget->setSizeType((ui::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
     widget->setPositionType((ui::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
@@ -90,21 +87,13 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
     widget->setPosition(ccp(x,y));
-    bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
-    if (sx)
-    {
-        widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX"));
-    }
-    bool sy = DICTOOL->checkObjectExist_json(options, "scaleY");
-    if (sy)
-    {
-        widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY"));
-    }
-    bool rt = DICTOOL->checkObjectExist_json(options, "rotation");
-    if (rt)
-    {
-        widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
-    }
+   
+    widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX",1.0));
+    
+    widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY",1.0));
+    
+    widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation",0));
+    
     bool vb = DICTOOL->checkObjectExist_json(options, "visible");
     if (vb)
     {
@@ -159,17 +148,12 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
 
 void WidgetReader::setColorPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    bool op = DICTOOL->checkObjectExist_json(options, "opacity");
-    if (op)
-    {
-        widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity"));
-    }
-    bool cr = DICTOOL->checkObjectExist_json(options, "colorR");
-    bool cg = DICTOOL->checkObjectExist_json(options, "colorG");
-    bool cb = DICTOOL->checkObjectExist_json(options, "colorB");
-    int colorR = cr ? DICTOOL->getIntValue_json(options, "colorR") : 255;
-    int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
-    int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
+    widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity",255));
+   
+    int colorR = DICTOOL->getIntValue_json(options, "colorR",255);
+    int colorG = DICTOOL->getIntValue_json(options, "colorG",255);
+    int colorB = DICTOOL->getIntValue_json(options, "colorB",255);
+    
     widget->setColor(ccc3(colorR, colorG, colorB));
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
     float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == ui::WidgetTypeWidget) ? 0.5f : 0.0f);

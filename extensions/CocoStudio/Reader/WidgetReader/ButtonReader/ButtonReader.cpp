@@ -134,24 +134,18 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
         }
     }
     
-    bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
-    bool cg = DICTOOL->checkObjectExist_json(options, "textColorG");
-    bool cb = DICTOOL->checkObjectExist_json(options, "textColorB");
-    int cri = cr?DICTOOL->getIntValue_json(options, "textColorR"):255;
-    int cgi = cg?DICTOOL->getIntValue_json(options, "textColorG"):255;
-    int cbi = cb?DICTOOL->getIntValue_json(options, "textColorB"):255;
+   
+    int cri = DICTOOL->getIntValue_json(options, "textColorR",255);
+    int cgi = DICTOOL->getIntValue_json(options, "textColorG",255);
+    int cbi = DICTOOL->getIntValue_json(options, "textColorB",255);
     
     button->setTitleColor(ccc3(cri,cgi,cbi));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
-    if (fs)
-    {
-        button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize"));
-    }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
-    if (fn)
-    {
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    }
+   
+    button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize", 14));
+    
+   
+    button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName","微软雅黑"));
+    
     
     
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);

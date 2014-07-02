@@ -34,22 +34,15 @@ void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
     
     
     ui::TextField* textField = (ui::TextField*)widget;
-    bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
-    if (ph)
-    {
-        textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
-    }
-    textField->setText(DICTOOL->getStringValue_json(options, "text"));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
-    if (fs)
-    {
-        textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
-    }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
-    if (fn)
-    {
-        textField->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    }
+   
+    textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder","inputs words here"));
+    
+    textField->setText(DICTOOL->getStringValue_json(options, "text","text field"));
+   
+    textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
+   
+    textField->setFontName(DICTOOL->getStringValue_json(options, "fontName","微软雅黑"));
+    
     bool tsw = DICTOOL->checkObjectExist_json(options, "touchSizeWidth");
     bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
     if (tsw && tsh)
@@ -68,14 +61,14 @@ void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
     
     if (maxLengthEnable)
     {
-        int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
+        int maxLength = DICTOOL->getIntValue_json(options, "maxLength",10);
         textField->setMaxLength(maxLength);
     }
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
     textField->setPasswordEnabled(passwordEnable);
     if (passwordEnable)
     {
-        textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
+        textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText","*"));
     }
     
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");

@@ -56,7 +56,7 @@ void LabelBMFontReader::setPropsFromJsonDictionary(ui::Widget *widget, const rap
             break;
     }
     
-    const char* text = DICTOOL->getStringValue_json(options, "text");
+    const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
     labelBMFont->setText(text);
     
     
