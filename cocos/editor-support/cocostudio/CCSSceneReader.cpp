@@ -111,10 +111,10 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
 						{
 							continue;
 						}
-						std::string key = subDict[1].GetName(&tCocoLoader);
+						std::string key1 = subDict[1].GetName(&tCocoLoader);
 						const char *comName = subDict[1].GetValue();
 						Component *pCom = nullptr;
-						if (key == "classname" && comName != nullptr)
+						if (key1 == "classname" && comName != nullptr)
 						{
 							pCom = createComponent(comName);
 						}
@@ -375,10 +375,10 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
             {
                 continue;
             }
-            std::string key = subDict[1].GetName(cocoLoader);
-            const char *comName = subDict[1].GetValue();//DICTOOL->getStringValue_json(subDict, "classname");
+            std::string key1 = subDict[1].GetName(cocoLoader);
+            const char *comName = subDict[1].GetValue();
             Component *pCom = nullptr;
-            if (key == "classname" && comName != nullptr)
+            if (key1 == "classname" && comName != nullptr)
             {
                 pCom = createComponent(comName);
             }
