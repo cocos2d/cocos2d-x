@@ -38,7 +38,7 @@ public class AppActivity extends GameControllerActivity {
 		
 		//Automatic adaptation for connect controller.
 		//Supported Platform: Nibiru / Moga / Ouya TV
-		this.connectController();
+		//this.connectController();
 		
 		//Manually specify an adapter.
 		//Requirements: using libControllerDriveAdapter project 
