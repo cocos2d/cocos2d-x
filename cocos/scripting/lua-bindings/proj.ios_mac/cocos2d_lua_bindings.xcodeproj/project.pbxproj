@@ -945,6 +945,7 @@
 				);
 				"OTHER_LDFLAGS[arch=arm64]" = "-llua";
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
+				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../platform/ios";
@@ -970,6 +971,7 @@
 				);
 				"OTHER_LDFLAGS[arch=arm64]" = "-llua";
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
+				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../platform/ios";

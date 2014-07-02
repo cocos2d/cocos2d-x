@@ -36,12 +36,7 @@ public class AppActivity extends GameControllerActivity {
 		
 		//The standard controller,without doing anything special. e.g: Amazon Fire TV
 		
-		//Automatic adaptation for connect controller.
-		//Supported Platform: Nibiru / Moga / Ouya TV
-		this.connectController();
-		
 		//Manually specify an adapter.
-		//Requirements: using libControllerDriveAdapter project 
 		//this.connectController(DRIVERTYPE_NIBIRU);
 		//this.connectController(DRIVERTYPE_MOGA);
 		//this.connectController(DRIVERTYPE_OUYA);

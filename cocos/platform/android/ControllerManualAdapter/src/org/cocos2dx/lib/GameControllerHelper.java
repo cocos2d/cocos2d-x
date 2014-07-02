@@ -1,5 +1,6 @@
 package org.cocos2dx.lib;
 
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ public class GameControllerHelper {
 	private static final int AXIS_RZ = 14;
 	private static final int AXIS_LTRIGGER = 17;
 	private static final int AXIS_RTRIGGER = 18;
+	public static final int AXIS_GAS = 22;
 	private static final int AXIS_BRAKE = 23;
 	private static final int AXIS_THROTTLE = 19;
 	
@@ -63,6 +65,7 @@ public class GameControllerHelper {
 	private float mOldRightTrigger = 0.0f;
 	private float mOldThrottle = 0.0f;
 	private float mOldBrake = 0.0f;
+	private float mOldGas = 0.0f;
 	
 	public boolean dispatchGenericMotionEvent(MotionEvent event) {		
 		boolean handled = false;
@@ -144,6 +147,17 @@ public class GameControllerHelper {
 						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, true, newAXIS_THROTTLE, true);
 					}
 					mOldThrottle = newAXIS_THROTTLE;
+					handled = true;
+				}
+        		
+        		float newAXIS_GAS = event.getAxisValue(AXIS_GAS);
+        		if (Float.compare(newAXIS_GAS , mOldGas) != 0) {
+        			if (Float.compare(newAXIS_GAS, 0.0f) == 0) {
+						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, false, 0.0f, true);
+					}else {
+						GameControllerAdapter.onButtonEvent(StandardControllerName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, true, newAXIS_GAS, true);
+					}
+        			mOldGas = newAXIS_GAS;
 					handled = true;
 				}
 			} 	
