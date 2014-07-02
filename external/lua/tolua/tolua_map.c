@@ -313,8 +313,7 @@ static int tolua_bnd_getcfunction(lua_State* L) {
         if (!lua_isnil(L, -1)) {
             lua_pushvalue(L, 2);    /* stack: class key mt mt[".backup"] key */
             lua_rawget(L, -2);
-            if (!lua_isnil(L, -1)) {
-                // key had been found
+            if (!lua_isnil(L, -1)) { // key had been found
                 return 1;
             }
             lua_pop(L, 1);

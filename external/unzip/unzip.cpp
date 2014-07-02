@@ -805,9 +805,9 @@ unzFile ZEXPORT unzOpen64 (const void *path)
 unzFile ZEXPORT unzOpenBuffer (const  void* buffer, uLong size)
 {
     char path[48] = {0};
-    cocos2d::zlib_filefunc64_32_def memory_file;
+    zlib_filefunc64_32_def memory_file;
     sprintf(path, "%llx %lx", (unsigned long long)buffer, (unsigned long)size);
-    cocos2d::fill_memory_filefunc64_32(&memory_file);
+    fill_memory_filefunc64_32(&memory_file);
     return unzOpenInternal(path, &memory_file, 0);
 }
     
