@@ -62,13 +62,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 	public Cocos2dxGLSurfaceView(final Context context) {
 		super(context);
-
+		this.setEGLConfigChooser(5, 6, 5, 0, 16, 8); // 添加此句  
 		this.initView();
 	}
 
 	public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
-		
+		this.setEGLConfigChooser(5, 6, 5, 0, 16, 8); // 添加此句  
 		this.initView();
 	}
 

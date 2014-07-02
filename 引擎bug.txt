@@ -1,0 +1,9 @@
+1 lua_xml_http_request.cpp 中的getResponse 的 bug
+2 assetsmanager 中的update网络错误没有回调lua的bug
+3 assetsmanager 中checkUpdate()阻塞问题
+4 assetsManager 中，保存的更新包名字相同导致多线程更新冲突
+5 assetsManager 中，不需要设置文件搜索路径
+6 assetsManager 中，增加手动设置远程版本号功能
+7 修改userdefault ，使支持多线程
+8 lua class扩展，构造函数没有调用父类构造函数
+9 lua_xml_http_request.cpp 中，handle_requestResponse错误直接返回，导致lua没有收到错误事件
