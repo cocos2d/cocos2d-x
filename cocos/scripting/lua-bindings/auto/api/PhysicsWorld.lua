@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsWorld
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsWorld] getGravity 
