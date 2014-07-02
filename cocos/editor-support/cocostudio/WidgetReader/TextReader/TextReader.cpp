@@ -48,7 +48,9 @@ namespace cocostudio
         stExpCocoNode *stChildArray = cocoNode->GetChildArray();
         
         Text* label = static_cast<Text*>(widget);
-    
+        
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
@@ -67,7 +69,8 @@ namespace cocostudio
             }else if(key == P_FontSize){
                 label->setFontSize(valueToInt(value));
             }else if(key == P_FontName){
-                label->setFontName(value);
+                std::string fontFilePath = jsonPath.append(value);
+                label->setFontName(fontFilePath);
             }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
             }else if(key == P_AreaHeight){
