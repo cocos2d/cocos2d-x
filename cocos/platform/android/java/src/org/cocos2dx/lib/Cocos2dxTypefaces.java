@@ -30,51 +30,51 @@ import android.content.Context;
 import android.graphics.Typeface;
 
 public class Cocos2dxTypefaces {
-	// ===========================================================
-	// Constants
-	// ===========================================================
+    // ===========================================================
+    // Constants
+    // ===========================================================
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	private static final HashMap<String, Typeface> sTypefaceCache = new HashMap<String, Typeface>();
+    private static final HashMap<String, Typeface> sTypefaceCache = new HashMap<String, Typeface>();
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
+    // ===========================================================
+    // Constructors
+    // ===========================================================
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
 
-	// ===========================================================
-	// Methods
-	// ===========================================================
+    // ===========================================================
+    // Methods
+    // ===========================================================
 
-	public static synchronized Typeface get(final Context pContext, final String pAssetName) {
-		if (!Cocos2dxTypefaces.sTypefaceCache.containsKey(pAssetName)) {
-			Typeface typeface = null;
-			if (pAssetName.startsWith("/"))
-			{
-				typeface = Typeface.createFromFile(pAssetName);
-			}
-			else
-			{
-				typeface = Typeface.createFromAsset(pContext.getAssets(), pAssetName);
-			}
-			Cocos2dxTypefaces.sTypefaceCache.put(pAssetName, typeface);
-		}
+    public static synchronized Typeface get(final Context pContext, final String pAssetName) {
+        if (!Cocos2dxTypefaces.sTypefaceCache.containsKey(pAssetName)) {
+            Typeface typeface = null;
+            if (pAssetName.startsWith("/"))
+            {
+                typeface = Typeface.createFromFile(pAssetName);
+            }
+            else
+            {
+                typeface = Typeface.createFromAsset(pContext.getAssets(), pAssetName);
+            }
+            Cocos2dxTypefaces.sTypefaceCache.put(pAssetName, typeface);
+        }
 
-		return Cocos2dxTypefaces.sTypefaceCache.get(pAssetName);
-	}
+        return Cocos2dxTypefaces.sTypefaceCache.get(pAssetName);
+    }
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
 
 }
