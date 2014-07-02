@@ -65,6 +65,7 @@ public:
     const Mat4& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
+    Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);

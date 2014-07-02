@@ -861,24 +861,25 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         }
     }
     
+    // TODO: support ends with '/..'
     // End with '/..'?
-    bool searchFromParent = false;
-    if (length > 3 &&
-        name[length-3] == '/' &&
-        name[length-2] == '.' &&
-        name[length-1] == '.')
-    {
-        searchFromParent = true;
-        subStrlength -= 3;
-    }
+//    bool searchFromParent = false;
+//    if (length > 3 &&
+//        name[length-3] == '/' &&
+//        name[length-2] == '.' &&
+//        name[length-1] == '.')
+//    {
+//        searchFromParent = true;
+//        subStrlength -= 3;
+//    }
     
-    // Remove '/', '//' and '/..' if exist
+    // Remove '/', '//' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
     // If search from parent, then add * at first to make it match its children, which will do make
-    if (searchFromParent)
-    {
-        newName.insert(0, "[[:alnum:]]+/");
-    }
+//    if (searchFromParent)
+//    {
+//        newName.insert(0, "[[:alnum:]]+/");
+//    }
     
     if (searchFromRoot)
     {
@@ -943,10 +944,14 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
         needRecursive = true;
     }
     
+    std::hash<std::string> h;
+    size_t hashOfName = h(searchName);
     bool ret = false;
     for (const auto& child : _children)
     {
-        if(std::regex_match(child->_name, std::regex(searchName)))
+        // TODO: regular expression support
+        // Android doesn't support c++ 11 regular expression well, may use external lib
+        if (hashOfName == child->_hashOfName && searchName.compare(child->_name) == 0)
         {
             if (!needRecursive)
             {
