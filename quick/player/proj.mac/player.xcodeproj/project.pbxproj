@@ -589,6 +589,9 @@
 					"$(QUICK_V3_ROOT)/external",
 					"$(QUICK_V3_ROOT)/external/chipmunk/include/chipmunk",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -637,6 +640,9 @@
 					"$(QUICK_V3_ROOT)/external",
 					"$(QUICK_V3_ROOT)/external/chipmunk/include/chipmunk",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -664,12 +670,12 @@
 					"$(QUICK_V3_ROOT)/external",
 					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
 					"$(QUICK_V3_ROOT)/external/lua/tolua",
-					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto",
+					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/manual",
+					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/auto",
 					"$(QUICK_V3_ROOT)/external/unzip",
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
-					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/extra",
+					"$(QUICK_V3_ROOT)/quick/lib/extra",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -708,12 +714,12 @@
 					"$(QUICK_V3_ROOT)/external",
 					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
 					"$(QUICK_V3_ROOT)/external/lua/tolua",
-					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto",
+					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/manual",
+					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/auto",
 					"$(QUICK_V3_ROOT)/external/unzip",
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
-					"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/extra",
+					"$(QUICK_V3_ROOT)/quick/lib/extra",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
