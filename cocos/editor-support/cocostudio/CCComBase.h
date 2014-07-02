@@ -50,10 +50,12 @@ struct SerData
 {
     const rapidjson::Value *_rData;
     cocostudio::stExpCocoNode *_cocoNode;
+    cocostudio::CocoLoader *_cocoLoader;
     SerData()
     {
         _rData = NULL;
         _cocoNode = NULL;
+        _cocoLoader = NULL;
     }
     
 };

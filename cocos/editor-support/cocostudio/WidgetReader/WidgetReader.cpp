@@ -295,8 +295,8 @@ namespace cocostudio
     
     std::string WidgetReader::getResourcePath(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::ui::Widget::TextureResType texType)
     {
-        stExpCocoNode *backGroundChildren = cocoNode->GetChildArray();
-        std::string backgroundValue = backGroundChildren[0].GetValue();
+        stExpCocoNode *backGroundChildren = cocoNode->GetChildArray(cocoLoader);
+        std::string backgroundValue = backGroundChildren[0].GetValue(cocoLoader);
 
         if (backgroundValue.size() < 3) {
             return "";
@@ -346,13 +346,13 @@ namespace cocostudio
     
     void WidgetReader::setPropsFromBinary(cocos2d::ui::Widget *widget, cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
     {
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         this->beginSetBasicProperties(widget);
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             CC_BASIC_PROPERTY_BINARY_READER
         }

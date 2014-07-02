@@ -44,12 +44,12 @@ namespace cocostudio
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         float innerWidth;
         float innerHeight;
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             if (key == P_InnerWidth) {
                 innerWidth = valueToFloat(value);
             }

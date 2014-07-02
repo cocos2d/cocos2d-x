@@ -361,13 +361,13 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
             rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
             if (rapidjson::kObjectType == tType || rapidjson::kArrayType == tType)
             {
-                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
                 
                 
                 for (int i = 0; i < tpRootCocoNode->GetChildNum(); ++i) {
                     std::string key = tpChildArray[i].GetName(&tCocoLoader);
                     if (key == "version") {
-                        fileVersion = tpChildArray[i].GetValue();
+                        fileVersion = tpChildArray[i].GetValue(&tCocoLoader);
                         break;
                     }
                 }
@@ -1222,7 +1222,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
  cocos2d::ui::Widget* WidgetPropertiesReader0300::createWidgetFromBinary(CocoLoader* cocoLoader,stExpCocoNode*	cocoNode, const char* fileName)
 {
     
-    stExpCocoNode *tpChildArray = cocoNode->GetChildArray();
+    stExpCocoNode *tpChildArray = cocoNode->GetChildArray(cocoLoader);
     float fileDesignWidth;
     float fileDesignHeight;
     
@@ -1236,14 +1236,14 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
             for (int j=0; j<texturesCount; j++)
             {
                 std::string file;
-                stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray();
-                file = textureCountsArray[j].GetValue();
+                stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray(cocoLoader);
+                file = textureCountsArray[j].GetValue(cocoLoader);
                 SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
             }
         }else if (key == "designWidth"){
-            fileDesignWidth =  atof(tpChildArray[i].GetValue());
+            fileDesignWidth =  atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "designHeight"){
-            fileDesignHeight = atof(tpChildArray[i].GetValue());
+            fileDesignHeight = atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "widgetTree"){
             
             if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
@@ -1275,7 +1275,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     
     /* ********************** */
     /* ********************** */
-    stExpCocoNode *optionChildNode = cocoNode->GetChildArray();
+    stExpCocoNode *optionChildNode = cocoNode->GetChildArray(cocoLoader);
     for (int k = 0; k < cocoNode->GetChildNum(); ++k) {
         std::string key = optionChildNode[k].GetName(cocoLoader);
         if (key == "animation") {
@@ -1291,7 +1291,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
 Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  stExpCocoNode*	cocoNode)
 {
     Widget* widget = nullptr;
-    stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
     stExpCocoNode *optionsNode = nullptr;
     stExpCocoNode *childrenNode = nullptr;
     int elementCount = cocoNode->GetChildNum();
@@ -1299,7 +1299,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
     
     for (int i = 0; i < elementCount; ++i) {
         std::string key = stChildArray[i].GetName(cocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(cocoLoader);
         
         if (key == "classname" )
         {
@@ -1341,11 +1341,11 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
             // 2nd., custom widget parse with custom reader
             //2nd. parse custom property
             const char* customProperty = NULL;
-            stExpCocoNode *optionChildNode = optionsNode->GetChildArray();
+            stExpCocoNode *optionChildNode = optionsNode->GetChildArray(cocoLoader);
             for (int k = 0; k < optionsNode->GetChildNum(); ++k) {
                 std::string key = optionChildNode[k].GetName(cocoLoader);
                 if (key == "customProperty") {
-                    customProperty = optionChildNode[k].GetValue();
+                    customProperty = optionChildNode[k].GetValue(cocoLoader);
                     break;
                 }
             }
@@ -1369,7 +1369,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
         if (tType22 == rapidjson::kArrayType) {
             
             int childrenCount = childrenNode->GetChildNum();
-            stExpCocoNode* innerChildArray = childrenNode->GetChildArray();
+            stExpCocoNode* innerChildArray = childrenNode->GetChildArray(cocoLoader);
             for (int i=0; i < childrenCount; ++i) {
                 rapidjson::Type tType  = innerChildArray[i].GetType(cocoLoader);
                 
