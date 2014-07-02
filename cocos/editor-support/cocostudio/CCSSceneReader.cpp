@@ -123,6 +123,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
 						{
 							data->_rData = nullptr;
 							data->_cocoNode = subDict;
+                            data->_cocoLoader = &tCocoLoader;
 							if (pCom->serialize(data))
 							{
 								ComRender *pTRender = dynamic_cast<ComRender*>(pCom);
@@ -283,6 +284,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             {
                 data->_rData = &subDict;
 				data->_cocoNode = nullptr;
+                data->_cocoLoader = nullptr;
                 if (com->serialize(data))
                 {
                     ComRender *tRender = dynamic_cast<ComRender*>(com);
@@ -387,6 +389,7 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
             {
                 data->_rData = nullptr;
                 data->_cocoNode = subDict;
+                data->_cocoLoader = cocoLoader;
                 if (pCom->serialize(data))
                 {
                     ComRender *pTRender = dynamic_cast<ComRender*>(pCom);
