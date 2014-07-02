@@ -30,6 +30,11 @@ USING_NS_CC_EXTRA;
 
 - (void) dealloc
 {
+    if (buildTask)
+    {
+        [buildTask interrupt];
+        buildTask = nil;
+    }
     [super dealloc];
 }
 
@@ -40,6 +45,9 @@ USING_NS_CC_EXTRA;
     isMaximized = NO;
     hasPopupDialog = NO;
     debugLogFile = 0;
+
+    buildTask = nil;
+    isBuildingFinished = YES;
     
     // load QUICK_COCOS2DX_ROOT from ~/.QUICK_COCOS2DX_ROOT
     NSMutableString *path = [NSMutableString stringWithString:NSHomeDirectory()];
@@ -611,6 +619,28 @@ USING_NS_CC_EXTRA;
     }];
 }
 
+- (void) buildAndroidInBackground:(NSString *) scriptAbsPath
+{
+    buildTask = [[NSTask alloc] init];
+    [buildTask setLaunchPath: [NSString stringWithUTF8String:scriptAbsPath.UTF8String]];
+    
+    [buildTask setArguments: [NSArray array]];
+    
+    [buildTask launch];
+    
+    [buildTask waitUntilExit];
+
+    int exitCode = [buildTask terminationStatus];
+    [buildTask release];
+    buildTask = nil;
+    
+    if (exitCode == 0)
+    {
+        [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:projectConfig.getProjectDir().c_str()
+                                                                   encoding:NSUTF8StringEncoding]];
+    }
+}
+
 #pragma mark -
 #pragma mark interfaces
 
@@ -832,27 +862,66 @@ USING_NS_CC_EXTRA;
 
 -(IBAction)fileBuildAndroid:(id)sender
 {
-    [self showAlert:@"Coming soon :-)" withTitle:@"player"];
+    if (!isBuildingFinished) return;
+        
+    if (projectConfig.isWelcome())
+    {
+        [self showAlert:@"Welcome app is not for android" withTitle:@""];
+    }
+    else
+    {
+        std::string scriptPath = projectConfig.getProjectDir() + "proj.android/build_native.sh";
+        if (!FileUtils::getInstance()->isFileExist(scriptPath))
+        {
+            [self showAlert:[NSString stringWithFormat:@"%s isn't exist", scriptPath.c_str()] withTitle:@""];
+        }
+        else
+        {
+            isBuildingFinished = NO;
+            NSString *tmpPath = [NSString stringWithUTF8String:scriptPath.c_str()];
+            
+            [self performSelectorInBackground:@selector(buildAndroidInBackground:)
+                                   withObject:tmpPath];
+            
+            
+            NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+            [alert addButtonWithTitle:@"Cancel"];
+            [alert setMessageText:@"Building android target, see log console :-)"];
+            [alert setAlertStyle:NSWarningAlertStyle];
+
+            [alert beginSheetModalForWindow:window
+                          completionHandler:^(NSModalResponse returnCode) {
+                              
+                              if (returnCode == NSAlertFirstButtonReturn)
+                              {
+                                  isBuildingFinished = YES;
+                                  if (buildTask && [buildTask isRunning])
+                                  {
+                                      [NSObject cancelPreviousPerformRequestsWithTarget:self];
+                                      [buildTask interrupt];
+                                  }
+                              }
+
+                          }];
+        }
+    }
+}
+
+- (BOOL) validateMenuItem: (id <NSMenuItem>) menuItem
+{
+    return (isBuildingFinished);
     
-//    // run script
-//    NSString *createProjectShellFilePath = [NSString stringWithFormat:@"%s%@", SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath().c_str(),@"bin/create_project.sh"];
-//    
-//    
-//    NSTask *task;
-//    task = [[NSTask alloc] init];
-//    [task setLaunchPath: createProjectShellFilePath];
-//    
-//    [task setArguments: nil];
-//    
-//    [task launch];
-//    
-//    [task waitUntilExit];
-//
-//    [task release];
 }
 
 - (IBAction) fileBuildIOS:(id)sender
 {
-    [self showAlert:@"Coming soon :-)" withTitle:@"player"];
+    if (projectConfig.isWelcome())
+    {
+        [self showAlert:@"Welcome app " withTitle:@""];
+    }
+    else
+    {
+        [self showAlert:@"Coming soon :-)" withTitle:@""];
+    }
 }
 @end

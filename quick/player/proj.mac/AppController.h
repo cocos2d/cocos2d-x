@@ -35,6 +35,10 @@ class AppControllerBridge;
     //console pipe
     NSPipe *pipe;
     NSFileHandle *pipeReadHandle;
+    
+    // build task
+    NSTask *buildTask;
+    bool isBuildingFinished;
 }
 //@property (assign) IBOutlet NSWindow *window;
 
