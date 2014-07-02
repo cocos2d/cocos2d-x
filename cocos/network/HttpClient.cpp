@@ -99,6 +99,8 @@ static int processGetTask(HttpRequest *request, write_callback callback, void *s
 static int processPostTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
 static int processPutTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
 static int processDeleteTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
+static int processHeadTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
+
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -189,6 +191,14 @@ void HttpClient::networkThread()
                                              writeHeaderData,
                                              response->getResponseHeader());
                 break;
+			case HttpRequest::Type::HEAD:
+				retValue = processHeadTask(request,
+											writeData,
+											response->getResponseData(),
+											&responseCode,
+											writeHeaderData,
+											response->getResponseHeader());
+				break;
             
             default:
                 CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
@@ -392,6 +402,16 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
             && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
             && curl.perform(responseCode);
     return ok ? 0 : 1;
+}
+//Process HEAD Request
+static int processHeadTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
+{
+	CURLRaii curl;
+	bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
+		&& curl.setOption(CURLOPT_CUSTOMREQUEST, "HEAD")
+		&& curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+		&& curl.perform(responseCode);
+	return ok ? 0 : 1;
 }
 
 // HttpClient implementation
