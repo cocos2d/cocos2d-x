@@ -66,10 +66,10 @@ namespace cocostudio
         
         ListView* listView = static_cast<ListView*>(widget);
                 
-        int direction = DICTOOL->getFloatValue_json(options, P_Direction);
+        int direction = DICTOOL->getFloatValue_json(options, P_Direction,2);
         listView->setDirection((ScrollView::Direction)direction);
         
-        ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, P_Gravity);
+        ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, P_Gravity,3);
         listView->setGravity(gravity);
         
         float itemMargin = DICTOOL->getFloatValue_json(options, P_ItemMargin);

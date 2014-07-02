@@ -145,25 +145,24 @@ namespace cocostudio
         slider->setPercent(DICTOOL->getIntValue_json(options, P_Percent));
 
         
-        bool bt = DICTOOL->checkObjectExist_json(options, P_BarFileName);
-        float barLength = DICTOOL->getFloatValue_json(options, P_Length);
-        if (bt)
-        {
-            const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_BarFileNameData);
-            int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
-            std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
-            slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+//        bool bt = DICTOOL->checkObjectExist_json(options, P_BarFileName);
+        float barLength = DICTOOL->getFloatValue_json(options, P_Length,290);
+        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_BarFileNameData);
+        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
+        slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
             
-            if (barTextureScale9Enable)
-            {
-                slider->setContentSize(Size(barLength, slider->getContentSize().height));
-            }
+           
+        
+        if (barTextureScale9Enable)
+        {
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
         }
         
         //loading normal slider ball texture
         const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, P_BallNormalData);
         int normalType = DICTOOL->getIntValue_json(normalDic, P_ResourceType);
-        std::string imageFileName = this->getResourcePath(normalDic, P_Path, (Widget::TextureResType)normalType);
+        imageFileName = this->getResourcePath(normalDic, P_Path, (Widget::TextureResType)normalType);
         slider->loadSlidBallTextureNormal(imageFileName, (Widget::TextureResType)normalType);
         
         

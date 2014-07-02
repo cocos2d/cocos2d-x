@@ -95,20 +95,15 @@ namespace cocostudio
         Text* label = static_cast<Text*>(widget);
         bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, P_TouchScaleEnable);
         label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-        const char* text = DICTOOL->getStringValue_json(options, P_Text);
+        const char* text = DICTOOL->getStringValue_json(options, P_Text,"Text Label");
         label->setString(text);
-        bool fs = DICTOOL->checkObjectExist_json(options, P_FontSize);
-        if (fs)
-        {
-            label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize));
-        }
-        bool fn = DICTOOL->checkObjectExist_json(options, P_FontName);
-        if (fn)
-        {
-            std::string fontName = DICTOOL->getStringValue_json(options, P_FontName);
-            std::string fontFilePath = jsonPath.append(fontName);
-            label->setFontName(fontFilePath);
-        }
+      
+        label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
+       
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
+        std::string fontFilePath = jsonPath.append(fontName);
+        label->setFontName(fontFilePath);
+        
         bool aw = DICTOOL->checkObjectExist_json(options, P_AreaWidth);
         bool ah = DICTOOL->checkObjectExist_json(options, P_AreaHeight);
         if (aw && ah)
