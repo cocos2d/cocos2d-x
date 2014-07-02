@@ -145,6 +145,15 @@ public:
 private:
 	AnySDKListener();
 
+	void releaseLuaFunction(int luaFunction);
+
+	AdsListenerLua* m_listenerAds;
+	PayResultListenerLua* m_listenerIAP;
+	PushActionListenerLua* m_listenerPush;
+	ShareResultListenerLua* m_listenerShare;
+	SocialListenerLua* m_listenerSocial;
+	UserActionListenerLua* m_listenerUser;
+	
 	//保存listener指针，以便释放
 	//ProtocolIAP没有提供取listener接口，只能统一保存
 	std:Map<int, void*> m_listenerMap;

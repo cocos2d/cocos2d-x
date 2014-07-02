@@ -206,10 +206,7 @@ static int tolua_anysdk_ProtocolIAP_setResultListener(lua_State* tolua_S)
     	int nFunction = 0;
     	luaval_to_int32(tolua_S, 2, &nFunction);
 
-    	PayResultListenerLua *listener = new PayResultListenerLua()
-    	listener->m_luaFunction = nFunction;
-    	self->setResultListener(listener);
-
+        AnySDKListener::getInstance()->setIAPListener(nFunction, self);
         return 0;
     }
     
