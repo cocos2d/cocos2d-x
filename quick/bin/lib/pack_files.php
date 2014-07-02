@@ -62,13 +62,13 @@ config file format:
 examples:
 
     # encrypt res/*.* to resnew/, with XXTEA, specifies sign
-    pack_files -i res -o resnew -ek XXTEA -es tsts
+    pack_files -i res -o resnew -es XXTEA -ek tsts
 
     # package res/*.* to game.zip
     pack_files -i res -o game.zip -m zip
 
     # package scripts/*.* to game.zip, encrypt game.zip with XXTEA, specifies sign
-    pack_files -i scripts -o game.zip -m zip -ek XXTEA -es tsts
+    pack_files -i scripts -o game.zip -m zip -es XXTEA -ek tsts
 
     # load options from config file
     pack_files -c my_config.lua
