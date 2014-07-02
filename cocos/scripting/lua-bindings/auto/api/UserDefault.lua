@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module UserDefault
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#UserDefault] setIntegerForKey 
