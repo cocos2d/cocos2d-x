@@ -301,9 +301,9 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     // Read content from file
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-    bool isbinarysrc = str==".csb";
+    bool isbinaryfilesrc = str==".csb";
     std::string filemode("r");
-    if(isbinarysrc)
+    if(isbinaryfilesrc)
         filemode += "b";
     ssize_t filesize;
     
@@ -324,7 +324,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
-    else if(str == ".csb")
+    else if(isbinaryfilesrc)
     {
         DataReaderHelper::addDataFromBinaryCache(contentStr.c_str(),&dataInfo);
     }
@@ -438,7 +438,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     {
         data->configType = CocoStudio_JSON;
     }
-    else if(str == ".csb")
+    else if(isbinaryfilesrc)
     {
         data->configType = CocoStudio_Binary;
     }
