@@ -1247,6 +1247,11 @@ void NodeNameTest::onEnter()
 {
     TestCocosNodeDemo::BaseTest::onEnter();
     
+    this->scheduleOnce(schedule_selector(NodeNameTest::test),0.05f);
+}
+
+void NodeNameTest::test(float dt)
+{
     auto parent = Node::create();
     
     // setName(), getName() and getChildByName()

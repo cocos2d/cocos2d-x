@@ -769,6 +769,7 @@
         "cocos/platform/android/ControllerManualAdapter/build.xml", 
         "cocos/platform/android/ControllerManualAdapter/lint.xml", 
         "cocos/platform/android/ControllerManualAdapter/proguard-project.txt", 
+        "cocos/platform/android/ControllerManualAdapter/project.properties", 
         "cocos/platform/android/ControllerManualAdapter/src/org/cocos2dx/lib/GameControllerActivity.java", 
         "cocos/platform/android/ControllerManualAdapter/src/org/cocos2dx/lib/GameControllerHelper.java", 
         "cocos/platform/android/ControllerManualAdapter/src/org/cocos2dx/lib/GameControllerMoga.java", 
