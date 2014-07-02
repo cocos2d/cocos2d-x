@@ -237,7 +237,7 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
     else
     {
         //do nothing, do not support
-        CCASSERT(0, "TMX invalid value");
+        //CCASSERT(0, "TMX invalid value");
     }
     
     _indicesVertexZNumber.clear();
@@ -387,7 +387,13 @@ Mat4 FastTMXLayer::tileToNodeTransform()
         }
         case FAST_TMX_ORIENTATION_HEX:
         {
-            _tileToNodeTransform = Mat4::IDENTITY;
+            _tileToNodeTransform = Mat4
+            (
+                h * sqrtf(0.75),    0,   0, 0,
+                -h/2,      -h,      0,   offY,
+                0,               0,     1,  0,
+                0,               0,     0,  1
+            );
             return _tileToNodeTransform;
         }
         default:
@@ -617,7 +623,7 @@ int FastTMXLayer::getVertexZForPos(const Vec2& pos)
                 ret = static_cast<int>(-(_layerSize.height-pos.y));
                 break;
             case FAST_TMX_ORIENTATION_HEX:
-                CCASSERT(0, "TMX Hexa zOrder not supported");
+                CCASSERT(0, "TMX Hexa vertexZ not supported");
                 break;
             default:
                 CCASSERT(0, "TMX invalid value");
