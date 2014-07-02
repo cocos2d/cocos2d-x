@@ -51,11 +51,11 @@ void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader 
     
     ui::ListView* listView = static_cast<ui::ListView*>(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "direction") {
             listView->setDirection((ui::SCROLLVIEW_DIR)valueToInt(value));

@@ -196,11 +196,11 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     ui::Slider* slider = static_cast<ui::Slider*>(widget);
     
     float barLength = 0.0f;
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     int percent = 0.0f;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "ignoreSize") {
             widget->ignoreContentAdaptWithSize(valueToBool(value));
@@ -248,7 +248,7 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -257,7 +257,7 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
@@ -321,8 +321,8 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         else if(key == "percent"){
             percent = valueToInt(value);
         }else if(key == "barFileNameData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             
@@ -333,8 +333,8 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "length"){
             barLength = valueToFloat(value);
         }else if(key == "ballNormalData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             
@@ -343,8 +343,8 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             slider->loadSlidBallTextureNormal(backgroundValue.c_str(), imageFileNameType);
             
         }else if(key == "ballPressedData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             
@@ -353,8 +353,8 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             slider->loadSlidBallTexturePressed(backgroundValue.c_str(), imageFileNameType);
             
         }else if(key == "ballDisabledData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             
@@ -363,8 +363,8 @@ void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             slider->loadSlidBallTextureDisabled(backgroundValue.c_str(), imageFileNameType);
             
         }else if(key == "progressBarData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             

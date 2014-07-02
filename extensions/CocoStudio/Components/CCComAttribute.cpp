@@ -170,6 +170,7 @@ bool CCComAttribute::serialize(void* r)
 		SerData *pSerData = (SerData *)(r);
 		const rapidjson::Value *v = pSerData->prData;
 		stExpCocoNode *pCocoNode = pSerData->pCocoNode;
+		CocoLoader *pCocoLoader = pSerData->pCocoLoader;
 		const char *pClassName = NULL;
 		const char *pComName = NULL;
 		const char *pFile = NULL;
@@ -189,14 +190,14 @@ bool CCComAttribute::serialize(void* r)
 		}
 		else if (pCocoNode != NULL)
 		{
-			pClassName = pCocoNode[1].GetValue();
+			pClassName = pCocoNode[1].GetValue(pCocoLoader);
 			CC_BREAK_IF(pClassName == NULL);
-			pComName = pCocoNode[2].GetValue();
-			stExpCocoNode *pfileData = pCocoNode[3].GetChildArray();
+			pComName = pCocoNode[2].GetValue(pCocoLoader);
+			stExpCocoNode *pfileData = pCocoNode[3].GetChildArray(pCocoLoader);
 			CC_BREAK_IF(!pfileData);
-			pFile = pfileData[0].GetValue();
+			pFile = pfileData[0].GetValue(pCocoLoader);
 			CC_BREAK_IF(pFile == NULL);
-			nResType = atoi(pfileData[2].GetValue());
+			nResType = atoi(pfileData[2].GetValue(pCocoLoader));
 			CC_BREAK_IF(nResType != 0);
 			
 		}
