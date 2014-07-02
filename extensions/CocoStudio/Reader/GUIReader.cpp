@@ -205,13 +205,13 @@ cocos2d::ui::Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
             rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
             if (rapidjson::kObjectType == tType || rapidjson::kArrayType == tType)
             {
-                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
                 
                 
                 for (int i = 0; i < tpRootCocoNode->GetChildNum(); ++i) {
                     std::string key = tpChildArray[i].GetName(&tCocoLoader);
                     if (key == "version") {
-                        fileVersion = tpChildArray[i].GetValue();
+                        fileVersion = tpChildArray[i].GetValue(&tCocoLoader);
                         break;
                     }
                 }
@@ -2179,7 +2179,7 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
     int pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
     
-    stExpCocoNode *tpChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *tpChildArray = pCocoNode->GetChildArray(pCocoLoader);
     float fileDesignWidth;
     float fileDesignHeight;
     
@@ -2193,16 +2193,16 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
             for (int j=0; j<texturesCount; j++)
             {
                 std::string file;
-                stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray();
-                file = textureCountsArray[j].GetValue();
+                stExpCocoNode *textureCountsArray = tpChildArray[i].GetChildArray(pCocoLoader);
+                file = textureCountsArray[j].GetValue(pCocoLoader);
                 std::string tp = m_strFilePath;
                 tp.append(file);
                 CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(tp.c_str());
             }
         }else if (key == "designWidth"){
-            fileDesignWidth =  atof(tpChildArray[i].GetValue());
+            fileDesignWidth =  atof(tpChildArray[i].GetValue(pCocoLoader));
         }else if (key == "designHeight"){
-            fileDesignHeight = atof(tpChildArray[i].GetValue());
+            fileDesignHeight = atof(tpChildArray[i].GetValue(pCocoLoader));
         }else if (key == "widgetTree"){
             
             if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
@@ -2233,7 +2233,7 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
     }
     
     /* ********************** */
-    stExpCocoNode *optionChildNode = pCocoNode->GetChildArray();
+    stExpCocoNode *optionChildNode = pCocoNode->GetChildArray(pCocoLoader);
     for (int k = 0; k < pCocoNode->GetChildNum(); ++k) {
         std::string key = optionChildNode[k].GetName(pCocoLoader);
         if (key == "animation") {
@@ -2252,7 +2252,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
                                               stExpCocoNode*	pCocoNode)
 {
     Widget* widget = NULL;
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     stExpCocoNode *optionsNode = NULL;
     stExpCocoNode *childrenNode = NULL;
@@ -2261,7 +2261,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
     for (int i = 0; i < elementCount; ++i)
     {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         if (key == "classname" )
         {
             if (!value.empty())
@@ -2302,11 +2302,11 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
             
             //2nd. parse custom property
             const char* customProperty = NULL;
-            stExpCocoNode *optionChildNode = optionsNode->GetChildArray();
+            stExpCocoNode *optionChildNode = optionsNode->GetChildArray(pCocoLoader);
             for (int k = 0; k < optionsNode->GetChildNum(); ++k) {
                 std::string key = optionChildNode[k].GetName(pCocoLoader);
                 if (key == "customProperty") {
-                    customProperty = optionChildNode[k].GetValue();
+                    customProperty = optionChildNode[k].GetValue(pCocoLoader);
                     break;
                 }
             }
@@ -2332,7 +2332,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
         {
             
             int childrenCount = childrenNode->GetChildNum();
-            stExpCocoNode* innerChildArray = childrenNode->GetChildArray();
+            stExpCocoNode* innerChildArray = childrenNode->GetChildArray(pCocoLoader);
             for (int i=0; i < childrenCount; ++i)
             {
                 rapidjson::Type tType  = innerChildArray[i].GetType(pCocoLoader);

@@ -78,7 +78,7 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
     ui::LabelAtlas* labelAtlas = static_cast<ui::LabelAtlas*>(widget);
     
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     ui::TextureResType type = ui::UI_TEX_TYPE_LOCAL;
     std::string charMapFileName;
     std::string stringValue;
@@ -87,7 +87,7 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
     float itemHeight = 0.0f;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         //            CCLOG("LabelAtlas: key = %s, value = %s", key.c_str(), value.c_str());
         
         if (key == "ignoreSize") {
@@ -136,7 +136,7 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -145,7 +145,7 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
@@ -206,8 +206,8 @@ void LabelAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
             stringValue = value;
         }
         else if(key == "charMapFileData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             

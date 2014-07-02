@@ -82,7 +82,7 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
 	CCLOG("filename == %s",fileName.c_str());
 	CCArray* actionList = CCArray::create();
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     stExpCocoNode *actionNode = NULL;
     for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
@@ -98,7 +98,7 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
             ActionObject* action = new ActionObject();
             action->autorelease();
             
-            action->initWithBinary(pCocoLoader, actionNode->GetChildArray(), root);
+            action->initWithBinary(pCocoLoader, actionNode->GetChildArray(pCocoLoader), root);
             
             actionList->addObject(action);
         }
