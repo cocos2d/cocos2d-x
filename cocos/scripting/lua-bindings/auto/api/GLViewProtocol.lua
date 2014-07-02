@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module GLViewProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#GLViewProtocol] setFrameSize 
