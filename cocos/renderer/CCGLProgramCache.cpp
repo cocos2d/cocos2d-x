@@ -387,8 +387,10 @@ GLProgram* GLProgramCache::getGLProgram(const std::string &key)
 
 void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
 {
-    program->retain();
-    _programs.insert( std::make_pair( key, program) );
+    if (program)
+        program->retain();
+    
+    _programs[key] = program;
 }
 
 NS_CC_END

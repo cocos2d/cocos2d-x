@@ -1329,7 +1329,7 @@ LabelShadowTest::LabelShadowTest()
     slider->loadBarTexture("cocosui/sliderTrack.png");
     slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
-    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getContentSize().height * 2.0f));
     slider->setPercent(52);
     slider->addEventListener(CC_CALLBACK_2(LabelShadowTest::sliderEvent, this));
     addChild(slider);
@@ -1795,7 +1795,7 @@ LabelLineHeightTest::LabelLineHeightTest()
     slider->loadBarTexture("cocosui/sliderTrack.png");
     slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
-    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getContentSize().height * 2.0f));
     slider->setPercent(label->getLineHeight());
     slider->addEventListener(CC_CALLBACK_2(LabelLineHeightTest::sliderEvent, this));
     addChild(slider);
@@ -1839,7 +1839,7 @@ LabelAdditionalKerningTest::LabelAdditionalKerningTest()
     slider->loadBarTexture("cocosui/sliderTrack.png");
     slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
-    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getSize().height * 2.0f));
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getContentSize().height * 2.0f));
     slider->setPercent(0);
     slider->addEventListener(CC_CALLBACK_2(LabelAdditionalKerningTest::sliderEvent, this));
     addChild(slider);

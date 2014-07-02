@@ -145,7 +145,7 @@ bool Layout::init()
     if (Widget::init())
     {
         ignoreContentAdaptWithSize(false);
-        setSize(Size::ZERO);
+        setContentSize(Size::ZERO);
         setAnchorPoint(Vec2::ZERO);
         onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         return true;
@@ -153,14 +153,14 @@ bool Layout::init()
     return false;
 }
     
-void Layout::addChild(Node *child)
+void Layout::addChild(Node* child)
 {
-    Layout::addChild(child, child->getZOrder(), child->getTag());
+    Layout::addChild(child, child->getLocalZOrder(), child->getTag());
 }
-
-void Layout::addChild(Node * child, int zOrder)
+    
+void Layout::addChild(Node * child, int localZOrder)
 {
-    Layout::addChild(child, zOrder, child->getTag());
+    Layout::addChild(child, localZOrder, child->getTag());
 }
 
 void Layout::addChild(Node *child, int zOrder, int tag)
@@ -169,6 +169,15 @@ void Layout::addChild(Node *child, int zOrder, int tag)
         supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     }
     Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
+}
+    
+void Layout::addChild(Node* child, int zOrder, const std::string &name)
+{
+    if (dynamic_cast<Widget*>(child)) {
+        supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    }
+    Widget::addChild(child, zOrder, name);
     _doLayoutDirty = true;
 }
     
@@ -429,7 +438,7 @@ void Layout::setClippingEnabled(bool able)
                     _clippingStencil->onEnter();
                 }
                 _clippingStencil->retain();
-                setStencilClippingSize(_size);
+                setStencilClippingSize(_contentSize);
             }
             else
             {
@@ -469,9 +478,9 @@ void Layout::setStencilClippingSize(const Size &size)
     {
         Vec2 rect[4];
         rect[0] = Vec2::ZERO;
-        rect[1] = Vec2(_size.width, 0);
-        rect[2] = Vec2(_size.width, _size.height);
-        rect[3] = Vec2(0, _size.height);
+        rect[1] = Vec2(_contentSize.width, 0);
+        rect[2] = Vec2(_contentSize.width, _contentSize.height);
+        rect[3] = Vec2(0, _contentSize.height);
         Color4F green(0, 1, 0, 1);
         _clippingStencil->clear();
         _clippingStencil->drawPolygon(rect, 4, green, 0, green);
@@ -484,8 +493,8 @@ const Rect& Layout::getClippingRect()
     {
         Vec2 worldPos = convertToWorldSpace(Vec2::ZERO);
         AffineTransform t = getNodeToWorldAffineTransform();
-        float scissorWidth = _size.width*t.a;
-        float scissorHeight = _size.height*t.d;
+        float scissorWidth = _contentSize.width*t.a;
+        float scissorHeight = _contentSize.height*t.d;
         Rect parentClippingRect;
         Layout* parent = this;
 
@@ -560,24 +569,24 @@ const Rect& Layout::getClippingRect()
 void Layout::onSizeChanged()
 {
     Widget::onSizeChanged();
-    setStencilClippingSize(_size);
+    setStencilClippingSize(_contentSize);
     _doLayoutDirty = true;
     _clippingRectDirty = true;
     if (_backGroundImage)
     {
-        _backGroundImage->setPosition(Vec2(_size.width/2.0f, _size.height/2.0f));
+        _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
         }
     }
     if (_colorRender)
     {
-        _colorRender->setContentSize(_size);
+        _colorRender->setContentSize(_contentSize);
     }
     if (_gradientRender)
     {
-        _gradientRender->setContentSize(_size);
+        _gradientRender->setContentSize(_contentSize);
     }
 }
 
@@ -626,7 +635,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
             default:
                 break;
         }
-        bgiScale9->setPreferredSize(_size);
+        bgiScale9->setPreferredSize(_contentSize);
     }
     else
     {
@@ -643,7 +652,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         }
     }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
-    _backGroundImage->setPosition(Vec2(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
     updateBackGroundImageRGBA();
 }
 
@@ -701,14 +710,14 @@ void Layout::addBackGroundImage()
     {
         _backGroundImage = extension::Scale9Sprite::create();
         addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
     }
     else
     {
         _backGroundImage = Sprite::create();
         addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
-    _backGroundImage->setPosition(Vec2(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
 }
 
 void Layout::removeBackGroundImage()
@@ -767,14 +776,14 @@ void Layout::setBackGroundColorType(BackGroundColorType type)
             break;
         case BackGroundColorType::SOLID:
             _colorRender = LayerColor::create();
-            _colorRender->setContentSize(_size);
+            _colorRender->setContentSize(_contentSize);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
             addProtectedChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         case BackGroundColorType::GRADIENT:
             _gradientRender = LayerGradient::create();
-            _gradientRender->setContentSize(_size);
+            _gradientRender->setContentSize(_contentSize);
             _gradientRender->setOpacity(_cOpacity);
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
@@ -947,7 +956,7 @@ void Layout::requestDoLayout()
     
 Size Layout::getLayoutContentSize()const
 {
-    return this->getSize();
+    return this->getContentSize();
 }
     
 const Vector<Node*>& Layout::getLayoutElements()const
@@ -1068,7 +1077,7 @@ Size Layout::getLayoutAccumulatedSize()const
             {
                 widgetCount++;
                 Margin m = w->getLayoutParameter()->getMargin();
-                layoutSize = layoutSize + w->getSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
+                layoutSize = layoutSize + w->getContentSize() + Size(m.right + m.left,  m.top + m.bottom) * 0.5;
             }
         }
     }
@@ -1090,12 +1099,12 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)const
 {
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
-    Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getSize();
+    Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getContentSize();
 //    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }
 
-float Layout::caculateNearestDistance(Widget* baseWidget)
+float Layout::calculateNearestDistance(Widget* baseWidget)
 {
     float distance = FLT_MAX;
     
@@ -1105,7 +1114,7 @@ float Layout::caculateNearestDistance(Widget* baseWidget)
         Layout *layout = dynamic_cast<Layout*>(node);
         int length;
         if (layout) {
-            length = layout->caculateNearestDistance(baseWidget);
+            length = layout->calculateNearestDistance(baseWidget);
         }
         else
         {
@@ -1128,7 +1137,7 @@ float Layout::caculateNearestDistance(Widget* baseWidget)
     return distance;
 }
     
-float Layout::caculateFarestDistance(cocos2d::ui::Widget *baseWidget)
+float Layout::calculateFarestDistance(cocos2d::ui::Widget *baseWidget)
 {
     float distance = -FLT_MAX;
     
@@ -1138,7 +1147,7 @@ float Layout::caculateFarestDistance(cocos2d::ui::Widget *baseWidget)
         Layout *layout = dynamic_cast<Layout*>(node);
         int length;
         if (layout) {
-            length = layout->caculateFarestDistance(baseWidget);
+            length = layout->calculateFarestDistance(baseWidget);
         }
         else
         {
@@ -1185,7 +1194,8 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     
     float distance = FLT_MAX;
     int found = 0;
-    if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
+    if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT ||
+        direction == FocusDirection::DOWN || direction == FocusDirection::UP)
     {
         Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
@@ -1198,7 +1208,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
                 {
-                    length = layout->caculateNearestDistance(baseWidget);
+                    length = layout->calculateNearestDistance(baseWidget);
                 }
                 else
                 {
@@ -1216,39 +1226,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
         return  found;
     }
     
-    index = 0;
-    found = 0;
-    distance = FLT_MAX;
-    if (direction == FocusDirection::DOWN || direction == FocusDirection::UP) {
-        Vec2 widgetPosition = this->getWorldCenterPoint(baseWidget);
-        while (index < count)
-        {
-            Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
-            if (w && w->isFocusEnabled())
-            {
-                Vec2 wPosition = this->getWorldCenterPoint(w);
-                float length;
-                Layout *layout = dynamic_cast<Layout*>(w);
-                if (layout)
-                {
-                    length = layout->caculateNearestDistance(baseWidget);
-                }
-                else
-                {
-                    length = (wPosition - widgetPosition).getLength();
-                }
-                
-                if (length < distance)
-                {
-                    found = index;
-                    distance = length;
-                }
-
-            }
-            index++;
-        }
-        return found;
-    }
+    
     CCASSERT(0, "invalid focus direction!!!");
     return 0;
 }
@@ -1264,7 +1242,8 @@ int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Wi
     
     float distance = -FLT_MAX;
     int found = 0;
-    if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT)
+    if (direction == FocusDirection::LEFT || direction == FocusDirection::RIGHT
+        || direction == FocusDirection::DOWN || direction == FocusDirection::UP)
     {
         Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
         while (index <  count)
@@ -1277,7 +1256,7 @@ int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Wi
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
                 {
-                    length = layout->caculateFarestDistance(baseWidget);
+                    length = layout->calculateFarestDistance(baseWidget);
                 }
                 else
                 {
@@ -1295,39 +1274,6 @@ int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Wi
         return  found;
     }
     
-    index = 0;
-    found = 0;
-    distance = -FLT_MAX;
-    if (direction == FocusDirection::DOWN || direction == FocusDirection::UP) {
-        Vec2 widgetPosition = this->getWorldCenterPoint(baseWidget);
-        while (index < count)
-        {
-            Widget *w = dynamic_cast<Widget*>(this->getChildren().at(index));
-            if (w && w->isFocusEnabled())
-            {
-                Vec2 wPosition = this->getWorldCenterPoint(w);
-                float length;
-                Layout *layout = dynamic_cast<Layout*>(w);
-                if (layout)
-                {
-                    length = layout->caculateFarestDistance(baseWidget);
-                }
-                else
-                {
-                    length = (wPosition - widgetPosition).getLength();
-                }
-                
-                if (length > distance)
-                {
-                    found = index;
-                    distance = length;
-                }
-                
-            }
-            index++;
-        }
-        return found;
-    }
     CCASSERT(0, "invalid focus direction!!!");
     return 0;
 }
@@ -1359,6 +1305,9 @@ Widget *Layout::findFirstNonLayoutWidget()
         Layout* layout = dynamic_cast<Layout*>(node);
         if (layout) {
             widget = layout->findFirstNonLayoutWidget();
+            if (widget != nullptr) {
+                return widget;
+            }
         }
         else{
             Widget *w = dynamic_cast<Widget*>(node);

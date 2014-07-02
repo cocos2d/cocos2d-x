@@ -247,6 +247,9 @@
     <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoLoader.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCComAttribute.h">
@@ -372,9 +375,6 @@
     <ClInclude Include="..\CCActionObject.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="..\ObjectFactory.h">
-      <Filter>trigger</Filter>
-    </ClInclude>
     <ClInclude Include="..\TriggerBase.h">
       <Filter>trigger</Filter>
     </ClInclude>
@@ -450,6 +450,9 @@
     </ClInclude>
     <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h">
       <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoLoader.h">
+      <Filter>json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

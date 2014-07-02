@@ -38,6 +38,7 @@ NS_CC_BEGIN
 
 class EventListenerCustom;
 class QuadCommand;
+class MeshCommand;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
@@ -132,6 +133,10 @@ protected:
     //Draw the previews queued quads and flush previous context
     void flush();
     
+    void flush2D();
+    
+    void flush3D();
+    
     void visitRenderQueue(const RenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
@@ -142,6 +147,7 @@ protected:
 
     uint32_t _lastMaterialID;
 
+    MeshCommand*              _lastBatchedMeshCommand;
     std::vector<QuadCommand*> _batchedQuadCommands;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];

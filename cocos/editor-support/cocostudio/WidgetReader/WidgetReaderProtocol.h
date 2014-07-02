@@ -28,6 +28,8 @@
 #include "cocos2d.h"
 #include "cocostudio/DictionaryHelper.h"
 
+
+
 namespace cocos2d
 {
     namespace ui
@@ -38,11 +40,15 @@ namespace cocos2d
 
 namespace cocostudio
 {
+    class CocoLoader;
+    struct stExpCocoNode;
+    
     class WidgetReaderProtocol
     {
     public:
         virtual ~WidgetReaderProtocol() {};
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) = 0;
     };
 }
 

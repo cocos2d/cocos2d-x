@@ -42,7 +42,7 @@ _curSelectedIndex(0),
 _refreshViewDirty(true),
 _eventCallback(nullptr)
 {
-    
+    this->setTouchEnabled(true);
 }
 
 ListView::~ListView()
@@ -96,9 +96,9 @@ void ListView::updateInnerContainerSize()
             float totalHeight = (length - 1) * _itemsMargin;
             for (auto& item : _items)
             {
-                totalHeight += item->getSize().height;
+                totalHeight += item->getContentSize().height;
             }
-            float finalWidth = _size.width;
+            float finalWidth = _contentSize.width;
             float finalHeight = totalHeight;
             setInnerContainerSize(Size(finalWidth, finalHeight));
             break;
@@ -109,10 +109,10 @@ void ListView::updateInnerContainerSize()
             float totalWidth = (length - 1) * _itemsMargin;
             for (auto& item : _items)
             {
-                totalWidth += item->getSize().width;
+                totalWidth += item->getContentSize().width;
             }
             float finalWidth = totalWidth;
-            float finalHeight = _size.height;
+            float finalHeight = _contentSize.height;
             setInnerContainerSize(Size(finalWidth, finalHeight));
             break;
         }
@@ -149,7 +149,7 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(MarginZero);
+                    defaultLp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -161,7 +161,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(MarginZero);
+                    llp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(MarginZero);
+                    defaultLp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(MarginZero);
+                    llp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -272,21 +272,12 @@ void ListView::insertDefaultItem(ssize_t index)
     _refreshViewDirty = true;
 }
 
+
 void ListView::pushBackCustomItem(Widget* item)
 {
     remedyLayoutParameter(item);
     addChild(item);
     _refreshViewDirty = true;
-}
-    
-void ListView::addChild(cocos2d::Node *child)
-{
-    ListView::addChild(child, child->getZOrder(), child->getTag());
-}
-    
-void ListView::addChild(cocos2d::Node *child, int zOrder)
-{
-    ListView::addChild(child, zOrder, child->getTag());
 }
     
 void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
@@ -298,7 +289,27 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     {
         _items.pushBack(widget);
     }
+}
+    
+void ListView::addChild(cocos2d::Node *child)
+{
+    ListView::addChild(child, child->getLocalZOrder(), child->getName());
+}
 
+void ListView::addChild(cocos2d::Node *child, int zOrder)
+{
+    ListView::addChild(child, zOrder, child->getName());
+}
+ 
+void ListView::addChild(Node* child, int zOrder, const std::string &name)
+{
+    ScrollView::addChild(child, zOrder, name);
+    
+    Widget* widget = dynamic_cast<Widget*>(child);
+    if (widget)
+    {
+        _items.pushBack(widget);
+    }
 }
     
 void ListView::removeChild(cocos2d::Node *child, bool cleaup)
@@ -453,6 +464,7 @@ void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
     _listViewEventListener = target;
     _listViewEventSelector = selector;
 }
+
     
 void ListView::addEventListener(const ccListViewCallback& callback)
 {
@@ -504,7 +516,9 @@ void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* 
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent(event);
+        if (sender->isHighlighted()) {
+            selectedItemEvent(event);
+        }
     }
 }
     

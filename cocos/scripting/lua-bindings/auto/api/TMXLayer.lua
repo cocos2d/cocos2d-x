@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TMXLayer
 -- @extend SpriteBatchNode
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TMXLayer] getPositionAt 

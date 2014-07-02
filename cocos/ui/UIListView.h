@@ -163,9 +163,10 @@ public:
     
     virtual void doLayout() override;
     
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node* child)override;
+    virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 	virtual void removeChild(Node* child, bool cleaup = true) override;
@@ -174,7 +175,8 @@ public:
     
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
     void addEventListener(const ccListViewCallback& callback);
-    
+    using ScrollView::addEventListener;
+
     /**
      * Changes scroll direction of scrollview.
      *

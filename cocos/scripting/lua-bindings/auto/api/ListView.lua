@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ListView
 -- @extend ScrollView
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ListView] getIndex 
@@ -112,11 +113,13 @@
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
+-- overload function: addChild(cc.Node, int, string)
+--          
 -- @function [parent=#ListView] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#ListView] setDirection 

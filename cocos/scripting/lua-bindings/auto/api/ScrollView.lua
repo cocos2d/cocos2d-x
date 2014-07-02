@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ScrollView
 -- @extend Layout
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 
@@ -186,11 +187,13 @@
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
+-- overload function: addChild(cc.Node, int, string)
+--          
 -- @function [parent=#ScrollView] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#ScrollView] getChildByName 

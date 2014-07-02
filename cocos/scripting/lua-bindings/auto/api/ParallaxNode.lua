@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParallaxNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParallaxNode] addChild 
@@ -22,12 +23,16 @@
 -- @return ParallaxNode#ParallaxNode ret (return value: cc.ParallaxNode)
         
 --------------------------------
--- @function [parent=#ParallaxNode] addChild 
+-- overload function: addChild(cc.Node, int, string)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#ParallaxNode] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#ParallaxNode] visit 
 -- @param self

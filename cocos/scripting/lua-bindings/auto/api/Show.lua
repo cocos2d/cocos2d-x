@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Show
 -- @extend ActionInstant
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Show] create 

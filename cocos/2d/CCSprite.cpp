@@ -521,8 +521,8 @@ void Sprite::updateTransform(void)
             else
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                Mat4 nodeToParent = getNodeToParentTransform();
-                Mat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
+                const Mat4 &nodeToParent = getNodeToParentTransform();
+                Mat4 &parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
                 _transformToBatch = parentTransform * nodeToParent;
             }
 
@@ -530,7 +530,7 @@ void Sprite::updateTransform(void)
             // calculate the Quad based on the Affine Matrix
             //
 
-            Size size = _rect.size;
+            Size &size = _rect.size;
 
             float x1 = _offsetPosition.x;
             float y1 = _offsetPosition.y;
@@ -642,6 +642,27 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     }
     //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
     Node::addChild(child, zOrder, tag);
+}
+
+void Sprite::addChild(Node *child, int zOrder, const std::string &name)
+{
+    CCASSERT(child != nullptr, "Argument must be non-nullptr");
+    
+    if (_batchNode)
+    {
+        Sprite* childSprite = dynamic_cast<Sprite*>(child);
+        CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        //put it in descendants array of batch node
+        _batchNode->appendChild(childSprite);
+        
+        if (!_reorderChildDirty)
+        {
+            setReorderChildDirtyRecursively();
+        }
+    }
+    //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
+    Node::addChild(child, zOrder, name);
 }
 
 void Sprite::reorderChild(Node *child, int zOrder)
