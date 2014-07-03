@@ -50,11 +50,11 @@ namespace cocostudio
         this->beginSetBasicProperties(widget);
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
 
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
 
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -65,8 +65,8 @@ namespace cocostudio
                 imageView->setScale9Enabled(valueToBool(value));
             }
             else if (key == P_FileNameData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -125,19 +125,16 @@ namespace cocostudio
         
         if (scale9Enable)
         {
-            bool sw = DICTOOL->checkObjectExist_json(options, P_Scale9Width);
-            bool sh = DICTOOL->checkObjectExist_json(options, P_Scale9Height);
-            if (sw && sh)
-            {
-                float swf = DICTOOL->getFloatValue_json(options, P_Scale9Width);
-                float shf = DICTOOL->getFloatValue_json(options, P_Scale9Height);
-                imageView->setSize(Size(swf, shf));
-            }
+          
+            float swf = DICTOOL->getFloatValue_json(options, P_Scale9Width,80.0f);
+            float shf = DICTOOL->getFloatValue_json(options, P_Scale9Height,80.0f);
+            imageView->setSize(Size(swf, shf));
+            
             
             float cx = DICTOOL->getFloatValue_json(options, P_CapInsetsX);
             float cy = DICTOOL->getFloatValue_json(options, P_CapInsetsY);
-            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth);
-            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight);
+            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth,1.0f);
+            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight,1.0f);
             
             imageView->setCapInsets(Rect(cx, cy, cw, ch));
             

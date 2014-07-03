@@ -714,7 +714,7 @@ public:
     virtual Node* getChildByName(const std::string& name) const;
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
-     * @param name The name to search for, support c++11 regular expression
+     * @param name The name to search for, supports c++11 regular expression
      * Search syntax options:
      * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
      * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node

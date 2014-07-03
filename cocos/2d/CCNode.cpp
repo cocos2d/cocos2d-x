@@ -872,9 +872,9 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         subStrlength -= 3;
     }
     
-    // Remove '/', '//' and '/..' if exist
+    // Remove '/', '//', '/..' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
-    // If search from parent, then add * at first to make it match its children, which will do make
+
     if (searchFromParent)
     {
         newName.insert(0, "[[:alnum:]]+/");
@@ -946,7 +946,7 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
     bool ret = false;
     for (const auto& child : _children)
     {
-        if(std::regex_match(child->_name, std::regex(searchName)))
+        if (std::regex_match(child->_name, std::regex(searchName)))
         {
             if (!needRecursive)
             {

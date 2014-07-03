@@ -303,6 +303,8 @@ public:
     virtual std::string subtitle() const override;
     
     virtual void onEnter() override;
+
+    void test(float dt);
 };
 
 

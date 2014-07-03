@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCControllerThumbStick.h"
+#include "CCControllerThumbstick.h"
 #include "CCControllerAxisInput.h"
 #include "CCControllerButtonInput.h"
 
