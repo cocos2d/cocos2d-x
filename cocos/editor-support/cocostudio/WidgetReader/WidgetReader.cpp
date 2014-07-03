@@ -264,7 +264,9 @@ namespace cocostudio
         widget->setColor(_color);
         widget->setOpacity(_opacity);
         //the setSize method will be conflict with scale9Width & scale9Height
-        widget->setSize(Size(_width, _height));
+        if (!widget->isIgnoreContentAdaptWithSize()) {
+            widget->setSize(Size(_width, _height));
+        }
         widget->setPosition(_position);
         widget->setAnchorPoint(_originalAnchorPoint);
     }
