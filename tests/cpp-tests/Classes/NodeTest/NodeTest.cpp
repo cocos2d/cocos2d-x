@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "NodeTest.h"
+#include <regex>
 #include "../testResource.h"
 
 enum 
@@ -1274,28 +1275,28 @@ void NodeNameTest::test(float dt)
     // enumerateChildren()
     // name = regular expression
     int i = 0;
-//    parent = Node::create();
-//    for (int i = 0; i < 100; ++i)
-//    {
-//        auto node = Node::create();
-//        sprintf(name, "node%d", i);
-//        node->setName(name);
-//        parent->addChild(node);
-//    }
-//    
-//    i = 0;
-//    parent->enumerateChildren("node[[:digit:]]+", [&i](Node* node) -> bool {
-//        ++i;
-//        return false;
-//    });
-//    CCAssert(i == 100, "");
-//    
-//    i = 0;
-//    parent->enumerateChildren("node[[:digit:]]+", [&i](Node* node) -> bool {
-//        ++i;
-//        return true;
-//    });
-//    CCAssert(i == 1, "");
+    parent = Node::create();
+    for (int i = 0; i < 100; ++i)
+    {
+        auto node = Node::create();
+        sprintf(name, "node%d", i);
+        node->setName(name);
+        parent->addChild(node);
+    }
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 100, "");
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
     
     
     // enumerateChildren
@@ -1332,117 +1333,104 @@ void NodeNameTest::test(float dt)
     CCAssert(i == 1, "");
     
     // search from root
-    parent = getScene();
+    parent = Node::create();
     for (int i = 0; i < 100; ++i)
     {
         auto node = Node::create();
-        node->setName("node");
+        sprintf(name, "node%d", i);
+        node->setName(name);
         parent->addChild(node);
         
         for (int j = 0; j < 100; ++j)
         {
             auto child = Node::create();
-            child->setName("child");
+            child->setName("node");
             node->addChild(child);
         }
     }
     
     i = 0;
-    parent->enumerateChildren("/node", [&i](Node* node) -> bool {
+    parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10000, "");
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    // search from parent
+    // name is xxx/..
+    i = 0;
+    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    i = 0;
+    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10000, "");
+    
+    // name = /xxx : search from root
+    parent = getScene();
+    for (int j = 0; j < 100; j++)
+    {
+        auto node = Node::create();
+        sprintf(name, "node%d", j);
+        node->setName(name);
+        parent->addChild(node);
+        
+        for (int k = 0; k < 100; ++k)
+        {
+            auto child = Node::create();
+            sprintf(name, "node%d", k);
+            child->setName(name);
+            node->addChild(child);
+        }
+    }
+    
+    i = 0;
+    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
     CCAssert(i == 100, "");
     
     i = 0;
-    parent->enumerateChildren("//child", [&i](Node* node) -> bool {
+    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    i = 0;
+    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10100, ""); // 10000(children) + 100(parent)
+    
+    i = 0;
+    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    i = 0;
+    enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
     CCAssert(i == 10000, "");
-    
-//    i = 0;
-//    parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
-//        ++i;
-//        return false;
-//    });
-//    CCAssert(i == 10000, "");
-//    
-//    i = 0;
-//    parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
-//        ++i;
-//        return true;
-//    });
-//    CCAssert(i == 1, "");
-    
-    // search from parent
-    // name is xxx/..
-//    i = 0;
-//    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
-//        ++i;
-//        return true;
-//    });
-//    CCAssert(i == 1, "");
-//    
-//    i = 0;
-//    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
-//        ++i;
-//        return false;
-//    });
-//    CCAssert(i == 10000, "");
-    
-    // name = /xxx : search from root
-//    parent = getScene();
-//    for (int j = 0; j < 100; j++)
-//    {
-//        auto node = Node::create();
-//        sprintf(name, "node%d", j);
-//        node->setName(name);
-//        parent->addChild(node);
-//        
-//        for (int k = 0; k < 100; ++k)
-//        {
-//            auto child = Node::create();
-//            sprintf(name, "node%d", k);
-//            child->setName(name);
-//            node->addChild(child);
-//        }
-//    }
-//    
-//    i = 0;
-//    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
-//        ++i;
-//        return false;
-//    });
-//    CCAssert(i == 100, "");
-    
-//    i = 0;
-//    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
-//        ++i;
-//        return true;
-//    });
-//    CCAssert(i == 1, "");
-//    
-//    i = 0;
-//    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
-//        ++i;
-//        return false;
-//    });
-//    CCAssert(i == 10100, ""); // 10000(children) + 100(parent)
-//    
-//    i = 0;
-//    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
-//        ++i;
-//        return true;
-//    });
-//    CCAssert(i == 1, "");
-//    
-//    i = 0;
-//    enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
-//        ++i;
-//        return false;
-//    });
-//    CCAssert(i == 10000, "");
     
     // utils::findChildren()
     
