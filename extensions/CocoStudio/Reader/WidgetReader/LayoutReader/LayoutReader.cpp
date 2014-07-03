@@ -56,17 +56,67 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     
     bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
     panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
-    int cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
-    int cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
-    int cb = DICTOOL->getIntValue_json(options, "bgColorB",150);
     
-    int scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
-    int scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
-    int scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+    int cr;
+    int cg;
+    int cb;
+    int scr;
+    int scg;
+    int scb;
+    int ecr;
+    int ecg;
+    int ecb;
     
-    int ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
-    int ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",200);
-    int ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+    if (dynamic_cast<ui::PageView*>(widget)) {
+        cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+        cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+        cb = DICTOOL->getIntValue_json(options, "bgColorB",100);
+        
+        scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+        scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+        scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+        
+        ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",255);
+        ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+        ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",100);
+    }else if(dynamic_cast<ui::ListView*>(widget)){
+        cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+        cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+        cb = DICTOOL->getIntValue_json(options, "bgColorB",255);
+        
+        scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+        scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+        scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+        
+        ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
+        ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+        ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+    }else if(dynamic_cast<ui::ScrollView*>(widget)){
+        cr = DICTOOL->getIntValue_json(options, "bgColorR",255);
+        cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+        cb = DICTOOL->getIntValue_json(options, "bgColorB",100);
+        
+        scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+        scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+        scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+        
+        ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",255);
+        ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+        ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",100);
+    }else{
+        cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+        cg = DICTOOL->getIntValue_json(options, "bgColorG",200);
+        cb = DICTOOL->getIntValue_json(options, "bgColorB",255);
+        
+        scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+        scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+        scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+        
+        ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
+        ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",200);
+        ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+    }
+   
     
     float bgcv1 = DICTOOL->getFloatValue_json(options, "vectorX");
     float bgcv2 = DICTOOL->getFloatValue_json(options, "vectorY",-0.5f);
@@ -75,6 +125,7 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity",100);
     
     int colorType = DICTOOL->getIntValue_json(options, "colorType",1);
+    
     panel->setBackGroundColorType(ui::LayoutBackGroundColorType(colorType));
     panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
     panel->setBackGroundColor(ccc3(cr, cg, cb));
