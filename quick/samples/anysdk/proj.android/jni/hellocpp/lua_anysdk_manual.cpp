@@ -541,10 +541,15 @@ static int tolua_anysdk_ProtocolPush_setActionListener(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        int nFunction = 0;
-        luaval_to_int32(tolua_S, 2, &nFunction);
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S,2,0));
 
-        AnySDKListener::getInstance()->setPushListener(nFunction, self);
+        AnySDKListener::getInstance()->setPushListener(handler, self);
 
         return 0;
     }

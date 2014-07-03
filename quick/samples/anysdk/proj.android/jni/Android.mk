@@ -37,7 +37,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,cocos2dx/lua-bindings)
+$(call import-module,lua_bindings)
 
 $(call import-module,protocols/android)
 

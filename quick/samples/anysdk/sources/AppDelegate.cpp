@@ -48,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaStack *pStack = pEngine->getLuaStack();
 
     register_all_anysdk(pStack->getLuaState());
-    //register_all_anysdk_manual(pStack->getLuaState());
+    register_all_anysdk_manual(pStack->getLuaState());
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // load framework

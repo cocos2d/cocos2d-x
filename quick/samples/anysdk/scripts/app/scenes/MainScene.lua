@@ -4,9 +4,11 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
-    if device.platform ~= "android" then
+    if device.platform == "android" then
     	self.ads = app.agentMgr:getAdsPlugin()
-    	self.ads:setAdsListener(handler(self, self.adListener))
+        if self.ads then
+    	   self.ads:setAdsListener(handler(self, self.adListener))
+        end
         self:show()
     else
         self:showNotSupport()
@@ -34,7 +36,9 @@ function MainScene:show()
         :setButtonLabel(cc.ui.UILabel.new({text = "显示广告", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-        	self.ads:showAds(0)
+        	if self.ads then
+                self.ads:showAds(0)
+            end
         end)
         :pos(display.cx/2, display.top - self.innerSpace*2)
         :addTo(self)
