@@ -42,6 +42,79 @@
 		F4F40D1B16573CE0007937AD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F40D1A16573CE0007937AD /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DAB7FEE71962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
+		DAB7FEE91962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2FD617814595006731B9;
+			remoteInfo = "cocos2dx-extensions Mac";
+		};
+		DAB7FEEB1962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2CB81780BD04006731B9;
+			remoteInfo = "chipmunk Mac";
+		};
+		DAB7FEED1962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2D9B1780BDF7006731B9;
+			remoteInfo = "box2d Mac";
+		};
+		DAB7FEEF1962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A03F2ED617814268006731B9;
+			remoteInfo = "CocosDenshion Mac";
+		};
+		DAB7FEF11962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4D641783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
+		DAB7FEF31962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4EFC1783867C0073F6A7;
+			remoteInfo = "cocos2dx-extensions iOS";
+		};
+		DAB7FEF51962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4F3B178387670073F6A7;
+			remoteInfo = "chipmunk iOS";
+		};
+		DAB7FEF71962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4F9E1783876B0073F6A7;
+			remoteInfo = "box2d iOS";
+		};
+		DAB7FEF91962AA9800DCA0EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A07A4FB4178387730073F6A7;
+			remoteInfo = "CocosDenshion iOS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2EDD276A191B6258004F9539 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		2EDD276B191B6258004F9539 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -70,7 +143,7 @@
 		DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_libs.xcodeproj; path = quick/lib/proj.ios_mac/quick_libs.xcodeproj; sourceTree = QUICK_V3_ROOT; };
 		F452BFC41687EEF900DC5BCC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		F452BFCF1687F0F200DC5BCC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F456ECC115EE018E00FCF3E2 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = __PROJECT_PACKAGE_LAST_NAME_L__.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F456ECC115EE018E00FCF3E2 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F456ECC515EE018E00FCF3E2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F456ECC715EE018E00FCF3E2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		F456ECC915EE018E00FCF3E2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -168,6 +241,23 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
+		DAB7FED91962AA9800DCA0EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DAB7FEE81962AA9800DCA0EF /* libcocos2dx Mac.a */,
+				DAB7FEEA1962AA9800DCA0EF /* libcocos2dx-extensions Mac.a */,
+				DAB7FEEC1962AA9800DCA0EF /* libchipmunk Mac.a */,
+				DAB7FEEE1962AA9800DCA0EF /* libbox2d Mac.a */,
+				DAB7FEF01962AA9800DCA0EF /* libCocosDenshion Mac.a */,
+				DAB7FEF21962AA9800DCA0EF /* libcocos2dx iOS.a */,
+				DAB7FEF41962AA9800DCA0EF /* libcocos2dx-extensions iOS.a */,
+				DAB7FEF61962AA9800DCA0EF /* libchipmunk iOS.a */,
+				DAB7FEF81962AA9800DCA0EF /* libbox2d iOS.a */,
+				DAB7FEFA1962AA9800DCA0EF /* libCocosDenshion iOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F456ECB615EE018E00FCF3E2 = {
 			isa = PBXGroup;
 			children = (
@@ -183,7 +273,7 @@
 		F456ECC215EE018E00FCF3E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F456ECC115EE018E00FCF3E2 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */,
+				F456ECC115EE018E00FCF3E2 /* test.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,9 +310,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F456ECC015EE018E00FCF3E2 /* __PROJECT_PACKAGE_LAST_NAME_L__ */ = {
+		F456ECC015EE018E00FCF3E2 /* test */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F456EFBD15EE019300FCF3E2 /* Build configuration list for PBXNativeTarget "__PROJECT_PACKAGE_LAST_NAME_L__" */;
+			buildConfigurationList = F456EFBD15EE019300FCF3E2 /* Build configuration list for PBXNativeTarget "test" */;
 			buildPhases = (
 				F456ECBD15EE018E00FCF3E2 /* Sources */,
 				F456ECBE15EE018E00FCF3E2 /* Frameworks */,
@@ -232,9 +322,9 @@
 			);
 			dependencies = (
 			);
-			name = __PROJECT_PACKAGE_LAST_NAME_L__;
-			productName = __PROJECT_PACKAGE_LAST_NAME_L__;
-			productReference = F456ECC115EE018E00FCF3E2 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */;
+			name = test;
+			productName = test;
+			productReference = F456ECC115EE018E00FCF3E2 /* test.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -245,7 +335,7 @@
 			attributes = {
 				LastUpgradeCheck = 0440;
 			};
-			buildConfigurationList = F456ECBB15EE018E00FCF3E2 /* Build configuration list for PBXProject "__PROJECT_PACKAGE_LAST_NAME_L__" */;
+			buildConfigurationList = F456ECBB15EE018E00FCF3E2 /* Build configuration list for PBXProject "test" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -256,12 +346,91 @@
 			mainGroup = F456ECB615EE018E00FCF3E2;
 			productRefGroup = F456ECC215EE018E00FCF3E2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DAB7FED91962AA9800DCA0EF /* Products */;
+					ProjectRef = DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				F456ECC015EE018E00FCF3E2 /* __PROJECT_PACKAGE_LAST_NAME_L__ */,
+				F456ECC015EE018E00FCF3E2 /* test */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DAB7FEE81962AA9800DCA0EF /* libcocos2dx Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2dx Mac.a";
+			remoteRef = DAB7FEE71962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEEA1962AA9800DCA0EF /* libcocos2dx-extensions Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2dx-extensions Mac.a";
+			remoteRef = DAB7FEE91962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEEC1962AA9800DCA0EF /* libchipmunk Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libchipmunk Mac.a";
+			remoteRef = DAB7FEEB1962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEEE1962AA9800DCA0EF /* libbox2d Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libbox2d Mac.a";
+			remoteRef = DAB7FEED1962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEF01962AA9800DCA0EF /* libCocosDenshion Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCocosDenshion Mac.a";
+			remoteRef = DAB7FEEF1962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEF21962AA9800DCA0EF /* libcocos2dx iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2dx iOS.a";
+			remoteRef = DAB7FEF11962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEF41962AA9800DCA0EF /* libcocos2dx-extensions iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2dx-extensions iOS.a";
+			remoteRef = DAB7FEF31962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEF61962AA9800DCA0EF /* libchipmunk iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libchipmunk iOS.a";
+			remoteRef = DAB7FEF51962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEF81962AA9800DCA0EF /* libbox2d iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libbox2d iOS.a";
+			remoteRef = DAB7FEF71962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB7FEFA1962AA9800DCA0EF /* libCocosDenshion iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libCocosDenshion iOS.a";
+			remoteRef = DAB7FEF91962AA9800DCA0EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F456ECBF15EE018E00FCF3E2 /* Resources */ = {
@@ -339,6 +508,7 @@
 					"\"$(QUICK_COCOS2DX_ROOT)/lib/third_party/chipmunk/luabinding\"",
 					"\"$(QUICK_COCOS2DX_ROOT)/lib/third_party/CSArmature\"",
 					"\"$(QUICK_COCOS2DX_ROOT)/lib/third_party\"",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "";
@@ -386,6 +556,7 @@
 					"\"$(QUICK_COCOS2DX_ROOT)/lib/third_party/chipmunk/luabinding\"",
 					"\"$(QUICK_COCOS2DX_ROOT)/lib/third_party/CSArmature\"",
 					"\"$(QUICK_COCOS2DX_ROOT)/lib/third_party\"",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -420,15 +591,19 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				HEADER_SEARCH_PATHS = (
-					"\"$(QUICK_V3_ROOT)/cocos\"",
-					"\"$(QUICK_V3_ROOT)/cocos/audio/include\"",
+					"$(QUICK_V3_ROOT)",
+					"$(QUICK_V3_ROOT)/cocos",
+					"$(QUICK_V3_ROOT)/cocos/editor-support",
+					"$(QUICK_V3_ROOT)/extensions",
+					"$(QUICK_V3_ROOT)/external",
+					"$(QUICK_V3_ROOT)/external/chipmunk/include/chipmunk",
+					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 					"\"$(QUICK_V3_ROOT)/cocos/platform/ios\"",
-					"\"$(QUICK_V3_ROOT)/external\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
-					"\"$(QUICK_V3_ROOT)/external/unzip\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/manual\"",
+					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
+					"$(QUICK_V3_ROOT)/external/lua/tolua",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -471,15 +646,19 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				HEADER_SEARCH_PATHS = (
-					"\"$(QUICK_V3_ROOT)/cocos\"",
-					"\"$(QUICK_V3_ROOT)/cocos/audio/include\"",
+					"$(QUICK_V3_ROOT)",
+					"$(QUICK_V3_ROOT)/cocos",
+					"$(QUICK_V3_ROOT)/cocos/editor-support",
+					"$(QUICK_V3_ROOT)/extensions",
+					"$(QUICK_V3_ROOT)/external",
+					"$(QUICK_V3_ROOT)/external/chipmunk/include/chipmunk",
+					"$(QUICK_V3_ROOT)/cocos/audio/include",
+					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 					"\"$(QUICK_V3_ROOT)/cocos/platform/ios\"",
-					"\"$(QUICK_V3_ROOT)/external\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
-					"\"$(QUICK_V3_ROOT)/external/unzip\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/lua-bindings/auto\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/cocos2dx/clua-bindings/manual\"",
+					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
+					"$(QUICK_V3_ROOT)/external/lua/tolua",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -502,7 +681,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F456ECBB15EE018E00FCF3E2 /* Build configuration list for PBXProject "__PROJECT_PACKAGE_LAST_NAME_L__" */ = {
+		F456ECBB15EE018E00FCF3E2 /* Build configuration list for PBXProject "test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F456EFBB15EE019300FCF3E2 /* Debug */,
@@ -511,7 +690,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F456EFBD15EE019300FCF3E2 /* Build configuration list for PBXNativeTarget "__PROJECT_PACKAGE_LAST_NAME_L__" */ = {
+		F456EFBD15EE019300FCF3E2 /* Build configuration list for PBXNativeTarget "test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F456EFBE15EE019300FCF3E2 /* Debug */,

@@ -64,10 +64,12 @@ LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(LOCAL_PATH)/manual/platform/android/jni \
                     $(QUICK_V3_LIB)/cocos2dx \
                     $(QUICK_V3_LIB)/cocos2dx/lua_extensions \
-                    $(QUICK_V3_LIB)/cocos2dx/extra \
-                    $(QUICK_V3_LIB)/cocos2dx/extra/native \
-                    $(QUICK_V3_LIB)/cocos2dx/extra/crypto \
-                    $(QUICK_V3_LIB)/cocos2dx/extra/network \
+                    $(QUICK_V3_LIB) \
+                    $(QUICK_V3_LIB)/extra \
+                    $(QUICK_V3_LIB)/extra/native \
+                    $(QUICK_V3_LIB)/extra/crypto \
+                    $(QUICK_V3_LIB)/extra/network \
+                    $(QUICK_V3_LIB)/external \
                     $(COCOS2DX_ROOT)/external/xxtea
 
 
@@ -95,8 +97,8 @@ LOCAL_EXPORT_CFLAGS += -Wno-psabi
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,lua/luajit/prebuilt/android)
-$(call import-module,cocos2dx/lua_extensions)
-$(call import-module,cocos2dx/extra)
+$(call import-module,lua_extensions)
+$(call import-module,extra)
 $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)

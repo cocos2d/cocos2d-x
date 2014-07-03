@@ -17,7 +17,7 @@ LOCAL_SRC_FILES := \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(QUICK_V3_LIB)/cocos2dx/lua-bindings/manual
+                           $(QUICK_V3_LIB)/lua_bindings/manual
 
 LOCAL_C_INCLUDES := $(LOCAL_EXPORT_C_INCLUDES) \
                     $(COCOS2DX_CORE) \
@@ -25,6 +25,7 @@ LOCAL_C_INCLUDES := $(LOCAL_EXPORT_C_INCLUDES) \
                     $(COCOS2DX_CORE)/platform/android \
                     $(COCOS2DX_ROOT)/external/lua/luajit/include \
                     $(COCOS2DX_ROOT)/external/lua/tolua \
+                    $(COCOS2DX_ROOT)/external \
                     $(COCOS2DX_ROOT)/external/unzip \
                     $(COCOS2DX_ROOT)/external/xxtea \
                     $(COCOS2DX_ROOT)/external/curl/include/android \
