@@ -362,7 +362,7 @@ void SkeletonRenderer::setOpacityModifyRGB (bool value) {
 	premultipliedAlpha = value;
 }
 
-bool SkeletonRenderer::isOpacityModifyRGB () {
+bool SkeletonRenderer::isOpacityModifyRGB () const {
 	return premultipliedAlpha;
 }
 

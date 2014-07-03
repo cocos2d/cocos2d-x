@@ -89,7 +89,7 @@ public:
 	virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc);
 	virtual const cocos2d::BlendFunc& getBlendFunc () const;
 	virtual void setOpacityModifyRGB (bool value);
-	virtual bool isOpacityModifyRGB ();
+	virtual bool isOpacityModifyRGB () const;
 
 protected:
 	SkeletonRenderer ();
