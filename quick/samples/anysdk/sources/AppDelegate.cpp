@@ -3,6 +3,8 @@
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 
+#include "../proj.android/jni/hellocpp/lua_anysdk_auto.hpp"
+#include "../proj.android/jni/hellocpp/lua_anysdk_manual.hpp"
 
 using namespace CocosDenshion;
 
@@ -44,6 +46,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
     LuaStack *pStack = pEngine->getLuaStack();
+
+    register_all_anysdk(pStack->getLuaState());
+    //register_all_anysdk_manual(pStack->getLuaState());
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // load framework

@@ -132,12 +132,11 @@ public:
     /*
      @brief reglua listener, typedef (*luaFunction)(const char* protocalName, const char* jsonStr)  
     */
-    void regListener(int luaFunction);
-    void callLuaFunction(const char* protocolName, const char* jsonStr);
+    void callLuaFunction(int luaFunction, const char* protocolName, const char* jsonStr);
 
     void setAdListener(int luaFunction, ProtocolAds* ads = NULL);
     void setIAPListener(int luaFunction, ProtocolIAP* iap = NULL);
-    void setPushListener(int luaFunction,, ProtocolPush* push = NULL);
+    void setPushListener(int luaFunction, ProtocolPush* push = NULL);
     void setShareListener(int luaFunction, ProtocolShare* share = NULL);
     void setSocialListener(int luaFunction, ProtocolSocial* social = NULL);
     void setUserListener(int luaFunction, ProtocolUser* user = NULL);
@@ -153,10 +152,7 @@ private:
 	ShareResultListenerLua* m_listenerShare;
 	SocialListenerLua* m_listenerSocial;
 	UserActionListenerLua* m_listenerUser;
-	
-	//保存listener指针，以便释放
-	//ProtocolIAP没有提供取listener接口，只能统一保存
-	std:Map<int, void*> m_listenerMap;
+
 	static AnySDKListener* gInstance;
 };
 

@@ -10,6 +10,16 @@ end
 
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
+
+    -- init anysdk
+    if device.platform == "android" then
+    	self.agentMgr = anysdk.AgentManager:getInstance()
+        print("htl agentmgr init:", tostring(self.agentMgr.init))
+
+    	self.agentMgr:init(ANYSDK_APPKEY, ANYSDK_SECRET, ANYSDK_PRIVATE_KEY, ANYSDK_OAUTH_LOGIN_SERVER)
+    	self.agentMgr:loadALLPlugin()
+	end
+
     self:enterScene("MainScene")
 end
 

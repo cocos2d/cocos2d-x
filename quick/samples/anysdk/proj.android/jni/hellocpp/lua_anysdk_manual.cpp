@@ -1,21 +1,22 @@
 
-#include "lua_anysdk_manual.h"
+#include "lua_anysdk_manual.hpp"
+#include "AgentManager.h"
+#include "AnySDKListener.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
-#include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
-#include "CCLuaEngine.h"
 
-using namespace cocostudio;
 
-void stdmap_string_key_iap_to_luaval(lua_State* L, const std::Map<std::string, anysdk::framework::ProtocolIAP*>* v)
+using namespace anysdk::framework;
+
+void stdmap_string_key_iap_to_luaval(lua_State* L, const ::std::map<std::string, anysdk::framework::ProtocolIAP*>* v)
 {
     lua_newtable(L);
     
     if(nullptr == L)
         return;
     
-    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    for (auto iter = v->begin(); iter != v->end(); ++iter)
     {
         std::string key = iter->first;
         anysdk::framework::ProtocolIAP* obj = iter->second;
@@ -25,16 +26,15 @@ void stdmap_string_key_iap_to_luaval(lua_State* L, const std::Map<std::string, a
             auto typeIter = g_luaType.find(name);
             if (g_luaType.end() != typeIter)
             {
-                lua_pushstring(L, key);
-                object_to_luaval<anysdk::framework::ProtocolIAP>(tolua_S,
-                	"ccanysdk.ProtocolIAP",(anysdk::framework::ProtocolIAP*)ret);
+                lua_pushstring(L, key.c_str());
+                object_to_luaval<anysdk::framework::ProtocolIAP>(L, "ccanysdk.ProtocolIAP", obj);
                 lua_rawset(L, -3);
             }
         }
     }
 }
 
-bool luaval_to_stdmap_string_key_string(lua_State* L, int lo, std::Map<std::string, std::string>* ret)
+bool luaval_to_stdmap_string_key_string(lua_State* L, int lo, std::map<std::string, std::string>* ret)
 {
     if(nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
@@ -70,7 +70,7 @@ bool luaval_to_stdmap_string_key_string(lua_State* L, int lo, std::Map<std::stri
             
             luaval_to_std_string(L, -2, &stringKey);
             luaval_to_std_string(L, -1, &stringVal);
-            ret->insert(stringKey, stringVal);
+            ret->insert(pair<std::string, std::string>(stringKey, stringVal));
                 
             lua_pop(L, 1);                                          /* L: lotable ..... key */
         }
@@ -105,7 +105,7 @@ static int tolua_anysdk_AgentManager_getIAPPlugin(lua_State* tolua_S)
     
     if (0 == argc)
     {
-    	std::map<std::string , ProtocolIAP*>* iaps = self->getIAPPlugin()
+    	std::map<std::string, ProtocolIAP*>* iaps = self->getIAPPlugin();
     	stdmap_string_key_iap_to_luaval(tolua_S, iaps);
 
         return 1;
@@ -422,12 +422,15 @@ static int tolua_anysdk_ProtocolAnalytics_logEvent(lua_State* tolua_S)
     if (2 == argc)
     {
         const char* eventId;
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); eventId = arg0_tmp.c_str();
+        std::string arg0_tmp;
+
+        luaval_to_std_string(tolua_S, 2, &arg0_tmp);
+        eventId = arg0_tmp.c_str();
 
         std::map<std::string, std::string> map;
         luaval_to_stdmap_string_key_string(tolua_S, 3, &map);
 
-        self->logEvent(eventId, map);
+        //self->logEvent(eventId, &map);
 
         return 0;
     }
