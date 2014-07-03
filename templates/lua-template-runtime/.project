@@ -11,6 +11,6 @@
 		<nature>org.eclipse.koneki.ldt.nature</nature>
 	</natures>
 	<cocosprojecttemplate>
-		<version>1.1</version>
+		<version>1.2</version>
 	</cocosprojecttemplate>
 </projectDescription>

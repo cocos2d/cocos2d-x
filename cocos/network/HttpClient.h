@@ -62,6 +62,13 @@ public:
                       please make sure request->_requestData is clear before calling "send" here.
      */
     void send(HttpRequest* request);
+
+    /**
+     * Immediate send a request
+     * @param request a HttpRequest object, which includes url, response callback etc.
+                      please make sure request->_requestData is clear before calling "sendImmediate" here.
+     */
+    void sendImmediate(HttpRequest* request);
   
     
     /**
@@ -101,6 +108,7 @@ private:
      */
     bool lazyInitThreadSemphore();
     void networkThread();
+    void networkThreadAlone(HttpRequest* request);
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
     

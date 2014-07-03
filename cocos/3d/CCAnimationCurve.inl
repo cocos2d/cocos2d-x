@@ -4,7 +4,6 @@ NS_CC_BEGIN
 template <int componentSize>
 void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateType type) const
 {
-    int floatSize = sizeof(float);
     if (_count == 1 || time <= _keytime[0])
     {
         memcpy(dst, _value, _componentSizeByte);

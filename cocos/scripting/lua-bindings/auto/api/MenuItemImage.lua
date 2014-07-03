@@ -2,6 +2,7 @@
 --------------------------------
 -- @module MenuItemImage
 -- @extend MenuItemSprite
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#MenuItemImage] setDisabledSpriteFrame 

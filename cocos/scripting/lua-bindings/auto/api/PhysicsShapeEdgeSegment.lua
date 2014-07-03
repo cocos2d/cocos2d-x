@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsShapeEdgeSegment
 -- @extend PhysicsShape
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeSegment] getPointB 

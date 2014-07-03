@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CardinalSplineBy
 -- @extend CardinalSplineTo
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#CardinalSplineBy] startWithTarget 

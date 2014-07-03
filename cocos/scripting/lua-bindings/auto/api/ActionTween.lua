@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionTween
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ActionTween] create 

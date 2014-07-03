@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SkewTo
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#SkewTo] create 

@@ -21,6 +21,7 @@ namespace
         CL(PhysicsPositionRotationTest),
         CL(PhysicsSetGravityEnableTest),
         CL(Bug5482),
+        CL(PhysicsTransformTest),
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -1593,7 +1594,7 @@ void PhysicsPositionRotationTest::onEnter()
     auto leftBall = Sprite::create("Images/ball.png");
     leftBall->setPosition(-30, 0);
     leftBall->cocos2d::Node::setScale(2);
-    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width/4));
+    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width));
     leftBall->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     parent->addChild(leftBall);
     
@@ -1732,6 +1733,83 @@ std::string Bug5482::title() const
 std::string Bug5482::subtitle() const
 {
     return "change physics body to the other.";
+}
+
+bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event *event)
+{
+    Node* child = this->getChildByTag(1);
+    child->setPosition(this->convertTouchToNodeSpace(touch));
+    return false;
+}
+
+void PhysicsTransformTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+    _scene->toggleDebug();
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsTransformTest::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    //parent test
+    auto parent = Sprite::create("Images/YellowSquare.png");
+    parent->setPosition(200, 100);
+    parent->setScale(0.25);
+    parent->setPhysicsBody(PhysicsBody::createBox(parent->getContentSize()*parent->getScale(), PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    parent->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    parent->setTag(1);
+    addChild(parent);
+    
+    auto leftBall = Sprite::create("Images/ball.png");
+    leftBall->setPosition(-30, 0);
+    leftBall->cocos2d::Node::setScale(2);
+    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    leftBall->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    parent->addChild(leftBall);
+    
+    ScaleTo* scaleTo = ScaleTo::create(2.0, 0.5);
+    ScaleTo* scaleBack = ScaleTo::create(2.0, 1.0);
+    parent->runAction(RepeatForever::create(Sequence::create(scaleTo, scaleBack, nullptr)));
+    
+    auto normal = Sprite::create("Images/YellowSquare.png");
+    normal->setPosition(300, 100);
+    normal->setScale(0.25, 0.5);
+    auto size = parent->getContentSize();
+    size.width *= normal->getScaleX();
+    size.height *= normal->getScaleY();
+    normal->setPhysicsBody(PhysicsBody::createBox(size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    normal->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(normal);
+    
+    auto bullet = Sprite::create("Images/ball.png");
+    bullet->setPosition(200, 200);
+    bullet->setPhysicsBody(PhysicsBody::createCircle(bullet->getContentSize().width/2, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    bullet->getPhysicsBody()->setVelocity(Vect(100, 100));
+    this->addChild(bullet);
+    
+    
+    MoveBy* move = MoveBy::create(2.0, Vec2(100, 100));
+    MoveBy* move2 = MoveBy::create(2.0, Vec2(-200, 0));
+    MoveBy* move3 = MoveBy::create(2.0, Vec2(100, -100));
+    ScaleTo* scale = ScaleTo::create(3.0, 0.3);
+    ScaleTo* scale2 = ScaleTo::create(3.0, 1.0);
+    
+    RotateBy* rotate = RotateBy::create(6.0, 360);
+    
+    this->runAction(RepeatForever::create(Sequence::create(move, move2, move3, nullptr)));
+    this->runAction(RepeatForever::create(Sequence::create(scale, scale2, nullptr)));
+    this->runAction(RepeatForever::create(rotate));
+}
+
+std::string PhysicsTransformTest::title() const
+{
+    return "Physics transform test";
 }
 
 #endif // ifndef CC_USE_PHYSICS
