@@ -96,7 +96,7 @@ namespace cocostudio
         {
             textField->setPlaceHolder(DICTOOL->getStringValue_json(options, P_PlaceHolder,"input words here"));
         }
-        textField->setText(DICTOOL->getStringValue_json(options, P_Text,"text Field"));
+        textField->setText(DICTOOL->getStringValue_json(options, P_Text,"Text Tield"));
        
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     

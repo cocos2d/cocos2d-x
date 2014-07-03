@@ -3,6 +3,9 @@
 #include "LayoutReader.h"
 #include "ui/UILayout.h"
 #include "cocostudio/CocoLoader.h"
+#include "ui/UIScrollView.h"
+#include "ui/UIPageView.h"
+#include "ui/UIListView.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -194,17 +197,67 @@ namespace cocostudio
         
         bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, P_BackGroundScale9Enable);
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
-        int cr = DICTOOL->getIntValue_json(options, P_BgColorR,150);
-        int cg = DICTOOL->getIntValue_json(options, P_BgColorG,150);
-        int cb = DICTOOL->getIntValue_json(options, P_BgColorB,100);
         
-        int scr = DICTOOL->getIntValue_json(options, P_BgStartColorR,255);
-        int scg = DICTOOL->getIntValue_json(options, P_BgStartColorG, 255);
-        int scb = DICTOOL->getIntValue_json(options, P_BgStartColorB, 255);
         
-        int ecr = DICTOOL->getIntValue_json(options, P_BgEndColorR,150);
-        int ecg = DICTOOL->getIntValue_json(options, P_BgEndColorG,200);
-        int ecb = DICTOOL->getIntValue_json(options, P_BgEndColorB,255);
+        int cr;
+        int cg;
+        int cb;
+        int scr;
+        int scg;
+        int scb;
+        int ecr;
+        int ecg;
+        int ecb;
+     
+        if (dynamic_cast<ui::PageView*>(widget)) {
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",100);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",255);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",100);
+        }else if(dynamic_cast<ui::ListView*>(widget)){
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",255);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+        }else if(dynamic_cast<ui::ScrollView*>(widget)){
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",255);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",100);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",255);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",100);
+        }else{
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",200);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",255);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",200);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+        }
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, P_VectorX);
         float bgcv2 = DICTOOL->getFloatValue_json(options, P_VectorY,-0.5);
@@ -214,6 +267,7 @@ namespace cocostudio
         
         int colorType = DICTOOL->getIntValue_json(options, P_ColorType,1);
         panel->setBackGroundColorType(Layout::BackGroundColorType(colorType));
+        
         panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
         panel->setBackGroundColor(Color3B(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
