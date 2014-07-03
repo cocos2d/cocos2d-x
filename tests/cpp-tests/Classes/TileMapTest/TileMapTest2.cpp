@@ -43,7 +43,7 @@ namespace
         CLN(TMXIsoTest1New),
         CLN(TMXIsoTest2New),
         CLN(TMXUncompressedTestNew),
-        //CLN(TMXHexTestNew),
+        CLN(TMXHexTestNew),
         CLN(TMXReadWriteTestNew),
         CLN(TMXTilesetTestNew),
         CLN(TMXOrthoObjectsTestNew),
