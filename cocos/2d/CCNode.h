@@ -1463,16 +1463,16 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
-    
-    /*
-     * Public pointers to various callbacks on this class. They can be treated as properties and
-     * set to call any method or lambda function.
-     */
-    std::function<void()> onEnterCallback;
-    std::function<void()> onExitCallback;
-    std::function<void()> onEnterTransitionDidFinishCallback;
-    std::function<void()> onExitTransitionDidStartCallback;
-    
+
+    void setOnEnterCallback(const std::function<void()>& callback) {onEnterCallback = callback;}
+    const std::function<void()>& getOnEnterCallback() const {return onEnterCallback;}   
+    void setOnExitCallback(const std::function<void()>& callback) {onExitCallback = callback;}
+    const std::function<void()>& getOnExitCallback() const {return onExitCallback;}   
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) {onEnterTransitionDidFinishCallback = callback;}
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const {return onEnterTransitionDidFinishCallback;}   
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) {onExitTransitionDidStartCallback = callback;}
+    const std::function<void()>& getonExitTransitionDidStartCallback() const {return onExitTransitionDidStartCallback;}   
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1611,6 +1611,11 @@ protected:
 
     static int s_globalOrderOfArrival;
     
+    std::function<void()> onEnterCallback;
+    std::function<void()> onExitCallback;
+    std::function<void()> onEnterTransitionDidFinishCallback;
+    std::function<void()> onExitTransitionDidStartCallback;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     
