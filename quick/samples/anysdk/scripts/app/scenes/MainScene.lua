@@ -36,124 +36,122 @@ function MainScene:show()
         :setButtonLabel(cc.ui.UILabel.new({text = "显示广告", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-        	if self.ads then
-                self.ads:showAds(0)
+            local ads = app.agentMgr:getAdsPlugin()
+        	if ads then
+                ads:showAds(0)
             end
         end)
         :pos(display.cx/2, display.top - self.innerSpace*2)
         :addTo(self)
 
     cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "购买道具", size = 22, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "记录事件", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-            -- 使用金币购买了1个头盔，一个头盔价值 1000 金币
-            cc.analytics:doCommand{command = "buy",
-                    args = {item = "helmet", amount = 1, price = 1000}}
-            -- MobClickCppForLua:buy("helmet", 1, 1000)
+            local analy = app.agentMgr:getAnalyticsPlugin()
+            if analy then
+                analy:logEvent("pressSecondBtn", {pos = 2, info = "第二个按钮被按下了"})
+            end
         end)
         :pos(display.cx + display.cx/2, display.top - self.innerSpace*2)
         :addTo(self)
 
     cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "消耗道具", size = 22, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "设置推送标签", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-            -- 使用了2瓶魔法药水,每个需要50个虚拟币
-            cc.analytics:doCommand{command = "use",
-                    args = {item = "magic_bottle", amount = 2, price = 50}}
-            -- MobClickCppForLua:use("magic_bottle", 2, 50)
+            local push = app.agentMgr:getPushPlugin()
+            if push then
+                push:setTags({"normalUser", "vip"})
+            end
         end)
         :pos(display.cx/2, display.top - self.innerSpace*3)
         :addTo(self)
 
     cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "额外奖励", size = 22, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "分享功能", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-            -- 连续5天登陆游戏奖励1000金币
-            cc.analytics:doCommand{command = "bonusCoin",
-                    args = {coin = 1000, source = 1}}
-            -- MobClickCppForLua:bonus(1000, 1);
+            local share = app.agentMgr:getSharePlugin()
+            if share then
+                -- 具体有哪些参数，请见anysdk官网的文档说明
+                -- http://docs.anysdk.com/ShareSystem
+                share:share({title = "quick分享",
+                    titleUrl = "http://quick.cocos.org/",
+                    site = "quick引挈",
+                    siteUrl = "http://quick.cocos.org/",
+                    text = "quick开发引挈提供一个快捷方便的开发框架",
+                    comment = "quick真是好"})
+            end
         end)
         :pos(display.cx + display.cx/2, display.top - self.innerSpace*3)
         :addTo(self)
 
     cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "普通事件", size = 22, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "社交功能", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-            -- 统计微博应用中"转发"事件发生的次数
-            cc.analytics:doCommand{command = "event",
-                    args = {eventId = "forward"}}
-            -- MobClickCppForLua:event("forward");
+            local social = app.agentMgr:getSocialPlugin()
+            if social then
+                social:unlockAchievement({key1 = "val1",
+                    key2 = "val2"})
+            end
         end)
         :pos(display.cx/2, display.top - self.innerSpace*4)
         :addTo(self)
 
     cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "多属性(K-V)事件", size = 22, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "用户模块", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-            -- 电商应用中“购买”事件发生的次数，以及购买的商品类型及数量，那么在购买的函数里调用
-
-            -- 注意这里的第二个参数 友盟原生要求传入map<string,string>
-            -- 在lua中改为传字串，它的格式为 “k,v” 或 “k,v|k,v”
-            -- 同时因为第二个参数类型的改变，会造成与普通事件的event函数有二义性，所以名字与原生也有变动
-            -- 详情可参见$QUICK_COCOS2DX_ROOT/lib/sdk/umeng_analytics/include/MobClickCppForLua.h
-            local attributes = "type,book|quantity,3"
-            cc.analytics:doCommand{command = "eventCustom",
-                    args = {eventId = "purchase", attributes = attributes}}
-            -- MobClickCppForLua:eventCustom("purchase", attributes)
+            local user = app.agentMgr:getUserPlugin()
+            if user then
+                user:login()
+            end
         end)
         :pos(display.cx + display.cx/2, display.top - self.innerSpace*4)
         :addTo(self)
 
     cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "事件开始", size = 22, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "支付模块", size = 22, color = display.COLOR_BLACK}))
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
-            -- 跟踪播放音乐事件发生的总时间,音乐播放开始时调用
-            cc.analytics:doCommand{command = "beginEvent",
-                    args = {eventId = "music_play"}}
-            -- MobClickCppForLua:beginEvent("music_play")
+            local iaps = app.agentMgr:getIAPPlugin()
+            if iaps then
+                --从iaps中选一个来支付，具体返回有哪些，要看anysk打包集成了哪些
+                local iap = iaps.alipay
+
+                --payForProduct有哪些参数及其含意，参见
+                --http://docs.anysdk.com/IAPSystem
+                iap:payForProduct({Product_Id = 1,
+                                Product_Name = "蓝药水",
+                                Product_Price = "10",
+                                Product_Count = 3,
+                                Role_Id = 1001,
+                                Role_Name = "天之林",
+                                Role_Grade = 11,
+                                Server_Id = 1})
+            end
         end)
         :pos(display.cx/2, display.top - self.innerSpace*5)
         :addTo(self)
 
-    cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "事件结束", size = 22, color = display.COLOR_BLACK}))
-        :setButtonSize(display.cx - 20, 60)
-        :onButtonClicked(function()
-            -- 跟踪播放音乐事件发生的总时间,音乐播放结束时调用
-            cc.analytics:doCommand{command = "endEvent",
-                    args = {eventId = "music_play"}}
-            -- MobClickCppForLua:endEvent("music_play")
-        end)
-        :pos(display.cx + display.cx/2, display.top - self.innerSpace*5)
+    self.textLable = cc.ui.UILabel.new({text = "-", size = 22, color = display.COLOR_BLACK})
+        :pos(display.cx, display.top - self.innerSpace*6)
+        :align(display.CENTER)
         :addTo(self)
-
-    cc.ui.UIPushButton.new("Button01.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "在线参数", size = 22, color = display.COLOR_BLACK}))
-        :setButtonSize(display.cx - 20, 60)
-        :onButtonClicked(function()
-            -- 跟踪播放音乐事件发生的总时间,音乐播放结束时调用
-            local value = cc.analytics:doCommand{command = "getConfigParams",
-                    args = {key = "author"}}
-            -- local value = MobClickCppForLua:getConfigParams("author")
-            if value then
-                print("online config author:" .. value)
-            else
-                print("online config author: nil")
-            end
-        end)
-        :pos(display.cx/2, display.top - self.innerSpace*6)
-        :addTo(self)
-
 end
 
-function MainScene:adListener(pluginName, param)
-	print("htl entry adlistener")
+function MainScene:sdkListener(protocol, param)
+    dump(param, "sdk callback param:")
+    self.textLable = json.encode(param)
+    if "ads" == protocol then
+    elseif "iap" == protocol then
+    elseif "share" == protocol then
+    elseif "social" == protocol then
+    elseif "user" == protocol then
+    elseif "push" == protocol then
+    end
 end
 
 function MainScene:onEnter()

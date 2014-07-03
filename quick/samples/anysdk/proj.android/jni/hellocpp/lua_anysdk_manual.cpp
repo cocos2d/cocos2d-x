@@ -203,10 +203,15 @@ static int tolua_anysdk_ProtocolIAP_setResultListener(lua_State* tolua_S)
     
     if (1 == argc)
     {
-    	int nFunction = 0;
-    	luaval_to_int32(tolua_S, 2, &nFunction);
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S,2,0));
 
-        AnySDKListener::getInstance()->setIAPListener(nFunction, self);
+        AnySDKListener::getInstance()->setIAPListener(handler, self);
         return 0;
     }
     
@@ -262,10 +267,15 @@ static int tolua_anysdk_ProtocolUser_setActionListener(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        int nFunction = 0;
-        luaval_to_int32(tolua_S, 2, &nFunction);
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S,2,0));
 
-        AnySDKListener::getInstance()->setUserListener(nFunction, self);
+        AnySDKListener::getInstance()->setUserListener(handler, self);
         return 0;
     }
     
@@ -361,10 +371,15 @@ static int tolua_anysdk_ProtocolSocial_setListener(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        int nFunction = 0;
-        luaval_to_int32(tolua_S, 2, &nFunction);
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S,2,0));
 
-        AnySDKListener::getInstance()->setSocialListener(nFunction, self);
+        AnySDKListener::getInstance()->setSocialListener(handler, self);
 
         return 0;
     }
@@ -484,10 +499,15 @@ static int tolua_anysdk_ProtocolAds_setAdsListener(lua_State* tolua_S)
     
     if (1 == argc)
     {
-        int nFunction = 0;
-        luaval_to_int32(tolua_S, 2, &nFunction);
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S,2,0));
 
-        AnySDKListener::getInstance()->setAdListener(nFunction, self);
+        AnySDKListener::getInstance()->setAdListener(handler, self);
 
         return 0;
     }
