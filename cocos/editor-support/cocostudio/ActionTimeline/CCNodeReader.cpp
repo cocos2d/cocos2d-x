@@ -45,6 +45,8 @@ static const char* ClassName_Button     = "Button";
 static const char* ClassName_CheckBox   = "CheckBox";
 static const char* ClassName_ImageView  = "ImageView";
 static const char* ClassName_TextAtlas  = "TextAtlas";
+static const char* ClassName_LabelAtlas = "LabelAtlas";
+static const char* ClassName_LabelBMFont= "LabelBMFont";
 static const char* ClassName_TextBMFont = "TextBMFont";
 static const char* ClassName_Text       = "Text";
 static const char* ClassName_LoadingBar = "LoadingBar";
@@ -132,7 +134,8 @@ void NodeReader::init()
     _funcs.insert(Pair(ClassName_SubGraph,  std::bind(&NodeReader::loadSubGraph,   this, _1)));
     _funcs.insert(Pair(ClassName_Sprite,    std::bind(&NodeReader::loadSprite,     this, _1)));
     _funcs.insert(Pair(ClassName_Particle,  std::bind(&NodeReader::loadParticle,   this, _1)));
-
+    _funcs.insert(Pair(ClassName_LabelAtlas,std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_LabelBMFont,std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Panel,     std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Button,    std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_CheckBox,  std::bind(&NodeReader::loadWidget,   this, _1)));

@@ -69,15 +69,15 @@ void PlayMusic::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -169,15 +169,15 @@ void TMoveTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -291,15 +291,15 @@ void TMoveBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -404,15 +404,15 @@ void TRotateTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -517,15 +517,15 @@ void TRotateBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -627,15 +627,15 @@ void TScaleTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpC
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -751,15 +751,15 @@ void TScaleBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpC
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -869,15 +869,15 @@ void TSkewTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -992,15 +992,15 @@ void TSkewBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -1106,15 +1106,15 @@ void TriggerState::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::st
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "ID")
 		{
 			if (str != NULL)
@@ -1195,15 +1195,15 @@ void ArmaturePlayAction::serialize(cocostudio::CocoLoader *pCocoLoader, cocostud
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)

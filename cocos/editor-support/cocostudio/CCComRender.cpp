@@ -97,6 +97,7 @@ bool ComRender::serialize(void* r)
 		SerData *serData = (SerData *)(r);
         const rapidjson::Value *v = serData->_rData;
 		stExpCocoNode *cocoNode = serData->_cocoNode;
+        CocoLoader *cocoLoader = serData->_cocoLoader;
 		const char *className = nullptr;
 		const char *comName = nullptr;
 		const char *file = nullptr;
@@ -118,15 +119,15 @@ bool ComRender::serialize(void* r)
 		}
 		else if(cocoNode != nullptr)
 		{
-			className = cocoNode[1].GetValue();
+			className = cocoNode[1].GetValue(cocoLoader);
 			CC_BREAK_IF(className == nullptr);
-			comName = cocoNode[2].GetValue();
-			stExpCocoNode *pfileData = cocoNode[4].GetChildArray();
+			comName = cocoNode[2].GetValue(cocoLoader);
+			stExpCocoNode *pfileData = cocoNode[4].GetChildArray(cocoLoader);
 			CC_BREAK_IF(!pfileData);
-			file = pfileData[0].GetValue();
-			plist = pfileData[1].GetValue();
+			file = pfileData[0].GetValue(cocoLoader);
+			plist = pfileData[1].GetValue(cocoLoader);
 			CC_BREAK_IF(file == nullptr && plist == nullptr);
-			resType = atoi(pfileData[2].GetValue());
+			resType = atoi(pfileData[2].GetValue(cocoLoader));
 		}
 		if (comName != nullptr)
 		{
@@ -195,7 +196,7 @@ bool ComRender::serialize(void* r)
 					const char *actionName = nullptr;
 					if (cocoNode != nullptr)
 					{
-						actionName = cocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+						actionName = cocoNode[6].GetValue(cocoLoader);//DICTOOL->getStringValue_json(*v, "selectedactionname");
 					}
 					else
 					{
@@ -222,25 +223,25 @@ bool ComRender::serialize(void* r)
 						if (rapidjson::kObjectType  == tType)
 						{
                             int count = tpRootCocoNode->GetChildNum();
-                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
                             for (int i = 0; i < count; ++i)
                             {
                                 std::string key = tpChildArray[i].GetName(&tCocoLoader);
                                 if (key.compare("armature_data") == 0)
                                 {
                                     int length = tpChildArray[i].GetChildNum();
-                                    stExpCocoNode *armature_dataArray = tpChildArray[i].GetChildArray();
+                                    stExpCocoNode *armature_dataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                                     if (length < 1)
                                     {
                                         continue;
                                     }
                                     
                                     length = armature_dataArray[0].GetChildNum();
-                                    stExpCocoNode *armature_data = armature_dataArray[0].GetChildArray();
+                                    stExpCocoNode *armature_data = armature_dataArray[0].GetChildArray(&tCocoLoader);
                                     for (int j = 0; j < length; ++j)
                                     {
                                         std::string key1 = armature_data[j].GetName(&tCocoLoader);
-                                        const char *str1 = armature_data[j].GetValue();
+                                        const char *str1 = armature_data[j].GetValue(&tCocoLoader);
                                         if (key.compare("name") == 0)
                                         {
                                             if (str1 != nullptr)
@@ -252,7 +253,7 @@ bool ComRender::serialize(void* r)
                                                 const char *actionName = nullptr;
                                                 if (cocoNode != nullptr)
                                                 {
-                                                    actionName = cocoNode[6].GetValue();
+                                                    actionName = cocoNode[6].GetValue(&tCocoLoader);
                                                 }
                                                 else
                                                 {
