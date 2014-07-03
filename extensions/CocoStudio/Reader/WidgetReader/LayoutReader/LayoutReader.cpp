@@ -155,12 +155,12 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     }
     
     
-    int bgimgcr = DICTOOL->getIntValue_json(options, "colorR");
-    int bgimgcg = DICTOOL->getIntValue_json(options, "colorG");
-    int bgimgcb = DICTOOL->getIntValue_json(options, "colorB");
+    int bgimgcr = DICTOOL->getIntValue_json(options, "colorR",255);
+    int bgimgcg = DICTOOL->getIntValue_json(options, "colorG",255);
+    int bgimgcb = DICTOOL->getIntValue_json(options, "colorB",255);
     panel->setBackGroundImageColor(ccc3(bgimgcr, bgimgcg, bgimgcb));
 
-    int bgimgopacity = DICTOOL->getIntValue_json(options, "opacity");
+    int bgimgopacity = DICTOOL->getIntValue_json(options, "opacity",255);
     panel->setBackGroundImageOpacity(bgimgopacity);
     
     if (backGroundScale9Enable)
