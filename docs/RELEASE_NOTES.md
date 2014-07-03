@@ -22,8 +22,8 @@
 
 # Misc Information
 
-* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2alpha0.zip
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2alpha0/CHANGELOG
+* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2beta0.zip
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2beta0/CHANGELOG
 * ~~API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.0/index.html~~
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
@@ -113,64 +113,68 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.2 alpha0
 
-* `Animation3D`/`Animate3d`, new nodes for 3d animation. lua-binding and WP8 is not supported now.
-* Updated libcurl.a to use OpenSSL v1.0.1h, [news](http://cocos2d-x.org/news/286) for it
-* Added `utils::captureScreen` to take screeshot
-
+* Game controller support
+* Fast tmx support
+* `Sprite3D` supports binary format, and 20% performance improved
+* Integrated physics engine supports scale and rotation
+* Added `Node::getName`, `Node::setName`, `Node::enumerateChildren` and `utils::findChildren`
+* `fbx-conv` can export binary format
 
 # Features in detail
 
-## Animation3D
+## Game controller support
 
-Animation3D is skeletal animation in 3D Game. It allows the artist animate a 3D model using bone in 3D modeling tools. Then export the model file and use it in the game.
+There are many game controllers don't follow standard processes on Android. A Android device  wants to run a game supports this type of game controller should install en extra application offered by the game controller maker. `Moga` and `Nibiru` are this kind of game controller.
 
-Work flow
-
-* Artist produce 3D models in modeling tools and then export it to FBX file
-* Use `fbx-conv` convert FBX file to c3t file
-* Load c3t file in the game
-
-Note
-
-* The API may change in final version
-* binary format of c3t will be added in final version
-* the bones in the FBX file should not be more than 50.
-
-### `fbx-conv` usage
-
-* windows
-
-```
-cd COCOS2DX_ROOT/tools/fbx-convert/win32
-fbx-conv FBXFile
-```
-* mac os x
-
-```
-cd COCOS2DX_ROOT/tools/fbx-convert/mac
-./fbx-conv FBXFile
-```
-
-
-### Sample code
+But don't be afraid, cocos2d-x do these things automatically for you. We put supported game controller applications in a server, engine will download application when it recognize a supported game controller. And install the application automatically.
 
 ```c++
-//load Sprite3D
-auto sprite = Sprite3D::create("girl.c3t");
-addChild(sprite);
-sprite->setPosition(Vec2( 0, 0));
+auto gameControllerListener = EventListenerController::create();
 
-//load animation and play it
-auto animation = Animation3D::getOrCreate("girl.c3t");
-if (animation)
-{
-   auto animate = Animate3D::create(animation);
-   sprite->runAction(RepeatForever::create(animate));       
-}
+// add call backs for listener and added into EventDispatcher
+...
+
+
+Controller::startDiscoveryController();
+
 ```
 
-Full sample please refer to [Sprite3D test](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp).
+Full document will be ready in final version.
 
-## captureScreen
+## Fast tmx support
 
-Please refer to [here](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/NewRendererTest/NewRendererTest.cpp) for usage.
+It has the same API as `TMXTileMap` except deprecated functions.
+
+```c++
+auto map = FastTMXTiledMap::create("test.tmx");
+addChild(map);
+```
+
+## fbx-conv
+
+
+* Max OS X
+
+    ```
+    $ cd -a|-b|t [path of fbx-conv]
+    $ ./fbx-conv [-a|-b|-t] FBXFile
+    ```
+
+* Windows
+
+    ```
+    cd [path of fbx-conv]
+    fbx-conv -a|-b|t FBXFile
+    ```
+
+Options:
+
+* -a export both c3t and c3b
+* -b export c3b
+* -t export c3t
+
+
+`Note: the bones in the FBX file should not be more than 60.`
+
+
+## Node::enumerateChildren
