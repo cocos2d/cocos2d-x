@@ -1464,14 +1464,14 @@ public:
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
 
-    void setOnEnterCallback(const std::function<void()>& callback) {onEnterCallback = callback;}
-    const std::function<void()>& getOnEnterCallback() const {return onEnterCallback;}   
-    void setOnExitCallback(const std::function<void()>& callback) {onExitCallback = callback;}
-    const std::function<void()>& getOnExitCallback() const {return onExitCallback;}   
-    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) {onEnterTransitionDidFinishCallback = callback;}
-    const std::function<void()>& getonEnterTransitionDidFinishCallback() const {return onEnterTransitionDidFinishCallback;}   
-    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) {onExitTransitionDidStartCallback = callback;}
-    const std::function<void()>& getonExitTransitionDidStartCallback() const {return onExitTransitionDidStartCallback;}   
+    void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1611,10 +1611,10 @@ protected:
 
     static int s_globalOrderOfArrival;
     
-    std::function<void()> onEnterCallback;
-    std::function<void()> onExitCallback;
-    std::function<void()> onEnterTransitionDidFinishCallback;
-    std::function<void()> onExitTransitionDidStartCallback;
+    std::function<void()> _onEnterCallback;
+    std::function<void()> _onExitCallback;
+    std::function<void()> _onEnterTransitionDidFinishCallback;
+    std::function<void()> _onExitTransitionDidStartCallback;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
