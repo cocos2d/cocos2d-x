@@ -37,7 +37,7 @@ void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
    
     textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder","inputs words here"));
     
-    textField->setText(DICTOOL->getStringValue_json(options, "text","text field"));
+    textField->setText(DICTOOL->getStringValue_json(options, "text","Text Field"));
    
     textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
    
