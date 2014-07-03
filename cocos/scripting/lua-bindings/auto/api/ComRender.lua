@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ComRender
 -- @extend Component
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ComRender] setNode 

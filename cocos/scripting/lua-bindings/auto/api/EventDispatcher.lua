@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventDispatcher
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventDispatcher] pauseEventListenersForTarget 

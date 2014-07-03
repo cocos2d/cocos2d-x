@@ -8,14 +8,12 @@ const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 UIListViewTest_Vertical::UIListViewTest_Vertical()
 : _displayValueLabel(nullptr)
-, _array(nullptr)
 {
     
 }
 
 UIListViewTest_Vertical::~UIListViewTest_Vertical()
 {
-    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Vertical::init()
@@ -44,12 +42,11 @@ bool UIListViewTest_Vertical::init()
         
         
         // create list view ex data
-        _array = Array::create();
-        CC_SAFE_RETAIN(_array);
+       
         for (int i = 0; i < 20; ++i)
         {
-            __String* ccstr = __String::createWithFormat("listview_item_%d", i);
-            _array->addObject(ccstr);
+            std::string ccstr = StringUtils::format("listview_item_%d", i);
+            _array.push_back(ccstr);
         }
         
         
@@ -86,7 +83,7 @@ bool UIListViewTest_Vertical::init()
         listView->setItemModel(default_item);
         
         // add default item
-        ssize_t count = _array->count();
+        ssize_t count = _array.size();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -144,7 +141,7 @@ bool UIListViewTest_Vertical::init()
             Widget* item = listView->getItem(i);
             Button* button = static_cast<Button*>(item->getChildByName("Title Button"));
             ssize_t index = listView->getIndex(item);
-            button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
+            button->setTitleText(_array[index]);
         }
         
         // remove last item
@@ -208,13 +205,11 @@ void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::Scro
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
 : _displayValueLabel(nullptr)
-, _array(nullptr)
 {
 }
 
 UIListViewTest_Horizontal::~UIListViewTest_Horizontal()
 {
-    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Horizontal::init()
@@ -244,12 +239,11 @@ bool UIListViewTest_Horizontal::init()
         
         
         // create list view ex data
-        _array = Array::create();
-        CC_SAFE_RETAIN(_array);
+      
         for (int i = 0; i < 20; ++i)
         {
-            __String* ccstr = __String::createWithFormat("listview_item_%d", i);
-            _array->addObject(ccstr);
+            std::string ccstr = StringUtils::format("listview_item_%d", i);
+            _array.push_back(ccstr);
         }
         
         
@@ -284,7 +278,7 @@ bool UIListViewTest_Horizontal::init()
         listView->setItemModel(default_item);
         
         // add default item
-        ssize_t count = _array->count();
+        ssize_t count = _array.size();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -335,7 +329,7 @@ bool UIListViewTest_Horizontal::init()
             Widget *item = listView->getItem(i);
             Button *button = static_cast<Button*>(item->getChildByName("Title Button"));
             ssize_t index = listView->getIndex(item);
-            button->setTitleText(static_cast<__String*>(_array->getObjectAtIndex(index))->getCString());
+            button->setTitleText(_array[index]);
         }
         // remove last item
         listView->removeLastItem();

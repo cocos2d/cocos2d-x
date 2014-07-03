@@ -2,6 +2,7 @@
 --------------------------------
 -- @module AtlasNode
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#AtlasNode] updateAtlasValues 

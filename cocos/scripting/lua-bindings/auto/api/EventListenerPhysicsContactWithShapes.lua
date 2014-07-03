@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventListenerPhysicsContactWithShapes
 -- @extend EventListenerPhysicsContact
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventListenerPhysicsContactWithShapes] hitTest 

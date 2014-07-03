@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJoint] getBodyA 

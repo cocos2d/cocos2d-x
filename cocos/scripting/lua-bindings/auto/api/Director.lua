@@ -1,10 +1,16 @@
 
 --------------------------------
 -- @module Director
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Director] pause 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Director] setEventDispatcher 
+-- @param self
+-- @param #cc.EventDispatcher eventdispatcher
         
 --------------------------------
 -- @function [parent=#Director] pushScene 
@@ -276,6 +282,11 @@
 -- @function [parent=#Director] setDisplayStats 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Director] getEventDispatcher 
+-- @param self
+-- @return EventDispatcher#EventDispatcher ret (return value: cc.EventDispatcher)
         
 --------------------------------
 -- @function [parent=#Director] replaceScene 

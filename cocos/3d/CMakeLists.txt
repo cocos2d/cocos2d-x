@@ -7,5 +7,6 @@ set(COCOS_3D_SRC
   3d/CCAnimation3D.cpp
   3d/CCBundle3D.cpp
   3d/CCMeshSkin.cpp
+  3d/CCBundleReader.cpp
 )
 

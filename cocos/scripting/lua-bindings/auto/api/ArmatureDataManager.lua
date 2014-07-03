@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ArmatureDataManager
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ArmatureDataManager] getAnimationDatas 

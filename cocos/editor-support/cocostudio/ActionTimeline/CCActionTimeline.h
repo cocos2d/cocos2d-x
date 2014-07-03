@@ -75,6 +75,14 @@ public:
      */
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, bool loop);
 
+    /** Goto the specified frame index, and start playing from start index, end at end index.
+     * @param startIndex The animation will play from this index.
+     * @param endIndex The animation will end at this index.
+     * @param currentFrameIndex set current frame index. 
+     * @param loop Whether or not the animation need loop. 
+     */
+    virtual void gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop);
+
     /** Goto the specified frame index, and pause at this index.
      * @param startIndex The animation will pause at this index.
      */
@@ -105,6 +113,8 @@ public:
       * or it will play from start frame again. */
     virtual int  getEndFrame() const { return _endFrame; }
 
+    /** Set current frame index, this will cause action plays to this frame. */
+    virtual void setCurrentFrame(int frameIndex);
     /** Get current frame. */
     virtual int  getCurrentFrame() const { return _currentFrame; }
 

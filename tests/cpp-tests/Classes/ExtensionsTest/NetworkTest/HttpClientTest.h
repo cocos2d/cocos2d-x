@@ -13,11 +13,11 @@ public:
     void toExtensionsMainLayer(cocos2d::Ref *sender);
     
     //Menu Callbacks
-    void onMenuGetTestClicked(cocos2d::Ref *sender);
-    void onMenuPostTestClicked(cocos2d::Ref *sender);
-    void onMenuPostBinaryTestClicked(cocos2d::Ref *sender);
-    void onMenuPutTestClicked(cocos2d::Ref *sender);
-    void onMenuDeleteTestClicked(cocos2d::Ref *sender);
+    void onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate);
+    void onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediate);
+    void onMenuPostBinaryTestClicked(cocos2d::Ref *sender, bool isImmediate);
+    void onMenuPutTestClicked(cocos2d::Ref *sender, bool isImmediate);
+    void onMenuDeleteTestClicked(cocos2d::Ref *sender, bool isImmediate);
     
     //Http Response Callback
     void onHttpRequestCompleted(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);

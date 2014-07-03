@@ -116,6 +116,8 @@ Node::Node(void)
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
+, _physicsScaleStartX(1.0f)
+, _physicsScaleStartY(1.0f)
 #endif
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -283,10 +285,9 @@ void Node::setRotation(float rotation)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
 #if CC_USE_PHYSICS
-    if (_physicsBody && !_physicsBody->_rotationResetTag)
+    if (!_physicsBody || !_physicsBody->_rotationResetTag)
     {
-        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
-        updatePhysicsBodyRotation(scene);
+        updatePhysicsBodyRotation(getScene());
     }
 #endif
 }
@@ -374,18 +375,15 @@ float Node::getScale(void) const
 /// scale setter
 void Node::setScale(float scale)
 {
-    if (_scaleX == scale)
+    if (_scaleX == scale && _scaleY == scale && _scaleZ == scale)
         return;
-    
-#if CC_USE_PHYSICS
-    if (_physicsBody != nullptr)
-    {
-        CCLOG("Node WARNING: PhysicsBody doesn't support setScale");
-    }
-#endif
     
     _scaleX = _scaleY = _scaleZ = scale;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    
+#if CC_USE_PHYSICS
+    updatePhysicsBodyTransform(getScene());
+#endif
 }
 
 /// scaleX getter
@@ -400,16 +398,13 @@ void Node::setScale(float scaleX,float scaleY)
     if (_scaleX == scaleX && _scaleY == scaleY)
         return;
     
-#if CC_USE_PHYSICS
-    if (_physicsBody != nullptr)
-    {
-        CCLOG("Node WARNING: PhysicsBody doesn't support setScale");
-    }
-#endif
-    
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    
+#if CC_USE_PHYSICS
+    updatePhysicsBodyTransform(getScene());
+#endif
 }
 
 /// scaleX setter
@@ -418,15 +413,12 @@ void Node::setScaleX(float scaleX)
     if (_scaleX == scaleX)
         return;
     
-#if CC_USE_PHYSICS
-    if (_physicsBody != nullptr)
-    {
-        CCLOG("Node WARNING: PhysicsBody doesn't support setScaleX");
-    }
-#endif
-    
     _scaleX = scaleX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    
+#if CC_USE_PHYSICS
+    updatePhysicsBodyTransform(getScene());
+#endif
 }
 
 /// scaleY getter
@@ -464,15 +456,12 @@ void Node::setScaleY(float scaleY)
     if (_scaleY == scaleY)
         return;
     
-#if CC_USE_PHYSICS
-    if (_physicsBody != nullptr)
-    {
-        CCLOG("Node WARNING: PhysicsBody doesn't support setScaleY");
-    }
-#endif
-    
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    
+#if CC_USE_PHYSICS
+    updatePhysicsBodyTransform(getScene());
+#endif
 }
 
 
@@ -493,10 +482,9 @@ void Node::setPosition(const Vec2& position)
     _usingNormalizedPosition = false;
 
 #if CC_USE_PHYSICS
-    if (_physicsBody != nullptr && !_physicsBody->_positionResetTag)
+    if (!_physicsBody || !_physicsBody->_positionResetTag)
     {
-        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
-        updatePhysicsBodyPosition(scene);
+        updatePhysicsBodyPosition(getScene());
     }
 #endif
 }
@@ -873,24 +861,25 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         }
     }
     
+    // TODO: support ends with '/..'
     // End with '/..'?
-    bool searchFromParent = false;
-    if (length > 3 &&
-        name[length-3] == '/' &&
-        name[length-2] == '.' &&
-        name[length-1] == '.')
-    {
-        searchFromParent = true;
-        subStrlength -= 3;
-    }
+//    bool searchFromParent = false;
+//    if (length > 3 &&
+//        name[length-3] == '/' &&
+//        name[length-2] == '.' &&
+//        name[length-1] == '.')
+//    {
+//        searchFromParent = true;
+//        subStrlength -= 3;
+//    }
     
-    // Remove '/', '//' and '/..' if exist
+    // Remove '/', '//' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
     // If search from parent, then add * at first to make it match its children, which will do make
-    if (searchFromParent)
-    {
-        newName.insert(0, "[[:alnum:]]+/");
-    }
+//    if (searchFromParent)
+//    {
+//        newName.insert(0, "[[:alnum:]]+/");
+//    }
     
     if (searchFromRoot)
     {
@@ -955,10 +944,14 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
         needRecursive = true;
     }
     
+    std::hash<std::string> h;
+    size_t hashOfName = h(searchName);
     bool ret = false;
     for (const auto& child : _children)
     {
-        if(std::regex_match(child->_name, std::regex(searchName)))
+        // TODO: regular expression support
+        // Android doesn't support c++ 11 regular expression well, may use external lib
+        if (hashOfName == child->_hashOfName && searchName.compare(child->_name) == 0)
         {
             if (!needRecursive)
             {
@@ -985,36 +978,49 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
 * If a class want's to extend the 'addChild' behavior it only needs
 * to override this method
 */
-void Node::addChild(Node *child, int zOrder, int tag)
+void Node::addChild(Node *child, int localZOrder, int tag)
 {    
     CCASSERT( child != nullptr, "Argument must be non-nil");
     CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
 
+    addChildHelper(child, localZOrder, tag, "", true);
+}
+
+void Node::addChild(Node* child, int localZOrder, const std::string &name)
+{
+    CCASSERT(child != nullptr, "Argument must be non-nil");
+    CCASSERT(child->_parent == nullptr, "child already added. It can't be added again");
+    
+    addChildHelper(child, localZOrder, INVALID_TAG, name, false);
+}
+
+void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag)
+{
     if (_children.empty())
     {
         this->childrenAlloc();
     }
-
-    this->insertChild(child, zOrder);
-
-    child->_tag = tag;
-
+    
+    this->insertChild(child, localZOrder);
+    
+    if (setTag)
+        child->setTag(tag);
+    else
+        child->setName(name);
+    
     child->setParent(this);
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     
 #if CC_USE_PHYSICS
     // Recursive add children with which have physics body.
-    for (Node* node = this; node != nullptr; node = node->getParent())
+    Scene* scene = this->getScene();
+    if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
     {
-        Scene* scene = dynamic_cast<Scene*>(node);
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
-        {
-            scene->addChildToPhysicsWorld(child);
-            break;
-        }
+        child->updatePhysicsBodyTransform(scene);
+        scene->addChildToPhysicsWorld(child);
     }
 #endif
-
+    
     if( _running )
     {
         child->onEnter();
@@ -1038,13 +1044,13 @@ void Node::addChild(Node *child, int zOrder, int tag)
 void Node::addChild(Node *child, int zOrder)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, zOrder, child->_tag);
+    this->addChild(child, zOrder, child->_name);
 }
 
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_localZOrder, child->_tag);
+    this->addChild(child, child->_localZOrder, child->_name);
 }
 
 void Node::removeFromParent()
@@ -1086,6 +1092,22 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
     if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeChild(child, cleanup);
+    }
+}
+
+void Node::removeChildByName(const std::string &name, bool cleanup)
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    
+    Node *child = this->getChildByName(name);
+    
+    if (child == nullptr)
+    {
+        CCLOG("cocos2d: removeChildByName(name = %s): child not found!", name.c_str());
     }
     else
     {
@@ -1838,6 +1860,12 @@ void Node::removeAllComponents()
 }
 
 #if CC_USE_PHYSICS
+void Node::updatePhysicsBodyTransform(Scene* scene)
+{
+    updatePhysicsBodyScale(scene);
+    updatePhysicsBodyPosition(scene);
+    updatePhysicsBodyRotation(scene);
+}
 
 void Node::updatePhysicsBodyPosition(Scene* scene)
 {
@@ -1852,6 +1880,11 @@ void Node::updatePhysicsBodyPosition(Scene* scene)
         {
             _physicsBody->setPosition(getPosition());
         }
+    }
+    
+    for (Node* child : _children)
+    {
+        child->updatePhysicsBodyPosition(scene);
     }
 }
 
@@ -1872,6 +1905,39 @@ void Node::updatePhysicsBodyRotation(Scene* scene)
         {
             _physicsBody->setRotation(_rotationZ_X);
         }
+    }
+    
+    for (auto child : _children)
+    {
+        child->updatePhysicsBodyRotation(scene);
+        child->updatePhysicsBodyPosition(scene);
+    }
+}
+
+void Node::updatePhysicsBodyScale(Scene* scene)
+{
+    if (_physicsBody != nullptr)
+    {
+        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
+        {
+            float scaleX = _scaleX / _physicsScaleStartX;
+            float scaleY = _scaleY / _physicsScaleStartY;
+            for (Node* parent = _parent; parent != scene; parent = parent->getParent())
+            {
+                scaleX *= parent->getScaleX();
+                scaleY *= parent->getScaleY();
+            }
+            _physicsBody->setScale(scaleX, scaleY);
+        }
+        else
+        {
+            _physicsBody->setScale(_scaleX / _physicsScaleStartX, _scaleY / _physicsScaleStartY);
+        }
+    }
+    
+    for (auto child : _children)
+    {
+        child->updatePhysicsBodyScale(scene);
     }
 }
 
@@ -1915,6 +1981,8 @@ void Node::setPhysicsBody(PhysicsBody* body)
     }
     
     _physicsBody = body;
+    _physicsScaleStartX = _scaleX;
+    _physicsScaleStartY = _scaleY;
     
     if (body != nullptr)
     {
@@ -1935,8 +2003,7 @@ void Node::setPhysicsBody(PhysicsBody* body)
             scene->getPhysicsWorld()->addBody(body);
         }
         
-        updatePhysicsBodyPosition(scene);
-        updatePhysicsBodyRotation(scene);
+        updatePhysicsBodyTransform(scene);
     }
 }
 

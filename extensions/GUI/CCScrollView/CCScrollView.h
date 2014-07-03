@@ -229,6 +229,7 @@ public:
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void addChild(Node * child, int zOrder, const std::string &name) override;
 
     /**
      * CCActionTweenDelegate

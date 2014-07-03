@@ -46,6 +46,7 @@ _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
+    this->setTouchEnabled(true);
 }
 
 PageView::~PageView()

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TransitionEaseScene
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionEaseScene] easeActionWithAction 

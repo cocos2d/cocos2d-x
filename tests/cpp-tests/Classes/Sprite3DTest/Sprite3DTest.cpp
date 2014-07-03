@@ -44,7 +44,8 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
     CL(Sprite3DEffectTest),
-    CL(Sprite3DWithSkinTest)
+    CL(Sprite3DWithSkinTest),
+    CL(Animate3DTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -340,7 +341,6 @@ Effect3DOutline::Effect3DOutline()
 
 Effect3DOutline::~Effect3DOutline()
 {
-    CC_SAFE_RELEASE_NULL(_sprite);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
@@ -370,8 +370,6 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     
     if(sprite != _sprite)
     {
-        CC_SAFE_RETAIN(sprite);
-        CC_SAFE_RELEASE_NULL(_sprite);
         _sprite = sprite;
         
         auto mesh = sprite->getMesh();
@@ -532,7 +530,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 }
 std::string Sprite3DWithSkinTest::title() const
 {
-    return "Testing Sprite3D for animation from c3t";
+    return "Testing Sprite3D";
 }
 std::string Sprite3DWithSkinTest::subtitle() const
 {
@@ -541,12 +539,14 @@ std::string Sprite3DWithSkinTest::subtitle() const
 
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite3D::create("Sprite3DTest/girl.c3t");
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(3);
+    sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
-    sprite->setRotation3D(Vec3(-90.f, 0.f, 0.f));
     sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::getOrCreate("Sprite3DTest/girl.c3t");
+    auto animation = Animation3D::getOrCreate(fileName);
     if (animation)
     {
         auto animate = Animate3D::create(animation);
@@ -576,5 +576,143 @@ void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Ev
         auto location = touch->getLocation();
         
         addNewSpriteWithCoords( location );
+    }
+}
+
+Animate3DTest::Animate3DTest()
+: _hurt(nullptr)
+, _swim(nullptr)
+, _sprite(nullptr)
+, _moveAction(nullptr)
+, _transTime(0.1f)
+, _elapseTransTime(0.f)
+{
+    addSprite3D();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Animate3DTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    scheduleUpdate();
+}
+
+Animate3DTest::~Animate3DTest()
+{
+    CC_SAFE_RELEASE(_moveAction);
+    CC_SAFE_RELEASE(_hurt);
+    CC_SAFE_RELEASE(_swim);
+}
+
+std::string Animate3DTest::title() const
+{
+    return "Testing Animate3D";
+}
+
+std::string Animate3DTest::subtitle() const
+{
+    return "Touch to beat the tortoise";
+}
+
+void Animate3DTest::update(float dt)
+{
+    if (_state == State::HURT_TO_SWIMMING)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        
+        if (t >= 1.f)
+        {
+            t = 1.f;
+            _sprite->stopAction(_hurt);
+            _state = State::SWIMMING;
+        }
+        _swim->setWeight(t);
+        _hurt->setWeight(1.f - t);
+    }
+    else if (_state == State::SWIMMING_TO_HURT)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        if (t >= 1.f)
+        {
+            t = 1.f;
+            _state = State::HURT;
+        }
+        _swim->setWeight(1.f - t);
+        _hurt->setWeight(t);
+    }
+}
+
+void Animate3DTest::addSprite3D()
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::getOrCreate(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+        _swim = animate;
+        _swim->retain();
+        _hurt = Animate3D::create(animation, 1.933f, 2.8f);
+        _hurt->retain();
+        _state = State::SWIMMING;
+    }
+    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
+}
+
+void Animate3DTest::reachEndCallBack()
+{
+    _sprite->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Animate3DTest::renewCallBack()
+{
+    _sprite->stopActionByTag(101);
+    _state = State::HURT_TO_SWIMMING;
+}
+
+void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        if (_sprite)
+        {
+            float len = (_sprite->getPosition() - location).length();
+            if (len < 40)
+            {
+                //hurt the tortoise
+                if (_state == State::SWIMMING)
+                {
+                    _sprite->runAction(_hurt);
+                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), NULL);
+                    seq->setTag(101);
+                    _sprite->runAction(seq);
+                    _state = State::SWIMMING_TO_HURT;
+                }
+                return;
+            }
+        }
     }
 }

@@ -249,6 +249,8 @@ bool UIButtonTest_Title::init()
         Button* button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
         button->setTitleText("Title Button");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setTitleColor(Color3B::YELLOW);
+        CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);

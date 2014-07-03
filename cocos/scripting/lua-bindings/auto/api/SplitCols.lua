@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SplitCols
 -- @extend TiledGrid3DAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#SplitCols] create 
