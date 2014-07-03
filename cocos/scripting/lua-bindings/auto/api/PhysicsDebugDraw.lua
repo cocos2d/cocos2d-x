@@ -1,5 +1,0 @@
-
---------------------------------
--- @module PhysicsDebugDraw
-
-return nil

@@ -34,18 +34,13 @@
 
 namespace cocos2d {
 
-    // typedef voidpf   (ZCALLBACK *open64_file_func)    OF((voidpf opaque, const void* filename, int mode));
-
-
-
     voidpf ZCALLBACK fopen_mem_func (voidpf opaque,
                                      const char* filename,
                                      int mode)
     {
         ourmemory_t *mem = (ourmemory_t*)malloc(sizeof(ourmemory_t));
 
-        if (mem==NULL)
-            return NULL; /* Can't allocate space, so failed */
+        if (mem==NULL) return NULL; /* Can't allocate space, so failed */
 
         /* Filenames are specified in the form :
          *    <hex base of zip file>+<hex size of zip file>
@@ -66,10 +61,11 @@ namespace cocos2d {
         mem->base = base;
         mem->size = size;
 
-        if (mode & ZLIB_FILEFUNC_MODE_CREATE)
+        if (mode & ZLIB_FILEFUNC_MODE_CREATE) {
             mem->limit = 0; /* When writing we start with 0 bytes written */
-        else
+        } else {
             mem->limit = mem->size;
+        }
         mem->cur_offset = 0;
 
         return mem;
@@ -81,8 +77,7 @@ namespace cocos2d {
     {
         ourmemory_t *mem = (ourmemory_t*)malloc(sizeof(ourmemory_t));
 
-        if (mem==NULL)
-            return NULL; /* Can't allocate space, so failed */
+        if (mem==NULL) return NULL; /* Can't allocate space, so failed */
 
         /* Filenames are specified in the form :
          *    <hex base of zip file>+<hex size of zip file>
@@ -103,10 +98,11 @@ namespace cocos2d {
         mem->base = base;
         mem->size = size;
 
-        if (mode & ZLIB_FILEFUNC_MODE_CREATE)
+        if (mode & ZLIB_FILEFUNC_MODE_CREATE) {
             mem->limit=0; /* When writing we start with 0 bytes written */
-        else
+        } else {
             mem->limit=mem->size;
+        }
 
         mem->cur_offset = 0;
 
@@ -117,8 +113,9 @@ namespace cocos2d {
     {
         ourmemory_t *mem = (ourmemory_t *)stream;
 
-        if (size > mem->size - mem->cur_offset)
+        if (size > mem->size - mem->cur_offset) {
             size = mem->size - mem->cur_offset;
+        }
 
         memcpy(buf, (char*)mem->base + mem->cur_offset, size);
         mem->cur_offset+=size;
@@ -131,13 +128,15 @@ namespace cocos2d {
     {
         ourmemory_t *mem = (ourmemory_t *)stream;
 
-        if (size > mem->size - mem->cur_offset)
+        if (size > mem->size - mem->cur_offset) {
             size = mem->size - mem->cur_offset;
+        }
 
         memcpy((char*)mem->base + mem->cur_offset, buf, size);
         mem->cur_offset+=size;
-        if (mem->cur_offset > mem->limit)
+        if (mem->cur_offset > mem->limit) {
             mem->limit = mem->cur_offset;
+        }
 
         return size;
     }
@@ -153,25 +152,29 @@ namespace cocos2d {
     {
         ourmemory_t *mem = (ourmemory_t *)stream;
         uLong new_pos;
-        switch (origin)
-        {
-            case ZLIB_FILEFUNC_SEEK_CUR :
+        switch (origin) {
+            case ZLIB_FILEFUNC_SEEK_CUR : {
                 new_pos = mem->cur_offset + offset;
                 break;
-            case ZLIB_FILEFUNC_SEEK_END :
+            }
+            case ZLIB_FILEFUNC_SEEK_END : {
                 new_pos = mem->limit + offset;
                 break;
-            case ZLIB_FILEFUNC_SEEK_SET :
+            }
+            case ZLIB_FILEFUNC_SEEK_SET : {
                 new_pos = offset;
                 break;
-            default: return -1;
+            }
+            default: {
+                return -1;
+            }
         }
 
-        if (new_pos > mem->size)
-            return 1; /* Failed to seek that far */
+        if (new_pos > mem->size) return 1; /* Failed to seek that far */
 
-        if (new_pos > mem->limit)
+        if (new_pos > mem->limit) {
             memset((char*)mem->base + mem->limit, 0, new_pos - mem->limit);
+        }
 
         mem->cur_offset = new_pos;
         return 0;
