@@ -1310,6 +1310,9 @@ Mat4 Node::transform(const Mat4& parentTransform)
 
 void Node::onEnter()
 {
+    if (onEnterCallback)
+        onEnterCallback();
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1337,6 +1340,9 @@ void Node::onEnter()
 
 void Node::onEnterTransitionDidFinish()
 {
+    if (onEnterTransitionDidFinishCallback)
+        onEnterTransitionDidFinishCallback();
+        
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1359,6 +1365,9 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
+    if (onExitTransitionDidStartCallback)
+        onExitTransitionDidStartCallback();
+    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1380,6 +1389,9 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
+    if (onExitCallback)
+        onExitCallback();
+    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {

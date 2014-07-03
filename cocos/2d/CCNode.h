@@ -1464,6 +1464,15 @@ public:
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
     
+    /*
+     * Public pointers to various callbacks on this class. They can be treated as properties and
+     * set to call any method or lambda function.
+     */
+    std::function<void()> onEnterCallback;
+    std::function<void()> onExitCallback;
+    std::function<void()> onEnterTransitionDidFinishCallback;
+    std::function<void()> onExitTransitionDidStartCallback;
+    
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
