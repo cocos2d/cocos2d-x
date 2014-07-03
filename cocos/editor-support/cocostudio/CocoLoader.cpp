@@ -44,7 +44,7 @@ Type stExpCocoNode::GetType(CocoLoader*	pCoco)
             stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*) tpCocoObjectDesc[m_ObjIndex].GetAttribDescArray(pCoco);
             tType = Type(tpAttribDescArray[m_AttribIndex].m_cTypeName - 'N' + kNullType);
             
-            if('F' == tType || 'T' == tType)
+            if(kFalseType == tType || kTrueType == tType)
             {
                 char* szValue = (char*)GetValue(pCoco);
                 if(szValue[0] == '0')
@@ -103,16 +103,13 @@ char*	stExpCocoNode::GetName(CocoLoader*		pCoco)
         }
         else
         {
-            //»Áπ˚√˚◊÷”Î¿‡√˚≥∆≤ªÕ¨£¨‘Ú∞¥’Ê µ÷µ…Ë÷√
             char* szValue = GetValue(pCoco);
             if(szValue[0])
             {
-                // ˝◊È
                 szName = GetValue(pCoco);
             }
             else
             {
-                //Ω·ππ
                 szName = tpCocoObjectDesc[m_ObjIndex].GetName(pCoco);
             }
         }
