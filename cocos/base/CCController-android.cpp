@@ -26,40 +26,20 @@
 #include "CCController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-
+#include <functional>
 #include "ccMacros.h"
-#include "CCEventDispatcher.h"
-#include "CCEventController.h"
-#include "CCEventListenerController.h"
 #include "CCDirector.h"
-
 #include "jni/JniHelper.h"
 
 
 NS_CC_BEGIN
-
-static EventDispatcher* s_eventDispatcher = nullptr;
 
 class ControllerImpl
 {
 public:
     ControllerImpl(Controller* controller)
             : _controller(controller)
-            , _connectEvent()
     {
-        if (s_eventDispatcher == nullptr)
-        {
-            s_eventDispatcher = Director::getInstance()->getEventDispatcher();
-        }
-        _connectEvent = new EventController(EventController::ControllerEventType::CONNECTION, controller, false);
-        _keyEvent = new EventController(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, controller, 0);
-        _axisEvent = new EventController(EventController::ControllerEventType::AXIS_STATUS_CHANGED, controller, 0);
-    }
-    ~ControllerImpl()
-    {
-        delete _connectEvent;
-        delete _keyEvent;
-        delete _axisEvent;
     }
 
     static std::vector<Controller*>::iterator findController(const std::string& deviceName, int deviceId)
@@ -77,6 +57,7 @@ public:
         auto iter = findController(deviceName, deviceId);
         if (iter != Controller::s_allController.end())
             return;
+
         log("onConnected new device");
         // It's a new controller being connected.
         auto controller = new cocos2d::Controller();
@@ -84,8 +65,7 @@ public:
         controller->_deviceName = deviceName;
         Controller::s_allController.push_back(controller);
 
-        controller->_impl->_connectEvent->setConnectStatus(true);
-        s_eventDispatcher->dispatchEvent(controller->_impl->_connectEvent);
+        controller->onConnected();
     }
 
     static void onDisconnected(const std::string& deviceName, int deviceId)
@@ -99,10 +79,7 @@ public:
             return;
         }
 
-        (*iter)->_impl->_connectEvent->setConnectStatus(false);
-        s_eventDispatcher->dispatchEvent((*iter)->_impl->_connectEvent);
-
-        delete (*iter);
+        (*iter)->onDisconnected();
         Controller::s_allController.erase(iter);
     }
 
@@ -117,13 +94,7 @@ public:
             iter = findController(deviceName, deviceId);
         }
 
-        (*iter)->_allKeyPrevStatus[keyCode] = (*iter)->_allKeyStatus[keyCode];
-        (*iter)->_allKeyStatus[keyCode].isPressed = isPressed;
-        (*iter)->_allKeyStatus[keyCode].value = value;
-        (*iter)->_allKeyStatus[keyCode].isAnalog = isAnalog;
-
-        (*iter)->_impl->_keyEvent->setKeyCode(keyCode);
-        s_eventDispatcher->dispatchEvent((*iter)->_impl->_keyEvent);
+        (*iter)->onButtonEvent(keyCode, isPressed, value, isAnalog);
     }
 
     static void onAxisEvent(const std::string& deviceName, int deviceId, int axisCode, float value, bool isAnalog)
@@ -135,23 +106,12 @@ public:
             iter = findController(deviceName, deviceId);
         }
 
-        (*iter)->_allKeyPrevStatus[axisCode] = (*iter)->_allKeyStatus[axisCode];
-        (*iter)->_allKeyStatus[axisCode].value = value;
-        (*iter)->_allKeyStatus[axisCode].isAnalog = isAnalog;
-
-        (*iter)->_impl->_axisEvent->setKeyCode(axisCode);
-        s_eventDispatcher->dispatchEvent((*iter)->_impl->_axisEvent);
+        (*iter)->onAxisEvent(axisCode, value, isAnalog);
     }
 
 private:
     Controller* _controller;
-    EventController *_connectEvent;
-    EventController *_keyEvent;
-    EventController *_axisEvent;
 };
-
-
-std::vector<Controller*> Controller::s_allController;
 
 void Controller::startDiscoveryController()
 {
@@ -163,16 +123,13 @@ void Controller::stopDiscoveryController()
     // Empty implementation on Android
 }
 
-Controller* Controller::getControllerByTag(int tag)
+Controller::~Controller()
 {
-    for (auto controller:Controller::s_allController)
-    {
-        if (controller->_controllerTag == tag)
-        {
-            return controller;
-        }
-    }
-    return nullptr;
+    delete _impl;
+
+    delete _connectEvent;
+    delete _keyEvent;
+    delete _axisEvent;
 }
 
 const std::string& Controller::getDeviceName()
@@ -191,31 +148,11 @@ bool Controller::isConnected() const
 Controller::Controller()
     : _controllerTag(TAG_UNSET)
     , _impl(new ControllerImpl(this))
+    , _connectEvent(nullptr)
+    , _keyEvent(nullptr)
+    , _axisEvent(nullptr)
 {
-    for (int key = Key::JOYSTICK_LEFT_X; key < Key::KEY_MAX; ++key)
-    {
-        _allKeyStatus[key].isPressed = false;
-        _allKeyStatus[key].value = 0.0f;
-
-        _allKeyPrevStatus[key].isPressed = false;
-        _allKeyPrevStatus[key].value = 0.0f;
-    }
-}
-
-Controller::~Controller()
-{
-    CC_SAFE_DELETE(_impl);
-}
-
-const Controller::KeyStatus& Controller::getKeyStatus(int keyCode)
-{
-    if (_allKeyStatus.find(keyCode) == _allKeyStatus.end())
-    {
-        _allKeyStatus[keyCode].isPressed = false;
-        _allKeyStatus[keyCode].value = 0.0f;
-    }
-
-    return _allKeyStatus[keyCode];
+    init();
 }
 
 NS_CC_END
