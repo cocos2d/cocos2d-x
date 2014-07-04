@@ -155,6 +155,10 @@ Controller::Controller()
     init();
 }
 
+void Controller::registerListeners()
+{
+}
+
 NS_CC_END
 
 extern "C" {
