@@ -1,18 +1,21 @@
 
 #import "CreateNewProjectDialogController.h"
-#include "SimulatorConfig.h"
+#include "ProjectConfig/SimulatorConfig.h"
 
 @implementation CreateNewProjectDialogController
 
 @synthesize textFieldProjetLocation;
 @synthesize textFieldPackageName;
 @synthesize textView;
+@synthesize cancelButton;
+@synthesize createButton;
 
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+        isCreatingProject = true;
     }
     
     return self;
@@ -57,45 +60,75 @@
 
 - (IBAction) onCreate:(id)sender
 {
-    // check all filed
-    NSString *projectLocation = [textFieldProjetLocation stringValue];
-    NSString *packageName = [textFieldPackageName stringValue];
-//
-    
-    // run script
-    NSString *createProjectShellFilePath = [NSString stringWithFormat:@"%s%@", SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath().c_str(),@"bin/create_project.sh"];
-    NSString *commandLine = [NSString stringWithFormat:@"%@ -f -p %@ -o %@", createProjectShellFilePath, packageName, projectLocation];
-    [[[textView textStorage] mutableString] appendString:commandLine];
-    
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: createProjectShellFilePath];
-    
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: @"-f",
-                                            [NSString stringWithFormat:@"-p %@", packageName],
-                                            [NSString stringWithFormat:@"-o %@", projectLocation], nil];
-    [task setArguments: arguments];
-    
-    NSPipe *pipe;
-    pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
-    
-    NSFileHandle *file;
-    file = [pipe fileHandleForReading];
-    
-    [task launch];
-    
-    NSData *data;
-    data = [file readDataToEndOfFile];
-    
-    NSString *string;
-    string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    
-    [[[textView textStorage] mutableString] appendString:string];
-    
-    [string release];
-    [task release];
+    // open project with player
+    if (isCreatingProject)
+    {
+        // check all filed
+        NSString *projectLocation = [textFieldProjetLocation stringValue];
+        NSString *packageName = [textFieldPackageName stringValue];
+    //
+        
+        // run script
+        NSString *createProjectShellFilePath = [NSString stringWithFormat:@"%s%@", SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath().c_str(),@"bin/create_project.sh"];
+        NSString *commandLine = [NSString stringWithFormat:@"%@ -f -p %@ -o %@", createProjectShellFilePath, packageName, projectLocation];
+        [[[textView textStorage] mutableString] appendString:commandLine];
+
+        
+        NSTask *task;
+        task = [[NSTask alloc] init];
+        [task setLaunchPath: createProjectShellFilePath];
+        
+        NSArray *arguments;
+        arguments = [NSArray arrayWithObjects: @"-f",
+                                                [NSString stringWithFormat:@"-p %@", packageName],
+                                                [NSString stringWithFormat:@"-o %@", projectLocation], nil];
+        [task setArguments: arguments];
+        
+        NSPipe *pipe;
+        pipe = [NSPipe pipe];
+        [task setStandardOutput: pipe];
+        
+        NSFileHandle *file;
+        file = [pipe fileHandleForReading];
+        
+        [task launch];
+        
+        NSData *data;
+        data = [file readDataToEndOfFile];
+        [task waitUntilExit];
+        
+        NSString *string;
+        string = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+        
+        [[[textView textStorage] mutableString] appendString:string];
+        
+        // update button name
+        if ([task terminationStatus] == 0)
+        {
+            [self.cancelButton setTitle:@"Close"];
+            [self.createButton setTitle:@"Open With Player"];
+            isCreatingProject = false;
+        }
+
+        // Scroll to end of outputText field
+        NSRange range;
+        range = NSMakeRange([[textView textStorage].string length], 0);
+        [textView scrollRangeToVisible:range];
+        
+        [string release];
+        [task release];
+    }
+    else
+    {
+        [self onCancel:nil];
+
+        // call selector or send message using cc.EventDispatcher
+        NSArray *args = @[@"-workdir", [textFieldProjetLocation stringValue]];
+        if ([[NSApp delegate] respondsToSelector:NSSelectorFromString(@"relaunch:")])
+        {
+            [[NSApp delegate] performSelectorOnMainThread:NSSelectorFromString(@"relaunch:") withObject:args waitUntilDone:YES];
+        }
+    }
 }
 
 - (IBAction) onPackageNameChanged:(id)sender

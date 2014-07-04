@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		9F05A0CF194EC0FA003CFA1F /* MessageBoxServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A0CE194EC0FA003CFA1F /* MessageBoxServiceMac.mm */; };
 		9F05A0D3194ECA3F003CFA1F /* MenuServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A0D2194ECA3F003CFA1F /* MenuServiceMac.mm */; };
-		9F05A0D6194EDAF6003CFA1F /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */; };
 		9F05A101194EF319003CFA1F /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F05A0FE194EF319003CFA1F /* ConsoleWindow.xib */; };
 		9F05A102194EF319003CFA1F /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A100194EF319003CFA1F /* ConsoleWindowController.m */; };
 		9F05A106194EF67E003CFA1F /* PlayerPreferencesDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F05A103194EF67E003CFA1F /* PlayerPreferencesDialog.xib */; };
 		9F05A107194EF67E003CFA1F /* PlayerPreferencesDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A105194EF67E003CFA1F /* PlayerPreferencesDialogController.m */; };
 		9F05A10A194EF988003CFA1F /* NSApplication+SheetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A109194EF988003CFA1F /* NSApplication+SheetAdditions.m */; };
+		9F17A5321962C0D1004A00F5 /* player.lua in Resources */ = {isa = PBXBuildFile; fileRef = 9F17A5311962C0D1004A00F5 /* player.lua */; };
 		9F19C52919580A5800CA020E /* PlayerUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F19C52719580A5800CA020E /* PlayerUtils.cpp */; };
 		9F1C8D33194DE61E0068C99B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1C8D32194DE61E0068C99B /* Cocoa.framework */; };
 		9F1C8D78194DEB430068C99B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1C8D77194DEB430068C99B /* MainMenu.xib */; };
@@ -142,8 +142,6 @@
 		9F05A0CE194EC0FA003CFA1F /* MessageBoxServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MessageBoxServiceMac.mm; sourceTree = SOURCE_ROOT; };
 		9F05A0D1194ECA1A003CFA1F /* MenuServiceMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuServiceMac.h; sourceTree = SOURCE_ROOT; };
 		9F05A0D2194ECA3F003CFA1F /* MenuServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MenuServiceMac.mm; sourceTree = SOURCE_ROOT; };
-		9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatorConfig.cpp; sourceTree = "<group>"; };
-		9F05A0D5194EDAF6003CFA1F /* SimulatorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorConfig.h; sourceTree = "<group>"; };
 		9F05A0FE194EF319003CFA1F /* ConsoleWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleWindow.xib; sourceTree = SOURCE_ROOT; };
 		9F05A0FF194EF319003CFA1F /* ConsoleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleWindowController.h; sourceTree = SOURCE_ROOT; };
 		9F05A100194EF319003CFA1F /* ConsoleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleWindowController.m; sourceTree = SOURCE_ROOT; };
@@ -152,6 +150,7 @@
 		9F05A105194EF67E003CFA1F /* PlayerPreferencesDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerPreferencesDialogController.m; sourceTree = SOURCE_ROOT; };
 		9F05A108194EF988003CFA1F /* NSApplication+SheetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSApplication+SheetAdditions.h"; sourceTree = SOURCE_ROOT; };
 		9F05A109194EF988003CFA1F /* NSApplication+SheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+SheetAdditions.m"; sourceTree = SOURCE_ROOT; };
+		9F17A5311962C0D1004A00F5 /* player.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = player.lua; sourceTree = "<group>"; };
 		9F19C52719580A5800CA020E /* PlayerUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerUtils.cpp; sourceTree = "<group>"; };
 		9F19C52819580A5800CA020E /* PlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerUtils.h; sourceTree = "<group>"; };
 		9F1C8D2F194DE61E0068C99B /* player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = player.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,12 +333,11 @@
 		9F1C8D94194DEE040068C99B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9F17A5311962C0D1004A00F5 /* player.lua */,
 				9FC192B11959784900417A1E /* player_tolua.cpp */,
 				9FC192B21959784900417A1E /* player_tolua.h */,
 				9F19C52719580A5800CA020E /* PlayerUtils.cpp */,
 				9F19C52819580A5800CA020E /* PlayerUtils.h */,
-				9F05A0D4194EDAF6003CFA1F /* SimulatorConfig.cpp */,
-				9F05A0D5194EDAF6003CFA1F /* SimulatorConfig.h */,
 				9F3BF72A194E91380072B3D0 /* AppDelegate.cpp */,
 				9F3BF72B194E91380072B3D0 /* AppDelegate.h */,
 				9F1C8D95194DEE040068C99B /* PlayerFileDialogServiceProtocol.h */,
@@ -511,6 +509,7 @@
 				9F1C8D81194DECE80068C99B /* Info.plist in Resources */,
 				9F1C8D78194DEB430068C99B /* MainMenu.xib in Resources */,
 				9F25617D194F07BF009E57D7 /* ProjectConfigDialog.xib in Resources */,
+				9F17A5321962C0D1004A00F5 /* player.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,7 +526,6 @@
 				9F25617E194F07BF009E57D7 /* ProjectConfigDialogController.mm in Sources */,
 				9FC192B31959784900417A1E /* player_tolua.cpp in Sources */,
 				9F1C8D82194DECE80068C99B /* main.m in Sources */,
-				9F05A0D6194EDAF6003CFA1F /* SimulatorConfig.cpp in Sources */,
 				9F05A0D3194ECA3F003CFA1F /* MenuServiceMac.mm in Sources */,
 				9F19C52919580A5800CA020E /* PlayerUtils.cpp in Sources */,
 				9F1C8DA1194DEFE40068C99B /* FileDialogServiceMac.mm in Sources */,
@@ -676,6 +674,7 @@
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
 					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -720,6 +719,7 @@
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
 					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (

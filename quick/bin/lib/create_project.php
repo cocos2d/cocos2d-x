@@ -78,20 +78,20 @@ print("\n");
 if ($argc < 2)
 {
     help();
-    return(1);
+    exit(1);
 }
 
 $config = fetchCommandLineArguments($argv, $options, 4);
 if (!$config)
 {
     errorhelp();
-    return(1);
+    exit(1);
 }
 
 if ($config['help'])
 {
     help();
-    return(0);
+    exit(0);
 }
 
 if ($config['config'])
@@ -110,17 +110,25 @@ if ($config['config'])
     {
         printf("ERR: invalid config file, %s\n", $configFilename);
         errorhelp();
-        return(1);
+        exit(1);
     }
 }
 
 $creator = new ProjectCreator($config, $options);
 if ($creator->validateConfig())
 {
-    return($creator->run());
+    if ($creator->run() == true)
+    {
+        exit(0);
+    }
+    else
+    {
+        exit(1);
+    }
+    // return($creator->run());
 }
 else
 {
     errorhelp();
-    return(1);
+    exit(1);
 }

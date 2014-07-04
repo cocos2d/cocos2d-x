@@ -1,6 +1,6 @@
 /*
 ** Lua binding: player_luabinding
-** Generated automatically by tolua++-1.0.92 on Tue Jun 24 17:11:04 2014.
+** Generated automatically by tolua++-1.0.92 on Thu Jun 26 17:26:27 2014.
 */
 
 /* Exported function */

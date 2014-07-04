@@ -3,7 +3,7 @@
 
 #include "base/CCRef.h"
 #include "CCApplication.h"
-#include "SimulatorConfig.h"
+#include "ProjectConfig/SimulatorConfig.h"
 
 /**
 @brief    The cocos2d Application.
