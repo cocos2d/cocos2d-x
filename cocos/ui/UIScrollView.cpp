@@ -852,7 +852,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
 bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
 {
     float realOffset = touchOffsetY;
-    bool scrollEnabled = false;
+    bool scrollEnabled = true;
     if (_bounceEnabled)
     {
         float icBottomPos = _innerContainer->getBottomBoundary();
@@ -894,7 +894,7 @@ bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
     
 bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY)
 {
-    bool scrollenabled = false;
+    bool scrollenabled = true;
     float realOffset = touchOffsetX;
     if (_bounceEnabled)
     {
@@ -936,7 +936,7 @@ bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY
     
 bool ScrollView::scrollChildrenBoth(float touchOffsetX, float touchOffsetY)
 {
-    bool scrollenabled = false;
+    bool scrollenabled = true;
     float realOffsetX = touchOffsetX;
     float realOffsetY = touchOffsetY;
     if (_bounceEnabled)

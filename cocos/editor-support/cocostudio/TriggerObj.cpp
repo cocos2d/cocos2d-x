@@ -246,33 +246,33 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         int length = pCocoNode->GetChildNum();
         int count = 0;
         int num = 0;
-        stExpCocoNode *pTriggerObjArray = pCocoNode->GetChildArray();
-        for (int i = 0; i < length; ++i)
+        stExpCocoNode *pTriggerObjArray = pCocoNode->GetChildArray(pCocoLoader);
+        for (int i0 = 0; i0 < length; ++i0)
         {
-            std::string key = pTriggerObjArray[i].GetName(pCocoLoader);
-            const char* str = pTriggerObjArray[i].GetValue();
+            std::string key = pTriggerObjArray[i0].GetName(pCocoLoader);
+            const char* str0 = pTriggerObjArray[i0].GetValue(pCocoLoader);
             if (key.compare("id") == 0)
             {
-                if (str != NULL)
+                if (str0 != NULL)
                 {
-                    _id = atoi(str); //(unsigned int)(DICTOOL->getIntValue_json(val, "id"));
+                    _id = atoi(str0); //(unsigned int)(DICTOOL->getIntValue_json(val, "id"));
                 }
             }
             else if (key.compare("conditions") == 0)
             {
-                count = pTriggerObjArray[i].GetChildNum();
-                stExpCocoNode *pConditionsArray = pTriggerObjArray[i].GetChildArray();
-                for (int i = 0; i < count; ++i)
+                count = pTriggerObjArray[i0].GetChildNum();
+                stExpCocoNode *pConditionsArray = pTriggerObjArray[i0].GetChildArray(pCocoLoader);
+                for (int i1 = 0; i1 < count; ++i1)
                 {
-                    num = pConditionsArray[i].GetChildNum();
-                    stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray();
-                    const char *classname = pConditionArray[0].GetValue();
-                    if (classname == NULL)
+                    num = pConditionsArray[i1].GetChildNum();
+                    stExpCocoNode *pConditionArray = pConditionsArray[i1].GetChildArray(pCocoLoader);
+                    const char *classname = pConditionArray[0].GetValue(pCocoLoader);
+                    if (classname == nullptr)
                     {
                         continue;
                     }
                     BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
-                    CCAssert(con != NULL, "class named classname can not implement!");
+                    CCAssert(con != nullptr, "class named classname can not implement!");
                     con->serialize(pCocoLoader, &pConditionArray[1]);
                     con->init();
                     _cons.pushBack(con);
@@ -280,14 +280,14 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             }
             else if (key.compare("actions") == 0)
             {
-                count = pTriggerObjArray[i].GetChildNum();
-                stExpCocoNode *pActionsArray = pTriggerObjArray[i].GetChildArray();
-                for (int i = 0; i < count; ++i)
+                count = pTriggerObjArray[i0].GetChildNum();
+                stExpCocoNode *pActionsArray = pTriggerObjArray[i0].GetChildArray(pCocoLoader);
+                for (int i2 = 0; i2 < count; ++i2)
                 {
-                    num = pActionsArray[i].GetChildNum();
-                    stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray();
-                    const char *classname = pActionArray[0].GetValue();
-                    if (classname == NULL)
+                    num = pActionsArray[i2].GetChildNum();
+                    stExpCocoNode *pActionArray = pActionsArray[i2].GetChildArray(pCocoLoader);
+                    const char *classname = pActionArray[0].GetValue(pCocoLoader);
+                    if (classname == nullptr)
                     {
                         continue;
                     }
@@ -300,18 +300,18 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             }
             else if (key.compare("events") == 0)
             {
-                count = pTriggerObjArray[i].GetChildNum();
-                stExpCocoNode *pEventsArray = pTriggerObjArray[i].GetChildArray();
-                for (int i = 0; i < count; ++i)
+                count = pTriggerObjArray[i0].GetChildNum();
+                stExpCocoNode *pEventsArray = pTriggerObjArray[i0].GetChildArray(pCocoLoader);
+                for (int i3 = 0; i3 < count; ++i3)
                 {
-                    num = pEventsArray[i].GetChildNum();
-                    stExpCocoNode *pEventArray = pEventsArray[i].GetChildArray();
-                    const char *str = pEventArray[0].GetValue();
-                    if (str == NULL)
+                    num = pEventsArray[i3].GetChildNum();
+                    stExpCocoNode *pEventArray = pEventsArray[i3].GetChildArray(pCocoLoader);
+                    const char *str1 = pEventArray[0].GetValue(pCocoLoader);
+                    if (str1 == nullptr)
                     {
                         continue;
                     }
-                    int event = atoi(str);
+                    int event = atoi(str1);
                     if (event < 0)
                     {
                         continue;
