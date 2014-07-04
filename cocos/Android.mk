@@ -109,7 +109,9 @@ base/CCEventCustom.cpp \
 base/CCEventDispatcher.cpp \
 base/CCEventFocus.cpp \
 base/CCEventKeyboard.cpp \
+base/CCEventController.cpp \
 base/CCEventListener.cpp \
+base/CCEventListenerController.cpp \
 base/CCEventListenerAcceleration.cpp \
 base/CCEventListenerCustom.cpp \
 base/CCEventListenerFocus.cpp \
@@ -139,6 +141,13 @@ base/ccUTF8.cpp \
 base/ccUtils.cpp \
 base/etc1.cpp \
 base/s3tc.cpp \
+base/CCController-android.cpp \
+base/CCControllerAxisInput.cpp \
+base/CCControllerButtonInput.cpp \
+base/CCControllerDirectionPad.cpp \
+base/CCControllerElement.cpp \
+base/CCControllerThumbstick.cpp \
+base/CCGamepad.cpp \
 base/ObjectFactory.cpp \
 renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
@@ -187,7 +196,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
-                    $(LOCAL_PATH)/../external/xxhash
+                    $(LOCAL_PATH)/../external/xxhash \
+                    $(LOCAL_PATH)/../external/nslog
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
@@ -198,7 +208,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/ConvertUTF 
+                    $(LOCAL_PATH)/../external/ConvertUTF \
+                    $(LOCAL_PATH)/../external/nslog
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -214,10 +225,10 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
-LOCAL_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
-LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
+LOCAL_CFLAGS   :=  -DUSE_FILE32API
+LOCAL_CPPFLAGS := -Wno-deprecated-declarations
+LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
+LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 

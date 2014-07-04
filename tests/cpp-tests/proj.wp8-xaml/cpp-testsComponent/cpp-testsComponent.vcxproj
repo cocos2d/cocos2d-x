@@ -230,6 +230,7 @@
     <ClCompile Include="..\..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
     <ClCompile Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
+    <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp" />
@@ -427,6 +428,7 @@
     <ClInclude Include="..\..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h" />
     <ClInclude Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
+    <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h" />

@@ -83,7 +83,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
         CCLOG("filename == %s",fileName.c_str());
         cocos2d::Vector<ActionObject*> actionList;
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray(cocoLoader);
         stExpCocoNode *actionNode = nullptr;
         for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
@@ -99,7 +99,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
                 ActionObject* action = new ActionObject();
                 action->autorelease();
                 
-                action->initWithBinary(cocoLoader, actionNode->GetChildArray(), root);
+                action->initWithBinary(cocoLoader, actionNode->GetChildArray(cocoLoader), root);
                 
                 actionList.pushBack(action);
             }

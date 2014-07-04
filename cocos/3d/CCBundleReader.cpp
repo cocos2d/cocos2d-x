@@ -15,7 +15,7 @@ BundleReader::~BundleReader()
     
 };
 
-void BundleReader::init(char* lpbuffer, unsigned int length)
+void BundleReader::init(char* lpbuffer, ssize_t length)
 {
     m_position = 0;
     m_buffer  = lpbuffer;

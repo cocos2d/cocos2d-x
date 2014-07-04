@@ -49,6 +49,9 @@ public:
         ACCELERATION,
         MOUSE,
         FOCUS,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        GAME_CONTROLLER,
+#endif
         CUSTOM
     };
     
