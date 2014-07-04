@@ -249,6 +249,14 @@ GLubyte ProgressTimer::getOpacity() const
     return _sprite->getOpacity();
 }
 
+void ProgressTimer::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+    Node::updateDisplayedOpacity(parentOpacity);
+    
+    if(_sprite)
+        _sprite->updateDisplayedOpacity(parentOpacity);
+}
+
 void ProgressTimer::setMidpoint(const Vec2& midPoint)
 {
     _midpoint = midPoint.getClampPoint(Vec2::ZERO, Vec2(1, 1));
