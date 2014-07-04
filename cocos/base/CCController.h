@@ -27,16 +27,16 @@
 #define __cocos2d_libs__CCController__
 
 #include "CCPlatformMacros.h"
-
 #include <string>
 #include <vector>
-#include <functional>
 #include <unordered_map>
 
 NS_CC_BEGIN
 
 class ControllerImpl;
 class EventListenerController;
+class EventController;
+class EventDispatcher;
 
 class Controller
 {
@@ -73,6 +73,7 @@ public:
         BUTTON_START,
         BUTTON_SELECT,
 
+        BUTTON_PAUSE,
         KEY_MAX
     };
 
@@ -107,6 +108,13 @@ private:
     Controller();
     virtual ~Controller();
 
+    void init();
+
+    void onConnected();
+    void onDisconnected();
+    void onButtonEvent(int keyCode, bool isPressed, float value, bool isAnalog);
+    void onAxisEvent(int axisCode, float value, bool isAnalog);
+
     std::unordered_map<int, KeyStatus> _allKeyStatus;
     std::unordered_map<int, KeyStatus> _allKeyPrevStatus;
 
@@ -116,6 +124,11 @@ private:
     int _controllerTag;
 
     ControllerImpl* _impl;
+
+    EventDispatcher* _eventDispatcher;
+    EventController *_connectEvent;
+    EventController *_keyEvent;
+    EventController *_axisEvent;
 
     friend class ControllerImpl;
     friend class EventListenerController;
