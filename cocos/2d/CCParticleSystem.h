@@ -183,7 +183,7 @@ public:
     //! Add a particle to the emitter
     bool addParticle();
     //! Initializes a particle
-    void initParticle(tParticle* particle);
+    virtual void initParticle(tParticle* particle);
     //! stop emitting particles. Running particles will continue to run until they die
     void stopSystem();
     //! Kill all living particles.
@@ -347,6 +347,10 @@ public:
     inline bool isOpacityModifyRGB() const { return _opacityModifyRGB; };
     CC_DEPRECATED_ATTRIBUTE inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
+	const std::string& getPLIST() const
+	{
+		return _plistFile;
+	}
     /** particles movement type: Free or Grouped
      @since v0.8
      */
