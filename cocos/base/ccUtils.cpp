@@ -76,7 +76,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         // The frame buffer is always created with portrait orientation on WP8. 
         // So if the current device orientation is landscape, we need to rotate the frame buffer.  
-        auto renderTargetSize = glView->getRenerTargetSize();
+        auto renderTargetSize = glView->getRenderTargetSize();
         CCASSERT(width * height == static_cast<int>(renderTargetSize.width * renderTargetSize.height), "The frame size is not matched");
         glReadPixels(0, 0, (int)renderTargetSize.width, (int)renderTargetSize.height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
 #else
