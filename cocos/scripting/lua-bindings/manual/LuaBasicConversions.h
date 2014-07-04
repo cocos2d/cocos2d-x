@@ -79,7 +79,7 @@ extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outVal
 extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue);
 extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue);
 
-CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Vec2* outValue)
+static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Point* outValue)
 {
     return luaval_to_vec2(L, lo, outValue);
 }
@@ -88,7 +88,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_kmMat4(lua_State* L, int lo
 {
     return luaval_to_mat4(L, lo, outValue);
 }
-CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_array_of_Point(lua_State* L,int lo,cocos2d::Vec2 **points, int *numPoints)
+static inline bool luaval_to_array_of_Point(lua_State* L,int lo,cocos2d::Point **points, int *numPoints)
 {
     return luaval_to_array_of_vec2(L, lo, points, numPoints);
 }
@@ -258,12 +258,12 @@ extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
 extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
 extern void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib);
 
-CC_DEPRECATED_ATTRIBUTE static inline void point_to_luaval(lua_State* L,const cocos2d::Vec2& pt)
+static inline void point_to_luaval(lua_State* L,const cocos2d::Point& pt)
 {
     vec2_to_luaval(L, pt);
 }
 
-CC_DEPRECATED_ATTRIBUTE static inline void points_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count)
+static inline void points_to_luaval(lua_State* L,const cocos2d::Point* points, int count)
 {
     vec2_array_to_luaval(L, points, count);
 }
