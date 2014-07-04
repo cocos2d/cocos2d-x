@@ -239,7 +239,7 @@ protected:
     Mat4 _tileToNodeTransform;
     /** data for rendering */
     bool _quadsDirty;
-    std::unordered_map<ssize_t, ssize_t> _tileToQuadIndex;
+    std::vector<int> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
     std::vector<int> _indices;
     std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;

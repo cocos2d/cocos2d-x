@@ -51,11 +51,11 @@ namespace cocostudio
         
         float barLength = 0.0f;
         int percent = slider->getPercent();
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -69,8 +69,8 @@ namespace cocostudio
             else if(key == P_Percent){
                 percent = valueToInt(value);
             }else if(key == P_BarFileNameData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -81,8 +81,8 @@ namespace cocostudio
             }else if(key == P_Length){
                 barLength = valueToFloat(value);
             }else if(key == P_BallNormalData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -91,8 +91,8 @@ namespace cocostudio
                 slider->loadSlidBallTextureNormal(backgroundValue, imageFileNameType);
 
             }else if(key == P_BallPressedData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -101,8 +101,8 @@ namespace cocostudio
                 slider->loadSlidBallTexturePressed(backgroundValue, imageFileNameType);
                 
             }else if(key == P_BallDisabledData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -111,8 +111,8 @@ namespace cocostudio
                 slider->loadSlidBallTextureDisabled(backgroundValue, imageFileNameType);
                 
             }else if(key == P_ProgressBarData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -145,25 +145,24 @@ namespace cocostudio
         slider->setPercent(DICTOOL->getIntValue_json(options, P_Percent));
 
         
-        bool bt = DICTOOL->checkObjectExist_json(options, P_BarFileName);
-        float barLength = DICTOOL->getFloatValue_json(options, P_Length);
-        if (bt)
-        {
-            const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_BarFileNameData);
-            int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
-            std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
-            slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+//        bool bt = DICTOOL->checkObjectExist_json(options, P_BarFileName);
+        float barLength = DICTOOL->getFloatValue_json(options, P_Length,290);
+        const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_BarFileNameData);
+        int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
+        slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
             
-            if (barTextureScale9Enable)
-            {
-                slider->setContentSize(Size(barLength, slider->getContentSize().height));
-            }
+           
+        
+        if (barTextureScale9Enable)
+        {
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
         }
         
         //loading normal slider ball texture
         const rapidjson::Value& normalDic = DICTOOL->getSubDictionary_json(options, P_BallNormalData);
         int normalType = DICTOOL->getIntValue_json(normalDic, P_ResourceType);
-        std::string imageFileName = this->getResourcePath(normalDic, P_Path, (Widget::TextureResType)normalType);
+        imageFileName = this->getResourcePath(normalDic, P_Path, (Widget::TextureResType)normalType);
         slider->loadSlidBallTextureNormal(imageFileName, (Widget::TextureResType)normalType);
         
         
