@@ -55,74 +55,74 @@ import android.widget.Toast;
 
 public class AppActivity extends Cocos2dxActivity{
 
-	static String hostIPAdress="0.0.0.0";
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		
-		if(nativeIsLandScape()) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-		} else {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-		}
-		
-		//2.Set the format of window
-		
-		// Check the wifi is opened when the native is debug.
-		if(nativeIsDebug())
-		{
-			if(!isWifiConnected())
-			{
-				AlertDialog.Builder builder=new AlertDialog.Builder(this);
-				builder.setTitle("Warning");
-				builder.setMessage("Open Wifi for debuging...");
-				builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-						finish();
-						System.exit(0);
-					}
-				});
-				builder.setCancelable(false);
-				builder.show();
-			}
-		}
-		hostIPAdress = getHostIpAddress();
-	}
-	 private boolean isWifiConnected() {  
-	        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
-	        if (cm != null) {  
-	            NetworkInfo networkInfo = cm.getActiveNetworkInfo();  
-	            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {  
-	                return true;  
-	            }  
-	        }  
-	        return false;  
-	    } 
-	 
-	public String getHostIpAddress() {
-		WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
-		WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-		int ip = wifiInfo.getIpAddress();
-		return ((ip & 0xFF) + "." + ((ip >>>= 8) & 0xFF) + "." + ((ip >>>= 8) & 0xFF) + "." + ((ip >>>= 8) & 0xFF));
-	}
-	
-	public static String getLocalIpAddress() {
-		return hostIPAdress;
-	}
-	
-	public static String getSDCardPath() {
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			String strSDCardPathString = Environment.getExternalStorageDirectory().getPath();
+    static String hostIPAdress="0.0.0.0";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+
+        if(nativeIsLandScape()) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+
+        //2.Set the format of window
+
+        // Check the wifi is opened when the native is debug.
+        if(nativeIsDebug())
+        {
+            if(!isWifiConnected())
+            {
+                AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                builder.setTitle("Warning");
+                builder.setMessage("Open Wifi for debuging...");
+                builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        finish();
+                        System.exit(0);
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+            }
+        }
+        hostIPAdress = getHostIpAddress();
+    }
+     private boolean isWifiConnected() {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm != null) {
+                NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    public String getHostIpAddress() {
+        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+        int ip = wifiInfo.getIpAddress();
+        return ((ip & 0xFF) + "." + ((ip >>>= 8) & 0xFF) + "." + ((ip >>>= 8) & 0xFF) + "." + ((ip >>>= 8) & 0xFF));
+    }
+
+    public static String getLocalIpAddress() {
+        return hostIPAdress;
+    }
+
+    public static String getSDCardPath() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            String strSDCardPathString = Environment.getExternalStorageDirectory().getPath();
            return  strSDCardPathString;
-		}
-		return null;
-	}
-	
-	private static native boolean nativeIsLandScape();
-	private static native boolean nativeIsDebug();
-	
+        }
+        return null;
+    }
+
+    private static native boolean nativeIsLandScape();
+    private static native boolean nativeIsDebug();
+
 }

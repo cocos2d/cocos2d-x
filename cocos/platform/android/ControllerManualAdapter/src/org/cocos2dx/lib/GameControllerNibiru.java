@@ -26,17 +26,17 @@ import android.view.MotionEvent;
 public class GameControllerNibiru implements OnControllerSeviceListener, OnKeyListener, 
 OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameControllerDelegate {
 
-	private static final String TAG = "NibiruTag";
-	private static final String mVendorName = "Nibiru";
-		
-	private Context mContext;
-	private SparseIntArray mKeyMap;
-	private ControllerEventListener mControllerEventListener = null;
-	private ControllerService mControllerService = null;
-	
-	public GameControllerNibiru() {
-		mKeyMap = new SparseIntArray(20);
-		
+    private static final String TAG = "NibiruTag";
+    private static final String mVendorName = "Nibiru";
+
+    private Context mContext;
+    private SparseIntArray mKeyMap;
+    private ControllerEventListener mControllerEventListener = null;
+    private ControllerService mControllerService = null;
+
+    public GameControllerNibiru() {
+        mKeyMap = new SparseIntArray(20);
+
         mKeyMap.put(ControllerKeyEvent.KEYCODE_BUTTON_A , GameControllerDelegate.BUTTON_A);
         mKeyMap.put(ControllerKeyEvent.KEYCODE_BUTTON_B , GameControllerDelegate.BUTTON_B);
         mKeyMap.put(ControllerKeyEvent.KEYCODE_BUTTON_X , GameControllerDelegate.BUTTON_X);
@@ -53,157 +53,157 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
         mKeyMap.put(ControllerKeyEvent.KEYCODE_BUTTON_SELECT , GameControllerDelegate.BUTTON_SELECT);
         mKeyMap.put(ControllerKeyEvent.KEYCODE_BUTTON_THUMBL , GameControllerDelegate.BUTTON_LEFT_THUMBSTICK);
         mKeyMap.put(ControllerKeyEvent.KEYCODE_BUTTON_THUMBR , GameControllerDelegate.BUTTON_RIGHT_THUMBSTICK);
-	}
-	
-	@Override
-	public void setControllerEventListener(ControllerEventListener listener) {
-		mControllerEventListener = listener;
-	}
-	
-	public void onCreate(Context context) {
-		mContext = context;
-		
-		mControllerService = Controller.getControllerService();
-		if (mControllerService != null) {
-			mControllerService.setControllerServiceListener(this);
-			mControllerService.setStateListener(this);
-			mControllerService.setKeyListener(this);
-			mControllerService.setSimpleStickListener(this);
-			//mControllerService.setAccListener(this);
-			//mControllerService.setGyroListener(this);
-			mControllerService.setEnableLR2(true);
-			mControllerService.setAutoKeyUpMode(false);
-			
-			mControllerService.checkNibiruInstall(mContext, true);
-		}
-	}
-	
-	public void onPause() {
-		if (mControllerService != null) {
-			mControllerService.setEnable(false);
-		}
-	}
-	
-	public void onResume() {
-		if (mControllerService != null) {
-			if (mControllerService.isServiceEnable()) {
-				//onControllerServiceReady(true);
-			} else {
-				if (mControllerService.checkNibiruInstall(mContext, false)) {
-					try {
-						mControllerService.register(mContext);
-					} catch (ControllerServiceException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			
-			mControllerService.setEnable(true);
-		}
-	}
-	
-	public void onDestroy() {
-		if( mControllerService != null ){
-			mControllerService.unregister();
-		}
-	}
+    }
 
-	@Override
-	public void onControllerServiceReady(boolean isSucc) {
-		if( isSucc )
-		{
-			if( !mControllerService.hasDeviceConnected() ){
-				Bundle bun = new Bundle();
-				bun.putBoolean(ControllerService.FLAG_IS_SHOW_GAMEPAD_TIP, true);
-				try {
-					mControllerService.showDeviceManagerUI(mContext, bun); 
-				} catch (ControllerServiceException e) {
-						e.printStackTrace(); 
-				}
-			} 
-		}
-	}
+    @Override
+    public void setControllerEventListener(ControllerEventListener listener) {
+        mControllerEventListener = listener;
+    }
 
-	@Override
-	public void onControllerKeyDown(int playerOrder, int keyCode, ControllerKeyEvent event) {
-		if (mKeyMap.get(keyCode) == 0) {
-			Log.e(TAG, "Didn't map the key: " + keyCode);
-			return;
-		}
-		
-		if (mControllerEventListener != null) {
-			mControllerEventListener.onButtonEvent(mVendorName, playerOrder, mKeyMap.get(keyCode), true, 1.0f, false);
-		}
-	}
+    public void onCreate(Context context) {
+        mContext = context;
 
-	@Override
-	public void onControllerKeyUp(int playerOrder, int keyCode, ControllerKeyEvent event) {		
-		if (mKeyMap.get(keyCode) == 0) {
-			Log.e(TAG, "Didn't map the key: " + keyCode);
-			return;
-		}
-		
-		if (mControllerEventListener != null) {
-			mControllerEventListener.onButtonEvent(mVendorName, playerOrder, 
-					mKeyMap.get(keyCode), false, 0.0f, false);
-		}
-	}
+        mControllerService = Controller.getControllerService();
+        if (mControllerService != null) {
+            mControllerService.setControllerServiceListener(this);
+            mControllerService.setStateListener(this);
+            mControllerService.setKeyListener(this);
+            mControllerService.setSimpleStickListener(this);
+            //mControllerService.setAccListener(this);
+            //mControllerService.setGyroListener(this);
+            mControllerService.setEnableLR2(true);
+            mControllerService.setAutoKeyUpMode(false);
 
-	@Override
-	public void onLeftStickChanged(int playerOrder, float x, float y) {
-		if (mControllerEventListener != null) {
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_LEFT_X, x, true);
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_LEFT_Y, y, true);
-		}
-	}
+            mControllerService.checkNibiruInstall(mContext, true);
+        }
+    }
 
-	@Override
-	public void onRightStickChanged(int playerOrder, float x, float y) {
-		if (mControllerEventListener != null) {
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_RIGHT_X, x, true);
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_RIGHT_Y, y, true);
-		}
-	}
-	
-	@Override
-	public void onControllerStateChanged(int playerOrder, int state, ControllerDevice device) {
-		if (mControllerEventListener != null) {
-			if (state == ControllerDevice.STATE_CONN)
-			{
-				mControllerEventListener.onConnected(mVendorName, playerOrder);
-			}
-			else if (state == ControllerDevice.STATE_DISCONN)
-			{
-				mControllerEventListener.onDisconnected(mVendorName, playerOrder);
-			}
-		}
-	}
+    public void onPause() {
+        if (mControllerService != null) {
+            mControllerService.setEnable(false);
+        }
+    }
 
-	public boolean dispatchGenericMotionEvent(MotionEvent event){
-		return mControllerService.handleExternalInput(event);
-	}
-	
-	public boolean dispatchKeyEvent(KeyEvent event){
-		return mControllerService.handleExternalInput(event);
-	}
-	
-	@Override
-	public void onControllerAccEvent(int playerOrder, AccEvent event) {
-		
-	}
+    public void onResume() {
+        if (mControllerService != null) {
+            if (mControllerService.isServiceEnable()) {
+                //onControllerServiceReady(true);
+            } else {
+                if (mControllerService.checkNibiruInstall(mContext, false)) {
+                    try {
+                        mControllerService.register(mContext);
+                    } catch (ControllerServiceException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
-	@Override
-	public void onControllerGyroEvent(int playerOrder, GyroEvent event) {
-		
-	}
+            mControllerService.setEnable(true);
+        }
+    }
 
-	@Override
-	public void onBluetoothStateChanged(int state) {
-		Log.d(TAG, "onBluetoothStateChanged:"+state);
-	}
+    public void onDestroy() {
+        if( mControllerService != null ){
+            mControllerService.unregister();
+        }
+    }
+
+    @Override
+    public void onControllerServiceReady(boolean isSucc) {
+        if( isSucc )
+        {
+            if( !mControllerService.hasDeviceConnected() ){
+                Bundle bun = new Bundle();
+                bun.putBoolean(ControllerService.FLAG_IS_SHOW_GAMEPAD_TIP, true);
+                try {
+                    mControllerService.showDeviceManagerUI(mContext, bun);
+                } catch (ControllerServiceException e) {
+                        e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onControllerKeyDown(int playerOrder, int keyCode, ControllerKeyEvent event) {
+        if (mKeyMap.get(keyCode) == 0) {
+            Log.e(TAG, "Didn't map the key: " + keyCode);
+            return;
+        }
+
+        if (mControllerEventListener != null) {
+            mControllerEventListener.onButtonEvent(mVendorName, playerOrder, mKeyMap.get(keyCode), true, 1.0f, false);
+        }
+    }
+
+    @Override
+    public void onControllerKeyUp(int playerOrder, int keyCode, ControllerKeyEvent event) {
+        if (mKeyMap.get(keyCode) == 0) {
+            Log.e(TAG, "Didn't map the key: " + keyCode);
+            return;
+        }
+
+        if (mControllerEventListener != null) {
+            mControllerEventListener.onButtonEvent(mVendorName, playerOrder,
+                    mKeyMap.get(keyCode), false, 0.0f, false);
+        }
+    }
+
+    @Override
+    public void onLeftStickChanged(int playerOrder, float x, float y) {
+        if (mControllerEventListener != null) {
+            mControllerEventListener.onAxisEvent(mVendorName, playerOrder,
+                    GameControllerDelegate.THUMBSTICK_LEFT_X, x, true);
+            mControllerEventListener.onAxisEvent(mVendorName, playerOrder,
+                    GameControllerDelegate.THUMBSTICK_LEFT_Y, y, true);
+        }
+    }
+
+    @Override
+    public void onRightStickChanged(int playerOrder, float x, float y) {
+        if (mControllerEventListener != null) {
+            mControllerEventListener.onAxisEvent(mVendorName, playerOrder,
+                    GameControllerDelegate.THUMBSTICK_RIGHT_X, x, true);
+            mControllerEventListener.onAxisEvent(mVendorName, playerOrder,
+                    GameControllerDelegate.THUMBSTICK_RIGHT_Y, y, true);
+        }
+    }
+
+    @Override
+    public void onControllerStateChanged(int playerOrder, int state, ControllerDevice device) {
+        if (mControllerEventListener != null) {
+            if (state == ControllerDevice.STATE_CONN)
+            {
+                mControllerEventListener.onConnected(mVendorName, playerOrder);
+            }
+            else if (state == ControllerDevice.STATE_DISCONN)
+            {
+                mControllerEventListener.onDisconnected(mVendorName, playerOrder);
+            }
+        }
+    }
+
+    public boolean dispatchGenericMotionEvent(MotionEvent event){
+        return mControllerService.handleExternalInput(event);
+    }
+
+    public boolean dispatchKeyEvent(KeyEvent event){
+        return mControllerService.handleExternalInput(event);
+    }
+
+    @Override
+    public void onControllerAccEvent(int playerOrder, AccEvent event) {
+
+    }
+
+    @Override
+    public void onControllerGyroEvent(int playerOrder, GyroEvent event) {
+
+    }
+
+    @Override
+    public void onBluetoothStateChanged(int state) {
+        Log.d(TAG, "onBluetoothStateChanged:"+state);
+    }
 
 }

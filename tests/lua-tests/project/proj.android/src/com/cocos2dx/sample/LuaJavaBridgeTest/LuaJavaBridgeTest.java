@@ -26,13 +26,13 @@ package com.cocos2dx.sample.LuaJavaBridgeTest;
 import org.cocos2dx.lib.Cocos2dxLuaJavaBridge;
 
 public class LuaJavaBridgeTest
-{	
-	public static int addTwoNumbers(final int num1,final int num2){
-		return num1 + num2;
-	}
-	
-	public static void callbackLua(final String tipInfo,final int luaFunc){
-		Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFunc, "success");
-		Cocos2dxLuaJavaBridge.releaseLuaFunction(luaFunc);
-	}
+{
+    public static int addTwoNumbers(final int num1,final int num2){
+        return num1 + num2;
+    }
+
+    public static void callbackLua(final String tipInfo,final int luaFunc){
+        Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFunc, "success");
+        Cocos2dxLuaJavaBridge.releaseLuaFunction(luaFunc);
+    }
 }

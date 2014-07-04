@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 
 public interface GameControllerDelegate {
 
-	public static final int THUMBSTICK_LEFT_X = 100;
+    public static final int THUMBSTICK_LEFT_X = 100;
     public static final int THUMBSTICK_LEFT_Y = 101;
     public static final int THUMBSTICK_RIGHT_X = 102;
     public static final int THUMBSTICK_RIGHT_Y = 103;
@@ -35,21 +35,21 @@ public interface GameControllerDelegate {
     public static final int BUTTON_START = 150;
     public static final int BUTTON_SELECT = 151;  
     
-	void onCreate(Context context);
-	void onPause();
-	void onResume();
-	void onDestroy();
-	
-	boolean dispatchKeyEvent(KeyEvent event);
-	boolean dispatchGenericMotionEvent(MotionEvent event);
-	
-	void setControllerEventListener(ControllerEventListener listener);
-	
-	public interface ControllerEventListener {
-		void onButtonEvent(String vendorName, int controller, int button, boolean isPressed, float value, boolean isAnalog);
-		void onAxisEvent(String vendorName, int controller, int axisID, float value, boolean isAnalog);
-		
-		void onConnected(String vendorName, int controller);
-		void onDisconnected(String vendorName, int controller);
-	}
+    void onCreate(Context context);
+    void onPause();
+    void onResume();
+    void onDestroy();
+
+    boolean dispatchKeyEvent(KeyEvent event);
+    boolean dispatchGenericMotionEvent(MotionEvent event);
+
+    void setControllerEventListener(ControllerEventListener listener);
+
+    public interface ControllerEventListener {
+        void onButtonEvent(String vendorName, int controller, int button, boolean isPressed, float value, boolean isAnalog);
+        void onAxisEvent(String vendorName, int controller, int axisID, float value, boolean isAnalog);
+
+        void onConnected(String vendorName, int controller);
+        void onDisconnected(String vendorName, int controller);
+    }
 }
