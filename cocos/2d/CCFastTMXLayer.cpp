@@ -237,7 +237,7 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
     else
     {
         //do nothing, do not support
-        CCASSERT(0, "TMX invalid value");
+        //CCASSERT(0, "TMX invalid value");
     }
     
     _indicesVertexZNumber.clear();
@@ -264,9 +264,8 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
             int offset = iter->second;
             iter->second++;
             
-            //CC_ASSERT(_tileToQuadIndex.find(tileIndex) != _tileToQuadIndex.end() && _tileToQuadIndex[tileIndex] <= _totalQuads.size()-1);
-            int quadIndex = (int)_tileToQuadIndex[tileIndex];
-
+            int quadIndex = _tileToQuadIndex[tileIndex];
+            CC_ASSERT(-1 != quadIndex);
             _indices[6 * offset + 0] = quadIndex * 4 + 0;
             _indices[6 * offset + 1] = quadIndex * 4 + 1;
             _indices[6 * offset + 2] = quadIndex * 4 + 2;
@@ -387,7 +386,13 @@ Mat4 FastTMXLayer::tileToNodeTransform()
         }
         case FAST_TMX_ORIENTATION_HEX:
         {
-            _tileToNodeTransform = Mat4::IDENTITY;
+            _tileToNodeTransform = Mat4
+            (
+                h * sqrtf(0.75),    0,   0, 0,
+                -h/2,      -h,      0,   offY,
+                0,               0,     1,  0,
+                0,               0,     0,  1
+            );
             return _tileToNodeTransform;
         }
         default:
@@ -408,6 +413,7 @@ void FastTMXLayer::updateTotalQuads()
         _tileToQuadIndex.clear();
         _totalQuads.resize(int(_layerSize.width * _layerSize.height));
         _indices.resize(6 * int(_layerSize.width * _layerSize.height));
+        _tileToQuadIndex.resize(int(_layerSize.width * _layerSize.height),-1);
         _indicesVertexZOffsets.clear();
         
         int quadIndex = 0;
@@ -617,7 +623,7 @@ int FastTMXLayer::getVertexZForPos(const Vec2& pos)
                 ret = static_cast<int>(-(_layerSize.height-pos.y));
                 break;
             case FAST_TMX_ORIENTATION_HEX:
-                CCASSERT(0, "TMX Hexa zOrder not supported");
+                CCASSERT(0, "TMX Hexa vertexZ not supported");
                 break;
             default:
                 CCASSERT(0, "TMX invalid value");
