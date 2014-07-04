@@ -627,10 +627,6 @@ public:
 #include "ResData.h"
         int designWidth = 1280;
         int designHeight = 800;
-        string fontName = "Arial";
-        if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-            fontName = "DroidSans";
-        }
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
         Image* imagebg = new Image();
         imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
@@ -677,10 +673,7 @@ public:
         string strip = getIPAddress();
         char szIPAddress[512]={0};
         sprintf(szIPAddress, "IP: %s",strip.c_str());
-        auto IPlabel = Label::create();
-        IPlabel->setString(szIPAddress);
-        IPlabel->setSystemFontName(fontName.c_str());
-        IPlabel->setSystemFontSize(72);
+        auto IPlabel = Label::createWithSystemFont(szIPAddress,"",72);
         IPlabel->setAnchorPoint(Vec2(0,0));
         int spaceSizex = 72;
         int spaceSizey = 200;
@@ -694,20 +687,14 @@ public:
 
         char szVersion[1024]={0};
         sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
-        Label* verLable = Label::create();
-        verLable->setString(szVersion);
-        verLable->setSystemFontName(fontName.c_str());
-        verLable->setSystemFontSize(24);
+        Label* verLable = Label::createWithSystemFont(szVersion,"",24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
         int height = verLable->getBoundingBox().size.height;
         verLable->setPosition( Point(VisibleRect::right().x-width, VisibleRect::rightBottom().y) );
         verLable->setAlignment(TextHAlignment::LEFT);
         addChild(verLable, 9002);
-        _labelUploadFile = Label::create();
-        _labelUploadFile->setString(_transferTip);
-        _labelUploadFile->setSystemFontName(fontName.c_str());
-        _labelUploadFile->setSystemFontSize(36);
+        _labelUploadFile = Label::createWithSystemFont(_transferTip,"",36);
         _labelUploadFile->setAnchorPoint(Vec2(0,0));
         _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
