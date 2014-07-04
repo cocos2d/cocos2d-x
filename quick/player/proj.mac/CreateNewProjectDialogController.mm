@@ -27,11 +27,42 @@
     NSLog(@"[CreateNewProjectDialogController dealloc]");
 }
 
+#pragma mark
+#pragma mark - functions
+
+- (NSString *) getProjectLocation
+{
+    NSMutableString *foldPath = [NSMutableString stringWithString:textFieldProjetLocation.stringValue];
+    
+    NSArray *com = [textFieldPackageName.stringValue componentsSeparatedByString:@"."];
+    if ([com count] > 0)
+    {
+        if (![foldPath hasSuffix:@"/"])
+        {
+            [foldPath appendString:@"/"];
+        }
+        
+        [foldPath appendString:[com lastObject]];
+    }
+    return foldPath;
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [textFieldProjetLocation setDelegate:self];
+    [textFieldPackageName setDelegate:self];
+}
+
+/**
+ * Called each time when the text field's text has changed.
+ */
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+    NSString *tips = [NSString stringWithFormat:@"create project on %@ folder.\n\n", [self getProjectLocation]];
+    [[[textView textStorage] mutableString] setString:tips];
 }
 
 - (IBAction) onSelectProjectLocation:(id)sender
@@ -64,7 +95,7 @@
     if (isCreatingProject)
     {
         // check all filed
-        NSString *projectLocation = [textFieldProjetLocation stringValue];
+        NSString *projectLocation = [self getProjectLocation];
         NSString *packageName = [textFieldPackageName stringValue];
     //
         
@@ -120,20 +151,22 @@
     }
     else
     {
+        NSArray *args = @[@"-workdir", [self getProjectLocation]];
+        
         [self onCancel:nil];
-
+        
         // call selector or send message using cc.EventDispatcher
-        NSArray *args = @[@"-workdir", [textFieldProjetLocation stringValue]];
         if ([[NSApp delegate] respondsToSelector:NSSelectorFromString(@"relaunch:")])
         {
             [[NSApp delegate] performSelectorOnMainThread:NSSelectorFromString(@"relaunch:") withObject:args waitUntilDone:YES];
         }
+        
+        
     }
 }
 
 - (IBAction) onPackageNameChanged:(id)sender
 {
-
 }
 
 @end

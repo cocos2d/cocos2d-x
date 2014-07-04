@@ -1,7 +1,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface CreateNewProjectDialogController : NSWindowController
+@interface CreateNewProjectDialogController : NSWindowController <NSTextFieldDelegate>
 {
     NSTextField *textFieldProjetLocation;
     NSTextField *textFieldPackageName;
