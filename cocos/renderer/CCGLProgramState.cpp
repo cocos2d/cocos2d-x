@@ -62,8 +62,8 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 
 UniformValue::~UniformValue()
 {
-	if (_useCallback)
-		delete _value.callback;
+//	if (_useCallback)
+//		delete _value.callback;
 }
 
 void UniformValue::apply()
@@ -281,7 +281,7 @@ GLProgramState::GLProgramState()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // listen the event when app go to foreground
     CCLOG("create _backToForegroundlistener for GLProgramState");
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*) { /*_uniformAttributeValueDirty = true;*/ updateUniformAndAtributesLocation(); });
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
 }
@@ -323,31 +323,6 @@ void GLProgramState::resetGLProgram()
     _attributes.clear();
     // first texture is GL_TEXTURE1
     _textureUnitIndex = 1;
-}
-
-void GLProgramState::updateUniformAndAtributesLocation()
-{
-    auto olduniformsByName = _uniformsByName;
-    auto olduniforms = _uniforms;
-    
-    _uniformsByName.clear();
-    _uniforms.clear();
-    
-    for (auto& uniform : _glprogram->_userUniforms) {
-        auto oldlocation = olduniformsByName[uniform.first];
-        auto value = olduniforms[oldlocation];
-        value._uniform = _glprogram->getUniform(uniform.first);
-        
-        _uniforms[uniform.second.location] = value;
-        _uniformsByName[uniform.first] = uniform.second.location;
-    }
-    
-    _vertexAttribsFlags = 0;
-    for (auto& attributeValue : _attributes) {
-        attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);
-        if(attributeValue.second._enabled)
-            _vertexAttribsFlags |= 1 << attributeValue.second._vertexAttrib->index;
-    }
 }
 
 void GLProgramState::apply(const Mat4& modelView)

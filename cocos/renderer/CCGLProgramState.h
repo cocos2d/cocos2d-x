@@ -207,7 +207,6 @@ protected:
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
     UniformValue* getUniformValue(GLint uniformLocation);
-    void updateUniformAndAtributesLocation();
     
     bool _uniformAttributeValueDirty;
     std::unordered_map<std::string, GLint> _uniformsByName;
