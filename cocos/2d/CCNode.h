@@ -38,7 +38,7 @@
 #include "math/CCMath.h"
 #include "renderer/ccGLStateCache.h"
 #include "CCGL.h"
-#include "event/CCTouchDelegateProtocol.h"
+// #include "event/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
 
@@ -103,7 +103,7 @@ class EventListener;
 
  */
 
-class CC_DLL Node : public Ref, public CCTouchDelegate
+class CC_DLL Node : public Ref//, public CCTouchDelegate
 {
 public:
     /// Default tag used for all the nodes
@@ -1476,7 +1476,52 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
+#if 0
+    virtual Scene *getScene();
     
+    virtual void registerWithTouchDispatcher(void);
+    virtual void unregisterWithTouchDispatcher(void);
+    
+    /** whether or not it will receive Touch events.
+     You can enable / disable touch events with this property.
+     Only the touches of this node will be affected. This "method" is not propagated to it's children.
+     @since v0.8.1
+     */
+    virtual bool isTouchCaptureEnabled();
+    virtual void setTouchCaptureEnabled(bool value);
+    virtual bool isTouchSwallowEnabled();
+    virtual void setTouchSwallowEnabled(bool value);
+    
+    virtual bool ccTouchCaptureBegan(Touch *pTouch, Node *pTarget);
+    virtual bool ccTouchCaptureMoved(Touch *pTouch, Node *pTarget);
+    virtual void ccTouchCaptureEnded(Touch *pTouch, Node *pTarget);
+    virtual void ccTouchCaptureCancelled(Touch *pTouch, Node *pTarget);
+    
+    virtual void ccTouchesCaptureBegan(__Set *pTouches, Node *pTarget);
+    virtual void ccTouchesCaptureMoved(__Set *pTouches, Node *pTarget);
+    virtual void ccTouchesCaptureEnded(__Set *pTouches, Node *pTarget);
+    virtual void ccTouchesCaptureCancelled(__Set *pTouches, Node *pTarget);
+    virtual void ccTouchesCaptureAdded(__Set *pTouches, Node *pTarget);
+    virtual void ccTouchesCaptureRemoved(__Set *pTouches, Node *pTarget);
+    
+    virtual bool isTouchEnabled();
+    virtual void setTouchEnabled(bool value);
+    
+    virtual void setTouchMode(int mode);
+    virtual int getTouchMode();
+    
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+    
+    virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent);
+    virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent);
+    virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent);
+    virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent);
+    virtual void ccTouchesAdded(__Set *pTouches, Event *pEvent);
+    virtual void ccTouchesRemoved(__Set *pTouches, Event *pEvent);
+#endif
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1596,7 +1641,16 @@ protected:
     int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
     
-    CCScriptEventDispatcher *_scriptEventDispatcher;
+//    CCScriptEventDispatcher *_scriptEventDispatcher;
+//    // touch events
+//    bool m_bTouchCaptureEnabled;
+//    bool m_bTouchSwallowEnabled;
+//    bool m_bTouchEnabled;
+//    int m_nTouchPriority;
+//    int m_eTouchMode;
+//
+//    virtual int executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase = 1);
+//    virtual int executeScriptTouchHandler(int nEventType, __Set *pTouches, int phase = 1);
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components

@@ -2245,8 +2245,8 @@ static int tolua_cocos2d_Node_addNodeEventListener(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addScriptEventListener'", NULL);
 #endif
         {
-            int tolua_ret = (int)  self->addScriptEventListener(event,listener,tag,priority);
-            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+//            int tolua_ret = (int)  self->addScriptEventListener(event,listener,tag,priority);
+//            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
         }
     }
     return 1;
