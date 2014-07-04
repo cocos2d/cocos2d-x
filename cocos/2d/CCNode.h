@@ -1032,7 +1032,20 @@ public:
     virtual void onExitTransitionDidStart();
 
     /// @} end of event callbacks.
+private:
+	typedef std::function<void(Node*)> NodeFunction;
+	NodeFunction m_onEnterFunc, m_onExitFunc;
 
+public:
+	void onEnter(NodeFunction onEnterFunc)
+	{
+		m_onEnterFunc = onEnterFunc;
+	}
+
+	void onExit(NodeFunction onExitFunc)
+	{
+		m_onExitFunc = onExitFunc;
+	}
 
     /**
      * Stops all running actions and schedulers

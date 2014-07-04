@@ -1322,6 +1322,9 @@ void Node::onEnter()
     
     _running = true;
     
+	if (m_onEnterFunc)
+		m_onEnterFunc(this);
+    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
@@ -1389,6 +1392,9 @@ void Node::onExit()
     
     for( const auto &child: _children)
         child->onExit();
+    
+	if (m_onExitFunc)
+		m_onExitFunc(this);
     
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
