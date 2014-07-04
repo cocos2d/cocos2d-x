@@ -39,6 +39,7 @@ class AppControllerBridge;
     // build task
     NSTask *buildTask;
     bool isBuildingFinished;
+    NSAlert *buildAlert;
 }
 //@property (assign) IBOutlet NSWindow *window;
 

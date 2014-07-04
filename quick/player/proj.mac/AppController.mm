@@ -634,12 +634,22 @@ USING_NS_CC_EXTRA;
     [buildTask release];
     buildTask = nil;
     
-    if (exitCode == 0)
-    {
-        [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:projectConfig.getProjectDir().c_str()
-                                                                   encoding:NSUTF8StringEncoding]];
-    }
+    [self performSelectorOnMainThread:@selector(updateAlertUI:) withObject:@(exitCode) waitUntilDone:YES];
 }
+
+- (void) updateAlertUI:(NSString*) errCodeString
+{
+    if (!buildAlert) return;
+    
+    int errCode = [errCodeString intValue];
+    NSString *message = (errCode == 0) ? @"Build finished, Congraturations!" : @"OPPS, please check your code or build env";
+    BOOL hide = (errCode == 0) ? YES : NO;
+    
+    [buildAlert setMessageText:message];
+    [[[buildAlert buttons] objectAtIndex:0] setTitle:@"Finish"];
+    [[[buildAlert buttons] objectAtIndex:1] setHidden:hide];
+}
+
 
 #pragma mark -
 #pragma mark interfaces
@@ -884,33 +894,38 @@ USING_NS_CC_EXTRA;
                                    withObject:tmpPath];
             
             
+            
             NSAlert *alert = [[[NSAlert alloc] init] autorelease];
             [alert addButtonWithTitle:@"Cancel"];
-            [alert setMessageText:@"Building android target, see log console :-)"];
+            [[alert addButtonWithTitle:@"How to setup android ENV"] setHidden:YES];
+            [alert setMessageText:@"Building android target, view log console :-)"];
             [alert setAlertStyle:NSWarningAlertStyle];
 
+            buildAlert = alert;
             [alert beginSheetModalForWindow:window
                           completionHandler:^(NSModalResponse returnCode) {
                               
+                              isBuildingFinished = YES;
                               if (returnCode == NSAlertFirstButtonReturn)
                               {
-                                  isBuildingFinished = YES;
                                   if (buildTask && [buildTask isRunning])
                                   {
                                       [NSObject cancelPreviousPerformRequestsWithTarget:self];
                                       [buildTask interrupt];
                                   }
                               }
-
+                              else if (returnCode == NSAlertSecondButtonReturn)
+                              {
+                                  Native::openURL("http://quick.cocos.org/?p=415");
+                              }
                           }];
         }
     }
 }
 
-- (BOOL) validateMenuItem: (id <NSMenuItem>) menuItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
     return (isBuildingFinished);
-    
 }
 
 - (IBAction) fileBuildIOS:(id)sender
