@@ -265,6 +265,9 @@ void Node::setGlobalZOrder(float globalZOrder)
     {
         _globalZOrder = globalZOrder;
         _eventDispatcher->setDirtyForNode(this);
+
+		for (auto child : _children)
+			child->setGlobalZOrder(globalZOrder);
     }
 }
 
