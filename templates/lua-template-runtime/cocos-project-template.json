@@ -14,21 +14,6 @@
         },
         "append_dir": [
             {
-                "from": "templates/lua-template-runtime/runtime/rtres",
-                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/rtres",
-                "exclude": []
-            },
-            {
-                "from": "templates/lua-template-runtime/runtime/rtres",
-                "to": "runtime/ios/PrebuiltRuntimeLua.app/rtres",
-                "exclude": []
-            },
-            {
-                "from": "templates/lua-template-runtime/runtime/rtres",
-                "to": "runtime/win32/rtres",
-                "exclude": []
-            },
-            {
                 "from": "cocos/scripting/lua-bindings/script",
                 "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
                 "exclude": []

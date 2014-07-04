@@ -195,11 +195,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         stExpCocoNode *stChildNode = cocoNode;
         
         int actionNodeCount =  stChildNode->GetChildNum();
-        stChildNode = stChildNode[0].GetChildArray();
+        stChildNode = stChildNode[0].GetChildArray(cocoLoader);
         stExpCocoNode *frameListNode = nullptr;
         for (int i = 0; i < actionNodeCount; ++i) {
             std::string key = stChildNode[i].GetName(cocoLoader);
-            std::string value = stChildNode[i].GetValue();
+            std::string value = stChildNode[i].GetValue(cocoLoader);
             if (key == "ActionTag") {
                 setActionTag(valueToInt(value));
             }else if (key == "actionframelist"){
@@ -208,7 +208,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         }
         
         int actionFrameCount = frameListNode->GetChildNum();
-        stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray();
+        stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray(cocoLoader);
         for (int i=0; i<actionFrameCount; i++) {
             
             int frameIndex;
@@ -225,10 +225,10 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
             std::vector<float> frameTweenParameter;
             
             int framesCount = stFrameChildNode[i].GetChildNum();
-            stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray();
+            stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray(cocoLoader);
             for (int j = 0; j < framesCount; j++) {
                 std::string key = innerFrameNode[j].GetName(cocoLoader);
-                std::string value = innerFrameNode[j].GetValue();
+                std::string value = innerFrameNode[j].GetValue(cocoLoader);
                 
                 if (key == "frameid") {
                     frameIndex = valueToInt(value);
@@ -237,10 +237,10 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
                 }else if (key == "tweenParameter"){
                     //  There are no tweenParameter args in the json file
                     int tweenParameterCount = innerFrameNode[j].GetChildNum();
-                    stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray();
+                    stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray(cocoLoader);
                     for (int k = 0; k < tweenParameterCount; ++k) {
                         std::string t_key = tweenParameterArray[j].GetName(cocoLoader);
-                        std::string t_value = tweenParameterArray[j].GetValue();
+                        std::string t_value = tweenParameterArray[j].GetValue(cocoLoader);
                         frameTweenParameter.push_back(valueToFloat(t_value));
                     }
                 }else if (key == "positionx"){

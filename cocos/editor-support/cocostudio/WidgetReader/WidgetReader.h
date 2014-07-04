@@ -176,14 +176,14 @@ namespace cocostudio
     }else if(key == P_ZOrder){ \
         widget->setZOrder(valueToInt(value));  \
     }else if(key == P_LayoutParameter){ \
-        stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(); \
+        stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(cocoLoader); \
         ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();  \
         ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();  \
         ui::Margin mg;  \
         int paramType = -1;  \
         for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {  \
             std::string innerKey = layoutCocosNode[j].GetName(cocoLoader);  \
-            std::string innerValue = layoutCocosNode[j].GetValue(); \
+            std::string innerValue = layoutCocosNode[j].GetValue(cocoLoader); \
             if (innerKey == P_Type) {  \
                 paramType = valueToInt(innerValue); \
             }else if(innerKey == P_Gravity){ \
