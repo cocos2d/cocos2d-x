@@ -879,6 +879,31 @@ void Director::popScene(void)
     }
 }
 
+Scene* Director::previousScene(void)
+{
+	const auto c = _scenesStack.size();
+	if (c <= 1)
+		return nullptr;
+	return _scenesStack.at(c - 2);
+}
+
+void Director::popScene(Scene *trans)
+{
+	CCAssert(_runningScene != NULL, "running scene should not null");
+	_scenesStack.popBack();
+	const auto c = _scenesStack.size();
+
+	if (c == 0)
+	{
+		end();
+	}
+	else
+	{
+		_sendCleanupToScene = true;
+		_nextScene = trans;
+	}
+}
+
 void Director::popToRootScene(void)
 {
     popToSceneStackLevel(1);
