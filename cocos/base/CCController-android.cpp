@@ -132,11 +132,6 @@ Controller::~Controller()
     delete _axisEvent;
 }
 
-const std::string& Controller::getDeviceName()
-{
-    return _deviceName;
-}
-
 void Controller::registerListeners()
 {
 }
@@ -157,10 +152,6 @@ Controller::Controller()
     , _axisEvent(nullptr)
 {
     init();
-}
-
-void Controller::registerListeners()
-{
 }
 
 NS_CC_END

@@ -124,6 +124,7 @@ void Controller::startDiscoveryController()
         
         auto controller = new Controller();
         controller->_impl->_gcController = gcController;
+        controller->_deviceName = [gcController.vendorName UTF8String];
         
         s_allController.push_back(controller);
         
@@ -303,15 +304,6 @@ void Controller::registerListeners()
         onButtonEvent(Key::BUTTON_PAUSE, true, 1.0f, false);
         onButtonEvent(Key::BUTTON_PAUSE, false, 0.0f, false);
     };
-}
-
-const std::string& Controller::getDeviceName()
-{
-    if (_deviceName.empty())
-    {
-        _deviceName = [_impl->_gcController.vendorName UTF8String];
-    }
-    return _deviceName;
 }
 
 bool Controller::isConnected() const

@@ -92,7 +92,7 @@ public:
     static void startDiscoveryController();
     static void stopDiscoveryController();
 
-    const std::string& getDeviceName();
+    const std::string& getDeviceName() const { return _deviceName;}
     int getDeviceId() const { return _deviceId;}
 
     bool isConnected() const;
