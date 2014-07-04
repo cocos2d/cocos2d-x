@@ -6449,7 +6449,6 @@ static int tolua_cocos2d_utils_captureScreen(lua_State* tolua_S)
             tolua_pushboolean(tolua_S, succeed);
             tolua_pushstring(tolua_S, name.c_str());
             LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
-            CCLOG("Handler is %d", handler);
             LuaEngine::getInstance()->removeScriptHandler(handler);
         }, fileName);
         
