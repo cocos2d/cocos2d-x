@@ -9,7 +9,68 @@
 
 using namespace anysdk::framework;
 
-void stdmap_string_key_iap_to_luaval(lua_State* L, const ::std::map<std::string, anysdk::framework::ProtocolIAP*>* v)
+void show_stdlist(std::list<std::string>* list)
+{
+    for (std::list<std::string>::iterator it = list->begin(); it != list->end(); ++it)
+    {
+        CCLOG("list item:%s", it->c_str());
+    }
+}
+
+bool luaval_to_stdlist_string(lua_State* L, int lo, std::list<std::string>* ret)
+{
+    if(nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        std::string stringVal = "";
+        lua_pushnil(L);                                             /* first key L: lotable ..... nil */
+        while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
+        {
+            if (!lua_isnumber(L, -2))
+            {
+                lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                continue;
+            }
+            
+            if (!lua_isstring(L, -1))
+            {
+                lua_pop(L, 1);
+                continue;
+            }
+            
+            luaval_to_std_string(L, -1, &stringVal);
+            ret->push_back(stringVal);
+                
+            lua_pop(L, 1);                                          /* L: lotable ..... key */
+        }
+    }
+    
+    return ok;
+}
+
+void show_stdmap(std::map<std::string, std::string>* map)
+{
+    std::map<std::string, std::string>::iterator mapIter;
+
+    for(mapIter=map->begin(); mapIter != map->end(); ++mapIter)
+    {
+        CCLOG("map %s:%s", mapIter->first.c_str(), mapIter->second.c_str());
+    }
+}
+
+void stdmap_string_key_iap_to_luaval(lua_State* L, const std::map<std::string, anysdk::framework::ProtocolIAP*>* v)
 {
     lua_newtable(L);
     
@@ -248,7 +309,7 @@ static int tolua_anysdk_ProtocolUser_setActionListener(lua_State* tolua_S)
     
     int argc = 0;
     ProtocolUser* self = nullptr;
-    
+
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ccanysdk.ProtocolUser",0,&tolua_err)) goto tolua_lerror;
@@ -264,7 +325,7 @@ static int tolua_anysdk_ProtocolUser_setActionListener(lua_State* tolua_S)
 #endif
     
     argc = lua_gettop(tolua_S) - 1;
-    
+
     if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
@@ -445,7 +506,8 @@ static int tolua_anysdk_ProtocolAnalytics_logEvent(lua_State* tolua_S)
         std::map<std::string, std::string> map;
         luaval_to_stdmap_string_key_string(tolua_S, 3, &map);
 
-        //self->logEvent(eventId, &map);
+        show_stdmap(&map);
+        self->logEvent(eventId, &map);
 
         return 0;
     }
@@ -584,6 +646,96 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    ProtocolPush* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.ProtocolPush",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<ProtocolPush*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_ProtocolPush_setTags'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (1 == argc)
+    {
+        std::list<std::string> list;
+        luaval_to_stdlist_string(tolua_S, 2, &list);
+
+        show_stdlist(&list);
+        self->setTags(list);
+
+        return 0;
+    }
+    
+    CCLOG("'setTags' function of ProtocolPush has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setTags'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_anysdk_ProtocolPush_delTags(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    ProtocolPush* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.ProtocolPush",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<ProtocolPush*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_ProtocolPush_delTags'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (1 == argc)
+    {
+        std::list<std::string> list;
+        luaval_to_stdlist_string(tolua_S, 2, &list);
+
+        show_stdlist(&list);
+        self->delTags(list);
+
+        return 0;
+    }
+    
+    CCLOG("'delTags' function of ProtocolPush has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'delTags'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static void extendPush(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "ccanysdk.ProtocolPush");
@@ -593,8 +745,136 @@ static void extendPush(lua_State* tolua_S)
         lua_pushstring(tolua_S,"setActionListener");
         lua_pushcfunction(tolua_S,tolua_anysdk_ProtocolPush_setActionListener);
         lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"setTags");
+        lua_pushcfunction(tolua_S,tolua_anysdk_ProtocolPush_setTags);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"delTags");
+        lua_pushcfunction(tolua_S,tolua_anysdk_ProtocolPush_delTags);
+        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
+}
+
+static int tolua_anysdk_ProtocolShare_setResultListener(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    ProtocolShare* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.ProtocolShare",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<ProtocolShare*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_ProtocolShare_setResultListener'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S,2,0));
+
+        AnySDKListener::getInstance()->setShareListener(handler, self);
+
+        return 0;
+    }
+    
+    CCLOG("'setResultListener' function of ProtocolShare has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setResultListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_anysdk_ProtocolShare_share(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    ProtocolShare* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.ProtocolShare",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<ProtocolShare*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_ProtocolShare_share'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (1 == argc)
+    {
+        std::map<std::string, std::string> map;
+        luaval_to_stdmap_string_key_string(tolua_S, 2, &map);
+
+        show_stdmap(&map);
+        self->share(map);
+
+        return 0;
+    }
+    
+    CCLOG("'share' function of ProtocolShare has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'share'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendShare(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ccanysdk.ProtocolShare");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setResultListener");
+        lua_pushcfunction(tolua_S,tolua_anysdk_ProtocolShare_setResultListener);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"share");
+        lua_pushcfunction(tolua_S,tolua_anysdk_ProtocolShare_share);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+
+    // tolua_usertype(tolua_S,"ccanysdk.ProtocolShare");
+    // tolua_cclass(tolua_S,"ProtocolShare","ccanysdk.ProtocolShare","",nullptr);
+
+    // tolua_beginmodule(tolua_S,"ProtocolShare");
+    //     tolua_function(tolua_S,"setActionListener",tolua_anysdk_ProtocolShare_setResultListener);
+    // tolua_endmodule(tolua_S);
+
+    // std::string typeName = typeid(anysdk::framework::ProtocolShare).name();
+    // g_luaType[typeName] = "ccanysdk.ProtocolShare";
+    // g_typeCast["ProtocolShare"] = "ccanysdk.ProtocolShare";
+
 }
 
 int register_all_anysdk_manual(lua_State* L)
@@ -609,6 +889,7 @@ int register_all_anysdk_manual(lua_State* L)
     extendAnalytics(L);
     extendAds(L);
     extendPush(L);
+    extendShare(L);
     
     return 0;
 }

@@ -66,6 +66,10 @@ function MyApp:sdkListener(protocol, param)
 	elseif "push" == protocol then
 	end
 
+    if not self.curScene then
+        printInfo("Current Scene is nil")
+        return
+    end
 	if self.curScene.sdkListener then
 		param = json.decode(param)
 		self.curScene:sdkListener(protocol, param)

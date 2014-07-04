@@ -1984,6 +1984,20 @@ int lua_register_anysdk_AgentManager(lua_State* tolua_S)
     g_typeCast["AgentManager"] = "ccanysdk.AgentManager";
     return 1;
 }
+
+int lua_register_anysdk_ProtocolShare(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccanysdk.ProtocolShare");
+    tolua_cclass(tolua_S,"ProtocolShare","ccanysdk.ProtocolShare","",nullptr);
+
+    tolua_beginmodule(tolua_S,"ProtocolShare");
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(anysdk::framework::ProtocolShare).name();
+    g_luaType[typeName] = "ccanysdk.ProtocolShare";
+    g_typeCast["ProtocolShare"] = "ccanysdk.ProtocolShare";
+    return 1;
+}
+
 TOLUA_API int register_all_anysdk(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -1998,6 +2012,7 @@ TOLUA_API int register_all_anysdk(lua_State* tolua_S)
 	lua_register_anysdk_ProtocolAnalytics(tolua_S);
 	lua_register_anysdk_ProtocolAds(tolua_S);
 	lua_register_anysdk_ProtocolPush(tolua_S);
+    lua_register_anysdk_ProtocolShare(tolua_S);
 
 	tolua_endmodule(tolua_S);
 	return 1;

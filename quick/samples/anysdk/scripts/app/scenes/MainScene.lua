@@ -39,6 +39,7 @@ function MainScene:show()
             local ads = app.agentMgr:getAdsPlugin()
         	if ads then
                 ads:showAds(0)
+                print("ads sdk version:", ads:getSDKVersion())
             end
         end)
         :pos(display.cx/2, display.top - self.innerSpace*2)
@@ -117,9 +118,14 @@ function MainScene:show()
         :setButtonSize(display.cx - 20, 60)
         :onButtonClicked(function()
             local iaps = app.agentMgr:getIAPPlugin()
+            dump(iaps, "IAPs:")
             if iaps then
                 --从iaps中选一个来支付，具体返回有哪些，要看anysk打包集成了哪些
                 local iap = iaps.alipay
+                if not iap then
+                    print("IAP is nil")
+                    return
+                end
 
                 --payForProduct有哪些参数及其含意，参见
                 --http://docs.anysdk.com/IAPSystem
@@ -136,7 +142,7 @@ function MainScene:show()
         :pos(display.cx/2, display.top - self.innerSpace*5)
         :addTo(self)
 
-    self.textLable = cc.ui.UILabel.new({text = "-", size = 22, color = display.COLOR_BLACK})
+    self.textLable = cc.ui.UILabel.new({text = "-", size = 22, color = display.COLOR_WHITE})
         :pos(display.cx, display.top - self.innerSpace*6)
         :align(display.CENTER)
         :addTo(self)
@@ -144,7 +150,7 @@ end
 
 function MainScene:sdkListener(protocol, param)
     dump(param, "sdk callback param:")
-    self.textLable = json.encode(param)
+    self.textLable:setString(json.encode(param))
     if "ads" == protocol then
     elseif "iap" == protocol then
     elseif "share" == protocol then

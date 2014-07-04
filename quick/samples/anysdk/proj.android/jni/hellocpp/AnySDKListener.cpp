@@ -19,14 +19,19 @@ AdsListenerLua::~AdsListenerLua()
 
 void AdsListenerLua::onAdsResult(AdsResultCode code, const char* msg)
 {
+	CCLOG("ads listener code:%d, msg:%s", code, msg);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
 
     writer.String("AdsResultCode");
     writer.Int(code);
-    writer.String("msg");
-    writer.String(msg);
+    if (NULL != msg)
+    {
+    	writer.String("msg");
+    	writer.String(msg);
+	}
 
     writer.EndObject();
 
@@ -35,6 +40,8 @@ void AdsListenerLua::onAdsResult(AdsResultCode code, const char* msg)
 
 void AdsListenerLua::onPlayerGetPoints(ProtocolAds* pAdsPlugin, int points)
 {
+	CCLOG("ads listener points:%d", points);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
@@ -57,12 +64,17 @@ PayResultListenerLua::~PayResultListenerLua()
 
 void PayResultListenerLua::onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
 {
+	CCLOG("iap listener msg:%s", msg);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
 
-	writer.String("msg");
-    writer.String(msg);
+	if (NULL != msg)
+    {
+    	writer.String("msg");
+    	writer.String(msg);
+	}
     writer.String("info");
 
     writer.StartObject();
@@ -88,14 +100,19 @@ PushActionListenerLua::~PushActionListenerLua()
 
 void PushActionListenerLua::onActionResult(ProtocolPush* pPlugin, PushActionResultCode code, const char* msg)
 {
+	CCLOG("push listener code:%d, msg:%s", code, msg);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
 
     writer.String("code");
     writer.Int(code);
-    writer.String("msg");
-    writer.String(msg);
+    if (NULL != msg)
+    {
+    	writer.String("msg");
+    	writer.String(msg);
+	}
 
     writer.EndObject();
 
@@ -114,12 +131,17 @@ ShareResultListenerLua::~ShareResultListenerLua()
 
 void ShareResultListenerLua::onShareResult(ShareResultCode ret, const char* msg)
 {
+	CCLOG("share listener msg:%s", msg);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
 
-    writer.String("msg");
-    writer.String(msg);
+    if (NULL != msg)
+    {
+    	writer.String("msg");
+    	writer.String(msg);
+	}
 
     writer.EndObject();
 
@@ -138,12 +160,17 @@ SocialListenerLua::~SocialListenerLua()
 
 void SocialListenerLua::onSocialResult(SocialRetCode code, const char* msg)
 {
+	CCLOG("social listener code:%d, msg:%s", code, msg);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
 
-    writer.String("msg");
-    writer.String(msg);
+    if (NULL != msg)
+    {
+    	writer.String("msg");
+    	writer.String(msg);
+	}
 
     writer.EndObject();
 
@@ -162,22 +189,36 @@ UserActionListenerLua::~UserActionListenerLua()
 
 void UserActionListenerLua::onActionResult(ProtocolUser* pPlugin, UserActionResultCode code, const char* msg)
 {
+	CCLOG("user listener code:%d, msg:%s", code, msg);
+
 	rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     writer.StartObject();
 
-    writer.String("msg");
-    writer.String(msg);
+	writer.String("UserActionResultCode");
+    writer.Int(code);
+    if (NULL != msg)
+    {
+    	writer.String("msg");
+    	writer.String(msg);
+	}
 
     writer.EndObject();
 
+    const char* str = buffer.GetString();
+    CCLOG("use json:%s, fun:%d", str, m_luaFunction);
 	AnySDKListener::getInstance()->callLuaFunction(m_luaFunction, "user", buffer.GetString());
 }
 
 
 AnySDKListener::AnySDKListener()
 {
-
+	m_listenerAds = NULL;
+	m_listenerIAP = NULL;
+	m_listenerPush = NULL;
+	m_listenerShare = NULL;
+	m_listenerSocial = NULL;
+	m_listenerUser = NULL;
 }
 
 AnySDKListener::~AnySDKListener()
@@ -197,12 +238,19 @@ AnySDKListener* AnySDKListener::getInstance()
 
 void AnySDKListener::callLuaFunction(int luaFunction, const char* protocolName, const char* jsonStr)
 {
-	cocos2d::LuaEngine *engine = cocos2d::LuaEngine::getInstance();
+	cocos2d::LuaEngine *engine =
+		dynamic_cast<cocos2d::LuaEngine *>(
+			cocos2d::ScriptEngineManager::getInstance()->getScriptEngine());
+	if (NULL == engine)
+	{
+		CCLOG("ERROR! AnySDKListener::callLuaFunction lua engine is null");
+		return;
+	}
     cocos2d::LuaStack *stack = engine->getLuaStack();
-    cocos2d::LuaBridge::pushLuaFunctionById(luaFunction);
     stack->pushString(protocolName);
     stack->pushString(jsonStr);
-    stack->executeFunction(2);
+    stack->executeFunctionByHandler(luaFunction, 2);
+    stack->clean();
 }
 
 void AnySDKListener::releaseLuaFunction(int luaFunction)
