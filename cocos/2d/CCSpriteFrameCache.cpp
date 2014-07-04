@@ -409,5 +409,22 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
     return frame;
 }
 
+std::vector<std::string> SpriteFrameCache::getSpriteFramesByStart(const std::string& name)
+{
+	std::vector<std::string> output;
+
+	for (auto iter = _spriteFrames.cbegin(); iter != _spriteFrames.cend(); ++iter)
+	{
+		string key = iter->first;
+
+		if (key.find(name) == 0)
+		{
+			output.push_back(key);
+		}
+	}
+
+	return output;
+}
+
 NS_CC_END
 
