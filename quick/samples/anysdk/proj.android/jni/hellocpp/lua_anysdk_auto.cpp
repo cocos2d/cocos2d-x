@@ -5,6 +5,529 @@
 
 
 
+int lua_anysdk_PluginProtocol_getPluginName(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginProtocol* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginProtocol*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginProtocol_getPluginName'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const char* ret = cobj->getPluginName();
+        tolua_pushstring(tolua_S,(const char*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPluginName",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginProtocol_getPluginName'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_anysdk_PluginProtocol_getPluginVersion(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginProtocol* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginProtocol*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginProtocol_getPluginVersion'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        std::string ret = cobj->getPluginVersion();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPluginVersion",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginProtocol_getPluginVersion'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_anysdk_PluginProtocol_setPluginName(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginProtocol* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginProtocol*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginProtocol_setPluginName'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->setPluginName(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setPluginName",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginProtocol_setPluginName'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_anysdk_PluginProtocol_getSDKVersion(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginProtocol* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginProtocol*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginProtocol_getSDKVersion'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        std::string ret = cobj->getSDKVersion();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSDKVersion",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginProtocol_getSDKVersion'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_anysdk_PluginProtocol_setDebugMode(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginProtocol* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginProtocol*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginProtocol_setDebugMode'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->setDebugMode(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setDebugMode",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginProtocol_setDebugMode'.",&tolua_err);
+#endif
+
+    return 0;
+}
+static int lua_anysdk_PluginProtocol_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (PluginProtocol)");
+    return 0;
+}
+
+int lua_register_anysdk_PluginProtocol(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccanysdk.PluginProtocol");
+    tolua_cclass(tolua_S,"PluginProtocol","ccanysdk.PluginProtocol","",nullptr);
+
+    tolua_beginmodule(tolua_S,"PluginProtocol");
+        tolua_function(tolua_S,"getPluginName",lua_anysdk_PluginProtocol_getPluginName);
+        tolua_function(tolua_S,"getPluginVersion",lua_anysdk_PluginProtocol_getPluginVersion);
+        tolua_function(tolua_S,"setPluginName",lua_anysdk_PluginProtocol_setPluginName);
+        tolua_function(tolua_S,"getSDKVersion",lua_anysdk_PluginProtocol_getSDKVersion);
+        tolua_function(tolua_S,"setDebugMode",lua_anysdk_PluginProtocol_setDebugMode);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(anysdk::framework::PluginProtocol).name();
+    g_luaType[typeName] = "ccanysdk.PluginProtocol";
+    g_typeCast["PluginProtocol"] = "ccanysdk.PluginProtocol";
+    return 1;
+}
+
+int lua_anysdk_PluginFactory_purgeFactory(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccanysdk.PluginFactory",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        anysdk::framework::PluginFactory::purgeFactory();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "purgeFactory",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginFactory_purgeFactory'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_anysdk_PluginFactory_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccanysdk.PluginFactory",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        anysdk::framework::PluginFactory* ret = anysdk::framework::PluginFactory::getInstance();
+        object_to_luaval<anysdk::framework::PluginFactory>(tolua_S, "ccanysdk.PluginFactory",(anysdk::framework::PluginFactory*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginFactory_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_anysdk_PluginFactory_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (PluginFactory)");
+    return 0;
+}
+
+int lua_register_anysdk_PluginFactory(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccanysdk.PluginFactory");
+    tolua_cclass(tolua_S,"PluginFactory","ccanysdk.PluginFactory","",nullptr);
+
+    tolua_beginmodule(tolua_S,"PluginFactory");
+        tolua_function(tolua_S,"purgeFactory", lua_anysdk_PluginFactory_purgeFactory);
+        tolua_function(tolua_S,"getInstance", lua_anysdk_PluginFactory_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(anysdk::framework::PluginFactory).name();
+    g_luaType[typeName] = "ccanysdk.PluginFactory";
+    g_typeCast["PluginFactory"] = "ccanysdk.PluginFactory";
+    return 1;
+}
+
+int lua_anysdk_PluginManager_unloadPlugin(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginManager* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginManager*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginManager_unloadPlugin'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        if(!ok)
+            return 0;
+        cobj->unloadPlugin(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        const char* arg0;
+        int arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        cobj->unloadPlugin(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "unloadPlugin",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginManager_unloadPlugin'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_anysdk_PluginManager_loadPlugin(lua_State* tolua_S)
+{
+    int argc = 0;
+    anysdk::framework::PluginManager* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (anysdk::framework::PluginManager*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_anysdk_PluginManager_loadPlugin'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        const char* arg0;
+        int arg1;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+            return 0;
+        anysdk::framework::PluginProtocol* ret = cobj->loadPlugin(arg0, arg1);
+        object_to_luaval<anysdk::framework::PluginProtocol>(tolua_S, "ccanysdk.PluginProtocol",(anysdk::framework::PluginProtocol*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "loadPlugin",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginManager_loadPlugin'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_anysdk_PluginManager_end(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccanysdk.PluginManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        anysdk::framework::PluginManager::end();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "end",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginManager_end'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_anysdk_PluginManager_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccanysdk.PluginManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        anysdk::framework::PluginManager* ret = anysdk::framework::PluginManager::getInstance();
+        object_to_luaval<anysdk::framework::PluginManager>(tolua_S, "ccanysdk.PluginManager",(anysdk::framework::PluginManager*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_anysdk_PluginManager_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_anysdk_PluginManager_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (PluginManager)");
+    return 0;
+}
+
+int lua_register_anysdk_PluginManager(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccanysdk.PluginManager");
+    tolua_cclass(tolua_S,"PluginManager","ccanysdk.PluginManager","",nullptr);
+
+    tolua_beginmodule(tolua_S,"PluginManager");
+        tolua_function(tolua_S,"unloadPlugin",lua_anysdk_PluginManager_unloadPlugin);
+        tolua_function(tolua_S,"loadPlugin",lua_anysdk_PluginManager_loadPlugin);
+        tolua_function(tolua_S,"end", lua_anysdk_PluginManager_end);
+        tolua_function(tolua_S,"getInstance", lua_anysdk_PluginManager_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(anysdk::framework::PluginManager).name();
+    g_luaType[typeName] = "ccanysdk.PluginManager";
+    g_typeCast["PluginManager"] = "ccanysdk.PluginManager";
+    return 1;
+}
+
 int lua_anysdk_ProtocolIAP_getPluginId(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2005,12 +2528,15 @@ TOLUA_API int register_all_anysdk(lua_State* tolua_S)
 	tolua_module(tolua_S,"anysdk",0);
 	tolua_beginmodule(tolua_S,"anysdk");
 
+	lua_register_anysdk_PluginProtocol(tolua_S);
+	lua_register_anysdk_ProtocolUser(tolua_S);
+	lua_register_anysdk_PluginFactory(tolua_S);
 	lua_register_anysdk_ProtocolIAP(tolua_S);
 	lua_register_anysdk_AgentManager(tolua_S);
-	lua_register_anysdk_ProtocolUser(tolua_S);
 	lua_register_anysdk_ProtocolSocial(tolua_S);
 	lua_register_anysdk_ProtocolAnalytics(tolua_S);
 	lua_register_anysdk_ProtocolAds(tolua_S);
+	lua_register_anysdk_PluginManager(tolua_S);
 	lua_register_anysdk_ProtocolPush(tolua_S);
     lua_register_anysdk_ProtocolShare(tolua_S);
 

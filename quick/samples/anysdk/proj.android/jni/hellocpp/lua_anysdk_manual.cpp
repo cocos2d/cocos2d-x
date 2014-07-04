@@ -877,6 +877,364 @@ static void extendShare(lua_State* tolua_S)
 
 }
 
+bool luavals_to_stdvector(lua_State* L, int argc, std::vector<PluginParam*>* pVec)
+{
+    int count = 0;
+    for (count = 3; count < argc + 1; count++)
+    {
+        int type = lua_type(L, count);
+
+        switch (type)
+        {
+            case LUA_TBOOLEAN:
+            {
+                bool b = lua_toboolean(L, count);
+                pVec->push_back(new PluginParam(b));
+
+                break;
+            }
+            case LUA_TNUMBER:
+            {
+                float f = lua_tonumber(L, count);
+                pVec->push_back(new PluginParam(f));
+
+                break;
+            }
+            case LUA_TSTRING:
+            {
+                const char* str = lua_tostring(L,count);
+                pVec->push_back(new PluginParam(str));
+
+                break;
+            }
+            case LUA_TTABLE:
+            {
+                std::map<std::string, std::string> map;
+                luaval_to_stdmap_string_key_string(L, count, &map);
+                pVec->push_back(new PluginParam(map));
+                break;
+            }
+            default:
+            {
+                return false;
+                //break;
+            }
+        }
+    }
+
+    return true;
+}
+static void releaseVecContent(std::vector<PluginParam*>* list)
+{
+    PluginParam* param = NULL;
+    for (std::vector<PluginParam*>::iterator it = list->begin(); it != list->end(); ++it)
+    {
+        param = *it;
+        if (NULL != param)
+        {
+            delete param;
+        }
+        param = NULL;
+    }
+    list->clear();
+}
+
+void show_stdvector(std::vector<PluginParam*>* list)
+{
+    for (std::vector<PluginParam*>::iterator it = list->begin(); it != list->end(); ++it)
+    {
+        PluginParam::ParamType type = (*it)->getCurrentType();
+        switch (type) {
+            case PluginParam::ParamType::kParamTypeNull: {
+                break;
+            }
+            case PluginParam::ParamType::kParamTypeInt: {
+                CCLOG("list item int:%d", (*it)->getIntValue());
+                break;
+            }
+            case PluginParam::ParamType::kParamTypeFloat: {
+                CCLOG("list item float:%f", (*it)->getFloatValue());
+                break;
+            }
+            case PluginParam::ParamType::kParamTypeBool: {
+                CCLOG("list item bool:%d", (*it)->getBoolValue());
+                break;
+            }
+            case PluginParam::ParamType::kParamTypeString: {
+                CCLOG("list item string:%s", (*it)->getStringValue());
+                break;
+            }
+            case PluginParam::ParamType::kParamTypeStringMap: {
+                CCLOG("list item stringmap:");
+                std::map<std::string, std::string> map = (*it)->getStrMapValue();
+                show_stdmap(&map);
+                break;
+            }
+            case PluginParam::ParamType::kParamTypeMap: {
+                CCLOG("list item map");
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+}
+
+static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    PluginProtocol* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<PluginProtocol*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_PluginProtocol_callFuncWithParam'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc < 7)
+    {
+        const char* funName = lua_tostring(tolua_S, 2);
+
+        std::vector<PluginParam*> vecParam;
+        luavals_to_stdvector(tolua_S, argc + 1, &vecParam);
+        self->callFuncWithParam(funName, vecParam);
+        releaseVecContent(&vecParam);
+
+        return 0;
+    }
+    
+    CCLOG("'callFuncWithParam' function of PluginProtocol has wrong number of arguments: %d, max %d\n", argc, 5);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'callFuncWithParam'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_anysdk_PluginProtocol_callStringFuncWithParam(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    PluginProtocol* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<PluginProtocol*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_PluginProtocol_callStringFuncWithParam'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc < 7)
+    {
+        const char* funName = lua_tostring(tolua_S, 2);
+
+        std::vector<PluginParam*> vecParam;
+        luavals_to_stdvector(tolua_S, argc + 1, &vecParam);
+        std::string retString = self->callStringFuncWithParam(funName, vecParam);
+        releaseVecContent(&vecParam);
+        tolua_pushcppstring(tolua_S,retString);
+        return 1;
+    }
+    
+    CCLOG("'callStringFuncWithParam' function of PluginProtocol has wrong number of arguments: %d, max %d\n", argc, 5);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'callStringFuncWithParam'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_anysdk_PluginProtocol_callIntFuncWithParam(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    PluginProtocol* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<PluginProtocol*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_PluginProtocol_callIntFuncWithParam'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc < 7)
+    {
+        const char* funName = lua_tostring(tolua_S, 2);
+        std::vector<PluginParam*> vecParam;
+        luavals_to_stdvector(tolua_S, argc + 1, &vecParam);
+        int ret = self->callIntFuncWithParam(funName, vecParam);
+        releaseVecContent(&vecParam);
+        tolua_pushnumber(tolua_S,ret);
+        return 1;
+    }
+    
+    CCLOG("'callIntFuncWithParam' function of PluginProtocol has wrong number of arguments: %d, max %d\n", argc, 5);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'callIntFuncWithParam'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    PluginProtocol* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<PluginProtocol*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_PluginProtocol_callBoolFuncWithParam'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc < 7)
+    {
+        const char* funName = lua_tostring(tolua_S, 2);
+
+        std::vector<PluginParam*> vecParam;
+        luavals_to_stdvector(tolua_S, argc + 1, &vecParam);
+        bool ret = self->callBoolFuncWithParam(funName, vecParam);
+        releaseVecContent(&vecParam);
+        tolua_pushboolean(tolua_S,ret);
+        return 1;
+    }
+    
+    CCLOG("'callBoolFuncWithParam' function of PluginProtocol has wrong number of arguments: %d, max %d\n", argc, 5);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'callBoolFuncWithParam'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_anysdk_PluginProtocol_callFloatFuncWithParam(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    PluginProtocol* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"ccanysdk.PluginProtocol",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<PluginProtocol*>(tolua_tousertype(tolua_S,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_anysdk_PluginProtocol_callFloatFuncWithParam'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc < 7)
+    {
+        const char* funName = lua_tostring(tolua_S, 2);
+
+        std::vector<PluginParam*> vecParam;
+        luavals_to_stdvector(tolua_S, argc + 1, &vecParam);
+        float ret = self->callFloatFuncWithParam(funName, vecParam);
+        releaseVecContent(&vecParam);
+        tolua_pushnumber(tolua_S,ret);
+        return 1;
+    }
+    
+    CCLOG("'callFloatFuncWithParam' function of PluginProtocol has wrong number of arguments: %d, max %d\n", argc, 5);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'callFloatFuncWithParam'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendPluginProtocol(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ccanysdk.PluginProtocol");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"callFuncWithParam");
+        lua_pushcfunction(tolua_S,tolua_anysdk_PluginProtocol_callFuncWithParam);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"callStringFuncWithParam");
+        lua_pushcfunction(tolua_S,tolua_anysdk_PluginProtocol_callStringFuncWithParam);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"callIntFuncWithParam");
+        lua_pushcfunction(tolua_S,tolua_anysdk_PluginProtocol_callIntFuncWithParam);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"callBoolFuncWithParam");
+        lua_pushcfunction(tolua_S,tolua_anysdk_PluginProtocol_callBoolFuncWithParam);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"callFloatFuncWithParam");
+        lua_pushcfunction(tolua_S,tolua_anysdk_PluginProtocol_callFloatFuncWithParam);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_anysdk_manual(lua_State* L)
 {
     if (nullptr == L)
@@ -890,6 +1248,7 @@ int register_all_anysdk_manual(lua_State* L)
     extendAds(L);
     extendPush(L);
     extendShare(L);
+    extendPluginProtocol(L);
     
     return 0;
 }

@@ -108,6 +108,13 @@ function MainScene:show()
             local user = app.agentMgr:getUserPlugin()
             if user then
                 user:login()
+
+                --调用扩展功能
+                if user:isSupportFunction("function1") then
+                    --PluginProtocol中的callFuncWithParam方法只导出了传多个参数的方法(原生C代码支持传多个参数或传一个vector)
+                    --除第一个外，后续参数不分先后，会自动全部转为PluginParam类型再传到AnySDK中
+                    user:callFuncWithParam("function1", 12, true, "infos1", {key1 = "val11", key2 = "val2"})
+                end
             end
         end)
         :pos(display.cx + display.cx/2, display.top - self.innerSpace*4)
