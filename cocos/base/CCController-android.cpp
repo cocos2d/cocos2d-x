@@ -137,6 +137,10 @@ const std::string& Controller::getDeviceName()
     return _deviceName;
 }
 
+void Controller::registerListeners()
+{
+}
+
 bool Controller::isConnected() const
 {
     // If there is a controller instance, it means that the controller is connected.
