@@ -114,6 +114,7 @@ private:
     void onDisconnected();
     void onButtonEvent(int keyCode, bool isPressed, float value, bool isAnalog);
     void onAxisEvent(int axisCode, float value, bool isAnalog);
+    void registerListeners();
 
     std::unordered_map<int, KeyStatus> _allKeyStatus;
     std::unordered_map<int, KeyStatus> _allKeyPrevStatus;

@@ -18,9 +18,9 @@ public:
     void onKeyDown(cocos2d::Controller* controller, int keyCode, cocos2d::Event* event);
     void onKeyUp(cocos2d::Controller* controller, int keyCode, cocos2d::Event* event);
     void onAxisEvent(cocos2d::Controller* controller, int keyCode, cocos2d::Event* event);
-
-    void update(float dt);
+    
     void menuCloseCallback(Ref* sender);
+    
 private:
     float _visibleCentreX;
     float _visibleCentreY;

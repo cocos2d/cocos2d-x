@@ -25,7 +25,7 @@
 
 #include "CCController.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "ccMacros.h"
 #include "CCEventDispatcher.h"
