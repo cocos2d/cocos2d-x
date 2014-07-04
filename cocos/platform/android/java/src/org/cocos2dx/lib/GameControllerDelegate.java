@@ -6,34 +6,36 @@ import android.view.MotionEvent;
 
 public interface GameControllerDelegate {
 
-	public static final int THUMBSTICK_LEFT_X = 100;
-    public static final int THUMBSTICK_LEFT_Y = 101;
-    public static final int THUMBSTICK_RIGHT_X = 102;
-    public static final int THUMBSTICK_RIGHT_Y = 103;
+	static final int KEY_BASE = 1000;
+	
+	public static final int THUMBSTICK_LEFT_X = KEY_BASE;
+    public static final int THUMBSTICK_LEFT_Y = KEY_BASE + 1;
+    public static final int THUMBSTICK_RIGHT_X = KEY_BASE + 2;
+    public static final int THUMBSTICK_RIGHT_Y = KEY_BASE + 3;
     
-    public static final int BUTTON_A = 110;
-    public static final int BUTTON_B = 111;
-    public static final int BUTTON_C = 112;
-    public static final int BUTTON_X = 113;
-    public static final int BUTTON_Y = 114;
-    public static final int BUTTON_Z = 115;
+    public static final int BUTTON_A = KEY_BASE + 4;
+    public static final int BUTTON_B = KEY_BASE + 5;
+    public static final int BUTTON_C = KEY_BASE + 6;
+    public static final int BUTTON_X = KEY_BASE + 7;
+    public static final int BUTTON_Y = KEY_BASE + 8;
+    public static final int BUTTON_Z = KEY_BASE + 9;
     
-    public static final int BUTTON_LEFT_SHOULDER = 120;
-    public static final int BUTTON_RIGHT_SHOULDER = 121;
-    public static final int BUTTON_LEFT_TRIGGER = 122;
-    public static final int BUTTON_RIGHT_TRIGGER = 123;
+    public static final int BUTTON_DPAD_UP = KEY_BASE + 10;
+    public static final int BUTTON_DPAD_DOWN = KEY_BASE + 11;
+    public static final int BUTTON_DPAD_LEFT = KEY_BASE + 12;
+    public static final int BUTTON_DPAD_RIGHT = KEY_BASE + 13;
+    public static final int BUTTON_DPAD_CENTER = KEY_BASE + 14;
     
-    public static final int BUTTON_DPAD_UP = 130;
-    public static final int BUTTON_DPAD_DOWN = 131;
-    public static final int BUTTON_DPAD_LEFT = 132;
-    public static final int BUTTON_DPAD_RIGHT = 133;
-    public static final int BUTTON_DPAD_CENTER = 134;
+    public static final int BUTTON_LEFT_SHOULDER = KEY_BASE + 15;
+    public static final int BUTTON_RIGHT_SHOULDER = KEY_BASE + 16;
+    public static final int BUTTON_LEFT_TRIGGER = KEY_BASE + 17;
+    public static final int BUTTON_RIGHT_TRIGGER = KEY_BASE + 18;
     
-    public static final int BUTTON_LEFT_THUMBSTICK = 140;
-    public static final int BUTTON_RIGHT_THUMBSTICK = 141;
+    public static final int BUTTON_LEFT_THUMBSTICK = KEY_BASE + 19;
+    public static final int BUTTON_RIGHT_THUMBSTICK = KEY_BASE + 20;
     
-    public static final int BUTTON_START = 150;
-    public static final int BUTTON_SELECT = 151;  
+    public static final int BUTTON_START = KEY_BASE + 21;
+    public static final int BUTTON_SELECT = KEY_BASE + 22;  
     
 	void onCreate(Context context);
 	void onPause();
