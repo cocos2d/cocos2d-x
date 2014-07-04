@@ -1,6 +1,6 @@
 
 #import "CreateNewProjectDialogController.h"
-#include "SimulatorConfig.h"
+#include "ProjectConfig/SimulatorConfig.h"
 
 @implementation CreateNewProjectDialogController
 

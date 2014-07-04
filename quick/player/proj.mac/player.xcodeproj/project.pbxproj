@@ -674,6 +674,7 @@
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
 					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -718,6 +719,7 @@
 					"$(QUICK_V3_ROOT)/cocos",
 					"$(QUICK_V3_ROOT)/cocos/audio/include",
 					"$(QUICK_V3_ROOT)/quick/lib/extra",
+					"$(QUICK_V3_ROOT)/quick/lib",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (

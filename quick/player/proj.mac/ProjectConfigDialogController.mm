@@ -1,7 +1,7 @@
 
 #import "ProjectConfigDialogController.h"
 
-#include "SimulatorConfig.h"
+#include "ProjectConfig/SimulatorConfig.h"
 
 @interface OnlyIntegerValueFormatter : NSNumberFormatter
 @end

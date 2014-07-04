@@ -1,6 +1,6 @@
 
 #import <Cocoa/Cocoa.h>
-#import "SimulatorConfig.h"
+#import "ProjectConfig/SimulatorConfig.h"
 
 @interface ProjectConfigDialogController : NSWindowController
 {

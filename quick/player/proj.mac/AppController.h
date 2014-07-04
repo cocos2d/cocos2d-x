@@ -7,7 +7,7 @@
 
 #import "ConsoleWindowController.h"
 
-#include "SimulatorConfig.h"
+#include "ProjectConfig/SimulatorConfig.h"
 #include "AppDelegate.h"
 
 class AppControllerBridge;
