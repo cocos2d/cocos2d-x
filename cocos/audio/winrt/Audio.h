@@ -9,6 +9,7 @@
 
 #include "pch.h"
 #include <map>
+#include <Xaudio2.h>
 
 static const int STREAMING_BUFFER_SIZE = 65536;
 static const int MAX_BUFFER_COUNT = 3;

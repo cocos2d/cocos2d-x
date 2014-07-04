@@ -7,6 +7,9 @@
 
 #pragma once
 #include "pch.h"
+#include "Mfapi.h"
+#include "Mfidl.h"
+#include "Mfreadwrite.h"
 
 class MediaStreamer
 {

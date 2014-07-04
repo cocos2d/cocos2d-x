@@ -52,18 +52,18 @@ static Audio* sharedAudioController()
     return s_audioController;
 }
 
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
+{
+	static SimpleAudioEngine ptr;
+	return &ptr;
+}
+
 SimpleAudioEngine::SimpleAudioEngine()
 {
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
 {
-}
-
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
-{
-    static SimpleAudioEngine s_SharedEngine;
-    return &s_SharedEngine;
 }
 
 void SimpleAudioEngine::end()
