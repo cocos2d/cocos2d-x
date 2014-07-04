@@ -183,12 +183,12 @@ void MeshCommand::preBatchDraw()
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
 
-    if (_vao == 0)
+    if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
         buildVAO();
     if (_vao)
     {
         GL::bindVAO(_vao);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
     else
     {
@@ -209,6 +209,13 @@ void MeshCommand::batchDraw()
     
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
+//    if (_matrixPaletteSize && _matrixPalette)
+//    {
+//        auto glProgram = _glProgramState->getGLProgram();
+//        auto uniform = glProgram->getUniform("u_matrixPalette");
+//        if (uniform)
+//        glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+//    }
     
     // Draw
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -265,7 +272,7 @@ void MeshCommand::execute()
 void MeshCommand::buildVAO()
 {
     releaseVAO();
-    if (Configuration::getInstance()->supportsShareableVAO())
+    //if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
         GL::bindVAO(_vao);
@@ -288,7 +295,8 @@ void MeshCommand::buildVAO()
 }
 void MeshCommand::releaseVAO()
 {
-    if (Configuration::getInstance()->supportsShareableVAO() && _vao)
+    //if (Configuration::getInstance()->supportsShareableVAO() && _vao)
+    if (_vao)
     {
         glDeleteVertexArrays(1, &_vao);
         _vao = 0;
