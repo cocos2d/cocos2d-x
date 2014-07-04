@@ -124,7 +124,10 @@ void MenuServiceMac::addItem( const PlayerMenuItem &item,
         }
         else
         {
-            menu = [(it->second) submenu];
+            if (it != m_id2Menu.end())
+            {
+                menu = [(it->second) submenu];
+            }
         }
         
         if (!menu)

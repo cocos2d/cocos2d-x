@@ -15,19 +15,25 @@
 #include "glfw3.h"
 #include "glfw3native.h"
 
-#include "native/CCNative.h"
-
 #include "cocos2d.h"
+#include "native/CCNative.h"
+#include "CCLuaEngine.h"
 USING_NS_CC;
 USING_NS_CC_EXTRA;
 
-
+// player interface
+#include "player_tolua.h"
 #include "PlayerProtocol.h"
 
 @implementation AppController
 
 - (void) dealloc
 {
+    if (buildTask)
+    {
+        [buildTask interrupt];
+        buildTask = nil;
+    }
     [super dealloc];
 }
 
@@ -38,6 +44,9 @@ USING_NS_CC_EXTRA;
     isMaximized = NO;
     hasPopupDialog = NO;
     debugLogFile = 0;
+
+    buildTask = nil;
+    isBuildingFinished = YES;
     
     // load QUICK_COCOS2DX_ROOT from ~/.QUICK_COCOS2DX_ROOT
     NSMutableString *path = [NSMutableString stringWithString:NSHomeDirectory()];
@@ -57,12 +66,13 @@ USING_NS_CC_EXTRA;
     SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([env cStringUsingEncoding:NSUTF8StringEncoding]);
     
     
-    
+    [self loadLuaConfig];
     [self updateProjectConfigFromCommandLineArgs:&projectConfig];
     [self createWindowAndGLView];
     [self initUI];
     [self updateOpenRect];
     [self updateUI];
+    [self loadLuaPlayerCore];
     [self startup];
 }
 
@@ -305,6 +315,47 @@ USING_NS_CC_EXTRA;
     [alert runModal];
 }
 
+- (void) showAlert:(NSString*)message withTitle:(NSString*)title
+{
+    
+    NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+	[alert addButtonWithTitle:@"OK"];
+	[alert setMessageText:message];
+	[alert setInformativeText:title];
+	[alert setAlertStyle:NSWarningAlertStyle];
+    
+	[alert beginSheetModalForWindow:window
+					  modalDelegate:self
+					 didEndSelector:nil
+						contextInfo:nil];
+}
+
+- (void) loadLuaConfig
+{
+    LuaEngine* pEngine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+    
+    tolua_player_luabinding_open(pEngine->getLuaStack()->getLuaState());
+    
+    NSMutableString *path = [NSMutableString stringWithString:NSHomeDirectory()];
+    [path appendString:@"/"];
+    
+    // set user home dir
+    lua_pushstring(pEngine->getLuaStack()->getLuaState(), path.UTF8String);
+    lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__USER_HOME__");
+    
+    [path appendString:@".quick_player.lua"];
+    
+
+    NSString *luaCorePath = [[NSBundle mainBundle] pathForResource:@"player" ofType:@"lua"];
+    pEngine->getLuaStack()->executeScriptFile(luaCorePath.UTF8String);
+    
+    player::PlayerSettings &settings = player::PlayerProtocol::getInstance()->getPlayerSettings();
+
+    projectConfig.setWindowOffset(Vec2(settings.offsetX, settings.offsetY));
+    projectConfig.setFrameSize(cocos2d::Size(settings.windowWidth, settings.windowHeight));
+}
+
 #pragma mark -
 #pragma mark functions
 
@@ -335,6 +386,30 @@ USING_NS_CC_EXTRA;
 //    [window setAcceptsMouseMovedEvents:NO];
 }
 
+- (void) loadLuaPlayerCore
+{
+    LuaEngine* pEngine = LuaEngine::getInstance();
+    
+    // set quick-cocos2d-x root path
+    std::string quickPath = SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath();
+    lua_pushstring(pEngine->getLuaStack()->getLuaState(), quickPath.c_str());
+    lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__G__QUICK_PATH__");
+    
+    std::string command = projectConfig.makeCommandLine();
+    std::vector <std::string> fields;
+    player::split(fields, command, ' ');
+    
+    LuaValueArray array;
+    for (size_t i = 0; i < fields.size(); i++)
+    {
+        array.push_back(LuaValue::stringValue(fields.at(i)));
+    }
+    pEngine->getLuaStack()->pushFunctionByName("__PLAYER_OPEN__");
+    pEngine->getLuaStack()->pushLuaValue(LuaValue::stringValue(projectConfig.getProjectDir()));
+    pEngine->getLuaStack()->pushLuaValueArray(array);
+    pEngine->getLuaStack()->executeFunction(2);
+
+}
 
 - (void) startup
 {
@@ -342,8 +417,6 @@ USING_NS_CC_EXTRA;
     if (path.length() <= 0)
     {
         [self showPreferences:YES];
-//        player::PlayerProtocol::getInstance()->getMessageBoxService()->showMessageBox("quick-x-player error",
-//                                                                                      "Please set quick-cocos2d-x root path.");
     }
     
     const string projectDir = projectConfig.getProjectDir();
@@ -376,8 +449,18 @@ USING_NS_CC_EXTRA;
         {
             std::vector<std::string> args;
             player::split(args, event->getDataString(), ',');
-            projectConfig.parseCommandLine(args);
-            [self relaunch];
+            
+            if (args.at(args.size()-1) == "-new")
+            {
+                ProjectConfig config;
+                config.parseCommandLine(args);
+                [self newPlayerWithArgs:config];
+            }
+            else
+            {
+                projectConfig.parseCommandLine(args);
+                [self relaunch];
+            }
         }
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, 1);
@@ -535,6 +618,38 @@ USING_NS_CC_EXTRA;
     }];
 }
 
+- (void) buildAndroidInBackground:(NSString *) scriptAbsPath
+{
+    buildTask = [[NSTask alloc] init];
+    [buildTask setLaunchPath: [NSString stringWithUTF8String:scriptAbsPath.UTF8String]];
+    
+    [buildTask setArguments: [NSArray array]];
+    
+    [buildTask launch];
+    
+    [buildTask waitUntilExit];
+
+    int exitCode = [buildTask terminationStatus];
+    [buildTask release];
+    buildTask = nil;
+    
+    [self performSelectorOnMainThread:@selector(updateAlertUI:) withObject:@(exitCode) waitUntilDone:YES];
+}
+
+- (void) updateAlertUI:(NSString*) errCodeString
+{
+    if (!buildAlert) return;
+    
+    int errCode = [errCodeString intValue];
+    NSString *message = (errCode == 0) ? @"Build finished, Congraturations!" : @"OPPS, please check your code or build env";
+    BOOL hide = (errCode == 0) ? YES : NO;
+    
+    [buildAlert setMessageText:message];
+    [[[buildAlert buttons] objectAtIndex:0] setTitle:@"Finish"];
+    [[[buildAlert buttons] objectAtIndex:1] setHidden:hide];
+}
+
+
 #pragma mark -
 #pragma mark interfaces
 
@@ -568,28 +683,11 @@ USING_NS_CC_EXTRA;
     Native::openURL("http://www.cocoachina.com/bbs/thread.php?fid=56");
 }
 
-- (void) welcomeOpenRecent:(cocos2d::CCObject *)object
+- (void) newPlayerWithArgs:(ProjectConfig&) config
 {
-    
-    cocos2d::CCString *stringData = dynamic_cast<cocos2d::CCString*>(object);
-    if (stringData)
-    {
-        NSString *data = [NSString stringWithUTF8String:stringData->getCString()];
-        [self relaunch:[data componentsSeparatedByString:@","]];
-    }
-    
-    cocos2d::CCInteger *intData = dynamic_cast<cocos2d::CCInteger*>(object);
-    if (intData)
-    {
-        int index = intData->getValue();
-        
-        NSArray *recents = [[NSUserDefaults standardUserDefaults] objectForKey:@"recents"];
-        if (index < recents.count)
-        {
-            NSDictionary *recentItem = [recents objectAtIndex:index];
-            [self relaunch: [recentItem objectForKey:@"args"]];
-        }
-    }
+    config.setWindowOffset(Vec2(window.frame.origin.x, window.frame.origin.y));
+    NSString *commandLine = [NSString stringWithCString:config.makeCommandLine().c_str() encoding:NSUTF8StringEncoding];
+    [self launch:[NSMutableArray arrayWithArray:[commandLine componentsSeparatedByString:@" "]]];
 }
 
 #pragma mark -
@@ -659,6 +757,7 @@ USING_NS_CC_EXTRA;
 - (IBAction) onFileOpenRecentClearMenu:(id)sender
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSArray array] forKey:@"recents"];
+    LuaEngine::getInstance()->getLuaStack()->executeString("cc.player.clearMenu()");
     [self updateUI];
 }
 
@@ -770,5 +869,73 @@ USING_NS_CC_EXTRA;
     [self setAlwaysOnTop:!isAlwaysOnTop];
 }
 
+-(IBAction)fileBuildAndroid:(id)sender
+{
+    if (!isBuildingFinished) return;
+        
+    if (projectConfig.isWelcome())
+    {
+        [self showAlert:@"Welcome app is not for android" withTitle:@""];
+    }
+    else
+    {
+        std::string scriptPath = projectConfig.getProjectDir() + "proj.android/build_native.sh";
+        if (!FileUtils::getInstance()->isFileExist(scriptPath))
+        {
+            [self showAlert:[NSString stringWithFormat:@"%s isn't exist", scriptPath.c_str()] withTitle:@""];
+        }
+        else
+        {
+            isBuildingFinished = NO;
+            NSString *tmpPath = [NSString stringWithUTF8String:scriptPath.c_str()];
+            
+            [self performSelectorInBackground:@selector(buildAndroidInBackground:)
+                                   withObject:tmpPath];
+            
+            
+            
+            NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+            [alert addButtonWithTitle:@"Cancel"];
+            [[alert addButtonWithTitle:@"How to setup android ENV"] setHidden:YES];
+            [alert setMessageText:@"Building android target, view console :-)"];
+            [alert setAlertStyle:NSWarningAlertStyle];
 
+            buildAlert = alert;
+            [alert beginSheetModalForWindow:window
+                          completionHandler:^(NSModalResponse returnCode) {
+                              
+                              isBuildingFinished = YES;
+                              if (returnCode == NSAlertFirstButtonReturn)
+                              {
+                                  if (buildTask && [buildTask isRunning])
+                                  {
+                                      [NSObject cancelPreviousPerformRequestsWithTarget:self];
+                                      [buildTask interrupt];
+                                  }
+                              }
+                              else if (returnCode == NSAlertSecondButtonReturn)
+                              {
+                                  Native::openURL("http://quick.cocos.org/?p=415");
+                              }
+                          }];
+        }
+    }
+}
+
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
+{
+    return (isBuildingFinished);
+}
+
+- (IBAction) fileBuildIOS:(id)sender
+{
+    if (projectConfig.isWelcome())
+    {
+        [self showAlert:@"Welcome app " withTitle:@""];
+    }
+    else
+    {
+        [self showAlert:@"Coming soon :-)" withTitle:@""];
+    }
+}
 @end

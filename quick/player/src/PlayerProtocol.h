@@ -11,6 +11,20 @@
 
 PLAYER_NS_BEGIN
 
+struct PlayerSettings
+{
+public:
+    PlayerSettings()
+    : openLastProject(false), offsetX(0), offsetY(0), windowWidth(960), windowHeight(640)
+    {}
+    
+    bool openLastProject;
+    long offsetX;
+    long offsetY;
+    long windowWidth;
+    long windowHeight;
+};
+
 class PlayerProtocol
 {
 public:
@@ -19,6 +33,9 @@ public:
     static PlayerProtocol *getInstance();
     static void purgeInstance();
 
+    void setPlayerSettings(PlayerSettings &settings);
+    PlayerSettings &getPlayerSettings() ;
+    
     virtual PlayerFileDialogServiceProtocol *getFileDialogService() = 0; // impl in platform related source files
     
     virtual PlayerMessageBoxServiceProtocol *getMessageBoxService() = 0;
@@ -35,6 +52,8 @@ protected:
 
 private:
     static PlayerProtocol *s_instance;
+    
+    PlayerSettings m_settings;
 };
 
 PLAYER_NS_END

@@ -15,6 +15,7 @@
 		9F05A106194EF67E003CFA1F /* PlayerPreferencesDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F05A103194EF67E003CFA1F /* PlayerPreferencesDialog.xib */; };
 		9F05A107194EF67E003CFA1F /* PlayerPreferencesDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A105194EF67E003CFA1F /* PlayerPreferencesDialogController.m */; };
 		9F05A10A194EF988003CFA1F /* NSApplication+SheetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05A109194EF988003CFA1F /* NSApplication+SheetAdditions.m */; };
+		9F17A5321962C0D1004A00F5 /* player.lua in Resources */ = {isa = PBXBuildFile; fileRef = 9F17A5311962C0D1004A00F5 /* player.lua */; };
 		9F19C52919580A5800CA020E /* PlayerUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F19C52719580A5800CA020E /* PlayerUtils.cpp */; };
 		9F1C8D33194DE61E0068C99B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1C8D32194DE61E0068C99B /* Cocoa.framework */; };
 		9F1C8D78194DEB430068C99B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1C8D77194DEB430068C99B /* MainMenu.xib */; };
@@ -152,6 +153,7 @@
 		9F05A105194EF67E003CFA1F /* PlayerPreferencesDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerPreferencesDialogController.m; sourceTree = SOURCE_ROOT; };
 		9F05A108194EF988003CFA1F /* NSApplication+SheetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSApplication+SheetAdditions.h"; sourceTree = SOURCE_ROOT; };
 		9F05A109194EF988003CFA1F /* NSApplication+SheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+SheetAdditions.m"; sourceTree = SOURCE_ROOT; };
+		9F17A5311962C0D1004A00F5 /* player.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = player.lua; sourceTree = "<group>"; };
 		9F19C52719580A5800CA020E /* PlayerUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerUtils.cpp; sourceTree = "<group>"; };
 		9F19C52819580A5800CA020E /* PlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerUtils.h; sourceTree = "<group>"; };
 		9F1C8D2F194DE61E0068C99B /* player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = player.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,6 +336,7 @@
 		9F1C8D94194DEE040068C99B /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9F17A5311962C0D1004A00F5 /* player.lua */,
 				9FC192B11959784900417A1E /* player_tolua.cpp */,
 				9FC192B21959784900417A1E /* player_tolua.h */,
 				9F19C52719580A5800CA020E /* PlayerUtils.cpp */,
@@ -511,6 +514,7 @@
 				9F1C8D81194DECE80068C99B /* Info.plist in Resources */,
 				9F1C8D78194DEB430068C99B /* MainMenu.xib in Resources */,
 				9F25617D194F07BF009E57D7 /* ProjectConfigDialog.xib in Resources */,
+				9F17A5321962C0D1004A00F5 /* player.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

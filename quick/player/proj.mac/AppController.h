@@ -35,8 +35,15 @@ class AppControllerBridge;
     //console pipe
     NSPipe *pipe;
     NSFileHandle *pipeReadHandle;
+    
+    // build task
+    NSTask *buildTask;
+    bool isBuildingFinished;
+    NSAlert *buildAlert;
 }
 //@property (assign) IBOutlet NSWindow *window;
+
+- (void) relaunch:(NSArray*)args;
 
 - (IBAction) onServicePreferences:(id)sender;
 
@@ -59,4 +66,6 @@ class AppControllerBridge;
 
 - (IBAction) onWindowAlwaysOnTop:(id)sender;
 
+- (IBAction) fileBuildAndroid:(id)sender;
+- (IBAction) fileBuildIOS:(id)sender;
 @end

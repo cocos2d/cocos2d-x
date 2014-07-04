@@ -1,6 +1,6 @@
 /*
 ** Lua binding: player_luabinding
-** Generated automatically by tolua++-1.0.92 on Tue Jun 24 17:11:04 2014.
+** Generated automatically by tolua++-1.0.92 on Thu Jun 26 17:26:27 2014.
 */
 
 #ifndef __cplusplus
@@ -16,6 +16,7 @@ TOLUA_API int  tolua_player_luabinding_open (lua_State* tolua_S);
 #include <string>
 #include <vector>
 #include "PlayerProtocol.h"
+#include "tolua++.h"
 #include "tolua_fix.h"
 using namespace std;
 using namespace player;
@@ -24,9 +25,9 @@ using namespace player;
 /* function to release collected object via destructor */
 #ifdef __cplusplus
 
-static int tolua_collect_std__vector_std__string_ (lua_State* tolua_S)
+static int tolua_collect_PlayerSettings (lua_State* tolua_S)
 {
- std::vector<std::string>* self = (std::vector<std::string>*) tolua_tousertype(tolua_S,1,0);
+ PlayerSettings* self = (PlayerSettings*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -37,21 +38,236 @@ static int tolua_collect_PlayerMenuItem (lua_State* tolua_S)
 	Mtolua_delete(self);
 	return 0;
 }
+
+static int tolua_collect_std__vector_std__string_ (lua_State* tolua_S)
+{
+ std::vector<std::string>* self = (std::vector<std::string>*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
 #endif
 
 
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"LUA_FUNCTION");
+ tolua_usertype(tolua_S,"PlayerSettings");
+ tolua_usertype(tolua_S,"PlayerServiceProtocol");
  tolua_usertype(tolua_S,"PlayerMenuItem");
  tolua_usertype(tolua_S,"PlayerMessageBoxServiceProtocol");
  tolua_usertype(tolua_S,"PlayerMenuServiceProtocol");
  tolua_usertype(tolua_S,"PlayerFileDialogServiceProtocol");
  tolua_usertype(tolua_S,"PlayerProtocol");
  tolua_usertype(tolua_S,"std::vector<std::string>");
- tolua_usertype(tolua_S,"PlayerServiceProtocol");
+ tolua_usertype(tolua_S,"LUA_FUNCTION");
 }
+
+/* method: new of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_player_luabinding_PlayerSettings_new00
+static int tolua_player_luabinding_PlayerSettings_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"PlayerSettings",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   PlayerSettings* tolua_ret = (PlayerSettings*)  Mtolua_new((PlayerSettings)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"PlayerSettings");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_player_luabinding_PlayerSettings_new00_local
+static int tolua_player_luabinding_PlayerSettings_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"PlayerSettings",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   PlayerSettings* tolua_ret = (PlayerSettings*)  Mtolua_new((PlayerSettings)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"PlayerSettings");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: openLastProject of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_get_PlayerSettings_openLastProject
+static int tolua_get_PlayerSettings_openLastProject(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'openLastProject'",NULL);
+#endif
+  tolua_pushboolean(tolua_S,(bool)self->openLastProject);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: openLastProject of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_set_PlayerSettings_openLastProject
+static int tolua_set_PlayerSettings_openLastProject(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'openLastProject'",NULL);
+  if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->openLastProject = ((bool)  tolua_toboolean(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: offsetX of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_get_PlayerSettings_offsetX
+static int tolua_get_PlayerSettings_offsetX(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'offsetX'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->offsetX);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: offsetX of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_set_PlayerSettings_offsetX
+static int tolua_set_PlayerSettings_offsetX(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'offsetX'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->offsetX = ((long)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: offsetY of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_get_PlayerSettings_offsetY
+static int tolua_get_PlayerSettings_offsetY(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'offsetY'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->offsetY);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: offsetY of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_set_PlayerSettings_offsetY
+static int tolua_set_PlayerSettings_offsetY(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'offsetY'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->offsetY = ((long)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: windowWidth of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_get_PlayerSettings_windowWidth
+static int tolua_get_PlayerSettings_windowWidth(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'windowWidth'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->windowWidth);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: windowWidth of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_set_PlayerSettings_windowWidth
+static int tolua_set_PlayerSettings_windowWidth(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'windowWidth'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->windowWidth = ((long)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: windowHeight of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_get_PlayerSettings_windowHeight
+static int tolua_get_PlayerSettings_windowHeight(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'windowHeight'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->windowHeight);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: windowHeight of class  PlayerSettings */
+#ifndef TOLUA_DISABLE_tolua_set_PlayerSettings_windowHeight
+static int tolua_set_PlayerSettings_windowHeight(lua_State* tolua_S)
+{
+  PlayerSettings* self = (PlayerSettings*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'windowHeight'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->windowHeight = ((long)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
 
 /* method: getInstance of class  PlayerProtocol */
 #ifndef TOLUA_DISABLE_tolua_player_luabinding_PlayerProtocol_getInstance00
@@ -103,6 +319,39 @@ static int tolua_player_luabinding_PlayerProtocol_purgeInstance00(lua_State* tol
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'purgeInstance'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setPlayerSettings of class  PlayerProtocol */
+#ifndef TOLUA_DISABLE_tolua_player_luabinding_PlayerProtocol_setPlayerSettings00
+static int tolua_player_luabinding_PlayerProtocol_setPlayerSettings00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"PlayerProtocol",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"PlayerSettings",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  PlayerProtocol* self = (PlayerProtocol*)  tolua_tousertype(tolua_S,1,0);
+  PlayerSettings* settings = ((PlayerSettings*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPlayerSettings'", NULL);
+#endif
+  {
+   self->setPlayerSettings(*settings);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setPlayerSettings'.",&tolua_err);
  return 0;
 #endif
 }
@@ -620,7 +869,7 @@ static int tolua_set_PlayerMenuItem_scriptHandlerId(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'scriptHandlerId'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
   self->scriptHandlerId = (int)(  toluafix_ref_function(tolua_S,2,0));
@@ -804,10 +1053,26 @@ TOLUA_API int tolua_player_luabinding_open (lua_State* tolua_S)
  tolua_reg_types(tolua_S);
  tolua_module(tolua_S,NULL,0);
  tolua_beginmodule(tolua_S,NULL);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"PlayerSettings","PlayerSettings","",tolua_collect_PlayerSettings);
+  #else
+  tolua_cclass(tolua_S,"PlayerSettings","PlayerSettings","",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"PlayerSettings");
+   tolua_function(tolua_S,"new",tolua_player_luabinding_PlayerSettings_new00);
+   tolua_function(tolua_S,"new_local",tolua_player_luabinding_PlayerSettings_new00_local);
+   tolua_function(tolua_S,".call",tolua_player_luabinding_PlayerSettings_new00_local);
+   tolua_variable(tolua_S,"openLastProject",tolua_get_PlayerSettings_openLastProject,tolua_set_PlayerSettings_openLastProject);
+   tolua_variable(tolua_S,"offsetX",tolua_get_PlayerSettings_offsetX,tolua_set_PlayerSettings_offsetX);
+   tolua_variable(tolua_S,"offsetY",tolua_get_PlayerSettings_offsetY,tolua_set_PlayerSettings_offsetY);
+   tolua_variable(tolua_S,"windowWidth",tolua_get_PlayerSettings_windowWidth,tolua_set_PlayerSettings_windowWidth);
+   tolua_variable(tolua_S,"windowHeight",tolua_get_PlayerSettings_windowHeight,tolua_set_PlayerSettings_windowHeight);
+  tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"PlayerProtocol","PlayerProtocol","",NULL);
   tolua_beginmodule(tolua_S,"PlayerProtocol");
    tolua_function(tolua_S,"getInstance",tolua_player_luabinding_PlayerProtocol_getInstance00);
    tolua_function(tolua_S,"purgeInstance",tolua_player_luabinding_PlayerProtocol_purgeInstance00);
+   tolua_function(tolua_S,"setPlayerSettings",tolua_player_luabinding_PlayerProtocol_setPlayerSettings00);
    tolua_function(tolua_S,"getFileDialogService",tolua_player_luabinding_PlayerProtocol_getFileDialogService00);
    tolua_function(tolua_S,"getMessageBoxService",tolua_player_luabinding_PlayerProtocol_getMessageBoxService00);
    tolua_function(tolua_S,"getMenuService",tolua_player_luabinding_PlayerProtocol_getMenuService00);

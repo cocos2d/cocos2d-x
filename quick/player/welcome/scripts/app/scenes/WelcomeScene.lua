@@ -1,4 +1,5 @@
-    
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+
 local WelcomeScene = class("WelcomeScene", function()
     return display.newScene("WelcomeScene")
 end)
@@ -13,8 +14,12 @@ function WelcomeScene:ctor()
     self:createLine()
     self:createCopyright()
 
+    __G__OPEN_RECENTS__ = {}
+    for _,v in ipairs(cc.player.settings.PLAYER_OPEN_RECTNS) do
+        __G__OPEN_RECENTS__[#__G__OPEN_RECENTS__+1] = v.title
+    end
+
     local recents = __G__OPEN_RECENTS__
-    -- __G__OPEN_RECENTS__ = nil
     if type(recents) ~= "table" then
         recents = {}
     end
@@ -58,8 +63,16 @@ function WelcomeScene:createOpenRecents(recents)
         -- touch event
         label:setTouchEnabled(true)
         label:addNodeEventListener(cc.NODE_TOUCH_EVENT, function ( event )
-            local evt = cc.EventCustom:new("WELCOME_OPEN_RECENT")
-            evt:setDataString(i-1)
+            local recent = cc.player.settings.PLAYER_OPEN_RECTNS [i]
+            local commandline = table.concat(recent.args, ",")
+
+            table.remove(cc.player.settings.PLAYER_OPEN_RECTNS , i)
+            table.insert(cc.player.settings.PLAYER_OPEN_RECTNS, 1, recent)
+
+            cc.player.saveSetting()
+
+            local evt = cc.EventCustom:new("WELCOME_OPEN_PROJECT_ARGS")
+            evt:setDataString(commandline)
             self:getEventDispatcher():dispatchEvent(evt)
         end)
     end
@@ -72,12 +85,56 @@ function WelcomeScene:createLogo()
 end
 
 function WelcomeScene:createBannderAds()
-    self.bannerAds_ = {}
+    self.bannerAds_ = {{img="BannerAd_01.png",link="http://open.cocoachina.com/service/ad"},
+                       {img="BannerAd_02.png",link="http://open.cocoachina.com/service/push"},
+                       -- {img="BannerAd_03.png",link="http://open.cocoachina.com/service/push"},
+                    }
 
-    local banner = display.newSprite("BannerAd_01.png")
-    local size = banner:getContentSize()
-    banner:pos(display.cx, display.top - size.height / 2 - 50)
-        :addTo(self)
+    self.currenBannerIndex = 1    
+    self.bannerSize = {w=920,h=248}
+
+    -- draw banner
+    self.banner = self:createBannerButton(self.bannerAds_[self.currenBannerIndex], display.cx) 
+
+
+    -- auto scroll banner
+    local nextBanner = function() self:nextBanner() end
+    local autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
+
+    local listener = function(event)
+        if event.name == "exit" then
+            scheduler.unscheduleGlobal(autoScrollHandler)
+        end
+    end
+    self:addNodeEventListener(cc.NODE_EVENT, listener)
+
+
+    -- left button
+    cc.ui.UIPushButton.new("arrow_left.png", {scale9 = true})
+    :setButtonSize(50, 50)
+    :pos(30, display.top - 150)
+    :addTo(self, 1, 100)
+    :onButtonClicked(function()
+        scheduler.unscheduleGlobal(autoScrollHandler)
+        self:nextBanner()
+        autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
+    end)
+
+
+    -- right button
+    cc.ui.UIPushButton.new("arrow_right.png", {scale9 = true})
+        :setButtonSize(50, 50)
+        :pos(display.width - 30, display.top - 150)
+        :addTo(self, 1, 100)
+        :onButtonClicked(function()
+            scheduler.unscheduleGlobal(autoScrollHandler)
+            self:preBanner()
+            autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
+        end)
+
+
+    -- prompt
+    self:setAdPrompt()
 end
 
 function WelcomeScene:createLine()
@@ -115,7 +172,6 @@ function WelcomeScene:createButtons()
 
     local openCommunityButton = cc.ui.UIPushButton.new("OpenCommunityButton_zh.png")
         :onButtonClicked(function()
-            print("community")
             cc.__NotificationCenter:getInstance():postNotification("WELCOME_OPEN_COMMUNITY")
         end)
         :pos(left, top - 140)
@@ -123,7 +179,6 @@ function WelcomeScene:createButtons()
 
     local openDocumentsButton = cc.ui.UIPushButton.new("OpenDocumentsButton_zh.png")
         :onButtonClicked(function()
-            print("documents")
             cc.__NotificationCenter:getInstance():postNotification("WELCOME_OPEN_DOCUMENTS")
         end)
         :pos(left + 200, top - 140)
@@ -132,7 +187,7 @@ end
 
 function WelcomeScene:createCopyright()
     local label = ui.newTTFLabel({
-        text = "Copyright (c) 2012-2014 chukong-inc.com, licensed under MIT.",
+        text = " Copyright 2012-2014 Chukong Technologies, Inc. Licensed under MIT License.",
         size = 14,
         color = cc.c3b(144, 144, 144),
         x = display.cx,
@@ -140,6 +195,67 @@ function WelcomeScene:createCopyright()
         align = ui.TEXT_ALIGN_CENTER,
     })
     self:addChild(label)
+end
+
+-- ad helper 
+
+function WelcomeScene:setAdPrompt()
+    self.hintNode = self.hintNode or display.newDrawNode():addTo(self, 100)
+    self.hintNode:clear()
+
+    local hintLength = 30
+    local x = (self.bannerSize.w - #self.bannerAds_ * hintLength - (#self.bannerAds_ -1) * 4) / 2
+    for i=1,#self.bannerAds_ do
+        local color = cc.c4f(1,1,1,0.5)
+        if i == self.currenBannerIndex then
+            color = cc.c4f(1,1,1,1)
+        end
+
+        self.hintNode:drawSegment(cc.p(x,display.top-280), cc.p(x+hintLength, display.top-280), 3, color)
+        self.hintNode.info = {from=cc.p(x,display.top-280), to=cc.p(x+hintLength,display.top-280), r=3}
+        x = x + hintLength + 10
+    end
+end
+
+function WelcomeScene:nextBanner() 
+    self.currenBannerIndex = self.currenBannerIndex +1 
+    if self.currenBannerIndex > #self.bannerAds_ then self.currenBannerIndex = 1 end
+
+    local fadeOutBanner = self.banner
+    fadeOutBanner:runAction(cc.Sequence:create(
+        cc.CallFunc:create(function() fadeOutBanner:setTouchEnabled(false) end),
+        cc.FadeOut:create(0.5),
+        cc.CallFunc:create(function() fadeOutBanner:removeFromParent() end)
+        ))
+
+    self.banner = self:createBannerButton(self.bannerAds_[self.currenBannerIndex], 3* display.cx) 
+    self:setAdPrompt()
+    transition.moveTo(self.banner, {x = display.cx, y = display.top - self.bannerSize.h / 2 - 50, time = 0.3})
+end
+
+function WelcomeScene:preBanner()
+    self.currenBannerIndex = self.currenBannerIndex -1
+    if self.currenBannerIndex < 1 then self.currenBannerIndex = #self.bannerAds_  end
+
+    local fadeOutBanner = self.banner
+    fadeOutBanner:runAction(cc.Sequence:create(
+        cc.CallFunc:create(function() fadeOutBanner:setTouchEnabled(false) end),
+        cc.FadeOut:create(0.5),
+        cc.CallFunc:create(function() fadeOutBanner:removeFromParent() end)
+        ))
+
+    self.banner = self:createBannerButton(self.bannerAds_[self.currenBannerIndex], -display.cx) 
+    self:setAdPrompt()
+    transition.moveTo(self.banner, {x = display.cx, y = self.banner:getPositionY(), time = 0.3})
+end
+
+function WelcomeScene:createBannerButton( AD, x)
+    local banner = cc.ui.UIPushButton.new(AD.img, {scale9 = true})
+                    :setButtonSize(self.bannerSize.w, self.bannerSize.h)
+                    :pos(x, display.top - self.bannerSize.h / 2 - 50)
+                    :addTo(self)
+                    :onButtonClicked(function() device.openURL(AD.link) end)
+    return banner
 end
 
 return WelcomeScene
