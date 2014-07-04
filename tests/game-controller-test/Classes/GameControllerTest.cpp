@@ -283,32 +283,6 @@ void GameControllerTest::onAxisEvent(cocos2d::Controller* controller, int keyCod
     }
 }
 
-void GameControllerTest::update(float dt)
-{
-    /*if (_player1 && _player1->isConnected())
-    {
-        auto gamePad = _player1->getGamepad();
-
-        Vec2 newPos = _leftActor->getPosition();
-        newPos.x += gamePad->getLeftThumbstick()->getAxisX()->getValue();
-        newPos.y -= gamePad->getLeftThumbstick()->getAxisY()->getValue();
-        adjustActorPos(newPos);
-        _leftActor->setPosition(newPos);
-
-        newPos = _rightActor->getPosition();
-        newPos.x += gamePad->getRightThumbstick()->getAxisX()->getValue();
-        newPos.y -= gamePad->getRightThumbstick()->getAxisY()->getValue();
-        adjustActorPos(newPos);
-        _rightActor->setPosition(newPos);
-
-        char triggerStatus[50];
-        sprintf(triggerStatus,"left trigger:%f",gamePad->getLeftTrigger()->getValue());
-        _leftTriggerLabel->setString(triggerStatus);
-        sprintf(triggerStatus,"right trigger:%f",gamePad->getRightTrigger()->getValue());
-        _rightTriggerLabel->setString(triggerStatus);
-    }*/
-}
-
 bool GameControllerTest::init()
 {
     if ( !Layer::init() )
@@ -341,7 +315,7 @@ bool GameControllerTest::init()
     auto menu = Menu::create(closeItem,nullptr);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu);
-
+    
     registerControllerListener();
 
     return true;
@@ -376,7 +350,7 @@ void GameControllerTest::createControllerSprite(ControllerHolder& holder)
     holder._holderNode->addChild(holder._deviceIdLabel);
     //-----------------------------------------------------------------
     //371,294  64
-    auto dPadTexture = Director::sharedDirector()->getTextureCache()->addImage("dPad.png");
+    auto dPadTexture = Director::getInstance()->getTextureCache()->addImage("dPad.png");
 
     auto dPadCenter = Sprite::createWithTexture(dPadTexture,Rect(60,60,68,68));
     dPadCenter->setPosition(Vec2(371,294));

@@ -827,8 +827,6 @@
 		3E6177351960FB4000DE83F5 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176DE1960FA6300DE83F5 /* AppController.mm */; };
 		3E6177361960FB5A00DE83F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176EE1960FA6300DE83F5 /* main.m */; };
 		3E6177371960FB5E00DE83F5 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176F01960FA6300DE83F5 /* RootViewController.mm */; };
-		3E6177391960FBB800DE83F5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6177381960FBB800DE83F5 /* SystemConfiguration.framework */; };
-		3E61773B1960FBC300DE83F5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E61773A1960FBC300DE83F5 /* CFNetwork.framework */; };
 		3E61773D1960FBD200DE83F5 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E61773C1960FBD100DE83F5 /* GameController.framework */; };
 		3E6177F41960FEFE00DE83F5 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 3E6177F01960FEFE00DE83F5 /* fonts */; };
 		3E6177F51960FEFE00DE83F5 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 3E6177F11960FEFE00DE83F5 /* ipad */; };
@@ -2132,8 +2130,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E61773D1960FBD200DE83F5 /* GameController.framework in Frameworks */,
-				3E61773B1960FBC300DE83F5 /* CFNetwork.framework in Frameworks */,
-				3E6177391960FBB800DE83F5 /* SystemConfiguration.framework in Frameworks */,
 				3E6177211960FAED00DE83F5 /* libchipmunk iOS.a in Frameworks */,
 				3E6177221960FAED00DE83F5 /* libcocos2dx iOS.a in Frameworks */,
 				3E6177231960FAED00DE83F5 /* libCocosDenshion iOS.a in Frameworks */,
@@ -5728,6 +5724,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/game-controller-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "game-controller-test IOS";
@@ -5745,6 +5742,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/game-controller-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "game-controller-test IOS";
