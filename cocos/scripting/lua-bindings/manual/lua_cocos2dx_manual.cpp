@@ -6452,8 +6452,7 @@ static int tolua_cocos2d_utils_captureScreen(lua_State* tolua_S)
             LuaEngine::getInstance()->removeScriptHandler(handler);
         }, fileName);
         
-        tolua_pushnumber(tolua_S, (lua_Number)handler);
-        return 1;
+        return 0;
     }
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
