@@ -41,11 +41,11 @@ namespace cocostudio
         
         ListView* listView = static_cast<ListView*>(widget);
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             if (key == P_Direction) {
                 listView->setDirection((ScrollView::Direction)valueToInt(value));
@@ -66,10 +66,10 @@ namespace cocostudio
         
         ListView* listView = static_cast<ListView*>(widget);
                 
-        int direction = DICTOOL->getFloatValue_json(options, P_Direction);
+        int direction = DICTOOL->getFloatValue_json(options, P_Direction,2);
         listView->setDirection((ScrollView::Direction)direction);
         
-        ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, P_Gravity);
+        ListView::Gravity gravity = (ListView::Gravity)DICTOOL->getIntValue_json(options, P_Gravity,3);
         listView->setGravity(gravity);
         
         float itemMargin = DICTOOL->getFloatValue_json(options, P_ItemMargin);
