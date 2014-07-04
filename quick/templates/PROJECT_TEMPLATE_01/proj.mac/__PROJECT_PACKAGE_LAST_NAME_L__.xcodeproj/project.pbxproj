@@ -351,6 +351,7 @@
 					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual\"",
 					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/auto\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
@@ -395,6 +396,7 @@
 					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual\"",
 					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/auto\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;

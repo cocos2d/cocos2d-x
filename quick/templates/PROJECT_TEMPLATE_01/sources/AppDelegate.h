@@ -3,7 +3,7 @@
 #define  _APP_DELEGATE_H_
 
 #include "CCApplication.h"
-#include "SimulatorConfig.h"
+#include "ProjectConfig/SimulatorConfig.h"
 
 /**
  @brief    The cocos2d Application.
