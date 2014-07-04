@@ -5,7 +5,6 @@ local childTag   = 119
 local function createLayer()
     local layer = cc.Layer:create()
     local filename = ""
-    local callbackHandler = 0
 
     local title = cc.Label:createWithTTF("New Renderer", "fonts/arial.ttf", 36)
     title:setColor(cc.c3b(255,255,0))
@@ -49,7 +48,7 @@ local function createLayer()
         cc.Director:getInstance():getTextureCache():removeTextureForKey(fileName)
         layer:removeChildByTag(childTag)
         fileName = "CaptureScreenTest.png"
-        callbackHandler = cc.utils:captureScreen(afterCaptured, fileName)
+        cc.utils:captureScreen(afterCaptured, fileName)
     end
 
     local ttfConfig = {}
@@ -61,13 +60,6 @@ local function createLayer()
     local menu = cc.Menu:create(mi1)
     layer:addChild(menu)
     menu:setPosition(winSize.width / 2, winSize.height / 4)
-    local function onNodeEvent(event)
-        if "exit" == event then
-            print("come in exit", callbackHandler)
-            cc.utils:unCaptureScreen(callbackHandler)
-        end
-    end
-    layer:registerScriptHandler(onNodeEvent)
 
     return layer
 end
