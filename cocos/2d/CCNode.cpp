@@ -48,6 +48,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
+#include "event/CCScriptEventDispatcher.h"
 
 #include "deprecated/CCString.h"
 
@@ -139,6 +140,7 @@ Node::Node(void)
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
+    _scriptEventDispatcher = new CCScriptEventDispatcher();
 #endif
     _transform = _inverse = _additionalTransform = Mat4::IDENTITY;
 }
@@ -152,6 +154,7 @@ Node::~Node()
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
     }
+    CC_SAFE_DELETE(_scriptEventDispatcher);
 #endif
 
     // User object has to be released before others, since userObject may have a weak reference of this node
@@ -2185,6 +2188,11 @@ void Node::disableCascadeColor()
     for(auto child : _children){
         child->updateDisplayedColor(Color3B::WHITE);
     }
+}
+
+int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int priority /* = 0 */)
+{
+    return _scriptEventDispatcher->addScriptEventListener(event, listener, tag, priority);
 }
 
 __NodeRGBA::__NodeRGBA()

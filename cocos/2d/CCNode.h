@@ -38,9 +38,11 @@
 #include "math/CCMath.h"
 #include "renderer/ccGLStateCache.h"
 #include "CCGL.h"
+#include "event/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
 
+class CCScriptEventDispatcher;
 class GridBase;
 class Touch;
 class Action;
@@ -101,7 +103,7 @@ class EventListener;
 
  */
 
-class CC_DLL Node : public Ref
+class CC_DLL Node : public Ref, public CCTouchDelegate
 {
 public:
     /// Default tag used for all the nodes
@@ -775,6 +777,7 @@ public:
     virtual Node* getParent() { return _parent; }
     virtual const Node* getParent() const { return _parent; }
 
+    int addScriptEventListener(int event, int listener, int tag = 0, int priority = 0);
 
     ////// REMOVES //////
 
@@ -1592,6 +1595,8 @@ protected:
     int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+    
+    CCScriptEventDispatcher *_scriptEventDispatcher;
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components

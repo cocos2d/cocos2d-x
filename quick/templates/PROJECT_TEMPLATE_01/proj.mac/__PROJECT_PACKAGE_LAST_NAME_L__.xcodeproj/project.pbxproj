@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F359E1B195193B40052017E /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F359E19195193B40052017E /* SimulatorConfig.cpp */; };
 		9F359E1F195197810052017E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F359E1E195197810052017E /* IOKit.framework */; };
 		9F6D890B195967EF00B36BA2 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */; };
 		9F6D890C195967EF00B36BA2 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */; };
@@ -46,8 +45,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9F359E19195193B40052017E /* SimulatorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatorConfig.cpp; sourceTree = "<group>"; };
-		9F359E1A195193B40052017E /* SimulatorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorConfig.h; sourceTree = "<group>"; };
 		9F359E1E195197810052017E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libchipmunk Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libchipmunk Mac.a"; sourceTree = "<group>"; };
 		9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libcocos2dx Mac.a"; sourceTree = "<group>"; };
@@ -177,8 +174,6 @@
 		F4B08159175C8A1E0029F472 /* sources */ = {
 			isa = PBXGroup;
 			children = (
-				9F359E19195193B40052017E /* SimulatorConfig.cpp */,
-				9F359E1A195193B40052017E /* SimulatorConfig.h */,
 				F4B0815A175C8A1E0029F472 /* AppDelegate.cpp */,
 				F4B0815B175C8A1E0029F472 /* AppDelegate.h */,
 			);
@@ -252,7 +247,6 @@
 			files = (
 				F4B0814A175C89050029F472 /* AppController.mm in Sources */,
 				F4B0814F175C89050029F472 /* main.m in Sources */,
-				9F359E1B195193B40052017E /* SimulatorConfig.cpp in Sources */,
 				F4B0815E175C8A1E0029F472 /* AppDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
