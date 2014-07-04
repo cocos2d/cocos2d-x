@@ -48,7 +48,7 @@ namespace cocostudio
         TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
 
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         Widget::TextureResType type;
         std::string charMapFileName;
         std::string stringValue;
@@ -57,7 +57,7 @@ namespace cocostudio
         float itemHeight;
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -68,8 +68,8 @@ namespace cocostudio
                 stringValue = value;
             }
             else if(key == P_CharMapFileData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -101,32 +101,35 @@ namespace cocostudio
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
-        bool sv = DICTOOL->checkObjectExist_json(options, P_StringValue);
-        bool cmf = DICTOOL->checkObjectExist_json(options, P_CharMapFile);
-        bool iw = DICTOOL->checkObjectExist_json(options, P_ItemWidth);
-        bool ih = DICTOOL->checkObjectExist_json(options, P_ItemHeight);
-        bool scm = DICTOOL->checkObjectExist_json(options, P_StartCharMap);
-        if (sv && cmf && iw && ih && scm)
+//        bool sv = DICTOOL->checkObjectExist_json(options, P_StringValue);
+//        bool cmf = DICTOOL->checkObjectExist_json(options, P_CharMapFile);
+//        bool iw = DICTOOL->checkObjectExist_json(options, P_ItemWidth);
+//        bool ih = DICTOOL->checkObjectExist_json(options, P_ItemHeight);
+//        bool scm = DICTOOL->checkObjectExist_json(options, P_StartCharMap);
+       
+        const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, P_CharMapFileData);
+        int cmfType = DICTOOL->getIntValue_json(cmftDic, P_ResourceType);
+        switch (cmfType)
         {
-            const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, P_CharMapFileData);
-            int cmfType = DICTOOL->getIntValue_json(cmftDic, P_ResourceType);
-            switch (cmfType)
+            case 0:
             {
-                case 0:
-                {
-                    std::string tp_c = jsonPath;
-                    const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, P_Path);
-                    const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                    labelAtlas->setProperty(DICTOOL->getStringValue_json(options, P_StringValue),cmf_tp,DICTOOL->getIntValue_json(options, P_ItemWidth),DICTOOL->getIntValue_json(options,P_ItemHeight), DICTOOL->getStringValue_json(options, P_StartCharMap));
-                    break;
-                }
-                case 1:
-                    CCLOG("Wrong res type of LabelAtlas!");
-                    break;
-                default:
-                    break;
+                std::string tp_c = jsonPath;
+                const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, P_Path);
+                const char* cmf_tp = tp_c.append(cmfPath).c_str();
+                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, P_StringValue,"12345678"),
+                                        cmf_tp,
+                                        DICTOOL->getIntValue_json(options, P_ItemWidth,24),
+                                        DICTOOL->getIntValue_json(options,P_ItemHeight,32),
+                                        DICTOOL->getStringValue_json(options, P_StartCharMap));
+                break;
             }
+            case 1:
+                CCLOG("Wrong res type of LabelAtlas!");
+                break;
+            default:
+                break;
         }
+        
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);

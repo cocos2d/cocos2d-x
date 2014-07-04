@@ -132,12 +132,12 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
                                   stExpCocoNode *cocoNode,
                                   cocos2d::Ref *root)
 {
-    stExpCocoNode *stChildNode = cocoNode->GetChildArray();
+    stExpCocoNode *stChildNode = cocoNode->GetChildArray(cocoLoader);
     stExpCocoNode *actionNodeList = nullptr;
     int count = cocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
         std::string key = stChildNode[i].GetName(cocoLoader);
-        std::string value = stChildNode[i].GetValue();
+        std::string value = stChildNode[i].GetValue(cocoLoader);
         if (key == "name") {
             setName(value.c_str());
         }else if (key == "loop"){
@@ -152,7 +152,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
     if(nullptr != actionNodeList)
     {
         int actionNodeCount = actionNodeList->GetChildNum();
-        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray();
+        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(cocoLoader);
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
             ActionNode* actionNode = new ActionNode();
