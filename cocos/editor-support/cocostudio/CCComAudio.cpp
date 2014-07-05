@@ -76,6 +76,7 @@ bool ComAudio::serialize(void* r)
 		SerData *serData = (SerData *)(r);
 		const rapidjson::Value *v = serData->_rData;
 		stExpCocoNode *cocoNode = serData->_cocoNode;
+        CocoLoader *cocoLoader = serData->_cocoLoader;
 		const char *className = nullptr;
 		const char *comName = nullptr;
 		const char *file = nullptr;
@@ -97,16 +98,16 @@ bool ComAudio::serialize(void* r)
 		}
 		else if (cocoNode != nullptr)
 		{
-			className = cocoNode[1].GetValue();
+			className = cocoNode[1].GetValue(cocoLoader);
 			CC_BREAK_IF(className == nullptr);
-			comName = cocoNode[2].GetValue();
-			stExpCocoNode *pfileData = cocoNode[4].GetChildArray();
+			comName = cocoNode[2].GetValue(cocoLoader);
+			stExpCocoNode *pfileData = cocoNode[4].GetChildArray(cocoLoader);
 			CC_BREAK_IF(!pfileData);
-			file = pfileData[0].GetValue();
+			file = pfileData[0].GetValue(cocoLoader);
 			CC_BREAK_IF(file == nullptr);
-			resType = atoi(pfileData[2].GetValue());
+			resType = atoi(pfileData[2].GetValue(cocoLoader));
 			CC_BREAK_IF(resType != 0);
-			loop = atoi(cocoNode[5].GetValue()) != 0? true:false;
+			loop = atoi(cocoNode[5].GetValue(cocoLoader)) != 0? true:false;
 			ret = true;
 		}
 		if (comName != nullptr)

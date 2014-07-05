@@ -6,6 +6,7 @@
 // UILoadingBarTest_Editor
 
 UILoadingBarTest_Editor::UILoadingBarTest_Editor()
+:_count(0)
 {
     
 }

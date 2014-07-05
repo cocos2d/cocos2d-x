@@ -623,7 +623,6 @@ bool TextField::isPasswordEnabled()const
 void TextField::setPasswordStyleText(const char *styleText)
 {
     _textFieldRenderer->setPasswordStyleText(styleText);
-    
     _passwordStyleText = styleText;
     
     setText(getStringValue());
