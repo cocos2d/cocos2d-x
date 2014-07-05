@@ -353,7 +353,6 @@
     <ClCompile Include="..\base\CCTouch.cpp" />
     <ClCompile Include="..\base\ccTypes.cpp" />
     <ClCompile Include="..\base\CCUserDefault.cpp" />
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp" />
     <ClCompile Include="..\base\ccUTF8.cpp" />
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />

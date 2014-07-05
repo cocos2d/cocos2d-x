@@ -66,21 +66,13 @@ public class GameControllerOuya implements GameControllerDelegate{
         	
         	float newLeftTrigger = c.getAxisValue(OuyaController.AXIS_L2);
         	if (Float.compare(newLeftTrigger, mOldLeftTrigger) != 0) {
-				if (Float.compare(newLeftTrigger, 0.0f) == 0) {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_LEFT_TRIGGER, false, 0.0f, true);
-				}else {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_LEFT_TRIGGER, true, newLeftTrigger, true);
-				}
+        		mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newLeftTrigger, true);
 				mOldLeftTrigger = newLeftTrigger;
 			}
         	
         	float newRightTrigger = c.getAxisValue(OuyaController.AXIS_R2);
         	if (Float.compare(newRightTrigger, mOldRightTrigger) != 0) {
-				if (Float.compare(newRightTrigger, 0.0f) == 0) {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, false, 0.0f, true);
-				}else {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, true, newRightTrigger, true);
-				}
+        		mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newRightTrigger, true);
 				mOldRightTrigger = newRightTrigger;
 			}
         	
