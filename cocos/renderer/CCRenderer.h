@@ -152,8 +152,14 @@ protected:
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];
+
+#if (DIRECTX_ENABLED == 1)
+	ID3D11Buffer* _bufferVertex;
+	ID3D11Buffer* _bufferIndex;
+#else
     GLuint _quadVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
+#endif
 
     int _numQuads;
     

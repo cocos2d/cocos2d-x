@@ -603,14 +603,21 @@ void Director::setProjection(Projection projection)
         case Projection::_2D:
         {
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            if(getOpenGLView() != nullptr)
-            {
-                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
-            }
-#endif
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+//            if(getOpenGLView() != nullptr)
+//            {
+//                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
+//            }
+//#endif
+
+#if (DIRECTX_ENABLED == 1)
+			auto m = DirectX::XMMatrixOrthographicOffCenterLH(0, size.width, 0, size.height, -1024, 1024);			
+			Mat4 orthoMatrix((float*)m.r);		
+			orthoMatrix.transpose();
+#else
             Mat4 orthoMatrix;
             Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
+#endif
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
@@ -624,14 +631,14 @@ void Director::setProjection(Projection projection)
 
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-            GLView* view = getOpenGLView();
-            if(getOpenGLView() != nullptr)
-            {
-                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
-            }
-#endif
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+//            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
+//            GLView* view = getOpenGLView();
+//            if(getOpenGLView() != nullptr)
+//            {
+//                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
+//            }
+//#endif
             // issue #1334
             Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
@@ -725,7 +732,7 @@ static void GLToClipTransform(Mat4 *transformOut)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
-    projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
+    //projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
 #endif
 
     Mat4 modelview;
@@ -737,6 +744,9 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
 {
     Mat4 transform;
     GLToClipTransform(&transform);
+#if (DIRECTX_ENABLED == 1)
+	transform.transpose();
+#endif
 
     Mat4 transformInv = transform.getInversed();
 

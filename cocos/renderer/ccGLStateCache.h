@@ -125,12 +125,6 @@ void CC_DLL bindTexture2DN(GLuint textureUnit, GLuint textureId);
  */
 void CC_DLL deleteTexture(GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached for the given texture unit.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
- @since v2.1.0
- */
-CC_DEPRECATED_ATTRIBUTE void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
-
 /** Select active texture unit.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
  @since v3.0

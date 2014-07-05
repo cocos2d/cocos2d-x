@@ -172,11 +172,14 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, 
 
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 {
+#if DIRECTX_ENABLED == 0
     glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+#endif
 }
 
 void MeshCommand::preBatchDraw()
 {
+#if DIRECTX_ENABLED == 0
     // set render state
     applyRenderState();
     // Set material
@@ -196,9 +199,14 @@ void MeshCommand::preBatchDraw()
         _glProgramState->applyAttributes();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
+#else
+	CCASSERT(false, "Not supported.");
+#endif
+
 }
 void MeshCommand::batchDraw()
 {
+#if DIRECTX_ENABLED == 0
     _glProgramState->setUniformVec4("u_color", _displayColor);
     
     if (_matrixPaletteSize && _matrixPalette)
@@ -214,9 +222,13 @@ void MeshCommand::batchDraw()
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+#else
+	CCASSERT(false, "Not supported.");
+#endif
 }
 void MeshCommand::postBatchDraw()
 {
+#if DIRECTX_ENABLED == 0
     //restore render state
     restoreRenderState();
     if (_vao)
@@ -228,10 +240,14 @@ void MeshCommand::postBatchDraw()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+#else
+	CCASSERT(false, "Not supported.");
+#endif
 }
 
 void MeshCommand::execute()
 {
+#if DIRECTX_ENABLED == 0
     // set render state
     applyRenderState();
     // Set material
@@ -260,10 +276,14 @@ void MeshCommand::execute()
     restoreRenderState();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+#else
+	CCASSERT(false, "Not supported.");
+#endif
 }
 
 void MeshCommand::buildVAO()
 {
+#if DIRECTX_ENABLED == 0
     releaseVAO();
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -285,15 +305,22 @@ void MeshCommand::buildVAO()
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
+#else
+	CCASSERT(false, "Not supported.");
+#endif
 }
 void MeshCommand::releaseVAO()
 {
+#if DIRECTX_ENABLED == 0
     if (Configuration::getInstance()->supportsShareableVAO() && _vao)
     {
         glDeleteVertexArrays(1, &_vao);
         _vao = 0;
         GL::bindVAO(0);
     }
+#else
+	CCASSERT(false, "Not supported.");
+#endif
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

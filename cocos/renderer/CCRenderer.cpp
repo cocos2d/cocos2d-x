@@ -115,6 +115,10 @@ Renderer::Renderer()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
+#if (DIRECTX_ENABLED == 1)
+, _bufferVertex(nullptr)
+, _bufferIndex(nullptr)
+#endif
 {
     _groupCommandManager = new GroupCommandManager();
     
@@ -130,6 +134,12 @@ Renderer::~Renderer()
     _renderGroups.clear();
     _groupCommandManager->release();
     
+#if (DIRECTX_ENABLED == 1)
+	if (_bufferVertex)
+		_bufferVertex->Release();
+	if(_bufferIndex)
+		_bufferIndex->Release();
+#else
     glDeleteBuffers(2, _buffersVBO);
     
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -137,6 +147,7 @@ Renderer::~Renderer()
         glDeleteVertexArrays(1, &_quadVAO);
         GL::bindVAO(0);
     }
+#endif
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
 #endif
@@ -175,6 +186,9 @@ void Renderer::setupIndices()
 
 void Renderer::setupBuffer()
 {
+#if (DIRECTX_ENABLED == 1)
+	mapBuffers();
+#else
     if(Configuration::getInstance()->supportsShareableVAO())
     {
         setupVBOAndVAO();
@@ -183,10 +197,12 @@ void Renderer::setupBuffer()
     {
         setupVBO();
     }
+#endif
 }
 
 void Renderer::setupVBOAndVAO()
 {
+#if (DIRECTX_ENABLED == 0)
     glGenVertexArrays(1, &_quadVAO);
     GL::bindVAO(_quadVAO);
 
@@ -216,17 +232,47 @@ void Renderer::setupVBOAndVAO()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 void Renderer::setupVBO()
 {
+#if (DIRECTX_ENABLED == 0)    
     glGenBuffers(2, &_buffersVBO[0]);
+#endif
 
     mapBuffers();
 }
 
 void Renderer::mapBuffers()
 {
+#if (DIRECTX_ENABLED == 1)
+	auto view = GLView::sharedOpenGLView();
+
+	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
+	vertexBufferData.pSysMem = _quads;
+	vertexBufferData.SysMemPitch = 0;
+	vertexBufferData.SysMemSlicePitch = 0;
+	CD3D11_BUFFER_DESC vertexBufferDesc(sizeof(_quads[0]) * VBO_SIZE, D3D11_BIND_VERTEX_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateBuffer(
+		&vertexBufferDesc,
+		&vertexBufferData,
+		&_bufferVertex));
+
+	D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
+	indexBufferData.pSysMem = _indices;
+	indexBufferData.SysMemPitch = 0;
+	indexBufferData.SysMemSlicePitch = 0;
+
+	CD3D11_BUFFER_DESC indexBufferDesc(sizeof(_indices[0]) * VBO_SIZE * 6, D3D11_BIND_INDEX_BUFFER);
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateBuffer(
+		&indexBufferDesc,
+		&indexBufferData,
+		&_bufferIndex));
+	
+#else
     // Avoid changing the element buffer for whatever VAO might be bound.
     GL::bindVAO(0);
 
@@ -239,6 +285,7 @@ void Renderer::mapBuffers()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -426,6 +473,43 @@ void Renderer::drawBatchedQuads()
         return;
     }
 
+#if (DIRECTX_ENABLED == 1)
+	auto view = GLView::sharedOpenGLView();
+
+	D3D11_MAPPED_SUBRESOURCE resource;
+	view->GetContext()->Map(_bufferVertex, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+	memcpy(resource.pData, _quads, sizeof(_quads[0]) * _numQuads);
+	view->GetContext()->Unmap(_bufferVertex, 0);
+
+	// Each vertex is one instance of the VertexPositionColor struct.
+	UINT stride = sizeof(V3F_C4B_T2F);
+	UINT offset = 0;
+	view->GetContext()->IASetVertexBuffers(
+		0,
+		1,
+		&_bufferVertex,
+		&stride,
+		&offset
+		);
+
+	view->GetContext()->IASetIndexBuffer(
+		_bufferIndex,
+		DXGI_FORMAT_R16_UINT, // Each index is one 16-bit unsigned integer (short).
+		0
+		);
+
+	view->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	static ID3D11RasterizerState *state = nullptr;
+	if(state == nullptr)
+	{		
+		auto d = CD3D11_RASTERIZER_DESC(CD3D11_DEFAULT());
+		d.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+		DX::ThrowIfFailed(view->GetDevice()->CreateRasterizerState(&d, &state));
+	}
+	view->GetContext()->RSSetState(state);
+	
+#else
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         //Set VBO data
@@ -468,6 +552,7 @@ void Renderer::drawBatchedQuads()
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     }
+#endif
 
     //Start drawing verties in batch
     for(const auto& cmd : _batchedQuadCommands)
@@ -478,7 +563,11 @@ void Renderer::drawBatchedQuads()
             //Draw quads
             if(quadsToDraw > 0)
             {
+#if (DIRECTX_ENABLED == 1)                
+				view->GetContext()->DrawIndexed(quadsToDraw * 6, startQuad * 6, 0);
+#else
                 glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+#endif
                 _drawnBatches++;
                 _drawnVertices += quadsToDraw*6;
 
@@ -497,11 +586,15 @@ void Renderer::drawBatchedQuads()
     //Draw any remaining quad
     if(quadsToDraw > 0)
     {
+#if (DIRECTX_ENABLED == 1)   
+		view->GetContext()->DrawIndexed(quadsToDraw * 6, startQuad * 6, 0);
+#else
         glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+#endif
         _drawnBatches++;
         _drawnVertices += quadsToDraw*6;
     }
-
+#if (DIRECTX_ENABLED == 0)   
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         //Unbind VAO
@@ -512,6 +605,7 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
+#endif
 
     _batchedQuadCommands.clear();
     _numQuads = 0;
