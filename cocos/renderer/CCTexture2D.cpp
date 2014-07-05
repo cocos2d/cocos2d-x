@@ -48,6 +48,9 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
+#if (DIRECTX_ENABLED == 1)
+#include "platform/winrt/CCGLView.h"
+#endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"
@@ -425,19 +428,27 @@ void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataL
 }
 // conventer function end
 //////////////////////////////////////////////////////////////////////////
+int Texture2D::s_TextureCount = 0;
 
 Texture2D::Texture2D()
 : _pixelFormat(Texture2D::PixelFormat::DEFAULT)
 , _pixelsWide(0)
 , _pixelsHigh(0)
-, _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
+#if (DIRECTX_ENABLED == 1)
+, _texture(nullptr)
+, _textureView(nullptr)
+, _name(++s_TextureCount)
+#else
+, _name(0)
+#endif
 {
+	
 }
 
 Texture2D::~Texture2D()
@@ -449,19 +460,23 @@ Texture2D::~Texture2D()
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
     CC_SAFE_RELEASE(_shaderProgram);
 
-    if(_name)
-    {
-        GL::deleteTexture(_name);
-    }
+	releaseGLTexture();
 }
 
 void Texture2D::releaseGLTexture()
 {
+#if (DIRECTX_ENABLED == 1)
+	if (_texture)
+		_texture->Release();
+	_texture = nullptr;
+
+	if (_textureView)
+		_textureView->Release();
+	_textureView = nullptr;
+#else
     if(_name)
-    {
         GL::deleteTexture(_name);
-    }
-    _name = 0;
+#endif
 }
 
 
@@ -579,6 +594,76 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         return false;
     }
 
+#if (DIRECTX_ENABLED == 1)
+
+	if (_texture)
+		_texture->Release();
+	if (_textureView)
+		_textureView->Release();
+
+	auto view = GLView::sharedOpenGLView();
+
+	auto format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	const auto bpp = getBitsPerPixelForFormat(pixelFormat);
+	if (pixelFormat == PixelFormat::RGBA4444)
+	{
+		format = DXGI_FORMAT_B4G4R4A4_UNORM;		
+	}
+
+	const auto rowPitch = pixelsWide * bpp / 8;
+
+	// Create texture
+	D3D11_TEXTURE2D_DESC desc;
+	desc.Width = pixelsWide;
+	desc.Height = pixelsHigh;
+	desc.MipLevels = mipmapsNum;
+	desc.ArraySize = 1;
+	desc.Format = format;
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = (mipmapsNum > 1) ? (D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET) : (D3D11_BIND_SHADER_RESOURCE);
+	desc.CPUAccessFlags = 0;
+	desc.MiscFlags = (mipmapsNum > 1) ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
+
+	D3D11_SUBRESOURCE_DATA initData;
+	initData.pSysMem = mipmaps->address;
+	initData.SysMemPitch = static_cast<UINT>(rowPitch);
+	initData.SysMemSlicePitch = static_cast<UINT>(mipmaps->len);
+
+	auto hr = view->GetDevice()->CreateTexture2D(&desc, (mipmapsNum > 1) ? nullptr : &initData, &_texture);
+	if (SUCCEEDED(hr) && _texture != 0)
+	{		
+		D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc;
+		memset(&SRVDesc, 0, sizeof(SRVDesc));
+		SRVDesc.Format = format;
+		SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		SRVDesc.Texture2D.MipLevels = (mipmapsNum > 1) ? -1 : 1;
+
+		hr = view->GetDevice()->CreateShaderResourceView(_texture, &SRVDesc, &_textureView);
+		if (FAILED(hr))
+		{
+			_texture->Release();			
+		}
+
+		if (mipmapsNum > 1)
+		{				
+			view->GetContext()->UpdateSubresource(_texture, 0, nullptr, mipmaps->address, static_cast<UINT>(rowPitch), static_cast<UINT>(mipmaps->len));
+			view->GetContext()->GenerateMips(_textureView);
+		}		
+		
+#if defined(_DEBUG) || defined(PROFILE)
+		_texture->SetPrivateData(WKPDID_D3DDebugObjectName,
+			sizeof("WICTextureLoader") - 1,
+			"WICTextureLoader"
+			);
+#endif					
+	}
+
+	DX::ThrowIfFailed(hr);
+
+#else
+    
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
     if (mipmapsNum == 1 && !info.compressed)
     {
@@ -674,6 +759,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         width = MAX(width >> 1, 1);
         height = MAX(height >> 1, 1);
     }
+#endif
 
     _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
     _pixelsWide = pixelsWide;
@@ -694,9 +780,11 @@ bool Texture2D::updateWithData(const void *data,int offsetX,int offsetY,int widt
 {
     if (_name)
     {
+#if (DIRECTX_ENABLED == 0)
         GL::bindTexture2D(_name);
         const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
         glTexSubImage2D(GL_TEXTURE_2D,0,offsetX,offsetY,width,height,info.format, info.type,data);
+#endif
 
         return true;
     }
@@ -711,7 +799,7 @@ std::string Texture2D::getDescription() const
 // implementation Texture2D (Image)
 bool Texture2D::initWithImage(Image *image)
 {
-    return initWithImage(image, image->getRenderFormat());
+	return initWithImage(image, PixelFormat::NONE);
 }
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
@@ -1157,6 +1245,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 
 void Texture2D::drawAtPoint(const Vec2& point)
 {
+#if (DIRECTX_ENABLED == 0)
     GLfloat    coordinates[] = {
         0.0f,    _maxT,
         _maxS,_maxT,
@@ -1191,10 +1280,14 @@ void Texture2D::drawAtPoint(const Vec2& point)
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+#else
+	CC_ASSERT(false && "Not implemented.");
+#endif
 }
 
 void Texture2D::drawInRect(const Rect& rect)
 {
+#if (DIRECTX_ENABLED == 0)
     GLfloat    coordinates[] = {    
         0.0f,    _maxT,
         _maxS,_maxT,
@@ -1223,6 +1316,9 @@ void Texture2D::drawInRect(const Rect& rect)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 #endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+#else
+	CC_ASSERT(false && "Not implemented.");
+#endif
 }
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
@@ -1238,12 +1334,16 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 
 void Texture2D::generateMipmap()
 {
+#if (DIRECTX_ENABLED == 0)
     CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
     GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
+#endif
+#else
+	CC_ASSERT(false && "Not implemented.");
 #endif
 }
 
@@ -1254,6 +1354,7 @@ bool Texture2D::hasMipmaps() const
 
 void Texture2D::setTexParameters(const TexParams &texParams)
 {
+#if (DIRECTX_ENABLED == 0)
     CCASSERT((_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
         (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
@@ -1267,10 +1368,14 @@ void Texture2D::setTexParameters(const TexParams &texParams)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
+#else
+	CC_ASSERT(false && "Not implemented.");
+#endif
 }
 
 void Texture2D::setAliasTexParameters()
 {
+#if (DIRECTX_ENABLED == 0)
     if (! _antialiasEnabled)
     {
         return;
@@ -1299,10 +1404,14 @@ void Texture2D::setAliasTexParameters()
     TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
     VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
+#else
+	CC_ASSERT(false && "Not implemented.");
+#endif
 }
 
 void Texture2D::setAntiAliasTexParameters()
 {
+#if (DIRECTX_ENABLED == 0)
     if ( _antialiasEnabled )
     {
         return;
@@ -1330,6 +1439,9 @@ void Texture2D::setAntiAliasTexParameters()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
     VolatileTextureMgr::setTexParameters(this, texParams);
+#endif
+#else
+	CC_ASSERT(false && "Not implemented.");
 #endif
 }
 

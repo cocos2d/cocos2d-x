@@ -433,6 +433,19 @@ protected:
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 
     bool _antialiasEnabled;
+
+#if (DIRECTX_ENABLED == 1)
+	ID3D11Texture2D* _texture;
+	ID3D11ShaderResourceView* _textureView;
+
+	static int s_TextureCount;
+
+public:
+	ID3D11ShaderResourceView* const * getView() const
+	{
+		return &_textureView;
+	}
+#endif
 };
 
 
