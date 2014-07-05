@@ -240,6 +240,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #else
+#if (DIRECTX_ENABLED == 0)
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
         GLProgram *program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
@@ -250,6 +251,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
+#endif
         
 #endif
 

@@ -42,13 +42,12 @@ public:
 
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
      * quantity of quads, and the Model View transform to be used for the quads */
-    void init(float globalOrder, GLuint texutreID, GLProgramState* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    void init(float globalOrder, Texture2D* texture, GLProgramState* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
 
     void useMaterial() const;
 
     inline uint32_t getMaterialID() const { return _materialID; }
-    inline GLuint getTextureID() const { return _textureID; }
     inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
     inline ssize_t getQuadCount() const { return _quadsCount; }
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
@@ -59,7 +58,8 @@ protected:
     void generateMaterialID();
 
     uint32_t _materialID;
-    GLuint _textureID;
+
+	Texture2D* _texture;
     GLProgramState* _glProgramState;
     BlendFunc _blendType;
     V3F_C4B_T2F_Quad* _quads;

@@ -137,7 +137,7 @@ void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _quadCommand.init(
               _globalZOrder,
-              _textureAtlas->getTexture()->getName(),
+              _textureAtlas->getTexture(),
               getGLProgramState(),
               _blendFunc,
               _textureAtlas->getQuads(),

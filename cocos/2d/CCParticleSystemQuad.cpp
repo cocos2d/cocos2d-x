@@ -374,7 +374,7 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
+        _quadCommand.init(_globalZOrder, _texture, getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
         renderer->addCommand(&_quadCommand);
     }
 }

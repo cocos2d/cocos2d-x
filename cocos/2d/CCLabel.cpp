@@ -348,6 +348,7 @@ void Label::updateShaderProgram()
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         break;
+#if (DIRECTX_ENABLED == 0)
     case cocos2d::LabelEffect::OUTLINE: 
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
         _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
@@ -359,11 +360,14 @@ void Label::updateShaderProgram()
             _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
         }
         break;
+#endif
     default:
         return;
     }
     
+#if (DIRECTX_ENABLED == 0)
     _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
+#endif
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)

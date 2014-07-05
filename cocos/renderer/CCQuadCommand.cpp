@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 QuadCommand::QuadCommand()
 :_materialID(0)
-,_textureID(0)
+,_texture(nullptr)
 ,_glProgramState(nullptr)
 ,_blendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
@@ -44,7 +44,7 @@ QuadCommand::QuadCommand()
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
 
-void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Mat4 &mv)
+void QuadCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Mat4 &mv)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
@@ -56,9 +56,9 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
 
     _mv = mv;
 
-    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != glProgramState) {
+	if (_texture != texture || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != glProgramState) {
 
-        _textureID = textureID;
+        _texture = texture;
         _blendType = blendType;
         _glProgramState = glProgramState;
 
@@ -80,19 +80,74 @@ void QuadCommand::generateMaterialID()
     else
     {
         int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
-        int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
+        int intArray[4] = { glProgram, (int)_texture->getName(), (int)_blendType.src, (int)_blendType.dst};
 
         _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
     }
 }
 
+#if (DIRECTX_ENABLED == 1)
+D3D11_BLEND GetDXBlend(GLint glBlend)
+{
+	if (glBlend == GL_ZERO)
+		return D3D11_BLEND_ZERO;
+	else if (glBlend == GL_SRC_COLOR)
+		return D3D11_BLEND_SRC_COLOR;
+	else if (glBlend == GL_ONE_MINUS_SRC_COLOR)
+		return D3D11_BLEND_INV_SRC_COLOR;
+	else if (glBlend == GL_SRC_ALPHA)
+		return D3D11_BLEND_SRC_ALPHA;
+	else if (glBlend == GL_ONE_MINUS_SRC_ALPHA)
+		return D3D11_BLEND_INV_SRC_ALPHA;
+	else if (glBlend == GL_DST_ALPHA)
+		return D3D11_BLEND_DEST_ALPHA;
+	else if (glBlend == GL_ONE_MINUS_DST_ALPHA)
+		return D3D11_BLEND_INV_DEST_ALPHA;
+	else if (glBlend == GL_DST_COLOR)
+		return D3D11_BLEND_DEST_COLOR;
+	else if (glBlend == GL_ONE_MINUS_DST_COLOR)
+		return D3D11_BLEND_INV_DEST_COLOR;
+	else if (glBlend == GL_SRC_ALPHA_SATURATE)
+		return D3D11_BLEND_SRC_ALPHA_SAT;
+	return D3D11_BLEND_ONE;
+}
+#endif
+
 void QuadCommand::useMaterial() const
 {
     //Set texture
+#if (DIRECTX_ENABLED == 1)
+	auto view = GLView::sharedOpenGLView();
+
+	view->GetContext()->PSSetShaderResources(0, 1, _texture->getView());
+
+	D3D11_BLEND src = GetDXBlend(_blendType.src);
+	D3D11_BLEND dst = GetDXBlend(_blendType.dst);
+
+	ID3D11BlendState* state = nullptr;
+	if(state == nullptr)
+	{
+		CD3D11_BLEND_DESC d = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
+		d.AlphaToCoverageEnable = false;
+		d.IndependentBlendEnable = false;
+		d.RenderTarget[0].BlendEnable = true; 
+		d.RenderTarget[0].SrcBlend = src;
+		d.RenderTarget[0].DestBlend = dst;
+		//d.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		d.RenderTarget[0].SrcBlendAlpha = src;
+		d.RenderTarget[0].DestBlendAlpha = dst;
+		//d.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		//d.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		DX::ThrowIfFailed(view->GetDevice()->CreateBlendState(&d, &state));
+	}
+
+	view->GetContext()->OMSetBlendState(state, nullptr, 0xffffffff);
+#else
     GL::bindTexture2D(_textureID);
 
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
+#endif
 
     _glProgramState->apply(_mv);
 }
