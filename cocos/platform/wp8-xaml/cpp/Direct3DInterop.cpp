@@ -40,28 +40,15 @@ using namespace PhoneDirect3DXamlAppComponent;
 namespace PhoneDirect3DXamlAppComponent
 {
 
-Direct3DInterop::Direct3DInterop(Windows::Graphics::Display::DisplayOrientations orientation) 
-    : mCurrentOrientation(orientation), m_delegate(nullptr)
+Direct3DInterop::Direct3DInterop() 
+    : m_delegate(nullptr)
 {
-    m_renderer = ref new Cocos2dRenderer(mCurrentOrientation);
 }
 
 IDrawingSurfaceBackgroundContentProvider^ Direct3DInterop::CreateContentProvider()
 {
 	ComPtr<Direct3DContentProvider> provider = Make<Direct3DContentProvider>(this);
 	return reinterpret_cast<IDrawingSurfaceBackgroundContentProvider^>(provider.Get());
-}
-
-
-// Interface With Direct3DContentProvider
-HRESULT Direct3DInterop::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host, _In_ ID3D11Device1* device)
-{
-    return S_OK;
-}
-
-void Direct3DInterop::Disconnect()
-{
-    m_renderer->Disconnect();  
 }
 
 // IDrawingSurfaceManipulationHandler
@@ -90,7 +77,7 @@ IAsyncAction^ Direct3DInterop::OnSuspending()
 
 void Direct3DInterop::OnBackKeyPress()
 {
-    cocos2d::GLView::sharedOpenGLView()->QueueBackKeyPress();
+	cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(new cocos2d::EventKeyboard(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, true));
 }
 
 // Pointer Event Handlers. We need to queue up pointer events to pass them to the drawing thread
@@ -129,31 +116,47 @@ void Direct3DInterop::OnCocos2dEditboxEvent(Object^ sender, Platform::String^ ar
     cocos2d::GLView::sharedOpenGLView()->QueueEvent(e);
 }
 
-
-
-
-HRESULT Direct3DInterop::PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Inout_ DrawingSurfaceSizeF* desiredRenderTargetSize)
+// Interface With Direct3DContentProvider
+HRESULT Direct3DInterop::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host)
 {
-	desiredRenderTargetSize->width = WindowBounds.Width;
-	desiredRenderTargetSize->height = WindowBounds.Height;
+	UNREFERENCED_PARAMETER(host);
+
+	m_renderer = ref new Cocos2dRenderer();
+	m_renderer->Initialize();
+	m_renderer->UpdateForWindowSizeChange(WindowBounds.Width, WindowBounds.Height);
+	m_renderer->UpdateForRenderResolutionChange(m_renderResolution.Width, m_renderResolution.Height);
+
 	return S_OK;
 }
 
-HRESULT Direct3DInterop::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView)
+void Direct3DInterop::Disconnect()
 {
-    m_renderer->UpdateDevice(device, context, renderTargetView);
-#if 0
-    if(mCurrentOrientation != WindowOrientation)
-    {
-        mCurrentOrientation = WindowOrientation;
-        m_renderer->OnOrientationChanged(mCurrentOrientation);
-    }  
-#endif // 0
+	m_renderer->Disconnect();
+}
 
-    cocos2d::GLView::sharedOpenGLView()->ProcessEvents();
+HRESULT Direct3DInterop::PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Out_ BOOL* contentDirty)
+{
+	UNREFERENCED_PARAMETER(presentTargetTime);
+
+	*contentDirty = true;
+
+	return S_OK;
+}
+
+HRESULT Direct3DInterop::GetTexture(_In_ const DrawingSurfaceSizeF* size, _Inout_ IDrawingSurfaceSynchronizedTextureNative** synchronizedTexture, _Inout_ DrawingSurfaceRectF* textureSubRectangle)
+    {
+	UNREFERENCED_PARAMETER(size);
+	UNREFERENCED_PARAMETER(synchronizedTexture);
+	UNREFERENCED_PARAMETER(textureSubRectangle);
+
     m_renderer->Render();
 	RequestAdditionalFrame();
 	return S_OK;
+}
+
+ID3D11Texture2D* Direct3DInterop::GetTexture()
+{
+	return m_renderer->GetTexture();
 }
 
 void Direct3DInterop::SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate) 
@@ -183,6 +186,21 @@ bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
         return true;
     }
     return false;
+}
+
+void Direct3DInterop::RenderResolution::set(Windows::Foundation::Size renderResolution)
+{
+	if (renderResolution.Width != m_renderResolution.Width ||
+		renderResolution.Height != m_renderResolution.Height)
+	{
+		m_renderResolution = renderResolution;
+
+		if (m_renderer)
+		{
+			m_renderer->UpdateForRenderResolutionChange(m_renderResolution.Width, m_renderResolution.Height);
+			RecreateSynchronizedTexture();
+		}
+	}
 }
 
 }

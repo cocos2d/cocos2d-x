@@ -601,7 +601,7 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
 
 unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size) 
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	return nullptr;
 #else
     std::string aName(pFontName);

@@ -25,19 +25,19 @@ THE SOFTWARE.
 #pragma once
 
 #include "InputEvent.h"
-#include "DirectXBase.h"
-
+#include "Direct3DBase.h"
+#include "platform/wp8-xaml/cpp/IWP8Win.h"
 class AppDelegate;
+class WP8Window;
  
-ref class Cocos2dRenderer sealed : public DirectXBase
+ref class Cocos2dRenderer sealed : public Direct3DBase
 {
 public:
-	Cocos2dRenderer(Windows::Graphics::Display::DisplayOrientations orientation);
+	Cocos2dRenderer();
 
 	// Direct3DBase methods.
-	virtual void OnOrientationChanged(Windows::Graphics::Display::DisplayOrientations orientation) override;
-	virtual bool OnRender() override;
-    virtual void CreateGLResources() override;
+	virtual void Render() override;
+    virtual void CreateWindowSizeDependentResources() override;
 
     void OnBackButton();
     void OnKeyPressed(Platform::String^ text);
@@ -50,13 +50,11 @@ public:
     void Connect();
     void Disconnect();
 
-protected:
-    virtual void OnUpdateDevice() override;
-
 private:
-
     bool m_loadingComplete;
     bool mInitialized;
+	WP8Window* m_wp8window;
+	static Cocos2dRenderer^ m_instance;
 
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
     PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
@@ -64,5 +62,25 @@ private:
 
 	// The AppDelegate for the Cocos2D app
 	AppDelegate* mApp;
-    Windows::Graphics::Display::DisplayOrientations m_orientation;
+    
+public:
+	static Cocos2dRenderer^ GetInstance()
+	{
+		return m_instance;
+	}
+
+	friend class WP8Window;
+};
+
+class WP8Window : public cocos2d::IWP8Win
+{
+	virtual ID3D11Device1* GetDevice()
+	{
+		return Cocos2dRenderer::GetInstance()->m_d3dDevice.Get();
+	}
+
+	virtual ID3D11DeviceContext1* GetContext()
+	{
+		return Cocos2dRenderer::GetInstance()->m_d3dContext.Get();
+	}
 };

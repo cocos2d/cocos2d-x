@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "platform/CCCommon.h"
 #include "InputEvent.h"
+#include "DirectXBase.h"
 #include "platform/CCGLViewProtocol.h"
 #include <agile.h>
 
@@ -48,21 +49,14 @@ NS_CC_BEGIN
 class CCEGL;
 class GLView;
 
-ref class WinRTWindow sealed
+ref class WinRTWindow sealed : public DirectXBase
 {
 
 public:
     WinRTWindow(Windows::UI::Core::CoreWindow^ window);
-	void Initialize(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ panel);
-	void setIMEKeyboardState(bool bOpen);
-    void swapBuffers();
-
 
 private:
 	cocos2d::Vec2 GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
-
-	void OnTextKeyDown(Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e); 
-	void OnTextKeyUp(Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e); 
 
 	void OnPointerWheelChanged(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
@@ -80,18 +74,10 @@ private:
 	void ShowKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 	void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 
-	Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
-
 	Windows::Foundation::Point m_lastPoint;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	bool m_lastPointValid;
 	bool m_textInputEnabled;
-	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
-	Windows::UI::Xaml::Controls::TextBox^ m_textBox;
-	Windows::UI::Xaml::Controls::Button^ m_dummy;
-
-    ESContext m_esContext;
-
 
     friend GLView;
 };
@@ -150,8 +136,6 @@ public:
     */
 	static GLView* sharedOpenGLView();
 
-protected:
-
 private:
     Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
 	bool m_running;
@@ -163,6 +147,17 @@ private:
 
     std::queue<std::shared_ptr<InputEvent>> mInputEvents;
     std::mutex mMutex;
+
+public:
+	ID3D11Device1* GetDevice()
+	{
+		return m_winRTWindow->m_d3dDevice.Get();
+	}
+
+	ID3D11DeviceContext1* GetContext()
+	{
+		return m_winRTWindow->m_d3dContext.Get();
+	}
 };
 
 NS_CC_END

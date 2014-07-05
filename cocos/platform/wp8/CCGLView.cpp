@@ -80,9 +80,7 @@ GLView::GLView()
 	, m_windowVisible(true)
     , m_width(0)
     , m_height(0)
-    , m_eglDisplay(nullptr)
-    , m_eglContext(nullptr)
-    , m_eglSurface(nullptr)
+	, m_wp8windows(nullptr)
     , m_delegate(nullptr)
     , m_messageBoxDelegate(nullptr)
     , m_orientation(DisplayOrientations::Landscape)
@@ -112,24 +110,13 @@ bool GLView::initWithFullScreen(const std::string& viewName)
     return initWithRect(viewName, Rect(0, 0, m_width, m_height), 1.0f);
 }
 
-
-bool GLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height, DisplayOrientations orientation)
+bool GLView::Create(IWP8Win* window, float width, float height,
+	Windows::Graphics::Display::DisplayOrientations orientation)
 {
     m_orientation = orientation;
-    m_eglDisplay = eglDisplay;
-    m_eglContext = eglContext;
-    m_eglSurface = eglSurface;
+	m_wp8windows = window;
     UpdateForWindowSizeChange(width, height);
     return true;
-}
-
-void GLView::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface)
-{
-    m_eglDisplay = eglDisplay;
-    m_eglContext = eglContext;
-    m_eglSurface = eglSurface;
-
-    //UpdateForWindowSizeChange(width, height);
 }
 
 void GLView::setIMEKeyboardState(bool bOpen)
@@ -149,21 +136,19 @@ void GLView::setIMEKeyboardState(bool bOpen)
 
 void GLView::swapBuffers()
 {
-    eglSwapBuffers(m_eglDisplay, m_eglSurface);  
-}
 
+}
 
 bool GLView::isOpenGLReady()
 {
 	// TODO: need to revisit this
-    return (m_eglDisplay && m_orientation != DisplayOrientations::None);
+	return (m_wp8windows && m_wp8windows->GetDevice() && m_orientation != DisplayOrientations::None);
 }
 
 void GLView::end()
 {
 	m_windowClosed = true;
 }
-
 
 void GLView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
@@ -367,8 +352,10 @@ void GLView::UpdateWindowSize()
 
     if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
     {
-        width = m_height;
-        height = m_width;
+       /* width = m_height;
+        height = m_width;*/
+		width = m_width;
+		height = m_height;
     }
     else
     {
@@ -431,27 +418,9 @@ void GLView::UpdateOrientationMatrix()
 
 cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
 {
-    cocos2d::Vec2 returnValue;
-
-    float x = p.X;
-    float y = p.Y;  
-
-    switch (m_orientation)
-    {
-        case DisplayOrientations::Portrait:
-        default:
-            returnValue = Vec2(x, y);
-            break;
-        case DisplayOrientations::Landscape:
-            returnValue = Vec2(y, m_width - x);
-            break;
-        case DisplayOrientations::PortraitFlipped:
-            returnValue = Vec2(m_width - x, m_height - y);
-            break;
-        case DisplayOrientations::LandscapeFlipped:
-            returnValue = Vec2(m_height - y, x);
-            break;
-    }
+	float x = getScaledDPIValue(p.X);
+	float y = getScaledDPIValue(p.Y);
+	Vec2 returnValue(x, y);
 
 	float zoomFactor = GLView::sharedOpenGLView()->getFrameZoomFactor();
 	if(zoomFactor > 0.0f) {
@@ -459,13 +428,11 @@ cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
 		returnValue.y /= zoomFactor;
 	}
 
-    // CCLOG("%.2f %.2f : %.2f %.2f", p.X, p.Y,returnValue.x, returnValue.y);
-
     return returnValue;
 }
 
-Vec2 GLView::GetPoint(PointerEventArgs^ args) {
-
+Vec2 GLView::GetPoint(PointerEventArgs^ args) 
+{
 	return TransformToOrientation(args->CurrentPoint->Position);
 
 }
@@ -496,9 +463,15 @@ void GLView::setScissorInPoints(float x , float y , float w , float h)
     switch(m_orientation)
 	{
 		case DisplayOrientations::Landscape:
+			glScissor((GLint)(y * _scaleY + _viewPortRect.origin.y),
+						(GLint)(_viewPortRect.size.width - ((x + w) * _scaleX) + _viewPortRect.origin.x),
+						(GLsizei)(h * _scaleY),
+						(GLsizei)(w * _scaleX));
+			break;
+
 		case DisplayOrientations::LandscapeFlipped:
-            glScissor((GLint)(y * _scaleX + _viewPortRect.origin.y),
-                       (GLint)((_viewPortRect.size.width - ((x + w) * _scaleX)) + _viewPortRect.origin.x),
+			glScissor((GLint)(_viewPortRect.size.height - ((y + h) * _scaleY) + _viewPortRect.origin.y),
+                       (GLint)(x * _scaleX + _viewPortRect.origin.x),
                        (GLsizei)(h * _scaleY),
                        (GLsizei)(w * _scaleX));
 			break;

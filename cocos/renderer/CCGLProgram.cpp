@@ -514,6 +514,7 @@ void GLProgram::updateUniforms()
 
 bool GLProgram::link()
 {
+#if (DIRECTX_ENABLED == 0)
     CCASSERT(_program != 0, "Cannot link invalid program");
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
@@ -568,6 +569,9 @@ bool GLProgram::link()
 #endif
 
     return (status == GL_TRUE);
+#else
+	return true;
+#endif
 }
 
 void GLProgram::use()

@@ -33,20 +33,25 @@ THE SOFTWARE.
 
 class Direct3DContentProvider : public Microsoft::WRL::RuntimeClass<
 		Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::WinRtClassicComMix>,
-		ABI::Windows::Phone::Graphics::Interop::IDrawingSurfaceBackgroundContentProvider,
-		IDrawingSurfaceBackgroundContentProviderNative>
+	ABI::Windows::Phone::Graphics::Interop::IDrawingSurfaceContentProvider,
+	IDrawingSurfaceContentProviderNative>
 {
 public:
 	Direct3DContentProvider(PhoneDirect3DXamlAppComponent::Direct3DInterop^ controller);
 
+	void ReleaseD3DResources();
+
 	// IDrawingSurfaceContentProviderNative
-	HRESULT STDMETHODCALLTYPE Connect(_In_ IDrawingSurfaceRuntimeHostNative* host, _In_ ID3D11Device1* device);
+	HRESULT STDMETHODCALLTYPE Connect(_In_ IDrawingSurfaceRuntimeHostNative* host);
 	void STDMETHODCALLTYPE Disconnect();
 
-	HRESULT STDMETHODCALLTYPE PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Inout_ DrawingSurfaceSizeF* desiredRenderTargetSize);
-	HRESULT STDMETHODCALLTYPE Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView);
+	HRESULT STDMETHODCALLTYPE PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Out_ BOOL* contentDirty);
+	HRESULT STDMETHODCALLTYPE GetTexture(_In_ const DrawingSurfaceSizeF* size, _Out_ IDrawingSurfaceSynchronizedTextureNative** synchronizedTexture, _Out_ DrawingSurfaceRectF* textureSubRectangle);
 
 private:
+	HRESULT InitializeTexture(_In_ const DrawingSurfaceSizeF* size);
+
 	PhoneDirect3DXamlAppComponent::Direct3DInterop^ m_controller;
 	Microsoft::WRL::ComPtr<IDrawingSurfaceRuntimeHostNative> m_host;
+	Microsoft::WRL::ComPtr<IDrawingSurfaceSynchronizedTextureNative> m_synchronizedTexture;
 };

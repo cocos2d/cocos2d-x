@@ -35,7 +35,7 @@
 using namespace Windows::UI::ViewManagement;
 
 // Helper class that initializes DirectX APIs
-ref class DirectXBase abstract
+ref class DirectXBase 
 {
 internal:
    DirectXBase();

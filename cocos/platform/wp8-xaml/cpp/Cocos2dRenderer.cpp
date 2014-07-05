@@ -39,22 +39,27 @@ using namespace PhoneDirect3DXamlAppComponent;
 
 USING_NS_CC;
 
-Cocos2dRenderer::Cocos2dRenderer(Windows::Graphics::Display::DisplayOrientations orientation): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
+Cocos2dRenderer^ Cocos2dRenderer::m_instance = nullptr;
+
+Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
 {
     mApp = new AppDelegate();
-    m_orientation = orientation;
+    m_wp8window = new WP8Window();
+	m_instance = this;
 }
 
 // Creates and restores Cocos2d-x after DirectX and Angle contexts are created or updated
-void Cocos2dRenderer::CreateGLResources()
+void Cocos2dRenderer::CreateWindowSizeDependentResources()
 {
+	Direct3DBase::CreateWindowSizeDependentResources();
+
     auto director = cocos2d::Director::getInstance();
 
     if(!mInitialized)
     {
         mInitialized = true;
         GLView* glview = GLView::create("Test Cpp");
-	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height,m_orientation);
+		glview->Create(m_wp8window, m_renderTargetSize.Width, m_renderTargetSize.Height, Windows::Graphics::Display::DisplayOrientations::Landscape);
         director->setOpenGLView(glview);
         CCApplication::getInstance()->run();
         glview->SetXamlEventDelegate(m_delegate);
@@ -68,6 +73,7 @@ void Cocos2dRenderer::CreateGLResources()
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
         cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        director->setGLDefaultValues();
         director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
         director->setGLDefaultValues();
@@ -87,7 +93,7 @@ void Cocos2dRenderer::Disconnect()
     Application::getInstance()->applicationDidEnterBackground();
     cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
     cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent); 
-    CloseAngle();
+   // CloseAngle();
     m_loadingComplete = false;
 }
 
@@ -99,29 +105,35 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
     });
 }
 
-
-void Cocos2dRenderer::OnUpdateDevice()
+void Cocos2dRenderer::Render()
 {
-    GLView* glview = GLView::sharedOpenGLView();
-    glview->UpdateDevice(m_eglDisplay, m_eglContext, m_eglSurface);
-}
+   const float midnightBlue[] = { 1, 0.5f, 0.5f, 1.0f };
+	m_d3dContext->ClearRenderTargetView(
+		m_renderTargetView.Get(),
+		midnightBlue);
+	
+	m_d3dContext->ClearDepthStencilView(
+		m_depthStencilView.Get(),
+		D3D11_CLEAR_DEPTH,
+		1.0f, 0);
 
-void Cocos2dRenderer::OnOrientationChanged(Windows::Graphics::Display::DisplayOrientations orientation)
-{
-	DirectXBase::OnOrientationChanged(orientation);
-    GLView::sharedOpenGLView()->UpdateOrientation(orientation);
-}
+	m_d3dContext->OMSetRenderTargets(
+		1,
+		m_renderTargetView.GetAddressOf(),
+		m_depthStencilView.Get());
 
-// return true if eglSwapBuffers was called by OnRender()
-bool Cocos2dRenderer::OnRender()
-{
+	ID3D11DepthStencilState* state;
+	auto d = CD3D11_DEPTH_STENCIL_DESC(CD3D11_DEFAULT());
+	d.DepthEnable = false;
+	m_d3dDevice->CreateDepthStencilState(&d, &state);
+	m_d3dContext->OMSetDepthStencilState(state, 0);
+
     if(m_loadingComplete)
     {
         GLView* glview = GLView::sharedOpenGLView();
+		glview->ProcessEvents();
         glview->Render();
-        return true; // eglSwapBuffers was called by glview->Render();
     }
-    return false;
 }
 
 void Cocos2dRenderer::OnKeyPressed(Platform::String^ text)

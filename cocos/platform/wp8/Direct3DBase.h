@@ -25,7 +25,7 @@ public:
     virtual void CreateWindowSizeDependentResources();
     virtual void UpdateForWindowSizeChange();
     virtual void ReleaseResourcesForSuspending();
-    //virtual void Render() = 0;
+    virtual void Render() = 0;
     virtual void Present();
     virtual float ConvertDipsToPixels(float dips);
     virtual void ComputeOrientationMatrices();

@@ -38,12 +38,13 @@ namespace PhoneDirect3DXamlAppComponent
 {
 
 public delegate void RequestAdditionalFrameHandler();
+public delegate void RecreateSynchronizedTextureHandler();
 
 [Windows::Foundation::Metadata::WebHostHidden]
 public ref class Direct3DInterop sealed : public Windows::Phone::Input::Interop::IDrawingSurfaceManipulationHandler
 {
 public:
-    Direct3DInterop(Windows::Graphics::Display::DisplayOrientations orientation);
+    Direct3DInterop();
 
 	Windows::Phone::Graphics::Interop::IDrawingSurfaceBackgroundContentProvider^ CreateContentProvider();
 
@@ -51,7 +52,15 @@ public:
     virtual void SetManipulationHost(Windows::Phone::Input::Interop::DrawingSurfaceManipulationHost^ manipulationHost);
 
 	event RequestAdditionalFrameHandler^ RequestAdditionalFrame;
+	event RecreateSynchronizedTextureHandler^ RecreateSynchronizedTexture;
 
+	property Windows::Foundation::Size WindowBounds;
+	property Windows::Foundation::Size NativeResolution;
+	property Windows::Foundation::Size RenderResolution
+	{
+		Windows::Foundation::Size get(){ return m_renderResolution; }
+		void set(Windows::Foundation::Size renderResolution);
+	}
 
     void UpdateForWindowSizeChange(float width, float height);
     Windows::Foundation::IAsyncAction^ OnSuspending();
@@ -61,12 +70,10 @@ public:
     void OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ text);
     void OnCocos2dEditboxEvent(Platform::Object^ sender, Platform::String^ args, Windows::Foundation::EventHandler<Platform::String^>^ handler);
 
-    property Windows::Graphics::Display::DisplayOrientations WindowOrientation;
-    property Windows::Foundation::Size WindowBounds;
-
     void SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate);
     void SetCocos2dMessageBoxDelegate(Cocos2dMessageBoxDelegate ^ delegate);
     void SetCocos2dEditBoxDelegate(Cocos2dEditBoxDelegate ^ delegate);
+	bool SendCocos2dEvent(Cocos2dEvent event);
 
 
 protected:
@@ -76,16 +83,15 @@ protected:
     void OnPointerReleased(Windows::Phone::Input::Interop::DrawingSurfaceManipulationHost^ sender, Windows::UI::Core::PointerEventArgs^ args);
 
 internal:
-	HRESULT Connect(_In_ IDrawingSurfaceRuntimeHostNative* host, _In_ ID3D11Device1* device);
-    void Disconnect();
-	HRESULT PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Inout_ DrawingSurfaceSizeF* desiredRenderTargetSize);
-    HRESULT Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView);
-    bool SendCocos2dEvent(Cocos2dEvent event);
+	HRESULT STDMETHODCALLTYPE Connect(_In_ IDrawingSurfaceRuntimeHostNative* host);
+	void STDMETHODCALLTYPE Disconnect();
+	HRESULT STDMETHODCALLTYPE PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Out_ BOOL* contentDirty);
+	HRESULT STDMETHODCALLTYPE GetTexture(_In_ const DrawingSurfaceSizeF* size, _Inout_ IDrawingSurfaceSynchronizedTextureNative** synchronizedTexture, _Inout_ DrawingSurfaceRectF* textureSubRectangle);
+	ID3D11Texture2D* GetTexture();
 
 private:
     Cocos2dRenderer^ m_renderer;
-    Windows::Graphics::Display::DisplayOrientations mCurrentOrientation;
-
+	Windows::Foundation::Size m_renderResolution;
 
     Cocos2dEventDelegate^ m_delegate;
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;

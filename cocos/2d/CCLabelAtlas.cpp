@@ -148,6 +148,9 @@ void LabelAtlas::updateAtlasValues()
         itemHeightInPixels = _itemHeight;
     }
 
+	if (_itemsPerRow == 0)
+		return;
+
     CCASSERT(n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
     for(ssize_t i = 0; i < n; i++) {

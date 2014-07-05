@@ -835,7 +835,6 @@
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp">
       <Filter>Classes\BugsTest</Filter>
@@ -849,6 +848,7 @@
     <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp">
       <Filter>Classes\TileMapTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1557,7 +1557,6 @@
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h">
@@ -1572,6 +1571,7 @@
     <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h">
       <Filter>Classes\TileMapTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libcurl.dll" />

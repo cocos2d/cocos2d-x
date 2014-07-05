@@ -59,69 +59,6 @@ static GLView* s_pEglView = NULL;
 //////////////////////////////////////////////////////////////////////////
 // impliment GLView
 //////////////////////////////////////////////////////////////////////////
-
-// Initialize the DirectX resources required to run.
-void WinRTWindow::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
-{
-	m_window = window;
- 	//TODO: remove esUtils
-    //esInitContext ( &m_esContext );
-
-    ANGLE_D3D_FEATURE_LEVEL featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_1;
-
-#if (_MSC_VER >= 1800)
-    // WinRT on Windows 8.1 can compile shaders at run time so we don't care about the DirectX feature level
-    featureLevel = ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_ANY;
-#endif
-
-
-    HRESULT result = CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(panel), featureLevel, m_eglWindow.GetAddressOf());
-	
-	if (!SUCCEEDED(result))
-	{
-		CCLOG("Unable to create Angle EGL Window: %d", result);
-		return;
-	}
-
-	m_esContext.hWnd = m_eglWindow;
-    // width and height are ignored and determined from the CoreWindow the SwapChainBackgroundPanel is in.
-
-    //TODO: remove esUtils
-    //esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
-
-	m_window->PointerPressed +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerPressed);
-    m_window->PointerReleased +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerReleased);
-    m_window->PointerMoved +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerMoved);
-    m_window->PointerWheelChanged +=
-        ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerWheelChanged);
-
-	m_dummy = ref new Button();
-	m_dummy->Opacity = 0.0;
-	m_dummy->Width=1;
-	m_dummy->Height=1;
-	m_dummy->IsEnabled = true;
-	panel->Children->Append(m_dummy);
-
-	m_textBox = ref new TextBox();
-	m_textBox->Opacity = 0.0;
-	m_textBox->Width=1;
-	m_textBox->Height=1;
-	m_textBox->MaxLength = 1;
-
-	panel->Children->Append(m_textBox);
-	m_textBox->AddHandler(UIElement::KeyDownEvent, ref new KeyEventHandler(this, &WinRTWindow::OnTextKeyDown), true);
-	m_textBox->AddHandler(UIElement::KeyUpEvent, ref new KeyEventHandler(this, &WinRTWindow::OnTextKeyUp), true);
-	m_textBox->IsEnabled = false;
-
-	auto keyboard = InputPane::GetForCurrentView();
-	keyboard->Showing += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &WinRTWindow::ShowKeyboard);
-	keyboard->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &WinRTWindow::HideKeyboard);
-	setIMEKeyboardState(false);
-}
-
 WinRTWindow::WinRTWindow(CoreWindow^ window) :
 	m_lastPointValid(false),
 	m_textInputEnabled(false)
@@ -139,12 +76,15 @@ WinRTWindow::WinRTWindow(CoreWindow^ window) :
 		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnDisplayContentsInvalidated);
 	
 	m_eventToken = CompositionTarget::Rendering::add(ref new EventHandler<Object^>(this, &WinRTWindow::OnRendering));
-}
 
-
-void WinRTWindow::swapBuffers()
-{
-	eglSwapBuffers(m_esContext.eglDisplay, m_esContext.eglSurface);  
+	window->PointerPressed +=
+		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerPressed);
+	window->PointerReleased +=
+		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerReleased);
+	window->PointerMoved +=
+		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerMoved);
+	window->PointerWheelChanged +=
+		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerWheelChanged);
 }
 
 
@@ -153,7 +93,7 @@ void WinRTWindow::OnSuspending()
 {
 #if (_MSC_VER >= 1800)
     Microsoft::WRL::ComPtr<IDXGIDevice3> dxgiDevice;
-    Microsoft::WRL::ComPtr<ID3D11Device> device = m_eglWindow->GetAngleD3DDevice();
+	Microsoft::WRL::ComPtr<ID3D11Device> device = m_d3dDevice;
     HRESULT result = device.As(&dxgiDevice);
     if (SUCCEEDED(result))
     {
@@ -193,76 +133,6 @@ void WinRTWindow::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArg
     GLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
 }
 
-void WinRTWindow::setIMEKeyboardState(bool bOpen)
-{
-	m_textInputEnabled = bOpen;
-	if(m_textInputEnabled)
-	{
-		m_textBox->IsEnabled = true;
-		m_textBox->Focus(FocusState::Pointer);
-	}
-	else
-	{
-		m_dummy->Focus(FocusState::Pointer);
-		m_textBox->IsEnabled = false;
-	}
-}
-
-
-
-void WinRTWindow::OnTextKeyDown(Object^ sender, KeyRoutedEventArgs^ args)
-{
-#if 0
-	if(!m_textInputEnabled)
-	{
-		return;
-	}
-
-    auto key = args->Key;
-
-    switch(key)
-    {
-    default:
-        break;
-    }
-#endif
-}
-
-void WinRTWindow::OnTextKeyUp(Object^ sender, KeyRoutedEventArgs^ args)
-{
-	if(!m_textInputEnabled)
-	{
-		return;
-	}
-
-	args->Handled = true;
-
-    auto key = args->Key;
-
-    switch(key)
-    {
-    case VirtualKey::Escape:
-        // TODO:: fix me
-        //Director::getInstance()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
-		args->Handled = true;
-        break;
-	case VirtualKey::Back:
-        IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-        break;
-    case VirtualKey::Enter:
-		setIMEKeyboardState(false);
-        IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
-        break;
-    default:
-        char szUtf8[8] = {0};
-        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)m_textBox->Text->Data(), 1, szUtf8, sizeof(szUtf8), NULL, NULL);
-        IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
-        break;
-    }	
-	m_textBox->Text = "";
-}
-
-
 void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
@@ -277,55 +147,20 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
 // user pressed the Back Key on the phone
 void GLView::OnBackKeyPress()
 {
-#if 0
-    if (m_delegate)
-    {
-        m_delegate->Invoke(Cocos2dEvent::TerminateApp);
-    }
-#endif // 0
 
 }
 
 
 void GLView::OnPointerPressed(PointerEventArgs^ args)
 {
-#if 0
-    int id = args->CurrentPoint->PointerId;
-    Vec2 pt = GetPoint(args);
-    handleTouchesBegin(1, &id, &pt.x, &pt.y);
-#endif
 }
 
 void GLView::OnPointerMoved(PointerEventArgs^ args)
 {
-#if 0
-    auto currentPoint = args->CurrentPoint;
-    if (currentPoint->IsInContact)
-    {
-        if (m_lastPointValid)
-        {
-            int id = args->CurrentPoint->PointerId;
-            Vec2 p = GetPoint(args);
-            handleTouchesMove(1, &id, &p.x, &p.y);
-        }
-        m_lastPoint = currentPoint->Position;
-        m_lastPointValid = true;
-    }
-    else
-    {
-        m_lastPointValid = false;
-    }
-#endif
 }
 
 void GLView::OnPointerReleased(PointerEventArgs^ args)
 {
-#if 0
-    int id = args->CurrentPoint->PointerId;
-    Vec2 pt = GetPoint(args);
-    handleTouchesEnd(1, &id, &pt.x, &pt.y);
-#endif // 0
-
 }
 
 
@@ -420,7 +255,7 @@ bool GLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 
 	m_bSupportTouch = true;
 	m_winRTWindow = ref new WinRTWindow(window);
-	m_winRTWindow->Initialize(window, panel);
+	m_winRTWindow->Initialize(window, panel, 96);
     m_initialized = false;
 	UpdateForWindowSizeChange();
     return bRet;
@@ -440,18 +275,13 @@ void GLView::end()
 
 void GLView::swapBuffers()
 {
-	m_winRTWindow->swapBuffers();
+	m_winRTWindow->Present();
 }
 
 
 void GLView::setIMEKeyboardState(bool bOpen)
 {
-	if(m_winRTWindow) 
-	{
-		m_winRTWindow->setIMEKeyboardState(bOpen);
 	}
-}
-
 
 void GLView::resize(int width, int height)
 {
@@ -508,51 +338,32 @@ void GLView::OnRendering()
 {
 	if(m_running && m_initialized)
 	{
+		const float midnightBlue[] = { 1, 1, 1, 1.0f };
+		m_winRTWindow->m_d3dContext->ClearRenderTargetView(
+			m_winRTWindow->m_renderTargetView.Get(),
+			midnightBlue
+			);
+
+		m_winRTWindow->m_d3dContext->ClearDepthStencilView(
+			m_winRTWindow->m_depthStencilView.Get(),
+			D3D11_CLEAR_DEPTH,
+			1.0f,
+			0
+			);
+
 		Director::sharedDirector()->mainLoop();
 	}
 }
 
 void GLView::HideKeyboard(Windows::Foundation::Rect r)
 {
-    return; // not implemented
-#if 0
-	float height = m_keyboardRect.Height;
-	float factor = _scaleY / CC_CONTENT_SCALE_FACTOR();
-	height = (float)height / factor;
 
-	Rect rect_end(0, 0, 0, 0);
-	Rect rect_begin(0, 0, _screenSize.width / factor, height);
-
-    IMEKeyboardNotificationInfo info;
-    info.begin = rect_begin;
-    info.end = rect_end;
-    info.duration = 0;
-    IMEDispatcher::sharedDispatcher()->dispatchKeyboardWillHide(info);
-    IMEDispatcher::sharedDispatcher()->dispatchKeyboardDidHide(info);
-#endif
 }
 
 void GLView::ShowKeyboard(Windows::Foundation::Rect r)
 {
-    return; // not implemented
-#if 0
-	float height = r.Height;
-	float factor = _scaleY / CC_CONTENT_SCALE_FACTOR();
-	height = (float)height / factor;
 
-	Rect rect_begin(0.0f, 0.0f - height, _screenSize.width / factor, height);
-	Rect rect_end(0.0f, 0.0f, _screenSize.width / factor, height);
-
-    CCIMEKeyboardNotificationInfo info;
-    info.begin = rect_begin;
-    info.end = rect_end;
-    info.duration = 0;
-    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardWillShow(info);
-    CCIMEDispatcher::sharedDispatcher()->dispatchKeyboardDidShow(info);
-	m_keyboardRect = r;
-#endif
 }
-
 
 void GLView::UpdateForWindowSizeChange()
 {
