@@ -76,9 +76,11 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         // The frame buffer is always created with portrait orientation on WP8. 
         // So if the current device orientation is landscape, we need to rotate the frame buffer.  
-        auto renderTargetSize = glView->getRenderTargetSize();
-        CCASSERT(width * height == static_cast<int>(renderTargetSize.width * renderTargetSize.height), "The frame size is not matched");
-        glReadPixels(0, 0, (int)renderTargetSize.width, (int)renderTargetSize.height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+		CCASSERT(false, "Not supported.");
+
+        //auto renderTargetSize = glView->getRenderTargetSize();
+        //CCASSERT(width * height == static_cast<int>(renderTargetSize.width * renderTargetSize.height), "The frame size is not matched");
+        //glReadPixels(0, 0, (int)renderTargetSize.width, (int)renderTargetSize.height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
 #else
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
 #endif
@@ -90,25 +92,25 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-        if (width == static_cast<int>(renderTargetSize.width))
-        {
-            // The current device orientation is portrait.
-            for (int row = 0; row < height; ++row)
-            {
-                memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
-            }
-        }
-        else
-        {
-            // The current device orientation is landscape.
-            for (int row = 0; row < width; ++row)
-            {
-                for (int col = 0; col < height; ++col)
-                {
-                    *(int*)(flippedBuffer.get() + (height - col - 1) * width * 4 + row * 4) = *(int*)(buffer.get() + row * height * 4 + col * 4);
-                }
-            }     
-        }
+        //if (width == static_cast<int>(renderTargetSize.width))
+        //{
+        //    // The current device orientation is portrait.
+        //    for (int row = 0; row < height; ++row)
+        //    {
+        //        memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
+        //    }
+        //}
+        //else
+        //{
+        //    // The current device orientation is landscape.
+        //    for (int row = 0; row < width; ++row)
+        //    {
+        //        for (int col = 0; col < height; ++col)
+        //        {
+        //            *(int*)(flippedBuffer.get() + (height - col - 1) * width * 4 + row * 4) = *(int*)(buffer.get() + row * height * 4 + col * 4);
+        //        }
+        //    }     
+        //}
 #else
         for (int row = 0; row < height; ++row)
         {

@@ -149,7 +149,7 @@ public:
      */
     SpriteFrame* getSpriteFrameByName(const std::string& name);
 
-	/ ** Returns names for sprite frames which starts with 'name' */
+	/** Returns names for sprite frames which starts with 'name' */
 	std::vector<std::string> getSpriteFramesByStart(const std::string& name);
 
     /** @deprecated use getSpriteFrameByName() instead */

@@ -1761,10 +1761,9 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
     {
         return isWidgetAncestorSupportLoopFocus(parent, direction);
     }
+
+	return false;
 }
-
-
-
 
 Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
 {
