@@ -27,14 +27,15 @@ THE SOFTWARE.
 #include "InputEvent.h"
 #include "Direct3DBase.h"
 #include "platform/wp8-xaml/cpp/IWP8Win.h"
-class AppDelegate;
+
 class WP8Window;
  
-ref class Cocos2dRenderer sealed : public Direct3DBase
+ref class Cocos2dRenderer : public Direct3DBase
 {
-public:
+protected private:
 	Cocos2dRenderer();
 
+public:	
 	// Direct3DBase methods.
 	virtual void Render() override;
     virtual void CreateWindowSizeDependentResources() override;
@@ -50,18 +51,17 @@ public:
     void Connect();
     void Disconnect();
 
-private:
+protected private:
     bool m_loadingComplete;
     bool mInitialized;
-	WP8Window* m_wp8window;
-	static Cocos2dRenderer^ m_instance;
 
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
     PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ m_editBoxDelegate;
 
-	// The AppDelegate for the Cocos2D app
-	AppDelegate* mApp;
+protected private:
+	static Cocos2dRenderer^ m_instance;
+	WP8Window* m_wp8window;
     
 public:
 	static Cocos2dRenderer^ GetInstance()

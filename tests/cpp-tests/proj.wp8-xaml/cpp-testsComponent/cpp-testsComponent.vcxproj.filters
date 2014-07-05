@@ -849,6 +849,7 @@
       <Filter>Classes\TileMapTest</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DBase.cpp" />
+    <ClCompile Include="..\..\Classes\CustomRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1557,7 +1558,6 @@
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h">
       <Filter>Classes\BugsTest</Filter>
@@ -1572,6 +1572,7 @@
       <Filter>Classes\TileMapTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DBase.h" />
+    <ClInclude Include="..\..\Classes\CustomRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libcurl.dll" />

@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include "DirectXHelper.h"
-
 // Helper class that initializes DirectX APIs for 3D rendering.
 ref class Direct3DBase abstract
 {

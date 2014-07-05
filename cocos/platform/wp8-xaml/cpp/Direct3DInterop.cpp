@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "Direct3DContentProvider.h"
 #include "EditBoxEvent.h"
 #include "cocos2d.h"
+#include "CustomRenderer.h"
 
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
@@ -121,7 +122,7 @@ HRESULT Direct3DInterop::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host)
 {
 	UNREFERENCED_PARAMETER(host);
 
-	m_renderer = ref new Cocos2dRenderer();
+	m_renderer = ref new CustomRenderer();
 	m_renderer->Initialize();
 	m_renderer->UpdateForWindowSizeChange(WindowBounds.Width, WindowBounds.Height);
 	m_renderer->UpdateForRenderResolutionChange(m_renderResolution.Width, m_renderResolution.Height);

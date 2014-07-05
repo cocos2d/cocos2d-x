@@ -44,7 +44,7 @@ THE SOFTWARE.
 
 #include <EGL/egl.h>
 #include "platform/wp8-xaml/cpp/IWP8Win.h"
-#include "DirectXHelper.h"
+#include "platform/winrt/DirectXHelper.h"
 
 NS_CC_BEGIN
 

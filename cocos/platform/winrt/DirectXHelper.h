@@ -20,7 +20,6 @@
 
 
 #include "base/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 // Helper utilities to make Win32 APIs work with exceptions.
 namespace DX
@@ -35,4 +34,3 @@ namespace DX
    }
 }
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

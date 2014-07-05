@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "CCApplication.h"
 #include "CCGLView.h"
-#include "AppDelegate.h"
 #include <ppltasks.h>
 
 using namespace Concurrency;
@@ -43,7 +42,6 @@ Cocos2dRenderer^ Cocos2dRenderer::m_instance = nullptr;
 
 Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
 {
-    mApp = new AppDelegate();
     m_wp8window = new WP8Window();
 	m_instance = this;
 }
@@ -76,7 +74,6 @@ void Cocos2dRenderer::CreateWindowSizeDependentResources()
         director->setGLDefaultValues();
         director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
-        director->setGLDefaultValues();
   }
 
     m_loadingComplete = true;
