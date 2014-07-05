@@ -33,8 +33,6 @@ NS_CC_BEGIN
 
 class Event;
 class Controller;
-class ControllerButtonInput;
-class ControllerAxisInput;
 
 class EventListenerController : public EventListener
 {
@@ -50,11 +48,11 @@ public:
 	std::function<void(Controller*, Event*)> onConnected;
 	std::function<void(Controller*, Event*)> onDisconnected;
     
-    std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonPressed;
-    std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonReleased;
-	std::function<void(Controller*, ControllerButtonInput*, Event*)> onButtonValueChanged;
+    std::function<void(Controller*, int, Event*)> onKeyDown;
+    std::function<void(Controller*, int, Event*)> onKeyUp;
+	std::function<void(Controller*, int, Event*)> onKeyRepeat;
     
-	std::function<void(Controller*, ControllerAxisInput*, Event*)> onAxisValueChanged;
+	std::function<void(Controller*, int, Event*)> onAxisEvent;
     
 protected:
     bool init();
