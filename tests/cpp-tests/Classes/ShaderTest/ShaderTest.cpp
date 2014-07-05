@@ -147,7 +147,9 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
 
     _time = 0;
     _resolution = Vec2(SIZE_X, SIZE_Y);
+#if D3D_ENABLED == 0
     getGLProgramState()->setUniformVec2("resolution", _resolution);
+#endif
 
     scheduleUpdate();
 
@@ -190,7 +192,9 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     Node::setPosition(newPosition);
     auto position = getPosition();
     _center = Vec2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+#if D3D_ENABLED == 0
     getGLProgramState()->setUniformVec2("center", _center);
+#endif
 }
 
 void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -484,21 +488,27 @@ void SpriteBlur::initGLProgram()
     setGLProgramState(glProgramState);
     
     auto size = getTexture()->getContentSizeInPixels();
+#if D3D_ENABLED == 0
     getGLProgramState()->setUniformVec2("resolution", size);
     getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
     getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
+#endif
 }
 
 void SpriteBlur::setBlurRadius(float radius)
 {
     _blurRadius = radius;
+#if D3D_ENABLED == 0
     getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
+#endif
 }
 
 void SpriteBlur::setBlurSampleNum(float num)
 {
     _blurSampleNum = num;
+#if D3D_ENABLED == 0
     getGLProgramState()->setUniformFloat("sampleNum", _blurSampleNum);
+#endif
 }
 
 // ShaderBlur
@@ -753,12 +763,14 @@ ui::Slider* ShaderMultiTexture::createSliderCtl()
 
     slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
 
+#if D3D_ENABLED == 0
         if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
         {
             ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
             float p = slider->getPercent() / 100.0f;
             _sprite->getGLProgramState()->setUniformFloat("u_interpolate",p);
         }
+#endif
     });
     return slider;
 }
@@ -789,8 +801,10 @@ bool ShaderMultiTexture::init()
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
         _sprite->setGLProgramState(glprogramstate);
 
+#if D3D_ENABLED == 0
         glprogramstate->setUniformTexture("u_texture1", right->getTexture());
         glprogramstate->setUniformFloat("u_interpolate",0.5);
+#endif
 
         // slider
         createSliderCtl();
@@ -820,7 +834,9 @@ void ShaderMultiTexture::changeTexture(Ref*)
     Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
     right->setTexture(textrue);
     auto programState = _sprite->getGLProgramState();
+#if D3D_ENABLED == 0
     programState->setUniformTexture("u_texture1", right->getTexture());
+#endif
 }
 
 

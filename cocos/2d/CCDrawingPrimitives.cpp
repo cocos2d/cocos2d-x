@@ -135,9 +135,10 @@ void drawPoint(const Vec2& point)
     s_shader->use();
     s_shader->setUniformsForBuiltins();
 
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
-
+#endif
 #ifdef EMSCRIPTEN
     setGLBufferData(&p, 8);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -157,9 +158,10 @@ void drawPoints( const Vec2 *points, unsigned int numberOfPoints )
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
-
+#endif
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
     Vec2* newPoints = new Vec2[numberOfPoints];
 
@@ -209,8 +211,9 @@ void drawLine(const Vec2& origin, const Vec2& destination)
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 #ifdef EMSCRIPTEN
     setGLBufferData(vertices, 16);
@@ -249,8 +252,9 @@ void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon)
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // iPhone and 32-bit machines optimization
@@ -301,8 +305,9 @@ void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
@@ -366,8 +371,9 @@ void drawCircle( const Vec2& center, float radius, float angle, unsigned int seg
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
@@ -411,8 +417,9 @@ void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned in
     
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
-    
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     
 #ifdef EMSCRIPTEN
@@ -452,8 +459,9 @@ void drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destina
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
@@ -509,8 +517,9 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*)&s_color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN
@@ -543,8 +552,9 @@ void drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& contr
 
     s_shader->use();
     s_shader->setUniformsForBuiltins();
+#if DIRECTX_ENABLED == 0
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
-
+#endif
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
 #ifdef EMSCRIPTEN

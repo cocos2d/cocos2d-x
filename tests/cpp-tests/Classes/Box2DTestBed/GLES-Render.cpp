@@ -57,7 +57,9 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, con
         vertices[i] *= mRatio;
     }
 
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
@@ -81,13 +83,17 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount
         vertices[i] *= mRatio;
     }
     
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
+#endif
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,vertexCount*2);
@@ -116,7 +122,9 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
         theta += k_increment;
     }
     
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
@@ -147,12 +155,15 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
         theta += k_increment;
     }
     
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
+#endif
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
-
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
     // Draw the axis line
@@ -170,7 +181,9 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
     mShaderProgram->use();
     mShaderProgram->setUniformsForBuiltins();
 
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
 
     GLfloat    glVertices[] = 
     {
@@ -202,7 +215,9 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
     mShaderProgram->use();
     mShaderProgram->setUniformsForBuiltins();
 
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
 
     //    glPointSize(size);
 
@@ -232,7 +247,9 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     mShaderProgram->use();
     mShaderProgram->setUniformsForBuiltins();
 
+#if D3D_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
+#endif
 
     GLfloat                glVertices[] = {
         aabb->lowerBound.x * mRatio, aabb->lowerBound.y * mRatio,

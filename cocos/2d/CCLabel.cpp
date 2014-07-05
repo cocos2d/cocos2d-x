@@ -834,7 +834,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     auto glprogram = getGLProgram();
     glprogram->use();
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-
+#if DIRECTX_ENABLED == 0
     if (_currentLabelType == LabelType::TTF)
     {
         glprogram->setUniformLocationWith4f(_uniformTextColor,
@@ -846,6 +846,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
          glprogram->setUniformLocationWith4f(_uniformEffectColor,
              _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
     }
+#endif
 
     if(_shadowEnabled && _shadowBlurRadius <= 0)
     {

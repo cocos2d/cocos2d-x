@@ -29,6 +29,46 @@ THE SOFTWARE.
 #define STRINGIFY(A)  #A
 
 NS_CC_BEGIN
+
+#if (DIRECTX_ENABLED == 1)
+const GLchar * ccPosition_uColor_frag = "Position_uColor";
+const GLchar * ccPosition_uColor_vert = "Position_uColor";
+
+const GLchar * ccPositionColor_frag = "PositionColor";
+const GLchar * ccPositionColor_vert = "PositionColor";
+
+const GLchar * ccPositionTexture_frag = "PositionTexture";
+const GLchar * ccPositionTexture_vert = "PositionTexture";
+
+const GLchar * ccPositionTextureA8Color_frag = "PositionTextureA8Color";
+const GLchar * ccPositionTextureA8Color_vert = "PositionTextureA8Color";
+
+const GLchar * ccPositionTextureColor_frag = "PositionTextureColor";
+const GLchar * ccPositionTextureColor_vert = "PositionTextureColor";
+
+const GLchar * ccPositionTextureColor_noMVP_frag = "PositionTextureColor_noMVP";
+const GLchar * ccPositionTextureColor_noMVP_vert = "PositionTextureColor_noMVP";
+
+const GLchar * ccPositionTextureColorAlphaTest_frag = "PositionTextureColorAlphaTest";
+
+const GLchar * ccPositionTexture_uColor_frag = "PositionTexture_uColor";
+const GLchar * ccPositionTexture_uColor_vert = "PositionTexture_uColor";
+
+const GLchar * ccPositionColorLengthTexture_frag = "PositionColorLengthTexture";
+const GLchar * ccPositionColorLengthTexture_vert = "PositionColorLengthTexture";
+
+const GLchar * ccLabelDistanceFieldNormal_frag = "Label_df_Normal";
+const GLchar * ccLabelDistanceFieldGlow_frag = "Label_df_Glow";
+const GLchar * ccLabelNormal_frag = "Label_normal";
+const GLchar * ccLabelOutline_frag = "Label_outline";
+
+const GLchar * ccLabel_vert = "Label";
+
+const GLchar * cc3D_PositionTex_vert = "3D_PositionTex";
+const GLchar * cc3D_SkinPositionTex_vert = "3D_PositionTex";
+const GLchar * cc3D_ColorTex_frag = "3D_ColorTex";
+const GLchar * cc3D_Color_frag = "3D_Color";
+#else
 //
 #include "ccShader_Position_uColor.frag"
 #include "ccShader_Position_uColor.vert"
@@ -74,5 +114,6 @@ NS_CC_BEGIN
 #include "ccShader_3D_PositionTex.vert"
 #include "ccShader_3D_Color.frag"
 #include "ccShader_3D_ColorTex.frag"
+#endif
 
 NS_CC_END

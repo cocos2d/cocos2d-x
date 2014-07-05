@@ -773,7 +773,9 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->use();
+#if D3D_ENABLED == 0
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+#endif
 #endif
 }
 
@@ -806,7 +808,9 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->use();
+#if D3D_ENABLED == 0
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+#endif
 #endif
 }
 
@@ -872,7 +876,9 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->use();
+#if D3D_ENABLED == 0
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+#endif
 #endif
     glFlush();
 }

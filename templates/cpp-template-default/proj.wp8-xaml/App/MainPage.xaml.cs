@@ -77,7 +77,7 @@ namespace PhoneDirect3DXamlAppInterop
                         displayOrientation = DisplayOrientations.Landscape;
                         break;
                 }
-                m_d3dInterop = new Direct3DInterop(displayOrientation);
+                m_d3dInterop = new Direct3DInterop();
 
                 // Set WindowBounds to size of DrawingSurface
                 m_d3dInterop.WindowBounds = new Windows.Foundation.Size(
@@ -85,9 +85,17 @@ namespace PhoneDirect3DXamlAppInterop
                     (float)Application.Current.Host.Content.ActualHeight
                     );
 
-                // Hook-up native component to DrawingSurfaceBackgroundGrid
-                DrawingSurfaceBackground.SetBackgroundContentProvider(m_d3dInterop.CreateContentProvider());
-                DrawingSurfaceBackground.SetBackgroundManipulationHandler(m_d3dInterop);
+                // Set native resolution in pixels
+                m_d3dInterop.NativeResolution = new Windows.Foundation.Size(
+                    (float)Math.Floor(DrawingSurface2.ActualWidth * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f),
+                    (float)Math.Floor(DrawingSurface2.ActualHeight * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f)
+                    );
+
+                // Set render resolution to the full native resolution
+                m_d3dInterop.RenderResolution = m_d3dInterop.NativeResolution;
+
+                DrawingSurface2.SetContentProvider(m_d3dInterop.CreateContentProvider());
+                DrawingSurface2.SetManipulationHandler(m_d3dInterop);
 
                 // Hook-up Cocos2d-x delegates
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
@@ -164,7 +172,7 @@ namespace PhoneDirect3DXamlAppInterop
                             m_textBox.MaxLength = 1;
                             m_textBox.KeyDown += OnKeyDown;
                             m_textBox.KeyUp += OnKeyUp;
-                            DrawingSurfaceBackground.Children.Add(m_textBox);
+                            // TODO DrawingSurface2.Children.Add(m_textBox);
                         }
                         m_textBox.Focus();
                         break;
@@ -172,7 +180,7 @@ namespace PhoneDirect3DXamlAppInterop
                     case Cocos2dEvent.HideKeyboard:
                         if (m_textBox != null)
                         {
-                            DrawingSurfaceBackground.Children.Remove(m_textBox);
+                            // TODO DrawingSurface2.Children.Remove(m_textBox);
                         }
                         m_textBox = null;
                         break;
@@ -187,7 +195,7 @@ namespace PhoneDirect3DXamlAppInterop
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 EditBox editbox = new EditBox(this, strPlaceHolder, strText, maxLength, inputMode, inputFlag);
-                DrawingSurfaceBackground.Children.Add(editbox);
+                // TODO DrawingSurface2.Children.Add(editbox);
             });
         }
 

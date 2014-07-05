@@ -778,7 +778,7 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
 
 	a = (Vx, Vy, Vz, 1)
 	b = (a×M)T
-	Out = 1 ⁄ bw(bx, by, bz)
+	Out = 1 / bw(bx, by, bz)
 	*/
 	
 	clipCoord.x = clipCoord.x / clipCoord.w;

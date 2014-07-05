@@ -98,7 +98,7 @@ const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
 
-GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
+GLProgram* GLProgram::createWithByteArrays(const std::string& vShaderByteArray, const std::string& fShaderByteArray)
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithByteArrays(vShaderByteArray, fShaderByteArray)) {
@@ -126,10 +126,22 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
     return nullptr;
 }
 
-GLProgram::GLProgram()
-: _program(0)
+#if (DIRECTX_ENABLED == 1)
+int GLProgram::s_programCount = 0;
+#endif
+
+GLProgram::GLProgram() :
+#if (DIRECTX_ENABLED == 1)
+_inputLayout(nullptr)
+, _vertexShader(nullptr)
+, _pixelShader(nullptr)
+, _constantBuffer(nullptr)
+, _program(++s_programCount)
+#else
+_program(0)
 , _vertShader(0)
 , _fragShader(0)
+#endif
 , _hashForUniforms(nullptr)
 , _flags()
 {
@@ -140,6 +152,19 @@ GLProgram::~GLProgram()
 {
     CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
+#if (DIRECTX_ENABLED == 1)
+	if (_inputLayout)
+		_inputLayout->Release();
+	_inputLayout = nullptr;
+
+	if (_vertexShader)
+		_vertexShader->Release();
+	_vertexShader = nullptr;
+
+	if (_pixelShader)
+		_pixelShader->Release();
+	_pixelShader = nullptr;
+#else 
     if (_vertShader)
     {
         glDeleteShader(_vertShader);
@@ -156,6 +181,7 @@ GLProgram::~GLProgram()
     {
         GL::deleteProgram(_program);
     }
+#endif
 
     tHashUniformEntry *current_element, *tmp;
 
@@ -168,20 +194,60 @@ GLProgram::~GLProgram()
     }
 }
 
-bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
+void GLProgram::initWithHLSL(const std::string& vertexShaderFilename, const std::string& pixelShaderFilename)
 {
+#if (DIRECTX_ENABLED == 1)
+	// Load shaders asynchronously.
+	auto vsData = FileUtils::getInstance()->getDataFromFile("ccShader_" + vertexShaderFilename + "_VS.cso");
+	auto psData = FileUtils::getInstance()->getDataFromFile("ccShader_" + pixelShaderFilename + "_PS.cso");
+	
+	auto view = GLView::sharedOpenGLView();
+	_shaderId = vertexShaderFilename;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    GLboolean hasCompiler = false;
-    glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
-    _hasShaderCompiler = (hasCompiler == GL_TRUE);
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateVertexShader(
+		vsData.getBytes(),
+		vsData.getSize(),
+		nullptr,
+		&_vertexShader));
 
-    if(!_hasShaderCompiler)
-    {
-        return initWithPrecompiledProgramByteArray(vShaderByteArray,fShaderByteArray);
-    }
+	static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateInputLayout(
+		vertexDesc,
+		ARRAYSIZE(vertexDesc),
+		vsData.getBytes(),
+		vsData.getSize(),
+		&_inputLayout));
+
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreatePixelShader(
+		psData.getBytes(),
+		psData.getSize(),
+		nullptr,
+		&_pixelShader));
+
+	CD3D11_BUFFER_DESC constantBufferDesc(sizeof(ModelViewProjectionConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateBuffer(
+		&constantBufferDesc,
+		nullptr,
+		&_constantBuffer));
+
 #endif
+    }
 
+bool GLProgram::initWithByteArrays(const std::string& vShaderByteArray, const std::string& fShaderByteArray)
+{
+#if (DIRECTX_ENABLED == 1)
+	CC_ASSERT(false && "This is not supported.");
+#else
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
@@ -219,48 +285,10 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     _hashForUniforms = nullptr;
     
     CHECK_GL_ERROR_DEBUG();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    _shaderId = CCPrecompiledShaders::getInstance()->addShaders(vShaderByteArray, fShaderByteArray);
 #endif
 
     return true;
 }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-GLProgram* GLProgram::createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-{
-    auto ret = new (std::nothrow) GLProgram();
-    if(ret && ret->initWithPrecompiledProgramByteArray(vShaderByteArray, fShaderByteArray)) {
-        ret->link();
-        ret->updateUniforms();
-        ret->autorelease();
-        return ret;
-    }
-
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-{
-    bool haveProgram = false;
-
-    _program = glCreateProgram();
-    CHECK_GL_ERROR_DEBUG();
-
-    _vertShader = _fragShader = 0;
-
-    haveProgram = CCPrecompiledShaders::getInstance()->loadProgram(_program, vShaderByteArray, fShaderByteArray);
-
-    CHECK_GL_ERROR_DEBUG();
-    _hashForUniforms = NULL;
-
-    CHECK_GL_ERROR_DEBUG();  
-
-    return haveProgram;
-}
-#endif
 
 bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std::string &fShaderFilename)
 {
@@ -268,11 +296,12 @@ bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std:
     std::string vertexSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename));
     std::string fragmentSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename));
 
-    return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str());
+    return initWithByteArrays(vertexSource, fragmentSource);
 }
 
 void GLProgram::bindPredefinedVertexAttribs()
 {
+#if (DIRECTX_ENABLED == 0)
     static const struct {
         const char *attributeName;
         int location;
@@ -289,10 +318,12 @@ void GLProgram::bindPredefinedVertexAttribs()
     for(int i=0; i<size;i++) {
         glBindAttribLocation(_program, attribute_locations[i].location, attribute_locations[i].attributeName);
     }
+#endif    
 }
 
 void GLProgram::parseVertexAttribs()
 {
+#if (DIRECTX_ENABLED == 0)
     _vertexAttribs.clear();
 
 	// Query and store vertex attribute meta-data from the program.
@@ -321,10 +352,12 @@ void GLProgram::parseVertexAttribs()
 			}
 		}
 	}
+#endif
 }
 
 void GLProgram::parseUniforms()
 {
+#if (DIRECTX_ENABLED == 0)
     _userUniforms.clear();
 
 	// Query and store uniforms from the program.
@@ -373,6 +406,7 @@ void GLProgram::parseUniforms()
 			}
 		}
 	}
+#endif
 }
 
 Uniform* GLProgram::getUniform(const std::string &name)
@@ -393,14 +427,22 @@ VertexAttrib* GLProgram::getVertexAttrib(const std::string &name)
 
 std::string GLProgram::getDescription() const
 {
+#if (DIRECTX_ENABLED == 0)
     return StringUtils::format("<GLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T
                                       " | Program = %i, VertexShader = %i, FragmentShader = %i>",
                                       (size_t)this, _program, _vertShader, _fragShader);
+#else
+	return StringUtils::format("<GLProgram = "
+		CC_FORMAT_PRINTF_SIZE_T
+		" | Program = %i, VertexShader = %i, FragmentShader = %i>",
+		(size_t)this, -1, _vertexShader, _pixelShader);
+#endif
 }
 
 bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
 {
+#if (DIRECTX_ENABLED == 0)
     GLint status;
  
     if (!source)
@@ -455,25 +497,39 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         return false;;
     }
     return (status == GL_TRUE);
+#endif
+
+	return false;
 }
 
 GLint GLProgram::getAttribLocation(const std::string &attributeName) const
 {
+#if (DIRECTX_ENABLED == 0)
     return glGetAttribLocation(_program, attributeName.c_str());
+#else 
+	return 0;
+#endif
 }
 
 GLint GLProgram::getUniformLocation(const std::string &attributeName) const
 {
+#if (DIRECTX_ENABLED == 0)
     return glGetUniformLocation(_program, attributeName.c_str());
+#else
+	return 0;
+#endif
 }
 
 void GLProgram::bindAttribLocation(const std::string &attributeName, GLuint index) const
 {
+#if (DIRECTX_ENABLED == 0)
     glBindAttribLocation(_program, index, attributeName.c_str());
+#endif
 }
 
 void GLProgram::updateUniforms()
 {
+#if (DIRECTX_ENABLED == 0)
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
@@ -510,25 +566,12 @@ void GLProgram::updateUniforms()
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER2], 2);
     if(_builtInUniforms[UNIFORM_SAMPLER3] != -1)
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER3], 3);
+#endif
 }
 
 bool GLProgram::link()
 {
 #if (DIRECTX_ENABLED == 0)
-    CCASSERT(_program != 0, "Cannot link invalid program");
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    if(!_hasShaderCompiler)
-    {
-        // precompiled shader program is already linked
-
-        //bindPredefinedVertexAttribs();
-        parseVertexAttribs();
-        parseUniforms();
-        return true;
-    }
-#endif
-
     GLint status = GL_TRUE;
 
     bindPredefinedVertexAttribs();
@@ -576,7 +619,18 @@ bool GLProgram::link()
 
 void GLProgram::use()
 {
+#if (DIRECTX_ENABLED == 0)
     GL::useProgram(_program);
+#else
+	auto view = GLView::sharedOpenGLView();
+
+	// Prepare the constant buffer to send it to the graphics device.
+	view->GetContext()->UpdateSubresource(_constantBuffer, 0, NULL, &_constantData, 0, 0);
+	view->GetContext()->IASetInputLayout(_inputLayout);	
+	view->GetContext()->VSSetConstantBuffers(0,	1, &_constantBuffer);
+	view->GetContext()->VSSetShader(_vertexShader, nullptr, 0);
+	view->GetContext()->PSSetShader(_pixelShader, nullptr, 0);
+#endif
 }
 
 std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
@@ -599,23 +653,36 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
 
 std::string GLProgram::getVertexShaderLog() const
 {
+#if (DIRECTX_ENABLED == 0)
     return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+#else
+	return "";
+#endif
 }
 
 std::string GLProgram::getFragmentShaderLog() const
 {
+#if (DIRECTX_ENABLED == 0)
     return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+#else
+	return "";
+#endif
 }
 
 std::string GLProgram::getProgramLog() const
 {
+#if (DIRECTX_ENABLED == 0)
     return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+#else
+	return "";
+#endif
 }
 
 // Uniform cache
 
 bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes)
 {
+#if (DIRECTX_ENABLED == 0)
     if (location < 0)
     {
         return false;
@@ -651,16 +718,24 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     }
 
     return updated;
+#else
+	return false;
+#endif
 }
 
 GLint GLProgram::getUniformLocationForName(const char* name) const
 {
+#if (DIRECTX_ENABLED == 0)
     CCASSERT(name != nullptr, "Invalid uniform name" );
     CCASSERT(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
     
     return glGetUniformLocation(_program, name);
+#else
+	return 0;
+#endif
 }
 
+#if (DIRECTX_ENABLED == 0)
 void GLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 {
     bool updated = updateUniformLocation(location, &i1, sizeof(i1)*1);
@@ -835,6 +910,7 @@ void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* m
         glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
     }
 }
+#endif
 
 void GLProgram::setUniformsForBuiltins()
 {
@@ -851,6 +927,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
     Mat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
+#if (DIRECTX_ENABLED == 0)
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
 
@@ -876,10 +953,16 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     
     if(_flags.usesRandom)
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+#else
+	auto mpv = matrixP;// *matrixMV;
+	//mpv.transpose();
+	memcpy(&_constantData.MPV, &mpv, sizeof(Mat4));	 
+#endif
 }
 
 void GLProgram::reset()
 {
+#if (DIRECTX_ENABLED == 0)
     _vertShader = _fragShader = 0;
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
     
@@ -899,6 +982,7 @@ void GLProgram::reset()
         free(current_element);
     }
     _hashForUniforms = nullptr;
+#endif
 }
 
 NS_CC_END

@@ -14,7 +14,8 @@
     shell:SystemTray.IsVisible="False">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <DrawingSurfaceBackgroundGrid x:Name="DrawingSurfaceBackground" Loaded="DrawingSurfaceBackground_Loaded">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <DrawingSurface x:Name="DrawingSurface2" Loaded="DrawingSurfaceBackground_Loaded" />
         <StackPanel Orientation="Horizontal" Margin="10,0,0,0" Height="30" VerticalAlignment="Top" x:Name="MemoryDisplay">
             <TextBlock Text="Memory: "/>
             <TextBlock x:Name="MemoryTextBlock"/>
@@ -23,6 +24,6 @@
             <TextBlock x:Name="PeakMemoryTextBlock"/>
             <TextBlock Text=" MB"/>
         </StackPanel>
-    </DrawingSurfaceBackgroundGrid>
+    </Grid>
 
 </phone:PhoneApplicationPage>

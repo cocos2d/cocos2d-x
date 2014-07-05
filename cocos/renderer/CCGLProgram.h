@@ -68,10 +68,17 @@ struct Uniform
     std::string name;
 };
 
+#if (DIRECTX_ENABLED == 1)
+#include "DirectXMath.h"
+
+struct ModelViewProjectionConstantBuffer
+{
+	DirectX::XMFLOAT4X4 MPV;
+};
+#endif
+
 /** GLProgram
  Class that implements a glProgram
- 
- 
  @since v2.0.0
  */
 class CC_DLL GLProgram : public Ref
@@ -165,16 +172,16 @@ public:
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CCGLProgram with precompiled shader program */
-    static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+    //static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+    //bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 #endif
 
     /** Initializes the GLProgram with a vertex and fragment with bytes array 
      * @js initWithString
      * @lua initWithString
      */
-    static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+	static GLProgram* createWithByteArrays(const std::string& vShaderByteArray, const std::string& fShaderByteArray);
+	bool initWithByteArrays(const std::string& vShaderByteArray, const std::string& fShaderByteArray);
 
     /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
      * @js init
@@ -214,6 +221,7 @@ public:
     /** calls retrieves the named uniform location for this shader program. */
     GLint getUniformLocationForName(const char* name) const;
     
+#if (DIRECTX_ENABLED == 0)
     /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
      * @js setUniformLocationI32
      * @lua setUniformLocationI32
@@ -280,6 +288,7 @@ public:
     
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
+#endif
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
@@ -300,6 +309,10 @@ public:
     // when opengl context lost, so don't call it.
     void reset();
     
+#if (DIRECTX_ENABLED == 1)
+	void initWithHLSL(const std::string& vertexShaderFilename, const std::string& pixelShaderFilename);
+#endif
+
     inline const GLuint getProgram() const { return _program; }
 
     // DEPRECATED
@@ -321,9 +334,19 @@ protected:
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
-    GLuint            _program;
+#if (DIRECTX_ENABLED == 1)
+	ID3D11InputLayout*	_inputLayout;
+	ID3D11VertexShader* _vertexShader;
+	ID3D11PixelShader*	_pixelShader;
+	ID3D11Buffer*		_constantBuffer;
+	ModelViewProjectionConstantBuffer _constantData;
+
+	static int s_programCount;
+#else    
     GLuint            _vertShader;
     GLuint            _fragShader;
+#endif
+	GLuint            _program;
     GLint             _builtInUniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;

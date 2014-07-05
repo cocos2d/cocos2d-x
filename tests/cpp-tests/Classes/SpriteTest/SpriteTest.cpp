@@ -948,12 +948,14 @@ SpriteZVertex::SpriteZVertex()
     auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
+#if D3D_ENABLED == 0
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
     if (getGLProgram())
     {
         getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     }
+#endif
     
     
     _dir = 1;
@@ -1038,12 +1040,14 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
+#if D3D_ENABLED == 0
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
     if (getGLProgram())
     {
         getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     }
+#endif
     
     auto s = Director::getInstance()->getWinSize();
     float step = s.width/12;

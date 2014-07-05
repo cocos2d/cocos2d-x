@@ -179,7 +179,7 @@ public:
 
     // user defined uniforms
     ssize_t getUniformCount() const { return _uniforms.size(); }
-    void setUniformInt(const std::string &uniformName, int value);
+   /* void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
@@ -197,7 +197,7 @@ public:
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
-    void setUniformTexture(GLint uniformLocation, GLuint textureId);
+    void setUniformTexture(GLint uniformLocation, GLuint textureId);*/
 
 protected:
     GLProgramState();
