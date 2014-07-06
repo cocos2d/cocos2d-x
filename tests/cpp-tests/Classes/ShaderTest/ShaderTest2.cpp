@@ -203,6 +203,7 @@ protected:
 
 bool Effect::initGLProgramState(const std::string &fragmentFilename)
 {
+#if D3D_ENABLED == 0
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(fragmentFilename);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
@@ -216,6 +217,8 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     _glprogramstate->retain();
 
     return _glprogramstate != nullptr;
+#endif
+	return false;
 }
 
 Effect::Effect()

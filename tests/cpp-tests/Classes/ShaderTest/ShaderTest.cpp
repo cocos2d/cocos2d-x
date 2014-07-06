@@ -162,6 +162,7 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
 
 void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &frag)
 {
+#if D3D_ENABLED == 0
     auto fileUtiles = FileUtils::getInstance();
 
     // frag
@@ -180,6 +181,7 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
     auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
     setGLProgramState(glprogramstate);
+#endif
 }
 
 void ShaderNode::update(float dt)
@@ -480,7 +482,8 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-    GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
+#if D3D_ENABLED == 0
+	GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
@@ -488,7 +491,7 @@ void SpriteBlur::initGLProgram()
     setGLProgramState(glProgramState);
     
     auto size = getTexture()->getContentSizeInPixels();
-#if D3D_ENABLED == 0
+
     getGLProgramState()->setUniformVec2("resolution", size);
     getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
     getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
@@ -612,6 +615,7 @@ ShaderRetroEffect::ShaderRetroEffect()
 
 bool ShaderRetroEffect::init()
 {
+#if D3D_ENABLED == 0
     if( ShaderTestDemo::init() ) {
 
         GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"))->getCString();
@@ -631,6 +635,7 @@ bool ShaderRetroEffect::init()
         scheduleUpdate();
         return true;
     }
+#endif
 
     return false;
 }

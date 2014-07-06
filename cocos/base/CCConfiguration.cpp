@@ -165,25 +165,34 @@ void Configuration::gatherGPUInfo()
 	switch (featureLevel)
 	{
 	case D3D_FEATURE_LEVEL_9_1:
+		SET_FEATURE("gl.max_texture_size", _maxTextureSize, 2048);
+		SET_FEATURE("gl.max_texture_units", _maxTextureUnits, 16);
+		_valueDict["gl.version"] = "Direct3D Feature Level 9.1";
+		break;
 	case D3D_FEATURE_LEVEL_9_2:
 		SET_FEATURE("gl.max_texture_size", _maxTextureSize, 2048);
 		SET_FEATURE("gl.max_texture_units", _maxTextureUnits, 16);
+		_valueDict["gl.version"] = "Direct3D Feature Level 9.2";
 		break;
 	case D3D_FEATURE_LEVEL_9_3:
 		SET_FEATURE("gl.max_texture_size", _maxTextureSize, 4096);		
 		SET_FEATURE("gl.max_texture_units", _maxTextureUnits, 16);		
+		_valueDict["gl.version"] = "Direct3D Feature Level 9.3";
 		break;
 	case D3D_FEATURE_LEVEL_10_0:
 		SET_FEATURE("gl.max_texture_size", _maxTextureSize, 8192);		
 		SET_FEATURE("gl.max_texture_units", _maxTextureUnits, 16);
+		_valueDict["gl.version"] = "Direct3D Feature Level 10.0";
 		break;
 	case D3D_FEATURE_LEVEL_10_1:
 		SET_FEATURE("gl.max_texture_size", _maxTextureSize, 8192);		
 		SET_FEATURE("gl.max_texture_units", _maxTextureUnits, 32);
+		_valueDict["gl.version"] = "Direct3D Feature Level 10.1";
 		break;
 	default: // DirectX 11
 		SET_FEATURE("gl.max_texture_size", _maxTextureSize, 16384);
 		SET_FEATURE("gl.max_texture_units", _maxTextureUnits, 32); 
+		_valueDict["gl.version"] = "Direct3D Feature Level 11.0";
 		break;
 	}
 

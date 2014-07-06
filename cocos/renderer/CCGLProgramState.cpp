@@ -301,7 +301,7 @@ bool GLProgramState::init(GLProgram* glprogram)
 
     _glprogram = glprogram;
     _glprogram->retain();
-
+/*
     for(auto &attrib : _glprogram->_vertexAttribs) {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
@@ -311,7 +311,7 @@ bool GLProgramState::init(GLProgram* glprogram)
         UniformValue value(&uniform.second, _glprogram);
         _uniforms[uniform.second.location] = value;
         _uniformsByName[uniform.first] = uniform.second.location;
-    }
+    }*/
 
     return true;
 }
@@ -337,7 +337,7 @@ void GLProgramState::apply(const Mat4& modelView)
 void GLProgramState::applyGLProgram(const Mat4& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
-    if(_uniformAttributeValueDirty)
+    /*if(_uniformAttributeValueDirty)
     {
         for(auto& uniformLocation : _uniformsByName)
         {
@@ -354,7 +354,7 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
         
         _uniformAttributeValueDirty = false;
         
-    }
+    }*/
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
@@ -366,7 +366,7 @@ void GLProgramState::applyAttributes(bool applyAttribFlags)
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
         if (applyAttribFlags)
-            GL::enableVertexAttribs(_vertexAttribsFlags);
+        GL::enableVertexAttribs(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {
@@ -395,7 +395,7 @@ void GLProgramState::setGLProgram(GLProgram *glprogram)
 UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
 {
     const auto itr = _uniforms.find(uniformLocation);
-    if (itr != _uniforms.end())
+    if( itr != _uniforms.end())
         return &itr->second;
     return nullptr;
 }

@@ -348,26 +348,22 @@ void Label::updateShaderProgram()
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         break;
-#if (DIRECTX_ENABLED == 0)
     case cocos2d::LabelEffect::OUTLINE: 
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
-        _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
+		_uniformEffectColor = getGLProgram()->getUniformLocation("u_effectColor");	
         break;
     case cocos2d::LabelEffect::GLOW:
         if (_useDistanceField)
         {
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW));
-            _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
+			_uniformEffectColor = getGLProgram()->getUniformLocation("u_effectColor");
         }
         break;
-#endif
     default:
         return;
     }
     
-#if (DIRECTX_ENABLED == 0)
-    _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
-#endif
+	_uniformTextColor = getGLProgram()->getUniformLocation("u_textColor");
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
@@ -821,6 +817,33 @@ void Label::setFontScale(float fontScale)
     Node::setScale(_fontScale);
 }
 
+#if (DIRECTX_ENABLED == 1)
+D3D11_BLEND GetDXBlend2(GLint glBlend)
+{
+	if (glBlend == GL_ZERO)
+		return D3D11_BLEND_ZERO;
+	else if (glBlend == GL_SRC_COLOR)
+		return D3D11_BLEND_SRC_COLOR;
+	else if (glBlend == GL_ONE_MINUS_SRC_COLOR)
+		return D3D11_BLEND_INV_SRC_COLOR;
+	else if (glBlend == GL_SRC_ALPHA)
+		return D3D11_BLEND_SRC_ALPHA;
+	else if (glBlend == GL_ONE_MINUS_SRC_ALPHA)
+		return D3D11_BLEND_INV_SRC_ALPHA;
+	else if (glBlend == GL_DST_ALPHA)
+		return D3D11_BLEND_DEST_ALPHA;
+	else if (glBlend == GL_ONE_MINUS_DST_ALPHA)
+		return D3D11_BLEND_INV_DEST_ALPHA;
+	else if (glBlend == GL_DST_COLOR)
+		return D3D11_BLEND_DEST_COLOR;
+	else if (glBlend == GL_ONE_MINUS_DST_COLOR)
+		return D3D11_BLEND_INV_DEST_COLOR;
+	else if (glBlend == GL_SRC_ALPHA_SATURATE)
+		return D3D11_BLEND_SRC_ALPHA_SAT;
+	return D3D11_BLEND_ONE;
+}
+#endif
+
 void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
     CC_PROFILER_START("Label - draw");
@@ -832,21 +855,43 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     }
 
     auto glprogram = getGLProgram();
-    glprogram->use();
+    
+#if (DIRECTX_ENABLED == 1)
+	auto view = GLView::sharedOpenGLView();
+	D3D11_BLEND src = GetDXBlend2(_blendFunc.src);
+	D3D11_BLEND dst = GetDXBlend2(_blendFunc.dst);
+
+	ID3D11BlendState* state = nullptr;
+	if (state == nullptr)
+	{
+		CD3D11_BLEND_DESC d = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
+		d.AlphaToCoverageEnable = false;
+		d.IndependentBlendEnable = false;
+		d.RenderTarget[0].BlendEnable = true;
+		d.RenderTarget[0].SrcBlend = src;
+		d.RenderTarget[0].DestBlend = dst;
+		d.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		d.RenderTarget[0].SrcBlendAlpha = src;
+		d.RenderTarget[0].DestBlendAlpha = dst;
+		d.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		d.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		DX::ThrowIfFailed(view->GetDevice()->CreateBlendState(&d, &state));
+	}
+
+	view->GetContext()->OMSetBlendState(state, nullptr, 0xffffffff);
+#else
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-#if DIRECTX_ENABLED == 0
+#endif
+	
     if (_currentLabelType == LabelType::TTF)
     {
-        glprogram->setUniformLocationWith4f(_uniformTextColor,
-            _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
+        glprogram->setUniformLocationWith4f(_uniformTextColor, _textColorF.r,_textColorF.g, _textColorF.b,_textColorF.a);
     }
 
     if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
     {
-         glprogram->setUniformLocationWith4f(_uniformEffectColor,
-             _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
+         glprogram->setUniformLocationWith4f(_uniformEffectColor, _effectColorF.r,_effectColorF.g,_effectColorF.b,_effectColorF.a);
     }
-#endif
 
     if(_shadowEnabled && _shadowBlurRadius <= 0)
     {
@@ -854,6 +899,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     }
 
     glprogram->setUniformsForBuiltins(transform);
+	glprogram->use();
 
     for(const auto &child: _children)
     {
@@ -1314,7 +1360,7 @@ void Label::updateColor()
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
 
     // special opacity for premultiplied textures
-    if (_isOpacityModifyRGB)
+    //if (_isOpacityModifyRGB)
     {
         color4.r *= _displayedOpacity/255.0f;
         color4.g *= _displayedOpacity/255.0f;

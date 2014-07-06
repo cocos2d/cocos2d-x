@@ -51,7 +51,6 @@ class GLProgram;
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
-
 struct VertexAttrib
 {
     GLuint index;
@@ -69,13 +68,41 @@ struct Uniform
 };
 
 #if (DIRECTX_ENABLED == 1)
+
 #include "DirectXMath.h"
 
-struct ModelViewProjectionConstantBuffer
+struct ShaderConstantBuffer
 {
 	DirectX::XMFLOAT4X4 MPV;
 };
+
+struct ShaderDescriptor
+{
+	std::string name;
+	std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayout;
+	std::vector<Uniform> uniformValues;
+
+	ShaderDescriptor(const std::string n) : name(n)
+	{
+	}
+
+	ShaderDescriptor& Input(LPCSTR SemanticName, UINT SemanticIndex, DXGI_FORMAT Format, UINT InputSlot, UINT AlignedByteOffset, D3D11_INPUT_CLASSIFICATION InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA, UINT InstanceDataStepRate = 0)
+	{
+		const D3D11_INPUT_ELEMENT_DESC desc = { SemanticName, SemanticIndex, Format, InputSlot, AlignedByteOffset, InputSlotClass, InstanceDataStepRate };
+		inputLayout.push_back(desc);
+		return *this;
+	}
+
+	ShaderDescriptor& Const(const std::string& name, GLint size)
+	{
+		const Uniform u = { 0, size, 0, name };
+		uniformValues.push_back(u);
+		return *this;
+	}
+};
+
 #endif
+
 
 /** GLProgram
  Class that implements a glProgram
@@ -191,8 +218,8 @@ public:
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
 
 	//void bindUniform(std::string uniformName, int value);
-	Uniform* getUniform(const std::string& name);
-    VertexAttrib* getVertexAttrib(const std::string& name);
+	const Uniform* getUniform(const std::string& name) const;
+    VertexAttrib* getVertexAttrib(const std::string& name) const;
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
     void bindAttribLocation(const std::string& attributeName, GLuint index) const;
@@ -201,7 +228,7 @@ public:
     GLint getAttribLocation(const std::string& attributeName) const;
 
     /** calls glGetUniformLocation() */
-    GLint getUniformLocation(const std::string& attributeName) const;
+    GLint getUniformLocation(const std::string& name) const;
 
     /** links the glProgram */
     bool link();
@@ -217,11 +244,7 @@ public:
 
  */
     void updateUniforms();
-    
-    /** calls retrieves the named uniform location for this shader program. */
-    GLint getUniformLocationForName(const char* name) const;
-    
-#if (DIRECTX_ENABLED == 0)
+        
     /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
      * @js setUniformLocationI32
      * @lua setUniformLocationI32
@@ -288,11 +311,10 @@ public:
     
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
-#endif
-    
+
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
-    void setUniformsForBuiltins();
-    void setUniformsForBuiltins(const Mat4 &modelView);
+    void setUniformsForBuiltins();    
+	void setUniformsForBuiltins(const Mat4 &modelView, bool transposed = false);
 
     // Attribute
 
@@ -310,10 +332,10 @@ public:
     void reset();
     
 #if (DIRECTX_ENABLED == 1)
-	void initWithHLSL(const std::string& vertexShaderFilename, const std::string& pixelShaderFilename);
+	void initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderDescriptor& pixelShader);
 #endif
 
-    inline const GLuint getProgram() const { return _program; }
+	inline const GLuint getProgram() const { return _program; }
 
     // DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
@@ -334,27 +356,34 @@ protected:
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
+	GLuint            _program;
+
 #if (DIRECTX_ENABLED == 1)
 	ID3D11InputLayout*	_inputLayout;
 	ID3D11VertexShader* _vertexShader;
 	ID3D11PixelShader*	_pixelShader;
-	ID3D11Buffer*		_constantBuffer;
-	ModelViewProjectionConstantBuffer _constantData;
+	ID3D11Buffer*		_constantBufferVS;
+	ID3D11Buffer*		_constantBufferPS;
+	
+	static const int UNIFORM_BUFFER_SIZE = 256;
+	unsigned char _uniformBufferVS[UNIFORM_BUFFER_SIZE];
+	unsigned char _uniformBufferPS[UNIFORM_BUFFER_SIZE];
+	std::unordered_map<std::string, Uniform> _uniformsDescription;
+	bool _uniformDirtyVS, _uniformDirtyPS;
+	int _uniformPSStart;
+
+	void updateUniform(int location, unsigned char* input, int size);
 
 	static int s_programCount;
+	std::string       _shaderId;
 #else    
     GLuint            _vertShader;
     GLuint            _fragShader;
-#endif
-	GLuint            _program;
+		
     GLint             _builtInUniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    std::string       _shaderId;
-#endif
-
     struct flag_struct {
         unsigned int usesTime:1;
         unsigned int usesMVP:1;
@@ -368,6 +397,7 @@ protected:
 
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
+#endif
 };
 
 NS_CC_END

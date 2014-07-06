@@ -31,43 +31,80 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 #if (DIRECTX_ENABLED == 1)
-const GLchar * ccPosition_uColor_frag = "Position_uColor";
-const GLchar * ccPosition_uColor_vert = "Position_uColor";
 
-const GLchar * ccPositionColor_frag = "PositionColor";
-const GLchar * ccPositionColor_vert = "PositionColor";
+const ShaderDescriptor ccPosition_uColor_frag = ShaderDescriptor("Position_uColor");
+const ShaderDescriptor ccPosition_uColor_vert = ShaderDescriptor("Position_uColor")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
-const GLchar * ccPositionTexture_frag = "PositionTexture";
-const GLchar * ccPositionTexture_vert = "PositionTexture";
+const ShaderDescriptor ccPositionColor_frag = ShaderDescriptor("PositionColor");
+const ShaderDescriptor ccPositionColor_vert = ShaderDescriptor("PositionColor")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
-const GLchar * ccPositionTextureA8Color_frag = "PositionTextureA8Color";
-const GLchar * ccPositionTextureA8Color_vert = "PositionTextureA8Color";
+const ShaderDescriptor ccPositionTexture_frag = ShaderDescriptor("PositionTexture");
+const ShaderDescriptor ccPositionTexture_vert = ShaderDescriptor("PositionTexture")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
-const GLchar * ccPositionTextureColor_frag = "PositionTextureColor";
-const GLchar * ccPositionTextureColor_vert = "PositionTextureColor";
+const ShaderDescriptor ccPositionTextureA8Color_frag = ShaderDescriptor("PositionTextureA8Color");
+const ShaderDescriptor ccPositionTextureA8Color_vert = ShaderDescriptor("PositionTextureA8Color")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
-const GLchar * ccPositionTextureColor_noMVP_frag = "PositionTextureColor_noMVP";
-const GLchar * ccPositionTextureColor_noMVP_vert = "PositionTextureColor_noMVP";
+const ShaderDescriptor ccPositionTextureColor_frag = ShaderDescriptor("PositionTextureColor");
+const ShaderDescriptor ccPositionTextureColor_vert = ShaderDescriptor("PositionTextureColor")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
+.Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
+.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4));
 
-const GLchar * ccPositionTextureColorAlphaTest_frag = "PositionTextureColorAlphaTest";
+const ShaderDescriptor ccPositionTextureColor_noMVP_frag = ShaderDescriptor("PositionTextureColor_noMVP");
+const ShaderDescriptor ccPositionTextureColor_noMVP_vert = ShaderDescriptor("PositionTextureColor_noMVP")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
+.Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
+.Const(GLProgram::UNIFORM_NAME_P_MATRIX, sizeof(Mat4));
 
-const GLchar * ccPositionTexture_uColor_frag = "PositionTexture_uColor";
-const GLchar * ccPositionTexture_uColor_vert = "PositionTexture_uColor";
+const ShaderDescriptor ccPositionTextureColorAlphaTest_frag = ShaderDescriptor("PositionTextureColorAlphaTest");
 
-const GLchar * ccPositionColorLengthTexture_frag = "PositionColorLengthTexture";
-const GLchar * ccPositionColorLengthTexture_vert = "PositionColorLengthTexture";
+const ShaderDescriptor ccPositionTexture_uColor_frag = ShaderDescriptor("PositionTexture_uColor");
+const ShaderDescriptor ccPositionTexture_uColor_vert = ShaderDescriptor("PositionTexture_uColor")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
-const GLchar * ccLabelDistanceFieldNormal_frag = "Label_df_Normal";
-const GLchar * ccLabelDistanceFieldGlow_frag = "Label_df_Glow";
-const GLchar * ccLabelNormal_frag = "Label_normal";
-const GLchar * ccLabelOutline_frag = "Label_outline";
+const ShaderDescriptor ccPositionColorLengthTexture_frag = ShaderDescriptor("PositionColorLengthTexture");
+const ShaderDescriptor ccPositionColorLengthTexture_vert = ShaderDescriptor("PositionColorLengthTexture")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
-const GLchar * ccLabel_vert = "Label";
+const ShaderDescriptor ccLabelDistanceFieldNormal_frag = ShaderDescriptor("Label_df_Normal")
+.Const("u_textColor", sizeof(float) * 4);
+const ShaderDescriptor ccLabelDistanceFieldGlow_frag = ShaderDescriptor("Label_df_Glow")
+.Const("u_effectColor", sizeof(float) * 4)
+.Const("u_textColor", sizeof(float) * 4);
 
-const GLchar * cc3D_PositionTex_vert = "3D_PositionTex";
-const GLchar * cc3D_SkinPositionTex_vert = "3D_PositionTex";
-const GLchar * cc3D_ColorTex_frag = "3D_ColorTex";
-const GLchar * cc3D_Color_frag = "3D_Color";
+const ShaderDescriptor ccLabelNormal_frag = ShaderDescriptor("Label_normal")
+.Const("u_textColor", sizeof(float) * 4);
+const ShaderDescriptor ccLabelOutline_frag = ShaderDescriptor("Label_outline")
+.Const("u_effectColor", sizeof(float) * 4)
+.Const("u_textColor", sizeof(float) * 4);
+
+const ShaderDescriptor ccLabel_vert = ShaderDescriptor("Label")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
+.Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
+.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4));
+
+const ShaderDescriptor cc3D_PositionTex_vert = ShaderDescriptor("3D_PositionTex")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
+const ShaderDescriptor cc3D_SkinPositionTex_vert = ShaderDescriptor("3D_PositionTex")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
+const ShaderDescriptor cc3D_ColorTex_frag = ShaderDescriptor("3D_ColorTex");
+const ShaderDescriptor cc3D_Color_frag = ShaderDescriptor("3D_Color");
+
 #else
 //
 #include "ccShader_Position_uColor.frag"

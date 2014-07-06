@@ -230,10 +230,16 @@ private:
     void setupVBO();
 
 protected:
-    GLushort*           _indices;
+#if (DIRECTX_ENABLED == 1)
+	ID3D11Buffer* _bufferVertex;
+	ID3D11Buffer* _bufferIndex;
+#else    
     GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+    GLuint              _buffersVBO[2]; //0: vertex  1: indices    
+#endif
+	GLushort*           _indices;
+	bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+
     /** quantity of quads that are going to be drawn */
     ssize_t _totalQuads;
     /** quantity of quads that can be stored with the current texture atlas size */

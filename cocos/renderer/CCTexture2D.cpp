@@ -474,11 +474,10 @@ void Texture2D::releaseGLTexture()
 		_textureView->Release();
 	_textureView = nullptr;
 #else
-    if(_name)
-        GL::deleteTexture(_name);
+	if (_name)
+		GL::deleteTexture(_name);
 #endif
 }
-
 
 Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
@@ -564,35 +563,33 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
 {
+	//the pixelFormat must be a certain value 
+	CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
+	CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
+
+	if (mipmapsNum <= 0)
+	{
+		CCLOG("cocos2d: WARNING: mipmap number is less than 1");
+		return false;
+	}
 
 
-    //the pixelFormat must be a certain value 
-    CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
-    CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
+	if(_pixelFormatInfoTables.find(pixelFormat) == _pixelFormatInfoTables.end())
+	{
+		CCLOG("cocos2d: WARNING: unsupported pixelformat: %lx", (unsigned long)pixelFormat );
+		return false;
+	}
 
-    if (mipmapsNum <= 0)
-    {
-        CCLOG("cocos2d: WARNING: mipmap number is less than 1");
-        return false;
-    }
-    
+	const PixelFormatInfo& info = _pixelFormatInfoTables.at(pixelFormat);
 
-    if(_pixelFormatInfoTables.find(pixelFormat) == _pixelFormatInfoTables.end())
-    {
-        CCLOG("cocos2d: WARNING: unsupported pixelformat: %lx", (unsigned long)pixelFormat );
-        return false;
-    }
-
-    const PixelFormatInfo& info = _pixelFormatInfoTables.at(pixelFormat);
-
-    if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
-                        && !Configuration::getInstance()->supportsETC()
-                        && !Configuration::getInstance()->supportsS3TC()
-                        && !Configuration::getInstance()->supportsATITC())
-    {
-        CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
-        return false;
-    }
+	if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
+		&& !Configuration::getInstance()->supportsETC()
+		&& !Configuration::getInstance()->supportsS3TC()
+		&& !Configuration::getInstance()->supportsATITC())
+	{
+		CCLOG("cocos2d: WARNING: PVRTC/ETC images are not supported");
+		return false;
+	}
 
 #if (DIRECTX_ENABLED == 1)
 
@@ -605,10 +602,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 	auto format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	const auto bpp = getBitsPerPixelForFormat(pixelFormat);
-	if (pixelFormat == PixelFormat::RGBA4444)
-	{
-		format = DXGI_FORMAT_B4G4R4A4_UNORM;		
-	}
+	if (pixelFormat == PixelFormat::RGBA4444)	
+		format = DXGI_FORMAT_B4G4R4A4_UNORM; // WRONG format	
+	if (pixelFormat == PixelFormat::A8)	
+		format = DXGI_FORMAT_A8_UNORM;
+	if (pixelFormat == PixelFormat::AI88)
+		format = DXGI_FORMAT_R8G8_UNORM; 
 
 	const auto rowPitch = pixelsWide * bpp / 8;
 
@@ -784,6 +783,21 @@ bool Texture2D::updateWithData(const void *data,int offsetX,int offsetY,int widt
         GL::bindTexture2D(_name);
         const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
         glTexSubImage2D(GL_TEXTURE_2D,0,offsetX,offsetY,width,height,info.format, info.type,data);
+#else
+		GLView* view = GLView::sharedOpenGLView();
+
+		CD3D11_BOX box;
+		box.left = offsetX;
+		box.top = offsetY;
+		box.right = offsetX + width;
+		box.bottom = offsetY + height;
+		box.front = 0;
+		box.back = 1;
+
+		const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
+		const auto rowPitch = _pixelsWide * info.bpp / 8;
+
+		view->GetContext()->UpdateSubresource(_texture, 0, &box, data, rowPitch, 0);
 #endif
 
         return true;
