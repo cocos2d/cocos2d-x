@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
     ../../sources/AppDelegate.cpp \
-    ../../sources/SimulatorConfig.cpp
+    $(QUICK_V3_LIB)/ProjectConfig/SimulatorConfig.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../sources
 
