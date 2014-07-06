@@ -28,8 +28,8 @@ THE SOFTWARE.
 
 #include "CCTouchDelegateProtocol.h"
 #include "CCTouchDispatcher.h"
-#include "cocoa/CCObject.h"
-#include "cocoa/CCSet.h"
+#include "base/CCRef.h"
+#include "deprecated/CCSet.h"
 
 NS_CC_BEGIN
 
@@ -44,7 +44,7 @@ NS_CC_BEGIN
  @js NA
  @lua NA
 */
-class CC_DLL  CCTouchHandler : public CCObject
+class CC_DLL  CCTouchHandler : public Ref
 {
 public:
     virtual ~CCTouchHandler(void);
@@ -107,7 +107,7 @@ public:
     void setSwallowsTouches(bool bSwallowsTouches);
 
     /** MutableSet that contains the claimed touches */
-    CCSet* getClaimedTouches(void);
+    __Set* getClaimedTouches(void);
 
     /** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
     bool initWithDelegate(CCTouchDelegate *pDelegate, int nPriority, bool bSwallow);
@@ -118,7 +118,7 @@ public:
 
 protected:
     bool m_bSwallowsTouches;
-    CCSet *m_pClaimedTouches;
+    __Set *m_pClaimedTouches;
 };
 
 // end of input group
