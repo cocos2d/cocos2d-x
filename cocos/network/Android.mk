@@ -12,7 +12,8 @@ WebSocket.cpp
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/..
+					$(LOCAL_PATH)/.. \
+				    $(QUICK_V3_LIB)
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi

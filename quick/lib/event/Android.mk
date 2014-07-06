@@ -2,22 +2,15 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := extra_static
-LOCAL_MODULE_FILENAME := libextra
+LOCAL_MODULE := event_static
+LOCAL_MODULE_FILENAME := libevent
 
 LOCAL_SRC_FILES := \
-    $(LOCAL_PATH)/apptools/HelperFunc.cpp \
-    $(LOCAL_PATH)/crypto/CCCrypto.cpp \
-    $(LOCAL_PATH)/crypto/base64/libbase64.c \
-    $(LOCAL_PATH)/network/CCHTTPRequest.cpp \
-    $(LOCAL_PATH)/network/CCNetwork.cpp \
-    $(LOCAL_PATH)/platform/android/CCCryptoAndroid.cpp \
-    $(LOCAL_PATH)/platform/android/CCNativeAndroid.cpp \
-    $(LOCAL_PATH)/platform/android/CCNetworkAndroid.cpp 
+    $(LOCAL_PATH)/CCScriptEventDispatcher.cpp \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                           $(QUICK_V3_LIB)/lua_bindings/manual
+
 
 LOCAL_C_INCLUDES := $(LOCAL_EXPORT_C_INCLUDES) \
                     $(COCOS2DX_CORE) \

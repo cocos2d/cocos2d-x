@@ -62,8 +62,7 @@ LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/manual/platform/android \
                     $(LOCAL_PATH)/manual/platform/android/jni \
-                    $(QUICK_V3_LIB)/cocos2dx \
-                    $(QUICK_V3_LIB)/cocos2dx/lua_extensions \
+                    $(QUICK_V3_LIB)/lua_extensions \
                     $(QUICK_V3_LIB) \
                     $(QUICK_V3_LIB)/extra \
                     $(QUICK_V3_LIB)/extra/native \
@@ -75,7 +74,8 @@ LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
 
 LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
                            $(COCOS2DX_ROOT)/external/lua/luajit/include \
-                           $(QUICK_V3_LIB)/cocos2dx/lua_extensions \
+                           $(QUICK_V3_LIB) \
+                           $(QUICK_V3_LIB)/lua_extensions \
                            $(LOCAL_PATH)/auto \
                            $(LOCAL_PATH)/manual
 
@@ -83,6 +83,7 @@ LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
 LOCAL_WHOLE_STATIC_LIBRARIES := luajit_static
 LOCAL_WHOLE_STATIC_LIBRARIES += lua_extensions_static
 LOCAL_WHOLE_STATIC_LIBRARIES += extra_static
+LOCAL_WHOLE_STATIC_LIBRARIES += event_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += websockets_static
@@ -99,6 +100,7 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,lua/luajit/prebuilt/android)
 $(call import-module,lua_extensions)
 $(call import-module,extra)
+$(call import-module,event)
 $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)

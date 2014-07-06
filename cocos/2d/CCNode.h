@@ -38,7 +38,7 @@
 #include "math/CCMath.h"
 #include "renderer/ccGLStateCache.h"
 #include "CCGL.h"
-// #include "event/CCTouchDelegateProtocol.h"
+#include "event/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
 
@@ -1476,7 +1476,7 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
-#if 0
+#if 1
     virtual Scene *getScene();
     
     virtual void registerWithTouchDispatcher(void);
@@ -1641,16 +1641,16 @@ protected:
     int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
     
-//    CCScriptEventDispatcher *_scriptEventDispatcher;
-//    // touch events
-//    bool m_bTouchCaptureEnabled;
-//    bool m_bTouchSwallowEnabled;
-//    bool m_bTouchEnabled;
-//    int m_nTouchPriority;
-//    int m_eTouchMode;
-//
-//    virtual int executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase = 1);
-//    virtual int executeScriptTouchHandler(int nEventType, __Set *pTouches, int phase = 1);
+   CCScriptEventDispatcher *_scriptEventDispatcher;
+   // touch events
+   bool m_bTouchCaptureEnabled;
+   bool m_bTouchSwallowEnabled;
+   bool m_bTouchEnabled;
+   int m_nTouchPriority;
+   int m_eTouchMode;
+
+   virtual int executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase = 1);
+   virtual int executeScriptTouchHandler(int nEventType, __Set *pTouches, int phase = 1);
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components

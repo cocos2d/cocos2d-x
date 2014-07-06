@@ -9,12 +9,14 @@ LOCAL_SRC_FILES := cddSimpleAudioEngine.cpp \
                    ccdandroidUtils.cpp \
                    jni/cddandroidAndroidJavaEngine.cpp
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include \
+				    $(QUICK_V3_LIB)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
                     $(LOCAL_PATH)/../../platform/android \
-                    $(LOCAL_PATH)/../../../external
+                    $(LOCAL_PATH)/../../../external \
+				    $(QUICK_V3_LIB)
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi

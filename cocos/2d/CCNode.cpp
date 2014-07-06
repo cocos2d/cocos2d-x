@@ -48,8 +48,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
-// #include "event/CCScriptEventDispatcher.h"
-// #include "event/CCTouchDispatcher.h"
+#include "event/CCScriptEventDispatcher.h"
+#include "event/CCTouchDispatcher.h"
 
 #include "deprecated/CCString.h"
 
@@ -141,7 +141,7 @@ Node::Node(void)
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
-//    _scriptEventDispatcher = new CCScriptEventDispatcher();
+   _scriptEventDispatcher = new CCScriptEventDispatcher();
 #endif
     _transform = _inverse = _additionalTransform = Mat4::IDENTITY;
 }
@@ -155,7 +155,7 @@ Node::~Node()
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
     }
-//    CC_SAFE_DELETE(_scriptEventDispatcher);
+   CC_SAFE_DELETE(_scriptEventDispatcher);
 #endif
 
     // User object has to be released before others, since userObject may have a weak reference of this node
@@ -2191,7 +2191,7 @@ void Node::disableCascadeColor()
     }
 }
 
-#if 0
+#if 1
 
 int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int priority /* = 0 */)
 {
@@ -2221,7 +2221,7 @@ void Node::registerWithTouchDispatcher()
     Scene *scene = getScene();
     if (scene)
     {
-        scene->addTouchableNode(this);
+        // scene->addTouchableNode(this);
     }
 }
 
@@ -2231,7 +2231,7 @@ void Node::unregisterWithTouchDispatcher()
     Scene *scene = getScene();
     if (scene)
     {
-        scene->removeTouchableNode(this);
+        // scene->removeTouchableNode(this);
     }
 }
 
