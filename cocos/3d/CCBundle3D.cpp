@@ -768,17 +768,45 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
 
 GLenum Bundle3D::parseGLType(const std::string& str)
 {
-    if (str == "GL_FLOAT")
+    if ("GL_BYTE")
     {
-        return GL_FLOAT;
+        return GL_BYTE;
+    }
+    else if("GL_UNSIGNED_BYTE")
+    {
+        return GL_UNSIGNED_BYTE;
+    }
+    else if("GL_SHORT")
+    {
+        return GL_SHORT;
+    }
+    else if("GL_UNSIGNED_SHORT")
+    {
+        return GL_UNSIGNED_SHORT;
+    }
+    else if("GL_INT")
+    {
+        return GL_INT;
+    }
+    else if ("GL_UNSIGNED_INT")
+    {
+        return GL_UNSIGNED_INT;
     }
     else if (str == "GL_UNSIGNED_INT")
     {
         return GL_UNSIGNED_INT;
     }
+    else if (str == "GL_FLOAT")
+    {
+        return GL_FLOAT;
+    }
+    else if (str == "GL_FIXED")
+    {
+        return GL_FIXED;
+    }
     else
     {
-        assert(0);
+        CCASSERT(false, "Wrong GL type");
         return 0;
     }
 }
