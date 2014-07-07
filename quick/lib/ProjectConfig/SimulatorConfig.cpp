@@ -15,14 +15,15 @@ void ProjectConfig::resetToWelcome(void)
 {
 	m_isWelcome = true;
     string path = SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath();
-    path.append("player/welcome");
+    //path.append("player/welcome");
+    path.append("samples/listview");
     SimulatorConfig::makeNormalizePath(&path);
     setProjectDir(path);
     setWritablePath(path);
     setScriptFile("$PROJDIR/scripts/main.lua");
     setFrameSize(CCSize(960, 640));
     setFrameScale(1.0f);
-    setLoadPrecompiledFramework(true);
+    setLoadPrecompiledFramework(false);
     setPackagePath("");
     setShowConsole(true);
     setWindowOffset(CCPointZero);
