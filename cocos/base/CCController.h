@@ -99,7 +99,9 @@ public:
 
     const KeyStatus& getKeyStatus(int keyCode);
     
-    //Setting up receives external key which not contained within enum Key.
+    //Activate receives key event from external key. e.g. back,menu.
+    //Controller receives only standard key which contained within enum Key by default.
+    //The API only work on the android platform for support diversified game controller.
     void receiveExternalKeyEvent(int externalKeyCode,bool receive);
 
     void setTag(int tag) { _controllerTag = tag;}

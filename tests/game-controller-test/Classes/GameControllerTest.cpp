@@ -73,9 +73,9 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
             this->addChild(_secondHolder._holderNode);
         }
 
-        char deviceId[20];
-        sprintf(deviceId,"device id:%d",controller->getDeviceId());
-        _secondHolder._deviceLabel->setString(deviceId);
+        char deviceInfo[50];
+        sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
+        _secondHolder._deviceLabel->setString(deviceInfo);
     }
     else
     {
@@ -93,9 +93,9 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
             _firstHolder._holderNode->setPosition(Vec2(_visibleThreeQuarterX, _visibleCentreY));
             this->addChild(_firstHolder._holderNode);
         }
-        char deviceId[20];
-        sprintf(deviceId,"device id:%d",controller->getDeviceId());
-        _firstHolder._deviceLabel->setString(deviceId);
+        char deviceInfo[50];
+        sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
+        _firstHolder._deviceLabel->setString(deviceInfo);
     }
 }
 
@@ -202,7 +202,7 @@ void GameControllerTest::showButtonState(cocos2d::Controller *controller, int ke
         default:
             {
                 char ketStatus[30];
-                sprintf(ketStatus,"External Key Down:%d",keyCode);
+                sprintf(ketStatus,"Key Down:%d",keyCode);
                 holder->_externalKeyLabel->setString(ketStatus);
                 break;
             }
@@ -245,7 +245,7 @@ void GameControllerTest::showButtonState(cocos2d::Controller *controller, int ke
         default:
             {
                 char ketStatus[30];
-                sprintf(ketStatus,"External Key Up:%d",keyCode);
+                sprintf(ketStatus,"Key Up:%d",keyCode);
                 holder->_externalKeyLabel->setString(ketStatus);
                 break;
             }
@@ -265,8 +265,6 @@ void GameControllerTest::onKeyUp(cocos2d::Controller *controller, int keyCode, c
 
 void GameControllerTest::onAxisEvent(cocos2d::Controller* controller, int keyCode, cocos2d::Event* event)
 {
-    //onConnectController(controller,nullptr);
-    log("controller:%d,keyCode:%d",controller,keyCode);
     ControllerHolder* holder = nullptr;
     if (controller == _firstHolder.controller)
         holder = &_firstHolder;
@@ -367,7 +365,7 @@ void GameControllerTest::createControllerSprite(ControllerHolder& holder)
     holder._deviceLabel->setTextColor(Color4B::RED);
     holder._holderNode->addChild(holder._deviceLabel);
 
-    holder._externalKeyLabel = Label::createWithTTF("External Key event","fonts/Marker Felt.ttf",36);
+    holder._externalKeyLabel = Label::createWithTTF("Key event","fonts/Marker Felt.ttf",36);
     holder._externalKeyLabel->setPosition(Vec2(499,500));
     holder._externalKeyLabel->setTextColor(Color4B::RED);
     holder._holderNode->addChild(holder._externalKeyLabel);
