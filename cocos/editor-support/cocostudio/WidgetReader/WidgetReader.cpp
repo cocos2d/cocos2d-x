@@ -114,8 +114,10 @@ namespace cocostudio
     void WidgetReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {        
    
-        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, P_IgnoreSize,false));
-        
+        bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, P_IgnoreSize);
+        if (ignoreSizeExsit) {
+            widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, P_IgnoreSize));
+        }
         
         widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, P_SizeType));
         widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, P_PositionType));
