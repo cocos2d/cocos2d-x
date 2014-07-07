@@ -1860,6 +1860,11 @@ bool Node::removeComponent(const std::string& name)
     return false;
 }
 
+bool Node::removeComponent(Component *pComponent)
+{
+	return _componentContainer->remove(pComponent);
+}
+
 void Node::removeAllComponents()
 {
     if( _componentContainer )
