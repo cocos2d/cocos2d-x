@@ -1,6 +1,8 @@
 package org.cocos2dx.lib;
 
-import android.util.Log;
+import java.util.ArrayList;
+
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -147,6 +149,8 @@ public class GameControllerHelper {
 		return handled;
 	}
 	
+	private static SparseArray<ArrayList<Integer>>  mControllerExtendKey = new SparseArray<ArrayList<Integer>>();
+	
 	public boolean dispatchKeyEvent(KeyEvent event) {
     	boolean handled = false;
     	
@@ -154,9 +158,18 @@ public class GameControllerHelper {
     	int keyCode = event.getKeyCode();
 		int controllerKey = ControllerKeyMap.get(keyCode);
 		
-		if (controllerKey != 0 && (((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
-				|| ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )) 
+		if (((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
+				|| ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) ) 
 		{
+			int deviceId = event.getDeviceId();
+			if (controllerKey == 0) {
+				if (mControllerExtendKey.get(deviceId) != null && mControllerExtendKey.get(deviceId).contains(keyCode)) {
+					controllerKey = keyCode;
+				}else {
+					return false;
+				}
+			}
+			
 			int action = event.getAction();
 			if (action == KeyEvent.ACTION_DOWN) {
 				handled = true;
@@ -169,4 +182,17 @@ public class GameControllerHelper {
 		
     	return handled;
     }
+	
+	public static void receiveExternalKeyEvent(int deviceId,int externalKeyCode,boolean receive) {
+		if (receive) {
+			if (mControllerExtendKey.get(deviceId) == null) {
+				mControllerExtendKey.put(deviceId, new ArrayList<Integer>());
+			}
+			mControllerExtendKey.get(deviceId).add(externalKeyCode);
+		} else {
+			if (mControllerExtendKey.get(deviceId) != null) {
+				mControllerExtendKey.get(deviceId).remove(Integer.valueOf(externalKeyCode));
+			}
+		}
+	}
 }

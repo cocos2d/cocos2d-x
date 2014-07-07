@@ -47,6 +47,7 @@ public:
         auto iter = std::find_if(Controller::s_allController.begin(), Controller::s_allController.end(), [&](Controller* controller){
                 return (deviceName == controller->_deviceName) && (deviceId == controller->_deviceId);
             });
+        return iter;
     }
 
     static void onConnected(const std::string& deviceName, int deviceId)
@@ -99,13 +100,16 @@ public:
 
     static void onAxisEvent(const std::string& deviceName, int deviceId, int axisCode, float value, bool isAnalog)
     {
+        log("onAxisEvent:%s,%d,%d,%f",deviceName.c_str(),deviceId,axisCode,value);
+
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
+            log("onAxisEvent: not find,connect new");
             onConnected(deviceName, deviceId);
             iter = findController(deviceName, deviceId);
         }
-
+        
         (*iter)->onAxisEvent(axisCode, value, isAnalog);
     }
 
@@ -152,6 +156,16 @@ Controller::Controller()
     , _axisEvent(nullptr)
 {
     init();
+}
+
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
+{
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", "(IIZ)V")) {
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, _deviceId, externalKeyCode, receive);
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 NS_CC_END
