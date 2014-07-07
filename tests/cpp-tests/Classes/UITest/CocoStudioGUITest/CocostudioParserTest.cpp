@@ -25,7 +25,7 @@
 #include "CocostudioParserTest.h"
 
 #include "CocoStudioGUITest.h"
-
+#include "CocostudioParserTest/Cocostudio1_4Test.h"
 
 enum
 {
@@ -40,15 +40,15 @@ static struct
 }
 g_guisTests[] =
 {
-//	{
-//        "custom gui image Test",
-//        [](Ref* sender)
-//        {
-//            CustomImageScene* pScene = new CustomImageScene();
-//            pScene->runThisTest();
-//            pScene->release();
-//        }
-//	},
+	{
+        "cocostudio 1.4",
+        [](Ref* sender)
+        {
+            CocostudioV1_4Scene* pScene = new CocostudioV1_4Scene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+	},
 //    {
 //        "custom gui particle widget Test",
 //        [](Ref* sender)

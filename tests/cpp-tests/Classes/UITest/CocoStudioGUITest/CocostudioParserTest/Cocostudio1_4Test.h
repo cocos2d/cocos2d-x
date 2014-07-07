@@ -25,6 +25,21 @@
 #ifndef __cocos2d_tests__Cocostudio1_4Test__
 #define __cocos2d_tests__Cocostudio1_4Test__
 
-#include <iostream>
+#include "cocos2d.h"
+#include "../../../testBasic.h"
+
+class CocostudioV1_4Layer : public cocos2d::Layer
+{
+public:
+    virtual void onEnter();
+};
+
+class CocostudioV1_4Scene : public TestScene
+{
+public:
+    virtual void onEnter();
+    virtual void runThisTest();
+    void BackCallback(cocos2d::Ref* pSender);
+};
 
 #endif /* defined(__cocos2d_tests__Cocostudio1_4Test__) */

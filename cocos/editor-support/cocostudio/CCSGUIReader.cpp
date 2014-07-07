@@ -1459,7 +1459,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
             }
             setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
         }else{
-            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your csb file.");
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your json file.");
         }
        
     }
