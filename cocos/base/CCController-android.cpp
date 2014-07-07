@@ -47,19 +47,19 @@ public:
         auto iter = std::find_if(Controller::s_allController.begin(), Controller::s_allController.end(), [&](Controller* controller){
                 return (deviceName == controller->_deviceName) && (deviceId == controller->_deviceId);
             });
+
         return iter;
     }
 
     static void onConnected(const std::string& deviceName, int deviceId)
     {
         // Check whether the controller is already connected.
-        log("onConnected %s,%d", deviceName.c_str(),deviceId);
+        CCLOG("onConnected %s,%d", deviceName.c_str(),deviceId);
 
         auto iter = findController(deviceName, deviceId);
         if (iter != Controller::s_allController.end())
             return;
 
-        log("onConnected new device");
         // It's a new controller being connected.
         auto controller = new cocos2d::Controller();
         controller->_deviceId = deviceId;
@@ -71,11 +71,11 @@ public:
 
     static void onDisconnected(const std::string& deviceName, int deviceId)
     {
-        log("onDisconnected %s,%d", deviceName.c_str(),deviceId);
+        CCLOG("onDisconnected %s,%d", deviceName.c_str(),deviceId);
+
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
-            log("Could not find the controller!");
             CCLOGERROR("Could not find the controller!");
             return;
         }
@@ -86,11 +86,10 @@ public:
 
     static void onButtonEvent(const std::string& deviceName, int deviceId, int keyCode, bool isPressed, float value, bool isAnalog)
     {
-        log("onButtonEvent %s,%d", deviceName.c_str(),deviceId);
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
-            log("onButtonEvent new connect");
+            CCLOG("onButtonEvent:connect new controller.");
             onConnected(deviceName, deviceId);
             iter = findController(deviceName, deviceId);
         }
@@ -100,12 +99,10 @@ public:
 
     static void onAxisEvent(const std::string& deviceName, int deviceId, int axisCode, float value, bool isAnalog)
     {
-        log("onAxisEvent:%s,%d,%d,%f",deviceName.c_str(),deviceId,axisCode,value);
-
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
-            log("onAxisEvent: not find,connect new");
+            CCLOG("onAxisEvent:connect new controller.");
             onConnected(deviceName, deviceId);
             iter = findController(deviceName, deviceId);
         }
