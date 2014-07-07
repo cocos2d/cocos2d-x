@@ -61,8 +61,10 @@ void WidgetReader::purge()
 
 void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    
-    widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize",false));
+    bool ignoreSizeExsits = DICTOOL->checkObjectExist_json(options, "ignoreSize");
+    if (ignoreSizeExsits) {
+        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize",false));
+    }
     
     widget->setSizeType((ui::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
     widget->setPositionType((ui::PositionType)DICTOOL->getIntValue_json(options, "positionType"));
