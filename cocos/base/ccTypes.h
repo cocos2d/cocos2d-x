@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 #include "CCGL.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -484,6 +485,7 @@ public:
  @brief The device accelerometer reports values for each axis in units of g-force
  */
 class Acceleration
+    : public Ref
 {
 public:
     double x;

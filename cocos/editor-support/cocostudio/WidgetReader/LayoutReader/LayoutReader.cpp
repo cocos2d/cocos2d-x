@@ -72,7 +72,7 @@ namespace cocostudio
         int ecr=0, ecg=0, ecb= 0;
         float bgcv1 = 0.0f, bgcv2= 0.0f;
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
-        Layout::Type layoutType;
+        Layout::Type layoutType = Layout::Type::ABSOLUTE;
         int bgColorOpacity = panel->getBackGroundColorOpacity();
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {

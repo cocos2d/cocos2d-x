@@ -35,6 +35,7 @@ import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.util.Log;
+import android.util.SparseArray;
 
 public abstract class GameControllerActivity extends Cocos2dxActivity implements InputDeviceListener {
 	// ===========================================================
@@ -189,14 +190,16 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 		if (mControllerNibiru != null) {
 			handled |= mControllerNibiru.dispatchKeyEvent(event);
 		}
-		if (mControllerMoga != null) {
+		if (handled == false && mControllerMoga != null) {
 			handled |= mControllerMoga.dispatchKeyEvent(event);
 		}
-		if (mControllerOuya != null) {
+		if (handled == false && mControllerOuya != null) {
 			handled |= mControllerOuya.dispatchKeyEvent(event);
 		}
 		
-		handled |= mControllerHelper.dispatchKeyEvent(event);
+		if (handled == false) {
+			handled |= mControllerHelper.dispatchKeyEvent(event);
+		}
 		
 		return handled || super.dispatchKeyEvent(event);
 	}
@@ -207,31 +210,44 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 		if (mControllerNibiru != null) {
 			handled |= mControllerNibiru.dispatchGenericMotionEvent(event);
 		}
-		if (mControllerMoga != null) {
+		if (handled == false && mControllerMoga != null) {
 			handled |= mControllerMoga.dispatchGenericMotionEvent(event);
 		}
-		if (mControllerOuya != null) {
+		if (handled == false && mControllerOuya != null) {
 			handled |= mControllerOuya.dispatchGenericMotionEvent(event);
 		}
 		
-		handled |= mControllerHelper.dispatchGenericMotionEvent(event);
+		if (handled == false) {
+			handled |= mControllerHelper.dispatchGenericMotionEvent(event);
+		}
 		
 		return handled || super.dispatchGenericMotionEvent(event);
 	}
 	
+	protected SparseArray<String> mGameController = null;
+	
 	@Override
-	public void onInputDeviceAdded(int deviceId) {
-		
+	public void onInputDeviceAdded(int deviceId) {	
 		Log.d(TAG,"onInputDeviceAdded:" + deviceId);
 		
-		InputDevice device = InputDevice.getDevice(deviceId);
-		int deviceSource = device.getSources();
-		
-		if ( ((deviceSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) 
-        		|| ((deviceSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )
-		{
-			GameControllerAdapter.onConnected("Standard", deviceId);
+		try {
+			InputDevice device = InputDevice.getDevice(deviceId);
+			int deviceSource = device.getSources();
+			
+			if ( ((deviceSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) 
+	        		|| ((deviceSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )
+			{
+				if (mGameController == null) {
+					mGameController = new SparseArray<String>();
+				}
+				String deviceName = device.getName();
+				mGameController.append(deviceId, deviceName);
+				GameControllerAdapter.onConnected(deviceName, deviceId);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 	}
 	/*
 	 * This is an unusual case. Input devices don't typically change, but they
@@ -244,7 +260,7 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 	 */
 	@Override
 	public void onInputDeviceChanged(int deviceId) {
-		Log.d(TAG,"onInputDeviceChanged:" + deviceId);
+		Log.w(TAG,"onInputDeviceChanged:" + deviceId);
 	}
 	
 	/*
@@ -258,13 +274,9 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 	public void onInputDeviceRemoved(int deviceId) {
 		Log.d(TAG,"onInputDeviceRemoved:" + deviceId);
 		
-		InputDevice device = InputDevice.getDevice(deviceId);
-		int deviceSource = device.getSources();
-		
-		if ( ((deviceSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) 
-        		|| ((deviceSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )
-		{
-			GameControllerAdapter.onDisconnected("Standard", deviceId);
+		if (mGameController != null && mGameController.get(deviceId) != null) {
+			GameControllerAdapter.onDisconnected(mGameController.get(deviceId), deviceId);
+			mGameController.delete(deviceId);
 		}
 	}
 
