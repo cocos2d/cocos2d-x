@@ -148,19 +148,30 @@ bool UIPageViewButtonTest::init()
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
         {
-            VBox* layout = VBox::create();
-            layout->setContentSize(Size(240.0f, 130.0f));
-            
-            for (int j = 0; j < 3; j++) {
-                Button *btn = Button::create("cocosui/animationbuttonnormal.png",
-                                             "cocosui/animationbuttonpressed.png");
-                btn->setName(StringUtils::format("button %d", j));
-                btn->addTouchEventListener( CC_CALLBACK_2(UIPageViewButtonTest::onButtonClicked, this));
+            HBox* outerBox = HBox::create();
+            outerBox->setContentSize(Size(240.0f, 130.0f));
+
+            for (int k = 0; k < 2; ++k) {
+                VBox* innerBox = VBox::create();
                 
-                layout->addChild(btn);
+                for (int j = 0; j < 3; j++) {
+                    Button *btn = Button::create("cocosui/animationbuttonnormal.png",
+                                                 "cocosui/animationbuttonpressed.png");
+                    btn->setName(StringUtils::format("button %d", j));
+                    btn->addTouchEventListener( CC_CALLBACK_2(UIPageViewButtonTest::onButtonClicked, this));
+                    
+                    innerBox->addChild(btn);
+                }
+                
+                LinearLayoutParameter *parameter = LinearLayoutParameter::create();
+                parameter->setMargin(Margin(0,0,100,0));
+                innerBox->setLayoutParameter(parameter);
+                
+                outerBox->addChild(innerBox);
+
             }
             
-            pageView->insertPage(layout,i);
+            pageView->insertPage(outerBox,i);
         }
         
         pageView->removePageAtIndex(0);
