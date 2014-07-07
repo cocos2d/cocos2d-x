@@ -58,12 +58,17 @@ ScriptEventCenter::ScriptEventCenter()
 
 ScriptEventCenter::~ScriptEventCenter()
 {
+    if (_running) {
+        cleanup();
+    }
     CC_SAFE_RELEASE(m_touchableNodes);
     CC_SAFE_RELEASE(m_touchingTargets);
 }
 
 bool ScriptEventCenter::init()
 {
+    _running = true;
+
     auto size = Director::getInstance()->getWinSize();
     return initWithSize(size);
 }
@@ -113,6 +118,7 @@ void ScriptEventCenter::addTouchableNode(Node *node)
 {
     if (!m_touchableNodes->containsObject(node))
     {
+//        printf("----addTouchableNode(%x): getOrderOfArrival=%d\n", node, node->getOrderOfArrival());
         m_touchableNodes->addObject(node);
 //        CCLOG("ADD TOUCHABLE NODE <%p>", node);
         if (!m_touchDispatchingEnabled)
@@ -316,6 +322,7 @@ void ScriptEventCenter::cleanup(void)
         _eventDispatcher->removeEventListener(_touchListener);
         _touchListener = NULL;
     }
+    _running = false;
 
 //    Layer::cleanup();
 }
@@ -332,7 +339,8 @@ void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
         tempItem = x[i];
         j = i - 1;
 
-        while(j >= 0 && (tempItem->getLocalZOrder() > x[j]->getLocalZOrder()))
+//        printf("----sortAllTouchableNodes(%x): getOrderOfArrival=%d\n", tempItem, tempItem->getOrderOfArrival());
+        while(j >= 0 && (tempItem->getOrderOfArrival() > x[j]->getOrderOfArrival()))
         {
             x[j + 1] = x[j];
             j = j - 1;
@@ -341,12 +349,12 @@ void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
     }
 
     // debug
-    //    CCLOG("----------------------------------------");
-    //    for(i=0; i<length; i++)
-    //    {
-    //        tempItem = x[i];
-    //        CCLOG("[%03d] getLocalZOrder() = %u, w = %0.2f, h = %0.2f", i, tempItem->getLocalZOrder(), tempItem->getCascadeBoundingBox().size.width, tempItem->getCascadeBoundingBox().size.height);
-    //    }
+        CCLOG("----------------------------------------");
+        for(i=0; i<length; i++)
+        {
+            tempItem = x[i];
+            CCLOG("[%03d] getOrderOfArrival() = %u, w = %0.2f, h = %0.2f", i, tempItem->getOrderOfArrival(), tempItem->getCascadeBoundingBox().size.width, tempItem->getCascadeBoundingBox().size.height);
+        }
 }
 
 void ScriptEventCenter::enableTouchDispatching()
@@ -358,7 +366,6 @@ void ScriptEventCenter::enableTouchDispatching()
         if (!_touchListener) {
             return;
         }
-        _running = true;
         _touchListener->onTouchesBegan = CC_CALLBACK_2(ScriptEventCenter::onTouchesBegan, this);
         _touchListener->onTouchesMoved = CC_CALLBACK_2(ScriptEventCenter::onTouchesMoved, this);
         _touchListener->onTouchesEnded = CC_CALLBACK_2(ScriptEventCenter::onTouchesEnded, this);
