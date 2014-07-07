@@ -40,20 +40,20 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
     controller->receiveExternalKeyEvent(82,true);
 #endif
 
-    if (_firstHolder.controller == nullptr && _secondHolder.controller == nullptr)
-    {   
-        char deviceId[20];
-        sprintf(deviceId,"device id:%d",controller->getDeviceId());
+    char deviceInfo[50];
+    sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
 
+    if (_firstHolder.controller == nullptr && _secondHolder.controller == nullptr)
+    {
         if (_firstHolder._holderNode)
         {
             _firstHolder.controller = controller;
-            _firstHolder._deviceLabel->setString(deviceId);
+            _firstHolder._deviceLabel->setString(deviceInfo);
         }
         else
         {
             _secondHolder.controller = controller;
-            _secondHolder._deviceLabel->setString(deviceId);
+            _secondHolder._deviceLabel->setString(deviceInfo);
         }
     }
     else if(_secondHolder.controller == nullptr)
@@ -73,8 +73,6 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
             this->addChild(_secondHolder._holderNode);
         }
 
-        char deviceInfo[50];
-        sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
         _secondHolder._deviceLabel->setString(deviceInfo);
     }
     else
@@ -93,8 +91,7 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
             _firstHolder._holderNode->setPosition(Vec2(_visibleThreeQuarterX, _visibleCentreY));
             this->addChild(_firstHolder._holderNode);
         }
-        char deviceInfo[50];
-        sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
+
         _firstHolder._deviceLabel->setString(deviceInfo);
     }
 }
@@ -361,7 +358,7 @@ void GameControllerTest::createControllerSprite(ControllerHolder& holder)
     holder._holderNode->addChild(holder._rightJoystick);
 
     holder._deviceLabel = Label::createWithTTF("Disconnected","fonts/Marker Felt.ttf",36);
-    holder._deviceLabel->setPosition(Vec2(499,460));
+    holder._deviceLabel->setPosition(Vec2(499,650));
     holder._deviceLabel->setTextColor(Color4B::RED);
     holder._holderNode->addChild(holder._deviceLabel);
 
