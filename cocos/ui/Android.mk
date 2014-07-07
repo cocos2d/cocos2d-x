@@ -41,8 +41,6 @@ $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/../editor-support
 
-LOCAL_CFLAGS += -Wno-psabi
-LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static

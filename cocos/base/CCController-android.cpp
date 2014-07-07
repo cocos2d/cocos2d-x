@@ -121,8 +121,7 @@ public:
     void sendEventButton(ControllerButtonInput* button, bool isPressed, float value, bool isAnalog)
     {
         button->setPressed(isPressed);
-        if (!isAnalog)
-            button->setValue(value);
+        button->setValue(value);
         button->setAnalog(isAnalog);
         EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, _controller, button);
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);

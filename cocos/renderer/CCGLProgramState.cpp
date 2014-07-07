@@ -62,8 +62,8 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 
 UniformValue::~UniformValue()
 {
-	if (_useCallback)
-		delete _value.callback;
+//	if (_useCallback)
+//		delete _value.callback;
 }
 
 void UniformValue::apply()

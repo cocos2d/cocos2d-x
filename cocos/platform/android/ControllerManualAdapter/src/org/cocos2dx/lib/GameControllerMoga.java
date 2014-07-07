@@ -20,6 +20,9 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 	private float mOldLeftThumbstickY = 0.0f;
 	private float mOldRightThumbstickX = 0.0f;
 	private float mOldRightThumbstickY = 0.0f;
+	
+	private float mOldLeftTrigger = 0.0f;
+	private float mOldRightTrigger = 0.0f;
 
 	private SparseIntArray mKeyMap = null;
 
@@ -60,9 +63,13 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 				GameControllerDelegate.BUTTON_RIGHT_THUMBSTICK);
 	}
 	
-	public void onKeyEvent(KeyEvent event) {
-		boolean isPressed = event.getAction() == KeyEvent.ACTION_DOWN;
+	public void onKeyEvent(KeyEvent event) {		
 		int keycode = event.getKeyCode();
+		if (keycode == KeyEvent.KEYCODE_BUTTON_L2
+				|| keycode == KeyEvent.KEYCODE_BUTTON_R2) {
+			return;
+		}
+		boolean isPressed = event.getAction() == KeyEvent.ACTION_DOWN;
 		boolean isAnalog = false;
 
 		if (keycode == KeyEvent.KEYCODE_BUTTON_THUMBL
@@ -82,10 +89,12 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 		if (mControllerEventListener == null) {
 			return;
 		}
+		int controllerId = event.getControllerId();
+		
 		float newLeftThumbstickX = event.getAxisValue(MotionEvent.AXIS_X);
 		if (newLeftThumbstickX != mOldLeftThumbstickX) {
 			mControllerEventListener.onAxisEvent(mVendorName,
-					event.getControllerId(),
+					controllerId,
 					GameControllerDelegate.THUMBSTICK_LEFT_X,
 					newLeftThumbstickX, true);
 			mOldLeftThumbstickX = newLeftThumbstickX;
@@ -94,7 +103,7 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 		float newLeftThumbstickY = event.getAxisValue(MotionEvent.AXIS_Y);
 		if (newLeftThumbstickY != mOldLeftThumbstickY) {
 			mControllerEventListener.onAxisEvent(mVendorName,
-					event.getControllerId(),
+					controllerId,
 					GameControllerDelegate.THUMBSTICK_LEFT_Y,
 					newLeftThumbstickY, true);
 			mOldLeftThumbstickY = newLeftThumbstickY;
@@ -103,7 +112,7 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 		float newRightThumbstickX = event.getAxisValue(MotionEvent.AXIS_Z);
 		if (newRightThumbstickX != mOldRightThumbstickX) {
 			mControllerEventListener.onAxisEvent(mVendorName,
-					event.getControllerId(),
+					controllerId,
 					GameControllerDelegate.THUMBSTICK_RIGHT_X,
 					newRightThumbstickX, true);
 			mOldRightThumbstickX = newRightThumbstickX;
@@ -112,10 +121,38 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 		float newRightThumbstickY = event.getAxisValue(MotionEvent.AXIS_RZ);
 		if (newRightThumbstickY != mOldRightThumbstickY) {
 			mControllerEventListener.onAxisEvent(mVendorName,
-					event.getControllerId(),
+					controllerId,
 					GameControllerDelegate.THUMBSTICK_RIGHT_Y,
 					newRightThumbstickY, true);
 			mOldRightThumbstickY = newRightThumbstickY;
+		}
+		
+		float newLeftTrigger = event.getAxisValue(MotionEvent.AXIS_LTRIGGER);
+		if (newLeftTrigger != mOldLeftTrigger) {
+			boolean isPressed = true;
+			if (Float.compare(newLeftTrigger, 0.0f) == 0) {
+				isPressed = false;
+			}
+			mControllerEventListener.onButtonEvent(mVendorName,
+					controllerId,
+					GameControllerDelegate.BUTTON_LEFT_TRIGGER,
+					isPressed,
+					newLeftTrigger, true);
+			mOldLeftTrigger = newLeftTrigger;
+		}
+		
+		float newRightTrigger = event.getAxisValue(MotionEvent.AXIS_RTRIGGER);
+		if (newRightTrigger != mOldRightTrigger) {
+			boolean isPressed = true;
+			if (Float.compare(newRightTrigger, 0.0f) == 0) {
+				isPressed = false;
+			}
+			mControllerEventListener.onButtonEvent(mVendorName,
+					controllerId,
+					GameControllerDelegate.BUTTON_RIGHT_TRIGGER,
+					isPressed,
+					newRightTrigger, true);
+			mOldRightTrigger = newRightTrigger;
 		}
 	}
 
