@@ -711,7 +711,7 @@ std::string Texture2D::getDescription() const
 // implementation Texture2D (Image)
 bool Texture2D::initWithImage(Image *image)
 {
-    return initWithImage(image, image->getRenderFormat());
+    return initWithImage(image, PixelFormat::NONE);
 }
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
