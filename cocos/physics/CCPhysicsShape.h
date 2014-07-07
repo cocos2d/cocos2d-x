@@ -143,6 +143,18 @@ public:
     void setGroup(int group);
     inline int getGroup() { return _group; }
     
+    /**
+     *  Is this body a sensor? A sensor will call a collision delegate but does not physically cause collisions between bodies.
+     *  Defaults to false
+     */
+    inline bool isSensor() const { return _sensor; }
+    /**
+     *  Set this body as a sensor. A sensor will call a collision delegate but does not physically cause collisions between bodies.
+     *  Defaults to false
+     */
+    void setSensor(bool enable);
+    
+    
 protected:
     bool init(Type type);
     
@@ -184,6 +196,7 @@ protected:
     int    _collisionBitmask;
     int    _contactTestBitmask;
     int    _group;
+    bool _sensor;
     
     friend class PhysicsWorld;
     friend class PhysicsBody;
