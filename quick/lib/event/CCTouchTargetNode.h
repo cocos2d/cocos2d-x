@@ -49,8 +49,8 @@ public:
     int getTouchId();
     void setTouchId(int touchId);
 
-    Touch *findTouch(__Set *touches);
-    static Touch *findTouchFromTouchesSet(__Set *touches, int touchId);
+    Touch *findTouch(const std::vector<Touch*>& touches);
+    static Touch *findTouchFromTouchesSet(const std::vector<Touch*>& touches, int touchId);
 
 private:
     CCTouchTargetNode(Node *node);

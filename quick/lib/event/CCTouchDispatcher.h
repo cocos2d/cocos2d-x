@@ -56,13 +56,13 @@ typedef enum
 #define CCTOUCHREMOVED      5
 #define ccTouchMax          6
 
-class CCSet;
-class CCEvent;
+class __Set;
+class Event;
 
 struct ccTouchHandlerHelperData {
     // we only use the type
-//    void (StandardTouchDelegate::*touchesSel)(CCSet*, CCEvent*);
-//    void (TargetedTouchDelegate::*touchSel)(NSTouch*, CCEvent*);
+//    void (StandardTouchDelegate::*touchesSel)(__Set*, Event*);
+//    void (TargetedTouchDelegate::*touchSel)(NSTouch*, Event*);
     int  m_type;
 };
 
@@ -75,19 +75,19 @@ public:
     /**
      * @lua NA
      */
-    virtual void touchesBegan(CCSet* touches, CCEvent* pEvent) = 0;
+    virtual void touchesBegan(__Set* touches, Event* pEvent) = 0;
     /**
      * @lua NA
      */
-    virtual void touchesMoved(CCSet* touches, CCEvent* pEvent) = 0;
+    virtual void touchesMoved(__Set* touches, Event* pEvent) = 0;
     /**
      * @lua NA
      */
-    virtual void touchesEnded(CCSet* touches, CCEvent* pEvent) = 0;
+    virtual void touchesEnded(__Set* touches, Event* pEvent) = 0;
     /**
      * @lua NA
      */
-    virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent) = 0;
+    virtual void touchesCancelled(__Set* touches, Event* pEvent) = 0;
     /**
      * @lua NA
      */
@@ -173,23 +173,23 @@ public:
     /**
      * @lua NA
      */
-    void touches(CCSet *pTouches, CCEvent *pEvent, unsigned int uIndex);
+    void touches(__Set *pTouches, Event *pEvent, unsigned int uIndex);
     /**
      * @lua NA
      */
-    virtual void touchesBegan(CCSet* touches, CCEvent* pEvent);
+    virtual void touchesBegan(__Set* touches, Event* pEvent);
     /**
      * @lua NA
      */
-    virtual void touchesMoved(CCSet* touches, CCEvent* pEvent);
+    virtual void touchesMoved(__Set* touches, Event* pEvent);
     /**
      * @lua NA
      */
-    virtual void touchesEnded(CCSet* touches, CCEvent* pEvent);
+    virtual void touchesEnded(__Set* touches, Event* pEvent);
     /**
      * @lua NA
      */
-    virtual void touchesCancelled(CCSet* touches, CCEvent* pEvent);
+    virtual void touchesCancelled(__Set* touches, Event* pEvent);
 
 public:
     /**

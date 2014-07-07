@@ -45,7 +45,7 @@ Scene::Scene()
 : m_touchableNodes(NULL)
 , m_touchingTargets(NULL)
 , m_touchDispatchingEnabled(false)
-, m_touchRegistered(false)
+, _touchListener(NULL)
 #if CC_USE_PHYSICS
 , _physicsWorld(nullptr)
 #endif
@@ -144,12 +144,12 @@ void Scene::removeTouchableNode(Node *node)
     }
 }
 
-void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
+void Scene::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
     if (!m_touchDispatchingEnabled) return;
 
     // save touches id
-    for (__SetIterator it = pTouches->begin(); it != pTouches->end(); ++it)
+    for (auto it = touches.begin(); it != touches.end(); ++it)
     {
         m_touchingIds.insert(((Touch*)*it)->getID());
     }
@@ -157,7 +157,7 @@ void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
     // check current in touching
     if (m_touchingTargets->count())
     {
-        dispatchingTouchEvent(pTouches, pEvent, CCTOUCHADDED);
+        dispatchingTouchEvent(touches, event, CCTOUCHADDED);
         return;
     }
 
@@ -167,7 +167,7 @@ void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
 
     // find touching target
     bool isTouchable = true;
-    CCObject *obj = NULL;
+    Ref *obj = NULL;
     Node *node = NULL;
     Node *checkTouchableNode = NULL;
     CCTouchTargetNode *touchTarget = NULL;
@@ -190,14 +190,14 @@ void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
 
         // prepare for touch testing
         touchTarget = NULL;
-        const CCRect boundingBox = node->getCascadeBoundingBox();
+        const Rect boundingBox = node->getCascadeBoundingBox();
 
         // set touch target
         Touch *touch = NULL;
-        for (__SetIterator it = pTouches->begin(); it != pTouches->end(); ++it)
+        for (auto it = touches.begin(); it != touches.end(); ++it)
         {
             touch = (Touch*)*it;
-            const CCPoint touchPoint = touch->getLocation();
+            const Point touchPoint = touch->getLocation();
 
             if (boundingBox.containsPoint(touchPoint))
             {
@@ -238,11 +238,11 @@ void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
             node = dynamic_cast<Node*>(path->objectAtIndex(i));
             if (touchMode == _CCTouchesAllAtOnce)
             {
-                node->ccTouchesCaptureBegan(pTouches, touchTarget->getNode());
+                node->ccTouchesCaptureBegan(touches, touchTarget->getNode());
             }
             else
             {
-                dispatchingContinue = node->ccTouchCaptureBegan(touchTarget->findTouch(pTouches), touchTarget->getNode());
+                dispatchingContinue = node->ccTouchCaptureBegan(touchTarget->findTouch(touches), touchTarget->getNode());
             }
         }
 
@@ -257,11 +257,11 @@ void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
         bool ret = true;
         if (touchMode == _CCTouchesAllAtOnce)
         {
-            node->ccTouchesBegan(pTouches, pEvent);
+            node->ccTouchesBegan(touches, event);
         }
         else
         {
-            ret = node->ccTouchBegan(touchTarget->findTouch(pTouches), pEvent);
+            ret = node->ccTouchBegan(touchTarget->findTouch(touches), event);
         }
 
         if (ret)
@@ -280,34 +280,34 @@ void Scene::ccTouchesBegan(__Set *pTouches, Event *pEvent)
     }
 }
 
-void Scene::ccTouchesMoved(__Set *pTouches, Event *pEvent)
+void Scene::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
-    dispatchingTouchEvent(pTouches, pEvent, CCTOUCHMOVED);
+    dispatchingTouchEvent(touches, event, CCTOUCHMOVED);
 }
 
-void Scene::ccTouchesEnded(__Set *pTouches, Event *pEvent)
+void Scene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
-    for (__SetIterator it = pTouches->begin(); it != pTouches->end(); ++it)
+    for (auto it = touches.begin(); it != touches.end(); ++it)
     {
         m_touchingIds.erase(((Touch*)*it)->getID());
     }
 
     if (m_touchingIds.size())
     {
-        dispatchingTouchEvent(pTouches, pEvent, CCTOUCHREMOVED);
+        dispatchingTouchEvent(touches, event, CCTOUCHREMOVED);
     }
     else
     {
-        dispatchingTouchEvent(pTouches, pEvent, CCTOUCHENDED);
+        dispatchingTouchEvent(touches, event, CCTOUCHENDED);
         // remove all touching nodes
 //    CCLOG("TOUCH ENDED, REMOVE ALL TOUCH TARGETS");
         m_touchingTargets->removeAllObjects();
     }
 }
 
-void Scene::ccTouchesCancelled(__Set *pTouches, Event *pEvent)
+void Scene::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
-    dispatchingTouchEvent(pTouches, pEvent, CCTOUCHCANCELLED);
+    dispatchingTouchEvent(touches, event, CCTOUCHCANCELLED);
     // remove all touching nodes
 //    CCLOG("TOUCH CANCELLED, REMOVE ALL TOUCH TARGETS");
     m_touchingTargets->removeAllObjects();
@@ -324,8 +324,12 @@ void Scene::cleanup(void)
     m_touchableNodes->removeAllObjects();
     m_touchingTargets->removeAllObjects();
     // Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
+    if (_touchListener) {
+        _eventDispatcher->removeEventListener(_touchListener);
+        _touchListener = NULL;
+    }
 
-    Layer::cleanup();
+//    Layer::cleanup();
 }
 
 void Scene::sortAllTouchableNodes(__Array *nodes)
@@ -359,10 +363,18 @@ void Scene::sortAllTouchableNodes(__Array *nodes)
 
 void Scene::enableTouchDispatching()
 {
-    if (!m_touchRegistered)
+    if (!_touchListener)
     {
         // Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
-        m_touchRegistered = true;
+        _touchListener = EventListenerTouchAllAtOnce::create();
+        if (!_touchListener) {
+            return;
+        }
+        _touchListener->onTouchesBegan = CC_CALLBACK_2(Scene::onTouchesBegan, this);
+        _touchListener->onTouchesMoved = CC_CALLBACK_2(Scene::onTouchesMoved, this);
+        _touchListener->onTouchesEnded = CC_CALLBACK_2(Scene::onTouchesEnded, this);
+        _touchListener->onTouchesCancelled = CC_CALLBACK_2(Scene::onTouchesCancelled, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
     }
     m_touchDispatchingEnabled = true;
 }
@@ -372,7 +384,7 @@ void Scene::disableTouchDispatching()
     m_touchDispatchingEnabled = false;
 }
 
-void Scene::dispatchingTouchEvent(__Set *pTouches, Event *pEvent, int event)
+void Scene::dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event)
 {
     Node *node = NULL;
     CCTouchTargetNode *touchTarget = NULL;
@@ -397,7 +409,7 @@ void Scene::dispatchingTouchEvent(__Set *pTouches, Event *pEvent, int event)
         int touchMode = touchTarget->getTouchMode();
         if (touchMode != _CCTouchesAllAtOnce)
         {
-            touch = touchTarget->findTouch(pTouches);
+            touch = touchTarget->findTouch(touches);
             if (!touch)
             {
                 // not found touch id for target, skip this target
@@ -424,23 +436,23 @@ void Scene::dispatchingTouchEvent(__Set *pTouches, Event *pEvent, int event)
                 switch (event)
                 {
                     case CCTOUCHMOVED:
-                        node->ccTouchesCaptureMoved(pTouches, touchTarget->getNode());
+                        node->ccTouchesCaptureMoved(touches, touchTarget->getNode());
                         break;
 
                     case CCTOUCHENDED:
-                        node->ccTouchesCaptureEnded(pTouches, touchTarget->getNode());
+                        node->ccTouchesCaptureEnded(touches, touchTarget->getNode());
                         break;
 
                     case CCTOUCHCANCELLED:
-                        node->ccTouchesCaptureCancelled(pTouches, touchTarget->getNode());
+                        node->ccTouchesCaptureCancelled(touches, touchTarget->getNode());
                         break;
 
                     case CCTOUCHADDED:
-                        node->ccTouchesCaptureAdded(pTouches, touchTarget->getNode());
+                        node->ccTouchesCaptureAdded(touches, touchTarget->getNode());
                         break;
 
                     case CCTOUCHREMOVED:
-                        node->ccTouchesCaptureRemoved(pTouches, touchTarget->getNode());
+                        node->ccTouchesCaptureRemoved(touches, touchTarget->getNode());
                         break;
                 }
             }
@@ -470,23 +482,23 @@ void Scene::dispatchingTouchEvent(__Set *pTouches, Event *pEvent, int event)
             switch (event)
             {
                 case CCTOUCHMOVED:
-                    node->ccTouchesMoved(pTouches, pEvent);
+                    node->ccTouchesMoved(touches, pEvent);
                     break;
 
                 case CCTOUCHENDED:
-                    node->ccTouchesEnded(pTouches, pEvent);
+                    node->ccTouchesEnded(touches, pEvent);
                     break;
 
                 case CCTOUCHCANCELLED:
-                    node->ccTouchesCancelled(pTouches, pEvent);
+                    node->ccTouchesCancelled(touches, pEvent);
                     break;
 
                 case CCTOUCHADDED:
-                    node->ccTouchesAdded(pTouches, pEvent);
+                    node->ccTouchesAdded(touches, pEvent);
                     break;
 
                 case CCTOUCHREMOVED:
-                    node->ccTouchesRemoved(pTouches, pEvent);
+                    node->ccTouchesRemoved(touches, pEvent);
                     break;
             }
         }

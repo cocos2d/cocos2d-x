@@ -129,6 +129,9 @@ public:
     virtual int sendEvent(ScriptEvent* message) override;
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
+    
+    virtual int executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase);
+    virtual int executeNodeTouchEvent(Node* pNode, int eventType, Touch *pTouch, int phase);
 private:
     LuaEngine(void)
     : _stack(nullptr)

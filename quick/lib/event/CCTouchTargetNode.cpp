@@ -25,18 +25,19 @@
  ****************************************************************************/
 
 #include "CCTouchTargetNode.h"
+#include "deprecated/CCSet.h"
 
 
 NS_CC_BEGIN
 
-CCTouchTargetNode *CCTouchTargetNode::create(CCNode *node)
+CCTouchTargetNode *CCTouchTargetNode::create(Node *node)
 {
     CCTouchTargetNode *touchableNode = new CCTouchTargetNode(node);
     touchableNode->autorelease();
     return touchableNode;
 }
 
-CCTouchTargetNode::CCTouchTargetNode(CCNode *node)
+CCTouchTargetNode::CCTouchTargetNode(Node *node)
 : m_touchId(0)
 {
     m_node = node;
@@ -49,7 +50,7 @@ CCTouchTargetNode::~CCTouchTargetNode()
     CC_SAFE_RELEASE(m_node);
 }
 
-CCNode *CCTouchTargetNode::getNode()
+Node *CCTouchTargetNode::getNode()
 {
     return  m_node;
 }
@@ -69,17 +70,17 @@ void CCTouchTargetNode::setTouchId(int touchId)
     m_touchId = touchId;
 }
 
-CCTouch *CCTouchTargetNode::findTouch(CCSet *touches)
+Touch *CCTouchTargetNode::findTouch(const std::vector<Touch*>& touches)
 {
     return findTouchFromTouchesSet(touches, getTouchId());
 }
 
-CCTouch *CCTouchTargetNode::findTouchFromTouchesSet(CCSet *touches, int touchId)
+Touch *CCTouchTargetNode::findTouchFromTouchesSet(const std::vector<Touch*>& touches, int touchId)
 {
-    CCTouch *touch = NULL;
-    for (CCSetIterator it = touches->begin(); it != touches->end(); ++it)
+    Touch *touch = NULL;
+    for (auto it = touches.begin(); it != touches.end(); ++it)
     {
-        touch = (CCTouch*)*it;
+        touch = (Touch*)*it;
         if (touch->getID() == touchId) return touch;
     }
     return NULL;

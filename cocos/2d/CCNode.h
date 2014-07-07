@@ -1481,6 +1481,7 @@ public:
     
     virtual void registerWithTouchDispatcher(void);
     virtual void unregisterWithTouchDispatcher(void);
+    CCScriptEventDispatcher *getScriptEventDispatcher();
     
     /** whether or not it will receive Touch events.
      You can enable / disable touch events with this property.
@@ -1497,12 +1498,12 @@ public:
     virtual void ccTouchCaptureEnded(Touch *pTouch, Node *pTarget);
     virtual void ccTouchCaptureCancelled(Touch *pTouch, Node *pTarget);
     
-    virtual void ccTouchesCaptureBegan(__Set *pTouches, Node *pTarget);
-    virtual void ccTouchesCaptureMoved(__Set *pTouches, Node *pTarget);
-    virtual void ccTouchesCaptureEnded(__Set *pTouches, Node *pTarget);
-    virtual void ccTouchesCaptureCancelled(__Set *pTouches, Node *pTarget);
-    virtual void ccTouchesCaptureAdded(__Set *pTouches, Node *pTarget);
-    virtual void ccTouchesCaptureRemoved(__Set *pTouches, Node *pTarget);
+    virtual void ccTouchesCaptureBegan(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureMoved(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureEnded(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureCancelled(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureAdded(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureRemoved(const std::vector<Touch*>& touches, Node *pTarget);
     
     virtual bool isTouchEnabled();
     virtual void setTouchEnabled(bool value);
@@ -1515,12 +1516,12 @@ public:
     virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
     virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
     
-    virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent);
-    virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent);
-    virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent);
-    virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent);
-    virtual void ccTouchesAdded(__Set *pTouches, Event *pEvent);
-    virtual void ccTouchesRemoved(__Set *pTouches, Event *pEvent);
+    virtual void ccTouchesBegan(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesMoved(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesEnded(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesCancelled(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent);
 #endif
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1650,7 +1651,7 @@ protected:
    int m_eTouchMode;
 
    virtual int executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase = 1);
-   virtual int executeScriptTouchHandler(int nEventType, __Set *pTouches, int phase = 1);
+   virtual int executeScriptTouchHandler(int nEventType, const std::vector<Touch*>& touches, int phase = 1);
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components

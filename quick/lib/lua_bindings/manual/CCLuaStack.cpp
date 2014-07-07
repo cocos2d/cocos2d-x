@@ -313,6 +313,16 @@ void LuaStack::clean(void)
     lua_settop(_state, 0);
 }
 
+void LuaStack::settop(int top)
+{
+    lua_settop(_state, top);
+}
+
+void LuaStack::copyValue(int index)
+{
+    lua_pushvalue(_state, index);
+}
+
 void LuaStack::pushInt(int intValue)
 {
     lua_pushinteger(_state, intValue);
