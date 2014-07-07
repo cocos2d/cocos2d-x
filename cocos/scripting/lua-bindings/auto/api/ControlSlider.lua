@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ControlSlider
 -- @extend Control
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ControlSlider] getSelectedThumbSprite 
@@ -12,7 +13,7 @@
 -- @function [parent=#ControlSlider] locationFromTouch 
 -- @param self
 -- @param #cc.Touch touch
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ControlSlider] setSelectedThumbSprite 

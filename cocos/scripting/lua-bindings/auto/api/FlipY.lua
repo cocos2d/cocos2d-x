@@ -2,6 +2,7 @@
 --------------------------------
 -- @module FlipY
 -- @extend ActionInstant
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#FlipY] create 

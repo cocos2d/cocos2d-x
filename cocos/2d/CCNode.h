@@ -107,6 +107,12 @@ public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
 
+    enum {
+        FLAGS_TRANSFORM_DIRTY = (1 << 0),
+        FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+
+        FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
+    };
     /// @{
     /// @name Constructor, Destructor and Initializers
 
@@ -114,7 +120,7 @@ public:
      * Allocates and initializes a node.
      * @return A initialized node which is marked as "autorelease".
      */
-    static Node * create(void);
+    static Node * create();
 
     /**
      * Gets the description string. It makes debugging easier.
@@ -195,6 +201,8 @@ public:
      * It is a scaling factor that multiplies the width of the node and its children.
      *
      * @param scaleX   The scale factor on X axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleX(float scaleX);
     /**
@@ -213,6 +221,8 @@ public:
      * It is a scaling factor that multiplies the height of the node and its children.
      *
      * @param scaleY   The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleY(float scaleY);
     /**
@@ -230,6 +240,8 @@ public:
      * The Default value is 1.0 if you haven't changed it before.
      *
      * @param scaleY   The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleZ(float scaleZ);
     /**
@@ -248,6 +260,8 @@ public:
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
      *
      * @param scale     The scale factor for both X and Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scale);
     /**
@@ -267,6 +281,8 @@ public:
      *
      * @param scaleX     The scale factor on X axis.
      * @param scaleY     The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scaleX, float scaleY);
 
@@ -283,6 +299,19 @@ public:
      * @param position  The position (x,y) of the node in OpenGL coordinates
      */
     virtual void setPosition(const Vec2 &position);
+
+    /** Sets the position (x,y) using values between 0 and 1.
+     The positions in pixels is calculated like the following:
+     @code
+     // pseudo code
+     void setNormalizedPosition(Vec2 pos) {
+       Size s = getParent()->getContentSize();
+       _position = pos * s;
+     }
+     @endcode
+     */
+    virtual void setNormalizedPosition(const Vec2 &position);
+
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -294,6 +323,10 @@ public:
      * @endcode
      */
     virtual const Vec2& getPosition() const;
+
+    /** returns the normalized position */
+    virtual const Vec2& getNormalizedPosition() const;
+
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
@@ -372,6 +405,8 @@ public:
      * The default skewX angle is 0. Positive values distort the node in a CW direction.
      *
      * @param skewX The X skew angle of the node in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setSkewX(float skewX);
     /**
@@ -395,6 +430,8 @@ public:
      * The default skewY angle is 0. Positive values distort the node in a CCW direction.
      *
      * @param skewY    The Y skew angle of the node in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setSkewY(float skewY);
     /**
@@ -497,6 +534,8 @@ public:
     /**
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotation3D(const Vec3& rotation);
     /**
@@ -514,6 +553,8 @@ public:
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
      * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotationSkewX(float rotationX);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
@@ -538,6 +579,8 @@ public:
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
      * @param rotationY    The Y rotation in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotationSkewY(float rotationY);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
@@ -634,16 +677,73 @@ public:
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * 
+     * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
-    virtual void addChild(Node* child, int localZOrder, int tag);
+     virtual void addChild(Node* child, int localZOrder, int tag);
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param name      A string to identify the node easily. Please refer to `setName(int)`
+     *
+     */
+    virtual void addChild(Node* child, int localZOrder, const std::string &name);
     /**
      * Gets a child from the container with its tag
      *
      * @param tag   An identifier to find the child node.
      *
      * @return a Node object whose tag equals to the input parameter
+     *
+     * Please use `getChildByName()` instead
      */
-    virtual Node * getChildByTag(int tag) const;
+     virtual Node * getChildByTag(int tag) const;
+    /**
+     * Gets a child from the container with its name
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node object whose name equals to the input parameter
+     *
+     * @since v3.2
+     */
+    virtual Node* getChildByName(const std::string& name) const;
+    /** Search the children of the receiving node to perform processing for nodes which share a name.
+     *
+     * @param name The name to search for, supports c++11 regular expression
+     * Search syntax options:
+     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
+     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
+     *       and be performed recursively across the entire node tree.
+     * `..`: The search should move up to the node's parent. Can only be placed at the end of string
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     *
+     * @code
+     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
+     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
+     * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
+     * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
+     * and whose parent is named `Abby`.
+     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * parent is named `Abby`.
+     * @endcode
+     *
+     * @warning Only support alpha or number for name, and not support unicode
+     *
+     * @param callback A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
+     *  `node` 
+     *      A node that matches the name
+     *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
+     *
+     * @since v3.2
+     */
+    virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
     /**
      * Returns the array of the node's children
      *
@@ -706,8 +806,17 @@ public:
      *
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     *
+     * Please use `removeChildByName` instead.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+     virtual void removeChildByTag(int tag, bool cleanup = true);
+    /**
+     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     *
+     * @param name       A string that identifies a child node
+     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     */
+    virtual void removeChildByName(const std::string &name, bool cleanup = true);
     /**
      * Removes all children from the container with a cleanup.
      *
@@ -747,16 +856,33 @@ public:
      * Returns a tag that is used to identify the node easily.
      *
      * @return An integer that identifies the node.
+     *
+     * Please use `getTag()` instead.
      */
-    virtual int getTag() const;
+     virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *
      * Please refer to getTag for the sample code.
      *
      * @param tag   A integer that identifies the node.
+     *
+     * Please use `setName()` instead.
      */
-    virtual void setTag(int tag);
+     virtual void setTag(int tag);
+    
+    /** Returns a string that is used to identify the node.
+     * @return A string that identifies the node.
+     * 
+     * @since v3.2
+     */
+    virtual std::string getName() const;
+    /** Changes the name that is used to identify the node easily.
+     * @param name A string that identifies the node.
+     *
+     * @since v3.2
+     */
+    virtual void setName(const std::string& name);
 
     
     /**
@@ -826,10 +952,10 @@ public:
      *
      * @return The GLProgram (shader) currently used for this node
      */
-    GLProgram* getGLProgram();
-    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() { return getGLProgram(); }
+    GLProgram* getGLProgram() const;
+    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
-    GLProgramState *getGLProgramState();
+    GLProgramState *getGLProgramState() const;
     void setGLProgramState(GLProgramState *glProgramState);
 
     /**
@@ -923,13 +1049,13 @@ public:
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
      */
-    virtual void draw(Renderer *renderer, const Mat4& transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
      * Visits this node's children and draw them recursively.
      */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
@@ -937,7 +1063,7 @@ public:
      It returns `nullptr` if the node doesn't belong to any Scene.
      This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
      */
-    virtual Scene* getScene();
+    virtual Scene* getScene() const;
 
     /**
      * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
@@ -1164,12 +1290,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions(void);
+    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions();
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions(void);
+    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions();
 
     /*
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
@@ -1290,17 +1416,17 @@ public:
     /**
      *   gets a component by its name
      */
-    Component* getComponent(const std::string& pName);
+    Component* getComponent(const std::string& name);
 
     /**
      *   adds a component
      */
-    virtual bool addComponent(Component *pComponent);
+    virtual bool addComponent(Component *component);
 
     /**
      *   removes a component by its name
      */
-    virtual bool removeComponent(const std::string& pName);
+    virtual bool removeComponent(const std::string& name);
 
     /**
      *   removes all components
@@ -1331,16 +1457,25 @@ public:
     virtual bool isCascadeOpacityEnabled() const;
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
     
-    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getColor() const;
     virtual const Color3B& getDisplayedColor() const;
     virtual void setColor(const Color3B& color);
     virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
     
-    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
-    
+
+    void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1362,6 +1497,7 @@ protected:
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Mat4 transform(const Mat4 &parentTransform);
+    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1369,10 +1505,20 @@ protected:
     virtual void disableCascadeColor();
     virtual void updateColor() {}
     
+    bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
+    bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    
 #if CC_USE_PHYSICS
+    void updatePhysicsBodyTransform(Scene* layer);
     virtual void updatePhysicsBodyPosition(Scene* layer);
     virtual void updatePhysicsBodyRotation(Scene* layer);
+    virtual void updatePhysicsBodyScale(Scene* scene);
 #endif // CC_USE_PHYSICS
+    
+private:
+    void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
+    
+protected:
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis
@@ -1387,6 +1533,8 @@ protected:
 
     Vec2 _position;                ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
+    Vec2 _normalizedPosition;
+    bool _usingNormalizedPosition;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
@@ -1395,6 +1543,7 @@ protected:
     Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
+    bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
     Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
 
@@ -1416,6 +1565,7 @@ protected:
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
+    size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
@@ -1450,6 +1600,8 @@ protected:
 
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
+    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
 #endif
     
     // opacity controls
@@ -1462,6 +1614,11 @@ protected:
 
     static int s_globalOrderOfArrival;
     
+    std::function<void()> _onEnterCallback;
+    std::function<void()> _onExitCallback;
+    std::function<void()> _onEnterTransitionDidFinishCallback;
+    std::function<void()> _onExitTransitionDidStartCallback;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     
@@ -1502,7 +1659,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __NodeRGBA();
     virtual ~__NodeRGBA() {}
 

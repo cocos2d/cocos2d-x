@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Node
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- overload function: addChild(cc.Node, int)
@@ -10,11 +11,13 @@
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
+-- overload function: addChild(cc.Node, int, string)
+--          
 -- @function [parent=#Node] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#Node] removeComponent 
@@ -57,19 +60,30 @@
 -- @return array_table#array_table ret (retunr value: array_table)
 
 --------------------------------
+-- @function [parent=#Node] setOnExitCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] pause 
 -- @param self
         
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpaceAR 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] isIgnoreAnchorPointForPosition 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Node] getChildByName 
+-- @param self
+-- @param #string str
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- @function [parent=#Node] updateDisplayedOpacity 
@@ -102,6 +116,11 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#Node] setonEnterTransitionDidFinishCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] removeAllComponents 
 -- @param self
         
@@ -116,6 +135,11 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- @function [parent=#Node] getonEnterTransitionDidFinishCallback 
+-- @param self
+-- @return function#function ret (return value: function)
+        
+--------------------------------
 -- @function [parent=#Node] getGLProgram 
 -- @param self
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
@@ -123,12 +147,12 @@
 --------------------------------
 -- @function [parent=#Node] getNodeToWorldTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Node] getPosition3D 
 -- @param self
--- @return Vec3#Vec3 ret (return value: cc.Vec3)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- @function [parent=#Node] removeChild 
@@ -139,8 +163,8 @@
 --------------------------------
 -- @function [parent=#Node] convertToWorldSpace 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] getScene 
@@ -163,15 +187,30 @@
 -- @param #cc.GLProgramState glprogramstate
         
 --------------------------------
+-- @function [parent=#Node] setOnEnterCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
+-- @function [parent=#Node] setNormalizedPosition 
+-- @param self
+-- @param #vec2_table vec2
+        
+--------------------------------
+-- @function [parent=#Node] setonExitTransitionDidStartCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpace 
 -- @param self
 -- @param #cc.Touch touch
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- overload function: removeAllChildrenWithCleanup(bool)
@@ -198,26 +237,36 @@
 -- @param #cc.Node node
         
 --------------------------------
+-- @function [parent=#Node] getName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- @function [parent=#Node] getRotation3D 
 -- @param self
--- @return Vec3#Vec3 ret (return value: cc.Vec3)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- @function [parent=#Node] getNodeToParentTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpaceAR 
 -- @param self
 -- @param #cc.Touch touch
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @function [parent=#Node] getOnEnterCallback 
+-- @param self
+-- @return function#function ret (return value: function)
         
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpace 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] resume 
@@ -231,7 +280,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(cc.Vec2)
+-- overload function: setPosition(vec2_table)
 --          
 -- @function [parent=#Node] setPosition
 -- @param self
@@ -267,7 +316,7 @@
 --------------------------------
 -- @function [parent=#Node] setRotation3D 
 -- @param self
--- @param #cc.Vec3 vec3
+-- @param #vec3_table vec3
         
 --------------------------------
 -- @function [parent=#Node] setPositionX 
@@ -277,12 +326,12 @@
 --------------------------------
 -- @function [parent=#Node] setNodeToParentTransform 
 -- @param self
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
         
 --------------------------------
 -- @function [parent=#Node] getAnchorPoint 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] getNumberOfRunningActions 
@@ -292,6 +341,11 @@
 --------------------------------
 -- @function [parent=#Node] updateTransform 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Node] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
         
 --------------------------------
 -- @function [parent=#Node] isVisible 
@@ -306,14 +360,20 @@
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpaceAR 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] addComponent 
 -- @param self
 -- @param #cc.Component component
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Node] runAction 
+-- @param self
+-- @param #cc.Action action
+-- @return Action#Action ret (return value: cc.Action)
         
 --------------------------------
 -- @function [parent=#Node] isOpacityModifyRGB 
@@ -328,13 +388,24 @@
 --------------------------------
 -- @function [parent=#Node] getAnchorPointInPoints 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- @function [parent=#Node] runAction 
+-- overload function: visit()
+--          
+-- overload function: visit(cc.Renderer, mat4_table, unsigned int)
+--          
+-- @function [parent=#Node] visit
 -- @param self
--- @param #cc.Action action
--- @return Action#Action ret (return value: cc.Action)
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
+
+--------------------------------
+-- @function [parent=#Node] removeChildByName 
+-- @param self
+-- @param #string str
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Node] getGLProgramState 
@@ -372,13 +443,18 @@
 -- @return Action#Action ret (return value: cc.Action)
         
 --------------------------------
+-- @function [parent=#Node] setName 
+-- @param self
+-- @param #string str
+        
+--------------------------------
 -- overload function: setAdditionalTransform(cc.AffineTransform)
 --          
--- overload function: setAdditionalTransform(cc.Mat4)
+-- overload function: setAdditionalTransform(mat4_table)
 --          
 -- @function [parent=#Node] setAdditionalTransform
 -- @param self
--- @param #cc.Mat4 mat4
+-- @param #mat4_table mat4
 
 --------------------------------
 -- @function [parent=#Node] getDisplayedOpacity 
@@ -477,7 +553,7 @@
 --------------------------------
 -- @function [parent=#Node] getParentToNodeTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Node] setGlobalZOrder 
@@ -494,6 +570,11 @@
 -- @param #float float
 -- @param #float float
 
+--------------------------------
+-- @function [parent=#Node] getOnExitCallback 
+-- @param self
+-- @return function#function ret (return value: function)
+        
 --------------------------------
 -- @function [parent=#Node] getChildByTag 
 -- @param self
@@ -578,18 +659,29 @@
 --------------------------------
 -- overload function: draw()
 --          
--- overload function: draw(cc.Renderer, cc.Mat4, bool)
+-- overload function: draw(cc.Renderer, mat4_table, unsigned int)
 --          
 -- @function [parent=#Node] draw
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
 
 --------------------------------
 -- @function [parent=#Node] setUserObject 
 -- @param self
 -- @param #cc.Ref ref
+        
+--------------------------------
+-- @function [parent=#Node] enumerateChildren 
+-- @param self
+-- @param #string str
+-- @param #function func
+        
+--------------------------------
+-- @function [parent=#Node] getonExitTransitionDidStartCallback 
+-- @param self
+-- @return function#function ret (return value: function)
         
 --------------------------------
 -- overload function: removeFromParentAndCleanup(bool)
@@ -603,7 +695,7 @@
 --------------------------------
 -- @function [parent=#Node] setPosition3D 
 -- @param self
--- @param #cc.Vec3 vec3
+-- @param #vec3_table vec3
         
 --------------------------------
 -- @function [parent=#Node] update 
@@ -617,17 +709,17 @@
 --------------------------------
 -- @function [parent=#Node] getWorldToNodeTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
-        
---------------------------------
--- @function [parent=#Node] setGLProgram 
--- @param self
--- @param #cc.GLProgram glprogram
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Node] getScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#Node] getNormalizedPosition 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Node] getRotationSkewX 

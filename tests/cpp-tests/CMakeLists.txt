@@ -14,7 +14,6 @@ else()
 endif()
 
 set(SAMPLE_SRC
-  Classes/AccelerometerTest/AccelerometerTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
@@ -66,6 +65,7 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
   Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
+  Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp
@@ -125,9 +125,7 @@ set(SAMPLE_SRC
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
-  Classes/KeyboardTest/KeyboardTest.cpp
   Classes/InputTest/MouseTest.cpp
-  Classes/KeypadTest/KeypadTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
@@ -165,6 +163,7 @@ set(SAMPLE_SRC
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
   Classes/TextureCacheTest/TextureCacheTest.cpp
   Classes/TileMapTest/TileMapTest.cpp
+  Classes/TileMapTest/TileMapTest2.cpp
   Classes/TouchesTest/Ball.cpp
   Classes/TouchesTest/Paddle.cpp
   Classes/TouchesTest/TouchesTest.cpp

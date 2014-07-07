@@ -28,10 +28,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ActionTween* ActionTween::create(float aDuration, const std::string& key, float from, float to)
+ActionTween* ActionTween::create(float duration, const std::string& key, float from, float to)
 {
     ActionTween* ret = new ActionTween();
-    if (ret && ret->initWithDuration(aDuration, key, from, to))
+    if (ret && ret->initWithDuration(duration, key, from, to))
     {
         ret->autorelease();
     }

@@ -157,8 +157,8 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated) override;
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
     virtual void update(float dt) override;
 
     virtual void onEnter() override;
@@ -199,9 +199,6 @@ public:
 
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
     virtual ArmatureData *getArmatureData() const { return _armatureData; }
-
-    virtual void setName(const std::string &name) { _name = name; }
-    virtual const std::string &getName() const { return _name; } 
 
 
     virtual void setParentBone(Bone *parentBone);
@@ -257,7 +254,6 @@ protected:
 
     BatchNode *_batchNode;
 
-    std::string _name;
     Bone *_parentBone;
     float _version;
 

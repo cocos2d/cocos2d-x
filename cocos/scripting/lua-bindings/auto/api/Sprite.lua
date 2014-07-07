@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Sprite
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- overload function: setSpriteFrame(cc.SpriteFrame)
@@ -44,7 +45,7 @@
 --------------------------------
 -- @function [parent=#Sprite] getOffsetPosition 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Sprite] removeAllChildrenWithCleanup 
@@ -184,16 +185,20 @@
 -- @function [parent=#Sprite] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
--- @function [parent=#Sprite] addChild 
+-- overload function: addChild(cc.Node, int, string)
+--          
+-- overload function: addChild(cc.Node, int, int)
+--          
+-- @function [parent=#Sprite] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#Sprite] setScaleY 
 -- @param self
@@ -217,7 +222,7 @@
 --------------------------------
 -- @function [parent=#Sprite] setAnchorPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Sprite] setRotationSkewX 

@@ -12,7 +12,6 @@ Classes/BaseTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/VisibleRect.cpp \
-Classes/AccelerometerTest/AccelerometerTest.cpp \
 Classes/ActionManagerTest/ActionManagerTest.cpp \
 Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 Classes/ActionsProgressTest/ActionsProgressTest.cpp \
@@ -55,6 +54,7 @@ Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
@@ -130,8 +130,6 @@ Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/InputTest/MouseTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
-Classes/KeyboardTest/KeyboardTest.cpp \
-Classes/KeypadTest/KeypadTest.cpp \
 Classes/LabelTest/LabelTest.cpp \
 Classes/LabelTest/LabelTestNew.cpp \
 Classes/LayerTest/LayerTest.cpp \
@@ -172,6 +170,7 @@ Classes/Texture2dTest/Texture2dTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 Classes/TileMapTest/TileMapTest.cpp \
+Classes/TileMapTest/TileMapTest2.cpp \
 Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
 Classes/TouchesTest/TouchesTest.cpp \

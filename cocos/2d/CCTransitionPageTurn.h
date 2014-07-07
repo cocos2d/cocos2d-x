@@ -72,7 +72,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     /**
     * Creates a base transition with duration and incoming scene.

@@ -137,14 +137,14 @@ void Box2DTestLayer::createResetButton()
 
 }
 
-void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //
     // IMPORTANT:
     // This is only for debug purposes
     // It is recommend to disable it
     //
-    Layer::draw(renderer, transform, transformUpdated);
+    Layer::draw(renderer, transform, flags);
 
 #if CC_ENABLE_BOX2D_INTEGRATION
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );

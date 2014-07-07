@@ -38,14 +38,14 @@ using namespace cocos2d::extension;
 
 
     
-void GLNode::draw(Renderer *renderer, const cocos2d::Mat4& transform, bool transformUpdated)
+void GLNode::draw(Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)
 {
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(GLNode::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(GLNode::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void GLNode::onDraw(const cocos2d::Mat4 &transform, bool transformUpdated)
+void GLNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
     if (0 != handler)
@@ -60,7 +60,7 @@ void GLNode::onDraw(const cocos2d::Mat4 &transform, bool transformUpdated)
             stack->pushFloat(transform.m[i]);
             lua_rawseti(L, -2, i + 1);
         }
-        stack->pushBoolean(transformUpdated);
+        stack->pushInt(flags);
         stack->executeFunctionByHandler(handler, 2);
         stack->clean();
     }

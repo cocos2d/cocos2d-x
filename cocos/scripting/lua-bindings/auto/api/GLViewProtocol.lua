@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module GLViewProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#GLViewProtocol] setFrameSize 
@@ -53,7 +54,7 @@
 --------------------------------
 -- @function [parent=#GLViewProtocol] getVisibleOrigin 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#GLViewProtocol] getFrameSize 

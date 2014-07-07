@@ -25,14 +25,15 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMBASE_H__
 #define __CC_EXTENTIONS_CCCOMBASE_H__
 
-#include "ObjectFactory.h"
-#include "DictionaryHelper.h"
 #include <string>
+#include "DictionaryHelper.h"
+#include "base/ObjectFactory.h"
+#include "CocoLoader.h"
 
 
 #define DECLARE_CLASS_COMPONENT_INFO \
     public: \
-        static cocostudio::ObjectFactory::TInfo Type; \
+        static cocos2d::ObjectFactory::TInfo Type; \
         static cocos2d::Ref* createInstance(void); \
         
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
@@ -40,10 +41,23 @@ THE SOFTWARE.
         { \
             return className::create(); \
         } \
-        cocostudio::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
+        cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 #define CREATE_CLASS_COMPONENT_INFO(className) \
-        cocostudio::ObjectFactory::TInfo(#className, &className::createInstance)
+        cocos2d::ObjectFactory::TInfo(#className, &className::createInstance)
 
+struct SerData
+{
+    const rapidjson::Value *_rData;
+    cocostudio::stExpCocoNode *_cocoNode;
+    cocostudio::CocoLoader *_cocoLoader;
+    SerData()
+    {
+        _rData = NULL;
+        _cocoNode = NULL;
+        _cocoLoader = NULL;
+    }
+    
+};
 
 #endif

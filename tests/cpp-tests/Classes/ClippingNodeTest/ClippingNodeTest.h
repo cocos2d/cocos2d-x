@@ -153,7 +153,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void setup();
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 	virtual void setupStencilForClippingOnPlane(GLint plane);
 	virtual void setupStencilForDrawingOnPlane(GLint plane);

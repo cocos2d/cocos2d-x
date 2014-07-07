@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsShapeEdgeChain
 -- @extend PhysicsShape
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeChain] getPointsCount 
@@ -11,6 +12,6 @@
 --------------------------------
 -- @function [parent=#PhysicsShapeEdgeChain] getCenter 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 return nil

@@ -36,9 +36,6 @@
     <ClInclude Include="..\..\ui\UIPageView.h">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ui\UIScrollInterface.h">
-      <Filter>UIWidgets\ScrollWidget</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ui\UIScrollView.h">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClInclude>
@@ -83,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="..\UIRelativeBox.h">
       <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UILayoutManager.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIDeprecated.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="..\UIRelativeBox.cpp">
       <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayoutManager.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIDeprecated.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

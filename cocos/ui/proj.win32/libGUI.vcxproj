@@ -15,17 +15,18 @@
     <ClInclude Include="..\CocosGUI.h" />
     <ClInclude Include="..\UIButton.h" />
     <ClInclude Include="..\UICheckBox.h" />
+    <ClInclude Include="..\UIDeprecated.h" />
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
     <ClInclude Include="..\UILayout.h" />
+    <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UILayoutParameter.h" />
     <ClInclude Include="..\UIListView.h" />
     <ClInclude Include="..\UILoadingBar.h" />
     <ClInclude Include="..\UIPageView.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
     <ClInclude Include="..\UIRichText.h" />
-    <ClInclude Include="..\UIScrollInterface.h" />
     <ClInclude Include="..\UIScrollView.h" />
     <ClInclude Include="..\UISlider.h" />
     <ClInclude Include="..\UIText.h" />
@@ -40,10 +41,12 @@
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
+    <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
     <ClCompile Include="..\UILayout.cpp" />
+    <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UILayoutParameter.cpp" />
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
@@ -125,13 +128,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

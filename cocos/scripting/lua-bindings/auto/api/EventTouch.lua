@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventTouch
 -- @extend Event
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventTouch] getEventCode 

@@ -263,13 +263,13 @@ void TextFieldTTF::setTextColor(const Color4B &color)
     Label::setTextColor(_colorText);
 }
 
-void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (_delegate && _delegate->onVisit(this,renderer,parentTransform,parentTransformUpdated))
+    if (_delegate && _delegate->onVisit(this,renderer,parentTransform,parentFlags))
     {
         return;
     }
-    Label::visit(renderer,parentTransform,parentTransformUpdated);
+    Label::visit(renderer,parentTransform,parentFlags);
 }
 
 const Color4B& TextFieldTTF::getColorSpaceHolder()

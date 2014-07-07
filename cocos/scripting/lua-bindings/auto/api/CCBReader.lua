@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CCBReader
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#CCBReader] addOwnerOutletName 

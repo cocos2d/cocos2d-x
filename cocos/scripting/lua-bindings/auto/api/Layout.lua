@@ -1,12 +1,13 @@
 
 --------------------------------
 -- @module Layout
--- @extend Widget
+-- @extend Widget,LayoutProtocol
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
@@ -31,7 +32,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 
@@ -184,11 +185,13 @@
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
+-- overload function: addChild(cc.Node, int, string)
+--          
 -- @function [parent=#Layout] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#Layout] getDescription 
@@ -202,10 +205,6 @@
         
 --------------------------------
 -- @function [parent=#Layout] removeAllChildren 
--- @param self
-        
---------------------------------
--- @function [parent=#Layout] sortAllChildren 
 -- @param self
         
 --------------------------------

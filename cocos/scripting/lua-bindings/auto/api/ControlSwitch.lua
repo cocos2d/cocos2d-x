@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ControlSwitch
 -- @extend Control
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ControlSwitch] setEnabled 
@@ -47,7 +48,7 @@
 -- @function [parent=#ControlSwitch] locationFromTouch 
 -- @param self
 -- @param #cc.Touch touch
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite)

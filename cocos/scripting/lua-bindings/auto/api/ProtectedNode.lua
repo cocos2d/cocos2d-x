@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ProtectedNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- overload function: addProtectedChild(cc.Node, int)
@@ -61,6 +62,13 @@
 -- @function [parent=#ProtectedNode] create 
 -- @param self
 -- @return ProtectedNode#ProtectedNode ret (return value: cc.ProtectedNode)
+        
+--------------------------------
+-- @function [parent=#ProtectedNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#ProtectedNode] updateDisplayedOpacity 

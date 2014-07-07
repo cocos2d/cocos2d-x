@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionPageTurn
 -- @extend TransitionScene
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionPageTurn] actionWithSize 
@@ -29,8 +30,8 @@
 -- @function [parent=#TransitionPageTurn] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#TransitionPageTurn] TransitionPageTurn 

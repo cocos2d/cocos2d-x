@@ -24,7 +24,14 @@ set(COCOS_NETWORK_SRC
   ${PLATFORM_SRC}
 )
 
-set(COCOS_NETWORK_LINK
-  curl
-  ${PLATFORM_LINK}
-)
+IF (WIN32 AND NOT MINGW)
+  set(COCOS_NETWORK_LINK
+    libcurl_imp
+    ${PLATFORM_LINK}
+  )
+ELSE()
+  set(COCOS_NETWORK_LINK
+    curl
+    ${PLATFORM_LINK}
+  )
+ENDIF()

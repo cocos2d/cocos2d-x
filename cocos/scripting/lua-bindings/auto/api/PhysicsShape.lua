@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsShape
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsShape] getFriction 
@@ -56,7 +57,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] containsPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -77,7 +78,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] getCenter 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShape] getDensity 
@@ -112,7 +113,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] getOffset 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsShape] getRestitution 

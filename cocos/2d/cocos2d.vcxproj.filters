@@ -562,8 +562,32 @@
     <ClCompile Include="..\3d\CCSprite3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
+    <ClCompile Include="..\base\ObjectFactory.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCBundle3D.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAnimate3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCMeshSkin.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAnimation3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCBundleReader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFastTMXLayer.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFastTMXTiledMap.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1141,8 +1165,38 @@
     <ClInclude Include="..\3d\CCSprite3D.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCSprite3DDataCache.h">
+    <ClInclude Include="..\base\ObjectFactory.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundle3D.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAnimate3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAnimationCurve.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMeshSkin.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAnimation3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundle3DData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSprite3DMaterial.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundleReader.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFastTMXTiledMap.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFastTMXLayer.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1166,6 +1220,9 @@
     </None>
     <None Include="..\math\Vec4.inl">
       <Filter>math</Filter>
+    </None>
+    <None Include="..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
     </None>
   </ItemGroup>
 </Project>

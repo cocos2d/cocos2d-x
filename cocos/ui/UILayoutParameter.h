@@ -52,9 +52,11 @@ public:
     Margin& operator= (const Margin& other);
     void setMargin(float l, float t, float r, float b);
     bool equals(const Margin& target) const;
+    
+    static const Margin ZERO;
+
 };
 
-const Margin MarginZero = Margin();
 
 /**
 *   @js NA
@@ -128,6 +130,15 @@ public:
 protected:
     Margin _margin;
     Type _layoutParameterType;
+};
+    
+class LayoutParameterProtocol
+{
+public:
+    LayoutParameterProtocol(){}
+    virtual ~LayoutParameterProtocol(){}
+    
+    virtual LayoutParameter* getLayoutParameter() const= 0;
 };
 
     
@@ -305,7 +316,7 @@ protected:
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
     bool _put;
-    friend class RelativeLayoutExecutant;
+    friend class RelativeLayoutManager;
 };
 
 }

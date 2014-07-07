@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui {
 
 /**
@@ -104,7 +106,7 @@ public:
      */
     void setFontSize(int size);
 
-    int getFontSize();
+    int getFontSize()const;
 
     /**
      * Sets the font name of label.
@@ -117,7 +119,7 @@ public:
      */
     void setFontName(const std::string& name);
 
-    const std::string& getFontName();
+    const std::string& getFontName()const;
     
     Type getType() const;
 
@@ -133,7 +135,7 @@ public:
      *
      * @return  touch scale enabled of label.
      */
-    bool isTouchScaleChangeEnabled();
+    bool isTouchScaleChangeEnabled()const;
 
     //override "getVirtualRendererSize" method of widget.
     virtual const Size& getVirtualRendererSize() const override;
@@ -148,15 +150,34 @@ public:
 
     void setTextAreaSize(const Size &size);
 
-    const Size& getTextAreaSize();
+    const Size& getTextAreaSize()const;
 
     void setTextHorizontalAlignment(TextHAlignment alignment);
 
-    TextHAlignment getTextHorizontalAlignment();
+    TextHAlignment getTextHorizontalAlignment()const;
 
     void setTextVerticalAlignment(TextVAlignment alignment);
 
-    TextVAlignment getTextVerticalAlignment();
+    TextVAlignment getTextVerticalAlignment()const;
+    
+    /**
+     * Enable shadow for the label
+     *
+     * @todo support blur for shadow effect
+     */
+    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
+    
+    /**
+     * Enable outline for the label
+     * It only works on IOS and Android when you use System fonts
+     */ 
+    void enableOutline(const Color4B& outlineColor,int outlineSize = 1);
+    
+    /** only support for TTF */
+    void enableGlow(const Color4B& glowColor);
+    
+    /** disable shadow/outline/glow rendering */
+    void disableEffect();
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -170,9 +191,7 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+   
     virtual void updateFlippedX() override;
     virtual void updateFlippedY() override;
     void labelScaleChangedWithSize();

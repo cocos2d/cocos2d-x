@@ -397,14 +397,14 @@ const Mat4& PhysicsSprite::getNodeToParentTransform() const
 	return _transform;
 }
 
-void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (isDirty())
     {
         syncPhysicsTransform();
     }
     
-    Sprite::draw(renderer, _transform, transformUpdated);
+    Sprite::draw(renderer, _transform, flags);
 }
 
 NS_CC_EXT_END

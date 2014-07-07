@@ -15,6 +15,7 @@ require "src/ActionsProgressTest/ActionsProgressTest"
 require "src/ActionsTest/ActionsTest"
 require "src/AssetsManagerTest/AssetsManagerTest"
 require "src/BugsTest/BugsTest"
+require "src/ByteCodeEncryptTest/ByteCodeEncryptTest"
 require "src/ClickAndMoveTest/ClickAndMoveTest"
 require "src/CocosDenshionTest/CocosDenshionTest"
 require "src/CocoStudioTest/CocoStudioTest"
@@ -52,6 +53,7 @@ require "src/ZwoptexTest/ZwoptexTest"
 require "src/LuaBridgeTest/LuaBridgeTest"
 require "src/XMLHttpRequestTest/XMLHttpRequestTest"
 require "src/PhysicsTest/PhysicsTest"
+require "src/CaptureScreenTest/CaptureScreenTest"
 
 
 local LINE_SPACE = 40
@@ -70,6 +72,8 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
+    { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },

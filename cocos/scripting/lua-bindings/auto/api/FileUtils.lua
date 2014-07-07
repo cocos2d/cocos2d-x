@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module FileUtils
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#FileUtils] fullPathForFilename 
@@ -42,6 +43,11 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
+-- @function [parent=#FileUtils] getSearchPaths 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
 -- @function [parent=#FileUtils] writeToFile 
 -- @param self
 -- @param #map_table map
@@ -53,6 +59,16 @@
 -- @param self
 -- @param #string str
 -- @return map_table#map_table ret (return value: map_table)
+        
+--------------------------------
+-- @function [parent=#FileUtils] setSearchPaths 
+-- @param self
+-- @param #array_table array
+        
+--------------------------------
+-- @function [parent=#FileUtils] setSearchResolutionsOrder 
+-- @param self
+-- @param #array_table array
         
 --------------------------------
 -- @function [parent=#FileUtils] addSearchResolutionsOrder 
@@ -85,6 +101,11 @@
 -- @function [parent=#FileUtils] setPopupNotify 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#FileUtils] getSearchResolutionsOrder 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- @function [parent=#FileUtils] getWritablePath 

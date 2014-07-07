@@ -28,6 +28,7 @@ THE SOFTWARE.
 #ifndef __CCSCENE_H__
 #define __CCSCENE_H__
 
+#include <string>
 #include "2d/CCNode.h"
 #include "physics/CCPhysicsWorld.h"
 
@@ -54,8 +55,11 @@ public:
     /** creates a new Scene object */
     static Scene *create();
 
+    /** creates a new Scene object with a predefined Size */
+    static Scene *createWithSize(const Size& size);
+
     // Overrides
-    virtual Scene *getScene() override;
+    virtual Scene *getScene() const override;
 
     using Node::addChild;
     virtual std::string getDescription() const override;
@@ -64,7 +68,8 @@ CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
     
-    virtual bool init() override;
+    bool init();
+    bool initWithSize(const Size& size);
 
 protected:
     friend class Node;
@@ -77,6 +82,7 @@ private:
 #if CC_USE_PHYSICS
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void update(float delta) override;
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     static Scene *createWithPhysics();

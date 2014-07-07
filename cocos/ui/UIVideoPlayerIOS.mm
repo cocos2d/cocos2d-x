@@ -29,7 +29,9 @@
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 #include "CCEAGLView.h"
+#include "CCGLView.h"
 #import <MediaPlayer/MediaPlayer.h>
+#include "base/CCDirector.h"
 
 @interface UIVideoViewWrapperIos : NSObject
 
@@ -312,11 +314,11 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
 }
 
-void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transformUpdated)
+void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    cocos2d::ui::Widget::draw(renderer,transform,transformUpdated);
+    cocos2d::ui::Widget::draw(renderer,transform,flags);
     
-    if (transformUpdated)
+    if (flags & FLAGS_TRANSFORM_DIRTY)
     {
         auto directorInstance = Director::getInstance();
         auto glView = directorInstance->getOpenGLView();
@@ -343,7 +345,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, bool transform
 #endif
 }
 
-bool VideoPlayer::isFullScreenEnabled()
+bool VideoPlayer::isFullScreenEnabled()const
 {
     return [((UIVideoViewWrapperIos*)_videoView) isFullScreenEnabled];
 }
@@ -458,6 +460,28 @@ void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
     if (_eventCallback)
     {
         _eventCallback(this,event);
+    }
+}
+
+cocos2d::ui::Widget* VideoPlayer::createCloneInstance()
+{
+    return VideoPlayer::create();
+}
+
+void VideoPlayer::copySpecialProperties(Widget *widget)
+{
+    VideoPlayer* videoPlayer = dynamic_cast<VideoPlayer*>(widget);
+    if (videoPlayer)
+    {
+        _isPlaying = videoPlayer->_isPlaying;
+        _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
+        _fullScreenDirty = videoPlayer->_fullScreenDirty;
+        _videoURL = videoPlayer->_videoURL;
+        _keepAspectRatioEnabled = videoPlayer->_keepAspectRatioEnabled;
+        _videoSource = videoPlayer->_videoSource;
+        _videoPlayerIndex = videoPlayer->_videoPlayerIndex;
+        _eventCallback = videoPlayer->_eventCallback;
+        _videoView = videoPlayer->_videoView;
     }
 }
 

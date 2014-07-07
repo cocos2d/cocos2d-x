@@ -30,10 +30,10 @@ set(CS_SRC
   DictionaryHelper.cpp
   CCSGUIReader.cpp
   CCSSceneReader.cpp
-  ObjectFactory.cpp
   TriggerBase.cpp
   TriggerMng.cpp
   TriggerObj.cpp
+  CocoLoader.cpp
   WidgetReader/WidgetReader.cpp
   WidgetReader/ButtonReader/ButtonReader.cpp
   WidgetReader/CheckBoxReader/CheckBoxReader.cpp
@@ -48,6 +48,11 @@ set(CS_SRC
   WidgetReader/TextBMFontReader/TextBMFontReader.cpp
   WidgetReader/TextFieldReader/TextFieldReader.cpp
   WidgetReader/TextReader/TextReader.cpp
+  ActionTimeline/CCActionTimeline.cpp
+  ActionTimeline/CCActionTimelineCache.cpp
+  ActionTimeline/CCFrame.cpp
+  ActionTimeline/CCNodeReader.cpp
+  ActionTimeline/CCTimeLine.cpp
 )
 
 include_directories(

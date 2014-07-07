@@ -36,10 +36,10 @@ CCInputDelegate.cpp \
 DictionaryHelper.cpp \
 CCSGUIReader.cpp \
 CCSSceneReader.cpp \
-ObjectFactory.cpp \
 TriggerBase.cpp \
 TriggerMng.cpp \
 TriggerObj.cpp \
+CocoLoader.cpp \
 WidgetReader/WidgetReader.cpp \
 WidgetReader/ButtonReader/ButtonReader.cpp \
 WidgetReader/CheckBoxReader/CheckBoxReader.cpp \
@@ -54,6 +54,11 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
+ActionTimeline/CCNodeReader.cpp \
+ActionTimeline/CCActionTimelineCache.cpp \
+ActionTimeline/CCFrame.cpp \
+ActionTimeline/CCTimeLine.cpp \
+ActionTimeline/CCActionTimeline.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
@@ -63,8 +68,8 @@ $(LOCAL_PATH)/../../../external \
 $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../..
 
-LOCAL_CFLAGS += -Wno-psabi -fexceptions
-LOCAL_EXPORT_CFLAGS += -Wno-psabi
+LOCAL_CFLAGS += -fexceptions
+
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

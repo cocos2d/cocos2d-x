@@ -23,7 +23,9 @@
  ****************************************************************************/
 
 #include "UIRichText.h"
-
+#include "platform/CCFileUtils.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -369,7 +371,7 @@ void RichText::formarRenderers()
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
             l->setPosition(Vec2(nextPosX, 0.0f));
-            _elementRenderersContainer->addChild(l, 1, (int)j);
+            _elementRenderersContainer->addChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
@@ -408,11 +410,11 @@ void RichText::formarRenderers()
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
                 l->setPosition(Vec2(nextPosX, nextPosY));
-                _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
+                _elementRenderersContainer->addChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }
         }
-        _elementRenderersContainer->setContentSize(_size);
+        _elementRenderersContainer->setContentSize(_contentSize);
         delete [] maxHeights;
     }
     
@@ -428,13 +430,13 @@ void RichText::formarRenderers()
     if (_ignoreSize)
     {
         Size s = getVirtualRendererSize();
-        _size = s;
+        this->setContentSize(s);
     }
     else
     {
-        _size = _customSize;
+        this->setContentSize(_customSize);
     }
-    updateContentSizeWithTextureSize(_size);
+    updateContentSizeWithTextureSize(_contentSize);
     _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
     
@@ -447,12 +449,12 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
 }
 
-void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_enabled)
     {
         formatText();
-        Widget::visit(renderer, parentTransform, parentTransformUpdated);
+        Widget::visit(renderer, parentTransform, parentFlags);
     }
 }
     

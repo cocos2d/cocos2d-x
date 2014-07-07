@@ -125,15 +125,15 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw(cocos2d::Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Skeleton::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
     
-void Skeleton::onDraw(const Mat4 &transform, bool transformUpdated)
+void Skeleton::onDraw(const Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -276,7 +276,15 @@ Rect Skeleton::getBoundingBox () const {
 }
 
 void Skeleton::onEnter() {
-	Node::onEnter();
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
+    Node::onEnter();
 	scheduleUpdate();
 }
 	

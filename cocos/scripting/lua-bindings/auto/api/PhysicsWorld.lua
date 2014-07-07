@@ -1,11 +1,12 @@
 
 --------------------------------
 -- @module PhysicsWorld
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsWorld] getGravity 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getAllBodies 
@@ -15,7 +16,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] setGravity 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getSpeed 
@@ -50,7 +51,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] getShapes 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
@@ -60,7 +61,7 @@
 --------------------------------
 -- @function [parent=#PhysicsWorld] getShape 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
         
 --------------------------------

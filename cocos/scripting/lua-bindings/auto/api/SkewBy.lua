@@ -2,6 +2,7 @@
 --------------------------------
 -- @module SkewBy
 -- @extend SkewTo
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#SkewBy] create 

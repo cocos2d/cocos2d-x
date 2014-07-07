@@ -69,6 +69,13 @@ SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, 
     return spriteFrame;
 }
 
+SpriteFrame::SpriteFrame(void)
+: _rotated(false)
+, _texture(nullptr)
+{
+    
+}
+
 bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);

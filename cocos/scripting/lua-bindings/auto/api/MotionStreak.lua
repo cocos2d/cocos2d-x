@@ -2,6 +2,7 @@
 --------------------------------
 -- @module MotionStreak
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#MotionStreak] reset 
@@ -99,7 +100,7 @@
 --------------------------------
 -- overload function: setPosition(float, float)
 --          
--- overload function: setPosition(cc.Vec2)
+-- overload function: setPosition(vec2_table)
 --          
 -- @function [parent=#MotionStreak] setPosition
 -- @param self

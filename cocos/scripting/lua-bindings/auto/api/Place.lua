@@ -2,11 +2,12 @@
 --------------------------------
 -- @module Place
 -- @extend ActionInstant
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Place] create 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return Place#Place ret (return value: cc.Place)
         
 --------------------------------

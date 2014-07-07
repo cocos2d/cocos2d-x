@@ -1,7 +1,8 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout,UIScrollInterface
+-- @extend Layout
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTop 
@@ -24,7 +25,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentBothDirection 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #float float
 -- @param #bool bool
         
@@ -128,7 +129,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] jumpToPercentBothDirection 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToPercentVertical 
@@ -186,17 +187,19 @@
 --          
 -- overload function: addChild(cc.Node, int, int)
 --          
+-- overload function: addChild(cc.Node, int, string)
+--          
 -- @function [parent=#ScrollView] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#ScrollView] getChildByName 
 -- @param self
 -- @param #string str
--- @return Widget#Widget ret (return value: ccui.Widget)
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- @function [parent=#ScrollView] getDescription 
@@ -221,6 +224,13 @@
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildren 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#ScrollView] findNextFocusedWidget 
+-- @param self
+-- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeChild 

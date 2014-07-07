@@ -28,6 +28,8 @@
 #include <string>
 #include <vector>
 
+#include "3d/CCBundle3DData.h"
+
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
@@ -35,18 +37,8 @@
 
 NS_CC_BEGIN
 
-//mesh vertex attribute
-struct MeshVertexAttrib
-{
-    //attribute size
-    GLint size;
-    //GL_FLOAT
-    GLenum type;
-    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, GLProgram for detail
-    int  vertexAttrib;
-    //size in bytes
-    int attribSizeBytes;
-};
+class EventListenerCustom;
+class EventCustom;
 
 class RenderMeshData
 {
@@ -56,9 +48,13 @@ public:
     {
     }
     bool hasVertexAttrib(int attrib);
-    bool initFrom(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
     
 protected:
+    
+    int calVertexSizeBytes();
+    
     int _vertexsizeBytes;
     ssize_t _vertexNum;
     std::vector<float> _vertexs;
@@ -66,7 +62,10 @@ protected:
     std::vector<MeshVertexAttrib> _vertexAttribs;
 };
 
-/** Mesh: TODO, add description of Mesh */
+/** 
+ * Mesh: Geometry with a collection of vertex. 
+ * Supporting various vertex formats.
+ */
 class Mesh : public Ref
 {
 public:
@@ -87,38 +86,52 @@ public:
         POINTS = GL_POINTS
     };
 
-    //create
+    /**create mesh from positions, normals, and so on*/
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+    /**create mesh with vertex attributes*/
+    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
 
-    //get vertex buffer
+    /**get vertex buffer*/
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
     
-    //get mesh vertex attribute count
+    /**get mesh vertex attribute count*/
     ssize_t getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
-    //get MeshVertexAttribute by index
+    /**get MeshVertexAttribute by index*/
     const MeshVertexAttrib& getMeshVertexAttribute(int idx) const { return _renderdata._vertexAttribs[idx]; }
-    //has vertex attribute?
+    /**has vertex attribute?*/
     bool hasVertexAttrib(int attrib) { return _renderdata.hasVertexAttrib(attrib); }
-    //get per vertex size in bytes
+    /**get per vertex size in bytes*/
     int getVertexSizeInBytes() const { return _renderdata._vertexsizeBytes; }
     
+    /** get primitive type*/
     PrimitiveType getPrimitiveType() const { return _primitiveType; }
+    /**get index count*/
     ssize_t getIndexCount() const { return _indexCount; }
+    /**get index format*/
     IndexFormat getIndexFormat() const { return _indexFormat; }
+    /**get index buffer*/
     GLuint getIndexBuffer() const {return _indexBuffer; }
     
-    //build vertex buffer from renderdata
+    /**build vertex buffer from renderdata*/
     void restore();
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Mesh();
     virtual ~Mesh();
+    /**init mesh*/
     bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    
+    /**init mesh*/
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
 
-    //build buffer
+    /**build buffer*/
     void buildBuffer();
+    /**free buffer*/
     void cleanAndFreeBuffers();
 
+protected:
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;
     GLuint _vertexBuffer;
@@ -126,6 +139,48 @@ protected:
     ssize_t _indexCount;
 
     RenderMeshData _renderdata;
+};
+
+/**
+ * Mesh Cache
+ */
+class MeshCache
+{
+public:
+    /**get & destroy*/
+    static MeshCache* getInstance();
+    static void destroyInstance();
+    
+    /**get mesh from cache*/
+    Mesh* getMesh(const std::string& key) const;
+    
+    /**add mesh to cache*/
+    bool addMesh(const std::string& key, Mesh* mesh);
+    
+    /**remove all meshes*/
+    void removeAllMeshes();
+
+    /**remove unused meshes*/
+    void removeUnusedMesh();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    void listenBackToForeground(EventCustom* event);
+#endif
+    
+CC_CONSTRUCTOR_ACCESS:
+    
+    MeshCache();
+    ~MeshCache();
+    
+protected:
+    
+    static MeshCache* _cacheInstance;//instance
+    
+    std::unordered_map<std::string, Mesh*> _meshes; //cached meshes
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 NS_CC_END

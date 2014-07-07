@@ -48,6 +48,11 @@ bool BaseTriggerCondition::detect()
 void BaseTriggerCondition::serialize(const rapidjson::Value &val)
 {
 }
+    
+void BaseTriggerCondition::serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
+{
+    
+}
 
 void BaseTriggerCondition::removeAll()
 {
@@ -72,6 +77,10 @@ void BaseTriggerAction::done()
 }
 
 void BaseTriggerAction::serialize(const rapidjson::Value &val)
+{
+}
+
+void BaseTriggerAction::serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
 {
 }
 
@@ -230,6 +239,102 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         TriggerMng::getInstance()->addEventListenerWithFixedPriority(listener, 1);
     }  
 }
+
+    
+    void TriggerObj::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+    {
+        int length = pCocoNode->GetChildNum();
+        int count = 0;
+        int num = 0;
+        stExpCocoNode *pTriggerObjArray = pCocoNode->GetChildArray(pCocoLoader);
+        for (int i0 = 0; i0 < length; ++i0)
+        {
+            std::string key = pTriggerObjArray[i0].GetName(pCocoLoader);
+            const char* str0 = pTriggerObjArray[i0].GetValue(pCocoLoader);
+            if (key.compare("id") == 0)
+            {
+                if (str0 != NULL)
+                {
+                    _id = atoi(str0); //(unsigned int)(DICTOOL->getIntValue_json(val, "id"));
+                }
+            }
+            else if (key.compare("conditions") == 0)
+            {
+                count = pTriggerObjArray[i0].GetChildNum();
+                stExpCocoNode *pConditionsArray = pTriggerObjArray[i0].GetChildArray(pCocoLoader);
+                for (int i1 = 0; i1 < count; ++i1)
+                {
+                    num = pConditionsArray[i1].GetChildNum();
+                    stExpCocoNode *pConditionArray = pConditionsArray[i1].GetChildArray(pCocoLoader);
+                    const char *classname = pConditionArray[0].GetValue(pCocoLoader);
+                    if (classname == nullptr)
+                    {
+                        continue;
+                    }
+                    BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
+                    CCAssert(con != nullptr, "class named classname can not implement!");
+                    con->serialize(pCocoLoader, &pConditionArray[1]);
+                    con->init();
+                    _cons.pushBack(con);
+                }
+            }
+            else if (key.compare("actions") == 0)
+            {
+                count = pTriggerObjArray[i0].GetChildNum();
+                stExpCocoNode *pActionsArray = pTriggerObjArray[i0].GetChildArray(pCocoLoader);
+                for (int i2 = 0; i2 < count; ++i2)
+                {
+                    num = pActionsArray[i2].GetChildNum();
+                    stExpCocoNode *pActionArray = pActionsArray[i2].GetChildArray(pCocoLoader);
+                    const char *classname = pActionArray[0].GetValue(pCocoLoader);
+                    if (classname == nullptr)
+                    {
+                        continue;
+                    }
+                    BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
+                    CCAssert(act != NULL, "class named classname can not implement!");
+                    act->serialize(pCocoLoader, &pActionArray[1]);
+                    act->init();
+                    _acts.pushBack(act);
+                }
+            }
+            else if (key.compare("events") == 0)
+            {
+                count = pTriggerObjArray[i0].GetChildNum();
+                stExpCocoNode *pEventsArray = pTriggerObjArray[i0].GetChildArray(pCocoLoader);
+                for (int i3 = 0; i3 < count; ++i3)
+                {
+                    num = pEventsArray[i3].GetChildNum();
+                    stExpCocoNode *pEventArray = pEventsArray[i3].GetChildArray(pCocoLoader);
+                    const char *str1 = pEventArray[0].GetValue(pCocoLoader);
+                    if (str1 == nullptr)
+                    {
+                        continue;
+                    }
+                    int event = atoi(str1);
+                    if (event < 0)
+                    {
+                        continue;
+                    }
+                    char* buf = new char[10];
+                    sprintf(buf, "%d", event);
+                    std::string custom_event_name(buf);
+                    CC_SAFE_DELETE_ARRAY(buf);
+                    
+                    EventListenerCustom* listener = EventListenerCustom::create(custom_event_name, [=](EventCustom* evt){
+                        if (detect())
+                        {
+                            done();
+                        }
+                    });
+                    _listeners.pushBack(listener);
+                    TriggerMng::getInstance()->addEventListenerWithFixedPriority(listener, 1);
+                }
+            }
+        }
+    }
+    
+
 
 unsigned int TriggerObj::getId()
 {

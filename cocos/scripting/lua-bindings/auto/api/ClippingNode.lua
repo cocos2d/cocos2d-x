@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ClippingNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ClippingNode] isInverted 
@@ -43,4 +44,11 @@
 -- @param #cc.Node node
 -- @return ClippingNode#ClippingNode ret (retunr value: cc.ClippingNode)
 
+--------------------------------
+-- @function [parent=#ClippingNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
+        
 return nil

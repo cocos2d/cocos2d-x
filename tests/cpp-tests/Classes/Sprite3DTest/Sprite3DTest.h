@@ -29,6 +29,12 @@
 #include "../BaseTest.h"
 #include <string>
 
+namespace cocos2d {
+    class Animate3D;
+    class Sprite3D;
+    class Delay;
+}
+
 class Sprite3DTestDemo : public BaseTest
 {
 public:
@@ -65,7 +71,8 @@ class EffectSprite3D;
 class Effect3D : public Ref
 {
 public:
-    virtual void drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform) = 0;
+    virtual void draw(const Mat4 &transform) = 0;
+    virtual void setTarget(EffectSprite3D *sprite) = 0;
 protected:
     Effect3D() : _glProgramState(nullptr) {}
     virtual ~Effect3D()
@@ -85,8 +92,8 @@ public:
     
     void setOutlineWidth(float width);
     
-    void drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform);
-    
+    virtual void draw(const Mat4 &transform) override;
+    virtual void setTarget(EffectSprite3D *sprite) override;
 protected:
     
     Effect3DOutline();
@@ -96,6 +103,11 @@ protected:
     
     Vec3 _outlineColor;
     float _outlineWidth;
+    //weak reference
+    EffectSprite3D* _sprite;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    EventListenerCustom* _backToForegroundListener;
+#endif
     
 protected:
     static const std::string _vertShaderFile;
@@ -110,7 +122,7 @@ public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
     void setEffect3D(Effect3D* effect);
     void addEffect(Effect3DOutline* effect, ssize_t order);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 protected:
     EffectSprite3D();
     virtual ~EffectSprite3D();
@@ -131,6 +143,59 @@ public:
     void addNewSpriteWithCoords(Vec2 p);
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class Sprite3DWithSkinTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithSkinTest);
+    Sprite3DWithSkinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class Animate3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DTest);
+    Animate3DTest();
+    ~Animate3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+    virtual void update(float dt) override;
+    
+protected:
+    void addSprite3D();
+    
+    enum class State
+    {
+        SWIMMING,
+        SWIMMING_TO_HURT,
+        HURT,
+        HURT_TO_SWIMMING,
+    };
+    
+    void reachEndCallBack();
+    
+    void renewCallBack();
+    
+    cocos2d::Sprite3D* _sprite;
+    
+    cocos2d::Animate3D* _swim;
+    cocos2d::Animate3D* _hurt;
+    float _transTime;
+    float _elapseTransTime;
+    
+    State   _state;
+    
+    MoveTo* _moveAction;
 };
 
 class Sprite3DTestScene : public TestScene

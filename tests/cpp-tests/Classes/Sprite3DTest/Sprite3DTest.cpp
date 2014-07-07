@@ -24,6 +24,8 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCAnimate3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -41,7 +43,9 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
-    CL(Sprite3DEffectTest)
+    CL(Sprite3DEffectTest),
+    CL(Sprite3DWithSkinTest),
+    CL(Animate3DTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -258,9 +262,10 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
 {
     if(nullptr == effect) return;
     effect->retain();
+    effect->setTarget(this);
     
     _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
-    
+
     std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }
 
@@ -296,7 +301,7 @@ Effect3DOutline* Effect3DOutline::create()
 bool Effect3DOutline::init()
 {
 
-    GLProgram* glprogram = Effect3DOutline::getOrCreateProgram();
+    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
     if(nullptr == glprogram)
     {
         CC_SAFE_DELETE(glprogram);
@@ -317,12 +322,28 @@ bool Effect3DOutline::init()
 Effect3DOutline::Effect3DOutline()
 : _outlineWidth(1.0f)
 , _outlineColor(1, 1, 1)
+, _sprite(nullptr)
 {
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                          [this](EventCustom*)
+                                                          {
+                                                              auto glProgram = _glProgramState->getGLProgram();
+                                                              glProgram->reset();
+                                                              glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
+                                                              glProgram->link();
+                                                              glProgram->updateUniforms();
+                                                          }
+                                                          );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Effect3DOutline::~Effect3DOutline()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void Effect3DOutline::setOutlineColor(const Vec3& color)
@@ -343,37 +364,50 @@ void Effect3DOutline::setOutlineWidth(float width)
     }
 }
 
-void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transform)
+void Effect3DOutline::setTarget(EffectSprite3D *sprite)
 {
-    auto mesh = sprite->getMesh();
-    long offset = 0;
-    for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
+    CCASSERT(nullptr != sprite && nullptr != sprite->getMesh(),"Error: Setting a null pointer or a null mesh EffectSprite3D to Effect3D");
+    
+    if(sprite != _sprite)
     {
-        auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
+        _sprite = sprite;
         
-        _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
-                                                meshvertexattrib.size,
-                                                meshvertexattrib.type,
-                                                GL_FALSE,
-                                                mesh->getVertexSizeInBytes(),
-                                                (void*)offset);
-        offset += meshvertexattrib.attribSizeBytes;
+        auto mesh = sprite->getMesh();
+        long offset = 0;
+        for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
+        {
+            auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
+            
+            _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
+                                                    meshvertexattrib.size,
+                                                    meshvertexattrib.type,
+                                                    GL_FALSE,
+                                                    mesh->getVertexSizeInBytes(),
+                                                    (void*)offset);
+            offset += meshvertexattrib.attribSizeBytes;
+        }
+        
+        Color4F color(_sprite->getDisplayedColor());
+        color.a = _sprite->getDisplayedOpacity() / 255.0f;
+        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
     }
+    
+}
+
+void Effect3DOutline::draw(const Mat4 &transform)
+{
     //draw
+    if(_sprite && _sprite->getMesh())
     {
         glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);
         glEnable(GL_DEPTH_TEST);
-        Color4F color(sprite->getDisplayedColor());
-        color.a = sprite->getDisplayedOpacity() / 255.0f;
         
-        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
-        
-        auto mesh = sprite->getMesh();
+        auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         _glProgramState->apply(transform);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements((GLenum)mesh->getPrimitiveType(), mesh->getIndexCount(), (GLenum)mesh->getIndexFormat(), 0);
+        glDrawElements((GLenum)mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), (GLenum)mesh->getIndexFormat(), 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
@@ -383,26 +417,26 @@ void Effect3DOutline::drawWithSprite(EffectSprite3D* sprite, const Mat4 &transfo
     }
 }
 
-void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, bool transformUpdated)
+void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     for(auto &effect : _effects)
     {
         if(std::get<0>(effect) >=0)
             break;
         CustomCommand &cc = std::get<2>(effect);
-        cc.func = CC_CALLBACK_0(Effect3D::drawWithSprite,std::get<1>(effect),this,transform);
+        cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
         renderer->addCommand(&cc);
         
     }
     
     if(!_defaultEffect)
     {
-        Sprite3D::draw(renderer, transform, transformUpdated);
+        Sprite3D::draw(renderer, transform, flags);
     }
     else
     {
         _command.init(_globalZOrder);
-        _command.func = CC_CALLBACK_0(Effect3D::drawWithSprite, _defaultEffect, this, transform);
+        _command.func = CC_CALLBACK_0(Effect3D::draw, _defaultEffect, transform);
         renderer->addCommand(&_command);
     }
     
@@ -411,7 +445,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         if(std::get<0>(effect) <=0)
             continue;
         CustomCommand &cc = std::get<2>(effect);
-        cc.func = CC_CALLBACK_0(Effect3D::drawWithSprite,std::get<1>(effect),this,transform);
+        cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
         renderer->addCommand(&cc);
         
     }
@@ -482,5 +516,203 @@ void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
         auto location = touch->getLocation();
         
         addNewSpriteWithCoords( location );
+    }
+}
+
+Sprite3DWithSkinTest::Sprite3DWithSkinTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DWithSkinTest::title() const
+{
+    return "Testing Sprite3D";
+}
+std::string Sprite3DWithSkinTest::subtitle() const
+{
+    return "Tap screen to add more sprite3D";
+}
+
+void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(3);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y) );
+
+    auto animation = Animation3D::getOrCreate(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        if(std::rand() %3 == 0)
+        {
+            animate->setPlayBack(true);
+        }
+
+        int rand2 = std::rand();
+        if(rand2 % 3 == 1)
+        {
+            animate->setSpeed(animate->getSpeed() + CCRANDOM_0_1());
+        }
+        else if(rand2 % 3 == 2)
+        {
+            animate->setSpeed(animate->getSpeed() - 0.5 * CCRANDOM_0_1());
+        }
+
+        sprite->runAction(RepeatForever::create(animate));
+    }
+}
+
+void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
+
+Animate3DTest::Animate3DTest()
+: _hurt(nullptr)
+, _swim(nullptr)
+, _sprite(nullptr)
+, _moveAction(nullptr)
+, _transTime(0.1f)
+, _elapseTransTime(0.f)
+{
+    addSprite3D();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Animate3DTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    scheduleUpdate();
+}
+
+Animate3DTest::~Animate3DTest()
+{
+    CC_SAFE_RELEASE(_moveAction);
+    CC_SAFE_RELEASE(_hurt);
+    CC_SAFE_RELEASE(_swim);
+}
+
+std::string Animate3DTest::title() const
+{
+    return "Testing Animate3D";
+}
+
+std::string Animate3DTest::subtitle() const
+{
+    return "Touch to beat the tortoise";
+}
+
+void Animate3DTest::update(float dt)
+{
+    if (_state == State::HURT_TO_SWIMMING)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        
+        if (t >= 1.f)
+        {
+            t = 1.f;
+            _sprite->stopAction(_hurt);
+            _state = State::SWIMMING;
+        }
+        _swim->setWeight(t);
+        _hurt->setWeight(1.f - t);
+    }
+    else if (_state == State::SWIMMING_TO_HURT)
+    {
+        _elapseTransTime += dt;
+        float t = _elapseTransTime / _transTime;
+        if (t >= 1.f)
+        {
+            t = 1.f;
+            _state = State::HURT;
+        }
+        _swim->setWeight(1.f - t);
+        _hurt->setWeight(t);
+    }
+}
+
+void Animate3DTest::addSprite3D()
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::getOrCreate(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+        _swim = animate;
+        _swim->retain();
+        _hurt = Animate3D::create(animation, 1.933f, 2.8f);
+        _hurt->retain();
+        _state = State::SWIMMING;
+    }
+    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
+}
+
+void Animate3DTest::reachEndCallBack()
+{
+    _sprite->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Animate3DTest::renewCallBack()
+{
+    _sprite->stopActionByTag(101);
+    _state = State::HURT_TO_SWIMMING;
+}
+
+void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        if (_sprite)
+        {
+            float len = (_sprite->getPosition() - location).length();
+            if (len < 40)
+            {
+                //hurt the tortoise
+                if (_state == State::SWIMMING)
+                {
+                    _sprite->runAction(_hurt);
+                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), NULL);
+                    seq->setTag(101);
+                    _sprite->runAction(seq);
+                    _state = State::SWIMMING_TO_HURT;
+                }
+                return;
+            }
+        }
     }
 }

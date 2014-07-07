@@ -111,8 +111,7 @@ PoolManager* PoolManager::getInstance()
     {
         s_singleInstance = new PoolManager();
         // Add the first auto release pool
-        s_singleInstance->_curReleasePool = new AutoreleasePool("cocos2d autorelease pool");
-        s_singleInstance->_releasePoolStack.push_back(s_singleInstance->_curReleasePool);
+        new AutoreleasePool("cocos2d autorelease pool");
     }
     return s_singleInstance;
 }
@@ -125,6 +124,7 @@ void PoolManager::destroyInstance()
 
 PoolManager::PoolManager()
 {
+    _releasePoolStack.reserve(10);
 }
 
 PoolManager::~PoolManager()
@@ -134,7 +134,6 @@ PoolManager::~PoolManager()
     while (!_releasePoolStack.empty())
     {
         AutoreleasePool* pool = _releasePoolStack.back();
-        _releasePoolStack.pop_back();
         
         delete pool;
     }
@@ -143,7 +142,7 @@ PoolManager::~PoolManager()
 
 AutoreleasePool* PoolManager::getCurrentPool() const
 {
-    return _curReleasePool;
+    return _releasePoolStack.back();
 }
 
 bool PoolManager::isObjectInPools(Ref* obj) const
@@ -159,21 +158,12 @@ bool PoolManager::isObjectInPools(Ref* obj) const
 void PoolManager::push(AutoreleasePool *pool)
 {
     _releasePoolStack.push_back(pool);
-    _curReleasePool = pool;
 }
 
 void PoolManager::pop()
 {
-    // Can not pop the pool that created by engine
-    CC_ASSERT(_releasePoolStack.size() >= 1);
-    
+    CC_ASSERT(!_releasePoolStack.empty());
     _releasePoolStack.pop_back();
-    
-    // Should update _curReleasePool if a temple pool is released
-    if (_releasePoolStack.size() > 1)
-    {
-        _curReleasePool = _releasePoolStack.back();
-    }
 }
 
 NS_CC_END

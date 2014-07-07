@@ -2,13 +2,14 @@
 --------------------------------
 -- @module RotateBy
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- overload function: create(float, float, float)
 --          
 -- overload function: create(float, float)
 --          
--- overload function: create(float, cc.Vec3)
+-- overload function: create(float, vec3_table)
 --          
 -- @function [parent=#RotateBy] create
 -- @param self

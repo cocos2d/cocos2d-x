@@ -25,11 +25,16 @@ THE SOFTWARE.
 #ifndef __SUPPORT_CC_UTILS_H__
 #define __SUPPORT_CC_UTILS_H__
 
+#include <vector>
+#include <string>
+#include "2d/CCNode.h"
+#include "base/ccMacros.h"
+
 /** @file ccUtils.h
 Misc free functions
 */
 
-namespace cocos2d {
+NS_CC_BEGIN
 /*
 ccNextPOT function is licensed under the same license that is used in Texture2D.m.
 */
@@ -46,6 +51,30 @@ Examples:
 
 int ccNextPOT(int value);
 
+namespace utils
+{
+    /** Capture the entire screen
+     * To ensure the snapshot is applied after everything is updated and rendered in the current frame,
+     * we need to wrap the operation with a custom command which is then inserted into the tail of the render queue.
+     * @param afterCaptured, specify the callback function which will be invoked after the snapshot is done.
+     * @param filename, specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple
+     * base filename ("hello.png" etc.), don't use a relative path containing directory names.("mydir/hello.png" etc.)
+     * @since v3.2
+     */
+    void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+    
+    /** Find children by name, it will return all child that has the same name.
+     * It supports c++ 11 regular expression. It is  a helper function of `Node::enumerateChildren()`.
+     * You can refer to `Node::enumerateChildren()` for detail information.
+     *
+     * @param node The node to find
+     * @param name The name to search for, it supports c++ 11 expression
+     * @return Array of Nodes that matches the name
+     * @since v3.2
+     */
+    std::vector<Node*> findChildren(const Node &node, const std::string &name);
 }
+
+NS_CC_END
 
 #endif // __SUPPORT_CC_UTILS_H__

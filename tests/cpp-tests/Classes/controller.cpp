@@ -34,7 +34,7 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
-	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
+    { "3D: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
 	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
 	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
@@ -69,8 +69,6 @@ Controller g_aTestNames[] = {
 	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
-	{ "Keyboard", []() { return new KeyboardTestScene(); } },
-	{ "Keypad", []() { return new KeypadTestScene(); } },
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
@@ -86,8 +84,8 @@ Controller g_aTestNames[] = {
 	{ "Node: Scene", [](){return new SceneTestScene();} },
 	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
-    { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
+	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
@@ -124,6 +122,7 @@ static void wait(int t)
 
 TestController::TestController()
 : _beginPos(Vec2::ZERO)
+,_exitThread(false)
 {
     // add close menu
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
@@ -255,6 +254,77 @@ void TestController::onMouseScroll(Event *event)
 }
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+void TestController::runAllTests(int fd)
+{
+    AppDelegate* app = (AppDelegate *)Application::getInstance();
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    for (int i = 0; i < g_testCount; i++)
+    {
+
+        // create the test scene and run it
+        std::string  msg("autotest: running test:");
+        msg += g_aTestNames[i].test_name;
+        send(fd, msg.c_str(), strlen(msg.c_str()),0);
+        send(fd, "\n",1,0);
+
+        currentController = &g_aTestNames[i];
+        sched->performFunctionInCocosThread( [&](){
+            auto scene = currentController->callback();
+            if(scene)
+            {
+                scene->runThisTest();
+                scene->release();
+            }
+        } );
+        wait(1);
+        BaseTest* firstTest = app->getCurrentTest();
+        if(firstTest == nullptr)
+        {
+            continue;
+        }
+        std::string  t1("");
+        t1 += firstTest->subtitle();
+        send(fd, t1.c_str(), strlen(t1.c_str()),0);
+        send(fd, "\n",1,0);
+        wait(2);
+
+        while(1)
+        {
+            if(_exitThread)
+            {
+                return;
+            }
+            //currentTest->nextCallback(nullptr);
+            sched->performFunctionInCocosThread( [&](){
+                BaseTest *t = app->getCurrentTest();
+                if(t != nullptr)
+                {
+                    t->nextCallback(nullptr);
+                }
+            } );
+            wait(1);
+            BaseTest * curTest = app->getCurrentTest();
+            if(curTest == nullptr)
+            {
+                break;
+            }
+            std::string  title("");
+            title += curTest->subtitle();
+            send(fd, title.c_str(), strlen(title.c_str()),0);
+            send(fd, "\n",1,0);
+            wait(2);
+
+            if(t1 == title)
+            {
+                break;
+            }
+        }
+    }
+    std::string  msg("autotest run successfully!");
+    send(fd, msg.c_str(), strlen(msg.c_str()),0);
+    send(fd, "\n",1,0);
+    return;
+}
 void TestController::addConsoleAutoTest()
 {
     auto console = Director::getInstance()->getConsole();
@@ -262,7 +332,7 @@ void TestController::addConsoleAutoTest()
     static struct Console::Command autotest = {
         "autotest", 
         "testcpp autotest command, use -h to list available tests", 
-        [](int fd, const std::string& args) 
+        [this](int fd, const std::string& args)
         {
             Scheduler *sched = Director::getInstance()->getScheduler();
             if(args == "help" || args == "-h")
@@ -353,64 +423,16 @@ void TestController::addConsoleAutoTest()
 
             if(args == "run")
             {
-                for (int i = 0; i < g_testCount; i++)
-                {
-                    // create the test scene and run it
-                    std::string  msg("autotest: running test:");
-                    msg += g_aTestNames[i].test_name;
-                    send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                    send(fd, "\n",1,0);
+                _exitThread = false;
+                std::thread t = std::thread( &TestController::runAllTests, this, fd);
+                t.detach();
+                return;
+            }
 
-                    currentController = &g_aTestNames[i];
-                    sched->performFunctionInCocosThread( [&](){
-                        auto scene = currentController->callback();
-                        if(scene)
-                        {
-                            scene->runThisTest();
-                            scene->release();
-                        }
-                    } );
-                    wait(1);
-                    BaseTest* firstTest = app->getCurrentTest();
-                    if(firstTest == nullptr)
-                    {
-                        continue;
-                    }
-                    std::string  t1("");
-                    t1 += firstTest->subtitle();
-                    send(fd, t1.c_str(), strlen(t1.c_str()),0);
-                    send(fd, "\n",1,0);
-                    wait(2);
-
-                    while(1)
-                    {
-                        //currentTest->nextCallback(nullptr);
-                        sched->performFunctionInCocosThread( [&](){
-                            BaseTest *t = app->getCurrentTest();
-                            if(t != nullptr)
-                            {
-                                t->nextCallback(nullptr);
-                            }
-                        } );
-                        wait(1);
-                        BaseTest * curTest = app->getCurrentTest();
-                        if(curTest == nullptr)
-                        {
-                            break;
-                        }
-                        std::string  title("");
-                        title += curTest->subtitle();
-                        send(fd, title.c_str(), strlen(title.c_str()),0);
-                        send(fd, "\n",1,0);
-                        wait(2);
-
-                        if(t1 == title)
-                        {
-                            break;
-                        }
-                    }
-                }
-                std::string  msg("autotest run successfully!");
+            if(args == "stop")
+            {
+                _exitThread = true;
+                std::string  msg("autotest: autotest stopped!");
                 send(fd, msg.c_str(), strlen(msg.c_str()),0);
                 send(fd, "\n",1,0);
                 return;

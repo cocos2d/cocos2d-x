@@ -656,6 +656,8 @@ Developers:
         
     lite3
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
+        Added HttpClient::sendImmediate()
+        Added operator == != for Value
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -716,6 +718,7 @@ Developers:
     kicktheken (Kenneth Chan)
         Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
         Fix lua project template crash on iOS5.1 device
+        Fix layout constant syntax error in lua-binding
         
     andyque
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
@@ -751,7 +754,9 @@ Developers:
         
     hanjukim
         Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
-        
+        Fixed the bug that FileUtils:getStringFromFile() may return a unterminated string
+        Skip BOM in DataReaderHelper::addDataFromJsonCache()
+
     bagobor
         Fixed a memory leak in AssetsManager::uncompress.
         Code format fix and small optimizations in cocostudio/CCActionNode.cpp.
@@ -790,6 +795,8 @@ Developers:
     newnon
         Adds getCurrentLanguageCode() which returns iso 639-1 language code
         Adds support for get response when Activity's onActivityResult is triggered
+        Improve Android projects
+        Android jni error clear & more readable log
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -828,6 +835,7 @@ Developers:
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
+        Fixed link error with Xcode 6 when building with 32-bit architecture
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -837,6 +845,7 @@ Developers:
         
     sachingarg05
         Re-added orientation change callback in java activity
+        GLProgram should not abort() if shader compilation fails, returning false is better.
         
     dplusic
         Fixed that cc.pGetAngle may return wrong value
@@ -861,6 +870,42 @@ Developers:
         
     favorcode
         Correct some doxygen comment
+        
+    asuuma
+        Fix Repeat will run one more over in rare situations.
+        
+    uqtimes 
+        Fix NSNotificationCenter and NSTimer leaks
+        
+    ntotani
+        fix building error in lua-binding in release mode
+        
+    kezhuw
+        AutoReleasePool manager improvement
+        
+    zhouxiaoxiaoxujian
+        Added TextField::getStringLength()
+        Add shadow, outline, glow filter support for UIText
+        
+    QiuleiWang
+        Fix the bug that calculated height of multi-line string was incorrect on iOS
+        
+    Rumist
+        Fix the bug that the result of Director->convertToUI() is error.
+        
+    kyokomi
+        Fix the bug that UIButton doesn't support TTF font
+        Fix a but of TextReader
+        
+    gin0606
+        Add a new line at the end of a file
+        Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        
+    billtt
+        Fixed a bug that Node::setScale(float) may not work properly
+        
+    Teivaz
+        Custom uniform search optimization
     
 Retired Core Developers:
     WenSheng Yang
@@ -874,7 +919,8 @@ Retired Core Developers:
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
         
-
+    timur-losev
+        Fix a bug that GLProgramCache::addGLProgram() can not replace existing program
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

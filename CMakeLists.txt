@@ -99,6 +99,9 @@ endif()
 
 if(MINGW)
   add_definitions(-DGLEW_STATIC)
+  add_definitions(-D__SSIZE_T)
+  set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES} -lws2_32")
+  set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lws2_32")
 endif()
 
 
@@ -150,9 +153,10 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/xxtea
 )
 
-if(WIN32)
+if(WIN32 AND NOT MINGW)
   include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/include
@@ -257,6 +261,9 @@ add_subdirectory(external/lua/tolua)
 
 # luabinding
 add_subdirectory(cocos/scripting/lua-bindings)
+
+# xxtea
+add_subdirectory(external/xxtea)
 endif(BUILD_LIBS_LUA)
 
 # build tests 

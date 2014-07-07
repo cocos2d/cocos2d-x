@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Label
 -- @extend SpriteBatchNode,LabelProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Label] isClipMarginEnabled 
@@ -44,11 +45,6 @@
 -- @return color4b_table#color4b_table ret (return value: color4b_table)
         
 --------------------------------
--- @function [parent=#Label] getCommonLineHeight 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
 -- @function [parent=#Label] setWidth 
 -- @param self
 -- @param #unsigned int int
@@ -82,13 +78,18 @@
 -- @function [parent=#Label] setBMFontFilePath 
 -- @param self
 -- @param #string str
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Label] getFontAtlas 
 -- @param self
 -- @return FontAtlas#FontAtlas ret (return value: cc.FontAtlas)
+        
+--------------------------------
+-- @function [parent=#Label] setLineHeight 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Label] setSystemFontSize 
@@ -119,6 +120,11 @@
 -- @param self
 -- @param #color4b_table color4b
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#Label] getAdditionalKerning 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- overload function: setCharMap(cc.Texture2D, int, int, int)
@@ -154,6 +160,11 @@
 -- @function [parent=#Label] setVerticalAlignment 
 -- @param self
 -- @param #cc.TextVAlignment textvalignment
+        
+--------------------------------
+-- @function [parent=#Label] getLineHeight 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Label] getTTFConfig 
@@ -192,6 +203,11 @@
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
+-- @function [parent=#Label] setAdditionalKerning 
+-- @param self
+-- @param #float float
+        
+--------------------------------
 -- @function [parent=#Label] getSystemFontSize 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -228,7 +244,7 @@
 -- @param #string str
 -- @param #cc.TextHAlignment texthalignment
 -- @param #int int
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
@@ -266,8 +282,8 @@
 -- @function [parent=#Label] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Label] addChild 
@@ -300,6 +316,13 @@
 -- @function [parent=#Label] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
+-- @function [parent=#Label] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Label] getScaleX 
