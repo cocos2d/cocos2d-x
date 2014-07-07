@@ -1049,6 +1049,8 @@
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
 		DA045A821952900C00444A66 /* CCClippingRegionNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F5C3CF195038C8009F8643 /* CCClippingRegionNode.cpp */; };
+		DA440C78196A943D00B222A3 /* ScriptEventCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA440C77196A943D00B222A3 /* ScriptEventCenter.cpp */; };
+		DA440C79196A943D00B222A3 /* ScriptEventCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA440C77196A943D00B222A3 /* ScriptEventCenter.cpp */; };
 		DA853FA2195029B00057DF22 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */; };
 		DA853FA3195029B40057DF22 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */; };
 		DAAEF731196A2FB3004C4C2C /* CCTouchTargetNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAAEF72F196A2FB3004C4C2C /* CCTouchTargetNode.cpp */; };
@@ -1960,6 +1962,8 @@
 		B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShapeInfo_chipmunk.h; sourceTree = "<group>"; };
 		B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorldInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
+		DA440C76196A93E100B222A3 /* ScriptEventCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptEventCenter.h; sourceTree = "<group>"; };
+		DA440C77196A943D00B222A3 /* ScriptEventCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptEventCenter.cpp; sourceTree = "<group>"; };
 		DA7850381966ACE500B4C4A4 /* CCTouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDispatcher.h; sourceTree = "<group>"; };
 		DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA853F9C19501BC90057DF22 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
@@ -3578,6 +3582,8 @@
 		DAB3E9FA1966403700D192A3 /* event */ = {
 			isa = PBXGroup;
 			children = (
+				DA440C77196A943D00B222A3 /* ScriptEventCenter.cpp */,
+				DA440C76196A93E100B222A3 /* ScriptEventCenter.h */,
 				DAAEF72F196A2FB3004C4C2C /* CCTouchTargetNode.cpp */,
 				DAAEF730196A2FB3004C4C2C /* CCTouchTargetNode.h */,
 				DA7850381966ACE500B4C4A4 /* CCTouchDispatcher.h */,
@@ -5066,6 +5072,7 @@
 				50ABBFFF1926664800A911A9 /* CCFileUtilsApple.mm in Sources */,
 				1A570075180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				B375107A1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
+				DA440C78196A943D00B222A3 /* ScriptEventCenter.cpp in Sources */,
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				50ABBE591925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,
 				1A57007D180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
@@ -5381,6 +5388,7 @@
 				50ABBE761925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				DAB7012B1963A82100DCA0EF /* lua_zlib.c in Sources */,
 				50ABBE5A1925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,
+				DA440C79196A943D00B222A3 /* ScriptEventCenter.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				DAB7FEFE1962B40000DCA0EF /* CCAnimation3D.cpp in Sources */,

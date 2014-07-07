@@ -2223,20 +2223,20 @@ Scene *Node::getScene()
 void Node::registerWithTouchDispatcher()
 {
     //    CCLOG("CCNODE: REGISTER WITH TOUCH DISPATHCER <%p>", this);
-    Scene *scene = getScene();
-    if (scene)
+    ScriptEventCenter *scriptEventCenter = Director::getInstance()->getScriptEventCenter();
+    if (scriptEventCenter)
     {
-        scene->addTouchableNode(this);
+        scriptEventCenter->addTouchableNode(this);
     }
 }
 
 void Node::unregisterWithTouchDispatcher()
 {
     //    CCLOG("CCNODE: UNREGISTER WITH TOUCH DISPATHCER <%p>", this);
-    Scene *scene = getScene();
-    if (scene)
+    ScriptEventCenter *scriptEventCenter = Director::getInstance()->getScriptEventCenter();
+    if (scriptEventCenter)
     {
-        scene->removeTouchableNode(this);
+        scriptEventCenter->removeTouchableNode(this);
     }
 }
 
