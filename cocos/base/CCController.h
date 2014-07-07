@@ -99,6 +99,9 @@ public:
 
     const KeyStatus& getKeyStatus(int keyCode);
     
+    //Setting up receives external key which not contained within enum Key.
+    void receiveExternalKeyEvent(int externalKeyCode,bool receive);
+
     void setTag(int tag) { _controllerTag = tag;}
     int getTag() const { return _controllerTag;}
 
