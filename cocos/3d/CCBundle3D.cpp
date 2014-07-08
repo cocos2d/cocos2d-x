@@ -800,10 +800,6 @@ GLenum Bundle3D::parseGLType(const std::string& str)
     {
         return GL_FLOAT;
     }
-    else if (str == "GL_FIXED")
-    {
-        return GL_FIXED;
-    }
     else
     {
         CCASSERT(false, "Wrong GL type");
