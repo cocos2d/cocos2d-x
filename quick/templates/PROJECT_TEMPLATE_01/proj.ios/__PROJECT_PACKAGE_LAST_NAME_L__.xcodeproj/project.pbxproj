@@ -23,6 +23,7 @@
 		9F6D893719596A8A00B36BA2 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D893319596A8A00B36BA2 /* libcocos2dx iOS.a */; };
 		9F6D893819596A8A00B36BA2 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D893419596A8A00B36BA2 /* libcocos2dx-extensions iOS.a */; };
 		9F6D893919596A8A00B36BA2 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D893519596A8A00B36BA2 /* libCocosDenshion iOS.a */; };
+		9FC0E163195418930064626D /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC0E161195418930064626D /* SimulatorConfig.cpp */; };
 		9FC0E165195418CB0064626D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC0E164195418CB0064626D /* CoreMotion.framework */; };
 		F452BFC51687EEF900DC5BCC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F452BFC41687EEF900DC5BCC /* CoreText.framework */; };
 		F452BFD01687F0F200DC5BCC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F452BFCF1687F0F200DC5BCC /* UIKit.framework */; };
@@ -136,6 +137,8 @@
 		9F6D893319596A8A00B36BA2 /* libcocos2dx iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx iOS.a"; path = "../../../lib/proj.ios_mac/build/Debug-iphoneos/libcocos2dx iOS.a"; sourceTree = "<group>"; };
 		9F6D893419596A8A00B36BA2 /* libcocos2dx-extensions iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx-extensions iOS.a"; path = "../../../lib/proj.ios_mac/build/Debug-iphoneos/libcocos2dx-extensions iOS.a"; sourceTree = "<group>"; };
 		9F6D893519596A8A00B36BA2 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCocosDenshion iOS.a"; path = "../../../lib/proj.ios_mac/build/Debug-iphoneos/libCocosDenshion iOS.a"; sourceTree = "<group>"; };
+		9FC0E161195418930064626D /* SimulatorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatorConfig.cpp; sourceTree = "<group>"; };
+		9FC0E162195418930064626D /* SimulatorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorConfig.h; sourceTree = "<group>"; };
 		9FC0E164195418CB0064626D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		DAEBA9FB1959898C00C31FBB /* quick_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_libs.xcodeproj; path = quick/lib/proj.ios_mac/quick_libs.xcodeproj; sourceTree = QUICK_V3_ROOT; };
 		F452BFC41687EEF900DC5BCC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -192,6 +195,8 @@
 		2EDD2769191B6258004F9539 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				9FC0E161195418930064626D /* SimulatorConfig.cpp */,
+				9FC0E162195418930064626D /* SimulatorConfig.h */,
 				2EDD276A191B6258004F9539 /* AppDelegate.cpp */,
 				2EDD276B191B6258004F9539 /* AppDelegate.h */,
 			);
@@ -452,6 +457,7 @@
 			files = (
 				2EDD279B191B639C004F9539 /* RootViewController.mm in Sources */,
 				2EDD276C191B6258004F9539 /* AppDelegate.cpp in Sources */,
+				9FC0E163195418930064626D /* SimulatorConfig.cpp in Sources */,
 				2EDD279A191B639C004F9539 /* main.m in Sources */,
 				2EDD2799191B639C004F9539 /* AppController.mm in Sources */,
 			);
