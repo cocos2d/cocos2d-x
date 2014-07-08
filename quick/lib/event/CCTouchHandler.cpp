@@ -37,12 +37,12 @@ void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 {
     if (pDelegate)
     {
-        dynamic_cast<CCObject*>(pDelegate)->retain();
+        dynamic_cast<Ref*>(pDelegate)->retain();
     }
 
     if (m_pDelegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<Ref*>(m_pDelegate)->release();
     }
 
     m_pDelegate = pDelegate;
@@ -93,7 +93,7 @@ bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 
     m_pDelegate = pDelegate; 
 
-    dynamic_cast<CCObject*>(pDelegate)->retain();
+    dynamic_cast<Ref*>(pDelegate)->retain();
 
     m_nPriority = nPriority;
     m_nEnabledSelectors = 0;
@@ -105,7 +105,7 @@ CCTouchHandler::~CCTouchHandler(void)
 {
     if (m_pDelegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        dynamic_cast<Ref*>(m_pDelegate)->release();
     }   
 }
 
