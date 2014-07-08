@@ -2604,7 +2604,7 @@ static int tolua_Cocos2d_glLineWidth00(lua_State* tolua_S)
 #endif
     {
         float arg0  = (float)tolua_tonumber(tolua_S, 1, 0);
-        glLineWidth((GLfloat)arg0  );
+        glLineWidth(arg0);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -2684,9 +2684,9 @@ static int tolua_Cocos2d_glPolygonOffset00(lua_State* tolua_S)
     else
 #endif
     {
-        int arg0  = (int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1  = (int)tolua_tonumber(tolua_S, 2, 0);
-        glPolygonOffset((GLfloat)arg0 , (GLfloat)arg1  );
+        float arg0  = (float)tolua_tonumber(tolua_S, 1, 0);
+        float arg1  = (float)tolua_tonumber(tolua_S, 2, 0);
+        glPolygonOffset(arg0, arg1);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -3165,7 +3165,7 @@ static int tolua_Cocos2d_glTexParameterf00(lua_State* tolua_S)
     {
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
         unsigned int arg1 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2 = (int)tolua_tonumber(tolua_S, 3, 0);
+        float arg2 = (float)tolua_tonumber(tolua_S, 3, 0);
         glTexParameterf((GLenum)arg0 , (GLenum)arg1 , (GLfloat)arg2  );
     }
     return 0;
@@ -3287,8 +3287,8 @@ static int tolua_Cocos2d_glUniform1f00(lua_State* tolua_S)
 #endif
     {
         int arg0 = (int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1 = (int)tolua_tonumber(tolua_S, 2, 0);
-        glUniform1f((GLint)arg0 , (GLfloat)arg1  );
+        float arg1 = (float)tolua_tonumber(tolua_S, 2, 0);
+        glUniform1f(arg0,arg1);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -3426,9 +3426,9 @@ static int tolua_Cocos2d_glUniform2f00(lua_State* tolua_S)
 #endif
     {
         int arg0 = (int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1 = (int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2 = (int)tolua_tonumber(tolua_S, 3, 0);
-        glUniform2f((GLint)arg0 , (GLfloat)arg1 , (GLfloat)arg2);
+        float arg1 = (int)tolua_tonumber(tolua_S, 2, 0);
+        float arg2 = (int)tolua_tonumber(tolua_S, 3, 0);
+        glUniform2f(arg0, arg1, arg2);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -3569,10 +3569,10 @@ static int tolua_Cocos2d_glUniform3f00(lua_State* tolua_S)
 #endif
     {
         int arg0 = (int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1 = (int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2 = (int)tolua_tonumber(tolua_S, 3, 0);
-        int arg3 = (int)tolua_tonumber(tolua_S, 4, 0);
-        glUniform3f((GLint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3  );
+        float arg1 = (float)tolua_tonumber(tolua_S, 2, 0);
+        float arg2 = (float)tolua_tonumber(tolua_S, 3, 0);
+        float arg3 = (float)tolua_tonumber(tolua_S, 4, 0);
+        glUniform3f(arg0, arg1, arg2, arg3);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -3716,11 +3716,11 @@ static int tolua_Cocos2d_glUniform4f00(lua_State* tolua_S)
 #endif
     {
         int arg0 = (int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1 = (int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2 = (int)tolua_tonumber(tolua_S, 3, 0);
-        int arg3 = (int)tolua_tonumber(tolua_S, 4, 0);
-        int arg4 = (int)tolua_tonumber(tolua_S, 5, 0);
-        glUniform4f((GLint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3 , (GLfloat)arg4  );
+        float arg1 = (float)tolua_tonumber(tolua_S, 2, 0);
+        float arg2 = (float)tolua_tonumber(tolua_S, 3, 0);
+        float arg3 = (float)tolua_tonumber(tolua_S, 4, 0);
+        float arg4 = (float)tolua_tonumber(tolua_S, 5, 0);
+        glUniform4f(arg0 , arg1, arg2, arg3, arg4);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -4042,8 +4042,8 @@ static int tolua_Cocos2d_glVertexAttrib1f00(lua_State* tolua_S)
 #endif
     {
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1          = (int)tolua_tonumber(tolua_S, 2, 0);
-        glVertexAttrib1f((GLuint)arg0 , (GLfloat)arg1  );
+        float arg1          = (float)tolua_tonumber(tolua_S, 2, 0);
+        glVertexAttrib1f(arg0 , arg1);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -4113,9 +4113,9 @@ static int tolua_Cocos2d_glVertexAttrib2f00(lua_State* tolua_S)
 #endif
     {
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1          = (int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2          = (int)tolua_tonumber(tolua_S, 3, 0);
-        glVertexAttrib2f((GLuint)arg0 , (GLfloat)arg1 , (GLfloat)arg2  );
+        float arg1          = (float)tolua_tonumber(tolua_S, 2, 0);
+        float arg2          = (float)tolua_tonumber(tolua_S, 3, 0);
+        glVertexAttrib2f(arg0, arg1, arg2);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -4186,10 +4186,10 @@ static int tolua_Cocos2d_glVertexAttrib3f00(lua_State* tolua_S)
 #endif
     {
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1          = (int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2          = (int)tolua_tonumber(tolua_S, 3, 0);
-        int arg3          = (int)tolua_tonumber(tolua_S, 4, 0);
-        glVertexAttrib3f((GLuint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3  );
+        float arg1          = (float)tolua_tonumber(tolua_S, 2, 0);
+        float arg2          = (float)tolua_tonumber(tolua_S, 3, 0);
+        float arg3          = (float)tolua_tonumber(tolua_S, 4, 0);
+        glVertexAttrib3f(arg0 , arg1, arg2, arg3);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -4261,11 +4261,11 @@ static int tolua_Cocos2d_glVertexAttrib4f00(lua_State* tolua_S)
 #endif
     {
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
-        int arg1          = (int)tolua_tonumber(tolua_S, 2, 0);
-        int arg2          = (int)tolua_tonumber(tolua_S, 3, 0);
-        int arg3          = (int)tolua_tonumber(tolua_S, 4, 0);
-        int arg4          = (int)tolua_tonumber(tolua_S, 5, 0);
-        glVertexAttrib4f((GLuint)arg0 , (GLfloat)arg1 , (GLfloat)arg2 , (GLfloat)arg3 , (GLfloat)arg4  );
+        float arg1          = (float)tolua_tonumber(tolua_S, 2, 0);
+        float arg2          = (float)tolua_tonumber(tolua_S, 3, 0);
+        float arg3          = (float)tolua_tonumber(tolua_S, 4, 0);
+        float arg4          = (float)tolua_tonumber(tolua_S, 5, 0);
+        glVertexAttrib4f(arg0, arg1, arg2, arg3, arg4);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -5031,10 +5031,10 @@ static int tolua_cocos2d_DrawPrimitives_drawColor4F00(lua_State* tolua_S)
     else
 #endif
     {
-        unsigned char r = (( unsigned char)  tolua_tonumber(tolua_S,1,0));
-        unsigned char g = (( unsigned char)  tolua_tonumber(tolua_S,2,0));
-        unsigned char b = (( unsigned char)  tolua_tonumber(tolua_S,3,0));
-        unsigned char a = (( unsigned char)  tolua_tonumber(tolua_S,4,0));
+        float r = (float)tolua_tonumber(tolua_S,1,0);
+        float g = (float)tolua_tonumber(tolua_S,2,0);
+        float b = (float)tolua_tonumber(tolua_S,3,0);
+        float a = (float)tolua_tonumber(tolua_S,4,0);
         DrawPrimitives::setDrawColor4F(r,g,b,a);
     }
     return 0;
