@@ -69,29 +69,6 @@ public:
     /** creates a fullscreen black layer */
     static Layer *create();
 
-    // Deprecated touch callbacks.
-    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    
-    /* Callback function should not be deprecated, it will generate lots of warnings.
-       Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
-    */
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
-    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
-    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
-    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
-
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
-    virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
     /** @deprecated Please override onAcceleration */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
@@ -99,33 +76,6 @@ public:
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
-
-    /** If isTouchEnabled, this method is called onEnter. Override it to change the
-    way Layer receives touch events.
-    ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
-    Example:
-    void Layer::registerWithTouchDispatcher()
-    {
-    TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-    }
-    @since v0.8.0
-    */
-    CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
-
-    /** whether or not it will receive Touch events.
-    You can enable / disable touch events with this property.
-    Only the touches of this node will be affected. This "method" is not propagated to it's children.
-    @since v0.8.1
-    */
-    CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
-    CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
-    CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
-
-    /** swallowsTouches of the touch events. Default is true */
-    CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
-    CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
@@ -173,21 +123,11 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
-    void _addTouchListener();
 
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
-
-    bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
-    EventListener* _touchListener;
     EventListenerKeyboard* _keyboardListener;
     EventListenerAcceleration* _accelerationListener;
-
-    Touch::DispatchMode _touchMode;
-    bool _swallowsTouches;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Layer);
