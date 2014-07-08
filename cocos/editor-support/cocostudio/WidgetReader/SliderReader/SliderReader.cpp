@@ -18,8 +18,6 @@ namespace cocostudio
     static const char* P_BallDisabledData = "ballDisabledData";
     static const char* P_ProgressBarData = "progressBarData";
     
-    static const char* P_BarFileName = "barFileName";
-    
     static SliderReader* instanceSliderReader = NULL;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(SliderReader)
