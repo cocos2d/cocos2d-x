@@ -1,4 +1,7 @@
-cocos2d-x-3.2rc0  ??
+cocos2d-x-3.2    ??
+    [FIX]           Label: color can not be set correctly if using system font.
+
+cocos2d-x-3.2rc0  Jul.7 2014
     [NEW]           FastTMXTiledMap: added fast tmx, which is much more faster for static tiled map
     [NEW]           GLProgramState: can use uniform location to get/set uniform values
     [NEW]           HttpClient: added sendImmediate()
