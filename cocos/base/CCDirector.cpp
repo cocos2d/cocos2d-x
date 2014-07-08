@@ -151,6 +151,7 @@ bool Director::init(void)
     _eventProjectionChanged = new EventCustom(EVENT_PROJECTION_CHANGED);
     _eventProjectionChanged->setUserData(this);
 
+    _scriptEventCenter = nullptr;
 
     //init TextureCache
     initTextureCache();
@@ -177,6 +178,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     
+    CC_SAFE_RELEASE(_scriptEventCenter);
 
     delete _eventAfterUpdate;
     delete _eventAfterDraw;

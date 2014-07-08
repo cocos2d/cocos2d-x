@@ -25,12 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCSCENE_H__
-#define __CCSCENE_H__
+#ifndef __SCRIPT_EVENT_CENTER_H__
+#define __SCRIPT_EVENT_CENTER_H__
 
 #include <string>
 #include "2d/CCNode.h"
-#include "physics/CCPhysicsWorld.h"
 #include "base/CCEventListenerTouch.h"
 
 NS_CC_BEGIN
@@ -52,17 +51,11 @@ additional logic.
 
 It is a good practice to use a Scene as the parent of all your nodes.
 */
-class CC_DLL Scene : public Node
+class CC_DLL ScriptEventCenter : public Node
 {
 public:
     /** creates a new Scene object */
-    static Scene *create();
-
-    /** creates a new Scene object with a predefined Size */
-    static Scene *createWithSize(const Size& size);
-
-    // Overrides
-    virtual Scene *getScene() const override;
+    static ScriptEventCenter *create();
 
     void addTouchableNode(Node *node);
     void removeTouchableNode(Node *node);
@@ -111,15 +104,14 @@ public:
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Scene();
-    virtual ~Scene();
+    ScriptEventCenter();
+    virtual ~ScriptEventCenter();
     
     bool init();
     bool initWithSize(const Size& size);
 
 protected:
     friend class Node;
-    friend class SpriteBatchNode;
     
     std::set<int> m_touchingIds;
     __Array *m_touchableNodes;
@@ -133,31 +125,11 @@ protected:
     void disableTouchDispatching();
 
     void dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event);
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(Scene);
-    
-#if CC_USE_PHYSICS
-public:
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
-    virtual void update(float delta) override;
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
-    static Scene *createWithPhysics();
-    
-CC_CONSTRUCTOR_ACCESS:
-    bool initWithPhysics();
-    
-protected:
-    void addChildToPhysicsWorld(Node* child);
-
-    PhysicsWorld* _physicsWorld;
-#endif // CC_USE_PHYSICS
 };
 
-// end of scene group
+// end of ScriptEventCenter group
 /// @}
 
 NS_CC_END
 
-#endif // __CCSCENE_H__
+#endif // __SCRIPT_EVENT_CENTER_H__

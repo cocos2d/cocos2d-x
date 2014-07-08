@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/CCScene.h"
+#include "event/ScriptEventCenter.h"
 #include "base/CCDirector.h"
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
@@ -41,14 +41,11 @@ NS_CC_BEGIN
 static const int _CCTouchesOneByOne = 1;
 static const int _CCTouchesAllAtOnce = 0;
 
-Scene::Scene()
+ScriptEventCenter::ScriptEventCenter()
 : m_touchableNodes(NULL)
 , m_touchingTargets(NULL)
 , m_touchDispatchingEnabled(false)
 , _touchListener(NULL)
-#if CC_USE_PHYSICS
-, _physicsWorld(nullptr)
-#endif
 {
     m_touchableNodes = __Array::createWithCapacity(100);
     m_touchableNodes->retain();
@@ -59,30 +56,32 @@ Scene::Scene()
     setAnchorPoint(Vec2(0.5f, 0.5f));
 }
 
-Scene::~Scene()
+ScriptEventCenter::~ScriptEventCenter()
 {
+    if (_running) {
+        cleanup();
+    }
     CC_SAFE_RELEASE(m_touchableNodes);
     CC_SAFE_RELEASE(m_touchingTargets);
-#if CC_USE_PHYSICS
-    CC_SAFE_DELETE(_physicsWorld);
-#endif
 }
 
-bool Scene::init()
+bool ScriptEventCenter::init()
 {
+    _running = true;
+
     auto size = Director::getInstance()->getWinSize();
     return initWithSize(size);
 }
 
-bool Scene::initWithSize(const Size& size)
+bool ScriptEventCenter::initWithSize(const Size& size)
 {
     setContentSize(size);
     return true;
 }
 
-Scene* Scene::create()
+ScriptEventCenter* ScriptEventCenter::create()
 {
-    Scene *ret = new Scene();
+    ScriptEventCenter *ret = new ScriptEventCenter();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -95,36 +94,31 @@ Scene* Scene::create()
     }
 }
 
-Scene* Scene::createWithSize(const Size& size)
+//ScriptEventCenter* ScriptEventCenter::createWithSize(const Size& size)
+//{
+//    ScriptEventCenter *ret = new ScriptEventCenter();
+//    if (ret && ret->initWithSize(size))
+//    {
+//        ret->autorelease();
+//        return ret;
+//    }
+//    else
+//    {
+//        CC_SAFE_DELETE(ret);
+//        return nullptr;
+//    }
+//}
+
+std::string ScriptEventCenter::getDescription() const
 {
-    Scene *ret = new Scene();
-    if (ret && ret->initWithSize(size))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-        return nullptr;
-    }
+    return StringUtils::format("<ScriptEventCenter | tag = %d>", _tag);
 }
 
-std::string Scene::getDescription() const
-{
-    return StringUtils::format("<Scene | tag = %d>", _tag);
-}
-
-Scene* Scene::getScene() const
-{
-    // FIX ME: should use const_case<> to fix compiling error
-    return const_cast<Scene*>(this);
-}
-
-void Scene::addTouchableNode(Node *node)
+void ScriptEventCenter::addTouchableNode(Node *node)
 {
     if (!m_touchableNodes->containsObject(node))
     {
+//        printf("----addTouchableNode(%x): getOrderOfArrival=%d\n", node, node->getOrderOfArrival());
         m_touchableNodes->addObject(node);
 //        CCLOG("ADD TOUCHABLE NODE <%p>", node);
         if (!m_touchDispatchingEnabled)
@@ -134,7 +128,7 @@ void Scene::addTouchableNode(Node *node)
     }
 }
 
-void Scene::removeTouchableNode(Node *node)
+void ScriptEventCenter::removeTouchableNode(Node *node)
 {
     m_touchableNodes->removeObject(node);
 //    CCLOG("REMOVE TOUCHABLE NODE <%p>", node);
@@ -144,7 +138,7 @@ void Scene::removeTouchableNode(Node *node)
     }
 }
 
-void Scene::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
+void ScriptEventCenter::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
     if (!m_touchDispatchingEnabled) return;
 
@@ -280,12 +274,12 @@ void Scene::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
     }
 }
 
-void Scene::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
+void ScriptEventCenter::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     dispatchingTouchEvent(touches, event, CCTOUCHMOVED);
 }
 
-void Scene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
+void ScriptEventCenter::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
     for (auto it = touches.begin(); it != touches.end(); ++it)
     {
@@ -305,7 +299,7 @@ void Scene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
     }
 }
 
-void Scene::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
+void ScriptEventCenter::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
     dispatchingTouchEvent(touches, event, CCTOUCHCANCELLED);
     // remove all touching nodes
@@ -313,13 +307,13 @@ void Scene::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
     m_touchingTargets->removeAllObjects();
 }
 
-// void Scene::visit()
+// void ScriptEventCenter::visit()
 // {
 //     g_drawOrder = 0;
 //     CCLayer::visit();
 // }
 
-void Scene::cleanup(void)
+void ScriptEventCenter::cleanup(void)
 {
     m_touchableNodes->removeAllObjects();
     m_touchingTargets->removeAllObjects();
@@ -328,11 +322,12 @@ void Scene::cleanup(void)
         _eventDispatcher->removeEventListener(_touchListener);
         _touchListener = NULL;
     }
+    _running = false;
 
 //    Layer::cleanup();
 }
 
-void Scene::sortAllTouchableNodes(__Array *nodes)
+void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
 {
     int i, j, length = nodes->data->num;
     Node **x = (Node**)nodes->data->arr;
@@ -344,7 +339,8 @@ void Scene::sortAllTouchableNodes(__Array *nodes)
         tempItem = x[i];
         j = i - 1;
 
-        while(j >= 0 && (tempItem->getLocalZOrder() > x[j]->getLocalZOrder()))
+//        printf("----sortAllTouchableNodes(%x): getOrderOfArrival=%d\n", tempItem, tempItem->getOrderOfArrival());
+        while(j >= 0 && (tempItem->getOrderOfArrival() > x[j]->getOrderOfArrival()))
         {
             x[j + 1] = x[j];
             j = j - 1;
@@ -353,15 +349,15 @@ void Scene::sortAllTouchableNodes(__Array *nodes)
     }
 
     // debug
-    //    CCLOG("----------------------------------------");
-    //    for(i=0; i<length; i++)
-    //    {
-    //        tempItem = x[i];
-    //        CCLOG("[%03d] getLocalZOrder() = %u, w = %0.2f, h = %0.2f", i, tempItem->getLocalZOrder(), tempItem->getCascadeBoundingBox().size.width, tempItem->getCascadeBoundingBox().size.height);
-    //    }
+        CCLOG("----------------------------------------");
+        for(i=0; i<length; i++)
+        {
+            tempItem = x[i];
+            CCLOG("[%03d] getOrderOfArrival() = %u, w = %0.2f, h = %0.2f", i, tempItem->getOrderOfArrival(), tempItem->getCascadeBoundingBox().size.width, tempItem->getCascadeBoundingBox().size.height);
+        }
 }
 
-void Scene::enableTouchDispatching()
+void ScriptEventCenter::enableTouchDispatching()
 {
     if (!_touchListener)
     {
@@ -370,21 +366,21 @@ void Scene::enableTouchDispatching()
         if (!_touchListener) {
             return;
         }
-        _touchListener->onTouchesBegan = CC_CALLBACK_2(Scene::onTouchesBegan, this);
-        _touchListener->onTouchesMoved = CC_CALLBACK_2(Scene::onTouchesMoved, this);
-        _touchListener->onTouchesEnded = CC_CALLBACK_2(Scene::onTouchesEnded, this);
-        _touchListener->onTouchesCancelled = CC_CALLBACK_2(Scene::onTouchesCancelled, this);
+        _touchListener->onTouchesBegan = CC_CALLBACK_2(ScriptEventCenter::onTouchesBegan, this);
+        _touchListener->onTouchesMoved = CC_CALLBACK_2(ScriptEventCenter::onTouchesMoved, this);
+        _touchListener->onTouchesEnded = CC_CALLBACK_2(ScriptEventCenter::onTouchesEnded, this);
+        _touchListener->onTouchesCancelled = CC_CALLBACK_2(ScriptEventCenter::onTouchesCancelled, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
     }
     m_touchDispatchingEnabled = true;
 }
 
-void Scene::disableTouchDispatching()
+void ScriptEventCenter::disableTouchDispatching()
 {
     m_touchDispatchingEnabled = false;
 }
 
-void Scene::dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event)
+void ScriptEventCenter::dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event)
 {
     Node *node = NULL;
     CCTouchTargetNode *touchTarget = NULL;
@@ -521,82 +517,5 @@ void Scene::dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEv
         }
     }
 }
-
-#if CC_USE_PHYSICS
-void Scene::addChild(Node* child, int zOrder, int tag)
-{
-    Node::addChild(child, zOrder, tag);
-    addChildToPhysicsWorld(child);
-}
-
-void Scene::addChild(Node* child, int zOrder, const std::string &name)
-{
-    Node::addChild(child, zOrder, name);
-    addChildToPhysicsWorld(child);
-}
-
-void Scene::update(float delta)
-{
-    Node::update(delta);
-    if (nullptr != _physicsWorld)
-    {
-        _physicsWorld->update(delta);
-    }
-}
-
-Scene* Scene::createWithPhysics()
-{
-    Scene *ret = new Scene();
-    if (ret && ret->initWithPhysics())
-    {
-        ret->autorelease();
-        return ret;
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-        return nullptr;
-    }
-}
-
-bool Scene::initWithPhysics()
-{
-    bool ret = false;
-    do
-    {
-        Director * director;
-        CC_BREAK_IF( ! (director = Director::getInstance()) );
-        this->setContentSize(director->getWinSize());
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
-        
-        this->scheduleUpdate();
-        // success
-        ret = true;
-    } while (0);
-    return ret;
-}
-
-void Scene::addChildToPhysicsWorld(Node* child)
-{
-    if (_physicsWorld)
-    {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            if (node->getPhysicsBody())
-            {
-                _physicsWorld->addBody(node->getPhysicsBody());
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
-    }
-}
-#endif
 
 NS_CC_END

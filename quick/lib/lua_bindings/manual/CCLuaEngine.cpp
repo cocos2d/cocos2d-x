@@ -32,6 +32,8 @@
 #include "lua_cocos2dx_extension_manual.h"
 // #include "lua_cocos2dx_coco_studio_manual.hpp"
 // #include "lua_cocos2dx_ui_manual.hpp"
+#include "event/CCScriptEventDispatcher.h"
+#include "event/CCTouchDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -1112,6 +1114,183 @@ int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* da
 int LuaEngine::reload(const char* moduleFileName)
 {
     return _stack->reload(moduleFileName);
+}
+
+int LuaEngine::executeNodeTouchEvent(Node* pNode, int eventType, Touch *pTouch, int phase)
+{
+    CCScriptEventListenersForEvent &listeners = pNode->getScriptEventDispatcher()->getScriptEventListenersByEvent(phase == NODE_TOUCH_CAPTURING_PHASE ? NODE_TOUCH_CAPTURE_EVENT : NODE_TOUCH_EVENT);
+    if (listeners.size() == 0) return 1;
+    
+    _stack->clean();
+    LuaValueDict event;
+    switch (eventType)
+    {
+        case CCTOUCHBEGAN:
+            event["name"] = LuaValue::stringValue("began");
+            break;
+            
+        case CCTOUCHMOVED:
+            event["name"] = LuaValue::stringValue("moved");
+            break;
+            
+        case CCTOUCHENDED:
+            event["name"] = LuaValue::stringValue("ended");
+            break;
+            
+        case CCTOUCHCANCELLED:
+            event["name"] = LuaValue::stringValue("cancelled");
+            break;
+            
+        default:
+            CCAssert(false, "INVALID touch event");
+            return 0;
+    }
+    
+    event["mode"] = LuaValue::intValue((int)Touch::DispatchMode::ONE_BY_ONE);
+    switch (phase)
+    {
+        case NODE_TOUCH_CAPTURING_PHASE:
+            event["phase"] = LuaValue::stringValue("capturing");
+            break;
+            
+        case NODE_TOUCH_TARGETING_PHASE:
+            event["phase"] = LuaValue::stringValue("targeting");
+            break;
+            
+        default:
+            event["phase"] = LuaValue::stringValue("unknown");
+    }
+    
+    const Point pt = CCDirector::getInstance()->convertToGL(pTouch->getLocationInView());
+    event["x"] = LuaValue::floatValue(pt.x);
+    event["y"] = LuaValue::floatValue(pt.y);
+    const Point prev = CCDirector::getInstance()->convertToGL(pTouch->getPreviousLocationInView());
+    event["prevX"] = LuaValue::floatValue(prev.x);
+    event["prevY"] = LuaValue::floatValue(prev.y);
+    
+    _stack->pushLuaValueDict(event);
+    CCScriptEventListenersForEventIterator it = listeners.begin();
+    int ret = 1;
+    for (; it != listeners.end(); ++it)
+    {
+        if (eventType == CCTOUCHBEGAN)
+        {
+            // enable listener when touch began
+            (*it).enabled = true;
+        }
+        
+        if ((*it).enabled)
+        {
+            _stack->copyValue(1);
+            int listenerRet = _stack->executeFunctionByHandler((*it).listener, 1);
+            if (listenerRet == 0)
+            {
+                if (phase == NODE_TOUCH_CAPTURING_PHASE && (eventType == CCTOUCHBEGAN || eventType == CCTOUCHMOVED))
+                {
+                    ret = 0;
+                }
+                else if (phase == NODE_TOUCH_TARGETING_PHASE && eventType == CCTOUCHBEGAN)
+                {
+                    // if listener return false when touch began, disable this listener
+                    (*it).enabled = false;
+                    ret = 0;
+                }
+            }
+            _stack->settop(1);
+        }
+    }
+    
+    //CCLOG("executeNodeTouchEvent %p, ret = %d, event = %d, phase = %d", pNode, ret, eventType, phase);
+    _stack->clean();
+    
+    return ret;
+}
+
+int LuaEngine::executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase)
+{
+    CCScriptEventListenersForEvent &listeners = pNode->getScriptEventDispatcher()->getScriptEventListenersByEvent(phase == NODE_TOUCH_CAPTURING_PHASE ? NODE_TOUCH_CAPTURE_EVENT : NODE_TOUCH_EVENT);
+    if (listeners.size() == 0) return 1;
+    
+    _stack->clean();
+    LuaValueDict event;
+    switch (eventType)
+    {
+        case CCTOUCHBEGAN:
+            event["name"] = LuaValue::stringValue("began");
+            break;
+            
+        case CCTOUCHMOVED:
+            event["name"] = LuaValue::stringValue("moved");
+            break;
+            
+        case CCTOUCHENDED:
+            event["name"] = LuaValue::stringValue("ended");
+            break;
+            
+        case CCTOUCHCANCELLED:
+            event["name"] = LuaValue::stringValue("cancelled");
+            break;
+            
+        case CCTOUCHADDED:
+            event["name"] = LuaValue::stringValue("added");
+            break;
+            
+        case CCTOUCHREMOVED:
+            event["name"] = LuaValue::stringValue("removed");
+            break;
+            
+        default:
+            return 0;
+    }
+    
+    event["mode"] = LuaValue::intValue((int)Touch::DispatchMode::ALL_AT_ONCE);
+    switch (phase)
+    {
+        case NODE_TOUCH_CAPTURING_PHASE:
+            event["phase"] = LuaValue::stringValue("capturing");
+            break;
+            
+        case NODE_TOUCH_TARGETING_PHASE:
+            event["phase"] = LuaValue::stringValue("targeting");
+            break;
+            
+        default:
+            event["phase"] = LuaValue::stringValue("unknown");
+    }
+    
+    LuaValueDict points;
+    Director* pDirector = Director::getInstance();
+    char touchId[16];
+    for (auto touchIt = touches.begin(); touchIt != touches.end(); ++touchIt)
+    {
+        LuaValueDict point;
+        Touch* pTouch = (Touch*)*touchIt;
+        sprintf(touchId, "%d", pTouch->getID());
+        point["id"] = LuaValue::stringValue(touchId);
+        
+        const Point pt = pDirector->convertToGL(pTouch->getLocationInView());
+        point["x"] = LuaValue::floatValue(pt.x);
+        point["y"] = LuaValue::floatValue(pt.y);
+        const Point prev = pDirector->convertToGL(pTouch->getPreviousLocationInView());
+        point["prevX"] = LuaValue::floatValue(prev.x);
+        point["prevY"] = LuaValue::floatValue(prev.y);
+        
+        points[touchId] = LuaValue::dictValue(point);
+    }
+    event["points"] = LuaValue::dictValue(points);
+    _stack->pushLuaValueDict(event);
+    
+    CCScriptEventListenersForEventIterator it = listeners.begin();
+    for (; it != listeners.end(); ++it)
+    {
+        _stack->copyValue(1);
+        _stack->executeFunctionByHandler((*it).listener, 1);
+        _stack->settop(1);
+    }
+    
+    _stack->clean();
+    
+    return 1;
 }
 
 NS_CC_END

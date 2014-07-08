@@ -2245,14 +2245,250 @@ static int tolua_cocos2d_Node_addNodeEventListener(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addScriptEventListener'", NULL);
 #endif
         {
-//            int tolua_ret = (int)  self->addScriptEventListener(event,listener,tag,priority);
-//            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+            int tolua_ret = (int)  self->addScriptEventListener(event,listener,tag,priority);
+            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
         }
     }
     return 1;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'addNodeEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_isTouchEnabled(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTouchEnabled'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->isTouchEnabled();
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'isTouchEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_setTouchEnabled(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        bool value = ((bool)  tolua_toboolean(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTouchEnabled'", NULL);
+#endif
+        {
+            self->setTouchEnabled(value);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setTouchEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_isTouchSwallowEnabled(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTouchSwallowEnabled'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->isTouchSwallowEnabled();
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'isTouchSwallowEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_setTouchSwallowEnabled(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        bool value = ((bool)  tolua_toboolean(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTouchSwallowEnabled'", NULL);
+#endif
+        {
+            self->setTouchSwallowEnabled(value);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setTouchSwallowEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_isTouchCaptureEnabled(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTouchCaptureEnabled'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->isTouchCaptureEnabled();
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'isTouchCaptureEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_setTouchCaptureEnabled(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        bool value = ((bool)  tolua_toboolean(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTouchCaptureEnabled'", NULL);
+#endif
+        {
+            self->setTouchCaptureEnabled(value);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setTouchCaptureEnabled'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_setTouchMode(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+        int mode = ((int)  tolua_tonumber(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTouchMode'", NULL);
+#endif
+        {
+            self->setTouchMode(mode);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setTouchMode'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_getTouchMode(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCNode* self = (CCNode*)  tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTouchMode'", NULL);
+#endif
+        {
+            int tolua_ret = (int)  self->getTouchMode();
+            tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+        }
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getTouchMode'.",&tolua_err);
     return 0;
 #endif
 }
@@ -3420,6 +3656,30 @@ static void extendNode(lua_State* tolua_S)
         lua_rawset(tolua_S, -3);
         lua_pushstring(tolua_S, "addNodeEventListener");
         lua_pushcfunction(tolua_S, tolua_cocos2d_Node_addNodeEventListener);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "isTouchEnabled");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_isTouchEnabled);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setTouchEnabled");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_setTouchEnabled);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "isTouchSwallowEnabled");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_isTouchSwallowEnabled);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setTouchSwallowEnabled");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_setTouchSwallowEnabled);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "isTouchCaptureEnabled");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_isTouchCaptureEnabled);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setTouchCaptureEnabled");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_setTouchCaptureEnabled);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setTouchMode");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_setTouchMode);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "getTouchMode");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_getTouchMode);
         lua_rawset(tolua_S, -3);
     }
     lua_pop(tolua_S, 1);

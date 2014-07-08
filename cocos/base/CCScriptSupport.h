@@ -448,6 +448,9 @@ public:
     };
     /** Parse configuration file */
     virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
+    
+    virtual int executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase) = 0;
+    virtual int executeNodeTouchEvent(Node* pNode, int eventType, Touch *pTouch, int phase) = 0;
 };
 
 class Node;
