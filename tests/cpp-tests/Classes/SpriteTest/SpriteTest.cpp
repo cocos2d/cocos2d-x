@@ -131,6 +131,7 @@ static std::function<Layer*()> createFunctions[] =
 	CL(AnimationCacheFile),
 	CL(SpriteCullTest1),
 	CL(SpriteCullTest2),
+    CL(Sprite3DRotationTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -4995,3 +4996,48 @@ std::string SpriteCullTest2::subtitle() const
 {
     return "Look at the GL calls";
 }
+
+//------------------------------------------------------------------
+//
+// Sprite 3D rotation test
+//
+//------------------------------------------------------------------
+Sprite3DRotationTest::Sprite3DRotationTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    
+    //Create reference sprite that's rotating based on there anchor point
+    auto s1 = Sprite::create("Images/grossini.png");
+    s1->setPosition(s.width/4, s.height/4 * 3);
+    s1->setAnchorPoint(Vec2(0, 0));
+    s1->runAction(RepeatForever::create(RotateBy::create(6, 360)));
+    addChild(s1);
+    
+    auto s2 = Sprite::create("Images/grossini.png");
+    s2->setPosition(s.width/4 * 3, s.height/4 * 3);
+    s2->runAction(RepeatForever::create(RotateBy::create(6, 360)));
+    addChild(s2);
+    
+    sprite1 = Sprite::create("Images/grossini.png");
+    sprite1->setPosition(s.width/4, s.height/4);
+    sprite1->setAnchorPoint(Vec2(0,0));
+    
+    addChild(sprite1);
+    
+    sprite2 = Sprite::create("Images/grossini.png");
+    sprite2->setPosition(s.width/4 * 3, s.height/4);
+    
+    addChild(sprite2);
+    
+    scheduleUpdate();
+}
+
+void Sprite3DRotationTest::update(float delta)
+{
+    rotation.y += 1;
+    sprite1->setRotation3D(rotation);
+    sprite2->setRotation3D(rotation);
+}
+
+
+
