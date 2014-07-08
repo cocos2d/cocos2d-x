@@ -311,6 +311,10 @@ bool Controller::isConnected() const
     return _impl->_gcController.isAttachedToDevice == YES;
 }
 
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
+{
+}
+
 NS_CC_END
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
