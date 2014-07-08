@@ -936,14 +936,14 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
     return (path[0] == '/');
 }
 
-bool FileUtils::isDirectoryExist(const std::string& dirPath)
+bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
-    CCASSERT(!dirPath.empty(), "Invalid path");
-    
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 	struct stat st;
 	if (stat(dirPath.c_str(), &st) == 0)
-		return S_ISDIR(st.st_mode);
+    {
+        return S_ISDIR(st.st_mode);
+    }
     
 	return false;
 #else
@@ -955,6 +955,40 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath)
     }
     return false;
 #endif
+}
+
+bool FileUtils::isDirectoryExist(const std::string& dirPath)
+{
+    CCASSERT(!dirPath.empty(), "Invalid path");
+    
+    if (isAbsolutePath(dirPath))
+    {
+        return isDirectoryExistInternal(dirPath);
+    }
+    
+    // Already Cached ?
+    auto cacheIter = _fullPathCache.find(dirPath);
+    if( cacheIter != _fullPathCache.end() )
+    {
+        return isDirectoryExistInternal(cacheIter->second);
+    }
+    
+	std::string fullpath;
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        {
+            // searchPath + file_path + resourceDirectory
+            fullpath = *searchIt + dirPath + *resolutionIt;
+            if (isDirectoryExistInternal(fullpath))
+            {
+                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(dirPath, fullpath));
+                return true;
+            }
+        }
+    }
+    
+    return false;
 }
 
 bool FileUtils::createDirectory(const std::string& dirPath)
