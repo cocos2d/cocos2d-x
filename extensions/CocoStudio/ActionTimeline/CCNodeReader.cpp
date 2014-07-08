@@ -319,6 +319,7 @@ cocos2d::CCNode* NodeReader::loadNode(const rapidjson::Value& json, cocos2d::CCN
             else
             {
                 cocos2d::ui::TouchGroup* group = cocos2d::ui::TouchGroup::create();
+                group->setZOrder(widget->getZOrder());
                 group->addWidget(widget);
                 parent->addChild(group);
             }
