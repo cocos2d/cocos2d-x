@@ -907,6 +907,9 @@ Developers:
         
     Teivaz
         Custom uniform search optimization
+        
+    chareice
+        Make `setup.py` work on zsh
     
 Retired Core Developers:
     WenSheng Yang
