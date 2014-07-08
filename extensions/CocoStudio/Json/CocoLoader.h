@@ -97,22 +97,20 @@ class CC_EX_DLL CocoLoader
     stExpCocoNode*				m_pRootNode;
     stExpCocoObjectDesc*		m_pObjectDescArray;
     char*						m_pMemoryBuff;
-    
+
 public:
     CocoLoader();
     ~CocoLoader();
 public:
-    
-    bool					ReadCocoBinBuff(char* pBinBuff);
-    stCocoFileHeader*		GetFileHeader(){return m_pFileHeader;}
-    stExpCocoNode*			GetRootCocoNode(){return	m_pRootNode;}
-    stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
-    stExpCocoObjectDesc*	GetCocoObjectDesc(const char* szObjDesc);
-    stExpCocoObjectDesc*	GetCocoObjectDesc(int vIndex);
-    char*					GetMemoryAddr_AttribDesc();
-    char*					GetMemoryAddr_CocoNode();
-    char*					GetMemoryAddr_String();
-    
+    bool    ReadCocoBinBuff(char* pBinBuff);
+    stCocoFileHeader*   GetFileHeader(){return m_pFileHeader;}
+    stExpCocoNode*  GetRootCocoNode(){return	m_pRootNode;}
+    stExpCocoObjectDesc*    GetCocoObjectDescArray(){return	m_pObjectDescArray;}
+    stExpCocoObjectDesc*    GetCocoObjectDesc(const char* szObjDesc);
+    stExpCocoObjectDesc*    GetCocoObjectDesc(int vIndex);
+    char*   GetMemoryAddr_AttribDesc();
+    char*   GetMemoryAddr_CocoNode();
+    char*   GetMemoryAddr_String();
 };
 
 NS_CC_EXT_END
