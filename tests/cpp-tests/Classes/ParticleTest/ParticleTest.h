@@ -328,4 +328,14 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Issue5331 : public ParticleDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addParticle(float delta);
+};
+
 #endif
