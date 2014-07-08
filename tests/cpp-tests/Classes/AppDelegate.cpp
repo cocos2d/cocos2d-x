@@ -54,7 +54,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("Cpp Tests");
+        glview = GLView::createWithRect("Cpp Tests",Rect(100,100,960,640));
         director->setOpenGLView(glview);
     }
 

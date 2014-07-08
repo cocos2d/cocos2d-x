@@ -22,41 +22,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Cocostudio1_4Test.h"
+#include "CocostudioParserJsonTest.h"
 #include "cocostudio/CCSGUIReader.h"
+#include "ui/CocosGUI.h"
 #include "CocostudioParserTest.h"
-
 
 USING_NS_CC;
 using namespace cocostudio;
+using namespace cocos2d::ui;
 
 // CustomImageLayer
+CocostudioParserJsonLayer::CocostudioParserJsonLayer(std::string jsonFile)
+{
+    _jsonFile = jsonFile;
+}
 
-
-void CocostudioV1_4Layer::onEnter()
+void CocostudioParserJsonLayer::onEnter()
 {
     Layer::onEnter();
     
     GUIReader* guiReader = GUIReader::getInstance();
     
     
-    Layout* layout = static_cast<Layout*>(guiReader->widgetFromJsonFile("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.json"));
+    Layout* layout = static_cast<Layout*>(guiReader->widgetFromJsonFile(_jsonFile.c_str()));
     layout->setScale(0.5);
-    CCLOG("content size  = %f", Director::getInstance()->getContentScaleFactor());
     addChild(layout);
 }
 
 
-// CocostudioV1_4Scene
+// CocostudioParserJsonScene
+CocostudioParserJsonScene::CocostudioParserJsonScene(std::string jsonFile)
+{
+    _jsonFile = jsonFile;
+}
 
-
-void CocostudioV1_4Scene::onEnter()
+void CocostudioParserJsonScene::onEnter()
 {
     CCScene::onEnter();
     
     auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
-    MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocostudioV1_4Scene::BackCallback, this));
+    MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocostudioParserJsonScene::BackCallback, this));
     
     Menu* pMenu = Menu::create(pMenuItem, NULL);
     
@@ -66,16 +72,16 @@ void CocostudioV1_4Scene::onEnter()
     addChild(pMenu, 1);
 }
 
-void CocostudioV1_4Scene::runThisTest()
+void CocostudioParserJsonScene::runThisTest()
 {
-    Layer* pLayer = new CocostudioV1_4Layer();
+    Layer* pLayer = new CocostudioParserJsonLayer(_jsonFile);
     addChild(pLayer);
     pLayer->release();
     
     CCDirector::getInstance()->replaceScene(this);
 }
 
-void CocostudioV1_4Scene::BackCallback(Ref* pSender)
+void CocostudioParserJsonScene::BackCallback(Ref* pSender)
 {
     CocostudioParserTestScene* pScene = new CocostudioParserTestScene();
     pScene->runThisTest();

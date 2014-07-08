@@ -25,7 +25,7 @@
 #include "CocostudioParserTest.h"
 
 #include "CocoStudioGUITest.h"
-#include "CocostudioParserTest/Cocostudio1_4Test.h"
+#include "CocostudioParserTest/CocostudioParserJsonTest.h"
 
 enum
 {
@@ -41,23 +41,33 @@ static struct
 g_guisTests[] =
 {
 	{
-        "cocostudio 1.4",
+        "cocostudio 1.3",
         [](Ref* sender)
         {
-            CocostudioV1_4Scene* pScene = new CocostudioV1_4Scene();
+            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.json");
             pScene->runThisTest();
             pScene->release();
         }
 	},
-//    {
-//        "custom gui particle widget Test",
-//        [](Ref* sender)
-//        {
-//            CustomParticleWidgetScene* pScene = new CustomParticleWidgetScene();
-//            pScene->runThisTest();
-//            pScene->release();
-//        }
-//	},
+    {
+        "cocostudio 1.4",
+        [](Ref* sender)
+        {
+            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.json");
+            pScene->runThisTest();
+            pScene->release();
+        }
+	},
+    {
+        "cocostudio 1.5",
+        [](Ref* sender)
+        {
+            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.json");
+            pScene->runThisTest();
+            pScene->release();
+        }
+	},
+
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
