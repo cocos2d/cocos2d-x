@@ -11,7 +11,7 @@ echo updating all framework_precompiled.zip
 echo.
 
 dir /s/b samples | find "framework_precompiled.zip" > ___tmp___
-dir /s/b template | find "framework_precompiled.zip" >> ___tmp___
+dir /s/b templates | find "framework_precompiled.zip" >> ___tmp___
 
 for /f %%f in (___tmp___) do (
     echo %%f

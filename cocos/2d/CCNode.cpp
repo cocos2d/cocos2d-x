@@ -113,7 +113,7 @@ Node::Node(void)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
 #if CC_ENABLE_SCRIPT_BINDING
-, _updateScriptHandler(0)
+//, _updateScriptHandler(0)
 // touch
 , m_bTouchCaptureEnabled(true)
 , m_bTouchSwallowEnabled(true)
@@ -156,10 +156,10 @@ Node::~Node()
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_updateScriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
-    }
+//    if (_updateScriptHandler)
+//    {
+//        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+//    }
    CC_SAFE_DELETE(_scriptEventDispatcher);
 #endif
 
@@ -859,12 +859,16 @@ void Node::cleanup()
     this->unscheduleAllSelectors();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
+//    if ( _scriptType != kScriptTypeNone)
+//    {
+//        int action = kNodeOnCleanup;
+//        BasicScriptData data(this,(void*)&action);
+//        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
     
@@ -1407,9 +1411,13 @@ void Node::onEnter()
     _running = true;
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
     }
 #endif
 }
@@ -1429,9 +1437,13 @@ void Node::onEnterTransitionDidFinish()
         child->onEnterTransitionDidFinish();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
     }
 #endif
 }
@@ -1450,9 +1462,13 @@ void Node::onExitTransitionDidStart()
         child->onExitTransitionDidStart();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
     }
 #endif
 }
@@ -1475,9 +1491,13 @@ void Node::onExit()
         child->onExit();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExit);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExit);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
     }
 #endif
 }
@@ -1569,7 +1589,7 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
     unscheduleUpdate();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    _updateScriptHandler = nHandler;
+//    _updateScriptHandler = nHandler;
 #endif
     
     _scheduler->scheduleUpdate(this, priority, !_running);
@@ -1580,11 +1600,11 @@ void Node::unscheduleUpdate()
     _scheduler->unscheduleUpdate(this);
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_updateScriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
-        _updateScriptHandler = 0;
-    }
+//    if (_updateScriptHandler)
+//    {
+//        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+//        _updateScriptHandler = 0;
+//    }
 #endif
 }
 
@@ -1654,11 +1674,15 @@ void Node::update(float fDelta)
 {
 #if CC_ENABLE_SCRIPT_BINDING
 //    if (0 != _updateScriptHandler)
+//    {
+//        //only lua use
+//        SchedulerScriptData data(_updateScriptHandler,fDelta);
+//        ScriptEvent event(kScheduleEvent,&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_ENTER_FRAME_EVENT))
     {
-        //only lua use
-        SchedulerScriptData data(_updateScriptHandler,fDelta);
-        ScriptEvent event(kScheduleEvent,&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEnterFrameEvent(this, fDelta);
     }
 #endif
     
@@ -2200,6 +2224,10 @@ void Node::disableCascadeColor()
 
 int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int priority /* = 0 */)
 {
+//    CCLOG("----addScriptEventListener: %d\n", event);
+    if (NODE_ENTER_FRAME_EVENT==event) {
+        scheduleUpdateWithPriorityLua(0, priority);
+    }
     return _scriptEventDispatcher->addScriptEventListener(event, listener, tag, priority);
 }
 
