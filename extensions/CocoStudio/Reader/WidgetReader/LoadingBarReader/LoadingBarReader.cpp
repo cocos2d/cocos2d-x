@@ -70,8 +70,8 @@ void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
         {
             float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
             float cy = DICTOOL->getFloatValue_json(options, "capInsetsY");
-            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth");
-            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
+            float cw = DICTOOL->getFloatValue_json(options, "capInsetsWidth",1);
+            float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight",1);
             
             loadingBar->setCapInsets(CCRectMake(cx, cy, cw, ch));
             
@@ -81,7 +81,7 @@ void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
         }
         
         loadingBar->setDirection(ui::LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
-        loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
+        loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent",100));
     }
     
     
@@ -96,11 +96,11 @@ void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
     this->beginSetBasicProperties(widget);
     float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     int percent = 0;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "ignoreSize") {
             widget->ignoreContentAdaptWithSize(valueToBool(value));
@@ -148,7 +148,7 @@ void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -157,7 +157,7 @@ void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
@@ -219,8 +219,8 @@ void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
         }
         else if (key == "textureData"){
             
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             

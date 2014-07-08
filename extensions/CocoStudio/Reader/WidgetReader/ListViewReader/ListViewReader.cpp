@@ -35,10 +35,10 @@ void ListViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidj
     
     ui::ListView* listView = (ui::ListView*)widget;
     
-	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	int direction = DICTOOL->getFloatValue_json(options, "direction",2);
 	listView->setDirection((ui::SCROLLVIEW_DIR)direction);
     
-    ui::ListViewGravity gravity = (ui::ListViewGravity)DICTOOL->getIntValue_json(options, "gravity");
+    ui::ListViewGravity gravity = (ui::ListViewGravity)DICTOOL->getIntValue_json(options, "gravity",3);
     listView->setGravity(gravity);
     
     float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
@@ -51,11 +51,11 @@ void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader 
     
     ui::ListView* listView = static_cast<ui::ListView*>(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "direction") {
             listView->setDirection((ui::SCROLLVIEW_DIR)valueToInt(value));

@@ -134,24 +134,18 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
         }
     }
     
-    bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
-    bool cg = DICTOOL->checkObjectExist_json(options, "textColorG");
-    bool cb = DICTOOL->checkObjectExist_json(options, "textColorB");
-    int cri = cr?DICTOOL->getIntValue_json(options, "textColorR"):255;
-    int cgi = cg?DICTOOL->getIntValue_json(options, "textColorG"):255;
-    int cbi = cb?DICTOOL->getIntValue_json(options, "textColorB"):255;
+   
+    int cri = DICTOOL->getIntValue_json(options, "textColorR",255);
+    int cgi = DICTOOL->getIntValue_json(options, "textColorG",255);
+    int cbi = DICTOOL->getIntValue_json(options, "textColorB",255);
     
     button->setTitleColor(ccc3(cri,cgi,cbi));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
-    if (fs)
-    {
-        button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize"));
-    }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
-    if (fn)
-    {
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    }
+   
+    button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize", 14));
+    
+   
+    button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName","微软雅黑"));
+    
     
     
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
@@ -163,7 +157,7 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     
     ui::Button *button = static_cast<ui::Button*>(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     this->beginSetBasicProperties(widget);
     
@@ -172,7 +166,7 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
     float scale9Width = 0.0f, scale9Height = 0.0f;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         //            CCLOG("Button: key = %s, value = %d", key.c_str(), i);
         
         if (key == "ignoreSize") {
@@ -221,7 +215,7 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -230,7 +224,7 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
@@ -294,8 +288,8 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }
         else if (key == "normalData"){
             
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             
@@ -306,8 +300,8 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }
         else if (key == "pressedData"){
             
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             
@@ -318,8 +312,8 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
         }
         else if (key == "disabledData"){
             
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             

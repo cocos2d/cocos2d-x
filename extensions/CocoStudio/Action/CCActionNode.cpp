@@ -177,11 +177,11 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
     stExpCocoNode *stChildNode = pCocoNode;
     
 	int actionNodeCount =  stChildNode->GetChildNum();
-    stChildNode = stChildNode[0].GetChildArray();
+    stChildNode = stChildNode[0].GetChildArray(pCocoLoader);
     stExpCocoNode *frameListNode = NULL;
     for (int i = 0; i < actionNodeCount; ++i) {
         std::string key = stChildNode[i].GetName(pCocoLoader);
-        std::string value = stChildNode[i].GetValue();
+        std::string value = stChildNode[i].GetValue(pCocoLoader);
         if (key == "ActionTag") {
             setActionTag(valueToInt(value));
         }else if (key == "actionframelist"){
@@ -190,7 +190,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
     }
     
     int actionFrameCount = frameListNode->GetChildNum();
-    stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray();
+    stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray(pCocoLoader);
 	for (int i=0; i<actionFrameCount; i++) {
         
         int frameIndex;
@@ -207,10 +207,10 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
         std::vector<float> frameTweenParameter;
         
         int framesCount = stFrameChildNode[i].GetChildNum();
-        stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray();
+        stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray(pCocoLoader);
         for (int j = 0; j < framesCount; j++) {
             std::string key = innerFrameNode[j].GetName(pCocoLoader);
-            std::string value = innerFrameNode[j].GetValue();
+            std::string value = innerFrameNode[j].GetValue(pCocoLoader);
             
             if (key == "frameid") {
                 frameIndex = valueToInt(value);
@@ -219,10 +219,10 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
             }else if (key == "tweenParameter"){
               //  There are no tweenParameter args in the json file
                 int tweenParameterCount = innerFrameNode[j].GetChildNum();
-                stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray();
+                stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray(pCocoLoader);
                 for (int k = 0; k < tweenParameterCount; ++k) {
                     std::string t_key = tweenParameterArray[j].GetName(pCocoLoader);
-                    std::string t_value = tweenParameterArray[j].GetValue();
+                    std::string t_value = tweenParameterArray[j].GetValue(pCocoLoader);
                     frameTweenParameter.push_back(valueToFloat(t_value));
                 }
             }else if (key == "positionx"){

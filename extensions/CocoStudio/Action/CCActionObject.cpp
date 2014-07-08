@@ -138,12 +138,12 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
 
 void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, cocos2d::CCObject *root)
 {
-    stExpCocoNode *stChildNode = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildNode = pCocoNode->GetChildArray(pCocoLoader);
     stExpCocoNode *actionNodeList = NULL;
     int count = pCocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
         std::string key = stChildNode[i].GetName(pCocoLoader);
-        std::string value = stChildNode[i].GetValue();
+        std::string value = stChildNode[i].GetValue(pCocoLoader);
         if (key == "name") {
             setName(value.c_str());
         }else if (key == "loop"){
@@ -158,7 +158,7 @@ void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, c
 	if(NULL != actionNodeList)
 	{
         int actionNodeCount = actionNodeList->GetChildNum();
-        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray();
+        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(pCocoLoader);
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
             ActionNode* actionNode = new ActionNode();

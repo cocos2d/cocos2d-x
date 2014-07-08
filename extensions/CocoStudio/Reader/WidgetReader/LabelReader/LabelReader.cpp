@@ -40,18 +40,15 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
     ui::Label* label = (ui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-    const char* text = DICTOOL->getStringValue_json(options, "text");
+    const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
     label->setText(text);
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
-    if (fs)
-    {
-        label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
-    }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
-    if (fn)
-    {
-        label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    }
+   
+    label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
+    
+    std::string fontName = DICTOOL->getStringValue_json(options, "fontName","微软雅黑");
+    std::string fontFilePath = jsonPath.append(fontName);
+    label->setFontName(fontFilePath);
+    
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
     bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
     if (aw && ah)
@@ -78,14 +75,14 @@ void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pC
 {
     this->beginSetBasicProperties(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     ui::Label* label = static_cast<ui::Label*>(widget);
     
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         //            CCLOG("Text: key = %s, value = %s", key.c_str(), value.c_str());
         
         if (key == "ignoreSize") {
@@ -134,7 +131,7 @@ void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pC
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             LinearLayoutParameter *linearParameter = LinearLayoutParameter::create();
             RelativeLayoutParameter *relativeParameter = RelativeLayoutParameter::create();
@@ -143,7 +140,7 @@ void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pC
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
