@@ -792,10 +792,6 @@ GLenum Bundle3D::parseGLType(const std::string& str)
     {
         return GL_UNSIGNED_INT;
     }
-    else if (str == "GL_UNSIGNED_INT")
-    {
-        return GL_UNSIGNED_INT;
-    }
     else if (str == "GL_FLOAT")
     {
         return GL_FLOAT;
