@@ -711,7 +711,7 @@ std::string Texture2D::getDescription() const
 // implementation Texture2D (Image)
 bool Texture2D::initWithImage(Image *image)
 {
-    return initWithImage(image, image->getRenderFormat());
+    return initWithImage(image, g_defaultAlphaPixelFormat);
 }
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
@@ -736,14 +736,14 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
     unsigned char*   tempData = image->getData();
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
-    PixelFormat      pixelFormat = PixelFormat::NONE;
+    PixelFormat      pixelFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getRenderFormat() : format;
     PixelFormat      renderFormat = image->getRenderFormat();
     size_t	         tempDataLen = image->getDataLen();
 
 
     if (image->getNumberOfMipmaps() > 1)
     {
-        if (format != PixelFormat::NONE)
+        if (pixelFormat != image->getRenderFormat())
         {
             CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
         }
@@ -754,7 +754,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     }
     else if (image->isCompressed())
     {
-        if (format != PixelFormat::NONE)
+        if (pixelFormat != image->getRenderFormat())
         {
             CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
         }
@@ -764,15 +764,6 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     }
     else
     {
-        // compute pixel format
-        if (format != PixelFormat::NONE)
-        {
-            pixelFormat = format;
-        }else
-        {
-            pixelFormat = g_defaultAlphaPixelFormat;
-        }
-
         unsigned char* outTempData = nullptr;
         ssize_t outTempDataLen = 0;
 

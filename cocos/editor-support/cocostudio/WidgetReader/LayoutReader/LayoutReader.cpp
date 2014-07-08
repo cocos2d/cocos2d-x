@@ -3,6 +3,9 @@
 #include "LayoutReader.h"
 #include "ui/UILayout.h"
 #include "cocostudio/CocoLoader.h"
+#include "ui/UIScrollView.h"
+#include "ui/UIPageView.h"
+#include "ui/UIListView.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -61,7 +64,7 @@ namespace cocostudio
         Layout* panel = static_cast<Layout*>(widget);
 
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         this->beginSetBasicProperties(widget);
         
         int cr=0, cg = 0, cb = 0;
@@ -69,12 +72,12 @@ namespace cocostudio
         int ecr=0, ecg=0, ecb= 0;
         float bgcv1 = 0.0f, bgcv2= 0.0f;
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
-        Layout::Type layoutType;
+        Layout::Type layoutType = Layout::Type::ABSOLUTE;
         int bgColorOpacity = panel->getBackGroundColorOpacity();
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -120,9 +123,9 @@ namespace cocostudio
                 panel->setBackGroundColorType(Layout::BackGroundColorType(valueToInt(value)));
             }else if (key == P_BackGroundImageData){
                 
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
                 if (backGroundChildren) {
-                    std::string resType = backGroundChildren[2].GetValue();;
+                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                     
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     
@@ -194,26 +197,77 @@ namespace cocostudio
         
         bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, P_BackGroundScale9Enable);
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
-        int cr = DICTOOL->getIntValue_json(options, P_BgColorR);
-        int cg = DICTOOL->getIntValue_json(options, P_BgColorG);
-        int cb = DICTOOL->getIntValue_json(options, P_BgColorB);
         
-        int scr = DICTOOL->getIntValue_json(options, P_BgStartColorR);
-        int scg = DICTOOL->getIntValue_json(options, P_BgStartColorG);
-        int scb = DICTOOL->getIntValue_json(options, P_BgStartColorB);
         
-        int ecr = DICTOOL->getIntValue_json(options, P_BgEndColorR);
-        int ecg = DICTOOL->getIntValue_json(options, P_BgEndColorG);
-        int ecb = DICTOOL->getIntValue_json(options, P_BgEndColorB);
+        int cr;
+        int cg;
+        int cb;
+        int scr;
+        int scg;
+        int scb;
+        int ecr;
+        int ecg;
+        int ecb;
+     
+        if (dynamic_cast<ui::PageView*>(widget)) {
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",100);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",255);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",100);
+        }else if(dynamic_cast<ui::ListView*>(widget)){
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",255);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+        }else if(dynamic_cast<ui::ScrollView*>(widget)){
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",255);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",150);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",100);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",255);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",150);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",100);
+        }else{
+            cr = DICTOOL->getIntValue_json(options, "bgColorR",150);
+            cg = DICTOOL->getIntValue_json(options, "bgColorG",200);
+            cb = DICTOOL->getIntValue_json(options, "bgColorB",255);
+            
+            scr = DICTOOL->getIntValue_json(options, "bgStartColorR",255);
+            scg = DICTOOL->getIntValue_json(options, "bgStartColorG",255);
+            scb = DICTOOL->getIntValue_json(options, "bgStartColorB",255);
+            
+            ecr = DICTOOL->getIntValue_json(options, "bgEndColorR",150);
+            ecg = DICTOOL->getIntValue_json(options, "bgEndColorG",200);
+            ecb = DICTOOL->getIntValue_json(options, "bgEndColorB",255);
+        }
         
         float bgcv1 = DICTOOL->getFloatValue_json(options, P_VectorX);
-        float bgcv2 = DICTOOL->getFloatValue_json(options, P_VectorY);
+        float bgcv2 = DICTOOL->getFloatValue_json(options, P_VectorY,-0.5);
         panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
-        int co = DICTOOL->getIntValue_json(options, P_BgColorOpacity);
+        int co = DICTOOL->getIntValue_json(options, P_BgColorOpacity,100);
         
-        int colorType = DICTOOL->getIntValue_json(options, P_ColorType);
+        int colorType = DICTOOL->getIntValue_json(options, P_ColorType,1);
         panel->setBackGroundColorType(Layout::BackGroundColorType(colorType));
+        
         panel->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
         panel->setBackGroundColor(Color3B(cr, cg, cb));
         panel->setBackGroundColorOpacity(co);
@@ -229,17 +283,20 @@ namespace cocostudio
         {
             float cx = DICTOOL->getFloatValue_json(options, P_CapInsetsX);
             float cy = DICTOOL->getFloatValue_json(options, P_CapInsetsY);
-            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth);
-            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight);
+            float cw = DICTOOL->getFloatValue_json(options, P_CapInsetsWidth,1);
+            float ch = DICTOOL->getFloatValue_json(options, P_CapInsetsHeight,1);
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         
         panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
         
-        int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR);
-        int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG);
-        int bgimgcb = DICTOOL->getIntValue_json(options, P_ColorB);
+        int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR,255);
+        int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG,255);
+        int bgimgcb = DICTOOL->getIntValue_json(options, P_ColorB,255);
         panel->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
+        
+        int bgimgopacity = DICTOOL->getIntValue_json(options, "opacity",255);
+        panel->setBackGroundImageOpacity(bgimgopacity);
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);

@@ -43,11 +43,11 @@ namespace cocostudio
         
         CheckBox *checkBox = static_cast<CheckBox*>(widget);
         this->beginSetBasicProperties(widget);
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
 //            CCLOG("key = %s, index : %d", key.c_str(), i);
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -56,8 +56,8 @@ namespace cocostudio
             
             else if (key == P_BackGroundBoxData){
                 
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -65,8 +65,8 @@ namespace cocostudio
                 
                 checkBox->loadTextureBackGround(backgroundValue, imageFileNameType);
             }else if(key == P_BackGroundBoxSelectedData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -74,8 +74,8 @@ namespace cocostudio
                 
                 checkBox->loadTextureBackGroundSelected(backgroundValue, imageFileNameType);
             }else if(key == P_FrontCrossData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -83,8 +83,8 @@ namespace cocostudio
                 
                 checkBox->loadTextureFrontCross(backgroundValue, imageFileNameType);
             }else if(key == P_BackGroundBoxDisabledData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -92,8 +92,8 @@ namespace cocostudio
                 
                 checkBox->loadTextureBackGroundDisabled(backgroundValue, imageFileNameType);
             }else if (key == P_FrontCrossDisabledData){
-                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-                std::string resType = backGroundChildren[2].GetValue();;
+                stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 

@@ -1,4 +1,18 @@
-cocos2d-x-3.2beta0  Jul.2 2014
+cocos2d-x-3.2    ??
+    [FIX]           GLView: cursor position is not correct if design resolution is different from device resolution
+    [FIX]           Label: color can not be set correctly if using system font
+    [FIX]           Node: setRotation3D not work based on anchor point
+    [FIX]           Setup.py: not work if using zsh
+    [FIX]           SpriteBatchNode: opacity can not work
+    [FIX]           Sprite3D: may crash on Android if playing animation and replace Scene after come from background
+    [FIX]           UIdget: opacity is wrong when replace texture
+    [FIX]           UITextField: keyboard can not hide if touching space outside of keyboard
+    
+    [FIX]           Others: don't release singleton objects correctly that are needed in the whole game, which will be treated
+    as memory leak when using VLD.
+    
+
+cocos2d-x-3.2rc0  Jul.7 2014
     [NEW]           FastTMXTiledMap: added fast tmx, which is much more faster for static tiled map
     [NEW]           GLProgramState: can use uniform location to get/set uniform values
     [NEW]           HttpClient: added sendImmediate()

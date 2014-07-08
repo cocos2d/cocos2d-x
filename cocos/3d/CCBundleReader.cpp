@@ -65,7 +65,7 @@ char* BundleReader::readLine(int num,char* line)
     char* p = line;
     char c;
     ssize_t readNum = 0;
-    while((c=*buffer) != 10 && readNum < (ssize_t)num && m_position<(long int)m_length)
+    while((c=*buffer) != 10 && readNum < (ssize_t)num && m_position < m_length)
     {
         *p = c;
         p++;
@@ -91,7 +91,7 @@ ssize_t BundleReader::length()
     return m_length;
 }
 
-long int BundleReader::tell()
+ssize_t BundleReader::tell()
 {
     if (!m_buffer)
         return -1;

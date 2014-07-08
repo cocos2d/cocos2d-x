@@ -44,12 +44,12 @@ namespace cocostudio
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
         
-        stExpCocoNode *stChildArray = cocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
         float innerWidth;
         float innerHeight;
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
-            std::string value = stChildArray[i].GetValue();
+            std::string value = stChildArray[i].GetValue(cocoLoader);
             if (key == P_InnerWidth) {
                 innerWidth = valueToFloat(value);
             }
@@ -72,10 +72,10 @@ namespace cocostudio
         
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
-        float innerWidth = DICTOOL->getFloatValue_json(options, P_InnerWidth);
-        float innerHeight = DICTOOL->getFloatValue_json(options, P_InnerHeight);
+        float innerWidth = DICTOOL->getFloatValue_json(options, P_InnerWidth,200);
+        float innerHeight = DICTOOL->getFloatValue_json(options, P_InnerHeight,200);
         scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
-        int direction = DICTOOL->getFloatValue_json(options, P_Direction);
+        int direction = DICTOOL->getFloatValue_json(options, P_Direction,1);
         scrollView->setDirection((ScrollView::Direction)direction);
         scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, P_BounceEnable));
         

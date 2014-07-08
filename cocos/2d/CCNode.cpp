@@ -861,25 +861,24 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         }
     }
     
-    // TODO: support ends with '/..'
     // End with '/..'?
-//    bool searchFromParent = false;
-//    if (length > 3 &&
-//        name[length-3] == '/' &&
-//        name[length-2] == '.' &&
-//        name[length-1] == '.')
-//    {
-//        searchFromParent = true;
-//        subStrlength -= 3;
-//    }
+    bool searchFromParent = false;
+    if (length > 3 &&
+        name[length-3] == '/' &&
+        name[length-2] == '.' &&
+        name[length-1] == '.')
+    {
+        searchFromParent = true;
+        subStrlength -= 3;
+    }
     
-    // Remove '/', '//' if exist
+    // Remove '/', '//', '/..' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
-    // If search from parent, then add * at first to make it match its children, which will do make
-//    if (searchFromParent)
-//    {
-//        newName.insert(0, "[[:alnum:]]+/");
-//    }
+
+    if (searchFromParent)
+    {
+        newName.insert(0, "[[:alnum:]]+/");
+    }
     
     if (searchFromRoot)
     {
@@ -944,14 +943,10 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
         needRecursive = true;
     }
     
-    std::hash<std::string> h;
-    size_t hashOfName = h(searchName);
     bool ret = false;
     for (const auto& child : _children)
     {
-        // TODO: regular expression support
-        // Android doesn't support c++ 11 regular expression well, may use external lib
-        if (hashOfName == child->_hashOfName && searchName.compare(child->_name) == 0)
+        if (std::regex_match(child->_name, std::regex(searchName)))
         {
             if (!needRecursive)
             {
@@ -1310,6 +1305,9 @@ Mat4 Node::transform(const Mat4& parentTransform)
 
 void Node::onEnter()
 {
+    if (_onEnterCallback)
+        _onEnterCallback();
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1337,6 +1335,9 @@ void Node::onEnter()
 
 void Node::onEnterTransitionDidFinish()
 {
+    if (_onEnterTransitionDidFinishCallback)
+        _onEnterTransitionDidFinishCallback();
+        
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1359,6 +1360,9 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
+    if (_onExitTransitionDidStartCallback)
+        _onExitTransitionDidStartCallback();
+    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1380,6 +1384,9 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
+    if (_onExitCallback)
+        _onExitCallback();
+    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1628,16 +1635,18 @@ const Mat4& Node::getNodeToParentTransform() const
 
         bool needsSkewMatrix = ( _skewX || _skewY );
 
+        Vec2 anchorPoint;
+        anchorPoint.x = _anchorPointInPoints.x * _scaleX;
+        anchorPoint.y = _anchorPointInPoints.y * _scaleY;
 
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
         if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
         {
-            x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-            y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+            x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
+            y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
         }
-
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
@@ -1649,6 +1658,11 @@ const Mat4& Node::getNodeToParentTransform() const
         
         _transform.set(mat);
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+        }
+        
         // XXX
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
@@ -1663,6 +1677,11 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform = _transform * rotX;
         }
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+        }
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
