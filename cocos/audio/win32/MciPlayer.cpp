@@ -1,6 +1,6 @@
 #include "MciPlayer.h"
 
-#define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
+#define WIN_CLASS_NAME      L"CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
 
 namespace CocosDenshion {
