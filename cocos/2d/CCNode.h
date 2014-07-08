@@ -712,6 +712,15 @@ public:
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
+    /**
+     * Gets a child from the container with its name that can be cast to Type T
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node with the given name that can be cast to Type T
+    */
+    template <typename T>
+    inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
      * @param name The name to search for, supports c++11 regular expression
