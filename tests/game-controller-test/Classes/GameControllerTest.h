@@ -53,7 +53,8 @@ private:
         cocos2d::Sprite* _buttonL2;
         cocos2d::Sprite* _buttonR2;
 
-        cocos2d::Label* _deviceIdLabel;
+        cocos2d::Label* _deviceLabel;
+        cocos2d::Label* _externalKeyLabel;
     }ControllerHolder;
 
     ControllerHolder _firstHolder;
