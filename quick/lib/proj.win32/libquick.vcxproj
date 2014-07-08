@@ -47,7 +47,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;CC_LUA_ENGINE_ENABLED=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(QUICK_V3_ROOT)cocos;$(QUICK_V3_ROOT)cocos\platform\win32;$(QUICK_V3_ROOT)cocos\platform\desktop;$(QUICK_V3_ROOT)cocos\audio\include;$(QUICK_V3_ROOT)external;$(QUICK_V3_ROOT)external\chipmunk\include\chipmunk;$(QUICK_V3_ROOT)external\ConvertUTF;$(QUICK_V3_ROOT)external\curl\include\win32;$(QUICK_V3_ROOT)external\edtaa3func;$(QUICK_V3_ROOT)external\freetype2\include\win32;$(QUICK_V3_ROOT)external\glfw3\include\win32;$(QUICK_V3_ROOT)external\jpeg\include\win32;$(QUICK_V3_ROOT)external\json;$(QUICK_V3_ROOT)external\png\include\win32;$(QUICK_V3_ROOT)external\sqlite3\include;$(QUICK_V3_ROOT)external\tiff\include\win32;$(QUICK_V3_ROOT)external\tinyxml2;$(QUICK_V3_ROOT)external\unzip;$(QUICK_V3_ROOT)external\webp\include\win32;$(QUICK_V3_ROOT)external\websockets\include\win32;$(QUICK_V3_ROOT)external\win32-specific\gles\include\OGLES;$(QUICK_V3_ROOT)external\win32-specific\icon\include;$(QUICK_V3_ROOT)external\win32-specific\zlib\include;$(QUICK_V3_ROOT)external\xxhash;$(QUICK_V3_ROOT)external\xxtea;$(QUICK_V3_ROOT)quick\lib;$(QUICK_V3_ROOT)quick\lib\event;$(QUICK_V3_ROOT)quick\lib\lua_bindings\auto;$(QUICK_V3_ROOT)quick\lib\lua_bindings\manual;$(QUICK_V3_ROOT)quick\lib\lua_bindings\luajit\include;$(QUICK_V3_ROOT)quick\lib\lua_bindings\tolua;$(QUICK_V3_ROOT)quick\lib\lua_extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QUICK_V3_ROOT)cocos;$(QUICK_V3_ROOT)cocos\platform\win32;$(QUICK_V3_ROOT)cocos\platform\desktop;$(QUICK_V3_ROOT)cocos\audio\include;$(QUICK_V3_ROOT)extensions;$(QUICK_V3_ROOT)external;$(QUICK_V3_ROOT)external\chipmunk\include\chipmunk;$(QUICK_V3_ROOT)external\ConvertUTF;$(QUICK_V3_ROOT)external\curl\include\win32;$(QUICK_V3_ROOT)external\edtaa3func;$(QUICK_V3_ROOT)external\freetype2\include\win32;$(QUICK_V3_ROOT)external\glfw3\include\win32;$(QUICK_V3_ROOT)external\jpeg\include\win32;$(QUICK_V3_ROOT)external\json;$(QUICK_V3_ROOT)external\png\include\win32;$(QUICK_V3_ROOT)external\sqlite3\include;$(QUICK_V3_ROOT)external\tiff\include\win32;$(QUICK_V3_ROOT)external\tinyxml2;$(QUICK_V3_ROOT)external\unzip;$(QUICK_V3_ROOT)external\webp\include\win32;$(QUICK_V3_ROOT)external\websockets\include\win32;$(QUICK_V3_ROOT)external\win32-specific\gles\include\OGLES;$(QUICK_V3_ROOT)external\win32-specific\icon\include;$(QUICK_V3_ROOT)external\win32-specific\zlib\include;$(QUICK_V3_ROOT)external\xxhash;$(QUICK_V3_ROOT)external\xxtea;$(QUICK_V3_ROOT)quick\lib;$(QUICK_V3_ROOT)quick\lib\event;$(QUICK_V3_ROOT)quick\lib\extra;$(QUICK_V3_ROOT)quick\lib\lua_bindings\auto;$(QUICK_V3_ROOT)quick\lib\lua_bindings\manual;$(QUICK_V3_ROOT)quick\lib\lua_bindings\luajit\include;$(QUICK_V3_ROOT)quick\lib\lua_bindings\tolua;$(QUICK_V3_ROOT)quick\lib\lua_extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
       <DisableSpecificWarnings>4244;4800;4056;4018</DisableSpecificWarnings>
@@ -273,6 +273,18 @@
     <ClInclude Include="..\..\..\cocos\renderer\CCTexture2D.h" />
     <ClInclude Include="..\..\..\cocos\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\..\..\cocos\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\..\..\extensions\cocos-ext.h" />
+    <ClInclude Include="..\..\..\extensions\ExtensionMacros.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlUtils.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.h" />
     <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk.h" />
     <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_ffi.h" />
     <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_private.h" />
@@ -447,6 +459,14 @@
     <ClInclude Include="..\event\CCTouchHandler.h" />
     <ClInclude Include="..\event\CCTouchTargetNode.h" />
     <ClInclude Include="..\event\ScriptEventCenter.h" />
+    <ClInclude Include="..\extra\apptools\HelperFunc.h" />
+    <ClInclude Include="..\extra\cocos2dx_extra.h" />
+    <ClInclude Include="..\extra\crypto\base64\libbase64.h" />
+    <ClInclude Include="..\extra\crypto\CCCrypto.h" />
+    <ClInclude Include="..\extra\crypto\md5\md5.h" />
+    <ClInclude Include="..\extra\network\CCHTTPRequest.h" />
+    <ClInclude Include="..\extra\network\CCHTTPRequestDelegate.h" />
+    <ClInclude Include="..\extra\network\CCNetwork.h" />
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.hpp" />
@@ -494,7 +514,6 @@
     <ClInclude Include="..\lua_extensions\socket\tcp.h" />
     <ClInclude Include="..\lua_extensions\socket\timeout.h" />
     <ClInclude Include="..\lua_extensions\socket\udp.h" />
-    <ClInclude Include="..\lua_extensions\socket\unix.h" />
     <ClInclude Include="..\lua_extensions\socket\wsocket.h" />
     <ClInclude Include="..\lua_extensions\zlib\lua_zlib.h" />
     <ClInclude Include="..\ProjectConfig\SimulatorConfig.h" />
@@ -674,35 +693,101 @@
     <ClCompile Include="..\..\..\cocos\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\..\..\cocos\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\..\..\cocos\renderer\CCTextureCache.cpp" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\chipmunk.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpConstraint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpDampedRotarySpring.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpDampedSpring.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpGearJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpGrooveJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpPinJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpPivotJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpRatchetJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpRotaryLimitJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpSimpleMotor.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpSlideJoint.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpArbiter.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpArray.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpBB.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpBBTree.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpBody.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpCollision.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpHashSet.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpPolyShape.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpShape.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpace.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceComponent.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceHash.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceQuery.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceStep.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpatialIndex.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpSweep1D.c" />
-    <ClCompile Include="..\..\..\external\chipmunk\src\cpVect.c" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlUtils.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.cpp" />
+    <ClCompile Include="..\..\..\external\chipmunk\src\chipmunk.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpConstraint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpDampedRotarySpring.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpDampedSpring.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpGearJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpGrooveJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpPinJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpPivotJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpRatchetJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpRotaryLimitJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpSimpleMotor.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpSlideJoint.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpArbiter.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpArray.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpBB.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpBBTree.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpBody.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpCollision.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpHashSet.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpPolyShape.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpShape.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpace.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceComponent.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceHash.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceQuery.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceStep.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpatialIndex.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSweep1D.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpVect.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="..\..\..\external\ConvertUTF\ConvertUTF.c" />
     <ClCompile Include="..\..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\..\..\external\edtaa3func\edtaa3func.cpp" />
@@ -713,11 +798,17 @@
     <ClCompile Include="..\..\..\external\xxhash\xxhash.c" />
     <ClCompile Include="..\..\..\external\xxtea\xxtea.cpp" />
     <ClCompile Include="..\event\CCScriptEventDispatcher.cpp" />
-    <ClCompile Include="..\event\CCTouch.cpp" />
-    <ClCompile Include="..\event\CCTouchDispatcher.cpp" />
-    <ClCompile Include="..\event\CCTouchHandler.cpp" />
     <ClCompile Include="..\event\CCTouchTargetNode.cpp" />
     <ClCompile Include="..\event\ScriptEventCenter.cpp" />
+    <ClCompile Include="..\extra\apptools\HelperFunc.cpp" />
+    <ClCompile Include="..\extra\crypto\base64\libbase64.c" />
+    <ClCompile Include="..\extra\crypto\CCCrypto.cpp" />
+    <ClCompile Include="..\extra\crypto\md5\md5.c" />
+    <ClCompile Include="..\extra\network\CCHTTPRequest.cpp" />
+    <ClCompile Include="..\extra\network\CCNetwork.cpp" />
+    <ClCompile Include="..\extra\platform\win32\CCCryptoWin32.cpp" />
+    <ClCompile Include="..\extra\platform\win32\CCNetworkWin32.cpp" />
+    <ClCompile Include="..\extra\platform\win32\CCStorePaymentTransactionWrapper.cpp" />
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.cpp" />
@@ -759,12 +850,10 @@
     <ClCompile Include="..\lua_extensions\socket\mime.c" />
     <ClCompile Include="..\lua_extensions\socket\options.c" />
     <ClCompile Include="..\lua_extensions\socket\select.c" />
-    <ClCompile Include="..\lua_extensions\socket\serial.c" />
     <ClCompile Include="..\lua_extensions\socket\socket_scripts.c" />
     <ClCompile Include="..\lua_extensions\socket\tcp.c" />
     <ClCompile Include="..\lua_extensions\socket\timeout.c" />
     <ClCompile Include="..\lua_extensions\socket\udp.c" />
-    <ClCompile Include="..\lua_extensions\socket\unix.c" />
     <ClCompile Include="..\lua_extensions\socket\wsocket.c" />
     <ClCompile Include="..\lua_extensions\zlib\lua_zlib.c" />
     <ClCompile Include="..\ProjectConfig\SimulatorConfig.cpp" />

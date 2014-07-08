@@ -26,7 +26,7 @@
 #include <string>
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
+#include "cocos-ext.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"

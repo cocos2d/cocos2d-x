@@ -283,6 +283,42 @@
     <Filter Include="libquick\ProjectConfig">
       <UniqueIdentifier>{5d48c2df-9fc2-4efc-ab1d-9133ab1be826}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extensions">
+      <UniqueIdentifier>{136daa53-15ba-4533-bf46-5b33d5a47b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI">
+      <UniqueIdentifier>{af88eb5a-c112-4ee3-bba5-f52c5177a35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI\CCControlExtension">
+      <UniqueIdentifier>{d45432b6-92ef-480a-9c13-f86e3b59a88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI\CCEditBox">
+      <UniqueIdentifier>{646dbca8-ac8a-4461-82a3-c0fdd84d8897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra">
+      <UniqueIdentifier>{a2cf7e6e-63cb-495d-b88c-4f94f3b87fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\apptools">
+      <UniqueIdentifier>{8af1f745-461e-49cf-8ca6-ea5fa2523bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\crypto">
+      <UniqueIdentifier>{07f0ac98-3a87-4776-b561-75143fb7d160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\crypto\base64">
+      <UniqueIdentifier>{1971f6da-0865-42be-a30f-bd17976ec5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\crypto\md5">
+      <UniqueIdentifier>{3c650650-e96c-40a3-99ac-81746a1c1cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\network">
+      <UniqueIdentifier>{f227793d-cf87-4f13-8b28-b95678dae4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\platform">
+      <UniqueIdentifier>{61008433-f365-4313-9c49-ae98de401792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\platform\win32">
+      <UniqueIdentifier>{b7306df9-8797-4c30-87c9-a609743d1ff6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -1506,9 +1542,6 @@
     <ClInclude Include="..\lua_extensions\lsqlite3\lsqlite3.h">
       <Filter>libquick\lua_extensions\lsqlite3</Filter>
     </ClInclude>
-    <ClInclude Include="..\lua_extensions\socket\unix.h">
-      <Filter>libquick\lua_extensions\socket</Filter>
-    </ClInclude>
     <ClInclude Include="..\lua_extensions\socket\wsocket.h">
       <Filter>libquick\lua_extensions\socket</Filter>
     </ClInclude>
@@ -1562,6 +1595,66 @@
     </ClInclude>
     <ClInclude Include="..\ProjectConfig\SimulatorConfig.h">
       <Filter>libquick\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\cocos-ext.h">
+      <Filter>extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\ExtensionMacros.h">
+      <Filter>extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlUtils.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCInvocation.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlExtensions.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\apptools\HelperFunc.h">
+      <Filter>libquick\extra\apptools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\crypto\CCCrypto.h">
+      <Filter>libquick\extra\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\crypto\base64\libbase64.h">
+      <Filter>libquick\extra\crypto\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\crypto\md5\md5.h">
+      <Filter>libquick\extra\crypto\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\network\CCHTTPRequestDelegate.h">
+      <Filter>libquick\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\network\CCNetwork.h">
+      <Filter>libquick\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\network\CCHTTPRequest.h">
+      <Filter>libquick\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\cocos2dx_extra.h">
+      <Filter>libquick\extra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2201,15 +2294,6 @@
     <ClCompile Include="..\event\CCScriptEventDispatcher.cpp">
       <Filter>libquick\event</Filter>
     </ClCompile>
-    <ClCompile Include="..\event\CCTouch.cpp">
-      <Filter>libquick\event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event\CCTouchDispatcher.cpp">
-      <Filter>libquick\event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\event\CCTouchHandler.cpp">
-      <Filter>libquick\event</Filter>
-    </ClCompile>
     <ClCompile Include="..\event\CCTouchTargetNode.cpp">
       <Filter>libquick\event</Filter>
     </ClCompile>
@@ -2309,9 +2393,6 @@
     <ClCompile Include="..\lua_extensions\lsqlite3\lsqlite3.c">
       <Filter>libquick\lua_extensions\lsqlite3</Filter>
     </ClCompile>
-    <ClCompile Include="..\lua_extensions\socket\unix.c">
-      <Filter>libquick\lua_extensions\socket</Filter>
-    </ClCompile>
     <ClCompile Include="..\lua_extensions\socket\wsocket.c">
       <Filter>libquick\lua_extensions\socket</Filter>
     </ClCompile>
@@ -2342,9 +2423,6 @@
     <ClCompile Include="..\lua_extensions\socket\select.c">
       <Filter>libquick\lua_extensions\socket</Filter>
     </ClCompile>
-    <ClCompile Include="..\lua_extensions\socket\serial.c">
-      <Filter>libquick\lua_extensions\socket</Filter>
-    </ClCompile>
     <ClCompile Include="..\lua_extensions\socket\socket_scripts.c">
       <Filter>libquick\lua_extensions\socket</Filter>
     </ClCompile>
@@ -2365,6 +2443,57 @@
     </ClCompile>
     <ClCompile Include="..\ProjectConfig\SimulatorConfig.cpp">
       <Filter>libquick\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlUtils.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.cpp">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\apptools\HelperFunc.cpp">
+      <Filter>libquick\extra\apptools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\crypto\CCCrypto.cpp">
+      <Filter>libquick\extra\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\crypto\base64\libbase64.c">
+      <Filter>libquick\extra\crypto\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\crypto\md5\md5.c">
+      <Filter>libquick\extra\crypto\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\network\CCNetwork.cpp">
+      <Filter>libquick\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\network\CCHTTPRequest.cpp">
+      <Filter>libquick\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\platform\win32\CCNetworkWin32.cpp">
+      <Filter>libquick\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\platform\win32\CCStorePaymentTransactionWrapper.cpp">
+      <Filter>libquick\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\platform\win32\CCCryptoWin32.cpp">
+      <Filter>libquick\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.cpp">
+      <Filter>extensions\GUI\CCEditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

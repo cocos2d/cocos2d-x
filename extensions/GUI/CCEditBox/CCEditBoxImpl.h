@@ -26,7 +26,7 @@
 #ifndef __CCEditBoxIMPL_H__
 #define __CCEditBoxIMPL_H__
 
-#include "extensions/ExtensionMacros.h"
+#include "ExtensionMacros.h"
 #include "CCEditBox.h"
 
 NS_CC_EXT_BEGIN

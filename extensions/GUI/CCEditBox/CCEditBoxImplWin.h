@@ -30,7 +30,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#include "extensions/ExtensionMacros.h"
+#include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
 NS_CC_EXT_BEGIN
