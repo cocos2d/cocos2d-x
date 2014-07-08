@@ -49,7 +49,7 @@ namespace cocostudio
         
         Text* label = static_cast<Text*>(widget);
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string binaryFilePath = GUIReader::getInstance()->getFilePath();
 
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
@@ -70,11 +70,7 @@ namespace cocostudio
                 label->setFontSize(valueToInt(value));
             }else if(key == P_FontName){
                 std::string fontFilePath;
-                if(FileUtils::getInstance()->isFileExist(value)){
-                    fontFilePath = jsonPath.append(value);
-                }else{
-                    fontFilePath = value;
-                }
+                fontFilePath = binaryFilePath.append(value);
                 label->setFontName(fontFilePath);
             }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
