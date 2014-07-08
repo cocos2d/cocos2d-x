@@ -172,7 +172,6 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, 
 
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 {
-    //glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
     glUniform4fv( uniform->location, (GLsizei)_matrixPaletteSize, (const float*)_matrixPalette );
 }
 
