@@ -515,7 +515,7 @@ int LuaStack::executeFunctionByHandler(int nHandler, int numArgs)
         }
         ret = executeFunction(numArgs);
     }
-    lua_settop(_state, 0);
+//    lua_settop(_state, 0);
     return ret;
 }
 

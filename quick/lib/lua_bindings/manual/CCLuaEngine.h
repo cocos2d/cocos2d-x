@@ -112,12 +112,13 @@ public:
     virtual int executeGlobalFunction(const char* functionName);
 
     virtual int executeNodeEvent(Node* pNode, int nAction);
+    virtual int executeNodeEnterFrameEvent(Node* pNode, float dt);
     virtual int executeMenuItemEvent(MenuItem* pMenuItem);
     virtual int executeNotificationEvent(__NotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CallFunc* pAction, Ref* pTarget = NULL);
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
-    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, __Set *pTouches);
-    virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
+    virtual int executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase);
+    virtual int executeNodeTouchEvent(Node* pNode, int eventType, Touch *pTouch, int phase);
     virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
@@ -130,8 +131,6 @@ public:
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
     
-    virtual int executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase);
-    virtual int executeNodeTouchEvent(Node* pNode, int eventType, Touch *pTouch, int phase);
 private:
     LuaEngine(void)
     : _stack(nullptr)

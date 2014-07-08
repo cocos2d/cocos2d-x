@@ -29,27 +29,3 @@ function Layer:registerScriptAccelerateHandler(listener)
         listener(event.x, event.y, event.z, event.timestamp)
     end)
 end
-
-function Layer:isTouchEnabled()
-    return cc.Node.isTouchEnabled(self)
-end
-
-function Layer:setTouchEnabled( isEnable )
-    return cc.Node.setTouchEnabled(self, isEnable)
-end
-
-function Layer:setTouchMode( mode )
-    return cc.Node.setTouchMode(self, mode)
-end
-
-function Layer:setSwallowsTouches( isEnable )
-    return cc.Node.setTouchSwallowEnabled(self, isEnable)
-end
-
-function Layer:getTouchMode()
-    return cc.Node.getTouchMode(self)
-end
-
-function Layer:isSwallowsTouches()
-    return cc.Node.isSwallowsTouches(self)
-end
