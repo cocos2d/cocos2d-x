@@ -27,7 +27,7 @@
 
 * Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2rc0.zip
 * Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2rc0/CHANGELOG
-* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2beta0/index.html
+* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2rc0/index.html
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -116,7 +116,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.2rc0
 
-* `fbx-conv` support generating binary format, and `Sprite3D` support it, and about 
+* `fbx-conv` support generating binary format, and `Sprite3D` support it 
 * about 20% performance improved in `Sprite3D`
 * game controller support
 * fast tilemap support, it is faster for static tilemap
