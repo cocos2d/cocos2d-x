@@ -303,12 +303,10 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if(alpha != 255)
     {
         node->setOpacity(alpha);
-        node->setCascadeOpacityEnabled(true);
     }
     if(red != 255 || green != 255 || blue != 255)
     {
         node->setColor(Color3B(red, green, blue));
-        node->setCascadeColorEnabled(true);
     }
 
 
