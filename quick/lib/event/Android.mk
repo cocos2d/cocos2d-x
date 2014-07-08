@@ -7,6 +7,8 @@ LOCAL_MODULE_FILENAME := libevent
 
 LOCAL_SRC_FILES := \
     $(LOCAL_PATH)/CCScriptEventDispatcher.cpp \
+    $(LOCAL_PATH)/CCTouchTargetNode.cpp \
+    $(LOCAL_PATH)/ScriptEventCenter.cpp \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
