@@ -396,12 +396,10 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
         if(alpha != 255)
         {
             rgbaProtocaol->setOpacity(alpha); 
-            rgbaProtocaol->setCascadeOpacityEnabled(true);
         }
         if(red != 255 || green != 255 || blue != 255)
         {
             rgbaProtocaol->setColor(ccc3(red, green, blue));
-            rgbaProtocaol->setCascadeColorEnabled(true);
         }
     }
 
