@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Application
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Application] getTargetPlatform 

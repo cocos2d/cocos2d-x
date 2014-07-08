@@ -49,6 +49,20 @@ protected:
 	MenuItemImage *restartItem;
 	MenuItemImage *nextItem;
 	MenuItemImage *backItem;
+    
+protected:
+	virtual void changeLoadTypeCallback(cocos2d::Ref *pSender);
+	virtual void defaultPlay() = 0; // must to be overrided
+	void loadFileChangeHelper(std::string& filePathName );  // switch json& csb
+
+private:
+	bool _isCsbLoad;   // default is false
+    cocos2d::Label* _loadtypelb;
+	static const char* _loadtypeStr[2];
+    
+protected:
+    cocos2d::Node* _rootNode;
+    std::string _filePath;
 };
 
 class LoadSceneEdtiorFileTest : public SceneEditorTestLayer
@@ -61,6 +75,8 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
+private:
+	void defaultPlay();
 };
 
 
@@ -75,6 +91,8 @@ public:
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
 
+private:
+	void defaultPlay();
 };
 
 class ArmatureComponentTest : public SceneEditorTestLayer
@@ -88,6 +106,8 @@ public:
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
 
+private:
+	void defaultPlay();
 };
 
 class UIComponentTest : public SceneEditorTestLayer
@@ -102,7 +122,7 @@ public:
     cocos2d::Node* createGameScene();
 	void touchEvent(cocos2d::Ref *pSender, ui::Widget::TouchEventType type);
 private:
-	cocos2d::Node* _node;
+	void defaultPlay();
 };
 
 class TmxMapComponentTest : public SceneEditorTestLayer
@@ -115,6 +135,8 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
+private:
+	void defaultPlay();
 
 };
 
@@ -128,6 +150,8 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
+protected:
+	void defaultPlay();
 };
 
 class EffectComponentTest : public SceneEditorTestLayer
@@ -142,7 +166,8 @@ public:
     cocos2d::Node* createGameScene();
     void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 private:
-	cocos2d::Node* _node;
+	void defaultPlay();
+	
 };
 
 class BackgroundComponentTest : public SceneEditorTestLayer
@@ -155,6 +180,8 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
+private:
+	void defaultPlay();
 };
 
 class AttributeComponentTest : public SceneEditorTestLayer
@@ -168,8 +195,9 @@ public:
     virtual void onExit() override;
 	bool initData();
     cocos2d::Node* createGameScene();
+    
 private:
-	cocos2d::Node* _node;
+	void defaultPlay();
 };
 
 class TriggerTest : public SceneEditorTestLayer
@@ -197,6 +225,8 @@ public:
 private:
 	cocos2d::Node *_node;
     cocos2d::EventListener* _touchListener;
+private:
+	void defaultPlay();
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

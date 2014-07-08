@@ -1,6 +1,8 @@
 
 --------------------------------
 -- @module Console
+-- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Console] stop 

@@ -33,7 +33,8 @@ public:
     UILayoutTest_Editor();
     ~UILayoutTest_Editor();
     bool init();    
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Editor)
 };
@@ -45,7 +46,8 @@ public:
     UILayoutTest_Color_Editor();
     ~UILayoutTest_Color_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Color_Editor)
 };
@@ -57,7 +59,8 @@ public:
     UILayoutTest_Gradient_Editor();
     ~UILayoutTest_Gradient_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Gradient_Editor)
 };
@@ -69,7 +72,8 @@ public:
     UILayoutTest_BackGroundImage_Editor();
     ~UILayoutTest_BackGroundImage_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_BackGroundImage_Editor)
 };
@@ -81,7 +85,8 @@ public:
     UILayoutTest_BackGroundImage_Scale9_Editor();
     ~UILayoutTest_BackGroundImage_Scale9_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_BackGroundImage_Scale9_Editor)
 };
@@ -92,6 +97,8 @@ class UILayoutTest_Layout_Linear_Vertical_Editor : public UIScene_Editor
 public:
     UILayoutTest_Layout_Linear_Vertical_Editor();
     ~UILayoutTest_Layout_Linear_Vertical_Editor();
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
     bool init();
     
 protected:
@@ -105,7 +112,8 @@ public:
     UILayoutTest_Layout_Linear_Horizontal_Editor();
     ~UILayoutTest_Layout_Linear_Horizontal_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Layout_Linear_Horizontal_Editor)
 };
@@ -117,7 +125,8 @@ public:
     UILayoutTest_Layout_Relative_Align_Parent_Editor();
     ~UILayoutTest_Layout_Relative_Align_Parent_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Layout_Relative_Align_Parent_Editor)
 };
@@ -129,7 +138,8 @@ public:
     UILayoutTest_Layout_Relative_Location_Editor();
     ~UILayoutTest_Layout_Relative_Location_Editor();
     bool init();
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Layout_Relative_Location_Editor)
 };

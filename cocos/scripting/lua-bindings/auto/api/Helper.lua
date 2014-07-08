@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Helper
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Helper] seekWidgetByTag 

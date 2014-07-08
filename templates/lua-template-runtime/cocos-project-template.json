@@ -14,21 +14,6 @@
         },
         "append_dir": [
             {
-                "from": "templates/lua-template-runtime/runtime/rtres",
-                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources/rtres",
-                "exclude": []
-            },
-            {
-                "from": "templates/lua-template-runtime/runtime/rtres",
-                "to": "runtime/ios/PrebuiltRuntimeLua.app/rtres",
-                "exclude": []
-            },
-            {
-                "from": "templates/lua-template-runtime/runtime/rtres",
-                "to": "runtime/win32/rtres",
-                "exclude": []
-            },
-            {
                 "from": "cocos/scripting/lua-bindings/script",
                 "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
                 "exclude": []
@@ -170,6 +155,18 @@
             "src_package_name": "org.cocos2dx.hellolua",
             "files": [
                 "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+            ]
+        },
+        "project_replace_mac_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
+            ]
+        },
+        "project_replace_ios_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
             ]
         }
     }

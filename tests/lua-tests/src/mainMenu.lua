@@ -53,7 +53,7 @@ require "src/ZwoptexTest/ZwoptexTest"
 require "src/LuaBridgeTest/LuaBridgeTest"
 require "src/XMLHttpRequestTest/XMLHttpRequestTest"
 require "src/PhysicsTest/PhysicsTest"
-require "src/VideoPlayerTest/VideoPlayerTest"
+require "src/CaptureScreenTest/CaptureScreenTest"
 
 
 local LINE_SPACE = 40
@@ -73,6 +73,7 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
@@ -115,7 +116,6 @@ local _allTests = {
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-    { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
@@ -170,12 +170,6 @@ function CreateTestMenu()
         local testMenuItem = cc.MenuItemLabel:create(testLabel)
         if not obj.isSupported then
             testMenuItem:setEnabled(false)
-        end
-
-        if obj.name == "VideoPlayerTest" then
-            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
-                testMenuItem:setEnabled(false)
-            end
         end
         testMenuItem:registerScriptTapHandler(menuCallback)
         testMenuItem:setPosition(cc.p(s.width / 2, (s.height - (index) * LINE_SPACE)))
