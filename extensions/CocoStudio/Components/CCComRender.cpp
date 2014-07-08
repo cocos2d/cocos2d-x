@@ -221,7 +221,7 @@ bool CCComRender::serialize(void* r)
 						if (rapidjson::kObjectType  == tType)
 						{
                             int count = tpRootCocoNode->GetChildNum();
-                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(pCocoLoader);
+                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
                             for (int i = 0; i < count; ++i)
                             {
                                 std::string key = tpChildArray[i].GetName(&tCocoLoader);
