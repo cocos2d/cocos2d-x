@@ -38,7 +38,6 @@
 #include "math/CCMath.h"
 #include "renderer/ccGLStateCache.h"
 #include "CCGL.h"
-#include "event/CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN
 

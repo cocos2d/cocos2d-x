@@ -27,7 +27,7 @@
 #define __CCEDITTEXT_H__
 
 #include "base/CCIMEDelegate.h"
-#include "extensions/ExtensionMacros.h"
+#include "../../ExtensionMacros.h"
 #include "../CCControlExtension/CCControlExtensions.h"
 
 NS_CC_EXT_BEGIN
