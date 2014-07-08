@@ -160,8 +160,6 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         default:
             break;
     }
-    _barRenderer->setColor(this->getColor());
-    _barRenderer->setOpacity(this->getOpacity());
     
     _barRendererTextureSize = _barRenderer->getContentSize();
     
