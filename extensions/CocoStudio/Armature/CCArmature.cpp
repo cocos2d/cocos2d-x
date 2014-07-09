@@ -489,7 +489,10 @@ void CCArmature::draw()
                 CCSkin *skin = (CCSkin *)node;
 
                 CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
-                bool blendDirty = bone->isBlendDirty();
+
+                ccBlendFunc func = bone->getBlendFunc();
+                bool blendDirty = func.src != m_sBlendFunc.src || func.dst != m_sBlendFunc.dst;
+
                 if(m_pAtlas != textureAtlas || blendDirty)
                 {
                     if (m_pAtlas)
@@ -507,14 +510,12 @@ void CCArmature::draw()
 
                 if (blendDirty)
                 {
-                    ccBlendFunc func = bone->getBlendFunc();
                     ccGLBlendFunc(func.src, func.dst);
 
                     m_pAtlas->drawQuads();
                     m_pAtlas->removeAllQuads();
 
                     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-                    bone->setBlendDirty(false);
                 }
             }
             break;
