@@ -25,7 +25,7 @@
 #include "CocostudioParserJsonTest.h"
 #include "cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
-#include "CocostudioParserTest.h"
+#include "../CocostudioParserTest.h"
 #include "../CustomWidget/CustomImageView.h"
 #include "../CustomWidget/CustomImageViewReader.h"
 #include "../CustomWidget/CustomParticleWidgetReader.h"
