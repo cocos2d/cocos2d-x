@@ -23,13 +23,13 @@ LOCAL_C_INCLUDES := $(LOCAL_EXPORT_C_INCLUDES) \
                     $(COCOS2DX_CORE) \
                     $(COCOS2DX_CORE)/platform \
                     $(COCOS2DX_CORE)/platform/android \
-                    $(COCOS2DX_ROOT)/external/lua/luajit/include \
-                    $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(COCOS2DX_ROOT)/external \
                     $(COCOS2DX_ROOT)/external/unzip \
                     $(COCOS2DX_ROOT)/external/xxtea \
                     $(COCOS2DX_ROOT)/external/curl/include/android \
-                    $(QUICK_V3_LIB)
+                    $(QUICK_V3_LIB) \
+                    $(QUICK_V3_LIB)/lua_bindings/luajit/include \
+                    $(QUICK_V3_LIB)/lua_bindings/tolua
 
 
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -DCC_LUA_ENGINE_ENABLED=1 $(ANDROID_COCOS2D_BUILD_FLAGS) -std=c++11

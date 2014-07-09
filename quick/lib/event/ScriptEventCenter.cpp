@@ -340,7 +340,7 @@ void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
         j = i - 1;
 
 //        printf("----sortAllTouchableNodes(%x): getOrderOfArrival=%d\n", tempItem, tempItem->getOrderOfArrival());
-        while(j >= 0 && (tempItem->getOrderOfArrival() > x[j]->getOrderOfArrival()))
+        while(j >= 0 && (tempItem->m_drawOrder > x[j]->m_drawOrder))
         {
             x[j + 1] = x[j];
             j = j - 1;
@@ -353,7 +353,7 @@ void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
         for(i=0; i<length; i++)
         {
             tempItem = x[i];
-            CCLOG("[%03d] getOrderOfArrival() = %u, w = %0.2f, h = %0.2f", i, tempItem->getOrderOfArrival(), tempItem->getCascadeBoundingBox().size.width, tempItem->getCascadeBoundingBox().size.height);
+            CCLOG("[%03d] m_drawOrder = %u, w = %0.2f, h = %0.2f", i, tempItem->m_drawOrder, tempItem->getCascadeBoundingBox().size.width, tempItem->getCascadeBoundingBox().size.height);
         }
 }
 

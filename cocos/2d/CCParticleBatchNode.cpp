@@ -123,6 +123,8 @@ bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 // Don't call visit on it's children
 void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
+    m_drawOrder = ++g_drawOrder;
+    
     // CAREFUL:
     // This visit is almost identical to Node#visit
     // with the exception that it doesn't call visit on it's children

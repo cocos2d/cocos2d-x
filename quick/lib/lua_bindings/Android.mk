@@ -8,10 +8,8 @@ LOCAL_MODULE_FILENAME := liblua
 LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(LOCAL_PATH)/manual/CCLuaEngine.cpp \
           $(LOCAL_PATH)/manual/CCLuaStack.cpp \
-          $(LOCAL_PATH)/manual/lua_debugger.c \
           $(LOCAL_PATH)/manual/CCLuaValue.cpp \
           $(LOCAL_PATH)/manual/Cocos2dxLuaLoader.cpp \
-          $(LOCAL_PATH)/manual/Lua_web_socket.cpp \
           $(LOCAL_PATH)/manual/LuaScriptHandlerMgr.cpp \
           $(LOCAL_PATH)/manual/LuaBasicConversions.cpp \
           $(LOCAL_PATH)/manual/lua_cocos2dx_manual.cpp \
@@ -22,37 +20,37 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(LOCAL_PATH)/manual/platform/android/CCLuaJavaBridge.cpp \
           $(LOCAL_PATH)/manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
           $(LOCAL_PATH)/manual/tolua_fix.cpp \
-          $(LOCAL_PATH)/manual/lua_extensions.c \
           $(LOCAL_PATH)/auto/lua_cocos2dx_auto.cpp \
           $(LOCAL_PATH)/auto/lua_cocos2dx_extension_auto.cpp \
           $(LOCAL_PATH)/auto/lua_cocos2dx_extra_auto.cpp \
           $(LOCAL_PATH)/auto/lua_cocos2dx_physics_auto.cpp \
-          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_event.c \
-          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_is.c \
-          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_map.c \
-          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_push.c \
-          $(COCOS2DX_ROOT)/external/lua/tolua/tolua_to.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/auxiliar.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/buffer.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/except.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/inet.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/io.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/luasocket.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/mime.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/options.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/select.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/serial.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/tcp.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/timeout.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/udp.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/unix.c \
-          $(COCOS2DX_ROOT)/external/lua/luasocket/usocket.c \
+          $(LOCAL_PATH)/tolua/tolua_event.c \
+          $(LOCAL_PATH)/tolua/tolua_is.c \
+          $(LOCAL_PATH)/tolua/tolua_map.c \
+          $(LOCAL_PATH)/tolua/tolua_push.c \
+          $(LOCAL_PATH)/tolua/tolua_to.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/auxiliar.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/except.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/inet.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/luasocket.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/luasocket_buffer.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/luasocket_io.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/mime.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/options.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/select.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/serial.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/socket_scripts.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/tcp.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/timeout.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/udp.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/unix.c \
+          $(QUICK_V3_LIB)/lua_extensions/socket/usocket.c \
           $(COCOS2DX_ROOT)/external/xxtea/xxtea.cpp
 
 
-LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
-                    $(COCOS2DX_ROOT)/external/lua/luajit/include \
-                    $(COCOS2DX_ROOT)/external/lua \
+LOCAL_C_INCLUDES := $(QUICK_V3_LIB)/lua_bindings/tolua \
+                    $(QUICK_V3_LIB)/lua_bindings/luajit/include \
+                    $(QUICK_V3_LIB)/lua_bindings \
                     $(COCOS2DX_ROOT)/extensions \
                     $(COCOS2DX_CORE)/editor-support/spine \
                     $(COCOS2DX_CORE)/editor-support/cocosbuilder \
@@ -72,8 +70,8 @@ LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(COCOS2DX_ROOT)/external/xxtea
 
 
-LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
-                           $(COCOS2DX_ROOT)/external/lua/luajit/include \
+LOCAL_EXPORT_C_INCLUDES := $(QUICK_V3_LIB)/lua_bindings/tolua \
+                           $(QUICK_V3_LIB)/lua_bindings/luajit/include \
                            $(QUICK_V3_LIB) \
                            $(QUICK_V3_LIB)/lua_extensions \
                            $(LOCAL_PATH)/auto \
@@ -97,14 +95,13 @@ LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,lua/luajit/prebuilt/android)
+$(call import-module,lua_bindings/luajit)
 $(call import-module,lua_extensions)
 $(call import-module,extra)
 $(call import-module,event)
 $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)
-$(call import-module,network)
 #$(call import-module,editor-support/cocostudio)
 #$(call import-module,editor-support/cocosbuilder)
 #$(call import-module,editor-support/spine)

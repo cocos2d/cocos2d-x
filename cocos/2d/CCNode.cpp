@@ -76,6 +76,8 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 int Node::s_globalOrderOfArrival = 1;
 
+unsigned int Node::g_drawOrder = 0;
+
 Node::Node(void)
 : _rotationX(0.0f)
 , _rotationY(0.0f)
@@ -114,6 +116,7 @@ Node::Node(void)
 , _isTransitionFinished(false)
 #if CC_ENABLE_SCRIPT_BINDING
 //, _updateScriptHandler(0)
+, m_drawOrder(0)
 // touch
 , m_bTouchCaptureEnabled(true)
 , m_bTouchSwallowEnabled(true)
@@ -1290,7 +1293,8 @@ void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 
 void Node::visit()
 {
-    auto renderer = Director::getInstance()->getRenderer();
+    m_drawOrder = ++g_drawOrder;
+   auto renderer = Director::getInstance()->getRenderer();
     Mat4 parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     visit(renderer, parentTransform, true);
 }
@@ -1320,6 +1324,8 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 
 void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
+    m_drawOrder = ++g_drawOrder;
+    
     // quick return if not visible. children won't be drawn.
     if (!_visible)
     {
@@ -1926,6 +1932,7 @@ Vec2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
 
 void Node::updateTransform()
 {
+    m_drawOrder = ++g_drawOrder;
     // Recursively iterate over children
     for( const auto &child: _children)
         child->updateTransform();
