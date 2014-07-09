@@ -66,17 +66,13 @@ public:
     
     virtual void update(float t) override;
     
-    /**get & set speed */
-    float getSpeed() const { return _speed; }
-    void setSpeed(float speed) { _speed = speed; }
+    /**get & set speed, negative speed means playing reverse */
+    float getSpeed() const;
+    void setSpeed(float speed);
     
-    /**get & set blend weight*/
+    /**get & set blend weight, weight must positive*/
     float getWeight() const { return _weight; }
-    void setWeight(float weight) { _weight = weight; }
-    
-    /**get & set play back*/
-    bool getPlayBack() const { return _playBack; }
-    void setPlayBack(bool playBack) { _playBack = playBack; }
+    void setWeight(float weight);
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -86,11 +82,11 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     Animation3D* _animation; //animation data
 
-    float      _speed; //playing speed
+    float      _absSpeed; //playing speed
     float      _weight; //blend weight
     float      _start; //start time 0 - 1, used to generate sub Animate3D
     float      _last; //last time 0 - 1, used to generate sub Animate3D
-    bool       _playBack; // is playing back
+    bool       _playReverse; // is playing reverse
     std::map<Bone*, Animation3D::Curve*> _boneCurves; //weak ref
 };
 
