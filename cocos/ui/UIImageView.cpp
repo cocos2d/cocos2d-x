@@ -154,8 +154,6 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
     _imageTextureSize = _imageRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    _imageRenderer->setColor(this->getColor());
-    _imageRenderer->setOpacity(this->getOpacity());
     
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
