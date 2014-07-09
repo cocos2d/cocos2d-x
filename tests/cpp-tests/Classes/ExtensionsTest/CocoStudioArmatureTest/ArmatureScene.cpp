@@ -591,7 +591,7 @@ std::string TestFrameEvent::title() const
 {
     return "Test Frame Event";
 }
-void TestFrameEvent::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
+void TestFrameEvent::onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
@@ -633,7 +633,7 @@ void TestParticleDisplay::onEnter()
     ParticleSystem *p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
     ParticleSystem *p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
 
-    Bone *bone  = Bone::create("p1");
+    cocostudio::Bone *bone  = cocostudio::Bone::create("p1");
     bone->addDisplay(p1, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
@@ -641,7 +641,7 @@ void TestParticleDisplay::onEnter()
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a3");
 
-    bone  = Bone::create("p2");
+    bone  = cocostudio::Bone::create("p2");
     bone->addDisplay(p2, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
@@ -773,7 +773,7 @@ std::string TestColliderDetector::title() const
 {
     return "Test Collider Detector";
 }
-void TestColliderDetector::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
+void TestColliderDetector::onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
@@ -1025,10 +1025,10 @@ void TestColliderDetector::update(float delta)
 
     // This code is just telling how to get the vertex.
     // For a more accurate collider detection, you need to implemente yourself.
-    const Map<std::string, Bone*>& map = armature2->getBoneDic();
+    const Map<std::string, cocostudio::Bone*>& map = armature2->getBoneDic();
     for(const auto& element : map)
     {
-        Bone *bone = element.second;
+        cocostudio::Bone *bone = element.second;
         ColliderDetector *detector = bone->getColliderDetector();
 
         if (!detector)
@@ -1243,7 +1243,7 @@ void Hero::changeMount(Armature *armature)
         removeFromParentAndCleanup(false);
 
         //Get the hero bone
-        Bone *bone = armature->getBone("hero");
+        cocostudio::Bone *bone = armature->getBone("hero");
         //Add hero as a display to this bone
         bone->addDisplay(this, 0);
         //Change this bone's display
