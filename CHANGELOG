@@ -1,4 +1,5 @@
 cocos2d-x-2.2.5 ???
+     [NEW]    Cocos Studio: support Cocos Studio mac version v1.0beta
      [FIX]    WP8: Box2D and Chipmunk projects build issue with VS2013 Express
 
 cocos2d-x-2.2.4 @Jun.19 2014
