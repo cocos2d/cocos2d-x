@@ -176,7 +176,7 @@ bool	CocoLoader::ReadCocoBinBuff(char* pBinBuff)
 		char*	pDestBuff  = new char[m_pFileHeader->m_nDataSize];
 		uLongf		dwSrcSize  = m_pFileHeader->m_nCompressSize;
 		uLongf		dwDestSize  = m_pFileHeader->m_nDataSize;
-		int			nRes = uncompress((Bytef*)pDestBuff,&dwDestSize,(Bytef*)m_pMemoryBuff,dwSrcSize);
+		uncompress((Bytef*)pDestBuff,&dwDestSize,(Bytef*)m_pMemoryBuff,dwSrcSize);
 		pStartAddr = m_pMemoryBuff = pDestBuff;
 	}
     
