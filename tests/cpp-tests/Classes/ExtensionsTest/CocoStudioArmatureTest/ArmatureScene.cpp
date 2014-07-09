@@ -1387,7 +1387,7 @@ void TestPlaySeveralMovement::onEnter()
 //    int index[] = {0, 1, 2};
 //    std::vector<int> indexes(index, index+3);
 
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playWithNames(names);
 //    armature->getAnimation()->playWithIndexes(indexes);
@@ -1458,7 +1458,7 @@ void TestChangeAnimationInternal::onEnter()
     listener->onTouchesEnded = CC_CALLBACK_2(TestPlaySeveralMovement::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
@@ -1558,7 +1558,7 @@ void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Even
         
 		m_armatureIndex = -2;    // is loading
 	}
-	else if(m_armatureIndex>=0 && m_armature != NULL)
+	else if(m_armatureIndex>=0 && m_armature != nullptr)
 	{
 		this->removeChild(m_armature);
 		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;

@@ -28,7 +28,7 @@ Layer* createActionManagerLayer(int nIndex)
         case 4: return new ResumeTest();
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Layer* nextActionManagerAction()
@@ -129,14 +129,14 @@ void CrashTest::onEnter()
     child->runAction(Sequence::create(
                                             DelayTime::create(1.4f),
                                             FadeOut::create(1.1f),
-                                            NULL)
+                                            nullptr)
                     );
     
     //After 1.5 second, self will be removed.
     runAction( Sequence::create(
                                     DelayTime::create(1.4f),
                                     CallFunc::create( CC_CALLBACK_0(CrashTest::removeThis,this)),
-                                    NULL)
+                                    nullptr)
              );
 }
 
@@ -168,7 +168,7 @@ void LogicTest::onEnter()
     grossini->runAction( Sequence::create( 
                                                 MoveBy::create(1, Vec2(150,0)),
                                                 CallFuncN::create(CC_CALLBACK_1(LogicTest::bugMe,this)),
-                                                NULL) 
+                                                nullptr) 
                         );
 }
 
@@ -246,7 +246,7 @@ void StopActionTest::onEnter()
 
     auto pMove = MoveBy::create(2, Vec2(200, 0));
     auto pCallback = CallFunc::create(CC_CALLBACK_0(StopActionTest::stopAction,this));
-    auto pSequence = Sequence::create(pMove, pCallback, NULL);
+    auto pSequence = Sequence::create(pMove, pCallback, nullptr);
     pSequence->setTag(kTagSequence);
 
     auto pChild = Sprite::create(s_pathGrossini);

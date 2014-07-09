@@ -11,7 +11,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 {
     struct timeval now;
 
-    gettimeofday( &now, NULL);
+    gettimeofday( &now, nullptr);
 
     float dt = (now.tv_sec - lastUpdate->tv_sec) + (now.tv_usec - lastUpdate->tv_usec) / 1000000.0f;
 
@@ -25,7 +25,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 ////////////////////////////////////////////////////////
 void TextureMenuLayer::showCurrentTest()
 {
-    Scene* scene = NULL;
+    Scene* scene = nullptr;
 
     switch (_curCase)
     {
@@ -89,7 +89,7 @@ void TextureTest::performTestsPNG(const char* filename)
 
     log("RGBA 8888");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-    gettimeofday(&now, NULL);
+    gettimeofday(&now, nullptr);
     texture = cache->addImage(filename);
     if( texture )
         log("  ms:%f", calculateDeltaTime(&now) );
@@ -99,7 +99,7 @@ void TextureTest::performTestsPNG(const char* filename)
 
     log("RGBA 4444");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-    gettimeofday(&now, NULL);
+    gettimeofday(&now, nullptr);
     texture = cache->addImage(filename);
     if( texture )
         log("  ms:%f", calculateDeltaTime(&now) );
@@ -109,7 +109,7 @@ void TextureTest::performTestsPNG(const char* filename)
 
     log("RGBA 5551");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
-    gettimeofday(&now, NULL);
+    gettimeofday(&now, nullptr);
     texture = cache->addImage(filename);
     if( texture )
         log("  ms:%f", calculateDeltaTime(&now) );
@@ -119,7 +119,7 @@ void TextureTest::performTestsPNG(const char* filename)
 
     log("RGB 565");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB565);
-    gettimeofday(&now, NULL);    
+    gettimeofday(&now, nullptr);    
     texture = cache->addImage(filename);
     if( texture )
         log("  ms:%f", calculateDeltaTime(&now) );
@@ -143,7 +143,7 @@ void TextureTest::performTests()
 
 //     log("--- PVR 128x128 ---");
 //     log("RGBA 8888");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/test_image_rgba8888.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -152,7 +152,7 @@ void TextureTest::performTests()
 //     cache->removeTexture(texture);
 // 
 //     log("BGRA 8888");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/test_image_bgra8888.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -161,7 +161,7 @@ void TextureTest::performTests()
 //     cache->removeTexture(texture);
 // 
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/test_image_rgba4444.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -170,7 +170,7 @@ void TextureTest::performTests()
 //     cache->removeTexture(texture);
 // 
 //     log("RGB 565");
-//     gettimeofday(&now, NULL);
+//     gettimeofday(&now, nullptr);
 //     texture = cache->addImage("Images/test_image_rgb565.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -184,7 +184,7 @@ void TextureTest::performTests()
 
 //     log("--- PVR 512x512 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/texture512x512_rgba4444.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -204,7 +204,7 @@ void TextureTest::performTests()
 
 //     log("--- PVR 1024x1024 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/texture1024x1024_rgba4444.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -214,7 +214,7 @@ void TextureTest::performTests()
 // 
 //     log("--- PVR.GZ 1024x1024 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/texture1024x1024_rgba4444.pvr.gz");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -224,7 +224,7 @@ void TextureTest::performTests()
 // 
 //     log("--- PVR.CCZ 1024x1024 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/texture1024x1024_rgba4444.pvr.ccz");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -244,7 +244,7 @@ void TextureTest::performTests()
 
 //     log("--- PVR 1024x1024 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/PlanetCute-1024x1024-rgba4444.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -254,7 +254,7 @@ void TextureTest::performTests()
 // 
 //     log("--- PVR.GZ 1024x1024 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/PlanetCute-1024x1024-rgba4444.pvr.gz");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -264,7 +264,7 @@ void TextureTest::performTests()
 // 
 //     log("--- PVR.CCZ 1024x1024 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/PlanetCute-1024x1024-rgba4444.pvr.ccz");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -286,7 +286,7 @@ void TextureTest::performTests()
 
 //     log("--- PVR 1024x1024 ---");
 //     log("RGBA 8888");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/landscape-1024x1024-rgba8888.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -296,7 +296,7 @@ void TextureTest::performTests()
 // 
 //     log("--- PVR.GZ 1024x1024 ---");
 //     log("RGBA 8888");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/landscape-1024x1024-rgba8888.pvr.gz");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -306,7 +306,7 @@ void TextureTest::performTests()
 // 
 //     log("--- PVR.CCZ 1024x1024 ---");
 //     log("RGBA 8888");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/landscape-1024x1024-rgba8888.pvr.ccz");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );
@@ -326,7 +326,7 @@ void TextureTest::performTests()
 
 //     log("--- PVR 2048x2048 ---");
 //     log("RGBA 4444");
-//     gettimeofday(&now, NULL);    
+//     gettimeofday(&now, nullptr);    
 //     texture = cache->addImage("Images/texture2048x2048_rgba4444.pvr");
 //     if( texture )
 //         log("  ms:%f", calculateDeltaTime(&now) );

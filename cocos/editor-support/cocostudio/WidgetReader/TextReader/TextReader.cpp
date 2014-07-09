@@ -18,7 +18,7 @@ namespace cocostudio
     static const char* P_HAlignment = "hAlignment";
     static const char* P_VAlignment = "vAlignment";
     
-    static TextReader* instanceTextReader = NULL;
+    static TextReader* instanceTextReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
     

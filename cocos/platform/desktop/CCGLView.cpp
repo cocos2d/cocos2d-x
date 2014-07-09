@@ -703,9 +703,9 @@ static bool glew_dynamic_binding()
     const char *gl_extensions = (const char*)glGetString(GL_EXTENSIONS);
 
     // If the current opengl driver doesn't have framebuffers methods, check if an extension exists
-    if (glGenFramebuffers == NULL)
+    if (glGenFramebuffers == nullptr)
     {
-        log("OpenGL: glGenFramebuffers is NULL, try to detect an extension");
+        log("OpenGL: glGenFramebuffers is nullptr, try to detect an extension");
         if (strstr(gl_extensions, "ARB_framebuffer_object"))
         {
             log("OpenGL: ARB_framebuffer_object is supported");

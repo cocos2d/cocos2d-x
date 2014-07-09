@@ -63,7 +63,7 @@ public:
         auto flipx_back = flipx->reverse();
         auto delay = DelayTime::create(2);
         
-        return Sequence::create(flipx, delay, flipx_back, NULL);
+        return Sequence::create(flipx, delay, flipx_back, nullptr);
     }
 };
 
@@ -76,7 +76,7 @@ public:
         auto flipy_back = flipy->reverse();
         auto delay = DelayTime::create(2);
         
-        return Sequence::create(flipy, delay, flipy_back, NULL);
+        return Sequence::create(flipy, delay, flipy_back, nullptr);
     }
 };
 
@@ -162,7 +162,7 @@ public:
         auto shuffle_back = shuffle->reverse();
         auto delay = DelayTime::create(2);
 
-        return Sequence::create(shuffle, delay, shuffle_back, NULL);
+        return Sequence::create(shuffle, delay, shuffle_back, nullptr);
     }
 };
 
@@ -176,7 +176,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -190,7 +190,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -204,7 +204,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -217,7 +217,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -230,7 +230,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -318,7 +318,7 @@ ActionInterval* createEffect(int nIndex, float t)
         case 21: return PageTurn3DDemo::create(t);
     }
 
-    return NULL;
+    return nullptr;
 }
 
 ActionInterval* getAction()
@@ -357,14 +357,14 @@ TextLayer::TextLayer(void)
     grossini->setPosition( Vec2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
-    grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
+    grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
 
     auto tamara = Sprite::create(s_pathSister1);
     _gridNodeTarget->addChild(tamara, 1);
     tamara->setPosition( Vec2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
-    tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL)) );
+    tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr)) );
     
     auto label = Label::createWithTTF((effectsList[actionIdx]).c_str(), "fonts/Marker Felt.ttf", 32);
     
@@ -378,7 +378,7 @@ TextLayer::TextLayer(void)
 void TextLayer::checkAnim(float dt)
 {
     //auto s2 = getChildByTag(kTagBackground);
-    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != NULL)
+    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != nullptr)
         _gridNodeTarget->setGrid(nullptr);;
 }
 

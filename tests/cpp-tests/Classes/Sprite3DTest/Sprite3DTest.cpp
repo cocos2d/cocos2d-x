@@ -184,7 +184,7 @@ void Sprite3DBasicTest::addNewSpriteWithCoords(Vec2 p)
     else
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -504,7 +504,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     else
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -706,7 +706,7 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 {
                     _sprite->runAction(_hurt);
                     auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
-                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), NULL);
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
                     seq->setTag(101);
                     _sprite->runAction(seq);
                     _state = State::SWIMMING_TO_HURT;

@@ -25,7 +25,7 @@ CustomParticleWidgetReader::~CustomParticleWidgetReader()
     
 }
 
-static CustomParticleWidgetReader* _instanceCustomParticleWidgetReader = NULL;
+static CustomParticleWidgetReader* _instanceCustomParticleWidgetReader = nullptr;
 
 CustomParticleWidgetReader* CustomParticleWidgetReader::getInstance()
 {

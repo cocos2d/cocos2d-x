@@ -32,7 +32,7 @@ CustomImageView* CustomImageView::create()
         return custom;
     }
     CC_SAFE_DELETE(custom);
-    return NULL;
+    return nullptr;
 }
 
 bool CustomImageView::init()
