@@ -103,7 +103,14 @@ namespace cocostudio
        
         std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
         std::string fontFilePath = jsonPath.append(fontName);
-        label->setFontName(fontFilePath);
+		if (FileUtils::getInstance()->isFileExist(fontFilePath))
+		{
+			label->setFontName(fontFilePath);
+		}
+		else{
+			label->setFontName(fontName);
+		}
+		
         
         bool aw = DICTOOL->checkObjectExist_json(options, P_AreaWidth);
         bool ah = DICTOOL->checkObjectExist_json(options, P_AreaHeight);
