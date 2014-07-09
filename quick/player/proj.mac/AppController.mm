@@ -64,8 +64,7 @@ USING_NS_CC_EXTRA;
     env = [env stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     env = [NSString stringWithFormat:@"%@/quick", env];
     SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([env cStringUsingEncoding:NSUTF8StringEncoding]);
-    
-    
+
     [self loadLuaConfig];
     [self updateProjectConfigFromCommandLineArgs:&projectConfig];
     [self createWindowAndGLView];
@@ -74,6 +73,28 @@ USING_NS_CC_EXTRA;
     [self updateUI];
     [self loadLuaPlayerCore];
     [self startup];
+}
+
+-(void) applicationDidResignActive: (NSNotification*) note
+{
+    cocos2d::EventCustom event("APP.EVENT");
+    std::stringstream buf;
+    
+    buf << "{\"name\":\"focusOut\"}";
+    
+    event.setDataString(buf.str());
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+- (void) applicationDidBecomeActive:(NSNotification *)notification
+{
+    cocos2d::EventCustom event("APP.EVENT");
+    std::stringstream buf;
+    
+    buf << "{\"name\":\"focusIn\"}";
+    
+    event.setDataString(buf.str());
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 - (BOOL) windowShouldClose:(id)sender
@@ -361,7 +382,11 @@ USING_NS_CC_EXTRA;
 
 - (void) createWindowAndGLView
 {
-    eglView = GLView::createWithRect("quick-x-player", cocos2d::Rect(0,0,projectConfig.getFrameSize().width, projectConfig.getFrameSize().height), projectConfig.getFrameScale());
+    int width = projectConfig.getFrameSize().width;
+    int height = projectConfig.getFrameSize().height;
+    float scale = projectConfig.getFrameScale();
+    
+    eglView = GLView::createWithRect("quick-x-player", cocos2d::Rect(0, 0, width, height), scale, false);
     Director::getInstance()->setOpenGLView(eglView);
     
     window = glfwGetCocoaWindow(eglView->getWindow());
@@ -486,7 +511,6 @@ USING_NS_CC_EXTRA;
     NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
     NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
 //    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpenRecent), "WELCOME_OPEN_PROJECT_ARGS", NULL);
-    
     
     
     // send recent to Lua
@@ -769,7 +793,17 @@ USING_NS_CC_EXTRA;
 
 - (IBAction) onFileClose:(id)sender
 {
-    [[NSApplication sharedApplication] terminate:self];
+    if (projectConfig.isWelcome())
+    {
+        cocos2d::EventCustom event("APP.EVENT");
+        std::string data = "{\"name\":\"close\"}";
+        event.setDataString(data);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
+    else
+    {
+        [[NSApplication sharedApplication] terminate:self];
+    }
 }
 
 - (IBAction) onPlayerWriteDebugLogToFile:(id)sender
@@ -818,7 +852,7 @@ USING_NS_CC_EXTRA;
     if (i >= 0 && i < SimulatorConfig::sharedDefaults()->getScreenSizeCount())
     {
         SimulatorScreenSize size = SimulatorConfig::sharedDefaults()->getScreenSize((int)i);
-        projectConfig.setFrameSize(projectConfig.isLandscapeFrame() ? CCSize(size.height, size.width) : CCSize(size.width, size.height));
+        projectConfig.setFrameSize(projectConfig.isLandscapeFrame() ? cocos2d::Size(size.height, size.width) : cocos2d::Size(size.width, size.height));
         projectConfig.setFrameScale(1.0f);
         [self relaunch];
     }

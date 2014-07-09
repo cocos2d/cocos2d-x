@@ -150,9 +150,12 @@ function player.buildUI()
 end
 
 function player.init()
-    player.configFilePath = __USER_HOME__ .. ".quick_player.lua"
-    if not cc.FileUtils:getInstance():isFileExist(player.configFilePath) then player.restorDefaultSettings() end
+    player.registerEventHandler()
 
+    player.configFilePath = __USER_HOME__ .. ".quick_player.lua"
+    if not cc.FileUtils:getInstance():isFileExist(player.configFilePath) then 
+        player.restorDefaultSettings()
+    end
     player.loadSetting(player.configFilePath)
 
     local s = PlayerSettings:new()
@@ -162,6 +165,29 @@ function player.init()
     s.windowHeight = cc.player.settings.PLAYER_WINDOW_HEIGHT 
     s.openLastProject = cc.player.settings.PLAYER_OPEN_LAST_PROJECT
     PlayerProtocol:getInstance():setPlayerSettings(s)
+end
+
+function player.registerEventHandler()
+    player.eventNode = cc.Node:create()
+    
+    -- for app event
+    local eventDispatcher = player.eventNode:getEventDispatcher()
+    local event = function(e)
+        local t = json.decode(e:getDataString())
+        if t == nil then return end
+
+        if t.name == "close" then
+            cc.Director:getInstance():endToLua()
+        elseif t.name == "resize" then
+            -- <code here> t.w,t.h
+        elseif t.name == "focusIn" then
+            -- cc.Director:getInstance():resume()
+        elseif t.name == "focusOut" then
+            -- cc.Director:getInstance():pause()
+        end
+    end
+
+    eventDispatcher:addEventListenerWithFixedPriority(cc.EventListenerCustom:create("APP.EVENT", event), 1)
 end
 
 -- load player settings
