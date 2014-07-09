@@ -123,6 +123,8 @@ public:
     virtual int executeGlobalFunction(const char* functionName);
 
     virtual void clean(void);
+    virtual void settop(int top);
+    virtual void copyValue(int index);
     virtual void pushInt(int intValue);
     virtual void pushFloat(float floatValue);
     virtual void pushLong(long longValue);

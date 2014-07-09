@@ -1,7 +1,6 @@
 
 #include "platform/win32/CCNativeWin32.h"
 #include "platform/win32/CCNativeWin32def.h"
-#include "CCEGLView.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_QT)
 #include <QInputDialog>

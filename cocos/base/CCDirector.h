@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "2d/CCLabelAtlas.h"
 #include <stack>
 #include "math/CCMath.h"
+#include "event/ScriptEventCenter.h"
 
 NS_CC_BEGIN
 
@@ -403,6 +404,14 @@ public:
      *  get Frame Rate
      */
     float getFrameRate() const { return _frameRate; }
+    
+    ScriptEventCenter* getScriptEventCenter() {
+        if (!_scriptEventCenter) {
+            _scriptEventCenter = ScriptEventCenter::create();
+            _scriptEventCenter->retain();
+        }
+        return _scriptEventCenter;
+    }
 
 protected:
     void purgeDirector();
@@ -507,6 +516,8 @@ protected:
     /* Console for the director */
     Console *_console;
 #endif
+    
+    ScriptEventCenter *_scriptEventCenter;
 
     // GLViewProtocol will recreate stats labels to fit visible rect
     friend class GLViewProtocol;

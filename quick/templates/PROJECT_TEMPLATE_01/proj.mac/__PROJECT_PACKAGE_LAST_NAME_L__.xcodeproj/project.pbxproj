@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F359E1F195197810052017E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F359E1E195197810052017E /* IOKit.framework */; };
-		9F6D890B195967EF00B36BA2 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */; };
-		9F6D890C195967EF00B36BA2 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */; };
-		9F6D890D195967EF00B36BA2 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D8909195967EF00B36BA2 /* libcocos2dx-extensions Mac.a */; };
-		9F6D890E195967EF00B36BA2 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6D890A195967EF00B36BA2 /* libCocosDenshion Mac.a */; };
+		DAF28348196BEDD500959DA1 /* liblibquick.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF28347196BEDD500959DA1 /* liblibquick.a */; };
 		F40EE898163F83E000090121 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44C957915F49004004D4151 /* AppKit.framework */; };
 		F44C957715F49004004D4151 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44C957615F49004004D4151 /* Cocoa.framework */; };
 		F4703CBE177955E200A8A9E9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4703CBC177955E100A8A9E9 /* MainMenu.xib */; };
@@ -46,11 +43,8 @@
 
 /* Begin PBXFileReference section */
 		9F359E1E195197810052017E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libchipmunk Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libchipmunk Mac.a"; sourceTree = "<group>"; };
-		9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libcocos2dx Mac.a"; sourceTree = "<group>"; };
-		9F6D8909195967EF00B36BA2 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2dx-extensions Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libcocos2dx-extensions Mac.a"; sourceTree = "<group>"; };
-		9F6D890A195967EF00B36BA2 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCocosDenshion Mac.a"; path = "../../../lib/proj.ios_mac/build/Debug/libCocosDenshion Mac.a"; sourceTree = "<group>"; };
-		DAEBA9D71959895A00C31FBB /* quick_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = quick_libs.xcodeproj; path = quick/lib/proj.ios_mac/quick_libs.xcodeproj; sourceTree = QUICK_V3_ROOT; };
+		DAF28333196BDDB100959DA1 /* libquick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libquick.xcodeproj; path = quick/lib/proj.mac/libquick.xcodeproj; sourceTree = QUICK_V3_ROOT; };
+		DAF28347196BEDD500959DA1 /* liblibquick.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibquick.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44C957215F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = __PROJECT_PACKAGE_LAST_NAME_L__.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F44C957615F49004004D4151 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F44C957915F49004004D4151 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -82,10 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F6D890B195967EF00B36BA2 /* libchipmunk Mac.a in Frameworks */,
-				9F6D890C195967EF00B36BA2 /* libcocos2dx Mac.a in Frameworks */,
-				9F6D890D195967EF00B36BA2 /* libcocos2dx-extensions Mac.a in Frameworks */,
-				9F6D890E195967EF00B36BA2 /* libCocosDenshion Mac.a in Frameworks */,
+				DAF28348196BEDD500959DA1 /* liblibquick.a in Frameworks */,
 				9F359E1F195197810052017E /* IOKit.framework in Frameworks */,
 				F4B4EF6616CA2A8B00736FFE /* SystemConfiguration.framework in Frameworks */,
 				F40EE898163F83E000090121 /* AppKit.framework in Frameworks */,
@@ -107,7 +98,7 @@
 		F44C956715F49004004D4151 = {
 			isa = PBXGroup;
 			children = (
-				DAEBA9D71959895A00C31FBB /* quick_libs.xcodeproj */,
+				DAF28333196BDDB100959DA1 /* libquick.xcodeproj */,
 				F44C957C15F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__ */,
 				F44C957515F49004004D4151 /* Frameworks */,
 				F44C957315F49004004D4151 /* Products */,
@@ -125,10 +116,7 @@
 		F44C957515F49004004D4151 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9F6D8907195967EF00B36BA2 /* libchipmunk Mac.a */,
-				9F6D8908195967EF00B36BA2 /* libcocos2dx Mac.a */,
-				9F6D8909195967EF00B36BA2 /* libcocos2dx-extensions Mac.a */,
-				9F6D890A195967EF00B36BA2 /* libCocosDenshion Mac.a */,
+				DAF28347196BEDD500959DA1 /* liblibquick.a */,
 				9F359E1E195197810052017E /* IOKit.framework */,
 				F44C957915F49004004D4151 /* AppKit.framework */,
 				F4A5C15816B7A35700A12606 /* AudioToolbox.framework */,
@@ -346,16 +334,19 @@
 					"\"$(QUICK_V3_ROOT)/cocos/platform/mac\"",
 					"\"$(QUICK_V3_ROOT)/external/glfw3/include/mac\"",
 					"\"$(QUICK_V3_ROOT)/external\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/auto\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
 					"\"$(QUICK_V3_ROOT)/quick/lib\"",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/luajit/include",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/tolua",
+					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/auto\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hello30-asffotrztqyegkaewfduddhjkgwo/Build/Products/Debug",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -391,16 +382,19 @@
 					"\"$(QUICK_V3_ROOT)/cocos/platform/mac\"",
 					"\"$(QUICK_V3_ROOT)/external/glfw3/include/mac\"",
 					"\"$(QUICK_V3_ROOT)/external\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/luajit/include\"",
-					"\"$(QUICK_V3_ROOT)/external/lua/tolua\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual\"",
-					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/auto\"",
 					"\"$(QUICK_V3_ROOT)/external/unzip\"",
 					"\"$(QUICK_V3_ROOT)/quick/lib\"",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/luajit/include",
+					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/tolua",
+					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/auto\"",
+					"\"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/hello30-asffotrztqyegkaewfduddhjkgwo/Build/Products/Debug",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

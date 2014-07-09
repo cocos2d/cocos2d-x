@@ -1,0 +1,2585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="cocos">
+      <UniqueIdentifier>{b9af95fd-6fdb-4f53-8565-80437db48d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\2d">
+      <UniqueIdentifier>{642cd9b1-b9e3-4676-8dc8-aa25835f851d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\3d">
+      <UniqueIdentifier>{def5e0ea-cfee-4335-9f20-6d003a237a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\audio">
+      <UniqueIdentifier>{267e2c82-8436-4839-8e2f-7f75dbcef141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\audio\include">
+      <UniqueIdentifier>{b5bb375f-f24a-4ada-b04a-f4e2fd238a79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\audio\win32">
+      <UniqueIdentifier>{0641bc6a-9021-4766-a826-19a827ccf7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\base">
+      <UniqueIdentifier>{56bdfbf7-0817-4c19-bb4a-401e280eb1f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\deprecated">
+      <UniqueIdentifier>{08f3a30f-8add-4050-9352-f09ca6f02da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\math">
+      <UniqueIdentifier>{6a6a2134-bb39-4b14-beef-5cd05dc2becc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\network">
+      <UniqueIdentifier>{619d3b52-230d-4b11-8885-854f00574909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\physics">
+      <UniqueIdentifier>{3c3b4ba8-0b32-45e7-baa8-2df639159a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\physics\chipmunk">
+      <UniqueIdentifier>{34809489-ac1a-4284-9dc7-b761eb662e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\platform">
+      <UniqueIdentifier>{91d5e500-1626-467a-8d94-1a1a272ae906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\platform\desktop">
+      <UniqueIdentifier>{e43b9400-f5a9-4323-acb6-d2eece390217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\platform\win32">
+      <UniqueIdentifier>{7e3272f5-baf0-47ef-8d46-d907f5ed96e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\platform\win32\compat">
+      <UniqueIdentifier>{21d626f9-51d9-4a47-bf27-731625e8ae11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\renderer">
+      <UniqueIdentifier>{d696a981-24a5-41c8-b610-cc17d5a60022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{264a75cb-ac4a-4f0d-a6e6-b640e48b1881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\chipmunk">
+      <UniqueIdentifier>{b7b0ce7a-bef7-49f7-8012-f2cb70e6a891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\chipmunk\include">
+      <UniqueIdentifier>{8bb9cf24-61b3-47e6-89c6-847d746a8692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\chipmunk\include\chipmunk">
+      <UniqueIdentifier>{91a443c9-7331-4098-9b90-2dc78378d459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\chipmunk\include\chipmunk\constraints">
+      <UniqueIdentifier>{01448636-03ec-4417-8772-b08a2aa668e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\chipmunk\src">
+      <UniqueIdentifier>{834016ad-f934-4653-b6ad-27e758ff61a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\chipmunk\src\constraints">
+      <UniqueIdentifier>{6c03572e-b57f-4f2d-bb33-99959b387e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\ConvertUTF">
+      <UniqueIdentifier>{09b2a1b6-58ff-4102-9e60-4171013fe6d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\curl">
+      <UniqueIdentifier>{9550ec8e-8734-4072-a2f7-432c973cd5d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\curl\include">
+      <UniqueIdentifier>{059cfdd9-5075-499b-b6a6-bbef81f27454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\curl\include\win32">
+      <UniqueIdentifier>{3bd48b2b-0c40-4800-bbc0-85468d8e8b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\curl\include\win32\curl">
+      <UniqueIdentifier>{2ed068ae-8cd9-44c8-9e31-0b567e473640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\edtaa3func">
+      <UniqueIdentifier>{f9c27086-0c29-40c0-a01f-f1eb0edb45e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2">
+      <UniqueIdentifier>{37958496-49e5-4622-80fa-83d775aabc5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2\include">
+      <UniqueIdentifier>{3252933a-e40f-46f4-b02e-7213734c4aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2\include\win32">
+      <UniqueIdentifier>{5a3fa089-64a8-4e44-b12a-fce39b746984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2\include\win32\freetype">
+      <UniqueIdentifier>{5f9726b8-b89d-4624-9d8d-8d05927562a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2\include\win32\freetype\config">
+      <UniqueIdentifier>{caa62d1f-a3c5-4f24-a054-e3187a34c76c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2\include\win32\freetype\internal">
+      <UniqueIdentifier>{396068f2-2908-4ad1-bcf6-6d047a7736c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\freetype2\include\win32\freetype\internal\services">
+      <UniqueIdentifier>{b44a37e3-5a9a-4e98-b0a5-1da1b9ba0d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\glfw3">
+      <UniqueIdentifier>{c30ef972-fbc6-4312-a414-b96403e55dfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\glfw3\include">
+      <UniqueIdentifier>{ccccda7a-3dea-4f27-b609-1640d88b5ac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\glfw3\include\win32">
+      <UniqueIdentifier>{fe1fd4c3-d693-4672-bbaf-6a6a5e777ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\jpeg">
+      <UniqueIdentifier>{1165d461-ee67-485b-bb8c-864a4552be18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\jpeg\include">
+      <UniqueIdentifier>{40e7eb02-1f0a-4480-ba14-01ae2d0d0f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\jpeg\include\win32">
+      <UniqueIdentifier>{8ed02f8e-1c05-43c8-996b-af31b9892356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json">
+      <UniqueIdentifier>{3f8cf689-827b-409f-9818-3e252fc20bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json\internal">
+      <UniqueIdentifier>{b38db78b-4dd8-4782-b504-2f1acc68d9a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\png">
+      <UniqueIdentifier>{f7c37e2e-1743-44f9-8eea-f36116ede758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\png\include">
+      <UniqueIdentifier>{48497082-2ee4-4841-b742-98d7f044f318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\png\include\win32">
+      <UniqueIdentifier>{dc4183ee-b7dd-45cd-8d06-d3c383e97ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\sqlite3">
+      <UniqueIdentifier>{3bf0690f-43c2-457a-89ba-fd8706bf3d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\sqlite3\include">
+      <UniqueIdentifier>{3e46944e-81ab-4b31-9ef6-1af0a84514a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\tiff">
+      <UniqueIdentifier>{8528086e-eeae-4bd8-84b7-56dcaa604755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\tiff\include">
+      <UniqueIdentifier>{28288089-7a32-4436-ab93-1f9f71c738ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\tiff\include\win32">
+      <UniqueIdentifier>{57f77736-ddda-4027-bb6c-f971e34e1a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\tinyxml2">
+      <UniqueIdentifier>{7718f6ab-470e-488f-b993-dd63d53b4640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\unzip">
+      <UniqueIdentifier>{560c0aa7-1f33-4a8e-8593-f0f3be206402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\webp">
+      <UniqueIdentifier>{7348fbd8-9a71-436b-945e-fcc3c8df9063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\webp\include">
+      <UniqueIdentifier>{5a9781c1-ef36-4b07-b13e-f390781a0413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\webp\include\win32">
+      <UniqueIdentifier>{df6b57cc-ebe9-4664-a28c-16e969270263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\websockets">
+      <UniqueIdentifier>{05b5802e-880d-4fb7-a06e-33fa64a5ba5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\websockets\include">
+      <UniqueIdentifier>{68a361c5-148b-44dc-bee4-a66121378857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\websockets\include\win32">
+      <UniqueIdentifier>{8b71db61-945b-4cd5-b5cc-30bb5060ce21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\websockets\include\win32\win32helpers">
+      <UniqueIdentifier>{319225bf-cc53-4af6-bdf6-fd1efbd99428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific">
+      <UniqueIdentifier>{4dfd0306-f58c-46b1-a79e-949c62a6bd86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\gles">
+      <UniqueIdentifier>{35b8e94d-5ad1-4c22-bcdc-589fde466978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\gles\include">
+      <UniqueIdentifier>{f1d0f314-35ad-47f0-8f0d-797d222f5544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\gles\include\OGLES">
+      <UniqueIdentifier>{bb1a3558-e53f-4a58-aa89-0acd2d4b5a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\gles\include\OGLES\GL">
+      <UniqueIdentifier>{650a81c0-0dd4-4d62-8cd9-76010a5233cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\icon">
+      <UniqueIdentifier>{c57a8474-f9e0-4081-b0cb-e505f23eb1c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\icon\include">
+      <UniqueIdentifier>{3e6bd3b1-100a-4956-9577-1c3fd85c637c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\zlib">
+      <UniqueIdentifier>{5c54c00b-8fbf-4bb4-875f-04eb8009abce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\win32-specific\zlib\include">
+      <UniqueIdentifier>{3fb22f48-ea86-4219-afe1-ea5d66dd312a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\xxhash">
+      <UniqueIdentifier>{6429bcb1-7e1e-48c2-8eec-4b35eb93047c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\xxtea">
+      <UniqueIdentifier>{004da72e-ae83-4ce8-8540-a43253a9e934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick">
+      <UniqueIdentifier>{be626f75-8b52-4313-906e-cb3099ffaee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\event">
+      <UniqueIdentifier>{dd3c53c3-a1e5-497f-b796-de0521b44a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_bindings">
+      <UniqueIdentifier>{eeeead30-0c9d-4680-b74a-b8871af24027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_bindings\auto">
+      <UniqueIdentifier>{3c989798-c82b-412e-a432-03c58e79748b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_bindings\luajit">
+      <UniqueIdentifier>{0b4cbe8f-a2f7-475d-938d-10748822036b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_bindings\luajit\include">
+      <UniqueIdentifier>{92ce1273-d8fd-4b2d-bfe9-616e0ac78c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_bindings\manual">
+      <UniqueIdentifier>{14bf70e5-2bff-413b-977a-00b07a1ce408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_bindings\tolua">
+      <UniqueIdentifier>{0dfc7fb6-d38a-40af-9c1f-993b62209323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions">
+      <UniqueIdentifier>{15c7eb01-873c-4b1b-a618-3783c74a3028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\cjson">
+      <UniqueIdentifier>{f6a43222-e720-4c4b-be33-b97ddce7a1a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\debugger">
+      <UniqueIdentifier>{892e2fc3-1013-46b4-9d8d-eb9a53808816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\filesystem">
+      <UniqueIdentifier>{7247e9f0-b769-4e23-af5f-3dc3b9b7785b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\lpack">
+      <UniqueIdentifier>{f1c4d199-7164-4166-90af-c9ecdd3c0bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\lsqlite3">
+      <UniqueIdentifier>{10defc87-7d2b-433a-a8ab-1f0b885ca5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\socket">
+      <UniqueIdentifier>{180c2797-96ce-430e-bcc1-423429b8271b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\lua_extensions\zlib">
+      <UniqueIdentifier>{9a376bd8-d1ff-4153-b0de-d201eb172f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\ProjectConfig">
+      <UniqueIdentifier>{5d48c2df-9fc2-4efc-ab1d-9133ab1be826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions">
+      <UniqueIdentifier>{136daa53-15ba-4533-bf46-5b33d5a47b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI">
+      <UniqueIdentifier>{af88eb5a-c112-4ee3-bba5-f52c5177a35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI\CCControlExtension">
+      <UniqueIdentifier>{d45432b6-92ef-480a-9c13-f86e3b59a88f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI\CCEditBox">
+      <UniqueIdentifier>{646dbca8-ac8a-4461-82a3-c0fdd84d8897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra">
+      <UniqueIdentifier>{a2cf7e6e-63cb-495d-b88c-4f94f3b87fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\apptools">
+      <UniqueIdentifier>{8af1f745-461e-49cf-8ca6-ea5fa2523bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\crypto">
+      <UniqueIdentifier>{07f0ac98-3a87-4776-b561-75143fb7d160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\crypto\base64">
+      <UniqueIdentifier>{1971f6da-0865-42be-a30f-bd17976ec5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\crypto\md5">
+      <UniqueIdentifier>{3c650650-e96c-40a3-99ac-81746a1c1cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\network">
+      <UniqueIdentifier>{f227793d-cf87-4f13-8b28-b95678dae4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\platform">
+      <UniqueIdentifier>{61008433-f365-4313-9c49-ae98de401792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\platform\win32">
+      <UniqueIdentifier>{b7306df9-8797-4c30-87c9-a609743d1ff6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionManager.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionPageTurn3D.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionProgressTimer.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionTiledGrid.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionTween.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCAnimation.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCAnimationCache.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCAtlasNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCClippingNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCClippingRegionNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCComponent.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCComponentContainer.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCDrawingPrimitives.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCDrawNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCFont.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCFontAtlas.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCFontAtlasCache.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCFontCharMap.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCFontFNT.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCFontFreeType.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCGLBufferedNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCGrabber.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCGrid.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLabel.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLabelAtlas.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLabelBMFont.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLabelTextFormatter.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLabelTTF.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLayer.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCMenu.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCMenuItem.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCMotionStreak.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCNodeGrid.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCParallaxNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCParticleBatchNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCParticleExamples.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCParticleSystem.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCParticleSystemQuad.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCProgressTimer.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCRenderTexture.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCScene.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCSprite.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCSpriteBatchNode.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCSpriteFrame.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCSpriteFrameCache.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTextFieldTTF.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTileMapAtlas.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTMXLayer.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTMXObjectGroup.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTMXTiledMap.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTMXXMLParser.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTransition.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTransitionPageTurn.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTransitionProgress.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCTweenFunction.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCAction.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionCamera.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionCatmullRom.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionEase.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionGrid.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionGrid3D.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionInstant.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCActionInterval.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAnimation3D.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAnimationCurve.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBundle3D.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBundle3DData.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCMesh.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCMeshSkin.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCObjLoader.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCSprite3D.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCSprite3DMaterial.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAnimate3D.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\audio\include\Export.h">
+      <Filter>cocos\audio\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\audio\include\SimpleAudioEngine.h">
+      <Filter>cocos\audio\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\audio\win32\MciPlayer.h">
+      <Filter>cocos\audio\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCAutoreleasePool.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccCArray.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccConfig.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCConfiguration.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCConsole.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCData.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCDataVisitor.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCDirector.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEvent.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventAcceleration.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventCustom.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventDispatcher.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventFocus.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventKeyboard.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListener.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListenerAcceleration.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListenerCustom.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListenerFocus.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListenerKeyboard.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListenerMouse.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventListenerTouch.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventMouse.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventTouch.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCEventType.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccFPSImages.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCIMEDelegate.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCIMEDispatcher.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccMacros.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCMap.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCNS.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCPlatformConfig.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCPlatformMacros.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCProfiling.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCProtocols.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCRef.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCRefPtr.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCScheduler.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCScriptSupport.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCTouch.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccTypes.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCUserDefault.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccUTF8.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ccUtils.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCValue.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCVector.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\etc1.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\firePngData.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ObjectFactory.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\s3tc.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\TGAlib.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\uthash.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\utlist.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\ZipUtils.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\atitc.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\base64.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCBool.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCDeprecated.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCDictionary.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCDouble.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCFloat.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCInteger.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCNotificationCenter.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCSet.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCString.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\deprecated\CCArray.h">
+      <Filter>cocos\deprecated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\CCMathBase.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\CCVertex.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\Mat4.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\MathUtil.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\Quaternion.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\TransformUtils.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\Vec2.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\Vec3.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\Vec4.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\CCAffineTransform.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\CCGeometry.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\math\CCMath.h">
+      <Filter>cocos\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\network\WebSocket.h">
+      <Filter>cocos\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\CCPhysicsBody.h">
+      <Filter>cocos\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\CCPhysicsContact.h">
+      <Filter>cocos\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\CCPhysicsJoint.h">
+      <Filter>cocos\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\CCPhysicsShape.h">
+      <Filter>cocos\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\CCPhysicsWorld.h">
+      <Filter>cocos\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\chipmunk\CCPhysicsHelper_chipmunk.h">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCApplicationProtocol.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCCommon.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCDevice.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCFileUtils.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCGLViewProtocol.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCImage.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCSAXParser.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\CCThread.h">
+      <Filter>cocos\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\desktop\CCGLView.h">
+      <Filter>cocos\platform\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\win32\CCApplication.h">
+      <Filter>cocos\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\win32\CCFileUtilsWin32.h">
+      <Filter>cocos\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\win32\CCGL.h">
+      <Filter>cocos\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\win32\CCPlatformDefine.h">
+      <Filter>cocos\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\win32\CCStdC.h">
+      <Filter>cocos\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\platform\win32\compat\stdint.h">
+      <Filter>cocos\platform\win32\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCRenderCommand.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCRenderCommandPool.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCRenderer.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\ccShaders.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCTexture2D.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCTextureAtlas.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCTextureCache.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCBatchCommand.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCCustomCommand.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCGLProgram.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCGLProgramCache.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCGLProgramState.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCGLProgramStateCache.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\ccGLStateCache.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCGroupCommand.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCMeshCommand.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\renderer\CCQuadCommand.h">
+      <Filter>cocos\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\cocos2d.h">
+      <Filter>cocos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpShape.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpSpace.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpSpatialIndex.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpVect.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_ffi.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_private.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_types.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_unsafe.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpArbiter.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpBB.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpBody.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\cpPolyShape.h">
+      <Filter>external\chipmunk\include\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpConstraint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpDampedRotarySpring.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpDampedSpring.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpGearJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpGrooveJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpPinJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpPivotJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpRatchetJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpRotaryLimitJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpSimpleMotor.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\cpSlideJoint.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\constraints\util.h">
+      <Filter>external\chipmunk\include\chipmunk\constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\chipmunk\src\prime.h">
+      <Filter>external\chipmunk\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\ConvertUTF\ConvertUTF.h">
+      <Filter>external\ConvertUTF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\curl.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\curlbuild.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\curlrules.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\curlver.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\easy.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\mprintf.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\multi.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\stdcheaders.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\curl\include\win32\curl\typecheck-gcc.h">
+      <Filter>external\curl\include\win32\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\edtaa3func\edtaa3func.h">
+      <Filter>external\edtaa3func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\ft2build.h">
+      <Filter>external\freetype2\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\config\ftconfig.h">
+      <Filter>external\freetype2\include\win32\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\config\ftheader.h">
+      <Filter>external\freetype2\include\win32\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\config\ftmodule.h">
+      <Filter>external\freetype2\include\win32\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\config\ftoption.h">
+      <Filter>external\freetype2\include\win32\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\config\ftstdlib.h">
+      <Filter>external\freetype2\include\win32\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svgxval.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svkern.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svmm.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svotval.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svpfr.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svpostnm.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svprop.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svpscmap.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svpsinfo.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svsfnt.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svttcmap.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svtteng.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svttglyf.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svwinfnt.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svxf86nm.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svbdf.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svcid.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\services\svgldict.h">
+      <Filter>external\freetype2\include\win32\freetype\internal\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\autohint.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftcalc.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftdebug.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftdriver.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftgloadr.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftmemory.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftobjs.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftpic.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftrfork.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftserv.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftstream.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\fttrace.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\ftvalid.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\internal.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\psaux.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\pshints.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\sfnt.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\t1types.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\internal\tttypes.h">
+      <Filter>external\freetype2\include\win32\freetype\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftrender.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftsizes.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftsnames.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftstroke.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftsynth.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftsystem.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\fttrigon.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftttdrv.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\fttypes.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftwinfnt.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftxf86.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\t1tables.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ttnameid.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\tttables.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\tttags.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ttunpat.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\freetype.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftadvanc.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftautoh.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftbbox.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftbdf.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftbitmap.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftbzip2.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftcache.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftcffdrv.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftchapters.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftcid.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\fterrdef.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\fterrors.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftgasp.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftglyph.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftgxval.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftgzip.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftimage.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftincrem.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftlcdfil.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftlist.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftlzw.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftmac.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftmm.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftmodapi.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftmoderr.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftotval.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftoutln.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\freetype2\include\win32\freetype\ftpfr.h">
+      <Filter>external\freetype2\include\win32\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\glfw3\include\win32\glfw3native.h">
+      <Filter>external\glfw3\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\glfw3\include\win32\glfw3.h">
+      <Filter>external\glfw3\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\jpeg\include\win32\jmorecfg.h">
+      <Filter>external\jpeg\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\jpeg\include\win32\jpeglib.h">
+      <Filter>external\jpeg\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\jpeg\include\win32\jconfig.h">
+      <Filter>external\jpeg\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\document.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\filestream.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\prettywriter.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\rapidjson.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\reader.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\stringbuffer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\writer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\pow10.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\stack.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\strfunc.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\png\include\win32\pngconf.h">
+      <Filter>external\png\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\png\include\win32\pnglibconf.h">
+      <Filter>external\png\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\png\include\win32\png.h">
+      <Filter>external\png\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\sqlite3\include\sqlite3.h">
+      <Filter>external\sqlite3\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\sqlite3\include\sqlite3ext.h">
+      <Filter>external\sqlite3\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\tiff\include\win32\tiffio.h">
+      <Filter>external\tiff\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\tiff\include\win32\tiffvers.h">
+      <Filter>external\tiff\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\tiff\include\win32\tiff.h">
+      <Filter>external\tiff\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\tiff\include\win32\tiffconf.h">
+      <Filter>external\tiff\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\tinyxml2\tinyxml2.h">
+      <Filter>external\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\unzip\ioapi_mem.h">
+      <Filter>external\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\unzip\unzip.h">
+      <Filter>external\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\unzip\ioapi.h">
+      <Filter>external\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\webp\include\win32\encode.h">
+      <Filter>external\webp\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\webp\include\win32\types.h">
+      <Filter>external\webp\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\webp\include\win32\decode.h">
+      <Filter>external\webp\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\websockets\include\win32\libwebsockets.h">
+      <Filter>external\websockets\include\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\websockets\include\win32\win32helpers\gettimeofday.h">
+      <Filter>external\websockets\include\win32\win32helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\websockets\include\win32\win32helpers\websock-w32.h">
+      <Filter>external\websockets\include\win32\win32helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\win32-specific\gles\include\OGLES\GL\glxew.h">
+      <Filter>external\win32-specific\gles\include\OGLES\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\win32-specific\gles\include\OGLES\GL\wglew.h">
+      <Filter>external\win32-specific\gles\include\OGLES\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\win32-specific\gles\include\OGLES\GL\glew.h">
+      <Filter>external\win32-specific\gles\include\OGLES\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\win32-specific\icon\include\iconv.h">
+      <Filter>external\win32-specific\icon\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\win32-specific\zlib\include\zlib.h">
+      <Filter>external\win32-specific\zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\win32-specific\zlib\include\zconf.h">
+      <Filter>external\win32-specific\zlib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\xxhash\xxhash.h">
+      <Filter>external\xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\xxtea\xxtea.h">
+      <Filter>external\xxtea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\CCScriptEventDispatcher.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\CCTouch.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\CCTouchDelegateProtocol.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\CCTouchDispatcher.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\CCTouchHandler.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\CCTouchTargetNode.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\event\ScriptEventCenter.h">
+      <Filter>libquick\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_auto.hpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.hpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.hpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_physics_auto.hpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\luajit\include\lua.h">
+      <Filter>libquick\lua_bindings\luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\luajit\include\luaconf.h">
+      <Filter>libquick\lua_bindings\luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\luajit\include\lualib.h">
+      <Filter>libquick\lua_bindings\luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\luajit\include\lauxlib.h">
+      <Filter>libquick\lua_bindings\luajit\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\CCLuaBridge.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\CCLuaEngine.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\CCLuaStack.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\CCLuaValue.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\Cocos2dxLuaLoader.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_deprecated.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_extension_manual.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_external_extra_manual.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_manual.hpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_physics_manual.hpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\Lua_web_socket.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\LuaBasicConversions.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\LuaScriptHandlerMgr.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\tolua_fix.h">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\tolua\tolua++.h">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\tolua\tolua_event.h">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\cjson\fpconv.h">
+      <Filter>libquick\lua_extensions\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\cjson\lua_cjson.h">
+      <Filter>libquick\lua_extensions\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\cjson\strbuf.h">
+      <Filter>libquick\lua_extensions\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\debugger\debugger.h">
+      <Filter>libquick\lua_extensions\debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\filesystem\lfs.h">
+      <Filter>libquick\lua_extensions\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\lpack\lpack.h">
+      <Filter>libquick\lua_extensions\lpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\lsqlite3\sqlite3.h">
+      <Filter>libquick\lua_extensions\lsqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\lsqlite3\lsqlite3.h">
+      <Filter>libquick\lua_extensions\lsqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\wsocket.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\auxiliar.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\except.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\inet.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\luasocket.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\luasocket_buffer.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\luasocket_io.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\mime.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\options.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\select.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\socket.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\socket_scripts.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\tcp.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\timeout.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\socket\udp.h">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\zlib\lua_zlib.h">
+      <Filter>libquick\lua_extensions\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_extensions\lua_extensions.h">
+      <Filter>libquick\lua_extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProjectConfig\SimulatorConfig.h">
+      <Filter>libquick\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\cocos-ext.h">
+      <Filter>extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\ExtensionMacros.h">
+      <Filter>extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlUtils.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCInvocation.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCControlExtension\CCControlExtensions.h">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\apptools\HelperFunc.h">
+      <Filter>libquick\extra\apptools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\crypto\CCCrypto.h">
+      <Filter>libquick\extra\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\crypto\base64\libbase64.h">
+      <Filter>libquick\extra\crypto\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\crypto\md5\md5.h">
+      <Filter>libquick\extra\crypto\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\network\CCHTTPRequestDelegate.h">
+      <Filter>libquick\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\network\CCNetwork.h">
+      <Filter>libquick\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\network\CCHTTPRequest.h">
+      <Filter>libquick\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\cocos2dx_extra.h">
+      <Filter>libquick\extra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.h">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionManager.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionPageTurn3D.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionProgressTimer.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionTiledGrid.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionTween.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCAnimation.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCAnimationCache.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCAtlasNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCClippingNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCClippingRegionNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCComponent.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCComponentContainer.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCDrawingPrimitives.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCDrawNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCFont.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCFontAtlas.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCFontAtlasCache.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCFontCharMap.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCFontFNT.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCFontFreeType.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCGLBufferedNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCGrabber.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCGrid.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLabel.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLabelAtlas.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLabelBMFont.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLabelTextFormatter.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLabelTTF.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLayer.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCMenu.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCMenuItem.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCMotionStreak.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCNodeGrid.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCParallaxNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCParticleBatchNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCParticleExamples.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCParticleSystem.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCParticleSystemQuad.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCProgressTimer.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCRenderTexture.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCScene.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCSprite.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCSpriteBatchNode.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCSpriteFrame.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCSpriteFrameCache.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTextFieldTTF.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTileMapAtlas.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTMXLayer.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTMXObjectGroup.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTMXTiledMap.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTMXXMLParser.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTransition.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTransitionPageTurn.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTransitionProgress.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCTweenFunction.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCAction.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionCamera.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionCatmullRom.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionEase.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionGrid.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionGrid3D.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionInstant.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCActionInterval.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCAnimation3D.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCBundle3D.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCMesh.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCMeshSkin.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCObjLoader.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCSprite3D.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCSprite3DMaterial.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCAnimate3D.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\audio\win32\SimpleAudioEngine.cpp">
+      <Filter>cocos\audio\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\audio\win32\MciPlayer.cpp">
+      <Filter>cocos\audio\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCAutoreleasePool.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ccCArray.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCConfiguration.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCConsole.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCData.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCDataVisitor.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCDirector.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEvent.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventAcceleration.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventCustom.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventDispatcher.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventFocus.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventKeyboard.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListener.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListenerAcceleration.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListenerCustom.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListenerFocus.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListenerKeyboard.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListenerMouse.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventListenerTouch.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventMouse.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCEventTouch.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ccFPSImages.c">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCIMEDispatcher.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCNS.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCProfiling.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCRef.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCScheduler.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCScriptSupport.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCTouch.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ccTypes.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCUserDefault.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCUserDefaultAndroid.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ccUTF8.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ccUtils.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCValue.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\etc1.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ObjectFactory.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\s3tc.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\TGAlib.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\ZipUtils.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\atitc.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\base64.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\deprecated\CCDeprecated.cpp">
+      <Filter>cocos\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\deprecated\CCDictionary.cpp">
+      <Filter>cocos\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\deprecated\CCNotificationCenter.cpp">
+      <Filter>cocos\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\deprecated\CCSet.cpp">
+      <Filter>cocos\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\deprecated\CCString.cpp">
+      <Filter>cocos\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\deprecated\CCArray.cpp">
+      <Filter>cocos\deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\CCVertex.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\Mat4.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\MathUtil.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\Quaternion.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\TransformUtils.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\Vec2.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\Vec3.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\Vec4.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\CCAffineTransform.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\math\CCGeometry.cpp">
+      <Filter>cocos\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\network\WebSocket.cpp">
+      <Filter>cocos\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\CCPhysicsBody.cpp">
+      <Filter>cocos\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\CCPhysicsContact.cpp">
+      <Filter>cocos\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\CCPhysicsJoint.cpp">
+      <Filter>cocos\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\CCPhysicsShape.cpp">
+      <Filter>cocos\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\CCPhysicsWorld.cpp">
+      <Filter>cocos\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
+      <Filter>cocos\physics\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\CCFileUtils.cpp">
+      <Filter>cocos\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\CCGLViewProtocol.cpp">
+      <Filter>cocos\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\CCImage.cpp">
+      <Filter>cocos\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\CCSAXParser.cpp">
+      <Filter>cocos\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\CCThread.cpp">
+      <Filter>cocos\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\desktop\CCGLView.cpp">
+      <Filter>cocos\platform\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\win32\CCApplication.cpp">
+      <Filter>cocos\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\win32\CCCommon.cpp">
+      <Filter>cocos\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\win32\CCDevice.cpp">
+      <Filter>cocos\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\win32\CCFileUtilsWin32.cpp">
+      <Filter>cocos\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\platform\win32\CCStdC.cpp">
+      <Filter>cocos\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCRenderCommand.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCRenderer.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\ccShaders.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCTexture2D.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCTextureAtlas.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCTextureCache.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCBatchCommand.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCCustomCommand.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCGLProgram.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCGLProgramCache.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCGLProgramState.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCGLProgramStateCache.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\ccGLStateCache.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCGroupCommand.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCMeshCommand.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\renderer\CCQuadCommand.cpp">
+      <Filter>cocos\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\cocos2d.cpp">
+      <Filter>cocos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceComponent.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceHash.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceQuery.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpaceStep.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpatialIndex.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSweep1D.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpVect.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\chipmunk.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpArbiter.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpArray.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpBB.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpBBTree.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpBody.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpCollision.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpHashSet.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpPolyShape.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpShape.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\cpSpace.c">
+      <Filter>external\chipmunk\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpConstraint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpDampedRotarySpring.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpDampedSpring.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpGearJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpGrooveJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpPinJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpPivotJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpRatchetJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpRotaryLimitJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpSimpleMotor.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\chipmunk\src\constraints\cpSlideJoint.c">
+      <Filter>external\chipmunk\src\constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
+      <Filter>external\ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\ConvertUTF\ConvertUTF.c">
+      <Filter>external\ConvertUTF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\edtaa3func\edtaa3func.cpp">
+      <Filter>external\edtaa3func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\tinyxml2\tinyxml2.cpp">
+      <Filter>external\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\unzip\ioapi_mem.cpp">
+      <Filter>external\unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\unzip\unzip.cpp">
+      <Filter>external\unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\unzip\ioapi.cpp">
+      <Filter>external\unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\xxhash\xxhash.c">
+      <Filter>external\xxhash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\xxtea\xxtea.cpp">
+      <Filter>external\xxtea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event\CCScriptEventDispatcher.cpp">
+      <Filter>libquick\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event\CCTouchTargetNode.cpp">
+      <Filter>libquick\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\event\ScriptEventCenter.cpp">
+      <Filter>libquick\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.cpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.cpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_physics_auto.cpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_auto.cpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\CCLuaBridge.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\CCLuaEngine.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\CCLuaStack.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\CCLuaValue.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\Cocos2dxLuaLoader.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_deprecated.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_extension_manual.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_external_extra_manual.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_manual.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_physics_manual.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\Lua_web_socket.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\LuaBasicConversions.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\LuaScriptHandlerMgr.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\tolua_fix.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\tolua\tolua_push.c">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\tolua\tolua_to.c">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\tolua\tolua_event.c">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\tolua\tolua_is.c">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\tolua\tolua_map.c">
+      <Filter>libquick\lua_bindings\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\cjson\fpconv.c">
+      <Filter>libquick\lua_extensions\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\cjson\lua_cjson.c">
+      <Filter>libquick\lua_extensions\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\cjson\strbuf.c">
+      <Filter>libquick\lua_extensions\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\debugger\debugger.c">
+      <Filter>libquick\lua_extensions\debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\filesystem\lfs.c">
+      <Filter>libquick\lua_extensions\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\lpack\lpack.c">
+      <Filter>libquick\lua_extensions\lpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\lsqlite3\sqlite3.c">
+      <Filter>libquick\lua_extensions\lsqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\lsqlite3\lsqlite3.c">
+      <Filter>libquick\lua_extensions\lsqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\wsocket.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\auxiliar.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\except.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\inet.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\luasocket.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\luasocket_buffer.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\luasocket_io.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\mime.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\options.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\select.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\socket_scripts.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\tcp.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\timeout.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\socket\udp.c">
+      <Filter>libquick\lua_extensions\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\zlib\lua_zlib.c">
+      <Filter>libquick\lua_extensions\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_extensions\lua_extensions.c">
+      <Filter>libquick\lua_extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProjectConfig\SimulatorConfig.cpp">
+      <Filter>libquick\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlUtils.cpp">
+      <Filter>extensions\GUI\CCControlExtension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.cpp">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.cpp">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\apptools\HelperFunc.cpp">
+      <Filter>libquick\extra\apptools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\crypto\CCCrypto.cpp">
+      <Filter>libquick\extra\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\crypto\base64\libbase64.c">
+      <Filter>libquick\extra\crypto\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\crypto\md5\md5.c">
+      <Filter>libquick\extra\crypto\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\network\CCNetwork.cpp">
+      <Filter>libquick\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\network\CCHTTPRequest.cpp">
+      <Filter>libquick\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\platform\win32\CCNetworkWin32.cpp">
+      <Filter>libquick\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\platform\win32\CCStorePaymentTransactionWrapper.cpp">
+      <Filter>libquick\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\platform\win32\CCCryptoWin32.cpp">
+      <Filter>libquick\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.cpp">
+      <Filter>extensions\GUI\CCEditBox</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\cocos\3d\CCAnimationCurve.inl">
+      <Filter>cocos\3d</Filter>
+    </None>
+    <None Include="..\..\..\cocos\base\CCUserDefault.mm">
+      <Filter>cocos\base</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\Mat4.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\MathUtil.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\MathUtilNeon.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\Quaternion.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\Vec2.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\Vec3.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\math\Vec4.inl">
+      <Filter>cocos\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_3D_Color.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_3D_ColorTex.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_3D_PositionTex.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Label.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Label_df.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Label_df_glow.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Label_normal.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Label_outline.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Position_uColor.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_Position_uColor.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionColor.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionColor.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionColorLengthTexture.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionColorLengthTexture.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTexture.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTexture.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTexture_uColor.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTexture_uColor.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureA8Color.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureA8Color.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureColor.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureColor.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureColor_noMVP.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureColor_noMVP.vert">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\renderer\ccShader_PositionTextureColorAlphaTest.frag">
+      <Filter>cocos\renderer</Filter>
+    </None>
+    <None Include="..\..\..\cocos\cocos2d-prefix.pch">
+      <Filter>cocos</Filter>
+    </None>
+  </ItemGroup>
+</Project>

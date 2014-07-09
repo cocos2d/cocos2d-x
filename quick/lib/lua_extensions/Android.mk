@@ -14,6 +14,7 @@ LOCAL_SRC_FILES := \
                         $(LOCAL_PATH)/lpack/lpack.c \
                         $(LOCAL_PATH)/lsqlite3/sqlite3.c \
                         $(LOCAL_PATH)/lsqlite3/lsqlite3.c \
+                        $(LOCAL_PATH)/lua_extensions.c
 
 
 LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/luajit/include \
@@ -58,7 +59,7 @@ LOCAL_CFLAGS += -Wno-psabi -DCC_LUA_ENGINE_ENABLED=1 $(ANDROID_COCOS2D_BUILD_FLA
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,lua/luajit/prebuilt/android)
+$(call import-module,lua_bindings/luajit)
 #$(call import-module,extensions)
 
 ifndef $(QUICK_MINI_TARGET)

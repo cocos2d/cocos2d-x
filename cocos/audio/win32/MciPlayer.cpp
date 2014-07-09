@@ -1,6 +1,6 @@
 #include "MciPlayer.h"
 
-#define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
+#define WIN_CLASS_NAME      L"CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
 
 namespace CocosDenshion {
@@ -16,7 +16,7 @@ MciPlayer::MciPlayer()
 , _soundID(0)
 , _times(0)
 , _playing(false)
-, strExt("")
+, _strExt("")
 {
     if (! s_hInstance)
     {
@@ -75,20 +75,19 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
         BREAK_IF(! pFileName || ! _wnd);
         int nLen = (int)strlen(pFileName);
         BREAK_IF(! nLen);
-//         pBuf = new WCHAR[nLen + 1];
-//         BREAK_IF(! pBuf);
-//         MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, pBuf, nLen + 1);
         
         std::string strFile(pFileName);
         int nPos = strFile.rfind(".") + 1;
-        strExt = strFile.substr(nPos, strFile.length() - nPos);
-
+        _strExt = strFile.substr(nPos, strFile.length() - nPos);
         Close();
+
+		WCHAR wzFileName[MAX_PATH];
+		MultiByteToWideChar(CP_UTF8, 0, pFileName, -1, wzFileName, MAX_PATH);
 
         MCI_OPEN_PARMS mciOpen = {0};
         MCIERROR mciError;
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
-        mciOpen.lpstrElementName = pFileName;
+		mciOpen.lpstrElementName = wzFileName;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, reinterpret_cast<DWORD_PTR>(&mciOpen));
         BREAK_IF(mciError);
@@ -136,7 +135,7 @@ void MciPlayer::Pause()
 
 void MciPlayer::Resume()
 {
-    if (strExt == "mid" || strExt == "MID")
+    if (_strExt == "mid" || _strExt == "MID")
     {
         // midi not supprt MCI_RESUME, should get the position and use MCI_FROM
         MCI_STATUS_PARMS mciStatusParms;

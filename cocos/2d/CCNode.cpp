@@ -113,7 +113,12 @@ Node::Node(void)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
 #if CC_ENABLE_SCRIPT_BINDING
-, _updateScriptHandler(0)
+//, _updateScriptHandler(0)
+// touch
+, m_bTouchCaptureEnabled(true)
+, m_bTouchSwallowEnabled(true)
+, m_bTouchEnabled(false)
+, m_eTouchMode(1/*kCCTouchesOneByOne*/)
 #endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
@@ -151,10 +156,10 @@ Node::~Node()
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_updateScriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
-    }
+//    if (_updateScriptHandler)
+//    {
+//        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+//    }
    CC_SAFE_DELETE(_scriptEventDispatcher);
 #endif
 
@@ -854,12 +859,16 @@ void Node::cleanup()
     this->unscheduleAllSelectors();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
+//    if ( _scriptType != kScriptTypeNone)
+//    {
+//        int action = kNodeOnCleanup;
+//        BasicScriptData data(this,(void*)&action);
+//        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
     
@@ -1402,9 +1411,13 @@ void Node::onEnter()
     _running = true;
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
     }
 #endif
 }
@@ -1424,9 +1437,13 @@ void Node::onEnterTransitionDidFinish()
         child->onEnterTransitionDidFinish();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
     }
 #endif
 }
@@ -1445,9 +1462,13 @@ void Node::onExitTransitionDidStart()
         child->onExitTransitionDidStart();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
     }
 #endif
 }
@@ -1470,9 +1491,13 @@ void Node::onExit()
         child->onExit();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExit);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExit);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
     }
 #endif
 }
@@ -1564,7 +1589,7 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
     unscheduleUpdate();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    _updateScriptHandler = nHandler;
+//    _updateScriptHandler = nHandler;
 #endif
     
     _scheduler->scheduleUpdate(this, priority, !_running);
@@ -1575,11 +1600,11 @@ void Node::unscheduleUpdate()
     _scheduler->unscheduleUpdate(this);
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_updateScriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
-        _updateScriptHandler = 0;
-    }
+//    if (_updateScriptHandler)
+//    {
+//        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+//        _updateScriptHandler = 0;
+//    }
 #endif
 }
 
@@ -1649,11 +1674,15 @@ void Node::update(float fDelta)
 {
 #if CC_ENABLE_SCRIPT_BINDING
 //    if (0 != _updateScriptHandler)
+//    {
+//        //only lua use
+//        SchedulerScriptData data(_updateScriptHandler,fDelta);
+//        ScriptEvent event(kScheduleEvent,&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_ENTER_FRAME_EVENT))
     {
-        //only lua use
-        SchedulerScriptData data(_updateScriptHandler,fDelta);
-        ScriptEvent event(kScheduleEvent,&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEnterFrameEvent(this, fDelta);
     }
 #endif
     
@@ -2195,6 +2224,10 @@ void Node::disableCascadeColor()
 
 int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int priority /* = 0 */)
 {
+//    CCLOG("----addScriptEventListener: %d\n", event);
+    if (NODE_ENTER_FRAME_EVENT==event) {
+        scheduleUpdateWithPriorityLua(0, priority);
+    }
     return _scriptEventDispatcher->addScriptEventListener(event, listener, tag, priority);
 }
 
@@ -2202,7 +2235,7 @@ int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int
 
 Scene *Node::getScene()
 {
-    if (!_running) return NULL;
+//    if (!_running) return NULL;
     Node *parent = getParent();
     if (!parent) return NULL;
     
@@ -2218,20 +2251,20 @@ Scene *Node::getScene()
 void Node::registerWithTouchDispatcher()
 {
     //    CCLOG("CCNODE: REGISTER WITH TOUCH DISPATHCER <%p>", this);
-    Scene *scene = getScene();
-    if (scene)
+    ScriptEventCenter *scriptEventCenter = Director::getInstance()->getScriptEventCenter();
+    if (scriptEventCenter)
     {
-        // scene->addTouchableNode(this);
+        scriptEventCenter->addTouchableNode(this);
     }
 }
 
 void Node::unregisterWithTouchDispatcher()
 {
     //    CCLOG("CCNODE: UNREGISTER WITH TOUCH DISPATHCER <%p>", this);
-    Scene *scene = getScene();
-    if (scene)
+    ScriptEventCenter *scriptEventCenter = Director::getInstance()->getScriptEventCenter();
+    if (scriptEventCenter)
     {
-        // scene->removeTouchableNode(this);
+        scriptEventCenter->removeTouchableNode(this);
     }
 }
 
@@ -2303,63 +2336,63 @@ void Node::ccTouchCaptureCancelled(Touch *pTouch, Node *pTarget)
     }
 }
 
-void Node::ccTouchesCaptureBegan(__Set *pTouches, Node *pTarget)
+void Node::ccTouchesCaptureBegan(const std::vector<Touch*>& touches, Node *pTarget)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pTarget);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHBEGAN, pTouches, NODE_TOUCH_CAPTURING_PHASE);
+        executeScriptTouchHandler(CCTOUCHBEGAN, touches, NODE_TOUCH_CAPTURING_PHASE);
     }
 }
 
-void Node::ccTouchesCaptureMoved(__Set *pTouches, Node *pTarget)
+void Node::ccTouchesCaptureMoved(const std::vector<Touch*>& touches, Node *pTarget)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pTarget);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHMOVED, pTouches, NODE_TOUCH_CAPTURING_PHASE);
+        executeScriptTouchHandler(CCTOUCHMOVED, touches, NODE_TOUCH_CAPTURING_PHASE);
     }
 }
 
-void Node::ccTouchesCaptureEnded(__Set *pTouches, Node *pTarget)
+void Node::ccTouchesCaptureEnded(const std::vector<Touch*>& touches, Node *pTarget)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pTarget);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHENDED, pTouches, NODE_TOUCH_CAPTURING_PHASE);
+        executeScriptTouchHandler(CCTOUCHENDED, touches, NODE_TOUCH_CAPTURING_PHASE);
     }
 }
 
-void Node::ccTouchesCaptureCancelled(__Set *pTouches, Node *pTarget)
+void Node::ccTouchesCaptureCancelled(const std::vector<Touch*>& touches, Node *pTarget)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pTarget);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouches, NODE_TOUCH_CAPTURING_PHASE);
+        executeScriptTouchHandler(CCTOUCHCANCELLED, touches, NODE_TOUCH_CAPTURING_PHASE);
     }
 }
 
-void Node::ccTouchesCaptureAdded(__Set *pTouches, Node *pTarget)
+void Node::ccTouchesCaptureAdded(const std::vector<Touch*>& touches, Node *pTarget)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pTarget);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHADDED, pTouches, NODE_TOUCH_CAPTURING_PHASE);
+        executeScriptTouchHandler(CCTOUCHADDED, touches, NODE_TOUCH_CAPTURING_PHASE);
     }
 }
 
-void Node::ccTouchesCaptureRemoved(__Set *pTouches, Node *pTarget)
+void Node::ccTouchesCaptureRemoved(const std::vector<Touch*>& touches, Node *pTarget)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pTarget);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHREMOVED, pTouches, NODE_TOUCH_CAPTURING_PHASE);
+        executeScriptTouchHandler(CCTOUCHREMOVED, touches, NODE_TOUCH_CAPTURING_PHASE);
     }
 }
 
@@ -2373,7 +2406,7 @@ void Node::setTouchEnabled(bool enabled)
     if (m_bTouchEnabled != enabled)
     {
         m_bTouchEnabled = enabled;
-        if (_running)
+        //if (_running)
         {
             if (enabled)
             {
@@ -2447,74 +2480,79 @@ void Node::ccTouchCancelled(Touch *pTouch, Event *pEvent)
     }
 }
 
-void Node::ccTouchesBegan(__Set *pTouches, Event *pEvent)
+void Node::ccTouchesBegan(const std::vector<Touch*>& touches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pEvent);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHBEGAN, pTouches);
+        executeScriptTouchHandler(CCTOUCHBEGAN, touches);
     }
 }
 
-void Node::ccTouchesMoved(__Set *pTouches, Event *pEvent)
+void Node::ccTouchesMoved(const std::vector<Touch*>& touches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pEvent);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHMOVED, pTouches);
+        executeScriptTouchHandler(CCTOUCHMOVED, touches);
     }
 }
 
-void Node::ccTouchesEnded(__Set *pTouches, Event *pEvent)
+void Node::ccTouchesEnded(const std::vector<Touch*>& touches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pEvent);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHENDED, pTouches);
+        executeScriptTouchHandler(CCTOUCHENDED, touches);
     }
 }
 
-void Node::ccTouchesCancelled(__Set *pTouches, Event *pEvent)
+void Node::ccTouchesCancelled(const std::vector<Touch*>& touches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pEvent);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
+        executeScriptTouchHandler(CCTOUCHCANCELLED, touches);
     }
 }
 
-void Node::ccTouchesAdded(__Set *pTouches, Event *pEvent)
+void Node::ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pEvent);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHADDED, pTouches);
+        executeScriptTouchHandler(CCTOUCHADDED, touches);
     }
 }
 
-void Node::ccTouchesRemoved(__Set *pTouches, Event *pEvent)
+void Node::ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(touches);
     CC_UNUSED_PARAM(pEvent);
     if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
     {
-        executeScriptTouchHandler(CCTOUCHREMOVED, pTouches);
+        executeScriptTouchHandler(CCTOUCHREMOVED, touches);
     }
 }
 
 int Node::executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase /* = NODE_TOUCH_TARGETING_PHASE */)
 {
-//    return ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeTouchEvent(this, nEventType, pTouch, phase);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeTouchEvent(this, nEventType, pTouch, phase);
 }
 
-int Node::executeScriptTouchHandler(int nEventType, __Set *pTouches, int phase /* = NODE_TOUCH_TARGETING_PHASE */)
+int Node::executeScriptTouchHandler(int nEventType, const std::vector<Touch*>& touches, int phase /* = NODE_TOUCH_TARGETING_PHASE */)
 {
-//    return ScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeTouchesEvent(this, nEventType, pTouches, phase);
+    return ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeTouchesEvent(this, nEventType, touches, phase);
+}
+
+CCScriptEventDispatcher *Node::getScriptEventDispatcher()
+{
+    return _scriptEventDispatcher;
 }
 
 #endif //1 0
