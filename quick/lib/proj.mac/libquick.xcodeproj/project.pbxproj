@@ -4098,6 +4098,7 @@
 					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/luajit/include",
 					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/tolua",
+					"$(QUICK_V3_ROOT)/extensions",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4147,6 +4148,7 @@
 					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/manual",
 					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/luajit/include",
 					"$(QUICK_V3_ROOT)/quick/lib/lua_bindings/tolua",
+					"$(QUICK_V3_ROOT)/extensions",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
