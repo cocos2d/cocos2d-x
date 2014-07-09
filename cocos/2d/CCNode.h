@@ -715,7 +715,7 @@ public:
     virtual Node* getChildByName(const std::string& name) const;
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
-     * @param name The name to search for, support c++11 regular expression
+     * @param name The name to search for, supports c++11 regular expression
      * Search syntax options:
      * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
      * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
@@ -1522,6 +1522,16 @@ public:
     virtual void ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent);
     virtual void ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent);
 #endif
+
+    void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1555,8 +1565,10 @@ protected:
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
 #if CC_USE_PHYSICS
+    void updatePhysicsBodyTransform(Scene* layer);
     virtual void updatePhysicsBodyPosition(Scene* layer);
     virtual void updatePhysicsBodyRotation(Scene* layer);
+    virtual void updatePhysicsBodyScale(Scene* scene);
 #endif // CC_USE_PHYSICS
     
 private:
@@ -1657,6 +1669,8 @@ protected:
 
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
+    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
 #endif
     
     // opacity controls
@@ -1669,6 +1683,11 @@ protected:
 
     static int s_globalOrderOfArrival;
     
+    std::function<void()> _onEnterCallback;
+    std::function<void()> _onExitCallback;
+    std::function<void()> _onEnterTransitionDidFinishCallback;
+    std::function<void()> _onExitTransitionDidStartCallback;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     

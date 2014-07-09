@@ -47,7 +47,6 @@ public:
 
     void useMaterial() const;
 
-
     inline uint32_t getMaterialID() const { return _materialID; }
     inline GLuint getTextureID() const { return _textureID; }
     inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
@@ -55,7 +54,6 @@ public:
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
     inline BlendFunc getBlendType() const { return _blendType; }
     inline const Mat4& getModelView() const { return _mv; }
-    
 
 protected:
     void generateMaterialID();
@@ -68,6 +66,7 @@ protected:
     ssize_t _quadsCount;
     Mat4 _mv;
 };
+
 NS_CC_END
 
 #endif //_CC_QUADCOMMAND_H_

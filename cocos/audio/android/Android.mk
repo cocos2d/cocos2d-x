@@ -18,7 +18,4 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../../../external \
 				    $(QUICK_V3_LIB)
 
-LOCAL_CFLAGS += -Wno-psabi
-LOCAL_EXPORT_CFLAGS += -Wno-psabi
-
 include $(BUILD_STATIC_LIBRARY)

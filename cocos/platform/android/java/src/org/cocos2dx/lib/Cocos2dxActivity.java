@@ -50,14 +50,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
-	private Cocos2dxHandler mHandler;
+	private Cocos2dxHandler mHandler;	
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
 	
 	public static Context getContext() {
 		return sContext;
 	}
-	
 	
 	protected void onLoadNativeLibraries() {
 //		try {
@@ -116,9 +115,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	@Override
 	protected void onPause() {
 		super.onPause();
-
+		
 		Cocos2dxHelper.onPause();
 		this.mGLSurfaceView.onPause();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 	@Override

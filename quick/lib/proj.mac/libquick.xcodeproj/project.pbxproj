@@ -94,6 +94,12 @@
 		DAF28329196BDACB00959DA1 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF282F0196BDACB00959DA1 /* usocket.h */; };
 		DAF2832C196BDACB00959DA1 /* lua_zlib.c in Sources */ = {isa = PBXBuildFile; fileRef = DAF282F4196BDACB00959DA1 /* lua_zlib.c */; };
 		DAF2832D196BDACB00959DA1 /* lua_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF282F5196BDACB00959DA1 /* lua_zlib.h */; };
+		DAF28353196CEE5A00959DA1 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF2834F196CEE5A00959DA1 /* CCFastTMXLayer.cpp */; };
+		DAF28354196CEE5A00959DA1 /* CCFastTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28350196CEE5A00959DA1 /* CCFastTMXLayer.h */; };
+		DAF28355196CEE5A00959DA1 /* CCFastTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28351196CEE5A00959DA1 /* CCFastTMXTiledMap.cpp */; };
+		DAF28356196CEE5A00959DA1 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28352196CEE5A00959DA1 /* CCFastTMXTiledMap.h */; };
+		DAF28359196CEE6D00959DA1 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28357196CEE6D00959DA1 /* CCBundleReader.cpp */; };
+		DAF2835A196CEE6D00959DA1 /* CCBundleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28358196CEE6D00959DA1 /* CCBundleReader.h */; };
 		F41590A9196BD1D20046D7EE /* CCScriptEventDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F415909C196BD1D20046D7EE /* CCScriptEventDispatcher.cpp */; };
 		F41590AA196BD1D20046D7EE /* CCScriptEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = F415909D196BD1D20046D7EE /* CCScriptEventDispatcher.h */; };
 		F41590AC196BD1D20046D7EE /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = F415909F196BD1D20046D7EE /* CCTouch.h */; };
@@ -838,6 +844,12 @@
 		DAF282F0196BDACB00959DA1 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usocket.h; sourceTree = "<group>"; };
 		DAF282F4196BDACB00959DA1 /* lua_zlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_zlib.c; sourceTree = "<group>"; };
 		DAF282F5196BDACB00959DA1 /* lua_zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_zlib.h; sourceTree = "<group>"; };
+		DAF2834F196CEE5A00959DA1 /* CCFastTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXLayer.cpp; sourceTree = "<group>"; };
+		DAF28350196CEE5A00959DA1 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
+		DAF28351196CEE5A00959DA1 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
+		DAF28352196CEE5A00959DA1 /* CCFastTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXTiledMap.h; sourceTree = "<group>"; };
+		DAF28357196CEE6D00959DA1 /* CCBundleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBundleReader.cpp; sourceTree = "<group>"; };
+		DAF28358196CEE6D00959DA1 /* CCBundleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundleReader.h; sourceTree = "<group>"; };
 		F415909C196BD1D20046D7EE /* CCScriptEventDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptEventDispatcher.cpp; sourceTree = "<group>"; };
 		F415909D196BD1D20046D7EE /* CCScriptEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptEventDispatcher.h; sourceTree = "<group>"; };
 		F415909F196BD1D20046D7EE /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
@@ -1850,6 +1862,10 @@
 		F4E0B1FC196B9C660053EFD7 /* 2d */ = {
 			isa = PBXGroup;
 			children = (
+				DAF2834F196CEE5A00959DA1 /* CCFastTMXLayer.cpp */,
+				DAF28350196CEE5A00959DA1 /* CCFastTMXLayer.h */,
+				DAF28351196CEE5A00959DA1 /* CCFastTMXTiledMap.cpp */,
+				DAF28352196CEE5A00959DA1 /* CCFastTMXTiledMap.h */,
 				F4E0B1FD196B9C660053EFD7 /* CCAction.cpp */,
 				F4E0B1FE196B9C660053EFD7 /* CCAction.h */,
 				F4E0B1FF196B9C660053EFD7 /* CCActionCamera.cpp */,
@@ -1985,6 +2001,8 @@
 		F4E0B287196B9C660053EFD7 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				DAF28357196CEE6D00959DA1 /* CCBundleReader.cpp */,
+				DAF28358196CEE6D00959DA1 /* CCBundleReader.h */,
 				F4E0B288196B9C660053EFD7 /* CCAnimate3D.cpp */,
 				F4E0B289196B9C660053EFD7 /* CCAnimate3D.h */,
 				F4E0B28A196B9C660053EFD7 /* CCAnimation3D.cpp */,
@@ -3353,6 +3371,7 @@
 				F4E0BB1F196BA00A0053EFD7 /* ftmm.h in Headers */,
 				F4E0B56B196B9C7D0053EFD7 /* CCRef.h in Headers */,
 				F4E0BB25196BA00A0053EFD7 /* ftrender.h in Headers */,
+				DAF28354196CEE5A00959DA1 /* CCFastTMXLayer.h in Headers */,
 				F4E0B5FA196B9C7D0053EFD7 /* CCGLViewProtocol.h in Headers */,
 				F4E0B654196B9C7D0053EFD7 /* CCRenderCommand.h in Headers */,
 				F4E0BCD6196BA0450053EFD7 /* glfw3.h in Headers */,
@@ -3416,6 +3435,7 @@
 				F4E0B51B196B9C7D0053EFD7 /* SimpleAudioEngine_objc.h in Headers */,
 				F4E0B652196B9C7D0053EFD7 /* CCQuadCommand.h in Headers */,
 				F4E0B511196B9C7D0053EFD7 /* CDAudioManager.h in Headers */,
+				DAF28356196CEE5A00959DA1 /* CCFastTMXTiledMap.h in Headers */,
 				F4E0B538196B9C7D0053EFD7 /* CCData.h in Headers */,
 				F4E0BB3F196BA00A0053EFD7 /* pshints.h in Headers */,
 				F4E0BB2F196BA00A0053EFD7 /* ftxf86.h in Headers */,
@@ -3439,6 +3459,7 @@
 				F4E0B2F9196B9C670053EFD7 /* CCParticleSystemQuad.h in Headers */,
 				F4E0B313196B9C670053EFD7 /* CCTMXXMLParser.h in Headers */,
 				F4E0B29F196B9C660053EFD7 /* CCActionCamera.h in Headers */,
+				DAF2835A196CEE6D00959DA1 /* CCBundleReader.h in Headers */,
 				F4E0B5AD196B9C7D0053EFD7 /* CCPhysicsContact.h in Headers */,
 				F4E0BB55196BA00A0053EFD7 /* t1tables.h in Headers */,
 				F4E0B570196B9C7D0053EFD7 /* CCScriptSupport.h in Headers */,
@@ -3748,6 +3769,7 @@
 				F4E0B709196B9EEB0053EFD7 /* cpHashSet.c in Sources */,
 				F4E0B31E196B9C670053EFD7 /* CCAnimation3D.cpp in Sources */,
 				F4E0B71B196B9F4E0053EFD7 /* ConvertUTFWrapper.cpp in Sources */,
+				DAF28353196CEE5A00959DA1 /* CCFastTMXLayer.cpp in Sources */,
 				F4E0B2CC196B9C670053EFD7 /* CCFontAtlasCache.cpp in Sources */,
 				F4E0B6F9196B9EEB0053EFD7 /* cpDampedRotarySpring.c in Sources */,
 				F4E0B643196B9C7D0053EFD7 /* CCGLProgram.cpp in Sources */,
@@ -3780,6 +3802,7 @@
 				F4E0B649196B9C7D0053EFD7 /* CCGLProgramStateCache.cpp in Sources */,
 				DAF2829C196BDA7300959DA1 /* ReachabilityIOSMac.m in Sources */,
 				F41590B4196BD1D20046D7EE /* ScriptEventCenter.cpp in Sources */,
+				DAF28355196CEE5A00959DA1 /* CCFastTMXTiledMap.cpp in Sources */,
 				F4E0B703196B9EEB0053EFD7 /* cpArbiter.c in Sources */,
 				F4E0B580196B9C7D0053EFD7 /* etc1.cpp in Sources */,
 				DAF28306196BDACB00959DA1 /* lua_extensions.c in Sources */,
@@ -3917,6 +3940,7 @@
 				F4E0B706196B9EEB0053EFD7 /* cpBBTree.c in Sources */,
 				F4E0B30E196B9C670053EFD7 /* CCTMXObjectGroup.cpp in Sources */,
 				F4E0B711196B9EEB0053EFD7 /* cpSpatialIndex.c in Sources */,
+				DAF28359196CEE6D00959DA1 /* CCBundleReader.cpp in Sources */,
 				F4E0B553196B9C7D0053EFD7 /* CCEventListenerMouse.cpp in Sources */,
 				F4E0C0D3196BA3D60053EFD7 /* CCString.cpp in Sources */,
 				F4E0C073196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.cpp in Sources */,
