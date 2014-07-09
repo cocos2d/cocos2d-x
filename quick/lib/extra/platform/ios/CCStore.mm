@@ -29,7 +29,7 @@ Store::~Store(void)
 #if CC_LUA_ENGINE_ENABLED > 0
     if (m_listener)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_listener);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_listener);
     }
 #endif
     for (StorePaymentTransactionsIterator it = m_transactions.begin(); it != m_transactions.end(); ++it)
@@ -64,7 +64,7 @@ void Store::postInitWithTransactionListenerLua(LUA_FUNCTION listener)
 {
     if (m_listener)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_listener);
+        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_listener);
     }
     m_listener = listener;
     [[StoreIOS sharedStore] postInitWithTransactionObserver:this];
@@ -82,7 +82,7 @@ void Store::loadProducts(CCArray* productsId, StoreProductsRequestDelegate* dele
     for (int i = 0; i < productsId->count(); ++i)
     {
         CCString* productId = static_cast<CCString*>(productsId->objectAtIndex(i));
-        [set addObject:[NSString stringWithUTF8String: productId->m_sString.c_str()]];
+        [set addObject:[NSString stringWithUTF8String: productId->_string.c_str()]];
     }
     [[StoreIOS sharedStore] requestProductData:set andDelegate:delegate];
 }
@@ -93,7 +93,7 @@ void Store::loadProductsLua(LUA_TABLE __LUA_TABLE__, LUA_FUNCTION callback)
     CC_UNUSED_PARAM(__LUA_TABLE__);
     if (m_isLoadProductsLuaNotCompleted) return;
 
-    CCLuaEngine* engine = LuaEngine::getInstance();
+    LuaEngine* engine = LuaEngine::getInstance();
     lua_State* L = engine->getLuaStack()->getLuaState();
     if (!lua_isfunction(L, -1) || !lua_istable(L, -2)) return;
 
@@ -182,7 +182,7 @@ void Store::finishTransactionLua(const char* transactionIdentifier)
 }
 #endif
 
-StoreReceiptVerifyMode Store::getReceiptVerifyMode(void)
+CCStoreReceiptVerifyMode Store::getReceiptVerifyMode(void)
 {
     return [StoreIOS sharedStore].receiptVerifyMode;
 }
@@ -263,7 +263,7 @@ void Store::requestProductsCompleted(CCArray* products, CCArray* invalidProducts
     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
 
     LuaValueDict event;
-    CCLuaValueArray products_;
+    LuaValueArray products_;
 
     for (int i = 0; i < products->count(); ++i)
     {
@@ -289,7 +289,7 @@ void Store::requestProductsCompleted(CCArray* products, CCArray* invalidProducts
         event["invalidProductsId"] = LuaValue::arrayValue(invalidProductsId_);
     }
 
-    stack->pushCCLuaValueDict(event);
+    stack->pushLuaValueDict(event);
     stack->executeFunctionByHandler(m_loadProductsCallback, 1);
 
     m_loadProductsCallback = 0;
@@ -304,7 +304,7 @@ void Store::requestProductsFailed(int errorCode, const char* errorString)
     event["errorCode"] = LuaValue::intValue(errorCode);
     event["errorString"] = LuaValue::stringValue(errorString);
 
-    stack->pushCCLuaValueDict(event);
+    stack->pushLuaValueDict(event);
     stack->executeFunctionByHandler(m_loadProductsCallback, 1);
 
     m_loadProductsCallback = 0;
@@ -323,7 +323,7 @@ void Store::passStorePaymentTransactionToLuaListener(StorePaymentTransaction* tr
     LuaValueDict event;
     event["transaction"] = LuaValue::dictValue(transaction->convertToLuaTable());
 
-    stack->pushCCLuaValueDict(event);
+    stack->pushLuaValueDict(event);
     stack->executeFunctionByHandler(m_listener, 1);
 }
 #endif
