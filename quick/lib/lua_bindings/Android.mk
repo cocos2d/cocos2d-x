@@ -48,9 +48,9 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(COCOS2DX_ROOT)/external/xxtea/xxtea.cpp
 
 
-LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
-                    $(COCOS2DX_ROOT)/external/lua/luajit/include \
-                    $(COCOS2DX_ROOT)/external/lua \
+LOCAL_C_INCLUDES := $(QUICK_V3_LIB)/lua_bindings/tolua \
+                    $(QUICK_V3_LIB)/lua_bindings/luajit/include \
+                    $(QUICK_V3_LIB)/lua_bindings \
                     $(COCOS2DX_ROOT)/extensions \
                     $(COCOS2DX_CORE)/editor-support/spine \
                     $(COCOS2DX_CORE)/editor-support/cocosbuilder \
@@ -67,12 +67,11 @@ LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(QUICK_V3_LIB)/extra/crypto \
                     $(QUICK_V3_LIB)/extra/network \
                     $(QUICK_V3_LIB)/external \
-                    $(QUICK_V3_LIB)/lua_bindings/tolua \
                     $(COCOS2DX_ROOT)/external/xxtea
 
 
-LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
-                           $(COCOS2DX_ROOT)/external/lua/luajit/include \
+LOCAL_EXPORT_C_INCLUDES := $(QUICK_V3_LIB)/lua_bindings/tolua \
+                           $(QUICK_V3_LIB)/lua_bindings/luajit/include \
                            $(QUICK_V3_LIB) \
                            $(QUICK_V3_LIB)/lua_extensions \
                            $(LOCAL_PATH)/auto \
