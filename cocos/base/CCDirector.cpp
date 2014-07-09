@@ -1271,6 +1271,7 @@ void DisplayLinkDirector::mainLoop()
     }
     else if (! _invalid)
     {
+        Node::g_drawOrder = 0;
         drawScene();
      
         // release the objects

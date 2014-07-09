@@ -1521,6 +1521,9 @@ public:
     virtual void ccTouchesCancelled(const std::vector<Touch*>& touches, Event *pEvent);
     virtual void ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent);
     virtual void ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent);
+
+    static unsigned int g_drawOrder;
+    unsigned int m_drawOrder;
 #endif
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
