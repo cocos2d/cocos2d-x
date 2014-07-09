@@ -32,6 +32,7 @@
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
+#include "base/CCPlatformMacros.h"
 #include "2d/CCActionInterval.h"
 
 NS_CC_BEGIN
@@ -73,6 +74,10 @@ public:
     /**get & set blend weight, weight must positive*/
     float getWeight() const { return _weight; }
     void setWeight(float weight);
+    
+    /**get & set play reverse*/
+    CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
+    CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
 CC_CONSTRUCTOR_ACCESS:
     
