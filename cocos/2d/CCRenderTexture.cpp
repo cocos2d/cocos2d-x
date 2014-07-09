@@ -385,6 +385,8 @@ void RenderTexture::clearStencil(int stencilValue)
 
 void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
+    m_drawOrder = ++g_drawOrder;
+    
     // override visit.
 	// Don't call visit on its children
     if (!_visible)
