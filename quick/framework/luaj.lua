@@ -29,7 +29,7 @@ Lua 与 Java 的交互接口
 ]]
 local luaj = {}
 
-local callJavaStaticMethod = cc.LuaJavaBridge.callStaticMethod
+local callJavaStaticMethod = LuaJavaBridge.callStaticMethod
 
 --[[--
 

@@ -8,8 +8,8 @@ echo "### UPDATING ###"
 echo ""
 echo "updating all framework_precompiled.zip"
 echo ""
-echo template/PROJECT_TEMPLATE_01/res/framework_precompiled.zip
-cp lib/framework_precompiled/framework_precompiled.zip template/PROJECT_TEMPLATE_01/res/
+echo templates/PROJECT_TEMPLATE_01/res/framework_precompiled.zip
+cp lib/framework_precompiled/framework_precompiled.zip templates/PROJECT_TEMPLATE_01/res/
 
 for dest in `find samples -type f | grep "/res/framework_precompiled.zip"`
 do

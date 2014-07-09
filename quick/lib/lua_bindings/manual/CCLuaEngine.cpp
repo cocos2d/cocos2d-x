@@ -26,7 +26,7 @@
 #include "CCLuaEngine.h"
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "GUI/CCControlExtension/CCControl.h"
 // #include "LuaOpengl.h"
 #include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
@@ -107,11 +107,6 @@ int LuaEngine::executeGlobalFunction(const char* functionName)
     return ret;
 }
 
-int LuaEngine::executeNodeEvent(Node* pNode, int nAction)
-{
-    return 0;
-}
-
 int LuaEngine::executeMenuItemEvent(MenuItem* pMenuItem)
 {
     return 0;
@@ -140,16 +135,6 @@ int LuaEngine::executeSchedule(int nHandler, float dt, Node* pNode/* = NULL*/)
     int ret = _stack->executeFunctionByHandler(nHandler, 1);
     _stack->clean();
     return ret;
-}
-
-int LuaEngine::executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch)
-{
-    return 0;
-}
-
-int LuaEngine::executeLayerTouchesEvent(Layer* pLayer, int eventType, __Set *pTouches)
-{
-    return 0;
 }
 
 int LuaEngine::executeLayerKeypadEvent(Layer* pLayer, int eventType)
@@ -1291,6 +1276,62 @@ int LuaEngine::executeNodeTouchesEvent(Node* pNode, int eventType, const std::ve
     _stack->clean();
     
     return 1;
+}
+
+int LuaEngine::executeNodeEvent(Node* pNode, int nAction)
+{
+    LuaValueDict event;
+    switch (nAction)
+    {
+        case kNodeOnEnter:
+            event["name"] = LuaValue::stringValue("enter");
+            break;
+            
+        case kNodeOnExit:
+            event["name"] = LuaValue::stringValue("exit");
+            break;
+            
+        case kNodeOnEnterTransitionDidFinish:
+            event["name"] = LuaValue::stringValue("enterTransitionFinish");
+            break;
+            
+        case kNodeOnExitTransitionDidStart:
+            event["name"] = LuaValue::stringValue("exitTransitionStart");
+            break;
+            
+        case kNodeOnCleanup:
+            event["name"] = LuaValue::stringValue("cleanup");
+            break;
+            
+        default:
+            return 0;
+    }
+    
+    _stack->clean();
+    _stack->pushLuaValueDict(event);
+    CCScriptEventListenersForEvent &listeners = pNode->getScriptEventDispatcher()->getScriptEventListenersByEvent(NODE_EVENT);
+    CCScriptEventListenersForEventIterator it = listeners.begin();
+    for (; it != listeners.end(); ++it)
+    {
+        _stack->copyValue(1);
+        _stack->executeFunctionByHandler(it->listener, 1);
+        _stack->settop(1);
+    }
+    _stack->clean();
+    return 0;
+}
+
+int LuaEngine::executeNodeEnterFrameEvent(Node* pNode, float dt)
+{
+    CCScriptEventListenersForEvent &listeners = pNode->getScriptEventDispatcher()->getScriptEventListenersByEvent(NODE_ENTER_FRAME_EVENT);
+    CCScriptEventListenersForEventIterator it = listeners.begin();
+    for (; it != listeners.end(); ++it)
+    {
+        _stack->pushFloat(dt);
+        _stack->executeFunctionByHandler(it->listener, 1);
+        _stack->clean();
+    }
+    return 0;
 }
 
 NS_CC_END

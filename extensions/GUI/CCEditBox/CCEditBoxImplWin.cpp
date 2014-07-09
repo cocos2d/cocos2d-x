@@ -35,7 +35,7 @@
 #endif
 
 #include "CCEditBox.h"
-#include "proj.win32/Win32InputBox.h"
+#include "Win32InputBox.h"
 #include "glfw3native.h"
 
 NS_CC_EXT_BEGIN

@@ -67,7 +67,7 @@ private:
     UINT        _soundID;
     UINT        _times;
     bool        _playing;
-    std::string strExt;
+    std::string _strExt;
 };
 
 } // end of namespace CocosDenshion

@@ -31,6 +31,7 @@
 #else
 #include <sys/socket.h>
 #endif
+#include "event/CCScriptEventDispatcher.h"
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
@@ -1753,6 +1754,155 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_Cocos2d_Node_removeNodeEventListener(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        int handle = ((int)  tolua_tonumber(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeScriptEventListener'", NULL);
+#endif
+        {
+            self->getScriptEventDispatcher()->removeScriptEventListener(handle);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeNodeEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_removeNodeEventListenersByEvent(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        int event = ((int)  tolua_tonumber(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeScriptEventListenersByEvent'", NULL);
+#endif
+        {
+            self->getScriptEventDispatcher()->removeScriptEventListenersByEvent(event);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeNodeEventListenersByEvent'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_removeNodeEventListenersByTag(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        int tag = ((int)  tolua_tonumber(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeScriptEventListenersByTag'", NULL);
+#endif
+        {
+            self->getScriptEventDispatcher()->removeScriptEventListenersByTag(tag);
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeNodeEventListenersByTag'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_removeAllNodeEventListeners(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAllScriptEventListeners'", NULL);
+#endif
+        {
+            self->getScriptEventDispatcher()->removeAllScriptEventListeners();
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeAllNodeEventListeners'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_Node_hasNodeEventListener(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        Node* self = static_cast<cocos2d::Node*>(tolua_tousertype(tolua_S,1,0));
+        int event = ((int)  tolua_tonumber(tolua_S,2,0));
+#if COCOS2D_DEBUG >= 1
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasScriptEventListener'", NULL);
+#endif
+        {
+            bool tolua_ret = (bool)  self->getScriptEventDispatcher()->hasScriptEventListener(event);
+            tolua_pushboolean(tolua_S,(bool)tolua_ret);
+        }
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'hasNodeEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static int tolua_Cocos2d_Node_isTouchEnabled(lua_State* tolua_S)
 {
 #if COCOS2D_DEBUG >= 1
@@ -3152,6 +3302,18 @@ static void extendNode(lua_State* tolua_S)
         lua_rawset(tolua_S, -3);
         lua_pushstring(tolua_S, "addNodeEventListener");
         lua_pushcfunction(tolua_S, tolua_cocos2d_Node_addNodeEventListener);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "removeNodeEventListenersByEvent");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_removeNodeEventListenersByEvent);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "removeNodeEventListenersByTag");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_removeNodeEventListenersByTag);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "removeAllNodeEventListeners");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_removeAllNodeEventListeners);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "hasNodeEventListener");
+        lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_hasNodeEventListener);
         lua_rawset(tolua_S, -3);
         lua_pushstring(tolua_S, "isTouchEnabled");
         lua_pushcfunction(tolua_S, tolua_Cocos2d_Node_isTouchEnabled);

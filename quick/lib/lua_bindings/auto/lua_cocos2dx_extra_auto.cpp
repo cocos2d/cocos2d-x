@@ -1,8 +1,8 @@
 #include "lua_cocos2dx_extra_auto.hpp"
-#include "CCNative.h"
-#include "CCCrypto.h"
-#include "CCNetwork.h"
-#include "CCHTTPRequest.h"
+#include "Native/CCNative.h"
+#include "Crypto/CCCrypto.h"
+#include "Network/CCNetwork.h"
+#include "Network/CCHTTPRequest.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 

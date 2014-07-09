@@ -34,7 +34,7 @@ extern "C" {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "lua_extensions.h"
 #endif
-#include "external/xxtea/xxtea.h"
+#include "xxtea/xxtea.h"
 }
 
 #include "Cocos2dxLuaLoader.h"
@@ -180,8 +180,8 @@ bool LuaStack::init(void)
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    tolua_web_socket_open(_state);
-    register_web_socket_manual(_state);
+    //tolua_web_socket_open(_state);
+    //register_web_socket_manual(_state);
 #endif
     
     //register_xml_http_request(_state);
@@ -515,7 +515,7 @@ int LuaStack::executeFunctionByHandler(int nHandler, int numArgs)
         }
         ret = executeFunction(numArgs);
     }
-    lua_settop(_state, 0);
+//    lua_settop(_state, 0);
     return ret;
 }
 
@@ -808,7 +808,7 @@ int LuaStack::lua_loadChunksFromZIP(lua_State *L)
     const char *zipFilename = lua_tostring(L, -1);
     lua_settop(L, 0);
     FileUtils *utils = FileUtils::getInstance();
-    string zipFilePath = utils->fullPathForFilename(zipFilename);
+    std::string zipFilePath = utils->fullPathForFilename(zipFilename);
     
     LuaStack *stack = curStack;
     
@@ -845,7 +845,7 @@ int LuaStack::lua_loadChunksFromZIP(lua_State *L)
             lua_getfield(L, -1, "preload");
             
             int count = 0;
-            string filename = zip->getFirstFilename();
+            std::string filename = zip->getFirstFilename();
             while (filename.length()) {
                 ssize_t bufferSize = 0;
                 unsigned char *zbuffer = zip->getFileData(filename.c_str(), &bufferSize);
