@@ -40,7 +40,6 @@ function MyApp:playLevel(levelIndex)
 end
 
 function HDrawRect(rect, parent, color)
-    dump(rect, "drawRect:")
     local left, bottom, width, height = rect.x, rect.y, rect.width, rect.height
     local points = {
         {left, bottom},

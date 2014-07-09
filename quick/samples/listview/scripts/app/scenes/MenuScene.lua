@@ -17,7 +17,7 @@ function MenuScene:ctor()
         :reload()
 
     HDrawRect(self.listview:getViewRect(), self, cc.c4f(1, 0, 0, 1))
-    -- HDrawRect(self.listview:getBoundingBox(), self, cc.c4f(1, 1, 1, 1))
+    HDrawRect(self.listview:getBoundingBox(), self, cc.c4f(1, 1, 1, 1))
 
     print("htl MenuScene ctor end")
 end
