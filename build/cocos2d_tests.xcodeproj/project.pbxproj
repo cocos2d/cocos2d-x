@@ -3606,6 +3606,7 @@
 		29080D25191B595E0066F8DF /* CustomTest */ = {
 			isa = PBXGroup;
 			children = (
+				29080D2C191B595E0066F8DF /* CustomWidget */,
 				29080D23191B595E0066F8DF /* CustomGUIScene.cpp */,
 				29080D24191B595E0066F8DF /* CustomGUIScene.h */,
 				29080D26191B595E0066F8DF /* CustomImageTest */,
@@ -3646,7 +3647,8 @@
 				29080D35191B595E0066F8DF /* CustomReader.cpp */,
 				29080D36191B595E0066F8DF /* CustomReader.h */,
 			);
-			path = CustomWidget;
+			name = CustomWidget;
+			path = ../CustomWidget;
 			sourceTree = "<group>";
 		};
 		29080D39191B595E0066F8DF /* UIButtonTest */ = {
@@ -3903,7 +3905,6 @@
 				29080D67191B595E0066F8DF /* UISceneManager.h */,
 				29080D68191B595E0066F8DF /* UISceneManager_Editor.cpp */,
 				29080D69191B595E0066F8DF /* UISceneManager_Editor.h */,
-				29080D2C191B595E0066F8DF /* CustomWidget */,
 				29080D6A191B595E0066F8DF /* UIScrollViewTest */,
 				29080D6F191B595E0066F8DF /* UISliderTest */,
 				29080D74191B595E0066F8DF /* UITextAtlasTest */,

@@ -44,7 +44,7 @@ g_guisTests[] =
         "cocostudio 1.3",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.json");
+            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -53,7 +53,7 @@ g_guisTests[] =
         "cocostudio 1.4",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.json");
+            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -62,7 +62,7 @@ g_guisTests[] =
         "cocostudio 1.5",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.json");
+            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }

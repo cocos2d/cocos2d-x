@@ -51,5 +51,6 @@ void CustomParticleWidgetReader::setProperties(const std::string& classType,
         std::string PlistFilePath = guiReader->getFilePath();
         PlistFilePath.append(PlistFile);
         custom->setParticlePlist(PlistFilePath.c_str());
+        
     }
 }

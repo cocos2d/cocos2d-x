@@ -26,6 +26,11 @@
 #include "cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
 #include "CocostudioParserTest.h"
+#include "../CustomWidget/CustomImageView.h"
+#include "../CustomWidget/CustomImageViewReader.h"
+#include "../CustomWidget/CustomParticleWidgetReader.h"
+#include "../CustomWidget/CustomParticleWidget.h"
+
 
 USING_NS_CC;
 using namespace cocostudio;
@@ -42,7 +47,14 @@ void CocostudioParserJsonLayer::onEnter()
     Layer::onEnter();
     
     GUIReader* guiReader = GUIReader::getInstance();
-    
+    guiReader->registerTypeAndCallBack("CustomImageView",
+                                       &CustomImageView::createInstance,
+                                       CustomImageViewReader::getInstance(),
+                                       parseselector(CustomImageViewReader::setProperties));
+    guiReader->registerTypeAndCallBack("CustomParticleWidget",
+                                       &CustomParticleWidget::createInstance,
+                                       CustomParticleWidgetReader::getInstance(),
+                                       parseselector(CustomParticleWidgetReader::setProperties));
     
     Layout* layout = static_cast<Layout*>(guiReader->widgetFromJsonFile(_jsonFile.c_str()));
     layout->setScale(0.5);
