@@ -322,22 +322,22 @@ void MeshCache::removeUnusedMesh()
 
 MeshCache::MeshCache()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // listen the event when app go to foreground
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // listen the event that renderer was recreated on Android/WP8
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCache::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
 }
 MeshCache::~MeshCache()
 {
     removeAllMeshes();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-void MeshCache::listenBackToForeground(EventCustom* event)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+void MeshCache::listenRendererRecreated(EventCustom* event)
 {
     for (auto iter = _meshes.begin(); iter != _meshes.end(); ++iter)
     {

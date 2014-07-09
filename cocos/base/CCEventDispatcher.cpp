@@ -211,6 +211,7 @@ EventDispatcher::EventDispatcher()
     // Therefore, internal listeners would not be cleaned when removeAllEventListeners is invoked.
     _internalCustomListenerIDs.insert(EVENT_COME_TO_FOREGROUND);
     _internalCustomListenerIDs.insert(EVENT_COME_TO_BACKGROUND);
+    _internalCustomListenerIDs.insert(EVENT_RENDERER_RECREATED);
 }
 
 EventDispatcher::~EventDispatcher()

@@ -56,10 +56,10 @@ MeshCommand::MeshCommand()
 , _vao(0)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // listen the event when app go to foreground
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCommand::listenBackToForeground, this));
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // listen the event that renderer was recreated on Android/WP8
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
 }
 
@@ -117,8 +117,8 @@ void MeshCommand::setDisplayColor(const Vec4& color)
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
@@ -297,7 +297,7 @@ void MeshCommand::releaseVAO()
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-void MeshCommand::listenBackToForeground(EventCustom* event)
+void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     releaseVAO();
 }

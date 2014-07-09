@@ -222,7 +222,7 @@ Effect::Effect()
 : _glprogramstate(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backgroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+    _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
                                                           auto glProgram = _glprogramstate->getGLProgram();
