@@ -112,7 +112,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	public void runOnGLThread(final Runnable pRunnable) {
 		this.mGLSurfaceView.queueEvent(pRunnable);
 	}
-
+	protected static FrameLayout mFrameLayout;
 	// ===========================================================
 	// Methods
 	// ===========================================================
@@ -122,8 +122,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         ViewGroup.LayoutParams framelayout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                                        ViewGroup.LayoutParams.FILL_PARENT);
-        FrameLayout framelayout = new FrameLayout(this);
-        framelayout.setLayoutParams(framelayout_params);
+        mFrameLayout = new FrameLayout(this);
+        mFrameLayout.setLayoutParams(framelayout_params);
 
         // Cocos2dxEditText layout
         ViewGroup.LayoutParams edittext_layout_params =
@@ -133,13 +133,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         edittext.setLayoutParams(edittext_layout_params);
 
         // ...add to FrameLayout
-        framelayout.addView(edittext);
+        mFrameLayout.addView(edittext);
 
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
 
         // ...add to FrameLayout
-        framelayout.addView(this.mGLSurfaceView);
+        mFrameLayout.addView(this.mGLSurfaceView);
 
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
@@ -149,7 +149,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
         // Set framelayout as the content view
-		setContentView(framelayout);
+		setContentView(mFrameLayout);
 	}
 	
     public Cocos2dxGLSurfaceView onCreateView() {
