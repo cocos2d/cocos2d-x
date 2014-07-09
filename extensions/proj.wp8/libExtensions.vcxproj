@@ -89,7 +89,7 @@
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
       <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\x86;..\..\cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;zlib.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,7 +110,7 @@
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\x86;..\..\cocos2dx\platform\third_party\wp8\libraries\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;zlib.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -133,7 +133,7 @@
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
-      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;zlib.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\arm;..\..\cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -154,7 +154,7 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;libwebsockets.lib;zlib.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\external\libwebsockets\wp8\lib\arm;..\..\cocos2dx\platform\third_party\wp8\libraries\arm</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
