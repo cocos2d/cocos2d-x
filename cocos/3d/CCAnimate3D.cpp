@@ -166,11 +166,12 @@ void Animate3D::setWeight(float weight)
 }
 
 Animate3D::Animate3D()
-: _absSpeed(1)
+: _absSpeed(1.f)
 , _weight(1.f)
 , _start(0.f)
 , _last(1.f)
 , _animation(nullptr)
+, _playReverse(false)
 {
     
 }
