@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(LOCAL_PATH)/manual/CCLuaStack.cpp \
           $(LOCAL_PATH)/manual/CCLuaValue.cpp \
           $(LOCAL_PATH)/manual/Cocos2dxLuaLoader.cpp \
+          $(LOCAL_PATH)/manual/Lua_web_socket.cpp \
           $(LOCAL_PATH)/manual/LuaScriptHandlerMgr.cpp \
           $(LOCAL_PATH)/manual/LuaBasicConversions.cpp \
           $(LOCAL_PATH)/manual/lua_cocos2dx_manual.cpp \
@@ -102,6 +103,7 @@ $(call import-module,event)
 $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)
+$(call import-module,network)
 #$(call import-module,editor-support/cocostudio)
 #$(call import-module,editor-support/cocosbuilder)
 #$(call import-module,editor-support/spine)

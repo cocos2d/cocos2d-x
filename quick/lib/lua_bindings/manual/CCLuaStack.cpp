@@ -180,8 +180,8 @@ bool LuaStack::init(void)
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    //tolua_web_socket_open(_state);
-    //register_web_socket_manual(_state);
+    tolua_web_socket_open(_state);
+    register_web_socket_manual(_state);
 #endif
     
     //register_xml_http_request(_state);

@@ -74,7 +74,6 @@ cocos2d.cpp \
 2d/CCTransitionPageTurn.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
-3d/CCMesh.cpp \
 3d/CCAnimate3D.cpp \
 3d/CCAnimation3D.cpp \
 3d/CCBundle3D.cpp \
@@ -196,7 +195,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(QUICK_V3_LIB)
+                    $(QUICK_V3_LIB) \
                     $(LOCAL_PATH)/../external/nslog
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
@@ -210,7 +209,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/ConvertUTF \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/base \
-                    $(QUICK_V3_LIB)
+                    $(QUICK_V3_LIB) \
                     $(LOCAL_PATH)/../external/nslog
 
 
