@@ -39,5 +39,19 @@ function MyApp:playLevel(levelIndex)
     self:enterScene("PlayLevelScene", {levelIndex}, "fade", 0.6, display.COLOR_WHITE)
 end
 
+function HDrawRect(rect, parent, color)
+    dump(rect, "drawRect:")
+    local left, bottom, width, height = rect.x, rect.y, rect.width, rect.height
+    local points = {
+        {left, bottom},
+        {left + width, bottom},
+        {left + width, bottom + height},
+        {left, bottom + height},
+        {left, bottom},
+    }
+    local box = display.newPolygon(points, {borderColor = color})
+    parent:addChild(box)
+end
+
 appInstance = MyApp
 return MyApp
