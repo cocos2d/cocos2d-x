@@ -117,6 +117,19 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
     Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
 }
+    
+std::vector<Node*> findChildren(const Node &node, const std::string &name)
+{
+    std::vector<Node*> vec;
+    
+    node.enumerateChildren(name, [&vec](Node* nodeFound) -> bool {
+        vec.push_back(nodeFound);
+        return false;
+    });
+
+    return vec;
+}
+    
 }
 
 NS_CC_END

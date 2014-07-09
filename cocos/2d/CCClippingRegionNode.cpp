@@ -1,6 +1,6 @@
 
 #include "CCClippingRegionNode.h"
-#include "CCDirector.h"
+#include "base/CCDirector.h"
 //#include "CCEGLView.h"
 
 NS_CC_BEGIN

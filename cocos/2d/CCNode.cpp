@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 
 #include <algorithm>
+#include <string>
+#include <regex>
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -46,6 +48,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
+#include "event/CCScriptEventDispatcher.h"
+#include "event/CCTouchDispatcher.h"
 
 #include "deprecated/CCString.h"
 
@@ -109,7 +113,12 @@ Node::Node(void)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
 #if CC_ENABLE_SCRIPT_BINDING
-, _updateScriptHandler(0)
+//, _updateScriptHandler(0)
+// touch
+, m_bTouchCaptureEnabled(true)
+, m_bTouchSwallowEnabled(true)
+, m_bTouchEnabled(false)
+, m_eTouchMode(1/*kCCTouchesOneByOne*/)
 #endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
@@ -122,6 +131,8 @@ Node::Node(void)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 , _usingNormalizedPosition(false)
+, _name("")
+, _hashOfName(0)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -135,6 +146,7 @@ Node::Node(void)
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
+   _scriptEventDispatcher = new CCScriptEventDispatcher();
 #endif
     _transform = _inverse = _additionalTransform = Mat4::IDENTITY;
 }
@@ -144,10 +156,11 @@ Node::~Node()
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_updateScriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
-    }
+//    if (_updateScriptHandler)
+//    {
+//        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+//    }
+   CC_SAFE_DELETE(_scriptEventDispatcher);
 #endif
 
     // User object has to be released before others, since userObject may have a weak reference of this node
@@ -199,6 +212,13 @@ void Node::setSkewX(float skewX)
     if (_skewX == skewX)
         return;
     
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setSkewX");
+    }
+#endif
+    
     _skewX = skewX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -212,6 +232,13 @@ void Node::setSkewY(float skewY)
 {
     if (_skewY == skewY)
         return;
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setSkewY");
+    }
+#endif
     
     _skewY = skewY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -294,10 +321,9 @@ void Node::setRotation3D(const Vec3& rotation)
     _rotationZ_Y = _rotationZ_X = rotation.z;
 
 #if CC_USE_PHYSICS
-    if (_physicsBody)
+    if (_physicsBody != nullptr)
     {
-        Scene* scene = _physicsBody->getWorld() != nullptr ? &_physicsBody->getWorld()->getScene() : nullptr;
-        updatePhysicsBodyRotation(scene);
+        CCLOG("Node WARNING: PhysicsBody doesn't support setRotation3D");
     }
 #endif
 }
@@ -315,6 +341,13 @@ void Node::setRotationSkewX(float rotationX)
     if (_rotationZ_X == rotationX)
         return;
     
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setRotationSkewX");
+    }
+#endif
+    
     _rotationZ_X = rotationX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -328,6 +361,13 @@ void Node::setRotationSkewY(float rotationY)
 {
     if (_rotationZ_Y == rotationY)
         return;
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setRotationSkewY");
+    }
+#endif
     
     _rotationZ_Y = rotationY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -343,9 +383,16 @@ float Node::getScale(void) const
 /// scale setter
 void Node::setScale(float scale)
 {
-    if (_scaleX == scale)
+    if (_scaleX == scale && _scaleY == scale && _scaleZ == scale)
         return;
-
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScale");
+    }
+#endif
+    
     _scaleX = _scaleY = _scaleZ = scale;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -362,6 +409,13 @@ void Node::setScale(float scaleX,float scaleY)
     if (_scaleX == scaleX && _scaleY == scaleY)
         return;
     
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScale");
+    }
+#endif
+    
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -372,6 +426,13 @@ void Node::setScaleX(float scaleX)
 {
     if (_scaleX == scaleX)
         return;
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScaleX");
+    }
+#endif
     
     _scaleX = scaleX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -389,6 +450,13 @@ void Node::setScaleZ(float scaleZ)
     if (_scaleZ == scaleZ)
         return;
     
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScaleZ");
+    }
+#endif
+    
     _scaleZ = scaleZ;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -404,6 +472,13 @@ void Node::setScaleY(float scaleY)
 {
     if (_scaleY == scaleY)
         return;
+    
+#if CC_USE_PHYSICS
+    if (_physicsBody != nullptr)
+    {
+        CCLOG("Node WARNING: PhysicsBody doesn't support setScaleY");
+    }
+#endif
     
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -594,6 +669,7 @@ bool Node::isRunning() const
 void Node::setParent(Node * parent)
 {
     _parent = parent;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 /// isRelativeAnchorPoint getter
@@ -621,6 +697,18 @@ int Node::getTag() const
 void Node::setTag(int tag)
 {
     _tag = tag ;
+}
+
+std::string Node::getName() const
+{
+    return _name;
+}
+
+void Node::setName(const std::string& name)
+{
+    _name = name;
+    std::hash<std::string> h;
+    _hashOfName = h(name);
 }
 
 /// userData setter
@@ -676,7 +764,7 @@ GLProgram * Node::getGLProgram() const
     return _glProgramState ? _glProgramState->getGLProgram() : nullptr;
 }
 
-Scene* Node::getScene()
+Scene* Node::getScene() const
 {
     if(!_parent)
         return nullptr;
@@ -771,12 +859,16 @@ void Node::cleanup()
     this->unscheduleAllSelectors();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
+//    if ( _scriptType != kScriptTypeNone)
+//    {
+//        int action = kNodeOnCleanup;
+//        BasicScriptData data(this,(void*)&action);
+//        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnCleanup);
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
     
@@ -809,24 +901,193 @@ Node* Node::getChildByTag(int tag) const
     return nullptr;
 }
 
+Node* Node::getChildByName(const std::string& name) const
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    
+    std::hash<std::string> h;
+    size_t hash = h(name);
+    
+    for (const auto& child : _children)
+    {
+        // Different strings may have the same hash code, but can use it to compare first for speed
+        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
+            return child;
+    }
+    return nullptr;
+}
+
+void Node::enumerateChildren(const std::string &name, std::function<bool (Node *)> callback) const
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    CCASSERT(callback != nullptr, "Invalid callback function");
+    
+    size_t length = name.length();
+    
+    size_t subStrStartPos = 0;  // sub string start index
+    size_t subStrlength = length; // sub string length
+    
+    // Starts with '/' or '//'?
+    bool searchFromRoot = false;
+    bool searchFromRootRecursive = false;
+    if (name[0] == '/')
+    {
+        if (length > 2 && name[1] == '/')
+        {
+            searchFromRootRecursive = true;
+            subStrStartPos = 2;
+            subStrlength -= 2;
+        }
+        else
+        {
+            searchFromRoot = true;
+            subStrStartPos = 1;
+            subStrlength -= 1;
+        }
+    }
+    
+    // End with '/..'?
+    bool searchFromParent = false;
+    if (length > 3 &&
+        name[length-3] == '/' &&
+        name[length-2] == '.' &&
+        name[length-1] == '.')
+    {
+        searchFromParent = true;
+        subStrlength -= 3;
+    }
+    
+    // Remove '/', '//' and '/..' if exist
+    std::string newName = name.substr(subStrStartPos, subStrlength);
+    // If search from parent, then add * at first to make it match its children, which will do make
+    if (searchFromParent)
+    {
+        newName.insert(0, "[[:alnum:]]+/");
+    }
+    
+    if (searchFromRoot)
+    {
+        // name is '/xxx'
+        auto root = getScene();
+        if (root)
+        {
+            root->doEnumerate(newName, callback);
+        }
+    }
+    else if (searchFromRootRecursive)
+    {
+        // name is '//xxx'
+        auto root = getScene();
+        if (root)
+        {
+            doEnumerateRecursive(root, newName, callback);
+        }
+    }
+    else
+    {
+        // name is xxx
+        doEnumerate(newName, callback);
+    }
+}
+
+bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const
+{
+    bool ret =false;
+    
+    if (node->doEnumerate(name, callback))
+    {
+        // search itself
+        ret = true;
+    }
+    else
+    {
+        // search its children
+        for (const auto& child : node->getChildren())
+        {
+            if (doEnumerateRecursive(child, name, callback))
+            {
+                ret = true;
+                break;
+            }
+        }
+    }
+    
+    return ret;
+}
+
+bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) const
+{
+    // name may be xxx/yyy, should find its parent
+    size_t pos = name.find('/');
+    std::string searchName = name;
+    bool needRecursive = false;
+    if (pos != name.npos)
+    {
+        searchName = name.substr(0, pos);
+        name.erase(0, pos+1);
+        needRecursive = true;
+    }
+    
+    bool ret = false;
+    for (const auto& child : _children)
+    {
+        if(std::regex_match(child->_name, std::regex(searchName)))
+        {
+            if (!needRecursive)
+            {
+                // terminate enumeration if callback return true
+                if (callback(child))
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            else
+            {
+                ret = child->doEnumerate(name, callback);
+                if (ret)
+                    break;
+            }
+        }
+    }
+    
+    return ret;
+}
+
 /* "add" logic MUST only be on this method
 * If a class want's to extend the 'addChild' behavior it only needs
 * to override this method
 */
-void Node::addChild(Node *child, int zOrder, int tag)
+void Node::addChild(Node *child, int localZOrder, int tag)
 {    
     CCASSERT( child != nullptr, "Argument must be non-nil");
     CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
 
+    addChildHelper(child, localZOrder, tag, "", true);
+}
+
+void Node::addChild(Node* child, int localZOrder, const std::string &name)
+{
+    CCASSERT(child != nullptr, "Argument must be non-nil");
+    CCASSERT(child->_parent == nullptr, "child already added. It can't be added again");
+    
+    addChildHelper(child, localZOrder, INVALID_TAG, name, false);
+}
+
+void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag)
+{
     if (_children.empty())
     {
         this->childrenAlloc();
     }
-
-    this->insertChild(child, zOrder);
-
-    child->_tag = tag;
-
+    
+    this->insertChild(child, localZOrder);
+    
+    if (setTag)
+        child->setTag(tag);
+    else
+        child->setName(name);
+    
     child->setParent(this);
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     
@@ -842,7 +1103,7 @@ void Node::addChild(Node *child, int zOrder, int tag)
         }
     }
 #endif
-
+    
     if( _running )
     {
         child->onEnter();
@@ -866,13 +1127,13 @@ void Node::addChild(Node *child, int zOrder, int tag)
 void Node::addChild(Node *child, int zOrder)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, zOrder, child->_tag);
+    this->addChild(child, zOrder, child->_name);
 }
 
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_localZOrder, child->_tag);
+    this->addChild(child, child->_localZOrder, child->_name);
 }
 
 void Node::removeFromParent()
@@ -914,6 +1175,22 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
     if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeChild(child, cleanup);
+    }
+}
+
+void Node::removeChildByName(const std::string &name, bool cleanup)
+{
+    CCASSERT(name.length() != 0, "Invalid name");
+    
+    Node *child = this->getChildByName(name);
+    
+    if (child == nullptr)
+    {
+        CCLOG("cocos2d: removeChildByName(name = %s): child not found!", name.c_str());
     }
     else
     {
@@ -1099,10 +1376,12 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         this->draw(renderer, _modelViewTransform, flags);
     }
 
-    // reset for next frame
-    _orderOfArrival = 0;
- 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // reset for next frame
+    // _orderOfArrival = 0;
 }
 
 Mat4 Node::transform(const Mat4& parentTransform)
@@ -1112,46 +1391,12 @@ Mat4 Node::transform(const Mat4& parentTransform)
     return ret;
 }
 
-
-#if CC_ENABLE_SCRIPT_BINDING
-
-static bool sendNodeEventToJS(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-
-    if (scriptEngine->isCalledFromScript())
-    {
-        scriptEngine->setCalledFromScript(false);
-    }
-    else
-    {
-        BasicScriptData data(node,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        if (scriptEngine->sendEvent(&scriptEvent))
-            return true;
-    }
-    
-    return false;
-}
-
-static void sendNodeEventToLua(Node* node, int action)
-{
-    auto scriptEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    
-    BasicScriptData data(node,(void*)&action);
-    ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-    
-    scriptEngine->sendEvent(&scriptEvent);
-}
-
-#endif
-
 void Node::onEnter()
 {
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnter))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnter))
             return;
     }
 #endif
@@ -1166,9 +1411,13 @@ void Node::onEnter()
     _running = true;
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        sendNodeEventToLua(this, kNodeOnEnter);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnter);
     }
 #endif
 }
@@ -1178,7 +1427,7 @@ void Node::onEnterTransitionDidFinish()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
             return;
     }
 #endif
@@ -1188,9 +1437,13 @@ void Node::onEnterTransitionDidFinish()
         child->onEnterTransitionDidFinish();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        sendNodeEventToLua(this, kNodeOnEnterTransitionDidFinish);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnEnterTransitionDidFinish);
     }
 #endif
 }
@@ -1200,7 +1453,7 @@ void Node::onExitTransitionDidStart()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
             return;
     }
 #endif
@@ -1209,9 +1462,13 @@ void Node::onExitTransitionDidStart()
         child->onExitTransitionDidStart();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        sendNodeEventToLua(this, kNodeOnExitTransitionDidStart);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnExitTransitionDidStart);
     }
 #endif
 }
@@ -1221,7 +1478,7 @@ void Node::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendNodeEventToJS(this, kNodeOnExit))
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
             return;
     }
 #endif
@@ -1234,9 +1491,13 @@ void Node::onExit()
         child->onExit();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeLua)
+//    if (_scriptType == kScriptTypeLua)
+//    {
+//        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnExit);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_EVENT))
     {
-        sendNodeEventToLua(this, kNodeOnExit);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEvent(this, kNodeOnExit);
     }
 #endif
 }
@@ -1328,7 +1589,7 @@ void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
     unscheduleUpdate();
     
 #if CC_ENABLE_SCRIPT_BINDING
-    _updateScriptHandler = nHandler;
+//    _updateScriptHandler = nHandler;
 #endif
     
     _scheduler->scheduleUpdate(this, priority, !_running);
@@ -1339,11 +1600,11 @@ void Node::unscheduleUpdate()
     _scheduler->unscheduleUpdate(this);
     
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_updateScriptHandler)
-    {
-        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
-        _updateScriptHandler = 0;
-    }
+//    if (_updateScriptHandler)
+//    {
+//        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
+//        _updateScriptHandler = 0;
+//    }
 #endif
 }
 
@@ -1413,11 +1674,15 @@ void Node::update(float fDelta)
 {
 #if CC_ENABLE_SCRIPT_BINDING
 //    if (0 != _updateScriptHandler)
+//    {
+//        //only lua use
+//        SchedulerScriptData data(_updateScriptHandler,fDelta);
+//        ScriptEvent event(kScheduleEvent,&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_ENTER_FRAME_EVENT))
     {
-        //only lua use
-        SchedulerScriptData data(_updateScriptHandler,fDelta);
-        ScriptEvent event(kScheduleEvent,&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeEnterFrameEvent(this, fDelta);
     }
 #endif
     
@@ -1954,6 +2219,343 @@ void Node::disableCascadeColor()
         child->updateDisplayedColor(Color3B::WHITE);
     }
 }
+
+#if 1
+
+int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int priority /* = 0 */)
+{
+//    CCLOG("----addScriptEventListener: %d\n", event);
+    if (NODE_ENTER_FRAME_EVENT==event) {
+        scheduleUpdateWithPriorityLua(0, priority);
+    }
+    return _scriptEventDispatcher->addScriptEventListener(event, listener, tag, priority);
+}
+
+// ----------------------------------------
+
+Scene *Node::getScene()
+{
+//    if (!_running) return NULL;
+    Node *parent = getParent();
+    if (!parent) return NULL;
+    
+    Node *scene = parent;
+    while (parent)
+    {
+        parent = parent->getParent();
+        if (parent) scene = parent;
+    }
+    return dynamic_cast<Scene*>(scene);
+}
+
+void Node::registerWithTouchDispatcher()
+{
+    //    CCLOG("CCNODE: REGISTER WITH TOUCH DISPATHCER <%p>", this);
+    ScriptEventCenter *scriptEventCenter = Director::getInstance()->getScriptEventCenter();
+    if (scriptEventCenter)
+    {
+        scriptEventCenter->addTouchableNode(this);
+    }
+}
+
+void Node::unregisterWithTouchDispatcher()
+{
+    //    CCLOG("CCNODE: UNREGISTER WITH TOUCH DISPATHCER <%p>", this);
+    ScriptEventCenter *scriptEventCenter = Director::getInstance()->getScriptEventCenter();
+    if (scriptEventCenter)
+    {
+        scriptEventCenter->removeTouchableNode(this);
+    }
+}
+
+bool Node::isTouchCaptureEnabled()
+{
+    return m_bTouchCaptureEnabled;
+}
+
+void Node::setTouchCaptureEnabled(bool value)
+{
+    m_bTouchCaptureEnabled = value;
+}
+
+bool Node::isTouchSwallowEnabled()
+{
+    return m_bTouchSwallowEnabled;
+}
+
+void Node::setTouchSwallowEnabled(bool value)
+{
+    m_bTouchSwallowEnabled = value;
+}
+
+bool Node::ccTouchCaptureBegan(Touch *pTouch, Node *pTarget)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        return executeScriptTouchHandler(CCTOUCHBEGAN, pTouch, NODE_TOUCH_CAPTURING_PHASE);
+    }
+    else
+    {
+        return true;
+    }
+}
+
+bool Node::ccTouchCaptureMoved(Touch *pTouch, Node *pTarget)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        return executeScriptTouchHandler(CCTOUCHMOVED, pTouch, NODE_TOUCH_CAPTURING_PHASE);
+    }
+    else
+    {
+        return true;
+    }
+}
+
+void Node::ccTouchCaptureEnded(Touch *pTouch, Node *pTarget)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHENDED, pTouch, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchCaptureCancelled(Touch *pTouch, Node *pTarget)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouch, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchesCaptureBegan(const std::vector<Touch*>& touches, Node *pTarget)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHBEGAN, touches, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchesCaptureMoved(const std::vector<Touch*>& touches, Node *pTarget)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHMOVED, touches, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchesCaptureEnded(const std::vector<Touch*>& touches, Node *pTarget)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHENDED, touches, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchesCaptureCancelled(const std::vector<Touch*>& touches, Node *pTarget)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHCANCELLED, touches, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchesCaptureAdded(const std::vector<Touch*>& touches, Node *pTarget)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHADDED, touches, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+void Node::ccTouchesCaptureRemoved(const std::vector<Touch*>& touches, Node *pTarget)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pTarget);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_CAPTURE_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHREMOVED, touches, NODE_TOUCH_CAPTURING_PHASE);
+    }
+}
+
+bool Node::isTouchEnabled()
+{
+    return m_bTouchEnabled;
+}
+
+void Node::setTouchEnabled(bool enabled)
+{
+    if (m_bTouchEnabled != enabled)
+    {
+        m_bTouchEnabled = enabled;
+        //if (_running)
+        {
+            if (enabled)
+            {
+                registerWithTouchDispatcher();
+            }
+            else
+            {
+                unregisterWithTouchDispatcher();
+            }
+        }
+    }
+}
+
+void Node::setTouchMode(int mode)
+{
+    if(m_eTouchMode != mode)
+    {
+        m_eTouchMode = mode;
+        
+		if( m_bTouchEnabled)
+        {
+			setTouchEnabled(false);
+			setTouchEnabled(true);
+		}
+    }
+}
+
+int Node::getTouchMode()
+{
+    return m_eTouchMode;
+}
+
+bool Node::ccTouchBegan(Touch *pTouch, Event *pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHBEGAN, pTouch);
+    }
+    return true;
+}
+
+void Node::ccTouchMoved(Touch *pTouch, Event *pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHMOVED, pTouch);
+    }
+}
+
+void Node::ccTouchEnded(Touch *pTouch, Event *pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHENDED, pTouch);
+    }
+}
+
+void Node::ccTouchCancelled(Touch *pTouch, Event *pEvent)
+{
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
+    }
+}
+
+void Node::ccTouchesBegan(const std::vector<Touch*>& touches, Event *pEvent)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHBEGAN, touches);
+    }
+}
+
+void Node::ccTouchesMoved(const std::vector<Touch*>& touches, Event *pEvent)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHMOVED, touches);
+    }
+}
+
+void Node::ccTouchesEnded(const std::vector<Touch*>& touches, Event *pEvent)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHENDED, touches);
+    }
+}
+
+void Node::ccTouchesCancelled(const std::vector<Touch*>& touches, Event *pEvent)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHCANCELLED, touches);
+    }
+}
+
+void Node::ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHADDED, touches);
+    }
+}
+
+void Node::ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent)
+{
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(pEvent);
+    if (_scriptEventDispatcher->hasScriptEventListener(NODE_TOUCH_EVENT))
+    {
+        executeScriptTouchHandler(CCTOUCHREMOVED, touches);
+    }
+}
+
+int Node::executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase /* = NODE_TOUCH_TARGETING_PHASE */)
+{
+    return ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeTouchEvent(this, nEventType, pTouch, phase);
+}
+
+int Node::executeScriptTouchHandler(int nEventType, const std::vector<Touch*>& touches, int phase /* = NODE_TOUCH_TARGETING_PHASE */)
+{
+    return ScriptEngineManager::getInstance()->getScriptEngine()->executeNodeTouchesEvent(this, nEventType, touches, phase);
+}
+
+CCScriptEventDispatcher *Node::getScriptEventDispatcher()
+{
+    return _scriptEventDispatcher;
+}
+
+#endif //1 0
 
 __NodeRGBA::__NodeRGBA()
 {

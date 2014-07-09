@@ -41,6 +41,7 @@
 
 NS_CC_BEGIN
 
+class CCScriptEventDispatcher;
 class GridBase;
 class Touch;
 class Action;
@@ -101,7 +102,7 @@ class EventListener;
 
  */
 
-class CC_DLL Node : public Ref
+class CC_DLL Node : public Ref//, public CCTouchDelegate
 {
 public:
     /// Default tag used for all the nodes
@@ -201,6 +202,8 @@ public:
      * It is a scaling factor that multiplies the width of the node and its children.
      *
      * @param scaleX   The scale factor on X axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleX(float scaleX);
     /**
@@ -219,6 +222,8 @@ public:
      * It is a scaling factor that multiplies the height of the node and its children.
      *
      * @param scaleY   The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleY(float scaleY);
     /**
@@ -236,6 +241,8 @@ public:
      * The Default value is 1.0 if you haven't changed it before.
      *
      * @param scaleY   The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScaleZ(float scaleZ);
     /**
@@ -254,6 +261,8 @@ public:
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
      *
      * @param scale     The scale factor for both X and Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scale);
     /**
@@ -273,6 +282,8 @@ public:
      *
      * @param scaleX     The scale factor on X axis.
      * @param scaleY     The scale factor on Y axis.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scaleX, float scaleY);
 
@@ -395,6 +406,8 @@ public:
      * The default skewX angle is 0. Positive values distort the node in a CW direction.
      *
      * @param skewX The X skew angle of the node in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setSkewX(float skewX);
     /**
@@ -418,6 +431,8 @@ public:
      * The default skewY angle is 0. Positive values distort the node in a CCW direction.
      *
      * @param skewY    The Y skew angle of the node in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setSkewY(float skewY);
     /**
@@ -520,6 +535,8 @@ public:
     /**
      * Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotation3D(const Vec3& rotation);
     /**
@@ -537,6 +554,8 @@ public:
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
      * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotationSkewX(float rotationX);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
@@ -561,6 +580,8 @@ public:
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
      *
      * @param rotationY    The Y rotation in degrees.
+     *
+     * @warning The physics body doesn't support this.
      */
     virtual void setRotationSkewY(float rotationY);
     CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
@@ -657,16 +678,73 @@ public:
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * 
+     * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
-    virtual void addChild(Node* child, int localZOrder, int tag);
+     virtual void addChild(Node* child, int localZOrder, int tag);
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param name      A string to identify the node easily. Please refer to `setName(int)`
+     *
+     */
+    virtual void addChild(Node* child, int localZOrder, const std::string &name);
     /**
      * Gets a child from the container with its tag
      *
      * @param tag   An identifier to find the child node.
      *
      * @return a Node object whose tag equals to the input parameter
+     *
+     * Please use `getChildByName()` instead
      */
-    virtual Node * getChildByTag(int tag) const;
+     virtual Node * getChildByTag(int tag) const;
+    /**
+     * Gets a child from the container with its name
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node object whose name equals to the input parameter
+     *
+     * @since v3.2
+     */
+    virtual Node* getChildByName(const std::string& name) const;
+    /** Search the children of the receiving node to perform processing for nodes which share a name.
+     *
+     * @param name The name to search for, support c++11 regular expression
+     * Search syntax options:
+     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
+     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
+     *       and be performed recursively across the entire node tree.
+     * `..`: The search should move up to the node's parent. Can only be placed at the end of string
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     *
+     * @code
+     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
+     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
+     * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
+     * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
+     * and whose parent is named `Abby`.
+     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * parent is named `Abby`.
+     * @endcode
+     *
+     * @warning Only support alpha or number for name, and not support unicode
+     *
+     * @param callback A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
+     *  `node` 
+     *      A node that matches the name
+     *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
+     *
+     * @since v3.2
+     */
+    virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
     /**
      * Returns the array of the node's children
      *
@@ -698,6 +776,7 @@ public:
     virtual Node* getParent() { return _parent; }
     virtual const Node* getParent() const { return _parent; }
 
+    int addScriptEventListener(int event, int listener, int tag = 0, int priority = 0);
 
     ////// REMOVES //////
 
@@ -729,8 +808,17 @@ public:
      *
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     *
+     * Please use `removeChildByName` instead.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+     virtual void removeChildByTag(int tag, bool cleanup = true);
+    /**
+     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     *
+     * @param name       A string that identifies a child node
+     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
+     */
+    virtual void removeChildByName(const std::string &name, bool cleanup = true);
     /**
      * Removes all children from the container with a cleanup.
      *
@@ -770,16 +858,33 @@ public:
      * Returns a tag that is used to identify the node easily.
      *
      * @return An integer that identifies the node.
+     *
+     * Please use `getTag()` instead.
      */
-    virtual int getTag() const;
+     virtual int getTag() const;
     /**
      * Changes the tag that is used to identify the node easily.
      *
      * Please refer to getTag for the sample code.
      *
      * @param tag   A integer that identifies the node.
+     *
+     * Please use `setName()` instead.
      */
-    virtual void setTag(int tag);
+     virtual void setTag(int tag);
+    
+    /** Returns a string that is used to identify the node.
+     * @return A string that identifies the node.
+     * 
+     * @since v3.2
+     */
+    virtual std::string getName() const;
+    /** Changes the name that is used to identify the node easily.
+     * @param name A string that identifies the node.
+     *
+     * @since v3.2
+     */
+    virtual void setName(const std::string& name);
 
     
     /**
@@ -960,7 +1065,7 @@ public:
      It returns `nullptr` if the node doesn't belong to any Scene.
      This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
      */
-    virtual Scene* getScene();
+    virtual Scene* getScene() const;
 
     /**
      * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
@@ -1370,7 +1475,53 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
+#if 1
+    virtual Scene *getScene();
     
+    virtual void registerWithTouchDispatcher(void);
+    virtual void unregisterWithTouchDispatcher(void);
+    CCScriptEventDispatcher *getScriptEventDispatcher();
+    
+    /** whether or not it will receive Touch events.
+     You can enable / disable touch events with this property.
+     Only the touches of this node will be affected. This "method" is not propagated to it's children.
+     @since v0.8.1
+     */
+    virtual bool isTouchCaptureEnabled();
+    virtual void setTouchCaptureEnabled(bool value);
+    virtual bool isTouchSwallowEnabled();
+    virtual void setTouchSwallowEnabled(bool value);
+    
+    virtual bool ccTouchCaptureBegan(Touch *pTouch, Node *pTarget);
+    virtual bool ccTouchCaptureMoved(Touch *pTouch, Node *pTarget);
+    virtual void ccTouchCaptureEnded(Touch *pTouch, Node *pTarget);
+    virtual void ccTouchCaptureCancelled(Touch *pTouch, Node *pTarget);
+    
+    virtual void ccTouchesCaptureBegan(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureMoved(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureEnded(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureCancelled(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureAdded(const std::vector<Touch*>& touches, Node *pTarget);
+    virtual void ccTouchesCaptureRemoved(const std::vector<Touch*>& touches, Node *pTarget);
+    
+    virtual bool isTouchEnabled();
+    virtual void setTouchEnabled(bool value);
+    
+    virtual void setTouchMode(int mode);
+    virtual int getTouchMode();
+    
+    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent);
+    
+    virtual void ccTouchesBegan(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesMoved(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesEnded(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesCancelled(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent);
+    virtual void ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent);
+#endif
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1400,10 +1551,18 @@ protected:
     virtual void disableCascadeColor();
     virtual void updateColor() {}
     
+    bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
+    bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    
 #if CC_USE_PHYSICS
     virtual void updatePhysicsBodyPosition(Scene* layer);
     virtual void updatePhysicsBodyRotation(Scene* layer);
 #endif // CC_USE_PHYSICS
+    
+private:
+    void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
+    
+protected:
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis
@@ -1452,6 +1611,7 @@ protected:
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
+    size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
 
     void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
@@ -1478,8 +1638,19 @@ protected:
 
 #if CC_ENABLE_SCRIPT_BINDING
     int _scriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
-    int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
+//    int _updateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+    
+   CCScriptEventDispatcher *_scriptEventDispatcher;
+   // touch events
+   bool m_bTouchCaptureEnabled;
+   bool m_bTouchSwallowEnabled;
+   bool m_bTouchEnabled;
+   int m_nTouchPriority;
+   int m_eTouchMode;
+
+   virtual int executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase = 1);
+   virtual int executeScriptTouchHandler(int nEventType, const std::vector<Touch*>& touches, int phase = 1);
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
@@ -1538,7 +1709,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __NodeRGBA();
     virtual ~__NodeRGBA() {}
 

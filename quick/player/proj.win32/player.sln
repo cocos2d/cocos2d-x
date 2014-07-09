@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "player", "player.vcxproj", "{D59C3C47-22EA-4EBA-B40C-A587FF80E766}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libquick", "..\..\lib\proj.win32\libquick.vcxproj", "{B366C69E-671D-4DE5-BAC2-F064ABFED392}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D59C3C47-22EA-4EBA-B40C-A587FF80E766}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D59C3C47-22EA-4EBA-B40C-A587FF80E766}.Debug|Win32.Build.0 = Debug|Win32
+		{D59C3C47-22EA-4EBA-B40C-A587FF80E766}.Release|Win32.ActiveCfg = Release|Win32
+		{D59C3C47-22EA-4EBA-B40C-A587FF80E766}.Release|Win32.Build.0 = Release|Win32
+		{B366C69E-671D-4DE5-BAC2-F064ABFED392}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B366C69E-671D-4DE5-BAC2-F064ABFED392}.Debug|Win32.Build.0 = Debug|Win32
+		{B366C69E-671D-4DE5-BAC2-F064ABFED392}.Release|Win32.ActiveCfg = Release|Win32
+		{B366C69E-671D-4DE5-BAC2-F064ABFED392}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "__PROJECT_PACKAGE_LAST_NAME_L__", "__PROJECT_PACKAGE_LAST_NAME_L__.vcxproj", "{71666DE3-D772-41E9-8624-8881686C7AED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5} = {9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cocos2dx_2012", "%QUICK_COCOS2DX_ROOT%\lib\proj.win32\cocos2dx_2012.vcxproj", "{9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71666DE3-D772-41E9-8624-8881686C7AED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71666DE3-D772-41E9-8624-8881686C7AED}.Debug|Win32.Build.0 = Debug|Win32
+		{71666DE3-D772-41E9-8624-8881686C7AED}.Release|Win32.ActiveCfg = Release|Win32
+		{71666DE3-D772-41E9-8624-8881686C7AED}.Release|Win32.Build.0 = Release|Win32
+		{9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5}.Debug|Win32.Build.0 = Debug|Win32
+		{9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5}.Release|Win32.ActiveCfg = Release|Win32
+		{9E05AA4B-1A09-433C-B1DF-BCE6675EC0D5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

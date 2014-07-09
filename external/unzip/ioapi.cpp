@@ -114,7 +114,7 @@ static voidpf ZCALLBACK fopen64_file_func (voidpf opaque, const void* filename, 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE || CC_TARGET_PLATFORM == CC_PLATFORM_BADA || CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_NACL || CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
         file = NULL;
 #else
-        file = fopen64((const char*)filename, mode_fopen);    
+        file = fopen64((const char*)filename, mode_fopen);
 #endif
     }
 

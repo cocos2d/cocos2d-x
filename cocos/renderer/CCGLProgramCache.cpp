@@ -51,6 +51,7 @@ enum {
     kShaderType_LabelOutline,
     kShaderType_3DPosition,
     kShaderType_3DPositionTex,
+    kShaderType_3DSkinPositionTex,
     kShaderType_MAX,
 };
 
@@ -200,6 +201,9 @@ void GLProgramCache::loadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_3DPositionTex);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_TEXTURE, p) );
     
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -297,6 +301,9 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DPositionTex);
     
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -356,6 +363,9 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_3DPositionTex:
             p->initWithByteArrays(cc3D_PositionTex_vert, cc3D_ColorTex_frag);
             break;
+        case kShaderType_3DSkinPositionTex:
+            p->initWithByteArrays(cc3D_SkinPositionTex_vert, cc3D_ColorTex_frag);
+            break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;
@@ -377,8 +387,10 @@ GLProgram* GLProgramCache::getGLProgram(const std::string &key)
 
 void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
 {
-    program->retain();
-    _programs.insert( std::make_pair( key, program) );
+    if (program)
+        program->retain();
+    
+    _programs[key] = program;
 }
 
 NS_CC_END

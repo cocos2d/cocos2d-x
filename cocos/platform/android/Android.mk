@@ -27,6 +27,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/../.. \
+                    $(LOCAL_PATH)/../../../quick/samples/anysdk/proj.android/protocols/android \
+                    $(QUICK_V3_LIB)
 
 LOCAL_LDLIBS := -lGLESv1_CM \
                 -lGLESv2 \
@@ -43,6 +45,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
                        -landroid
 
 LOCAL_WHOLE_STATIC_LIBRARIES	:= cocos_png_static cocos_jpeg_static cocos_tiff_static cocos_webp_static
+LOCAL_WHOLE_STATIC_LIBRARIES ＋= PluginProtocolStatic 
 
 
 include $(BUILD_STATIC_LIBRARY)

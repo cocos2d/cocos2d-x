@@ -69,7 +69,7 @@ UniformValue::~UniformValue()
 void UniformValue::apply()
 {
     if(_useCallback) {
-        (*_value.callback)(_uniform);
+        (*_value.callback)(_glprogram, _uniform);
     }
     else
     {
@@ -110,7 +110,7 @@ void UniformValue::apply()
     }
 }
 
-void UniformValue::setCallback(const std::function<void(Uniform*)> &callback)
+void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &callback)
 {
 	// delete previously set callback
 	// XXX TODO: memory will leak if the user does:
@@ -119,7 +119,7 @@ void UniformValue::setCallback(const std::function<void(Uniform*)> &callback)
 	if (_useCallback)
 		delete _value.callback;
 
-    _value.callback = new std::function<void(Uniform*)>();
+    _value.callback = new std::function<void(GLProgram*, Uniform*)>();
 	*_value.callback = callback;
 
     _useCallback = true;
@@ -422,7 +422,7 @@ void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size,
 
 // Uniform Setters
 
-void GLProgramState::setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback)
+void GLProgramState::setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback)
 {
     auto v = getUniformValue(uniformName);
     if (v)
@@ -497,9 +497,21 @@ void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint te
 {
     auto v = getUniformValue(uniformName);
     if (v)
-        v->setTexture(textureId, _textureUnitIndex++);
+    {
+        if (_boundTextureUnits.find(uniformName) != _boundTextureUnits.end())
+        {
+            v->setTexture(textureId, _boundTextureUnits[uniformName]);
+        }
+        else
+        {
+            v->setTexture(textureId, _textureUnitIndex);
+            _boundTextureUnits[uniformName] = _textureUnitIndex++;
+        }
+    }
     else
+    {
         CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    }
 }
 
 
