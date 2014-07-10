@@ -8,7 +8,7 @@ USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 using namespace cocostudio;
 
-static CustomImageViewReader* _instanceCustomImageViewReader = NULL;
+static CustomImageViewReader* _instanceCustomImageViewReader = nullptr;
 
 CustomImageViewReader::CustomImageViewReader()
 {

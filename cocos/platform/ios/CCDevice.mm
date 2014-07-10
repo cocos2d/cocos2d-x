@@ -348,7 +348,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         }
         
         // text color
-        CGContextSetRGBFillColor(context, info->tintColorR, info->tintColorG, info->tintColorB, 1);
+        CGContextSetRGBFillColor(context, info->tintColorR / 255.0f, info->tintColorG / 255.0f, info->tintColorB / 255.0f, 1);
         // move Y rendering to the top of the image
         CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential

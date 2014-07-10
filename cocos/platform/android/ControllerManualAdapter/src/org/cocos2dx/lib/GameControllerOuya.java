@@ -10,8 +10,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class GameControllerOuya implements GameControllerDelegate{
-
-	public static final String sVendorName = "Ouya";
 	
 	private SparseIntArray mKeyMap;
     
@@ -61,35 +59,28 @@ public class GameControllerOuya implements GameControllerDelegate{
         
         if (handled && mControllerEventListener != null)
         {
-        	OuyaController c = OuyaController.getControllerByDeviceId(event.getDeviceId());
-        	int controllerID = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
+        	int deviceId = event.getDeviceId();
+        	String deviceName = event.getDevice().getName();
+        	OuyaController c = OuyaController.getControllerByDeviceId(deviceId);  	
         	
         	float newLeftTrigger = c.getAxisValue(OuyaController.AXIS_L2);
         	if (Float.compare(newLeftTrigger, mOldLeftTrigger) != 0) {
-				if (Float.compare(newLeftTrigger, 0.0f) == 0) {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_LEFT_TRIGGER, false, 0.0f, true);
-				}else {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_LEFT_TRIGGER, true, newLeftTrigger, true);
-				}
+        		mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newLeftTrigger, true);
 				mOldLeftTrigger = newLeftTrigger;
 			}
         	
         	float newRightTrigger = c.getAxisValue(OuyaController.AXIS_R2);
         	if (Float.compare(newRightTrigger, mOldRightTrigger) != 0) {
-				if (Float.compare(newRightTrigger, 0.0f) == 0) {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, false, 0.0f, true);
-				}else {
-					mControllerEventListener.onButtonEvent(sVendorName, controllerID, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, true, newRightTrigger, true);
-				}
+        		mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newRightTrigger, true);
 				mOldRightTrigger = newRightTrigger;
 			}
         	
         	float newLeftThumbstickX = c.getAxisValue(OuyaController.AXIS_LS_X);
         	if (Float.compare(newLeftThumbstickX, mOldLeftThumbstickX) != 0) {
 				if (Float.compare(newLeftThumbstickX, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_LEFT_X, 0.0f, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, 0.0f, true);
 				}else {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_LEFT_X, newLeftThumbstickX, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, newLeftThumbstickX, true);
 				}
 				mOldLeftThumbstickX = newLeftThumbstickX;
 			}
@@ -97,9 +88,9 @@ public class GameControllerOuya implements GameControllerDelegate{
         	float newLeftThumbstickY = c.getAxisValue(OuyaController.AXIS_LS_Y);
         	if (Float.compare(newLeftThumbstickY, mOldLeftThumbstickY) != 0) {
 				if (Float.compare(newLeftThumbstickY, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_LEFT_Y, 0.0f, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, 0.0f, true);
 				}else {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_LEFT_Y, newLeftThumbstickY, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, newLeftThumbstickY, true);
 				}
 				mOldLeftThumbstickY = newLeftThumbstickY;
 			}
@@ -107,9 +98,9 @@ public class GameControllerOuya implements GameControllerDelegate{
         	float newRightThumbstickX = c.getAxisValue(OuyaController.AXIS_RS_X);
         	if (Float.compare(newRightThumbstickX, mOldRightThumbstickX) != 0) {
 				if (Float.compare(newRightThumbstickX, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_RIGHT_X, 0.0f, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, 0.0f, true);
 				}else {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_RIGHT_X, newRightThumbstickX, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, newRightThumbstickX, true);
 				}
 				mOldRightThumbstickX = newRightThumbstickX;
 			}
@@ -117,9 +108,9 @@ public class GameControllerOuya implements GameControllerDelegate{
         	float newRightThumbstickY = c.getAxisValue(OuyaController.AXIS_RS_Y);
         	if (Float.compare(newRightThumbstickY, mOldRightThumbstickY) != 0) {
 				if (Float.compare(newRightThumbstickY, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_RIGHT_Y, 0.0f, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, 0.0f, true);
 				}else {
-					mControllerEventListener.onAxisEvent(sVendorName, controllerID, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newRightThumbstickY, true);
+					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newRightThumbstickY, true);
 				}
 				mOldRightThumbstickY = newRightThumbstickY;
 			}
@@ -130,8 +121,13 @@ public class GameControllerOuya implements GameControllerDelegate{
     
     public boolean dispatchKeyEvent(KeyEvent event) {
     	boolean handled = false;
+    	
     	int action = event.getAction();
     	int keyCode = event.getKeyCode();
+    	
+    	if (keyCode == KeyEvent.KEYCODE_BUTTON_L2 || keyCode == KeyEvent.KEYCODE_BUTTON_R2) {
+			return true;
+		}
     	
     	if (action == KeyEvent.ACTION_DOWN) {
     		handled = OuyaController.onKeyDown(keyCode, event);
@@ -147,11 +143,10 @@ public class GameControllerOuya implements GameControllerDelegate{
     			isAnalog = true;
     		}
     		
-    		int controllerID = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
     		if (action == KeyEvent.ACTION_DOWN) {
-    			mControllerEventListener.onButtonEvent(sVendorName, controllerID, mKeyMap.get(keyCode), true, 1.0f, isAnalog);
+    			mControllerEventListener.onButtonEvent(event.getDevice().getName(), event.getDeviceId(), mKeyMap.get(keyCode), true, 1.0f, isAnalog);
 			}else {
-				mControllerEventListener.onButtonEvent(sVendorName, controllerID, mKeyMap.get(keyCode), false, 0.0f, isAnalog);
+				mControllerEventListener.onButtonEvent(event.getDevice().getName(), event.getDeviceId(), mKeyMap.get(keyCode), false, 0.0f, isAnalog);
 			}
 		}
     	

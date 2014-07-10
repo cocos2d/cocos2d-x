@@ -137,7 +137,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 	});
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height/2+15));
     addChild(menu, 1);

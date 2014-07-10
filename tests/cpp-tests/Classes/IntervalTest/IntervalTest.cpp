@@ -55,7 +55,7 @@ IntervalLayer::IntervalLayer()
     auto jump = JumpBy::create(3, Vec2(s.width-80,0), 50, 4);
     
     addChild(sprite);
-    sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), NULL) ));
+    sprite->runAction( RepeatForever::create(Sequence::create(jump, jump->reverse(), nullptr) ));
     // pause button
     auto item1 = MenuItemFont::create("Pause", [&](Ref* sender) {
 		if(Director::getInstance()->isPaused())
@@ -63,7 +63,7 @@ IntervalLayer::IntervalLayer()
 		else
 			Director::getInstance()->pause();
 	});
-    auto menu = Menu::create(item1, NULL);
+    auto menu = Menu::create(item1, nullptr);
     menu->setPosition( Vec2(s.width/2, s.height-50) );
 
     addChild( menu );

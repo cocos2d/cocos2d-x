@@ -34,7 +34,7 @@ namespace cocostudio
     static const char* P_BackGroundImageData = "backGroundImageData";
     static const char* P_LayoutType = "layoutType";
     
-    static LayoutReader* instanceLayoutReader = NULL;
+    static LayoutReader* instanceLayoutReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(LayoutReader)
     
@@ -72,7 +72,7 @@ namespace cocostudio
         int ecr=0, ecg=0, ecb= 0;
         float bgcv1 = 0.0f, bgcv2= 0.0f;
         float capsx = 0.0f, capsy = 0.0, capsWidth = 0.0, capsHeight = 0.0f;
-        Layout::Type layoutType;
+        Layout::Type layoutType = Layout::Type::ABSOLUTE;
         int bgColorOpacity = panel->getBackGroundColorOpacity();
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
@@ -290,10 +290,13 @@ namespace cocostudio
         
         panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
         
-        int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR);
-        int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG);
-        int bgimgcb = DICTOOL->getIntValue_json(options, P_ColorB);
+        int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR,255);
+        int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG,255);
+        int bgimgcb = DICTOOL->getIntValue_json(options, P_ColorB,255);
         panel->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
+        
+        int bgimgopacity = DICTOOL->getIntValue_json(options, "opacity",255);
+        panel->setBackGroundImageOpacity(bgimgopacity);
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);

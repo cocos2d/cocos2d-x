@@ -2215,6 +2215,66 @@ tolua_lerror:
 #endif
 }
 
+static int lua_cocos2dx_Node_enumerateChildren(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_enumerateChildren'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isstring(tolua_S, 2, 0, &tolua_err) ||
+            !toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        
+        std::string name = (std::string)tolua_tocppstring(tolua_S,2,0);
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S,3,0);
+        
+        cobj->enumerateChildren(name, [=](Node* node)->bool{
+            int id = node ? (int)node->_ID : -1;
+            int* luaID = node ? &node->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)node,"cc.Node");
+            bool ret = LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
+            LuaEngine::getInstance()->removeScriptHandler(handler);
+            return ret;
+        });
+        
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "enumerateChildren",argc, 2);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_enumerateChildren'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
 static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -3919,6 +3979,9 @@ static void extendNode(lua_State* tolua_S)
         lua_rawset(tolua_S, -3);
         lua_pushstring(tolua_S, "setAnchorPoint");
         lua_pushcfunction(tolua_S, tolua_cocos2d_Node_setAnchorPoint);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "enumerateChildren");
+        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_enumerateChildren);
         lua_rawset(tolua_S, -3);
     }
     lua_pop(tolua_S, 1);
@@ -6426,6 +6489,93 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendTMXLayer(tolua_S);
     extendEventListenerFocus(tolua_S);
     extendApplication(tolua_S);
+    
+    return 0;
+}
+
+static int tolua_cocos2d_utils_captureScreen(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_istable(tolua_S,1,0, &tolua_err) ||
+        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
+        !tolua_isstring(tolua_S, 3, 0, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
+        std::string  fileName = tolua_tocppstring(tolua_S, 3, "");
+        cocos2d::utils::captureScreen([=](bool succeed, const std::string& name ){
+            
+            tolua_pushboolean(tolua_S, succeed);
+            tolua_pushstring(tolua_S, name.c_str());
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
+            LuaEngine::getInstance()->removeScriptHandler(handler);
+        }, fileName);
+        
+        return 0;
+    }
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'captureScreen'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_utils_findChildren(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_istable(tolua_S,1,0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Node", 0, &tolua_err) ||
+        !tolua_isstring(tolua_S, 3, 0, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        cocos2d::Node* node = static_cast<Node*>(tolua_tousertype(tolua_S, 2, nullptr));
+        std::string  name = tolua_tocppstring(tolua_S, 3, "");
+        std::vector<Node*> children = cocos2d::utils::findChildren(*node, name);
+        lua_newtable(tolua_S);
+        int index = 1;
+        for (const auto& obj : children)
+        {
+            if (nullptr == obj)
+                continue;
+            
+            lua_pushnumber(tolua_S, (lua_Number)index);
+            int ID = (obj) ? (int)obj->_ID : -1;
+            int* luaID = (obj) ? &obj->_luaID : NULL;
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)obj, "cc.Node");
+            lua_rawset(tolua_S, -3);
+            ++index;
+        }
+        return 1;
+    }
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'findChildren'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int register_all_cocos2dx_module_manual(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    tolua_open(tolua_S);
+    tolua_module(tolua_S, "cc", 0);
+    tolua_beginmodule(tolua_S, "cc");
+        tolua_module(tolua_S, "utils", 0);
+        tolua_beginmodule(tolua_S,"utils");
+            tolua_function(tolua_S, "captureScreen", tolua_cocos2d_utils_captureScreen);
+            tolua_function(tolua_S, "findChildren", tolua_cocos2d_utils_findChildren);
+        tolua_endmodule(tolua_S);
+    tolua_endmodule(tolua_S);
     
     return 0;
 }

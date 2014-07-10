@@ -662,7 +662,7 @@ void S9CascadeOpacityAndColor::onEnter()
                                          TintTo::create(1, 0, 255, 0),
                                          TintTo::create(1, 255, 255, 255),
                                          FadeOut::create(1),
-                                         NULL);
+                                         nullptr);
     auto repeat = RepeatForever::create(actions);
     rgba->runAction(repeat);
     log("this->addChild");

@@ -138,11 +138,11 @@ INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
 #else
     HRSRC rcDlg = ::FindResource(hModule, MAKEINTRESOURCE(param->DlgTemplateName), RT_DIALOG);
 #endif
-    if (rcDlg == NULL)
+    if (rcDlg == nullptr)
       return 0;
 
     HGLOBAL hglobalDlg = ::LoadResource(hModule, rcDlg);
-    if (hglobalDlg == NULL)
+    if (hglobalDlg == nullptr)
       return 0;
 
     dlgTemplate = (LPDLGTEMPLATE) hglobalDlg;
@@ -336,16 +336,16 @@ std::string CWin32InputBox::AnsiToUtf8(std::string strAnsi)
 	std::string ret;
 	if (strAnsi.length() > 0)
 	{	
-		int nWideStrLength = MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, NULL, 0);
+		int nWideStrLength = MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, nullptr, 0);
 		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength+1)*sizeof(WCHAR));
 		memset(pwszBuf, 0, (nWideStrLength+1)*sizeof(WCHAR));
 		MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
 
-		int nUtf8Length = WideCharToMultiByte( CP_UTF8,0,pwszBuf,-1,NULL,0,NULL,FALSE );
+		int nUtf8Length = WideCharToMultiByte( CP_UTF8,0,pwszBuf,-1,nullptr,0,nullptr,FALSE );
 		char* pszUtf8Buf = (char*)malloc((nUtf8Length+1)*sizeof(char));
 		memset(pszUtf8Buf, 0, (nUtf8Length+1)*sizeof(char));
 
-		WideCharToMultiByte(CP_UTF8, 0, pwszBuf, -1, pszUtf8Buf, (nUtf8Length+1)*sizeof(char), NULL, FALSE);
+		WideCharToMultiByte(CP_UTF8, 0, pwszBuf, -1, pszUtf8Buf, (nUtf8Length+1)*sizeof(char), nullptr, FALSE);
 		ret = pszUtf8Buf;
 
 		free(pszUtf8Buf);
@@ -359,16 +359,16 @@ std::string CWin32InputBox::Utf8ToAnsi(std::string strUTF8)
 	std::string ret;
 	if (strUTF8.length() > 0)
 	{
-		int nWideStrLength = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, NULL, 0);
+		int nWideStrLength = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, nullptr, 0);
 		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength+1)*sizeof(WCHAR));
 		memset(pwszBuf, 0, (nWideStrLength+1)*sizeof(WCHAR));
 		MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
 
-		int nAnsiStrLength = WideCharToMultiByte( CP_ACP,0,pwszBuf,-1,NULL,0,NULL,FALSE );
+		int nAnsiStrLength = WideCharToMultiByte( CP_ACP,0,pwszBuf,-1,nullptr,0,nullptr,FALSE );
 		char* pszAnsiBuf = (char*)malloc((nAnsiStrLength+1)*sizeof(char));
 		memset(pszAnsiBuf, 0, (nAnsiStrLength+1)*sizeof(char));
 
-		WideCharToMultiByte(CP_ACP, 0, pwszBuf, -1, pszAnsiBuf, (nAnsiStrLength+1)*sizeof(char), NULL, FALSE);
+		WideCharToMultiByte(CP_ACP, 0, pwszBuf, -1, pszAnsiBuf, (nAnsiStrLength+1)*sizeof(char), nullptr, FALSE);
 		ret = pszAnsiBuf;
 
 		free(pszAnsiBuf);
