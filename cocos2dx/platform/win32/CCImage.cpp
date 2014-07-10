@@ -122,7 +122,14 @@ public:
                     size_t nFindPos = fontName.rfind("/");
                     if (nFindPos != fontName.npos)
                     {
-                        fontName = &fontName[nFindPos+1];
+                        if (fontName.length() == nFindPos + 1)
+                        {
+                            fontName = "";
+                        } 
+                        else
+                        {
+                            fontName = &fontName[nFindPos+1];
+                        }
                     }
                 }
                 tNewFont.lfCharSet = DEFAULT_CHARSET;
