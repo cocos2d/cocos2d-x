@@ -1,7 +1,11 @@
 cocos2d-x-3.2    ??
+    [FIX]           Animation3D: getOrCreate is deprecated and replaced with Animation3D::create
+    [FIX]           Animate3D: setSpeed() accept negtive value, which means play reverse, getPlayback and setPlayBack are deprecated
     [FIX]           GLView: cursor position is not correct if design resolution is different from device resolution
     [FIX]           Label: color can not be set correctly if using system font
+    [FIX]           Lua-binding: support UIVideoPlayer
     [FIX]           Node: setRotation3D not work based on anchor point
+    [FIX]           Node: modify regular of enumerateChildren, now it just searchs its children
     [FIX]           Setup.py: not work if using zsh
     [FIX]           SpriteBatchNode: opacity can not work
     [FIX]           Sprite3D: may crash on Android if playing animation and replace Scene after come from background

@@ -92,7 +92,7 @@ Type stExpCocoNode::GetType(CocoLoader*	pCoco)
 
 char*	stExpCocoNode::GetName(CocoLoader*		pCoco)
 {
-    char*   szName  = NULL ;
+    char*   szName  = nullptr ;
     if(m_ObjIndex >= 0)
     {
         stExpCocoObjectDesc*	tpCocoObjectDesc = pCoco->GetCocoObjectDescArray();
@@ -130,10 +130,19 @@ char*	stExpCocoNode::GetName(CocoLoader*		pCoco)
     
 }
 
-char* stExpCocoNode::GetValue(CocoLoader* pCoco)
-{
-    return ( pCoco->GetMemoryAddr_String() + m_szValue );
-}
+    char* stExpCocoNode::GetValue(CocoLoader* pCoco)
+    {
+        char* szValue = ( pCoco->GetMemoryAddr_String() + m_szValue );
+        if(GetType(pCoco) == kStringType )
+        {
+            if(szValue && 0==strcmp(szValue,"null"))
+            {
+                strcpy(szValue,"");
+            }
+        }
+        return szValue;
+    }
+
 
 int	stExpCocoNode::GetChildNum()
 {
@@ -147,9 +156,9 @@ stExpCocoNode*	stExpCocoNode::GetChildArray(CocoLoader* pCoco)
 
 CocoLoader::CocoLoader()
 {
-    m_pRootNode = NULL;
-    m_pObjectDescArray = NULL;
-    m_pMemoryBuff = NULL;
+    m_pRootNode = nullptr;
+    m_pObjectDescArray = nullptr;
+    m_pMemoryBuff = nullptr;
 }
 
 CocoLoader::~CocoLoader()
@@ -157,7 +166,7 @@ CocoLoader::~CocoLoader()
     if(m_pMemoryBuff)
     {
         delete[] m_pMemoryBuff;
-        m_pMemoryBuff = NULL;
+        m_pMemoryBuff = nullptr;
     }
     
 }
@@ -198,7 +207,7 @@ stExpCocoObjectDesc*	CocoLoader::GetCocoObjectDesc(const char* szObjDesc)
             return	&m_pObjectDescArray[i];
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 stExpCocoObjectDesc*	CocoLoader::GetCocoObjectDesc(int vIndex)
@@ -207,7 +216,7 @@ stExpCocoObjectDesc*	CocoLoader::GetCocoObjectDesc(int vIndex)
     {
         return	&m_pObjectDescArray[vIndex];
     }
-    return NULL;
+    return nullptr;
 }
 
 char*	CocoLoader::GetMemoryAddr_AttribDesc()

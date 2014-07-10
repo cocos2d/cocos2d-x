@@ -33,12 +33,12 @@ class Sprite;
 
 namespace ui {
 
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
+typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 /**

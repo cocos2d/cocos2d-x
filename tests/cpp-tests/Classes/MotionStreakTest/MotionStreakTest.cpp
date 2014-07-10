@@ -79,7 +79,7 @@ void MotionStreakTest1::onEnter()
 
     auto action1 = RepeatForever::create(a1);
     auto motion = MoveBy::create(2, Vec2(100,0) );
-    _root->runAction( RepeatForever::create(Sequence::create(motion, motion->reverse(), NULL) ) );
+    _root->runAction( RepeatForever::create(Sequence::create(motion, motion->reverse(), nullptr) ) );
     _root->runAction( action1 );
 
     auto colorAction = RepeatForever::create(Sequence::create(
@@ -90,7 +90,7 @@ void MotionStreakTest1::onEnter()
         TintTo::create(0.2f, 255, 255, 0),
         TintTo::create(0.2f, 255, 0, 255),
         TintTo::create(0.2f, 255, 255, 255),
-        NULL));
+        nullptr));
 
     streak->runAction(colorAction);
 }
@@ -214,9 +214,9 @@ void MotionStreakTest::onEnter()
     auto itemMode = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MotionStreakTest::modeCallback, this),
         MenuItemFont::create("Use High Quality Mode"),
         MenuItemFont::create("Use Fast Mode"),
-        NULL);
+        nullptr);
 
-    auto menuMode = Menu::create(itemMode, NULL);
+    auto menuMode = Menu::create(itemMode, nullptr);
     addChild(menuMode);
 
     menuMode->setPosition(Vec2(s.width/2, s.height/4));

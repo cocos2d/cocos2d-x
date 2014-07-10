@@ -302,7 +302,7 @@ void TextFieldTTFActionTest::onEnter()
         Sequence::create(
             FadeOut::create(0.25),
             FadeIn::create(0.25),
-            NULL
+            nullptr
         ));
     _textFieldAction->retain();
     _action = false;
@@ -394,9 +394,9 @@ bool TextFieldTTFActionTest::onTextFieldInsertText(TextFieldTTF * sender, const 
             MoveTo::create(duration, endPos),
             ScaleTo::create(duration, 1),
             FadeOut::create(duration),
-            NULL),
+            nullptr),
         CallFuncN::create(CC_CALLBACK_1(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction, this)),
-        NULL);
+        nullptr);
     label->runAction(seq);
     return false;
 }
@@ -428,9 +428,9 @@ bool TextFieldTTFActionTest::onTextFieldDeleteBackward(TextFieldTTF * sender, co
                 RotateBy::create(rotateDuration, (rand()%2) ? 360 : -360),
                 repeatTime),
             FadeOut::create(duration),
-        NULL),
+        nullptr),
         CallFuncN::create(CC_CALLBACK_1(TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction, this)),
-        NULL);
+        nullptr);
     label->runAction(seq);
     return false;
 }

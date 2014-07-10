@@ -66,7 +66,7 @@ RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte 
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
@@ -90,7 +90,7 @@ RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyt
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
@@ -112,7 +112,7 @@ RichElementCustomNode* RichElementCustomNode::create(int tag, const Color3B &col
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity, cocos2d::Node *customNode)
@@ -149,7 +149,7 @@ RichText* RichText::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 bool RichText::init()
@@ -204,7 +204,7 @@ void RichText::formatText()
             for (ssize_t i=0; i<_richElements.size(); i++)
             {
                 RichElement* element = _richElements.at(i);
-                Node* elementRenderer = NULL;
+                Node* elementRenderer = nullptr;
                 switch (element->_type)
                 {
                     case RichElement::Type::TEXT:
