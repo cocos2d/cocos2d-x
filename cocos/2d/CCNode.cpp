@@ -842,23 +842,13 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
     size_t subStrStartPos = 0;  // sub string start index
     size_t subStrlength = length; // sub string length
     
-    // Starts with '/' or '//'?
-    bool searchFromRoot = false;
-    bool searchFromRootRecursive = false;
-    if (name[0] == '/')
+    // Starts with '//'?
+    bool searchRecursively = false;
+    if (length > 2 && name[0] == '/' && name[1] == '/')
     {
-        if (length > 2 && name[1] == '/')
-        {
-            searchFromRootRecursive = true;
-            subStrStartPos = 2;
-            subStrlength -= 2;
-        }
-        else
-        {
-            searchFromRoot = true;
-            subStrStartPos = 1;
-            subStrlength -= 1;
-        }
+        searchRecursively = true;
+        subStrStartPos = 2;
+        subStrlength -= 2;
     }
     
     // End with '/..'?
@@ -872,7 +862,7 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         subStrlength -= 3;
     }
     
-    // Remove '/', '//', '/..' if exist
+    // Remove '//', '/..' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
 
     if (searchFromParent)
@@ -880,23 +870,11 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         newName.insert(0, "[[:alnum:]]+/");
     }
     
-    if (searchFromRoot)
-    {
-        // name is '/xxx'
-        auto root = getScene();
-        if (root)
-        {
-            root->doEnumerate(newName, callback);
-        }
-    }
-    else if (searchFromRootRecursive)
+    
+    if (searchRecursively)
     {
         // name is '//xxx'
-        auto root = getScene();
-        if (root)
-        {
-            doEnumerateRecursive(root, newName, callback);
-        }
+        doEnumerateRecursive(this, newName, callback);
     }
     else
     {
