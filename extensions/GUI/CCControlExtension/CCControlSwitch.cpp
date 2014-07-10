@@ -291,13 +291,13 @@ ControlSwitch::~ControlSwitch()
 
 bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
 {
-    return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL);
+    return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, nullptr, nullptr);
 }
 
 ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
 {
     ControlSwitch* pRet = new ControlSwitch();
-    if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL))
+    if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, nullptr, nullptr))
     {
         pRet->autorelease();
     }
@@ -382,7 +382,7 @@ void ControlSwitch::setOn(bool isOn, bool animated)
 void ControlSwitch::setEnabled(bool enabled)
 {
     _enabled = enabled;
-    if (_switchSprite != NULL)
+    if (_switchSprite != nullptr)
     {
         _switchSprite->setOpacity((enabled) ? 255 : 128);
     } 

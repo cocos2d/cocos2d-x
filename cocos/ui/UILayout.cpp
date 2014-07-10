@@ -1648,7 +1648,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         if (direction == FocusDirection::LEFT) {
             if (index == 0)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
             }
             else
             {
@@ -1658,7 +1658,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         if (direction == FocusDirection::RIGHT) {
             if (index == container.size()-1)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
             }
             else
             {
@@ -1681,7 +1681,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         {
             if (index == 0)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
                 
             }
             else
@@ -1693,7 +1693,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         {
             if (index == container.size() - 1)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
             }
             else
             {

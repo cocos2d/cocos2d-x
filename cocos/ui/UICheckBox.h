@@ -33,13 +33,13 @@ class Sprite;
 
 namespace ui {
 
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     CHECKBOX_STATE_EVENT_SELECTED,
     CHECKBOX_STATE_EVENT_UNSELECTED
 }CheckBoxEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
+typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
 /**

@@ -135,7 +135,7 @@ void ControlColourPicker::setColor(const Color3B& color)
 void ControlColourPicker::setEnabled(bool enabled)
 {
     Control::setEnabled(enabled);
-    if (_huePicker != NULL)
+    if (_huePicker != nullptr)
     {
         _huePicker->setEnabled(enabled);
     }
