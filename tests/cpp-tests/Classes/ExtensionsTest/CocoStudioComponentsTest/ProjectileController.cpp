@@ -133,7 +133,7 @@ void ProjectileController::move(float flocationX, float flocationY)
           Sequence::create(
                MoveTo::create(realMoveDuration, realDest),
                callfunc,
-               NULL)
+               nullptr)
           );
 }
 

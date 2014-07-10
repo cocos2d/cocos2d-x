@@ -9,7 +9,7 @@ using namespace ui;
 
 namespace cocostudio
 {
-    static TextFieldReader* instanceTextFieldReader = NULL;
+    static TextFieldReader* instanceTextFieldReader = nullptr;
     
     static const char* P_PlaceHolder = "placeHolder";
     static const char* P_Text = "text";

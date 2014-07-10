@@ -55,7 +55,7 @@ Application::Application()
 Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
-    sm_pSharedApplication = NULL;
+    sm_pSharedApplication = nullptr;
 }
 
 int Application::run()
@@ -248,7 +248,7 @@ static void PVRFrameEnableControlWindow(bool bEnable)
         KEY_ALL_ACCESS,
         0,
         &hKey,
-        NULL))
+        nullptr))
     {
         return;
     }
@@ -257,7 +257,7 @@ static void PVRFrameEnableControlWindow(bool bEnable)
     const WCHAR* wszNewData = (bEnable) ? L"NO" : L"YES";
     WCHAR wszOldData[256] = {0};
     DWORD   dwSize = sizeof(wszOldData);
-    LSTATUS status = RegQueryValueExW(hKey, wszValue, 0, NULL, (LPBYTE)wszOldData, &dwSize);
+    LSTATUS status = RegQueryValueExW(hKey, wszValue, 0, nullptr, (LPBYTE)wszOldData, &dwSize);
     if (ERROR_FILE_NOT_FOUND == status              // the key not exist
         || (ERROR_SUCCESS == status                 // or the hide_gui value is exist
         && 0 != wcscmp(wszNewData, wszOldData)))    // but new data and old data not equal

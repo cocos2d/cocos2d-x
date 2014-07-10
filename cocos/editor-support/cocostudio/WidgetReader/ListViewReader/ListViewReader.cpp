@@ -12,7 +12,7 @@ namespace cocostudio
     static const char* P_Direction = "direction";
     static const char* P_ItemMargin = "itemMargin";
     
-    static ListViewReader* instanceListViewReader = NULL;
+    static ListViewReader* instanceListViewReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(ListViewReader)
     

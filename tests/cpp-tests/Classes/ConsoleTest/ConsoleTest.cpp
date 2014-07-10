@@ -258,7 +258,7 @@ void ConsoleUploadFile::uploadFile()
       If socket(2) (or connect(2)) fails, we (close the socket
       and) try the next address. */
 
-    for (rp = result; rp != NULL; rp = rp->ai_next) {
+    for (rp = result; rp != nullptr; rp = rp->ai_next) {
         sfd = socket(rp->ai_family, rp->ai_socktype,
                     rp->ai_protocol);
         if (sfd == -1)
@@ -274,7 +274,7 @@ void ConsoleUploadFile::uploadFile()
 #endif
     }
 
-    if (rp == NULL) {               /* No address succeeded */
+    if (rp == nullptr) {               /* No address succeeded */
         CCLOG("ConsoleUploadFile: could not connect!");
         return;
     }

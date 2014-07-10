@@ -195,7 +195,7 @@ TileMapTest::TileMapTest()
     auto scale = ScaleBy::create(4, 0.8f);
     auto scaleBack = scale->reverse();
 
-    auto seq = Sequence::create(scale, scaleBack, NULL);
+    auto seq = Sequence::create(scale, scaleBack, nullptr);
 
     map->runAction(RepeatForever::create(seq));
 }
@@ -291,7 +291,7 @@ TMXOrthoTest::TMXOrthoTest()
 
     auto scale = ScaleBy::create(10, 0.1f);
     auto back = scale->reverse();
-    auto seq = Sequence::create(scale, back, NULL);
+    auto seq = Sequence::create(scale, back, nullptr);
     auto repeat = RepeatForever::create(seq);
     map->runAction(repeat);
 
@@ -332,7 +332,7 @@ TMXOrthoTest2::TMXOrthoTest2()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    SpriteBatchNode* child = NULL;
+    SpriteBatchNode* child = nullptr;
 
     for(const auto &obj : children) {
         child = static_cast<SpriteBatchNode*>(obj);
@@ -361,7 +361,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     auto& children = map->getChildren();
-    SpriteBatchNode* child = NULL;
+    SpriteBatchNode* child = nullptr;
 
     for(const auto &node : children) {
         child = static_cast<SpriteBatchNode*>(node);
@@ -483,7 +483,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     auto fadein = FadeIn::create(2);
     auto scaleback = ScaleTo::create(1, 1);
     auto finish = CallFuncN::create(CC_CALLBACK_1(TMXReadWriteTest::removeSprite, this));
-    auto seq0 = Sequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
+    auto seq0 = Sequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, nullptr);
     auto seq1 = seq0->clone();
     auto seq2 = seq0->clone();
     auto seq3 = seq0->clone();
@@ -947,7 +947,7 @@ TMXIsoZorder::TMXIsoZorder()
     
     auto move = MoveBy::create(10, Vec2(300,250));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
     schedule( schedule_selector(TMXIsoZorder::repositionSprite) );
@@ -1013,7 +1013,7 @@ TMXOrthoZorder::TMXOrthoZorder()
     
     auto move = MoveBy::create(10, Vec2(400,450));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
     schedule( schedule_selector(TMXOrthoZorder::repositionSprite));
@@ -1075,7 +1075,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     
     auto move = MoveBy::create(10, Vec2(300,250) * (1/CC_CONTENT_SCALE_FACTOR()));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
     schedule( schedule_selector(TMXIsoVertexZ::repositionSprite));
@@ -1147,7 +1147,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 
     auto move = MoveBy::create(10, Vec2(400,450) * (1/CC_CONTENT_SCALE_FACTOR()));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
     schedule(schedule_selector(TMXOrthoVertexZ::repositionSprite));
@@ -1389,7 +1389,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     std::string file = resources + "/orthogonal-test1.tmx";
 
     auto str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
-    CCASSERT(str != NULL, "Unable to open file");
+    CCASSERT(str != nullptr, "Unable to open file");
 
     auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
     addChild(map, 0, kTagTileMap);

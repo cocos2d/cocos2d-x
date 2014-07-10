@@ -77,7 +77,7 @@ struct ProgressMessage
 
 // Implementation of AssetsManager
 
-AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* versionFileUrl/* =NULL */, const char* storagePath/* =NULL */)
+AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* versionFileUrl/* =nullptr */, const char* storagePath/* =nullptr */)
 :  _storagePath(storagePath)
 , _version("")
 , _packageUrl(packageUrl)
@@ -309,9 +309,9 @@ bool AssetsManager::uncompress()
                                   &fileInfo,
                                   fileName,
                                   MAX_FILENAME,
-                                  NULL,
+                                  nullptr,
                                   0,
-                                  NULL,
+                                  nullptr,
                                   0) != UNZ_OK)
         {
             CCLOG("can not read file info");
@@ -455,7 +455,7 @@ bool AssetsManager::createDirectory(const char *path)
     
     return true;
 #else
-    BOOL ret = CreateDirectoryA(path, NULL);
+    BOOL ret = CreateDirectoryA(path, nullptr);
 	if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
 	{
 		return false;
@@ -632,7 +632,7 @@ void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *dir = NULL;
+    DIR *dir = nullptr;
     
     dir = opendir (_storagePath.c_str());
     if (!dir)
