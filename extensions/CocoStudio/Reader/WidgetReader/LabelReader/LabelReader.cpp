@@ -206,7 +206,9 @@ void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pC
         }else if(key == "fontSize"){
             label->setFontSize(valueToInt(value));
         }else if(key == "fontName"){
-            label->setFontName(value);
+            std::string jsonPath = GUIReader::shareReader()->getFilePath();
+            std::string fontFilePath = jsonPath.append(value);
+            label->setFontName(fontFilePath);
         }else if(key == "areaWidth"){
             label->setTextAreaSize(CCSize(valueToFloat(value), label->getTextAreaSize().height));
         }else if(key == "areaHeight"){
