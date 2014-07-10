@@ -75,7 +75,7 @@ public:
     float getWeight() const { return _weight; }
     void setWeight(float weight);
     
-    /**get & set play reverse*/
+    /**get & set play reverse, these are deprecated, use set negative speed instead*/
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
