@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 #include "CCGL.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -254,6 +255,15 @@ struct V3F_C4B_T2F
     Tex2F        texCoords;           // 8 bytes
 };
 
+//! a Vec2 with a vertex point, a tex coord point
+struct V3F_T2F
+{
+    //! vertices (2F)
+    Vec3       vertices;
+    //! tex coords (2F)
+    Tex2F          texCoords;
+};
+
 //! A Triangle of V2F_C4B_T2F
 struct V2F_C4B_T2F_Triangle
 {
@@ -302,6 +312,18 @@ struct V2F_C4F_T2F_Quad
     V2F_C4F_T2F    tl;
     //! top right
     V2F_C4F_T2F    tr;
+};
+
+struct V3F_T2F_Quad
+{
+    //! bottom left
+    V3F_T2F    bl;
+    //! bottom right
+    V3F_T2F    br;
+    //! top left
+    V3F_T2F    tl;
+    //! top right
+    V3F_T2F    tr;
 };
 
 //! Blend Function used for textures
@@ -463,6 +485,7 @@ public:
  @brief The device accelerometer reports values for each axis in units of g-force
  */
 class Acceleration
+    : public Ref
 {
 public:
     double x;

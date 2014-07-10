@@ -303,6 +303,10 @@ protected:
     
     virtual void setPosition(Vec2 position);
     virtual void setRotation(float rotation);
+    virtual void setScale(float scale);
+    virtual void setScale(float scaleX, float scaleY);
+    virtual void setScaleX(float scaleX);
+    virtual void setScaleY(float scaleY);
     
     void update(float delta);
     

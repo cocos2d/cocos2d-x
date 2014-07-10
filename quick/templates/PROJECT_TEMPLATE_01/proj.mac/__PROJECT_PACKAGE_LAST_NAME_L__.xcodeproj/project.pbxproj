@@ -28,6 +28,16 @@
 		F4DDD22D1926533C00D37F83 /* __PROJECT_PACKAGE_LAST_NAME_L__.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = F44C957215F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__.app */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DAF2834D196CD3B600959DA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAF28333196BDDB100959DA1 /* libquick.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F4E0B1C3196B9B740053EFD7;
+			remoteInfo = libquick;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		F4DDD22C1926532400D37F83 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -95,6 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DAF2834A196CD3B600959DA1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DAF2834E196CD3B600959DA1 /* liblibquick.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F44C956715F49004004D4151 = {
 			isa = PBXGroup;
 			children = (
@@ -209,12 +227,28 @@
 			mainGroup = F44C956715F49004004D4151;
 			productRefGroup = F44C957315F49004004D4151 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DAF2834A196CD3B600959DA1 /* Products */;
+					ProjectRef = DAF28333196BDDB100959DA1 /* libquick.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F44C957115F49004004D4151 /* __PROJECT_PACKAGE_LAST_NAME_L__ */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DAF2834E196CD3B600959DA1 /* liblibquick.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblibquick.a;
+			remoteRef = DAF2834D196CD3B600959DA1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F44C957015F49004004D4151 /* Resources */ = {

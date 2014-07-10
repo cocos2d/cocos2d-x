@@ -45,16 +45,34 @@ Animate3D* Animate3D::create(Animation3D* animation)
     return animate;
 }
 
+Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float duration)
+{
+    auto animate = Animate3D::create(animation);
+    
+    float fullDuration = animation->getDuration();
+    if (duration > fullDuration - fromTime)
+        duration = fullDuration - fromTime;
+    
+    animate->_start = fromTime / fullDuration;
+    animate->_last = duration / fullDuration;
+    animate->setDuration(duration);
+    
+    return  animate;
+}
+
 /** returns a clone of action */
 Animate3D* Animate3D::clone() const
 {
-    
     auto animate = const_cast<Animate3D*>(this);
     auto copy = Animate3D::create(animate->_animation);
     
     copy->_speed = _speed;
+    copy->_weight = _weight;
     copy->_elapsed = _elapsed;
+    copy->_start = _start;
+    copy->_last = _last;
     copy->_playBack = _playBack;
+    copy->setDuration(animate->getDuration());
 
     return copy;
 }
@@ -106,6 +124,7 @@ void Animate3D::update(float t)
         if (_playBack)
             t = 1 - t;
         
+        t = _start + t * _last;
         for (const auto& it : _boneCurves) {
             auto bone = it.first;
             auto curve = it.second;
@@ -124,7 +143,7 @@ void Animate3D::update(float t)
                 curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
                 scale = &scaleDst[0];
             }
-            bone->setAnimationValue(trans, rot, scale, _weight);
+            bone->setAnimationValue(trans, rot, scale, this, _weight);
         }
     }
     
@@ -133,6 +152,8 @@ void Animate3D::update(float t)
 Animate3D::Animate3D()
 : _speed(1)
 , _weight(1.f)
+, _start(0.f)
+, _last(1.f)
 , _animation(nullptr)
 , _playBack(false)
 {

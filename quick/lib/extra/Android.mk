@@ -23,8 +23,6 @@ LOCAL_C_INCLUDES := $(LOCAL_EXPORT_C_INCLUDES) \
                     $(COCOS2DX_CORE) \
                     $(COCOS2DX_CORE)/platform \
                     $(COCOS2DX_CORE)/platform/android \
-                    $(COCOS2DX_ROOT)/external/lua/luajit/include \
-                    $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(COCOS2DX_ROOT)/external \
                     $(COCOS2DX_ROOT)/external/unzip \
                     $(COCOS2DX_ROOT)/external/xxtea \

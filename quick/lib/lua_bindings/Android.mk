@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(LOCAL_PATH)/manual/CCLuaStack.cpp \
           $(LOCAL_PATH)/manual/CCLuaValue.cpp \
           $(LOCAL_PATH)/manual/Cocos2dxLuaLoader.cpp \
+          $(LOCAL_PATH)/manual/Lua_web_socket.cpp \
           $(LOCAL_PATH)/manual/LuaScriptHandlerMgr.cpp \
           $(LOCAL_PATH)/manual/LuaBasicConversions.cpp \
           $(LOCAL_PATH)/manual/lua_cocos2dx_manual.cpp \
@@ -48,9 +49,9 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(COCOS2DX_ROOT)/external/xxtea/xxtea.cpp
 
 
-LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
-                    $(COCOS2DX_ROOT)/external/lua/luajit/include \
-                    $(COCOS2DX_ROOT)/external/lua \
+LOCAL_C_INCLUDES := $(QUICK_V3_LIB)/lua_bindings/tolua \
+                    $(QUICK_V3_LIB)/lua_bindings/luajit/include \
+                    $(QUICK_V3_LIB)/lua_bindings \
                     $(COCOS2DX_ROOT)/extensions \
                     $(COCOS2DX_CORE)/editor-support/spine \
                     $(COCOS2DX_CORE)/editor-support/cocosbuilder \
@@ -67,12 +68,11 @@ LOCAL_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(QUICK_V3_LIB)/extra/crypto \
                     $(QUICK_V3_LIB)/extra/network \
                     $(QUICK_V3_LIB)/external \
-                    $(QUICK_V3_LIB)/lua_bindings/tolua \
                     $(COCOS2DX_ROOT)/external/xxtea
 
 
-LOCAL_EXPORT_C_INCLUDES := $(COCOS2DX_ROOT)/external/lua/tolua \
-                           $(COCOS2DX_ROOT)/external/lua/luajit/include \
+LOCAL_EXPORT_C_INCLUDES := $(QUICK_V3_LIB)/lua_bindings/tolua \
+                           $(QUICK_V3_LIB)/lua_bindings/luajit/include \
                            $(QUICK_V3_LIB) \
                            $(QUICK_V3_LIB)/lua_extensions \
                            $(LOCAL_PATH)/auto \
@@ -103,6 +103,7 @@ $(call import-module,event)
 $(call import-module,extensions)
 $(call import-module,.)
 $(call import-module,websockets/prebuilt/android)
+$(call import-module,network)
 #$(call import-module,editor-support/cocostudio)
 #$(call import-module,editor-support/cocosbuilder)
 #$(call import-module,editor-support/spine)

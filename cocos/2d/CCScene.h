@@ -31,11 +31,8 @@ THE SOFTWARE.
 #include <string>
 #include "2d/CCNode.h"
 #include "physics/CCPhysicsWorld.h"
-#include "base/CCEventListenerTouch.h"
 
 NS_CC_BEGIN
-
-class __Array;
 
 /**
  * @addtogroup scene
@@ -64,49 +61,6 @@ public:
     // Overrides
     virtual Scene *getScene() const override;
 
-    void addTouchableNode(Node *node);
-    void removeTouchableNode(Node *node);
-
-    virtual void registerWithTouchDispatcher(void) {}
-    virtual void unregisterWithTouchDispatcher(void) {}
-
-    virtual bool isTouchEnabled() { return true; }
-    virtual void setTouchEnabled(bool value) { CC_UNUSED_PARAM(value); }
-
-    virtual void setTouchMode(int mode) { CC_UNUSED_PARAM(mode); }
-    virtual int getTouchMode() { return 0 /*kCCTouchesAllAtOnce*/; }
-
-    virtual bool isTouchCaptureEnabled() { return true; }
-    virtual void setTouchCaptureEnabled(bool value) { CC_UNUSED_PARAM(value); }
-    virtual bool isTouchSwallowEnabled() { return false; };
-    virtual void setTouchSwallowEnabled(bool value) { CC_UNUSED_PARAM(value); }
-
-    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-        return true;
-    };
-    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    };
-    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    };
-    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) {
-        CC_UNUSED_PARAM(pTouch);
-        CC_UNUSED_PARAM(pEvent);
-    };
-
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *pEvent);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *pEvent);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *pEvent);
-    virtual void onTouchesCancelled(const std::vector<Touch*>& touches, Event *pEvent);
-
-    // virtual void visit();
-    virtual void cleanup(void);
-
     using Node::addChild;
     virtual std::string getDescription() const override;
     
@@ -121,19 +75,6 @@ protected:
     friend class Node;
     friend class SpriteBatchNode;
     
-    std::set<int> m_touchingIds;
-    __Array *m_touchableNodes;
-    __Array *m_touchingTargets;
-    bool m_touchDispatchingEnabled;
-//    bool m_touchRegistered;
-    EventListenerTouchAllAtOnce *_touchListener;
-
-    void sortAllTouchableNodes(__Array *nodes);
-    void enableTouchDispatching();
-    void disableTouchDispatching();
-
-    void dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event);
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
