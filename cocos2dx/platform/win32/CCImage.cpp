@@ -117,6 +117,14 @@ public:
                     nFindPos = fontName.rfind(".");
                     fontName = fontName.substr(0,nFindPos);                
                 }
+                else
+                {
+                    size_t nFindPos = fontName.rfind("/");
+                    if (nFindPos != fontName.npos)
+                    {
+                        fontName = &fontName[nFindPos+1];
+                    }
+                }
                 tNewFont.lfCharSet = DEFAULT_CHARSET;
                 strcpy_s(tNewFont.lfFaceName, LF_FACESIZE, fontName.c_str());
             }
