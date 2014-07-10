@@ -940,10 +940,15 @@ function display.newLine(points, params)
 
     if not params then
         borderColor = cc.c4f(0,0,0,1)
-        radius = 1
+        radius = 0.5
     else
         borderColor = params.borderColor or cc.c4f(0,0,0,1)
-        radius = params.borderWidth or 1
+        radius = params.borderWidth or 0.5
+    end
+
+    for i, p in ipairs(points) do
+        p = cc.p(p[1] * scale, p[2] * scale)
+        points[i] = p
     end
 
     local drawNode = cc.DrawNode:create()

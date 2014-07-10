@@ -1,30 +1,33 @@
 
-local AdBar = import("..views.AdBar")
-local BubbleButton = import("..views.BubbleButton")
-
-local MenuScene = class("MenuScene", function()
-    return display.newScene("MenuScene")
+local TestUIListViewScene = class("TestUIListViewScene", function()
+    return display.newScene("TestUIListViewScene")
 end)
 
-function MenuScene:ctor()
-    -- self.bg = display.newSprite("#MenuSceneBg.png", display.cx, display.cy)
-    -- self:addChild(self.bg)
+function TestUIListViewScene:ctor()
+    app:createGrid(self)
 
-    -- add listview
-    self.listview = cc.ui.UIListView.new{rect = cc.rect(10, 50, display.width - 20, display.height - 100)}
+    self:createListView1()
+
+    app:createTitle(self, "Test UIListView")
+    app:createNextButton(self)
+end
+
+function TestUIListViewScene:createListView1()
+    self.listview = cc.ui.UIListView.new{
+            rect = cc.rect(10, 50, display.width - 20, display.height - 100),
+            -- bgColor = cc.c4b(250, 0, 0, 255),
+            bg = "YellowBlock.png",
+            showScrollBar = true,
+            scrollBar = "SliderBar.png",
+            scrollButton = "SliderButton.png",
+            scrollWidth = 10}
         :registerHandler(self.listViewDelegate, cc.ui.UIListView.DELEGATE)
         :addTo(self)
         :reload()
-
-    HDrawRect(self.listview:getViewRect(), self, cc.c4f(1, 0, 0, 1))
-    -- HDrawRect(self.listview:getBoundingBox(), self, cc.c4f(1, 1, 1, 1))
 end
 
-function MenuScene:onEnter()
-end
-
-function MenuScene:listViewDelegate(name, idx, param)
-    print("htl listview delegate:" .. name, idx)
+function TestUIListViewScene:listViewDelegate(name, idx, param)
+    -- print("htl listview delegate:" .. name, idx)
 
     if name == cc.ui.UIListView.CELL_TAG then
         local i = math.random(3)
@@ -85,4 +88,4 @@ function MenuScene:listViewDelegate(name, idx, param)
     end
 end
 
-return MenuScene
+return TestUIListViewScene

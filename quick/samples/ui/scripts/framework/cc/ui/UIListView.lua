@@ -22,13 +22,68 @@ function UIListView:ctor(param)
 	self.direction = param.direction or UIListView.DIRECTION_VERTICAL
 	self.container = cc.Node:create()
 
+	self:addBgColorIf(param.bgColor)
+	self:addBgIf(param)
 	self:setViewRect(param.rect)
 	self.container:setAnchorPoint(0, 0)
 	self:addChild(self.container)
 
+	self:addScrollBarIf(param)
+
 	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
         return self:onTouch_(event)
     end)
+end
+
+function UIListView:addBgColorIf(bgColor)
+	if not bgColor then
+		return
+	end
+
+	display.newColorLayer(bgColor):addTo(self)
+end
+
+function UIListView:addBgIf(param)
+	if not param.bg then
+		return
+	end
+
+	display.newScale9Sprite(param.bg)
+		:size(param.rect.width, param.rect.height)
+		:pos(param.rect.x + param.rect.width/2,
+			param.rect.y + param.rect.height/2)
+		:addTo(self)
+end
+
+function UIListView:addScrollBarIf(param)
+	if not param.showScrollBar then
+		return
+	end
+
+	param.scrollWidth = param.scrollWidth or 5
+	if UIListView.DIRECTION_VERTICAL == self.direction then
+		cc.ui.UISlider.new(display.TOP_TO_BOTTOM,
+				{bar = param.scrollBar, button = param.scrollButton},
+				{scale9 = true})
+	        :onSliderValueChanged(handler(self, self.scrollBar_))
+	        :setSliderValue(0)
+	        :addTo(self)
+			:setSliderSize(param.scrollWidth, param.rect.height)
+			:align(display.CENTER,
+				param.rect.x + param.rect.width - param.scrollWidth/2,
+				param.rect.y + param.rect.height/2)
+	else
+		cc.ui.UISlider.new(display.LEFT_TO_RIGHT,
+				{bar = param.scrollBar, button = param.scrollButton},
+				{scale9 = true})
+	        :onSliderValueChanged(handler(self, self.scrollBar_))
+	        :setSliderValue(0)
+	        :addTo(self)
+			:setSliderSize(param.rect.width, param.scrollWidth)
+			:align(display.CENTER,
+				param.rect.x + param.rect.width/2,
+				param.rect.y + param.scrollWidth/2)
+	end
 end
 
 function UIListView:setViewRect(rect)
@@ -253,6 +308,10 @@ function UIListView:onTouch_(event)
 				self.container:convertToNodeSpace(cc.p(event.x, event.y)))
 		end
 	end
+end
+
+function UIListView:scrollBar_(event)
+	-- event.value
 end
 
 
