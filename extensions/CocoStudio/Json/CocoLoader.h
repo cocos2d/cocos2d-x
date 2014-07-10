@@ -32,7 +32,6 @@
 #include "ExtensionMacros.h"
 #include "../Json/rapidjson/rapidjson.h"
 #include "../Json/rapidjson/document.h"
-#include "zlib.h"
 
 #pragma pack (4)
 
