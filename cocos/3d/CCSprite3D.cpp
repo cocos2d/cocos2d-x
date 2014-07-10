@@ -193,7 +193,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         return false;
     }
     
-    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.numIndex, meshdata.attribs, meshdata.attribCount);
+    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.attribs);
     CC_SAFE_RETAIN(_mesh);
     
     _skin = MeshSkin::create(fullPath, "");
