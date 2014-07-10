@@ -46,8 +46,23 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
     label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
     
     std::string fontName = DICTOOL->getStringValue_json(options, "fontName","微软雅黑");
-    std::string fontFilePath = jsonPath.append(fontName);
-    label->setFontName(fontFilePath);
+    std::string file_extension = "";
+    size_t pos = fontName.find_last_of('.');
+    if (pos != std::string::npos)
+    {
+        file_extension = fontName.substr(pos, fontName.length());
+        std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
+    }
+    
+    if (file_extension.compare(".TTF") == 0)
+    {
+        std::string fontFilePath = jsonPath.append(fontName);
+        label->setFontName(fontFilePath);
+    }
+    else
+    {
+        label->setFontName(fontName);
+    }
     
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
     bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
