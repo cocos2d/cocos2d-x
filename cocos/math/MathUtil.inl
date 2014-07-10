@@ -152,7 +152,7 @@ inline void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* ds
     product[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
 
     memcpy(dst, product, MATRIX_SIZE);
-//#endif // __SSE__
+#endif // __SSE__
 }
 
 inline void MathUtil::negateMatrix(const float* m, float* dst)
@@ -195,7 +195,7 @@ inline void MathUtil::transformVec4(const float* m, float x, float y, float z, f
 
 inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
 {
-//#if defined(__SSE__)
+#if defined(__SSE__)
     __m128 row1 = _mm_load_ps(&m[0]); // m[0], m[1], m[2], m[3]
     __m128 row2 = _mm_load_ps(&m[4]); // m[4], m[5], m[6], m[7]
     __m128 row3 = _mm_load_ps(&m[8]); // m[8], m[9], m[10],m[11]
@@ -217,7 +217,7 @@ inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
                                        )
                             );
     _mm_store_ps(dst, res);
-//#else
+#else
     // Handle case where v == dst.
     float x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + v[3] * m[12];
     float y = v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + v[3] * m[13];
@@ -228,7 +228,7 @@ inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
     dst[1] = y;
     dst[2] = z;
     dst[3] = w;
-//#endif // __SSE__
+#endif // __SSE__
 }
 
 inline void MathUtil::crossVec3(const float* v1, const float* v2, float* dst)
