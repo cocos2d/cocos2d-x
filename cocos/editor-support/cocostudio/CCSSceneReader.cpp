@@ -531,7 +531,7 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         else if (key == "zorder")
         {
             nZorder = atoi(value.c_str());
-            node->setZOrder(nZorder);
+            node->setLocalZOrder(nZorder);
         }
         else if(key == "scalex")
         {

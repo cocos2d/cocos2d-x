@@ -183,12 +183,12 @@ void Test2::onEnter()
     auto a1 = RotateBy::create(2, 360);
     auto a2 = ScaleBy::create(2, 2);
     
-    auto action1 = RepeatForever::create( Sequence::create(a1, a2, a2->reverse(), NULL) );
+    auto action1 = RepeatForever::create( Sequence::create(a1, a2, a2->reverse(), nullptr) );
     auto action2 = RepeatForever::create( Sequence::create(
 																	a1->clone(),
 																	a2->clone(),
 																	a2->reverse(),
-																	NULL)
+																	nullptr)
 												);
     
     sp2->setAnchorPoint(Vec2(0,0));
@@ -260,7 +260,7 @@ Test5::Test5()
 
     auto rot = RotateBy::create(2, 360);
     auto rot_back = rot->reverse();
-    auto forever = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto forever = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     auto forever2 = forever->clone();
     forever->setTag(101);
     forever2->setTag(102);
@@ -315,7 +315,7 @@ Test6::Test6()
         
     auto rot = RotateBy::create(2, 360);
     auto rot_back = rot->reverse();
-    auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     auto forever11 = forever1->clone();
 
     auto forever2 = forever1->clone();
@@ -394,7 +394,7 @@ void StressTest1::shouldNotCrash(float dt)
     runAction( Sequence::create(
                             RotateBy::create(2, 360),
                             CallFuncN::create(CC_CALLBACK_1(StressTest1::removeMe, this)),
-                            NULL) );
+                            nullptr) );
     
     addChild(explosion);
 }
@@ -429,7 +429,7 @@ StressTest2::StressTest2()
     auto move = MoveBy::create(3, Vec2(350,0));
     auto move_ease_inout3 = EaseInOut::create(move->clone(), 2.0f);
     auto move_ease_inout_back3 = move_ease_inout3->reverse();
-    auto seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
+    auto seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, nullptr);
     sp1->runAction( RepeatForever::create(seq3) );
     sublayer->addChild(sp1, 1);
 
@@ -508,7 +508,7 @@ NodeToWorld::NodeToWorld()
     auto backSize = back->getContentSize();
     
     auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     menu->alignItemsVertically();
     menu->setPosition( Vec2(backSize.width/2, backSize.height/2));
     back->addChild(menu);
@@ -519,7 +519,7 @@ NodeToWorld::NodeToWorld()
     
     auto move = MoveBy::create(3, Vec2(200,0));
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     auto fe2 = RepeatForever::create(seq);
     back->runAction(fe2);
 }
@@ -554,7 +554,7 @@ NodeToWorld3D::NodeToWorld3D()
     auto backSize = back->getContentSize();
 
     auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     menu->alignItemsVertically();
     menu->setPosition( Vec2(backSize.width/2, backSize.height/2));
     back->addChild(menu);
@@ -565,7 +565,7 @@ NodeToWorld3D::NodeToWorld3D()
 
     auto move = MoveBy::create(3, Vec2(200,0));
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     auto fe2 = RepeatForever::create(seq);
     back->runAction(fe2);
 
@@ -885,7 +885,7 @@ std::string ConvertToNode::subtitle() const
 
 NodeOpaqueTest::NodeOpaqueTest()
 {
-    Sprite *background = NULL;
+    Sprite *background = nullptr;
 
     for (int i = 0; i < 50; i++)
     {
@@ -910,7 +910,7 @@ std::string NodeOpaqueTest::subtitle() const
 
 NodeNonOpaqueTest::NodeNonOpaqueTest()
 {
-    Sprite *background = NULL;
+    Sprite *background = nullptr;
 
     for (int i = 0; i < 50; i++)
     {
@@ -1379,8 +1379,8 @@ void NodeNameTest::test(float dt)
     });
     CCAssert(i == 10000, "");
     
-    // name = /xxx : search from root
-    parent = getScene();
+    // name = //xxx : search recursively
+    parent = Node::create();
     for (int j = 0; j < 100; j++)
     {
         auto node = Node::create();
@@ -1398,35 +1398,21 @@ void NodeNameTest::test(float dt)
     }
     
     i = 0;
-    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
-        ++i;
-        return false;
-    });
-    CCAssert(i == 100, "");
-    
-    i = 0;
-    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
-        ++i;
-        return true;
-    });
-    CCAssert(i == 1, "");
-    
-    i = 0;
-    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+    parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
     CCAssert(i == 10100, ""); // 10000(children) + 100(parent)
     
     i = 0;
-    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+    parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
         ++i;
         return true;
     });
     CCAssert(i == 1, "");
     
     i = 0;
-    enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
+    parent->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });

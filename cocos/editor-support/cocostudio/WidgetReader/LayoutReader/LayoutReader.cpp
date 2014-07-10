@@ -34,7 +34,7 @@ namespace cocostudio
     static const char* P_BackGroundImageData = "backGroundImageData";
     static const char* P_LayoutType = "layoutType";
     
-    static LayoutReader* instanceLayoutReader = NULL;
+    static LayoutReader* instanceLayoutReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(LayoutReader)
     

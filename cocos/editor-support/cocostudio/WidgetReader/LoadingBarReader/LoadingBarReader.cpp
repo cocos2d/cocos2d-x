@@ -19,7 +19,7 @@ namespace cocostudio
     static const char* P_Direction = "direction";
     static const char* P_Percent = "percent";
     
-    static LoadingBarReader* instanceLoadingBar = NULL;
+    static LoadingBarReader* instanceLoadingBar = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(LoadingBarReader)
     
@@ -130,7 +130,7 @@ namespace cocostudio
         
         float width = DICTOOL->getFloatValue_json(options, P_Width);
         float height = DICTOOL->getFloatValue_json(options, P_Height);
-        loadingBar->setSize(Size(width, height));
+        loadingBar->setContentSize(Size(width, height));
         
         /**/
         

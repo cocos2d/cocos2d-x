@@ -114,8 +114,6 @@ public:
     GCController* _gcController;
 };
 
-std::vector<Controller*> Controller::s_allController;
-
 void Controller::startDiscoveryController()
 {
     [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];

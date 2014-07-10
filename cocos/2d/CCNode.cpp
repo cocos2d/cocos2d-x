@@ -842,23 +842,13 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
     size_t subStrStartPos = 0;  // sub string start index
     size_t subStrlength = length; // sub string length
     
-    // Starts with '/' or '//'?
-    bool searchFromRoot = false;
-    bool searchFromRootRecursive = false;
-    if (name[0] == '/')
+    // Starts with '//'?
+    bool searchRecursively = false;
+    if (length > 2 && name[0] == '/' && name[1] == '/')
     {
-        if (length > 2 && name[1] == '/')
-        {
-            searchFromRootRecursive = true;
-            subStrStartPos = 2;
-            subStrlength -= 2;
-        }
-        else
-        {
-            searchFromRoot = true;
-            subStrStartPos = 1;
-            subStrlength -= 1;
-        }
+        searchRecursively = true;
+        subStrStartPos = 2;
+        subStrlength -= 2;
     }
     
     // End with '/..'?
@@ -872,7 +862,7 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         subStrlength -= 3;
     }
     
-    // Remove '/', '//', '/..' if exist
+    // Remove '//', '/..' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
 
     if (searchFromParent)
@@ -880,23 +870,11 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         newName.insert(0, "[[:alnum:]]+/");
     }
     
-    if (searchFromRoot)
-    {
-        // name is '/xxx'
-        auto root = getScene();
-        if (root)
-        {
-            root->doEnumerate(newName, callback);
-        }
-    }
-    else if (searchFromRootRecursive)
+    
+    if (searchRecursively)
     {
         // name is '//xxx'
-        auto root = getScene();
-        if (root)
-        {
-            doEnumerateRecursive(root, newName, callback);
-        }
+        doEnumerateRecursive(this, newName, callback);
     }
     else
     {
@@ -1635,16 +1613,18 @@ const Mat4& Node::getNodeToParentTransform() const
 
         bool needsSkewMatrix = ( _skewX || _skewY );
 
+        Vec2 anchorPoint;
+        anchorPoint.x = _anchorPointInPoints.x * _scaleX;
+        anchorPoint.y = _anchorPointInPoints.y * _scaleY;
 
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
         if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
         {
-            x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-            y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+            x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
+            y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
         }
-
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
@@ -1656,6 +1636,11 @@ const Mat4& Node::getNodeToParentTransform() const
         
         _transform.set(mat);
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+        }
+        
         // XXX
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
@@ -1670,6 +1655,11 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform = _transform * rotX;
         }
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+        }
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)

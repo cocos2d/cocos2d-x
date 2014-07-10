@@ -9245,59 +9245,6 @@ int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_enumerateChildren(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_enumerateChildren'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        std::string arg0;
-        std::function<bool (cocos2d::Node *)> arg1;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-        if(!ok)
-            return 0;
-        cobj->enumerateChildren(arg0, arg1);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "enumerateChildren",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_enumerateChildren'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Node_getonExitTransitionDidStartCallback(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10093,7 +10040,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getGlobalZOrder",lua_cocos2dx_Node_getGlobalZOrder);
         tolua_function(tolua_S,"draw",lua_cocos2dx_Node_draw);
         tolua_function(tolua_S,"setUserObject",lua_cocos2dx_Node_setUserObject);
-        tolua_function(tolua_S,"enumerateChildren",lua_cocos2dx_Node_enumerateChildren);
         tolua_function(tolua_S,"getonExitTransitionDidStartCallback",lua_cocos2dx_Node_getonExitTransitionDidStartCallback);
         tolua_function(tolua_S,"removeFromParent",lua_cocos2dx_Node_removeFromParentAndCleanup);
         tolua_function(tolua_S,"setPosition3D",lua_cocos2dx_Node_setPosition3D);
@@ -63135,6 +63081,374 @@ int lua_register_cocos2dx_Mesh(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_Animation3D_getDuration(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animation3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animation3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animation3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation3D_getDuration'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getDuration();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDuration",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animation3D_getDuration'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Animation3D_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Animation3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::Animation3D* ret = cocos2d::Animation3D::create(arg0);
+        object_to_luaval<cocos2d::Animation3D>(tolua_S, "cc.Animation3D",(cocos2d::Animation3D*)ret);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        std::string arg0;
+        std::string arg1;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cocos2d::Animation3D* ret = cocos2d::Animation3D::create(arg0, arg1);
+        object_to_luaval<cocos2d::Animation3D>(tolua_S, "cc.Animation3D",(cocos2d::Animation3D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animation3D_create'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_Animation3D_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (Animation3D)");
+    return 0;
+}
+
+int lua_register_cocos2dx_Animation3D(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.Animation3D");
+    tolua_cclass(tolua_S,"Animation3D","cc.Animation3D","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"Animation3D");
+        tolua_function(tolua_S,"getDuration",lua_cocos2dx_Animation3D_getDuration);
+        tolua_function(tolua_S,"create", lua_cocos2dx_Animation3D_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::Animation3D).name();
+    g_luaType[typeName] = "cc.Animation3D";
+    g_typeCast["Animation3D"] = "cc.Animation3D";
+    return 1;
+}
+
+int lua_cocos2dx_Animate3D_setSpeed(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_setSpeed'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->setSpeed(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSpeed",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_setSpeed'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Animate3D_setWeight(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_setWeight'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0);
+        if(!ok)
+            return 0;
+        cobj->setWeight(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setWeight",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_setWeight'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Animate3D_getSpeed(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_getSpeed'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getSpeed();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSpeed",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_getSpeed'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Animate3D_getWeight(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_getWeight'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getWeight();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getWeight",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_getWeight'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Animate3D_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 3)
+        {
+            cocos2d::Animation3D* arg0;
+            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1);
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2);
+            if (!ok) { break; }
+            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0, arg1, arg2);
+            object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 1)
+        {
+            cocos2d::Animation3D* arg0;
+            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+            if (!ok) { break; }
+            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0);
+            object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_create'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_Animate3D_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (Animate3D)");
+    return 0;
+}
+
+int lua_register_cocos2dx_Animate3D(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.Animate3D");
+    tolua_cclass(tolua_S,"Animate3D","cc.Animate3D","cc.ActionInterval",nullptr);
+
+    tolua_beginmodule(tolua_S,"Animate3D");
+        tolua_function(tolua_S,"setSpeed",lua_cocos2dx_Animate3D_setSpeed);
+        tolua_function(tolua_S,"setWeight",lua_cocos2dx_Animate3D_setWeight);
+        tolua_function(tolua_S,"getSpeed",lua_cocos2dx_Animate3D_getSpeed);
+        tolua_function(tolua_S,"getWeight",lua_cocos2dx_Animate3D_getWeight);
+        tolua_function(tolua_S,"create", lua_cocos2dx_Animate3D_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::Animate3D).name();
+    g_luaType[typeName] = "cc.Animate3D";
+    g_typeCast["Animate3D"] = "cc.Animate3D";
+    return 1;
+}
+
 int lua_cocos2dx_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;
@@ -64795,466 +65109,6 @@ int lua_register_cocos2dx_ProtectedNode(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::ProtectedNode).name();
     g_luaType[typeName] = "cc.ProtectedNode";
     g_typeCast["ProtectedNode"] = "cc.ProtectedNode";
-    return 1;
-}
-
-int lua_cocos2dx_Animation3D_getDuration(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animation3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animation3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animation3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animation3D_getDuration'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getDuration();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getDuration",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animation3D_getDuration'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animation3D_getOrCreate(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.Animation3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 1)
-    {
-        std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cocos2d::Animation3D* ret = cocos2d::Animation3D::getOrCreate(arg0);
-        object_to_luaval<cocos2d::Animation3D>(tolua_S, "cc.Animation3D",(cocos2d::Animation3D*)ret);
-        return 1;
-    }
-    if (argc == 2)
-    {
-        std::string arg0;
-        std::string arg1;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1);
-        if(!ok)
-            return 0;
-        cocos2d::Animation3D* ret = cocos2d::Animation3D::getOrCreate(arg0, arg1);
-        object_to_luaval<cocos2d::Animation3D>(tolua_S, "cc.Animation3D",(cocos2d::Animation3D*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getOrCreate",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animation3D_getOrCreate'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_Animation3D_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Animation3D)");
-    return 0;
-}
-
-int lua_register_cocos2dx_Animation3D(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.Animation3D");
-    tolua_cclass(tolua_S,"Animation3D","cc.Animation3D","cc.Ref",nullptr);
-
-    tolua_beginmodule(tolua_S,"Animation3D");
-        tolua_function(tolua_S,"getDuration",lua_cocos2dx_Animation3D_getDuration);
-        tolua_function(tolua_S,"getOrCreate", lua_cocos2dx_Animation3D_getOrCreate);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::Animation3D).name();
-    g_luaType[typeName] = "cc.Animation3D";
-    g_typeCast["Animation3D"] = "cc.Animation3D";
-    return 1;
-}
-
-int lua_cocos2dx_Animate3D_getSpeed(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animate3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_getSpeed'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getSpeed();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getSpeed",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_getSpeed'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animate3D_setWeight(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animate3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_setWeight'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj->setWeight(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setWeight",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_setWeight'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animate3D_getPlayBack(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animate3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_getPlayBack'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        bool ret = cobj->getPlayBack();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPlayBack",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_getPlayBack'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animate3D_setPlayBack(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animate3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_setPlayBack'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj->setPlayBack(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setPlayBack",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_setPlayBack'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animate3D_setSpeed(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animate3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_setSpeed'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0);
-        if(!ok)
-            return 0;
-        cobj->setSpeed(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSpeed",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_setSpeed'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animate3D_getWeight(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Animate3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate3D_getWeight'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getWeight();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getWeight",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_getWeight'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Animate3D_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-
-    do 
-    {
-        if (argc == 3)
-        {
-            cocos2d::Animation3D* arg0;
-            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1);
-            if (!ok) { break; }
-            double arg2;
-            ok &= luaval_to_number(tolua_S, 4,&arg2);
-            if (!ok) { break; }
-            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0, arg1, arg2);
-            object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 1)
-        {
-            cocos2d::Animation3D* arg0;
-            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
-            if (!ok) { break; }
-            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0);
-            object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "create",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate3D_create'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_Animate3D_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (Animate3D)");
-    return 0;
-}
-
-int lua_register_cocos2dx_Animate3D(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.Animate3D");
-    tolua_cclass(tolua_S,"Animate3D","cc.Animate3D","cc.ActionInterval",nullptr);
-
-    tolua_beginmodule(tolua_S,"Animate3D");
-        tolua_function(tolua_S,"getSpeed",lua_cocos2dx_Animate3D_getSpeed);
-        tolua_function(tolua_S,"setWeight",lua_cocos2dx_Animate3D_setWeight);
-        tolua_function(tolua_S,"getPlayBack",lua_cocos2dx_Animate3D_getPlayBack);
-        tolua_function(tolua_S,"setPlayBack",lua_cocos2dx_Animate3D_setPlayBack);
-        tolua_function(tolua_S,"setSpeed",lua_cocos2dx_Animate3D_setSpeed);
-        tolua_function(tolua_S,"getWeight",lua_cocos2dx_Animate3D_getWeight);
-        tolua_function(tolua_S,"create", lua_cocos2dx_Animate3D_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::Animate3D).name();
-    g_luaType[typeName] = "cc.Animate3D";
-    g_typeCast["Animate3D"] = "cc.Animate3D";
     return 1;
 }
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
