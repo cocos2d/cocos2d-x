@@ -42,6 +42,8 @@
 NS_CC_BEGIN
 
 class CCScriptEventDispatcher;
+class EventListenerKeyboard;
+class EventListenerAcceleration;
 class GridBase;
 class Touch;
 class Action;
@@ -1477,7 +1479,7 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
-#if 1
+
     virtual Scene *getScene();
     
     virtual void registerWithTouchDispatcher(void);
@@ -1524,9 +1526,14 @@ public:
     virtual void ccTouchesAdded(const std::vector<Touch*>& touches, Event *pEvent);
     virtual void ccTouchesRemoved(const std::vector<Touch*>& touches, Event *pEvent);
 
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+    
+    virtual bool isKeyboardEnabled() const;
+    virtual void setKeyboardEnabled(bool value);
+    
     static unsigned int g_drawOrder;
     unsigned int m_drawOrder;
-#endif
 
     void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
     const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
@@ -1668,6 +1675,12 @@ protected:
 
    virtual int executeScriptTouchHandler(int nEventType, Touch *pTouch, int phase = 1);
    virtual int executeScriptTouchHandler(int nEventType, const std::vector<Touch*>& touches, int phase = 1);
+
+    bool _accelerometerEnabled;
+    bool _keyboardEnabled;
+    EventListenerKeyboard* _keyboardListener;
+    EventListenerAcceleration* _accelerationListener;
+    
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components

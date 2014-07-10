@@ -93,25 +93,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
 
-    /** Please use onKeyPressed instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
-    
-    /** Please use onKeyReleased instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
-
-	/* Callback function should not be deprecated, it will generate lots of warnings.
-	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
-    */
-    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
-    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
-
-    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
-    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
-
-    /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
-    CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
-
     // Overrides
     virtual std::string getDescription() const override;
 
@@ -125,8 +106,6 @@ protected:
     //add the api for avoid use deprecated api
 
     bool _accelerometerEnabled;
-    bool _keyboardEnabled;
-    EventListenerKeyboard* _keyboardListener;
     EventListenerAcceleration* _accelerationListener;
 
 private:

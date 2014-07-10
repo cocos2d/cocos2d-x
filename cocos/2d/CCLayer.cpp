@@ -56,8 +56,6 @@ NS_CC_BEGIN
 // Layer
 Layer::Layer()
 : _accelerometerEnabled(false)
-, _keyboardEnabled(false)
-, _keyboardListener(nullptr)
 , _accelerationListener(nullptr)
 {
     _ignoreAnchorPointForPosition = true;
@@ -148,55 +146,15 @@ void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
 #endif
 }
 
-void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* unused_event)
-{
-    CC_UNUSED_PARAM(keyCode);
-    CC_UNUSED_PARAM(unused_event);
-}
-
-void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
-{
-    CC_UNUSED_PARAM(unused_event);
-#if CC_ENABLE_SCRIPT_BINDING
-    if(kScriptTypeNone != _scriptType)
-    {
-        KeypadScriptData data(keyCode, this);
-        ScriptEvent event(kKeypadEvent,&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-#endif
-}
-
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled() const
 {
-    return _keyboardEnabled;
+    return Node::isKeyboardEnabled();
 }
 /// isKeyboardEnabled setter
 void Layer::setKeyboardEnabled(bool enabled)
 {
-    if (enabled != _keyboardEnabled)
-    {
-        _keyboardEnabled = enabled;
-
-        _eventDispatcher->removeEventListener(_keyboardListener);
-        _keyboardListener = nullptr;
-
-        if (enabled)
-        {
-            auto listener = EventListenerKeyboard::create();
-            listener->onKeyPressed = CC_CALLBACK_2(Layer::onKeyPressed, this);
-            listener->onKeyReleased = CC_CALLBACK_2(Layer::onKeyReleased, this);
-
-            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-            _keyboardListener = listener;
-        }
-    }
-}
-
-void Layer::setKeypadEnabled(bool enabled)
-{
-    setKeyboardEnabled(enabled);
+    Node::setKeyboardEnabled(enabled);
 }
 /// Callbacks
 

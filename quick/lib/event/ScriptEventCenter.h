@@ -117,7 +117,6 @@ protected:
     __Array *m_touchableNodes;
     __Array *m_touchingTargets;
     bool m_touchDispatchingEnabled;
-//    bool m_touchRegistered;
     EventListenerTouchAllAtOnce *_touchListener;
 
     void sortAllTouchableNodes(__Array *nodes);

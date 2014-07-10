@@ -137,16 +137,6 @@ int LuaEngine::executeSchedule(int nHandler, float dt, Node* pNode/* = NULL*/)
     return ret;
 }
 
-int LuaEngine::executeLayerKeypadEvent(Layer* pLayer, int eventType)
-{
-    return 0;
-}
-
-int LuaEngine::executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue)
-{
-    return 0;
-}
-
 int LuaEngine::executeEvent(int nHandler, const char* pEventName, Ref* pEventSource /* = NULL*/, const char* pEventSourceClassName /* = NULL*/)
 {
     _stack->pushString(pEventName);
@@ -1330,6 +1320,62 @@ int LuaEngine::executeNodeEnterFrameEvent(Node* pNode, float dt)
         _stack->pushFloat(dt);
         _stack->executeFunctionByHandler(it->listener, 1);
         _stack->clean();
+    }
+    return 0;
+}
+
+int LuaEngine::executeKeypadEvent(Node* pNode, int eventType)
+{
+    _stack->clean();
+    LuaValueDict event;
+    event["name"] = LuaValue::stringValue("clicked");
+    switch (eventType)
+    {
+        case (int)EventKeyboard::KeyCode::KEY_BACK:
+            event["key"] = LuaValue::stringValue("back");
+            break;
+            
+        case (int)EventKeyboard::KeyCode::KEY_MENU:
+            event["key"] = LuaValue::stringValue("menu");
+            break;
+            
+        default:
+            event["key"] = LuaValue::intValue(eventType);
+            break;
+//            return 0;
+    }
+    
+    _stack->pushLuaValueDict(event);
+    CCScriptEventListenersForEvent &listeners = pNode->getScriptEventDispatcher()->getScriptEventListenersByEvent(KEYPAD_EVENT);
+    CCScriptEventListenersForEventIterator it = listeners.begin();
+    for (; it != listeners.end(); ++it)
+    {
+        _stack->copyValue(1);
+        _stack->executeFunctionByHandler(it->listener, 1);
+        _stack->settop(1);
+    }
+    _stack->clean();
+    return 0;
+}
+
+int LuaEngine::executeAccelerometerEvent(Node* pNode, Acceleration* pAccelerationValue)
+{
+    _stack->clean();
+    LuaValueDict event;
+    event["name"] = LuaValue::stringValue("changed");
+    event["x"] = LuaValue::floatValue(pAccelerationValue->x);
+    event["y"] = LuaValue::floatValue(pAccelerationValue->y);
+    event["z"] = LuaValue::floatValue(pAccelerationValue->z);
+    event["timestamp"] = LuaValue::floatValue(pAccelerationValue->timestamp);
+    
+    _stack->pushLuaValueDict(event);
+    CCScriptEventListenersForEvent &listeners = pNode->getScriptEventDispatcher()->getScriptEventListenersByEvent(ACCELERATE_EVENT);
+    CCScriptEventListenersForEventIterator it = listeners.begin();
+    for (; it != listeners.end(); ++it)
+    {
+        _stack->copyValue(1);
+        _stack->executeFunctionByHandler(it->listener, 1);
+        _stack->settop(1);
     }
     return 0;
 }
