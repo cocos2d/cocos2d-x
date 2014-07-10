@@ -1379,8 +1379,8 @@ void NodeNameTest::test(float dt)
     });
     CCAssert(i == 10000, "");
     
-    // name = /xxx : search from root
-    parent = getScene();
+    // name = //xxx : search recursively
+    parent = Node::create();
     for (int j = 0; j < 100; j++)
     {
         auto node = Node::create();
@@ -1398,35 +1398,21 @@ void NodeNameTest::test(float dt)
     }
     
     i = 0;
-    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
-        ++i;
-        return false;
-    });
-    CCAssert(i == 100, "");
-    
-    i = 0;
-    enumerateChildren("/node[[:digit:]]+", [&i](Node* node) -> bool {
-        ++i;
-        return true;
-    });
-    CCAssert(i == 1, "");
-    
-    i = 0;
-    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+    parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
     CCAssert(i == 10100, ""); // 10000(children) + 100(parent)
     
     i = 0;
-    enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+    parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
         ++i;
         return true;
     });
     CCAssert(i == 1, "");
     
     i = 0;
-    enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
+    parent->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
         ++i;
         return false;
     });
