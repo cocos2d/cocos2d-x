@@ -588,6 +588,8 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     JumpTo() {}
     virtual ~JumpTo() {}
+
+private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };
 
