@@ -38,9 +38,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static const int _CCTouchesOneByOne = 1;
-static const int _CCTouchesAllAtOnce = 0;
-
 ScriptEventCenter::ScriptEventCenter()
 : m_touchableNodes(NULL)
 , m_touchingTargets(NULL)
@@ -94,21 +91,6 @@ ScriptEventCenter* ScriptEventCenter::create()
     }
 }
 
-//ScriptEventCenter* ScriptEventCenter::createWithSize(const Size& size)
-//{
-//    ScriptEventCenter *ret = new ScriptEventCenter();
-//    if (ret && ret->initWithSize(size))
-//    {
-//        ret->autorelease();
-//        return ret;
-//    }
-//    else
-//    {
-//        CC_SAFE_DELETE(ret);
-//        return nullptr;
-//    }
-//}
-
 std::string ScriptEventCenter::getDescription() const
 {
     return StringUtils::format("<ScriptEventCenter | tag = %d>", _tag);
@@ -118,7 +100,6 @@ void ScriptEventCenter::addTouchableNode(Node *node)
 {
     if (!m_touchableNodes->containsObject(node))
     {
-//        printf("----addTouchableNode(%x): getOrderOfArrival=%d\n", node, node->getOrderOfArrival());
         m_touchableNodes->addObject(node);
 //        CCLOG("ADD TOUCHABLE NODE <%p>", node);
         if (!m_touchDispatchingEnabled)
@@ -200,7 +181,7 @@ void ScriptEventCenter::onTouchesBegan(const std::vector<Touch*>& touches, Event
                     touchTarget = CCTouchTargetNode::create(node);
                 }
 
-                if (touchTarget->getTouchMode() == _CCTouchesOneByOne)
+                if (touchTarget->getTouchMode() == Node::modeTouchesOneByOne)
                 {
                     touchTarget->setTouchId(touch->getID());
                     break;
@@ -227,10 +208,10 @@ void ScriptEventCenter::onTouchesBegan(const std::vector<Touch*>& touches, Event
         // from parent to child
         bool dispatchingContinue = true;
         int touchMode = touchTarget->getTouchMode();
-        for (int i = path->count() - 1; dispatchingContinue && i >= 0; --i)
+        for (long i = path->count() - 1; dispatchingContinue && i >= 0; --i)
         {
-            node = dynamic_cast<Node*>(path->objectAtIndex(i));
-            if (touchMode == _CCTouchesAllAtOnce)
+            node = dynamic_cast<Node*>(path->getObjectAtIndex(i));
+            if (touchMode == Node::modeTouchesAllAtOnce)
             {
                 node->ccTouchesCaptureBegan(touches, touchTarget->getNode());
             }
@@ -249,7 +230,7 @@ void ScriptEventCenter::onTouchesBegan(const std::vector<Touch*>& touches, Event
         // phase: targeting
         node = touchTarget->getNode();
         bool ret = true;
-        if (touchMode == _CCTouchesAllAtOnce)
+        if (touchMode == Node::modeTouchesAllAtOnce)
         {
             node->ccTouchesBegan(touches, event);
         }
@@ -307,12 +288,6 @@ void ScriptEventCenter::onTouchesCancelled(const std::vector<Touch*>& touches, E
     m_touchingTargets->removeAllObjects();
 }
 
-// void ScriptEventCenter::visit()
-// {
-//     g_drawOrder = 0;
-//     CCLayer::visit();
-// }
-
 void ScriptEventCenter::cleanup(void)
 {
     m_touchableNodes->removeAllObjects();
@@ -323,13 +298,11 @@ void ScriptEventCenter::cleanup(void)
         _touchListener = NULL;
     }
     _running = false;
-
-//    Layer::cleanup();
 }
 
 void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
 {
-    int i, j, length = nodes->data->num;
+    ssize_t i, j, length = nodes->data->num;
     Node **x = (Node**)nodes->data->arr;
     Node *tempItem;
 
@@ -339,7 +312,6 @@ void ScriptEventCenter::sortAllTouchableNodes(__Array *nodes)
         tempItem = x[i];
         j = i - 1;
 
-//        printf("----sortAllTouchableNodes(%x): getOrderOfArrival=%d\n", tempItem, tempItem->getOrderOfArrival());
         while(j >= 0 && (tempItem->m_drawOrder > x[j]->m_drawOrder))
         {
             x[j + 1] = x[j];
@@ -361,7 +333,6 @@ void ScriptEventCenter::enableTouchDispatching()
 {
     if (!_touchListener)
     {
-        // Director::getInstance()->getTouchDispatcher()->addStandardDelegate(this, 0);
         _touchListener = EventListenerTouchAllAtOnce::create();
         if (!_touchListener) {
             return;
@@ -386,11 +357,11 @@ void ScriptEventCenter::dispatchingTouchEvent(const std::vector<Touch*>& touches
     CCTouchTargetNode *touchTarget = NULL;
     Touch *touch = NULL;
 
-    unsigned int count = m_touchingTargets->count();
+    ssize_t count = m_touchingTargets->count();
 //    CCLOG("TOUCH TARGETS COUNT [%u]", count);
-    for (unsigned int i = 0; i < count; ++i)
+    for (ssize_t i = 0; i < count; ++i)
     {
-        touchTarget = dynamic_cast<CCTouchTargetNode*>(m_touchingTargets->objectAtIndex(i));
+        touchTarget = dynamic_cast<CCTouchTargetNode*>(m_touchingTargets->getObjectAtIndex(i));
 
         if (!touchTarget->getNode()->isRunning())
         {
@@ -403,7 +374,7 @@ void ScriptEventCenter::dispatchingTouchEvent(const std::vector<Touch*>& touches
         }
 
         int touchMode = touchTarget->getTouchMode();
-        if (touchMode != _CCTouchesAllAtOnce)
+        if (touchMode != Node::modeTouchesAllAtOnce)
         {
             touch = touchTarget->findTouch(touches);
             if (!touch)
@@ -424,10 +395,10 @@ void ScriptEventCenter::dispatchingTouchEvent(const std::vector<Touch*>& touches
 
         // phase: capturing
         // from parent to child
-        for (int i = path->count() - 1; i >= 0; --i)
+        for (long i = path->count() - 1; i >= 0; --i)
         {
-            node = dynamic_cast<Node*>(path->objectAtIndex(i));
-            if (touchMode == _CCTouchesAllAtOnce)
+            node = dynamic_cast<Node*>(path->getObjectAtIndex(i));
+            if (touchMode == Node::modeTouchesAllAtOnce)
             {
                 switch (event)
                 {
@@ -473,7 +444,7 @@ void ScriptEventCenter::dispatchingTouchEvent(const std::vector<Touch*>& touches
 
         // phase: targeting
         node = touchTarget->getNode();
-        if (touchMode == _CCTouchesAllAtOnce)
+        if (touchMode == Node::modeTouchesAllAtOnce)
         {
             switch (event)
             {

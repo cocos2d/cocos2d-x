@@ -121,7 +121,7 @@ Node::Node(void)
 , m_bTouchCaptureEnabled(true)
 , m_bTouchSwallowEnabled(true)
 , m_bTouchEnabled(false)
-, m_eTouchMode(1/*kCCTouchesOneByOne*/)
+, m_eTouchMode(modeTouchesOneByOne)
 #endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS

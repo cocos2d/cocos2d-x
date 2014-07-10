@@ -102,11 +102,13 @@ class EventListener;
 
  */
 
-class CC_DLL Node : public Ref//, public CCTouchDelegate
+class CC_DLL Node : public Ref
 {
 public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
+    static const int modeTouchesOneByOne = (int)Touch::DispatchMode::ONE_BY_ONE;
+    static const int modeTouchesAllAtOnce = (int)Touch::DispatchMode::ALL_AT_ONCE;
 
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
