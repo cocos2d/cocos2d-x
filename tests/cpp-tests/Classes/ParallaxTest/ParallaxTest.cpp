@@ -68,7 +68,7 @@ Parallax1::Parallax1()
     auto goDown = goUp->reverse();
     auto go = MoveBy::create(8, Vec2(-1000,0) );
     auto goBack = go->reverse();
-    auto seq = Sequence::create(goUp, go, goDown, goBack, NULL);
+    auto seq = Sequence::create(goUp, go, goDown, goBack, nullptr);
     voidNode->runAction( (RepeatForever::create(seq) ));
     
     addChild( voidNode );
@@ -247,7 +247,7 @@ Layer* createParallaxTestLayer(int nIndex)
         case 2: return new Issue2572();
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Layer* nextParallaxAction()

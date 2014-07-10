@@ -302,7 +302,7 @@ bool UIFocusTestNestedLayout1::init()
         
         //add HBox into VBox
         HBox *hbox = HBox::create();
-        hbox->setScale(0.8);
+        hbox->setScale(0.8f);
         hbox->setTag(101);
         _verticalLayout->addChild(hbox);
         
@@ -384,7 +384,7 @@ bool UIFocusTestNestedLayout2::init()
         _horizontalLayout = HBox::create();
         _horizontalLayout->setPosition(Vec2(winSize.width/2 - 200, winSize.height - 70));
         _uiLayer->addChild(_horizontalLayout);
-        _horizontalLayout->setScale(0.6);
+        _horizontalLayout->setScale(0.6f);
         
         _horizontalLayout->setFocused(true);
         _horizontalLayout->setLoopFocus(true);
@@ -397,14 +397,14 @@ bool UIFocusTestNestedLayout2::init()
             w->setAnchorPoint(Vec2(0,1));
             w->setTouchEnabled(true);
             w->setTag(i+count1);
-            w->setScaleY(2.4);
+            w->setScaleY(2.4f);
             w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestNestedLayout2::onImageViewClicked, this));
             _horizontalLayout->addChild(w);
         }
         
         //add HBox into VBox
         VBox *vbox = VBox::create();
-        vbox->setScale(0.8);
+        vbox->setScale(0.8f);
         vbox->setTag(101);
         _horizontalLayout->addChild(vbox);
         
@@ -486,7 +486,7 @@ bool UIFocusTestNestedLayout3::init()
         _verticalLayout = VBox::create();
         _verticalLayout->setPosition(Vec2(40, winSize.height - 70));
         _uiLayer->addChild(_verticalLayout);
-        _verticalLayout->setScale(0.8);
+        _verticalLayout->setScale(0.8f);
         
         _verticalLayout->setFocused(true);
         _verticalLayout->setLoopFocus(true);
@@ -602,7 +602,7 @@ bool UIFocusTestListView::init()
         
         _listView->setPosition(Vec2(40, 70));
         _uiLayer->addChild(_listView);
-        _listView->setScale(0.8);
+        _listView->setScale(0.8f);
         
         _listView->setFocused(true);
         _listView->setLoopFocus(true);

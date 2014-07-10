@@ -44,7 +44,7 @@ void CocosBuilderTestScene::runThisTest() {
     
     ccbReader->release();
 
-    if(node != NULL) {
+    if(node != nullptr) {
         this->addChild(node);
     }
 
@@ -65,7 +65,7 @@ void CocosBuilderTestScene::runThisTest() {
 //    /* Read a ccbi file. */
 //    auto node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
 //    
-//    if(node != NULL) {
+//    if(node != nullptr) {
 //        ccbiReaderLayer->addChild(node);
 //    }
 //    

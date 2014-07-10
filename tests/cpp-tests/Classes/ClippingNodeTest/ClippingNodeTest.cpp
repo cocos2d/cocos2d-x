@@ -170,7 +170,7 @@ Action* BasicTest::actionRotate()
 Action* BasicTest::actionScale()
 {
     auto scale = ScaleBy::create(1.33f, 1.5f);
-    return RepeatForever::create(Sequence::create(scale, scale->reverse(), NULL));
+    return RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr));
 }
 
 DrawNode* BasicTest::shape()
@@ -195,7 +195,7 @@ Sprite* BasicTest::grossini()
 
 Node* BasicTest::stencil()
 {
-    return NULL;
+    return nullptr;
 }
 
 ClippingNode* BasicTest::clipper()
@@ -205,7 +205,7 @@ ClippingNode* BasicTest::clipper()
 
 Node* BasicTest::content()
 {
-    return NULL;
+    return nullptr;
 }
 
 

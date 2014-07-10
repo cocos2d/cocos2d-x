@@ -68,7 +68,7 @@ VisibleFrame* VisibleFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 VisibleFrame::VisibleFrame()
@@ -104,7 +104,7 @@ TextureFrame* TextureFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 TextureFrame::TextureFrame()
@@ -155,7 +155,7 @@ RotationFrame* RotationFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 RotationFrame::RotationFrame()
@@ -204,7 +204,7 @@ SkewFrame* SkewFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 SkewFrame::SkewFrame()
@@ -261,7 +261,7 @@ RotationSkewFrame* RotationSkewFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 RotationSkewFrame::RotationSkewFrame()
@@ -314,7 +314,7 @@ PositionFrame* PositionFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 PositionFrame::PositionFrame()
@@ -366,7 +366,7 @@ ScaleFrame* ScaleFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ScaleFrame::ScaleFrame()
@@ -421,7 +421,7 @@ AnchorPointFrame* AnchorPointFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 AnchorPointFrame::AnchorPointFrame()
@@ -457,7 +457,7 @@ InnerActionFrame* InnerActionFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 InnerActionFrame::InnerActionFrame()
@@ -493,7 +493,7 @@ ColorFrame* ColorFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ColorFrame::ColorFrame()
@@ -559,7 +559,7 @@ EventFrame* EventFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 EventFrame::EventFrame()
@@ -594,7 +594,7 @@ ZOrderFrame* ZOrderFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ZOrderFrame::ZOrderFrame()
@@ -605,7 +605,7 @@ ZOrderFrame::ZOrderFrame()
 void ZOrderFrame::onEnter(Frame *nextFrame)
 {
     if(_node)
-        _node->setZOrder(_zorder);
+        _node->setLocalZOrder(_zorder);
 }
 
 

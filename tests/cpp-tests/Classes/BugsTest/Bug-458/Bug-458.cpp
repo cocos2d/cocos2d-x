@@ -28,7 +28,7 @@ bool Bug458Layer::init()
 
         auto layer2 = LayerColor::create(Color4B(255,0,0,255), 100, 100);
         auto sprite2 = MenuItemSprite::create(layer, layer2, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
-        auto menu = Menu::create(sprite, sprite2, NULL);
+        auto menu = Menu::create(sprite, sprite2, nullptr);
         menu->alignItemsVerticallyWithPadding(100);
         menu->setPosition(Vec2(size.width / 2, size.height / 2));
 

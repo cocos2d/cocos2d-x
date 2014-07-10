@@ -253,7 +253,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             const char* str0 = pTriggerObjArray[i0].GetValue(pCocoLoader);
             if (key.compare("id") == 0)
             {
-                if (str0 != NULL)
+                if (str0 != nullptr)
                 {
                     _id = atoi(str0); //(unsigned int)(DICTOOL->getIntValue_json(val, "id"));
                 }
@@ -292,7 +292,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
                         continue;
                     }
                     BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
-                    CCAssert(act != NULL, "class named classname can not implement!");
+                    CCAssert(act != nullptr, "class named classname can not implement!");
                     act->serialize(pCocoLoader, &pActionArray[1]);
                     act->init();
                     _acts.pushBack(act);

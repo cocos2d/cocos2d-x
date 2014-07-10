@@ -41,7 +41,7 @@ bool UIScene_Editor::init()
         
         pToggleItem->setPosition(Vec2(VisibleRect::right().x - 150, VisibleRect::top().y - 50));;
         
-        Menu* pMenu =Menu::create(pToggleItem, NULL);
+        Menu* pMenu =Menu::create(pToggleItem, nullptr);
         pMenu->setPosition( Vec2::ZERO );
         
         addChild(pMenu, 1);

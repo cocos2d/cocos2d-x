@@ -184,7 +184,7 @@ void Sprite3DBasicTest::addNewSpriteWithCoords(Vec2 p)
     else
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -504,7 +504,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     else
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -546,24 +546,23 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::getOrCreate(fileName);
+    auto animation = Animation3D::create(fileName);
     if (animation)
     {
         auto animate = Animate3D::create(animation);
-        if(std::rand() %3 == 0)
-        {
-            animate->setPlayBack(true);
-        }
+        bool inverse = (std::rand() % 3 == 0);
 
         int rand2 = std::rand();
+        float speed = 1.0f;
         if(rand2 % 3 == 1)
         {
-            animate->setSpeed(animate->getSpeed() + CCRANDOM_0_1());
+            speed = animate->getSpeed() + CCRANDOM_0_1();
         }
         else if(rand2 % 3 == 2)
         {
-            animate->setSpeed(animate->getSpeed() - 0.5 * CCRANDOM_0_1());
+            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
         }
+        animate->setSpeed(inverse ? -speed : speed);
 
         sprite->runAction(RepeatForever::create(animate));
     }
@@ -652,7 +651,7 @@ void Animate3DTest::addSprite3D()
     sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
     addChild(sprite);
     _sprite = sprite;
-    auto animation = Animation3D::getOrCreate(fileName);
+    auto animation = Animation3D::create(fileName);
     if (animation)
     {
         auto animate = Animate3D::create(animation, 0.f, 1.933f);
@@ -706,7 +705,7 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 {
                     _sprite->runAction(_hurt);
                     auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
-                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), NULL);
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
                     seq->setTag(101);
                     _sprite->runAction(seq);
                     _state = State::SWIMMING_TO_HURT;

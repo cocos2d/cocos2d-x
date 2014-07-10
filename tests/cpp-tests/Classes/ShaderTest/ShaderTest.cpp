@@ -22,7 +22,7 @@ static Layer* createShaderLayer(int nIndex)
         case 9: return new ShaderGlow();
         case 10: return new ShaderMultiTexture();
     }
-    return NULL;
+    return nullptr;
 }
 
 static Layer* nextAction(void)
