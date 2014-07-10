@@ -21,6 +21,7 @@
 #ifndef MATH_VEC4_H
 #define MATH_VEC4_H
 
+#include "base/CCPlatformMacros.h"
 #include "math/CCMathBase.h"
 
 NS_CC_MATH_BEGIN
@@ -433,7 +434,7 @@ public:
     static const Vec4 UNIT_Z;
     /** equals to Vec4(0,0,0,1) */
     static const Vec4 UNIT_W;
-};
+} CC_ALIGNED_16;
 
 /**
  * Calculates the scalar product of the given vector with the given value.

@@ -21,6 +21,7 @@
 #ifndef MATH_MAT4_H
 #define MATH_MAT4_H
 
+#include "base/CCPlatformMacros.h"
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 
@@ -77,7 +78,7 @@ public:
     /**
      * Stores the columns of this 4x4 matrix.
      * */
-    float m[16];
+    float m[16] CC_ALIGNED_16;
 
     /**
      * Constructs a matrix initialized to the identity matrix:
