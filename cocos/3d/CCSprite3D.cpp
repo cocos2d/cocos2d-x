@@ -342,7 +342,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     _meshCommand.setDepthTestEnabled(true);
     if (_skin)
     {
-        _meshCommand.setMatrixPaletteSize(_skin->getMatrixPaletteSize());
+        _meshCommand.setMatrixPaletteSize((int)_skin->getMatrixPaletteSize());
         _meshCommand.setMatrixPalette(_skin->getMatrixPalette());
     }
     //support tint and fade
