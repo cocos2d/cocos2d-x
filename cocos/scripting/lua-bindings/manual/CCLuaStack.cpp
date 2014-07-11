@@ -587,7 +587,6 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
         }
     }
     
-    lua_settop(_state, 0);
     return 1;
 }
 
