@@ -49,7 +49,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-extern string getIPAddress();
+
 
 //1M size 
 #define MAXPROTOLENGTH 1048576
@@ -60,6 +60,7 @@ extern string getIPAddress();
 #define usleep(t) usleep(t)
 #endif
 
+extern string getIPAddress();
 const char* getRuntimeVersion()
 {
     return "1.2";
