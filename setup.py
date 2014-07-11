@@ -535,7 +535,8 @@ class SetEnvVar(object):
             import commands
             state, result = commands.getstatusoutput("which ant")
             if state == 0:
-                ret = os.path.dirname(result)
+                ret = os.path.realpath(result)
+                ret = os.path.dirname(ret)
 
         if ret is not None:
             print("    ->Path \"%s\" was found\n" % ret)
@@ -550,7 +551,8 @@ class SetEnvVar(object):
             import commands
             state, result = commands.getstatusoutput("which android")
             if state == 0:
-                ret = os.path.dirname(result)
+                ret = os.path.realpath(result)
+                ret = os.path.dirname(ret)
 
         if ret is not None:
             ret = os.path.abspath(os.path.join(ret,os.pardir))
@@ -566,7 +568,8 @@ class SetEnvVar(object):
             import commands
             state, result = commands.getstatusoutput("which ndk-build")
             if state == 0:
-                ret = os.path.dirname(result)
+                ret = os.path.realpath(result)
+                ret = os.path.dirname(ret)
 
         if ret is not None:
             print("    ->Path \"%s\" was found\n" % ret)
