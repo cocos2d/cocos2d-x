@@ -911,6 +911,54 @@ end
 
 --[[--
 
+创建并返回一个 DrawNode （线性）对象。
+
+格式：
+
+shape = display.newLine(point表, [参数])
+
+~~~ lua
+
+-- 创建一个线宽为2，颜色为红色，从(10,10)到(100,100)的线段
+local shape3 = display.newRect({cc.p(10, 10), cc.p(100,100)},
+    {borderColor = cc.c4f(1.0, 0.0, 0.0, 1.0),
+    radius = 1})
+
+~~~
+
+@param table point table
+@param table params 有参数，边线色 borderColor 及边线宽度 radius
+
+@return DrawNode
+
+@see ShapeNode
+
+]]
+function display.newLine(points, params)
+    local radius
+    local borderColor
+
+    if not params then
+        borderColor = cc.c4f(0,0,0,1)
+        radius = 0.5
+    else
+        borderColor = params.borderColor or cc.c4f(0,0,0,1)
+        radius = params.borderWidth or 0.5
+    end
+
+    for i, p in ipairs(points) do
+        p = cc.p(p[1] * scale, p[2] * scale)
+        points[i] = p
+    end
+
+    local drawNode = cc.DrawNode:create()
+    drawNode:drawSegment(points[1], points[2], radius, borderColor)
+
+    return drawNode
+end
+
+--[[--
+
 创建并返回一个 PolygonShape （多边形）对象。
 
 ~~~ lua

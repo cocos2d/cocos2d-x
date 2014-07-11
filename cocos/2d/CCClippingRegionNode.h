@@ -29,11 +29,12 @@
 #define __MISCNODE_CCCLIPPING_REGION_NODE_H__
 
 #include "2d/CCNode.h"
+#include "2d/CCClippingNode.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
 
-class CC_DLL ClippingRegionNode : public Node
+class CC_DLL ClippingRegionNode : public ClippingNode
 {    
 public:
     static ClippingRegionNode* create(const Rect& clippingRegion);
