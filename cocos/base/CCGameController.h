@@ -26,12 +26,6 @@
 #ifndef __cocos2d_libs__CCGameController__
 #define __cocos2d_libs__CCGameController__
 
-#include "CCControllerElement.h"
-#include "CCControllerButtonInput.h"
-#include "CCControllerAxisInput.h"
-#include "CCControllerDirectionPad.h"
-#include "CCControllerThumbstick.h"
-#include "CCGamepad.h"
 #include "CCController.h"
 #include "CCEventController.h"
 #include "CCEventListenerController.h"

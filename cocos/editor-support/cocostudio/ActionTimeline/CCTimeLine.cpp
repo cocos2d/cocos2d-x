@@ -104,7 +104,7 @@ void Timeline::insertFrame(Frame* frame, int index)
 void Timeline::removeFrame(Frame* frame)
 {
     _frames.eraseObject(frame);
-    frame->setTimeline(NULL);
+    frame->setTimeline(nullptr);
 }
 
 void Timeline::setNode(Node* node)
@@ -131,8 +131,8 @@ void Timeline::apply(int frameIndex)
 
 void Timeline::binarySearchKeyFrame(int frameIndex)
 {
-    Frame *from = NULL;
-    Frame *to   = NULL;
+    Frame *from = nullptr;
+    Frame *to   = nullptr;
 
     long length = _frames.size();
     bool needEnterFrame = false;

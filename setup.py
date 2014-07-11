@@ -79,6 +79,7 @@ class SetEnvVar(object):
 
     MAC_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
     LINUX_CHECK_FILES = [ '.bashrc' ]
+    ZSH_CHECK_FILES = ['.zshrc' ]
     RE_FORMAT = r'^export[ \t]+%s=(.+)'
 
     def __init__(self):
@@ -96,13 +97,23 @@ class SetEnvVar(object):
     def _is_mac(self):
         return sys.platform == 'darwin'
 
-    def _get_filepath_for_setup(self):
+    def _is_zsh(self):
+        return os.environ.get('SHELL')[-3:] == "zsh"
 
+    def _get_unix_file_list(self):
         file_list = None
-        if self._isLinux():
+
+        if self._is_zsh():
+            file_list = SetEnvVar.ZSH_CHECK_FILES
+        elif self._isLinux():
             file_list = SetEnvVar.LINUX_CHECK_FILES
         elif self._is_mac():
             file_list = SetEnvVar.MAC_CHECK_FILES
+        
+        return file_list
+
+    def _get_filepath_for_setup(self):
+        file_list = self._get_unix_file_list();
 
         file_to_write = None
         if file_list is None:
@@ -213,11 +224,7 @@ class SetEnvVar(object):
             ret = os.environ[var]
         except Exception:
             if not self._isWindows():
-                file_list = None
-                if self._isLinux():
-                    file_list = SetEnvVar.LINUX_CHECK_FILES
-                elif self._is_mac():
-                    file_list = SetEnvVar.MAC_CHECK_FILES
+                file_list = self._get_unix_file_list()
 
                 if file_list is not None:
                     home = os.path.expanduser('~')

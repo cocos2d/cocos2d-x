@@ -10,7 +10,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Animation3D] getOrCreate 
+-- @function [parent=#Animation3D] create 
 -- @param self
 -- @param #string str
 -- @param #string str

@@ -31,10 +31,8 @@
 
 NS_CC_BEGIN
 
-class ControllerButtonInput;
-class ControllerAxisInput;
-class ControllerElement;
 class Controller;
+class EventListenerController;
 
 class EventController : public Event
 {
@@ -46,19 +44,25 @@ public:
         AXIS_STATUS_CHANGED,
     };
     
-	EventController(ControllerEventType type, Controller* controller, ControllerElement* element);
+	EventController(ControllerEventType type, Controller* controller, int keyCode);
     EventController(ControllerEventType type, Controller* controller, bool isConnected);
 
-    ControllerEventType getControllerEventType() const;
-    Controller* getController() const;
-    ControllerElement* getControllerElement() const;
-    bool isConnected() const;
+    ControllerEventType getControllerEventType() const { return _controllerEventType; }
+    Controller* getController() const { return _controller; }
+
+    int getKeyCode() const{ return _keyCode; }
+    void setKeyCode(int keyCode) { _keyCode = keyCode;}
+
+    void setConnectStatus(bool isConnected) {_isConnected = isConnected;}
+    bool isConnected() const { return _isConnected; }
     
 protected:
     ControllerEventType _controllerEventType;
-    ControllerElement* _element;
     Controller* _controller;
+    int _keyCode;
     bool _isConnected;
+
+    friend class EventListenerController;
 };
 
 NS_CC_END

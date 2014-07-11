@@ -41,7 +41,7 @@ static int s_nTouchCurCase = 0;
 ////////////////////////////////////////////////////////
 void TouchesMainScene::showCurrentTest()
 {
-    Layer* layer = NULL;
+    Layer* layer = nullptr;
     switch (_curCase)
     {
     case 0:
@@ -283,7 +283,7 @@ void TouchesPerformTest3::onEnter()
     });
     
     menuItem->setPosition(Vec2(0, -20));
-    auto menu = Menu::create(menuItem, NULL);
+    auto menu = Menu::create(menuItem, nullptr);
     addChild(menu);
 }
 
@@ -294,7 +294,7 @@ std::string TouchesPerformTest3::title() const
 
 void TouchesPerformTest3::showCurrentTest()
 {
-    Layer* layer = NULL;
+    Layer* layer = nullptr;
     switch (_curCase)
     {
         case 0:

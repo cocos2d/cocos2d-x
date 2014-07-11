@@ -1,252 +1,437 @@
 #include "GameControllerTest.h"
 #include "AppMacros.h"
-#include "ui/CocosGUI.h"
 
 USING_NS_CC;
-
-
-Scene* GameControllerTest::scene()
-{
-    auto scene = Scene::create();
-    GameControllerTest *layer = GameControllerTest::create();
-    scene->addChild(layer);
-    
-    return scene;
-}
 
 GameControllerTest::~GameControllerTest()
 {
     Controller::stopDiscoveryController();
 }
 
-bool GameControllerTest::init()
+void GameControllerTest::registerControllerListener()
 {
-    if ( !Layer::init() )
-    {
-        return false;
-    }
-
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
-
-    auto tmpPos = Vec2(visibleSize / 2) + origin;
-    _actor = Sprite::create("CloseNormal.png");
-    _actor->setPosition(tmpPos);
-    this->addChild(_actor,10);
-
-    tmpPos.y -= 35;
-    _statusLabel = Label::createWithTTF("status", "fonts/Marker Felt.ttf", 40);
-    _statusLabel->setPosition(tmpPos);
-    this->addChild(_statusLabel, 0, 100);
-
-    tmpPos.y += 65;
-    _leftTriggerLabel = Label::createWithTTF("left trigger", "fonts/Marker Felt.ttf", 40);
-    _leftTriggerLabel->setPosition(tmpPos);
-    this->addChild(_leftTriggerLabel, 0, 100);
-
-    tmpPos.y += 40;
-    _rightTriggerLabel = Label::createWithTTF("right trigger", "fonts/Marker Felt.ttf", 40);
-    _rightTriggerLabel->setPosition(tmpPos);
-    this->addChild(_rightTriggerLabel, 0, 100);
-
     _listener = EventListenerController::create();
-    _listener->onConnected = [=](Controller* controller, Event* event){
-        _player1 = controller;
-        _statusLabel->setString("controller connected!");
-    };
 
-    _listener->onDisconnected = [=](Controller* controller, Event* event){
-        _player1 = nullptr;
-        _statusLabel->setString("controller disconnected!");
-    };
+    _listener->onConnected = CC_CALLBACK_2(GameControllerTest::onConnectController,this);
+    _listener->onDisconnected = CC_CALLBACK_2(GameControllerTest::onDisconnectedController,this);
+    _listener->onKeyDown = CC_CALLBACK_3(GameControllerTest::onKeyDown, this);
+    _listener->onKeyUp = CC_CALLBACK_3(GameControllerTest::onKeyUp, this);
+    _listener->onAxisEvent = CC_CALLBACK_3(GameControllerTest::onAxisEvent, this);
 
-    _listener->onButtonPressed = CC_CALLBACK_3(GameControllerTest::onButtonPressed, this);
-    _listener->onButtonReleased = CC_CALLBACK_3(GameControllerTest::onButtonReleased, this);
-    _listener->onAxisValueChanged = CC_CALLBACK_3(GameControllerTest::onAxisValueChanged, this);
-    
     _eventDispatcher->addEventListenerWithSceneGraphPriority(_listener, this);
 
     Controller::startDiscoveryController();
+
+    //get game pad status in polling mode
+    //scheduleUpdate();
+}
+
+void GameControllerTest::onConnectController(Controller* controller, Event* event)
+{
+    if (controller == nullptr || controller == _firstHolder.controller || controller == _secondHolder.controller)
+    {
+        return;
+    }
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    //receive back key
+    controller->receiveExternalKeyEvent(4,true);
+    //receive menu key
+    controller->receiveExternalKeyEvent(82,true);
+#endif
+
+    char deviceInfo[50];
+    sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
+
+    if (_firstHolder.controller == nullptr && _secondHolder.controller == nullptr)
+    {
+        if (_firstHolder._holderNode)
+        {
+            _firstHolder.controller = controller;
+            _firstHolder._deviceLabel->setString(deviceInfo);
+        }
+        else
+        {
+            _secondHolder.controller = controller;
+            _secondHolder._deviceLabel->setString(deviceInfo);
+        }
+    }
+    else if(_secondHolder.controller == nullptr)
+    {
+        _secondHolder.controller = controller;
+        if (_secondHolder._holderNode == nullptr)
+        {
+            createControllerSprite(_secondHolder);
+
+            _firstHolder._holderNode->runAction(ScaleTo::create(0.3f,0.5f,0.5f));
+            _firstHolder._holderNode->runAction(MoveTo::create(0.3f,Vec2(_visibleQuarterX, _visibleCentreY)));
+
+            _secondHolder._holderNode->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _secondHolder._holderNode->setScale(0.1f);
+            _secondHolder._holderNode->runAction(ScaleTo::create(0.3f,0.5f,0.5f));
+            _secondHolder._holderNode->setPosition(Vec2(_visibleThreeQuarterX, _visibleCentreY));
+            this->addChild(_secondHolder._holderNode);
+        }
+
+        _secondHolder._deviceLabel->setString(deviceInfo);
+    }
+    else
+    {
+        _firstHolder.controller = controller;
+        if (_firstHolder._holderNode == nullptr)
+        {
+            createControllerSprite(_firstHolder);
+
+            _secondHolder._holderNode->runAction(ScaleTo::create(0.3f,0.5f,0.5f));
+            _secondHolder._holderNode->runAction(MoveTo::create(0.3f,Vec2(_visibleQuarterX, _visibleCentreY)));
+
+            _firstHolder._holderNode->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _firstHolder._holderNode->setScale(0.1f);
+            _firstHolder._holderNode->runAction(ScaleTo::create(0.3f,0.5f,0.5f));
+            _firstHolder._holderNode->setPosition(Vec2(_visibleThreeQuarterX, _visibleCentreY));
+            this->addChild(_firstHolder._holderNode);
+        }
+
+        _firstHolder._deviceLabel->setString(deviceInfo);
+    }
+}
+
+void GameControllerTest::onDisconnectedController(Controller* controller, Event* event)
+{
+    log("onDisconnectedController:%d",controller->getDeviceId());
+    if (_firstHolder.controller == controller)
+    {
+        _firstHolder.controller = nullptr;
+
+        if (_secondHolder.controller != nullptr)
+        {
+            _firstHolder._holderNode->runAction(MoveBy::create(0.3f,Vec2(0,_visibleSize.height)));
+
+            _secondHolder._holderNode->runAction(MoveTo::create(0.3f,Vec2(_visibleCentreX,_visibleCentreY) ));
+            _secondHolder._holderNode->runAction(ScaleTo::create(0.3f,1.0f,1.0f));
+        }
+        else
+        {
+            resetControllerHolderState(_firstHolder);
+        }
+    }
+    else if (_secondHolder.controller == controller)
+    {
+        _secondHolder.controller = nullptr;
+
+        if (_firstHolder.controller != nullptr)
+        {
+            _secondHolder._holderNode->runAction(MoveBy::create(0.3f,Vec2(0,_visibleSize.height)));
+
+            _firstHolder._holderNode->runAction(MoveTo::create(0.3f,Vec2(_visibleCentreX,_visibleCentreY) ));
+            _firstHolder._holderNode->runAction(ScaleTo::create(0.3f,1.0f,1.0f));
+        }
+        else
+        {
+            resetControllerHolderState(_secondHolder);
+        }
+    }
+}
+
+void GameControllerTest::resetControllerHolderState(ControllerHolder& holder)
+{
+    holder._buttonA->setColor(Color3B::WHITE);
+    holder._buttonB->setColor(Color3B::WHITE);
+    holder._buttonX->setColor(Color3B::WHITE);
+    holder._buttonY->setColor(Color3B::WHITE);
+    holder._dpadUp->setColor(Color3B::WHITE);
+    holder._dpadDown->setColor(Color3B::WHITE);
+    holder._dpadLeft->setColor(Color3B::WHITE);
+    holder._dpadRight->setColor(Color3B::WHITE);
+    holder._buttonL1->setColor(Color3B::WHITE);
+    holder._buttonR1->setColor(Color3B::WHITE);
+
+    holder._leftJoystick->setPosition(Vec2(238,460));
+    holder._rightJoystick->setPosition(Vec2(606,293));
+    holder._deviceLabel->setString("Disconnected");
+}
+
+void GameControllerTest::showButtonState(cocos2d::Controller *controller, int keyCode, bool isPressed)
+{
+    onConnectController(controller,nullptr);
+    ControllerHolder* holder = nullptr;
+    if (controller == _firstHolder.controller)
+        holder = &_firstHolder;
+    else if(controller == _secondHolder.controller)
+        holder = &_secondHolder;
+    else
+        return;
+
+    if (isPressed)
+    {
+        switch (keyCode)
+        {
+        case Controller::Key::BUTTON_A:
+            holder->_buttonA->setColor(Color3B(250,103,93));
+            break;
+        case Controller::Key::BUTTON_B:
+            holder->_buttonB->setColor(Color3B(92,214,183));
+            break;
+        case Controller::Key::BUTTON_X:
+            holder->_buttonX->setColor(Color3B(96,113,192));
+            break;
+        case Controller::Key::BUTTON_Y:
+            holder->_buttonY->setColor(Color3B(199,222,118));
+            break;
+        case Controller::Key::BUTTON_DPAD_UP:
+            holder->_dpadUp->setColor(Color3B(0,115,158));
+            break;
+        case Controller::Key::BUTTON_DPAD_DOWN:
+            holder->_dpadDown->setColor(Color3B(0,115,158));
+            break;
+        case Controller::Key::BUTTON_DPAD_LEFT:
+            holder->_dpadLeft->setColor(Color3B(170,216,0));
+            break;
+        case Controller::Key::BUTTON_DPAD_RIGHT:
+            holder->_dpadRight->setColor(Color3B(170,216,0));
+            break;
+        case Controller::Key::BUTTON_LEFT_SHOULDER:
+            holder->_buttonL1->setColor(Color3B(19,231,238));
+            break;
+        case Controller::Key::BUTTON_RIGHT_SHOULDER:
+            holder->_buttonR1->setColor(Color3B(19,231,238));
+            break;
+        default:
+            {
+                char ketStatus[30];
+                sprintf(ketStatus,"Key Down:%d",keyCode);
+                holder->_externalKeyLabel->setString(ketStatus);
+                break;
+            }
+        }
+    } 
+    else
+    {
+        switch (keyCode)
+        {
+        case Controller::Key::BUTTON_A:
+            holder->_buttonA->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_B:
+            holder->_buttonB->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_X:
+            holder->_buttonX->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_Y:
+            holder->_buttonY->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_DPAD_UP:
+            holder->_dpadUp->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_DPAD_DOWN:
+            holder->_dpadDown->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_DPAD_LEFT:
+            holder->_dpadLeft->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_DPAD_RIGHT:
+            holder->_dpadRight->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_LEFT_SHOULDER:
+            holder->_buttonL1->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_RIGHT_SHOULDER:
+            holder->_buttonR1->setColor(Color3B::WHITE);
+            break;
+        default:
+            {
+                char ketStatus[30];
+                sprintf(ketStatus,"Key Up:%d",keyCode);
+                holder->_externalKeyLabel->setString(ketStatus);
+                break;
+            }
+        }
+    }
+}
+
+void GameControllerTest::onKeyDown(cocos2d::Controller *controller, int keyCode, cocos2d::Event *event)
+{
+    showButtonState(controller, keyCode, true);
+}
+
+void GameControllerTest::onKeyUp(cocos2d::Controller *controller, int keyCode, cocos2d::Event *event)
+{
+    showButtonState(controller, keyCode, false);
+}
+
+void GameControllerTest::onAxisEvent(cocos2d::Controller* controller, int keyCode, cocos2d::Event* event)
+{
+    ControllerHolder* holder = nullptr;
+    if (controller == _firstHolder.controller)
+        holder = &_firstHolder;
+    else if(controller == _secondHolder.controller)
+        holder = &_secondHolder;
+    else
+        return;
+
+    const auto& ketStatus = controller->getKeyStatus(keyCode);
+    switch (keyCode)
+    {
+    case Controller::Key::JOYSTICK_LEFT_X:
+        holder->_leftJoystick->setPositionX(238 + ketStatus.value * 24);
+        break;
+    case Controller::Key::JOYSTICK_LEFT_Y:
+        holder->_leftJoystick->setPositionY(460 - ketStatus.value * 24);
+        break;
+    case Controller::Key::JOYSTICK_RIGHT_X:
+        holder->_rightJoystick->setPositionX(606 + ketStatus.value * 24);
+        break;
+    case Controller::Key::JOYSTICK_RIGHT_Y:
+        holder->_rightJoystick->setPositionY(293 - ketStatus.value * 24);
+        break;
+    case Controller::Key::AXIS_LEFT_TRIGGER:
+        holder->_buttonL2->setOpacity(200 * controller->getKeyStatus(keyCode).value);
+        break;
+    case Controller::Key::AXIS_RIGHT_TRIGGER:
+        holder->_buttonR2->setOpacity(200 * controller->getKeyStatus(keyCode).value);
+        break;
+    default:
+        break;
+    }
+}
+
+bool GameControllerTest::init()
+{
+    if ( !Layer::init() )
+        return false;
+
+    _currControllerCount = 0;
+
+    _visibleSize = Director::getInstance()->getVisibleSize();
+    _visibleOrigin = Director::getInstance()->getVisibleOrigin();
+
+
+    auto tmpPos = Vec2(_visibleSize / 2) + _visibleOrigin;
+
+    _visibleCentreX = _visibleOrigin.x + _visibleSize.width / 2;
+    _visibleCentreY = _visibleOrigin.y + _visibleSize.height / 2;
+    _visibleQuarterX = _visibleOrigin.x + _visibleSize.width / 4;
+    _visibleThreeQuarterX = _visibleOrigin.x + _visibleSize.width * 0.75f;
+
+    _firstHolder.controller = nullptr;
+    _secondHolder.controller = nullptr;
+
+    createControllerSprite(_firstHolder);
+    _firstHolder._holderNode->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _firstHolder._holderNode->setPosition(tmpPos);
+    this->addChild(_firstHolder._holderNode);
+
     auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png", CC_CALLBACK_1(GameControllerTest::menuCloseCallback, this));
-    closeItem->setPosition(origin + visibleSize - closeItem->getContentSize() / 2);
-    
+    closeItem->setPosition(_visibleOrigin + _visibleSize - closeItem->getContentSize() / 2);
+
     auto menu = Menu::create(closeItem,nullptr);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu);
-
-    //get game pad status in polling mode
-    scheduleUpdate();
+    
+    registerControllerListener();
 
     return true;
 }
 
-void GameControllerTest::onButtonPressed(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
+void GameControllerTest::createControllerSprite(ControllerHolder& holder)
 {
-    if (controller == nullptr)
-    {
-        return;
-    }
-    _player1 = controller;
+    holder._holderNode = Node::create();
+    holder._holderNode->setContentSize(Size(998,1000));
 
-    auto gamePad = controller->getGamepad();
+    auto controllerBg1 = Sprite::create("controller-1.png");
+    controllerBg1->setPosition(Vec2::ZERO);
+    controllerBg1->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    holder._holderNode->addChild(controllerBg1);
 
-    if (button == gamePad->getButtonA())
-    {
-        _statusLabel->setString("button A pressed!");
-    }
+    auto controllerBg2 = Sprite::create("controller-2.png");
+    controllerBg2->setPosition(Vec2(499,1000));
+    controllerBg2->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
+    holder._holderNode->addChild(controllerBg2);
 
-    if (button == gamePad->getButtonB())
-    {
-        _statusLabel->setString("button B pressed!");
-    }
+    holder._leftJoystick = Sprite::create("joystick.png");
+    holder._leftJoystick->setPosition(Vec2(238,460));
+    holder._holderNode->addChild(holder._leftJoystick);
 
-    if (button == gamePad->getButtonX())
-    {
-        _statusLabel->setString("button X pressed!");
-    }
+    holder._rightJoystick = Sprite::create("joystick.png");
+    holder._rightJoystick->setPosition(Vec2(606,293));
+    holder._holderNode->addChild(holder._rightJoystick);
 
-    if (button == gamePad->getButtonY())
-    {
-        _statusLabel->setString("button Y pressed!");
-    }
+    holder._deviceLabel = Label::createWithTTF("Disconnected","fonts/Marker Felt.ttf",36);
+    holder._deviceLabel->setPosition(Vec2(499,650));
+    holder._deviceLabel->setTextColor(Color4B::RED);
+    holder._holderNode->addChild(holder._deviceLabel);
 
-    if (button == gamePad->getDirectionPad()->getUp())
-    {
-        _statusLabel->setString("Dpad up pressed!");
-    }
+    holder._externalKeyLabel = Label::createWithTTF("Key event","fonts/Marker Felt.ttf",36);
+    holder._externalKeyLabel->setPosition(Vec2(499,500));
+    holder._externalKeyLabel->setTextColor(Color4B::RED);
+    holder._holderNode->addChild(holder._externalKeyLabel);
+    //-----------------------------------------------------------------
+    auto dPadTexture = Director::getInstance()->getTextureCache()->addImage("dPad.png");
 
-    if (button == gamePad->getDirectionPad()->getDown())
-    {
-        _statusLabel->setString("Dpad down pressed!");
-    }
+    auto dPadCenter = Sprite::createWithTexture(dPadTexture,Rect(60,60,68,68));
+    dPadCenter->setPosition(Vec2(371,294));
+    holder._holderNode->addChild(dPadCenter);
 
-    if (button == gamePad->getDirectionPad()->getLeft())
-    {
-        _statusLabel->setString("Dpad left pressed!");
-    }
+    holder._dpadLeft = Sprite::createWithTexture(dPadTexture,Rect(0,60,60,60));
+    holder._dpadLeft->setPosition(Vec2(371 - 64,296));
+    holder._holderNode->addChild(holder._dpadLeft);
 
-    if (button == gamePad->getDirectionPad()->getRight())
-    {
-        _statusLabel->setString("Dpad right pressed!");
-    }
+    holder._dpadRight = Sprite::createWithTexture(dPadTexture,Rect(128,60,60,60));
+    holder._dpadRight->setPosition(Vec2(371 + 64,296));
+    holder._holderNode->addChild(holder._dpadRight);
 
-    if (button == gamePad->getLeftShoulder())
-    {
-        _statusLabel->setString("Left shoulder pressed!");
-    }
+    holder._dpadUp = Sprite::createWithTexture(dPadTexture,Rect(60,0,60,60));
+    holder._dpadUp->setPosition(Vec2(369,294 + 64));
+    holder._holderNode->addChild(holder._dpadUp);
 
-    if (button == gamePad->getRightShoulder())
-    {
-        _statusLabel->setString("Right shoulder pressed!");
-    }
-}
+    holder._dpadDown = Sprite::createWithTexture(dPadTexture,Rect(60,128,60,60));
+    holder._dpadDown->setPosition(Vec2(369,294 - 64));
+    holder._holderNode->addChild(holder._dpadDown);
+    //-----------------------------------------------------------------
+    holder._buttonL1 = Sprite::create("L1.png");
+    holder._buttonL1->setPosition(Vec2(290,792));
+    holder._holderNode->addChild(holder._buttonL1);
 
-void GameControllerTest::onButtonReleased(cocos2d::Controller *controller, cocos2d::ControllerButtonInput *button, cocos2d::Event *event)
-{
-    if (controller == nullptr)
-    {
-        return;
-    }
-    _player1 = controller;
+    holder._buttonR1 = Sprite::create("R1.png");
+    holder._buttonR1->setPosition(Vec2(998 - 290,792));
+    holder._holderNode->addChild(holder._buttonR1);
 
-    auto gamePad = controller->getGamepad();
+    auto buttonL2 = Sprite::create("L2.png");
+    buttonL2->setPosition(Vec2(220,910));
+    holder._holderNode->addChild(buttonL2);
 
-    if (button == gamePad->getButtonA())
-    {
-        _statusLabel->setString("button A released!");
-    }
+    auto buttonR2 = Sprite::create("R2.png");
+    buttonR2->setPosition(Vec2(998-220,910));
+    holder._holderNode->addChild(buttonR2);
 
-    if (button == gamePad->getButtonB())
-    {
-        _statusLabel->setString("button B released!");
-    }
+    holder._buttonL2 = Sprite::create("L2.png");
+    holder._buttonL2->setOpacity(0);
+    holder._buttonL2->setColor(Color3B::RED);
+    holder._buttonL2->setPosition(Vec2(220,910));
+    holder._holderNode->addChild(holder._buttonL2);
 
-    if (button == gamePad->getButtonX())
-    {
-        _statusLabel->setString("button X released!");
-    }
+    holder._buttonR2 = Sprite::create("R2.png");
+    holder._buttonR2->setOpacity(0);
+    holder._buttonR2->setColor(Color3B::RED);
+    holder._buttonR2->setPosition(Vec2(998-220,910));
+    holder._holderNode->addChild(holder._buttonR2);
+    //-----------------------------------------------------------------
+    holder._buttonX = Sprite::create("X.png");
+    holder._buttonX->setPosition(Vec2(750 - 70,460));
+    holder._holderNode->addChild(holder._buttonX);
 
-    if (button == gamePad->getButtonY())
-    {
-        _statusLabel->setString("button Y released!");
-    }
+    holder._buttonY = Sprite::create("Y.png");
+    holder._buttonY->setPosition(Vec2(750,460 + 70));
+    holder._holderNode->addChild(holder._buttonY);
 
-    if (button == gamePad->getDirectionPad()->getUp())
-    {
-        _statusLabel->setString("Dpad up released!");
-    }
+    holder._buttonA = Sprite::create("A.png");
+    holder._buttonA->setPosition(Vec2(750,460 - 70));
+    holder._holderNode->addChild(holder._buttonA);
 
-    if (button == gamePad->getDirectionPad()->getDown())
-    {
-        _statusLabel->setString("Dpad down released!");
-    }
-
-    if (button == gamePad->getDirectionPad()->getLeft())
-    {
-        _statusLabel->setString("Dpad left released!");
-    }
-
-    if (button == gamePad->getDirectionPad()->getRight())
-    {
-        _statusLabel->setString("Dpad right released!");
-    }
-
-    if (button == gamePad->getLeftShoulder())
-    {
-        _statusLabel->setString("Left shoulder released!");
-    }
-
-    if (button == gamePad->getRightShoulder())
-    {
-        _statusLabel->setString("Right shoulder released!");
-    }
-}
-
-void GameControllerTest::onAxisValueChanged(cocos2d::Controller* controller, cocos2d::ControllerAxisInput* axis, cocos2d::Event* event)
-{
-    if (controller == nullptr)
-    {
-        return;
-    }
-    _player1 = controller;
-
-    auto moveDelta = axis->getValue();
-    Vec2 newPos = _actor->getPosition();
-    auto gamePad = controller->getGamepad();
-
-    if (axis == gamePad->getLeftThumbstick()->getAxisX() || axis == gamePad->getRightThumbstick()->getAxisX())
-    {
-        newPos.x += moveDelta;
-    }
-    else if (axis == gamePad->getLeftThumbstick()->getAxisY() || axis == gamePad->getRightThumbstick()->getAxisY())
-    {
-        newPos.y -= moveDelta;
-    }
-    _actor->setPosition(newPos);
-}
-
-void GameControllerTest::update(float dt)
-{
-    if (_player1 && _player1->isConnected())
-    {
-        Vec2 newPos = _actor->getPosition();
-        auto gamePad = _player1->getGamepad();
-
-        newPos.x += gamePad->getLeftThumbstick()->getAxisX()->getValue();
-        newPos.y -= gamePad->getLeftThumbstick()->getAxisY()->getValue();
-
-        newPos.x += gamePad->getRightThumbstick()->getAxisX()->getValue();
-        newPos.y -= gamePad->getRightThumbstick()->getAxisY()->getValue();
-
-        _actor->setPosition(newPos);
-
-        char triggerStatus[50];
-        sprintf(triggerStatus,"left trigger:%f",gamePad->getLeftTrigger()->getValue());
-        _leftTriggerLabel->setString(triggerStatus);
-        sprintf(triggerStatus,"right trigger:%f",gamePad->getRightTrigger()->getValue());
-        _rightTriggerLabel->setString(triggerStatus);
-    }
+    holder._buttonB = Sprite::create("B.png");
+    holder._buttonB->setPosition(Vec2(750 + 70,460));
+    holder._holderNode->addChild(holder._buttonB);
 }
 
 void GameControllerTest::menuCloseCallback(Ref* sender)

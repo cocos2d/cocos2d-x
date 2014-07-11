@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,45 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "base/ccConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "CCControllerThumbstick.h"
-#include "CCControllerAxisInput.h"
-#include "CCControllerButtonInput.h"
+#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_VIDEO_MANUAL_H
+#define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_VIDEO_MANUAL_H
 
-NS_CC_BEGIN
-
-ControllerThumbstick::ControllerThumbstick()
-: _axisX(new ControllerAxisInput())
-, _axisY(new ControllerAxisInput())
-, _button(new ControllerButtonInput())
-{
-    _axisX->setCollection(this);
-    _axisY->setCollection(this);
-    _button->setCollection(this);
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "tolua++.h"
+#ifdef __cplusplus
 }
+#endif
 
-ControllerThumbstick::~ControllerThumbstick()
-{
-    CC_SAFE_DELETE(_axisX);
-    CC_SAFE_DELETE(_axisY);
-    CC_SAFE_DELETE(_button);
-}
+TOLUA_API int register_all_cocos2dx_experimental_video_manual(lua_State* L);
 
-ControllerAxisInput* ControllerThumbstick::getAxisX() const
-{
-    return _axisX;
-}
-
-ControllerAxisInput* ControllerThumbstick::getAxisY() const
-{
-    return _axisY;
-}
-
-ControllerButtonInput* ControllerThumbstick::getButton() const
-{
-    return _button;
-}
-
-
-
-NS_CC_END
+#endif // COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_VIDEO_MANUAL_H
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

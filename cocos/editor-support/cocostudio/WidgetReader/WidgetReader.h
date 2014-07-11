@@ -174,7 +174,7 @@ namespace cocostudio
     }else if(key == P_Visbile){ \
         widget->setVisible(valueToBool(value)); \
     }else if(key == P_ZOrder){ \
-        widget->setZOrder(valueToInt(value));  \
+        widget->setLocalZOrder(valueToInt(value));  \
     }else if(key == P_LayoutParameter){ \
         stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(cocoLoader); \
         ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();  \

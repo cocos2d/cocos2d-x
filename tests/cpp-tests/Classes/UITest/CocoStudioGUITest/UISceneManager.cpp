@@ -100,7 +100,8 @@ static const char* s_testArray[] =
     "UIScrollViewTest_Both",
     "UIScrollViewTest_ScrollToPercentBothDirection",
     "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",    
-    "UIPageViewTest,",
+    "UIPageViewTest",
+    "UIPageViewButtonTest",
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
     /*
@@ -124,7 +125,7 @@ static const char* s_testArray[] =
 #endif
 };
 
-static UISceneManager *sharedInstance = NULL;
+static UISceneManager *sharedInstance = nullptr;
 
 
 UISceneManager::UISceneManager()
@@ -139,7 +140,7 @@ UISceneManager::~UISceneManager()
 
 UISceneManager * UISceneManager::sharedUISceneManager()
 {
-    if (sharedInstance == NULL)
+    if (sharedInstance == nullptr)
     {
         sharedInstance = new UISceneManager();
     }
@@ -344,7 +345,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUIPageViewButtonTest:
+            return UIPageViewButtonTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -389,5 +391,5 @@ Scene *UISceneManager::currentUIScene()
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
     }
-    return NULL;
+    return nullptr;
 }

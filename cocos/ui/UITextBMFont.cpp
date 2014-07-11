@@ -88,8 +88,6 @@ void TextBMFont::setFntFile(const std::string& fileName)
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
     
-    _labelBMFontRenderer->setColor(this->getColor());
-    _labelBMFontRenderer->setOpacity(this->getOpacity());
     _fntFileHasInit = true;
     setString(_stringValue);
 }

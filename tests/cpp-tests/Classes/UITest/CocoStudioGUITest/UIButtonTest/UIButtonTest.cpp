@@ -42,6 +42,17 @@ bool UIButtonTest::init()
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
         _uiLayer->addChild(button);
+        
+        // Create the imageview
+        ImageView* imageView = ImageView::create();
+    
+        imageView->setPosition(Vec2(widgetSize.width / 2.0f + 50+ button->getContentSize().width/2,
+                                    widgetSize.height / 2.0f));
+        imageView->setTag(12);
+        
+        _uiLayer->addChild(imageView);
+        
+        
 
         return true;
     }
@@ -61,7 +72,15 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
             
         case Widget::TouchEventType::ENDED:
+        {
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            ImageView* imageView = (ImageView*)_uiLayer->getChildByTag(12);
+            imageView->setVisible(false);
+            imageView->loadTexture("cocosui/ccicon.png");
+            imageView->setOpacity(0);
+            imageView->setVisible(true);
+            imageView->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
+        }
             break;
             
         case Widget::TouchEventType::CANCELED:
@@ -111,9 +130,17 @@ bool UIButtonTest_Scale9::init()
         button->setScale9Enabled(true);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setContentSize(Size(150, 70));
-//        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9::touchEvent, this));
         _uiLayer->addChild(button);
+        
+        // Create the imageview
+        Button* button2 = Button::create();
+        button2->setPosition(Vec2(widgetSize.width / 2.0f + button->getContentSize().width + 20, widgetSize.height / 2.0f));
+        button2->setName("normal");
+        _uiLayer->addChild(button2);
+        
+        Sprite *sprite = Sprite::create("cocosui/animationbuttonnormal.png");
+        button2->addChild(sprite);
         
         return true;
     }
@@ -133,7 +160,13 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
             
         case Widget::TouchEventType::ENDED:
+        {
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            Button *btn = (Button*)_uiLayer->getChildByName("normal");
+            btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
+            btn->loadTexturePressed("cocosui/animationbuttonpressed.png");
+            btn->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
+        }
             break;
             
         case Widget::TouchEventType::CANCELED:
@@ -180,8 +213,10 @@ bool UIButtonTest_PressedAction::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setPressedActionEnabled(true);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-//        button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));
+        button->setColor(Color3B::GREEN);
+        button->setOpacity(30);
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_PressedAction::touchEvent, this));
+        button->setName("button");
         _uiLayer->addChild(button);
         
         return true;
@@ -202,7 +237,11 @@ void UIButtonTest_PressedAction::touchEvent(Ref *pSender, Widget::TouchEventType
             break;
             
         case Widget::TouchEventType::ENDED:
+        {
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            Button* btn = (Button*)_uiLayer->getChildByName("button");
+            btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
+        }
             break;
             
         case Widget::TouchEventType::CANCELED:
@@ -255,6 +294,16 @@ bool UIButtonTest_Title::init()
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);
         
+        
+        TextBMFont *text = TextBMFont::create("BMFont", "cocosui/bitmapFontTest2.fnt");
+        text->setPosition(button->getPosition() + Vec2(button->getContentSize().width/2 + 50,0));
+        text->setColor(Color3B::YELLOW);
+        text->setOpacity(50);
+        text->setName("text");
+
+
+        _uiLayer->addChild(text);
+        
         return true;
     }
     return false;
@@ -274,7 +323,17 @@ void UIButtonTest_Title::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
             
         case Widget::TouchEventType::ENDED:
+        {
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            TextBMFont *text = (TextBMFont*)_uiLayer->getChildByName("text");
+            text->setFntFile("cocosui/bitmapFontTest2.fnt");
+            if (text->getString() == "BMFont") {
+                text->setString("Hello");
+            }
+            else{
+                text->setString("BMFont");
+            }
+        }
             break;
             
         case Widget::TouchEventType::CANCELED:

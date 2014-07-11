@@ -66,6 +66,8 @@ extern "C" {
 #include "lua_cocos2dx_physics_manual.hpp"
 #include "lua_cocos2dx_ui_auto.hpp"
 #include "lua_cocos2dx_ui_manual.hpp"
+#include "lua_cocos2dx_experimental_video_auto.hpp"
+#include "lua_cocos2dx_experimental_video_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -160,6 +162,7 @@ bool LuaStack::init(void)
     register_all_cocos2dx_ui(_state);
     register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
+    register_all_cocos2dx_module_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_coco_studio_manual(_state);
     register_all_cocos2dx_ui_manual(_state);
@@ -172,6 +175,11 @@ bool LuaStack::init(void)
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
+#endif
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    register_all_cocos2dx_experimental_video(_state);
+    register_all_cocos2dx_experimental_video_manual(_state);
 #endif
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
