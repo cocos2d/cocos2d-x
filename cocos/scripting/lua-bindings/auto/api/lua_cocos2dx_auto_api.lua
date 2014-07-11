@@ -1197,6 +1197,16 @@
 
 
 --------------------------------------------------------
+-- the cc FastTMXTiledMap
+-- @field [parent=#cc] FastTMXTiledMap#FastTMXTiledMap FastTMXTiledMap preloaded module
+
+
+--------------------------------------------------------
+-- the cc FastTMXLayer
+-- @field [parent=#cc] FastTMXLayer#FastTMXLayer FastTMXLayer preloaded module
+
+
+--------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
 
@@ -1209,11 +1219,6 @@
 --------------------------------------------------------
 -- the cc Mesh
 -- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
-
-
---------------------------------------------------------
--- the cc Bone3D
--- @field [parent=#cc] Bone3D#Bone3D Bone3D preloaded module
 
 
 --------------------------------------------------------
