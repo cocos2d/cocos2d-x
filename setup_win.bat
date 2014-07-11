@@ -1,5 +1,5 @@
 @echo off
-set QUICK_V3_ROOT=%~dp0..
+set QUICK_V3_ROOT=%~dp0
 
 set SETX=setx
 ver | find "XP" > nul

@@ -12,10 +12,9 @@ fi
 if [ "$2" != "" ]; then
     CALL_BY_PKG=YES
     DIR=$2
-    QUICK_V3_ROOT="$DIR"
-else
-    QUICK_V3_ROOT="$DIR/.."
 fi;
+
+QUICK_V3_ROOT="$DIR"
 
 export QUICK_V3_CORE_PATH="$QUICK_V3_ROOT/quick"
 
