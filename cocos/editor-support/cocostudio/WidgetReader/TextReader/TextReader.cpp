@@ -102,7 +102,7 @@ namespace cocostudio
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
         std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
-        std::string file_extension = “”;
+        std::string file_extension = "";
         size_t pos = fontName.find_last_of('.');
         if (pos != std::string::npos)
         {
