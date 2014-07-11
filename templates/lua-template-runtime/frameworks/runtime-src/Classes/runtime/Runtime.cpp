@@ -218,6 +218,7 @@ void FileServer::readResFileFinfo()
         _filecfgjson.SetObject();
     }
 
+#ifndef CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM
     //save file info to disk every ten second
     Director::getInstance()->getScheduler()->schedule([&](float){
         rapidjson::StringBuffer buffer;
@@ -232,6 +233,7 @@ void FileServer::readResFileFinfo()
         fwrite(str,sizeof(char),strlen(str),pFile);
         fclose(pFile);
     },this, 10.0f, false, "fileinfo");
+#endif
 }
 
 void FileServer::addResFileInfo(const char* filename,uint64_t u64)
@@ -447,7 +449,14 @@ void FileServer::loopReceiveFile()
             }
         }
         int contentSize = recvDataBuf.fileProto.content_size();
-        if (contentSize>0){  
+        if (contentSize == 0)
+        {
+            recvDataBuf.contentBuf="";
+            _recvBufListMutex.lock();
+            _recvBufList.push_back(recvDataBuf);
+            _recvBufListMutex.unlock();
+        }else if(contentSize>0)
+        {  
             //recv body data
             Bytef *contentbuf= new Bytef[contentSize+1];
             memset(contentbuf,0,contentSize+1);
@@ -531,7 +540,7 @@ void FileServer::loopWriteFile()
               continue;
          }
          if (fp){
-             if (0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
+             if (recvDataBuf.contentBuf.size() > 0 && 0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
                  addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno);
                  fclose(fp);
                  continue;
