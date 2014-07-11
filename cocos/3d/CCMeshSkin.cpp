@@ -36,22 +36,22 @@ NS_CC_BEGIN
  *
  * @param m C3DMatrix representing the inverse bind pose for this Bone.
  */
-void Bone::setInverseBindPose(const Mat4& m)
+void Bone3D::setInverseBindPose(const Mat4& m)
 {
     _invBindPose = m;
 }
 
-const Mat4& Bone::getInverseBindPose()
+const Mat4& Bone3D::getInverseBindPose()
 {
     return _invBindPose;
 }
 
-void Bone::setOriPose(const Mat4& m)
+void Bone3D::setOriPose(const Mat4& m)
 {
     _oriPose = m;
 }
 
-void Bone::resetPose()
+void Bone3D::resetPose()
 {
     _local =_oriPose;
     
@@ -60,7 +60,7 @@ void Bone::resetPose()
     }
 }
 
-void Bone::setWorldMatDirty(bool dirty)
+void Bone3D::setWorldMatDirty(bool dirty)
 {
     _worldDirty = dirty;
     for (auto it : _children) {
@@ -69,7 +69,7 @@ void Bone::setWorldMatDirty(bool dirty)
 }
 
 //update own world matrix and children's
-void Bone::updateWorldMat()
+void Bone3D::updateWorldMat()
 {
     getWorldMat();
     for (auto itor : _children) {
@@ -77,7 +77,7 @@ void Bone::updateWorldMat()
     }
 }
 
-const Mat4& Bone::getWorldMat()
+const Mat4& Bone3D::getWorldMat()
 {
     if (_worldDirty)
     {
@@ -95,7 +95,7 @@ const Mat4& Bone::getWorldMat()
     return _world;
 }
 
-void Bone::setAnimationValue(float* trans, float* rot, float* scale, void* tag, float weight)
+void Bone3D::setAnimationValue(float* trans, float* rot, float* scale, void* tag, float weight)
 {
     for (auto& it : _blendStates) {
         if (it.tag == tag)
@@ -124,7 +124,7 @@ void Bone::setAnimationValue(float* trans, float* rot, float* scale, void* tag, 
     _blendStates.push_back(state);
 }
 
-void Bone::clearBoneBlendState()
+void Bone3D::clearBoneBlendState()
 {
     _blendStates.clear();
     for (auto it : _children) {
@@ -135,14 +135,14 @@ void Bone::clearBoneBlendState()
 /**
  * Creates C3DBone.
  */
-Bone* Bone::create(const std::string& id)
+Bone3D* Bone3D::create(const std::string& id)
 {
-    auto bone = new Bone(id);
+    auto bone = new Bone3D(id);
     bone->autorelease();
     return bone;
 }
 
-void Bone::updateJointMatrix(Vec4* matrixPalette)
+void Bone3D::updateJointMatrix(Vec4* matrixPalette)
 {
     {
         static Mat4 t;
@@ -154,37 +154,37 @@ void Bone::updateJointMatrix(Vec4* matrixPalette)
     }
 }
 
-Bone* Bone::getParentBone()
+Bone3D* Bone3D::getParentBone()
 {
     return _parent;
 }
-ssize_t Bone::getChildBoneCount() const
+ssize_t Bone3D::getChildBoneCount() const
 {
     return _children.size();
 }
-Bone* Bone::getChildBoneByIndex(int index)
+Bone3D* Bone3D::getChildBoneByIndex(int index)
 {
     return _children.at(index);
 }
-void Bone::addChildBone(Bone* bone)
+void Bone3D::addChildBone(Bone3D* bone)
 {
     if (_children.find(bone) == _children.end())
        _children.pushBack(bone);
 }
-void Bone::removeChildBoneByIndex(int index)
+void Bone3D::removeChildBoneByIndex(int index)
 {
     _children.erase(index);
 }
-void Bone::removeChildBone(Bone* bone)
+void Bone3D::removeChildBone(Bone3D* bone)
 {
     _children.eraseObject(bone);
 }
-void Bone::removeAllChildBone()
+void Bone3D::removeAllChildBone()
 {
     _children.clear();
 }
 
-Bone::Bone(const std::string& id)
+Bone3D::Bone3D(const std::string& id)
 : _name(id)
 , _parent(nullptr)
 , _worldDirty(true)
@@ -192,12 +192,12 @@ Bone::Bone(const std::string& id)
     
 }
 
-Bone::~Bone()
+Bone3D::~Bone3D()
 {
     removeAllChildBone();
 }
 
-void Bone::updateLocalMat()
+void Bone3D::updateLocalMat()
 {
     if (_blendStates.size())
     {
@@ -299,13 +299,13 @@ bool MeshSkin::initFromSkinData(const SkinData& skindata)
 {
     ssize_t i = 0;
     for (; i < skindata.skinBoneNames.size(); i++) {
-        auto bone = Bone::create(skindata.skinBoneNames[i]);
+        auto bone = Bone3D::create(skindata.skinBoneNames[i]);
         bone->_invBindPose = skindata.inverseBindPoseMatrices[i];
         bone->setOriPose(skindata.skinBoneOriginMatrices[i]);
         addSkinBone(bone);
     }
     for (i = 0; i < skindata.nodeBoneNames.size(); i++) {
-        auto bone = Bone::create(skindata.nodeBoneNames[i]);
+        auto bone = Bone3D::create(skindata.nodeBoneNames[i]);
         bone->setOriPose(skindata.nodeBoneOriginMatrices[i]);
         addNodeBone(bone);
     }
@@ -330,7 +330,7 @@ ssize_t MeshSkin::getBoneCount() const
 }
 
 //get bone
-Bone* MeshSkin::getBoneByIndex(unsigned int index) const
+Bone3D* MeshSkin::getBoneByIndex(unsigned int index) const
 {
     if (index < _skinBones.size())
         return _skinBones.at(index);
@@ -340,7 +340,7 @@ Bone* MeshSkin::getBoneByIndex(unsigned int index) const
     
     return nullptr;
 }
-Bone* MeshSkin::getBoneByName(const std::string& id) const
+Bone3D* MeshSkin::getBoneByName(const std::string& id) const
 {
     //search from skin bones
     for (auto it : _skinBones) {
@@ -355,18 +355,18 @@ Bone* MeshSkin::getBoneByName(const std::string& id) const
     return nullptr;
 }
 
-Bone* MeshSkin::getRootBone() const
+Bone3D* MeshSkin::getRootBone() const
 {
     return _rootBone;
 }
-void MeshSkin::setRootBone(Bone* joint)
+void MeshSkin::setRootBone(Bone3D* joint)
 {
     CC_SAFE_RETAIN(joint);
     CC_SAFE_RELEASE(_rootBone);
     _rootBone = joint;
 }
 
-int MeshSkin::getBoneIndex(Bone* bone) const
+int MeshSkin::getBoneIndex(Bone3D* bone) const
 {
     int i = 0;
     for (; i < _skinBones.size(); i++) {
@@ -419,12 +419,12 @@ void MeshSkin::removeAllBones()
     CC_SAFE_RELEASE(_rootBone);
 }
 
-void MeshSkin::addSkinBone(Bone* bone)
+void MeshSkin::addSkinBone(Bone3D* bone)
 {
     _skinBones.pushBack(bone);
 }
 
-void MeshSkin::addNodeBone(Bone* bone)
+void MeshSkin::addNodeBone(Bone3D* bone)
 {
     _nodeBones.pushBack(bone);
 }

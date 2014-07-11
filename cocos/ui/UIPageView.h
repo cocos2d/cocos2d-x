@@ -31,12 +31,12 @@ NS_CC_BEGIN
 
 namespace ui {
 
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     PAGEVIEW_EVENT_TURNING,
 }PageViewEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
+typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 class PageView : public Layout

@@ -47,7 +47,7 @@ Layer* createLayer(int nIndex)
         case 6: return new SpriteProgressWithSpriteFrame();
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Layer* nextAction()
@@ -371,10 +371,10 @@ void SpriteProgressBarTintAndFade::onEnter()
 	auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
 								   TintTo::create(1, 0, 255, 0),
 								   TintTo::create(1, 0, 0, 255),
-								   NULL);
+								   nullptr);
 	auto fade = Sequence::create(FadeTo::create(1.0f, 0),
 								   FadeTo::create(1.0f, 255),
-								   NULL);
+								   nullptr);
 
     auto left = ProgressTimer::create(Sprite::create(s_pathSister1));
     left->setType(ProgressTimer::Type::BAR);

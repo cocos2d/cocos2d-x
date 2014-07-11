@@ -93,7 +93,7 @@ HttpClientTest::HttpClientTest()
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
     itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
 }

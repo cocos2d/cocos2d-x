@@ -69,7 +69,7 @@ bool __String::initWithFormatAndValist(const char* format, va_list ap)
 {
     bool bRet = false;
     char* pBuf = (char*)malloc(kMaxStringLen);
-    if (pBuf != NULL)
+    if (pBuf != nullptr)
     {
         vsnprintf(pBuf, kMaxStringLen, format, ap);
         _string = pBuf;
@@ -170,7 +170,7 @@ void __String::appendWithFormat(const char* format, ...)
     va_start(ap, format);
     
     char* pBuf = (char*)malloc(kMaxStringLen);
-    if (pBuf != NULL)
+    if (pBuf != nullptr)
     {
         vsnprintf(pBuf, kMaxStringLen, format, ap);
         _string.append(pBuf);
@@ -207,7 +207,7 @@ bool __String::isEqual(const Ref* pObject)
 {
     bool bRet = false;
     const __String* pStr = dynamic_cast<const __String*>(pObject);
-    if (pStr != NULL)
+    if (pStr != nullptr)
     {
         if (0 == _string.compare(pStr->_string))
         {
@@ -226,11 +226,11 @@ __String* __String::create(const std::string& str)
 
 __String* __String::createWithData(const unsigned char* data, size_t nLen)
 {
-    __String* ret = NULL;
-    if (data != NULL)
+    __String* ret = nullptr;
+    if (data != nullptr)
     {
         char* pStr = (char*)malloc(nLen+1);
-        if (pStr != NULL)
+        if (pStr != nullptr)
         {
             pStr[nLen] = '\0';
             if (nLen > 0)

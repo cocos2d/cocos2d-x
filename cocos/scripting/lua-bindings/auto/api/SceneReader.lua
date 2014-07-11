@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module SceneReader
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#SceneReader] setTarget 

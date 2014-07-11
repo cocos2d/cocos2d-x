@@ -23,16 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.game_controller_test;
 
-import java.util.ArrayList;
+import org.cocos2dx.lib.GameControllerActivity;
+//import org.cocos2dx.lib.GameControllerHelper.ControllerListener;
 
-import org.cocos2dx.lib.Cocos2dxActivity;
-import org.cocos2dx.lib.GameControllerHelper.ControllerListener;
-
-import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
-import android.util.Log;
 
-public class AppActivity extends Cocos2dxActivity {
+public class AppActivity extends GameControllerActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
@@ -40,63 +36,9 @@ public class AppActivity extends Cocos2dxActivity {
 		
 		//The standard controller,without doing anything special. e.g: Amazon Fire TV
 		
-		//Automatic adaptation for connect controller.
-		//Supported Platform: Nibiru / Moga / Ouya TV
-		//mControllerHelper.setControllerListener(controllerListener);
-		mControllerHelper.connectController();
-		
 		//Manually specify an adapter.
-		//setGameControllerInstance(new GameControllerNibiru());
-		//setGameControllerInstance(new GameControllerMoga());
-		//setGameControllerInstance(new GameControllerOuya());
+		//this.connectController(DRIVERTYPE_NIBIRU);
+		//this.connectController(DRIVERTYPE_MOGA);
+		//this.connectController(DRIVERTYPE_OUYA);
 	}
-	
-	ControllerListener controllerListener = new ControllerListener() {
-		
-		@Override
-		public void onDownloadConfigStarted() {
-			Log.w("controllerListener", "onDownloadDepsFinished");
-		}
-		
-		@Override
-		public void onDownloadConfigFinished(boolean isSuccess) {
-			//If download failed
-			Log.w("controllerListener", "onDownloadConfigFinished:" + isSuccess);
-		}
-		
-		@Override
-		public void onControllerDiscoveryStarted() {
-			Log.w("controllerListener", "onControllerDiscoveryStarted");
-		}
-		
-		@Override
-		public void onControllerDiscoveryFinish(ArrayList<BluetoothDevice> devices) {
-			Log.w("controllerListener", "onControllerDiscoveryFinish");
-		}
-		
-		@Override
-		public void onDownloadDepsStarted() {
-			Log.w("controllerListener", "onDownloadDepsStarted");
-		}
-		
-		@Override
-		public void onDownloadDepsProgress(int bytesWritten, int totalSize) {
-			Log.w("controllerListener", "onDownloadDepsProgress");
-		}
-		
-		@Override
-		public void onDownloadDepsFinished(boolean isSuccess) {
-			Log.w("controllerListener", "");
-		}
-		
-		@Override
-		public void onInstallDriver(String filePath) {
-			Log.w("controllerListener", "onInstallDriver");
-		}
-		
-		@Override
-		public void onConnectController() {
-			Log.w("controllerListener", "onConnectController");
-		}
-	};
 }

@@ -120,7 +120,7 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
     pMainItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menu = Menu::create(pMainItem, NULL);
+    auto menu = Menu::create(pMainItem, nullptr);
     menu->setPosition( Vec2::ZERO );
     addChild(menu);
 }

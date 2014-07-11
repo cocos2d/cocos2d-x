@@ -18,7 +18,7 @@ SocketIOTestLayer::SocketIOTestLayer(void)
 	: _sioClient(nullptr)
 	, _sioEndpoint(nullptr)
 {
-	//set the clients to NULL until we are ready to connect
+	//set the clients to nullptr until we are ready to connect
 
 	Size winSize = Director::getInstance()->getWinSize();
     
@@ -90,7 +90,7 @@ SocketIOTestLayer::SocketIOTestLayer(void)
 	// Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(SocketIOTestLayer::toExtensionsMainLayer, this));
     itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
 
@@ -163,45 +163,45 @@ void SocketIOTestLayer::onMenuSIOEndpointClicked(cocos2d::Ref *sender)
 
 void SocketIOTestLayer::onMenuTestMessageClicked(cocos2d::Ref *sender)
 {
-	//check that the socket is != NULL before sending or emitting events
-	//the client should be NULL either before initialization and connection or after disconnect
-	if(_sioClient != NULL) _sioClient->send("Hello Socket.IO!");
+	//check that the socket is != nullptr before sending or emitting events
+	//the client should be nullptr either before initialization and connection or after disconnect
+	if(_sioClient != nullptr) _sioClient->send("Hello Socket.IO!");
 
 }
 
 void SocketIOTestLayer::onMenuTestMessageEndpointClicked(cocos2d::Ref *sender)
 {
 
-	if(_sioEndpoint != NULL) _sioEndpoint->send("Hello Socket.IO!");
+	if(_sioEndpoint != nullptr) _sioEndpoint->send("Hello Socket.IO!");
 
 }
 
 void SocketIOTestLayer::onMenuTestEventClicked(cocos2d::Ref *sender)
 {
-	//check that the socket is != NULL before sending or emitting events
-	//the client should be NULL either before initialization and connection or after disconnect
-	if(_sioClient != NULL) _sioClient->emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
+	//check that the socket is != nullptr before sending or emitting events
+	//the client should be nullptr either before initialization and connection or after disconnect
+	if(_sioClient != nullptr) _sioClient->emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
 
 }
 
 void SocketIOTestLayer::onMenuTestEventEndpointClicked(cocos2d::Ref *sender)
 {
 
-	if(_sioEndpoint != NULL) _sioEndpoint->emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
+	if(_sioEndpoint != nullptr) _sioEndpoint->emit("echotest","[{\"name\":\"myname\",\"type\":\"mytype\"}]");
 
 }
 
 void SocketIOTestLayer::onMenuTestClientDisconnectClicked(cocos2d::Ref *sender)
 {
 
-	if(_sioClient != NULL) _sioClient->disconnect();
+	if(_sioClient != nullptr) _sioClient->disconnect();
 
 }
 
 void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Ref *sender)
 {
 
-	if(_sioEndpoint != NULL) _sioEndpoint->disconnect();
+	if(_sioEndpoint != nullptr) _sioEndpoint->disconnect();
 
 }
 
@@ -235,14 +235,14 @@ void SocketIOTestLayer::onClose(network::SIOClient* client)
 	s << client->getTag() << " closed!";	
 	_sioClientStatus->setString(s.str().c_str());
 
-	//set the local pointer to NULL or connect to another client
+	//set the local pointer to nullptr or connect to another client
 	//the client object will be released on its own after this method completes
 	if(client == _sioClient) {
 		
-		_sioClient = NULL;
+		_sioClient = nullptr;
 	} else if(client == _sioEndpoint) {
 		
-		_sioEndpoint = NULL;
+		_sioEndpoint = nullptr;
 	}
 	
 }

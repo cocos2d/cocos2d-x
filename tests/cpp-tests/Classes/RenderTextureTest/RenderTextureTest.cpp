@@ -108,7 +108,7 @@ RenderTextureSave::RenderTextureSave()
     MenuItemFont::setFontSize(16);
     auto item1 = MenuItemFont::create("Save Image", CC_CALLBACK_1(RenderTextureSave::saveImage, this));
     auto item2 = MenuItemFont::create("Clear", CC_CALLBACK_1(RenderTextureSave::clearImage, this));
-    auto menu = Menu::create(item1, item2, NULL);
+    auto menu = Menu::create(item1, item2, nullptr);
     this->addChild(menu);
     menu->alignItemsVertically();
     menu->setPosition(Vec2(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
@@ -151,7 +151,7 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
         sprite->setPosition(Vec2(40, 40));
         sprite->setRotation(counter * 3);
     };
-    runAction(Sequence::create(action1, CallFunc::create(func), NULL));
+    runAction(Sequence::create(action1, CallFunc::create(func), nullptr));
 
     CCLOG("Image saved %s and %s", png, jpg);
 
@@ -239,7 +239,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     /* A2 & B2 setup */
     auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
 
-    if (NULL == rend)
+    if (nullptr == rend)
     {
         return;
     }
@@ -404,7 +404,7 @@ void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 void RenderTextureZbuffer::renderScreenShot()
 {
     auto texture = RenderTexture::create(512, 512);
-    if (NULL == texture)
+    if (nullptr == texture)
     {
         return;
     }
@@ -425,7 +425,7 @@ void RenderTextureZbuffer::renderScreenShot()
 
     sprite->runAction(Sequence::create(FadeTo::create(2, 0),
                                           Hide::create(),
-                                          NULL));
+                                          nullptr));
 }
 
 RenderTexturePartTest::RenderTexturePartTest()
@@ -465,7 +465,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     _spriteDraw->setPosition(0,size.height/2);
     _spriteDraw->setScaleY(-1);
     _spriteDraw->runAction(RepeatForever::create(Sequence::create
-                                          (baseAction,baseAction->reverse(), NULL)));
+                                          (baseAction,baseAction->reverse(), nullptr)));
     addChild(_spriteDraw);
 }
 
@@ -623,7 +623,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     
     // Toggle clear on / off
     auto item = MenuItemFont::create("Clear On/Off", CC_CALLBACK_1(RenderTextureTargetNode::touched, this));
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -722,7 +722,7 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
     
     sprite->setPosition(p);
     
-	FiniteTimeAction *action = NULL;
+	FiniteTimeAction *action = nullptr;
 	float rd = CCRANDOM_0_1();
     
 	if (rd < 0.20)
@@ -737,12 +737,12 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::addNewSpriteWithCo
 		action = FadeOut::create(2);
     
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction(RepeatForever::create(seq));
     
     //return sprite;
-    return NULL;
+    return nullptr;
 }
 
 void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)

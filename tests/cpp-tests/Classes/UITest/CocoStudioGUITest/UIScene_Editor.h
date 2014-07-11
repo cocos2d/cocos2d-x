@@ -69,7 +69,8 @@ public:
     CC_SYNTHESIZE_READONLY(Text*, _sceneTitle, SceneTitle)
     
     UI_SCENE_EDITOR_CREATE_FUNC(UIScene_Editor);
-    
+    virtual void switchLoadMethod(Ref* pSender);
+
 protected:
     Layer* _touchGroup;
     Layout* _layout;

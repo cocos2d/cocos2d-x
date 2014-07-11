@@ -134,7 +134,7 @@ void PageView::addPage(Layout* page)
     }
 
     
-    addProtectedChild(page);
+    addChild(page);
     _pages.pushBack(page);
     
     _doLayoutDirty = true;
@@ -156,7 +156,7 @@ void PageView::insertPage(Layout* page, int idx)
     else
     {
         _pages.insert(idx, page);
-        addProtectedChild(page);
+        addChild(page);
         
     }
     
@@ -169,7 +169,7 @@ void PageView::removePage(Layout* page)
     {
         return;
     }
-    removeProtectedChild(page);
+    removeChild(page);
     _pages.eraseObject(page);
     
     _doLayoutDirty = true;
@@ -189,7 +189,7 @@ void PageView::removeAllPages()
 {
     for(const auto& node : _pages)
     {
-        removeProtectedChild(node);
+        removeChild(node);
     }
     _pages.clear();
 }

@@ -594,7 +594,7 @@ public:
     virtual JumpTo* clone() const override;
 	virtual JumpTo* reverse(void) const override;
 
-private:
+CC_CONSTRUCTOR_ACCESS:
     JumpTo() {}
     virtual ~JumpTo() {}
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
@@ -759,7 +759,7 @@ public:
     virtual ScaleBy* clone() const override;
 	virtual ScaleBy* reverse(void) const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     ScaleBy() {}
     virtual ~ScaleBy() {}
 
@@ -851,7 +851,7 @@ public:
     
     void setReverseAction(FadeTo* ac);
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeIn():_reverseAction(nullptr) {}
     virtual ~FadeIn() {}
 
@@ -878,7 +878,7 @@ public:
     
     void setReverseAction(FadeTo* ac);
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOut():_reverseAction(nullptr) {}
     virtual ~FadeOut() {}
 private:
@@ -970,7 +970,7 @@ public:
     virtual DelayTime* reverse() const override;
     virtual DelayTime* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     DelayTime() {}
     virtual ~DelayTime() {}
 

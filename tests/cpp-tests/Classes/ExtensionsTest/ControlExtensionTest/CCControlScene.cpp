@@ -44,7 +44,7 @@ bool ControlScene::init()
     {    
         auto pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(ControlScene::toExtensionsMainLayer, this));
         pBackItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        auto pBackMenu = Menu::create(pBackItem, NULL);
+        auto pBackMenu = Menu::create(pBackItem, nullptr);
         pBackMenu->setPosition( Vec2::ZERO );
         addChild(pBackMenu, 10);
 
@@ -69,7 +69,7 @@ bool ControlScene::init()
         auto item2 = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ControlScene::restartCallback, this));
         auto item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(ControlScene::nextCallback, this));
         
-        auto menu = Menu::create(item1, item3, item2, NULL);
+        auto menu = Menu::create(item1, item3, item2, nullptr);
         menu->setPosition(Vec2::ZERO);
         item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
         item2->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module NodeReader
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#NodeReader] setJsonPath 

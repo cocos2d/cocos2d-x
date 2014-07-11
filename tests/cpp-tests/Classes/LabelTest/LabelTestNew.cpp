@@ -210,7 +210,7 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     addChild(label1, 0, kTagBitmapAtlas1);
     auto fade = FadeOut::create(1.0f);
     auto fade_in = fade->reverse();
-    auto seq = Sequence::create(fade, fade_in, NULL);
+    auto seq = Sequence::create(fade, fade_in, nullptr);
     auto repeat = RepeatForever::create(seq);
     label1->runAction(repeat);
     
@@ -220,7 +220,7 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
         TintTo::create(1, 0, 255, 0),
         TintTo::create(1, 0, 0, 255),
-        NULL);
+        nullptr);
     label2->runAction( RepeatForever::create(tint) );
     
     auto label3 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Test");
@@ -282,7 +282,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     
     auto scale = ScaleBy::create(2, 1.5f);
     auto scale_back = scale->reverse();
-    auto scale_seq = Sequence::create(scale, scale_back,NULL);
+    auto scale_seq = Sequence::create(scale, scale_back,nullptr);
     auto scale_4ever = RepeatForever::create(scale_seq);
     
     auto jump = JumpBy::create(0.5f, Vec2::ZERO, 60, 1);
@@ -290,7 +290,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     
     auto fade_out = FadeOut::create(1);
     auto fade_in = FadeIn::create(1);
-    auto seq = Sequence::create(fade_out, fade_in, NULL);
+    auto seq = Sequence::create(fade_out, fade_in, nullptr);
     auto fade_4ever = RepeatForever::create(seq);
     
     BChar->runAction(rot_4ever);
@@ -689,7 +689,7 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
     auto lineBreaks    = MenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
     auto mixed         = MenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
-    auto stringMenu    = Menu::create(longSentences, lineBreaks, mixed, NULL);
+    auto stringMenu    = Menu::create(longSentences, lineBreaks, mixed, nullptr);
     stringMenu->alignItemsVertically();
 
     longSentences->setColor(Color3B::RED);
@@ -703,7 +703,7 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto left = MenuItemFont::create("Left", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto center = MenuItemFont::create("Center", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto right = MenuItemFont::create("Right", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
-    auto alignmentMenu = Menu::create(left, center, right, NULL);
+    auto alignmentMenu = Menu::create(left, center, right, nullptr);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
     center->setColor(Color3B::RED);
@@ -1008,7 +1008,7 @@ LabelTTFDynamicAlignment::LabelTTFDynamicAlignment()
                               MenuItemFont::create("Left", CC_CALLBACK_1(LabelTTFDynamicAlignment::setAlignmentLeft, this)),
                               MenuItemFont::create("Center", CC_CALLBACK_1(LabelTTFDynamicAlignment::setAlignmentCenter, this)),
                               MenuItemFont::create("Right", CC_CALLBACK_1(LabelTTFDynamicAlignment::setAlignmentRight, this)),
-                              NULL);
+                              nullptr);
     
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(Vec2(50, size.height / 4 ));
@@ -1436,7 +1436,7 @@ LabelCharMapColorTest::LabelCharMapColorTest()
     auto fade = FadeOut::create(1.0f);
     auto fade_in = fade->reverse();
     auto cb = CallFunc::create(CC_CALLBACK_0(LabelCharMapColorTest::actionFinishCallback, this));
-    auto seq = Sequence::create(fade, fade_in, cb, NULL);
+    auto seq = Sequence::create(fade, fade_in, cb, nullptr);
     auto repeat = RepeatForever::create( seq );
     label2->runAction( repeat );    
 
@@ -1612,7 +1612,7 @@ LabelAlignmentTest::LabelAlignmentTest()
         MenuItemFont::create("Left", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentLeft, this)),
         MenuItemFont::create("Center", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentCenter, this)),
         MenuItemFont::create("Right", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentRight, this)),
-        NULL);
+        nullptr);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(Vec2(50, s.height / 2 - 20));
     this->addChild(menu);
@@ -1621,7 +1621,7 @@ LabelAlignmentTest::LabelAlignmentTest()
         MenuItemFont::create("Top", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentTop, this)),
         MenuItemFont::create("Middle", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentMiddle, this)),
         MenuItemFont::create("Bottom", CC_CALLBACK_1(LabelAlignmentTest::setAlignmentBottom, this)),
-        NULL);
+        nullptr);
     menu->alignItemsVerticallyWithPadding(4);
     menu->setPosition(Vec2(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
@@ -1690,8 +1690,8 @@ void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
 
 const char* LabelAlignmentTest::getCurrentAlignment()
 {
-    const char* vertical = NULL;
-    const char* horizontal = NULL;
+    const char* vertical = nullptr;
+    const char* horizontal = nullptr;
     switch (_vertAlign) {
     case TextVAlignment::TOP:
         vertical = "Top";

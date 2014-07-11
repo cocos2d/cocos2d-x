@@ -60,6 +60,11 @@
 -- @return array_table#array_table ret (retunr value: array_table)
 
 --------------------------------
+-- @function [parent=#Node] setOnExitCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] pause 
 -- @param self
         
@@ -111,6 +116,11 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#Node] setonEnterTransitionDidFinishCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] removeAllComponents 
 -- @param self
         
@@ -123,6 +133,11 @@
 -- @function [parent=#Node] getTag 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#Node] getonEnterTransitionDidFinishCallback 
+-- @param self
+-- @return function#function ret (return value: function)
         
 --------------------------------
 -- @function [parent=#Node] getGLProgram 
@@ -172,6 +187,11 @@
 -- @param #cc.GLProgramState glprogramstate
         
 --------------------------------
+-- @function [parent=#Node] setOnEnterCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -180,6 +200,11 @@
 -- @function [parent=#Node] setNormalizedPosition 
 -- @param self
 -- @param #vec2_table vec2
+        
+--------------------------------
+-- @function [parent=#Node] setonExitTransitionDidStartCallback 
+-- @param self
+-- @param #function func
         
 --------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpace 
@@ -231,6 +256,11 @@
 -- @param self
 -- @param #cc.Touch touch
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @function [parent=#Node] getOnEnterCallback 
+-- @param self
+-- @return function#function ret (return value: function)
         
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpace 
@@ -541,6 +571,11 @@
 -- @param #float float
 
 --------------------------------
+-- @function [parent=#Node] getOnExitCallback 
+-- @param self
+-- @return function#function ret (return value: function)
+        
+--------------------------------
 -- @function [parent=#Node] getChildByTag 
 -- @param self
 -- @param #int int
@@ -638,10 +673,9 @@
 -- @param #cc.Ref ref
         
 --------------------------------
--- @function [parent=#Node] enumerateChildren 
+-- @function [parent=#Node] getonExitTransitionDidStartCallback 
 -- @param self
--- @param #string str
--- @param #function func
+-- @return function#function ret (return value: function)
         
 --------------------------------
 -- overload function: removeFromParentAndCleanup(bool)
