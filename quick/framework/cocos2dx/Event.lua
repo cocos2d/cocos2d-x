@@ -41,14 +41,3 @@ c.KEYPAD_EVENT               = 6
 
 c.NODE_TOUCH_CAPTURING_PHASE = 0
 c.NODE_TOUCH_TARGETING_PHASE = 1
-
--- 临时使用
-function KeypadEventCodeConvert(code)
-	if code==7 then
-		return "back"
-	elseif code==15 then
-		return "menu"
-	else
-		return tostring(code)
-	end
-end
