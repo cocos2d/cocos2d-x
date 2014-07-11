@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__CocosGUIScene__
-#define __TestCpp__CocosGUIScene__
+#ifndef __cocos2d_tests__CocostudioParserTest__
+#define __cocos2d_tests__CocostudioParserTest__
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
@@ -34,21 +34,20 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 
-class CocosGUITestMainLayer : public Layer
+class CocostudioParserTestMainLayer : public Layer
 {
 public:
     virtual void onEnter();
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     
-	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void touchEvent(Ref* pSender, Widget::TouchEventType type);
     
-	Vec2 _beginPos;
+private:
+    Vec2 _beginPos;
     Menu* _itemMenu;
-    
-	int _testcount;
 };
 
-class CocosGUITestScene : public TestScene
+class CocostudioParserTestScene : public TestScene
 {
 public:
     virtual void onEnter();
@@ -56,5 +55,4 @@ public:
     void BackCallback(Ref* pSender);
 };
 
-
-#endif /* defined(__TestCpp__CocosGUIScene__) */
+#endif /* defined(__cocos2d_tests__CocostudioParserTest__) */

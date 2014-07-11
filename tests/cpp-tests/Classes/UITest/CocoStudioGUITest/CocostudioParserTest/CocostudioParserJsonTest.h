@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,39 +22,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__CocosGUIScene__
-#define __TestCpp__CocosGUIScene__
+#ifndef __cocos2d_tests__CocostudioParserJsonTest__
+#define __cocos2d_tests__CocostudioParserJsonTest__
 
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
-#include "../../testBasic.h"
-#include "ui/CocosGUI.h"
+#include "../../../testBasic.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace cocos2d::ui;
-
-class CocosGUITestMainLayer : public Layer
+class CocostudioParserJsonLayer : public cocos2d::Layer
 {
 public:
+    CocostudioParserJsonLayer(std::string jsonFile);
+    ~CocostudioParserJsonLayer(){}
     virtual void onEnter();
-    
-	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
-    
-	Vec2 _beginPos;
-    Menu* _itemMenu;
-    
-	int _testcount;
+private:
+    std::string _jsonFile;
 };
 
-class CocosGUITestScene : public TestScene
+class CocostudioParserJsonScene : public TestScene
 {
 public:
+    CocostudioParserJsonScene(std::string jsonFile);
+    ~CocostudioParserJsonScene(){}
     virtual void onEnter();
     virtual void runThisTest();
-    void BackCallback(Ref* pSender);
+    void BackCallback(cocos2d::Ref* pSender);
+private:
+    std::string _jsonFile;
 };
 
-
-#endif /* defined(__TestCpp__CocosGUIScene__) */
+#endif /* defined(__cocos2d_tests__CocostudioParserJsonTest__) */

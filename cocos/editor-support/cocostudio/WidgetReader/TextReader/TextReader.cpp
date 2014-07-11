@@ -71,7 +71,11 @@ namespace cocostudio
             }else if(key == P_FontName){
                 std::string fontFilePath;
                 fontFilePath = binaryFilePath.append(value);
-                label->setFontName(fontFilePath);
+                if (FileUtils::getInstance()->isFileExist(fontFilePath)) {
+                    label->setFontName(fontFilePath);
+                }else{
+                    label->setFontName(value);
+                }
             }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
             }else if(key == P_AreaHeight){
@@ -102,23 +106,15 @@ namespace cocostudio
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
         std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
-        std::string file_extension = “”;
-        size_t pos = fontName.find_last_of('.');
-        if (pos != std::string::npos)
-        {
-            file_extension = fontName.substr(pos, fontName.length());
-            std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
-        }
-        if(file_extension.compare(".TTF") == 0)
-        {
-            std::string fontFilePath = jsonPath.append(fontName);
-            label->setFontName(fontFilePath);
-        }
-        else
-        {
-            label->setFontName(fontName);
-        }
         
+        std::string fontFilePath = jsonPath.append(fontName);
+		if (FileUtils::getInstance()->isFileExist(fontFilePath))
+		{
+			label->setFontName(fontFilePath);
+		}
+		else{
+			label->setFontName(fontName);
+		}
         
         bool aw = DICTOOL->checkObjectExist_json(options, P_AreaWidth);
         bool ah = DICTOOL->checkObjectExist_json(options, P_AreaHeight);
