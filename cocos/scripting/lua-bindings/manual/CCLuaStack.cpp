@@ -507,6 +507,7 @@ int LuaStack::reallocateScriptHandler(int nHandler)
 
 int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray)
 {
+    int top = lua_gettop(_state);
     if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
     {
         if (numArgs > 0)
@@ -518,6 +519,7 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
         {
             CCLOG("value at stack [%d] is not function", functionIndex);
             lua_pop(_state, numArgs + 1); // remove function and arguments
+            lua_settop(_state,top);
             return 0;
         }
         
@@ -548,12 +550,16 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
             {
                 lua_pop(_state, 2); // remove __G__TRACKBACK__ and error message from stack
             }
+            lua_settop(_state,top);
             return 0;
         }
         
         // get return value,don't pass LUA_MULTRET to numResults,
         if (numResults <= 0)
+        {
+            lua_settop(_state,top);
             return 0;
+        }
         
         for (int i = 0 ; i < numResults; i++)
         {
@@ -586,7 +592,7 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
             lua_pop(_state, 1); // remove __G__TRACKBACK__ from stack      /* L: ... */
         }
     }
-    
+    lua_settop(_state,top);
     return 1;
 }
 
