@@ -213,6 +213,7 @@ void ClippingNode::drawFullScreenQuadClearStencil()
 
 void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
+    m_drawOrder = ++g_drawOrder;
     if(!_visible)
         return;
     
