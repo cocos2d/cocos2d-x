@@ -67,7 +67,7 @@ bool SpineTestLayer::init () {
     skeletonNode->runAction(CCRepeatForever::create(CCSequence::create(CCFadeOut::create(1),
                                                                        CCFadeIn::create(1),
                                                                        CCDelayTime::create(5),
-                                                                       NULL)));
+                                                                       nullptr)));
     
     Size windowSize = Director::getInstance()->getWinSize();
     skeletonNode->setPosition(Vec2(windowSize.width / 2, 20));

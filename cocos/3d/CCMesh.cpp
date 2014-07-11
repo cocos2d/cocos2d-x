@@ -125,7 +125,7 @@ bool RenderMeshData::init(const std::vector<float>& positions,
     return true;
 }
 
-bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
     _vertexs = vertices;
     _indices = indices;
@@ -174,10 +174,10 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
-Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, int numIndex, const std::vector<MeshVertexAttrib> &attribs, int attribCount)
+Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, const std::vector<MeshVertexAttrib> &attribs)
 {
     auto mesh = new Mesh();
-    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount))
+    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, attribs))
     {
         mesh->autorelease();
         return mesh;
@@ -192,17 +192,17 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
     if (!bRet)
         return false;
     
-    restore();
+    buildBuffer();
     return true;
 }
 
-bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
-    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
+    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, attribs);
     if (!bRet)
         return false;
     
-    restore();
+    buildBuffer();
     return true;
 }
 
@@ -242,20 +242,20 @@ void Mesh::buildBuffer()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
     unsigned int indexSize = 2;
-    IndexFormat indexformat = IndexFormat::INDEX16;
     
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * _renderdata._indices.size(), &_renderdata._indices[0], GL_STATIC_DRAW);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     _primitiveType = PrimitiveType::TRIANGLES;
-    _indexFormat = indexformat;
+    _indexFormat = IndexFormat::INDEX16;
     _indexCount = _renderdata._indices.size();
 }
 
 void Mesh::restore()
 {
-    cleanAndFreeBuffers();
+    _vertexBuffer = 0;
+    _indexBuffer = 0;
     buildBuffer();
 }
 

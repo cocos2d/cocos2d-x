@@ -18,7 +18,7 @@ namespace cocostudio
     static const char* P_HAlignment = "hAlignment";
     static const char* P_VAlignment = "vAlignment";
     
-    static TextReader* instanceTextReader = NULL;
+    static TextReader* instanceTextReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
     
@@ -49,7 +49,7 @@ namespace cocostudio
         
         Text* label = static_cast<Text*>(widget);
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string binaryFilePath = GUIReader::getInstance()->getFilePath();
 
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
@@ -69,7 +69,8 @@ namespace cocostudio
             }else if(key == P_FontSize){
                 label->setFontSize(valueToInt(value));
             }else if(key == P_FontName){
-                std::string fontFilePath = jsonPath.append(value);
+                std::string fontFilePath;
+                fontFilePath = binaryFilePath.append(value);
                 label->setFontName(fontFilePath);
             }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));

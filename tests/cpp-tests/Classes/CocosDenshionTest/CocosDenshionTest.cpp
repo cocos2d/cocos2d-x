@@ -36,7 +36,7 @@ public:
         auto b = new Button();
         if (b && !b->initSpriteButton(filePath)) {
             delete b;
-            b = NULL;
+            b = nullptr;
         }
         b->autorelease();
         return b;
@@ -47,7 +47,7 @@ public:
         auto b = new Button();
         if (b && !b->initTextButton(text)) {
             delete b;
-            b = NULL;
+            b = nullptr;
         }
         b->autorelease();
         return b;
@@ -150,7 +150,7 @@ public:
         auto ret = new AudioSlider(direction);
         if (ret && !ret->init()) {
             delete ret;
-            ret = NULL;
+            ret = nullptr;
         }
         ret->autorelease();
         return ret;

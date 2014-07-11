@@ -1311,7 +1311,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
         for (int i = 0; i < length; i++)
         {
-			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
+			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? nullptr : json[CONFIG_FILE_PATH][i].GetString();
             if (path == nullptr)
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
@@ -2426,21 +2426,21 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             }
             else if (key.compare(A_HEIGHT) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
                     textureData->height = atof(str);
                 }
             }
             else if (key.compare(A_PIVOT_X) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
                     textureData->pivotX = atof(str);
                 }
             }
             else if (key.compare(A_PIVOT_Y) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
                     textureData->pivotY = atof(str);
                 }

@@ -613,7 +613,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (l->getAssociatedNode() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getAssociatedNode(), l);
-                    l->setAssociatedNode(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+                    l->setAssociatedNode(nullptr);  // nullptr out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
@@ -1276,7 +1276,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
                 if (l->getAssociatedNode() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getAssociatedNode(), l);
-                    l->setAssociatedNode(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+                    l->setAssociatedNode(nullptr);  // nullptr out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
