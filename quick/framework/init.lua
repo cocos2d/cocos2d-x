@@ -155,6 +155,8 @@ local sharedDirector = cc.Director:getInstance()
 
 if DEBUG_FPS then
     sharedDirector:setDisplayStats(true)
+else
+    sharedDirector:setDisplayStats(false)
 end
 
 if DEBUG_MEM then
