@@ -73,7 +73,7 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 			mControllerService.setEnableLR2(true);
 			mControllerService.setAutoKeyUpMode(false);
 			
-			mControllerService.checkNibiruInstall(mContext, true);
+			mControllerService.checkNibiruInstall(mContext, false);
 		}
 	}
 	

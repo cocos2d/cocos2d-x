@@ -1212,6 +1212,11 @@
 
 
 --------------------------------------------------------
+-- the cc Bone3D
+-- @field [parent=#cc] Bone3D#Bone3D Bone3D preloaded module
+
+
+--------------------------------------------------------
 -- the cc Animation3D
 -- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
 

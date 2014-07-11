@@ -325,7 +325,7 @@ Effect3DOutline::Effect3DOutline()
 , _sprite(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                           [this](EventCustom*)
                                                           {
                                                               auto glProgram = _glProgramState->getGLProgram();
