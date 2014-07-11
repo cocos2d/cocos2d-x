@@ -32,6 +32,5 @@ ui.UILabel               = import(".UILabel")
 ui.UISlider              = import(".UISlider")
 ui.UIBoxLayout           = import(".UIBoxLayout")
 ui.UIListView            = import(".UIListView")
-ui.UIListViewItem        = import(".UIListViewItem")
 
 return ui

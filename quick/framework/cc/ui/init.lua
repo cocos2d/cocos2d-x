@@ -31,5 +31,6 @@ ui.UICheckBoxButtonGroup = import(".UICheckBoxButtonGroup")
 ui.UILabel               = import(".UILabel")
 ui.UISlider              = import(".UISlider")
 ui.UIBoxLayout           = import(".UIBoxLayout")
+ui.UIListView            = import(".UIListView")
 
 return ui
