@@ -14,10 +14,31 @@ function __G__TRACKBACK__(msg)
     cclog("----------------------------------------")
 end
 
+local function initGLView()
+    local director = cc.Director:getInstance()
+    local glView = director:getOpenGLView()
+    if nil == glView then
+        glView = cc.GLView:create("Lua Empty Test")
+        director:setOpenGLView(glView)
+    end
+
+    director:setOpenGLView(glView)
+
+    glView:setDesignResolutionSize(480, 320, cc.ResolutionPolicy.NO_BORDER)
+
+    --turn on display FPS
+    director:setDisplayStats(true)
+
+    --set FPS. the default value is 1.0/60 if you don't call this
+    director:setAnimationInterval(1.0 / 60)
+end
+
 local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
+
+    initGLView()
 
     --support debug,when used on ios7.1 64bit,these codes should be commented
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
@@ -58,7 +79,7 @@ local function main()
 ]]--
 
         local animation = cc.Animation:createWithSpriteFrames({frame0,frame1}, 0.5)
-        local animate = cc.Animate:create(animation);
+        local animate = cc.Animate:create(animation)
         spriteDog:runAction(cc.RepeatForever:create(animate))
 
         -- moving dog at every frame
@@ -101,7 +122,7 @@ local function main()
         local frameCrop = cc.SpriteFrame:create("res/crop.png", cc.rect(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
-                local spriteCrop = cc.Sprite:createWithSpriteFrame(frameCrop);
+                local spriteCrop = cc.Sprite:createWithSpriteFrame(frameCrop)
                 spriteCrop:setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
                 layerFarm:addChild(spriteCrop)
             end

@@ -24,16 +24,6 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-        glview = GLView::create("Lua Game Controller Test");
-        director->setOpenGLView(glview);
-    }
-    
-    director->setOpenGLView(glview);
-    
     LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     LuaStack* stack = engine->getLuaStack();
