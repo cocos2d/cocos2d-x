@@ -130,18 +130,15 @@ char*	stExpCocoNode::GetName(CocoLoader*		pCoco)
     
 }
 
-    char* stExpCocoNode::GetValue(CocoLoader* pCoco)
-    {
-        char* szValue = ( pCoco->GetMemoryAddr_String() + m_szValue );
-        if(GetType(pCoco) == kStringType )
-        {
-            if(szValue && 0==strcmp(szValue,"null"))
-            {
-                strcpy(szValue,"");
-            }
-        }
-        return szValue;
-    }
+char* stExpCocoNode::GetValue(CocoLoader* pCoco)
+{
+	char* szValue = ( pCoco->GetMemoryAddr_String() + m_szValue );
+	if( 0==strcmp(szValue,"null") && GetType(pCoco) == kStringType ) 
+	{
+		strcpy(szValue,"");
+	}
+	return szValue;
+}
 
 
 int	stExpCocoNode::GetChildNum()
