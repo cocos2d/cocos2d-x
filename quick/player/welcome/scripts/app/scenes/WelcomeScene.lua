@@ -110,27 +110,27 @@ function WelcomeScene:createBannderAds()
 
 
     -- left button
-    cc.ui.UIPushButton.new("arrow_left.png", {scale9 = true})
-    :setButtonSize(50, 50)
-    :pos(30, display.top - 150)
-    :addTo(self, 1, 100)
-    :onButtonClicked(function()
-        scheduler.unscheduleGlobal(autoScrollHandler)
-        self:nextBanner()
-        autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
-    end)
+    -- cc.ui.UIPushButton.new("arrow_left.png", {scale9 = true})
+    -- :setButtonSize(50, 50)
+    -- :pos(30, display.top - 150)
+    -- :addTo(self, 1, 100)
+    -- :onButtonClicked(function()
+    --     scheduler.unscheduleGlobal(autoScrollHandler)
+    --     self:nextBanner()
+    --     autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
+    -- end)
 
 
     -- right button
-    cc.ui.UIPushButton.new("arrow_right.png", {scale9 = true})
-        :setButtonSize(50, 50)
-        :pos(display.width - 30, display.top - 150)
-        :addTo(self, 1, 100)
-        :onButtonClicked(function()
-            scheduler.unscheduleGlobal(autoScrollHandler)
-            self:preBanner()
-            autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
-        end)
+    -- cc.ui.UIPushButton.new("arrow_right.png", {scale9 = true})
+    --     :setButtonSize(50, 50)
+    --     :pos(display.width - 30, display.top - 150)
+    --     :addTo(self, 1, 100)
+    --     :onButtonClicked(function()
+    --         scheduler.unscheduleGlobal(autoScrollHandler)
+    --         self:preBanner()
+    --         autoScrollHandler = scheduler.scheduleGlobal(nextBanner, 5.0)
+    --     end)
 
 
     -- prompt
