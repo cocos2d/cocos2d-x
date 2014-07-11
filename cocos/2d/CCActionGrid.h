@@ -48,7 +48,11 @@ public:
     virtual GridBase* getGrid();
 
     // overrides
-	virtual GridAction * clone() const override = 0;
+	virtual GridAction * clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
     virtual GridAction* reverse() const override;
     virtual void startWithTarget(Node *target) override;
 
@@ -109,7 +113,11 @@ public:
     void setVertex(const Vec2& position, const Vec3& vertex);
 
     // Overrides
-	virtual Grid3DAction * clone() const override = 0;
+	virtual Grid3DAction * clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 };
 
 /** @brief Base class for TiledGrid3D actions */
@@ -156,7 +164,11 @@ public:
     virtual GridBase* getGrid();
 
     // Override
-    virtual TiledGrid3DAction * clone() const override = 0;
+    virtual TiledGrid3DAction * clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 };
 
 /** @brief AccelDeccelAmplitude action */

@@ -173,9 +173,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
-    void _addTouchListener();
+    CC_DEPRECATED_ATTRIBUTE void _addTouchListener() {}
 
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
+    CC_DEPRECATED_ATTRIBUTE void addTouchListener() {}
     CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
     CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
 
