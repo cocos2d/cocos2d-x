@@ -11,12 +11,14 @@ ClippingRegionNode* ClippingRegionNode::create(const Rect& clippingRegion)
 {
     ClippingRegionNode* node = new ClippingRegionNode();
     node->setClippingRegion(clippingRegion);
+    node->autorelease();
     return node;
 }
 
 ClippingRegionNode* ClippingRegionNode::create(void)
 {
     ClippingRegionNode* node = new ClippingRegionNode();
+    node->autorelease();
     return node;
 }
 
