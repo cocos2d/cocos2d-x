@@ -160,7 +160,8 @@ end
 function UISlider:onTouch_(event, x, y)
     if event == "began" then
         if not self:checkTouchInButton_(x, y) then return false end
-        local buttonPosition = self:convertToWorldSpace(self.buttonSprite_:getPositionInCCPoint())
+        local posx, posy = self.buttonSprite_:getPosition()
+        local buttonPosition = self:convertToWorldSpace(cc.p(posx, posy))
         self.buttonPositionOffset_.x = buttonPosition.x - x
         self.buttonPositionOffset_.y = buttonPosition.y - y
         self.fsm_:doEvent("press")
