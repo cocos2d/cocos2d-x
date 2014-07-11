@@ -71,7 +71,11 @@ namespace cocostudio
             }else if(key == P_FontName){
                 std::string fontFilePath;
                 fontFilePath = binaryFilePath.append(value);
-                label->setFontName(fontFilePath);
+                if (FileUtils::getInstance()->isFileExist(fontFilePath)) {
+                    label->setFontName(fontFilePath);
+                }else{
+                    label->setFontName(value);
+                }
             }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
             }else if(key == P_AreaHeight){
