@@ -1,6 +1,3 @@
-require("extern")
-require("Cocos2d")
-require("Cocos2dConstants")
 
 local ControllerHolder = class("ControllerHolder")
 

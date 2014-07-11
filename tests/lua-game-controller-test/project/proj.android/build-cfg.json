@@ -23,6 +23,13 @@
             "include": [
                 "*.lua"
             ]
+        },
+        {
+            "from": "../../../game-controller-test/Resources",
+            "to": "res",
+            "exclude": [
+                "*.gz"
+            ]
         }
     ]
 }

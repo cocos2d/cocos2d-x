@@ -1,3 +1,5 @@
+require("Cocos2d")
+require("Cocos2dConstants")
 
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
