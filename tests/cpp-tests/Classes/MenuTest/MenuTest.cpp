@@ -445,7 +445,7 @@ MenuLayer4::MenuLayer4()
                   item3, item4,
                   back, nullptr ); // 9 items.
     
-    menu->alignItemsInColumns(2, 2, 2, 2, 1, nullptr);
+    menu->alignItemsInColumns(2, 2, 2, 2, 1, NULL);
     
     addChild( menu );
 
