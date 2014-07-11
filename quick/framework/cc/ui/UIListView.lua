@@ -33,9 +33,18 @@ function UIListView:ctor(param)
 
 	self:addScrollBarIf(param)
 
+	self:setEnabled(true)
 	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
         return self:onTouch_(event)
     end)
+end
+
+function UIListView:setEnabled(enabled)
+    self:setTouchEnabled(enabled)
+end
+
+function UIListView:isEnabled()
+    return self:isTouchEnabled()
 end
 
 function UIListView:addBgColorIf(bgColor)
