@@ -7,6 +7,9 @@ local UIListView = class("UIListView", function()
 	return node
 end)
 
+local UIListViewItem = import(".UIListViewItem")
+
+
 UIListView.DELEGATE					= "ListView_delegate"
 UIListView.TOUCH_DELEGATE			= "ListView_Touch_delegate"
 UIListView.DIRECTION_HORIZONTAL		= 1
@@ -89,6 +92,10 @@ function UIListView:registerHandler(listener, delegate)
 	return self
 end
 
+function UIListView:transItem(item)
+	return UIListViewItem.new(item)
+end
+
 function UIListView:reload()
 	local width,height = 0,0 --container width height
 	local count = self.listener[UIListView.DELEGATE](self, UIListView.COUNT_TAG)
@@ -134,13 +141,17 @@ function UIListView:reload()
 			h = h or 0
 
 			item = self.listener[UIListView.DELEGATE](self, UIListView.CELL_TAG, i)
-			item:setPosition(width/2, tempHeight - h/2)
-			item:setTag(i)
-			self.container:addChild(item)
+			if item then
+				item:setItemSize(w, h)
+				item:setAnchorPoint(cc.p(0.5, 0.5))
+				item:setPosition(width/2, tempHeight - h/2)
+				item:setTag(i)
+				self.container:addChild(item)
+			end
 
 			tempHeight = tempHeight -h
-			HDrawRect({x = 0, y = tempHeight, width = tempWidth, height = h},
-				self.container, cc.c4f(0, 1, 0, 1))
+			-- HDrawRect({x = 0, y = tempHeight, width = tempWidth, height = h},
+			-- 	self.container, cc.c4f(0, 1, 0, 1))
 		end
 	else
 		local w,h = 0, 0
@@ -152,12 +163,16 @@ function UIListView:reload()
 			h = h or 0
 
 			item = self.listener[UIListView.DELEGATE](self, UIListView.CELL_TAG, i)
-			item:setPosition(tempWidth + w/2, height/2)
-			item:setTag(i)
-			self.container:addChild(item)
+			if item then
+				item:setItemSize(w, h)
+				item:setAnchorPoint(cc.p(0.5, 0.5))
+				item:setPosition(tempWidth + w/2, height/2)
+				item:setTag(i)
+				self.container:addChild(item)
+			end
 
-			HDrawRect({x = tempWidth, y = 0, width = w, height = height},
-				self.container, cc.c4f(0, 1, 0, 1))
+			-- HDrawRect({x = tempWidth, y = 0, width = w, height = height},
+			-- 	self.container, cc.c4f(0, 1, 0, 1))
 			tempWidth = tempWidth + w
 		end
 	end
@@ -207,7 +222,7 @@ function UIListView:scrollAuto()
 	if self.position_.x < self.positionRange_.minX then
 		self:scrollTo(self.positionRange_.minX, self.position_.y)
 	elseif self.position_.x > self.positionRange_.maxX then
-		self:scrollTo(self.positionRange_.minY, self.position_.y)
+		self:scrollTo(self.positionRange_.maxX, self.position_.y)
 	else
 		--do nothing
 	end
