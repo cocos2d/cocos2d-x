@@ -315,7 +315,7 @@ void GLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], floa
         else
         {
             // It is error, should return.
-            CCLOG("Moving touches with id: %ld error", id);
+            CCLOG("Moving touches with id: %ld error", (long int)id);
             return;
         }
     }
