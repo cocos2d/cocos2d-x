@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -78,6 +78,8 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,6 +87,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -105,27 +109,21 @@
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-mkdir "$(OutDir)\Resource\rtres"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
-xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
-copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -136,6 +134,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGSNDEBUG;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,11 +167,9 @@ if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource"
 mkdir "$(OutDir)\Resource\src"
 mkdir "$(OutDir)\Resource\res"
-mkdir "$(OutDir)\Resource\rtres"
 xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script" "$(OutDir)\Resource" /e /Y
 xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y
-xcopy "$(ProjectDir)..\..\..\runtime\rtres" "$(OutDir)\Resource\rtres" /e /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(OutDir)\Resource\config.json" /Y
 xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(OutDir)\Resource" /e /Y</Command>
       <Message>copy files</Message>
@@ -184,7 +182,30 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ConfigParser.h" />
-    <ClInclude Include="..\Classes\Runtime.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
+    <ClInclude Include="..\Classes\runtime\ResData.h" />
+    <ClInclude Include="..\Classes\runtime\Runtime.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
@@ -193,7 +214,25 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
-    <ClCompile Include="..\Classes\Runtime.cpp" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc" />
+    <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Protos.pb.cc" />
+    <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Runtime_win32.cpp" />

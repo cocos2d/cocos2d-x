@@ -146,7 +146,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 {
     TextureCache *cache = Director::getInstance()->getTextureCache();
 
-    Sprite* sprite = NULL;
+    Sprite* sprite = nullptr;
     switch (subtestNumber)
     {
         ///
@@ -319,7 +319,7 @@ void SpriteMenuLayer::backCallback(Ref* sender)
 
 void SpriteMenuLayer::showCurrentTest()
 {
-    SpriteMainScene* scene = NULL;
+    SpriteMainScene* scene = nullptr;
     auto pPreScene = (SpriteMainScene*) getParent();
     int nSubTest = pPreScene->getSubTestNum();
     int nNodes   = pPreScene->getNodesNum();
@@ -386,7 +386,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(SpriteMainScene::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height-65));
     addChild(menu, 1);
@@ -410,7 +410,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     
-    MenuItemFont* autoTestItem = NULL;
+    MenuItemFont* autoTestItem = nullptr;
     if (SpriteMainScene::_s_autoTest)
     {
         autoTestItem = MenuItemFont::create("Auto Test On",CC_CALLBACK_1(SpriteMainScene::onAutoTest, this));
@@ -484,7 +484,7 @@ SpriteMainScene::~SpriteMainScene()
     if (_subTest)
     {
         delete _subTest;
-        _subTest = NULL;
+        _subTest = nullptr;
     }
 }
 
@@ -617,7 +617,7 @@ void SpriteMainScene::onExit()
 void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest,int nodes)
 {
     
-    SpriteMainScene* scene = NULL;
+    SpriteMainScene* scene = nullptr;
     
     switch (curCase)
     {
@@ -760,12 +760,12 @@ void performanceActions(Sprite* sprite)
     float period = 0.5f + (rand() % 1000) / 500.0f;
     auto rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     auto rot_back = rot->reverse();
-    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;
     auto grow = ScaleBy::create(growDuration, 0.5f, 0.5f);
-    auto permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), NULL));
+    auto permanentScaleLoop = RepeatForever::create(Sequence::create(grow, grow->reverse(), nullptr));
     sprite->runAction(permanentScaleLoop);
 }
 
@@ -780,7 +780,7 @@ void performanceActions20(Sprite* sprite)
     float period = 0.5f + (rand() % 1000) / 500.0f;
     auto rot = RotateBy::create(period, 360.0f * CCRANDOM_0_1());
     auto rot_back = rot->reverse();
-    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto permanentRotation = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     sprite->runAction(permanentRotation);
 
     float growDuration = 0.5f + (rand() % 1000) / 500.0f;

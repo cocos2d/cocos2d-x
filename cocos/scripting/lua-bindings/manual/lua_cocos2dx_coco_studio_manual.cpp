@@ -176,7 +176,7 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
 
-        self->setFrameEventCallFunc([=](Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex){
+        self->setFrameEventCallFunc([=](cocostudio::Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex){
             
             if (0 != handler)
             {

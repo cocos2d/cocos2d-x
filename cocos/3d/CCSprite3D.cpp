@@ -193,7 +193,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         return false;
     }
     
-    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.numIndex, meshdata.attribs, meshdata.attribCount);
+    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.indices, meshdata.attribs);
     CC_SAFE_RETAIN(_mesh);
     
     _skin = MeshSkin::create(fullPath, "");
@@ -342,7 +342,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     _meshCommand.setDepthTestEnabled(true);
     if (_skin)
     {
-        _meshCommand.setMatrixPaletteSize(_skin->getMatrixPaletteSize());
+        _meshCommand.setMatrixPaletteSize((int)_skin->getMatrixPaletteSize());
         _meshCommand.setMatrixPalette(_skin->getMatrixPalette());
     }
     //support tint and fade

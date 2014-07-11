@@ -156,7 +156,7 @@ void Mat4::createOrthographicOffCenter(float left, float right, float bottom, fl
 void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
                              const Vec3& cameraUpVector, Mat4* dst)
 {
-    createBillboardHelper(objectPosition, cameraPosition, cameraUpVector, NULL, dst);
+    createBillboardHelper(objectPosition, cameraPosition, cameraUpVector, nullptr, dst);
 }
 
 void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
@@ -441,7 +441,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
     }
 
     // Nothing left to do.
-    if (scale == NULL && rotation == NULL)
+    if (scale == nullptr && rotation == nullptr)
         return true;
 
     // Extract the scale.
@@ -469,7 +469,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
     }
 
     // Nothing left to do.
-    if (rotation == NULL)
+    if (rotation == nullptr)
         return true;
 
     // Scale too close to zero, can't decompose rotation.
@@ -559,17 +559,17 @@ float Mat4::determinant() const
 
 void Mat4::getScale(Vec3* scale) const
 {
-    decompose(scale, NULL, NULL);
+    decompose(scale, nullptr, nullptr);
 }
 
 bool Mat4::getRotation(Quaternion* rotation) const
 {
-    return decompose(NULL, rotation, NULL);
+    return decompose(nullptr, rotation, nullptr);
 }
 
 void Mat4::getTranslation(Vec3* translation) const
 {
-    decompose(NULL, NULL, translation);
+    decompose(nullptr, nullptr, translation);
 }
 
 void Mat4::getUpVector(Vec3* dst) const

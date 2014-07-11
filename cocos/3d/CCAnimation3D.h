@@ -59,8 +59,10 @@ public:
         ~Curve();
     };
     
-    /**read all animation or only the animation with given animationName? animationName == "" read all.*/
-    static Animation3D* getOrCreate(const std::string& filename, const std::string& animationName = "");
+    /**read all animation or only the animation with given animationName? animationName == "" read the first.*/
+    static Animation3D* create(const std::string& filename, const std::string& animationName = "");
+    
+    CC_DEPRECATED_ATTRIBUTE static Animation3D* getOrCreate(const std::string& filename, const std::string& animationName = ""){ return create(filename, animationName); }
        
     /**get duration*/
     float getDuration() const { return _duration; }

@@ -25,9 +25,8 @@
 
 #include "CCEventListenerController.h"
 #include "CCEventController.h"
-#include "CCControllerButtonInput.h"
-#include "CCControllerAxisInput.h"
 #include "ccMacros.h"
+#include "base/CCController.h"
 
 NS_CC_BEGIN
 
@@ -51,8 +50,9 @@ bool EventListenerController::init()
 {
     auto listener = [this](Event* event){
         auto evtController = static_cast<EventController*>(event);
-        if (evtController->getControllerEventType() == EventController::ControllerEventType::CONNECTION)
+        switch (evtController->getControllerEventType())
         {
+        case EventController::ControllerEventType::CONNECTION:
             if (evtController->isConnected())
             {
                 if (this->onConnected)
@@ -63,45 +63,40 @@ bool EventListenerController::init()
                 if (this->onDisconnected)
                     this->onDisconnected(evtController->getController(), event);
             }
-        }
-        else
-        {
-            switch (evtController->getControllerEventType()) {
-                case EventController::ControllerEventType::BUTTON_STATUS_CHANGED:
-                    {
-                        auto button = static_cast<ControllerButtonInput*>(evtController->getControllerElement());
+            break;
+        case EventController::ControllerEventType::BUTTON_STATUS_CHANGED:
+            {
+                const auto&  keyStatus = evtController->_controller->_allKeyStatus[evtController->_keyCode];
+                const auto&  keyPrevStatus = evtController->_controller->_allKeyPrevStatus[evtController->_keyCode];
 
-                        if (this->onButtonPressed && button->isPressed() && !button->isPrevStatusPressed())
-                        {
-                            this->onButtonPressed(evtController->getController(), button, event);
-                        }
-                        else if (this->onButtonReleased && !button->isPressed() && button->isPrevStatusPressed())
-                        {
-                            this->onButtonReleased(evtController->getController(), button, event);
-                        }
-                        
-                        if (this->onButtonValueChanged)
-                        {
-                            this->onButtonValueChanged(evtController->getController(), button, event);
-                        }
-                    }
-                    break;
-                case EventController::ControllerEventType::AXIS_STATUS_CHANGED:
-                    {
-                        if (this->onAxisValueChanged)
-                        {
-                            auto axis = static_cast<ControllerAxisInput*>(evtController->getControllerElement());
-                            this->onAxisValueChanged(evtController->getController(), axis, event);
-                        }
-                    }
-                    break;
-                default:
-                    CCASSERT(false, "Invalid EventController type");
-                    break;
+                if (this->onKeyDown && keyStatus.isPressed && !keyPrevStatus.isPressed)
+                {
+                    this->onKeyDown(evtController->_controller, evtController->_keyCode, event);
+                }
+                else if (this->onKeyUp && !keyStatus.isPressed && keyPrevStatus.isPressed)
+                {
+                    this->onKeyUp(evtController->_controller, evtController->_keyCode, event);
+                }
+                else if (this->onKeyRepeat && keyStatus.isPressed && keyPrevStatus.isPressed)
+                {
+                    this->onKeyRepeat(evtController->_controller, evtController->_keyCode, event);
+                }
             }
+            break;
+        case EventController::ControllerEventType::AXIS_STATUS_CHANGED:
+            {
+                if (this->onAxisEvent)
+                {
+                    this->onAxisEvent(evtController->_controller, evtController->_keyCode, event);
+                }
+            }
+            break;
+        default:
+            CCASSERT(false, "Invalid EventController type");
+            break;
         }
     };
-    
+
     if (EventListener::init(EventListener::Type::GAME_CONTROLLER, LISTENER_ID, listener))
     {
         return true;

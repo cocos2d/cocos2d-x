@@ -1212,13 +1212,8 @@
 
 
 --------------------------------------------------------
--- the cc SimpleAudioEngine
--- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
-
-
---------------------------------------------------------
--- the cc ProtectedNode
--- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
+-- the cc Bone3D
+-- @field [parent=#cc] Bone3D#Bone3D Bone3D preloaded module
 
 
 --------------------------------------------------------
@@ -1229,6 +1224,16 @@
 --------------------------------------------------------
 -- the cc Animate3D
 -- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc SimpleAudioEngine
+-- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
+
+
+--------------------------------------------------------
+-- the cc ProtectedNode
+-- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
 
 
 return nil

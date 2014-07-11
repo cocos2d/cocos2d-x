@@ -97,7 +97,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(LabelMainScene::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height-65));
     addChild(menu, 1);
@@ -121,7 +121,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     
-    MenuItemFont* autoTestItem = NULL;
+    MenuItemFont* autoTestItem = nullptr;
     if (LabelMainScene::_s_autoTest)
     {
         autoTestItem = MenuItemFont::create("Auto Test On",CC_CALLBACK_1(LabelMainScene::onAutoTest, this));

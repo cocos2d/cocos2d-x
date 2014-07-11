@@ -53,7 +53,8 @@ require "src/ZwoptexTest/ZwoptexTest"
 require "src/LuaBridgeTest/LuaBridgeTest"
 require "src/XMLHttpRequestTest/XMLHttpRequestTest"
 require "src/PhysicsTest/PhysicsTest"
-require "src/FastTiledMapTest/FastTiledMapTest"
+require "src/CaptureScreenTest/CaptureScreenTest"
+require "src/VideoPlayerTest/VideoPlayerTest"
 
 
 local LINE_SPACE = 40
@@ -73,6 +74,7 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
@@ -83,7 +85,6 @@ local _allTests = {
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
     { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
-    { isSupported = true,  name = "FastTiledMapTest"       , create_func=      FastTiledMapTestMain      },
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 
@@ -116,6 +117,7 @@ local _allTests = {
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
+    { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
@@ -171,6 +173,13 @@ function CreateTestMenu()
         if not obj.isSupported then
             testMenuItem:setEnabled(false)
         end
+
+        if obj.name == "VideoPlayerTest" then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+                testMenuItem:setEnabled(false)
+            end
+         end
+
         testMenuItem:registerScriptTapHandler(menuCallback)
         testMenuItem:setPosition(cc.p(s.width / 2, (s.height - (index) * LINE_SPACE)))
         MainMenu:addChild(testMenuItem, index + 10000, index + 10000)

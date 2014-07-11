@@ -584,6 +584,8 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
+    } else {
+        this->didNotSelectSelf();
     }
     return pass;
 }
@@ -623,7 +625,6 @@ bool TextField::isPasswordEnabled()const
 void TextField::setPasswordStyleText(const char *styleText)
 {
     _textFieldRenderer->setPasswordStyleText(styleText);
-    
     _passwordStyleText = styleText;
     
     setText(getStringValue());

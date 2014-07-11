@@ -71,7 +71,7 @@ Scale9Sprite::~Scale9Sprite()
 
 bool Scale9Sprite::init()
 {
-    return this->initWithBatchNode(NULL, Rect::ZERO, Rect::ZERO);
+    return this->initWithBatchNode(nullptr, Rect::ZERO, Rect::ZERO);
 }
 
 bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets)
@@ -389,13 +389,13 @@ void Scale9Sprite::setContentSize(const Size &size)
 
 void Scale9Sprite::updatePositions()
 {
-    // Check that instances are non-NULL
+    // Check that instances are non-nullptr
     if(!((_topLeft) &&
          (_topRight) &&
          (_bottomRight) &&
          (_bottomLeft) &&
          (_centre))) {
-        // if any of the above sprites are NULL, return
+        // if any of the above sprites are nullptr, return
         return;
     }
 
@@ -462,7 +462,7 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  c
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
@@ -480,7 +480,7 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 
@@ -499,7 +499,7 @@ Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& fil
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool Scale9Sprite::initWithFile(const std::string& file)
@@ -518,16 +518,16 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     Texture2D* texture = spriteFrame->getTexture();
-    CCASSERT(texture != NULL, "CCTexture must be not nil");
+    CCASSERT(texture != nullptr, "CCTexture must be not nil");
 
     SpriteBatchNode *batchnode = SpriteBatchNode::createWithTexture(texture, 9);
-    CCASSERT(batchnode != NULL, "CCSpriteBatchNode must be not nil");
+    CCASSERT(batchnode != nullptr, "CCSpriteBatchNode must be not nil");
 
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
     return pReturn;
@@ -542,11 +542,11 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, cons
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
 {
-    CCASSERT(spriteFrame != NULL, "Invalid spriteFrame for sprite");
+    CCASSERT(spriteFrame != nullptr, "Invalid spriteFrame for sprite");
     bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
     return pReturn;
 }
@@ -560,17 +560,17 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
 {
-    CCASSERT((SpriteFrameCache::getInstance()) != NULL, "SpriteFrameCache::getInstance() must be non-NULL");
+    CCASSERT((SpriteFrameCache::getInstance()) != nullptr, "SpriteFrameCache::getInstance() must be non-nullptr");
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    CCASSERT(frame != NULL, "CCSpriteFrame must be non-NULL");
+    CCASSERT(frame != nullptr, "CCSpriteFrame must be non-nullptr");
 
-    if (NULL == frame) return false;
+    if (nullptr == frame) return false;
 
     bool pReturn = this->initWithSpriteFrame(frame, capInsets);
     return pReturn;
@@ -585,7 +585,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
@@ -605,7 +605,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
     CC_SAFE_DELETE(pReturn);
 
     log("Could not allocate Scale9Sprite()");
-    return NULL;
+    return nullptr;
     
 }
 
@@ -618,7 +618,7 @@ Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 Scale9Sprite* Scale9Sprite::create()
@@ -630,7 +630,7 @@ Scale9Sprite* Scale9Sprite::create()
         return pReturn;
     } 
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 /** sets the opacity.

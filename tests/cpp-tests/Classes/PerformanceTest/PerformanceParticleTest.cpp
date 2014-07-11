@@ -35,7 +35,7 @@ void ParticleMenuLayer::showCurrentTest()
     int subTest = scene->getSubTestNum();
     int parNum  = scene->getParticlesNum();
 
-    ParticleMainScene* pNewScene = NULL;
+    ParticleMainScene* pNewScene = nullptr;
 
     switch (_curCase)
     {
@@ -98,7 +98,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 	});
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height/2+15));
     addChild(menu, 1);
@@ -234,7 +234,7 @@ void ParticleMainScene::createParticleSystem()
 //         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
 //         break;
     default:
-        particleSystem = NULL;
+        particleSystem = nullptr;
         CCLOG("Shall not happen!");
         break;
     }
