@@ -27,7 +27,7 @@ alpha2版合并了cocos2d-x3.2rc0版本核心引擎；完善了单点及多点�
 
 在开始使用quick前，请你简单配置一下环境变量。
 
-你只需要进入到quick目录，运行一下setup_mac.sh，所有的配置工作就可以完成了。(Windows下请运行setup_win.bat)
+你只需要运行一下setup_mac.sh，所有的配置工作就可以完成了。(Windows下请运行setup_win.bat)
 
 如果需要编译Android，请按照以前的教程配置好ADT+NDK开发环境。
     
