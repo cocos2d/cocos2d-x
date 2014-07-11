@@ -24,7 +24,7 @@ function UIListView:ctor(param)
 
 	self:addBgColorIf(param.bgColor)
 	self:addBgIf(param)
-	self:setViewRect(param.rect)
+	self:setViewRect(param.viewRect)
 	self.container:setAnchorPoint(0, 0)
 	self:addChild(self.container)
 
@@ -49,9 +49,9 @@ function UIListView:addBgIf(param)
 	end
 
 	display.newScale9Sprite(param.bg)
-		:size(param.rect.width, param.rect.height)
-		:pos(param.rect.x + param.rect.width/2,
-			param.rect.y + param.rect.height/2)
+		:size(param.viewRect.width, param.viewRect.height)
+		:pos(param.viewRect.x + param.viewRect.width/2,
+			param.viewRect.y + param.viewRect.height/2)
 		:addTo(self)
 end
 
@@ -60,30 +60,6 @@ function UIListView:addScrollBarIf(param)
 		return
 	end
 
-	param.scrollWidth = param.scrollWidth or 5
-	if UIListView.DIRECTION_VERTICAL == self.direction then
-		cc.ui.UISlider.new(display.TOP_TO_BOTTOM,
-				{bar = param.scrollBar, button = param.scrollButton},
-				{scale9 = true})
-	        :onSliderValueChanged(handler(self, self.scrollBar_))
-	        :setSliderValue(0)
-	        :addTo(self)
-			:setSliderSize(param.scrollWidth, param.rect.height)
-			:align(display.CENTER,
-				param.rect.x + param.rect.width - param.scrollWidth/2,
-				param.rect.y + param.rect.height/2)
-	else
-		cc.ui.UISlider.new(display.LEFT_TO_RIGHT,
-				{bar = param.scrollBar, button = param.scrollButton},
-				{scale9 = true})
-	        :onSliderValueChanged(handler(self, self.scrollBar_))
-	        :setSliderValue(0)
-	        :addTo(self)
-			:setSliderSize(param.rect.width, param.scrollWidth)
-			:align(display.CENTER,
-				param.rect.x + param.rect.width/2,
-				param.rect.y + param.scrollWidth/2)
-	end
 end
 
 function UIListView:setViewRect(rect)

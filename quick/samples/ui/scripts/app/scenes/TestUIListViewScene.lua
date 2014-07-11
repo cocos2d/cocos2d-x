@@ -14,12 +14,10 @@ end
 
 function TestUIListViewScene:createListView1()
     self.listview = cc.ui.UIListView.new{
-            rect = cc.rect(10, 50, display.width - 20, display.height - 100),
+            viewRect = cc.rect(20, 80, 200, display.height - 150),
             -- bgColor = cc.c4b(250, 0, 0, 255),
             bg = "YellowBlock.png",
-            showScrollBar = true,
-            scrollBar = "SliderBar.png",
-            scrollButton = "SliderButton.png",
+            showScrollBar = false,
             scrollWidth = 10}
         :registerHandler(self.listViewDelegate, cc.ui.UIListView.DELEGATE)
         :addTo(self)
@@ -30,7 +28,7 @@ function TestUIListViewScene:listViewDelegate(name, idx, param)
     -- print("htl listview delegate:" .. name, idx)
 
     if name == cc.ui.UIListView.CELL_TAG then
-        local i = math.random(3)
+        local i = math.random(4)
         local item
 
         if 1 == i then
@@ -41,7 +39,7 @@ function TestUIListViewScene:listViewDelegate(name, idx, param)
         elseif 2 == i then
             item = cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
                 :setButtonSize(160, 40)
-                :setButtonLabel(cc.ui.UILabel.new({text = "Remove option 2", size = 16, color = display.COLOR_BLUE}))
+                :setButtonLabel(cc.ui.UILabel.new({text = "Button" .. idx, size = 16, color = display.COLOR_BLUE}))
                 :onButtonPressed(function(event)
                     event.target:getButtonLabel():setColor(display.COLOR_RED)
                 end)
@@ -49,19 +47,52 @@ function TestUIListViewScene:listViewDelegate(name, idx, param)
                     event.target:getButtonLabel():setColor(display.COLOR_BLUE)
                 end)
                 :onButtonClicked(function(event)
-                    print("htl button2 clicked")
+                    print("TestUIListViewScene - Button" .. idx .. " clicked")
+                end)
+        elseif 4 == i then
+            local group = cc.ui.UICheckBoxButtonGroup.new(display.TOP_TO_BOTTOM)
+                :addButton(cc.ui.UICheckBoxButton.new(TestUIButtonScene.RADIO_BUTTON_IMAGES)
+                    :setButtonLabel(cc.ui.UILabel.new({text = "option 1", color = display.COLOR_BLACK}))
+                    :setButtonLabelOffset(20, 0)
+                    :align(display.LEFT_CENTER))
+                :addButton(cc.ui.UICheckBoxButton.new(TestUIButtonScene.RADIO_BUTTON_IMAGES)
+                    :setButtonLabel(cc.ui.UILabel.new({text = "option 2", color = display.COLOR_BLACK}))
+                    :setButtonLabelOffset(20, 0)
+                    :align(display.LEFT_CENTER))
+                :addButton(cc.ui.UICheckBoxButton.new(TestUIButtonScene.RADIO_BUTTON_IMAGES)
+                    :setButtonLabel(cc.ui.UILabel.new({text = "option 3", color = display.COLOR_BLACK}))
+                    :setButtonLabelOffset(20, 0)
+                    :align(display.LEFT_CENTER))
+                :addButton(cc.ui.UICheckBoxButton.new(TestUIButtonScene.RADIO_BUTTON_IMAGES)
+                    :setButtonLabel(cc.ui.UILabel.new({text = "option 4 disabled", color = display.COLOR_BLACK}))
+                    :setButtonEnabled(false)
+                    :setButtonLabelOffset(20, 0)
+                    :align(display.LEFT_CENTER))
+                :setButtonsLayoutMargin(10, 10, 10, 10)
+                :onButtonSelectChanged(function(event)
+                    printf("Option %d selected, Option %d unselected", event.selected, event.last)
+                end)
+                :align(display.LEFT_TOP, display.left + 40, display.top - 240)
+                :addTo(self)
+
+            item = cc.ui.UICheckBoxButton.new({off = "CheckBoxButton2Off.png", on = "CheckBoxButton2On.png",})
+                :setButtonLabel(cc.ui.UILabel.new({text = "CheckBox" .. idx, size = 14,  color = display.COLOR_BLUE}))
+                :setButtonLabelOffset(20, 0)
+                :setButtonLabelAlignment(display.LEFT_CENTER)
+                onButtonClicked(function(event)
+                    print("TestUIListViewScene - CheckBox" .. idx .. " clicked")
                 end)
         elseif 3 == i then
             item = cc.Node:create()
             cc.ui.UICheckBoxButton.new({off = "CheckBoxButton2Off.png", on = "CheckBoxButton2On.png",})
-                :setButtonLabel(cc.ui.UILabel.new({text = "checkbox 6", size = 16,  color = display.COLOR_BLUE}))
-                :setButtonLabelOffset(0, -40)
+                :setButtonLabel(cc.ui.UILabel.new({text = "Checkbox" .. idx, size = 16,  color = display.COLOR_BLUE}))
+                :setButtonLabelOffset(70, 0)
                 :setButtonLabelAlignment(display.CENTER)
-                :align(display.CENTER, 60, 20)
+                :align(display.CENTER, 40, 30)
                 :addTo(item)
             cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
-                :setButtonSize(160, 40)
-                :setButtonLabel(cc.ui.UILabel.new({text = "Remove option 2", size = 16, color = display.COLOR_BLUE}))
+                :setButtonSize(60, 40)
+                :setButtonLabel(cc.ui.UILabel.new({text = "Button" .. idx, size = 16, color = display.COLOR_BLUE}))
                 :onButtonPressed(function(event)
                     event.target:getButtonLabel():setColor(display.COLOR_RED)
                 end)
@@ -69,17 +100,17 @@ function TestUIListViewScene:listViewDelegate(name, idx, param)
                     event.target:getButtonLabel():setColor(display.COLOR_BLUE)
                 end)
                 :onButtonClicked(function(event)
-                    print("htl button3 clicked")
+                    print("TestUIListViewScene - Button" .. idx .. " clicked")
                 end)
-                :align(display.CENTER, 200, 20)
+                :align(display.CENTER, 160, 20)
                 :addTo(item)
         end
         return item
     elseif name == cc.ui.UIListView.CELL_SIZE_TAG then
         if 1 == idx%2 then
-            return 300, 40
+            return 200, 40
         else
-            return 240, 60
+            return 200, 60
         end
     elseif name == cc.ui.UIListView.COUNT_TAG then
         return 10
