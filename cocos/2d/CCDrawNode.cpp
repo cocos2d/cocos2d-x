@@ -194,8 +194,8 @@ bool DrawNode::init()
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-    /** listen the event that coming to foreground on Android */
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+   /** listen the event that renderer was recreated on Android/WP8 */
         this->init();
     });
 

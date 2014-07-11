@@ -37,8 +37,8 @@ public class AppActivity extends GameControllerActivity {
 		//The standard controller,without doing anything special. e.g: Amazon Fire TV
 		
 		//Manually specify an adapter.
-		//this.connectController(DRIVERTYPE_NIBIRU);
-		//this.connectController(DRIVERTYPE_MOGA);
-		//this.connectController(DRIVERTYPE_OUYA);
+		this.connectController(DRIVERTYPE_NIBIRU);
+		this.connectController(DRIVERTYPE_MOGA);
+		this.connectController(DRIVERTYPE_OUYA);
 	}
 }

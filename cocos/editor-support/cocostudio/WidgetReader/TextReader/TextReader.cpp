@@ -102,6 +102,7 @@ namespace cocostudio
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
         std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
+        
         std::string fontFilePath = jsonPath.append(fontName);
 		if (FileUtils::getInstance()->isFileExist(fontFilePath))
 		{
@@ -110,7 +111,6 @@ namespace cocostudio
 		else{
 			label->setFontName(fontName);
 		}
-		
         
         bool aw = DICTOOL->checkObjectExist_json(options, P_AreaWidth);
         bool ah = DICTOOL->checkObjectExist_json(options, P_AreaHeight);

@@ -75,8 +75,8 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
 
-        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
-        director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+        cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+        director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
     }
 
