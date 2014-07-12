@@ -81,6 +81,8 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp

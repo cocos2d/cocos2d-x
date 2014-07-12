@@ -1,5 +1,6 @@
 require "src/ExtensionTest/CocosBuilderTest"
 require "src/ExtensionTest/WebProxyTest"
+require "src/ExtensionTest/SceneEditorTest"
 
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
@@ -13,7 +14,8 @@ local ExtensionTestEnum =
     TEST_EDITBOX            = 4,
     TEST_TABLEVIEW          = 5,
     TEST_SCROLLVIEW         = 6,
-    TEST_MAX_COUNT          = 7,
+    TEST_STUDIOSCENE        = 7,
+    TEST_MAX_COUNT          = 8,
 }
 
 local testsName =
@@ -25,6 +27,7 @@ local testsName =
     "EditBoxTest",
     "TableViewTest",
     "ScrollViewTest",
+    "CocoStudioSceneTest",
 }
 
 
@@ -1187,6 +1190,7 @@ local CreateExtensionsTestTable =
     runEditBoxTest,
     runTableViewTest,
     runScrollViewTest,
+    runStudioSceneTest,
 }
 
 
@@ -1267,7 +1271,7 @@ local function ExtensionsMainLayer()
 
     local listener = cc.EventListenerTouchAllAtOnce:create()
     listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
-    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
 
     local eventDispatcher = layer:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)

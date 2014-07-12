@@ -18,7 +18,7 @@ namespace cocostudio
     static const char* P_HAlignment = "hAlignment";
     static const char* P_VAlignment = "vAlignment";
     
-    static TextReader* instanceTextReader = NULL;
+    static TextReader* instanceTextReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
     
@@ -49,7 +49,7 @@ namespace cocostudio
         
         Text* label = static_cast<Text*>(widget);
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string binaryFilePath = GUIReader::getInstance()->getFilePath();
 
         
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
@@ -69,8 +69,13 @@ namespace cocostudio
             }else if(key == P_FontSize){
                 label->setFontSize(valueToInt(value));
             }else if(key == P_FontName){
-                std::string fontFilePath = jsonPath.append(value);
-                label->setFontName(fontFilePath);
+                std::string fontFilePath;
+                fontFilePath = binaryFilePath.append(value);
+                if (FileUtils::getInstance()->isFileExist(fontFilePath)) {
+                    label->setFontName(fontFilePath);
+                }else{
+                    label->setFontName(value);
+                }
             }else if(key == P_AreaWidth){
                 label->setTextAreaSize(Size(valueToFloat(value), label->getTextAreaSize().height));
             }else if(key == P_AreaHeight){
@@ -101,8 +106,15 @@ namespace cocostudio
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
         std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
+        
         std::string fontFilePath = jsonPath.append(fontName);
-        label->setFontName(fontFilePath);
+		if (FileUtils::getInstance()->isFileExist(fontFilePath))
+		{
+			label->setFontName(fontFilePath);
+		}
+		else{
+			label->setFontName(fontName);
+		}
         
         bool aw = DICTOOL->checkObjectExist_json(options, P_AreaWidth);
         bool ah = DICTOOL->checkObjectExist_json(options, P_AreaHeight);

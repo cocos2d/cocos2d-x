@@ -222,7 +222,7 @@ static void _log(const char *format, va_list args)
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), NULL, FALSE);
+    WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), nullptr, FALSE);
     printf("%s", buf);
     fflush(stdout);
 #else
@@ -337,7 +337,7 @@ bool Console::listenOnTCP(int port)
 #endif
 #endif
 
-    if ( (n = getaddrinfo(NULL, serv, &hints, &res)) != 0) {
+    if ( (n = getaddrinfo(nullptr, serv, &hints, &res)) != 0) {
         fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
         return false;
     }
@@ -359,9 +359,9 @@ bool Console::listenOnTCP(int port)
 #else
         close(listenfd);
 #endif
-    } while ( (res = res->ai_next) != NULL);
+    } while ( (res = res->ai_next) != nullptr);
     
-    if (res == NULL) {
+    if (res == nullptr) {
         perror("net_listen:");
         freeaddrinfo(ressave);
         return false;
@@ -372,14 +372,14 @@ bool Console::listenOnTCP(int port)
     if (res->ai_family == AF_INET) {
         char buf[INET_ADDRSTRLEN] = "";
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-        if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != NULL )
+        if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
             cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
         else
             perror("inet_ntop");
     } else if (res->ai_family == AF_INET6) {
         char buf[INET6_ADDRSTRLEN] = "";
         struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
-        if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != NULL )
+        if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
             cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
         else
             perror("inet_ntop");
@@ -1042,7 +1042,7 @@ void Console::loop()
         copy_set = _read_set;
         timeout_copy = timeout;
         
-        int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
+        int nready = select(_maxfd+1, &copy_set, nullptr, nullptr, &timeout_copy);
 
         if( nready == -1 )
         {

@@ -40,7 +40,7 @@ NS_CC_BEGIN
 /**
  * Defines a basic hierachial structure of transformation spaces.
  */
-class Bone : public Ref
+class Bone3D : public Ref
 {
     friend class MeshSkin;
 public:
@@ -76,7 +76,7 @@ public:
     /**
      * Creates C3DBone.
      */
-    static Bone* create(const std::string& id);
+    static Bone3D* create(const std::string& id);
     
     /**
      * Sets the inverse bind pose matrix.
@@ -105,17 +105,17 @@ public:
     void updateJointMatrix(Vec4* matrixPalette);
     
     /**bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.*/
-    Bone* getParentBone();
+    Bone3D* getParentBone();
     /**get child bone count*/
     ssize_t getChildBoneCount() const;
     /**get child bone by index*/
-    Bone* getChildBoneByIndex(int index);
+    Bone3D* getChildBoneByIndex(int index);
     /**add child bone*/
-    void addChildBone(Bone* bone);
+    void addChildBone(Bone3D* bone);
     /**remove child bone by index*/
     void removeChildBoneByIndex(int index);
     /**remove child bone*/
-    void removeChildBone(Bone* bone);
+    void removeChildBone(Bone3D* bone);
     /**remove all child bone*/
     void removeAllChildBone();
     
@@ -143,12 +143,12 @@ protected:
 	/**
      * Constructor.
      */
-    Bone(const std::string& id);
+    Bone3D(const std::string& id);
     
 	/**
      * Destructor.
      */
-    virtual ~Bone();
+    virtual ~Bone3D();
     
     /**
      * Update local matrix
@@ -166,9 +166,9 @@ protected:
     
     Mat4 _oriPose; //original bone pose
     
-    Bone* _parent; //parent bone
+    Bone3D* _parent; //parent bone
     
-    Vector<Bone*> _children;
+    Vector<Bone3D*> _children;
     
     bool          _worldDirty;
     Mat4          _world;
@@ -193,15 +193,15 @@ public:
     ssize_t getBoneCount() const;
     
     /**get bone*/
-    Bone* getBoneByIndex(unsigned int index) const;
-    Bone* getBoneByName(const std::string& id) const;
+    Bone3D* getBoneByIndex(unsigned int index) const;
+    Bone3D* getBoneByName(const std::string& id) const;
     
     /**get & set root bone*/
-    Bone* getRootBone() const;
-    void setRootBone(Bone* bone);
+    Bone3D* getRootBone() const;
+    void setRootBone(Bone3D* bone);
     
     /**get bone index*/
-    int getBoneIndex(Bone* bone) const;
+    int getBoneIndex(Bone3D* bone) const;
     
     /**compute matrix palette used by gpu skin*/
     Vec4* getMatrixPalette();
@@ -225,17 +225,17 @@ CC_CONSTRUCTOR_ACCESS:
     void removeAllBones();
     
     /**add skin bone*/
-    void addSkinBone(Bone* bone);
+    void addSkinBone(Bone3D* bone);
     
     /**add Node bone*/
-    void addNodeBone(Bone* bone);
+    void addNodeBone(Bone3D* bone);
     
 protected:
     
-    Vector<Bone*> _skinBones; // bones with skin
-    Vector<Bone*> _nodeBones; //bones without skin, only used to compute transform of children
+    Vector<Bone3D*> _skinBones; // bones with skin
+    Vector<Bone3D*> _nodeBones; //bones without skin, only used to compute transform of children
 
-    Bone* _rootBone;
+    Bone3D* _rootBone;
     
     // Pointer to the array of palette matrices.
     // This array is passed to the vertex shader as a uniform.

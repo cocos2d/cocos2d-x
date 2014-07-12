@@ -67,7 +67,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     auto item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
     auto item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(MenuLayer::nextCallback, this) );
 
-    auto menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));

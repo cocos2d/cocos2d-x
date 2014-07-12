@@ -284,9 +284,9 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if (rotation != 0)
         node->setRotation(rotation);
     if(rotationSkewX != 0)
-        node->setRotationX(rotationSkewX);
+        node->setRotationSkewX(rotationSkewX);
     if(rotationSkewY != 0)
-        node->setRotationY(rotationSkewY);
+        node->setRotationSkewY(rotationSkewY);
     if(skewx != 0)
         node->setSkewX(skewx);
     if(skewy != 0)
@@ -296,19 +296,17 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if(width != 0 || height != 0)
         node->setContentSize(Size(width, height));
     if(zorder != 0)
-        node->setZOrder(zorder);
+        node->setLocalZOrder(zorder);
     if(visible != true)
         node->setVisible(visible);
 
     if(alpha != 255)
     {
         node->setOpacity(alpha);
-        node->setCascadeOpacityEnabled(true);
     }
     if(red != 255 || green != 255 || blue != 255)
     {
         node->setColor(Color3B(red, green, blue));
-        node->setCascadeColorEnabled(true);
     }
 
 

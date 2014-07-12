@@ -35,12 +35,12 @@ NS_CC_BEGIN
 
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
-    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
+    MessageBoxA(nullptr, pszMsg, pszTitle, MB_OK);
 }
 
 void LuaLog(const char *pszMsg)
 {
-    int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, NULL, 0);
+    int bufflen = MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, nullptr, 0);
     WCHAR* widebuff = new WCHAR[bufflen + 1];
     memset(widebuff, 0, sizeof(WCHAR) * (bufflen + 1));
     MultiByteToWideChar(CP_UTF8, 0, pszMsg, -1, widebuff, bufflen);
@@ -48,10 +48,10 @@ void LuaLog(const char *pszMsg)
     OutputDebugStringW(widebuff);
     OutputDebugStringA("\n");
 
-	bufflen = WideCharToMultiByte(CP_ACP, 0, widebuff, -1, NULL, 0, NULL, NULL);
+	bufflen = WideCharToMultiByte(CP_ACP, 0, widebuff, -1, nullptr, 0, nullptr, nullptr);
 	char* buff = new char[bufflen + 1];
 	memset(buff, 0, sizeof(char) * (bufflen + 1));
-	WideCharToMultiByte(CP_ACP, 0, widebuff, -1, buff, bufflen, NULL, NULL);
+	WideCharToMultiByte(CP_ACP, 0, widebuff, -1, buff, bufflen, nullptr, nullptr);
 	puts(buff);
 
 	delete[] widebuff;

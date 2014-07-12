@@ -118,7 +118,7 @@ void ControlHuePicker::setHuePercentage(float hueValueInPercent)
 void ControlHuePicker::setEnabled(bool enabled)
 {
     Control::setEnabled(enabled);
-    if (_slider != NULL)
+    if (_slider != nullptr)
     {
         _slider->setOpacity(enabled ? 255 : 128);
     }

@@ -588,7 +588,7 @@ void ParallaxParticle::onEnter()
     ParticleDemo::onEnter();
 
     _background->getParent()->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     auto p = ParallaxNode::create();
     addChild(p, 5);
@@ -612,7 +612,7 @@ void ParallaxParticle::onEnter()
 
     auto move = MoveBy::create(4, Vec2(300,0));
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     p->runAction(RepeatForever::create(seq));
 }
 
@@ -632,7 +632,7 @@ void RadiusMode1::onEnter()
 
 	_color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::createWithTotalParticles(200);
     _emitter->retain();
@@ -716,7 +716,7 @@ void RadiusMode2::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::createWithTotalParticles(200);
     _emitter->retain();
@@ -800,7 +800,7 @@ void Issue704::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::createWithTotalParticles(100);
     _emitter->retain();
@@ -892,7 +892,7 @@ void Issue870::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
     _emitter->setTextureWithRect(Director::getInstance()->getTextureCache()->addImage("Images/particles.png"), Rect(0,0,32,32));
@@ -932,7 +932,7 @@ void DemoParticleFromFile::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     std::string filename = "Particles/" + _title + ".plist";
     _emitter = ParticleSystemQuad::create(filename);
@@ -1016,7 +1016,7 @@ Layer* createParticleLayer(int nIndex)
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 #define MAX_LAYER    49
 
@@ -1065,7 +1065,7 @@ void ParticleDemo::onEnter(void)
 	_color = LayerColor::create( Color4B(127,127,127,255) );
 	this->addChild(_color);
 
-    _emitter = NULL;
+    _emitter = nullptr;
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(ParticleDemo::onTouchesBegan, this);
@@ -1079,9 +1079,9 @@ void ParticleDemo::onEnter(void)
                                                                MenuItemFont::create( "Free Movement" ),
                                                                MenuItemFont::create( "Relative Movement" ),
                                                                MenuItemFont::create( "Grouped Movement" ),
-                                                               NULL );
+                                                               nullptr );
 
-    auto menu = Menu::create(item4, NULL);
+    auto menu = Menu::create(item4, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     item4->setPosition( Vec2( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
@@ -1100,7 +1100,7 @@ void ParticleDemo::onEnter(void)
 
     auto move = MoveBy::create(4, Vec2(300,0) );
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     _background->runAction( RepeatForever::create(seq) );
 
 
@@ -1139,7 +1139,7 @@ void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *ev
         pos = _background->convertToWorldSpace(Vec2::ZERO);
     }
 
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         _emitter->setPosition(location -pos);
     }
@@ -1158,7 +1158,7 @@ void ParticleDemo::update(float dt)
 
 void ParticleDemo::toggleCallback(Ref* sender)
 {
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         if (_emitter->getPositionType() == ParticleSystem::PositionType::GROUPED)
             _emitter->setPositionType(ParticleSystem::PositionType::FREE);
@@ -1171,7 +1171,7 @@ void ParticleDemo::toggleCallback(Ref* sender)
 
 void ParticleDemo::restartCallback(Ref* sender)
 {
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         _emitter->resetSystem();
     }
@@ -1196,7 +1196,7 @@ void ParticleDemo::backCallback(Ref* sender)
 void ParticleDemo::setEmitterPosition()
 {
     auto s = Director::getInstance()->getWinSize();
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         _emitter->setPosition( Vec2(s.width / 2, s.height / 2) );
     }
@@ -1210,7 +1210,7 @@ void ParticleBatchHybrid::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     _emitter->retain();
@@ -1231,7 +1231,7 @@ void ParticleBatchHybrid::onEnter()
 
 void ParticleBatchHybrid::switchRender(float dt)
 {
-     bool usingBatch = ( _emitter->getBatchNode() != NULL );
+     bool usingBatch = ( _emitter->getBatchNode() != nullptr );
      _emitter->removeFromParentAndCleanup(false);
 
      auto newParent = (usingBatch ? _parent2  : _parent1 );
@@ -1258,7 +1258,7 @@ void ParticleBatchMultipleEmitters::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     auto emitter1 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter1->setStartColor(Color4F(1,0,0,1));
@@ -1301,7 +1301,7 @@ void ParticleReorder::onEnter()
     _order = 0;
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     auto ignore = ParticleSystemQuad::create("Particles/SmallSun.plist");
     auto parent1 = Node::create();
@@ -1471,7 +1471,7 @@ void Issue1201::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     RainbowEffect *particle = new RainbowEffect();
     particle->initWithTotalParticles(50);
@@ -1501,7 +1501,7 @@ void MultipleParticleSystems::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     Director::getInstance()->getTextureCache()->addImage("Images/particles.png");
 
@@ -1514,7 +1514,7 @@ void MultipleParticleSystems::onEnter()
         addChild(particleSystem);
     }
 
-    _emitter = NULL;
+    _emitter = nullptr;
 
 }
 
@@ -1536,7 +1536,7 @@ void MultipleParticleSystems::update(float dt)
     
     for(const auto &child : _children) {
         auto item = dynamic_cast<ParticleSystem*>(child);
-        if (item != NULL)
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
@@ -1555,7 +1555,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     ParticleBatchNode *batchNode = ParticleBatchNode::createWithTexture(nullptr, 3000);
 
@@ -1572,7 +1572,7 @@ void MultipleParticleSystemsBatched::onEnter()
         batchNode->addChild(particleSystem);
     }
 
-    _emitter = NULL;
+    _emitter = nullptr;
 }
 
 void MultipleParticleSystemsBatched::update(float dt)
@@ -1584,7 +1584,7 @@ void MultipleParticleSystemsBatched::update(float dt)
     auto batchNode = getChildByTag(2);
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
-        if (item != NULL)
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
@@ -1613,10 +1613,10 @@ void AddAndDeleteParticleSystems::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     //adds the texture inside the plist to the texture cache
-    _batchNode = ParticleBatchNode::createWithTexture((Texture2D*)NULL, 16000);
+    _batchNode = ParticleBatchNode::createWithTexture((Texture2D*)nullptr, 16000);
 
     addChild(_batchNode, 1, 2);
 
@@ -1636,7 +1636,7 @@ void AddAndDeleteParticleSystems::onEnter()
     }
 
     schedule(schedule_selector(AddAndDeleteParticleSystems::removeSystem), 0.5f);
-    _emitter = NULL;
+    _emitter = nullptr;
 
 }
 
@@ -1672,7 +1672,7 @@ void AddAndDeleteParticleSystems::update(float dt)
     auto batchNode = getChildByTag(2);
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
-        if (item != NULL)
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
@@ -1701,7 +1701,7 @@ void ReorderParticleSystems::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background ,true);
-    _background = NULL;
+    _background = nullptr;
 
     _batchNode = ParticleBatchNode::create("Images/stars-grayscale.png" ,3000);
 
@@ -1787,7 +1787,7 @@ void ReorderParticleSystems::onEnter()
     }
 
     schedule(schedule_selector(ReorderParticleSystems::reorderSystem), 2.0f);
-    _emitter = NULL;
+    _emitter = nullptr;
 
 }
 
@@ -1859,7 +1859,7 @@ void PremultipliedAlphaTest::onEnter()
 
 	_color->setColor(Color3B::BLUE);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/BoilingFoam.plist");
     _emitter->retain();
@@ -1893,7 +1893,7 @@ void PremultipliedAlphaTest2::onEnter()
 
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/TestPremultipliedAlpha.plist");
     _emitter->retain();
@@ -1919,7 +1919,7 @@ void Issue3990::onEnter()
     
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
     
     _emitter = ParticleSystemQuad::create("Particles/Spiral.plist");
     
@@ -1983,7 +1983,7 @@ void ParticleAutoBatching::onEnter()
 
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     Size s = Director::getInstance()->getWinSize();
 

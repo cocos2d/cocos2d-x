@@ -201,8 +201,8 @@ void Bone::update(float delta)
         _worldInfo->y = _tweenData->y + _position.y;
         _worldInfo->scaleX = _tweenData->scaleX * _scaleX;
         _worldInfo->scaleY = _tweenData->scaleY * _scaleY;
-        _worldInfo->skewX = _tweenData->skewX + _skewX + _rotationX;
-        _worldInfo->skewY = _tweenData->skewY + _skewY - _rotationY;
+        _worldInfo->skewX = _tweenData->skewX + _skewX + _rotationZ_X;
+        _worldInfo->skewY = _tweenData->skewY + _skewY - _rotationZ_Y;
 
         if(_parentBone)
         {

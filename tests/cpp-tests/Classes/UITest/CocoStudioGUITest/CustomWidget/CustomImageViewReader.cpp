@@ -8,7 +8,7 @@ USING_NS_CC_EXT;
 using namespace cocos2d::ui;
 using namespace cocostudio;
 
-static CustomImageViewReader* _instanceCustomImageViewReader = NULL;
+static CustomImageViewReader* _instanceCustomImageViewReader = nullptr;
 
 CustomImageViewReader::CustomImageViewReader()
 {
@@ -34,7 +34,9 @@ void CustomImageViewReader::setProperties(const std::string& classType, cocos2d:
     CustomImageView* custom = static_cast<CustomImageView*>(widget);
     
     const char* StringTest = DICTOOL->getStringValue_json(customOptions, "StringTest");
-    custom->setText(StringTest);
+    if (StringTest) {
+        custom->setText(StringTest);
+    }
 }
 
 
