@@ -1085,6 +1085,9 @@ bool startRuntime()
 #endif
 #endif
 
+    // turn on display FPS
+    Director::getInstance()->setDisplayStats(true);
+
     static ConsoleCustomCommand s_customCommand;
     s_customCommand.init();
     auto engine = LuaEngine::getInstance();
