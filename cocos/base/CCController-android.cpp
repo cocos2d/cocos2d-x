@@ -30,7 +30,7 @@
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "jni/JniHelper.h"
-
+#include "base/CCEventController.h"
 
 NS_CC_BEGIN
 
