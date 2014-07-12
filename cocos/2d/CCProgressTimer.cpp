@@ -55,6 +55,11 @@ ProgressTimer::ProgressTimer()
 ,_vertexDataCount(0)
 ,_vertexData(nullptr)
 ,_reverseDirection(false)
+#if (DIRECTX_ENABLED == 1)
+, _bufferVertex(nullptr)
+, _bufferIndex(nullptr)
+, _bufferDirty(false)
+#endif
 {}
 
 ProgressTimer* ProgressTimer::create(Sprite* sp)
@@ -95,6 +100,13 @@ ProgressTimer::~ProgressTimer(void)
 {
     CC_SAFE_FREE(_vertexData);
     CC_SAFE_RELEASE(_sprite);
+
+#if (DIRECTX_ENABLED == 1)
+	if (_bufferVertex)
+		_bufferVertex->Release();
+	if (_bufferIndex)
+		_bufferIndex->Release();
+#endif
 }
 
 void ProgressTimer::setPercentage(float percentage)
@@ -172,15 +184,15 @@ Tex2F ProgressTimer::textureCoordFromAlphaPoint(Vec2 alpha)
     return Tex2F(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
-Vec2 ProgressTimer::vertexFromAlphaPoint(Vec2 alpha)
+Vec3 ProgressTimer::vertexFromAlphaPoint(Vec2 alpha)
 {
-    Vec2 ret(0.0f, 0.0f);
+    Vec3 ret(0.0f, 0.0f, 0.0f);
     if (!_sprite) {
         return ret;
     }
     V3F_C4B_T2F_Quad quad = _sprite->getQuad();
-    Vec2 min = Vec2(quad.bl.vertices.x,quad.bl.vertices.y);
-    Vec2 max = Vec2(quad.tr.vertices.x,quad.tr.vertices.y);
+    Vec3 min = Vec3(quad.bl.vertices.x,quad.bl.vertices.y, 0.0f);
+	Vec3 max = Vec3(quad.tr.vertices.x, quad.tr.vertices.y, 0.0f);
     ret.x = min.x * (1.f - alpha.x) + max.x * alpha.x;
     ret.y = min.y * (1.f - alpha.y) + max.y * alpha.y;
     return ret;
@@ -352,6 +364,8 @@ void ProgressTimer::updateRadial(void)
 
     }
 
+	GLushort* indices = nullptr;
+	int originalCount = _vertexDataCount;
 
     //    The size of the vertex data is the index from the hitpoint
     //    the 3 is for the _midpoint, 12 o'clock point and hitpoint position.
@@ -366,8 +380,10 @@ void ProgressTimer::updateRadial(void)
 
     if(!_vertexData) {
         _vertexDataCount = index + 3;
-        _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
+        _vertexData = (V3F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V3F_C4B_T2F));
         CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
+
+		UpdateVertexBuffer();
     }
     updateColor();
 
@@ -391,7 +407,30 @@ void ProgressTimer::updateRadial(void)
     //    hitpoint will go last
     _vertexData[_vertexDataCount - 1].texCoords = textureCoordFromAlphaPoint(hit);
     _vertexData[_vertexDataCount - 1].vertices = vertexFromAlphaPoint(hit);
+	_bufferDirty = true;
 
+#if DIRECTX_ENABLED == 1
+	if (_vertexDataCount != originalCount)
+	{
+		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_vertexDataCount * 6]);
+
+		GLushort* ptr = indices.get();
+		int i = 0;
+		ptr[i * 6 + 0] = (GLushort)0;
+		ptr[i * 6 + 1] = (GLushort)1;
+		ptr[i * 6 + 2] = (GLushort)2;
+		++i;
+
+		for (int j = 0; j < index; j++, i++)
+		{
+			ptr[i * 6 + 0] = (GLushort)(0);
+			ptr[i * 6 + 1] = (GLushort)(j + 2);
+			ptr[i * 6 + 2] = (GLushort)(j + 3);
+		}
+		
+		UpdateIndexBuffer(indices.get(), _vertexDataCount * 6);
+	}
+#endif
 }
 
 ///
@@ -433,12 +472,15 @@ void ProgressTimer::updateBar(void)
         max.y = 1.f;
     }
 
+	int originalCount = _vertexDataCount;
 
-    if (!_reverseDirection) {
+    if (!_reverseDirection) 
+	{
         if(!_vertexData) {
             _vertexDataCount = 4;
-            _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
+            _vertexData = (V3F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V3F_C4B_T2F));
             CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
+			UpdateVertexBuffer();
         }
         //    TOPLEFT
         _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(min.x,max.y));
@@ -455,11 +497,16 @@ void ProgressTimer::updateBar(void)
         //    BOTRIGHT
         _vertexData[3].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
-    } else {
-        if(!_vertexData) {
+    } 
+	else 
+	{
+        if(!_vertexData) 
+		{
             _vertexDataCount = 8;
-            _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
+            _vertexData = (V3F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V3F_C4B_T2F));
             CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
+			UpdateVertexBuffer();
+			
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
@@ -493,7 +540,29 @@ void ProgressTimer::updateBar(void)
         _vertexData[5].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[5].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     }
+
+	_bufferDirty = true;
     updateColor();
+
+#if DIRECTX_ENABLED == 1
+	if (_vertexDataCount != originalCount)
+	{
+		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_vertexDataCount * 6]);
+
+		GLushort* ptr = indices.get();
+		for (int i = 0; i < _vertexDataCount; i++)
+		{
+			ptr[i * 6 + 0] = (GLushort)(i * 4 + 0);
+			ptr[i * 6 + 1] = (GLushort)(i * 4 + 1);
+			ptr[i * 6 + 2] = (GLushort)(i * 4 + 2);
+			ptr[i * 6 + 3] = (GLushort)(i * 4 + 3);
+			ptr[i * 6 + 4] = (GLushort)(i * 4 + 2);
+			ptr[i * 6 + 5] = (GLushort)(i * 4 + 1);
+		}
+
+		UpdateIndexBuffer(indices.get(), _vertexDataCount * 6);
+	}
+#endif
 }
 
 Vec2 ProgressTimer::boundaryTexCoord(char index)
@@ -513,6 +582,7 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
+	getGLProgram()->set();
 
 #if DIRECTX_ENABLED == 0
     GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
@@ -520,23 +590,20 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
     GL::bindTexture2D( _sprite->getTexture()->getName() );
-#else
-	// TODO
-#endif
 
 #ifdef EMSCRIPTEN
-    setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);
+    setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V3F_C4B_T2F)), 0);
 
     int offset = 0;
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(Vec2);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offset);
 
     offset += sizeof(Color4B);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offset);
 #else
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
+    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
 #endif // EMSCRIPTEN
@@ -561,6 +628,29 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
         }
     }
+#else
+	DXStateCache::getInstance().setPSTexture(0, _sprite->getTexture()->getView());
+	DXStateCache::getInstance().setBlend(_sprite->getBlendFunc().src, _sprite->getBlendFunc().dst);
+
+	auto view = GLView::sharedOpenGLView();
+
+	if (_bufferDirty)
+	{
+		D3D11_MAPPED_SUBRESOURCE resource;
+		view->GetContext()->Map(_bufferVertex, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+		memcpy(resource.pData, _vertexData, sizeof(_vertexData[0]) * _vertexDataCount);
+		view->GetContext()->Unmap(_bufferVertex, 0);
+
+		_bufferDirty = false;
+	}
+	
+	DXStateCache::getInstance().setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	DXStateCache::getInstance().setVertexBuffer(_bufferVertex, sizeof(V3F_C4B_T2F), 0);
+	DXStateCache::getInstance().setIndexBuffer(_bufferIndex);
+
+	view->GetContext()->DrawIndexed(_vertexDataCount * 6, 0, 0);
+	CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _vertexDataCount);
+#endif
 }
 
 void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -573,5 +663,45 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     renderer->addCommand(&_customCommand);
 }
 
+#if DIRECTX_ENABLED == 1
+void ProgressTimer::UpdateVertexBuffer()
+{
+	if (_bufferVertex)
+		_bufferVertex->Release();
+
+	auto view = GLView::sharedOpenGLView();
+
+	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
+	vertexBufferData.pSysMem = _vertexData;
+	vertexBufferData.SysMemPitch = 0;
+	vertexBufferData.SysMemSlicePitch = 0;
+	CD3D11_BUFFER_DESC vertexBufferDesc(sizeof(_vertexData[0]) * _vertexDataCount, D3D11_BIND_VERTEX_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateBuffer(
+		&vertexBufferDesc,
+		&vertexBufferData,
+		&_bufferVertex));
+}
+
+void ProgressTimer::UpdateIndexBuffer(GLushort* indices, int count)
+{
+	if (_bufferIndex)
+		_bufferIndex->Release();
+
+	auto view = GLView::sharedOpenGLView();
+
+	D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
+	indexBufferData.pSysMem = indices;
+	indexBufferData.SysMemPitch = 0;
+	indexBufferData.SysMemSlicePitch = 0;
+
+	CD3D11_BUFFER_DESC indexBufferDesc(sizeof(indices[0]) * count, D3D11_BIND_INDEX_BUFFER);
+	DX::ThrowIfFailed(
+		view->GetDevice()->CreateBuffer(
+		&indexBufferDesc,
+		&indexBufferData,
+		&_bufferIndex));
+}
+#endif
 
 NS_CC_END

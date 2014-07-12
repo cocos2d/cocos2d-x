@@ -137,7 +137,7 @@ protected:
     void onDraw(const Mat4 &transform, uint32_t flags);
     
     Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
-    Vec2 vertexFromAlphaPoint(Vec2 alpha);
+    Vec3 vertexFromAlphaPoint(Vec2 alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
@@ -150,7 +150,21 @@ protected:
     float _percentage;
     Sprite *_sprite;
     int _vertexDataCount;
-    V2F_C4B_T2F *_vertexData;
+	V3F_C4B_T2F *_vertexData;
+
+#if DIRECTX_ENABLED == 1
+	ID3D11Buffer* _bufferVertex;
+	ID3D11Buffer* _bufferIndex;
+
+	void UpdateVertexBuffer();
+	void UpdateIndexBuffer(GLushort* indices, int count);
+
+	bool _bufferDirty;
+#else
+	// GL not use buffers
+	void UpdateVertexBuffer() {}
+	void UpdateIndexBuffer(GLushort* indices, int count) {}
+#endif
     
     CustomCommand _customCommand;
 
