@@ -1,5 +1,18 @@
 <img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
 
+cocos2d-x with native Direct3D render
+=========
+
+This is version of cocos2d-x 3.1 which supports native Direct3D rendering (not using Angle project). 
+
+Supports:
+* Windows creation for W8 (native) and WP8 (XAML)
+* Basic rendering
+* Labels
+* Shaders
+* State cache
+* Texture atlases
+* Not all nodes are supported.
 
 cocos2d-x
 =========
