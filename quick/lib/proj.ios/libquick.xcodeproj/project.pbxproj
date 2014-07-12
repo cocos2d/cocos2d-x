@@ -3753,7 +3753,7 @@
 					"$(SRCROOT)/../../../external/freetype2/prebuilt/ios",
 					"$(SRCROOT)/../../../external/websockets/prebuilt/ios",
 					"$(SRCROOT)/../../../external/curl/prebuilt/ios",
-					"/Users/zhujunfeng/quick-x-3/quick/lib/lua_bindings/luajit/ios",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/luajit/ios",
 				);
 				"OTHER_LDFLAGS[arch=arm64]" = (
 					"-lcurl_arm64",
@@ -3812,7 +3812,7 @@
 					"$(SRCROOT)/../../../external/freetype2/prebuilt/ios",
 					"$(SRCROOT)/../../../external/websockets/prebuilt/ios",
 					"$(SRCROOT)/../../../external/curl/prebuilt/ios",
-					"/Users/zhujunfeng/quick-x-3/quick/lib/lua_bindings/luajit/ios",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/luajit/ios",
 				);
 				"OTHER_LDFLAGS[arch=arm64]" = (
 					"-lcurl_arm64",

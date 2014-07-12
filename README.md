@@ -1,5 +1,7 @@
 quick-cocos2d-x V3.0
 =========
+mq
+
 
 #当前版本为alpha版
 
