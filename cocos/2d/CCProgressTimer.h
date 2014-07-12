@@ -160,6 +160,7 @@ protected:
 	void UpdateIndexBuffer(GLushort* indices, int count);
 
 	bool _bufferDirty;
+	int _triCount;
 #else
 	// GL not use buffers
 	void UpdateVertexBuffer() {}

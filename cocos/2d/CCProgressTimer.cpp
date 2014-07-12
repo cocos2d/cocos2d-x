@@ -59,6 +59,7 @@ ProgressTimer::ProgressTimer()
 , _bufferVertex(nullptr)
 , _bufferIndex(nullptr)
 , _bufferDirty(false)
+, _triCount(0)
 #endif
 {}
 
@@ -410,25 +411,26 @@ void ProgressTimer::updateRadial(void)
 	_bufferDirty = true;
 
 #if DIRECTX_ENABLED == 1
-	if (_vertexDataCount != originalCount)
+	if (_vertexDataCount != originalCount && _vertexDataCount > 0)
 	{
-		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_vertexDataCount * 6]);
+		_triCount = index + 1;
+		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_triCount * 3]);
 
 		GLushort* ptr = indices.get();
 		int i = 0;
-		ptr[i * 6 + 0] = (GLushort)0;
-		ptr[i * 6 + 1] = (GLushort)1;
-		ptr[i * 6 + 2] = (GLushort)2;
+		ptr[i * 3 + 0] = (GLushort)0;
+		ptr[i * 3 + 1] = (GLushort)1;
+		ptr[i * 3 + 2] = (GLushort)2;
 		++i;
 
 		for (int j = 0; j < index; j++, i++)
 		{
-			ptr[i * 6 + 0] = (GLushort)(0);
-			ptr[i * 6 + 1] = (GLushort)(j + 2);
-			ptr[i * 6 + 2] = (GLushort)(j + 3);
+			ptr[i * 3 + 0] = (GLushort)(0);
+			ptr[i * 3 + 1] = (GLushort)(j + 2);
+			ptr[i * 3 + 2] = (GLushort)(j + 3);
 		}
 		
-		UpdateIndexBuffer(indices.get(), _vertexDataCount * 6);
+		UpdateIndexBuffer(indices.get(), _triCount * 3);
 	}
 #endif
 }
@@ -547,10 +549,11 @@ void ProgressTimer::updateBar(void)
 #if DIRECTX_ENABLED == 1
 	if (_vertexDataCount != originalCount)
 	{
-		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_vertexDataCount * 6]);
+		_triCount = _vertexDataCount / 2;
+		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_triCount * 3]);
 
 		GLushort* ptr = indices.get();
-		for (int i = 0; i < _vertexDataCount; i++)
+		for (int i = 0; i < _triCount / 2; i++)
 		{
 			ptr[i * 6 + 0] = (GLushort)(i * 4 + 0);
 			ptr[i * 6 + 1] = (GLushort)(i * 4 + 1);
@@ -560,7 +563,7 @@ void ProgressTimer::updateBar(void)
 			ptr[i * 6 + 5] = (GLushort)(i * 4 + 1);
 		}
 
-		UpdateIndexBuffer(indices.get(), _vertexDataCount * 6);
+		UpdateIndexBuffer(indices.get(), _triCount * 3);
 	}
 #endif
 }
@@ -629,6 +632,9 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
         }
     }
 #else
+	if (_triCount == 0)
+		return;
+
 	DXStateCache::getInstance().setPSTexture(0, _sprite->getTexture()->getView());
 	DXStateCache::getInstance().setBlend(_sprite->getBlendFunc().src, _sprite->getBlendFunc().dst);
 
@@ -648,7 +654,7 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 	DXStateCache::getInstance().setVertexBuffer(_bufferVertex, sizeof(V3F_C4B_T2F), 0);
 	DXStateCache::getInstance().setIndexBuffer(_bufferIndex);
 
-	view->GetContext()->DrawIndexed(_vertexDataCount * 6, 0, 0);
+	view->GetContext()->DrawIndexed(_triCount * 3, 0, 0);
 	CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _vertexDataCount);
 #endif
 }

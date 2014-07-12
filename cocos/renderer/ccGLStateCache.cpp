@@ -445,7 +445,7 @@ void DXStateCache::enableScissor(bool enable)
 
 bool DXStateCache::isScissorEnabled() const
 {
-	return _rasterizerDesc.ScissorEnable;
+	return _rasterizerDesc.ScissorEnable != 0;
 }
 
 void DXStateCache::setRasterizer()
