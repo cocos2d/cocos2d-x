@@ -253,7 +253,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         // XXX: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
 #endif
-        
+		NOT_SUPPORTED();
 #endif
 
     }
@@ -419,7 +419,7 @@ void ClippingNode::onBeforeVisit()
         // pixel will be drawn only if greater than an alpha threshold
         glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-        
+		NOT_SUPPORTED();
 #endif
     }
 

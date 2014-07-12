@@ -278,6 +278,8 @@ void DXStateCache::invalidateStateCache()
 	memset(_constantBufferPS, 0, sizeof(_constantBufferPS));
 	memset(_textureViewsVS, 0, sizeof(_textureViewsVS));
 	memset(_textureViewsPS, 0, sizeof(_textureViewsPS));
+	memset(&_viewportRect, 0, sizeof(_viewportRect));
+	memset(&_scissorRect, 0, sizeof(_scissorRect));
 }
 
 void DXStateCache::setShaders(ID3D11VertexShader* vs, ID3D11PixelShader* ps)
@@ -398,8 +400,65 @@ void DXStateCache::setBlend(GLint GLsrc, GLint GLdst)
 	setRasterizer();
 }
 
+void DXStateCache::setViewport(float x, float y, float w, float h)
+{
+	D3D11_VIEWPORT viewport;
+	viewport.TopLeftX = x; 
+	viewport.TopLeftY = y; 
+	viewport.Width = w;
+	viewport.Height = h;
+	viewport.MinDepth = 0;
+	viewport.MaxDepth = 1;
+	if (viewport != _viewportRect)
+	{
+		_view->GetContext()->RSSetViewports(1, &viewport);
+		_viewportRect = viewport;
+	}
+}
+
+void DXStateCache::setScissor(float x, float y, float w, float h)
+{
+	CD3D11_RECT rect(x, y, x + w, y + h);
+	if (rect != _scissorRect)
+	{
+		_view->GetContext()->RSSetScissorRects(1, &rect);
+		_scissorRect = rect;
+	}
+}
+
+void DXStateCache::getScissor(Rect& rect) const
+{
+	rect.origin.x = _scissorRect.left;
+	rect.origin.y = _scissorRect.top;
+	rect.size.width = _scissorRect.right - _scissorRect.left;
+	rect.size.height = _scissorRect.bottom - _scissorRect.top;
+}
+
+void DXStateCache::enableScissor(bool enable)
+{
+	if (_rasterizerDesc.ScissorEnable != (BOOL)enable)
+	{
+		_rasterizerDesc.ScissorEnable = enable;
+		_rasterizerDirty = true;
+	}
+}
+
+bool DXStateCache::isScissorEnabled() const
+{
+	return _rasterizerDesc.ScissorEnable;
+}
+
 void DXStateCache::setRasterizer()
 {	
+	if (_rasterizerDirty)
+	{
+		if (_rasterizerState)
+			_rasterizerState->Release();
+
+		DX::ThrowIfFailed(_view->GetDevice()->CreateRasterizerState(&_rasterizerDesc, &_rasterizerState));
+		_rasterizerDirty = false;
+	}
+
 	_view->GetContext()->RSSetState(_rasterizerState);
 }
 

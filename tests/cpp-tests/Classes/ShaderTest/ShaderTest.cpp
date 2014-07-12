@@ -147,7 +147,7 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
 
     _time = 0;
     _resolution = Vec2(SIZE_X, SIZE_Y);
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     getGLProgramState()->setUniformVec2("resolution", _resolution);
 #endif
 
@@ -162,7 +162,7 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
 
 void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &frag)
 {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     auto fileUtiles = FileUtils::getInstance();
 
     // frag
@@ -194,7 +194,7 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     Node::setPosition(newPosition);
     auto position = getPosition();
     _center = Vec2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     getGLProgramState()->setUniformVec2("center", _center);
 #endif
 }
@@ -482,7 +482,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
 	GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
@@ -501,7 +501,7 @@ void SpriteBlur::initGLProgram()
 void SpriteBlur::setBlurRadius(float radius)
 {
     _blurRadius = radius;
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
 #endif
 }
@@ -509,7 +509,7 @@ void SpriteBlur::setBlurRadius(float radius)
 void SpriteBlur::setBlurSampleNum(float num)
 {
     _blurSampleNum = num;
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     getGLProgramState()->setUniformFloat("sampleNum", _blurSampleNum);
 #endif
 }
@@ -615,7 +615,7 @@ ShaderRetroEffect::ShaderRetroEffect()
 
 bool ShaderRetroEffect::init()
 {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     if( ShaderTestDemo::init() ) {
 
         GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"))->getCString();
@@ -768,7 +768,7 @@ ui::Slider* ShaderMultiTexture::createSliderCtl()
 
     slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
 
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
         {
             ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
@@ -806,7 +806,7 @@ bool ShaderMultiTexture::init()
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
         _sprite->setGLProgramState(glprogramstate);
 
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         glprogramstate->setUniformTexture("u_texture1", right->getTexture());
         glprogramstate->setUniformFloat("u_interpolate",0.5);
 #endif
@@ -839,7 +839,7 @@ void ShaderMultiTexture::changeTexture(Ref*)
     Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
     right->setTexture(textrue);
     auto programState = _sprite->getGLProgramState();
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     programState->setUniformTexture("u_texture1", right->getTexture());
 #endif
 }

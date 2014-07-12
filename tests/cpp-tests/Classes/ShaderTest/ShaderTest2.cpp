@@ -203,7 +203,7 @@ protected:
 
 bool Effect::initGLProgramState(const std::string &fragmentFilename)
 {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(fragmentFilename);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
@@ -265,7 +265,7 @@ protected:
 
 void EffectBlur::setTarget(EffectSprite *sprite)
 {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
     _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
@@ -306,7 +306,7 @@ public:
         GLfloat radius = 0.01;
         GLfloat threshold = 1.75;
 
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         _glprogramstate->setUniformVec3("u_outlineColor", color);
         _glprogramstate->setUniformFloat("u_radius", radius);
         _glprogramstate->setUniformFloat("u_threshold", threshold);
@@ -330,7 +330,7 @@ protected:
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
 #endif
     }
@@ -351,7 +351,7 @@ protected:
     virtual void setTarget(EffectSprite* sprite) override
     {
         auto s = sprite->getTexture()->getContentSizeInPixels();
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
 #endif
     }
@@ -397,7 +397,7 @@ protected:
 
     virtual void setTarget(EffectSprite* sprite) override
     {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         auto s = sprite->getTexture()->getContentSizeInPixels();
         getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
 #endif
@@ -418,7 +418,7 @@ protected:
 
     virtual void setTarget(EffectSprite* sprite) override
     {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         auto s = sprite->getTexture()->getContentSizeInPixels();
         getGLProgramState()->setUniformVec2("resolution", Vec2(s.width, s.height));
 #endif
@@ -439,7 +439,7 @@ protected:
 
     virtual void setTarget(EffectSprite* sprite) override
     {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         auto s = sprite->getTexture()->getContentSizeInPixels();
         getGLProgramState()->setUniformVec2("textureResolution", Vec2(s.width, s.height));
 

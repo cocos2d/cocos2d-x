@@ -1014,7 +1014,7 @@ void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 {
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 

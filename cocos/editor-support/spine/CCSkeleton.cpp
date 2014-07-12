@@ -138,7 +138,7 @@ void Skeleton::onDraw(const Mat4 &transform, uint32_t flags)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     GL::blendFunc(blendFunc.src, blendFunc.dst);
 #endif
 	Color3B color = getColor();
@@ -171,7 +171,7 @@ void Skeleton::onDraw(const Mat4 &transform, uint32_t flags)
 				textureAtlas->removeAllQuads();
 			}
 			additive = !additive;
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
             GL::blendFunc(blendFunc.src, additive ? GL_ONE : blendFunc.dst);
 #endif
 		} else if (regionTextureAtlas != textureAtlas && textureAtlas) {
@@ -346,13 +346,13 @@ void Skeleton::setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture
 {
     if(nextRenderedTexture->getTexture() && nextRenderedTexture->getTexture()->hasPremultipliedAlpha())
     {
-#if (D3D_ENABLED == 0)
+#if (DIRECTX_ENABLED == 0)
         GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
 #endif
     }
     else
     {
-#if (D3D_ENABLED == 0)
+#if (DIRECTX_ENABLED == 0)
         GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
 #endif
     }

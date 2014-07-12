@@ -313,7 +313,7 @@ bool Effect3DOutline::init()
         return false;
     }
     _glProgramState->retain();
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
     _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
     _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
 #endif
@@ -352,7 +352,7 @@ void Effect3DOutline::setOutlineColor(const Vec3& color)
     if(_outlineColor != color)
     {
         _outlineColor = color;
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
 #endif
     }
@@ -363,7 +363,7 @@ void Effect3DOutline::setOutlineWidth(float width)
     if(_outlineWidth != width)
     {
         _outlineWidth = width;
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
 #endif
     }
@@ -394,7 +394,7 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
         
         Color4F color(_sprite->getDisplayedColor());
         color.a = _sprite->getDisplayedOpacity() / 255.0f;
-#if D3D_ENABLED == 0
+#if DIRECTX_ENABLED == 0
         _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
 #endif
     }

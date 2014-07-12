@@ -177,6 +177,12 @@ public:
 
 	void setBlend(GLint src, GLint dst);
 
+	void setViewport(float x, float y, float w, float h);
+	void setScissor(float x, float y, float w, float h);
+	void getScissor(Rect& rect) const;
+	void enableScissor(bool enable);
+	bool isScissorEnabled() const;
+
 	void setRasterizer();
 
 private:
@@ -201,8 +207,11 @@ private:
 	ID3D11ShaderResourceView*const* _textureViewsPS[MAX_UNITS];
 	ID3D11ShaderResourceView*const* _textureViewsVS[MAX_UNITS];
 
+	bool _rasterizerDirty;
 	CD3D11_RASTERIZER_DESC _rasterizerDesc;
 	ID3D11RasterizerState* _rasterizerState;
+	CD3D11_RECT _scissorRect;
+	D3D11_VIEWPORT _viewportRect;
 
 	CD3D11_BLEND_DESC _blendDesc;
 	ID3D11BlendState* _blendState;

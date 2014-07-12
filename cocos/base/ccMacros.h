@@ -276,4 +276,6 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 #define CC_CALLBACK_3(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
 
+#define NOT_SUPPORTED() CCASSERT(false, "Not supported.");
+
 #endif // __BASE_CCMACROS_H__

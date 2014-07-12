@@ -83,7 +83,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DIRECTX_ENABLED=1;WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -104,7 +104,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DIRECTX_ENABLED=1;WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -125,7 +125,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DIRECTX_ENABLED=1;WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -138,7 +138,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;%(AdditionalDependencies);dxgi.lib;dxguid.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\angle\prebuilt\$(Platform);$(EngineRoot)\external\curl\prebuilt\wp8\$(Platform);$(EngineRoot)external\websockets\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -146,7 +146,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DIRECTX_ENABLED=1;WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -159,7 +159,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;%(AdditionalDependencies);dxgi.lib;dxguid.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\angle\prebuilt\$(Platform);$(EngineRoot)\external\curl\prebuilt\wp8\$(Platform);$(EngineRoot)external\websockets\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

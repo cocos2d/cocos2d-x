@@ -66,7 +66,9 @@ void Cocos2dRenderer::CreateWindowSizeDependentResources()
    }
     else
     {
-        cocos2d::GL::invalidateStateCache();
+#if DIRECTX_ENABLED == 0
+       // cocos2d::GL::invalidateStateCache();
+#endif
         cocos2d::ShaderCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();

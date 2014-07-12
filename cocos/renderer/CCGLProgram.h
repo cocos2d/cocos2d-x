@@ -37,6 +37,9 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "CCGL.h"
 #include "math/CCMath.h"
+#if (DIRECTX_ENABLED == 1)
+#include "DirectXMath.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -68,8 +71,6 @@ struct Uniform
 };
 
 #if (DIRECTX_ENABLED == 1)
-
-#include "DirectXMath.h"
 
 struct ShaderConstantBuffer
 {
