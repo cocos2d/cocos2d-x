@@ -31,6 +31,9 @@ THE SOFTWARE.
 #include <ppl.h>
 #include <ppltasks.h>
 #include <sstream>
+#include <locale>
+#include <codecvt>
+#include <clocale>
 
 NS_CC_BEGIN
 
@@ -90,9 +93,23 @@ std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
 	return ret;
 }
 
-std::string PlatformStringToString(Platform::String^ s) {
-	std::wstring t = std::wstring(s->Data());
-	return std::string(t.begin(),t.end());
+std::string PlatformStringToString(Platform::String^ s) 
+{
+	std::setlocale(LC_ALL, "");
+	const std::wstring ws = std::wstring(s->Data());
+	const std::locale locale("");
+	typedef std::codecvt<wchar_t, char, std::mbstate_t> converter_type;
+	const converter_type& converter = std::use_facet<converter_type>(locale);
+	std::vector<char> to(ws.length() * 512);
+	std::mbstate_t state;
+	const wchar_t* from_next;
+	char* to_next;
+
+	auto result = converter.out(state, ws.data(), ws.data() + ws.length(), from_next, &to[0], &to[0] + to.size(), to_next);	
+	if (result == converter_type::ok || result == converter_type::noconv) 	
+		return std::string(&to[0], to_next);		
+	
+	return "";
 }
 
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
