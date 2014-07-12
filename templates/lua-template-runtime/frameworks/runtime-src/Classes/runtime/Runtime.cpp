@@ -63,7 +63,7 @@ std::string g_resourcePath;
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
-    return "1.2";
+    return "1.3";
 }
 
 void startScript(string strDebugArg)
