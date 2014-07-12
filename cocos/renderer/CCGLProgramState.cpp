@@ -75,32 +75,39 @@ void UniformValue::apply()
     {
         switch (_uniform->type) {
             case GL_SAMPLER_2D:
-                //_glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                //GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId);
+#if DIRECTX_ENABLED == 1
+				//GLView* view = GLView::sharedOpenGLView();
+				CCASSERT(false, "Not supported.");
+				// TODO: Not supported now
+				// view->GetContext()->PSSetShaderResources(_value.tex.textureUnit, 1, _value.tex);
+#else
+                _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
+                GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId);
+#endif
                 break;
 
             case GL_INT:
-                //_glprogram->setUniformLocationWith1i(_uniform->location, _value.intValue);
+                _glprogram->setUniformLocationWith1i(_uniform->location, _value.intValue);
                 break;
 
             case GL_FLOAT:
-                //_glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
+                _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
                 break;
 
             case GL_FLOAT_VEC2:
-                //_glprogram->setUniformLocationWith2f(_uniform->location, _value.v2Value[0], _value.v2Value[1]);
+                _glprogram->setUniformLocationWith2f(_uniform->location, _value.v2Value[0], _value.v2Value[1]);
                 break;
 
             case GL_FLOAT_VEC3:
-               // _glprogram->setUniformLocationWith3f(_uniform->location, _value.v3Value[0], _value.v3Value[1], _value.v3Value[2]);
+                _glprogram->setUniformLocationWith3f(_uniform->location, _value.v3Value[0], _value.v3Value[1], _value.v3Value[2]);
                 break;
 
             case GL_FLOAT_VEC4:
-                //_glprogram->setUniformLocationWith4f(_uniform->location, _value.v4Value[0], _value.v4Value[1], _value.v4Value[2], _value.v4Value[3]);
+                _glprogram->setUniformLocationWith4f(_uniform->location, _value.v4Value[0], _value.v4Value[1], _value.v4Value[2], _value.v4Value[3]);
                 break;
 
             case GL_FLOAT_MAT4:
-                //_glprogram->setUniformLocationWithMatrix4fv(_uniform->location, (GLfloat*)&_value.matrixValue, 1);
+                _glprogram->setUniformLocationWithMatrix4fv(_uniform->location, (GLfloat*)&_value.matrixValue, 1);
                 break;
 
             default:
@@ -202,6 +209,7 @@ VertexAttribValue::~VertexAttribValue()
 
 void VertexAttribValue::apply()
 {
+#if DIRECTX_ENABLED == 0
     if(_enabled) {
         if(_useCallback) {
             (*_value.callback)(_vertexAttrib);
@@ -216,6 +224,7 @@ void VertexAttribValue::apply()
                                   _value.pointer.pointer);
         }
     }
+#endif
 }
 
 void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> &callback)
@@ -301,7 +310,7 @@ bool GLProgramState::init(GLProgram* glprogram)
 
     _glprogram = glprogram;
     _glprogram->retain();
-/*
+#if DIRECTX_ENABLED == 0	
     for(auto &attrib : _glprogram->_vertexAttribs) {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
@@ -311,7 +320,8 @@ bool GLProgramState::init(GLProgram* glprogram)
         UniformValue value(&uniform.second, _glprogram);
         _uniforms[uniform.second.location] = value;
         _uniformsByName[uniform.first] = uniform.second.location;
-    }*/
+    }
+#endif
 
     return true;
 }
@@ -332,12 +342,16 @@ void GLProgramState::apply(const Mat4& modelView)
     applyAttributes();
 
     applyUniforms();
+
+	_glprogram->set();
 }
 
 void GLProgramState::applyGLProgram(const Mat4& modelView)
 {
     CCASSERT(_glprogram, "invalid glprogram");
-    /*if(_uniformAttributeValueDirty)
+
+#if DIRECTX_ENABLED == 0
+	if (_uniformAttributeValueDirty)
     {
         for(auto& uniformLocation : _uniformsByName)
         {
@@ -351,16 +365,19 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
             if(attributeValue.second._enabled)
                 _vertexAttribsFlags |= 1 << attributeValue.second._vertexAttrib->index;
         }
+	}
+#endif
         
+	if (_uniformAttributeValueDirty)
         _uniformAttributeValueDirty = false;
         
-    }*/
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
 }
 void GLProgramState::applyAttributes(bool applyAttribFlags)
 {
+#if DIRECTX_ENABLED == 0
     // Don't set attributes if they weren't set
     // Use Case: Auto-batching
     if(_vertexAttribsFlags) {
@@ -373,6 +390,7 @@ void GLProgramState::applyAttributes(bool applyAttribFlags)
             attribute.second.apply();
         }
     }
+#endif
 }
 void GLProgramState::applyUniforms()
 {
@@ -444,86 +462,94 @@ void GLProgramState::setVertexAttribPointer(const std::string &name, GLint size,
 }
 
 // Uniform Setters
-//
-//void GLProgramState::setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if (v)
-//        v->setCallback(callback);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
-//
-//void GLProgramState::setUniformFloat(const std::string &uniformName, float value)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if (v)
-//        v->setFloat(value);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
-//
-//void GLProgramState::setUniformInt(const std::string &uniformName, int value)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if(v)
-//        v->setInt(value);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
-//
-//void GLProgramState::setUniformVec2(const std::string &uniformName, const Vec2& value)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if (v)
-//        v->setVec2(value);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
-//
-//void GLProgramState::setUniformVec3(const std::string &uniformName, const Vec3& value)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if (v)
-//        v->setVec3(value);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
-//
-//void GLProgramState::setUniformVec4(const std::string &uniformName, const Vec4& value)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if (v)
-//        v->setVec4(value);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
-//
-//void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& value)
-//{
-//    auto v = getUniformValue(uniformName);
-//    if (v)
-//        v->setMat4(value);
-//    else
-//        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-//}
+
+void GLProgramState::setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setCallback(callback);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformFloat(const std::string &uniformName, float value)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setFloat(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformInt(const std::string &uniformName, int value)
+{
+    auto v = getUniformValue(uniformName);
+    if(v)
+        v->setInt(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec2(const std::string &uniformName, const Vec2& value)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec2(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec3(const std::string &uniformName, const Vec3& value)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec3(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec4(const std::string &uniformName, const Vec4& value)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec4(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& value)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setMat4(value);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
 
 // Textures
-/*
 void GLProgramState::setUniformTexture(const std::string &uniformName, Texture2D *texture)
 {
+#if DIRECTX_ENABLED == 1
+	CCASSERT(false, "Not supported yet.");
+#endif
     CCASSERT(texture, "Invalid texture");
     setUniformTexture(uniformName, texture->getName());
 }
 
 void GLProgramState::setUniformTexture(GLint uniformLocation, Texture2D *texture)
 {
+#if DIRECTX_ENABLED == 1
+	CCASSERT(false, "Not supported yet.");
+#endif
     CCASSERT(texture, "Invalid texture");
     setUniformTexture(uniformLocation, texture->getName());
 }
 
 void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint textureId)
 {
+#if DIRECTX_ENABLED == 1
+	CCASSERT(false, "Not supported yet.");
+#endif
     auto v = getUniformValue(uniformName);
     if (v)
     {
@@ -545,6 +571,9 @@ void GLProgramState::setUniformTexture(const std::string &uniformName, GLuint te
 
 void GLProgramState::setUniformTexture(GLint uniformLocation, GLuint textureId)
 {
+#if DIRECTX_ENABLED == 1
+	CCASSERT(false, "Not supported yet.");
+#endif
     auto v = getUniformValue(uniformLocation);
     if (v)
     {
@@ -562,6 +591,6 @@ void GLProgramState::setUniformTexture(GLint uniformLocation, GLuint textureId)
     {
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
     }
-}*/
+}
 
 NS_CC_END

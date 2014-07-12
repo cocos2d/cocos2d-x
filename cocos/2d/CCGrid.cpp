@@ -179,6 +179,7 @@ void GridBase::setTextureFlipped(bool flipped)
 
 void GridBase::set2DProjection()
 {
+#if DIRECTX_ENABLED == 0
     Director *director = Director::getInstance();
 
     Size    size = director->getWinSizeInPixels();
@@ -193,6 +194,7 @@ void GridBase::set2DProjection()
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     GL::setProjectionMatrixDirty();
+#endif
 }
 
 void GridBase::beforeDraw(void)
@@ -209,6 +211,7 @@ void GridBase::beforeDraw(void)
 
 void GridBase::afterDraw(cocos2d::Node *target)
 {
+#if DIRECTX_ENABLED == 0
     _grabber->afterRender(_texture);
 
     // restore projection
@@ -233,6 +236,7 @@ void GridBase::afterDraw(cocos2d::Node *target)
 //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 //TODO:         Director::getInstance()->applyOrientation();
     blit();
+#endif
 }
 
 void GridBase::blit(void)
@@ -313,7 +317,7 @@ Grid3D::~Grid3D(void)
 void Grid3D::blit(void)
 {
     int n = _gridSize.width * _gridSize.height;
-
+#if DIRECTX_ENABLED == 0
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();;
@@ -345,6 +349,7 @@ void Grid3D::blit(void)
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, _indices);
 #endif // EMSCRIPTEN
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
+#endif
 }
 
 void Grid3D::calculateVertexPoints(void)
@@ -527,6 +532,7 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
 
 void TiledGrid3D::blit(void)
 {
+#if DIRECTX_ENABLED == 0
     int n = _gridSize.width * _gridSize.height;
 
     
@@ -562,6 +568,7 @@ void TiledGrid3D::blit(void)
 
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
+#endif
 }
 
 void TiledGrid3D::calculateVertexPoints(void)

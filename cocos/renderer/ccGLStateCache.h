@@ -42,6 +42,8 @@ NS_CC_BEGIN
 
 class GLProgram;
 
+#if DIRECTX_ENABLED == 0
+
 namespace GL {
 
 /** vertex attrib flags */
@@ -141,6 +143,73 @@ void CC_DLL bindVAO(GLuint vaoId);
 /// @}
 
 } // Namespace GL
+#else
+
+class GLView;
+
+class DXStateCache
+{	
+public:
+	static DXStateCache& getInstance()
+	{
+		static auto ptr = std::unique_ptr<DXStateCache>(new DXStateCache());
+		return *ptr.get();
+	}
+
+public:
+	D3D11_BLEND GetDXBlend(GLint glBlend) const;
+
+	void invalidateStateCache();
+
+	void setShaders(ID3D11VertexShader* vs, ID3D11PixelShader* ps);
+		
+	void setVertexBuffer(ID3D11Buffer* buffer, UINT stride, UINT offset);
+	void setIndexBuffer(ID3D11Buffer* buffer);
+	
+	void setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
+	void setInputLayout(ID3D11InputLayout* layout);
+	
+	void setVSConstantBuffer(int index, ID3D11Buffer*const* buffer);
+	void setPSConstantBuffer(int index, ID3D11Buffer*const* buffer);
+	
+	void setVSTexture(int index, ID3D11ShaderResourceView*const* view);
+	void setPSTexture(int index, ID3D11ShaderResourceView*const* view);
+
+	void setBlend(GLint src, GLint dst);
+
+	void setRasterizer();
+
+private:
+	DXStateCache();
+
+	static const int MAX_UNITS = 8;
+
+	GLView* _view;
+
+	DXStateCache(const DXStateCache&);
+	DXStateCache& operator=(const DXStateCache&);
+
+	// Cached values	
+	ID3D11Buffer* _vertexBuffer;
+	ID3D11Buffer* _indexBuffer;
+	ID3D11VertexShader* _vertexShader;
+	ID3D11PixelShader*  _pixelShader;
+	ID3D11Buffer*const* _constantBufferPS[MAX_UNITS];
+	ID3D11Buffer*const* _constantBufferVS[MAX_UNITS];
+	D3D11_PRIMITIVE_TOPOLOGY _primitiveTopology;
+	ID3D11InputLayout* _inputLayout;
+	ID3D11ShaderResourceView*const* _textureViewsPS[MAX_UNITS];
+	ID3D11ShaderResourceView*const* _textureViewsVS[MAX_UNITS];
+
+	CD3D11_RASTERIZER_DESC _rasterizerDesc;
+	ID3D11RasterizerState* _rasterizerState;
+
+	CD3D11_BLEND_DESC _blendDesc;
+	ID3D11BlendState* _blendState;
+};
+
+#endif
+
 NS_CC_END
     
 

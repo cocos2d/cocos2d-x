@@ -597,7 +597,7 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
-
+#if DIRECTX_ENABLED == 0
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
     //
     // Attributes
@@ -616,6 +616,9 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+#else
+	//CCASSERT(false, "Not supported yet.");
+#endif
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }

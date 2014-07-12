@@ -1014,6 +1014,7 @@ void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 {
+#if D3D_ENABLED == 0
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
@@ -1041,6 +1042,7 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 
     CHECK_GL_ERROR_DEBUG();
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+#endif
 }
 //------------------------------------------------------------------
 //

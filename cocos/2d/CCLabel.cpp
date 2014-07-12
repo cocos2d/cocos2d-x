@@ -855,6 +855,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     }
 
     auto glprogram = getGLProgram();
+	glprogram->use();
     
 #if (DIRECTX_ENABLED == 1)
 	auto view = GLView::sharedOpenGLView();
@@ -899,7 +900,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     }
 
     glprogram->setUniformsForBuiltins(transform);
-	glprogram->use();
+	glprogram->set();
 
     for(const auto &child: _children)
     {

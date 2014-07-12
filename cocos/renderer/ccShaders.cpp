@@ -57,14 +57,14 @@ const ShaderDescriptor ccPositionTextureColor_vert = ShaderDescriptor("PositionT
 .Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
 .Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
 .Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
-.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4));
+.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4), GL_FLOAT_MAT4);
 
 const ShaderDescriptor ccPositionTextureColor_noMVP_frag = ShaderDescriptor("PositionTextureColor_noMVP");
 const ShaderDescriptor ccPositionTextureColor_noMVP_vert = ShaderDescriptor("PositionTextureColor_noMVP")
 .Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
 .Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
 .Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
-.Const(GLProgram::UNIFORM_NAME_P_MATRIX, sizeof(Mat4));
+.Const(GLProgram::UNIFORM_NAME_P_MATRIX, sizeof(Mat4), GL_FLOAT_MAT4);
 
 const ShaderDescriptor ccPositionTextureColorAlphaTest_frag = ShaderDescriptor("PositionTextureColorAlphaTest");
 
@@ -79,22 +79,22 @@ const ShaderDescriptor ccPositionColorLengthTexture_vert = ShaderDescriptor("Pos
 .Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
 
 const ShaderDescriptor ccLabelDistanceFieldNormal_frag = ShaderDescriptor("Label_df_Normal")
-.Const("u_textColor", sizeof(float) * 4);
+.Const("u_textColor", sizeof(float) * 4, GL_FLOAT_VEC4);
 const ShaderDescriptor ccLabelDistanceFieldGlow_frag = ShaderDescriptor("Label_df_Glow")
-.Const("u_effectColor", sizeof(float) * 4)
-.Const("u_textColor", sizeof(float) * 4);
+.Const("u_effectColor", sizeof(float) * 4, GL_FLOAT_VEC4)
+.Const("u_textColor", sizeof(float) * 4, GL_FLOAT_VEC4);
 
 const ShaderDescriptor ccLabelNormal_frag = ShaderDescriptor("Label_normal")
-.Const("u_textColor", sizeof(float) * 4);
+.Const("u_textColor", sizeof(float) * 4, GL_FLOAT_VEC4);
 const ShaderDescriptor ccLabelOutline_frag = ShaderDescriptor("Label_outline")
-.Const("u_effectColor", sizeof(float) * 4)
-.Const("u_textColor", sizeof(float) * 4);
+.Const("u_effectColor", sizeof(float) * 4, GL_FLOAT_VEC4)
+.Const("u_textColor", sizeof(float) * 4, GL_FLOAT_VEC4);
 
 const ShaderDescriptor ccLabel_vert = ShaderDescriptor("Label")
 .Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
 .Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
 .Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
-.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4));
+.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4), GL_FLOAT_MAT4);
 
 const ShaderDescriptor cc3D_PositionTex_vert = ShaderDescriptor("3D_PositionTex")
 .Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)

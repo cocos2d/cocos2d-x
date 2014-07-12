@@ -34,6 +34,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+#if DIRECTX_ENABLED == 0
+
 static const int MAX_ATTRIBUTES = 16;
 static const int MAX_ACTIVE_TEXTURE = 16;
 
@@ -242,5 +244,190 @@ void setProjectionMatrixDirty( void )
 }
 
 } // Namespace GL
+
+#else
+
+DXStateCache::DXStateCache()
+{
+	invalidateStateCache();
+
+	_view = GLView::sharedOpenGLView();
+	CCASSERT(_view, "GLView not set.");
+
+	_blendDesc = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
+	DX::ThrowIfFailed(_view->GetDevice()->CreateBlendState(&_blendDesc, &_blendState));
+		
+	_rasterizerDesc = CD3D11_RASTERIZER_DESC(CD3D11_DEFAULT());
+	_rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+	DX::ThrowIfFailed(_view->GetDevice()->CreateRasterizerState(&_rasterizerDesc, &_rasterizerState));
+}
+
+void DXStateCache::invalidateStateCache()
+{
+	_vertexBuffer = nullptr;
+	_indexBuffer = nullptr;
+	_blendState = nullptr;
+	_rasterizerState = nullptr;
+	_inputLayout = nullptr;
+	_vertexShader = nullptr;
+	_pixelShader = nullptr;
+	_blendDesc = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
+	_rasterizerDesc = CD3D11_RASTERIZER_DESC(CD3D11_DEFAULT());
+	_primitiveTopology = D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED;
+	memset(_constantBufferVS, 0, sizeof(_constantBufferVS));
+	memset(_constantBufferPS, 0, sizeof(_constantBufferPS));
+	memset(_textureViewsVS, 0, sizeof(_textureViewsVS));
+	memset(_textureViewsPS, 0, sizeof(_textureViewsPS));
+}
+
+void DXStateCache::setShaders(ID3D11VertexShader* vs, ID3D11PixelShader* ps)
+{
+	if (vs != _vertexShader)
+	{
+		_view->GetContext()->VSSetShader(vs, nullptr, 0);
+		_vertexShader = vs;
+	}
+
+	if (ps != _pixelShader)
+	{
+		_view->GetContext()->PSSetShader(ps, nullptr, 0);
+		_pixelShader = ps;
+	}
+}
+
+void DXStateCache::setVertexBuffer(ID3D11Buffer* buffer, UINT stride, UINT offset)
+{
+	if (buffer != _vertexBuffer)
+	{
+		_view->GetContext()->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+		_indexBuffer = buffer;
+	}
+}
+
+void DXStateCache::setIndexBuffer(ID3D11Buffer* buffer)
+{
+	if (buffer != _indexBuffer)
+	{
+		_view->GetContext()->IASetIndexBuffer(buffer, DXGI_FORMAT_R16_UINT, 0);
+		_indexBuffer = buffer;
+	}
+}
+
+void DXStateCache::setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
+{
+	if (_primitiveTopology != topology)
+	{
+		_view->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		_primitiveTopology = topology;
+	}
+}
+
+void DXStateCache::setInputLayout(ID3D11InputLayout* layout)
+{
+	if (_inputLayout != layout)
+	{
+		_view->GetContext()->IASetInputLayout(layout);
+		_inputLayout = layout;
+	}
+}
+
+void DXStateCache::setVSConstantBuffer(int index, ID3D11Buffer*const* buffer)
+{
+	CCASSERT(index < MAX_UNITS, "Invalid index of unit.");
+	if (_constantBufferVS[index] != buffer)
+	{
+		_view->GetContext()->VSSetConstantBuffers(index, 1, buffer);
+		_constantBufferVS[index] = buffer;
+	}	
+}
+
+void DXStateCache::setPSConstantBuffer(int index, ID3D11Buffer*const* buffer)
+{
+	CCASSERT(index < MAX_UNITS, "Invalid index of unit.");
+	if (_constantBufferPS[index] != buffer)
+	{
+		_view->GetContext()->PSSetConstantBuffers(index, 1, buffer);
+		_constantBufferPS[index] = buffer;
+	}	
+}
+
+void DXStateCache::setVSTexture(int index, ID3D11ShaderResourceView*const* textureView)
+{
+	CCASSERT(index < MAX_UNITS, "Invalid index of unit.");
+	if (_textureViewsVS[index] != textureView)
+	{
+		_view->GetContext()->VSSetShaderResources(index, 1, textureView);
+		_textureViewsVS[index] = textureView;
+	}
+}
+
+void DXStateCache::setPSTexture(int index, ID3D11ShaderResourceView*const* textureView)
+{
+	CCASSERT(index < MAX_UNITS, "Invalid index of unit.");
+	if (_textureViewsPS[index] != textureView)
+	{
+		_view->GetContext()->PSSetShaderResources(index, 1, textureView);
+		_textureViewsPS[index] = textureView;
+	}
+}
+
+void DXStateCache::setBlend(GLint GLsrc, GLint GLdst)
+{
+	D3D11_BLEND src = GetDXBlend(GLsrc);
+	D3D11_BLEND dst = GetDXBlend(GLdst);
+
+	bool change = src != _blendDesc.RenderTarget[0].SrcBlend || dst != _blendDesc.RenderTarget[0].DestBlend;
+	if (change && _blendState)
+	{
+		_blendState->Release();
+		_blendState = nullptr;
+	}
+
+	if (_blendState == nullptr)
+	{
+		_blendDesc = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
+		_blendDesc.RenderTarget[0].BlendEnable = true;
+		_blendDesc.RenderTarget[0].SrcBlend = src;
+		_blendDesc.RenderTarget[0].DestBlend = dst;
+		_blendDesc.RenderTarget[0].SrcBlendAlpha = src;
+		_blendDesc.RenderTarget[0].DestBlendAlpha = dst;
+		DX::ThrowIfFailed(_view->GetDevice()->CreateBlendState(&_blendDesc, &_blendState));
+		_view->GetContext()->OMSetBlendState(_blendState, nullptr, 0xffffffff);
+	}
+
+	setRasterizer();
+}
+
+void DXStateCache::setRasterizer()
+{	
+	_view->GetContext()->RSSetState(_rasterizerState);
+}
+
+D3D11_BLEND DXStateCache::GetDXBlend(GLint glBlend) const
+{
+	if (glBlend == GL_ZERO)
+		return D3D11_BLEND_ZERO;
+	else if (glBlend == GL_SRC_COLOR)
+		return D3D11_BLEND_SRC_COLOR;
+	else if (glBlend == GL_ONE_MINUS_SRC_COLOR)
+		return D3D11_BLEND_INV_SRC_COLOR;
+	else if (glBlend == GL_SRC_ALPHA)
+		return D3D11_BLEND_SRC_ALPHA;
+	else if (glBlend == GL_ONE_MINUS_SRC_ALPHA)
+		return D3D11_BLEND_INV_SRC_ALPHA;
+	else if (glBlend == GL_DST_ALPHA)
+		return D3D11_BLEND_DEST_ALPHA;
+	else if (glBlend == GL_ONE_MINUS_DST_ALPHA)
+		return D3D11_BLEND_INV_DEST_ALPHA;
+	else if (glBlend == GL_DST_COLOR)
+		return D3D11_BLEND_DEST_COLOR;
+	else if (glBlend == GL_ONE_MINUS_DST_COLOR)
+		return D3D11_BLEND_INV_DEST_COLOR;
+	else if (glBlend == GL_SRC_ALPHA_SATURATE)
+		return D3D11_BLEND_SRC_ALPHA_SAT;
+	return D3D11_BLEND_ONE;
+}
+
+#endif
 
 NS_CC_END

@@ -663,7 +663,9 @@ void Director::setProjection(Projection projection)
     }
 
     _projection = projection;
+#if DIRECTX_ENABLED == 0
     GL::setProjectionMatrixDirty();
+#endif
 
     _eventDispatcher->dispatchEvent(_eventProjectionChanged);
 }
@@ -694,11 +696,19 @@ void Director::setAlphaBlending(bool on)
 {
     if (on)
     {
+#if DIRECTX_ENABLED == 0
         GL::blendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+#else
+		DXStateCache::getInstance().setBlend(CC_BLEND_SRC, CC_BLEND_DST);
+#endif
     }
     else
     {
+#if DIRECTX_ENABLED == 0
         GL::blendFunc(GL_ONE, GL_ZERO);
+#else
+		DXStateCache::getInstance().setBlend(CC_BLEND_SRC, CC_BLEND_DST);
+#endif
     }
 
     CHECK_GL_ERROR_DEBUG();
@@ -1016,7 +1026,11 @@ void Director::purgeDirector()
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     
+#if DIRECTX_ENABLED == 0
     GL::invalidateStateCache();
+#else
+	DXStateCache::getInstance().invalidateStateCache();
+#endif
     
     destroyTextureCache();
 

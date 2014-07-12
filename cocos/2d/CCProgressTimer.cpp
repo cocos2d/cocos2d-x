@@ -514,11 +514,15 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
+#if DIRECTX_ENABLED == 0
     GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
     GL::bindTexture2D( _sprite->getTexture()->getName() );
+#else
+	// TODO
+#endif
 
 #ifdef EMSCRIPTEN
     setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);

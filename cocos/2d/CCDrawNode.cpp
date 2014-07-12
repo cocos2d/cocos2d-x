@@ -116,7 +116,7 @@ DrawNode::~DrawNode()
 {
     free(_buffer);
     _buffer = nullptr;
-    
+#if DIRECTX_ENABLED == 0
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
     
@@ -126,6 +126,7 @@ DrawNode::~DrawNode()
         GL::bindVAO(0);
         _vao = 0;
     }
+#endif
 }
 
 DrawNode* DrawNode::create()
@@ -161,7 +162,7 @@ bool DrawNode::init()
     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
     
     ensureCapacity(512);
-    
+#if DIRECTX_ENABLED == 0
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
@@ -187,6 +188,7 @@ bool DrawNode::init()
     {
         GL::bindVAO(0);
     }
+#endif
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -217,7 +219,9 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
     auto glProgram = getGLProgram();
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
+	glProgram->set();
 
+#if DIRECTX_ENABLED == 0
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
@@ -247,6 +251,9 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
 
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+#else
+	CCASSERT(false, "Not supported yet.");
+#endif
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
     CHECK_GL_ERROR_DEBUG();

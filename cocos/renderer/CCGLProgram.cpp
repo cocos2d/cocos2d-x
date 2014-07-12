@@ -261,17 +261,23 @@ void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderD
 		&_pixelShader));
 
 	CD3D11_BUFFER_DESC constantBufferDesc(UNIFORM_BUFFER_SIZE, D3D11_BIND_CONSTANT_BUFFER);
+	if (!vertexShader.uniformValues.empty())
+	{
 	DX::ThrowIfFailed(
 		view->GetDevice()->CreateBuffer(
 		&constantBufferDesc,
 		nullptr,
 		&_constantBufferVS));
+	}
 
+	if (!pixelShader.uniformValues.empty())
+	{
 	DX::ThrowIfFailed(
 		view->GetDevice()->CreateBuffer(
 		&constantBufferDesc,
 		nullptr,
 		&_constantBufferPS));
+	}
 #endif
     }
 
@@ -453,6 +459,21 @@ const Uniform* GLProgram::getUniform(const std::string &name) const
     return nullptr;
 #else
 	const auto itr = _uniformsDescription.find(name);
+	if (itr != _uniformsDescription.end())
+		return &itr->second;
+	return nullptr;
+#endif
+}
+
+Uniform* GLProgram::getUniform(const std::string& name)
+{
+#if (DIRECTX_ENABLED == 0)
+	auto itr = _userUniforms.find(name);
+	if( itr != _userUniforms.end())
+		return &itr->second;
+	return nullptr;
+#else
+	auto itr = _uniformsDescription.find(name);
 	if (itr != _uniformsDescription.end())
 		return &itr->second;
 	return nullptr;
@@ -673,24 +694,38 @@ void GLProgram::use()
 #if (DIRECTX_ENABLED == 0)
     GL::useProgram(_program);
 #else
+	DXStateCache::getInstance().setShaders(_vertexShader, _pixelShader);
+	DXStateCache::getInstance().setInputLayout(_inputLayout);	
+#endif
+}
+
+void GLProgram::set()
+{
+#if (DIRECTX_ENABLED == 1)
 	auto view = GLView::sharedOpenGLView();
 
+	if (_constantBufferVS)
+	{
 	// Prepare the constant buffer to send it to the graphics device.
 	if (_uniformDirtyVS)
 	{
 		view->GetContext()->UpdateSubresource(_constantBufferVS, 0, NULL, &_uniformBufferVS, 0, 0);		
 		_uniformDirtyVS = false;
 	}
+
+		DXStateCache::getInstance().setVSConstantBuffer(0, &_constantBufferVS);		
+	}
+
+	if (_constantBufferPS)
+	{
 	if (_uniformDirtyPS)
 	{		
 		view->GetContext()->UpdateSubresource(_constantBufferPS, 0, NULL, &_uniformBufferPS, 0, 0);
 		_uniformDirtyPS = false;
 	}
-	view->GetContext()->IASetInputLayout(_inputLayout);	
-	view->GetContext()->VSSetConstantBuffers(0,	1, &_constantBufferVS);	
-	view->GetContext()->VSSetShader(_vertexShader, nullptr, 0);
-	view->GetContext()->PSSetConstantBuffers(0, 1, &_constantBufferPS);
-	view->GetContext()->PSSetShader(_pixelShader, nullptr, 0);
+
+		DXStateCache::getInstance().setPSConstantBuffer(0, &_constantBufferPS);		
+	}
 #endif
 }
 

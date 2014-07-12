@@ -248,6 +248,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         // set our alphaThreshold
         program->use();
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+		glProgram->set();
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);

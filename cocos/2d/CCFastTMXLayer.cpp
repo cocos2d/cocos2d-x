@@ -177,6 +177,7 @@ void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flag
 
 void FastTMXLayer::onDraw(int offset, int count)
 {
+#if DIRECTX_ENABLED == 0
     GL::bindTexture2D(_texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
@@ -192,6 +193,7 @@ void FastTMXLayer::onDraw(int offset, int count)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, count * 4);
+#endif
 }
 
 void FastTMXLayer::updateTiles(const Rect& culledRect)
@@ -289,6 +291,7 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
 
 void FastTMXLayer::updateVertexBuffer()
 {
+#if DIRECTX_ENABLED == 0
     GL::bindVAO(0);
     if(!glIsBuffer(_buffersVBO[0]))
     {
@@ -298,6 +301,7 @@ void FastTMXLayer::updateVertexBuffer()
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * _totalQuads.size(), (GLvoid*)&_totalQuads[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 }
 
 void FastTMXLayer::updateIndexBuffer()

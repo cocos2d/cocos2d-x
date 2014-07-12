@@ -668,35 +668,10 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 		_dirty = false;
 	}
 
-	// Each vertex is one instance of the VertexPositionColor struct.
-	UINT stride = sizeof(V3F_C4B_T2F);
-	UINT offset = 0;
-	view->GetContext()->IASetVertexBuffers(
-		0,
-		1,
-		&_bufferVertex,
-		&stride,
-		&offset
-		);
-
-	view->GetContext()->IASetIndexBuffer(
-		_bufferIndex,
-		DXGI_FORMAT_R16_UINT, // Each index is one 16-bit unsigned integer (short).
-		0
-		);
-
-	view->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	static ID3D11RasterizerState *state = nullptr;
-	if (state == nullptr)
-	{
-		auto d = CD3D11_RASTERIZER_DESC(CD3D11_DEFAULT());
-		d.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		DX::ThrowIfFailed(view->GetDevice()->CreateRasterizerState(&d, &state));
-	}
-	view->GetContext()->RSSetState(state);
-
-	view->GetContext()->PSSetShaderResources(0, 1, _texture->getView());
+	DXStateCache::getInstance().setVertexBuffer(_bufferVertex, sizeof(V3F_C4B_T2F), 0);
+	DXStateCache::getInstance().setIndexBuffer(_bufferIndex);
+	DXStateCache::getInstance().setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	DXStateCache::getInstance().setPSTexture(0, _texture->getView());
 
 	view->GetContext()->DrawIndexed(numberOfQuads * 6, start * 6, 0);	
 #else

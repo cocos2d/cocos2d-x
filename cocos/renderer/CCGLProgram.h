@@ -93,9 +93,9 @@ struct ShaderDescriptor
 		return *this;
 	}
 
-	ShaderDescriptor& Const(const std::string& name, GLint size)
+	ShaderDescriptor& Const(const std::string& name, GLint size, GLint type)
 	{
-		const Uniform u = { 0, size, 0, name };
+		const Uniform u = { 0, size, type, name };
 		uniformValues.push_back(u);
 		return *this;
 	}
@@ -192,16 +192,6 @@ public:
 
     GLProgram();
     virtual ~GLProgram();
-    /** Initializes the GLProgram with a vertex and fragment with bytes array 
-     * @js initWithString
-     * @lua initWithString
-     */
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    /** Initializes the CCGLProgram with precompiled shader program */
-    //static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    //bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-#endif
 
     /** Initializes the GLProgram with a vertex and fragment with bytes array 
      * @js initWithString
@@ -219,6 +209,7 @@ public:
 
 	//void bindUniform(std::string uniformName, int value);
 	const Uniform* getUniform(const std::string& name) const;
+	Uniform* getUniform(const std::string& name);
     VertexAttrib* getVertexAttrib(const std::string& name) const;
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
@@ -234,6 +225,8 @@ public:
     bool link();
     /** it will call glUseProgram() */
     void use();
+	/** Only for DX, settings constant buffers */
+	void set();
 /** It will create 4 uniforms:
     - kUniformPMatrix
     - kUniformMVMatrix
@@ -365,7 +358,7 @@ protected:
 	ID3D11Buffer*		_constantBufferVS;
 	ID3D11Buffer*		_constantBufferPS;
 	
-	static const int UNIFORM_BUFFER_SIZE = 256;
+	static const int UNIFORM_BUFFER_SIZE = 128;
 	unsigned char _uniformBufferVS[UNIFORM_BUFFER_SIZE];
 	unsigned char _uniformBufferPS[UNIFORM_BUFFER_SIZE];
 	std::unordered_map<std::string, Uniform> _uniformsDescription;
