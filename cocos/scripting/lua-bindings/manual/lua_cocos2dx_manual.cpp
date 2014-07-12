@@ -6436,6 +6436,80 @@ static void extendApplication(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static int lua_cocos2dx_FastTMXLayer_getTileGIDAt(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FastTMXLayer* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FastTMXLayer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::FastTMXLayer*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FastTMXLayer_getTileGIDAt'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        cocos2d::Vec2 arg0;
+        
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0);
+        if(!ok)
+            return 0;
+        int ret = cobj->getTileGIDAt(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::Vec2 arg0;
+        int arg1 = 0;
+        
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0);
+        ok &= luaval_to_int32(tolua_S, 3, &arg1);
+        
+        if(!ok)
+            return 0;
+        
+        unsigned int ret = cobj->getTileGIDAt(arg0, (cocos2d::TMXTileFlags*)&arg1);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTileGIDAt",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FastTMXLayer_getTileGIDAt'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendFastTMXLayer(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.FastTMXLayer");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "getTileGIDAt", lua_cocos2dx_FastTMXLayer_getTileGIDAt);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -6489,6 +6563,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendTMXLayer(tolua_S);
     extendEventListenerFocus(tolua_S);
     extendApplication(tolua_S);
+    extendFastTMXLayer(tolua_S);
     
     return 0;
 }

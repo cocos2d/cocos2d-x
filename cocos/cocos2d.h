@@ -253,6 +253,8 @@ THE SOFTWARE.
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTileMapAtlas.h"
+#include "2d/CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
 
 // component
 #include "2d/CCComponent.h"

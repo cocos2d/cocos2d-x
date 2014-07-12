@@ -16,10 +16,18 @@ local largeResource =
     directory = "ipadhd",
 }
 
-local glView = cc.Director:getInstance():getOpenGLView()
+local director = cc.Director:getInstance()
+local glView = director:getOpenGLView()
+if nil == glView then
+    glView = cc.GLView:create("Game Controller Test")
+    director:setOpenGLView(glView)
+end
+
+director:setOpenGLView(glView)
+
 local designResolutionSize = cc.size(1920, 1080)
 
-glView:setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, 2)
+glView:setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, cc.ResolutionPolicy.SHOW_ALL)
 
 local frameSize = glView:getFrameSize()
 
