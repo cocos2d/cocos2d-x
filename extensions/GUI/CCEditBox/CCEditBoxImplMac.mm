@@ -404,11 +404,15 @@ void EditBoxImplMac::setText(const char* pText)
 {
     NSString *string = [NSString stringWithUTF8String:pText];
     _sysEdit.textField.stringValue = string;
-    _sysEdit.textField.stringValue = string;
+    _sysEdit.secureTextField.stringValue = string;
 }
 
 const char*  EditBoxImplMac::getText(void)
 {
+    if (_sysEdit.secureTextField.superview) {
+        return [_sysEdit.secureTextField.stringValue UTF8String];
+    }
+    
     return [_sysEdit.textField.stringValue UTF8String];
 }
 
