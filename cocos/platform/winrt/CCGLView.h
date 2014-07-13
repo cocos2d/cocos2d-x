@@ -158,6 +158,16 @@ public:
 	{
 		return m_winRTWindow->m_d3dContext.Get();
 	}
+
+	ID3D11DepthStencilView* GetDepthStencilView()
+	{
+		return m_winRTWindow->m_depthStencilView.Get();
+	}
+
+	ID3D11RenderTargetView*const* GetRenderTargetView() const
+	{
+		return m_winRTWindow->m_renderTargetView.GetAddressOf();
+	}
 };
 
 NS_CC_END

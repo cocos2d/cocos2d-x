@@ -437,6 +437,7 @@ protected:
 #if (DIRECTX_ENABLED == 1)
 	ID3D11Texture2D* _texture;
 	ID3D11ShaderResourceView* _textureView;
+	bool _renderTargetTexture;
 
 	static int s_TextureCount;
 
@@ -444,6 +445,16 @@ public:
 	ID3D11ShaderResourceView* const * getView() const
 	{
 		return &_textureView;
+	}
+
+	ID3D11Texture2D* getTexture() 
+	{
+		return _texture;
+	}
+
+	void prepareForRenderTarget()
+	{
+		_renderTargetTexture = true;
 	}
 #endif
 };

@@ -134,11 +134,6 @@ void GLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-void GLView::swapBuffers()
-{
-
-}
-
 bool GLView::isOpenGLReady()
 {
 	// TODO: need to revisit this
@@ -434,54 +429,6 @@ cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
 Vec2 GLView::GetPoint(PointerEventArgs^ args) 
 {
 	return TransformToOrientation(args->CurrentPoint->Position);
-
-}
-
-
-void GLView::setViewPortInPoints(float x , float y , float w , float h)
-{
-    switch(m_orientation)
-	{
-		case DisplayOrientations::Landscape:
-		case DisplayOrientations::LandscapeFlipped:
-            glViewport((GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLsizei)(h * _scaleY),
-                       (GLsizei)(w * _scaleX));
-			break;
-
-        default:
-            glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLsizei)(w * _scaleX),
-                       (GLsizei)(h * _scaleY));
-	}
-}
-
-void GLView::setScissorInPoints(float x , float y , float w , float h)
-{
-    switch(m_orientation)
-	{
-		case DisplayOrientations::Landscape:
-			glScissor((GLint)(y * _scaleY + _viewPortRect.origin.y),
-						(GLint)(_viewPortRect.size.width - ((x + w) * _scaleX) + _viewPortRect.origin.x),
-						(GLsizei)(h * _scaleY),
-						(GLsizei)(w * _scaleX));
-			break;
-
-		case DisplayOrientations::LandscapeFlipped:
-			glScissor((GLint)(_viewPortRect.size.height - ((y + h) * _scaleY) + _viewPortRect.origin.y),
-                       (GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLsizei)(h * _scaleY),
-                       (GLsizei)(w * _scaleX));
-			break;
-
-        default:
-            glScissor((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLsizei)(w * _scaleX),
-                       (GLsizei)(h * _scaleY));
-	}
 }
 
 void GLView::QueueBackKeyPress()

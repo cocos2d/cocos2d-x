@@ -83,4 +83,14 @@ class WP8Window : public cocos2d::IWP8Win
 	{
 		return Cocos2dRenderer::GetInstance()->m_d3dContext.Get();
 	}
+
+	virtual ID3D11DepthStencilView* GetDepthStencilView()
+	{
+		return Cocos2dRenderer::GetInstance()->m_depthStencilView.Get();
+	}
+
+	virtual ID3D11RenderTargetView*const* GetRenderTargetView() const
+	{
+		return Cocos2dRenderer::GetInstance()->m_renderTargetView.GetAddressOf();
+	}
 };

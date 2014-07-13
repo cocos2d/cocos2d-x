@@ -402,13 +402,7 @@ void DXStateCache::setBlend(GLint GLsrc, GLint GLdst)
 
 void DXStateCache::setViewport(float x, float y, float w, float h)
 {
-	D3D11_VIEWPORT viewport;
-	viewport.TopLeftX = x; 
-	viewport.TopLeftY = y; 
-	viewport.Width = w;
-	viewport.Height = h;
-	viewport.MinDepth = 0;
-	viewport.MaxDepth = 1;
+	CD3D11_VIEWPORT viewport(x, y, w, h);
 	if (viewport != _viewportRect)
 	{
 		_view->GetContext()->RSSetViewports(1, &viewport);
@@ -441,6 +435,8 @@ void DXStateCache::enableScissor(bool enable)
 		_rasterizerDesc.ScissorEnable = enable;
 		_rasterizerDirty = true;
 	}
+
+	setRasterizer();
 }
 
 bool DXStateCache::isScissorEnabled() const

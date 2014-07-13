@@ -59,9 +59,7 @@ public:
     /* override functions */
     virtual bool isOpenGLReady();
     virtual void end();
-    virtual void swapBuffers();
-    virtual void setViewPortInPoints(float x , float y , float w , float h);
-    virtual void setScissorInPoints(float x , float y , float w , float h);
+	virtual void swapBuffers() {}
     const Mat4& getOrientationMatrix() const;
     const Mat4& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
@@ -188,6 +186,16 @@ public:
 	ID3D11DeviceContext1* GetContext()
 	{
 		return m_wp8windows->GetContext();
+	}
+
+	ID3D11DepthStencilView* GetDepthStencilView()
+	{
+		return m_wp8windows->GetDepthStencilView();
+	}
+
+	ID3D11RenderTargetView*const* GetRenderTargetView() const
+	{
+		return m_wp8windows->GetRenderTargetView();
 	}
 
 };

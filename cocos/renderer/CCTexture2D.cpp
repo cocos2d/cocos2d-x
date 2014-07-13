@@ -444,6 +444,7 @@ Texture2D::Texture2D()
 , _texture(nullptr)
 , _textureView(nullptr)
 , _name(++s_TextureCount)
+, _renderTargetTexture(false)
 #else
 , _name(0)
 #endif
@@ -621,7 +622,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
 	desc.Usage = D3D11_USAGE_DEFAULT;
-	desc.BindFlags = (mipmapsNum > 1) ? (D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET) : (D3D11_BIND_SHADER_RESOURCE);
+	desc.BindFlags = _renderTargetTexture ? (D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET) : (D3D11_BIND_SHADER_RESOURCE);
 	desc.CPUAccessFlags = 0;
 	desc.MiscFlags = (mipmapsNum > 1) ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
 
@@ -1418,8 +1419,6 @@ void Texture2D::setAliasTexParameters()
     TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
     VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
-#else
-	CC_ASSERT(false && "Not implemented.");
 #endif
 }
 
@@ -1454,8 +1453,6 @@ void Texture2D::setAntiAliasTexParameters()
     TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
     VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
-#else
-	CC_ASSERT(false && "Not implemented.");
 #endif
 }
 

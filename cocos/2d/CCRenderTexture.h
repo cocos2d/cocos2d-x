@@ -214,6 +214,13 @@ protected:
     CustomCommand _beginCommand;
     CustomCommand _endCommand;
     CustomCommand _saveToFileCommand;
+
+#if DIRECTX_ENABLED == 1
+	ID3D11RenderTargetView* _renderTargetViewMap;
+	ID3D11ShaderResourceView* _shaderResourceViewMap;
+	ID3D11DepthStencilView* _depthStencilView;
+#endif
+
 protected:
     //renderer caches and callbacks
     void onBegin();
