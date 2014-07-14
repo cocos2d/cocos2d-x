@@ -969,23 +969,16 @@ local function TextureAsync()
     local  seq = cc.Sequence:create(scale, scale_back)
     label:runAction(cc.RepeatForever:create(seq))
 
-    local function imageLoaded(pObj)
-        local  tex = pObj
+    local function imageLoaded(texture)
         local director = cc.Director:getInstance()
 
-        --cc.ASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
-
-        -- IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
-
-        -- This test just creates a sprite based on the Texture
-
-        local sprite = cc.Sprite:createWithTexture(tex)
+        local sprite = cc.Sprite:createWithTexture(texture)
         sprite:setAnchorPoint(cc.p(0,0))
         ret:addChild(sprite, -1)
 
         local size = director:getWinSize()
         local i = m_nImageOffset * 32
-        sprite:setPosition(cc.p( i % size.width, (i / size.width) * 32 ))
+        sprite:setPosition(cc.p( i % size.width, math.floor((i / size.width)) * 32 ))
 
         m_nImageOffset = m_nImageOffset + 1
         cclog("Image loaded:...")-- %p", tex)
