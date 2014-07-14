@@ -56,6 +56,10 @@ while (!empty($argv))
     {
         array_push($parameters['macros'], array_shift($argv));
     }
+    else if ($arg == '-pfx')
+    {
+        $parameters['prefix_name'] = array_shift($argv);
+    }
     else
     {
         $parameters['input_path'] = $arg;

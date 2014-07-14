@@ -31,6 +31,12 @@
 		497DB3551959870600271944 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49E5774919597E0B00C26077 /* xxtea.cpp */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		DA853FA3195029B40057DF22 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */; };
+		DA9FAA151973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA9FAA0C1973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.cpp */; };
+		DA9FAA161973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9FAA0D1973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.h */; };
+		DA9FAA171973F1C1006A0B4C /* cocos2dx_extra_luabinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA9FAA0F1973F1C1006A0B4C /* cocos2dx_extra_luabinding.cpp */; };
+		DA9FAA181973F1C1006A0B4C /* cocos2dx_extra_luabinding.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9FAA101973F1C1006A0B4C /* cocos2dx_extra_luabinding.h */; };
+		DA9FAA191973F1C1006A0B4C /* HelperFunc_luabinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA9FAA121973F1C1006A0B4C /* HelperFunc_luabinding.cpp */; };
+		DA9FAA1A1973F1C1006A0B4C /* HelperFunc_luabinding.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9FAA131973F1C1006A0B4C /* HelperFunc_luabinding.h */; };
 		DAF28DA1196D082800959DA1 /* CCScriptEventDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28BE7196D082800959DA1 /* CCScriptEventDispatcher.cpp */; };
 		DAF28DA2196D082800959DA1 /* CCScriptEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28BE8196D082800959DA1 /* CCScriptEventDispatcher.h */; };
 		DAF28DA3196D082800959DA1 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28BE9196D082800959DA1 /* CCTouch.h */; };
@@ -771,6 +777,12 @@
 		49E5774A19597E0B00C26077 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		DA853F9B19501BC90057DF22 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA853F9C19501BC90057DF22 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
+		DA9FAA0C1973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2dx_extra_ios_iap_luabinding.cpp; sourceTree = "<group>"; };
+		DA9FAA0D1973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dx_extra_ios_iap_luabinding.h; sourceTree = "<group>"; };
+		DA9FAA0F1973F1C1006A0B4C /* cocos2dx_extra_luabinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2dx_extra_luabinding.cpp; sourceTree = "<group>"; };
+		DA9FAA101973F1C1006A0B4C /* cocos2dx_extra_luabinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dx_extra_luabinding.h; sourceTree = "<group>"; };
+		DA9FAA121973F1C1006A0B4C /* HelperFunc_luabinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperFunc_luabinding.cpp; sourceTree = "<group>"; };
+		DA9FAA131973F1C1006A0B4C /* HelperFunc_luabinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperFunc_luabinding.h; sourceTree = "<group>"; };
 		DAB2BFC319595A2E00ADD4E0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DAF28BE7196D082800959DA1 /* CCScriptEventDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptEventDispatcher.cpp; sourceTree = "<group>"; };
 		DAF28BE8196D082800959DA1 /* CCScriptEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptEventDispatcher.h; sourceTree = "<group>"; };
@@ -1919,6 +1931,19 @@
 			path = ../../../external/xxtea;
 			sourceTree = "<group>";
 		};
+		DA9FAA091973F1C1006A0B4C /* luabinding */ = {
+			isa = PBXGroup;
+			children = (
+				DA9FAA0C1973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.cpp */,
+				DA9FAA0D1973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.h */,
+				DA9FAA0F1973F1C1006A0B4C /* cocos2dx_extra_luabinding.cpp */,
+				DA9FAA101973F1C1006A0B4C /* cocos2dx_extra_luabinding.h */,
+				DA9FAA121973F1C1006A0B4C /* HelperFunc_luabinding.cpp */,
+				DA9FAA131973F1C1006A0B4C /* HelperFunc_luabinding.h */,
+			);
+			path = luabinding;
+			sourceTree = "<group>";
+		};
 		DAF28BE4196D080700959DA1 /* libquick */ = {
 			isa = PBXGroup;
 			children = (
@@ -1952,6 +1977,7 @@
 		DAF28BF1196D082800959DA1 /* extra */ = {
 			isa = PBXGroup;
 			children = (
+				DA9FAA091973F1C1006A0B4C /* luabinding */,
 				DAF28BF3196D082800959DA1 /* apptools */,
 				DAF28BF6196D082800959DA1 /* cocos2dx_extra.h */,
 				DAF28BF7196D082800959DA1 /* crypto */,
@@ -2929,6 +2955,7 @@
 				DAF2940C196D339500959DA1 /* Vec4.h in Headers */,
 				DAF28DB7196D082800959DA1 /* CCHTTPRequest.h in Headers */,
 				DAF28DAF196D082800959DA1 /* libbase64.h in Headers */,
+				DA9FAA181973F1C1006A0B4C /* cocos2dx_extra_luabinding.h in Headers */,
 				DAF29379196D339000959DA1 /* atitc.h in Headers */,
 				DAF292BB196D338E00959DA1 /* CCActionCamera.h in Headers */,
 				DAF28EE3196D082900959DA1 /* unix.h in Headers */,
@@ -3179,6 +3206,7 @@
 				DAF2932D196D338F00959DA1 /* CCTMXLayer.h in Headers */,
 				DAF293E3196D339300959DA1 /* ZipUtils.h in Headers */,
 				DAF294D3196D359500959DA1 /* CCScale9Sprite.h in Headers */,
+				DA9FAA161973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.h in Headers */,
 				DAF28EA2196D082900959DA1 /* LuaScriptHandlerMgr.h in Headers */,
 				DAF293BD196D339200959DA1 /* CCPlatformMacros.h in Headers */,
 				DAF294B9196D339E00959DA1 /* CCMeshCommand.h in Headers */,
@@ -3227,6 +3255,7 @@
 				DAF293A8196D339100959DA1 /* CCEventListenerKeyboard.h in Headers */,
 				DAF292FB196D338E00959DA1 /* CCLabel.h in Headers */,
 				DAF293AE196D339100959DA1 /* CCEventMouse.h in Headers */,
+				DA9FAA1A1973F1C1006A0B4C /* HelperFunc_luabinding.h in Headers */,
 				DAF29476196D339900959DA1 /* CCEAGLView.h in Headers */,
 				DAF2931F196D338F00959DA1 /* CCScene.h in Headers */,
 				DAF28DB4196D082800959DA1 /* CCAlertViewDelegate.h in Headers */,
@@ -3335,6 +3364,7 @@
 				DAF293E2196D339300959DA1 /* ZipUtils.cpp in Sources */,
 				DAF28EE4196D082900959DA1 /* usocket.c in Sources */,
 				DAF293C6196D339200959DA1 /* CCScriptSupport.cpp in Sources */,
+				DA9FAA151973F1C1006A0B4C /* cocos2dx_extra_ios_iap_luabinding.cpp in Sources */,
 				DAF28DC1196D082800959DA1 /* CCNativeIOS.mm in Sources */,
 				DAF28EC2196D082900959DA1 /* lua_extensions.c in Sources */,
 				DAF2941B196D339500959DA1 /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
@@ -3442,6 +3472,7 @@
 				DAF29475196D339900959DA1 /* CCDirectorCaller.mm in Sources */,
 				DAF28EC8196D082900959DA1 /* except.c in Sources */,
 				DAF293D2196D339200959DA1 /* ccUtils.cpp in Sources */,
+				DA9FAA191973F1C1006A0B4C /* HelperFunc_luabinding.cpp in Sources */,
 				DAF294F6196D368700959DA1 /* cpSpaceComponent.c in Sources */,
 				DAF29304196D338F00959DA1 /* CCLayer.cpp in Sources */,
 				DAF28E91196D082900959DA1 /* Cocos2dxLuaLoader.cpp in Sources */,
@@ -3585,6 +3616,7 @@
 				DAF2933A196D338F00959DA1 /* CCTweenFunction.cpp in Sources */,
 				DAF29332196D338F00959DA1 /* CCTMXXMLParser.cpp in Sources */,
 				DAF294E2196D368700959DA1 /* cpDampedRotarySpring.c in Sources */,
+				DA9FAA171973F1C1006A0B4C /* cocos2dx_extra_luabinding.cpp in Sources */,
 				DAF292D6196D338E00959DA1 /* CCAtlasNode.cpp in Sources */,
 				DAF29336196D338F00959DA1 /* CCTransitionPageTurn.cpp in Sources */,
 				DAF294F2196D368700959DA1 /* cpHashSet.c in Sources */,
