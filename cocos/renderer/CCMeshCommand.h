@@ -40,7 +40,7 @@ class EventListenerCustom;
 class EventCustom;
 
 //it is a common mesh
-class MeshCommand : public RenderCommand
+class CC_DLL MeshCommand : public RenderCommand
 {
 public:
 
