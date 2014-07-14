@@ -850,6 +850,8 @@
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		290E94B5196FC16900694919 /* CocostudioParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290E94B3196FC16900694919 /* CocostudioParserTest.cpp */; };
 		290E94B6196FC16900694919 /* CocostudioParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290E94B3196FC16900694919 /* CocostudioParserTest.cpp */; };
+		29422EC81973872E00348656 /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29422EC61973872E00348656 /* UIScale9SpriteTest.cpp */; };
+		29422EC91973872E00348656 /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29422EC61973872E00348656 /* UIScale9SpriteTest.cpp */; };
 		29FBBBFE196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
@@ -3114,6 +3116,8 @@
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
 		290E94B3196FC16900694919 /* CocostudioParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CocostudioParserTest.cpp; path = ../CocostudioParserTest.cpp; sourceTree = "<group>"; };
 		290E94B4196FC16900694919 /* CocostudioParserTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocostudioParserTest.h; path = ../CocostudioParserTest.h; sourceTree = "<group>"; };
+		29422EC61973872E00348656 /* UIScale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9SpriteTest.cpp; sourceTree = "<group>"; };
+		29422EC71973872E00348656 /* UIScale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9SpriteTest.h; sourceTree = "<group>"; };
 		29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocostudioParserJsonTest.cpp; sourceTree = "<group>"; };
 		29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocostudioParserJsonTest.h; sourceTree = "<group>"; };
 		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
@@ -7218,6 +7222,8 @@
 		29FBBC00196A9F0D00E65826 /* UIAndEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				29422EC61973872E00348656 /* UIScale9SpriteTest.cpp */,
+				29422EC71973872E00348656 /* UIScale9SpriteTest.h */,
 				29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */,
 				29080D20191B595E0066F8DF /* CocosGUIScene.h */,
 				29080D37191B595E0066F8DF /* GUIEditorTest.cpp */,
@@ -8339,6 +8345,7 @@
 				1AC35B8118CECF0C00F37B72 /* SceneController.cpp in Sources */,
 				1AC35B3318CECF0C00F37B72 /* Test.cpp in Sources */,
 				1AC35C2318CECF0C00F37B72 /* ParticleTest.cpp in Sources */,
+				29422EC81973872E00348656 /* UIScale9SpriteTest.cpp in Sources */,
 				1AC35C6118CECF0C00F37B72 /* TouchesTest.cpp in Sources */,
 				1AC35C6318CECF0C00F37B72 /* TransitionsTest.cpp in Sources */,
 				29080DB3191B595E0066F8DF /* UILayoutTest_Editor.cpp in Sources */,
@@ -8421,6 +8428,7 @@
 				1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
 				1AC35BF218CECF0C00F37B72 /* EditBoxTest.cpp in Sources */,
 				38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
+				29422EC91973872E00348656 /* UIScale9SpriteTest.cpp in Sources */,
 				1AC35B3A18CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
 				1AC35BE418CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DD4191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
