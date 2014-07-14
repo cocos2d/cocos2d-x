@@ -16,6 +16,11 @@
 -- @param #rect_table rect
         
 --------------------------------
+-- @function [parent=#ParticleSystemQuad] listenRendererRecreated 
+-- @param self
+-- @param #cc.EventCustom eventcustom
+        
+--------------------------------
 -- overload function: create(string)
 --          
 -- overload function: create()

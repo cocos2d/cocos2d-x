@@ -19,23 +19,6 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    // initialize director
-    auto director = Director::getInstance();
-	auto glview = director->getOpenGLView();
-	if(!glview) {
-		glview = GLView::createWithRect("HelloLua", Rect(0,0,900,640));
-		director->setOpenGLView(glview);
-	}
-
-    glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
-
-    // turn on display FPS
-    director->setDisplayStats(true);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
-
-
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     if (engine->executeScriptFile("src/main.lua")) {

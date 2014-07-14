@@ -7,6 +7,7 @@
 #include "CustomGUIScene.h"
 #include "controller.h"
 #include "cocostudio/CocoStudio.h"
+#include "CocostudioParserTest.h"
 
 enum
 {
@@ -44,6 +45,15 @@ g_guisTests[] =
         [](Ref* sender)
         {
             CustomGUITestScene* scene = new CustomGUITestScene();
+            scene->runThisTest();
+            scene->release();
+        }
+	},
+    {
+        "Cocostudio Parser Test",
+        [](Ref* sender)
+        {
+            CocostudioParserTestScene* scene = new CocostudioParserTestScene();
             scene->runThisTest();
             scene->release();
         }

@@ -145,8 +145,8 @@ Renderer::~Renderer()
 void Renderer::initGLView()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-        /** listen the event that coming to foreground on Android */
+    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+        /** listen the event that renderer was recreated on Android/WP8 */
         this->setupBuffer();
     });
     
