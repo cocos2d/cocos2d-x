@@ -119,9 +119,9 @@ public:
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
     virtual int executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase);
     virtual int executeNodeTouchEvent(Node* pNode, int eventType, Touch *pTouch, int phase);
-    virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
+    virtual int executeKeypadEvent(Node* pNode, int eventType);
     /** execute a accelerometer event */
-    virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
+    virtual int executeAccelerometerEvent(Node* pNode, Acceleration* pAccelerationValue);
     virtual int executeEvent(int nHandler, const char* pEventName, Ref* pEventSource = NULL, const char* pEventSourceClassName = NULL);
 
     virtual bool handleAssert(const char *msg);

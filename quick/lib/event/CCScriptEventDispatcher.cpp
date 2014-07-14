@@ -75,7 +75,7 @@ void CCScriptEventDispatcher::removeScriptEventListener(int handle)
         {
             if (it2->index == handle)
             {
-                ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(it2->listener);
+                ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(it2->listener);
                 LUALOG("[LUA] Remove script event listener: %d", it2->listener);
                 it->second.erase(it2);
                 return;
@@ -88,7 +88,7 @@ void CCScriptEventDispatcher::removeScriptEventListenersByEvent(int event)
 {
     if (!m_scriptEventListeners) return;
 
-    ScriptEngineProtocol *engine = ScriptEngineManager::sharedManager()->getScriptEngine();
+    ScriptEngineProtocol *engine = ScriptEngineManager::getInstance()->getScriptEngine();
     CCScriptEventListenersForDispatcherIterator it = m_scriptEventListeners->find(event);
     if (it != m_scriptEventListeners->end())
     {
@@ -120,7 +120,7 @@ void CCScriptEventDispatcher::removeAllScriptEventListeners()
 {
     if (!m_scriptEventListeners) return;
 
-    ScriptEngineProtocol *engine = ScriptEngineManager::sharedManager()->getScriptEngine();
+    ScriptEngineProtocol *engine = ScriptEngineManager::getInstance()->getScriptEngine();
     CCScriptEventListenersForDispatcherIterator it = m_scriptEventListeners->begin();
     for (; it != m_scriptEventListeners->end(); ++it)
     {
@@ -161,7 +161,7 @@ bool CCScriptEventDispatcher::removeListenerByTag(CCScriptHandlePair &p)
 {
     if (p.tag == s_removeTag)
     {
-        ScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(p.listener);
+        ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(p.listener);
         return true;
     }
     else

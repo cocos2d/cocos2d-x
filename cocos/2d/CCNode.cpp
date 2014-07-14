@@ -50,6 +50,10 @@ THE SOFTWARE.
 #include "math/TransformUtils.h"
 #include "event/CCScriptEventDispatcher.h"
 #include "event/CCTouchDispatcher.h"
+#include "base/CCEventKeyboard.h"
+#include "base/CCEventListenerKeyboard.h"
+#include "base/CCEventAcceleration.h"
+#include "base/CCEventListenerAcceleration.h"
 
 #include "deprecated/CCString.h"
 
@@ -122,6 +126,10 @@ Node::Node(void)
 , m_bTouchSwallowEnabled(true)
 , m_bTouchEnabled(false)
 , m_eTouchMode(modeTouchesOneByOne)
+, _accelerometerEnabled(false)
+, _keyboardEnabled(false)
+, _keyboardListener(nullptr)
+, _accelerationListener(nullptr)
 #endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
@@ -850,6 +858,10 @@ void Node::cleanup()
     this->unscheduleAllSelectors();
     
 #if CC_ENABLE_SCRIPT_BINDING
+    if (_keyboardListener) {
+        _eventDispatcher->removeEventListener(_keyboardListener);
+        _keyboardListener = nullptr;
+    }
 //    if ( _scriptType != kScriptTypeNone)
 //    {
 //        int action = kNodeOnCleanup;
@@ -2269,13 +2281,13 @@ void Node::disableCascadeColor()
     }
 }
 
-#if 1
-
 int Node::addScriptEventListener(int event, int listener, int tag /* = 0 */, int priority /* = 0 */)
 {
 //    CCLOG("----addScriptEventListener: %d\n", event);
     if (NODE_ENTER_FRAME_EVENT==event) {
         scheduleUpdateWithPriorityLua(0, priority);
+//    } else if (KEYPAD_EVENT==event) {
+//        CCLOG("----addScriptEventListener: %d\n", event);
     }
     return _scriptEventDispatcher->addScriptEventListener(event, listener, tag, priority);
 }
@@ -2604,7 +2616,58 @@ CCScriptEventDispatcher *Node::getScriptEventDispatcher()
     return _scriptEventDispatcher;
 }
 
-#endif //1 0
+void Node::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* unused_event)
+{
+    CC_UNUSED_PARAM(keyCode);
+    CC_UNUSED_PARAM(unused_event);
+}
+
+void Node::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
+{
+    CC_UNUSED_PARAM(unused_event);
+#if CC_ENABLE_SCRIPT_BINDING
+//    if(kScriptTypeNone != _scriptType)
+//    {
+//        KeypadScriptData data(keyCode, this);
+//        ScriptEvent event(kKeypadEvent,&data);
+//        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+//    }
+    if (_scriptEventDispatcher->hasScriptEventListener(KEYPAD_EVENT))
+    {
+        ScriptEngineManager::getInstance()->getScriptEngine()->executeKeypadEvent(this, (int)keyCode);
+    }
+#endif
+}
+
+/// isKeyboardEnabled getter
+bool Node::isKeyboardEnabled() const
+{
+    return _keyboardEnabled;
+}
+/// isKeyboardEnabled setter
+void Node::setKeyboardEnabled(bool enabled)
+{
+    if (enabled != _keyboardEnabled)
+    {
+        _keyboardEnabled = enabled;
+        
+        if (_keyboardListener) {
+            _eventDispatcher->removeEventListener(_keyboardListener);
+            _keyboardListener = nullptr;
+        }
+        
+        if (enabled)
+        {
+            auto listener = EventListenerKeyboard::create();
+            listener->onKeyPressed = CC_CALLBACK_2(Node::onKeyPressed, this);
+            listener->onKeyReleased = CC_CALLBACK_2(Node::onKeyReleased, this);
+            
+            _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+            _keyboardListener = listener;
+        }
+    }
+}
+
 
 __NodeRGBA::__NodeRGBA()
 {

@@ -1,6 +1,8 @@
 
 #include "CCClippingRegionNode.h"
 #include "base/CCDirector.h"
+#include "2d/CCDrawNode.h"
+#include "math/Vec2.h"
 //#include "CCEGLView.h"
 
 NS_CC_BEGIN
@@ -23,7 +25,15 @@ ClippingRegionNode* ClippingRegionNode::create(void)
 void ClippingRegionNode::setClippingRegion(const Rect &clippingRegion)
 {
     m_clippingRegion = clippingRegion;
-    setContentSize(clippingRegion.size);
+    DrawNode *node = DrawNode::create();
+    Vec2 vec2Points[4] = {};
+    vec2Points[0] = Vec2(clippingRegion.origin);
+    vec2Points[1] = Vec2(clippingRegion.origin.x + clippingRegion.size.width, clippingRegion.origin.y);
+    vec2Points[2] = Vec2(clippingRegion.origin.x + clippingRegion.size.width,
+                         clippingRegion.origin.y + clippingRegion.size.height);
+    vec2Points[3] = Vec2(clippingRegion.origin.x, clippingRegion.origin.y + clippingRegion.size.height);
+    node->drawPolygon(vec2Points, 4, Color4F(1, 1, 1, 1), 1, Color4F(1,1,1,1));
+    setStencil(node);
 }
 
 //void ClippingRegionNode::visit()

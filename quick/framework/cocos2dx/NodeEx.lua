@@ -192,3 +192,12 @@ end
 function Node:setTouchPriority()
     PRINT_DEPRECATED("Node.setTouchPriority() is deprecated, remove it")
 end
+
+function Node:setKeypadEnabled(enable)
+    print("···Node:setKeypadEnabled")
+    self:setKeyboardEnabled(enable)
+end
+
+function Node:isKeypadEnabled()
+    return self:isKeyboardEnabled()
+end

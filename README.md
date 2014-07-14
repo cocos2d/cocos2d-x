@@ -1,11 +1,13 @@
 quick-cocos2d-x V3.0
 =========
 
-#当前版本为功能预览版
+#当前版本为alpha版
 
 V3.0在cocos2dx V3的最新版本基础之上，移植了原来quick-x的基本框架、强大的player、丰富的示例等，并将增加更多新的功能。
 
-预览版已经完成了大部分基本框架的移植工作；提供了MAC版本的player；已经有多个完整的示例，可以在player中直接运行和调试；创建自己的工程，将游戏快速布署到IOS及Android设备上。
+alpha1版已经完成了大部分基本框架的移植工作；提供了MAC版本的player；已经有多个完整的示例，可以在player中直接运行和调试；创建自己的工程，将游戏快速布署到IOS及Android设备上。
+
+alpha2版合并了cocos2d-x3.2rc0版本核心引擎；完善了单点及多点触摸机制，并提供了相应的示例；为Anysdk封装了Lua接口，并提供了相应的示例；修改了1版中player的一些问题；增补和修改了一些框架接口及底层功能。
 
 后续功能已经在继续开发中，敬请期待！
     
@@ -25,7 +27,7 @@ V3.0在cocos2dx V3的最新版本基础之上，移植了原来quick-x的基本�
 
 在开始使用quick前，请你简单配置一下环境变量。
 
-你只需要进入到quick目录，运行一下setup_mac.sh，所有的配置工作就可以完成了。(Windows下请运行setup_win.bat)
+你只需要运行一下setup_mac.sh，所有的配置工作就可以完成了。(Windows下请运行setup_win.bat)
 
 如果需要编译Android，请按照以前的教程配置好ADT+NDK开发环境。
     
@@ -35,17 +37,15 @@ V3.0在cocos2dx V3的最新版本基础之上，移植了原来quick-x的基本�
 
 如果你是拉取的源码仓库，请在quick/player目录下找到工程目录，打开工程编译运行即可。
     
-##4.关于预览版
+##4.关于alpha版
 
-预览版仅提供MAC的player。
+alpha版目前仅提供MAC的player。Win player正在紧张开发中。
 
-预览版已经移植了大部分的框架，但仍有一些功能未来得及移植。
-
-使用player创建新工程时，预览版暂时不能按你指定的工程名创建同名目录，请自己先创建。
+alpha版已经移植了大部分的框架，虽然仍有一些功能未来得及移植，但已经能够完成多数类型游戏的开发工作。
 
 仍然可以象以前版本一样，在命令行使用create_project来创建新的工程。请指定quick/bin为搜索路径。
 
-预览版新建的工程目前支持MAC、IOS、Android平台，暂时不支持windwos平台工程。(但可以在windows下编译Android)
+alpha版新建的工程目前支持MAC、IOS、Android平台，暂时不支持windwos平台工程。(但可以在windows下编译Android)
     
 ####Git源码仓库：
 https://github.com/dualface/cocos2d-x

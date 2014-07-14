@@ -292,7 +292,6 @@ void ScriptEventCenter::cleanup(void)
 {
     m_touchableNodes->removeAllObjects();
     m_touchingTargets->removeAllObjects();
-    // Director::getInstance()->getTouchDispatcher()->removeDelegate(this);
     if (_touchListener) {
         _eventDispatcher->removeEventListener(_touchListener);
         _touchListener = NULL;
