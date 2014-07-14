@@ -49,8 +49,18 @@ public:
     //
     // Overrides
     //
-	virtual ActionEase* clone() const override = 0;
-    virtual ActionEase* reverse() const override = 0;
+	virtual ActionEase* clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+    
+    virtual ActionEase* reverse() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
     virtual void update(float time) override;
@@ -83,8 +93,16 @@ public:
     //
     // Overrides
     //
-	virtual EaseRateAction* clone() const override = 0;
-    virtual EaseRateAction* reverse() const override = 0;
+	virtual EaseRateAction* clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+    virtual EaseRateAction* reverse() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
 CC_CONSTRUCTOR_ACCESS:
     EaseRateAction() {}
@@ -323,8 +341,17 @@ public:
     //
     // Overrides
     //
-	virtual EaseElastic* clone() const override = 0;
-	virtual EaseElastic* reverse() const override = 0;
+	virtual EaseElastic* clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+	
+    virtual EaseElastic* reverse() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
 CC_CONSTRUCTOR_ACCESS:
     EaseElastic() {}
@@ -428,8 +455,17 @@ class CC_DLL EaseBounce : public ActionEase
 public:
 
     // Overrides
-	virtual EaseBounce* clone() const override = 0;
-	virtual EaseBounce* reverse() const override = 0;
+	virtual EaseBounce* clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+
+	virtual EaseBounce* reverse() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
 CC_CONSTRUCTOR_ACCESS:
     EaseBounce() {}
