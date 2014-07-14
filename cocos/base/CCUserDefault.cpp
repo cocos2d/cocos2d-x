@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "tinyxml2.h"
 #include "base/base64.h"
+#include "base/ccUtils.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
