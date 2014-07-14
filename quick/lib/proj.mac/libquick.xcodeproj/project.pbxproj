@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DAF28220196BD94800959DA1 /* lua_cocos2dx_extra_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF2821E196BD94800959DA1 /* lua_cocos2dx_extra_auto.cpp */; };
-		DAF28221196BD94800959DA1 /* lua_cocos2dx_extra_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DAF2821F196BD94800959DA1 /* lua_cocos2dx_extra_auto.hpp */; };
+		DA9FAA03197377AC006A0B4C /* cocos2dx_extra_luabinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA9FA9FB197377AC006A0B4C /* cocos2dx_extra_luabinding.cpp */; };
+		DA9FAA04197377AC006A0B4C /* cocos2dx_extra_luabinding.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9FA9FC197377AC006A0B4C /* cocos2dx_extra_luabinding.h */; };
+		DA9FAA05197377AC006A0B4C /* HelperFunc_luabinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA9FA9FE197377AC006A0B4C /* HelperFunc_luabinding.cpp */; };
+		DA9FAA06197377AC006A0B4C /* HelperFunc_luabinding.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9FA9FF197377AC006A0B4C /* HelperFunc_luabinding.h */; };
 		DAF28273196BDA7300959DA1 /* HelperFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28225196BDA7300959DA1 /* HelperFunc.cpp */; };
 		DAF28274196BDA7300959DA1 /* HelperFunc.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28226196BDA7300959DA1 /* HelperFunc.h */; };
 		DAF28275196BDA7300959DA1 /* cocos2dx_extra.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28227196BDA7300959DA1 /* cocos2dx_extra.h */; };
@@ -757,8 +759,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DAF2821E196BD94800959DA1 /* lua_cocos2dx_extra_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extra_auto.cpp; sourceTree = "<group>"; };
-		DAF2821F196BD94800959DA1 /* lua_cocos2dx_extra_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extra_auto.hpp; sourceTree = "<group>"; };
+		DA9FA9FB197377AC006A0B4C /* cocos2dx_extra_luabinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2dx_extra_luabinding.cpp; sourceTree = "<group>"; };
+		DA9FA9FC197377AC006A0B4C /* cocos2dx_extra_luabinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dx_extra_luabinding.h; sourceTree = "<group>"; };
+		DA9FA9FE197377AC006A0B4C /* HelperFunc_luabinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperFunc_luabinding.cpp; sourceTree = "<group>"; };
+		DA9FA9FF197377AC006A0B4C /* HelperFunc_luabinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperFunc_luabinding.h; sourceTree = "<group>"; };
 		DAF28225196BDA7300959DA1 /* HelperFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperFunc.cpp; sourceTree = "<group>"; };
 		DAF28226196BDA7300959DA1 /* HelperFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperFunc.h; sourceTree = "<group>"; };
 		DAF28227196BDA7300959DA1 /* cocos2dx_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dx_extra.h; sourceTree = "<group>"; };
@@ -1559,9 +1563,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA9FA9F4197377AC006A0B4C /* luabinding */ = {
+			isa = PBXGroup;
+			children = (
+				DA9FA9FB197377AC006A0B4C /* cocos2dx_extra_luabinding.cpp */,
+				DA9FA9FC197377AC006A0B4C /* cocos2dx_extra_luabinding.h */,
+				DA9FA9FE197377AC006A0B4C /* HelperFunc_luabinding.cpp */,
+				DA9FA9FF197377AC006A0B4C /* HelperFunc_luabinding.h */,
+			);
+			path = luabinding;
+			sourceTree = "<group>";
+		};
 		DAF28222196BDA7300959DA1 /* extra */ = {
 			isa = PBXGroup;
 			children = (
+				DA9FA9F4197377AC006A0B4C /* luabinding */,
 				DAF28224196BDA7300959DA1 /* apptools */,
 				DAF28227196BDA7300959DA1 /* cocos2dx_extra.h */,
 				DAF28228196BDA7300959DA1 /* crypto */,
@@ -3075,8 +3091,6 @@
 		F4E0BEA8196BA25D0053EFD7 /* auto */ = {
 			isa = PBXGroup;
 			children = (
-				DAF2821E196BD94800959DA1 /* lua_cocos2dx_extra_auto.cpp */,
-				DAF2821F196BD94800959DA1 /* lua_cocos2dx_extra_auto.hpp */,
 				F4E0BEA9196BA25D0053EFD7 /* lua_cocos2dx_auto.cpp */,
 				F4E0BEAA196BA25D0053EFD7 /* lua_cocos2dx_auto.hpp */,
 				F4E0BEAB196BA25D0053EFD7 /* lua_cocos2dx_extension_auto.cpp */,
@@ -3363,7 +3377,6 @@
 				F4E0B329196B9C670053EFD7 /* CCObjLoader.h in Headers */,
 				F4E0BB17196BA00A0053EFD7 /* ftgxval.h in Headers */,
 				F4E0C080196BA25D0053EFD7 /* LuaBasicConversions.h in Headers */,
-				DAF28221196BD94800959DA1 /* lua_cocos2dx_extra_auto.hpp in Headers */,
 				F4E0B6EB196B9EEB0053EFD7 /* cpRotaryLimitJoint.h in Headers */,
 				F4E0B544196B9C7D0053EFD7 /* CCEventDispatcher.h in Headers */,
 				F4E0BB2B196BA00A0053EFD7 /* fttrigon.h in Headers */,
@@ -3460,6 +3473,7 @@
 				F4E0B313196B9C670053EFD7 /* CCTMXXMLParser.h in Headers */,
 				F4E0B29F196B9C660053EFD7 /* CCActionCamera.h in Headers */,
 				DAF2835A196CEE6D00959DA1 /* CCBundleReader.h in Headers */,
+				DA9FAA04197377AC006A0B4C /* cocos2dx_extra_luabinding.h in Headers */,
 				F4E0B5AD196B9C7D0053EFD7 /* CCPhysicsContact.h in Headers */,
 				F4E0BB55196BA00A0053EFD7 /* t1tables.h in Headers */,
 				F4E0B570196B9C7D0053EFD7 /* CCScriptSupport.h in Headers */,
@@ -3624,6 +3638,7 @@
 				F4E0BB51196BA00A0053EFD7 /* svxf86nm.h in Headers */,
 				F4E0BB1C196BA00A0053EFD7 /* ftlist.h in Headers */,
 				F4E0B594196B9C7D0053EFD7 /* CCMath.h in Headers */,
+				DA9FAA06197377AC006A0B4C /* HelperFunc_luabinding.h in Headers */,
 				F4E0B572196B9C7D0053EFD7 /* CCTouch.h in Headers */,
 				F4E0B52F196B9C7D0053EFD7 /* CCAutoreleasePool.h in Headers */,
 				DAF28274196BDA7300959DA1 /* HelperFunc.h in Headers */,
@@ -3917,6 +3932,7 @@
 				F4E0B598196B9C7D0053EFD7 /* Mat4.cpp in Sources */,
 				DAF28326196BDACB00959DA1 /* unix.c in Sources */,
 				F4E0B537196B9C7D0053EFD7 /* CCData.cpp in Sources */,
+				DA9FAA05197377AC006A0B4C /* HelperFunc_luabinding.cpp in Sources */,
 				DAF28328196BDACB00959DA1 /* usocket.c in Sources */,
 				DAF282A0196BDA7300959DA1 /* CCNativeMac.mm in Sources */,
 				DAF282F8196BDACB00959DA1 /* lua_cjson.c in Sources */,
@@ -3964,7 +3980,6 @@
 				F4E0B70D196B9EEB0053EFD7 /* cpSpaceComponent.c in Sources */,
 				F4E0B651196B9C7D0053EFD7 /* CCQuadCommand.cpp in Sources */,
 				DAF282FE196BDACB00959DA1 /* lfs.c in Sources */,
-				DAF28220196BD94800959DA1 /* lua_cocos2dx_extra_auto.cpp in Sources */,
 				DAF2831C196BDACB00959DA1 /* serial.c in Sources */,
 				F4E0B539196B9C7D0053EFD7 /* CCDataVisitor.cpp in Sources */,
 				F4E0B601196B9C7D0053EFD7 /* CCGLView.cpp in Sources */,
@@ -4009,6 +4024,7 @@
 				F4E0B583196B9C7D0053EFD7 /* ObjectFactory.cpp in Sources */,
 				F4E0B555196B9C7D0053EFD7 /* CCEventListenerTouch.cpp in Sources */,
 				F4E0B5F9196B9C7D0053EFD7 /* CCGLViewProtocol.cpp in Sources */,
+				DA9FAA03197377AC006A0B4C /* cocos2dx_extra_luabinding.cpp in Sources */,
 				F4E0B5FB196B9C7D0053EFD7 /* CCImage.cpp in Sources */,
 				DAF28302196BDACB00959DA1 /* lsqlite3.c in Sources */,
 				F4E0B795196BA0030053EFD7 /* edtaa3func.cpp in Sources */,
