@@ -1978,36 +1978,20 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
 	switch (tag) 
     {
 		case 0:
-			file = "Images/background.png";
+			file = "Images/test_image.png";
 			break;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            // android can not pack .gz file into apk file
         case 1:
-            file = "Images/fire_rgba8888.pvr";
+            file = "Images/test_image_rgba8888.pvr";
             break;
         case 2:
-            file = "Images/grossini_pvr_rgba8888.pvr";
+            file = "Images/test_image_rgb888.pvr";
             break;
         case 3:
-            file = "Images/grossini_pvr_rgba4444.pvr";
+            file = "Images/test_image_rgba4444.pvr";
             break;
         case 4:
             file = "Images/test_image_a8.pvr";
             break;
-#else
-		case 1:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 2:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 3:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 4:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-#endif
 	}
 
     _background = Sprite::create(file.c_str());
