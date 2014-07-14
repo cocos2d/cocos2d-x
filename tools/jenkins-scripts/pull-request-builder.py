@@ -205,7 +205,7 @@ def main():
           if(ret == 0):
             _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
             filesize = os.path.getsize(_path)
-            pr_desc = pr_desc + '<br /><h3>size of libcpp_empty_test is:' + str(filesize/1024) + 'kb</h3>'
+            pr_desc = pr_desc + '<br /><h3>size of libcpp_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
             set_description(pr_desc, target_url)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
