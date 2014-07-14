@@ -156,6 +156,18 @@
             "files": [
                 "frameworks/runtime-src/proj.android/AndroidManifest.xml"
             ]
+        },
+        "project_replace_mac_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
+            ]
+        },
+        "project_replace_ios_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
+            ]
         }
     }
 }

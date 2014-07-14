@@ -253,6 +253,8 @@ THE SOFTWARE.
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTileMapAtlas.h"
+#include "2d/CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
 
 // component
 #include "2d/CCComponent.h"
@@ -261,6 +263,10 @@ THE SOFTWARE.
 //3d
 #include "3d/CCSprite3D.h"
 #include "3d/CCMesh.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCAnimate3D.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCSprite3DMaterial.h"
 
 // Audio
 #include "audio/include/SimpleAudioEngine.h"

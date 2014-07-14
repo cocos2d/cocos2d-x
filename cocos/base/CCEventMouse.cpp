@@ -30,7 +30,7 @@ NS_CC_BEGIN
 EventMouse::EventMouse(MouseEventType mouseEventCode)
 : Event(Type::MOUSE)
 , _mouseEventType(mouseEventCode)
-, _mouseButton(0)
+, _mouseButton(-1)
 , _x(0.0f)
 , _y(0.0f)
 , _scrollX(0.0f)

@@ -18,9 +18,7 @@ namespace cocostudio
     static const char* P_BallDisabledData = "ballDisabledData";
     static const char* P_ProgressBarData = "progressBarData";
     
-    static const char* P_BarFileName = "barFileName";
-    
-    static SliderReader* instanceSliderReader = NULL;
+    static SliderReader* instanceSliderReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(SliderReader)
     
@@ -125,7 +123,7 @@ namespace cocostudio
         } //end of for loop
         
         if (slider->isScale9Enabled()) {
-            slider->setSize(Size(barLength, slider->getContentSize().height));
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
         }
         slider->setPercent(percent);
         

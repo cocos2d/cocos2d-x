@@ -201,7 +201,7 @@ void TouchableSpriteTest::onEnter()
         nextItem->setFontSizeObj(16);
         nextItem->setPosition(VisibleRect::right() + Vec2(-100, -30));
         
-        auto menu2 = Menu::create(nextItem, NULL);
+        auto menu2 = Menu::create(nextItem, nullptr);
         menu2->setPosition(Vec2(0, 0));
         menu2->setAnchorPoint(Vec2(0, 0));
         this->addChild(menu2);
@@ -405,7 +405,7 @@ void RemoveListenerWhenDispatching::onEnter()
 
             (*enable) = true;
         }
-    }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), NULL);
+    }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), nullptr);
     
     toggleItem->setPosition(origin + Vec2(size.width/2, 80));
     auto menu = Menu::create(toggleItem, nullptr);
@@ -1153,7 +1153,7 @@ PauseResumeTargetTest::PauseResumeTargetTest()
         
         closeItem->setPosition(VisibleRect::center());
         
-        auto closeMenu = Menu::create(closeItem, NULL);
+        auto closeMenu = Menu::create(closeItem, nullptr);
         closeMenu->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         closeMenu->setPosition(Vec2::ZERO);
         
@@ -1216,7 +1216,7 @@ Issue4129::Issue4129()
         nextItem->setFontSizeObj(16);
         nextItem->setPosition(VisibleRect::right() + Vec2(-100, -30));
         
-        auto menu2 = Menu::create(nextItem, NULL);
+        auto menu2 = Menu::create(nextItem, nullptr);
         menu2->setPosition(Vec2(0, 0));
         menu2->setAnchorPoint(Vec2(0, 0));
         this->addChild(menu2);

@@ -30,7 +30,7 @@
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "jni/JniHelper.h"
-
+#include "base/CCEventController.h"
 
 NS_CC_BEGIN
 
@@ -47,18 +47,19 @@ public:
         auto iter = std::find_if(Controller::s_allController.begin(), Controller::s_allController.end(), [&](Controller* controller){
                 return (deviceName == controller->_deviceName) && (deviceId == controller->_deviceId);
             });
+
+        return iter;
     }
 
     static void onConnected(const std::string& deviceName, int deviceId)
     {
         // Check whether the controller is already connected.
-        log("onConnected %s,%d", deviceName.c_str(),deviceId);
+        CCLOG("onConnected %s,%d", deviceName.c_str(),deviceId);
 
         auto iter = findController(deviceName, deviceId);
         if (iter != Controller::s_allController.end())
             return;
 
-        log("onConnected new device");
         // It's a new controller being connected.
         auto controller = new cocos2d::Controller();
         controller->_deviceId = deviceId;
@@ -70,11 +71,11 @@ public:
 
     static void onDisconnected(const std::string& deviceName, int deviceId)
     {
-        log("onDisconnected %s,%d", deviceName.c_str(),deviceId);
+        CCLOG("onDisconnected %s,%d", deviceName.c_str(),deviceId);
+
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
-            log("Could not find the controller!");
             CCLOGERROR("Could not find the controller!");
             return;
         }
@@ -85,11 +86,10 @@ public:
 
     static void onButtonEvent(const std::string& deviceName, int deviceId, int keyCode, bool isPressed, float value, bool isAnalog)
     {
-        log("onButtonEvent %s,%d", deviceName.c_str(),deviceId);
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
-            log("onButtonEvent new connect");
+            CCLOG("onButtonEvent:connect new controller.");
             onConnected(deviceName, deviceId);
             iter = findController(deviceName, deviceId);
         }
@@ -102,10 +102,11 @@ public:
         auto iter = findController(deviceName, deviceId);
         if (iter == Controller::s_allController.end())
         {
+            CCLOG("onAxisEvent:connect new controller.");
             onConnected(deviceName, deviceId);
             iter = findController(deviceName, deviceId);
         }
-
+        
         (*iter)->onAxisEvent(axisCode, value, isAnalog);
     }
 
@@ -152,6 +153,16 @@ Controller::Controller()
     , _axisEvent(nullptr)
 {
     init();
+}
+
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
+{
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", "(IIZ)V")) {
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, _deviceId, externalKeyCode, receive);
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 NS_CC_END

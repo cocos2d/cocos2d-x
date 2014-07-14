@@ -41,6 +41,9 @@ class EventDispatcher;
 class Controller
 {
 public:
+    /** Controllers' standard  key
+     * Controller receives only standard key which contained within enum Key by default.
+     */
     enum Key
     {
         JOYSTICK_LEFT_X = 1000,
@@ -87,9 +90,17 @@ public:
     static const int TAG_UNSET = -1;
 
     static const std::vector<Controller*>& getAllController(){ return s_allController;}
+    /** Gets a controller with its tag
+     * @param tag   An identifier to find the controller.
+     */
     static Controller* getControllerByTag(int tag);
-
+    /** To start discovering new controllers
+     * @warning The API only work on the IOS platform.Empty implementation on Android
+     */
     static void startDiscoveryController();
+    /** End the discovery process
+     * @warning The API only work on the IOS platform.Empty implementation on Android
+     */
     static void stopDiscoveryController();
 
     const std::string& getDeviceName() const { return _deviceName;}
@@ -99,7 +110,24 @@ public:
 
     const KeyStatus& getKeyStatus(int keyCode);
     
+    /** Activate receives key event from external key. e.g. back,menu.
+     * Controller receives only standard key which contained within enum Key by default.
+     * @warning The API only work on the android platform for support diversified game controller.
+     *
+     * @param externalKeyCode  external key code
+     * @param receive  true if external key event on this controller should be receive, false otherwise.
+     */
+    void receiveExternalKeyEvent(int externalKeyCode,bool receive);
+
+    /** Changes the tag that is used to identify the controller easily.
+     * @param tag   A integer that identifies the controller.
+     */
     void setTag(int tag) { _controllerTag = tag;}
+    /**
+     * Returns a tag that is used to identify the controller easily.
+     *
+     * @return An integer that identifies the controller.
+     */
     int getTag() const { return _controllerTag;}
 
 private:

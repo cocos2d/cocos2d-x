@@ -66,7 +66,7 @@ struct Color3B
     GLubyte g;
     GLubyte b;
     
-    static const  Color3B WHITE;
+    static const Color3B WHITE;
     static const Color3B YELLOW;
     static const Color3B BLUE;
     static const Color3B GREEN;

@@ -41,7 +41,7 @@ bool TableViewTestLayer::init()
 	// Back Menu
 	MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
 	itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-	Menu *menuBack = Menu::create(itemBack, NULL);
+	Menu *menuBack = Menu::create(itemBack, nullptr);
 	menuBack->setPosition(Vec2::ZERO);
 	addChild(menuBack);
 

@@ -447,8 +447,7 @@ bool Bundle3D::loadBinary(const std::string& path)
         return false;
     }
 
-    // Create bundle reader
-    //CC_SAFE_DELETE(_bundleReader);
+    // Initialise bundle reader
     _binaryReader.init( (char*)_binaryBuffer->getBytes(),  _binaryBuffer->getSize() );
 
     // Read identifier info
@@ -463,20 +462,23 @@ bool Bundle3D::loadBinary(const std::string& path)
 
     // Read version
     unsigned char ver[2];
-    if (_binaryReader.read(ver, 1, 2) == 2)
-    {
-        if (ver[0] != 0) {
-            clear();
-            CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
-            return false;
-        }
-        
-        if (ver[1] <= 0 || ver[1] > 2) {
-            clear();
-            CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
-            return false;
-        }
+    if (_binaryReader.read(ver, 1, 2)!= 2){
+        CCLOG("Failed to read version:");
+        return false;
     }
+    
+    if (ver[0] != 0) {
+        clear();
+        CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+        return false;
+    }
+    
+    if (ver[1] <= 0 || ver[1] > 2) {
+        clear();
+        CCLOGINFO(false, "Unsupported version: (%d, %d)", ver[0], ver[1]);
+        return false;
+    }
+    
 
     // Read ref table size
     if (_binaryReader.read(&_referenceCount, 4, 1) != 1)
@@ -766,17 +768,37 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
 
 GLenum Bundle3D::parseGLType(const std::string& str)
 {
-    if (str == "GL_FLOAT")
+    if (str == "GL_BYTE")
     {
-        return GL_FLOAT;
+        return GL_BYTE;
+    }
+    else if(str == "GL_UNSIGNED_BYTE")
+    {
+        return GL_UNSIGNED_BYTE;
+    }
+    else if(str == "GL_SHORT")
+    {
+        return GL_SHORT;
+    }
+    else if(str == "GL_UNSIGNED_SHORT")
+    {
+        return GL_UNSIGNED_SHORT;
+    }
+    else if(str == "GL_INT")
+    {
+        return GL_INT;
     }
     else if (str == "GL_UNSIGNED_INT")
     {
         return GL_UNSIGNED_INT;
     }
+    else if (str == "GL_FLOAT")
+    {
+        return GL_FLOAT;
+    }
     else
     {
-        assert(0);
+        CCASSERT(false, "Wrong GL type");
         return 0;
     }
 }

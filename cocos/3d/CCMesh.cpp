@@ -125,7 +125,7 @@ bool RenderMeshData::init(const std::vector<float>& positions,
     return true;
 }
 
-bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
     _vertexs = vertices;
     _indices = indices;
@@ -174,10 +174,10 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
-Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, int numIndex, const std::vector<MeshVertexAttrib> &attribs, int attribCount)
+Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, const std::vector<MeshVertexAttrib> &attribs)
 {
     auto mesh = new Mesh();
-    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount))
+    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, attribs))
     {
         mesh->autorelease();
         return mesh;
@@ -192,17 +192,17 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
     if (!bRet)
         return false;
     
-    restore();
+    buildBuffer();
     return true;
 }
 
-bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
+bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
-    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
+    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, attribs);
     if (!bRet)
         return false;
     
-    restore();
+    buildBuffer();
     return true;
 }
 
@@ -242,20 +242,20 @@ void Mesh::buildBuffer()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
     unsigned int indexSize = 2;
-    IndexFormat indexformat = IndexFormat::INDEX16;
     
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * _renderdata._indices.size(), &_renderdata._indices[0], GL_STATIC_DRAW);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     _primitiveType = PrimitiveType::TRIANGLES;
-    _indexFormat = indexformat;
+    _indexFormat = IndexFormat::INDEX16;
     _indexCount = _renderdata._indices.size();
 }
 
 void Mesh::restore()
 {
-    cleanAndFreeBuffers();
+    _vertexBuffer = 0;
+    _indexBuffer = 0;
     buildBuffer();
 }
 
@@ -322,22 +322,22 @@ void MeshCache::removeUnusedMesh()
 
 MeshCache::MeshCache()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // listen the event when app go to foreground
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCache::listenBackToForeground, this));
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // listen the event that renderer was recreated on Android/WP8
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCache::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
 }
 MeshCache::~MeshCache()
 {
     removeAllMeshes();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-void MeshCache::listenBackToForeground(EventCustom* event)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+void MeshCache::listenRendererRecreated(EventCustom* event)
 {
     for (auto iter = _meshes.begin(); iter != _meshes.end(); ++iter)
     {

@@ -673,12 +673,6 @@
 -- @param #cc.Ref ref
         
 --------------------------------
--- @function [parent=#Node] enumerateChildren 
--- @param self
--- @param #string str
--- @param #function func
-        
---------------------------------
 -- @function [parent=#Node] getonExitTransitionDidStartCallback 
 -- @param self
 -- @return function#function ret (return value: function)

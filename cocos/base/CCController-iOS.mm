@@ -114,8 +114,6 @@ public:
     GCController* _gcController;
 };
 
-std::vector<Controller*> Controller::s_allController;
-
 void Controller::startDiscoveryController()
 {
     [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
@@ -309,6 +307,10 @@ void Controller::registerListeners()
 bool Controller::isConnected() const
 {
     return _impl->_gcController.isAttachedToDevice == YES;
+}
+
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
+{
 }
 
 NS_CC_END

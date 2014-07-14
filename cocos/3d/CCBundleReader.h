@@ -112,7 +112,7 @@ public:
     bool readMatrix(float* m);
 
 private:
-    long int m_position;
+    ssize_t m_position;
     ssize_t  m_length;
     char* m_buffer;
 };
@@ -136,6 +136,7 @@ inline bool BundleReader::readArray(unsigned int *length, std::vector<T> *values
     {
         return false;
     }
+    
     if (*length > 0 && values)
     {
         values->resize(*length);
