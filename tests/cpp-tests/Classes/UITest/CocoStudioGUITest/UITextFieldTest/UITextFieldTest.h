@@ -78,4 +78,17 @@ protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest_LineWrap)
     Text* _displayValueLabel;
 };
+
+class UITextFieldTest_TrueTypeFont : public UIScene
+{
+public:
+    UITextFieldTest_TrueTypeFont();
+    ~UITextFieldTest_TrueTypeFont();
+    bool init();
+    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UITextFieldTest_TrueTypeFont)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UITextFieldTest__) */
