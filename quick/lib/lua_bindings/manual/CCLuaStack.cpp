@@ -171,7 +171,9 @@ bool LuaStack::init(void)
 //    register_all_cocos2dx_extra(_state);
 //    register_all_cocos2dx_external_extra_manual(_state);
     luaopen_cocos2dx_extra_luabinding(_state);
-//    luaopen_cocos2dx_extra_ios_iap_luabinding(_state);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    luaopen_cocos2dx_extra_ios_iap_luabinding(_state);
+#endif
     luaopen_HelperFunc_luabinding(_state);
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
