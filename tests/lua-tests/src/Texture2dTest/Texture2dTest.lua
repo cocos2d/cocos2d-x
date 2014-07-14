@@ -1266,31 +1266,17 @@ local function TextureMemoryAlloc()
         local targetPlatform = cc.Application:getInstance():getTargetPlatform()
         local file = ""
 
-        if targetPlatform == cc.PLATFORM_OS_ANDROID then
-            if tag == 0 then
-                file = "Images/background.png"
+        if tag == 0 then
+                file = "Images/test_image.png"
             elseif tag == 1 then
-                file = "Images/fire_rgba8888.pvr"
+                file = "Images/test_image_rgba8888.pvr"
             elseif tag == 2 then
-                file = "Images/grossini_pvr_rgba8888.pvr"
+                file = "Images/test_image_rgb888.pvr"
             elseif tag == 3 then
-                 file = "Images/grossini_pvr_rgba4444.pvr"
+                file = "Images/test_image_rgba4444.pvr"
             elseif tag == 4 then
                 file = "Images/test_image_a8.pvr"
             end
-        else
-            if tag == 0 then
-                file = "Images/background.png"
-            elseif tag == 1 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            elseif tag == 2 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            elseif tag == 3 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            elseif tag == 4 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            end
-        end
 
         m_pBackground = cc.Sprite:create(file)
         ret:addChild(m_pBackground, -10)
