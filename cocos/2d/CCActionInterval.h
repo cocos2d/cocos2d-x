@@ -80,10 +80,11 @@ public:
     virtual ActionInterval* reverse() const override = 0;
 	virtual ActionInterval *clone() const override = 0;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** initializes the action */
     bool initWithDuration(float d);
 
+protected:
     float _elapsed;
     bool   _firstTick;
 };
@@ -588,6 +589,8 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     JumpTo() {}
     virtual ~JumpTo() {}
+
+private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };
 
