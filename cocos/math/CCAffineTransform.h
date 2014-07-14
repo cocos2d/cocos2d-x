@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-struct AffineTransform {
+struct CC_DLL AffineTransform {
     float a, b, c, d;
     float tx, ty;
 
