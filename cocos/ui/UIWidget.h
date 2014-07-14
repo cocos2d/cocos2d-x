@@ -37,7 +37,7 @@ class EventListenerTouchOneByOne;
 
 namespace ui {
     
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     TOUCH_EVENT_BEGAN,
     TOUCH_EVENT_MOVED,
@@ -45,7 +45,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
     TOUCH_EVENT_CANCELED
 }TouchEventType;
     
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
+typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 
 

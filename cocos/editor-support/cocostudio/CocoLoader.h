@@ -36,101 +36,80 @@
 
 namespace cocostudio{
         
-
+class CocoLoader;
+    
 struct  stExpCocoAttribDesc
 {
-	rapidjson::Type	m_Type;
-	uint64_t m_szName;
-	uint64_t m_szDefaultValue;
+    char	m_cTypeName;
+    uint32_t m_szName;
 public:
-	
-	void ReBuild(char* pStringMemoryAddr)
-	{
-		m_szName = m_szName + (uint64_t)pStringMemoryAddr;
-		m_szDefaultValue = m_szDefaultValue + (uint64_t)pStringMemoryAddr;
-	}
+    char* GetName(CocoLoader*	pCoco);
 };
 
 struct  stExpCocoObjectDesc
 {
-	uint32_t		m_nAttribNum;
-	uint64_t		m_szName;
-	uint64_t		m_pAttribDescArray;
-
+    unsigned char	m_cAttribNum;
+    uint32_t		m_szName;
+    uint32_t		m_pAttribDescArray;
 public:
-	stExpCocoObjectDesc()
-	{
-		m_nAttribNum = 0;
-		m_szName = 0;
-		m_pAttribDescArray = 0;
-	}
-	void ReBuild(char* pAttribMemoryAddr,char* pStringMemoryAddr)
-	{
-		m_szName = m_szName + (uint64_t)pStringMemoryAddr;
-		m_pAttribDescArray = m_pAttribDescArray + (uint64_t)pAttribMemoryAddr;
-		stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*)m_pAttribDescArray;
-		for(uint32_t i = 0 ; i < m_nAttribNum ; i++)
-		{
-			tpAttribDescArray[i].ReBuild(pStringMemoryAddr);
-		}
-	}
-	
+    char*	GetName(CocoLoader*	pCoco);
+    int		GetAttribNum();
+    stExpCocoAttribDesc*	GetAttribDescArray(CocoLoader*	pCoco);
 };
-   
-class CocoLoader;
 
-struct stExpCocoNode
+struct  stExpCocoNode
 {
-protected:
-	int32_t	m_ObjIndex;
-	int32_t	m_AttribIndex;
-	uint32_t	m_ChildNum;
-	uint64_t	m_szValue;
-	uint64_t	m_ChildArray;
-    
 public:
-    rapidjson::Type	 GetType(CocoLoader*	pCoco);
-	char*	GetName(CocoLoader*	pCoco);
-	char*	GetValue();
-	int	GetChildNum();
-	stExpCocoNode*	GetChildArray();
-    
+    int16_t			m_ObjIndex;
+    int16_t			m_AttribIndex;
+    unsigned char	m_ChildNum;
+    uint32_t		m_szValue;
+    uint32_t		m_ChildArray;
 public:
-	inline  void	ReBuild(char* cocoNodeAddr,char* pStringMemoryAddr);
-	void	WriteJson(CocoLoader* pCoco, void* pFileName = NULL, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
+    rapidjson::Type		GetType(CocoLoader*	pCoco);
+    char*				GetName(CocoLoader*	pCoco);
+    char*				GetValue(CocoLoader*	pCoco);
+    int					GetChildNum();
+    stExpCocoNode*		GetChildArray(CocoLoader*	pCoco);
+public:
+    void WriteJson(CocoLoader* pCoco,void* pFileName = nullptr, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
 };
-
 
 struct	stCocoFileHeader
 {
-	char	m_FileDesc[32];
-	char	m_Version[32];
-	uint32_t	m_nFirstUsed;
-	uint32_t	m_ObjectCount;
-	uint64_t	m_lAttribMemAddr;
-	uint64_t	m_CocoNodeMemAddr;
-	uint64_t	m_lStringMemAddr;
-	
+    char		m_FileDesc[32];
+    char		m_Version[32];
+    uint32_t	m_nDataSize;
+    uint32_t	m_nCompressSize;
+    uint32_t	m_ObjectCount;
+    uint32_t	m_lAttribMemAddr;
+    uint32_t	m_CocoNodeMemAddr;
+    uint32_t	m_lStringMemAddr;
+    
 };
-
 
 class CocoLoader
 {
-private:
-	stCocoFileHeader*	m_pFileHeader;
-	stExpCocoNode*		m_pRootNode;
-	stExpCocoObjectDesc*	m_pObjectDescArray;
-
+    stCocoFileHeader*			m_pFileHeader;
+    stExpCocoNode*				m_pRootNode;
+    stExpCocoObjectDesc*		m_pObjectDescArray;
+    char*						m_pMemoryBuff;
+    
 public:
-	CocoLoader();
-	~CocoLoader();
-
+    CocoLoader();
+    ~CocoLoader();
 public:
-	bool	ReadCocoBinBuff(char* pBinBuff);
-	stCocoFileHeader*	GetFileHeader(){return m_pFileHeader;}
-	stExpCocoNode*		GetRootCocoNode(){return	m_pRootNode;}
-	stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
-	stExpCocoObjectDesc*	GetCocoObjectDesc(const char* szObjDesc);
+    
+    bool					ReadCocoBinBuff(char* pBinBuff);
+    stCocoFileHeader*		GetFileHeader(){return m_pFileHeader;}
+    stExpCocoNode*			GetRootCocoNode(){return	m_pRootNode;}
+    stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
+    stExpCocoObjectDesc*	GetCocoObjectDesc(const char* szObjDesc);
+    stExpCocoObjectDesc*	GetCocoObjectDesc(int vIndex);
+    char*					GetMemoryAddr_AttribDesc();
+    char*					GetMemoryAddr_CocoNode();
+    char*					GetMemoryAddr_String();
+    
 };
 
 }

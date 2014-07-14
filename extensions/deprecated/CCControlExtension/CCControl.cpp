@@ -59,7 +59,7 @@ __Control* __Control::create()
     else
     {
         CC_SAFE_DELETE(pRet);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -154,7 +154,7 @@ void __Control::addTargetWithActionForControlEvents(Ref* target, Handler action,
  *
  * @param target The target object that is, the object to which the action 
  * message is sent. It cannot be nil. The target is not retained.
- * @param action A selector identifying an action message. It cannot be NULL.
+ * @param action A selector identifying an action message. It cannot be nullptr.
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
@@ -320,7 +320,7 @@ bool __Control::isHighlighted() const
 bool __Control::hasVisibleParents() const
 {
     auto parent = this->getParent();
-    for( auto c = parent; c != NULL; c = c->getParent() )
+    for( auto c = parent; c != nullptr; c = c->getParent() )
     {
         if( !c->isVisible() )
         {

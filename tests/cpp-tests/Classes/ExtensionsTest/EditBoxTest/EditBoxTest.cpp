@@ -30,7 +30,7 @@ EditBoxTest::EditBoxTest()
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
     itemBack->setPosition(Vec2(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
-    auto menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
     

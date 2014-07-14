@@ -63,6 +63,8 @@ Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp \
 Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp \
+Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp \
+Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp \
 Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp \
 Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp \
 Classes/UITest/CocoStudioGUITest/UIScene.cpp \
@@ -171,6 +173,7 @@ Classes/Texture2dTest/Texture2dTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 Classes/TileMapTest/TileMapTest.cpp \
+Classes/TileMapTest/TileMapTest2.cpp \
 Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
 Classes/TouchesTest/TouchesTest.cpp \

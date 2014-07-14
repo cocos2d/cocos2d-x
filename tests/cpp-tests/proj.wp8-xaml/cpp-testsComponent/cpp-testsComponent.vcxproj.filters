@@ -846,7 +846,13 @@
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp">
+    <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp">
+      <Filter>Classes\TileMapTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.cpp">
+      <Filter>Classes\UITest\CocosStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.cpp">
       <Filter>Classes\UITest\CocosStudioGUITest</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1569,7 +1575,13 @@
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h">
+    <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h">
+      <Filter>Classes\TileMapTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.h">
+      <Filter>Classes\UITest\CocosStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h">
       <Filter>Classes\UITest\CocosStudioGUITest</Filter>
     </ClInclude>
   </ItemGroup>

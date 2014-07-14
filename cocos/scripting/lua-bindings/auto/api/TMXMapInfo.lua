@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module TMXMapInfo
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TMXMapInfo] setObjectGroups 

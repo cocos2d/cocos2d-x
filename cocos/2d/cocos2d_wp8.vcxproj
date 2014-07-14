@@ -225,6 +225,7 @@
     <ClCompile Include="..\3d\CCAnimate3D.cpp" />
     <ClCompile Include="..\3d\CCAnimation3D.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
+    <ClCompile Include="..\3d\CCBundleReader.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
@@ -279,7 +280,6 @@
     <ClCompile Include="..\base\CCTouch.cpp" />
     <ClCompile Include="..\base\ccTypes.cpp" />
     <ClCompile Include="..\base\CCUserDefault.cpp" />
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp" />
     <ClCompile Include="..\base\ccUTF8.cpp" />
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
@@ -378,6 +378,8 @@
     <ClCompile Include="CCComponentContainer.cpp" />
     <ClCompile Include="CCDrawingPrimitives.cpp" />
     <ClCompile Include="CCDrawNode.cpp" />
+    <ClCompile Include="CCFastTMXLayer.cpp" />
+    <ClCompile Include="CCFastTMXTiledMap.cpp" />
     <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
@@ -433,6 +435,7 @@
     <ClInclude Include="..\3d\CCAnimationCurve.h" />
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
+    <ClInclude Include="..\3d\CCBundleReader.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
@@ -591,6 +594,8 @@
     <ClInclude Include="CCComponentContainer.h" />
     <ClInclude Include="CCDrawingPrimitives.h" />
     <ClInclude Include="CCDrawNode.h" />
+    <ClInclude Include="CCFastTMXLayer.h" />
+    <ClInclude Include="CCFastTMXTiledMap.h" />
     <ClInclude Include="CCFont.h" />
     <ClInclude Include="CCFontAtlas.h" />
     <ClInclude Include="CCFontAtlasCache.h" />

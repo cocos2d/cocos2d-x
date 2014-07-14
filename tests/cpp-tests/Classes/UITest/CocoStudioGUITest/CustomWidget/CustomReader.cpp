@@ -3,7 +3,7 @@
 #include "CustomReader.h"
 #include "CustomImageView.h"
 
-static CustomReader* _instanceCustomReader = NULL;
+static CustomReader* _instanceCustomReader = nullptr;
 
 CustomReader::CustomReader()
 {

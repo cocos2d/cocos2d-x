@@ -230,8 +230,11 @@
     <ClCompile Include="..\..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
     <ClCompile Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
+    <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.cpp" />
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
@@ -428,8 +431,11 @@
     <ClInclude Include="..\..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h" />
     <ClInclude Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
+    <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h" />
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />

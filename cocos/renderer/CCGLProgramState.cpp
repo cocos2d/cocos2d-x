@@ -279,9 +279,9 @@ GLProgramState::GLProgramState()
 , _uniformAttributeValueDirty(true)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // listen the event when app go to foreground
-    CCLOG("create _backToForegroundlistener for GLProgramState");
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
+    /** listen the event that renderer was recreated on Android/WP8 */
+    CCLOG("create rendererRecreatedListener for GLProgramState");
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
 }
@@ -327,6 +327,15 @@ void GLProgramState::resetGLProgram()
 
 void GLProgramState::apply(const Mat4& modelView)
 {
+    applyGLProgram(modelView);
+
+    applyAttributes();
+
+    applyUniforms();
+}
+
+void GLProgramState::applyGLProgram(const Mat4& modelView)
+{
     CCASSERT(_glprogram, "invalid glprogram");
     if(_uniformAttributeValueDirty)
     {
@@ -349,19 +358,24 @@ void GLProgramState::apply(const Mat4& modelView)
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
-
+}
+void GLProgramState::applyAttributes(bool applyAttribFlags)
+{
     // Don't set attributes if they weren't set
     // Use Case: Auto-batching
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
-        GL::enableVertexAttribs(_vertexAttribsFlags);
+        if (applyAttribFlags)
+            GL::enableVertexAttribs(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {
             attribute.second.apply();
         }
     }
-
+}
+void GLProgramState::applyUniforms()
+{
     // set uniforms
     for(auto& uniform : _uniforms) {
         uniform.second.apply();

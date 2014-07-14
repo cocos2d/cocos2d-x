@@ -50,15 +50,7 @@ Controller g_aTestNames[] = {
 
 #endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "Curl", []() { return new CurlTestScene(); } },
-#endif
-#endif
-#endif
-#endif
 #endif
 	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
@@ -85,6 +77,7 @@ Controller g_aTestNames[] = {
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
+	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
@@ -125,7 +118,7 @@ TestController::TestController()
 {
     // add close menu
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
-    auto menu =Menu::create(closeItem, NULL);
+    auto menu =Menu::create(closeItem, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     closeItem->setPosition(Vec2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
@@ -532,7 +525,7 @@ void TestController::autorun()
       If socket(2) (or connect(2)) fails, we (close the socket
       and) try the next address. */
 
-    for (rp = result; rp != NULL; rp = rp->ai_next) {
+    for (rp = result; rp != nullptr; rp = rp->ai_next) {
         sfd = socket(rp->ai_family, rp->ai_socktype,
                     rp->ai_protocol);
         if (sfd == -1)
@@ -548,7 +541,7 @@ void TestController::autorun()
 #endif
     }
 
-    if (rp == NULL) {               /* No address succeeded */
+    if (rp == nullptr) {               /* No address succeeded */
         CCLOG("autotest: could not connect!");
         return;
     }

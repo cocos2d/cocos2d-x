@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 #include "CCGL.h"
+#include "CCRef.h"
 
 NS_CC_BEGIN
 
@@ -65,15 +66,15 @@ struct Color3B
     GLubyte g;
     GLubyte b;
     
-    const static Color3B WHITE;
-    const static Color3B YELLOW;
-    const static Color3B BLUE;
-    const static Color3B GREEN;
-    const static Color3B RED;
-    const static Color3B MAGENTA;
-    const static Color3B BLACK;
-    const static Color3B ORANGE;
-    const static Color3B GRAY;
+    static const Color3B WHITE;
+    static const Color3B YELLOW;
+    static const Color3B BLUE;
+    static const Color3B GREEN;
+    static const Color3B RED;
+    static const Color3B MAGENTA;
+    static const Color3B BLACK;
+    static const Color3B ORANGE;
+    static const Color3B GRAY;
 };
 
 /** RGBA color composed of 4 bytes
@@ -98,15 +99,15 @@ struct Color4B
     GLubyte b;
     GLubyte a;
 
-    const static Color4B WHITE;
-    const static Color4B YELLOW;
-    const static Color4B BLUE;
-    const static Color4B GREEN;
-    const static Color4B RED;
-    const static Color4B MAGENTA;
-    const static Color4B BLACK;
-    const static Color4B ORANGE;
-    const static Color4B GRAY;
+    static const Color4B WHITE;
+    static const Color4B YELLOW;
+    static const Color4B BLUE;
+    static const Color4B GREEN;
+    static const Color4B RED;
+    static const Color4B MAGENTA;
+    static const Color4B BLACK;
+    static const Color4B ORANGE;
+    static const Color4B GRAY;
 };
 
 
@@ -137,15 +138,15 @@ struct Color4F
     GLfloat b;
     GLfloat a;
 
-    const static Color4F WHITE;
-    const static Color4F YELLOW;
-    const static Color4F BLUE;
-    const static Color4F GREEN;
-    const static Color4F RED;
-    const static Color4F MAGENTA;
-    const static Color4F BLACK;
-    const static Color4F ORANGE;
-    const static Color4F GRAY;
+    static const Color4F WHITE;
+    static const Color4F YELLOW;
+    static const Color4F BLUE;
+    static const Color4F GREEN;
+    static const Color4F RED;
+    static const Color4F MAGENTA;
+    static const Color4F BLACK;
+    static const Color4F ORANGE;
+    static const Color4F GRAY;
 };
 
 /** A vertex composed of 2 floats: x, y
@@ -254,6 +255,15 @@ struct V3F_C4B_T2F
     Tex2F        texCoords;           // 8 bytes
 };
 
+//! a Vec2 with a vertex point, a tex coord point
+struct V3F_T2F
+{
+    //! vertices (2F)
+    Vec3       vertices;
+    //! tex coords (2F)
+    Tex2F          texCoords;
+};
+
 //! A Triangle of V2F_C4B_T2F
 struct V2F_C4B_T2F_Triangle
 {
@@ -304,6 +314,18 @@ struct V2F_C4F_T2F_Quad
     V2F_C4F_T2F    tr;
 };
 
+struct V3F_T2F_Quad
+{
+    //! bottom left
+    V3F_T2F    bl;
+    //! bottom right
+    V3F_T2F    br;
+    //! top left
+    V3F_T2F    tl;
+    //! top right
+    V3F_T2F    tr;
+};
+
 //! Blend Function used for textures
 struct BlendFunc
 {
@@ -313,13 +335,13 @@ struct BlendFunc
     GLenum dst;
 
     //! Blending disabled. Uses {GL_ONE, GL_ZERO}
-    const static BlendFunc DISABLE;
+    static const BlendFunc DISABLE;
     //! Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
-    const static BlendFunc ALPHA_PREMULTIPLIED;
+    static const BlendFunc ALPHA_PREMULTIPLIED;
     //! Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
-    const static BlendFunc ALPHA_NON_PREMULTIPLIED;
+    static const BlendFunc ALPHA_NON_PREMULTIPLIED;
     //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
-    const static BlendFunc ADDITIVE;
+    static const BlendFunc ADDITIVE;
 
     bool operator==(const BlendFunc &a) const
     {
@@ -463,6 +485,7 @@ public:
  @brief The device accelerometer reports values for each axis in units of g-force
  */
 class Acceleration
+    : public Ref
 {
 public:
     double x;

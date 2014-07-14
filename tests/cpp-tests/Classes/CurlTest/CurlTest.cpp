@@ -33,13 +33,13 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
     curl = curl_easy_init();
     if (curl) 
     {
-        curl_easy_setopt(curl, CURLOPT_URL, "google.com");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://webtest.cocos2d-x.org/curltest");
         res = curl_easy_perform(curl);
         /* always cleanup */
         curl_easy_cleanup(curl);
         if (res == 0)
         {
-            _label->setString("0 response");
+            _label->setString("Connect successfully!");
         }
         else
         {

@@ -22,7 +22,7 @@ SceneTestLayer1::SceneTestLayer1()
     auto item2 = MenuItemFont::create( "Test pushScene w/transition", CC_CALLBACK_1(SceneTestLayer1::onPushSceneTran, this));
     auto item3 = MenuItemFont::create( "Quit", CC_CALLBACK_1(SceneTestLayer1::onQuit, this));
     
-    auto menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create( item1, item2, item3, nullptr );
     menu->alignItemsVertically();
     
     addChild( menu );
@@ -107,7 +107,7 @@ SceneTestLayer2::SceneTestLayer2()
     auto item2 = MenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
     auto item3 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
     
-    auto menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create( item1, item2, item3, nullptr );
     menu->alignItemsVertically();
     
     addChild( menu );
@@ -176,7 +176,7 @@ bool SceneTestLayer3::init()
         auto item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
         auto item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 
-        auto menu = Menu::create(item0, item1, item2, item3, NULL);
+        auto menu = Menu::create(item0, item1, item2, item3, nullptr);
         this->addChild(menu);
         menu->alignItemsVertically();
 

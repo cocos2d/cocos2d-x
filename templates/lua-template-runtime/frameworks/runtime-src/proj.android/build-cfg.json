@@ -31,10 +31,6 @@
             "to": ""
         },
         {
-            "from": "../../../runtime/rtres",
-            "to": "rtres"
-        },
-        {
             "from": "../../cocos2d-x/external/lua/luasocket",
             "to": "",
             "include": [

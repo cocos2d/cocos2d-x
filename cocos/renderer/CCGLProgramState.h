@@ -157,7 +157,16 @@ public:
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
+    // apply GLProgram, attributes and uniforms
     void apply(const Mat4& modelView);
+    
+    void applyGLProgram(const Mat4& modelView);
+    /**
+     * apply vertex attributes
+     * @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not
+     */
+    void applyAttributes(bool applyAttribFlags = true);
+    void applyUniforms();
 
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
