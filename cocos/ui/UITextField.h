@@ -228,6 +228,16 @@ protected:
     
     std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
+private:
+    enum class FontType
+    {
+        SYSTEM,
+        TTF
+    };
+
+    std::string _fontName;
+    int _fontSize;
+    FontType _fontType;
 };
 
 }
