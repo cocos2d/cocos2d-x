@@ -403,9 +403,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -1224,5 +1221,6 @@
     <None Include="..\3d\CCAnimationCurve.inl">
       <Filter>3d</Filter>
     </None>
+    <None Include="cocos2d.def" />
   </ItemGroup>
 </Project>
