@@ -250,7 +250,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 
 	if (value)
 	{
-		ret = atof(value);
+		ret = utils::atof(value);
 	}
 
     if (doc) delete doc;
