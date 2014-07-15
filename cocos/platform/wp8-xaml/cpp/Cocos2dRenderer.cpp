@@ -67,8 +67,8 @@ void Cocos2dRenderer::CreateGLResources()
         cocos2d::ShaderCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
-        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
-        director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+        cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+        director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
         director->setGLDefaultValues();
   }

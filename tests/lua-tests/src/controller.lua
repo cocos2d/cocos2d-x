@@ -6,25 +6,31 @@ collectgarbage("setstepmul", 5000)
 
 ----------------
 -- run
+local director = cc.Director:getInstance()
+local glView   = director:getOpenGLView()
+if nil == glView then
+    glView = cc.GLView:createWithRect("Lua Tests", cc.rect(0,0,900,640))
+    director:setOpenGLView(glView)
+end
 
-local glView = cc.Director:getInstance():getOpenGLView()
+--turn on display FPS
+director:setDisplayStats(true)
+
+--set FPS. the default value is 1.0/60 if you don't call this
+director:setAnimationInterval(1.0 / 60)
 
 local screenSize = glView:getFrameSize()
+
 local designSize = {width = 480, height = 320}
-local fileUtils = cc.FileUtils:getInstance()
-
-
-local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-
-local dd = glView:getDesignResolutionSize()
 
 if screenSize.height > 320 then
     local resourceSize = {width = 960, height = 640}
-    local rate = resourceSize.height/screenSize.height
-    cc.Director:getInstance():setContentScaleFactor(resourceSize.height/designSize.height);
+    cc.Director:getInstance():setContentScaleFactor(resourceSize.height/designSize.height)
 end
-glView:setDesignResolutionSize(designSize.width, designSize.height, 3);
- 
+
+glView:setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.FIXED_HEIGHT)
+
+local fileUtils = cc.FileUtils:getInstance()
 local function addSearchPath(resPrefix, height)
     local searchPaths = fileUtils:getSearchPaths()
     table.insert(searchPaths, 1, resPrefix)

@@ -1197,6 +1197,16 @@
 
 
 --------------------------------------------------------
+-- the cc FastTMXTiledMap
+-- @field [parent=#cc] FastTMXTiledMap#FastTMXTiledMap FastTMXTiledMap preloaded module
+
+
+--------------------------------------------------------
+-- the cc FastTMXLayer
+-- @field [parent=#cc] FastTMXLayer#FastTMXLayer FastTMXLayer preloaded module
+
+
+--------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
 
@@ -1212,16 +1222,6 @@
 
 
 --------------------------------------------------------
--- the cc SimpleAudioEngine
--- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
-
-
---------------------------------------------------------
--- the cc ProtectedNode
--- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
-
-
---------------------------------------------------------
 -- the cc Animation3D
 -- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
 
@@ -1229,6 +1229,16 @@
 --------------------------------------------------------
 -- the cc Animate3D
 -- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc SimpleAudioEngine
+-- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
+
+
+--------------------------------------------------------
+-- the cc ProtectedNode
+-- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
 
 
 return nil

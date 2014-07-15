@@ -40,7 +40,7 @@ CustomParticleWidget* CustomParticleWidget::create()
         return custom;
     }
     CC_SAFE_DELETE(custom);
-    return NULL;
+    return nullptr;
 }
 
 bool CustomParticleWidget::init()
@@ -74,8 +74,10 @@ void CustomParticleWidget::setParticlePlist(const char *plist)
         _emitter->removeFromParent();
         _emitter = ParticleSystemQuad::create(plist);
     }
-    Node::addChild(_emitter , getLocalZOrder() + 1, -1);
-    
+    //Warning!!! don't forget to set the position
+    addProtectedChild(_emitter , getLocalZOrder() + 1, -1);
+    this->setParticlePosition(Vec2::ZERO);
+
     _emitterPlist = plist;
 }
 

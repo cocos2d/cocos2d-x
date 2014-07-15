@@ -147,7 +147,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextFieldTest);
             sceneManager->setMinUISceneId(kUITextFieldTest);
-            sceneManager->setMaxUISceneId(kUITextFieldTest_LineWrap);
+            sceneManager->setMaxUISceneId(kUITextFieldTest_TrueTypeFont);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -183,7 +183,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIPageViewTest);
             sceneManager->setMinUISceneId(kUIPageViewTest);
-            sceneManager->setMaxUISceneId(kUIPageViewTest);
+            sceneManager->setMaxUISceneId(kUIPageViewButtonTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -310,7 +310,7 @@ void CocosGUITestScene::onEnter()
     //#endif
     auto pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocosGUITestScene::BackCallback, this));
     
-    Menu* pMenu =Menu::create(pMenuItem, NULL);
+    Menu* pMenu =Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
     pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );

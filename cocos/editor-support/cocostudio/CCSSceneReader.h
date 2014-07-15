@@ -76,6 +76,10 @@ private:
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
     bool readJson(const std::string &fileName, rapidjson::Document& doc);
+
+    cocos2d::Node* createObject(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node* parent, AttachComponentType attachComponent);
+	void setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node *node);
+    
     cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
 private:
     static SceneReader* s_sharedReader;

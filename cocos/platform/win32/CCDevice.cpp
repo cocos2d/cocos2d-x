@@ -37,10 +37,10 @@ int Device::getDPI()
     static int dpi = -1;
     if (dpi == -1)
     {
-        HDC hScreenDC = GetDC( NULL );
+        HDC hScreenDC = GetDC( nullptr );
         int PixelsX = GetDeviceCaps( hScreenDC, HORZRES );
         int MMX = GetDeviceCaps( hScreenDC, HORZSIZE );
-        ReleaseDC( NULL, hScreenDC );   
+        ReleaseDC( nullptr, hScreenDC );   
         dpi = 254.0f*PixelsX/MMX/10;
     }
     return dpi;
@@ -55,7 +55,7 @@ void Device::setAccelerometerInterval(float interval)
 class BitmapDC
 {
 public:
-    BitmapDC(HWND hWnd = NULL)
+    BitmapDC(HWND hWnd = nullptr)
         : _DC(nullptr)
         , _bmp(nullptr)
         , _font((HFONT)GetStockObject(DEFAULT_GUI_FONT))
@@ -79,7 +79,7 @@ public:
 
     wchar_t * utf8ToUtf16(const std::string& str)
     {
-        wchar_t * pwszBuffer = NULL;
+        wchar_t * pwszBuffer = nullptr;
         do 
         {
             if (str.empty())
@@ -99,7 +99,7 @@ public:
 
     }
 
-    bool setFont(const char * pFontName = NULL, int nSize = 0)
+    bool setFont(const char * pFontName = nullptr, int nSize = 0)
     {
         bool bRet = false;
         do 
@@ -122,6 +122,21 @@ public:
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");
                     fontName = fontName.substr(0,nFindPos);                
+                }
+                else
+                {
+                    auto nFindPos = fontName.rfind("/");
+                    if (nFindPos != fontName.npos)
+                    {
+                        if (fontName.length() == nFindPos + 1)
+                        {
+                            fontName = "";
+                        } 
+                        else
+                        {
+                            fontName = &fontName[nFindPos+1];
+                        }
+                    }
                 }
                 tNewFont.lfCharSet = DEFAULT_CHARSET;
                 strcpy_s(tNewFont.lfFaceName, LF_FACESIZE, fontName.c_str());
@@ -154,7 +169,7 @@ public:
                         SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
                     }						
                     delete [] pwszBuffer;
-                    pwszBuffer = NULL;
+                    pwszBuffer = nullptr;
                 }
             }
 
@@ -214,11 +229,11 @@ public:
         if (_bmp)
         {
             DeleteObject(_bmp);
-            _bmp = NULL;
+            _bmp = nullptr;
         }
         if (nWidth > 0 && nHeight > 0)
         {
-            _bmp = CreateBitmap(nWidth, nHeight, 1, 32, NULL);
+            _bmp = CreateBitmap(nWidth, nHeight, 1, 32, nullptr);
             if (! _bmp)
             {
                 return false;
@@ -364,7 +379,7 @@ private:
                 RemoveFontResource(pwszBuffer);
                 SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
                 delete [] pwszBuffer;
-                pwszBuffer = NULL;
+                pwszBuffer = nullptr;
             }
             _curFontPath.clear();
         }	
@@ -404,7 +419,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         } bi = {0};
         bi.bmiHeader.biSize = sizeof(bi.bmiHeader);
         CC_BREAK_IF(! GetDIBits(dc.getDC(), dc.getBitmap(), 0, 0, 
-            NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS));
+            nullptr, (LPBITMAPINFO)&bi, DIB_RGB_COLORS));
 
         width    = (short)size.cx;
         height   = (short)size.cy;
@@ -416,7 +431,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
             (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
         // change pixel's alpha value to 255, when it's RGB != 0
-        COLORREF * pPixel = NULL;
+        COLORREF * pPixel = nullptr;
         for (int y = 0; y < height; ++y)
         {
             pPixel = (COLORREF *)dataBuf + y * width;

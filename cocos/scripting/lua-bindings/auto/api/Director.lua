@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module Director
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Director] pause 

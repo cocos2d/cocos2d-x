@@ -233,6 +233,8 @@
     <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.cpp" />
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.cpp" />
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
@@ -431,6 +433,8 @@
     <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h" />
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />

@@ -21,8 +21,8 @@ local function main()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("src");
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("res");
+	cc.FileUtils:getInstance():addSearchPath("src")
+	cc.FileUtils:getInstance():addSearchPath("res")
 	local schedulerID = 0
     --support debug
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()

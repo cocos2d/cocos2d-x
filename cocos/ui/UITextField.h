@@ -91,7 +91,7 @@ protected:
     bool _deleteBackward;
 };
 
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
@@ -99,7 +99,7 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
+typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public Widget
@@ -228,6 +228,16 @@ protected:
     
     std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
+private:
+    enum class FontType
+    {
+        SYSTEM,
+        TTF
+    };
+
+    std::string _fontName;
+    int _fontSize;
+    FontType _fontType;
 };
 
 }

@@ -266,20 +266,13 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto toBackgroundListener = EventListenerCustom::create(EVENT_COME_TO_BACKGROUND, [this](EventCustom* event){
-        if (_fontAtlas && _currentLabelType == LabelType::TTF)
-        {
-            _batchNodes.clear();
-            _batchNodes.push_back(this);
-            Node::removeAllChildrenWithCleanup(true);
-        }
-    });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(toBackgroundListener, this);
-#endif
     auto purgeTextureListener = EventListenerCustom::create(FontAtlas::EVENT_PURGE_TEXTURES, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
+            Node::removeAllChildrenWithCleanup(true);
+            _batchNodes.clear();
+            _batchNodes.push_back(this);
+
             alignText();
         }
     });

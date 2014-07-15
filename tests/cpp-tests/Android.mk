@@ -63,6 +63,8 @@ Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp \
 Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp \
+Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp \
+Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp \
 Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp \
 Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp \
 Classes/UITest/CocoStudioGUITest/UIScene.cpp \

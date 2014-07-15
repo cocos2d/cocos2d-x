@@ -8,7 +8,7 @@ import shutil
 from optparse import OptionParser
 
 CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests', 'game-controller-test']
-LUA_SAMPLES = ['lua-empty-test', 'lua-tests']
+LUA_SAMPLES = ['lua-empty-test', 'lua-tests', 'lua-game-controller-test']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
 def get_num_of_cpu():
@@ -53,23 +53,7 @@ def check_environment_variables_sdk():
     return SDK_ROOT
 
 def select_toolchain_version():
-    '''Because ndk-r8e uses gcc4.6 as default. gcc4.6 doesn't support c++11. So we should select gcc4.7 when
-    using ndk-r8e. But gcc4.7 is removed in ndk-r9, so we should determine whether gcc4.7 exist.
-    Conclution:
-    ndk-r8e  -> use gcc4.7
-    ndk-r9   -> use gcc4.8
-    '''
-
-    ndk_root = check_environment_variables()
-    if os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.8")):
-        os.environ['NDK_TOOLCHAIN_VERSION'] = '4.8'
-        print "The Selected NDK toolchain version was 4.8 !"
-    elif os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.7")):
-        os.environ['NDK_TOOLCHAIN_VERSION'] = '4.7'
-        print "The Selected NDK toolchain version was 4.7 !"
-    else:
-        print "Couldn't find the gcc toolchain."
-        exit(1)
+    pass
 
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
@@ -188,6 +172,10 @@ def copy_resources(target, app_android_root):
 
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_res_dir)
+        if target == "lua-game-controller-test":
+            print("coming generator game controller")
+            resources_dir = os.path.join(app_android_root, "../../../game-controller-test/Resources")
+            copy_files(resources_dir, assets_res_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 
@@ -219,7 +207,8 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
         "game-controller-test": "tests/game-controller-test/proj.android",
         "cpp-tests": "tests/cpp-tests/proj.android",
         "lua-empty-test": "tests/lua-empty-test/project/proj.android",
-        "lua-tests": "tests/lua-tests/project/proj.android"
+        "lua-tests": "tests/lua-tests/project/proj.android",
+        "lua-game-controller-test": "tests/lua-game-controller-test/project/proj.android"
     }
 
     for target in build_targets:

@@ -402,9 +402,9 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 Skin *skin = static_cast<Skin *>(node);
                 skin->updateTransform();
                 
-                bool blendDirty = bone->isBlendDirty();
+                BlendFunc func = bone->getBlendFunc();
                 
-                if (blendDirty)
+                if (func.src != _blendFunc.src || func.dst != _blendFunc.dst)
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }

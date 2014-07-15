@@ -886,6 +886,7 @@ Developers:
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
+        Fix UITextField IME can't auto detach
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
@@ -895,7 +896,8 @@ Developers:
         
     kyokomi
         Fix the bug that UIButton doesn't support TTF font
-        Fix a but of TextReader
+        Fix a bug of TextReader
+        Fix a bug that UITextField doesn't support TTF font
         
     gin0606
         Add a new line at the end of a file
@@ -906,6 +908,9 @@ Developers:
         
     Teivaz
         Custom uniform search optimization
+        
+    chareice
+        Make `setup.py` work on zsh
     
 Retired Core Developers:
     WenSheng Yang

@@ -49,7 +49,7 @@ public:
     }
     bool hasVertexAttrib(int attrib);
     bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
     
 protected:
     
@@ -90,7 +90,10 @@ public:
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
     
     /**create mesh with vertex attributes*/
-    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
+    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount) { return create(vertices, vertexSizeInFloat, indices, attribs); }
+    
+    /**create mesh with vertex attributes*/
+    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
 
     /**get vertex buffer*/
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
@@ -124,7 +127,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
     
     /**init mesh*/
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
 
     /**build buffer*/
     void buildBuffer();
@@ -163,8 +166,8 @@ public:
     /**remove unused meshes*/
     void removeUnusedMesh();
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    void listenBackToForeground(EventCustom* event);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    void listenRendererRecreated(EventCustom* event);
 #endif
     
 CC_CONSTRUCTOR_ACCESS:
@@ -178,8 +181,8 @@ protected:
     
     std::unordered_map<std::string, Mesh*> _meshes; //cached meshes
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    EventListenerCustom* _backToForegroundlistener;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    EventListenerCustom* _rendererRecreatedListener;
 #endif
 };
 

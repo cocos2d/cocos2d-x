@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsContactPostSolve
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsContactPostSolve] getFriction 

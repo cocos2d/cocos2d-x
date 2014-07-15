@@ -41,4 +41,18 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIPageViewButtonTest : public UIScene
+{
+public:
+    UIPageViewButtonTest();
+    ~UIPageViewButtonTest();
+    bool init();
+    
+    void pageViewEvent(Ref* pSender, PageView::EventType type);
+    void onButtonClicked(Ref* pSender, Widget::TouchEventType type);
+protected:
+    UI_SCENE_CREATE_FUNC(UIPageViewButtonTest)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */
