@@ -6090,7 +6090,8 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
             return 0;
         unsigned int ret = cobj->getTileGIDAt(arg0);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
+        tolua_pushnumber(tolua_S,(lua_Number)0);
+        return 2;
     }
     if (argc == 2)
     {
@@ -6105,7 +6106,8 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
         
         unsigned int ret = cobj->getTileGIDAt(arg0, (cocos2d::TMXTileFlags*)&arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
+        tolua_pushnumber(tolua_S,(lua_Number)arg1);
+        return 2;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTileGIDAt",argc, 1);
     return 0;
@@ -6471,7 +6473,8 @@ static int lua_cocos2dx_FastTMXLayer_getTileGIDAt(lua_State* tolua_S)
             return 0;
         int ret = cobj->getTileGIDAt(arg0);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
+        tolua_pushnumber(tolua_S,(lua_Number)0);
+        return 2;
     }
     if (argc == 2)
     {
@@ -6486,7 +6489,8 @@ static int lua_cocos2dx_FastTMXLayer_getTileGIDAt(lua_State* tolua_S)
         
         unsigned int ret = cobj->getTileGIDAt(arg0, (cocos2d::TMXTileFlags*)&arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
+        tolua_pushnumber(tolua_S,(lua_Number)arg1);
+        return 2;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTileGIDAt",argc, 1);
     return 0;
