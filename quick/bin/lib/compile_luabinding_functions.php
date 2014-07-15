@@ -136,6 +136,14 @@ EOT;
     $replace = '';
     $rules[$find] = $replace;
 
+    $find = '#ifndef TOLUA_RELEASE';
+    $replace = '#if COCOS2D_DEBUG >= 1';
+    $rules[$find] = $replace;
+
+    $find = '#ifndef TOLUA_RELEASE';
+    $replace = '#if COCOS2D_DEBUG >= 1';
+    $rules[$find] = $replace;
+
     return $rules;
 }
 
@@ -154,6 +162,7 @@ class Builder
     private $macros_;
     private $luaopenFunctionName_;
     private $password_;
+    private $prefixName_;
 
     function __construct($parameters)
     {
@@ -165,6 +174,7 @@ class Builder
         $this->outputHeaderPath_    = $this->outputDir_ . $this->outputFilename_ . '.h';
         $this->macros_              = $parameters['macros'];
         $this->luaopenFunctionName_ = str_replace('-', '_', sprintf('luaopen_%s', $parameters['output_filename']));
+        $this->prefixName_          = $parameters['prefix_name'];
     }
 
     function build()
@@ -251,7 +261,22 @@ EOT;
         }
 
         // $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', 'tolua_usertype(tolua_S,"\1"); toluafix_add_type_mapping(typeid(\1).hash_code(), "\1");', $contents);
-        $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', 'tolua_usertype(tolua_S,"\1"); toluafix_add_type_mapping(CLASS_HASH_CODE(typeid(\1)), "\1");', $contents);
+        // $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', 'tolua_usertype(tolua_S,"\1"); toluafix_add_type_mapping(CLASS_HASH_CODE(typeid(\1)), "\1");', $contents);
+
+        if (!empty($this->prefixName_)) {
+            $strToluaUsertype = sprintf('tolua_usertype(tolua_S,"%s.\1");', $this->prefixName_);
+            $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', $strToluaUsertype, $contents);
+            $strToluaCClass = sprintf('tolua_cclass(tolua_S,"\1","%s.\2","%s.\3",NULL);', $this->prefixName_, $this->prefixName_);
+            $contents = preg_replace('/tolua_cclass\(tolua_S,"(\w+)","(\w+)","(\w+)",NULL\);/', $strToluaCClass, $contents);
+            $strToluaCClass = sprintf('tolua_cclass(tolua_S,"\1","%s.\2","",NULL);', $this->prefixName_);
+            $contents = preg_replace('/tolua_cclass\(tolua_S,"(\w+)","(\w+)","",NULL\);/', $strToluaCClass, $contents);
+            $strToluaModule = sprintf('tolua_module(tolua_S,"%s",0);', $this->prefixName_);
+            $contents = str_replace('tolua_module(tolua_S,NULL,0);', $strToluaModule, $contents);
+            $strToluaBeginModule = sprintf('tolua_beginmodule(tolua_S,"%s");', $this->prefixName_);
+            $contents = str_replace('tolua_beginmodule(tolua_S,NULL);', $strToluaBeginModule, $contents);
+            $strToluaIsUserTable = sprintf('tolua_isusertable(tolua_S,1,"%s.\1",0,&tolua_err)', $this->prefixName_);
+            $contents = preg_replace('/tolua_isusertable\(tolua_S,1,"(\w+)",0,&tolua_err\)/', $strToluaIsUserTable, $contents);
+        }
 
         file_put_contents($this->outputSourcePath_, $contents);
     }

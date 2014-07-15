@@ -56,11 +56,14 @@ int HelperFunc::getFileData(const char *pPathFile)
 {
     unsigned long size;
     unsigned char* buf = HelperFunc::getFileData(pPathFile, "rb", &size);
-    if (NULL==buf) return 0;
     
     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
 	stack->clean();
-    stack->pushString((const char*)(buf), (int)size);
-    delete buf;
+    if (buf) {
+        stack->pushString((const char*)(buf), (int)size);
+        delete buf;
+    } else {
+        stack->pushNil();
+    }
     return 1;
 }
