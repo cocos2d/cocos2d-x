@@ -820,7 +820,6 @@ void TriggerTest::onEnter()
     listener->onTouchCancelled = CC_CALLBACK_2(SceneEditorTestLayer::onTouchCancelled, this);
     dispatcher->addEventListenerWithFixedPriority(listener, 1);
     _touchListener = listener;
-    sendEvent(TRIGGEREVENT_ENTERSCENE);
 }
 
 
@@ -879,4 +878,5 @@ cocos2d::Node* TriggerTest::createGameScene()
 }
 void TriggerTest::defaultPlay()
 {
+    sendEvent(TRIGGEREVENT_ENTERSCENE);
 }

@@ -104,8 +104,6 @@ public:
     stCocoFileHeader*		GetFileHeader(){return m_pFileHeader;}
     stExpCocoNode*			GetRootCocoNode(){return	m_pRootNode;}
     stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
-    stExpCocoObjectDesc*	GetCocoObjectDesc(const char* szObjDesc);
-    stExpCocoObjectDesc*	GetCocoObjectDesc(int vIndex);
     char*					GetMemoryAddr_AttribDesc();
     char*					GetMemoryAddr_CocoNode();
     char*					GetMemoryAddr_String();
