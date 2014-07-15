@@ -31,7 +31,7 @@
 #include "base/CCVector.h"
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
-
+#include "physics/CCPhysicsBody.h"
 #include <list>
 
 NS_CC_BEGIN
@@ -80,7 +80,7 @@ typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
  */
-class PhysicsWorld
+class CC_DLL PhysicsWorld
 {
 public:
     static const int DEBUGDRAW_NONE;        ///< draw nothing
