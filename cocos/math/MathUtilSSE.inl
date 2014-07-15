@@ -18,10 +18,10 @@ inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
 
     __m128 s = _mm_set1_ps(scalar);
 
-    col1 = _mm_mul_ps(col1, s);
-    col2 = _mm_mul_ps(col2, s);
-    col3 = _mm_mul_ps(col3, s);
-    col4 = _mm_mul_ps(col4, s);
+    col1 = _mm_add_ps(col1, s);
+    col2 = _mm_add_ps(col2, s);
+    col3 = _mm_add_ps(col3, s);
+    col4 = _mm_add_ps(col4, s);
 
     _mm_store_ps(&dst[0], col1);
     _mm_store_ps(&dst[4], col2);
@@ -32,14 +32,14 @@ inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
 inline void MathUtil::addMatrix(const float* m1, const float* m2, float* dst)
 {
     __m128 m1col1 = _mm_load_ps(&m1[0]);
-    __m128 m1col2 = _mm_load_ps(&m1[0]);
-    __m128 m1col3 = _mm_load_ps(&m1[0]);
-    __m128 m1col4 = _mm_load_ps(&m1[0]);
+    __m128 m1col2 = _mm_load_ps(&m1[4]);
+    __m128 m1col3 = _mm_load_ps(&m1[8]);
+    __m128 m1col4 = _mm_load_ps(&m1[12]);
     
     __m128 m2col1 = _mm_load_ps(&m2[0]);
-    __m128 m2col2 = _mm_load_ps(&m2[0]);
-    __m128 m2col3 = _mm_load_ps(&m2[0]);
-    __m128 m2col4 = _mm_load_ps(&m2[0]);
+    __m128 m2col2 = _mm_load_ps(&m2[4]);
+    __m128 m2col3 = _mm_load_ps(&m2[8]);
+    __m128 m2col4 = _mm_load_ps(&m2[12]);
     
     m1col1 = _mm_add_ps(m1col1, m2col1);
     m1col2 = _mm_add_ps(m1col2, m2col2);
@@ -55,14 +55,14 @@ inline void MathUtil::addMatrix(const float* m1, const float* m2, float* dst)
 inline void MathUtil::subtractMatrix(const float* m1, const float* m2, float* dst)
 {
     __m128 m1col1 = _mm_load_ps(&m1[0]);
-    __m128 m1col2 = _mm_load_ps(&m1[0]);
-    __m128 m1col3 = _mm_load_ps(&m1[0]);
-    __m128 m1col4 = _mm_load_ps(&m1[0]);
+    __m128 m1col2 = _mm_load_ps(&m1[4]);
+    __m128 m1col3 = _mm_load_ps(&m1[8]);
+    __m128 m1col4 = _mm_load_ps(&m1[12]);
     
     __m128 m2col1 = _mm_load_ps(&m2[0]);
-    __m128 m2col2 = _mm_load_ps(&m2[0]);
-    __m128 m2col3 = _mm_load_ps(&m2[0]);
-    __m128 m2col4 = _mm_load_ps(&m2[0]);
+    __m128 m2col2 = _mm_load_ps(&m2[4]);
+    __m128 m2col3 = _mm_load_ps(&m2[8]);
+    __m128 m2col4 = _mm_load_ps(&m2[12]);
     
     m1col1 = _mm_sub_ps(m1col1, m2col1);
     m1col2 = _mm_sub_ps(m1col2, m2col2);
@@ -129,9 +129,9 @@ inline void MathUtil::negateMatrix(const float* m, float* dst)
     __m128 z = _mm_setzero_ps();
     
     col1 = _mm_sub_ps(z, col1);
-    col2 = _mm_mul_ps(z, col2);
-    col3 = _mm_mul_ps(z, col3);
-    col4 = _mm_mul_ps(z, col4);
+    col2 = _mm_sub_ps(z, col2);
+    col3 = _mm_sub_ps(z, col3);
+    col4 = _mm_sub_ps(z, col4);
     
     _mm_store_ps(&dst[0], col1);
     _mm_store_ps(&dst[4], col2);
@@ -164,8 +164,11 @@ inline void MathUtil::transposeMatrix(const float* m, float* dst)
 
 inline void MathUtil::transformVec4(const float* m, float x, float y, float z, float w, float* dst)
 {
-    float v[4] = {x, y, z, w};
-    MathUtil::transformVec4(m, v, dst);
+    float v[4] = {x, y, z, w}, out[4];
+    MathUtil::transformVec4(m, v, out);
+    dst[0] = out[0];
+    dst[1] = out[1];
+    dst[2] = out[2];
 }
 
 inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
