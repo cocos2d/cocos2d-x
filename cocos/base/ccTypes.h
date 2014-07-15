@@ -43,7 +43,7 @@ struct Color4F;
 /** RGB color composed of bytes 3 bytes
 @since v3.0
  */
-struct Color3B
+struct CC_DLL Color3B
 {
     Color3B();
     Color3B(GLubyte _r, GLubyte _g, GLubyte _b);
@@ -80,7 +80,7 @@ struct Color3B
 /** RGBA color composed of 4 bytes
 @since v3.0
 */
-struct Color4B
+struct CC_DLL Color4B
 {
     Color4B();
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
@@ -114,7 +114,7 @@ struct Color4B
 /** RGBA color composed of 4 floats
 @since v3.0
 */
-struct Color4F
+struct CC_DLL Color4F
 {
     Color4F();
     Color4F(float _r, float _g, float _b, float _a);
@@ -327,7 +327,7 @@ struct V3F_T2F_Quad
 };
 
 //! Blend Function used for textures
-struct BlendFunc
+struct CC_DLL BlendFunc
 {
     //! source blend function
     GLenum src;
