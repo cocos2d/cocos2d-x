@@ -136,8 +136,8 @@ static int lua_cocos2dx_CCSkeletonAnimation_createWithFile(lua_State* L)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(L,"#ferror in function 'createWithFile'.",&tolua_err);
-    return 0;
 #endif
+    return 0;
 }
 
 int tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00(lua_State* tolua_S)
