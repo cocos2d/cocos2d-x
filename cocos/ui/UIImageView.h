@@ -61,7 +61,7 @@ public:
      *
      * @param imageFileName   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     static ImageView* create(const std::string& imageFileName, TextureResType texType = TextureResType::LOCAL);
     
@@ -71,7 +71,7 @@ public:
      *
      * @param fileName   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
 
