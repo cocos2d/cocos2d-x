@@ -1001,14 +1001,15 @@ local function TextureAsync()
         cc.Director:getInstance():getTextureCache():addImageAsync("Images/background.png", imageLoaded)
         cc.Director:getInstance():getTextureCache():addImageAsync("Images/atlastest.png", imageLoaded)
         cc.Director:getInstance():getTextureCache():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
+
+        ret:unscheduleUpdate()
     end
 
-    local schedulerEntry = nil
     local function onNodeEvent(event)
         if event == "enter" then
-            schedulerEntry = scheduler:scheduleScriptFunc(loadImages, 1.0, false)
+            ret:scheduleUpdateWithPriorityLua(loadImages,0)
         elseif event == "exit" then
-            scheduler:unscheduleScriptEntry(schedulerEntry)
+            ret:unscheduleUpdate()
             cc.Director:getInstance():getTextureCache():removeAllTextures()
         end
     end
