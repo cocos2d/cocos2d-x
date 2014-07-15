@@ -94,7 +94,7 @@ protected:
     BlendFunc         _blend;
 };
 
-extern std::string s_attributeNames[];//attribute names array
+extern std::string CC_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_
