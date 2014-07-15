@@ -296,7 +296,6 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _labelRenderer->setDimensions(0,0);
         _labelRenderer->setScale(1.0f);
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
