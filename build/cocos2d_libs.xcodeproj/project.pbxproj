@@ -7475,15 +7475,6 @@
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 				);
-				"OTHER_LDFLAGS[arch=arm64]" = (
-					"-lcurl_arm64",
-					"-ljpeg_arm64",
-					"-lpng_arm64",
-					"-ltiff_arm64",
-					"-lwebp_arm64",
-					"-lwebsockets_arm64",
-					"-lfreetype_arm64",
-				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
@@ -7514,15 +7505,6 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
-				);
-				"OTHER_LDFLAGS[arch=arm64]" = (
-					"-lcurl_arm64",
-					"-ljpeg_arm64",
-					"-lpng_arm64",
-					"-ltiff_arm64",
-					"-lwebp_arm64",
-					"-lwebsockets_arm64",
-					"-lfreetype_arm64",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
