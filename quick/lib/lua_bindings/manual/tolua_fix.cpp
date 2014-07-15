@@ -23,6 +23,16 @@ TOLUA_API void toluafix_open(lua_State* L)
     lua_rawset(L, LUA_REGISTRYINDEX);
 }
 
+static std::map<unsigned int, char*> hash_type_mapping;
+
+TOLUA_API void toluafix_add_type_mapping(unsigned int type, const char *clsName)
+{
+    if (hash_type_mapping.find(type) == hash_type_mapping.end())
+    {
+        hash_type_mapping[type] = strdup(clsName);
+    }
+}
+
 TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
                                              int refid,
                                              int* p_refid,

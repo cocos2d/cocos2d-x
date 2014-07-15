@@ -1,6 +1,6 @@
 /*
 ** Lua binding: cocos2dx_extra_luabinding
-** Generated automatically by tolua++-1.0.92 on Mon Jul 14 18:37:35 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:01:14 2014.
 */
 
 #include "cocos2dx_extra_luabinding.h"
@@ -674,7 +674,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_createWithUrl00(lua_State
   int method = ((int)  tolua_tonumber(tolua_S,4,kCCHTTPRequestMethodGET));
   {
    HTTPRequest* tolua_ret = (HTTPRequest*)  HTTPRequest::createWithUrlLua(listener,url,method);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"HTTPRequest");
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.HTTPRequest");
   }
  }
  return 1;
@@ -693,7 +693,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setRequestUrl00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -726,7 +726,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getRequestUrl00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -758,7 +758,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addRequestHeader00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -791,7 +791,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addPOSTValue00(lua_State*
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -826,7 +826,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setPOSTData00(lua_State* 
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -859,7 +859,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addFormFile00(lua_State* 
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,1,&tolua_err) ||
@@ -896,7 +896,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addFormContents00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -931,7 +931,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setCookieString00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -964,7 +964,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getCookieString00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -996,7 +996,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setAcceptEncoding00(lua_S
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1029,7 +1029,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setTimeout00(lua_State* t
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1062,7 +1062,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_start00(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1094,7 +1094,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_cancel00(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1125,7 +1125,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getState00(lua_State* tol
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1157,7 +1157,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseStatusCode00(l
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1189,7 +1189,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseHeadersString0
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1221,7 +1221,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseString00(lua_S
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1253,7 +1253,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseData00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1285,7 +1285,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseDataLength00(l
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1317,7 +1317,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_saveResponseData00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1351,7 +1351,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getErrorCode00(lua_State*
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1383,7 +1383,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getErrorMessage00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1544,7 +1544,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_createHTTPRequest00(lua_State
   int method = ((int)  tolua_tonumber(tolua_S,4,kCCHTTPRequestMethodGET));
   {
    HTTPRequest* tolua_ret = (HTTPRequest*)  Network::createHTTPRequestLua(listener,url,method);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"HTTPRequest");
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.HTTPRequest");
   }
  }
  return 1;

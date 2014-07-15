@@ -1,6 +1,6 @@
 /*
 ** Lua binding: cocos2dx_extra_ios_iap_luabinding
-** Generated automatically by tolua++-1.0.92 on Mon Jul 14 18:37:36 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:01:14 2014.
 */
 
 #include "cocos2dx_extra_ios_iap_luabinding.h"
@@ -40,7 +40,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_sharedStore00(lua_State
  {
   {
    Store* tolua_ret = (Store*)  Store::sharedStore();
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Store");
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.Store");
   }
  }
  return 1;
@@ -86,7 +86,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_postInitWithTransaction
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -119,7 +119,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_canMakePurchases00(lua_
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -151,7 +151,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_loadProducts00(lua_Stat
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_istable(tolua_S,2,"LUA_TABLE",0,&tolua_err)) ||
      (tolua_isvaluenil(tolua_S,3,&tolua_err) || !toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -186,7 +186,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_cancelLoadProducts00(lu
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -217,7 +217,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_isProductLoaded00(lua_S
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -251,7 +251,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_purchase00(lua_State* t
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -285,7 +285,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_restore00(lua_State* to
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -316,7 +316,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_finishTransaction00(lua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -349,7 +349,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_getReceiptVerifyMode00(
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -381,7 +381,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_setReceiptVerifyMode00(
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,3,1,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -416,7 +416,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_getReceiptVerifyServerU
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -448,7 +448,7 @@ static int tolua_cocos2dx_extra_ios_iap_luabinding_Store_setReceiptVerifyServerU
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"Store",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"cc.Store",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )

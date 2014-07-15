@@ -260,9 +260,6 @@ EOT;
             //$contents = str_replace($find, $replace, $contents);
         }
 
-        // $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', 'tolua_usertype(tolua_S,"\1"); toluafix_add_type_mapping(typeid(\1).hash_code(), "\1");', $contents);
-        // $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', 'tolua_usertype(tolua_S,"\1"); toluafix_add_type_mapping(CLASS_HASH_CODE(typeid(\1)), "\1");', $contents);
-
         if (!empty($this->prefixName_)) {
             $strToluaUsertype = sprintf('tolua_usertype(tolua_S,"%s.\1");', $this->prefixName_);
             $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', $strToluaUsertype, $contents);
@@ -276,7 +273,14 @@ EOT;
             $contents = str_replace('tolua_beginmodule(tolua_S,NULL);', $strToluaBeginModule, $contents);
             $strToluaIsUserTable = sprintf('tolua_isusertable(tolua_S,1,"%s.\1",0,&tolua_err)', $this->prefixName_);
             $contents = preg_replace('/tolua_isusertable\(tolua_S,1,"(\w+)",0,&tolua_err\)/', $strToluaIsUserTable, $contents);
+            $strToluaIsUserType = sprintf('tolua_isusertype(tolua_S,1,"%s.\1",0,&tolua_err)', $this->prefixName_);
+            $contents = preg_replace('/tolua_isusertype\(tolua_S,1,"(\w+)",0,&tolua_err\)/', $strToluaIsUserType, $contents);
+            $strToluaPushUserType = sprintf('tolua_pushusertype(tolua_S,(void*)tolua_ret,"%s.\1");', $this->prefixName_);
+            $contents = preg_replace('/tolua_pushusertype\(tolua_S,\(void\*\)tolua_ret,"(\w+)"\);/', $strToluaPushUserType, $contents);
         }
+        // $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+)"\);/', 'tolua_usertype(tolua_S,"\1"); toluafix_add_type_mapping(typeid(\1).hash_code(), "\1");', $contents);
+        // $contents = preg_replace('/tolua_usertype\(tolua_S,"(\w+).(\w+)"\);/', 'tolua_usertype(tolua_S,"\1.\2"); toluafix_add_type_mapping(CLASS_HASH_CODE(typeid(\2)), "\1.\2");', $contents);
+
 
         file_put_contents($this->outputSourcePath_, $contents);
     }
