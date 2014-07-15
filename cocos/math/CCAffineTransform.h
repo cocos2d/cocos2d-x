@@ -62,7 +62,7 @@ CC_DLL AffineTransform AffineTransformConcat(const AffineTransform& t1, const Af
 CC_DLL bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2);
 CC_DLL AffineTransform AffineTransformInvert(const AffineTransform& t);
 
-Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
+CC_DLL Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
 
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 
