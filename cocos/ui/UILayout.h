@@ -365,11 +365,11 @@ protected:
     
     /**
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child
-     * will get the focus.  The current algorithm to determine which child will get focus is farest-distance-priority algorithm
+     * will get the focus.  The current algorithm to determine which child will get focus is farthest-distance-priority algorithm
      *@param dir next focused widget direction
      *@return The index of child widget in the container
      */
-    int findFarestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
+    int findFarthestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
     /**
      * caculate the nearest distance between the baseWidget and the children of the layout
@@ -379,15 +379,15 @@ protected:
     float calculateNearestDistance(Widget* baseWidget);
     
     /**
-     * caculate the farest distance between the baseWidget and the children of the layout
+     * caculate the farthest distance between the baseWidget and the children of the layout
      *@param the base widget which will be used to caculate the distance between the layout's children and itself
-     *@return return the farest distance between the baseWidget and the layout's children
+     *@return return the farthest distance between the baseWidget and the layout's children
      */
 
-    float calculateFarestDistance(Widget* baseWidget);
+    float calculateFarthestDistance(Widget* baseWidget);
     
     /**
-     *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farest distance algorithm or not
+     *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farthest distance algorithm or not
      */
     void findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget);
     
