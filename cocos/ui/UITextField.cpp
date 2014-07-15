@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UITextField.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -366,7 +367,10 @@ _textFieldEventListener(nullptr),
 _textFieldEventSelector(nullptr),
 _eventCallback(nullptr),
 _passwordStyleText(""),
-_textFieldRendererAdaptDirty(true)
+_textFieldRendererAdaptDirty(true),
+_fontName("Thonburi"),
+_fontSize(10),
+_fontType(FontType::SYSTEM)
 {
 }
 
@@ -541,26 +545,44 @@ const std::string& TextField::getPlaceHolder()const
 
 void TextField::setFontSize(int size)
 {
-    _textFieldRenderer->setSystemFontSize(size);
+    if (_fontType == FontType::SYSTEM) {
+        _textFieldRenderer->setSystemFontSize(size);
+    } else {
+        TTFConfig config = _textFieldRenderer->getTTFConfig();
+        config.fontSize = size;
+        _textFieldRenderer->setTTFConfig(config);
+    }
+    _fontSize = size;
     _textFieldRendererAdaptDirty = true;
     updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
 int TextField::getFontSize()const
 {
-    return _textFieldRenderer->getSystemFontSize();
+    return _fontSize;
 }
 
 void TextField::setFontName(const std::string& name)
 {
-    _textFieldRenderer->setSystemFontName(name);
+    if(FileUtils::getInstance()->isFileExist(name))
+    {
+        TTFConfig config = _textFieldRenderer->getTTFConfig();
+        config.fontFilePath = name;
+        config.fontSize = _fontSize;
+        _textFieldRenderer->setTTFConfig(config);
+        _fontType = FontType::TTF;
+    } else {
+        _textFieldRenderer->setSystemFontName(name);
+        _fontType = FontType::SYSTEM;
+    }
+    _fontName = name;
     _textFieldRendererAdaptDirty = true;
     updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
 const std::string& TextField::getFontName()const
 {
-    return _textFieldRenderer->getSystemFontName();
+    return _fontName;
 }
 
 void TextField::didNotSelectSelf()
@@ -831,8 +853,8 @@ void TextField::copySpecialProperties(Widget *widget)
     {
         setText(textField->_textFieldRenderer->getString());
         setPlaceHolder(textField->getStringValue());
-        setFontSize(textField->_textFieldRenderer->getSystemFontSize());
-        setFontName(textField->_textFieldRenderer->getSystemFontName());
+        setFontSize(textField->_fontSize);
+        setFontName(textField->_fontName);
         setMaxLengthEnabled(textField->isMaxLengthEnabled());
         setMaxLength(textField->getMaxLength());
         setPasswordEnabled(textField->isPasswordEnabled());
