@@ -1,6 +1,6 @@
 /*
 ** Lua binding: cocos2dx_extra_luabinding
-** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:01:14 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:15:02 2014.
 */
 
 #include "cocos2dx_extra_luabinding.h"
@@ -28,12 +28,12 @@ using namespace cocos2d::extra;
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"cc.Ref");
- tolua_usertype(tolua_S,"cc.Network");
- tolua_usertype(tolua_S,"cc.Crypto");
+ tolua_usertype(tolua_S,"Ref");
+ tolua_usertype(tolua_S,"Network");
+ tolua_usertype(tolua_S,"Crypto");
  
- tolua_usertype(tolua_S,"cc.Native");
- tolua_usertype(tolua_S,"cc.HTTPRequest");
+ tolua_usertype(tolua_S,"Native");
+ tolua_usertype(tolua_S,"HTTPRequest");
  
 }
 
@@ -44,7 +44,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_getAES256KeyLength00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -72,7 +72,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_encryptAES25600(lua_State* tol
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -108,7 +108,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_decryptAES25600(lua_State* tol
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -144,7 +144,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_encryptXXTEA00(lua_State* tolu
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -180,7 +180,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_decryptXXTEA00(lua_State* tolu
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -216,7 +216,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_encodeBase6400(lua_State* tolu
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -248,7 +248,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_decodeBase6400(lua_State* tolu
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -278,7 +278,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_MD500(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isboolean(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -310,7 +310,7 @@ static int tolua_cocos2dx_extra_luabinding_Crypto_MD5File00(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Crypto",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Crypto",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -340,7 +340,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_showActivityIndicator00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -367,7 +367,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_hideActivityIndicator00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -394,7 +394,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_createAlert00(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -427,7 +427,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_addAlertButton00(lua_State* to
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -457,7 +457,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_showAlert00(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -486,7 +486,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_cancelAlert00(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -513,7 +513,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_getOpenUDID00(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -541,7 +541,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_openURL00(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -570,7 +570,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_getInputText00(lua_State* tolu
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,0,&tolua_err) ||
@@ -604,7 +604,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_getDeviceName00(lua_State* tol
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -632,7 +632,7 @@ static int tolua_cocos2dx_extra_luabinding_Native_vibrate00(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Native",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Native",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -659,7 +659,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_createWithUrl00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
@@ -674,7 +674,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_createWithUrl00(lua_State
   int method = ((int)  tolua_tonumber(tolua_S,4,kCCHTTPRequestMethodGET));
   {
    HTTPRequest* tolua_ret = (HTTPRequest*)  HTTPRequest::createWithUrlLua(listener,url,method);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.HTTPRequest");
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"HTTPRequest");
   }
  }
  return 1;
@@ -693,7 +693,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setRequestUrl00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -726,7 +726,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getRequestUrl00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -758,7 +758,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addRequestHeader00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -791,7 +791,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addPOSTValue00(lua_State*
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -826,7 +826,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setPOSTData00(lua_State* 
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -859,7 +859,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addFormFile00(lua_State* 
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isstring(tolua_S,4,1,&tolua_err) ||
@@ -896,7 +896,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_addFormContents00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
@@ -931,7 +931,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setCookieString00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -964,7 +964,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getCookieString00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -996,7 +996,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setAcceptEncoding00(lua_S
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1029,7 +1029,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setTimeout00(lua_State* t
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1062,7 +1062,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_start00(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1094,7 +1094,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_cancel00(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1125,7 +1125,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getState00(lua_State* tol
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1157,7 +1157,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseStatusCode00(l
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1189,7 +1189,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseHeadersString0
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1221,7 +1221,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseString00(lua_S
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1253,7 +1253,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseData00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1285,7 +1285,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getResponseDataLength00(l
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1317,7 +1317,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_saveResponseData00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1351,7 +1351,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getErrorCode00(lua_State*
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1383,7 +1383,7 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_getErrorMessage00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"cc.HTTPRequest",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,1,"HTTPRequest",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1415,7 +1415,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_isLocalWiFiAvailable00(lua_St
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Network",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Network",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1443,7 +1443,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_isInternetConnectionAvailable
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Network",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Network",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1471,7 +1471,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_isHostNameReachable00(lua_Sta
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Network",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Network",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -1501,7 +1501,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_getInternetConnectionStatus00
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Network",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Network",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
@@ -1529,7 +1529,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_createHTTPRequest00(lua_State
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.Network",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"Network",0,&tolua_err) ||
      (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
      !tolua_isstring(tolua_S,3,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
@@ -1544,7 +1544,7 @@ static int tolua_cocos2dx_extra_luabinding_Network_createHTTPRequest00(lua_State
   int method = ((int)  tolua_tonumber(tolua_S,4,kCCHTTPRequestMethodGET));
   {
    HTTPRequest* tolua_ret = (HTTPRequest*)  Network::createHTTPRequestLua(listener,url,method);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.HTTPRequest");
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"HTTPRequest");
   }
  }
  return 1;
@@ -1563,7 +1563,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
  tolua_reg_types(tolua_S);
  tolua_module(tolua_S,"cc",0);
  tolua_beginmodule(tolua_S,"cc");
-  tolua_cclass(tolua_S,"Crypto","cc.Crypto","",NULL);
+  tolua_cclass(tolua_S,"Crypto","Crypto","",NULL);
   tolua_beginmodule(tolua_S,"Crypto");
    tolua_function(tolua_S,"getAES256KeyLength",tolua_cocos2dx_extra_luabinding_Crypto_getAES256KeyLength00);
    tolua_function(tolua_S,"encryptAES256",tolua_cocos2dx_extra_luabinding_Crypto_encryptAES25600);
@@ -1575,7 +1575,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
    tolua_function(tolua_S,"MD5",tolua_cocos2dx_extra_luabinding_Crypto_MD500);
    tolua_function(tolua_S,"MD5File",tolua_cocos2dx_extra_luabinding_Crypto_MD5File00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"Native","cc.Native","",NULL);
+  tolua_cclass(tolua_S,"Native","Native","",NULL);
   tolua_beginmodule(tolua_S,"Native");
    tolua_function(tolua_S,"showActivityIndicator",tolua_cocos2dx_extra_luabinding_Native_showActivityIndicator00);
    tolua_function(tolua_S,"hideActivityIndicator",tolua_cocos2dx_extra_luabinding_Native_hideActivityIndicator00);
@@ -1600,7 +1600,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCHTTPRequestStateCompleted",kCCHTTPRequestStateCompleted);
   tolua_constant(tolua_S,"kCCHTTPRequestStateCancelled",kCCHTTPRequestStateCancelled);
   tolua_constant(tolua_S,"kCCHTTPRequestStateFailed",kCCHTTPRequestStateFailed);
-  tolua_cclass(tolua_S,"HTTPRequest","cc.HTTPRequest","cc.Ref",NULL);
+  tolua_cclass(tolua_S,"HTTPRequest","HTTPRequest","Ref",NULL);
   tolua_beginmodule(tolua_S,"HTTPRequest");
    tolua_function(tolua_S,"createWithUrl",tolua_cocos2dx_extra_luabinding_HTTPRequest_createWithUrl00);
    tolua_function(tolua_S,"setRequestUrl",tolua_cocos2dx_extra_luabinding_HTTPRequest_setRequestUrl00);
@@ -1629,7 +1629,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCNetworkStatusNotReachable",kCCNetworkStatusNotReachable);
   tolua_constant(tolua_S,"kCCNetworkStatusReachableViaWiFi",kCCNetworkStatusReachableViaWiFi);
   tolua_constant(tolua_S,"kCCNetworkStatusReachableViaWWAN",kCCNetworkStatusReachableViaWWAN);
-  tolua_cclass(tolua_S,"Network","cc.Network","",NULL);
+  tolua_cclass(tolua_S,"Network","Network","",NULL);
   tolua_beginmodule(tolua_S,"Network");
    tolua_function(tolua_S,"isLocalWiFiAvailable",tolua_cocos2dx_extra_luabinding_Network_isLocalWiFiAvailable00);
    tolua_function(tolua_S,"isInternetConnectionAvailable",tolua_cocos2dx_extra_luabinding_Network_isInternetConnectionAvailable00);

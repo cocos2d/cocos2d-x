@@ -1,6 +1,6 @@
 /*
 ** Lua binding: HelperFunc_luabinding
-** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:01:14 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:15:02 2014.
 */
 
 #include "HelperFunc_luabinding.h"
@@ -24,7 +24,7 @@ using namespace cocos2d;
 static void tolua_reg_types (lua_State* tolua_S)
 {
  
- tolua_usertype(tolua_S,"cc.HelperFunc");
+ tolua_usertype(tolua_S,"HelperFunc");
 }
 
 /* method: getFileData of class  HelperFunc */
@@ -34,7 +34,7 @@ static int tolua_HelperFunc_luabinding_HelperFunc_getFileData00(lua_State* tolua
 #if COCOS2D_DEBUG >= 1
  tolua_Error tolua_err;
  if (
-     !tolua_isusertable(tolua_S,1,"cc.HelperFunc",0,&tolua_err) ||
+     !tolua_isusertable(tolua_S,1,"HelperFunc",0,&tolua_err) ||
      !tolua_isstring(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
@@ -64,7 +64,7 @@ TOLUA_API int tolua_HelperFunc_luabinding_open (lua_State* tolua_S)
  tolua_reg_types(tolua_S);
  tolua_module(tolua_S,"cc",0);
  tolua_beginmodule(tolua_S,"cc");
-  tolua_cclass(tolua_S,"HelperFunc","cc.HelperFunc","",NULL);
+  tolua_cclass(tolua_S,"HelperFunc","HelperFunc","",NULL);
   tolua_beginmodule(tolua_S,"HelperFunc");
    tolua_function(tolua_S,"getFileData",tolua_HelperFunc_luabinding_HelperFunc_getFileData00);
   tolua_endmodule(tolua_S);
