@@ -5900,7 +5900,7 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         
         if(!ok)
             return 0;
-        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)&arg5);
         return 0;
     }
     else if (argc == 7)
@@ -6566,8 +6566,8 @@ static int lua_cocos2dx_TextureCache_addImageAsync(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'addImageAsync'.",&tolua_err);
-    return 0;
 #endif
+    return 0;
 }
 
 static void extendTextureCache(lua_State* tolua_S)

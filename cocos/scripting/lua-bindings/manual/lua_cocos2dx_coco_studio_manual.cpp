@@ -201,8 +201,8 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(L,"#ferror in function 'setFrameEventCallFunc'.",&tolua_err);
-    return 0;
 #endif
+    return 0;
 }
 
 static void extendArmatureAnimation(lua_State* L)
@@ -293,8 +293,8 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(L,"#ferror in function 'addArmatureFileInfoAsync'.",&tolua_err);
-    return 0;
 #endif
+    return 0;
 }
 
 static void extendArmatureDataManager(lua_State* L)
@@ -538,8 +538,8 @@ static int lua_cocos2dx_ActionTimeline_setFrameEventCallFunc(lua_State* L)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(L,"#ferror in function 'setFrameEventCallFunc'.",&tolua_err);
-    return 0;
 #endif
+    return 0;
 }
 
 static void extendActionTimeline(lua_State* L)

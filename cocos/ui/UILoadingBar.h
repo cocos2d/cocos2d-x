@@ -89,7 +89,7 @@ public:
      *
      * @param texture   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTexture(const std::string& texture,TextureResType texType = TextureResType::LOCAL);
     
