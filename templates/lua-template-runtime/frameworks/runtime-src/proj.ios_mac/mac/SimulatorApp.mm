@@ -233,7 +233,6 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     }
     
 
-    //[window setTitle:[NSString stringWithFormat:@"quick-x-player (%0.0f%%)", projectConfig.getFrameScale() * 100]];
 }
 
 
