@@ -172,6 +172,10 @@ function SceneEditorTestLayer:createMenu()
             self.loadtypeLabel:setString(self.loadtypeStr[1])
         end
 
+        if sceneEditorTestIdx == #SceneEditorTestLayer.title then
+            self:unscheduleUpdate()
+        end
+
         SceneEditorTestLayer.fileName = self:loadFileChangeHelper(SceneEditorTestLayer.fileName)
     
         if SceneEditorTestLayer.rootNode ~= nil then
