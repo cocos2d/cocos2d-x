@@ -19,6 +19,7 @@ UILoadingBarTest_Editor::~UILoadingBarTest_Editor()
 void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
+    _count = 0;
     
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
