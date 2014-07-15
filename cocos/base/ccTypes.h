@@ -497,8 +497,8 @@ public:
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
-extern const std::string STD_STRING_EMPTY;
-extern const ssize_t CC_INVALID_INDEX;
+extern const std::string CC_DLL STD_STRING_EMPTY;
+extern const ssize_t CC_DLL CC_INVALID_INDEX;
 
 NS_CC_END
 

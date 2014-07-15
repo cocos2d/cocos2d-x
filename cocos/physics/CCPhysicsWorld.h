@@ -226,7 +226,7 @@ protected:
     
     friend class PhysicsWorld;
 };
-extern const float PHYSICS_INFINITY;
+extern const float CC_DLL PHYSICS_INFINITY;
 
 NS_CC_END
 

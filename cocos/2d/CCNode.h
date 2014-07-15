@@ -71,7 +71,7 @@ enum {
     kNodeOnCleanup
 };
 
-bool nodeComparisonLess(Node* n1, Node* n2);
+bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
