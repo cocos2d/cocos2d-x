@@ -2864,6 +2864,7 @@
 		50FCEB9018C72017004AD434 /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		50FCEB9118C72017004AD434 /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
+		652F6F9D19754596001BF104 /* MathUtilSSE.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = MathUtilSSE.inl; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4627,6 +4628,7 @@
 				50ABBD271925AB0000A911A9 /* MathUtil.h */,
 				50ABBD281925AB0000A911A9 /* MathUtil.inl */,
 				50ABBD291925AB0000A911A9 /* MathUtilNeon.inl */,
+				652F6F9D19754596001BF104 /* MathUtilSSE.inl */,
 				50ABBD2A1925AB0000A911A9 /* Quaternion.cpp */,
 				50ABBD2B1925AB0000A911A9 /* Quaternion.h */,
 				50ABBD2C1925AB0000A911A9 /* Quaternion.inl */,

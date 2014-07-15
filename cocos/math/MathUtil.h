@@ -97,6 +97,8 @@ NS_CC_MATH_END
 
 #ifdef USE_NEON
 #include "MathUtilNeon.inl"
+#elif defined(__SSE__)
+#include "MathUtilSSE.inl"
 #else
 #include "MathUtil.inl"
 #endif

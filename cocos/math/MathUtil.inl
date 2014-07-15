@@ -17,10 +17,6 @@
 
  This file was modified to fit the cocos2d-x project
  */
-#if defined(__SSE__)
-#include <xmmintrin.h>
-#endif
-
 NS_CC_MATH_BEGIN
 
 inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
@@ -105,29 +101,6 @@ inline void MathUtil::multiplyMatrix(const float* m, float scalar, float* dst)
 
 inline void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* dst)
 {
-#if defined(__SSE__)
-    __m128 row1 = _mm_load_ps(&m1[0]);
-    __m128 row2 = _mm_load_ps(&m1[4]);
-    __m128 row3 = _mm_load_ps(&m1[8]);
-    __m128 row4 = _mm_load_ps(&m1[12]);
-    int i;
-    for(i=0; i<4; i++) {
-        __m128 col1 = _mm_set1_ps(m2[4*i + 0]);
-        __m128 col2 = _mm_set1_ps(m2[4*i + 1]);
-        __m128 col3 = _mm_set1_ps(m2[4*i + 2]);
-        __m128 col4 = _mm_set1_ps(m2[4*i + 3]);
-        __m128 row = _mm_add_ps(
-                                _mm_add_ps(
-                                           _mm_mul_ps(col1, row1),
-                                           _mm_mul_ps(col2, row2)
-                                           ),
-                                _mm_add_ps(
-                                           _mm_mul_ps(col3, row3),
-                                           _mm_mul_ps(col4, row4))
-                                );
-        _mm_store_ps(&dst[4*i], row);
-    }
-#else
     // Support the case where m1 or m2 is the same array as dst.
     float product[16];
 
@@ -152,7 +125,6 @@ inline void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* ds
     product[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
 
     memcpy(dst, product, MATRIX_SIZE);
-#endif // __SSE__
 }
 
 inline void MathUtil::negateMatrix(const float* m, float* dst)
@@ -195,29 +167,6 @@ inline void MathUtil::transformVec4(const float* m, float x, float y, float z, f
 
 inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
 {
-#if defined(__SSE__)
-    __m128 row1 = _mm_load_ps(&m[0]); // m[0], m[1], m[2], m[3]
-    __m128 row2 = _mm_load_ps(&m[4]); // m[4], m[5], m[6], m[7]
-    __m128 row3 = _mm_load_ps(&m[8]); // m[8], m[9], m[10],m[11]
-    __m128 row4 = _mm_load_ps(&m[12]);// m[12],m[13],m[14],m[15]
-    
-    __m128 col1 = _mm_set1_ps(v[0]);  // v[0], v[0], v[0], v[0]
-    __m128 col2 = _mm_set1_ps(v[1]);  // v[1], v[1], v[1], v[1]
-    __m128 col3 = _mm_set1_ps(v[2]);  // v[2], v[2], v[2], v[2]
-    __m128 col4 = _mm_set1_ps(v[3]);  // v[3], v[3], v[3], v[3]
-    
-    __m128 res = _mm_add_ps(
-                            _mm_add_ps(
-                                       _mm_mul_ps(row1, col1),   // v[0] * m[0], v[0] * m[1], v[0] * m[2], v[0] * m[3]
-                                       _mm_mul_ps(row2, col2)    // v[1] * m[4], v[1] * m[5], v[1] * m[6], v[1] * m[7]
-                                       ),
-                            _mm_add_ps(
-                                       _mm_mul_ps(row3, col3),   // v[2] * m[8], v[2] * m[9], v[2] * m[10], v[2] * m[11]
-                                       _mm_mul_ps(row4, col4)    // v[3] * m[12],v[3] * m[13],v[3] * m[14], v[3] * m[15]
-                                       )
-                            );
-    _mm_store_ps(dst, res);
-#else
     // Handle case where v == dst.
     float x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + v[3] * m[12];
     float y = v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + v[3] * m[13];
@@ -228,7 +177,6 @@ inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
     dst[1] = y;
     dst[2] = z;
     dst[3] = w;
-#endif // __SSE__
 }
 
 inline void MathUtil::crossVec3(const float* v1, const float* v2, float* dst)
