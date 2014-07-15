@@ -30,11 +30,11 @@ local function main()
     gameScene = scene.create()
     gameScene:playBgMusic()
     
-	if cc.Director:getInstance():getRunningScene() then
+    if cc.Director:getInstance():getRunningScene() then
         cc.Director:getInstance():replaceScene(gameScene)
-	else
+    else
         cc.Director:getInstance():runWithScene(gameScene)
-	end
+    end
 
 end
 
