@@ -1,8 +1,8 @@
-# cocos2d-x v3.2rc0 Release Notes #
+# cocos2d-x v3.2 Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.2rc0 Release Notes](#user-content-cocos2d-x-v32rc0-release-notes)
+- [cocos2d-x v3.2 Release Notes](#user-content-cocos2d-x-v32-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
@@ -13,21 +13,23 @@
 		- [Windows](#user-content-windows)
 		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Highlights of v3.2rc0](#user-content-highlights-of-v32rc0)
+- [Highlights of v3.2](#user-content-highlights-of-v32)
+- [Documents](#user-content-documents)
 - [Toolchain requirement changed](#user-content-toolchain-requirement-changed)
 - [Features in detail](#user-content-features-in-detail)
-	- [Sprite3d](#user-content-sprite3d)
+	- [Sprite3D & Animation3D](#user-content-sprite3d--animation3d)
 		- [fbx-conv usage](#user-content-fbx-conv-usage)
-	- [Controller support](#user-content-controller-support)
+	- [Game controller](#user-content-game-controller)
 	- [Fast tilemap](#user-content-fast-tilemap)
 	- [Node::enumerateChildren](#user-content-nodeenumeratechildren)
 	- [utils::findChildren](#user-content-utilsfindchildren)
+	- [Node::setNormalizedPosition](#user-content-nodesetnormalizedposition)
 
 # Misc Information
 
-* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2rc0.zip
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2rc0/CHANGELOG
-* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2rc0/index.html
+* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2.zip
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2/CHANGELOG
+* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2/index.html
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -114,14 +116,22 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# Highlights of v3.2rc0
+# Highlights of v3.2
 
-* `fbx-conv` support generating binary format, and `Sprite3D` support it 
-* about 20% performance improved in `Sprite3D`
-* game controller support
-* fast tilemap support, it is faster for static tilemap
-* physics body supports scale and rotation
-* added Node::enumearteChildren(), and support c++ 11 regular expression
+* `Animation3D`/`Animate3D`, new nodes for 3d animation
+* `fbx-conv` supports generating binary format which is supported by `Sprite3D`
+* Game controller support
+* Fast tilemap support
+* Added `utils::cpatureScreen` to take screenshot
+* Physics body supports scale and rotation
+* Added `Node::enumerateChildren` and `utils::findChildren`, and support c++ 11 regular expression
+* Added `Node::setNormalizedPosition`, `Node`'s position in pixel will be calculated according its parent's content size
+
+# Documents
+
+* [Sprite3D & Animation3D](http://cocos2d-x.org/wiki/Sprite3D)
+* [Game controller](http://www.cocos2d-x.org/wiki/Game_Controller)
+* [How to compile shader on WP8](http://cocos2d-x.org/wiki/How_to_update_wp8_shader)
 
 # Toolchain requirement changed
 
@@ -133,14 +143,19 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Features in detail
 
-## Sprite3d
+## Sprite3D & Animation3D
 
 Sample code to use binary version
 ```c++
 auto sprite3d = Sprite3D::create("filename.c3b");
 addChild(sprite3d);
+
+auto animation3d = Animation3D("filename.c3b");
+auto animate3d = Animate3D::create(animation3d);
+sprite3d->runAction(RepeatForEver::create(animate));
 ```
 
+Detail information please refer to [Sprite3D & Animation3D](http://cocos2d-x.org/wiki/Sprite3D).
 
 ### `fbx-conv` usage
 
@@ -164,19 +179,43 @@ Options:
 * -b: export binary format
 * -t: export text format
 
-## Controller support
+## Game controller
 
 Supported controller type:
 
-* amazon tv
+* Android standard controllers
+* Amazon tv
 * OUYA
 * Moga
 * Nibiru
 * iOS standard controllers
 
-In order to use controller on Android, you should refer to this Android project(`COCOS2DX_ROOT/cocos/platform/android/ControllerManualAdapter`).
+Sample codes
+```c++
+// register event listener
+auto listener = EventListenerController::create();
+listner->onKeyDown = ...
+...
+eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-Full demo please refer to `COCOS2DX_ROOT/tests/game-controler-test`.
+// start connecting controller
+Controller::startDiscoveryController();
+
+// handler key down/ key up event
+void GameControllerTest::onKeyDown(Controller *controller, int keyCode, Event *event)
+{
+    switch (keyCode)
+    {
+        case Controller::Key::BUTTON_A:
+        ...
+        break;
+        
+        ...
+    }
+}
+```
+
+Detail information please refer to [Game controller](http://www.cocos2d-x.org/wiki/Game_Controller).
 
 ## Fast tilemap
 
@@ -192,10 +231,16 @@ Full demo please refer to `COCOS2DX_ROOT/tests/cpp-tests/Classes/TileMapTest/Til
 
 ## Node::enumerateChildren
 
-This functions is used to enumerate children of a `Node` recursively. It supports c++ 11 regular expression.
+This functions is used to enumerate children of a `Node`. It supports c++ 11 regular expression.
 
 ```c++
 // Find nodes whose name is 'nameToFind' and end with digits.
+node->enumerateChildren("nameToFind[[:digit:]]+", [](Node* node) -> bool {
+    ...
+    return false; // return true to stop at first match
+});
+
+// Find nodes whose name is 'nameToFind' and end with digits recursively.
 node->enumerateChildren("nameToFind[[:digit:]]+", [](Node* node) -> bool {
     ...
     return false; // return true to stop at first match
@@ -215,3 +260,18 @@ auto children = utils::findChildren(node, "nameToFind");
 
 ...
 ```
+
+## Node::setNormalizedPosition
+
+Can use this function to set Node's position(x,y) using value between 0 and 1. `Can use this function when it has a parent node.` The positions in pixels is calculated like the following:
+
+```c++
+// pseudo code
+void setNormalizedPosition(Vec2 pos)
+{
+    Size s = getParent()->getContentSize();
+    _position = pos * s;
+}
+```
+
+Full test please refer to `NodeNormalizedPositionTest1/2` in `tests/cpp-tests/Classes/NodeTest/NodeTest.cpp`.
