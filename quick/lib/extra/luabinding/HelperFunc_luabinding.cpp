@@ -1,6 +1,6 @@
 /*
 ** Lua binding: HelperFunc_luabinding
-** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:15:02 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:28:05 2014.
 */
 
 #include "HelperFunc_luabinding.h"

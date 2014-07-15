@@ -5244,11 +5244,20 @@ static void extendGLProgramState(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static void extendFunctions(lua_State* tolua_S)
+{
+    tolua_module(tolua_S,"cc",0);
+    tolua_beginmodule(tolua_S,"cc");
+        tolua_function(tolua_S,"LuaLoadChunksFromZIP",LuaStack::lua_loadChunksFromZIP);
+    tolua_endmodule(tolua_S);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
         return 0;
     
+    extendFunctions(tolua_S);
     extendNode(tolua_S);
     extendLayer(tolua_S);
     extendMenuItem(tolua_S);
