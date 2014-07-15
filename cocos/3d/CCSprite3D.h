@@ -41,7 +41,7 @@ class Texture2D;
 class MeshSkin;
 
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
-class Sprite3D : public Node, public BlendProtocol
+class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
