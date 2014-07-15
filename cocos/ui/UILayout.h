@@ -110,7 +110,7 @@ public:
      *
      * @param fileName image file path.
      *
-     * @param texType @see TextureResType. UI_TEX_TYPE_LOCAL means local file, UI_TEX_TYPE_PLIST means sprite frame.
+     * @param texType @see TextureResType. TextureResType::LOCAL means local file, TextureResType::PLIST means sprite frame.
      */
     void setBackGroundImage(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
@@ -143,7 +143,7 @@ public:
     bool isBackGroundImageScale9Enabled()const;
     
     /**
-     * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
+     * Sets background color for layout, if color type is BackGroundColorType::SOLIDE
      *
      * @param color
      */
@@ -152,7 +152,7 @@ public:
     const Color3B& getBackGroundColor()const;
     
     /**
-     * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
+     * Sets background color for layout, if color type is BackGroundColorType::GRADIENT
      *
      * @param start color
      *
@@ -174,7 +174,7 @@ public:
     GLubyte getBackGroundColorOpacity()const;
     
     /**
-     * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
+     * Sets background color vector for layout, if color type is BackGroundColorType::GRADIENT
      *
      * @param vector
      */

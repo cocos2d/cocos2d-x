@@ -236,7 +236,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     void addTouchEventListener(ccWidgetTouchCallback callback);
 
-    //cocos2d property
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -249,10 +248,7 @@ public:
     virtual void setPosition(const Vec2 &pos) override;
 
     /**
-     * Changes the position (x,y) of the widget in OpenGL coordinates
-     *
-     * Usually we use p(x,y) to compose Vec2 object.
-     * The original point (0,0) is at the left-bottom corner of screen.
+     * Set the percent(x,y) of the widget in OpenGL coordinates
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
