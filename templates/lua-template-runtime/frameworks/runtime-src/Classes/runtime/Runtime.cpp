@@ -94,10 +94,7 @@ bool reloadScript(const string& modulefile)
         director->getTextureCache()->removeAllTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
-
-    director->getScheduler()->unscheduleAll();
-    director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
-
+    
     return (LuaEngine::getInstance()->reload(strfile.c_str())==0);
 }
 
