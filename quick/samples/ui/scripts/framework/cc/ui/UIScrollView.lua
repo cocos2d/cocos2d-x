@@ -28,6 +28,10 @@ function UIScrollView:setViewRect(rect)
 	return self
 end
 
+function UIScrollView:setActualRect(rect)
+	self.actualRect_ = rect
+end
+
 function UIScrollView:setDirection(dir)
 	self.direction = dir
 
@@ -80,18 +84,16 @@ function UIScrollView:onTouch_(event)
 		self.bDrag_ = true
 		local disX = event.x - event.prevX
 		local disY = event.y - event.prevY
-		print("UIScrollView - moved x:" .. disX .. " y:" .. disY)
-		local newx, newy = self.position_.x, self.position_.y
+
 		if self.direction == UIScrollView.DIRECTION_VERTICAL then
-			newy = self.position_.y + disY
+			disX = 0
 		elseif self.direction == UIScrollView.DIRECTION_HORIZONTAL then
-			newx = self.position_.x + disX
+			disY = 0
 		else
-			newx = self.position_.x + disX
-			newy = self.position_.y + disY
+			-- do nothing
 		end
 
-		self:scrollTo(newx, newy)
+		self:scrollBy(disX, disY)
 		self:callListener_{name = "moved", disX = disX, disY = disY}
 	elseif "ended" == event.name then
 		if self.bDrag_ then
@@ -119,13 +121,26 @@ function UIScrollView:scrollTo(p, y)
 	self.scrollNode:setPosition(self.position_)
 end
 
+function UIScrollView:scrollBy(x, y)
+	self.position_.x = self.position_.x + x
+	self.position_.y = self.position_.y + y
+	self.scrollNode:setPosition(self.position_)
+
+	if self.actualRect_ then
+		self.actualRect_.x = self.actualRect_.x + x
+		self.actualRect_.y = self.actualRect_.y + y
+	end
+end
+
 function UIScrollView:calcScrollRange()
 	--先计算出container的position x,y方向上的可变范围,后面拖动时可以直接用
 	--拖动时是可以大于或小于这个范围的，只是拖动结束自动回到这个范围中来，回到哪一边的值，最近原则
 
-	-- self.rect = self.scrollNode:getCascadeBoundingBox()
-	self.rect = self.scrollNode:getBoundingBox()
+	self.rect = self.scrollNode:getCascadeBoundingBox()
+	-- self.rect = self.scrollNode:getBoundingBox()
 	dump(self.rect, "UIScrollView scrollNode BoundingBox:")
+	-- HDrawRect(self.rect, self, cc.c4f(0, 1, 0, 1))
+	print("UIScrollView - calcScrollRange child count:" .. self.scrollNode:getChildrenCount())
 	-- dump(self.viewRect_, "viewRect:")
 	if not self.positionRange_ then
 		self.positionRange_ = {}
@@ -151,16 +166,18 @@ function UIScrollView:calcScrollRange()
 
 	-- anchorpoint
 	local anchor = self.scrollNode:getAnchorPoint()
-	local size = self.scrollNode:getContentSize()
+	local size = self.scrollNode:getCascadeBoundingBox()
 	self.positionRange_.minX = self.positionRange_.minX + anchor.x * size.width
 	self.positionRange_.maxX = self.positionRange_.maxX + anchor.x * size.width
 	self.positionRange_.minY = self.positionRange_.minY + anchor.y * size.height
 	self.positionRange_.maxY = self.positionRange_.maxY + anchor.y * size.height
 
-	dump(self.positionRange_, "positionRange:")
+	dump(anchor, "anchor:")
+	-- dump(self.viewRect_, "viewRect_:")
+	-- dump(self.positionRange_, "positionRange:")
 end
 
-function UIScrollView:scrollAuto()
+function UIScrollView:scrollAuto1()
 	self:calcScrollRange()
 
 	local newX, newY = self.position_.x, self.position_.y
@@ -182,6 +199,32 @@ function UIScrollView:scrollAuto()
 	print("UIScrollView - scrollAuto: x:" .. newX .. " y:" .. newY)
 	transition.moveTo(self.scrollNode,
 		{x = newX, y = newY, time = 0.3,
+		easing = "backout",
+		onComplete = function()
+			self:callListener_{name = "scrollEnd"}
+		end})
+end
+
+function UIScrollView:scrollAuto()
+	local cascadeBound = self.actualRect_ or self.scrollNode:getCascadeBoundingBox()
+	local disX, dixY = 0, 0
+
+	-- dump(cascadeBound, "UIScrollView - cascBoundingBox:")
+	-- dump(self.scrollNode:getBoundingBox(), "UIScrollView - BoundingBox:")
+
+	if cascadeBound.x > self.viewRect_.x then
+		disX = self.viewRect_.x - cascadeBound.x
+	elseif cascadeBound.x + cascadeBound.width < self.viewRect_.x + self.viewRect_.width then
+		disX = self.viewRect_.x + self.viewRect_.width - cascadeBound.x - cascadeBound.width
+	end
+	if cascadeBound.y > self.viewRect_.y then
+		disY = self.viewRect_.y - cascadeBound.y
+	elseif cascadeBound.y + cascadeBound.height < self.viewRect_.y + self.viewRect_.height then
+		disY = self.viewRect_.y + self.viewRect_.height - cascadeBound.y - cascadeBound.height
+	end
+
+	transition.moveBy(self.scrollNode,
+		{x = disX, y = disY, time = 0.3,
 		easing = "backout",
 		onComplete = function()
 			self:callListener_{name = "scrollEnd"}

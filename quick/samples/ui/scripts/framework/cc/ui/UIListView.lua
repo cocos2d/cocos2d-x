@@ -134,8 +134,10 @@ function UIListView:layout_()
 			width = width + itemW
 		end
 	end
-	self.container:setContentSize(width, height)
-	print("UIListView container w,h" .. width .. " " .. height)
+	self:setActualRect({x = self.viewRect_.x,
+		y = self.viewRect_.y,
+		width = width,
+		height = height})
 	dump(self.container:getCascadeBoundingBox(), "UIListView container bound:")
 
 	print("UIListView - w,h", width, height)

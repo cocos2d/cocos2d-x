@@ -23,13 +23,16 @@ function TestUIScrollViewScene:createScrollView1()
     sp2:setContentSize(300, 200)
     sp2:pos(200, 180)
 
+    local emptyNode = cc.Node:create()
+    emptyNode:addChild(sp2)
+
     local bound = sp2:getBoundingBox()
     bound.width = 150
-    bound.height = 100
+    bound.height = 200
 
     cc.ui.UIScrollView.new({viewRect = bound})
-        :addScrollNode(sp2)
-        :setDirection(cc.ui.UIScrollView.DIRECTION_HORIZONTAL)
+        :addScrollNode(emptyNode)
+        -- :setDirection(cc.ui.UIScrollView.DIRECTION_HORIZONTAL)
         :onScroll(handler(self, self.scrollListener))
         :addTo(self)
 
