@@ -2,7 +2,7 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.2rc0 Release Notes](#user-content-cocos2d-x-v32rc0-release-notes)
+- [cocos2d-x v3.2 Release Notes](#user-content-cocos2d-x-v32-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
@@ -13,15 +13,17 @@
 		- [Windows](#user-content-windows)
 		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Highlights of v3.2rc0](#user-content-highlights-of-v32rc0)
+- [Highlights of v3.2](#user-content-highlights-of-v32)
+- [Documents](#user-content-documents)
 - [Toolchain requirement changed](#user-content-toolchain-requirement-changed)
 - [Features in detail](#user-content-features-in-detail)
-	- [Sprite3d](#user-content-sprite3d)
+	- [Sprite3D & Animation3D](#user-content-sprite3d--animation3d)
 		- [fbx-conv usage](#user-content-fbx-conv-usage)
-	- [Controller support](#user-content-controller-support)
+	- [Game controller](#user-content-game-controller)
 	- [Fast tilemap](#user-content-fast-tilemap)
 	- [Node::enumerateChildren](#user-content-nodeenumeratechildren)
 	- [utils::findChildren](#user-content-utilsfindchildren)
+	- [Node::setNormalizedPosition](#user-content-nodesetnormalizedposition)
 
 # Misc Information
 
