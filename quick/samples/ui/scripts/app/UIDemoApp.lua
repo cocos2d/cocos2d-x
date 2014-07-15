@@ -9,11 +9,11 @@ local UIDemoApp = class("UIDemoApp", cc.mvc.AppBase)
 function UIDemoApp:ctor()
     UIDemoApp.super.ctor(self)
     self.scenes_ = {
+        "TestUIListViewScene",
         "TestUIScrollViewScene",
         "TestUIImageScene",
         "TestUIButtonScene",
         "TestUISliderScene",
-        "TestUIListViewScene"
     }
 end
 
@@ -89,17 +89,17 @@ function UIDemoApp:createNextButton(scene)
         :addTo(scene)
 end
 
--- function HDrawRect(rect, parent, color)
---     local left, bottom, width, height = rect.x, rect.y, rect.width, rect.height
---     local points = {
---         {left, bottom},
---         {left + width, bottom},
---         {left + width, bottom + height},
---         {left, bottom + height},
---         {left, bottom},
---     }
---     local box = display.newPolygon(points, {borderColor = color})
---     parent:addChild(box)
--- end
+function HDrawRect(rect, parent, color)
+    local left, bottom, width, height = rect.x, rect.y, rect.width, rect.height
+    local points = {
+        {left, bottom},
+        {left + width, bottom},
+        {left + width, bottom + height},
+        {left, bottom + height},
+        {left, bottom},
+    }
+    local box = display.newPolygon(points, {borderColor = color})
+    parent:addChild(box)
+end
 
 return UIDemoApp

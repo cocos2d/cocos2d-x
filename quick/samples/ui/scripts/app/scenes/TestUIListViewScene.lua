@@ -15,10 +15,11 @@ TestUIListViewScene.RADIO_BUTTON_IMAGES = {
 function TestUIListViewScene:ctor()
     app:createGrid(self)
 
-    self:createListView1()
-    self:createListView2()
-    self:createListView3()
-    self:createListView4()
+    -- self:createListView1()
+    -- self:createListView2()
+    -- self:createListView3()
+    -- self:createListView4()
+    self:createListView5()
 
     app:createTitle(self, "Test UIListView")
     app:createNextButton(self)
@@ -48,10 +49,11 @@ function TestUIListViewScene:listViewDelegate1(listview, name, idx, param)
     if name == cc.ui.UIListView.CELL_TAG then
         local i = idx --math.random(4)
         local item
+        local container = listview:newItem()
 
         if 1 == i then
             item = cc.ui.UILabel.new(
-                {text = "text"..idx, size = 20,
+                {text = "textekkkdkkdkikfjdkjfslkdjlfjsdfsdfdsf"..idx, size = 20,
                 align = cc.ui.TEXT_ALIGN_CENTER,
                 color = display.COLOR_WHITE})
             :pos(100, 20)
@@ -142,8 +144,8 @@ function TestUIListViewScene:listViewDelegate1(listview, name, idx, param)
             :pos(100, 20)
         end
 
-        item = listview:transItem(item)
-        return item
+        container:addContent(item)
+        return container
     elseif name == cc.ui.UIListView.CELL_SIZE_TAG then
         if 1 == idx then
             return 200, 40
@@ -341,5 +343,36 @@ function TestUIListViewScene:listViewDelegate4(listview, name, idx, param)
         print("TestUIListViewScene clicked on " .. idx .. " point:(" .. param.x .. " ," .. param.y .. ")")
     end
 end
+
+function TestUIListViewScene:createListView5()
+    self.lv = cc.ui.UIListView.new {
+        bgColor = cc.c4b(200, 200, 200, 120),
+        viewRect = cc.rect(40, 80, 120, 400),
+        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
+        :onTouch(handler(self, self.touchListener))
+        :addTo(self)
+
+    -- add items
+    for i=1,10 do
+        local item = self.lv:newItem()
+        local content = cc.ui.UILabel.new(
+                {text = "item"..i,
+                size = 20,
+                align = cc.ui.TEXT_ALIGN_CENTER,
+                color = display.COLOR_BLACK})
+        item:addContent(content)
+        item:setItemSize(451, 40)
+
+        self.lv:addItem(item)
+    end
+    self.lv:reload()
+
+    HDrawRect(self.lv:getCascadeBoundingBox(), self, cc.c4f(0, 1, 0, 1))
+end
+
+function TestUIListViewScene:touchListener(event)
+    -- body
+end
+
 
 return TestUIListViewScene

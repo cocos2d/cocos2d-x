@@ -19,25 +19,25 @@ function TestUIScrollViewScene:createScrollView1()
 	sp1:pos(200, 440)
 	sp1:addTo(self)
 
-
-	local sp2 = display.newScale9Sprite("sunset.png")
-	sp2:setContentSize(300, 200)
-	sp2:pos(200, 180)
-
-	cc(sp2):addComponent("components.ui.ScrollViewProtocol")
-        :exportMethods()
-        :applyTo(self)
+    local sp2 = display.newScale9Sprite("sunset.png")
+    sp2:setContentSize(300, 200)
+    sp2:pos(200, 180)
 
     local bound = sp2:getBoundingBox()
     bound.width = 150
     bound.height = 100
-    sp2:setViewRect(bound):apply()
+
+    cc.ui.UIScrollView.new({viewRect = bound})
+        :addScrollNode(sp2)
+        :setDirection(cc.ui.UIScrollView.DIRECTION_HORIZONTAL)
+        :onScroll(handler(self, self.scrollListener))
+        :addTo(self)
 
 	-- sp2:setDirection(0) --支持横向，纵向滑动，默认
 	-- sp2:setDirection(1) --只支持纵向滑动
     -- sp2:setDirection(2) --只支持横向滑动
 
-    sp2:regScrollListener(handler(self, self.scrollListener))
+    -- sp2:regScrollListener(handler(self, self.scrollListener))
 end
 
 function TestUIScrollViewScene:scrollListener(event)
