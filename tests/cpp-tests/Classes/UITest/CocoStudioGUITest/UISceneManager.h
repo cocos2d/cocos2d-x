@@ -72,6 +72,7 @@ enum
     kUITextFieldTest_MaxLength,
     kUITextFieldTest_Password,
     kUITextFieldTest_LineWrap,
+    kUITextFieldTest_TrueTypeFont,
     kUILayoutTest,
     kUILayoutTest_Color,
     kUILayoutTest_Gradient,

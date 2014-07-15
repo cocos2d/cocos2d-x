@@ -83,6 +83,7 @@ static const char* s_testArray[] =
     "UITextFieldTest_MaxLength",
     "UITextFieldTest_Password",
     "UITextFieldTest_LineWrap",
+    "UITextFieldTest_TrueTypeFont",
     "UILayoutTest",
     "UILayoutTest_Color",
     "UILayoutTest_Gradient",
@@ -159,7 +160,6 @@ Scene *UISceneManager::nextUIScene()
     {
         _currentUISceneId = _minUISceneId;
     }
-//    _currentUISceneId = (_currentUISceneId + 1) % kUITestMax;
     
     return currentUIScene();
 }
@@ -171,13 +171,6 @@ Scene *UISceneManager::previousUIScene()
     {
         _currentUISceneId = _maxUISceneId;
     }
-    /*
-    _currentUISceneId = _currentUISceneId - 1;
-    if (_currentUISceneId < 0)
-    {
-        _currentUISceneId = kUITestMax - 1;
-    }
-     */
     
     return currentUIScene();
 }
@@ -207,22 +200,6 @@ Scene *UISceneManager::currentUIScene()
         case kUISliderTest_Scale9:
             return UISliderTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
-        case kUIPotentiometerTest:
-            return UIPotentiometerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
-            /*
-        case kUISwitchTest_Horizontal:
-            return UISwitchTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUISwitchTest_Vertical:
-            return UISwitchTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUISwitchTest_VerticalAndTitleVertical:
-            return UISwitchTest_VerticalAndTitleVertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
         case kUIImageViewTest:
             return UIImageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -240,29 +217,6 @@ Scene *UISceneManager::currentUIScene()
             
         case kUILoadingBarTest_Right_Scale9:
             return UILoadingBarTest_Right_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-            /*
-        case kUIProgressTimerTest_Radial:
-            return UIProgressTimerTest_Radial::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_Horizontal:
-            return UIProgressTimerTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_Vertical:
-            return UIProgressTimerTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_RadialMidpointChanged:
-            return UIProgressTimerTest_RadialMidpointChanged::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_BarVarious:
-            return UIProgressTimerTest_BarVarious::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_BarTintAndFade:
-            return UIProgressTimerTest_BarTintAndFade::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIProgressTimerTest_WithSpriteFrame:
-            return UIProgressTimerTest_WithSpriteFrame::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
             
         case kUITextAtlasTest:
             return UITextAtlasTest::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -295,7 +249,9 @@ Scene *UISceneManager::currentUIScene()
             
         case kUITextFieldTest_LineWrap:
             return UITextFieldTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUITextFieldTest_TrueTypeFont:
+            return UITextFieldTest_TrueTypeFont::sceneWithTitle(s_testArray[_currentUISceneId]);
+        
         case kUILayoutTest:
             return UILayoutTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -323,11 +279,6 @@ Scene *UISceneManager::currentUIScene()
         case kUILayoutTest_Layout_Relative_Location:
             return UILayoutTest_Layout_Relative_Location::sceneWithTitle(s_testArray[_currentUISceneId]);
             
-            /*
-        case kUILayoutTest_Layout_Grid:
-            return UILayoutTest_Layout_Grid::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
         case kUIScrollViewTest_Vertical:
             return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -352,22 +303,6 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIListViewTest_Horizontal:
             return UIListViewTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-            /*
-        case kUIGridViewTest_Mode_Column:
-            return UIGridViewTest_Mode_Column::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIGridViewTest_Mode_Row:
-            return UIGridViewTest_Mode_Row::sceneWithTitle(s_testArray[_currentUISceneId]);
-             */
-            
-            /*
-        case kUIPickerViewTest_Vertical:
-            return UIPickerViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
-        case kUIPickerViewTest_Horizontal:
-            return UIPickerViewTest_Horizontal::sceneWithTitle(s_testArray[_currentUISceneId]);
-            */
             
         case kUIWidgetAddNodeTest:
             return UIWidgetAddNodeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
