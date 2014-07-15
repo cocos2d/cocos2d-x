@@ -5,10 +5,9 @@
 //  Created by sun zhuoshi on 7/15/14.
 //
 //
+#include <xmmintrin.h>
 
 NS_CC_MATH_BEGIN
-
-#include <xmmintrin.h>
 
 inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
 {
