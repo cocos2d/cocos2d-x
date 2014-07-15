@@ -40,10 +40,25 @@ bool UITextTest_LineWrap::init()
         _uiLayer->addChild(alert);
         
         // Create the line wrap
-        Text* text = Text::create("Text can line wrap","AmericanTypewriter",32);
+        Text* text = Text::create("TextArea Widget can line wrap","AmericanTypewriter",32);
         text->ignoreContentAdaptWithSize(false);
         text->setContentSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
+        text->setTouchScaleChangeEnabled(true);
+        text->setTouchEnabled(true);
+        text->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type)
+        {
+            if (type == Widget::TouchEventType::ENDED)
+            {
+                if ((int)text->getContentSize().width == 280)
+                {
+                    text->setContentSize(Size(380,100));
+                }else
+                {
+                    text->setContentSize(Size(280, 150));
+                }
+            }
+        });
         text->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - text->getContentSize().height / 8.0f));
         _uiLayer->addChild(text);
         
