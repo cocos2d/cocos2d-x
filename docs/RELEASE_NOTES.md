@@ -27,9 +27,9 @@
 
 # Misc Information
 
-* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2rc0.zip
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2rc0/CHANGELOG
-* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2rc0/index.html
+* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2.zip
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2/CHANGELOG
+* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2/index.html
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
