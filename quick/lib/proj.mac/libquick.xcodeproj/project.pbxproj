@@ -715,8 +715,6 @@
 		F4E0C070196BA25D0053EFD7 /* lua_cocos2dx_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = F4E0BF9D196BA25D0053EFD7 /* lua_cocos2dx_deprecated.h */; };
 		F4E0C071196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4E0BF9E196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.cpp */; };
 		F4E0C072196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = F4E0BF9F196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.h */; };
-		F4E0C073196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4E0BFA0196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.cpp */; };
-		F4E0C074196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = F4E0BFA1196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.h */; };
 		F4E0C075196BA25D0053EFD7 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4E0BFA2196BA25D0053EFD7 /* lua_cocos2dx_manual.cpp */; };
 		F4E0C076196BA25D0053EFD7 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4E0BFA3196BA25D0053EFD7 /* lua_cocos2dx_manual.hpp */; };
 		F4E0C077196BA25D0053EFD7 /* lua_cocos2dx_physics_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4E0BFA4196BA25D0053EFD7 /* lua_cocos2dx_physics_manual.cpp */; };
@@ -1501,8 +1499,6 @@
 		F4E0BF9D196BA25D0053EFD7 /* lua_cocos2dx_deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_deprecated.h; sourceTree = "<group>"; };
 		F4E0BF9E196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
 		F4E0BF9F196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extension_manual.h; sourceTree = "<group>"; };
-		F4E0BFA0196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_external_extra_manual.cpp; sourceTree = "<group>"; };
-		F4E0BFA1196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_external_extra_manual.h; sourceTree = "<group>"; };
 		F4E0BFA2196BA25D0053EFD7 /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
 		F4E0BFA3196BA25D0053EFD7 /* lua_cocos2dx_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_manual.hpp; sourceTree = "<group>"; };
 		F4E0BFA4196BA25D0053EFD7 /* lua_cocos2dx_physics_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics_manual.cpp; sourceTree = "<group>"; };
@@ -3146,8 +3142,6 @@
 				F4E0BF9D196BA25D0053EFD7 /* lua_cocos2dx_deprecated.h */,
 				F4E0BF9E196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.cpp */,
 				F4E0BF9F196BA25D0053EFD7 /* lua_cocos2dx_extension_manual.h */,
-				F4E0BFA0196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.cpp */,
-				F4E0BFA1196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.h */,
 				F4E0BFA2196BA25D0053EFD7 /* lua_cocos2dx_manual.cpp */,
 				F4E0BFA3196BA25D0053EFD7 /* lua_cocos2dx_manual.hpp */,
 				F4E0BFA4196BA25D0053EFD7 /* lua_cocos2dx_physics_manual.cpp */,
@@ -3577,7 +3571,6 @@
 				F4E0C08D196BA25D0053EFD7 /* tolua_event.h in Headers */,
 				F4E0B2D7196B9C670053EFD7 /* CCGrabber.h in Headers */,
 				F4E0B6EA196B9EEB0053EFD7 /* cpRatchetJoint.h in Headers */,
-				F4E0C074196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.h in Headers */,
 				F4E0BB4F196BA00A0053EFD7 /* svttglyf.h in Headers */,
 				F4E0B54A196B9C7D0053EFD7 /* CCEventListener.h in Headers */,
 				F4E0BB30196BA00A0053EFD7 /* autohint.h in Headers */,
@@ -3959,7 +3952,6 @@
 				DAF28359196CEE6D00959DA1 /* CCBundleReader.cpp in Sources */,
 				F4E0B553196B9C7D0053EFD7 /* CCEventListenerMouse.cpp in Sources */,
 				F4E0C0D3196BA3D60053EFD7 /* CCString.cpp in Sources */,
-				F4E0C073196BA25D0053EFD7 /* lua_cocos2dx_external_extra_manual.cpp in Sources */,
 				DAF2830A196BDACB00959DA1 /* auxiliar.c in Sources */,
 				F4E0B2C2196B9C660053EFD7 /* CCComponentContainer.cpp in Sources */,
 				F4E0B2A4196B9C660053EFD7 /* CCActionGrid.cpp in Sources */,
