@@ -4038,6 +4038,7 @@
         "cocos/scripting/lua-bindings/script/Opengl.lua", 
         "cocos/scripting/lua-bindings/script/OpenglConstants.lua", 
         "cocos/scripting/lua-bindings/script/StudioConstants.lua", 
+        "cocos/scripting/lua-bindings/script/bitExtend.lua", 
         "cocos/scripting/lua-bindings/script/experimentalConstants.lua", 
         "cocos/scripting/lua-bindings/script/extern.lua", 
         "cocos/scripting/lua-bindings/script/json.lua", 
