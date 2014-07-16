@@ -613,23 +613,14 @@
 		1AAF5354180E3060000584C8 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5351180E3060000584C8 /* AssetsManager.cpp */; };
 		1AAF5355180E3060000584C8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
 		1AAF5356180E3060000584C8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
-		1AAF536A180E3374000584C8 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
 		1AAF536B180E3374000584C8 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
-		1AAF536C180E3374000584C8 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
 		1AAF536D180E3374000584C8 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
-		1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5364180E3374000584C8 /* HttpRequest.h */; };
 		1AAF536F180E3374000584C8 /* HttpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5364180E3374000584C8 /* HttpRequest.h */; };
-		1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5365180E3374000584C8 /* HttpResponse.h */; };
 		1AAF5371180E3374000584C8 /* HttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5365180E3374000584C8 /* HttpResponse.h */; };
-		1AAF5372180E3374000584C8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5366180E3374000584C8 /* SocketIO.cpp */; };
 		1AAF5373180E3374000584C8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5366180E3374000584C8 /* SocketIO.cpp */; };
-		1AAF5374180E3374000584C8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5367180E3374000584C8 /* SocketIO.h */; };
 		1AAF5375180E3374000584C8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5367180E3374000584C8 /* SocketIO.h */; };
-		1AAF5376180E3374000584C8 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
 		1AAF5377180E3374000584C8 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
-		1AAF5378180E3374000584C8 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5369180E3374000584C8 /* WebSocket.h */; };
 		1AAF5379180E3374000584C8 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5369180E3374000584C8 /* WebSocket.h */; };
-		1AAF5385180E35A3000584C8 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
 		1AAF5388180E35AC000584C8 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5387180E35AC000584C8 /* libwebsockets.a */; };
 		1AAF541D180E3B6A000584C8 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF541C180E3B6A000584C8 /* libcurl.a */; };
 		1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF584C180E40B9000584C8 /* LocalStorage.cpp */; };
@@ -1506,6 +1497,14 @@
 		50FCEBCA18C72017004AD434 /* WidgetReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FCEB9118C72017004AD434 /* WidgetReader.h */; };
 		50FCEBCC18C72017004AD434 /* WidgetReaderProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		B244F3071976871800ED1926 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
+		B244F3081976871C00ED1926 /* HttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5365180E3374000584C8 /* HttpResponse.h */; };
+		B244F3091976871F00ED1926 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5367180E3374000584C8 /* SocketIO.h */; };
+		B244F30A1976872C00ED1926 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5369180E3374000584C8 /* WebSocket.h */; };
+		B244F30B1976873300ED1926 /* HttpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5364180E3374000584C8 /* HttpRequest.h */; };
+		B244F30C1976874300ED1926 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
+		B244F30E1976875100ED1926 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5366180E3374000584C8 /* SocketIO.cpp */; };
+		B244F30F1976875300ED1926 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
 		B24AA985195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA982195A675C007B4522 /* CCFastTMXLayer.h */; };
@@ -1514,6 +1513,7 @@
 		B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */; };
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
+		B27AEE0219768934008BD575 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
 		B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B61926D5EC003EEF37 /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
@@ -2896,6 +2896,7 @@
 		B2DB47D2197669A100411E16 /* libcocosBuilder Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosStudio Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosSpine Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosNetwork Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
 		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
@@ -2936,7 +2937,6 @@
 				1A5703A1180BD22C0088DEC7 /* libtiff.a in Frameworks */,
 				1A5703B8180BD2780088DEC7 /* libwebp.a in Frameworks */,
 				1A57052B180BD31F0088DEC7 /* libfreetype.a in Frameworks */,
-				1AAF5385180E35A3000584C8 /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3040,6 +3040,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2DB49A7197686CB00411E16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B27AEE0219768934008BD575 /* libwebsockets.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -3107,6 +3115,7 @@
 				B2DB47D2197669A100411E16 /* libcocosBuilder Mac.a */,
 				B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */,
 				B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */,
+				B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5213,15 +5222,10 @@
 				50ABBE3B1925AB6F00A911A9 /* CCData.h in Headers */,
 				50ABBE3F1925AB6F00A911A9 /* CCDataVisitor.h in Headers */,
 				3EA47872195478E00068D9D1 /* CCBundleReader.h in Headers */,
-				1AAF536C180E3374000584C8 /* HttpClient.h in Headers */,
 				50ABBD9D1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
 				50ABBEB91925AB6F00A911A9 /* ccUTF8.h in Headers */,
-				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
-				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
-				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
 				50ABBE2F1925AB6F00A911A9 /* ccConfig.h in Headers */,
-				1AAF5378180E3374000584C8 /* WebSocket.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
 				1A01C69018F57BE800EFE3A6 /* CCDictionary.h in Headers */,
 				1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
@@ -6072,6 +6076,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2DB49A8197686CB00411E16 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B244F30B1976873300ED1926 /* HttpRequest.h in Headers */,
+				B244F3071976871800ED1926 /* HttpClient.h in Headers */,
+				B244F3081976871C00ED1926 /* HttpResponse.h in Headers */,
+				B244F3091976871F00ED1926 /* SocketIO.h in Headers */,
+				B244F30A1976872C00ED1926 /* WebSocket.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -6315,6 +6331,23 @@
 			productReference = B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		B2DB498D197686CB00411E16 /* cocosNetwork Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2DB49C1197686CB00411E16 /* Build configuration list for PBXNativeTarget "cocosNetwork Mac" */;
+			buildPhases = (
+				B2DB498E197686CB00411E16 /* Sources */,
+				B2DB49A7197686CB00411E16 /* Frameworks */,
+				B2DB49A8197686CB00411E16 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocosNetwork Mac";
+			productName = cocos2dx;
+			productReference = B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -6343,6 +6376,7 @@
 				B2DB48161976716E00411E16 /* cocosStudio Mac */,
 				B2DB479B197669A100411E16 /* cocosBuilder Mac */,
 				B2DB48CA19767F1F00411E16 /* cocosSpine Mac */,
+				B2DB498D197686CB00411E16 /* cocosNetwork Mac */,
 				A03F2B781780BD04006731B9 /* chipmunk Mac */,
 				A03F2D5D1780BDF7006731B9 /* box2d Mac */,
 				A03F2E9817814268006731B9 /* CocosDenshion Mac */,
@@ -6505,11 +6539,8 @@
 				50ABBE511925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
 				50ABC0051926664800A911A9 /* CCThread.mm in Sources */,
 				B29594CA1926D61F003EEF37 /* CCSprite3D.cpp in Sources */,
-				1AAF536A180E3374000584C8 /* HttpClient.cpp in Sources */,
 				50ABC0631926664800A911A9 /* CCDevice.mm in Sources */,
-				1AAF5372180E3374000584C8 /* SocketIO.cpp in Sources */,
 				50ABBE1F1925AB6F00A911A9 /* atitc.cpp in Sources */,
-				1AAF5376180E3374000584C8 /* WebSocket.cpp in Sources */,
 				1A01C69818F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */,
 				50ABBEA31925AB6F00A911A9 /* CCScriptSupport.cpp in Sources */,
@@ -7293,6 +7324,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2DB498E197686CB00411E16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B244F30C1976874300ED1926 /* HttpClient.cpp in Sources */,
+				B244F30E1976875100ED1926 /* SocketIO.cpp in Sources */,
+				B244F30F1976875300ED1926 /* WebSocket.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -7455,7 +7496,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
 		};
@@ -7483,7 +7524,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
 		};
@@ -7976,6 +8017,47 @@
 			};
 			name = Release;
 		};
+		B2DB49C2197686CB00411E16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/huabingxu/work/cocos2d-x/external/websockets/prebuilt/mac",
+				);
+				PRODUCT_NAME = "cocosNetwork Mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
+			};
+			name = Debug;
+		};
+		B2DB49C3197686CB00411E16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+					CC_KEYBOARD_SUPPORT,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/huabingxu/work/cocos2d-x/external/websockets/prebuilt/mac",
+				);
+				PRODUCT_NAME = "cocosNetwork Mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -8128,6 +8210,15 @@
 			buildConfigurations = (
 				B2DB48FF19767F1F00411E16 /* Debug */,
 				B2DB490019767F1F00411E16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2DB49C1197686CB00411E16 /* Build configuration list for PBXNativeTarget "cocosNetwork Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2DB49C2197686CB00411E16 /* Debug */,
+				B2DB49C3197686CB00411E16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
