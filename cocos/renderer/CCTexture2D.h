@@ -400,6 +400,9 @@ private:
     static void convertRGBA8888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
 
+	// Special for DX textures
+	static void convertRGBA4444ToBGRA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
+
 protected:
     /** pixel format of the texture */
     Texture2D::PixelFormat _pixelFormat;

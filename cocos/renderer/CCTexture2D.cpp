@@ -426,6 +426,18 @@ void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataL
             |  (data[i + 3] & 0x0080) >> 7;   //A
     }
 }
+
+void Texture2D::convertRGBA4444ToBGRA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+{
+	unsigned short* out16 = (unsigned short*)outData;
+	for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
+	{		
+		*out16++ = (data[i + 0] & 0x0F) << 12	// A
+			| (data[i + 1] & 0xF0) << 4			// R
+			| (data[i + 0] & 0xF0)				// G
+			| (data[i + 1] & 0x0F);				// B
+	}
+}
 // conventer function end
 //////////////////////////////////////////////////////////////////////////
 int Texture2D::s_TextureCount = 0;
@@ -594,14 +606,27 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 	auto view = GLView::sharedOpenGLView();
 
+	// Defalt 32-bit RGBA
 	auto format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	const auto bpp = getBitsPerPixelForFormat(pixelFormat);
-	if (pixelFormat == PixelFormat::RGBA4444)	
-		format = DXGI_FORMAT_B4G4R4A4_UNORM; // WRONG format	
-	if (pixelFormat == PixelFormat::A8)	
+	if (pixelFormat == PixelFormat::RGBA4444)
+	{
+		// Default 16-bit BGRA needs conversion
+		format = DXGI_FORMAT_B4G4R4A4_UNORM; 
+		convertRGBA4444ToBGRA4444(mipmaps->address, mipmaps->len, mipmaps->address);
+	}
+	else if (pixelFormat == PixelFormat::A8)
+	{
 		format = DXGI_FORMAT_A8_UNORM;
-	if (pixelFormat == PixelFormat::AI88)
-		format = DXGI_FORMAT_R8G8_UNORM; 
+	}
+	else if (pixelFormat == PixelFormat::AI88)
+	{
+		format = DXGI_FORMAT_R8G8_UNORM;
+	}
+	else if (pixelFormat != PixelFormat::RGBA8888)
+	{
+		NOT_SUPPORTED();
+	}
 
 	const auto rowPitch = pixelsWide * bpp / 8;
 
@@ -644,7 +669,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 			view->GetContext()->UpdateSubresource(_texture, 0, nullptr, mipmaps->address, static_cast<UINT>(rowPitch), static_cast<UINT>(mipmaps->len));
 			view->GetContext()->GenerateMips(_textureView);
 		}		
-		
+
 		DXResourceManager::getInstance().add(&_texture);
 		DXResourceManager::getInstance().add(&_textureView);
 		
@@ -863,11 +888,16 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     }
     else
     {
-        // compute pixel format
-        if (format != PixelFormat::NONE)
+		// Persist original pixel format
+		if (_pixelFormat != PixelFormat::DEFAULT)
+		{
+			pixelFormat = _pixelFormat;
+		}        
+        else if (format != PixelFormat::NONE)
         {
             pixelFormat = format;
-        }else
+        }
+		else
         {
             pixelFormat = g_defaultAlphaPixelFormat;
         }
@@ -1379,8 +1409,6 @@ void Texture2D::setTexParameters(const TexParams &texParams)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
-#else
-	CC_ASSERT(false && "Not implemented.");
 #endif
 }
 
