@@ -455,7 +455,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
     deleteNodeByKey(pKey);
 #endif
     
-    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), value.getSize());
+    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), (int)(value.getSize()));
     char * encodedData = nullptr;
     unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
 

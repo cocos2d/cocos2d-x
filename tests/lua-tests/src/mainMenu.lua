@@ -4,6 +4,7 @@ require "Opengl"
 require "OpenglConstants"
 require "StudioConstants"
 require "GuiConstants"
+require "bitExtend"
 require "src/helper"
 require "src/testResource"
 require "src/VisibleRect"
@@ -55,6 +56,7 @@ require "src/XMLHttpRequestTest/XMLHttpRequestTest"
 require "src/PhysicsTest/PhysicsTest"
 require "src/CaptureScreenTest/CaptureScreenTest"
 require "src/VideoPlayerTest/VideoPlayerTest"
+require "src/FastTiledMapTest/FastTiledMapTest"
 
 
 local LINE_SPACE = 40
@@ -85,6 +87,7 @@ local _allTests = {
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
     { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
+    { isSupported = true,  name = "FastTiledMapTest"       , create_func   =              FastTiledMapTestMain},
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 

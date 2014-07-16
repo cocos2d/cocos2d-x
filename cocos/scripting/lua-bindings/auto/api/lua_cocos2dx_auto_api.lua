@@ -1197,6 +1197,16 @@
 
 
 --------------------------------------------------------
+-- the cc FastTMXTiledMap
+-- @field [parent=#cc] FastTMXTiledMap#FastTMXTiledMap FastTMXTiledMap preloaded module
+
+
+--------------------------------------------------------
+-- the cc FastTMXLayer
+-- @field [parent=#cc] FastTMXLayer#FastTMXLayer FastTMXLayer preloaded module
+
+
+--------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
 

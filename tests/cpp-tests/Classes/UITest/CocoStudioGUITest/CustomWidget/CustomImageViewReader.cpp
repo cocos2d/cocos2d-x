@@ -34,7 +34,9 @@ void CustomImageViewReader::setProperties(const std::string& classType, cocos2d:
     CustomImageView* custom = static_cast<CustomImageView*>(widget);
     
     const char* StringTest = DICTOOL->getStringValue_json(customOptions, "StringTest");
-    custom->setText(StringTest);
+    if (StringTest) {
+        custom->setText(StringTest);
+    }
 }
 
 

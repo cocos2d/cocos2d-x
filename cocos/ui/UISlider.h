@@ -76,7 +76,7 @@ public:
      *
      * @param fileName   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadBarTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
@@ -123,7 +123,7 @@ public:
      *
      * @param slider ball disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadSlidBallTextures(const std::string& normal,
                               const std::string& pressed,
@@ -135,7 +135,7 @@ public:
      *
      * @param normal    normal state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = TextureResType::LOCAL);
     
@@ -144,7 +144,7 @@ public:
      *
      * @param selected    selected state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = TextureResType::LOCAL);
     
@@ -153,7 +153,7 @@ public:
      *
      * @param disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = TextureResType::LOCAL);
     
@@ -162,7 +162,7 @@ public:
      *
      * @param fileName    file path of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
     
