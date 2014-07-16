@@ -603,12 +603,6 @@ void Director::setProjection(Projection projection)
         case Projection::_2D:
         {
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-//            if(getOpenGLView() != nullptr)
-//            {
-//                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
-//            }
-//#endif
 
 #if (DIRECTX_ENABLED == 1)
 			auto m = DirectX::XMMatrixOrthographicOffCenterLH(0, size.width, 0, size.height, -1024, 1024);			
@@ -1204,14 +1198,6 @@ void Director::createStatsLabel()
     texture = _textureCache->addImage(image, "/cc_fps_images");
     CC_SAFE_RELEASE(image);
 
-    /*
-     We want to use an image which is stored in the file named ccFPSImage.c 
-     for any design resolutions and all resource resolutions. 
-     
-     To achieve this, we need to ignore 'contentScaleFactor' in 'AtlasNode' and 'LabelAtlas'.
-     So I added a new method called 'setIgnoreContentScaleFactor' for 'AtlasNode',
-     this is not exposed to game developers, it's only used for displaying FPS now.
-     */
     float scaleFactor = 1 / CC_CONTENT_SCALE_FACTOR();
 
     _FPSLabel = LabelAtlas::create();

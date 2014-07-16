@@ -135,10 +135,8 @@ Renderer::~Renderer()
     _groupCommandManager->release();
     
 #if (DIRECTX_ENABLED == 1)
-	if (_bufferVertex)
-		_bufferVertex->Release();
-	if(_bufferIndex)
-		_bufferIndex->Release();
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	DXResourceManager::getInstance().remove(&_bufferIndex);	
 #else
     glDeleteBuffers(2, _buffersVBO);
     
@@ -248,6 +246,8 @@ void Renderer::mapBuffers()
 {
 #if (DIRECTX_ENABLED == 1)
 	auto view = GLView::sharedOpenGLView();
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	DXResourceManager::getInstance().remove(&_bufferIndex);
 
 	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
 	vertexBufferData.pSysMem = _quads;
@@ -272,6 +272,9 @@ void Renderer::mapBuffers()
 		&indexBufferData,
 		&_bufferIndex));
 	
+	DXResourceManager::getInstance().add(&_bufferVertex);
+	DXResourceManager::getInstance().add(&_bufferIndex);
+
 #else
     // Avoid changing the element buffer for whatever VAO might be bound.
     GL::bindVAO(0);
@@ -475,6 +478,9 @@ void Renderer::drawBatchedQuads()
 
 #if (DIRECTX_ENABLED == 1)
 	auto view = GLView::sharedOpenGLView();
+
+	if (!_bufferVertex || !_bufferIndex)
+		mapBuffers();
 
 	D3D11_MAPPED_SUBRESOURCE resource;
 	view->GetContext()->Map(_bufferVertex, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);

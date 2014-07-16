@@ -64,6 +64,10 @@ void Direct3DBase::CreateDeviceResources()
 			)
 		);
 
+	m_depthStencilView = nullptr;
+	m_renderTargetView = nullptr;
+	m_renderTarget = nullptr;
+	
 	// Get the Direct3D 11.1 API device and context interfaces.
 	DX::ThrowIfFailed(
 		device.As(&m_d3dDevice)
@@ -154,6 +158,7 @@ void Direct3DBase::UpdateForRenderResolutionChange(float width, float height)
 	m_renderTarget = nullptr;
 	m_renderTargetView = nullptr;
 	m_depthStencilView = nullptr;
+	m_d3dContext->ClearState();
 	m_d3dContext->Flush();
 	CreateWindowSizeDependentResources();
 }
@@ -162,4 +167,28 @@ void Direct3DBase::UpdateForWindowSizeChange(float width, float height)
 {
 	m_windowBounds.Width  = width;
 	m_windowBounds.Height = height;
+}
+
+void Direct3DBase::Clear()
+{
+	if (m_d3dDevice)
+	{
+		Microsoft::WRL::ComPtr<ID3D11Debug> pDebug;
+		m_d3dDevice.Get()->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(pDebug.GetAddressOf()));
+		pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+		
+		cocos2d::DXResourceManager::getInstance().clear();
+		cocos2d::DXStateCache::getInstance().invalidateStateCache();		
+
+		m_renderTarget = nullptr;
+		m_renderTargetView = nullptr;
+		m_depthStencilView = nullptr;
+		m_d3dContext->ClearState();
+		m_d3dContext->Flush();
+		m_d3dContext = nullptr;
+
+		pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+		pDebug = nullptr;
+		m_d3dDevice = nullptr;
+	}
 }

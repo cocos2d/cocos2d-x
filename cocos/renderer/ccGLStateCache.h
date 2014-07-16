@@ -217,6 +217,65 @@ private:
 	ID3D11BlendState* _blendState;
 };
 
+class DXResourceManager
+{
+public:
+	static DXResourceManager& getInstance()
+	{
+		static auto ptr = std::unique_ptr<DXResourceManager>(new DXResourceManager());
+		return *ptr.get();
+	}
+
+#define DX_MANAGER_PROPERTY_DEF(type, name) \
+	public:	\
+		void add(type* ##name)	\
+		{ \
+			if(*##name)	\
+				_##name.insert(##name); \
+		} \
+		\
+		void remove(type* ##name) \
+		{ \
+			if (*##name) \
+			{ \
+				auto it = _##name.find(##name); \
+				if (it != _##name.end()) \
+				{ \
+					(*##name)->Release(); \
+					_##name.erase(it); \
+					*##name = nullptr; \
+				} \
+			} \
+		} \
+		\
+	private: \
+		std::set<type*> _##name; \
+		\
+		void clear##name() \
+		{ \
+			for(auto a : _##name)	\
+			{\
+				(*a)->Release(); \
+				*a = nullptr; \
+			} \
+			_##name.clear(); \
+		}
+
+public:
+	DX_MANAGER_PROPERTY_DEF(ID3D11Buffer*, buffer);
+	DX_MANAGER_PROPERTY_DEF(ID3D11Texture2D*, texture);
+	DX_MANAGER_PROPERTY_DEF(ID3D11VertexShader*, vs);
+	DX_MANAGER_PROPERTY_DEF(ID3D11PixelShader*, ps);
+	DX_MANAGER_PROPERTY_DEF(ID3D11ShaderResourceView*, shaderView);
+	DX_MANAGER_PROPERTY_DEF(ID3D11InputLayout*, inputLayout);
+	DX_MANAGER_PROPERTY_DEF(ID3D11RasterizerState*, rasterizeState);
+	DX_MANAGER_PROPERTY_DEF(ID3D11BlendState*, blendState);
+
+public:
+	void clear();
+};
+
+
 #endif
 
 NS_CC_END

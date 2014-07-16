@@ -58,6 +58,7 @@ protected private:
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
     PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ m_editBoxDelegate;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> m_depthStencilState;
 
 protected private:
 	static Cocos2dRenderer^ m_instance;

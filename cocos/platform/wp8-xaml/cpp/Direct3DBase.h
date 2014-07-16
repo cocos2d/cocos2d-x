@@ -20,6 +20,8 @@ internal:
 		return m_renderTarget.Get();
 	}
 
+	void Clear();
+
 protected private:
 	// Direct3D Objects.
 	Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;

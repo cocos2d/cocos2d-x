@@ -161,25 +161,11 @@ GLProgram::~GLProgram()
     CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
 #if (DIRECTX_ENABLED == 1)
-	if (_inputLayout)
-		_inputLayout->Release();
-	_inputLayout = nullptr;
-
-	if (_vertexShader)
-		_vertexShader->Release();
-	_vertexShader = nullptr;
-
-	if (_pixelShader)
-		_pixelShader->Release();
-	_pixelShader = nullptr;
-
-	if (_constantBufferVS)
-		_constantBufferVS->Release();
-	_constantBufferVS = nullptr;
-
-	if (_constantBufferPS)
-		_constantBufferPS->Release();
-	_constantBufferPS = nullptr;
+	DXResourceManager::getInstance().remove(&_inputLayout);
+	DXResourceManager::getInstance().remove(&_vertexShader);
+	DXResourceManager::getInstance().remove(&_pixelShader);
+	DXResourceManager::getInstance().remove(&_constantBufferVS);
+	DXResourceManager::getInstance().remove(&_constantBufferPS);	
 #else 
     if (_vertShader)
     {
@@ -213,6 +199,12 @@ GLProgram::~GLProgram()
 void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderDescriptor& pixelShader)
 {
 #if (DIRECTX_ENABLED == 1)
+	DXResourceManager::getInstance().remove(&_inputLayout);
+	DXResourceManager::getInstance().remove(&_vertexShader);
+	DXResourceManager::getInstance().remove(&_pixelShader);
+	DXResourceManager::getInstance().remove(&_constantBufferVS);
+	DXResourceManager::getInstance().remove(&_constantBufferPS);
+
 	// Load shaders asynchronously.
 	auto vsData = FileUtils::getInstance()->getDataFromFile("ccShader_" + vertexShader.name + "_VS.cso");
 	auto psData = FileUtils::getInstance()->getDataFromFile("ccShader_" + pixelShader.name + "_PS.cso");
@@ -278,6 +270,13 @@ void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderD
 		nullptr,
 		&_constantBufferPS));
 	}
+
+	DXResourceManager::getInstance().add(&_inputLayout);
+	DXResourceManager::getInstance().add(&_vertexShader);
+	DXResourceManager::getInstance().add(&_pixelShader);
+	DXResourceManager::getInstance().add(&_constantBufferVS);
+	DXResourceManager::getInstance().add(&_constantBufferPS);
+	_uniformDirtyPS = _uniformDirtyVS = true;
 #endif
     }
 

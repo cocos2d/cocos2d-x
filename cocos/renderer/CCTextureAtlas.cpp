@@ -73,10 +73,8 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_FREE(_indices);
 
 #if (DIRECTX_ENABLED == 1)
-	if (_bufferVertex)
-		_bufferVertex->Release();
-	if (_bufferIndex)
-		_bufferIndex->Release();
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	DXResourceManager::getInstance().remove(&_bufferIndex);
 #else
     glDeleteBuffers(2, _buffersVBO);
 
@@ -316,10 +314,8 @@ void TextureAtlas::mapBuffers()
 #if (DIRECTX_ENABLED == 1)
 	auto view = GLView::sharedOpenGLView();
 
-	if (_bufferVertex)
-		_bufferVertex->Release();
-	if (_bufferIndex)
-		_bufferIndex->Release();
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	DXResourceManager::getInstance().remove(&_bufferIndex);
 
 	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
 	vertexBufferData.pSysMem = _quads;
@@ -343,6 +339,9 @@ void TextureAtlas::mapBuffers()
 		&indexBufferDesc,
 		&indexBufferData,
 		&_bufferIndex));
+
+	DXResourceManager::getInstance().add(&_bufferVertex);
+	DXResourceManager::getInstance().add(&_bufferIndex);
 
 #else
     // Avoid changing the element buffer for whatever VAO might be bound.
@@ -653,7 +652,6 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
     if(!numberOfQuads)
         return;
-
 
 #if (DIRECTX_ENABLED == 1)
 	auto view = GLView::sharedOpenGLView();

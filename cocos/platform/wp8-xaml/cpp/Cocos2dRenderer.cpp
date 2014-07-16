@@ -67,7 +67,9 @@ void Cocos2dRenderer::CreateWindowSizeDependentResources()
     else
     {
 #if DIRECTX_ENABLED == 0
-       // cocos2d::GL::invalidateStateCache();
+        cocos2d::GL::invalidateStateCache();
+#else
+		cocos2d::DXStateCache::getInstance().invalidateStateCache();
 #endif
         cocos2d::ShaderCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
@@ -94,6 +96,9 @@ void Cocos2dRenderer::Disconnect()
     cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent); 
    // CloseAngle();
     m_loadingComplete = false;
+
+	m_depthStencilState = nullptr;
+	Clear();		
 }
 
 // save your game state here
@@ -121,11 +126,13 @@ void Cocos2dRenderer::Render()
 		m_renderTargetView.GetAddressOf(),
 		m_depthStencilView.Get());
 
-	ID3D11DepthStencilState* state;
+	if (m_depthStencilState == nullptr)
+	{
 	auto d = CD3D11_DEPTH_STENCIL_DESC(CD3D11_DEFAULT());
 	d.DepthEnable = false;
-	m_d3dDevice->CreateDepthStencilState(&d, &state);
-	m_d3dContext->OMSetDepthStencilState(state, 0);
+		m_d3dDevice->CreateDepthStencilState(&d, &m_depthStencilState);
+		m_d3dContext->OMSetDepthStencilState(m_depthStencilState.Get(), 0);
+	}
 
     if(m_loadingComplete)
     {

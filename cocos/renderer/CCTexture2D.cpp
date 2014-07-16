@@ -467,13 +467,8 @@ Texture2D::~Texture2D()
 void Texture2D::releaseGLTexture()
 {
 #if (DIRECTX_ENABLED == 1)
-	if (_texture)
-		_texture->Release();
-	_texture = nullptr;
-
-	if (_textureView)
-		_textureView->Release();
-	_textureView = nullptr;
+	DXResourceManager::getInstance().remove(&_texture);
+	DXResourceManager::getInstance().remove(&_textureView);	
 #else
 	if (_name)
 		GL::deleteTexture(_name);
@@ -594,10 +589,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 #if (DIRECTX_ENABLED == 1)
 
-	if (_texture)
-		_texture->Release();
-	if (_textureView)
-		_textureView->Release();
+	DXResourceManager::getInstance().remove(&_texture);
+	DXResourceManager::getInstance().remove(&_textureView);
 
 	auto view = GLView::sharedOpenGLView();
 
@@ -643,7 +636,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 		hr = view->GetDevice()->CreateShaderResourceView(_texture, &SRVDesc, &_textureView);
 		if (FAILED(hr))
 		{
-			_texture->Release();			
+			_texture = nullptr;
 		}
 
 		if (mipmapsNum > 1)
@@ -651,6 +644,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 			view->GetContext()->UpdateSubresource(_texture, 0, nullptr, mipmaps->address, static_cast<UINT>(rowPitch), static_cast<UINT>(mipmaps->len));
 			view->GetContext()->GenerateMips(_textureView);
 		}		
+		
+		DXResourceManager::getInstance().add(&_texture);
+		DXResourceManager::getInstance().add(&_textureView);
 		
 #if defined(_DEBUG) || defined(PROFILE)
 		_texture->SetPrivateData(WKPDID_D3DDebugObjectName,

@@ -249,30 +249,36 @@ void setProjectionMatrixDirty( void )
 
 DXStateCache::DXStateCache()
 {
-	invalidateStateCache();
-
-	_view = GLView::sharedOpenGLView();
-	CCASSERT(_view, "GLView not set.");
-
-	_blendDesc = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
-	DX::ThrowIfFailed(_view->GetDevice()->CreateBlendState(&_blendDesc, &_blendState));
-		
-	_rasterizerDesc = CD3D11_RASTERIZER_DESC(CD3D11_DEFAULT());
-	_rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-	DX::ThrowIfFailed(_view->GetDevice()->CreateRasterizerState(&_rasterizerDesc, &_rasterizerState));
-}
-
-void DXStateCache::invalidateStateCache()
-{
+	_blendState = nullptr;
 	_vertexBuffer = nullptr;
 	_indexBuffer = nullptr;
-	_blendState = nullptr;
 	_rasterizerState = nullptr;
 	_inputLayout = nullptr;
 	_vertexShader = nullptr;
 	_pixelShader = nullptr;
+
+	invalidateStateCache();
+}
+
+void DXStateCache::invalidateStateCache()
+{
+	_view = GLView::sharedOpenGLView();
+	CCASSERT(_view, "GLView not set.");
+
+	DXResourceManager::getInstance().remove(&_blendState);
+	DXResourceManager::getInstance().remove(&_rasterizerState);
+
+	_vertexBuffer = nullptr;
+	_indexBuffer = nullptr;
+	_rasterizerState = nullptr;
+	_inputLayout = nullptr;
+	_vertexShader = nullptr;
+	_pixelShader = nullptr;
+	_blendState = nullptr;
+
 	_blendDesc = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
 	_rasterizerDesc = CD3D11_RASTERIZER_DESC(CD3D11_DEFAULT());
+	_rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 	_primitiveTopology = D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED;
 	memset(_constantBufferVS, 0, sizeof(_constantBufferVS));
 	memset(_constantBufferPS, 0, sizeof(_constantBufferPS));
@@ -280,6 +286,9 @@ void DXStateCache::invalidateStateCache()
 	memset(_textureViewsPS, 0, sizeof(_textureViewsPS));
 	memset(&_viewportRect, 0, sizeof(_viewportRect));
 	memset(&_scissorRect, 0, sizeof(_scissorRect));
+
+	//DX::ThrowIfFailed(_view->GetDevice()->CreateBlendState(&_blendDesc, &_blendState));
+	//DX::ThrowIfFailed(_view->GetDevice()->CreateRasterizerState(&_rasterizerDesc, &_rasterizerState));
 }
 
 void DXStateCache::setShaders(ID3D11VertexShader* vs, ID3D11PixelShader* ps)
@@ -302,7 +311,7 @@ void DXStateCache::setVertexBuffer(ID3D11Buffer* buffer, UINT stride, UINT offse
 	if (buffer != _vertexBuffer)
 	{
 		_view->GetContext()->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
-		_indexBuffer = buffer;
+		_vertexBuffer = buffer;
 	}
 }
 
@@ -379,14 +388,9 @@ void DXStateCache::setBlend(GLint GLsrc, GLint GLdst)
 	D3D11_BLEND dst = GetDXBlend(GLdst);
 
 	bool change = src != _blendDesc.RenderTarget[0].SrcBlend || dst != _blendDesc.RenderTarget[0].DestBlend;
-	if (change && _blendState)
+	if (change || _blendState == nullptr)
 	{
-		_blendState->Release();
-		_blendState = nullptr;
-	}
-
-	if (_blendState == nullptr)
-	{
+		DXResourceManager::getInstance().remove(&_blendState);
 		_blendDesc = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
 		_blendDesc.RenderTarget[0].BlendEnable = true;
 		_blendDesc.RenderTarget[0].SrcBlend = src;
@@ -395,6 +399,7 @@ void DXStateCache::setBlend(GLint GLsrc, GLint GLdst)
 		_blendDesc.RenderTarget[0].DestBlendAlpha = dst;
 		DX::ThrowIfFailed(_view->GetDevice()->CreateBlendState(&_blendDesc, &_blendState));
 		_view->GetContext()->OMSetBlendState(_blendState, nullptr, 0xffffffff);
+		DXResourceManager::getInstance().add(&_blendState);
 	}
 
 	setRasterizer();
@@ -446,12 +451,11 @@ bool DXStateCache::isScissorEnabled() const
 
 void DXStateCache::setRasterizer()
 {	
-	if (_rasterizerDirty)
+	if (_rasterizerDirty || _rasterizerState == nullptr)
 	{
-		if (_rasterizerState)
-			_rasterizerState->Release();
-
+		DXResourceManager::getInstance().remove(&_rasterizerState);
 		DX::ThrowIfFailed(_view->GetDevice()->CreateRasterizerState(&_rasterizerDesc, &_rasterizerState));
+		DXResourceManager::getInstance().add(&_rasterizerState);
 		_rasterizerDirty = false;
 	}
 
@@ -481,6 +485,18 @@ D3D11_BLEND DXStateCache::GetDXBlend(GLint glBlend) const
 	else if (glBlend == GL_SRC_ALPHA_SATURATE)
 		return D3D11_BLEND_SRC_ALPHA_SAT;
 	return D3D11_BLEND_ONE;
+}
+
+void DXResourceManager::clear()
+{
+	clearbuffer();
+	clearvs();
+	clearps();
+	clearblendState();	
+	clearinputLayout();
+	clearrasterizeState();
+	cleartexture();
+	clearshaderView();
 }
 
 #endif

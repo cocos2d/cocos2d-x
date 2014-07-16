@@ -103,10 +103,8 @@ ProgressTimer::~ProgressTimer(void)
     CC_SAFE_RELEASE(_sprite);
 
 #if (DIRECTX_ENABLED == 1)
-	if (_bufferVertex)
-		_bufferVertex->Release();
-	if (_bufferIndex)
-		_bufferIndex->Release();
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	DXResourceManager::getInstance().remove(&_bufferIndex);	
 #endif
 }
 
@@ -378,7 +376,6 @@ void ProgressTimer::updateRadial(void)
         _vertexDataCount = 0;
     }
 
-
     if(!_vertexData) {
         _vertexDataCount = index + 3;
         _vertexData = (V3F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V3F_C4B_T2F));
@@ -473,7 +470,7 @@ void ProgressTimer::updateBar(void)
         min.y -= max.y - 1.f;
         max.y = 1.f;
     }
-
+		
 	int originalCount = _vertexDataCount;
 
     if (!_reverseDirection) 
@@ -498,7 +495,7 @@ void ProgressTimer::updateBar(void)
 
         //    BOTRIGHT
         _vertexData[3].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
-        _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
+        _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));			
     } 
 	else 
 	{
@@ -582,16 +579,13 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
 
 void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 {
-
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 	getGLProgram()->set();
 
 #if DIRECTX_ENABLED == 0
     GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
-
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-
     GL::bindTexture2D( _sprite->getTexture()->getName() );
 
 #ifdef EMSCRIPTEN
@@ -630,7 +624,7 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
             // 2 draw calls
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
         }
-    }
+	}
 #else
 	if (_triCount == 0)
 		return;
@@ -672,9 +666,8 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 #if DIRECTX_ENABLED == 1
 void ProgressTimer::UpdateVertexBuffer()
 {
-	if (_bufferVertex)
-		_bufferVertex->Release();
-
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	
 	auto view = GLView::sharedOpenGLView();
 
 	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
@@ -687,12 +680,13 @@ void ProgressTimer::UpdateVertexBuffer()
 		&vertexBufferDesc,
 		&vertexBufferData,
 		&_bufferVertex));
+
+	DXResourceManager::getInstance().add(&_bufferVertex);
 }
 
 void ProgressTimer::UpdateIndexBuffer(GLushort* indices, int count)
 {
-	if (_bufferIndex)
-		_bufferIndex->Release();
+	DXResourceManager::getInstance().remove(&_bufferIndex);
 
 	auto view = GLView::sharedOpenGLView();
 
@@ -707,6 +701,8 @@ void ProgressTimer::UpdateIndexBuffer(GLushort* indices, int count)
 		&indexBufferDesc,
 		&indexBufferData,
 		&_bufferIndex));
+
+	DXResourceManager::getInstance().add(&_bufferIndex);
 }
 #endif
 

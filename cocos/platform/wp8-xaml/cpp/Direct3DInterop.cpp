@@ -122,6 +122,7 @@ HRESULT Direct3DInterop::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host)
 {
 	UNREFERENCED_PARAMETER(host);
 
+	if (!m_renderer)
 	m_renderer = ref new CustomRenderer();
 	m_renderer->Initialize();
 	m_renderer->UpdateForWindowSizeChange(WindowBounds.Width, WindowBounds.Height);

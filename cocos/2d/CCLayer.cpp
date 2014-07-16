@@ -440,7 +440,7 @@ __LayerRGBA::__LayerRGBA()
 #endif
 /// LayerColor
 
-LayerColor::LayerColor()
+LayerColor::LayerColor() 
 {
     // default blend function
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -454,10 +454,8 @@ LayerColor::LayerColor()
 LayerColor::~LayerColor()
 {
 #if DIRECTX_ENABLED == 1
-	if (_bufferVertex)
-		_bufferVertex->Release();
-	if (_bufferIndex)
-		_bufferIndex->Release();
+	DXResourceManager::getInstance().remove(&_bufferVertex);
+	DXResourceManager::getInstance().remove(&_bufferIndex);
 #endif
 }
 
@@ -627,7 +625,7 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 #else
 	//CCASSERT(false, "Not supported yet.");
 #endif
@@ -679,6 +677,8 @@ void LayerColor::UpdateVertexBuffer()
 			&vertexBufferDesc,
 			&vertexBufferData,
 			&_bufferVertex));
+
+		DXResourceManager::getInstance().add(&_bufferVertex);
 	}
 	else
 	{
@@ -713,6 +713,8 @@ void LayerColor::UpdateVertexBuffer()
 			&indexBufferDesc,
 			&indexBufferData,
 			&_bufferIndex));
+
+		DXResourceManager::getInstance().add(&_bufferIndex);
 	}
 }
 #endif
