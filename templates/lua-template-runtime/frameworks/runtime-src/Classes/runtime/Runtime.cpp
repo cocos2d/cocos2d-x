@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "ConfigParser.h"
 #include "Protos.pb.h"
 #include "zlib.h"
+#include "lua.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -66,6 +67,83 @@ const char* getRuntimeVersion()
     return "1.3";
 }
 
+static string& replaceAll(string& str,const string& old_value,const string& new_value)
+{
+    while(true)
+    {
+        int pos=0;
+        if((pos=str.find(old_value,0))!=string::npos)
+            str.replace(pos,old_value.length(),new_value);
+        else break;
+    }
+    return str;
+}
+static bool resetLuaModule(string fileName)
+{
+    if (fileName.empty())
+    {
+        CCLOG("fileName is null");
+        return false;
+    }
+    auto engine = LuaEngine::getInstance();
+    LuaStack* luaStack = engine->getLuaStack();
+    lua_State* stack=luaStack->getLuaState();
+    lua_getglobal(stack, "package");                         /* L: package */
+    lua_getfield(stack, -1, "loaded");                       /* L: package loaded */
+    int top = lua_gettop(stack);
+    lua_pushnil(stack);                                     /* L: lotable ?-.. nil */
+    while ( 0 != lua_next(stack, -2 ) )                     /* L: lotable ?-.. key value */
+    {
+        top = lua_gettop(stack);
+        //CCLOG("%s - %s \n", tolua_tostring(stack, -2, ""), lua_typename(stack, lua_type(stack, -1)));
+        std::string key=tolua_tostring(stack, -2, "");
+        std::string tableKey =key;
+        unsigned found = tableKey.rfind(".lua");
+        if (found!=std::string::npos)
+            tableKey = tableKey.substr(0,found);
+        tableKey=replaceAll(tableKey,".","/");
+        tableKey=replaceAll(tableKey,"\\","/");
+        tableKey.append(".lua");
+        top = lua_gettop(stack);
+        found = fileName.rfind(tableKey);
+        top = lua_gettop(stack);
+        if (0 == found || ( found!=std::string::npos && fileName.at(found-1) == '/'))
+        {
+            top = lua_gettop(stack);
+            lua_pushstring(stack, key.c_str());
+            lua_pushnil(stack);
+            if (lua_istable(stack, -5))
+            {
+                lua_settable(stack, -5);
+            }
+             top = lua_gettop(stack);
+        }
+        lua_pop(stack, 1);
+        top = lua_gettop(stack);
+    }
+    top = lua_gettop(stack);
+    lua_pop(stack, 2);
+    return true;
+}
+bool reloadScript(string modulefile)
+{
+    auto director = Director::getInstance();
+    FontFNT::purgeCachedData();
+    if (director->getOpenGLView())
+    {
+        SpriteFrameCache::getInstance()->removeSpriteFrames();
+        director->getTextureCache()->removeAllTextures();
+    }
+    FileUtils::getInstance()->purgeCachedEntries();
+    if (!resetLuaModule(modulefile))
+    {
+        modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
+    }
+    auto engine = LuaEngine::getInstance();
+    LuaStack* luaStack = engine->getLuaStack();
+    std::string require = "require \'" + modulefile + "\'";
+    return luaStack->executeString(require.c_str());
+}
 void startScript(string strDebugArg)
 {
     // register lua engine
@@ -78,25 +156,8 @@ void startScript(string strDebugArg)
     engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-bool reloadScript(const string& modulefile)
-{
-    string strfile = modulefile;
-    if (strfile.empty())
-    {
-        strfile = ConfigParser::getInstance()->getEntryFile().c_str();
-    }
 
-    auto director = Director::getInstance();
-    FontFNT::purgeCachedData();
-    if (director->getOpenGLView())
-    {
-        SpriteFrameCache::getInstance()->removeSpriteFrames();
-        director->getTextureCache()->removeAllTextures();
-    }
-    FileUtils::getInstance()->purgeCachedEntries();
     
-    return (LuaEngine::getInstance()->reload(strfile.c_str())==0);
-}
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -337,19 +398,8 @@ void FileServer::stop()
     }
 }
 
-string& replaceAll(string& str,const string& old_value,const string& new_value)
-{
-    while(true)
-    {
-        int pos=0;
-        if((pos=str.find(old_value,0))!=string::npos)
-            str.replace(pos,old_value.length(),new_value);
-        else break;
-    }
-    return str;
-}
 
-bool CreateDir(const char *sPathName)
+static bool CreateDir(const char *sPathName)
 {
     char   DirName[256]={0};
     strcpy(DirName,   sPathName);
@@ -382,7 +432,7 @@ bool CreateDir(const char *sPathName)
     return   true;  
 }
 
-void recvBuf(int fd,char *pbuf,int bufsize)
+static void recvBuf(int fd,char *pbuf,int bufsize)
 {
     int startFlagLen = bufsize;
     while (startFlagLen != 0){
@@ -520,7 +570,7 @@ void FileServer::loopWriteFile()
          _fileNameMutex.lock();
          _strFileName = filename;
          _fileNameMutex.unlock();
-         cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
+         //cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
          CreateDir(fullfilename.substr(0,fullfilename.find_last_of("/")).c_str());
 
          FILE *fp= nullptr;
@@ -1063,6 +1113,11 @@ bool initRuntime()
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    LuaStack* stack = engine->getLuaStack();
+    register_runtime_override_function(stack->getLuaState());
+    luaopen_debugger(engine->getLuaStack()->getLuaState());
     return true;
 }
 
@@ -1088,14 +1143,7 @@ bool startRuntime()
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-
-    LuaStack* stack = engine->getLuaStack();
-    register_runtime_override_function(stack->getLuaState());
-
-    luaopen_debugger(engine->getLuaStack()->getLuaState());
-    
+ 
     auto scene = Scene::create();
     auto connectLayer = new ConnectWaitLayer();
     connectLayer->autorelease();
