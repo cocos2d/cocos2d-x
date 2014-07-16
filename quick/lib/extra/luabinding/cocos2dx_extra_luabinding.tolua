@@ -81,7 +81,7 @@ public:
 #define kCCHTTPRequestStateCancelled            4
 #define kCCHTTPRequestStateFailed               5
 
-class HTTPRequest : public Ref
+class HTTPRequest : public cc.Ref
 {
     static HTTPRequest* createWithUrlLua @ createWithUrl (LUA_FUNCTION listener,
                                            const char* url,

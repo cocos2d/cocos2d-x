@@ -98,8 +98,6 @@
 		DAF28DEB196D082800959DA1 /* lua_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DAF28C46196D082800959DA1 /* lua_cocos2dx_auto.hpp */; };
 		DAF28DEC196D082800959DA1 /* lua_cocos2dx_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28C47196D082800959DA1 /* lua_cocos2dx_extension_auto.cpp */; };
 		DAF28DED196D082800959DA1 /* lua_cocos2dx_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DAF28C48196D082800959DA1 /* lua_cocos2dx_extension_auto.hpp */; };
-		DAF28DEE196D082800959DA1 /* lua_cocos2dx_extra_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28C49196D082800959DA1 /* lua_cocos2dx_extra_auto.cpp */; };
-		DAF28DEF196D082800959DA1 /* lua_cocos2dx_extra_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DAF28C4A196D082800959DA1 /* lua_cocos2dx_extra_auto.hpp */; };
 		DAF28DF0196D082800959DA1 /* lua_cocos2dx_physics_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28C4B196D082800959DA1 /* lua_cocos2dx_physics_auto.cpp */; };
 		DAF28DF1196D082800959DA1 /* lua_cocos2dx_physics_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DAF28C4C196D082800959DA1 /* lua_cocos2dx_physics_auto.hpp */; };
 		DAF28DF5196D082800959DA1 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28C5B196D082800959DA1 /* lauxlib.h */; };
@@ -120,8 +118,6 @@
 		DAF28E94196D082900959DA1 /* lua_cocos2dx_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28D37196D082800959DA1 /* lua_cocos2dx_deprecated.h */; };
 		DAF28E95196D082900959DA1 /* lua_cocos2dx_extension_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28D38196D082800959DA1 /* lua_cocos2dx_extension_manual.cpp */; };
 		DAF28E96196D082900959DA1 /* lua_cocos2dx_extension_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28D39196D082800959DA1 /* lua_cocos2dx_extension_manual.h */; };
-		DAF28E97196D082900959DA1 /* lua_cocos2dx_external_extra_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28D3A196D082800959DA1 /* lua_cocos2dx_external_extra_manual.cpp */; };
-		DAF28E98196D082900959DA1 /* lua_cocos2dx_external_extra_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF28D3B196D082800959DA1 /* lua_cocos2dx_external_extra_manual.h */; };
 		DAF28E99196D082900959DA1 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28D3C196D082800959DA1 /* lua_cocos2dx_manual.cpp */; };
 		DAF28E9A196D082900959DA1 /* lua_cocos2dx_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DAF28D3D196D082800959DA1 /* lua_cocos2dx_manual.hpp */; };
 		DAF28E9B196D082900959DA1 /* lua_cocos2dx_physics_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAF28D3E196D082800959DA1 /* lua_cocos2dx_physics_manual.cpp */; };
@@ -845,8 +841,6 @@
 		DAF28C46196D082800959DA1 /* lua_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_auto.hpp; sourceTree = "<group>"; };
 		DAF28C47196D082800959DA1 /* lua_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
 		DAF28C48196D082800959DA1 /* lua_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
-		DAF28C49196D082800959DA1 /* lua_cocos2dx_extra_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extra_auto.cpp; sourceTree = "<group>"; };
-		DAF28C4A196D082800959DA1 /* lua_cocos2dx_extra_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extra_auto.hpp; sourceTree = "<group>"; };
 		DAF28C4B196D082800959DA1 /* lua_cocos2dx_physics_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics_auto.cpp; sourceTree = "<group>"; };
 		DAF28C4C196D082800959DA1 /* lua_cocos2dx_physics_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_physics_auto.hpp; sourceTree = "<group>"; };
 		DAF28C5B196D082800959DA1 /* lauxlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
@@ -867,8 +861,6 @@
 		DAF28D37196D082800959DA1 /* lua_cocos2dx_deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_deprecated.h; sourceTree = "<group>"; };
 		DAF28D38196D082800959DA1 /* lua_cocos2dx_extension_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_manual.cpp; sourceTree = "<group>"; };
 		DAF28D39196D082800959DA1 /* lua_cocos2dx_extension_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_extension_manual.h; sourceTree = "<group>"; };
-		DAF28D3A196D082800959DA1 /* lua_cocos2dx_external_extra_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_external_extra_manual.cpp; sourceTree = "<group>"; };
-		DAF28D3B196D082800959DA1 /* lua_cocos2dx_external_extra_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_external_extra_manual.h; sourceTree = "<group>"; };
 		DAF28D3C196D082800959DA1 /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
 		DAF28D3D196D082800959DA1 /* lua_cocos2dx_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_manual.hpp; sourceTree = "<group>"; };
 		DAF28D3E196D082800959DA1 /* lua_cocos2dx_physics_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics_manual.cpp; sourceTree = "<group>"; };
@@ -2143,8 +2135,6 @@
 				DAF28C46196D082800959DA1 /* lua_cocos2dx_auto.hpp */,
 				DAF28C47196D082800959DA1 /* lua_cocos2dx_extension_auto.cpp */,
 				DAF28C48196D082800959DA1 /* lua_cocos2dx_extension_auto.hpp */,
-				DAF28C49196D082800959DA1 /* lua_cocos2dx_extra_auto.cpp */,
-				DAF28C4A196D082800959DA1 /* lua_cocos2dx_extra_auto.hpp */,
 				DAF28C4B196D082800959DA1 /* lua_cocos2dx_physics_auto.cpp */,
 				DAF28C4C196D082800959DA1 /* lua_cocos2dx_physics_auto.hpp */,
 			);
@@ -2196,8 +2186,6 @@
 				DAF28D37196D082800959DA1 /* lua_cocos2dx_deprecated.h */,
 				DAF28D38196D082800959DA1 /* lua_cocos2dx_extension_manual.cpp */,
 				DAF28D39196D082800959DA1 /* lua_cocos2dx_extension_manual.h */,
-				DAF28D3A196D082800959DA1 /* lua_cocos2dx_external_extra_manual.cpp */,
-				DAF28D3B196D082800959DA1 /* lua_cocos2dx_external_extra_manual.h */,
 				DAF28D3C196D082800959DA1 /* lua_cocos2dx_manual.cpp */,
 				DAF28D3D196D082800959DA1 /* lua_cocos2dx_manual.hpp */,
 				DAF28D3E196D082800959DA1 /* lua_cocos2dx_physics_manual.cpp */,
@@ -3234,12 +3222,10 @@
 				DAF293B3196D339100959DA1 /* ccFPSImages.h in Headers */,
 				DAF294A9196D339D00959DA1 /* CCBatchCommand.h in Headers */,
 				DAF293B4196D339100959DA1 /* CCGameController.h in Headers */,
-				DAF28DEF196D082800959DA1 /* lua_cocos2dx_extra_auto.hpp in Headers */,
 				DAF292C3196D338E00959DA1 /* CCActionGrid3D.h in Headers */,
 				DAF28DEB196D082800959DA1 /* lua_cocos2dx_auto.hpp in Headers */,
 				DAF292FF196D338E00959DA1 /* CCLabelBMFont.h in Headers */,
 				DAF293F8196D339400959DA1 /* CCAffineTransform.h in Headers */,
-				DAF28E98196D082900959DA1 /* lua_cocos2dx_external_extra_manual.h in Headers */,
 				DAF28DAD196D082800959DA1 /* cocos2dx_extra.h in Headers */,
 				DAF28DA4196D082800959DA1 /* CCTouchDelegateProtocol.h in Headers */,
 				DAF29410196D339500959DA1 /* CCPhysicsBody.h in Headers */,
@@ -3319,7 +3305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAF28DEE196D082800959DA1 /* lua_cocos2dx_extra_auto.cpp in Sources */,
 				DAF292C4196D338E00959DA1 /* CCActionInstant.cpp in Sources */,
 				DAF293B2196D339100959DA1 /* ccFPSImages.c in Sources */,
 				DAF294D0196D359500959DA1 /* CCInvocation.cpp in Sources */,
@@ -3581,7 +3566,6 @@
 				DAF292D2196D338E00959DA1 /* CCAnimation.cpp in Sources */,
 				DAF29300196D338E00959DA1 /* CCLabelTextFormatter.cpp in Sources */,
 				DAF292E8196D338E00959DA1 /* CCFont.cpp in Sources */,
-				DAF28E97196D082900959DA1 /* lua_cocos2dx_external_extra_manual.cpp in Sources */,
 				DAF29378196D339000959DA1 /* atitc.cpp in Sources */,
 				DAF29422196D339600959DA1 /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				DAF29391196D339000959DA1 /* CCEventAcceleration.cpp in Sources */,

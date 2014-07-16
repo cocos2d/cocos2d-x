@@ -61,8 +61,6 @@ extern "C" {
 //#include "lua_xml_http_request.h"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
-#include "lua_cocos2dx_extra_auto.hpp"
-#include "lua_cocos2dx_external_extra_manual.h"
 #include "luabinding/cocos2dx_extra_luabinding.h"
 #include "luabinding/cocos2dx_extra_ios_iap_luabinding.h"
 #include "luabinding/HelperFunc_luabinding.h"
@@ -146,6 +144,8 @@ bool LuaStack::init(void)
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {
         {"print", lua_print},
+        {"CCLuaLog", lua_print},
+        {"LuaLoadChunksFromZIP", LuaStack::lua_loadChunksFromZIP},
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
@@ -168,8 +168,6 @@ bool LuaStack::init(void)
     //register_all_cocos2dx_spine(_state);
     //register_all_cocos2dx_spine_manual(_state);
     //register_glnode_manual(_state);
-//    register_all_cocos2dx_extra(_state);
-//    register_all_cocos2dx_external_extra_manual(_state);
     luaopen_cocos2dx_extra_luabinding(_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     luaopen_cocos2dx_extra_ios_iap_luabinding(_state);

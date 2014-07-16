@@ -1,6 +1,6 @@
 /*
 ** Lua binding: cocos2dx_extra_luabinding
-** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:15:02 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Jul 15 15:28:05 2014.
 */
 
 #include "cocos2dx_extra_luabinding.h"
@@ -28,7 +28,7 @@ using namespace cocos2d::extra;
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
 {
- tolua_usertype(tolua_S,"Ref");
+ tolua_usertype(tolua_S,"cc.Ref");
  tolua_usertype(tolua_S,"Network");
  tolua_usertype(tolua_S,"Crypto");
  
@@ -1600,7 +1600,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCHTTPRequestStateCompleted",kCCHTTPRequestStateCompleted);
   tolua_constant(tolua_S,"kCCHTTPRequestStateCancelled",kCCHTTPRequestStateCancelled);
   tolua_constant(tolua_S,"kCCHTTPRequestStateFailed",kCCHTTPRequestStateFailed);
-  tolua_cclass(tolua_S,"HTTPRequest","HTTPRequest","Ref",NULL);
+  tolua_cclass(tolua_S,"HTTPRequest","HTTPRequest","cc.Ref",NULL);
   tolua_beginmodule(tolua_S,"HTTPRequest");
    tolua_function(tolua_S,"createWithUrl",tolua_cocos2dx_extra_luabinding_HTTPRequest_createWithUrl00);
    tolua_function(tolua_S,"setRequestUrl",tolua_cocos2dx_extra_luabinding_HTTPRequest_setRequestUrl00);
