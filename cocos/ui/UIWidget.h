@@ -236,7 +236,6 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     void addTouchEventListener(ccWidgetTouchCallback callback);
 
-    //cocos2d property
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -249,10 +248,7 @@ public:
     virtual void setPosition(const Vec2 &pos) override;
 
     /**
-     * Changes the position (x,y) of the widget in OpenGL coordinates
-     *
-     * Usually we use p(x,y) to compose Vec2 object.
-     * The original point (0,0) is at the left-bottom corner of screen.
+     * Set the percent(x,y) of the widget in OpenGL coordinates
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
@@ -456,16 +452,18 @@ public:
 
 
     /**
-     * Ignore the widget size
      *
-     * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
+     * Note: when you set _ignoreSize to true, no matther you call setContentSize or not, 
+     * the widget size is always equal to the return value of the member function getVirtualRendererSize.
+     *
+     * @param ignore, set member variabl _ignoreSize to ignore
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
     /**
-     * Gets the widget if is ignore it's size.
+     * Query whether the widget ignores user deinfed content size or not
      *
-     * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
+     * @return bool
      */
     bool isIgnoreContentAdaptWithSize() const;
 
@@ -485,14 +483,8 @@ public:
      */
     virtual Node* getVirtualRenderer();
 
-//    /**
-//     * Gets the content size of widget.
-//     *
-//     * Content size is widget's texture size.
-//     */
-//    virtual const Size& getContentSize() const;
+
     virtual const Size& getVirtualRendererSize() const;
-    
     
 
     /**

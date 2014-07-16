@@ -531,7 +531,7 @@ function LabelTTFUnicodeChinese.create()
 
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
-    ttfConfig.fontFilePath="fonts/wt021.ttf"
+    ttfConfig.fontFilePath="fonts/HKYuanMini.ttf"
     ttfConfig.fontSize=28
     ttfConfig.glyphs=cc.GLYPHCOLLECTION_CUSTOM
     ttfConfig.customGlyphs="美好的一天啊"
@@ -858,7 +858,7 @@ function LabelTTFUnicodeNew.create()
     layer:addChild(label2)
     label2:setPosition(cc.p(s.width/2, vSize - vStep * 5.5))
     
-    ttfConfig.fontFilePath = "fonts/wt021.ttf"
+    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf"
     ttfConfig.glyphs = cc.GLYPHCOLLECTION_CUSTOM
     ttfConfig.customGlyphs = "美好的一天"
     local label3 = cc.Label:createWithTTF(ttfConfig, "美好的一天", cc.TEXT_ALIGNMENT_CENTER, s.width)
@@ -1022,7 +1022,7 @@ function LabelTTFCJKWrappingTest.create()
 
     local size = cc.Director:getInstance():getVisibleSize()
     local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/wt021.ttf"
+    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf"
     ttfConfig.fontSize = 25
     ttfConfig.glyphs = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
@@ -1292,32 +1292,6 @@ function LabelCrashTest.create()
     label1:setPosition( cc.p(s.width/2, s.height/2) )
     label1:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(label1)
-
-    return layer
-end
-
-
-
-
---------------------------------------------------------
------ LabelTTFLargeText
---------------------------------------------------------
-local LabelTTFLargeText = {}
-function LabelTTFLargeText.create()
-    local layer = cc.Layer:create()
-    Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("New Label + .TTF")
-    Helper.subtitleLabel:setString("Uses the new Label with TTF. Testing large text")
-
-    local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/wt021.ttf"
-    ttfConfig.fontSize     = 18
-    ttfConfig.glyphs       = cc.GLYPHCOLLECTION_DYNAMIC
-    local s = cc.Director:getInstance():getWinSize()
-    local text = cc.FileUtils:getInstance():getStringFromFile("commonly_used_words.txt")
-    local label = cc.Label:createWithTTF(ttfConfig, text, cc.TEXT_ALIGNMENT_CENTER, s.width)
-    label:setPosition( cc.p(s.width/2, s.height/2) )
-    layer:addChild(label)
 
     return layer
 end
@@ -1751,7 +1725,6 @@ function LabelTestNew()
         LabelFNTOffset.create,
         LabelFNTColor.create,
         LabelTTFLongLineWrapping.create,
-        LabelTTFLargeText.create,
         LabelTTFColor.create,
         LabelFNTHundredLabels.create,
         LabelFNTMultiLine.create,

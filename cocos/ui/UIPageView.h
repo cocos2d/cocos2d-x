@@ -127,8 +127,7 @@ public:
      */
     ssize_t getCurPageIndex() const;
     
-    //TODO: add Vector<Layout*> member variables into UIPageView, but it only used for reference purpose,
-    //all the pages are added into proteced node, so does scrollview, listview
+    
     Vector<Layout*>& getPages();
     
     Layout* getPage(ssize_t index);
