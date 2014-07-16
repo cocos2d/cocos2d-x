@@ -27,13 +27,13 @@ local function main()
     
     --create scene 
     local scene = require("GameScene")
-    local GameScene = scene.create()
-    GameScene:playBgMusic()
+    local gameScene = scene.create()
+    gameScene:playBgMusic()
     
     if cc.Director:getInstance():getRunningScene() then
-        cc.Director:getInstance():replaceScene(GameScene)
+        cc.Director:getInstance():replaceScene(gameScene)
     else
-        cc.Director:getInstance():runWithScene(GameScene)
+        cc.Director:getInstance():runWithScene(gameScene)
     end
 
 end
