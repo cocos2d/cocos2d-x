@@ -143,7 +143,7 @@ void RenderTexture::listenToForeground(EventCustom *event)
 
     if (_depthStencilFormat != 0)
     {
-        CCSize size = _texture->getContentSizeInPixels();
+        Size size = _texture->getContentSizeInPixels();
 
         //create and attach depth buffer
         glGenRenderbuffers(1, &_depthRenderBufffer);
