@@ -925,6 +925,9 @@
 		B2DB48C319767D3D00411E16 /* libcocosStudio Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB48C219767D3600411E16 /* libcocosStudio Mac.a */; };
 		B2DB48C619767DAC00411E16 /* libcocosStudio Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB48C219767D3600411E16 /* libcocosStudio Mac.a */; };
 		B2DB48C919767EB700411E16 /* libcocosStudio Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB48C219767D3600411E16 /* libcocosStudio Mac.a */; };
+		B2DB493A197681E500411E16 /* libcocosGUI Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB49391976819900411E16 /* libcocosGUI Mac copy.a */; };
+		B2DB49401976826000411E16 /* libcocosGUI Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB49391976819900411E16 /* libcocosGUI Mac copy.a */; };
+		B2DB49431976826E00411E16 /* libcocosGUI Mac copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB49391976819900411E16 /* libcocosGUI Mac copy.a */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -1474,6 +1477,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = B2DB48161976716E00411E16;
 			remoteInfo = "cocosStudio Mac";
+		};
+		B2DB49351976819900411E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B2DB48CA19767F1F00411E16;
+			remoteInfo = "cocosSpine Mac";
+		};
+		B2DB49381976819900411E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B2DB490119767F1F00411E16;
+			remoteInfo = "cocosSpine Mac";
+		};
+		B2DB493E1976825800411E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B2DB48CA19767F1F00411E16;
+			remoteInfo = "cocosSpine Mac";
+		};
+		B2DB49411976826900411E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B2DB48CA19767F1F00411E16;
+			remoteInfo = "cocosSpine Mac";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -3323,6 +3354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2DB49431976826E00411E16 /* libcocosGUI Mac copy.a in Frameworks */,
 				B2DB48C919767EB700411E16 /* libcocosStudio Mac.a in Frameworks */,
 				B2DB480E197670F500411E16 /* libcocosBuilder Mac.a in Frameworks */,
 				B2DB480F197670F500411E16 /* libcocosGUI Mac.a in Frameworks */,
@@ -3391,6 +3423,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2DB49401976826000411E16 /* libcocosGUI Mac copy.a in Frameworks */,
 				B2DB48C319767D3D00411E16 /* libcocosStudio Mac.a in Frameworks */,
 				B2DB48141976711A00411E16 /* libcocosBuilder Mac.a in Frameworks */,
 				B2DB48151976711A00411E16 /* libcocosGUI Mac.a in Frameworks */,
@@ -3439,6 +3472,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2DB493A197681E500411E16 /* libcocosGUI Mac copy.a in Frameworks */,
 				B2DB48C619767DAC00411E16 /* libcocosStudio Mac.a in Frameworks */,
 				B2DB480919766E4800411E16 /* libcocosBuilder Mac.a in Frameworks */,
 				B2DB479A197668D500411E16 /* libcocosGUI Mac.a in Frameworks */,
@@ -7453,6 +7487,7 @@
 				B2DB4799197668CA00411E16 /* libcocosGUI Mac.a */,
 				B2DB48C219767D3600411E16 /* libcocosStudio Mac.a */,
 				B2DB480819766E3C00411E16 /* libcocosBuilder Mac.a */,
+				B2DB49391976819900411E16 /* libcocosGUI Mac copy.a */,
 				46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */,
 				46A15FB61807A4F9005B8026 /* libbox2d Mac.a */,
 				46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */,
@@ -7521,6 +7556,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B2DB49421976826900411E16 /* PBXTargetDependency */,
 				B2DB48C819767EAF00411E16 /* PBXTargetDependency */,
 				B2DB480B197670ED00411E16 /* PBXTargetDependency */,
 				B2DB480D197670ED00411E16 /* PBXTargetDependency */,
@@ -7588,6 +7624,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B2DB493F1976825800411E16 /* PBXTargetDependency */,
 				B2DB48BF19767D3600411E16 /* PBXTargetDependency */,
 				B2DB48111976711200411E16 /* PBXTargetDependency */,
 				B2DB48131976711200411E16 /* PBXTargetDependency */,
@@ -7635,6 +7672,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B2DB49361976819900411E16 /* PBXTargetDependency */,
 				B2DB48C519767DA500411E16 /* PBXTargetDependency */,
 				B2DB480519766E3C00411E16 /* PBXTargetDependency */,
 				B2DB4794197668CA00411E16 /* PBXTargetDependency */,
@@ -7846,6 +7884,13 @@
 			fileType = archive.ar;
 			path = "libcocosStudio Mac.a";
 			remoteRef = B2DB48C119767D3600411E16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B2DB49391976819900411E16 /* libcocosGUI Mac copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocosGUI Mac copy.a";
+			remoteRef = B2DB49381976819900411E16 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -9042,6 +9087,21 @@
 			isa = PBXTargetDependency;
 			name = "cocosStudio Mac";
 			targetProxy = B2DB48C719767EAF00411E16 /* PBXContainerItemProxy */;
+		};
+		B2DB49361976819900411E16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosSpine Mac";
+			targetProxy = B2DB49351976819900411E16 /* PBXContainerItemProxy */;
+		};
+		B2DB493F1976825800411E16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosSpine Mac";
+			targetProxy = B2DB493E1976825800411E16 /* PBXContainerItemProxy */;
+		};
+		B2DB49421976826900411E16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosSpine Mac";
+			targetProxy = B2DB49411976826900411E16 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
