@@ -301,6 +301,7 @@ function UIScrollView:elasticScroll()
 		return
 	end
 
+	print("htl disY:" .. disY)
 	transition.moveBy(self.scrollNode,
 		{x = disX, y = disY, time = 0.3,
 		easing = "backout",
@@ -349,8 +350,8 @@ function UIScrollView:enableScrollBar()
 		self.sbV:setOpacity(128)
 		local size = self.sbV:getContentSize()
 		if self.viewRect_.height < bound.height then
-			dump(self.viewRect_, "viewRect_:")
-			dump(bound, "bound:")
+			-- dump(self.viewRect_, "viewRect_:")
+			-- dump(bound, "bound:")
 			local barH = self.viewRect_.height*self.viewRect_.height/bound.height
 			if barH < size.width then
 				-- 保证bar不会太小

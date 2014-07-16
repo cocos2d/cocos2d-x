@@ -51,9 +51,9 @@ function UIListView:addBgIf(params)
 	end
 
 	display.newScale9Sprite(params.bg)
-		:size(params.viewRect_.width, params.viewRect_.height)
-		:pos(params.viewRect_.x + params.viewRect_.width/2,
-			params.viewRect_.y + params.viewRect_.height/2)
+		:size(params.viewRect.width, params.viewRect.height)
+		:pos(params.viewRect.x + params.viewRect.width/2,
+			params.viewRect.y + params.viewRect.height/2)
 		:addTo(self, UIListView.BG_ZORDER)
 end
 
@@ -71,6 +71,7 @@ function UIListView:newItem(item)
 end
 
 function UIListView:itemSizeChangeListener(listItem, newSize, oldSize)
+	-- print("UIListView - itemSizeChangeListener")
 	local pos = self:getItemPos(listItem)
 	if not pos then
 		return
@@ -143,6 +144,7 @@ function UIListView:addItem(listItem, pos)
 end
 
 function UIListView:removeItem(listItem, bAni)
+	print("UIListView - removeItem")
 	local itemW, itemH = listItem:getItemSize()
 	self.container:removeChild(listItem)
 
@@ -160,18 +162,6 @@ function UIListView:removeItem(listItem, bAni)
 	self.size.width = self.size.width - itemW
 	self.size.height = self.size.height - itemH
 	self:moveItems(1, pos - 1, -itemW, -itemH, bAni)
-
-	return self
-end
-
-function UIListView:modifyItem(listItem)
-	self.container:removeChild(listItem)
-
-	local pos = self:getItemPos(listItem)
-	if pos then
-		table.remove(self.items_, pos)
-	end
-	self:addItem(listItem, pos)
 
 	return self
 end
@@ -261,6 +251,7 @@ function UIListView:layout_()
 		end
 	end
 
+	self.container:setPosition(0, self.viewRect_.height - self.size.height)
 	-- dump(self.container:getCascadeBoundingBox(), "UIListView container bound:")
 	-- local bound = self.container:getCascadeBoundingBox()
 	-- dump(bound, "bound:")
@@ -315,17 +306,23 @@ function UIListView:moveItems(beginIdx, endIdx, x, y, bAni)
 
 	local posX, posY = 0, 0
 
+	local moveByParams = {x = x, y = y, time = 0.2}
 	for i=beginIdx, endIdx do
 		if bAni then
-			transition.moveBy(self.items_[i],
-				{x = x, y = y, time = 0.2,
-				onComplete = function()
+			if i == beginIdx then
+				moveByParams.onComplete = function()
 					self:elasticScroll()
-				end})
+				end
+			else
+				moveByParams.onComplete = nil
+			end
+			transition.moveBy(self.items_[i], moveByParams)
 		else
 			posX, posY = self.items_[i]:getPosition()
 			self.items_[i]:setPosition(posX + x, posY + y)
-			self:elasticScroll()
+			if i == beginIdx then
+				self:elasticScroll()
+			end
 		end
 	end
 end

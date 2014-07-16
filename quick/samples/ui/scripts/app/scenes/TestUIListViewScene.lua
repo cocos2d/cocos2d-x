@@ -347,21 +347,62 @@ end
 function TestUIListViewScene:createListView5()
     self.lv = cc.ui.UIListView.new {
         -- bgColor = cc.c4b(200, 200, 200, 120),
-        bg = "GreenBlock.png",
+        bg = "sunset.png",
         viewRect = cc.rect(40, 80, 120, 400),
         direction = cc.ui.UIScrollView.DIRECTION_VERTICAL,
-        scrollbarImgV = "SliderBarFixedV.png"}
+        scrollbarImgV = "bar.png"}
         :onTouch(handler(self, self.touchListener))
         :addTo(self)
 
     -- add items
     for i=1,20 do
         local item = self.lv:newItem()
-        local content = cc.ui.UILabel.new(
-                {text = "item"..i,
-                size = 20,
-                align = cc.ui.TEXT_ALIGN_CENTER,
-                color = display.COLOR_BLACK})
+        local content
+        if 1 == i then
+            content = cc.ui.UILabel.new(
+                    {text = "item"..i,
+                    size = 20,
+                    align = cc.ui.TEXT_ALIGN_CENTER,
+                    color = display.COLOR_BLACK})
+        elseif 2 == i then
+            content = cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
+                :setButtonSize(120, 40)
+                :setButtonLabel(cc.ui.UILabel.new({text = "点击大小改变" .. i, size = 16, color = display.COLOR_BLUE}))
+                :onButtonPressed(function(event)
+                    event.target:getButtonLabel():setColor(display.COLOR_RED)
+                end)
+                :onButtonRelease(function(event)
+                    event.target:getButtonLabel():setColor(display.COLOR_BLUE)
+                end)
+                :onButtonClicked(function(event)
+                    print("TestUIListViewScene buttonclicked")
+                    local _,h = item:getItemSize()
+                    if 40 == h then
+                        item:setItemSize(120, 80)
+                    else
+                        item:setItemSize(120, 40)
+                    end
+                end)
+        elseif 3 == i then
+            content = cc.ui.UILabel.new(
+                    {text = "点击删除它"..i,
+                    size = 20,
+                    align = cc.ui.TEXT_ALIGN_CENTER,
+                    color = display.COLOR_BLACK})
+        elseif 4 == i then
+            content = cc.ui.UILabel.new(
+                    {text = "有背景图"..i,
+                    size = 20,
+                    align = cc.ui.TEXT_ALIGN_CENTER,
+                    color = display.COLOR_BLACK})
+            item:setBg("YellowBlock.png")
+        else
+            content = cc.ui.UILabel.new(
+                    {text = "item"..i,
+                    size = 20,
+                    align = cc.ui.TEXT_ALIGN_CENTER,
+                    color = display.COLOR_BLACK})
+        end
         item:addContent(content)
         item:setItemSize(120, 40)
 
@@ -375,8 +416,11 @@ end
 function TestUIListViewScene:touchListener(event)
     dump(event, "TestUIListViewScene - event:")
     local listView = event.listView
-    -- listView:removeItem(event.item, true)
-    event.item:setItemSize(120, 80)
+    if 3 == event.itemPos then
+        listView:removeItem(event.item)
+    else
+        -- event.item:setItemSize(120, 80)
+    end
 end
 
 
