@@ -32,7 +32,7 @@
 NS_CC_BEGIN
 
 /** Command used to render one or more Quads */
-class QuadCommand : public RenderCommand
+class CC_DLL QuadCommand : public RenderCommand
 {
 public:
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;

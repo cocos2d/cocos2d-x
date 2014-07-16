@@ -34,7 +34,7 @@
 
 NS_CC_BEGIN
 
-class CC_DLL ProtectedNode : public Node
+class ProtectedNode : public Node
 {
 public:
     static ProtectedNode * create(void);

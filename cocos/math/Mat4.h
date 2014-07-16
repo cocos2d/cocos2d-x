@@ -59,7 +59,7 @@ NS_CC_MATH_BEGIN
  *
  * @see Transform
  */
-class Mat4
+class CC_DLL Mat4
 {
 public:
     // //temp add conversion

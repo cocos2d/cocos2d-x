@@ -1221,5 +1221,6 @@
     <None Include="..\3d\CCAnimationCurve.inl">
       <Filter>3d</Filter>
     </None>
+    <None Include="cocos2d.def" />
   </ItemGroup>
 </Project>

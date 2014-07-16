@@ -36,7 +36,7 @@ class CC_DLL ObjectFactory
 {
 public:
     typedef cocos2d::Ref* (*Instance)(void);
-    struct TInfo
+    struct CC_DLL TInfo
     {
         TInfo(void);
         TInfo(const std::string& type, Instance ins = NULL);

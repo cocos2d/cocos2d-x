@@ -43,7 +43,7 @@ extern const ValueVector ValueVectorNull;
 extern const ValueMap ValueMapNull;
 extern const ValueMapIntKey ValueMapIntKeyNull;
 
-class Value
+class CC_DLL Value
 {
 public:
     static const Value Null;

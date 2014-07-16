@@ -42,7 +42,7 @@ class Bone3D;
 /**
  * Animate3D, Animates a Sprite3D given with an Animation3D
  */
-class Animate3D: public ActionInterval
+class CC_DLL Animate3D: public ActionInterval
 {
 public:
     

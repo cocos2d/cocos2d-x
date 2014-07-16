@@ -39,7 +39,7 @@ NS_CC_BEGIN
 /**
  * static animation data, shared
  */
-class Animation3D: public Ref
+class CC_DLL Animation3D: public Ref
 {
     friend class Bundle3D;
 public:
