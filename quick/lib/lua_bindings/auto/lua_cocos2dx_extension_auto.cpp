@@ -122,7 +122,7 @@ int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(lua_State* tolua
     do{
         if (argc == 1) {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
             bool ret = cobj->initWithSpriteFrameName(arg0);
@@ -134,7 +134,7 @@ int lua_cocos2dx_extension_Scale9Sprite_initWithSpriteFrameName(lua_State* tolua
     do{
         if (argc == 2) {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -670,7 +670,7 @@ int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
     do{
         if (argc == 2) {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -686,7 +686,7 @@ int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
     do{
         if (argc == 3) {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -710,7 +710,7 @@ int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
 
             if (!ok) { break; }
             std::string arg1;
-             arg1=tolua_tostring(tolua_S,3,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
 
             if (!ok) { break; }
             bool ret = cobj->initWithFile(arg0, arg1);
@@ -722,7 +722,7 @@ int lua_cocos2dx_extension_Scale9Sprite_initWithFile(lua_State* tolua_S)
     do{
         if (argc == 1) {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
             if (!ok) { break; }
             bool ret = cobj->initWithFile(arg0);
@@ -1089,7 +1089,7 @@ int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
         if (argc == 3)
         {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -1121,7 +1121,7 @@ int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
             ok &= luaval_to_rect(tolua_S, 2, &arg0);
             if (!ok) { break; }
             std::string arg1;
-             arg1=tolua_tostring(tolua_S,3,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
             if (!ok) { break; }
             cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create(arg0, arg1);
             object_to_luaval<cocos2d::extension::Scale9Sprite>(tolua_S, "cc.Scale9Sprite",(cocos2d::extension::Scale9Sprite*)ret);
@@ -1134,7 +1134,7 @@ int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
         if (argc == 2)
         {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -1150,7 +1150,7 @@ int lua_cocos2dx_extension_Scale9Sprite_create(lua_State* tolua_S)
         if (argc == 1)
         {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
             cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::create(arg0);
             object_to_luaval<cocos2d::extension::Scale9Sprite>(tolua_S, "cc.Scale9Sprite",(cocos2d::extension::Scale9Sprite*)ret);
@@ -1185,7 +1185,7 @@ int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_State* tol
         if (argc == 2)
         {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1);
@@ -1201,7 +1201,7 @@ int lua_cocos2dx_extension_Scale9Sprite_createWithSpriteFrameName(lua_State* tol
         if (argc == 1)
         {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
             cocos2d::extension::Scale9Sprite* ret = cocos2d::extension::Scale9Sprite::createWithSpriteFrameName(arg0);
             object_to_luaval<cocos2d::extension::Scale9Sprite>(tolua_S, "cc.Scale9Sprite",(cocos2d::extension::Scale9Sprite*)ret);
@@ -2459,7 +2459,7 @@ int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolua_S)
         std::string arg0;
         cocos2d::extension::Control::State arg1;
 
-         arg0=tolua_tostring(tolua_S,2,0); ok=true;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
         if(!ok)
@@ -2645,7 +2645,7 @@ int lua_cocos2dx_extension_ControlButton_setTitleTTFForState(lua_State* tolua_S)
         std::string arg0;
         cocos2d::extension::Control::State arg1;
 
-         arg0=tolua_tostring(tolua_S,2,0); ok=true;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
         if(!ok)
@@ -3799,7 +3799,7 @@ int lua_cocos2dx_extension_ControlButton_setTitleBMFontForState(lua_State* tolua
         std::string arg0;
         cocos2d::extension::Control::State arg1;
 
-         arg0=tolua_tostring(tolua_S,2,0); ok=true;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
         if(!ok)
@@ -4013,10 +4013,10 @@ int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
         if (argc == 3)
         {
             std::string arg0;
-             arg0=tolua_tostring(tolua_S,2,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0);
             if (!ok) { break; }
             std::string arg1;
-             arg1=tolua_tostring(tolua_S,3,0); ok=true;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1);
             if (!ok) { break; }
             double arg2;
             ok &= luaval_to_number(tolua_S, 4,&arg2);
