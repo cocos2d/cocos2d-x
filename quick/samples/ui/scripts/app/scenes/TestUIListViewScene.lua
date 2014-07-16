@@ -348,12 +348,13 @@ function TestUIListViewScene:createListView5()
     self.lv = cc.ui.UIListView.new {
         bgColor = cc.c4b(200, 200, 200, 120),
         viewRect = cc.rect(40, 80, 120, 400),
-        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
+        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL,
+        scrollbarImgV = "SliderBarFixedV.png"}
         :onTouch(handler(self, self.touchListener))
         :addTo(self)
 
     -- add items
-    for i=1,10 do
+    for i=1,20 do
         local item = self.lv:newItem()
         local content = cc.ui.UILabel.new(
                 {text = "item"..i,
@@ -361,17 +362,20 @@ function TestUIListViewScene:createListView5()
                 align = cc.ui.TEXT_ALIGN_CENTER,
                 color = display.COLOR_BLACK})
         item:addContent(content)
-        item:setItemSize(451, 40)
+        item:setItemSize(120, 40)
 
         self.lv:addItem(item)
     end
     self.lv:reload()
 
-    HDrawRect(self.lv:getCascadeBoundingBox(), self, cc.c4f(0, 1, 0, 1))
+    -- HDrawRect(self.lv:getCascadeBoundingBox(), self, cc.c4f(0, 1, 0, 1))
 end
 
 function TestUIListViewScene:touchListener(event)
-    -- body
+    dump(event, "TestUIListViewScene - event:")
+    local listView = event.listView
+    -- listView:removeItem(event.item, true)
+    event.item:setItemSize(120, 80)
 end
 
 
