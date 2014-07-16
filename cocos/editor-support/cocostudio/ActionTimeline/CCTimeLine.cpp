@@ -157,8 +157,8 @@ void Timeline::binarySearchKeyFrame(int frameIndex)
             break;
         }
 
-        int target = -1;
-        int low=0,high=length-1,mid;
+        long target = -1;
+        long low=0,high=length-1,mid=0;
         while(low<=high){ 
             mid=(low+high)/2;
             if(frameIndex >= _frames.at(mid)->getFrameIndex() && frameIndex < _frames.at(mid+1)->getFrameIndex()) 
