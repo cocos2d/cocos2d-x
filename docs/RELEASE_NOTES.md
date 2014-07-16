@@ -46,7 +46,7 @@
 
 ## Compiler Requirements
 
-* Xcode 4.6 or newer for iOS or Mac
+* Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
 * ndk-r9d or newer for Android
 * Visual Studio 2012  or newer for Windows (win32)
@@ -135,10 +135,14 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Toolchain requirement changed
 
-`Node::enumerateChildren()` uses `std::regex` which will cause crash using gcc v4.8 or lower version. So
+`Node::enumerateChildren()` uses `std::regex` which will cause crash using gcc v4.8 or lower version. 
+Because `OTHER_LDFLAGS` can not work in Xcode6 beta3. So we used fat library(including 64-bit libaries) on iOS. But Xcode 5.0 or lower version has building problem by this way.
+
+So
 
 * NDK r9d or newer version is required for Android building
 * gcc 4.9 is required for linux building
+* Xcode 5.1 or newer is required on iOS
 
 
 # Features in detail
