@@ -90,38 +90,30 @@ static bool resetLuaModule(string fileName)
     lua_State* stack=luaStack->getLuaState();
     lua_getglobal(stack, "package");                         /* L: package */
     lua_getfield(stack, -1, "loaded");                       /* L: package loaded */
-    int top = lua_gettop(stack);
     lua_pushnil(stack);                                     /* L: lotable ?-.. nil */
     while ( 0 != lua_next(stack, -2 ) )                     /* L: lotable ?-.. key value */
     {
-        top = lua_gettop(stack);
         //CCLOG("%s - %s \n", tolua_tostring(stack, -2, ""), lua_typename(stack, lua_type(stack, -1)));
         std::string key=tolua_tostring(stack, -2, "");
         std::string tableKey =key;
-        unsigned found = tableKey.rfind(".lua");
+        int found = tableKey.rfind(".lua");
         if (found!=std::string::npos)
             tableKey = tableKey.substr(0,found);
         tableKey=replaceAll(tableKey,".","/");
         tableKey=replaceAll(tableKey,"\\","/");
         tableKey.append(".lua");
-        top = lua_gettop(stack);
         found = fileName.rfind(tableKey);
-        top = lua_gettop(stack);
         if (0 == found || ( found!=std::string::npos && fileName.at(found-1) == '/'))
         {
-            top = lua_gettop(stack);
             lua_pushstring(stack, key.c_str());
             lua_pushnil(stack);
             if (lua_istable(stack, -5))
             {
                 lua_settable(stack, -5);
             }
-             top = lua_gettop(stack);
         }
         lua_pop(stack, 1);
-        top = lua_gettop(stack);
     }
-    top = lua_gettop(stack);
     lua_pop(stack, 2);
     return true;
 }
