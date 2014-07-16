@@ -79,18 +79,27 @@ function Sprite3DWithSkinTest.addNewSpriteWithCoords(parent,x,y)
     sprite:setPosition(cc.p(x, y))
     parent:addChild(sprite)
 
-    local animation = cc.Animation3D:getOrCreate("Sprite3DTest/orc.c3b")
+    local animation = cc.Animation3D:create("Sprite3DTest/orc.c3b")
     if nil ~= animation then
         local animate = cc.Animate3D:create(animation)
-        if math.random() < (1/3) then
-            animate:setPlayBack(true)
+        local inverse = false
+        if math.random() == 0 then
+            inverse = true
         end
 
         local rand2 = math.random()
+        local speed = 1.0
+
         if rand2 < 1/3 then
-            animate:setSpeed(animate:getSpeed() + math.random())    
+            speed = animate:getSpeed() + math.random()  
         elseif rand2 < 2/3 then
-            animate:setSpeed(animate:getSpeed() - 0.5 *  math.random())
+            speed = animate:getSpeed() - 0.5 *  math.random()
+        end
+
+        if inverse then
+            animate:setSpeed(-speed)
+        else
+            animate:setSpeed(speed)
         end
 
         sprite:runAction(cc.RepeatForever:create(animate))
@@ -226,7 +235,7 @@ function Animate3DTest:addSprite3D()
 
     self._sprite = sprite
 
-    local animation = cc.Animation3D:getOrCreate(fileName)
+    local animation = cc.Animation3D:create(fileName)
     if nil ~= animation then
         local animate = cc.Animate3D:create(animation, 0.0, 1.933)
         sprite:runAction(cc.RepeatForever:create(animate))

@@ -95,18 +95,18 @@ public:
     /**
      * Changes scroll direction of scrollview.
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see Direction      Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
      *
-     * @param SCROLLVIEW_DIR
+     * @param dir
      */
     virtual void setDirection(Direction dir);
     
     /**
      * Gets scroll direction of scrollview.
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see Direction      Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
      *
-     * @return SCROLLVIEW_DIR
+     * @return Direction
      */
     Direction getDirection()const;
     

@@ -195,27 +195,6 @@ bool	CocoLoader::ReadCocoBinBuff(char* pBinBuff)
 	return true;
 }
 
-stExpCocoObjectDesc*	CocoLoader::GetCocoObjectDesc(const char* szObjDesc)
-{
-    for(int i = 0 ; i < m_pFileHeader->m_ObjectCount ; i++)
-    {
-        if(0 == strcmp((char*)m_pObjectDescArray[i].m_szName,szObjDesc))
-        {
-            return	&m_pObjectDescArray[i];
-        }
-    }
-    return nullptr;
-}
-
-stExpCocoObjectDesc*	CocoLoader::GetCocoObjectDesc(int vIndex)
-{
-    if(vIndex >= 0 && vIndex <  m_pFileHeader->m_ObjectCount)
-    {
-        return	&m_pObjectDescArray[vIndex];
-    }
-    return nullptr;
-}
-
 char*	CocoLoader::GetMemoryAddr_AttribDesc()
 {
     return m_pMemoryBuff + m_pFileHeader->m_lAttribMemAddr ;

@@ -22,10 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include <sstream>
-
 #include "2d/CCFontAtlasCache.h"
+
+#include <iostream>
+#include <sstream>
 
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontFreeType.h"

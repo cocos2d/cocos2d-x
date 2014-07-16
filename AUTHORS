@@ -828,6 +828,7 @@ Developers:
         Added missing Text Font and Placeholder feature of EditBox for Mac platform
         HttpRequest uses std::function as callback
         EditBox: mac secure input
+        Fix a bug that can not get/set text in password mode on Mac OS X
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -896,7 +897,8 @@ Developers:
         
     kyokomi
         Fix the bug that UIButton doesn't support TTF font
-        Fix a but of TextReader
+        Fix a bug of TextReader
+        Fix a bug that UITextField doesn't support TTF font
         
     gin0606
         Add a new line at the end of a file
