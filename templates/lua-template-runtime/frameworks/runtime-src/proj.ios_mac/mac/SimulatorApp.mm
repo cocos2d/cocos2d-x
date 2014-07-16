@@ -172,7 +172,7 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     }
     
     NSMenu *menuControl = [[[window menu] itemWithTitle:@"Control"] submenu];
-    NSMenuItem *itemTop = [menuControl itemWithTitle:@"Top"];
+    NSMenuItem *itemTop = [menuControl itemWithTitle:@"Keep Window Top"];
     if (g_windTop) {
         [window setLevel:NSFloatingWindowLevel];
         [itemTop setState:NSOnState];
