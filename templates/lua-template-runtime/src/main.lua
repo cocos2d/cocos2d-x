@@ -26,14 +26,14 @@ local function main()
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
     
     --create scene 
-    local scene = require("gameScene")
-    local gameScene = scene.create()
-    gameScene:playBgMusic()
+    local scene = require("GameScene")
+    local GameScene = scene.create()
+    GameScene:playBgMusic()
     
     if cc.Director:getInstance():getRunningScene() then
-        cc.Director:getInstance():replaceScene(gameScene)
+        cc.Director:getInstance():replaceScene(GameScene)
     else
-        cc.Director:getInstance():runWithScene(gameScene)
+        cc.Director:getInstance():runWithScene(GameScene)
     end
 
 end

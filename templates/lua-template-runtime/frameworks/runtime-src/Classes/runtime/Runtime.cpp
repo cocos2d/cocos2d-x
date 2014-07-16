@@ -808,6 +808,7 @@ public:
         }
         _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
 
+        _fileserver = nullptr;
 #if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
         _fileserver->listenOnTCP(6020);
@@ -868,9 +869,11 @@ public:
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                    for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                    if(_fileserver){
+                        rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
+                        for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
+                            bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
