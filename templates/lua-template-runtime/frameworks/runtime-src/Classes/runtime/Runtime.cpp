@@ -277,7 +277,7 @@ void FileServer::readResFileFinfo()
         _filecfgjson.SetObject();
     }
 
-#ifndef CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM
+#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM))
     //save file info to disk every ten second
     Director::getInstance()->getScheduler()->schedule([&](float){
         rapidjson::StringBuffer buffer;
@@ -291,7 +291,7 @@ void FileServer::readResFileFinfo()
         if (!pFile) return ;
         fwrite(str,sizeof(char),strlen(str),pFile);
         fclose(pFile);
-    },this, 10.0f, false, "fileinfo");
+    },this, 5.0f, false, "fileinfo");
 #endif
 }
 
