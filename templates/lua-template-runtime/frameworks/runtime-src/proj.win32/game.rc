@@ -65,8 +65,8 @@ BEGIN
     END
     POPUP "&Control"
     BEGIN
-        MENUITEM "Top",                         ID_CONTROL_TOP
         MENUITEM "Restart(F5)",                 ID_CONTROL_RELOAD
+        MENUITEM "Keep Window Top",             ID_CONTROL_TOP
     END
     POPUP "&Help"
     BEGIN
