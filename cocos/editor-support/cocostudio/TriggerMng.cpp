@@ -191,7 +191,7 @@ bool TriggerMng::isEmpty(void) const
 }
 
     
-    void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
 {
     int count = pCocoNode[13].GetChildNum();
     int length = 0;
@@ -262,12 +262,12 @@ bool TriggerMng::isEmpty(void) const
                                     }
                                     else
                                     {
-                                        rapidjson::Type type = pDataItemArray[i4].GetType(pCocoLoader);
+                                        rapidjson::Type type = pDataItemArray[i5].GetType(pCocoLoader);
                                         if (type == rapidjson::kStringType)
                                         {
                                             dataitem.AddMember("value", str3, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str3);
                                             float fV = atof(str3);
