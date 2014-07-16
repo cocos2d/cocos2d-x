@@ -343,7 +343,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         {
                                             dataitem.AddMember("value", str5, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str5);
                                             float fV = atof(str5);
