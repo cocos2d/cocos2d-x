@@ -4721,50 +4721,6 @@ int lua_cocos2dx_Node_getTag(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_getonEnterTransitionDidFinishCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getonEnterTransitionDidFinishCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        const std::function<void ()>& ret = cobj->getonEnterTransitionDidFinishCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getonEnterTransitionDidFinishCallback",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getonEnterTransitionDidFinishCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Node_getGLProgram(lua_State* tolua_S)
 {
     int argc = 0;
@@ -5778,50 +5734,6 @@ int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_convertTouchToNodeSpaceAR'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Node_getOnEnterCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOnEnterCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        const std::function<void ()>& ret = cobj->getOnEnterCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOnEnterCallback",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getOnEnterCallback'.",&tolua_err);
 #endif
 
     return 0;
@@ -8379,50 +8291,6 @@ int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_getOnExitCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOnExitCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        const std::function<void ()>& ret = cobj->getOnExitCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOnExitCallback",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getOnExitCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9245,50 +9113,6 @@ int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_getonExitTransitionDidStartCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getonExitTransitionDidStartCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        const std::function<void ()>& ret = cobj->getonExitTransitionDidStartCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getonExitTransitionDidStartCallback",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getonExitTransitionDidStartCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9942,7 +9766,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"removeAllComponents",lua_cocos2dx_Node_removeAllComponents);
         tolua_function(tolua_S,"_setLocalZOrder",lua_cocos2dx_Node__setLocalZOrder);
         tolua_function(tolua_S,"getTag",lua_cocos2dx_Node_getTag);
-        tolua_function(tolua_S,"getonEnterTransitionDidFinishCallback",lua_cocos2dx_Node_getonEnterTransitionDidFinishCallback);
         tolua_function(tolua_S,"getGLProgram",lua_cocos2dx_Node_getGLProgram);
         tolua_function(tolua_S,"getNodeToWorldTransform",lua_cocos2dx_Node_getNodeToWorldTransform);
         tolua_function(tolua_S,"getPosition3D",lua_cocos2dx_Node_getPosition3D);
@@ -9965,7 +9788,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getRotation3D",lua_cocos2dx_Node_getRotation3D);
         tolua_function(tolua_S,"getNodeToParentTransform",lua_cocos2dx_Node_getNodeToParentTransform);
         tolua_function(tolua_S,"convertTouchToNodeSpaceAR",lua_cocos2dx_Node_convertTouchToNodeSpaceAR);
-        tolua_function(tolua_S,"getOnEnterCallback",lua_cocos2dx_Node_getOnEnterCallback);
         tolua_function(tolua_S,"convertToNodeSpace",lua_cocos2dx_Node_convertToNodeSpace);
         tolua_function(tolua_S,"resume",lua_cocos2dx_Node_resume);
         tolua_function(tolua_S,"getPhysicsBody",lua_cocos2dx_Node_getPhysicsBody);
@@ -10021,7 +9843,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getParentToNodeTransform",lua_cocos2dx_Node_getParentToNodeTransform);
         tolua_function(tolua_S,"setGlobalZOrder",lua_cocos2dx_Node_setGlobalZOrder);
         tolua_function(tolua_S,"setScale",lua_cocos2dx_Node_setScale);
-        tolua_function(tolua_S,"getOnExitCallback",lua_cocos2dx_Node_getOnExitCallback);
         tolua_function(tolua_S,"getChildByTag",lua_cocos2dx_Node_getChildByTag);
         tolua_function(tolua_S,"setOrderOfArrival",lua_cocos2dx_Node_setOrderOfArrival);
         tolua_function(tolua_S,"getScaleZ",lua_cocos2dx_Node_getScaleZ);
@@ -10040,7 +9861,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getGlobalZOrder",lua_cocos2dx_Node_getGlobalZOrder);
         tolua_function(tolua_S,"draw",lua_cocos2dx_Node_draw);
         tolua_function(tolua_S,"setUserObject",lua_cocos2dx_Node_setUserObject);
-        tolua_function(tolua_S,"getonExitTransitionDidStartCallback",lua_cocos2dx_Node_getonExitTransitionDidStartCallback);
         tolua_function(tolua_S,"removeFromParent",lua_cocos2dx_Node_removeFromParentAndCleanup);
         tolua_function(tolua_S,"setPosition3D",lua_cocos2dx_Node_setPosition3D);
         tolua_function(tolua_S,"update",lua_cocos2dx_Node_update);
