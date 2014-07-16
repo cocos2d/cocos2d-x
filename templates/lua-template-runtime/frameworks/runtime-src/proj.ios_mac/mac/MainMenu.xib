@@ -282,19 +282,19 @@
 						<object class="NSMenu" key="NSSubmenu" id="201383158">
 							<string key="NSTitle">Control</string>
 							<array class="NSMutableArray" key="NSMenuItems">
-								<object class="NSMenuItem" id="834755239">
-									<reference key="NSMenu" ref="201383158"/>
-									<string key="NSTitle">Top</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="415077826"/>
-									<reference key="NSMixedImage" ref="266121528"/>
-								</object>
 								<object class="NSMenuItem" id="675525235">
 									<reference key="NSMenu" ref="201383158"/>
 									<string key="NSTitle">Relaunch</string>
 									<string key="NSKeyEquiv">r</string>
 									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="415077826"/>
+									<reference key="NSMixedImage" ref="266121528"/>
+								</object>
+								<object class="NSMenuItem" id="834755239">
+									<reference key="NSMenu" ref="201383158"/>
+									<string key="NSTitle">Keep Window Top</string>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="415077826"/>
 									<reference key="NSMixedImage" ref="266121528"/>
@@ -800,7 +800,68 @@
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">AppController</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="onFileClose:">id</string>
+						<string key="onRelaunch:">id</string>
+						<string key="onScreenLandscape:">id</string>
+						<string key="onScreenPortait:">id</string>
+						<string key="onScreenZoomOut:">id</string>
+						<string key="onSetTop:">id</string>
+						<string key="onViewChangeFrameSize:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="onFileClose:">
+							<string key="name">onFileClose:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onRelaunch:">
+							<string key="name">onRelaunch:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onScreenLandscape:">
+							<string key="name">onScreenLandscape:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onScreenPortait:">
+							<string key="name">onScreenPortait:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onScreenZoomOut:">
+							<string key="name">onScreenZoomOut:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onSetTop:">
+							<string key="name">onSetTop:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onViewChangeFrameSize:">
+							<string key="name">onViewChangeFrameSize:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">menu</string>
+						<string key="NS.object.0">NSMenu</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">menu</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">menu</string>
+							<string key="candidateClassName">NSMenu</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AppController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
