@@ -492,3 +492,5 @@ ccui.LayoutType.linearVertical = ccui.LayoutType.VERTICAL
 ccui.LayoutType.linearHorizontal = ccui.LayoutType.HORIZONTAL
 ccui.LayoutType.relative = ccui.LayoutType.RELATIVE
 
+ccui.ListViewEventType.onsSelectedItem = ccui.ListViewEventType.ONSELECTEDITEM_START
+
