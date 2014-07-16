@@ -277,7 +277,6 @@ void FileServer::readResFileFinfo()
         _filecfgjson.SetObject();
     }
 
-#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM))
     //save file info to disk every ten second
     Director::getInstance()->getScheduler()->schedule([&](float){
         rapidjson::StringBuffer buffer;
@@ -292,7 +291,6 @@ void FileServer::readResFileFinfo()
         fwrite(str,sizeof(char),strlen(str),pFile);
         fclose(pFile);
     },this, 5.0f, false, "fileinfo");
-#endif
 }
 
 void FileServer::addResFileInfo(const char* filename,uint64_t u64)
@@ -808,16 +806,20 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
-        _console->listenOnTCP(6010);
+        _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
 
+        _fileserver = nullptr;
+#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
         _fileserver->listenOnTCP(6020);
         _fileserver->readResFileFinfo();
+#endif
     }
 
     ~ConsoleCustomCommand()
     {
         Director::getInstance()->getConsole()->stop();
+        if(_fileserver)
         _fileserver->stop();
     }
 
@@ -867,9 +869,11 @@ public:
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                    for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                    if(_fileserver){
+                        rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
+                        for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
+                            bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());

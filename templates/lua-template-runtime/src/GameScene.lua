@@ -1,32 +1,32 @@
 require "Cocos2d"
 require "Cocos2dConstants"
 
-local gameScene = class("gameScene",function()
-	return cc.Scene:create()
+local GameScene = class("GameScene",function()
+    return cc.Scene:create()
 end)
 
-function gameScene.create()
-    scene = gameScene.new()
+function GameScene.create()
+    local scene = GameScene.new()
     scene:addChild(scene:createLayerFarm())
     scene:addChild(scene:createLayerMenu())
     return scene
 end
 
 
-function gameScene:ctor()
+function GameScene:ctor()
     self.visibleSize = cc.Director:getInstance():getVisibleSize()
     self.origin = cc.Director:getInstance():getVisibleOrigin()
     self.schedulerID = nil
 end
 
-function gameScene:playBgMusic()
+function GameScene:playBgMusic()
     local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3") 
     cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 end
 
-function gameScene:creatDog()
+function GameScene:creatDog()
     local frameWidth = 105
     local frameHeight = 95
 
@@ -64,7 +64,7 @@ function gameScene:creatDog()
 end
 
 -- create farm
-function gameScene:createLayerFarm()
+function GameScene:createLayerFarm()
     local layerFarm = cc.Layer:create()
     -- add in farm background
     local bg = cc.Sprite:create("farm.jpg")
@@ -141,7 +141,7 @@ function gameScene:createLayerFarm()
 end
 
 -- create menu
-function gameScene:createLayerMenu()
+function GameScene:createLayerMenu()
 
     local layerMenu = cc.Layer:create()
     local menuPopup, menuTools, effectID
@@ -181,4 +181,4 @@ function gameScene:createLayerMenu()
     return layerMenu
 end
 
-return gameScene
+return GameScene
