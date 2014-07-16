@@ -135,11 +135,6 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#Node] getonEnterTransitionDidFinishCallback 
--- @param self
--- @return function#function ret (return value: function)
-        
---------------------------------
 -- @function [parent=#Node] getGLProgram 
 -- @param self
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
@@ -256,11 +251,6 @@
 -- @param self
 -- @param #cc.Touch touch
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- @function [parent=#Node] getOnEnterCallback 
--- @param self
--- @return function#function ret (return value: function)
         
 --------------------------------
 -- @function [parent=#Node] convertToNodeSpace 
@@ -571,11 +561,6 @@
 -- @param #float float
 
 --------------------------------
--- @function [parent=#Node] getOnExitCallback 
--- @param self
--- @return function#function ret (return value: function)
-        
---------------------------------
 -- @function [parent=#Node] getChildByTag 
 -- @param self
 -- @param #int int
@@ -671,11 +656,6 @@
 -- @function [parent=#Node] setUserObject 
 -- @param self
 -- @param #cc.Ref ref
-        
---------------------------------
--- @function [parent=#Node] getonExitTransitionDidStartCallback 
--- @param self
--- @return function#function ret (return value: function)
         
 --------------------------------
 -- overload function: removeFromParentAndCleanup(bool)
