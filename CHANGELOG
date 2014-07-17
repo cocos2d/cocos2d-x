@@ -1,4 +1,6 @@
 cocos2d-x-3.2    ??
+    [NEW]           Node: added getChildByName method for get a node that can be cast to Type T
+
     [FIX]           Animation3D: getOrCreate is deprecated and replaced with Animation3D::create
     [FIX]           Animate3D: setSpeed() accept negtive value, which means play reverse, getPlayback and setPlayBack are deprecated
     [FIX]           EditBox: can not set/get text in password mode on Mac OS X
