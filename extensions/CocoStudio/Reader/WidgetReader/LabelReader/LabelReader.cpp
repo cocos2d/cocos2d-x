@@ -3,6 +3,8 @@
 #include "LabelReader.h"
 #include "../../../GUI/UIWidgets/UILabel.h"
 
+#include <algorithm>    // std::transform
+
 NS_CC_EXT_BEGIN
 
 using namespace cocos2d::ui;
