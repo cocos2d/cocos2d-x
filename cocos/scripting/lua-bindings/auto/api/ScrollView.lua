@@ -32,7 +32,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] getDirection 
 -- @param self
--- @return ScrollView::Direction#ScrollView::Direction ret (return value: ccui.ScrollView::Direction)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToBottomLeft 
@@ -52,7 +52,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] setDirection 
 -- @param self
--- @param #ccui.ScrollView::Direction direction
+-- @param #int direction
         
 --------------------------------
 -- @function [parent=#ScrollView] scrollToTopLeft 
@@ -210,7 +210,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] getLayoutType 
 -- @param self
--- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#ScrollView] removeAllChildrenWithCleanup 
@@ -224,7 +224,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] findNextFocusedWidget 
 -- @param self
--- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #int focusdirection
 -- @param #ccui.Widget widget
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
@@ -255,7 +255,7 @@
 --------------------------------
 -- @function [parent=#ScrollView] setLayoutType 
 -- @param self
--- @param #ccui.Layout::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#ScrollView] ScrollView 

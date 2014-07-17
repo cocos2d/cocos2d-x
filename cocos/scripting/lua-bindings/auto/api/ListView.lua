@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#ListView] setGravity 
 -- @param self
--- @param #ccui.ListView::Gravity gravity
+-- @param #int gravity
         
 --------------------------------
 -- @function [parent=#ListView] pushBackCustomItem 
@@ -120,7 +120,7 @@
 --------------------------------
 -- @function [parent=#ListView] setDirection 
 -- @param self
--- @param #ccui.ScrollView::Direction direction
+-- @param #int direction
         
 --------------------------------
 -- @function [parent=#ListView] getDescription 

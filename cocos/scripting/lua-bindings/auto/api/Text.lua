@@ -33,7 +33,7 @@
 --------------------------------
 -- @function [parent=#Text] getTextVerticalAlignment 
 -- @param self
--- @return TextVAlignment#TextVAlignment ret (return value: cc.TextVAlignment)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Text] getString 
@@ -52,12 +52,12 @@
 --------------------------------
 -- @function [parent=#Text] getTextHorizontalAlignment 
 -- @param self
--- @return TextHAlignment#TextHAlignment ret (return value: cc.TextHAlignment)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Text] setTextVerticalAlignment 
 -- @param self
--- @param #cc.TextVAlignment textvalignment
+-- @param #int textvalignment
         
 --------------------------------
 -- @function [parent=#Text] enableGlow 
@@ -72,7 +72,7 @@
 --------------------------------
 -- @function [parent=#Text] setTextHorizontalAlignment 
 -- @param self
--- @param #cc.TextHAlignment texthalignment
+-- @param #int texthalignment
         
 --------------------------------
 -- @function [parent=#Text] setFontSize 
@@ -87,7 +87,7 @@
 --------------------------------
 -- @function [parent=#Text] getType 
 -- @param self
--- @return Text::Type#Text::Type ret (return value: ccui.Text::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Text] disableEffect 

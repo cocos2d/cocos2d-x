@@ -49,6 +49,6 @@
 --------------------------------
 -- @function [parent=#EventMouse] EventMouse 
 -- @param self
--- @param #cc.EventMouse::MouseEventType mouseeventtype
+-- @param #int mouseeventtype
         
 return nil

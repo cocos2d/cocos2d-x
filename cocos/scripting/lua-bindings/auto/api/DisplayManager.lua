@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#DisplayManager] getDisplayRenderNodeType 
 -- @param self
--- @return DisplayType#DisplayType ret (return value: ccs.DisplayType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#DisplayManager] removeDisplay 

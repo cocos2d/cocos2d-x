@@ -79,12 +79,12 @@
 -- @param self
 -- @param #float float
 -- @param #float float
--- @param #ResolutionPolicy resolutionpolicy
+-- @param #int resolutionpolicy
         
 --------------------------------
 -- @function [parent=#GLViewProtocol] getResolutionPolicy 
 -- @param self
--- @return ResolutionPolicy#ResolutionPolicy ret (return value: ResolutionPolicy)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#GLViewProtocol] setViewPortInPoints 

@@ -64,13 +64,13 @@
 -- @param #int int
         
 --------------------------------
--- @overload self, int, vec2_table, cc.TMXTileFlags_         
+-- @overload self, int, vec2_table, int         
 -- @overload self, int, vec2_table         
 -- @function [parent=#TMXLayer] setTileGID
 -- @param self
 -- @param #int int
 -- @param #vec2_table vec2
--- @param #cc.TMXTileFlags_ tmxtileflags_
+-- @param #int tmxtileflags_
 
 --------------------------------
 -- @function [parent=#TMXLayer] getMapTileSize 
