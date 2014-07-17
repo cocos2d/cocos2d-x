@@ -1540,27 +1540,31 @@ std::string TestLoadFromBinary::subtitle() const
 
 void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-	// remove json created
-	// remove sync resource
 	if(-1 == m_armatureIndex )
 	{
+		m_armatureIndex = -2;    // is loading
+        
+        // remove json created  and need remove their names: exprtjsone & csbs
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/hero.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/horse.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.ExportJson");
+        for( int i = 0; i < BINARYFILECOUNT; i++)
+		{
+			ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[i]);
+        }
         
 		for( int i = 0; i < BINARYFILECOUNT; i++)
 		{
 			ArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
 		}
         
-		m_armatureIndex = -2;    // is loading
 	}
 	else if(m_armatureIndex>=0 && m_armature != nullptr)
 	{
-		this->removeChild(m_armature);
+		m_armature->removeFromParent();
 		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;
 		m_armature = Armature::create(m_armatureNames[m_armatureIndex]);
 		m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));

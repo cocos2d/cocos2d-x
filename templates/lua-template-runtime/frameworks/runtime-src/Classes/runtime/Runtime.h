@@ -31,7 +31,7 @@ using namespace std;
 bool initRuntime();
 bool startRuntime();
 
-bool reloadScript(const string& modulefile);
+bool reloadScript(string modulefile);
 
 #endif // _RUNTIME__H_
 

@@ -16,6 +16,7 @@
 - [Highlights of v3.2](#user-content-highlights-of-v32)
 - [Documents](#user-content-documents)
 - [Toolchain requirement changed](#user-content-toolchain-requirement-changed)
+- [atof issue on Android](#user-content-atof-issue-on-android)
 - [Features in detail](#user-content-features-in-detail)
 	- [Sprite3D & Animation3D](#user-content-sprite3d--animation3d)
 		- [fbx-conv usage](#user-content-fbx-conv-usage)
@@ -46,7 +47,7 @@
 
 ## Compiler Requirements
 
-* Xcode 4.6 or newer for iOS or Mac
+* Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
 * ndk-r9d or newer for Android
 * Visual Studio 2012  or newer for Windows (win32)
@@ -135,11 +136,28 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Toolchain requirement changed
 
-`Node::enumerateChildren()` uses `std::regex` which will cause crash using gcc v4.8 or lower version. So
+`Node::enumerateChildren()` uses `std::regex` which will cause crash using gcc v4.8 or lower version. 
+Because `OTHER_LDFLAGS` can not work in Xcode6 beta3. So we used fat library(including 64-bit libaries) on iOS. But Xcode 5.0 or lower version has building problem by this way.
+
+So
 
 * NDK r9d or newer version is required for Android building
 * gcc 4.9 is required for linux building
+* Xcode 5.1 or newer is required on iOS
 
+# atof issue on Android
+
+We found a bug of `atof` on Android when using libc++. The bug is that, the return value of `atof` may be `-inf` when passing some valid digit string.
+
+For example
+
+```c++
+atof("90.099998474121094"); // -> return value is -inf
+```
+
+We have reported it to google guys, and they confirmed that it is a bug. In order to work around this issue, we added `utils::atof()`.
+
+The corresponding pull request for this issue is [here](https://github.com/cocos2d/cocos2d-x/pull/7440). You can refer to this pull request for demail information.
 
 # Features in detail
 

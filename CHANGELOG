@@ -10,13 +10,16 @@ cocos2d-x-3.2    ??
     [FIX]           Lua-binding: support UIVideoPlayer
     [FIX]           Node: setRotation3D not work based on anchor point
     [FIX]           Node: modify regular of enumerateChildren, now it just searchs its children
+    [FIX]           Physics integration: body shape will be wrong when using negative value to scale
     [FIX]           ScrollViewDelegate: make the scrollView delegate methods optional
     [FIX]           Setup.py: not work if using zsh
     [FIX]           SpriteBatchNode: opacity can not work
     [FIX]           Sprite3D: may crash on Android if playing animation and replace Scene after come from background
     [FIX]           UIdget: opacity is wrong when replace texture
+    [FIX]           UIRichText: will crash when using utf8 string and the length exceed specified length
     [FIX]           UIText: can not wrap words automatically
     [FIX]           UITextField: keyboard can not hide if touching space outside of keyboard
+    [FIX]           UITextField: can not wrap words automatically
     
     [FIX]           Others: don't release singleton objects correctly that are needed in the whole game, which will be treated
     as memory leak when using VLD.

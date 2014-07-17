@@ -66,6 +66,7 @@ BEGIN
     POPUP "&Control"
     BEGIN
         MENUITEM "Restart(F5)",                 ID_CONTROL_RELOAD
+        MENUITEM "Keep Window Top",             ID_CONTROL_TOP
     END
     POPUP "&Help"
     BEGIN
@@ -88,19 +89,6 @@ BEGIN
     LTEXT           "Cocos2d-x-Simulator",IDC_STATIC,29,17,169,25
 END
 
-IDD_DIALOG_VIEWCUSTOM DIALOGEX 0, 0, 179, 98
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Custom"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,47,77,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,104,77,50,14
-    LTEXT           "Width£º",IDC_STATIC,15,14,30,8
-    LTEXT           "Height£º",IDC_STATIC,15,36,36,12
-    EDITTEXT        IDC_EDIT_WIDTH,60,15,89,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_HEIGHT,62,36,87,14,ES_AUTOHSCROLL
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -116,14 +104,6 @@ BEGIN
         RIGHTMARGIN, 236
         TOPMARGIN, 7
         BOTTOMMARGIN, 87
-    END
-
-    IDD_DIALOG_VIEWCUSTOM, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 172
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 91
     END
 END
 #endif    // APSTUDIO_INVOKED
