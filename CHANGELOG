@@ -1,5 +1,6 @@
 cocos2d-x-3.2    ??
     [NEW]           Node: added getChildByName method for get a node that can be cast to Type T
+    [NEW]           FileUtils: could add seach path and resolution order path in front
 
     [FIX]           Animation3D: getOrCreate is deprecated and replaced with Animation3D::create
     [FIX]           Animate3D: setSpeed() accept negtive value, which means play reverse, getPlayback and setPlayBack are deprecated
