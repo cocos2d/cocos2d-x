@@ -277,6 +277,7 @@ cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
 {
     _filePath = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+    ActionManagerEx::getInstance()->playActionByName("startMenu_1.json", "Animation1");
 	if (_rootNode == nullptr)
 	{
 		return nullptr;
