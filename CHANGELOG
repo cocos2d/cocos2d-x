@@ -17,6 +17,7 @@ cocos2d-x-3.2    ??
     [FIX]           UIdget: opacity is wrong when replace texture
     [FIX]           UIText: can not wrap words automatically
     [FIX]           UITextField: keyboard can not hide if touching space outside of keyboard
+    [FIX]           UITextField: can not wrap words automatically
     
     [FIX]           Others: don't release singleton objects correctly that are needed in the whole game, which will be treated
     as memory leak when using VLD.
