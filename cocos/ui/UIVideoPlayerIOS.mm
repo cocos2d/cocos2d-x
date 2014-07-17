@@ -449,7 +449,7 @@ void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& cal
     _eventCallback = callback;
 }
 
-void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
+void VideoPlayer::onPlayEvent(int event)
 {
     if (event == VideoPlayer::EventType::PLAYING) {
         _isPlaying = true;
@@ -459,7 +459,7 @@ void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
     
     if (_eventCallback)
     {
-        _eventCallback(this,event);
+        _eventCallback(this, (VideoPlayer::EventType)event);
     }
 }
 
