@@ -922,6 +922,16 @@
 		B2C59AC8197782B900B452DF /* libcocosBuilder iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503D197763A20041958E /* libcocosBuilder iOS.a */; };
 		B2C59AC9197782B900B452DF /* libcocosGUI iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC5039197763A20041958E /* libcocosGUI iOS.a */; };
 		B2C59ACA197782B900B452DF /* libcocosStudio iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503B197763A20041958E /* libcocosStudio iOS.a */; };
+		B2C59AD619779CEB00B452DF /* libcocosBuilder iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503D197763A20041958E /* libcocosBuilder iOS.a */; };
+		B2C59AD719779CEB00B452DF /* libcocosGUI iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC5039197763A20041958E /* libcocosGUI iOS.a */; };
+		B2C59AD819779CEB00B452DF /* libcocosNetwork iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC5041197763A20041958E /* libcocosNetwork iOS.a */; };
+		B2C59AD919779CEB00B452DF /* libcocosSpine iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503F197763A20041958E /* libcocosSpine iOS.a */; };
+		B2C59ADA19779CEB00B452DF /* libcocosStudio iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503B197763A20041958E /* libcocosStudio iOS.a */; };
+		B2C59AE519779D5D00B452DF /* libcocosBuilder iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503D197763A20041958E /* libcocosBuilder iOS.a */; };
+		B2C59AE619779D5D00B452DF /* libcocosGUI iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC5039197763A20041958E /* libcocosGUI iOS.a */; };
+		B2C59AE719779D5D00B452DF /* libcocosNetwork iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC5041197763A20041958E /* libcocosNetwork iOS.a */; };
+		B2C59AE819779D5D00B452DF /* libcocosSpine iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503F197763A20041958E /* libcocosSpine iOS.a */; };
+		B2C59AE919779D5D00B452DF /* libcocosStudio iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503B197763A20041958E /* libcocosStudio iOS.a */; };
 		B2CC5045197766F70041958E /* libcocosNetwork iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC5041197763A20041958E /* libcocosNetwork iOS.a */; };
 		B2CC507B19776D8B0041958E /* libcocosSpine iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503F197763A20041958E /* libcocosSpine iOS.a */; };
 		B2DB479A197668D500411E16 /* libcocosGUI Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DB4799197668CA00411E16 /* libcocosGUI Mac.a */; };
@@ -1450,6 +1460,76 @@
 			proxyType = 1;
 			remoteGlobalIDString = B24EEA6F19775ECE004493CC;
 			remoteInfo = "cocosBuilder iOS";
+		};
+		B2C59ACC19779CDF00B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA2C19775E92004493CC;
+			remoteInfo = "cocosGUI iOS";
+		};
+		B2C59ACE19779CDF00B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA6719775EBB004493CC;
+			remoteInfo = "cocosStudio iOS";
+		};
+		B2C59AD019779CDF00B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA6F19775ECE004493CC;
+			remoteInfo = "cocosBuilder iOS";
+		};
+		B2C59AD219779CDF00B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA7719775EE1004493CC;
+			remoteInfo = "cocosSpine iOS";
+		};
+		B2C59AD419779CDF00B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA7F19775EF3004493CC;
+			remoteInfo = "cocosNetwork iOS";
+		};
+		B2C59ADB19779D5400B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA2C19775E92004493CC;
+			remoteInfo = "cocosGUI iOS";
+		};
+		B2C59ADD19779D5400B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA6719775EBB004493CC;
+			remoteInfo = "cocosStudio iOS";
+		};
+		B2C59ADF19779D5400B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA6F19775ECE004493CC;
+			remoteInfo = "cocosBuilder iOS";
+		};
+		B2C59AE119779D5400B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA7719775EE1004493CC;
+			remoteInfo = "cocosSpine iOS";
+		};
+		B2C59AE319779D5400B452DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B24EEA7F19775EF3004493CC;
+			remoteInfo = "cocosNetwork iOS";
 		};
 		B2CC5038197763A20041958E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3507,6 +3587,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2C59AD619779CEB00B452DF /* libcocosBuilder iOS.a in Frameworks */,
+				B2C59AD719779CEB00B452DF /* libcocosGUI iOS.a in Frameworks */,
+				B2C59AD819779CEB00B452DF /* libcocosNetwork iOS.a in Frameworks */,
+				B2C59AD919779CEB00B452DF /* libcocosSpine iOS.a in Frameworks */,
+				B2C59ADA19779CEB00B452DF /* libcocosStudio iOS.a in Frameworks */,
 				15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */,
 				1A0EE42C18CDF799004CD58F /* libz.dylib in Frameworks */,
 				1A0EE42D18CDF799004CD58F /* CoreMotion.framework in Frameworks */,
@@ -3557,6 +3642,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2C59AE519779D5D00B452DF /* libcocosBuilder iOS.a in Frameworks */,
+				B2C59AE619779D5D00B452DF /* libcocosGUI iOS.a in Frameworks */,
+				B2C59AE719779D5D00B452DF /* libcocosNetwork iOS.a in Frameworks */,
+				B2C59AE819779D5D00B452DF /* libcocosSpine iOS.a in Frameworks */,
+				B2C59AE919779D5D00B452DF /* libcocosStudio iOS.a in Frameworks */,
 				15AECE0B195C0F8A00907DB0 /* MediaPlayer.framework in Frameworks */,
 				1ABCA3B018CDA06D0087CE3A /* libz.dylib in Frameworks */,
 				1ABCA3AA18CD9F1A0087CE3A /* CoreMotion.framework in Frameworks */,
@@ -7723,6 +7813,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				B2C59ACD19779CDF00B452DF /* PBXTargetDependency */,
+				B2C59ACF19779CDF00B452DF /* PBXTargetDependency */,
+				B2C59AD119779CDF00B452DF /* PBXTargetDependency */,
+				B2C59AD319779CDF00B452DF /* PBXTargetDependency */,
+				B2C59AD519779CDF00B452DF /* PBXTargetDependency */,
 				1A0EE41A18CDF799004CD58F /* PBXTargetDependency */,
 				1A0EE41C18CDF799004CD58F /* PBXTargetDependency */,
 				1A0EE41E18CDF799004CD58F /* PBXTargetDependency */,
@@ -7772,6 +7867,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				B2C59ADC19779D5400B452DF /* PBXTargetDependency */,
+				B2C59ADE19779D5400B452DF /* PBXTargetDependency */,
+				B2C59AE019779D5400B452DF /* PBXTargetDependency */,
+				B2C59AE219779D5400B452DF /* PBXTargetDependency */,
+				B2C59AE419779D5400B452DF /* PBXTargetDependency */,
 				1ABCA2F818CD93850087CE3A /* PBXTargetDependency */,
 				1ABCA2FA18CD93850087CE3A /* PBXTargetDependency */,
 				1ABCA2FC18CD93850087CE3A /* PBXTargetDependency */,
@@ -9242,6 +9342,56 @@
 			isa = PBXTargetDependency;
 			name = "cocosBuilder iOS";
 			targetProxy = B2C59AC1197782AC00B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59ACD19779CDF00B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosGUI iOS";
+			targetProxy = B2C59ACC19779CDF00B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59ACF19779CDF00B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosStudio iOS";
+			targetProxy = B2C59ACE19779CDF00B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59AD119779CDF00B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosBuilder iOS";
+			targetProxy = B2C59AD019779CDF00B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59AD319779CDF00B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosSpine iOS";
+			targetProxy = B2C59AD219779CDF00B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59AD519779CDF00B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosNetwork iOS";
+			targetProxy = B2C59AD419779CDF00B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59ADC19779D5400B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosGUI iOS";
+			targetProxy = B2C59ADB19779D5400B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59ADE19779D5400B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosStudio iOS";
+			targetProxy = B2C59ADD19779D5400B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59AE019779D5400B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosBuilder iOS";
+			targetProxy = B2C59ADF19779D5400B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59AE219779D5400B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosSpine iOS";
+			targetProxy = B2C59AE119779D5400B452DF /* PBXContainerItemProxy */;
+		};
+		B2C59AE419779D5400B452DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocosNetwork iOS";
+			targetProxy = B2C59AE319779D5400B452DF /* PBXContainerItemProxy */;
 		};
 		B2CC5044197766EB0041958E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
