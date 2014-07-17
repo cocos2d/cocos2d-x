@@ -144,6 +144,19 @@ So
 * gcc 4.9 is required for linux building
 * Xcode 5.1 or newer is required on iOS
 
+# atof issue on Android
+
+We found a bug of `atof` on Android when using libc++. The bug is that, the return value of `atof` may be `-inf` when passing some valid digit string.
+
+For example
+
+```c++
+atof("90.099998474121094"); // -> return value is -inf
+```
+
+We have reported it to google guys, and they confirmed that it is a bug. In order to work around this issue, we added `utils::atof()`.
+
+The corresponding pull request for this issue is [here](https://github.com/cocos2d/cocos2d-x/pull/7440). You can refer to this pull request for demail information.
 
 # Features in detail
 
