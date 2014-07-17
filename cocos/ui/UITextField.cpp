@@ -799,24 +799,9 @@ void TextField::adaptRenderers()
 
 void TextField::textfieldRendererScaleChangedWithSize()
 {
-    if (_ignoreSize)
-    {
-        _textFieldRenderer->setDimensions(0,0);
-        _textFieldRenderer->setScale(1.0f);
-    }
-    else
+    if (!_ignoreSize)
     {
         _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
-        Size textureSize = getContentSize();
-        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
-        {
-            _textFieldRenderer->setScale(1.0f);
-            return;
-        }
-        float scaleX = _contentSize.width / textureSize.width;
-        float scaleY = _contentSize.height / textureSize.height;
-        _textFieldRenderer->setScaleX(scaleX);
-        _textFieldRenderer->setScaleY(scaleY);
     }
     _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
@@ -871,7 +856,7 @@ void TextField::copySpecialProperties(Widget *widget)
     
 void TextField::setTextAreaSize(const Size &size)
 {
-    _textFieldRenderer->setDimensions(size.width,size.height);
+    this->setContentSize(size);
 }
 
 void TextField::setTextHorizontalAlignment(TextHAlignment alignment)
