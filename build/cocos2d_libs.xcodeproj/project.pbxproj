@@ -613,15 +613,6 @@
 		1AAF5354180E3060000584C8 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5351180E3060000584C8 /* AssetsManager.cpp */; };
 		1AAF5355180E3060000584C8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
 		1AAF5356180E3060000584C8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
-		1AAF536B180E3374000584C8 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
-		1AAF536D180E3374000584C8 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
-		1AAF536F180E3374000584C8 /* HttpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5364180E3374000584C8 /* HttpRequest.h */; };
-		1AAF5371180E3374000584C8 /* HttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5365180E3374000584C8 /* HttpResponse.h */; };
-		1AAF5373180E3374000584C8 /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5366180E3374000584C8 /* SocketIO.cpp */; };
-		1AAF5375180E3374000584C8 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5367180E3374000584C8 /* SocketIO.h */; };
-		1AAF5377180E3374000584C8 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
-		1AAF5379180E3374000584C8 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5369180E3374000584C8 /* WebSocket.h */; };
-		1AAF5388180E35AC000584C8 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5387180E35AC000584C8 /* libwebsockets.a */; };
 		1AAF541D180E3B6A000584C8 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF541C180E3B6A000584C8 /* libcurl.a */; };
 		1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF584C180E40B9000584C8 /* LocalStorage.cpp */; };
 		1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF584C180E40B9000584C8 /* LocalStorage.cpp */; };
@@ -1534,6 +1525,15 @@
 		B29594CF1926D61F003EEF37 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */; };
 		B29594D01926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
 		B29594D11926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
+		B2CC5025197763350041958E /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
+		B2CC50261977633B0041958E /* HttpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5364180E3374000584C8 /* HttpRequest.h */; };
+		B2CC50271977633D0041958E /* HttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5365180E3374000584C8 /* HttpResponse.h */; };
+		B2CC50291977634A0041958E /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5362180E3374000584C8 /* HttpClient.cpp */; };
+		B2CC502A1977635D0041958E /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5369180E3374000584C8 /* WebSocket.h */; };
+		B2CC502B1977635F0041958E /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5367180E3374000584C8 /* SocketIO.h */; };
+		B2CC502C197763620041958E /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
+		B2CC502D197763640041958E /* SocketIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5366180E3374000584C8 /* SocketIO.cpp */; };
+		B2CC502E1977638A0041958E /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5387180E35AC000584C8 /* libwebsockets.a */; };
 		B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
 		B2D3D3BA1948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
 		B2DB4763197661CD00411E16 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */; };
@@ -2879,6 +2879,11 @@
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
 		B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
 		B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXTiledMap.h; sourceTree = "<group>"; };
+		B24EEA6619775E92004493CC /* libcocosGUI iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosGUI iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA6E19775EBB004493CC /* libcocosStudio iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosStudio iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosSpine iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosNetwork iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B29594AF1926D5D9003EEF37 /* ccShader_3D_Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Color.frag; sourceTree = "<group>"; };
 		B29594B01926D5D9003EEF37 /* ccShader_3D_ColorTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorTex.frag; sourceTree = "<group>"; };
 		B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
@@ -2979,7 +2984,6 @@
 				1A5703A4180BD2350088DEC7 /* libtiff.a in Frameworks */,
 				1A5703BB180BD2800088DEC7 /* libwebp.a in Frameworks */,
 				1A57052E180BD3280088DEC7 /* libfreetype.a in Frameworks */,
-				1AAF5388180E35AC000584C8 /* libwebsockets.a in Frameworks */,
 				1AAF541D180E3B6A000584C8 /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3016,6 +3020,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA4619775E92004493CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA6919775EBB004493CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA7119775ECE004493CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA7919775EE1004493CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA8119775EF3004493CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2CC502E1977638A0041958E /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3116,6 +3156,11 @@
 				B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */,
 				B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */,
 				B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */,
+				B24EEA6619775E92004493CC /* libcocosGUI iOS.a */,
+				B24EEA6E19775EBB004493CC /* libcocosStudio iOS.a */,
+				B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */,
+				B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */,
+				B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5692,11 +5737,6 @@
 				1AD71EE4180E26E600808F54 /* SlotData.h in Headers */,
 				1AD71EE8180E26E600808F54 /* spine-cocos2dx.h in Headers */,
 				1AD71EEA180E26E600808F54 /* spine.h in Headers */,
-				1AAF536D180E3374000584C8 /* HttpClient.h in Headers */,
-				1AAF536F180E3374000584C8 /* HttpRequest.h in Headers */,
-				1AAF5371180E3374000584C8 /* HttpResponse.h in Headers */,
-				1AAF5375180E3374000584C8 /* SocketIO.h in Headers */,
-				1AAF5379180E3374000584C8 /* WebSocket.h in Headers */,
 				50ABBE921925AB6F00A911A9 /* CCPlatformMacros.h in Headers */,
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
@@ -5941,6 +5981,46 @@
 				B2DB47721976658000411E16 /* UIVBox.h in Headers */,
 				B2DB47741976659800411E16 /* CocosGUI.h in Headers */,
 				B2DB4776197665AA00411E16 /* UIDeprecated.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA4719775E92004493CC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA6A19775EBB004493CC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA7219775ECE004493CC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA7A19775EE1004493CC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA8219775EF3004493CC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2CC502A1977635D0041958E /* WebSocket.h in Headers */,
+				B2CC502B1977635F0041958E /* SocketIO.h in Headers */,
+				B2CC5025197763350041958E /* HttpClient.h in Headers */,
+				B2CC50261977633B0041958E /* HttpRequest.h in Headers */,
+				B2CC50271977633D0041958E /* HttpResponse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6280,6 +6360,91 @@
 			productReference = B245F13A19766132001920FD /* libcocosGUI Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		B24EEA2C19775E92004493CC /* cocosGUI iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B24EEA6319775E92004493CC /* Build configuration list for PBXNativeTarget "cocosGUI iOS" */;
+			buildPhases = (
+				B24EEA2D19775E92004493CC /* Sources */,
+				B24EEA4619775E92004493CC /* Frameworks */,
+				B24EEA4719775E92004493CC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocosGUI iOS";
+			productName = cocos2dx;
+			productReference = B24EEA6619775E92004493CC /* libcocosGUI iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B24EEA6719775EBB004493CC /* cocosStudio iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B24EEA6B19775EBB004493CC /* Build configuration list for PBXNativeTarget "cocosStudio iOS" */;
+			buildPhases = (
+				B24EEA6819775EBB004493CC /* Sources */,
+				B24EEA6919775EBB004493CC /* Frameworks */,
+				B24EEA6A19775EBB004493CC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocosStudio iOS";
+			productName = cocos2dx;
+			productReference = B24EEA6E19775EBB004493CC /* libcocosStudio iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B24EEA6F19775ECE004493CC /* cocosBuilder iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B24EEA7319775ECE004493CC /* Build configuration list for PBXNativeTarget "cocosBuilder iOS" */;
+			buildPhases = (
+				B24EEA7019775ECE004493CC /* Sources */,
+				B24EEA7119775ECE004493CC /* Frameworks */,
+				B24EEA7219775ECE004493CC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocosBuilder iOS";
+			productName = cocos2dx;
+			productReference = B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B24EEA7719775EE1004493CC /* cocosSpine iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B24EEA7B19775EE1004493CC /* Build configuration list for PBXNativeTarget "cocosSpine iOS" */;
+			buildPhases = (
+				B24EEA7819775EE1004493CC /* Sources */,
+				B24EEA7919775EE1004493CC /* Frameworks */,
+				B24EEA7A19775EE1004493CC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocosSpine iOS";
+			productName = cocos2dx;
+			productReference = B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B24EEA7F19775EF3004493CC /* cocosNetwork iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B24EEA8319775EF3004493CC /* Build configuration list for PBXNativeTarget "cocosNetwork iOS" */;
+			buildPhases = (
+				B24EEA8019775EF3004493CC /* Sources */,
+				B24EEA8119775EF3004493CC /* Frameworks */,
+				B24EEA8219775EF3004493CC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "cocosNetwork iOS";
+			productName = cocos2dx;
+			productReference = B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		B2DB479B197669A100411E16 /* cocosBuilder Mac */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2DB47CF197669A100411E16 /* Build configuration list for PBXNativeTarget "cocosBuilder Mac" */;
@@ -6386,6 +6551,11 @@
 				A07A4EFD178387670073F6A7 /* chipmunk iOS */,
 				A07A4F3C1783876B0073F6A7 /* box2d iOS */,
 				A07A4F9F178387730073F6A7 /* CocosDenshion iOS */,
+				B24EEA2C19775E92004493CC /* cocosGUI iOS */,
+				B24EEA6719775EBB004493CC /* cocosStudio iOS */,
+				B24EEA6F19775ECE004493CC /* cocosBuilder iOS */,
+				B24EEA7719775EE1004493CC /* cocosSpine iOS */,
+				B24EEA7F19775EF3004493CC /* cocosNetwork iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -6954,9 +7124,6 @@
 				503DD8E71926736A00CD74DD /* CCEAGLView.mm in Sources */,
 				1AD71EE6180E26E600808F54 /* spine-cocos2dx.cpp in Sources */,
 				2905FA8518CF08D100240AA3 /* UITextBMFont.cpp in Sources */,
-				1AAF536B180E3374000584C8 /* HttpClient.cpp in Sources */,
-				1AAF5373180E3374000584C8 /* SocketIO.cpp in Sources */,
-				1AAF5377180E3374000584C8 /* WebSocket.cpp in Sources */,
 				50ABBDA41925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */,
 				1AAF5854180E40B9000584C8 /* LocalStorageAndroid.cpp in Sources */,
@@ -7199,6 +7366,44 @@
 				B2DB477B197665D900411E16 /* UIPageView.cpp in Sources */,
 				B2DB4777197665B400411E16 /* UIHelper.cpp in Sources */,
 				B2DB477D197665E500411E16 /* UIScrollView.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA2D19775E92004493CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA6819775EBB004493CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA7019775ECE004493CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA7819775EE1004493CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24EEA8019775EF3004493CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2CC50291977634A0041958E /* HttpClient.cpp in Sources */,
+				B2CC502C197763620041958E /* WebSocket.cpp in Sources */,
+				B2CC502D197763640041958E /* SocketIO.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7679,12 +7884,11 @@
 					"\"$(SRCROOT)/../external/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
 			};
 			name = Debug;
 		};
@@ -7710,12 +7914,11 @@
 					"\"$(SRCROOT)/../external/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios";
 			};
 			name = Release;
 		};
@@ -7909,6 +8112,217 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "cocosGUI Mac";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac";
+			};
+			name = Release;
+		};
+		B24EEA6419775E92004493CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosGUI iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Debug;
+		};
+		B24EEA6519775E92004493CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosGUI iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Release;
+		};
+		B24EEA6C19775EBB004493CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosStudio iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Debug;
+		};
+		B24EEA6D19775EBB004493CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosStudio iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Release;
+		};
+		B24EEA7419775ECE004493CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosBuilder iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Debug;
+		};
+		B24EEA7519775ECE004493CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosBuilder iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Release;
+		};
+		B24EEA7C19775EE1004493CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosSpine iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Debug;
+		};
+		B24EEA7D19775EE1004493CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "cocosSpine iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios";
+			};
+			name = Release;
+		};
+		B24EEA8419775EF3004493CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
+				);
+				PRODUCT_NAME = "cocosNetwork iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/websockets/include/ios";
+			};
+			name = Debug;
+		};
+		B24EEA8519775EF3004493CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
+				);
+				PRODUCT_NAME = "cocosNetwork iOS";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/websockets/include/ios";
 			};
 			name = Release;
 		};
@@ -8183,6 +8597,51 @@
 			buildConfigurations = (
 				B245F13819766132001920FD /* Debug */,
 				B245F13919766132001920FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B24EEA6319775E92004493CC /* Build configuration list for PBXNativeTarget "cocosGUI iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24EEA6419775E92004493CC /* Debug */,
+				B24EEA6519775E92004493CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B24EEA6B19775EBB004493CC /* Build configuration list for PBXNativeTarget "cocosStudio iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24EEA6C19775EBB004493CC /* Debug */,
+				B24EEA6D19775EBB004493CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B24EEA7319775ECE004493CC /* Build configuration list for PBXNativeTarget "cocosBuilder iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24EEA7419775ECE004493CC /* Debug */,
+				B24EEA7519775ECE004493CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B24EEA7B19775EE1004493CC /* Build configuration list for PBXNativeTarget "cocosSpine iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24EEA7C19775EE1004493CC /* Debug */,
+				B24EEA7D19775EE1004493CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B24EEA8319775EF3004493CC /* Build configuration list for PBXNativeTarget "cocosNetwork iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B24EEA8419775EF3004493CC /* Debug */,
+				B24EEA8519775EF3004493CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
