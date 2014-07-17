@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := \
 ../../Classes/protobuf-lite/google/protobuf/generated_message_util.cc \
 ../../Classes/protobuf-lite/google/protobuf/message_lite.cc \
 ../../Classes/protobuf-lite/google/protobuf/stubs/once.cc \
+../../Classes/protobuf-lite/google/protobuf/stubs/atomicops_internals_x86_gcc.cc \
 ../../Classes/protobuf-lite/google/protobuf/repeated_field.cc \
 ../../Classes/protobuf-lite/google/protobuf/wire_format_lite.cc \
 ../../Classes/protobuf-lite/google/protobuf/io/zero_copy_stream.cc \

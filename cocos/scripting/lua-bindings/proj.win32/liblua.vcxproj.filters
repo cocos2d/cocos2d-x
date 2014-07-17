@@ -165,6 +165,12 @@
     <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp">
       <Filter>xxtea</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\lua_cocos2dx_experimental_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
@@ -313,6 +319,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
       <Filter>xxtea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\lua_cocos2dx_experimental_manual.hpp">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp">
+      <Filter>auto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

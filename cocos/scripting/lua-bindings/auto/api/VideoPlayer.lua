@@ -2,7 +2,7 @@
 --------------------------------
 -- @module VideoPlayer
 -- @extend Widget
--- @parent_module ccexprimental
+-- @parent_module ccexp
 
 --------------------------------
 -- @function [parent=#VideoPlayer] getFileName 

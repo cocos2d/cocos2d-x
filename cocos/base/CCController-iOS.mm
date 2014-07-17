@@ -196,7 +196,7 @@ void Controller::registerListeners()
         };
         
         _impl->_gcController.extendedGamepad.leftThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
-            onAxisEvent(Key::JOYSTICK_LEFT_Y, value, axis.isAnalog);
+            onAxisEvent(Key::JOYSTICK_LEFT_Y, -value, axis.isAnalog);
         };
         
         _impl->_gcController.extendedGamepad.rightThumbstick.xAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
@@ -204,7 +204,7 @@ void Controller::registerListeners()
         };
         
         _impl->_gcController.extendedGamepad.rightThumbstick.yAxis.valueChangedHandler = ^(GCControllerAxisInput *axis, float value){
-            onAxisEvent(Key::JOYSTICK_RIGHT_Y, value, axis.isAnalog);
+            onAxisEvent(Key::JOYSTICK_RIGHT_Y, -value, axis.isAnalog);
         };
         
         _impl->_gcController.extendedGamepad.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element){
