@@ -1559,7 +1559,8 @@ void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Even
         
 		for( int i = 0; i < BINARYFILECOUNT; i++)
 		{
-			ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.csb");		}
+			ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.csb");
+        }
         
 		for( int i = 0; i < BINARYFILECOUNT; i++)
 		{
