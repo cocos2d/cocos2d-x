@@ -319,7 +319,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
         size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
         std::string leftWords = utf8_substr(curText,0,leftLength);
-        std::string cutWords = utf8_substr(curText, leftLength, curText.length()-1);
+        std::string cutWords = utf8_substr(curText, leftLength, curText.length() - leftLength);
         if (leftLength > 0)
         {
             Label* leftRenderer = nullptr;
