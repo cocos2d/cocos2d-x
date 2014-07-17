@@ -15520,6 +15520,19 @@ int lua_cocos2dx_FileUtils_addSearchResolutionsOrder(lua_State* tolua_S)
         cobj->addSearchResolutionsOrder(arg0);
         return 0;
     }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        bool arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->addSearchResolutionsOrder(arg0, arg1);
+        return 0;
+    }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSearchResolutionsOrder",argc, 1);
     return 0;
 
@@ -15564,6 +15577,19 @@ int lua_cocos2dx_FileUtils_addSearchPath(lua_State* tolua_S)
         if(!ok)
             return 0;
         cobj->addSearchPath(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        bool arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1);
+        if(!ok)
+            return 0;
+        cobj->addSearchPath(arg0, arg1);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSearchPath",argc, 1);
