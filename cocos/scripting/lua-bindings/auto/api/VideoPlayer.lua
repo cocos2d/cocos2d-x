@@ -58,7 +58,7 @@
 --------------------------------
 -- @function [parent=#VideoPlayer] onPlayEvent 
 -- @param self
--- @param #cc.experimental::ui::VideoPlayer::EventType eventtype
+-- @param #int int
         
 --------------------------------
 -- @function [parent=#VideoPlayer] isFullScreenEnabled 
