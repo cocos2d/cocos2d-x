@@ -34,7 +34,7 @@ namespace cocostudio {
 class ComAttribute : public cocos2d::Component
 {
     DECLARE_CLASS_COMPONENT_INFO
-protected:
+public:
     /**
      * @js ctor
      */
