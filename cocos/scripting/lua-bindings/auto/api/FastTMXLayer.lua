@@ -46,10 +46,8 @@
 -- @param #vec2_table vec2
         
 --------------------------------
--- overload function: getProperties()
---          
--- overload function: getProperties()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#FastTMXLayer] getProperties
 -- @param self
 -- @return map_table#map_table ret (retunr value: map_table)
@@ -66,10 +64,8 @@
 -- @param #int int
         
 --------------------------------
--- overload function: setTileGID(int, vec2_table, cc.TMXTileFlags_)
---          
--- overload function: setTileGID(int, vec2_table)
---          
+-- @overload self, int, vec2_table, cc.TMXTileFlags_         
+-- @overload self, int, vec2_table         
 -- @function [parent=#FastTMXLayer] setTileGID
 -- @param self
 -- @param #int int

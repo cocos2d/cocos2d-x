@@ -62,10 +62,8 @@
 -- @param self
         
 --------------------------------
--- overload function: setTileGID(unsigned int, vec2_table, cc.TMXTileFlags_)
---          
--- overload function: setTileGID(unsigned int, vec2_table)
---          
+-- @overload self, unsigned int, vec2_table, cc.TMXTileFlags_         
+-- @overload self, unsigned int, vec2_table         
 -- @function [parent=#TMXLayer] setTileGID
 -- @param self
 -- @param #unsigned int int
@@ -104,10 +102,8 @@
 -- @return TMXTilesetInfo#TMXTilesetInfo ret (return value: cc.TMXTilesetInfo)
         
 --------------------------------
--- overload function: getProperties()
---          
--- overload function: getProperties()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXLayer] getProperties
 -- @param self
 -- @return map_table#map_table ret (retunr value: map_table)

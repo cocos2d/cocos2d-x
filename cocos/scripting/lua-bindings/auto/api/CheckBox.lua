@@ -60,10 +60,8 @@
 -- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- overload function: create(string, string, string, string, string, ccui.Widget::TextureResType)
---          
--- overload function: create()
---          
+-- @overload self, string, string, string, string, string, ccui.Widget::TextureResType         
+-- @overload self         
 -- @function [parent=#CheckBox] create
 -- @param self
 -- @param #string str

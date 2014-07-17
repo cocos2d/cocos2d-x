@@ -65,10 +65,8 @@
 -- @param self
         
 --------------------------------
--- overload function: saveToFile(string, cc.Image::Format, bool)
---          
--- overload function: saveToFile(string, bool)
---          
+-- @overload self, string, cc.Image::Format, bool         
+-- @overload self, string, bool         
 -- @function [parent=#RenderTexture] saveToFile
 -- @param self
 -- @param #string str
@@ -91,12 +89,9 @@
 -- @param self
         
 --------------------------------
--- overload function: beginWithClear(float, float, float, float, float)
---          
--- overload function: beginWithClear(float, float, float, float)
---          
--- overload function: beginWithClear(float, float, float, float, float, int)
---          
+-- @overload self, float, float, float, float, float         
+-- @overload self, float, float, float, float         
+-- @overload self, float, float, float, float, float, int         
 -- @function [parent=#RenderTexture] beginWithClear
 -- @param self
 -- @param #float float
@@ -140,10 +135,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: initWithWidthAndHeight(int, int, cc.Texture2D::PixelFormat, unsigned int)
---          
--- overload function: initWithWidthAndHeight(int, int, cc.Texture2D::PixelFormat)
---          
+-- @overload self, int, int, cc.Texture2D::PixelFormat, unsigned int         
+-- @overload self, int, int, cc.Texture2D::PixelFormat         
 -- @function [parent=#RenderTexture] initWithWidthAndHeight
 -- @param self
 -- @param #int int
@@ -153,12 +146,9 @@
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
--- overload function: create(int, int, cc.Texture2D::PixelFormat)
---          
--- overload function: create(int, int, cc.Texture2D::PixelFormat, unsigned int)
---          
--- overload function: create(int, int)
---          
+-- @overload self, int, int, cc.Texture2D::PixelFormat         
+-- @overload self, int, int, cc.Texture2D::PixelFormat, unsigned int         
+-- @overload self, int, int         
 -- @function [parent=#RenderTexture] create
 -- @param self
 -- @param #int int

@@ -181,14 +181,10 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
--- overload function: addChild(cc.Node, int, string)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
 -- @function [parent=#ScrollView] addChild
 -- @param self
 -- @param #cc.Node node
@@ -239,10 +235,8 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: getChildren()
---          
--- overload function: getChildren()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#ScrollView] getChildren
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)

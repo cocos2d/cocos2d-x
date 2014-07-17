@@ -27,10 +27,8 @@
 -- @return TMXObjectGroup#TMXObjectGroup ret (return value: cc.TMXObjectGroup)
         
 --------------------------------
--- overload function: getObjectGroups()
---          
--- overload function: getObjectGroups()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#FastTMXTiledMap] getObjectGroups
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)

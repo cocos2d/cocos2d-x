@@ -179,10 +179,8 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- overload function: create(string, string, int)
---          
--- overload function: create()
---          
+-- @overload self, string, string, int         
+-- @overload self         
 -- @function [parent=#TextField] create
 -- @param self
 -- @param #string str

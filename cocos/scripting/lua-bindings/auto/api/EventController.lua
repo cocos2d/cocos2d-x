@@ -35,10 +35,8 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- overload function: EventController(cc.EventController::ControllerEventType, cc.Controller, bool)
---          
--- overload function: EventController(cc.EventController::ControllerEventType, cc.Controller, int)
---          
+-- @overload self, cc.EventController::ControllerEventType, cc.Controller, bool         
+-- @overload self, cc.EventController::ControllerEventType, cc.Controller, int         
 -- @function [parent=#EventController] EventController
 -- @param self
 -- @param #cc.EventController::ControllerEventType controllereventtype

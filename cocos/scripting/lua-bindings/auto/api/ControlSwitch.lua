@@ -10,10 +10,8 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: setOn(bool)
---          
--- overload function: setOn(bool, bool)
---          
+-- @overload self, bool         
+-- @overload self, bool, bool         
 -- @function [parent=#ControlSwitch] setOn
 -- @param self
 -- @param #bool bool
@@ -25,10 +23,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: initWithMaskSprite(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.Label, cc.Label)
---          
--- overload function: initWithMaskSprite(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite)
---          
+-- @overload self, cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.Label, cc.Label         
+-- @overload self, cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite         
 -- @function [parent=#ControlSwitch] initWithMaskSprite
 -- @param self
 -- @param #cc.Sprite sprite
@@ -51,10 +47,8 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite)
---          
--- overload function: create(cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.Label, cc.Label)
---          
+-- @overload self, cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite         
+-- @overload self, cc.Sprite, cc.Sprite, cc.Sprite, cc.Sprite, cc.Label, cc.Label         
 -- @function [parent=#ControlSwitch] create
 -- @param self
 -- @param #cc.Sprite sprite
