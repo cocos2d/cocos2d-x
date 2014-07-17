@@ -1544,8 +1544,7 @@ void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Even
 	{
 		m_armatureIndex = -2;    // is loading
         
-        // remove json created
-        // remove sync resource
+        // remove json created  and need remove their names: exprtjsone & csbs
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/hero.ExportJson");
