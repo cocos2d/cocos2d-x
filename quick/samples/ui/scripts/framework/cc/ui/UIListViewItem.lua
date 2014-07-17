@@ -22,7 +22,7 @@ function UIListViewItem:addContent(content)
 	if not content then
 		return
 	end
-	
+
 	self:addChild(content, UIListViewItem.CONTENT_Z_ORDER, UIListViewItem.CONTENT_TAG)
 end
 

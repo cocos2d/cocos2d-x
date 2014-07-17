@@ -33,5 +33,6 @@ ui.UISlider              = import(".UISlider")
 ui.UIBoxLayout           = import(".UIBoxLayout")
 ui.UIScrollView          = import(".UIScrollView")
 ui.UIListView            = import(".UIListView")
+ui.UIPageView            = import(".UIPageView")
 
 return ui

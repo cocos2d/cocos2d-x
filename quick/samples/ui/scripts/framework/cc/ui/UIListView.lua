@@ -43,6 +43,7 @@ function UIListView:addBgColorIf(bgColor)
 	end
 
 	display.newColorLayer(bgColor):addTo(self, UIListView.BG_ZORDER)
+		:setTouchSwallowEnabled(false)
 end
 
 function UIListView:addBgIf(params)
@@ -55,6 +56,7 @@ function UIListView:addBgIf(params)
 		:pos(params.viewRect.x + params.viewRect.width/2,
 			params.viewRect.y + params.viewRect.height/2)
 		:addTo(self, UIListView.BG_ZORDER)
+		:setTouchSwallowEnabled(false)
 end
 
 function UIListView:onTouch(listener)
@@ -84,13 +86,18 @@ function UIListView:itemSizeChangeListener(listItem, newSize, oldSize)
 		itemH = 0
 	end
 
+	print("UIListView - sizeChange: w,h " .. itemW .. "," .. itemH)
 	local content = listItem:getContent()
 	transition.moveBy(content,
 				{x = itemW/2, y = itemH/2, time = 0.2})
 
 	self.size.width = self.size.width + itemW
 	self.size.height = self.size.height + itemH
-	self:moveItems(1, pos - 1, itemW, itemH, true)
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		self:moveItems(1, pos - 1, itemW, itemH, true)
+	else
+		self:moveItems(pos + 1, table.nums(self.items_), itemW, itemH, true)
+	end
 end
 
 function UIListView:scrollListener(event)
@@ -161,7 +168,11 @@ function UIListView:removeItem(listItem, bAni)
 
 	self.size.width = self.size.width - itemW
 	self.size.height = self.size.height - itemH
-	self:moveItems(1, pos - 1, -itemW, -itemH, bAni)
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		self:moveItems(1, pos - 1, -itemW, -itemH, bAni)
+	else
+		self:moveItems(pos, table.nums(self.items_), -itemW, -itemH, bAni)
+	end
 
 	return self
 end
@@ -244,9 +255,10 @@ function UIListView:layout_()
 			itemW = itemW or 0
 			itemH = itemH or 0
 
-			v:setAnchorPoint(0.5, 0.5)
-			v:setPosition(self.viewRect_.x + tempWidth + itemW/2,
-				self.viewRect_.y + tempHeight/2)
+			content = v:getContent()
+			content:setAnchorPoint(0.5, 0.5)
+			content:setPosition(itemW/2, itemH/2)
+			v:setPosition(self.viewRect_.x + tempWidth, self.viewRect_.y)
 			tempWidth = tempWidth + itemW
 		end
 	end
@@ -306,6 +318,7 @@ function UIListView:moveItems(beginIdx, endIdx, x, y, bAni)
 
 	local posX, posY = 0, 0
 
+	print("UIListView - moveItems x,y " .. x .. "," .. y)
 	local moveByParams = {x = x, y = y, time = 0.2}
 	for i=beginIdx, endIdx do
 		if bAni then

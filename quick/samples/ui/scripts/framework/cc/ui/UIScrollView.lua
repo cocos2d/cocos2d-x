@@ -69,6 +69,7 @@ function UIScrollView:addScrollNode(node)
 		self.viewRect_ = self.scrollNode:getCascadeBoundingBox()
 		self:setViewRect(self.viewRect_)
 	end
+	node:setTouchSwallowEnabled(true)
 	node:setTouchEnabled(true)
 	node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
         return self:onTouch_(event)
@@ -346,6 +347,7 @@ function UIScrollView:enableScrollBar()
 
 	local bound = self.scrollNode:getCascadeBoundingBox()
 	if self.sbV then
+		self.sbV:setVisible(false)
 		transition.stopTarget(self.sbV)
 		self.sbV:setOpacity(128)
 		local size = self.sbV:getContentSize()
@@ -363,6 +365,7 @@ function UIScrollView:enableScrollBar()
 		end
 	end
 	if self.sbH then
+		self.sbH:setVisible(false)
 		transition.stopTarget(self.sbH)
 		self.sbH:setOpacity(128)
 		local size = self.sbH:getContentSize()
@@ -426,6 +429,7 @@ function UIScrollView:drawScrollBar()
 			+ self.viewRect_.x + size.width/2
 		local x, y = self.sbH:getPosition()
 		self.sbH:setPosition(posX, y)
+		print("UIScrollView - x,y " .. x .. "," .. y)
 	end
 end
 
