@@ -43,7 +43,10 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    // 3DEffect use custom shader which is not supported on WP8 yet. 
     CL(Sprite3DEffectTest),
+#endif
     CL(Sprite3DWithSkinTest),
     CL(Animate3DTest)
 };
