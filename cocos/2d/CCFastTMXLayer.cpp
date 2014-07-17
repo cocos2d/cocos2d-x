@@ -49,6 +49,7 @@ THE SOFTWARE.
 #include <algorithm>
 
 NS_CC_BEGIN
+namespace experimental {
 
 const int FastTMXLayer::FAST_TMX_ORIENTATION_ORTHO = 0;
 const int FastTMXLayer::FAST_TMX_ORIENTATION_HEX = 1;
@@ -856,5 +857,7 @@ std::string FastTMXLayer::getDescription() const
 {
     return StringUtils::format("<FastTMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
 }
+
+} //end of namespace experimental
 
 NS_CC_END
