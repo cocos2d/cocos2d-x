@@ -1,7 +1,7 @@
-ccexprimental = ccexprimental or {}
+ccexp = ccexp or {}
 
 
-ccexprimental.VideoPlayerEvent = {
+ccexp.VideoPlayerEvent = {
     PLAYING = 0,
     PAUSED = 1,
     STOPPED= 2,
