@@ -913,6 +913,9 @@ Developers:
         
     chareice
         Make `setup.py` work on zsh
+        
+    taug
+        Could add seach path and resolution order path in front.
     
 Retired Core Developers:
     WenSheng Yang
