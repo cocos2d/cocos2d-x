@@ -65,7 +65,7 @@ public class Cocos2dxVideoHelper {
 	private final static int VideoTaskRestart = 10;
 	private final static int VideoTaskKeepRatio = 11;
 	private final static int VideoTaskFullScreen = 12;
-	final static int KeyEventBack = 13;
+	final static int KeyEventBack = 1000;
 	
 	static class VideoHandler extends Handler{
 		WeakReference<Cocos2dxVideoHelper> mReference;
@@ -299,7 +299,7 @@ public class Cocos2dxVideoHelper {
 			Cocos2dxVideoView videoView = sVideoViews.get(key);
 			if (videoView != null) {
 				videoView.setFullScreenEnabled(false, 0, 0);
-				mActivity.runOnGLThread(new VideoEventRunnable(key, 1024));
+				mActivity.runOnGLThread(new VideoEventRunnable(key, KeyEventBack));
 			}
 		}
 	}
