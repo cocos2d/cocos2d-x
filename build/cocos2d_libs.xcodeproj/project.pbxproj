@@ -342,7 +342,6 @@
 		1A5703BB180BD2800088DEC7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703BA180BD2800088DEC7 /* libwebp.a */; };
 		1A57052B180BD31F0088DEC7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052A180BD31F0088DEC7 /* libfreetype.a */; };
 		1A57052E180BD3280088DEC7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052D180BD3280088DEC7 /* libfreetype.a */; };
-		1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
 		1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
 		1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */; };
@@ -1223,6 +1222,13 @@
 		50ABC0671926664800A911A9 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF541926664700A911A9 /* CCPlatformDefine.h */; };
 		50ABC0691926664800A911A9 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF551926664700A911A9 /* CCStdC.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
+		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
+		B21770421977ECF8009EE11B /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770411977ECF8009EE11B /* ApplicationServices.framework */; };
+		B21770451977ED14009EE11B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770431977ED07009EE11B /* Cocoa.framework */; };
+		B21770471977ED34009EE11B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770461977ED34009EE11B /* QuartzCore.framework */; };
+		B21770491977ED4C009EE11B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770481977ED4C009EE11B /* libz.dylib */; };
+		B217704E1977ED9F009EE11B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B217704C1977ED8B009EE11B /* libsqlite3.dylib */; };
 		B244F3071976871800ED1926 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
 		B244F3081976871C00ED1926 /* HttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5365180E3374000584C8 /* HttpResponse.h */; };
 		B244F3091976871F00ED1926 /* SocketIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5367180E3374000584C8 /* SocketIO.h */; };
@@ -1951,7 +1957,7 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
-		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
@@ -2872,6 +2878,15 @@
 		A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B217703F1977ECE6009EE11B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		B21770411977ECF8009EE11B /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		B21770431977ED07009EE11B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B21770461977ED34009EE11B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B21770481977ED4C009EE11B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		B217704A1977ED55009EE11B /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
+		B217704C1977ED8B009EE11B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B245F13A19766132001920FD /* libcocosGUI Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosGUI Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXLayer.cpp; sourceTree = "<group>"; };
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
@@ -2932,8 +2947,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B217704E1977ED9F009EE11B /* libsqlite3.dylib in Frameworks */,
+				B21770491977ED4C009EE11B /* libz.dylib in Frameworks */,
+				B21770471977ED34009EE11B /* QuartzCore.framework in Frameworks */,
+				B21770451977ED14009EE11B /* Cocoa.framework in Frameworks */,
+				B21770421977ECF8009EE11B /* ApplicationServices.framework in Frameworks */,
+				B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */,
+				B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */,
 				B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */,
-				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
 				1A570347180BD0850088DEC7 /* libglfw3.a in Frameworks */,
 				1A570361180BD1080088DEC7 /* libpng.a in Frameworks */,
 				1A57037B180BD1C90088DEC7 /* libjpeg.a in Frameworks */,
@@ -3139,7 +3160,7 @@
 		1551A340158F2AB200E66CFE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */,
+				1551A33F158F2AB200E66CFE /* libcocos2dx Mac.dylib */,
 				A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */,
 				A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */,
 				A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */,
@@ -3166,6 +3187,15 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B217704C1977ED8B009EE11B /* libsqlite3.dylib */,
+				B217704A1977ED55009EE11B /* libcurl.dylib */,
+				B21770481977ED4C009EE11B /* libz.dylib */,
+				B21770461977ED34009EE11B /* QuartzCore.framework */,
+				B21770431977ED07009EE11B /* Cocoa.framework */,
+				B21770411977ECF8009EE11B /* ApplicationServices.framework */,
+				B217703F1977ECE6009EE11B /* OpenGL.framework */,
+				B217703D1977ECC1009EE11B /* AudioToolbox.framework */,
+				B217703B1977ECB4009EE11B /* IOKit.framework */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -6182,7 +6212,7 @@
 			);
 			name = "cocos2dx Mac";
 			productName = cocos2dx;
-			productReference = 1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */;
+			productReference = 1551A33F158F2AB200E66CFE /* libcocos2dx Mac.dylib */;
 			productType = "com.apple.product-type.library.static";
 		};
 		A03F2B781780BD04006731B9 /* chipmunk Mac */ = {
@@ -7678,12 +7708,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				EXECUTABLE_EXTENSION = dylib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
+					_USRDLL,
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
@@ -7697,6 +7730,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
+				MACH_O_TYPE = mh_dylib;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
@@ -7705,6 +7739,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				EXECUTABLE_EXTENSION = dylib;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
@@ -7712,6 +7748,7 @@
 					"$(inherited)",
 					CC_KEYBOARD_SUPPORT,
 					CC_TARGET_OS_MAC,
+					_USRDLL,
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
@@ -7725,6 +7762,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
+				MACH_O_TYPE = mh_dylib;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
