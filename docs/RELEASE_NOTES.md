@@ -16,6 +16,7 @@
 - [Highlights of v3.2](#user-content-highlights-of-v32)
 - [Documents](#user-content-documents)
 - [Toolchain requirement changed](#user-content-toolchain-requirement-changed)
+- [atof issue on Android](#user-content-atof-issue-on-android)
 - [Features in detail](#user-content-features-in-detail)
 	- [Sprite3D & Animation3D](#user-content-sprite3d--animation3d)
 		- [fbx-conv usage](#user-content-fbx-conv-usage)
