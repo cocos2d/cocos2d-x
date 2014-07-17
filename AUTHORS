@@ -888,6 +888,7 @@ Developers:
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
         Fix UITextField IME can't auto detach
+        Add getChildByName method for get a node that can be cast to Type T
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
