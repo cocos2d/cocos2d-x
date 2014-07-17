@@ -5,10 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: setEye(float, float, float)
---          
--- overload function: setEye(vec3_table)
---          
+-- @overload self, float, float, float         
+-- @overload self, vec3_table         
 -- @function [parent=#ActionCamera] setEye
 -- @param self
 -- @param #float float

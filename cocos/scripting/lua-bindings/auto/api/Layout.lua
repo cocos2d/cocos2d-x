@@ -70,10 +70,8 @@
 -- @param #ccui.Widget::TextureResType texturerestype
         
 --------------------------------
--- overload function: setBackGroundColor(color3b_table, color3b_table)
---          
--- overload function: setBackGroundColor(color3b_table)
---          
+-- @overload self, color3b_table, color3b_table         
+-- @overload self, color3b_table         
 -- @function [parent=#Layout] setBackGroundColor
 -- @param self
 -- @param #color3b_table color3b
@@ -179,14 +177,10 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
--- overload function: addChild(cc.Node, int, string)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
 -- @function [parent=#Layout] addChild
 -- @param self
 -- @param #cc.Node node

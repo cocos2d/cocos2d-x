@@ -121,10 +121,8 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: create(string, string, string, ccui.Widget::TextureResType)
---          
--- overload function: create()
---          
+-- @overload self, string, string, string, ccui.Widget::TextureResType         
+-- @overload self         
 -- @function [parent=#Button] create
 -- @param self
 -- @param #string str

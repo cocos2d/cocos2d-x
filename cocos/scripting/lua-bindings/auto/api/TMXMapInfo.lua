@@ -57,19 +57,15 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: getLayers()
---          
--- overload function: getLayers()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXMapInfo] getLayers
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)
 
 --------------------------------
--- overload function: getTilesets()
---          
--- overload function: getTilesets()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXMapInfo] getTilesets
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)
@@ -112,10 +108,8 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- overload function: getObjectGroups()
---          
--- overload function: getObjectGroups()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXMapInfo] getObjectGroups
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)
@@ -166,10 +160,8 @@
 -- @param #array_table array
         
 --------------------------------
--- overload function: getProperties()
---          
--- overload function: getProperties()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXMapInfo] getProperties
 -- @param self
 -- @return map_table#map_table ret (retunr value: map_table)

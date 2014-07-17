@@ -46,20 +46,16 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- overload function: addDisplay(cc.Node, int)
---          
--- overload function: addDisplay(ccs.DisplayData, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, ccs.DisplayData, int         
 -- @function [parent=#DisplayManager] addDisplay
 -- @param self
 -- @param #ccs.DisplayData displaydata
 -- @param #int int
 
 --------------------------------
--- overload function: containPoint(float, float)
---          
--- overload function: containPoint(vec2_table)
---          
+-- @overload self, float, float         
+-- @overload self, vec2_table         
 -- @function [parent=#DisplayManager] containPoint
 -- @param self
 -- @param #float float

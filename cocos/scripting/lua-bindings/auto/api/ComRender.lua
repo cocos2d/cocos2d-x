@@ -15,10 +15,8 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
--- overload function: create(cc.Node, char)
---          
--- overload function: create()
---          
+-- @overload self, cc.Node, char         
+-- @overload self         
 -- @function [parent=#ComRender] create
 -- @param self
 -- @param #cc.Node node

@@ -5,10 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: create(float, cc.Scene)
---          
--- overload function: create(float, cc.Scene, cc.TransitionScene::Orientation)
---          
+-- @overload self, float, cc.Scene         
+-- @overload self, float, cc.Scene, cc.TransitionScene::Orientation         
 -- @function [parent=#TransitionFlipX] create
 -- @param self
 -- @param #float float

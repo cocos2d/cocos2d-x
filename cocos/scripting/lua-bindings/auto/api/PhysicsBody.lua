@@ -49,10 +49,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: applyImpulse(vec2_table, vec2_table)
---          
--- overload function: applyImpulse(vec2_table)
---          
+-- @overload self, vec2_table, vec2_table         
+-- @overload self, vec2_table         
 -- @function [parent=#PhysicsBody] applyImpulse
 -- @param self
 -- @param #vec2_table vec2
@@ -64,10 +62,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: applyForce(vec2_table, vec2_table)
---          
--- overload function: applyForce(vec2_table)
---          
+-- @overload self, vec2_table, vec2_table         
+-- @overload self, vec2_table         
 -- @function [parent=#PhysicsBody] applyForce
 -- @param self
 -- @param #vec2_table vec2
@@ -222,10 +218,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: removeShape(int, bool)
---          
--- overload function: removeShape(cc.PhysicsShape, bool)
---          
+-- @overload self, int, bool         
+-- @overload self, cc.PhysicsShape, bool         
 -- @function [parent=#PhysicsBody] removeShape
 -- @param self
 -- @param #cc.PhysicsShape physicsshape
@@ -346,12 +340,9 @@
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
--- overload function: create(float)
---          
--- overload function: create()
---          
--- overload function: create(float, float)
---          
+-- @overload self, float         
+-- @overload self         
+-- @overload self, float, float         
 -- @function [parent=#PhysicsBody] create
 -- @param self
 -- @param #float float
