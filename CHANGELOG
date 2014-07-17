@@ -8,6 +8,7 @@ cocos2d-x-3.2  Jul.17 2014
     [FIX]           Game Controller: joystick y value inversed on iOS
     [FIX]           GLView: cursor position is not correct if design resolution is different from device resolution
     [FIX]           Label: color can not be set correctly if using system font
+    [FIX]           LabelTTF: may lost chinese characters on linux
     [FIX]           Lua-binding: support UIVideoPlayer
     [FIX]           Node: setRotation3D not work based on anchor point
     [FIX]           Node: modify regular of enumerateChildren, now it just searchs its children
