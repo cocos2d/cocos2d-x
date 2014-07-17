@@ -105,10 +105,8 @@
 -- @param self
         
 --------------------------------
--- overload function: getCurrentTitle()
---          
--- overload function: getCurrentTitle()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#ControlButton] getCurrentTitle
 -- @param self
 -- @return string#string ret (retunr value: string)
@@ -219,14 +217,10 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: create(cc.Scale9Sprite)
---          
--- overload function: create()
---          
--- overload function: create(cc.Node, cc.Scale9Sprite)
---          
--- overload function: create(string, string, float)
---          
+-- @overload self, cc.Scale9Sprite         
+-- @overload self         
+-- @overload self, cc.Node, cc.Scale9Sprite         
+-- @overload self, string, string, float         
 -- @function [parent=#ControlButton] create
 -- @param self
 -- @param #string str

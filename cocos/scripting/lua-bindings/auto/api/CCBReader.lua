@@ -102,12 +102,9 @@
 -- @param #float float
         
 --------------------------------
--- overload function: CCBReader(cc.CCBReader)
---          
--- overload function: CCBReader(cc.NodeLoaderLibrary, cc.CCBMemberVariableAssigner, cc.CCBSelectorResolver, cc.NodeLoaderListener)
---          
--- overload function: CCBReader()
---          
+-- @overload self, cc.CCBReader         
+-- @overload self, cc.NodeLoaderLibrary, cc.CCBMemberVariableAssigner, cc.CCBSelectorResolver, cc.NodeLoaderListener         
+-- @overload self         
 -- @function [parent=#CCBReader] CCBReader
 -- @param self
 -- @param #cc.NodeLoaderLibrary nodeloaderlibrary

@@ -127,12 +127,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: setCharMap(cc.Texture2D, int, int, int)
---          
--- overload function: setCharMap(string, int, int, int)
---          
--- overload function: setCharMap(string)
---          
+-- @overload self, cc.Texture2D, int, int, int         
+-- @overload self, string, int, int, int         
+-- @overload self, string         
 -- @function [parent=#Label] setCharMap
 -- @param self
 -- @param #string str
@@ -228,10 +225,8 @@
 -- @param #cc.TextHAlignment texthalignment
         
 --------------------------------
--- overload function: setAlignment(cc.TextHAlignment, cc.TextVAlignment)
---          
--- overload function: setAlignment(cc.TextHAlignment)
---          
+-- @overload self, cc.TextHAlignment, cc.TextVAlignment         
+-- @overload self, cc.TextHAlignment         
 -- @function [parent=#Label] setAlignment
 -- @param self
 -- @param #cc.TextHAlignment texthalignment
@@ -253,12 +248,9 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
--- overload function: createWithCharMap(cc.Texture2D, int, int, int)
---          
--- overload function: createWithCharMap(string, int, int, int)
---          
--- overload function: createWithCharMap(string)
---          
+-- @overload self, cc.Texture2D, int, int, int         
+-- @overload self, string, int, int, int         
+-- @overload self, string         
 -- @function [parent=#Label] createWithCharMap
 -- @param self
 -- @param #string str

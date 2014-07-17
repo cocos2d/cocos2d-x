@@ -15,10 +15,8 @@
 -- @return char#char ret (return value: char)
         
 --------------------------------
--- overload function: initWithImage(cc.Image, cc.Texture2D::PixelFormat)
---          
--- overload function: initWithImage(cc.Image)
---          
+-- @overload self, cc.Image, cc.Texture2D::PixelFormat         
+-- @overload self, cc.Image         
 -- @function [parent=#Texture2D] initWithImage
 -- @param self
 -- @param #cc.Image image
@@ -45,10 +43,8 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- overload function: getBitsPerPixelForFormat(cc.Texture2D::PixelFormat)
---          
--- overload function: getBitsPerPixelForFormat()
---          
+-- @overload self, cc.Texture2D::PixelFormat         
+-- @overload self         
 -- @function [parent=#Texture2D] getBitsPerPixelForFormat
 -- @param self
 -- @param #cc.Texture2D::PixelFormat pixelformat
@@ -60,10 +56,8 @@
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
--- overload function: initWithString(char, cc.FontDefinition)
---          
--- overload function: initWithString(char, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
---          
+-- @overload self, char, cc.FontDefinition         
+-- @overload self, char, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment         
 -- @function [parent=#Texture2D] initWithString
 -- @param self
 -- @param #char char

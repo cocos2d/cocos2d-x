@@ -104,10 +104,8 @@
 -- @param #size_table size
         
 --------------------------------
--- overload function: create(string, string, int)
---          
--- overload function: create()
---          
+-- @overload self, string, string, int         
+-- @overload self         
 -- @function [parent=#Text] create
 -- @param self
 -- @param #string str

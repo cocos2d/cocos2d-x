@@ -36,10 +36,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: create(string, ccui.Widget::TextureResType)
---          
--- overload function: create()
---          
+-- @overload self, string, ccui.Widget::TextureResType         
+-- @overload self         
 -- @function [parent=#ImageView] create
 -- @param self
 -- @param #string str

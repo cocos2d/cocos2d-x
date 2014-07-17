@@ -33,10 +33,8 @@
 -- @param self
         
 --------------------------------
--- overload function: create(string, string, int, int, string)
---          
--- overload function: create()
---          
+-- @overload self, string, string, int, int, string         
+-- @overload self         
 -- @function [parent=#TextAtlas] create
 -- @param self
 -- @param #string str

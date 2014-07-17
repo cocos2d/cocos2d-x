@@ -51,10 +51,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: create(string, float)
---          
--- overload function: create()
---          
+-- @overload self, string, float         
+-- @overload self         
 -- @function [parent=#LoadingBar] create
 -- @param self
 -- @param #string str

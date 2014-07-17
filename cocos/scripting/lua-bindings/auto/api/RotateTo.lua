@@ -5,10 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: create(float, float)
---          
--- overload function: create(float, float, float)
---          
+-- @overload self, float, float         
+-- @overload self, float, float, float         
 -- @function [parent=#RotateTo] create
 -- @param self
 -- @param #float float

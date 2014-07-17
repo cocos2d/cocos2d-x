@@ -45,10 +45,8 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- overload function: setReverseDirection(bool)
---          
--- overload function: setReverseDirection(bool)
---          
+-- @overload self, bool         
+-- @overload self, bool         
 -- @function [parent=#ProgressTimer] setReverseDirection
 -- @param self
 -- @param #bool bool
