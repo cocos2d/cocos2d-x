@@ -270,7 +270,7 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 			mControllerOuya.onResume();
 		}
 		
-		mControllerHelper.gatherControllers();
+		GameControllerHelper.gatherControllers(mControllerHelper.mGameController);
 	}
 	
 	@Override

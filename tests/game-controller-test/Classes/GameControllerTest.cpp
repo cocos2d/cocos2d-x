@@ -196,6 +196,12 @@ void GameControllerTest::showButtonState(cocos2d::Controller *controller, int ke
         case Controller::Key::BUTTON_RIGHT_SHOULDER:
             holder->_buttonR1->setColor(Color3B(19,231,238));
             break;
+        case Controller::Key::BUTTON_LEFT_THUMBSTICK:
+            holder->_leftJoystick->setColor(Color3B(19,231,238));
+            break;
+        case Controller::Key::BUTTON_RIGHT_THUMBSTICK:
+            holder->_rightJoystick->setColor(Color3B(19,231,238));
+            break;
         default:
             {
                 char ketStatus[30];
@@ -238,6 +244,12 @@ void GameControllerTest::showButtonState(cocos2d::Controller *controller, int ke
             break;
         case Controller::Key::BUTTON_RIGHT_SHOULDER:
             holder->_buttonR1->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_LEFT_THUMBSTICK:
+            holder->_leftJoystick->setColor(Color3B::WHITE);
+            break;
+        case Controller::Key::BUTTON_RIGHT_THUMBSTICK:
+            holder->_rightJoystick->setColor(Color3B::WHITE);
             break;
         default:
             {
