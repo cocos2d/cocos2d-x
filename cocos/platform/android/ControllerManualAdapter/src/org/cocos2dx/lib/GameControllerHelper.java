@@ -80,6 +80,7 @@ public class GameControllerHelper {
         		int deviceId = event.getDeviceId();
         		String deviceName = event.getDevice().getName();
         		if(mGameController.get(deviceId) == null){
+        			gatherControllers(mGameController);
         			mGameController.append(deviceId, deviceName);
         		}
         		
@@ -167,6 +168,7 @@ public class GameControllerHelper {
 			String deviceName = event.getDevice().getName();
 			
 			if(mGameController.get(deviceId) == null){
+				gatherControllers(mGameController);
     			mGameController.append(deviceId, deviceName);
     		}
 			
@@ -224,7 +226,7 @@ public class GameControllerHelper {
 	}
 	
 	void onInputDeviceChanged(int deviceId){
-		gatherControllers();
+		gatherControllers(mGameController);
 	}
 	
 	void onInputDeviceRemoved(int deviceId) {
@@ -234,20 +236,20 @@ public class GameControllerHelper {
 		}
 	}
 	
-	void gatherControllers(){
-		int controllerCount = mGameController.size();
+	static void gatherControllers(SparseArray<String> controllers){
+		int controllerCount = controllers.size();
 		for (int i = 0; i < controllerCount; i++) {
 			try {
-				int controllerDeveceId = mGameController.keyAt(i);
+				int controllerDeveceId = controllers.keyAt(i);
 				InputDevice device = InputDevice.getDevice(controllerDeveceId);
 				if (device == null) {						
-					GameControllerAdapter.onDisconnected(mGameController.get(controllerDeveceId), controllerDeveceId);
-					mGameController.delete(controllerDeveceId);
+					GameControllerAdapter.onDisconnected(controllers.get(controllerDeveceId), controllerDeveceId);
+					controllers.delete(controllerDeveceId);
 				}
 			} catch (Exception e) {
-				int controllerDeveceId = mGameController.keyAt(i);
-				GameControllerAdapter.onDisconnected(mGameController.get(controllerDeveceId), controllerDeveceId);
-				mGameController.delete(controllerDeveceId);
+				int controllerDeveceId = controllers.keyAt(i);
+				GameControllerAdapter.onDisconnected(controllers.get(controllerDeveceId), controllerDeveceId);
+				controllers.delete(controllerDeveceId);
 				e.printStackTrace();
 			}
 		}
