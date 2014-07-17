@@ -73,6 +73,11 @@ namespace utils
      * @since v3.2
      */
     std::vector<Node*> findChildren(const Node &node, const std::string &name);
+    
+    /** Same to ::atof, but strip the string, remain 7 numbers after '.' before call atof。
+     *  Why we need this? Because in android c++_static, atof ( and std::atof ) is unsupported for numbers have long decimal part and contain several numbers can approximate to 1 （ like 90.099998474121094 ), it will return inf. this function is used to fix this bug.
+     */
+    double atof(const char* str);
 }
 
 NS_CC_END

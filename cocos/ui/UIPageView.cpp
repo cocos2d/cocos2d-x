@@ -336,10 +336,6 @@ void PageView::autoScroll(float dt)
 bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
-    if (_hitted)
-    {
-        handlePressLogic(touch);
-    }
     return pass;
 }
 
@@ -433,10 +429,6 @@ bool PageView::scrollPages(float touchOffset)
     return true;
 }
 
-void PageView::handlePressLogic(Touch *touch)
-{
-    //no-op
-}
 
 void PageView::handleMoveLogic(Touch *touch)
 {
@@ -507,7 +499,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
     switch (event)
     {
         case TouchEventType::BEGAN:
-            handlePressLogic(touch);
+            //no-op
             break;
         case TouchEventType::MOVED:
         {

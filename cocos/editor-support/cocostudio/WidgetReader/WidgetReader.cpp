@@ -87,7 +87,7 @@ namespace cocostudio
         };
         
         valueToFloat = [=](const std::string& str) -> float{
-            return atof(str.c_str());
+            return utils::atof(str.c_str());
         };
     }
     
