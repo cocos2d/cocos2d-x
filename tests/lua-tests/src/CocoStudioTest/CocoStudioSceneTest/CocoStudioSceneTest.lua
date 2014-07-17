@@ -173,7 +173,6 @@ function SceneEditorTestLayer:createMenu()
         end
 
         if sceneEditorTestIdx == #SceneEditorTestLayer.title then
-            self:unscheduleUpdate()
             ccs.TriggerMng.getInstance():removeAll()
         end
 
