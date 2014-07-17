@@ -45,6 +45,8 @@ class Texture2D;
 class Sprite;
 struct _ccCArray;
 
+namespace experimental{
+
 /**
  * @addtogroup tilemap_parallax_nodes
  * @{
@@ -256,7 +258,7 @@ public:
 
 // end of tilemap_parallax_nodes group
 /// @}
-
+} //end of namespace experimental
 NS_CC_END
 
 #endif //__CCTMX_LAYER2_H__

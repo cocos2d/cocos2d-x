@@ -4,6 +4,9 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 
+using cocos2d::experimental::FastTMXLayer;
+using cocos2d::experimental::FastTMXTiledMap;
+
 namespace
 {
     enum

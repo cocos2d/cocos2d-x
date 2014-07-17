@@ -33,10 +33,13 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class TMXObjectGroup;
-class FastTMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
+
+namespace experimental {
+    
+class FastTMXLayer;
 
 /** @brief FastTMXTiledMap knows how to parse and render a TMX map.
 
@@ -179,6 +182,8 @@ private:
 
 // end of tilemap_parallax_nodes group
 /// @}
+    
+} //end of namespace experimental
 
 NS_CC_END
 
