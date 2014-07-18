@@ -68,7 +68,7 @@ bool HTTPRequest::initWithUrl(const char *url, int method)
     }
     
     ++s_id;
-    CCLOG("HTTPRequest[0x%04x] - create request with url: %s", s_id, url);
+    // CCLOG("HTTPRequest[0x%04x] - create request with url: %s", s_id, url);
     return true;
 }
 
@@ -79,7 +79,7 @@ HTTPRequest::~HTTPRequest(void)
     {
         LuaEngine::getInstance()->removeScriptHandler(m_listener);
     }
-    CCLOG("HTTPRequest[0x%04x] - request removed", s_id);
+    // CCLOG("HTTPRequest[0x%04x] - request removed", s_id);
 }
 
 void HTTPRequest::setRequestUrl(const char *url)
