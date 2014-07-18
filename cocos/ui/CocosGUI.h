@@ -49,6 +49,7 @@ THE SOFTWARE.
 #include "ui/UIVideoPlayer.h"
 #endif
 #include "ui/UIDeprecated.h"
+#include "ui/UIScale9Sprite.h"
 
 
 NS_CC_BEGIN

@@ -123,7 +123,7 @@ void CCBAnimationManager::addDocumentCallbackName(std::string name)
     _documentCallbackNames.push_back(Value(name));
 }
 
-void CCBAnimationManager::addDocumentCallbackControlEvents(Control::EventType eventType)
+void CCBAnimationManager::addDocumentCallbackControlEvents(__Control::EventType eventType)
 {
     _documentCallbackControlEvents.push_back(Value(static_cast<int>(eventType)));
 }

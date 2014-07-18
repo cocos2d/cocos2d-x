@@ -30,8 +30,8 @@
  */
 
 
-#ifndef __CCCONTROL_SATURATION_PICKER_H__
-#define __CCCONTROL_SATURATION_PICKER_H__
+#ifndef __CCCONTROL_HUE_PICKER_H__
+#define __CCCONTROL_HUE_PICKER_H__
 
 #include "CCControl.h"
 #include "CCInvocation.h"
@@ -45,56 +45,41 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlSaturationBrightnessPicker : public Control
+class __ControlHuePicker : public __Control
 {
-    /** Contains the receiver's current saturation value. */
-    CC_SYNTHESIZE_READONLY(float, _saturation, Saturation);
-    /** Contains the receiver's current brightness value. */
-    CC_SYNTHESIZE_READONLY(float, _brightness, Brightness);
-
-    //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_READONLY(Sprite*, _background, Background);
-    CC_SYNTHESIZE_READONLY(Sprite*, _overlay, Overlay);
-    CC_SYNTHESIZE_READONLY(Sprite*, _shadow, Shadow);
-    CC_SYNTHESIZE_READONLY(Sprite*, _slider, Slider);
-    CC_SYNTHESIZE_READONLY(Vec2, _startPos, StartPos);
-
-protected:
-    int         boxPos;
-    int         boxSize;
-    
 public:
+    static __ControlHuePicker* create(Node* target, Vec2 pos);
     /**
      * @js ctor
      */
-    ControlSaturationBrightnessPicker();
+    __ControlHuePicker();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlSaturationBrightnessPicker();
+    virtual ~__ControlHuePicker();
     virtual bool initWithTargetAndPos(Node* target, Vec2 pos);
 
-    static ControlSaturationBrightnessPicker* create(Node* target, Vec2 pos);
-
     virtual void setEnabled(bool enabled);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void updateWithHSV(HSV hsv);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void updateDraggerWithHSV(HSV hsv);
 
-protected:    
+    // overrides
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
+
+protected:
     void updateSliderPosition(Vec2 location);
     bool checkSliderPosition(Vec2 location);
 
-    virtual bool onTouchBegan(Touch* touch, Event* pEvent);
-    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
+    //maunally put in the setters
+    CC_SYNTHESIZE_READONLY(float, _hue, Hue);
+    virtual void setHue(float val);
+    CC_SYNTHESIZE_READONLY(float, _huePercentage, HuePercentage);
+    virtual void setHuePercentage(float val);
+
+    //not sure if these need to be there actually. I suppose someone might want to access the sprite?
+    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background);
+    CC_SYNTHESIZE_RETAIN(Sprite*, _slider, Slider);
+    CC_SYNTHESIZE_READONLY(Vec2, _startPos, StartPos);
 };
 
 // end of GUI group

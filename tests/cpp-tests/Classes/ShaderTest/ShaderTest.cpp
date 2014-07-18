@@ -523,7 +523,7 @@ void ShaderBlur::createSliderCtls()
     auto screenSize = Director::getInstance()->getWinSize();
     
     {
-        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        __ControlSlider *slider = __ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         slider->setAnchorPoint(Vec2(0.5f, 1.0f));
         slider->setMinimumValue(0.0f);
         slider->setMaximumValue(25.0f);
@@ -540,7 +540,7 @@ void ShaderBlur::createSliderCtls()
     }
     
     {
-        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        __ControlSlider *slider = __ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
         slider->setAnchorPoint(Vec2(0.5f, 1.0f));
         slider->setMinimumValue(0.0f);
         slider->setMaximumValue(11.0f);
@@ -581,13 +581,13 @@ bool ShaderBlur::init()
 
 void ShaderBlur::onRadiusChanged(Ref* sender, Control::EventType)
 {
-    ControlSlider* slider = (ControlSlider*)sender;
+    __ControlSlider* slider = (__ControlSlider*)sender;
     _blurSprite->setBlurRadius(slider->getValue());
 }
 
 void ShaderBlur::onSampleNumChanged(Ref* sender, Control::EventType)
 {
-    ControlSlider* slider = (ControlSlider*)sender;
+    __ControlSlider* slider = (__ControlSlider*)sender;
     _blurSprite->setBlurSampleNum(slider->getValue());
 }
 

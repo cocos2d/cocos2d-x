@@ -54,6 +54,7 @@ bool UIImageViewTest_Scale9::init()
         imageView->setContentSize(Size(300, 115));
         imageView->setPosition(Vec2(widgetSize.width / 2.0f,
                                      widgetSize.height / 2.0f));
+        imageView->setColor(Color3B::GREEN);
         
         _uiLayer->addChild(imageView);                
         

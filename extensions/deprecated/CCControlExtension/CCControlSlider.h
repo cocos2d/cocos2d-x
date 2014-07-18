@@ -42,14 +42,14 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlSlider: public Control
+class __ControlSlider: public __Control
 {
 public:
     /**
      * Creates slider with a background filename, a progress filename and a
      * thumb image filename.
      */
-    static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
+    static __ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
 
     /**
      * Creates a slider with a given background sprite and a progress bar and a
@@ -57,13 +57,13 @@ public:
      *
      * @see initWithSprites
      */
-    static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
+    static __ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
 
     /**
      * Creates slider with a background filename, a progress filename, a thumb
      * and a selected thumb image filename.
      */
-    static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile,
+    static __ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile,
             const char* selectedThumbSpriteFile);
 
     /**
@@ -72,17 +72,17 @@ public:
      *
      * @see initWithSprites
      */
-    static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
+    static __ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
             Sprite* selectedThumbSprite);
     /**
      * @js ctor
      */
-    ControlSlider();
+    __ControlSlider();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlSlider();
+    virtual ~__ControlSlider();
 
     /**
     * Initializes a slider with a background sprite, a progress bar and a thumb

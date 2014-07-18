@@ -51,13 +51,13 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class ControlButton Button control for Cocos2D. */
-class ControlButton : public Control
+class __ControlButton : public __Control
 {        
 public:
-    static ControlButton* create();
-    static ControlButton* create(Scale9Sprite* sprite);
-    static ControlButton* create(Node* label, Scale9Sprite* backgroundSprite);
-    static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
+    static __ControlButton* create();
+    static __ControlButton* create(__Scale9Sprite* sprite);
+    static __ControlButton* create(Node* label, __Scale9Sprite* backgroundSprite);
+    static __ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
 
     virtual void needsLayout(void);
 
@@ -148,7 +148,7 @@ public:
      * @param state The state that uses the background sprite. Possible values are
      * described in "CCControlState".
      */
-    virtual Scale9Sprite* getBackgroundSpriteForState(State state);
+    virtual __Scale9Sprite* getBackgroundSpriteForState(State state);
 
     /**
      * Sets the background sprite to use for the specified button state.
@@ -157,7 +157,7 @@ public:
      * @param state The state that uses the specified image. The values are described
      * in "CCControlState".
      */
-    virtual void setBackgroundSpriteForState(Scale9Sprite* sprite, State state);
+    virtual void setBackgroundSpriteForState(__Scale9Sprite* sprite, State state);
 
     /**
      * Sets the background spriteFrame to use for the specified button state.
@@ -194,16 +194,16 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    ControlButton();
+    __ControlButton();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlButton();
+    virtual ~__ControlButton();
     
     virtual bool init() override;
-    virtual bool initWithLabelAndBackgroundSprite(Node* label, Scale9Sprite* backgroundSprite);
-    virtual bool initWithBackgroundSprite(Scale9Sprite* sprite);
+    virtual bool initWithLabelAndBackgroundSprite(Node* label, __Scale9Sprite* backgroundSprite);
+    virtual bool initWithBackgroundSprite(__Scale9Sprite* sprite);
     virtual bool initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize);
     
 protected:
@@ -221,7 +221,7 @@ protected:
     CC_SYNTHESIZE_RETAIN(Node*, _titleLabel, TitleLabel);
 
     /** The current background sprite. */
-    CC_SYNTHESIZE_RETAIN(Scale9Sprite*, _backgroundSprite, BackgroundSprite);
+    CC_SYNTHESIZE_RETAIN(__Scale9Sprite*, _backgroundSprite, BackgroundSprite);
 
     /** The prefered size of the button, if label is larger it will be expanded. */
     CC_PROPERTY_PASS_BY_REF(Size, _preferredSize, PreferredSize);
@@ -237,7 +237,7 @@ protected:
     std::unordered_map<int, Color3B> _titleColorDispatchTable;
 
     Map<int, Node*> _titleLabelDispatchTable;
-    Map<int, Scale9Sprite*> _backgroundSpriteDispatchTable;
+    Map<int, __Scale9Sprite*> _backgroundSpriteDispatchTable;
 
     /* Define the button margin for Top/Bottom edge */
     CC_SYNTHESIZE_READONLY(int, _marginV, VerticalMargin);
@@ -245,7 +245,7 @@ protected:
     CC_SYNTHESIZE_READONLY(int, _marginH, HorizontalOrigin);
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(ControlButton);
+    CC_DISALLOW_COPY_AND_ASSIGN(__ControlButton);
 };
 
 // end of GUI group

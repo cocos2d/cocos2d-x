@@ -45,7 +45,7 @@ bool ControlColourPickerTest::init()
         double layer_width = 0;
 
         // Create the colour picker
-        ControlColourPicker *colourPicker = ControlColourPicker::create();
+        __ControlColourPicker *colourPicker = __ControlColourPicker::create();
         colourPicker->setColor(Color3B(37, 46, 252));
         colourPicker->setPosition(Vec2 (colourPicker->getContentSize().width / 2, 0));
 
@@ -91,7 +91,7 @@ ControlColourPickerTest::~ControlColourPickerTest()
 
 void ControlColourPickerTest::colourValueChanged(Ref *sender, Control::EventType controlEvent)
 {
-    ControlColourPicker* pPicker = (ControlColourPicker*)sender;
+    __ControlColourPicker* pPicker = (__ControlColourPicker*)sender;
     _colorLabel->setString(String::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
 }
 

@@ -1,13 +1,6 @@
 /*
  * Copyright (c) 2012 cocos2d-x.org
  * http://www.cocos2d-x.org
- *
- *
- * Copyright 2012 Stewart Hamilton-Arrandale.
- * http://creativewax.co.uk
- *
- * Modified by Yannick Loriot.
- * http://yannickloriot.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,29 +23,18 @@
  *
  * Converted to c++ / cocos2d-x by Angus C
  */
+/*
+ *
+ * Helper class to store targets and selectors (and eventually, params?) in the same MutableArray. Basically a very crude form of a NSInvocation
+ */
+#ifndef __CCINVOCATION_H__
+#define __CCINVOCATION_H__
 
-#ifndef __CCCONTROL_UTILS_H__
-#define __CCCONTROL_UTILS_H__
-
-#include "2d/CCSprite.h"
+#include "base/CCRef.h"
 #include "../../ExtensionMacros.h"
+#include "CCControl.h"
 
 NS_CC_EXT_BEGIN
-
-typedef struct
-{
-    double r;       // percent
-    double g;       // percent
-    double b;       // percent
-    double a;       // percent
-} RGBA;
-
-typedef struct
-{
-    double h;       // angle in degrees
-    double s;       // percent
-    double v;       // percent
-} HSV;
 
 /**
  * @addtogroup GUI
@@ -61,41 +43,31 @@ typedef struct
  * @{
  */
 
-//helper class to store Color3B's in mutable arrays
-class Color3bObject : public Ref
-{
-public:
-    Color3B value;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Color3bObject(Color3B s_value):value(s_value){}
-};
+#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::__Control::Handler>(&_SELECTOR)
 
-class ControlUtils
+class __Invocation : public Ref
 {
 public:
     /**
      * @js NA
      * @lua NA
      */
-    static Sprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vec2 pos, Vec2 anchor);
+    static __Invocation* create(Ref* target, __Control::Handler action, __Control::EventType controlEvent);
     /**
      * @js NA
      * @lua NA
      */
-    static HSV HSVfromRGB(RGBA value);
+    __Invocation(Ref* target, __Control::Handler action, __Control::EventType controlEvent);
     /**
      * @js NA
      * @lua NA
      */
-    static RGBA RGBfromHSV(HSV value);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    static Rect RectUnion(const Rect& src1, const Rect& src2);
+    void invoke(Ref* sender);
+
+protected:
+    CC_SYNTHESIZE_READONLY(__Control::Handler, _action, Action);
+    CC_SYNTHESIZE_READONLY(Ref*, _target, Target);
+    CC_SYNTHESIZE_READONLY(__Control::EventType, _controlEvent, ControlEvent);
 };
 
 // end of GUI group

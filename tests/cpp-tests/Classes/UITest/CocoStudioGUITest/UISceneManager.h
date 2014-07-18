@@ -111,6 +111,9 @@ enum
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif
+    kUIScale9SpriteTests,
+    kUIScale9SpriteTestHierarchial,
+    kUIScale9SpriteTouchTest,
     kUITestMax
 };
 

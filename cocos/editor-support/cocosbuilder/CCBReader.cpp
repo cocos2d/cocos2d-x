@@ -983,7 +983,7 @@ void CCBReader::addOwnerCallbackNode(Node *node)
     _ownerCallbackNodes.pushBack(node);
 }
 
-void CCBReader::addOwnerCallbackControlEvents(Control::EventType type)
+void CCBReader::addOwnerCallbackControlEvents(__Control::EventType type)
 {
     _ownerOwnerCallbackControlEvents.push_back(Value((int)type));
 }
@@ -998,7 +998,7 @@ void CCBReader::addDocumentCallbackNode(Node *node)
     _animationManager->addDocumentCallbackNode(node);
 }
 
-void CCBReader::addDocumentCallbackControlEvents(Control::EventType eventType)
+void CCBReader::addDocumentCallbackControlEvents(__Control::EventType eventType)
 {
     _animationManager->addDocumentCallbackControlEvents(eventType);
 }

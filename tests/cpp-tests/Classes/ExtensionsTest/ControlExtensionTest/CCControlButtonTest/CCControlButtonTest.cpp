@@ -48,7 +48,7 @@ bool ControlButtonTest_HelloVariableSize::init()
         for (auto& title : vec)
         {
             // Creates a button with this string as title
-            ControlButton *button = standardButtonWithTitle(title.c_str());
+            __ControlButton *button = standardButtonWithTitle(title.c_str());
             if (i == 0)
             {
                 button->setOpacity(50);
@@ -88,7 +88,7 @@ bool ControlButtonTest_HelloVariableSize::init()
     return false;
 }
 
-ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(const char * title)
+__ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(const char * title)
 {
     /** Creates and return a button with a default background and title color. */
     auto backgroundButton = Scale9Sprite::create("extensions/button.png");
@@ -98,7 +98,7 @@ ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(cons
 
     titleButton->setColor(Color3B(159, 168, 176));
     
-    ControlButton *button = ControlButton::create(titleButton, backgroundButton);
+    __ControlButton *button = ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
     button->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
 
@@ -144,7 +144,7 @@ bool ControlButtonTest_Event::init()
 
         titleButton->setColor(Color3B(159, 168, 176));
         
-        ControlButton *controlButton = ControlButton::create(titleButton, backgroundButton);
+        __ControlButton *controlButton = __ControlButton::create(titleButton, backgroundButton);
         controlButton->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
         controlButton->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
         
@@ -241,7 +241,7 @@ bool ControlButtonTest_Styling::init()
             for (int j = 0; j < 3; j++)
             {
                 // Add the buttons
-                ControlButton *button = standardButtonWithTitle(String::createWithFormat("%d",rand() % 30)->getCString());
+                __ControlButton *button = standardButtonWithTitle(String::createWithFormat("%d",rand() % 30)->getCString());
                 button->setAdjustBackgroundImage(false);  // Tells the button that the background image must not be adjust
                                                     // It'll use the prefered size of the background image
                 button->setPosition(Vec2(button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,
@@ -270,19 +270,19 @@ bool ControlButtonTest_Styling::init()
 
 //CCControlButtonTest_Styling
 
-ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *title)
+__ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *title)
 {
     /** Creates and return a button with a default background and title color. */
-    auto backgroundButton = Scale9Sprite::create("extensions/button.png");
+    auto backgroundButton = __Scale9Sprite::create("extensions/button.png");
     backgroundButton->setPreferredSize(Size(45, 45));  // Set the prefered size
-    auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+    auto backgroundHighlightedButton = __Scale9Sprite::create("extensions/buttonHighlighted.png");
     backgroundHighlightedButton->setPreferredSize(Size(45, 45));  // Set the prefered size
     
     auto titleButton = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     
-    ControlButton *button = ControlButton::create(titleButton, backgroundButton);
+    __ControlButton *button = __ControlButton::create(titleButton, backgroundButton);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
     button->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
     

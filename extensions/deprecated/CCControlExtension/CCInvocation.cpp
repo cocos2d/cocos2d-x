@@ -23,57 +23,34 @@
  *
  * Converted to c++ / cocos2d-x by Angus C
  */
-/*
- *
- * Helper class to store targets and selectors (and eventually, params?) in the same MutableArray. Basically a very crude form of a NSInvocation
- */
-#ifndef __CCINVOCATION_H__
-#define __CCINVOCATION_H__
 
-#include "base/CCRef.h"
-#include "../../ExtensionMacros.h"
-#include "CCControl.h"
+#include "CCInvocation.h"
 
 NS_CC_EXT_BEGIN
 
-/**
- * @addtogroup GUI
- * @{
- * @addtogroup control_extension
- * @{
- */
-
-#define cccontrol_selector(_SELECTOR) static_cast<cocos2d::extension::Control::Handler>(&_SELECTOR)
-
-class Invocation : public Ref
+__Invocation* __Invocation::create(Ref* target, __Control::Handler action, __Control::EventType controlEvent)
 {
-public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    static Invocation* create(Ref* target, Control::Handler action, Control::EventType controlEvent);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Invocation(Ref* target, Control::Handler action, Control::EventType controlEvent);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void invoke(Ref* sender);
+    __Invocation* pRet = new __Invocation(target, action, controlEvent);
+    if (pRet != NULL)
+    {
+        pRet->autorelease();
+    }
+    return pRet;
+}
 
-protected:
-    CC_SYNTHESIZE_READONLY(Control::Handler, _action, Action);
-    CC_SYNTHESIZE_READONLY(Ref*, _target, Target);
-    CC_SYNTHESIZE_READONLY(Control::EventType, _controlEvent, ControlEvent);
-};
+__Invocation::__Invocation(Ref* target, __Control::Handler action, __Control::EventType controlEvent)
+{
+    _target=target;
+    _action=action;
+    _controlEvent=controlEvent;
+}
 
-// end of GUI group
-/// @}
-/// @}
+void __Invocation::invoke(Ref* sender)
+{
+    if (_target && _action)
+    {
+        (_target->*_action)(sender, _controlEvent);
+    }                
+}
 
 NS_CC_EXT_END
-
-#endif

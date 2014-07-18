@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-Sprite* ControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vec2 pos, Vec2 anchor)
+Sprite* __ControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vec2 pos, Vec2 anchor)
 {
     Sprite *sprite =Sprite::createWithSpriteFrameName(spriteName);
     
@@ -41,7 +41,7 @@ Sprite* ControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteName, 
 }
 
 
-HSV ControlUtils::HSVfromRGB(RGBA value)
+HSV __ControlUtils::HSVfromRGB(RGBA value)
 {
     HSV         out;
     double      min, max, delta;
@@ -83,7 +83,7 @@ HSV ControlUtils::HSVfromRGB(RGBA value)
     return out;
 }
 
-RGBA ControlUtils::RGBfromHSV(HSV value)
+RGBA __ControlUtils::RGBfromHSV(HSV value)
 {
     double      hh, p, q, t, ff;
     long        i;
@@ -154,7 +154,7 @@ RGBA ControlUtils::RGBfromHSV(HSV value)
     return out;     
 }
 
-Rect ControlUtils::RectUnion(const Rect& src1, const Rect& src2) 
+Rect __ControlUtils::RectUnion(const Rect& src1, const Rect& src2) 
 {
     Rect result;
     

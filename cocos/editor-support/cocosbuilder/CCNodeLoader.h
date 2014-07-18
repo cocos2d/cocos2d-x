@@ -1,9 +1,9 @@
 #ifndef _CCB_CCNODELOADER_H_
 #define _CCB_CCNODELOADER_H_
 
-#include "extensions/GUI/CCControlExtension/CCInvocation.h"
+#include "extensions/deprecated/CCControlExtension/CCInvocation.h"
 #include "CCBReader.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "extensions/deprecated/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
 
@@ -34,9 +34,9 @@ struct BlockData {
 };
 
 struct BlockControlData {
-    cocos2d::extension::Control::Handler mSELControlHandler;
+    cocos2d::extension::__Control::Handler mSELControlHandler;
     cocos2d::Ref * _target;
-    cocos2d::extension::Control::EventType mControlEvents;
+    cocos2d::extension::__Control::EventType mControlEvents;
 };
 
 /* Forward declaration. */

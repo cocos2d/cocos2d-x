@@ -36,7 +36,7 @@ namespace cocos2d { class Label; }
 
 NS_CC_EXT_BEGIN
 
-class ControlSwitchSprite;
+class __ControlSwitchSprite;
 
 /**
  * @addtogroup GUI
@@ -46,22 +46,22 @@ class ControlSwitchSprite;
  */
 
 /** @class ControlSwitch Switch control for Cocos2D. */
-class ControlSwitch : public Control
+class __ControlSwitch : public __Control
 {
 public:
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
-    static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel);
+    static __ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel);
     /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
-    static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
+    static __ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
     /**
      * @js ctor
      */
-    ControlSwitch();
+    __ControlSwitch();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlSwitch();
+    virtual ~__ControlSwitch();
 
     /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
     bool initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
@@ -92,7 +92,7 @@ public:
 
 protected:
     /** Sprite which represents the view. */
-    ControlSwitchSprite* _switchSprite;
+    __ControlSwitchSprite* _switchSprite;
     float _initialTouchXPosition;
     
     bool _moved;

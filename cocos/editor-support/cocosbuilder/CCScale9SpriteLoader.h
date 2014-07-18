@@ -3,7 +3,7 @@
 
 #include "CCNodeLoader.h"
 #include "CCScale9SpriteLoader.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "extensions/deprecated/CCControlExtension/CCScale9Sprite.h"
 
 namespace cocosbuilder {
 
@@ -28,8 +28,8 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual cocos2d::extension::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
-        cocos2d::extension::Scale9Sprite* pNode = cocos2d::extension::Scale9Sprite::create();
+    virtual cocos2d::extension::__Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
+        cocos2d::extension::__Scale9Sprite* pNode = cocos2d::extension::__Scale9Sprite::create();
         
         pNode->setAnchorPoint(cocos2d::Vec2::ZERO);
         

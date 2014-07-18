@@ -57,25 +57,25 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
+void EditBox::touchDownAction(Ref *sender, __Control::EventType controlEvent)
 {
     _editBoxImpl->openKeyboard();
 }
 
-EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg/* = nullptr*/, Scale9Sprite* pDisabled9SpriteBg/* = nullptr*/)
+EditBox* EditBox::create(const Size& size, __Scale9Sprite* pNormal9SpriteBg, __Scale9Sprite* pPressed9SpriteBg/* = NULL*/, __Scale9Sprite* pDisabled9SpriteBg/* = NULL*/)
 {
     EditBox* pRet = new EditBox();
     
-    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
+    if (pRet != NULL && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
     {
-        if (pPressed9SpriteBg != nullptr)
+        if (pPressed9SpriteBg != NULL)
         {
-            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, Control::State::HIGH_LIGHTED);
+            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, __Control::State::HIGH_LIGHTED);
         }
         
-        if (pDisabled9SpriteBg != nullptr)
+        if (pDisabled9SpriteBg != NULL)
         {
-            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, Control::State::DISABLED);
+            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, __Control::State::DISABLED);
         }
         pRet->autorelease();
     }
@@ -87,9 +87,9 @@ EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale
     return pRet;
 }
 
-bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pPressed9SpriteBg)
+bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, __Scale9Sprite* pPressed9SpriteBg)
 {
-    if (ControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
+    if (__ControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
@@ -98,7 +98,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);
         this->setPosition(Vec2(0, 0));
-        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), Control::EventType::TOUCH_UP_INSIDE);
+        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), __Control::EventType::TOUCH_UP_INSIDE);
         
         return true;
     }
@@ -108,7 +108,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
 void EditBox::setDelegate(EditBoxDelegate* pDelegate)
 {
     _delegate = pDelegate;
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setDelegate(pDelegate);
     }
@@ -121,10 +121,10 @@ EditBoxDelegate* EditBox::getDelegate()
 
 void EditBox::setText(const char* pText)
 {
-    if (pText != nullptr)
+    if (pText != NULL)
     {
         _text = pText;
-        if (_editBoxImpl != nullptr)
+        if (_editBoxImpl != NULL)
         {
             _editBoxImpl->setText(pText);
         }
@@ -133,10 +133,10 @@ void EditBox::setText(const char* pText)
 
 const char* EditBox::getText(void)
 {
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
 		const char* pText = _editBoxImpl->getText();
-		if(pText != nullptr)
+		if(pText != NULL)
 			return pText;
     }
     
@@ -147,9 +147,9 @@ void EditBox::setFont(const char* pFontName, int fontSize)
 {
     _fontName = pFontName;
     _fontSize = fontSize;
-    if (pFontName != nullptr)
+    if (pFontName != NULL)
     {
-        if (_editBoxImpl != nullptr)
+        if (_editBoxImpl != NULL)
         {
             _editBoxImpl->setFont(pFontName, fontSize);
         }
@@ -159,7 +159,7 @@ void EditBox::setFont(const char* pFontName, int fontSize)
 void EditBox::setFontName(const char* pFontName)
 {
     _fontName = pFontName;
-    if (_editBoxImpl != nullptr && _fontSize != -1)
+    if (_editBoxImpl != NULL && _fontSize != -1)
     {
         _editBoxImpl->setFont(pFontName, _fontSize);
     }
@@ -168,7 +168,7 @@ void EditBox::setFontName(const char* pFontName)
 void EditBox::setFontSize(int fontSize)
 {
     _fontSize = fontSize;
-    if (_editBoxImpl != nullptr && _fontName.length() > 0)
+    if (_editBoxImpl != NULL && _fontName.length() > 0)
     {
         _editBoxImpl->setFont(_fontName.c_str(), _fontSize);
     }
@@ -177,7 +177,7 @@ void EditBox::setFontSize(int fontSize)
 void EditBox::setFontColor(const Color3B& color)
 {
     _colText = color;
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setFontColor(color);
     }
@@ -187,9 +187,9 @@ void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     _placeholderFontName = pFontName;
     _placeholderFontSize = fontSize;
-    if (pFontName != nullptr)
+    if (pFontName != NULL)
     {
-        if (_editBoxImpl != nullptr)
+        if (_editBoxImpl != NULL)
         {
             _editBoxImpl->setPlaceholderFont(pFontName, fontSize);
         }
@@ -199,7 +199,7 @@ void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 void EditBox::setPlaceholderFontName(const char* pFontName)
 {
     _placeholderFontName = pFontName;
-    if (_editBoxImpl != nullptr && _placeholderFontSize != -1)
+    if (_editBoxImpl != NULL && _placeholderFontSize != -1)
     {
         _editBoxImpl->setPlaceholderFont(pFontName, _fontSize);
     }
@@ -208,7 +208,7 @@ void EditBox::setPlaceholderFontName(const char* pFontName)
 void EditBox::setPlaceholderFontSize(int fontSize)
 {
     _placeholderFontSize = fontSize;
-    if (_editBoxImpl != nullptr && _placeholderFontName.length() > 0)
+    if (_editBoxImpl != NULL && _placeholderFontName.length() > 0)
     {
         _editBoxImpl->setPlaceholderFont(_placeholderFontName.c_str(), _fontSize);
     }
@@ -217,7 +217,7 @@ void EditBox::setPlaceholderFontSize(int fontSize)
 void EditBox::setPlaceholderFontColor(const Color3B& color)
 {
     _colText = color;
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setPlaceholderFontColor(color);
     }
@@ -225,10 +225,10 @@ void EditBox::setPlaceholderFontColor(const Color3B& color)
 
 void EditBox::setPlaceHolder(const char* pText)
 {
-    if (pText != nullptr)
+    if (pText != NULL)
     {
         _placeHolder = pText;
-        if (_editBoxImpl != nullptr)
+        if (_editBoxImpl != NULL)
         {
             _editBoxImpl->setPlaceHolder(pText);
         }
@@ -243,7 +243,7 @@ const char* EditBox::getPlaceHolder(void)
 void EditBox::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setInputMode(inputMode);
     }
@@ -252,7 +252,7 @@ void EditBox::setInputMode(EditBox::InputMode inputMode)
 void EditBox::setMaxLength(int maxLength)
 {
     _maxLength = maxLength;
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setMaxLength(maxLength);
     }
@@ -267,7 +267,7 @@ int EditBox::getMaxLength()
 void EditBox::setInputFlag(EditBox::InputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setInputFlag(inputFlag);
     }
@@ -275,7 +275,7 @@ void EditBox::setInputFlag(EditBox::InputFlag inputFlag)
 
 void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 {
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setReturnType(returnType);
     }
@@ -284,8 +284,8 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 /* override function */
 void EditBox::setPosition(const Vec2& pos)
 {
-    ControlButton::setPosition(pos);
-    if (_editBoxImpl != nullptr)
+    __ControlButton::setPosition(pos);
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setPosition(pos);
     }
@@ -293,8 +293,8 @@ void EditBox::setPosition(const Vec2& pos)
 
 void EditBox::setVisible(bool visible)
 {
-    ControlButton::setVisible(visible);
-    if (_editBoxImpl != nullptr)
+    __ControlButton::setVisible(visible);
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setVisible(visible);
     }
@@ -302,8 +302,8 @@ void EditBox::setVisible(bool visible)
 
 void EditBox::setContentSize(const Size& size)
 {
-    ControlButton::setContentSize(size);
-    if (_editBoxImpl != nullptr)
+    __ControlButton::setContentSize(size);
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setContentSize(size);
     }
@@ -311,8 +311,8 @@ void EditBox::setContentSize(const Size& size)
 
 void EditBox::setAnchorPoint(const Vec2& anchorPoint)
 {
-    ControlButton::setAnchorPoint(anchorPoint);
-    if (_editBoxImpl != nullptr)
+    __ControlButton::setAnchorPoint(anchorPoint);
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->setAnchorPoint(anchorPoint);
     }
@@ -320,8 +320,8 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
 
 void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    ControlButton::visit(renderer, parentTransform, parentFlags);
-    if (_editBoxImpl != nullptr)
+    __ControlButton::visit(renderer, parentTransform, parentFlags);
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->visit();
     }
@@ -337,8 +337,8 @@ void EditBox::onEnter(void)
     }
 #endif
     
-    ControlButton::onEnter();
-    if (_editBoxImpl != nullptr)
+    __ControlButton::onEnter();
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->onEnter();
     }
@@ -357,8 +357,8 @@ void EditBox::updatePosition(float dt)
 
 void EditBox::onExit(void)
 {
-    ControlButton::onExit();
-    if (_editBoxImpl != nullptr)
+    __ControlButton::onExit();
+    if (_editBoxImpl != NULL)
     {
         // remove system edit control
         _editBoxImpl->closeKeyboard();
@@ -390,7 +390,7 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
     _adjustHeight = info.end.getMaxY() - rectTracked.getMinY();
     // CCLOG("CCEditBox:needAdjustVerticalPosition(%f)", _adjustHeight);
     
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->doAnimationWhenKeyboardMove(info.duration, _adjustHeight);
     }
@@ -404,7 +404,7 @@ void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& info)
 void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
 {
     // CCLOG("CCEditBox::keyboardWillHide");
-    if (_editBoxImpl != nullptr)
+    if (_editBoxImpl != NULL)
     {
         _editBoxImpl->doAnimationWhenKeyboardMove(info.duration, -_adjustHeight);
     }

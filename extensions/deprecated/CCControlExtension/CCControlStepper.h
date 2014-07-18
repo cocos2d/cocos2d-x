@@ -40,7 +40,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlStepper : public Control
+class __ControlStepper : public __Control
 {
 public:
     enum class Part
@@ -50,16 +50,16 @@ public:
         NONE
     };
     
-    static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
+    static __ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
     /**
      * @js ctor
      */
-    ControlStepper();
+    __ControlStepper();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlStepper();
+    virtual ~__ControlStepper();
 
     bool initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprite *plusSprite);
 

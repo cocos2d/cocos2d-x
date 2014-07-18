@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-Scale9Sprite::Scale9Sprite()
+__Scale9Sprite::__Scale9Sprite()
 : _spritesGenerated(false)
 , _spriteFrameRotated(false)
 , _positionsAreDirty(false)
@@ -55,7 +55,7 @@ Scale9Sprite::Scale9Sprite()
 
 }
 
-Scale9Sprite::~Scale9Sprite()
+__Scale9Sprite::~__Scale9Sprite()
 {
     CC_SAFE_RELEASE(_topLeft);
     CC_SAFE_RELEASE(_top);
@@ -69,17 +69,17 @@ Scale9Sprite::~Scale9Sprite()
     CC_SAFE_RELEASE(_scale9Image);
 }
 
-bool Scale9Sprite::init()
+bool __Scale9Sprite::init()
 {
     return this->initWithBatchNode(nullptr, Rect::ZERO, Rect::ZERO);
 }
 
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets)
+bool __Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets)
 {
     return this->initWithBatchNode(batchnode, rect, false, capInsets);
 }
 
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets)
+bool __Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets)
 {
     if(batchnode)
     {
@@ -99,7 +99,7 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rec
 #define    TRANSLATE_Y(x, y, ytranslate) \
     y+=ytranslate;                       \
 
-bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets)
+bool __Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets)
 {
     GLubyte opacity = getOpacity();
     Color3B color = getColor();
@@ -381,13 +381,13 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
     return true;
 }
 
-void Scale9Sprite::setContentSize(const Size &size)
+void __Scale9Sprite::setContentSize(const Size &size)
 {
     Node::setContentSize(size);
     this->_positionsAreDirty = true;
 }
 
-void Scale9Sprite::updatePositions()
+void __Scale9Sprite::updatePositions()
 {
     // Check that instances are non-nullptr
     if(!((_topLeft) &&
@@ -446,16 +446,16 @@ void Scale9Sprite::updatePositions()
     _centre->setPosition(Vec2(leftWidth, bottomHeight));
 }
 
-bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
+bool __Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
 {    
     SpriteBatchNode *batchnode = SpriteBatchNode::create(file, 9);
     bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  const Rect& capInsets)
+__Scale9Sprite* __Scale9Sprite::create(const std::string& file, const Rect& rect,  const Rect& capInsets)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
     {
         pReturn->autorelease();
@@ -465,15 +465,15 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  c
     return nullptr;
 }
 
-bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
+bool __Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
 {
     bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
+__Scale9Sprite* __Scale9Sprite::create(const std::string& file, const Rect& rect)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect) )
     {
         pReturn->autorelease();
@@ -484,15 +484,15 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
 }
 
 
-bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
+bool __Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
 {
     bool pReturn = this->initWithFile(file, Rect::ZERO, capInsets);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& file)
+__Scale9Sprite* __Scale9Sprite::create(const Rect& capInsets, const std::string& file)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(capInsets, file) )
     {
         pReturn->autorelease();
@@ -502,16 +502,16 @@ Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& fil
     return nullptr;
 }
 
-bool Scale9Sprite::initWithFile(const std::string& file)
+bool __Scale9Sprite::initWithFile(const std::string& file)
 {
     bool pReturn = this->initWithFile(file, Rect::ZERO);
     return pReturn;
     
 }
 
-Scale9Sprite* Scale9Sprite::create(const std::string& file)
+__Scale9Sprite* __Scale9Sprite::create(const std::string& file)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(file) )
     {
         pReturn->autorelease();
@@ -521,7 +521,7 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file)
     return nullptr;
 }
 
-bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
+bool __Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     Texture2D* texture = spriteFrame->getTexture();
     CCASSERT(texture != nullptr, "CCTexture must be not nil");
@@ -533,9 +533,9 @@ bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& cap
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
+__Scale9Sprite* __Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
     {
         pReturn->autorelease();
@@ -544,16 +544,16 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, cons
     CC_SAFE_DELETE(pReturn);
     return nullptr;
 }
-bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
+bool __Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
 {
     CCASSERT(spriteFrame != nullptr, "Invalid spriteFrame for sprite");
     bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
+__Scale9Sprite* __Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
     {
         pReturn->autorelease();
@@ -563,7 +563,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
     return nullptr;
 }
 
-bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
+bool __Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
 {
     CCASSERT((SpriteFrameCache::getInstance()) != nullptr, "SpriteFrameCache::getInstance() must be non-nullptr");
 
@@ -576,9 +576,9 @@ bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, c
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
+__Scale9Sprite* __Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
     {
         pReturn->autorelease();
@@ -588,15 +588,15 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
     return nullptr;
 }
 
-bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
+bool __Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     bool pReturn = this->initWithSpriteFrameName(spriteFrameName, Rect::ZERO);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
+__Scale9Sprite* __Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
     {
         pReturn->autorelease();
@@ -609,9 +609,9 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
     
 }
 
-Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
+__Scale9Sprite* __Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
 {
-    Scale9Sprite* pReturn = new Scale9Sprite();
+    __Scale9Sprite* pReturn = new __Scale9Sprite();
     if ( pReturn && pReturn->initWithBatchNode(_scale9Image, _spriteRect, capInsets) )
     {
         pReturn->autorelease();
@@ -621,9 +621,9 @@ Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
     return nullptr;
 }
 
-Scale9Sprite* Scale9Sprite::create()
+__Scale9Sprite* __Scale9Sprite::create()
 { 
-    Scale9Sprite *pReturn = new Scale9Sprite();
+    __Scale9Sprite *pReturn = new __Scale9Sprite();
     if (pReturn && pReturn->init())
     { 
         pReturn->autorelease();   
@@ -638,30 +638,30 @@ Scale9Sprite* Scale9Sprite::create()
  Values goes from 0 to 255, where 255 means fully opaque.
  */
 
-void Scale9Sprite::setPreferredSize(Size preferedSize)
+void __Scale9Sprite::setPreferredSize(Size preferedSize)
 {
     this->setContentSize(preferedSize);
     this->_preferredSize = preferedSize;
 }
 
-Size Scale9Sprite::getPreferredSize()
+Size __Scale9Sprite::getPreferredSize()
 {
     return this->_preferredSize;
 }
 
-void Scale9Sprite::setCapInsets(Rect capInsets)
+void __Scale9Sprite::setCapInsets(Rect capInsets)
 {
     Size contentSize = this->_contentSize;
     this->updateWithBatchNode(this->_scale9Image, this->_spriteRect, _spriteFrameRotated, capInsets);
     this->setContentSize(contentSize);
 }
 
-Rect Scale9Sprite::getCapInsets()
+Rect __Scale9Sprite::getCapInsets()
 {
     return _capInsets;
 }
 
-void Scale9Sprite::updateCapInset()
+void __Scale9Sprite::updateCapInset()
 {
     Rect insets;
     if (this->_insetLeft == 0 && this->_insetTop == 0 && this->_insetRight == 0 && this->_insetBottom == 0)
@@ -678,7 +678,7 @@ void Scale9Sprite::updateCapInset()
     this->setCapInsets(insets);
 }
 
-void Scale9Sprite::setOpacityModifyRGB(bool var)
+void __Scale9Sprite::setOpacityModifyRGB(bool var)
 {
     if (!_scale9Image)
     {
@@ -691,12 +691,12 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
     }
 }
 
-bool Scale9Sprite::isOpacityModifyRGB() const
+bool __Scale9Sprite::isOpacityModifyRGB() const
 {
     return _opacityModifyRGB;
 }
 
-void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame)
+void __Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame)
 {
     SpriteBatchNode * batchnode = SpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     this->updateWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), Rect::ZERO);
@@ -708,51 +708,51 @@ void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame)
     this->_insetBottom = 0;
 }
 
-float Scale9Sprite::getInsetLeft()
+float __Scale9Sprite::getInsetLeft()
 {
     return this->_insetLeft;
 }
 
-float Scale9Sprite::getInsetTop()
+float __Scale9Sprite::getInsetTop()
 {
     return this->_insetTop;
 }
 
-float Scale9Sprite::getInsetRight()
+float __Scale9Sprite::getInsetRight()
 {
     return this->_insetRight;
 }
 
-float Scale9Sprite::getInsetBottom()
+float __Scale9Sprite::getInsetBottom()
 {
     return this->_insetBottom;
 }
 
-void Scale9Sprite::setInsetLeft(float insetLeft)
+void __Scale9Sprite::setInsetLeft(float insetLeft)
 {
     this->_insetLeft = insetLeft;
     this->updateCapInset();
 }
 
-void Scale9Sprite::setInsetTop(float insetTop)
+void __Scale9Sprite::setInsetTop(float insetTop)
 {
     this->_insetTop = insetTop;
     this->updateCapInset();
 }
 
-void Scale9Sprite::setInsetRight(float insetRight)
+void __Scale9Sprite::setInsetRight(float insetRight)
 {
     this->_insetRight = insetRight;
     this->updateCapInset();
 }
 
-void Scale9Sprite::setInsetBottom(float insetBottom)
+void __Scale9Sprite::setInsetBottom(float insetBottom)
 {
     this->_insetBottom = insetBottom;
     this->updateCapInset();
 }
 
-void Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void __Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if(this->_positionsAreDirty)
     {
@@ -762,7 +762,7 @@ void Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     Node::visit(renderer, parentTransform, parentFlags);
 }
 
-void Scale9Sprite::setColor(const Color3B& color)
+void __Scale9Sprite::setColor(const Color3B& color)
 {
     if (!_scale9Image)
     {
@@ -776,7 +776,7 @@ void Scale9Sprite::setColor(const Color3B& color)
     }
 }
 
-void Scale9Sprite::setOpacity(GLubyte opacity)
+void __Scale9Sprite::setOpacity(GLubyte opacity)
 {
     if (!_scale9Image)
     {
@@ -789,7 +789,7 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     }
 }
 
-void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
+void __Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
 {
     if (!_scale9Image)
     {
@@ -802,7 +802,7 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
     }
 }
 
-void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
+void __Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     if (!_scale9Image)
     {

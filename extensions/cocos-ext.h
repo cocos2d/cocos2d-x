@@ -4,7 +4,7 @@
 #include "ExtensionMacros.h"
 
 
-#include "GUI/CCControlExtension/CCControlExtensions.h"
+#include "deprecated/CCControlExtension/CCControlExtensions.h"
 #include "GUI/CCScrollView/CCScrollView.h"
 #include "GUI/CCScrollView/CCTableView.h"
 #include "GUI/CCEditBox/CCEditBox.h"
@@ -14,5 +14,6 @@
 #include "physics-nodes/CCPhysicsSprite.h"
 
 #include "assets-manager/AssetsManager.h"
+#include "deprecated/DeprecatedEx.h"
 
 #endif /* __COCOS2D_EXT_H__ */

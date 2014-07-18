@@ -35,7 +35,7 @@ class ControlButtonTest_HelloVariableSize : public ControlScene
 public:
     bool init();
     /** Creates and return a button with a default background and title color. */
-    ControlButton *standardButtonWithTitle(const char * title);
+    __ControlButton *standardButtonWithTitle(const char * title);
 
     CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_HelloVariableSize)
 };
@@ -66,7 +66,7 @@ class ControlButtonTest_Styling : public ControlScene
 {
 public:
     bool init();
-    ControlButton *standardButtonWithTitle(const char *title);
+    __ControlButton *standardButtonWithTitle(const char *title);
     CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Styling)
 };
 

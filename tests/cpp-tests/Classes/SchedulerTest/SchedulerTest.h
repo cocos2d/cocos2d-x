@@ -246,9 +246,9 @@ public:
     void onExit();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    ControlSlider* sliderCtl();
+    __ControlSlider* sliderCtl();
     void sliderAction(Ref* sender, Control::EventType controlEvent);
-    ControlSlider* _sliderCtl;
+    __ControlSlider* _sliderCtl;
 };
 
 
@@ -261,15 +261,15 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onEnter();
-    ControlSlider* sliderCtl();
+    __ControlSlider* sliderCtl();
     void sliderAction(Ref* sender, Control::EventType controlEvent);
     Scheduler *sched1;
     Scheduler *sched2;
     ActionManager *actionManager1;
     ActionManager *actionManager2;
 
-    ControlSlider    *sliderCtl1;
-    ControlSlider    *sliderCtl2;
+    __ControlSlider    *sliderCtl1;
+    __ControlSlider    *sliderCtl2;
 };
 
 class SchedulerIssue2268 : public SchedulerTestLayer

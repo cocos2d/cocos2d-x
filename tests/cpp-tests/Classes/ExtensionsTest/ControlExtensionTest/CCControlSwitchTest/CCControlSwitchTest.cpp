@@ -58,7 +58,7 @@ bool ControlSwitchTest::init()
         layer->addChild(_displayValueLabel);
         
         // Create the switch
-        ControlSwitch *switchControl = ControlSwitch::create
+        __ControlSwitch *switchControl = __ControlSwitch::create
             (
                 Sprite::create("extensions/switch-mask.png"),
                 Sprite::create("extensions/switch-on.png"),
@@ -85,7 +85,7 @@ bool ControlSwitchTest::init()
 
 void ControlSwitchTest::valueChanged(Ref* sender, Control::EventType controlEvent)
 {
-    ControlSwitch* pSwitch = (ControlSwitch*)sender;
+    __ControlSwitch* pSwitch = (__ControlSwitch*)sender;
     if (pSwitch->isOn())
     {
         _displayValueLabel->setString("On");

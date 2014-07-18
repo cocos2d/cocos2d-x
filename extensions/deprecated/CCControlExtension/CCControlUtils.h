@@ -2,6 +2,7 @@
  * Copyright (c) 2012 cocos2d-x.org
  * http://www.cocos2d-x.org
  *
+ *
  * Copyright 2012 Stewart Hamilton-Arrandale.
  * http://creativewax.co.uk
  *
@@ -26,17 +27,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
+ *
  * Converted to c++ / cocos2d-x by Angus C
  */
 
+#ifndef __CCCONTROL_UTILS_H__
+#define __CCCONTROL_UTILS_H__
 
-#ifndef __CCCONTROL_HUE_PICKER_H__
-#define __CCCONTROL_HUE_PICKER_H__
-
-#include "CCControl.h"
-#include "CCInvocation.h"
+#include "2d/CCSprite.h"
+#include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
+
+typedef struct
+{
+    double r;       // percent
+    double g;       // percent
+    double b;       // percent
+    double a;       // percent
+} RGBA;
+
+typedef struct
+{
+    double h;       // angle in degrees
+    double s;       // percent
+    double v;       // percent
+} HSV;
 
 /**
  * @addtogroup GUI
@@ -45,41 +61,41 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlHuePicker : public Control
+//helper class to store Color3B's in mutable arrays
+class __Color3bObject : public Ref
 {
 public:
-    static ControlHuePicker* create(Node* target, Vec2 pos);
-    /**
-     * @js ctor
-     */
-    ControlHuePicker();
+    Color3B value;
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlHuePicker();
-    virtual bool initWithTargetAndPos(Node* target, Vec2 pos);
+    __Color3bObject(Color3B s_value):value(s_value){}
+};
 
-    virtual void setEnabled(bool enabled);
-
-    // overrides
-    virtual bool onTouchBegan(Touch* touch, Event* pEvent) override;
-    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
-
-protected:
-    void updateSliderPosition(Vec2 location);
-    bool checkSliderPosition(Vec2 location);
-
-    //maunally put in the setters
-    CC_SYNTHESIZE_READONLY(float, _hue, Hue);
-    virtual void setHue(float val);
-    CC_SYNTHESIZE_READONLY(float, _huePercentage, HuePercentage);
-    virtual void setHuePercentage(float val);
-
-    //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background);
-    CC_SYNTHESIZE_RETAIN(Sprite*, _slider, Slider);
-    CC_SYNTHESIZE_READONLY(Vec2, _startPos, StartPos);
+class __ControlUtils
+{
+public:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static Sprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, Node * target, Vec2 pos, Vec2 anchor);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static HSV HSVfromRGB(RGBA value);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static RGBA RGBfromHSV(HSV value);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static Rect RectUnion(const Rect& src1, const Rect& src2);
 };
 
 // end of GUI group

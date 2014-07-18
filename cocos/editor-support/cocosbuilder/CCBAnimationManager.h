@@ -9,7 +9,7 @@
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
 #include "CCBSequenceProperty.h"
-#include "extensions/GUI/CCControlExtension/CCControl.h"
+#include "extensions/deprecated/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
 
@@ -52,7 +52,7 @@ public:
 
     void addDocumentCallbackNode(cocos2d::Node *node);
     void addDocumentCallbackName(std::string name);
-    void addDocumentCallbackControlEvents(cocos2d::extension::Control::EventType eventType);
+    void addDocumentCallbackControlEvents(cocos2d::extension::__Control::EventType eventType);
     
     void addDocumentOutletNode(cocos2d::Node *node);
     void addDocumentOutletName(std::string name);

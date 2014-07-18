@@ -29,14 +29,12 @@
  * Converted to c++ / cocos2d-x by Angus C
  */
 
-#ifndef __CCCONTROL_COLOUR_PICKER_H__
-#define __CCCONTROL_COLOUR_PICKER_H__
 
+#ifndef __CCCONTROL_SATURATION_PICKER_H__
+#define __CCCONTROL_SATURATION_PICKER_H__
 
 #include "CCControl.h"
-#include "CCControlUtils.h"
-#include "CCControlHuePicker.h"
-#include "CCControlSaturationBrightnessPicker.h"
+#include "CCInvocation.h"
 
 NS_CC_EXT_BEGIN
 
@@ -47,38 +45,56 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlColourPicker: public Control
+class __ControlSaturationBrightnessPicker : public __Control
 {
+    /** Contains the receiver's current saturation value. */
+    CC_SYNTHESIZE_READONLY(float, _saturation, Saturation);
+    /** Contains the receiver's current brightness value. */
+    CC_SYNTHESIZE_READONLY(float, _brightness, Brightness);
+
+    //not sure if these need to be there actually. I suppose someone might want to access the sprite?
+    CC_SYNTHESIZE_READONLY(Sprite*, _background, Background);
+    CC_SYNTHESIZE_READONLY(Sprite*, _overlay, Overlay);
+    CC_SYNTHESIZE_READONLY(Sprite*, _shadow, Shadow);
+    CC_SYNTHESIZE_READONLY(Sprite*, _slider, Slider);
+    CC_SYNTHESIZE_READONLY(Vec2, _startPos, StartPos);
+
+protected:
+    int         boxPos;
+    int         boxSize;
+    
 public:
-    static ControlColourPicker* create();
     /**
      * @js ctor
      */
-    ControlColourPicker();
+    __ControlSaturationBrightnessPicker();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ControlColourPicker();
+    virtual ~__ControlSaturationBrightnessPicker();
+    virtual bool initWithTargetAndPos(Node* target, Vec2 pos);
 
-    virtual bool init() override;
+    static __ControlSaturationBrightnessPicker* create(Node* target, Vec2 pos);
 
-    virtual void setColor(const Color3B& colorValue);
-    virtual void setEnabled(bool bEnabled);
+    virtual void setEnabled(bool enabled);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void updateWithHSV(HSV hsv);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void updateDraggerWithHSV(HSV hsv);
 
-    //virtual ~ControlColourPicker();
-    void hueSliderValueChanged(Ref * sender, Control::EventType controlEvent);
-    void colourSliderValueChanged(Ref * sender, Control::EventType controlEvent);
+protected:    
+    void updateSliderPosition(Vec2 location);
+    bool checkSliderPosition(Vec2 location);
 
-protected:
-    void updateControlPicker();
-    void updateHueAndControlPicker();
     virtual bool onTouchBegan(Touch* touch, Event* pEvent);
-
-    HSV _hsv;
-    CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)
-    CC_SYNTHESIZE_RETAIN(ControlHuePicker*, _huePicker, HuePicker)
-    CC_SYNTHESIZE_RETAIN(Sprite*, _background, Background)
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
 };
 
 // end of GUI group
