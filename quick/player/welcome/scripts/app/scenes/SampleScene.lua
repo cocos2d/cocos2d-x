@@ -186,13 +186,16 @@ end
 
 function SampleScene:updateArrow()
     local pageIdx = self.currentPageIndex - 1
+    local isLeftButtonVisible = true
+    local isRightButtonVisible = true
     if 0 == pageIdx then
-        self:getChildByTag(100):setVisible(false)
-        self:getChildByTag(101):setVisible(true)
-    else
-        self:getChildByTag(100):setVisible(true)
-        self:getChildByTag(101):setVisible(false)
+        isLeftButtonVisible = false
+    elseif self.pageCount-1 == pageIdx then
+        isRightButtonVisible = false
     end
+
+    self:getChildByTag(100):setVisible(isLeftButtonVisible)
+    self:getChildByTag(101):setVisible(isRightButtonVisible)
 end
 
 function SampleScene:goLeftWall()
