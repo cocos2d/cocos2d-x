@@ -70,6 +70,8 @@ void Cocos2dRenderer::CreateGLResources()
         cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
+        cocos2d::EventCustom event(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
         director->setGLDefaultValues();
   }
 
