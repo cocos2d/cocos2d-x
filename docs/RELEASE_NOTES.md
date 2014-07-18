@@ -241,7 +241,7 @@ Fast tilemap has the same API as `TMXTiledMap` without deprecated functions.
 
 Sample code
 ```c++
-auto tilemap = FastTMXTiledMap::create("MyFile.tmx");
+auto tilemap = cocos2d::experimental::TMXTiledMap::create("MyFile.tmx");
 addChild(tilemap);
 ```
 
