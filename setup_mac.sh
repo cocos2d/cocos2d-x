@@ -16,11 +16,8 @@ fi;
 
 QUICK_V3_ROOT="$DIR"
 
-export QUICK_V3_CORE_PATH="$QUICK_V3_ROOT/quick"
-
 echo ""
 echo "QUICK_V3_ROOT = \"$QUICK_V3_ROOT\""
-echo "QUICK_V3_CORE_PATH = \"$QUICK_V3_CORE_PATH\""
 echo ""
 
 # set Xcode
@@ -60,15 +57,15 @@ echo ""
 
 if [ "$CALL_BY_PKG" != "" ]; then
 
-    $QUICK_V3_CORE_PATH/bin/install_luajit.sh
-    ln -s $QUICK_V3_CORE_PATH/player/mac/player.app $QUICK_V3_CORE_PATH/player.app
+    $QUICK_V3_ROOT/quick/bin/install_luajit.sh
+    ln -s $QUICK_V3_ROOT/quick/player/mac/player.app $QUICK_V3_ROOT/quick/player.app
 
 else
 
     while true; do
         read -p "Do you wish to install LuaJIT (Y/N) ? " yn
         case $yn in
-            [Yy]* ) echo ""; $QUICK_V3_CORE_PATH/bin/install_luajit.sh; break;;
+            [Yy]* ) echo ""; $QUICK_V3_ROOT/quick/bin/install_luajit.sh; break;;
             [Nn]* ) exit;;
             * ) echo "Please answer yes or no.";;
         esac
