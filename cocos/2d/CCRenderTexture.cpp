@@ -96,7 +96,10 @@ void RenderTexture::listenToBackground(EventCustom *event)
 {
     // We have not found a way to dispatch the enter background message before the texture data are destroyed.
     // So we disable this pair of message handler at present.
-#if 0
+    int count = 0;
+    count++;
+
+#if 1
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CC_SAFE_DELETE(_UITextureImage);
     
@@ -126,7 +129,7 @@ void RenderTexture::listenToBackground(EventCustom *event)
 
 void RenderTexture::listenToForeground(EventCustom *event)
 {
-#if 0
+#if 1
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -241,8 +244,10 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         }
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
-        
+  
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+#endif
         {
             _textureCopy = new Texture2D();
             if (_textureCopy)
