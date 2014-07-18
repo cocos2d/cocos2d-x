@@ -16,12 +16,15 @@ function TestUIPageViewScene:createPageView()
     self.pv = cc.ui.UIPageView.new {
         -- bgColor = cc.c4b(200, 200, 200, 120),
         -- bg = "sunset.png",
-        viewRect = cc.rect(80, 80, 800, 480)}
+        viewRect = cc.rect(80, 80, 780, 480),
+        column = 3, row = 3,
+        padding = {left = 20, right = 20, top = 20, bottom = 20},
+        columnSpace = 10, rowSapce = 10}
         :onTouch(handler(self, self.touchListener))
         :addTo(self)
 
     -- add items
-    for i=1,4 do
+    for i=1,18 do
         local item = self.pv:newItem()
         local content
 
@@ -35,7 +38,7 @@ function TestUIPageViewScene:createPageView()
                 math.random(250),
                 math.random(250),
                 250))
-        content:setContentSize(800, 480)
+        content:setContentSize(240, 140)
         content:setTouchEnabled(false)
         item:addChild(content)
         self.pv:addItem(item)        

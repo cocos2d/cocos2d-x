@@ -86,7 +86,8 @@ function UIPageView:createPage_(pageNo)
 			item:setAnchorPoint(cc.p(0.5, 0.5))
 			item:setPosition(
 				self.padding_.left + (column - 1)*self.columnSpace_ + column*itemW - itemW/2,
-				self.padding_.bottom + (row - 1)*self.rowSpace_ + row*itemH - itemH/2)
+				self.viewRect_.height - self.padding_.top - (row - 1)*self.rowSpace_ - row*itemH + itemH/2)
+				-- self.padding_.bottom + (row - 1)*self.rowSpace_ + row*itemH - itemH/2)
 		end
 		if bBreak then
 			break
@@ -97,10 +98,11 @@ function UIPageView:createPage_(pageNo)
 end
 
 function UIPageView:getMaxPage()
-	return math.ceil(table.nums(self.items_)/self.column_*self.row_)
+	return math.ceil(table.nums(self.items_)/(self.column_*self.row_))
 end
 
 function UIPageView:onTouch_(event)
+	print("UIPageView - onTouch_:" .. event.x .. " " .. event.y)
 	if "began" == event.name
 		and not cc.rectContainsPoint(self.viewRect_, cc.p(event.x, event.y)) then
 		printInfo("UIPageView - touch didn't in viewRect")
@@ -109,11 +111,17 @@ function UIPageView:onTouch_(event)
 
 	if "began" == event.name then
 		self:resetLRPage()
+		self.bDrag_ = false
 	elseif "moved" == event.name then
+		self.bDrag_ = true
 		self.speed = event.x - event.prevX
 		self:scroll(self.speed)
 	elseif "ended" == event.name then
-		self:scrollAuto()
+		if self.bDrag_ then
+			self:scrollAuto()
+		else
+			self:onClick_(event)
+		end
 	end
 
 	return true
@@ -187,7 +195,7 @@ function UIPageView:scrollAuto()
 		and self.curPageIdx_ > 1 then
 		bChange = true
 	elseif (-dis > self.viewRect_.width/2 or -self.speed > 10)
-		and self.curPageIdx_ < #self.pages_ then
+		and self.curPageIdx_ < self:getMaxPage() then
 		bChange = true
 	end
 
@@ -234,6 +242,41 @@ function UIPageView:scrollAuto()
 			end
 		end
 	end
+end
+
+function UIPageView:onClick_(event)
+	local itemW, itemH
+
+	itemW = (self.viewRect_.width - self.padding_.left - self.padding_.right
+				- self.columnSpace_*(self.column_ - 1)) / self.column_
+	itemH = (self.viewRect_.height - self.padding_.top - self.padding_.bottom
+				- self.rowSpace_*(self.row_ - 1)) / self.row_
+
+	local x, y = event.x, event.y
+	x = x - self.viewRect_.x
+	y = y - self.viewRect_.y
+	local itemRect = {width = itemW, height = itemH}
+
+	local clickIdx
+	for row = 1, self.row_ do
+		itemRect.y = self.viewRect_.height - self.padding_.top - row*itemH - (row - 1)*self.rowSpace_
+		for column = 1, self.column_ do
+			itemRect.x = self.padding_.left + (column - 1)*(itemW + self.columnSpace_)
+
+			if cc.rectContainsPoint(itemRect, cc.p(x,y)) then
+				clickIdx = (row - 1)*self.column_ + column
+				break
+			end
+		end
+		if clickIdx then
+			break
+		end
+	end
+
+	self.touchListener{pageView = self, name = "clicked",
+		item = self.items_[clickIdx],
+		itemIdx = clickIdx,
+		pageIdx = self.curPageIdx_}
 end
 
 return UIPageView
