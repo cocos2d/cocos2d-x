@@ -58,7 +58,7 @@
                             </menuItem>
                             <menuItem title="Quit quick-x-player" keyEquivalent="q" id="136">
                                 <connections>
-                                    <action selector="terminate:" target="-3" id="449"/>
+                                    <action selector="onFileClose:" target="-1" id="UyZ-bV-2zL"/>
                                 </connections>
                             </menuItem>
                         </items>

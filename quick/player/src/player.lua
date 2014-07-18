@@ -150,9 +150,12 @@ function player.buildUI()
 end
 
 function player.init()
-    player.configFilePath = __USER_HOME__ .. ".quick_player.lua"
-    if not cc.FileUtils:getInstance():isFileExist(player.configFilePath) then player.restorDefaultSettings() end
+    player.registerEventHandler()
 
+    player.configFilePath = __USER_HOME__ .. ".quick_player.lua"
+    if not cc.FileUtils:getInstance():isFileExist(player.configFilePath) then 
+        player.restorDefaultSettings()
+    end
     player.loadSetting(player.configFilePath)
 
     local s = PlayerSettings:new()
@@ -162,6 +165,76 @@ function player.init()
     s.windowHeight = cc.player.settings.PLAYER_WINDOW_HEIGHT 
     s.openLastProject = cc.player.settings.PLAYER_OPEN_LAST_PROJECT
     PlayerProtocol:getInstance():setPlayerSettings(s)
+end
+
+function player.registerEventHandler()
+    player.eventNode = cc.Node:create()
+    
+    -- for app event
+    local eventDispatcher = player.eventNode:getEventDispatcher()
+    local event = function(e)
+        local t = json.decode(e:getDataString())
+        if t == nil then return end
+
+        if t.name == "close" then
+            -- player.trackEvent("exit")
+            print("exit")
+            eventDispatcher:dispatchEvent(cc.EventCustom:new("WELCOME_APP_HIDE"))
+            -- cc.Director:getInstance():endToLua()
+        elseif t.name == "resize" then
+            -- <code here> t.w,t.h
+        elseif t.name == "focusIn" then
+            -- cc.Director:getInstance():resume()
+        elseif t.name == "focusOut" then
+            -- cc.Director:getInstance():pause()
+        elseif t.name == "keyPress" then
+            -- t.key = "tab"
+            -- t.key = "return"
+        end
+    end
+
+    eventDispatcher:addEventListenerWithFixedPriority(cc.EventListenerCustom:create("APP.EVENT", event), 1)
+end
+
+function player.trackEvent(eventName, ev)
+    local url = 'http://www.google-analytics.com/collect'
+    local request = cc.HTTPRequest:createWithUrl(function(event) 
+                                                    local eventName = eventName
+                                                    if eventName == "exit" then 
+                                                        cc.Director:getInstance():endToLua() 
+                                                    end 
+                                                end,
+                                                url, 
+                                                cc.kCCHTTPRequestMethodPOST)
+
+    request:addPOSTValue("v", "1")
+    request:addPOSTValue("tid", "UA-52790340-1")
+    request:addPOSTValue("cid", cc.Native:getOpenUDID())
+    request:addPOSTValue("t", "event")
+
+    request:addPOSTValue("an", "player")
+    request:addPOSTValue("av", "alpha2")
+
+    request:addPOSTValue("ec", device.platform)
+    request:addPOSTValue("ea", eventName)
+    -- request:addPOSTValue("el", "mac")
+
+    if ev == nil then ev = "0" else ev = tostring(ev) end
+    request:addPOSTValue("ev", ev)
+
+    -- 开始请求。当请求完成时会调用 callback() 函数
+    request:start()
+end
+
+function player.exit()
+    local delta = os.time() - player.startClock
+    player.trackEvent("exit", delta)
+end
+
+-- call from host
+function player.start()
+    player.startClock = os.time()
+    player.trackEvent("launch")
 end
 
 -- load player settings
@@ -174,5 +247,5 @@ cc.player.init()
 
 function __PLAYER_OPEN__(title, args)
     cc.player.openProject(title, args)
-    cc.player.buildUI()
+    player.buildUI()
 end

@@ -44,12 +44,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (m_projectConfig.getDebuggerType() != kCCLuaDebuggerNone)
     {
         Scene *scene = Scene::create();
-        LabelTTF *label = LabelTTF::create("WAITING FOR CONNECT TO DEBUGGER...", "Arial", 32);
+        Label *label = Label::createWithSystemFont("WAITING FOR CONNECT TO DEBUGGER...", "Arial", 32);
         const Size winSize = director->getWinSize();
         label->setPosition(winSize.width / 2, winSize.height / 2);
         scene->addChild(label);
         director->runWithScene(scene);
-        scene->runAction(CallFunc::create(call, callfunc_selector(StartupCall::startup)));
+        scene->runAction(CallFunc::create(std::bind(&StartupCall::startup, *call)));
+//        scene->runAction(CallFunc::create(call, callfunc_selector(StartupCall::startup)));
     }
     else
     {
@@ -159,9 +160,13 @@ void StartupCall::startup()
     }
     lua_setglobal(L, "__G__OPEN_RECENTS__");
     
+
     CCLOG("------------------------------------------------");
     CCLOG("LOAD LUA FILE: %s", path.c_str());
     CCLOG("------------------------------------------------");
     pEngine->executeScriptFile(path.c_str());
+    
+    //
+    pEngine->executeString("cc.player.start()");
 }
 
