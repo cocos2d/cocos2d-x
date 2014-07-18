@@ -132,8 +132,12 @@ bool Sprite3D::loadFromObj(const std::string& path)
         {
             CCLOGWARN("cocos2d:WARNING: more than one texture in %s", path.c_str());
         }
-            
-        matnames.push_back(dir + (*it).material.diffuse_texname);
+        
+        std::string texname = (*it).material.diffuse_texname;
+        if (texname.size() > 0)
+        {
+            matnames.push_back(dir + texname);
+        }
     }
     _mesh = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, indices);
     
