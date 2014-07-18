@@ -4,6 +4,7 @@
 #include "FileDialogServiceMac.h"
 #include "MessageBoxServiceMac.h"
 #include "MenuServiceMac.h"
+#include "EditBoxServiceMac.h"
 
 PLAYER_NS_BEGIN
 
@@ -43,6 +44,15 @@ PlayerMenuServiceProtocol *PlayerMac::getMenuService()
         m_menuService = new MenuServiceMac();
     }
     return m_menuService;
+}
+
+PlayerEditBoxServiceProtocol *PlayerMac::getEditBoxService()
+{
+    if (!m_editBoxService)
+    {
+        m_editBoxService = new EditBoxServiceMac();
+    }
+    return m_editBoxService;
 }
 
 PLAYER_DECLARE_GLOBAL_INSTANCE(PlayerMac, __mac_player);

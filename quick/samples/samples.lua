@@ -2,6 +2,13 @@
 local data =
 {
     {
+        title       = "sprite 3D",
+        description = "3D 精灵演示",
+        path        = "samples/sprite3d",
+        image       = "sprite3d_ss.png"
+    },
+
+    {
         title       = "2048",
         description = "用 quick 开发的 2048 游戏",
         path        = "samples/2048",
@@ -16,6 +23,34 @@ local data =
     },
 
     {
+        title       = "physics",
+        description = "物理引擎演示",
+        path        = "samples/physics",
+        image       = "physics_ss.png"
+    },
+
+    {
+        title       = "touch",
+        description = "触摸机制测试",
+        path        = "samples/touch",
+        image       = "touch_ss.png"
+    },
+
+    {
+        title       = "ui",
+        description = "UI 系统测试",
+        path        = "samples/ui",
+        image       = "ui_ss.png"
+    },
+
+    {
+        title       = "coinflip",
+        description = "一个翻转金币的小游戏",
+        path        = "samples/coinflip",
+        image       = "coinflip_ss.png"
+    },
+
+    {
         title       = "chukong_ad",
         description = "触控广告 SDK 集成（真机）",
         path        = "samples/chukong_ad",
@@ -27,13 +62,6 @@ local data =
         description = "触控 Push SDK 集成（真机）",
         path        = "samples/cocopush",
         image       = "cocopush_ss.png"
-    },
-
-    {
-        title       = "coinflip",
-        description = "一个翻转金币的小游戏",
-        path        = "samples/coinflip",
-        image       = "coinflip_ss.png"
     },
 
     {
@@ -92,12 +120,7 @@ local data =
         image       = "nightclub_ss.png"
     },
 
-    {
-        title       = "physics",
-        description = "物理引擎演示",
-        path        = "samples/physics",
-        image       = "physics_ss.png"
-    },
+
 
     {
         title       = "statemachine",
@@ -111,20 +134,6 @@ local data =
         description = "测试",
         path        = "samples/tests",
         image       = "tests_ss.png"
-    },
-
-    {
-        title       = "touch",
-        description = "触摸机制测试",
-        path        = "samples/touch",
-        image       = "touch_ss.png"
-    },
-
-    {
-        title       = "ui",
-        description = "UI 系统测试",
-        path        = "samples/ui",
-        image       = "ui_ss.png"
     },
 
     {
