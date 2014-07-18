@@ -916,6 +916,9 @@ Developers:
         
     taug
         Could add seach path and resolution order path in front.
+        
+    CaiCQ
+        Fix a but that LabelTTF may lost chinese characters on linux
     
 Retired Core Developers:
     WenSheng Yang

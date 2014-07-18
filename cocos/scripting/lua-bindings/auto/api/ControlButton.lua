@@ -18,7 +18,7 @@
 -- @function [parent=#ControlButton] setTitleLabelForState 
 -- @param self
 -- @param #cc.Node node
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setAdjustBackgroundImage 
@@ -39,7 +39,7 @@
 -- @function [parent=#ControlButton] setTitleForState 
 -- @param self
 -- @param #string str
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setLabelAnchorPoint 
@@ -54,20 +54,20 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleTTFForState 
 -- @param self
 -- @param #string str
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleTTFSizeForState 
 -- @param self
 -- @param #float float
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleLabel 
@@ -92,7 +92,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getBackgroundSpriteForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return Scale9Sprite#Scale9Sprite ret (return value: cc.Scale9Sprite)
         
 --------------------------------
@@ -119,7 +119,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return string#string ret (return value: string)
         
 --------------------------------
@@ -130,14 +130,14 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleColorForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleColorForState 
 -- @param self
 -- @param #color3b_table color3b
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] doesAdjustBackgroundImage 
@@ -148,13 +148,13 @@
 -- @function [parent=#ControlButton] setBackgroundSpriteFrameForState 
 -- @param self
 -- @param #cc.SpriteFrame spriteframe
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setBackgroundSpriteForState 
 -- @param self
 -- @param #cc.Scale9Sprite scale9sprite
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setScaleRatio 
@@ -184,7 +184,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleLabelForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
@@ -197,12 +197,12 @@
 -- @function [parent=#ControlButton] setTitleBMFontForState 
 -- @param self
 -- @param #string str
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] getTitleBMFontForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return string#string ret (return value: string)
         
 --------------------------------
@@ -213,7 +213,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return string#string ret (return value: string)
         
 --------------------------------

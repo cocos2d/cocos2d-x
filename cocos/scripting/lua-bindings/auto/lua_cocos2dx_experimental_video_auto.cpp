@@ -522,7 +522,7 @@ int lua_cocos2dx_experimental_video_VideoPlayer_onPlayEvent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::experimental::ui::VideoPlayer::EventType arg0;
+        int arg0;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
         if(!ok)

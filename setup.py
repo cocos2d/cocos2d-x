@@ -557,7 +557,7 @@ class SetEnvVar(object):
         if ret is not None:
             print("    ->Path " + ret + " was found\n")
         else:
-            print("    ->Command " + ret + " not found\n")
+            print("    ->Command " + cmd + " not found\n")
         return ret
 
     def _find_value_from_sys(self, var_name):

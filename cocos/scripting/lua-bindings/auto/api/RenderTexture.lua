@@ -65,12 +65,12 @@
 -- @param self
         
 --------------------------------
--- @overload self, string, cc.Image::Format, bool         
+-- @overload self, string, int, bool         
 -- @overload self, string, bool         
 -- @function [parent=#RenderTexture] saveToFile
 -- @param self
 -- @param #string str
--- @param #cc.Image::Format format
+-- @param #int format
 -- @param #bool bool
 -- @return bool#bool ret (retunr value: bool)
 
@@ -135,25 +135,25 @@
 -- @param #float float
         
 --------------------------------
--- @overload self, int, int, cc.Texture2D::PixelFormat, unsigned int         
--- @overload self, int, int, cc.Texture2D::PixelFormat         
+-- @overload self, int, int, int, unsigned int         
+-- @overload self, int, int, int         
 -- @function [parent=#RenderTexture] initWithWidthAndHeight
 -- @param self
 -- @param #int int
 -- @param #int int
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
 -- @param #unsigned int int
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
--- @overload self, int, int, cc.Texture2D::PixelFormat         
--- @overload self, int, int, cc.Texture2D::PixelFormat, unsigned int         
+-- @overload self, int, int, int         
+-- @overload self, int, int, int, unsigned int         
 -- @overload self, int, int         
 -- @function [parent=#RenderTexture] create
 -- @param self
 -- @param #int int
 -- @param #int int
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
 -- @param #unsigned int int
 -- @return RenderTexture#RenderTexture ret (retunr value: cc.RenderTexture)
 

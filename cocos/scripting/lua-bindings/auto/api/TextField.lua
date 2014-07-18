@@ -57,7 +57,7 @@
 --------------------------------
 -- @function [parent=#TextField] setTextVerticalAlignment 
 -- @param self
--- @param #cc.TextVAlignment textvalignment
+-- @param #int textvalignment
         
 --------------------------------
 -- @function [parent=#TextField] addEventListener 
@@ -130,7 +130,7 @@
 --------------------------------
 -- @function [parent=#TextField] setTextHorizontalAlignment 
 -- @param self
--- @param #cc.TextHAlignment texthalignment
+-- @param #int texthalignment
         
 --------------------------------
 -- @function [parent=#TextField] getMaxLength 
