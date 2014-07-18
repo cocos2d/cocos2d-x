@@ -17,6 +17,8 @@ public:
     virtual PlayerMessageBoxServiceProtocol *getMessageBoxService();
     
     virtual PlayerMenuServiceProtocol       *getMenuService();
+    
+    virtual PlayerEditBoxServiceProtocol    *getEditBoxService();
 protected:
     
 };
