@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UIPAGEVIEW_H__
 
 #include "ui/UILayout.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -39,7 +40,7 @@ typedef enum
 typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-class PageView : public Layout
+class CC_GUI_DLL PageView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO

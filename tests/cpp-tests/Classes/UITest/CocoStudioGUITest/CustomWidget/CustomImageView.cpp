@@ -49,7 +49,7 @@ void CustomImageView::initRenderer()
     ImageView::initRenderer();
     
     _label = Label::create();
-    ProtectedNode::addChild(_label, getLocalZOrder() + 1, -1);
+    addChild(_label, getLocalZOrder() + 1, -1);
 }
 
 void CustomImageView::setText(const std::string &text)
