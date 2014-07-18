@@ -64,7 +64,7 @@ USING_NS_CC_EXTRA;
     env = [env stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     env = [NSString stringWithFormat:@"%@/quick", env];
     SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([env cStringUsingEncoding:NSUTF8StringEncoding]);
-
+    
     [self loadLuaConfig];
     [self updateProjectConfigFromCommandLineArgs:&projectConfig];
     [self createWindowAndGLView];
@@ -109,7 +109,8 @@ USING_NS_CC_EXTRA;
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
 {
-    return YES;
+    LuaEngine::getInstance()->getLuaStack()->executeString("cc.player.exit()");
+    return NO;
 }
 
 - (void) updateOpenRect
@@ -318,7 +319,9 @@ USING_NS_CC_EXTRA;
 - (void) relaunch:(NSArray*)args
 {
     [self launch:args];
-    [[NSApplication sharedApplication] terminate:self];
+    
+    LuaEngine::getInstance()->getLuaStack()->executeString("cc.player.exit()");
+//    [[NSApplication sharedApplication] terminate:self];
 }
 
 - (void) relaunch
@@ -468,7 +471,7 @@ USING_NS_CC_EXTRA;
     app = new AppDelegate();
     bridge = new AppControllerBridge(self);
     
-    
+    EventDispatcher *eventDispatcher = Director::getInstance()->getEventDispatcher();
     EventListenerCustom *_listener = EventListenerCustom::create("WELCOME_OPEN_PROJECT_ARGS", [=](EventCustom* event){
         if (event->getDataString().length() > 0)
         {
@@ -488,7 +491,7 @@ USING_NS_CC_EXTRA;
             }
         }
     });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, 1);
+    eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
     
     EventListenerCustom *_listener2 = EventListenerCustom::create("WELCOME_OPEN_RECENT", [=](EventCustom* event){
         if (event->getDataString().length() > 0)
@@ -503,13 +506,28 @@ USING_NS_CC_EXTRA;
             }
         }
     });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener2, 1);
+    eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);
     
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeNewProject), "WELCOME_NEW_PROJECT", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpen), "WELCOME_OPEN_PROJECT", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeSamples), "WELCOME_LIST_SAMPLES", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
+    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_NEW_PROJECT", [=](EventCustom* event) {
+        [self welcomeNewProject];
+    }), 1);
+    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_OPEN_PROJECT", [=](EventCustom* event) {
+        [self welcomeOpen];
+    }), 1);
+    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_OPEN_DOCUMENTS", [=](EventCustom* event) {
+        [self welcomeGetStarted];
+    }), 1);
+    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_OPEN_COMMUNITY", [=](EventCustom* event) {
+        [self welcomeCommunity];
+    }), 1);
+    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_APP_HIDE", [=](EventCustom* event) {
+        [consoleController close];
+        glfwHideWindow(eglView->getWindow());
+    }), 1);
+//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeNewProject), "WELCOME_NEW_PROJECT", NULL);
+//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpen), "WELCOME_OPEN_PROJECT", NULL);
+//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
+//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
 //    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpenRecent), "WELCOME_OPEN_PROJECT_ARGS", NULL);
     
     
@@ -793,17 +811,13 @@ USING_NS_CC_EXTRA;
 
 - (IBAction) onFileClose:(id)sender
 {
-    if (projectConfig.isWelcome())
-    {
-        cocos2d::EventCustom event("APP.EVENT");
-        std::string data = "{\"name\":\"close\"}";
-        event.setDataString(data);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-    }
-    else
-    {
-        [[NSApplication sharedApplication] terminate:self];
-    }
+    // send close event to lua
+    cocos2d::EventCustom event("APP.EVENT");
+    std::string data = "{\"name\":\"close\"}";
+    event.setDataString(data);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+
+//    [[NSApplication sharedApplication] terminate:self];
 }
 
 - (IBAction) onPlayerWriteDebugLogToFile:(id)sender

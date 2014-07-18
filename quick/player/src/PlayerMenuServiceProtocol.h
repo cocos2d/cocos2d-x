@@ -39,7 +39,7 @@ public:
     int scriptHandlerId;    // 事件回调的 Lua 脚本 id
 };
 
-class PlayerMenuServiceProtocol
+class PlayerMenuServiceProtocol : public PlayerServiceProtocol
 {
 public:
     // 添加一个菜单项
