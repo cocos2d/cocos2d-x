@@ -36,7 +36,7 @@ function SampleScene:createCopyright()
     self:addChild(label)
 end
 
-function SampleScene:createPageView()
+function SampleScene:createPageView1()
 
     local originLeft  = display.left + 130
     local left        = originLeft
@@ -92,6 +92,38 @@ function SampleScene:createPageView()
     self:updateWall()
 end
 
+function SampleScene:createPageView()
+    self.pageView = cc.ui.UIPageView.new{
+        viewRect = cc.rect(50, 80, 860, 510),
+        row = 3, column = 4,
+        rowSpace = 20, columnSpace = 30}
+        :onTouch(handler(self, self.gridViewListener))
+        :addTo(self)
+
+    local sampleCount = #self.samples
+
+    for i=1,sampleCount do
+        local sample = self.samples[i]
+        local pageViewItem = self.pageView:newItem()
+
+        pageViewItem:addChild(self:createDemoTitle(sample))
+        pageViewItem:addChild(self:createDemoDescription(sample))
+        pageViewItem:addChild(self:createDemoButton(sample))
+        self.pageView:addItem(pageViewItem)
+    end
+
+    self.pageView:reload()
+    self.pageCount = self.pageView:getPageCount()
+    self:createBackButton()
+    self:createLRButton()
+end
+
+function SampleScene:gridViewListener(event)
+    if "pageChange" == event.name then
+        self:updateArrow()
+    end
+end
+
 -- helper
 
 function SampleScene:createDemoTitle(sample, x, y)
@@ -102,7 +134,8 @@ function SampleScene:createDemoTitle(sample, x, y)
         size = 14,
         font = "Monaco",
     })
-    label:setPosition(cc.p(x, y))
+    label:setAnchorPoint(0.5, 0.5)
+    label:setPosition(100, 150)
     return label
 end
 
@@ -120,11 +153,12 @@ function SampleScene:createDemoDescription(sample, x, y)
         color = color,
         size = 12,
     })
-    label:setPosition(cc.p(x, y))
+    label:setAnchorPoint(0.5, 0.5)
+    label:setPosition(100, 140)
     return label
 end
 
-function SampleScene:createDemoButton(sample, x, y)
+function SampleScene:createDemoButton(sample)
     function onButtonClick()
         local configPath = __G__QUICK_PATH__ .. sample.path .. "/scripts/config.lua"
         dofile(configPath)
@@ -147,7 +181,7 @@ function SampleScene:createDemoButton(sample, x, y)
     
     local button = cc.ui.UIPushButton.new(demoImage, {scale9 = true})
                         :onButtonClicked(onButtonClick)
-                        :align(display.CENTER, x, y)
+                        :align(display.CENTER, 100, 65)
     return button
 end
 
@@ -169,7 +203,6 @@ function SampleScene:createLRButton()
         :addTo(self, 0, 100)
         :onButtonClicked(function()
             self:goLeftWall()
-            self:updateArrow()
         end)
 
     cc.ui.UIPushButton.new("arrow_right.png", {scale9 = true})
@@ -178,20 +211,24 @@ function SampleScene:createLRButton()
         :addTo(self, 0, 101)
         :onButtonClicked(function()
             self:goRightWall()
-            self:updateArrow()
         end)
 
     self:updateArrow()
 end
 
 function SampleScene:updateArrow()
-    local pageIdx = self.currentPageIndex - 1
+    local pageIdx = self.pageView:getCurPageIdx()
     local isLeftButtonVisible = true
     local isRightButtonVisible = true
-    if 0 == pageIdx then
+    if 1 == self.pageCount then
         isLeftButtonVisible = false
-    elseif self.pageCount-1 == pageIdx then
         isRightButtonVisible = false
+    else
+        if 1 == pageIdx then
+            isLeftButtonVisible = false
+        elseif self.pageCount == pageIdx then
+            isRightButtonVisible = false
+        end
     end
 
     self:getChildByTag(100):setVisible(isLeftButtonVisible)
@@ -199,17 +236,11 @@ function SampleScene:updateArrow()
 end
 
 function SampleScene:goLeftWall()
-    if self.currentPageIndex > 1 then 
-        self.currentPageIndex = self.currentPageIndex - 1 
-    end
-    self:updateWall()
+    self.pageView:gotoPage(self.pageView:getCurPageIdx() - 1, true)
 end
 
 function SampleScene:goRightWall()
-    if self.currentPageIndex < self.pageCount then 
-        self.currentPageIndex = self.currentPageIndex + 1 
-    end
-    self:updateWall()
+    self.pageView:gotoPage(self.pageView:getCurPageIdx() + 1, true)
 end
 
 function SampleScene:updateWall()
