@@ -261,10 +261,7 @@ void Widget::setContentSize(const cocos2d::Size &contentSize)
     {
         _contentSize = getVirtualRendererSize();
     }
-    else
-    {
-        _contentSize = contentSize;
-    }
+    
     if (_running)
     {
         Widget* widgetParent = getWidgetParent();
