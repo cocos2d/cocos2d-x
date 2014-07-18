@@ -999,7 +999,7 @@ bool FileUtils::createDirectory(const std::string& dirPath)
         return true;
     
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    if (mkdir(dirPath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO) != 0)
+    if (mkdir(dirPath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO) != 0 && errno != EEXIST)
     {
         CCLOGERROR("Create directory (%s) failed", dirPath.c_str());
         return false;
@@ -1008,7 +1008,7 @@ bool FileUtils::createDirectory(const std::string& dirPath)
 #else
     if (GetFileAttributesA(dirPath.c_str()) == INVALID_FILE_ATTRIBUTES)
     {
-		BOOL ret = CreateDirectoryA(dirPath.c_str(), NULL);
+		bool ret = CreateDirectoryA(dirPath.c_str(), nullptr);
         if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
         {
             return false;
@@ -1020,6 +1020,11 @@ bool FileUtils::createDirectory(const std::string& dirPath)
 
 bool FileUtils::createDirectories(const std::string& path)
 {
+    CCASSERT(!path.empty(), "Invalid path");
+    
+    if (isDirectoryExist(path))
+        return true;
+    
     // Split the path
     size_t start = 0;
     size_t found = path.find_first_of("/\\", start);
@@ -1046,40 +1051,17 @@ bool FileUtils::createDirectories(const std::string& path)
         }
     }
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *dir = NULL;
-    
     // Create path recursively
     subpath = "";
     for (int i = 0; i < dirs.size(); ++i) {
         subpath += dirs[i];
-        dir = opendir(subpath.c_str());
-        if (!dir)
+        
+        if (!createDirectory(subpath))
         {
-            int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-            if (ret != 0 && (errno != EEXIST))
-            {
-                return false;
-            }
+            return false;
         }
     }
     return true;
-#else
-    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
-    {
-		subpath = "";
-		for(int i = 0 ; i < dirs.size() ; ++i)
-		{
-			subpath += dirs[i];
-			BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
-            if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
-            {
-                return false;
-            }
-		}
-    }
-    return true;
-#endif
 }
 
 bool FileUtils::removeDirectory(const std::string& path)
