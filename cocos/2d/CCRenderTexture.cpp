@@ -99,8 +99,7 @@ void RenderTexture::listenToBackground(EventCustom *event)
     int count = 0;
     count++;
 
-#if 1
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA && (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     CC_SAFE_DELETE(_UITextureImage);
     
     // to get the rendered texture data
@@ -124,13 +123,11 @@ void RenderTexture::listenToBackground(EventCustom *event)
     glDeleteFramebuffers(1, &_FBO);
     _FBO = 0;
 #endif
-#endif
 }
 
 void RenderTexture::listenToForeground(EventCustom *event)
 {
-#if 1
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA && (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     // -- regenerate frame buffer object and attach the texture
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     
@@ -146,7 +143,6 @@ void RenderTexture::listenToForeground(EventCustom *event)
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-#endif
 #endif
 }
 
