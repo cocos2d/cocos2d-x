@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventMouse.h"
 #include "base/CCIMEDispatcher.h"
+#include "base/ccUtils.h"
 
 #include <unordered_map>
 
@@ -356,7 +357,7 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
 
-    if ( atof((const char*)glVersion) < 1.5 )
+    if ( utils::atof((const char*)glVersion) < 1.5 )
     {
         char strComplain[256] = {0};
         sprintf(strComplain,

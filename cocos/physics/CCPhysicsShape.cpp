@@ -453,7 +453,7 @@ void PhysicsShapeCircle::update(float delta)
     
     if (_dirty)
     {
-        cpFloat factor = PhysicsHelper::float2cpfloat( _newScaleX / _scaleX );
+        cpFloat factor = std::abs(PhysicsHelper::float2cpfloat( _newScaleX / _scaleX ));
         
         cpShape* shape = _info->getShapes().front();
         cpVect v = cpCircleShapeGetOffset(shape);
@@ -708,6 +708,17 @@ void PhysicsShapePolygon::update(float delta)
         {
             vects[i].x *= factorX;
             vects[i].y *= factorY;
+        }
+        
+        // convert hole to clockwise
+        if ( factorX * factorY < 0 )
+        {
+            for (int i = 0; i < count / 2; ++i)
+            {
+                cpVect v = vects[i];
+                vects[i] = vects[count - i - 1];
+                vects[count - i - 1] = v;
+            }
         }
         
         for (int i = 0; i < count; ++i)

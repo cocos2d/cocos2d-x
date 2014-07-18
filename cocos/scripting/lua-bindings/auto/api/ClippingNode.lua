@@ -35,10 +35,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: create(cc.Node)
---          
--- overload function: create()
---          
+-- @overload self, cc.Node         
+-- @overload self         
 -- @function [parent=#ClippingNode] create
 -- @param self
 -- @param #cc.Node node

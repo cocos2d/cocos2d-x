@@ -522,7 +522,7 @@ int lua_cocos2dx_experimental_video_VideoPlayer_onPlayEvent(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::experimental::ui::VideoPlayer::EventType arg0;
+        int arg0;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
         if(!ok)
@@ -743,8 +743,8 @@ TOLUA_API int register_all_cocos2dx_experimental_video(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
 	
-	tolua_module(tolua_S,"ccexprimental",0);
-	tolua_beginmodule(tolua_S,"ccexprimental");
+	tolua_module(tolua_S,"ccexp",0);
+	tolua_beginmodule(tolua_S,"ccexp");
 
 	lua_register_cocos2dx_experimental_video_VideoPlayer(tolua_S);
 

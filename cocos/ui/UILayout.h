@@ -110,7 +110,7 @@ public:
      *
      * @param fileName image file path.
      *
-     * @param texType @see TextureResType. UI_TEX_TYPE_LOCAL means local file, UI_TEX_TYPE_PLIST means sprite frame.
+     * @param texType @see TextureResType. TextureResType::LOCAL means local file, TextureResType::PLIST means sprite frame.
      */
     void setBackGroundImage(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
@@ -143,7 +143,7 @@ public:
     bool isBackGroundImageScale9Enabled()const;
     
     /**
-     * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
+     * Sets background color for layout, if color type is BackGroundColorType::SOLIDE
      *
      * @param color
      */
@@ -152,7 +152,7 @@ public:
     const Color3B& getBackGroundColor()const;
     
     /**
-     * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
+     * Sets background color for layout, if color type is BackGroundColorType::GRADIENT
      *
      * @param start color
      *
@@ -174,7 +174,7 @@ public:
     GLubyte getBackGroundColorOpacity()const;
     
     /**
-     * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
+     * Sets background color vector for layout, if color type is BackGroundColorType::GRADIENT
      *
      * @param vector
      */
@@ -365,11 +365,11 @@ protected:
     
     /**
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child
-     * will get the focus.  The current algorithm to determine which child will get focus is farest-distance-priority algorithm
+     * will get the focus.  The current algorithm to determine which child will get focus is farthest-distance-priority algorithm
      *@param dir next focused widget direction
      *@return The index of child widget in the container
      */
-    int findFarestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
+    int findFarthestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
     /**
      * caculate the nearest distance between the baseWidget and the children of the layout
@@ -379,15 +379,15 @@ protected:
     float calculateNearestDistance(Widget* baseWidget);
     
     /**
-     * caculate the farest distance between the baseWidget and the children of the layout
+     * caculate the farthest distance between the baseWidget and the children of the layout
      *@param the base widget which will be used to caculate the distance between the layout's children and itself
-     *@return return the farest distance between the baseWidget and the layout's children
+     *@return return the farthest distance between the baseWidget and the layout's children
      */
 
-    float calculateFarestDistance(Widget* baseWidget);
+    float calculateFarthestDistance(Widget* baseWidget);
     
     /**
-     *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farest distance algorithm or not
+     *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farthest distance algorithm or not
      */
     void findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget);
     

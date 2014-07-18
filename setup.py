@@ -98,7 +98,11 @@ class SetEnvVar(object):
         return sys.platform == 'darwin'
 
     def _is_zsh(self):
-        return os.environ.get('SHELL')[-3:] == "zsh"
+        shellItem = os.environ.get('SHELL')
+        if shellItem is not None:
+            if len(shellItem) >= 3:
+                return shellItem[-3:] == "zsh"
+        return False
 
     def _get_unix_file_list(self):
         file_list = None
@@ -553,7 +557,7 @@ class SetEnvVar(object):
         if ret is not None:
             print("    ->Path " + ret + " was found\n")
         else:
-            print("    ->Command " + ret + " not found\n")
+            print("    ->Command " + cmd + " not found\n")
         return ret
 
     def _find_value_from_sys(self, var_name):

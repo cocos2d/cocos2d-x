@@ -5,10 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: setTexture(cc.Texture2D)
---          
--- overload function: setTexture(string)
---          
+-- @overload self, cc.Texture2D         
+-- @overload self, string         
 -- @function [parent=#Sprite3D] setTexture
 -- @param self
 -- @param #string str
@@ -29,10 +27,8 @@
 -- @param #cc.BlendFunc blendfunc
         
 --------------------------------
--- overload function: create(string, string)
---          
--- overload function: create(string)
---          
+-- @overload self, string, string         
+-- @overload self, string         
 -- @function [parent=#Sprite3D] create
 -- @param self
 -- @param #string str

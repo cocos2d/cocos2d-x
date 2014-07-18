@@ -58,6 +58,9 @@
 		1503FAC418DA8B6C00F6518C /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
 		1503FAC518DA8B6C00F6518C /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		1503FAC618DA8B6C00F6518C /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
+		156229331973D400009C9067 /* bitExtend.lua in Resources */ = {isa = PBXBuildFile; fileRef = 156229321973D400009C9067 /* bitExtend.lua */; };
+		156229341973D400009C9067 /* bitExtend.lua in Resources */ = {isa = PBXBuildFile; fileRef = 156229321973D400009C9067 /* bitExtend.lua */; };
+		156EAE071977D0BD00F53709 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		15AECE0B195C0F8A00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		15AECE1F195D0EC500907DB0 /* experimentalConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */; };
@@ -1393,6 +1396,7 @@
 		1503FAB018DA8B6C00F6518C /* socket.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = socket.lua; path = ../external/lua/luasocket/socket.lua; sourceTree = "<group>"; };
 		1503FAB118DA8B6C00F6518C /* tp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tp.lua; path = ../external/lua/luasocket/tp.lua; sourceTree = "<group>"; };
 		1503FAB218DA8B6C00F6518C /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = ../external/lua/luasocket/url.lua; sourceTree = "<group>"; };
+		156229321973D400009C9067 /* bitExtend.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bitExtend.lua; path = "../cocos/scripting/lua-bindings/script/bitExtend.lua"; sourceTree = "<group>"; };
 		15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = experimentalConstants.lua; path = "../cocos/scripting/lua-bindings/script/experimentalConstants.lua"; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
@@ -5531,6 +5535,7 @@
 		1ABCA36418CD9E060087CE3A /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				156229321973D400009C9067 /* bitExtend.lua */,
 				15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */,
 				1503FAA918DA8B6C00F6518C /* ftp.lua */,
 				1503FAAA18DA8B6C00F6518C /* headers.lua */,
@@ -7866,6 +7871,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				156EAE071977D0BD00F53709 /* ActionTimeline in Resources */,
 				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
@@ -7897,6 +7903,7 @@
 				15C90B4918E66C2A00D69802 /* tp.lua in Resources */,
 				1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */,
 				1ABCA38E18CD9E180087CE3A /* GuiConstants.lua in Resources */,
+				156229331973D400009C9067 /* bitExtend.lua in Resources */,
 				15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */,
 				15C90B4718E66C2400D69802 /* socket.lua in Resources */,
 				15C90B3A18E66BE200D69802 /* ftp.lua in Resources */,
@@ -7939,6 +7946,7 @@
 				15B0870D195AD52000D6F62B /* ActionTimeline in Resources */,
 				15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */,
 				15C90B4418E66C1800D69802 /* mime.lua in Resources */,
+				156229341973D400009C9067 /* bitExtend.lua in Resources */,
 				15C90B4C18E66C3100D69802 /* url.lua in Resources */,
 				1AC35DD618CEE65200F37B72 /* Misc in Resources */,
 				1ABCA37B18CD9E180087CE3A /* CCBReaderLoad.lua in Resources */,

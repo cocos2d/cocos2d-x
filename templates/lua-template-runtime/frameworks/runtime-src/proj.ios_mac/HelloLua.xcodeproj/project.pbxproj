@@ -44,6 +44,7 @@
 		3EB5156D1952865D006966AA /* stringprintf.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EB515511952865D006966AA /* stringprintf.cc */; };
 		3EB5156E1952865D006966AA /* wire_format_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EB515551952865D006966AA /* wire_format_lite.cc */; };
 		3EB5156F1952865D006966AA /* wire_format_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EB515551952865D006966AA /* wire_format_lite.cc */; };
+		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
 		5023811817EBBCAC00990C9B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
 		5023811917EBBCAC00990C9B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5023810917EBBCAC00990C9B /* Default-568h@2x.png */; };
 		5023811A17EBBCAC00990C9B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5023810A17EBBCAC00990C9B /* Default.png */; };
@@ -161,9 +162,6 @@
 		C08D5D6718E567C6009071A4 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D5418E567C6009071A4 /* tp.lua */; };
 		C08D5D6818E567C6009071A4 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D5518E567C6009071A4 /* url.lua */; };
 		C08D5D6918E567C6009071A4 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D5518E567C6009071A4 /* url.lua */; };
-		C09BA7E718BC929700A85A3E /* WorkSpaceDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */; };
-		C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */; };
-		C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -390,6 +388,7 @@
 		3EB515551952865D006966AA /* wire_format_lite.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wire_format_lite.cc; sourceTree = "<group>"; };
 		3EB515561952865D006966AA /* wire_format_lite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wire_format_lite.h; sourceTree = "<group>"; };
 		3EB515571952865D006966AA /* wire_format_lite_inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wire_format_lite_inl.h; sourceTree = "<group>"; };
+		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5023810817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		5023810917EBBCAC00990C9B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -471,11 +470,6 @@
 		C08D5D5318E567C6009071A4 /* socket.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = socket.lua; path = "../../cocos2d-x/external/lua/luasocket/socket.lua"; sourceTree = "<group>"; };
 		C08D5D5418E567C6009071A4 /* tp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tp.lua; path = "../../cocos2d-x/external/lua/luasocket/tp.lua"; sourceTree = "<group>"; };
 		C08D5D5518E567C6009071A4 /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = "../../cocos2d-x/external/lua/luasocket/url.lua"; sourceTree = "<group>"; };
-		C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkSpaceDialog.xib; sourceTree = "<group>"; };
-		C09BA7E518BC929700A85A3E /* WorkSpaceDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkSpaceDialogController.h; sourceTree = "<group>"; };
-		C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorkSpaceDialogController.mm; sourceTree = "<group>"; };
-		C09BA7EC18BCA49600A85A3E /* NSAppSheetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAppSheetAdditions.h; sourceTree = "<group>"; };
-		C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSAppSheetAdditions.m; sourceTree = "<group>"; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		F293B3C815EB7BE500256477 /* HelloLua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloLua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -518,6 +512,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */,
 				C03781F618BF65B100FE4F13 /* libluabindings iOS.a in Frameworks */,
 				15A8A4441834C43700142BE0 /* libchipmunk iOS.a in Frameworks */,
 				15A8A4451834C43700142BE0 /* libcocos2dx iOS.a in Frameworks */,
@@ -689,11 +684,6 @@
 		5023817117EBBE3400990C9B /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				C09BA7EC18BCA49600A85A3E /* NSAppSheetAdditions.h */,
-				C09BA7ED18BCA49600A85A3E /* NSAppSheetAdditions.m */,
-				C09BA7E418BC929700A85A3E /* WorkSpaceDialog.xib */,
-				C09BA7E518BC929700A85A3E /* WorkSpaceDialogController.h */,
-				C09BA7E618BC929700A85A3E /* WorkSpaceDialogController.mm */,
 				5023817217EBBE3400990C9B /* Icon.icns */,
 				C07828F418B4D72E00BD2287 /* main.m */,
 				C07828F518B4D72E00BD2287 /* MainMenu.xib */,
@@ -780,6 +770,7 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */,
 				3EB51526195187AF006966AA /* CFNetwork.framework */,
 				15A8A4871834C90E00142BE0 /* libcurl.dylib */,
 				D6B061341803AC000077942B /* CoreMotion.framework */,
@@ -1019,7 +1010,6 @@
 				C08D5D6118E567C6009071A4 /* mime.lua in Resources */,
 				C03781D418BF656A00FE4F13 /* Cocos2d.lua in Resources */,
 				C03781BA18BF655400FE4F13 /* res in Resources */,
-				C09BA7E718BC929700A85A3E /* WorkSpaceDialog.xib in Resources */,
 				C03781BC18BF655400FE4F13 /* src in Resources */,
 				C08D5D6918E567C6009071A4 /* url.lua in Resources */,
 				C03781E218BF656A00FE4F13 /* DrawPrimitives.lua in Resources */,
@@ -1148,12 +1138,10 @@
 				3EB515691952865D006966AA /* common.cc in Sources */,
 				3EB515651952865D006966AA /* repeated_field.cc in Sources */,
 				3EB5156B1952865D006966AA /* once.cc in Sources */,
-				C09BA7EE18BCA49600A85A3E /* NSAppSheetAdditions.m in Sources */,
 				3EB5155D1952865D006966AA /* coded_stream.cc in Sources */,
 				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
 				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				3EB5156D1952865D006966AA /* stringprintf.cc in Sources */,
-				C09BA7E818BC929700A85A3E /* WorkSpaceDialogController.mm in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				3EB515611952865D006966AA /* zero_copy_stream_impl_lite.cc in Sources */,
 				3EB5156F1952865D006966AA /* wire_format_lite.cc in Sources */,

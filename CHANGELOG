@@ -1,19 +1,32 @@
-cocos2d-x-3.2    ??
+cocos2d-x-3.2  Jul.17 2014
+    [NEW]           Node: added getChildByName method for get a node that can be cast to Type T
+    [NEW]           FileUtils: could add seach path and resolution order path in front
+
     [FIX]           Animation3D: getOrCreate is deprecated and replaced with Animation3D::create
     [FIX]           Animate3D: setSpeed() accept negtive value, which means play reverse, getPlayback and setPlayBack are deprecated
+    [FIX]           EditBox: can not set/get text in password mode on Mac OS X
+    [FIX]           Game Controller: joystick y value inversed on iOS
     [FIX]           GLView: cursor position is not correct if design resolution is different from device resolution
-    [FIX]           Label: color can not be set correctly if using system font
+    [FIX]           Label: color can not be set correctly if using system font on iOS
+    [FIX]           LabelTTF: may lost chinese characters on linux
     [FIX]           Lua-binding: support UIVideoPlayer
     [FIX]           Node: setRotation3D not work based on anchor point
     [FIX]           Node: modify regular of enumerateChildren, now it just searchs its children
-    [FIX]           Setup.py: not work if using zsh
+    [FIX]           Physics integration: body shape will be wrong when using negative value to scale
+    [FIX]           ScrollViewDelegate: make the scrollView delegate methods optional
+    [FIX]           Setup.py: will crash on windows because of checking `zsh`
     [FIX]           SpriteBatchNode: opacity can not work
     [FIX]           Sprite3D: may crash on Android if playing animation and replace Scene after come from background
-    [FIX]           UIdget: opacity is wrong when replace texture
+    [FIX]           UIwidget: opacity is wrong when replace texture
+    [FIX]           UIRichText: will crash when using utf8 string and the length exceed specified length
+    [FIX]           UIText: can not wrap words automatically
     [FIX]           UITextField: keyboard can not hide if touching space outside of keyboard
+    [FIX]           UITextField: can not wrap words automatically
+    [FIX]           UIVideoPlayer: can not exit full screen mode on Android
     
     [FIX]           Others: don't release singleton objects correctly that are needed in the whole game, which will be treated
     as memory leak when using VLD.
+    [FIX]           Others: compiling error when building for iOS 64-bit devices with Xcode6 beta3
     
 
 cocos2d-x-3.2rc0  Jul.7 2014

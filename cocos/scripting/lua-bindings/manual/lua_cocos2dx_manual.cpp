@@ -1234,7 +1234,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
             goto tolua_lerror;
 #endif
         double interval = tolua_tonumber(L, 2, 0);
-        Device::setAccelerometerEnabled(interval);
+        Device::setAccelerometerInterval(interval);
         return 0;
     }
     
@@ -5900,7 +5900,7 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         
         if(!ok)
             return 0;
-        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)&arg5);
         return 0;
     }
     else if (argc == 7)
@@ -6090,7 +6090,8 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
             return 0;
         unsigned int ret = cobj->getTileGIDAt(arg0);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
+        tolua_pushnumber(tolua_S,(lua_Number)0);
+        return 2;
     }
     if (argc == 2)
     {
@@ -6105,7 +6106,8 @@ int lua_cocos2dx_TMXLayer_getTileGIDAt(lua_State* tolua_S)
         
         unsigned int ret = cobj->getTileGIDAt(arg0, (cocos2d::TMXTileFlags*)&arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
+        tolua_pushnumber(tolua_S,(lua_Number)arg1);
+        return 2;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTileGIDAt",argc, 1);
     return 0;
@@ -6436,76 +6438,69 @@ static void extendApplication(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static int lua_cocos2dx_FastTMXLayer_getTileGIDAt(lua_State* tolua_S)
+static int lua_cocos2dx_TextureCache_addImageAsync(lua_State* tolua_S)
 {
+    if (nullptr == tolua_S)
+        return 0 ;
+    
     int argc = 0;
-    cocos2d::FastTMXLayer* cobj = nullptr;
-    bool ok  = true;
+    TextureCache* self = nullptr;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
+	if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
 #endif
     
+    self = static_cast<TextureCache*>(tolua_tousertype(tolua_S,1,0));
     
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.FastTMXLayer",0,&tolua_err)) goto tolua_lerror;
+	if (nullptr == self) {
+		tolua_error(tolua_S,"invalid 'self' in function 'lua_cocos2dx_TextureCache_addImageAsync'\n", NULL);
+		return 0;
+	}
 #endif
+    argc = lua_gettop(tolua_S) - 1;
     
-    cobj = (cocos2d::FastTMXLayer*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
+    if (2 == argc)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FastTMXLayer_getTileGIDAt'", nullptr);
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isstring(tolua_S, 2, 0, &tolua_err)  ||
+            !toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        const char* configFilePath = tolua_tostring(tolua_S, 2, "");
+        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S, 3, 0));
+        
+        
+        self->addImageAsync(configFilePath, [=](Texture2D* tex){
+            int ID = (tex) ? (int)tex->_ID : -1;
+            int* luaID = (tex) ? &tex->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tex, "cc.Texture2D");
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler,1);
+            LuaEngine::getInstance()->removeScriptHandler(handler);
+        });
+        
         return 0;
     }
-#endif
     
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    {
-        cocos2d::Vec2 arg0;
-        
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0);
-        if(!ok)
-            return 0;
-        int ret = cobj->getTileGIDAt(arg0);
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    if (argc == 2)
-    {
-        cocos2d::Vec2 arg0;
-        int arg1 = 0;
-        
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0);
-        ok &= luaval_to_int32(tolua_S, 3, &arg1);
-        
-        if(!ok)
-            return 0;
-        
-        unsigned int ret = cobj->getTileGIDAt(arg0, (cocos2d::TMXTileFlags*)&arg1);
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTileGIDAt",argc, 1);
-    return 0;
+    CCLOG("'addImageAsync' function of TextureCache has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FastTMXLayer_getTileGIDAt'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'addImageAsync'.",&tolua_err);
 #endif
-    
     return 0;
 }
 
-static void extendFastTMXLayer(lua_State* tolua_S)
+static void extendTextureCache(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "cc.FastTMXLayer");
+    lua_pushstring(tolua_S, "cc.TextureCache");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "getTileGIDAt", lua_cocos2dx_FastTMXLayer_getTileGIDAt);
+        tolua_function(tolua_S, "addImageAsync", lua_cocos2dx_TextureCache_addImageAsync);
     }
     lua_pop(tolua_S, 1);
 }
@@ -6563,7 +6558,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendTMXLayer(tolua_S);
     extendEventListenerFocus(tolua_S);
     extendApplication(tolua_S);
-    extendFastTMXLayer(tolua_S);
+    extendTextureCache(tolua_S);
     
     return 0;
 }
