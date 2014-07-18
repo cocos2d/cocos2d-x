@@ -135,7 +135,7 @@
 		15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
 		15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
 		1A0EE2A118CDF6DA004CD58F /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
-		1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
+		1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
 		1A0EE2A418CDF6DA004CD58F /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		1A0EE2A618CDF6DA004CD58F /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
@@ -157,7 +157,7 @@
 		1A0EE2D018CDF733004CD58F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35618CD9A890087CE3A /* QuartzCore.framework */; };
 		1A0EE2D118CDF733004CD58F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
 		1A0EE2D218CDF733004CD58F /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
-		1A0EE2D318CDF733004CD58F /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
+		1A0EE2D318CDF733004CD58F /* libcocos2dx Mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
 		1A0EE2D418CDF733004CD58F /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB21807A4F9005B8026 /* libcocos2dx-extensions Mac.a */; };
 		1A0EE2D518CDF733004CD58F /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1A0EE2D618CDF733004CD58F /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA27E18CD90A50087CE3A /* libluabindings Mac.a */; };
@@ -233,7 +233,7 @@
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1AAF534B180E2F4E000584C8 /* libbox2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB61807A4F9005B8026 /* libbox2d Mac.a */; };
 		1AAF534C180E2F4E000584C8 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
-		1AAF534D180E2F4E000584C8 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
+		1AAF534D180E2F4E000584C8 /* libcocos2dx Mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
 		1AAF534E180E2F4E000584C8 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB21807A4F9005B8026 /* libcocos2dx-extensions Mac.a */; };
 		1AAF534F180E2F4E000584C8 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1AAF53FE180E39D4000584C8 /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC41807A4F9005B8026 /* libbox2d iOS.a */; };
@@ -243,7 +243,7 @@
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		1ABCA2C218CD92420087CE3A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
-		1ABCA2C318CD92420087CE3A /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
+		1ABCA2C318CD92420087CE3A /* libcocos2dx Mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
 		1ABCA2C418CD92420087CE3A /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB21807A4F9005B8026 /* libcocos2dx-extensions Mac.a */; };
 		1ABCA2C518CD92420087CE3A /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
 		1ABCA2C618CD92420087CE3A /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA27E18CD90A50087CE3A /* libluabindings Mac.a */; };
@@ -915,6 +915,10 @@
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		B24024DB1978DE1000FDE433 /* libcocos2dx Mac.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
+		B24024DD1978EC0700FDE433 /* libcocos2dx Mac.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
+		B24024E31978ED5200FDE433 /* libcocos2dx Mac.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
+		B24024E51978ED5F00FDE433 /* libcocos2dx Mac.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */; };
 		B244F3171976878E00ED1926 /* libcocosNetwork Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B244F3161976878700ED1926 /* libcocosNetwork Mac.a */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
@@ -1694,6 +1698,49 @@
 			remoteInfo = "cocosSpine Mac";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B24024D81978DE0800FDE433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B24024DB1978DE1000FDE433 /* libcocos2dx Mac.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24024DC1978EBFE00FDE433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B24024DD1978EC0700FDE433 /* libcocos2dx Mac.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24024E21978ED4B00FDE433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B24024E31978ED5200FDE433 /* libcocos2dx Mac.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B24024E41978ED5800FDE433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B24024E51978ED5F00FDE433 /* libcocos2dx Mac.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1503FAA918DA8B6C00F6518C /* ftp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ftp.lua; path = ../external/lua/luasocket/ftp.lua; sourceTree = "<group>"; };
@@ -3522,7 +3569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A0EE2A118CDF6DA004CD58F /* libchipmunk Mac.a in Frameworks */,
-				1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.a in Frameworks */,
+				1A0EE2A218CDF6DA004CD58F /* libcocos2dx Mac.dylib in Frameworks */,
 				1A0EE2A418CDF6DA004CD58F /* libCocosDenshion Mac.a in Frameworks */,
 				1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */,
 				1A0EE2A618CDF6DA004CD58F /* libcurl.dylib in Frameworks */,
@@ -3556,7 +3603,7 @@
 				1A0EE2D018CDF733004CD58F /* QuartzCore.framework in Frameworks */,
 				1A0EE2D118CDF733004CD58F /* OpenGL.framework in Frameworks */,
 				1A0EE2D218CDF733004CD58F /* libchipmunk Mac.a in Frameworks */,
-				1A0EE2D318CDF733004CD58F /* libcocos2dx Mac.a in Frameworks */,
+				1A0EE2D318CDF733004CD58F /* libcocos2dx Mac.dylib in Frameworks */,
 				1A0EE2D418CDF733004CD58F /* libcocos2dx-extensions Mac.a in Frameworks */,
 				1A0EE2D518CDF733004CD58F /* libCocosDenshion Mac.a in Frameworks */,
 				1A0EE2D618CDF733004CD58F /* libluabindings Mac.a in Frameworks */,
@@ -3631,7 +3678,7 @@
 				1ABCA35718CD9A890087CE3A /* QuartzCore.framework in Frameworks */,
 				1ABCA35518CD9A820087CE3A /* OpenGL.framework in Frameworks */,
 				1ABCA2C218CD92420087CE3A /* libchipmunk Mac.a in Frameworks */,
-				1ABCA2C318CD92420087CE3A /* libcocos2dx Mac.a in Frameworks */,
+				1ABCA2C318CD92420087CE3A /* libcocos2dx Mac.dylib in Frameworks */,
 				1ABCA2C418CD92420087CE3A /* libcocos2dx-extensions Mac.a in Frameworks */,
 				1ABCA2C518CD92420087CE3A /* libCocosDenshion Mac.a in Frameworks */,
 				1ABCA2C618CD92420087CE3A /* libluabindings Mac.a in Frameworks */,
@@ -3678,7 +3725,7 @@
 				B2DB479A197668D500411E16 /* libcocosGUI Mac.a in Frameworks */,
 				1AAF534B180E2F4E000584C8 /* libbox2d Mac.a in Frameworks */,
 				1AAF534C180E2F4E000584C8 /* libchipmunk Mac.a in Frameworks */,
-				1AAF534D180E2F4E000584C8 /* libcocos2dx Mac.a in Frameworks */,
+				1AAF534D180E2F4E000584C8 /* libcocos2dx Mac.dylib in Frameworks */,
 				1AAF534E180E2F4E000584C8 /* libcocos2dx-extensions Mac.a in Frameworks */,
 				1AAF534F180E2F4E000584C8 /* libCocosDenshion Mac.a in Frameworks */,
 				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
@@ -7687,7 +7734,7 @@
 		46A15F9D1807A4F8005B8026 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */,
+				46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */,
 				46A15FB21807A4F9005B8026 /* libcocos2dx-extensions Mac.a */,
 				B2DB4799197668CA00411E16 /* libcocosGUI Mac.a */,
 				B2DB48C219767D3600411E16 /* libcocosStudio Mac.a */,
@@ -7743,6 +7790,7 @@
 				1A0EE1D118CDF6DA004CD58F /* Resources */,
 				1A0EE1F618CDF6DA004CD58F /* Sources */,
 				1A0EE29F18CDF6DA004CD58F /* Frameworks */,
+				B24024D81978DE0800FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -7763,6 +7811,7 @@
 				1A0EE2C318CDF733004CD58F /* Sources */,
 				1A0EE2C818CDF733004CD58F /* Frameworks */,
 				1A0EE2D818CDF733004CD58F /* Resources */,
+				B24024E21978ED4B00FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -7837,6 +7886,7 @@
 				1ABCA28218CD91510087CE3A /* Sources */,
 				1ABCA28318CD91510087CE3A /* Frameworks */,
 				1ABCA28418CD91510087CE3A /* Resources */,
+				B24024E41978ED5800FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -7891,6 +7941,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				B24024DC1978EBFE00FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -8024,10 +8075,10 @@
 			remoteRef = 1ABCA27F18CD90A50087CE3A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */ = {
+		46A15FB01807A4F9005B8026 /* libcocos2dx Mac.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libcocos2dx Mac.a";
+			path = "libcocos2dx Mac.dylib";
 			remoteRef = 46A15FAF1807A4F9005B8026 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -9598,6 +9649,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
@@ -9612,6 +9664,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -9626,6 +9679,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-pagezero_size",
 					10000,
@@ -9645,6 +9699,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-pagezero_size",
 					10000,
@@ -9731,6 +9786,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-pagezero_size",
 					10000,
@@ -9750,6 +9806,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-pagezero_size",
 					10000,
@@ -9803,6 +9860,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
@@ -9816,6 +9874,7 @@
 					CC_TARGET_OS_MAC,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};

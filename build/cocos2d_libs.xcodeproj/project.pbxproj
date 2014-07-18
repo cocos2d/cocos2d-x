@@ -7720,6 +7720,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
+				LD_DYLIB_INSTALL_NAME = "@rpath/../Frameworks/lib$(TARGET_NAME).dylib";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
@@ -7752,6 +7753,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
+				LD_DYLIB_INSTALL_NAME = "@rpath/../Frameworks/lib$(TARGET_NAME).dylib";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
