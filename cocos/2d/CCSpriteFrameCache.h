@@ -106,6 +106,8 @@ public:
      */
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
+	void addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture);
+
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
      */
@@ -134,6 +136,8 @@ public:
     * @since v0.99.5
     */
     void removeSpriteFramesFromFile(const std::string& plist);
+
+	void removeSpriteFramesFromFileContent(const std::string& plist_content);
 
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.
