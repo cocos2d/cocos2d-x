@@ -1,50 +1,40 @@
 
-local UIListView = class("UIListView", function()
-	local node = cc.ClippingRegionNode:create()
-	node:setAnchorPoint(0.5, 0.5)
-	node:setContentSize(display.width, display.height)
-	node:setPosition(display.cx, display.cy)
-	return node
-end)
+local UIScrollView = import(".UIScrollView")
+local UIListView = class("UIListView", UIScrollView)
 
 local UIListViewItem = import(".UIListViewItem")
 
 
 UIListView.DELEGATE					= "ListView_delegate"
 UIListView.TOUCH_DELEGATE			= "ListView_Touch_delegate"
-UIListView.DIRECTION_HORIZONTAL		= 1
-UIListView.DIRECTION_VERTICAL		= 0
 
 UIListView.CELL_TAG					= "Cell"
 UIListView.CELL_SIZE_TAG			= "CellSize"
 UIListView.COUNT_TAG				= "Count"
 UIListView.CLICKED_TAG				= "Clicked"
 
-function UIListView:ctor(param)
-	self.listener = {}
-	self.direction = param.direction or UIListView.DIRECTION_VERTICAL
+UIListView.BG_ZORDER 				= -1
+UIListView.CONTENT_ZORDER			= 10
+
+function UIListView:ctor(params)
+	UIListView.super.ctor(self, params)
+
+	self.items_ = {}
+	self.direction = params.direction or UIScrollView.DIRECTION_VERTICAL
 	self.container = cc.Node:create()
 
-	self:addBgColorIf(param.bgColor)
-	self:addBgIf(param)
-	self:setViewRect(param.viewRect)
-	self.container:setAnchorPoint(0, 0)
-	self:addChild(self.container)
+	self:setDirection(params.direction)
+	self:setViewRect(params.viewRect)
+	self:addScrollNode(self.container)
+	self:onScroll(handler(self, self.scrollListener))
 
-	self:addScrollBarIf(param)
+	self:addBgColorIf(params.bgColor)
+	self:addBgIf(params)
 
-	self:setEnabled(true)
-	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
-        return self:onTouch_(event)
-    end)
-end
+	self.size = {}
 
-function UIListView:setEnabled(enabled)
-    self:setTouchEnabled(enabled)
-end
-
-function UIListView:isEnabled()
-    return self:isTouchEnabled()
+	-- dump(self.super, "padding:")
+	-- print("list super:", tostring(self.super))
 end
 
 function UIListView:addBgColorIf(bgColor)
@@ -52,197 +42,239 @@ function UIListView:addBgColorIf(bgColor)
 		return
 	end
 
-	display.newColorLayer(bgColor):addTo(self)
+	display.newColorLayer(bgColor):addTo(self, UIListView.BG_ZORDER)
+		:setTouchSwallowEnabled(false)
 end
 
-function UIListView:addBgIf(param)
-	if not param.bg then
+function UIListView:addBgIf(params)
+	if not params.bg then
 		return
 	end
 
-	display.newScale9Sprite(param.bg)
-		:size(param.viewRect.width, param.viewRect.height)
-		:pos(param.viewRect.x + param.viewRect.width/2,
-			param.viewRect.y + param.viewRect.height/2)
-		:addTo(self)
+	display.newScale9Sprite(params.bg)
+		:size(params.viewRect.width, params.viewRect.height)
+		:pos(params.viewRect.x + params.viewRect.width/2,
+			params.viewRect.y + params.viewRect.height/2)
+		:addTo(self, UIListView.BG_ZORDER)
+		:setTouchSwallowEnabled(false)
 end
 
-function UIListView:addScrollBarIf(param)
-	if not param.showScrollBar then
-		return
-	end
+function UIListView:onTouch(listener)
+	self.touchListener_ = listener
 
-end
-
-function UIListView:setViewRect(rect)
-	if not rect then
-		return
-	end
-
-	self.viewRect = rect
-	self:setClippingRegion(rect)
-	self.container:setPosition(cc.p(rect.x, rect.y))
-end
-
-function UIListView:getViewRect()
-	return self.viewRect
-end
-
-function UIListView:setContentSize()
-	printInfo("UIListView - needn't setContentSize")
-end
-
-function UIListView:setDirection(direction)
-	self.direction = direction
-end
-
-function UIListView:registerHandler(listener, delegate)
-	self.listener[delegate] = listener
 	return self
 end
 
-function UIListView:transItem(item)
-	return UIListViewItem.new(item)
+function UIListView:newItem(item)
+	item = UIListViewItem.new(item)
+	item:onSizeChange(handler(self, self.itemSizeChangeListener))
+
+	return item
+end
+
+function UIListView:itemSizeChangeListener(listItem, newSize, oldSize)
+	-- print("UIListView - itemSizeChangeListener")
+	local pos = self:getItemPos(listItem)
+	if not pos then
+		return
+	end
+
+	local itemW, itemH = newSize.width - oldSize.width, newSize.height - oldSize.height
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		itemW = 0
+	else
+		itemH = 0
+	end
+
+	print("UIListView - sizeChange: w,h " .. itemW .. "," .. itemH)
+	local content = listItem:getContent()
+	transition.moveBy(content,
+				{x = itemW/2, y = itemH/2, time = 0.2})
+
+	self.size.width = self.size.width + itemW
+	self.size.height = self.size.height + itemH
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		self:moveItems(1, pos - 1, itemW, itemH, true)
+	else
+		self:moveItems(pos + 1, table.nums(self.items_), itemW, itemH, true)
+	end
+end
+
+function UIListView:scrollListener(event)
+	-- print("UIListView - scrollListener:" .. event.name)
+
+	if "clicked" ~= event.name then
+		return
+	end
+
+	local nodePoint = self.container:convertToNodeSpace(cc.p(event.x, event.y))
+	nodePoint.x = nodePoint.x - self.viewRect_.x
+	nodePoint.y = nodePoint.y - self.viewRect_.y
+
+	local width, height = 0, self.size.height
+	local itemW, itemH = 0, 0
+	local pos
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		for i,v in ipairs(self.items_) do
+			_, itemH = v:getItemSize()
+
+			if nodePoint.y < height and nodePoint.y > height - itemH then
+				pos = i
+				break
+			end
+			height = height - itemH
+		end
+	else
+		for i,v in ipairs(self.items_) do
+			itemW, _ = v:getItemSize()
+
+			if nodePoint.x > width and nodePoint.x < width + itemW then
+				pos = i
+				break
+			end
+			width = width + itemW
+		end
+	end
+
+	self.touchListener_({name = "clicked", listView = self, itemPos = pos, item = self.items_[pos]})
+end
+
+function UIListView:addItem(listItem, pos)
+	if pos then
+		table.insert(self.items_, pos, listItem)
+	else
+		table.insert(self.items_, listItem)
+	end
+	self.container:addChild(listItem)
+
+	return self
+end
+
+function UIListView:removeItem(listItem, bAni)
+	print("UIListView - removeItem")
+	local itemW, itemH = listItem:getItemSize()
+	self.container:removeChild(listItem)
+
+	local pos = self:getItemPos(listItem)
+	if pos then
+		table.remove(self.items_, pos)
+	end
+
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		itemW = 0
+	else
+		itemH = 0
+	end
+
+	self.size.width = self.size.width - itemW
+	self.size.height = self.size.height - itemH
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		self:moveItems(1, pos - 1, -itemW, -itemH, bAni)
+	else
+		self:moveItems(pos, table.nums(self.items_), -itemW, -itemH, bAni)
+	end
+
+	return self
+end
+
+function UIListView:getItemPos(listItem)
+	for i,v in ipairs(self.items_) do
+		if v == listItem then
+			return i
+		end
+	end
+end
+
+function UIListView:layout_()
+	local width, height = 0, 0
+	local itemW, itemH = 0, 0
+
+	-- calcate whole width height
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		width = self.viewRect_.width
+
+		for i,v in ipairs(self.items_) do
+			itemW, itemH = v:getItemSize()
+			itemW = itemW or 0
+			itemH = itemH or 0
+
+			height = height + itemH
+		end
+	else
+		height = self.viewRect_.height
+
+		for i,v in ipairs(self.items_) do
+			itemW, itemH = v:getItemSize()
+			itemW = itemW or 0
+			itemH = itemH or 0
+
+			width = width + itemW
+		end
+	end
+	self:setActualRect({x = self.viewRect_.x,
+		y = self.viewRect_.y,
+		width = width,
+		height = height})
+	self.size.width = width
+	self.size.height = height
+	-- dump(self.container:getCascadeBoundingBox(), "UIListView container bound:")
+
+	print("UIListView - w,h", width, height)
+
+	local tempWidth, tempHeight = width, height
+	if UIScrollView.DIRECTION_VERTICAL == self.direction then
+		itemW, itemH = 0, 0
+
+		local content
+		for i,v in ipairs(self.items_) do
+			itemW, itemH = v:getItemSize()
+			itemW = itemW or 0
+			itemH = itemH or 0
+
+			tempHeight = tempHeight - itemH
+			content = v:getContent()
+			content:setAnchorPoint(0.5, 0.5)
+			-- content:setPosition(self.viewRect_.x + tempWidth/2,
+			-- 	self.viewRect_.y + tempHeight + itemH/2)
+			content:setPosition(itemW/2, itemH/2)
+			v:setPosition(self.viewRect_.x,
+				self.viewRect_.y + tempHeight)
+
+
+			-- print("UIListView - layout_:" .. tempWidth/2 .. " " .. tempHeight + itemH/2)
+			-- HDrawRect(content:getBoundingBox(), v, cc.c4f(0, 1, 0, 1))
+			-- dump(v:getBoundingBox(), "v Rect:")
+			-- dump(content:getBoundingBox(), "content rect:")
+		end
+	else
+		itemW, itemH = 0, 0
+		tempWidth = 0
+
+		for i,v in ipairs(self.items_) do
+			itemW, itemH = v:getItemSize()
+			itemW = itemW or 0
+			itemH = itemH or 0
+
+			content = v:getContent()
+			content:setAnchorPoint(0.5, 0.5)
+			content:setPosition(itemW/2, itemH/2)
+			v:setPosition(self.viewRect_.x + tempWidth, self.viewRect_.y)
+			tempWidth = tempWidth + itemW
+		end
+	end
+
+	self.container:setPosition(0, self.viewRect_.height - self.size.height)
+	-- dump(self.container:getCascadeBoundingBox(), "UIListView container bound:")
+	-- local bound = self.container:getCascadeBoundingBox()
+	-- dump(bound, "bound:")
+	-- HDrawRect(bound, self, cc.c4f(0, 1, 0, 1))
+
 end
 
 function UIListView:reload()
-	local width,height = 0,0 --container width height
-	local count = self.listener[UIListView.DELEGATE](self, UIListView.COUNT_TAG)
-	if count and 0 == count then
-		printInfo("UIListView - count is 0")
-		return
-	end
-
-	--calcate container width height
-	if self.direction == UIListView.DIRECTION_VERTICAL then
-		width = self.viewRect.width
-		local w,h = 0, 0
-		for i = 1, count do
-			w,h = self.listener[UIListView.DELEGATE](self, UIListView.CELL_SIZE_TAG, i)
-			w = w or 0
-			h = h or 0
-
-			height = height + h
-		end
-		self:scrollTo(self.viewRect.x + 0, self.viewRect.y + self.viewRect.height - height)
-	else
-		height = self.viewRect.height
-		local w,h = 0, 0
-		local item
-		for i = 1, count do
-			w,h = self.listener[UIListView.DELEGATE](self, UIListView.CELL_SIZE_TAG, i)
-			w = w or 0
-			h = h or 0
-
-			width = width + w
-		end
-		self:scrollTo(self.viewRect.x, self.viewRect.y)
-	end
-	self.container:setContentSize(width, height)
-
-	local tempWidth, tempHeight = width, height
-	if self.direction == UIListView.DIRECTION_VERTICAL then
-		local w,h = 0, 0
-		local item
-		for i = 1, count do
-			w,h = self.listener[UIListView.DELEGATE](self, UIListView.CELL_SIZE_TAG, i)
-			w = w or 0
-			h = h or 0
-
-			item = self.listener[UIListView.DELEGATE](self, UIListView.CELL_TAG, i)
-			if item then
-				item:setItemSize(w, h)
-				item:setAnchorPoint(cc.p(0.5, 0.5))
-				item:setPosition(width/2, tempHeight - h/2)
-				item:setTag(i)
-				self.container:addChild(item)
-			end
-
-			tempHeight = tempHeight -h
-			-- HDrawRect({x = 0, y = tempHeight, width = tempWidth, height = h},
-			-- 	self.container, cc.c4f(0, 1, 0, 1))
-		end
-	else
-		local w,h = 0, 0
-		local item
-		tempWidth = 0
-		for i = 1, count do
-			w,h = self.listener[UIListView.DELEGATE](self, UIListView.CELL_SIZE_TAG, i)
-			w = w or 0
-			h = h or 0
-
-			item = self.listener[UIListView.DELEGATE](self, UIListView.CELL_TAG, i)
-			if item then
-				item:setItemSize(w, h)
-				item:setAnchorPoint(cc.p(0.5, 0.5))
-				item:setPosition(tempWidth + w/2, height/2)
-				item:setTag(i)
-				self.container:addChild(item)
-			end
-
-			-- HDrawRect({x = tempWidth, y = 0, width = w, height = height},
-			-- 	self.container, cc.c4f(0, 1, 0, 1))
-			tempWidth = tempWidth + w
-		end
-	end
-
-	--先计算出container的position x,y方向上的可变范围,后面拖动时可以直接用
-	--拖动时是可以大于或小于这个范围的，只是拖动结束自动回到这个范围中来，回到哪一边的值，最近原则
-	self.positionRange_ = {}
-	if self.viewRect.width < width then
-		self.positionRange_.minX = self.viewRect.width - width
-		self.positionRange_.maxX = 0
-	else
-		self.positionRange_.minX = 0
-		self.positionRange_.maxX = 0
-	end
-	if self.viewRect.height < height then
-		self.positionRange_.minY = self.viewRect.height - height
-		self.positionRange_.maxY = 0
-	else
-		self.positionRange_.minY = self.viewRect.height - height
-		self.positionRange_.maxY = self.viewRect.height - height
-	end
-	self.positionRange_.minX = self.positionRange_.minX + self.viewRect.x
-	self.positionRange_.maxX = self.positionRange_.maxX + self.viewRect.x
-	self.positionRange_.minY = self.positionRange_.minY + self.viewRect.y
-	self.positionRange_.maxY = self.positionRange_.maxY + self.viewRect.y
+	self:layout_()
 
 	return self
-end
-
---自已保存一份position数据，就不用通用binding从C代码中取
-function UIListView:scrollTo(p, y)
-	local x_, y_
-	if "table" == type(p) then
-		x_ = p.x or 0
-		y_ = p.y or 0
-	else
-		x_ = p
-		y_ = y
-	end
-
-	self.position_ = cc.p(x_, y_)
-	self.container:setPosition(self.position_)
-end
-
-function UIListView:scrollAuto()
-	print("htl scrollAuto:", self.position_.x, self.positionRange_.minX)
-	if self.position_.x < self.positionRange_.minX then
-		self:scrollTo(self.positionRange_.minX, self.position_.y)
-	elseif self.position_.x > self.positionRange_.maxX then
-		self:scrollTo(self.positionRange_.maxX, self.position_.y)
-	else
-		--do nothing
-	end
-
-	if self.position_.y < self.positionRange_.minY then
-		self:scrollTo(self.position_.x, self.positionRange_.minY)
-	elseif self.position_.y > self.positionRange_.maxY then
-		self:scrollTo(self.position_.x, self.positionRange_.maxY)
-	else
-		-- do nothing
-	end
 end
 
 function UIListView:notifyItem(point)
@@ -279,40 +311,33 @@ function UIListView:notifyItem(point)
 	self.listener[UIListView.DELEGATE](self, UIListView.CLICKED_TAG, tag, point)
 end
 
-function UIListView:onTouch_(event)
-	if "began" == event.name and not cc.rectContainsPoint(self.viewRect, cc.p(event.x, event.y)) then
-		return false
+function UIListView:moveItems(beginIdx, endIdx, x, y, bAni)
+	if 0 == endIdx then
+		self:elasticScroll()
 	end
 
-	if "began" == event.name then
-		self.touchX_ = event.x
-		self.touchY_ = event.y
-		self.bDrag_ = false
-		return true
-	elseif "moved" == event.name then
-		self.bDrag_ = true
-		local disX = event.x - event.prevX
-		local disY = event.y - event.prevY
-		local newx, newy = self.position_.x, self.position_.y
-		if self.direction == UIListView.DIRECTION_VERTICAL then
-			newy = self.position_.y + disY
+	local posX, posY = 0, 0
+
+	print("UIListView - moveItems x,y " .. x .. "," .. y)
+	local moveByParams = {x = x, y = y, time = 0.2}
+	for i=beginIdx, endIdx do
+		if bAni then
+			if i == beginIdx then
+				moveByParams.onComplete = function()
+					self:elasticScroll()
+				end
+			else
+				moveByParams.onComplete = nil
+			end
+			transition.moveBy(self.items_[i], moveByParams)
 		else
-			newx = self.position_.x + disX
-		end
-		self:scrollTo(newx, newy)
-	elseif "ended" == event.name then
-		if self.bDrag_ then
-			self:scrollAuto()
-		else
-			self:notifyItem(
-				self.container:convertToNodeSpace(cc.p(event.x, event.y)))
+			posX, posY = self.items_[i]:getPosition()
+			self.items_[i]:setPosition(posX + x, posY + y)
+			if i == beginIdx then
+				self:elasticScroll()
+			end
 		end
 	end
 end
-
-function UIListView:scrollBar_(event)
-	-- event.value
-end
-
 
 return UIListView
