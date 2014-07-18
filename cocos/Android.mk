@@ -190,6 +190,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/3d \
+                    $(LOCAL_PATH)/math \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external \
