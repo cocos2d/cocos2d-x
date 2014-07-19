@@ -85,7 +85,7 @@ namespace {
 #ifdef GL_ETC1_RGB8_OES
         PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
 #endif
-        
+
 #if DIRECTX_ENABLED == 1
 		PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 		PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT3, Texture2D::PixelFormatInfo(S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, true)),
@@ -442,8 +442,8 @@ void Texture2D::convertRGBA4444ToBGRA4444(const unsigned char* data, ssize_t dat
 	{		
 		*out16++ = (data[i + 0] & 0x0F) << 12	// A
 			| (data[i + 1] & 0xF0) << 4			// R
-			| (data[i + 0] & 0xF0)				// G
-			| (data[i + 1] & 0x0F);				// B
+			| (data[i + 1] & 0x0F) << 4			// G
+			| (data[i + 0] & 0xF0) >> 4;		// B			
 	}
 }
 // conventer function end
@@ -648,60 +648,60 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 	if (!compressed)
 	{
-	const auto rowPitch = pixelsWide * bpp / 8;
+		const auto rowPitch = pixelsWide * bpp / 8;
 
-	// Create texture
-	D3D11_TEXTURE2D_DESC desc;
-	desc.Width = pixelsWide;
-	desc.Height = pixelsHigh;
-	desc.MipLevels = mipmapsNum;
-	desc.ArraySize = 1;
-	desc.Format = format;
-	desc.SampleDesc.Count = 1;
-	desc.SampleDesc.Quality = 0;
-	desc.Usage = D3D11_USAGE_DEFAULT;
-	desc.BindFlags = _renderTargetTexture ? (D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET) : (D3D11_BIND_SHADER_RESOURCE);
-	desc.CPUAccessFlags = 0;
-	desc.MiscFlags = (mipmapsNum > 1) ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
+		// Create texture
+		D3D11_TEXTURE2D_DESC desc;
+		desc.Width = pixelsWide;
+		desc.Height = pixelsHigh;
+		desc.MipLevels = mipmapsNum;
+		desc.ArraySize = 1;
+		desc.Format = format;
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.BindFlags = _renderTargetTexture ? (D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET) : (D3D11_BIND_SHADER_RESOURCE);
+		desc.CPUAccessFlags = 0;
+		desc.MiscFlags = (mipmapsNum > 1) ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
 
-	D3D11_SUBRESOURCE_DATA initData;
-	initData.pSysMem = mipmaps->address;
-	initData.SysMemPitch = static_cast<UINT>(rowPitch);
-	initData.SysMemSlicePitch = static_cast<UINT>(mipmaps->len);
+		D3D11_SUBRESOURCE_DATA initData;
+		initData.pSysMem = mipmaps->address;
+		initData.SysMemPitch = static_cast<UINT>(rowPitch);
+		initData.SysMemSlicePitch = static_cast<UINT>(mipmaps->len);
 
-	auto hr = view->GetDevice()->CreateTexture2D(&desc, (mipmapsNum > 1) ? nullptr : &initData, &_texture);
-	if (SUCCEEDED(hr) && _texture != 0)
-	{		
-		D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc;
-		memset(&SRVDesc, 0, sizeof(SRVDesc));
-		SRVDesc.Format = format;
-		SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		SRVDesc.Texture2D.MipLevels = (mipmapsNum > 1) ? -1 : 1;
-
-		hr = view->GetDevice()->CreateShaderResourceView(_texture, &SRVDesc, &_textureView);
-		if (FAILED(hr))
+		auto hr = view->GetDevice()->CreateTexture2D(&desc, (mipmapsNum > 1) ? nullptr : &initData, &_texture);
+		if (SUCCEEDED(hr) && _texture != 0)
 		{
-			_texture = nullptr;
+			D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc;
+			memset(&SRVDesc, 0, sizeof(SRVDesc));
+			SRVDesc.Format = format;
+			SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+			SRVDesc.Texture2D.MipLevels = (mipmapsNum > 1) ? -1 : 1;
+
+			hr = view->GetDevice()->CreateShaderResourceView(_texture, &SRVDesc, &_textureView);
+			if (FAILED(hr))
+			{
+				_texture = nullptr;
+			}
+
+			if (mipmapsNum > 1)
+			{
+				view->GetContext()->UpdateSubresource(_texture, 0, nullptr, mipmaps->address, static_cast<UINT>(rowPitch), static_cast<UINT>(mipmaps->len));
+				view->GetContext()->GenerateMips(_textureView);
+			}
+
+			DXResourceManager::getInstance().add(&_texture);
+			DXResourceManager::getInstance().add(&_textureView);
+
+#if defined(_DEBUG) || defined(PROFILE)
+			_texture->SetPrivateData(WKPDID_D3DDebugObjectName,
+				sizeof("WICTextureLoader") - 1,
+				"WICTextureLoader"
+				);
+#endif					
 		}
 
-		if (mipmapsNum > 1)
-		{				
-			view->GetContext()->UpdateSubresource(_texture, 0, nullptr, mipmaps->address, static_cast<UINT>(rowPitch), static_cast<UINT>(mipmaps->len));
-			view->GetContext()->GenerateMips(_textureView);
-		}		
-
-		DXResourceManager::getInstance().add(&_texture);
-		DXResourceManager::getInstance().add(&_textureView);
-		
-#if defined(_DEBUG) || defined(PROFILE)
-		_texture->SetPrivateData(WKPDID_D3DDebugObjectName,
-			sizeof("WICTextureLoader") - 1,
-			"WICTextureLoader"
-			);
-#endif					
-	}
-
-	DX::ThrowIfFailed(hr);
+		DX::ThrowIfFailed(hr);
 	}
 
 #else
