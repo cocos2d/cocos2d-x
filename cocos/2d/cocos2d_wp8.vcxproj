@@ -332,6 +332,7 @@
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
+    <ClCompile Include="..\platform\winrt\TextureLoader\DDSTextureLoader.cpp" />
     <ClCompile Include="..\platform\wp8\CCGLView.cpp" />
     <ClCompile Include="..\platform\wp8\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
@@ -550,6 +551,10 @@
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
+    <ClInclude Include="..\platform\winrt\TextureLoader\dds.h" />
+    <ClInclude Include="..\platform\winrt\TextureLoader\DDSTextureLoader.h" />
+    <ClInclude Include="..\platform\winrt\TextureLoader\DirectXHelpers.h" />
+    <ClInclude Include="..\platform\winrt\TextureLoader\PlatformHelpers.h" />
     <ClInclude Include="..\platform\wp8-xaml\cpp\IWP8Win.h" />
     <ClInclude Include="..\platform\wp8\CCGLView.h" />
     <ClInclude Include="..\platform\wp8\pch.h" />

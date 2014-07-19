@@ -173,9 +173,11 @@ void Direct3DBase::Clear()
 {
 	if (m_d3dDevice)
 	{
+#if defined(_DEBUG)
 		Microsoft::WRL::ComPtr<ID3D11Debug> pDebug;
 		m_d3dDevice.Get()->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(pDebug.GetAddressOf()));
 		pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+#endif
 		
 		cocos2d::DXResourceManager::getInstance().clear();
 		cocos2d::DXStateCache::getInstance().invalidateStateCache();		
@@ -187,8 +189,10 @@ void Direct3DBase::Clear()
 		m_d3dContext->Flush();
 		m_d3dContext = nullptr;
 
+#if defined(_DEBUG)
 		pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 		pDebug = nullptr;
+#endif
 		m_d3dDevice = nullptr;
 	}
 }

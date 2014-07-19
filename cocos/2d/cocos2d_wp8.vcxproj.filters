@@ -55,6 +55,9 @@
     <Filter Include="2d">
       <UniqueIdentifier>{fdee8fd3-05f9-46a1-aa15-6ceb16358145}</UniqueIdentifier>
     </Filter>
+    <Filter Include="platform\winrt\TextureLoader">
+      <UniqueIdentifier>{c13a5da6-e84f-4232-bd9c-3a7d8605fddb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -607,6 +610,9 @@
     </ClCompile>
     <ClCompile Include="CCFastTMXTiledMap.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\TextureLoader\DDSTextureLoader.cpp">
+      <Filter>platform\winrt\TextureLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1245,6 +1251,18 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8-xaml\cpp\IWP8Win.h" />
+    <ClInclude Include="..\platform\winrt\TextureLoader\dds.h">
+      <Filter>platform\winrt\TextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\TextureLoader\DDSTextureLoader.h">
+      <Filter>platform\winrt\TextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\TextureLoader\DirectXHelpers.h">
+      <Filter>platform\winrt\TextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\TextureLoader\PlatformHelpers.h">
+      <Filter>platform\winrt\TextureLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

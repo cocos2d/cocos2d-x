@@ -2,7 +2,7 @@ Texture2D g_Texture0;
 
 SamplerState TextureSampler
 {
-	Filter = MIN_MAG_MIP_LINEAR;
+	Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	AddressU = Wrap;
 	AddressV = Wrap;
 };
@@ -18,6 +18,5 @@ struct PixelShaderInput
 // A pass-through function for the (interpolated) color data.
 float4 main(PixelShaderInput input) : SV_TARGET
 {
-	float4 color = g_Texture0.Sample(TextureSampler, input.texUV);
-	return input.color * color;// g_Texture0.Sample(TextureSampler, input.texUV);
+	return input.color * g_Texture0.Sample(TextureSampler, input.texUV);
 }

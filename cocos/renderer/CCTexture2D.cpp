@@ -50,6 +50,7 @@ THE SOFTWARE.
 
 #if (DIRECTX_ENABLED == 1)
 #include "platform/winrt/CCGLView.h"
+#include "platform/winrt/TextureLoader/DDSTextureLoader.h"
 #endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -85,6 +86,12 @@ namespace {
         PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
 #endif
         
+#if DIRECTX_ENABLED == 1
+		PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+		PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT3, Texture2D::PixelFormatInfo(S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, true)),
+		PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, true)),
+#else
+        
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
         PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
@@ -96,6 +103,7 @@ namespace {
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
         PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
+#endif // DIRECTX_ENABLED
         
 #ifdef GL_ATC_RGB_AMD
         PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD,
@@ -605,6 +613,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 	DXResourceManager::getInstance().remove(&_textureView);
 
 	auto view = GLView::sharedOpenGLView();
+	bool compressed = false;
 
 	// Defalt 32-bit RGBA
 	auto format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -623,11 +632,22 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 	{
 		format = DXGI_FORMAT_R8G8_UNORM;
 	}
+	else if (pixelFormat == PixelFormat::S3TC_DXT5 || pixelFormat == PixelFormat::S3TC_DXT3 || pixelFormat == PixelFormat::S3TC_DXT1)
+	{		
+		DX::ThrowIfFailed(DirectX::CreateDDSTextureFromMemory(view->GetDevice(), (uint8_t*)mipmaps->address, mipmaps->len, (ID3D11Resource**)&_texture, &_textureView));
+
+		DXResourceManager::getInstance().add(&_texture);
+		DXResourceManager::getInstance().add(&_textureView);		
+
+		compressed = true;
+	}
 	else if (pixelFormat != PixelFormat::RGBA8888)
 	{
 		NOT_SUPPORTED();
 	}
 
+	if (!compressed)
+	{
 	const auto rowPitch = pixelsWide * bpp / 8;
 
 	// Create texture
@@ -682,6 +702,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 	}
 
 	DX::ThrowIfFailed(hr);
+	}
 
 #else
     

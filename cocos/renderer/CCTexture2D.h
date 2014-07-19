@@ -40,6 +40,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+#if DIRECTX_ENABLED == 1
+#define S3TC_DXT1_EXT 0x78945456
+#define S3TC_DXT3_EXT 0x78945457
+#define S3TC_DXT5_EXT 0x78945458
+#endif
+
 class Image;
 typedef struct _MipmapInfo MipmapInfo;
 

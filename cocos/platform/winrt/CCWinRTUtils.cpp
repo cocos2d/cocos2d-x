@@ -107,7 +107,12 @@ std::string PlatformStringToString(Platform::String^ s)
 
 	auto result = converter.out(state, ws.data(), ws.data() + ws.length(), from_next, &to[0], &to[0] + to.size(), to_next);	
 	if (result == converter_type::ok || result == converter_type::noconv) 	
+	{
+		std::setlocale(LC_ALL, "C");
 		return std::string(&to[0], to_next);		
+	}
+
+	std::setlocale(LC_ALL, "C");
 	
 	return "";
 }

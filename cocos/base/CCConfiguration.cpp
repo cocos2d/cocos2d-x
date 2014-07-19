@@ -153,7 +153,7 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.renderer"] = "Native Direct3D Renderer";
 	_valueDict["gl.version"] = "0.9";
 	SET_FEATURE("gl.supports_ETC1", _supportsETC1, false);
-	SET_FEATURE("gl.supports_S3TC", _supportsS3TC, false);
+	SET_FEATURE("gl.supports_S3TC", _supportsS3TC, true);
 	SET_FEATURE("gl.supports_ATITC", _supportsATITC, false);
 	SET_FEATURE("gl.supports_PVRTC", _supportsPVRTC, false);
 	SET_FEATURE("gl.supports_NPOT", _supportsNPOT, true);
