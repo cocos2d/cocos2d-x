@@ -328,6 +328,10 @@ void CCLayer::keyMenuClicked(void)
     }
 }
 
+void CCLayer::keypadDown(int)
+{
+}
+
 /// Callbacks
 void CCLayer::onEnter()
 {

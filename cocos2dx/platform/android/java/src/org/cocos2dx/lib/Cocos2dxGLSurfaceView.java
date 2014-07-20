@@ -294,19 +294,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 	@Override
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
-		switch (pKeyCode) {
-			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_MENU:
 				this.queueEvent(new Runnable() {
 					@Override
 					public void run() {
-						Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
+				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer
+						.handleKeyDown(pKeyCode);
 					}
 				});
 				return true;
-			default:
-				return super.onKeyDown(pKeyCode, pKeyEvent);
-		}
 	}
 
 	// ===========================================================

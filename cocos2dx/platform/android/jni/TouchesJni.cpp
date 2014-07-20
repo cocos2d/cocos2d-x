@@ -83,6 +83,8 @@ extern "C" {
                     return JNI_TRUE;
                 break;
             default:
+				if (pDirector->getKeypadDispatcher()->dispatchKeypadDown(keyCode))
+					return JNI_TRUE;
                 return JNI_FALSE;
         }
         return JNI_FALSE;

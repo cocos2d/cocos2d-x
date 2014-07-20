@@ -165,6 +165,7 @@ public:
 
     virtual void keyBackClicked(void);
     virtual void keyMenuClicked(void);
+	virtual void keypadDown(int);
     
     inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return m_pScriptTouchHandlerEntry; };
     inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return m_pScriptKeypadHandlerEntry; };
