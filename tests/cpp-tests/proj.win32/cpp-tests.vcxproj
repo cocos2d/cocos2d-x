@@ -581,9 +581,6 @@
     <ProjectReference Include="..\..\..\cocos\network\proj.win32\libNetwork.vcxproj">
       <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
-      <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
