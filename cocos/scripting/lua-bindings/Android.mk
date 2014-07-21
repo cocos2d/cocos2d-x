@@ -94,6 +94,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi
@@ -108,3 +109,4 @@ $(call import-module,network)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/spine)
+$(call import-module,audio/android)
