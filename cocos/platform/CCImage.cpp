@@ -58,7 +58,7 @@ extern "C"
         return strerror(errnum);
     }
 #endif
-#endif
+//#endif
 #include "png.h"
 #include "tiffio.h"
 #include "base/etc1.h"

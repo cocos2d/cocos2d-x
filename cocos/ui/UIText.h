@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UILABEL_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +39,7 @@ namespace ui {
  *@js 
  *@lua NA
  */
-class Text : public Widget
+class CC_GUI_DLL Text : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO

@@ -948,6 +948,12 @@ Layout::Type Layout::getLayoutType() const
 {
     return _layoutType;
 }
+
+void Layout::forceDoLayout()
+{
+    this->requestDoLayout();
+    this->doLayout();
+}
     
 void Layout::requestDoLayout()
 {
