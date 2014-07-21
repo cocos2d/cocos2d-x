@@ -67,6 +67,11 @@
 
 
 --------------------------------------------------------
+-- the cc Scene
+-- @field [parent=#cc] Scene#Scene Scene preloaded module
+
+
+--------------------------------------------------------
 -- the cc Director
 -- @field [parent=#cc] Director#Director Director preloaded module
 
@@ -769,11 +774,6 @@
 --------------------------------------------------------
 -- the cc LayerMultiplex
 -- @field [parent=#cc] LayerMultiplex#LayerMultiplex LayerMultiplex preloaded module
-
-
---------------------------------------------------------
--- the cc Scene
--- @field [parent=#cc] Scene#Scene Scene preloaded module
 
 
 --------------------------------------------------------
