@@ -95,6 +95,28 @@ bool ComponentContainer::remove(const std::string& name)
     return ret;
  }
 
+bool ComponentContainer::remove(Component *pCom)
+{
+	bool bRet = false;
+	do 
+	{ 
+		CC_BREAK_IF(!_components);
+
+		for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+		{
+			if (iter->second == pCom)
+			{
+				pCom->onExit();
+				pCom->setOwner(nullptr);
+				_components->erase(iter);
+				break;
+			}
+		}
+		bRet = true;
+	} while (0);
+	return bRet;
+}
+
 void ComponentContainer::removeAll()
 {
     if (_components != nullptr)

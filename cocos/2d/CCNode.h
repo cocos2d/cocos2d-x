@@ -1433,6 +1433,10 @@ public:
      */
     virtual bool removeComponent(const std::string& name);
 
+    /** 
+     *   removes a component by its pointer      
+     */
+    virtual bool removeComponent(Component *pComponent);
     /**
      *   removes all components
      */

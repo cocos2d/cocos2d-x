@@ -26,12 +26,13 @@
 #define __UIRICHTEXT_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 namespace ui {
     
-class RichElement : public Ref
+class CC_GUI_DLL RichElement : public Ref
 {
 public:
     enum class Type
@@ -51,7 +52,7 @@ protected:
     friend class RichText;
 };
     
-class RichElementText : public RichElement
+class CC_GUI_DLL RichElementText : public RichElement
 {
 public:
     RichElementText(){_type = Type::TEXT;};
@@ -66,7 +67,7 @@ protected:
     
 };
     
-class RichElementImage : public RichElement
+class CC_GUI_DLL RichElementImage : public RichElement
 {
 public:
     RichElementImage(){_type = Type::IMAGE;};
@@ -80,7 +81,7 @@ protected:
     friend class RichText;
 };
     
-class RichElementCustomNode : public RichElement
+class CC_GUI_DLL RichElementCustomNode : public RichElement
 {
 public:
     RichElementCustomNode(){_type = Type::CUSTOM;};
@@ -92,7 +93,7 @@ protected:
     friend class RichText;
 };
     
-class RichText : public Widget
+class CC_GUI_DLL RichText : public Widget
 {
 public:
     RichText();
