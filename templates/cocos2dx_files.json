@@ -180,6 +180,7 @@
         "cocos/2d/CCTweenFunction.cpp", 
         "cocos/2d/CCTweenFunction.h", 
         "cocos/2d/CMakeLists.txt", 
+        "cocos/2d/cocos2d.def", 
         "cocos/2d/cocos2d.vcxproj", 
         "cocos/2d/cocos2d.vcxproj.filters", 
         "cocos/2d/cocos2d_headers.props", 
