@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ui/CCProtectedNode.h"
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
+#include "ui/GUIExport.h"
 #include "base/CCMap.h"
 
 NS_CC_BEGIN
@@ -61,7 +62,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #endif
 
 
-class Widget : public ProtectedNode, public LayoutParameterProtocol
+class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
     enum class FocusDirection
