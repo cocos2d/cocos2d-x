@@ -22,7 +22,7 @@
         #endif
     #endif
 #else
-    #define CC_EX_DLL
+    #define CC_GUI_DLL
 #endif
 
 #endif /* __CCEXTENSIONEXPORT_H__*/
