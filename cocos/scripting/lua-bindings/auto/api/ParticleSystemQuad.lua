@@ -21,12 +21,9 @@
 -- @param #cc.EventCustom eventcustom
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
--- overload function: create(map_table)
---          
+-- @overload self, string         
+-- @overload self         
+-- @overload self, map_table         
 -- @function [parent=#ParticleSystemQuad] create
 -- @param self
 -- @param #map_table map

@@ -4,7 +4,8 @@
        "name": "HelloLua",
        "width": 960,
        "height": 640,
-       "entry": "src/main.lua"
+       "entry": "src/main.lua",
+       "consolePort": 6010
     },
     "simulator_screen_size": [
         {

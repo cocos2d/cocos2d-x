@@ -10,10 +10,8 @@
 -- @param #cc.Node node
         
 --------------------------------
--- overload function: getGrid()
---          
--- overload function: getGrid()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#NodeGrid] getGrid
 -- @param self
 -- @return GridBase#GridBase ret (retunr value: cc.GridBase)

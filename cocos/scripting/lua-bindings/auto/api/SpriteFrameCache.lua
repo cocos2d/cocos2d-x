@@ -5,12 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: addSpriteFramesWithFile(string, string)
---          
--- overload function: addSpriteFramesWithFile(string)
---          
--- overload function: addSpriteFramesWithFile(string, cc.Texture2D)
---          
+-- @overload self, string, string         
+-- @overload self, string         
+-- @overload self, string, cc.Texture2D         
 -- @function [parent=#SpriteFrameCache] addSpriteFramesWithFile
 -- @param self
 -- @param #string str

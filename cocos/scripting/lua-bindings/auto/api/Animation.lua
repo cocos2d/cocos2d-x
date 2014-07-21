@@ -76,10 +76,8 @@
 -- @param #rect_table rect
         
 --------------------------------
--- overload function: create(array_table, float, unsigned int)
---          
--- overload function: create()
---          
+-- @overload self, array_table, float, unsigned int         
+-- @overload self         
 -- @function [parent=#Animation] create
 -- @param self
 -- @param #array_table array

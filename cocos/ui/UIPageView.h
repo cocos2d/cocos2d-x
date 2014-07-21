@@ -186,7 +186,6 @@ protected:
     void updateAllPagesPosition();
     void autoScroll(float dt);
 
-    virtual void handlePressLogic(Touch *touch);
     virtual void handleMoveLogic(Touch *touch) ;
     virtual void handleReleaseLogic(Touch *touch) ;
     virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) ;

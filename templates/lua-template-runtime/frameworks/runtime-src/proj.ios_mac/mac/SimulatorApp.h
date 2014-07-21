@@ -41,7 +41,7 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
 @property (nonatomic, assign) IBOutlet NSMenu* menu;
 
 
-- (IBAction) onChangeProject:(id)sender;
+- (IBAction) onSetTop:(id)sender;
 - (IBAction) onFileClose:(id)sender;
 - (IBAction) onScreenPortait:(id)sender;
 - (IBAction) onScreenLandscape:(id)sender;

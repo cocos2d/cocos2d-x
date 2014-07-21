@@ -2425,7 +2425,7 @@ function UIListViewVerticalTest:initExtend()
     end
 
     local function listViewEvent(sender, eventType)
-        if eventType == ccui.ListViewEventType.onsSelectedItem then
+        if eventType == ccui.ListViewEventType.ONSELECTEDITEM_START then
             print("select child index = ",sender:getCurSelectedIndex())
         end
     end

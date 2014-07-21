@@ -61,10 +61,8 @@
 -- @return ParticleBatchNode#ParticleBatchNode ret (return value: cc.ParticleBatchNode)
         
 --------------------------------
--- overload function: addChild(cc.Node, int, string)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#ParticleBatchNode] addChild
 -- @param self
 -- @param #cc.Node node

@@ -12,7 +12,7 @@
 --------------------------------
 -- @function [parent=#TableView] setVerticalFillOrder 
 -- @param self
--- @param #cc.TableView::VerticalFillOrder verticalfillorder
+-- @param #int verticalfillorder
         
 --------------------------------
 -- @function [parent=#TableView] scrollViewDidZoom 
@@ -26,7 +26,7 @@
 --------------------------------
 -- @function [parent=#TableView] getVerticalFillOrder 
 -- @param self
--- @return TableView::VerticalFillOrder#TableView::VerticalFillOrder ret (return value: cc.TableView::VerticalFillOrder)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#TableView] removeCellAtIndex 
