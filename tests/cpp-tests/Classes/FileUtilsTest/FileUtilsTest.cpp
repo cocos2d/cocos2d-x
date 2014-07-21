@@ -419,17 +419,17 @@ void TestDirectoryFuncs::onEnter()
         this->addChild(label);
         
         // Create sub directories recursively
-        ok = sharedFileUtils->createDirectories(dir + subDir);
+        ok = sharedFileUtils->createDirectory(dir + subDir);
         if (ok && sharedFileUtils->isDirectoryExist(dir + subDir))
         {
-            msg = StringUtils::format("createDirectories: Sub directories '%s' created", subDir.c_str());
+            msg = StringUtils::format("createDirectory: Sub directories '%s' created", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
             label->setPosition(Vec2(x, y * 2));
             this->addChild(label);
         }
         else
         {
-            msg = StringUtils::format("createDirectories: Failed to create sub directories '%s'", subDir.c_str());
+            msg = StringUtils::format("createDirectory: Failed to create sub directories '%s'", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
             label->setPosition(Vec2(x, y * 2));
             this->addChild(label);

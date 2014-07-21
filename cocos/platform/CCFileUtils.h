@@ -336,20 +336,12 @@ public:
     virtual bool isDirectoryExist(const std::string& dirPath);
     
     /**
-     *  Creates a directory without recursive
+     *  Creates a directory
      *
      *  @param dirPath The path of the directory, it must be an absolute path.
      *  @return true if the directory have been created successfully, otherwise it will return false.
      */
     virtual bool createDirectory(const std::string& dirPath);
-    
-    /**
-     *  Creates a directory recursively
-     *
-     *  @param dirPath The path of the directory, it must be an absolute path.
-     *  @return true if the directories have been created successfully, otherwise it will return false.
-     */
-    virtual bool createDirectories(const std::string& dirPath);
     
     /**
      *  Remove a directory
