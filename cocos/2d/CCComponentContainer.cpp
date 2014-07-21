@@ -94,7 +94,7 @@ bool ComponentContainer::remove(const std::string& name)
     return ret;
  }
 
-bool ComponentContainer::remove(Component *pCom)
+bool ComponentContainer::remove(Component *com)
 {
     bool ret = false;
     do
@@ -103,10 +103,10 @@ bool ComponentContainer::remove(Component *pCom)
         
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
-            if (iter->second == pCom)
+            if (iter->second == com)
             {
-                pCom->onExit();
-                pCom->setOwner(nullptr);
+                com->onExit();
+                com->setOwner(nullptr);
                 _components->erase(iter);
                 break;
             }
