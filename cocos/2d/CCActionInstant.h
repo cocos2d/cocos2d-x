@@ -74,7 +74,7 @@ public:
     virtual ActionInstant* reverse() const override;
 	virtual Show* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Show(){}
     virtual ~Show(){}
 
@@ -98,7 +98,7 @@ public:
 	virtual ActionInstant* reverse() const override;
 	virtual Hide* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Hide(){}
     virtual ~Hide(){}
 
@@ -121,7 +121,7 @@ public:
 	virtual ToggleVisibility* reverse() const override;
 	virtual ToggleVisibility* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     ToggleVisibility(){}
     virtual ~ToggleVisibility(){}
 
