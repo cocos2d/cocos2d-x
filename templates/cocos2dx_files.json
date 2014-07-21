@@ -3552,6 +3552,9 @@
         "plugin/tools/toolsForPublish/checkEnvironment.sh", 
         "plugin/tools/toolsForPublish/genPrebuildMK.sh", 
         "plugin/tools/toolsForPublish/publishPlugin.sh", 
+        "tools/fbx-conv/README.md", 
+        "tools/fbx-conv/mac/fbx-conv", 
+        "tools/fbx-conv/mac/libfbxsdk.dylib", 
         "tools/particle/convert_YCoordFlipped.py"
     ], 
     "lua": [
