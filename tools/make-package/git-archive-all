@@ -234,6 +234,16 @@ class GitArchiver(object):
                 path_in_zip = extra_to_zip_file + file_path[(len(extra_folder_path)):]
                 add(file_path, path_in_zip)
 
+        outfile_name, outfile_ext = path.splitext(output_path)
+        for extra_dir in config_data["extra_dirs"]:
+            dir_path = path.join(self.main_repo_abspath, extra_dir)
+            list_dirs = os.walk(dir_path)
+            for root,dirs,files in list_dirs:
+                for f in files:
+                    file_path = path.join(root,f)
+                    path_in_zip = file_path[(len(self.main_repo_abspath)+1):]
+                    add(file_path, path_in_zip)
+
         if not dry_run:
             archive.close()
 

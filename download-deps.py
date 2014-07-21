@@ -64,6 +64,10 @@ class CocosZipInstaller(object):
 
         self._current_version = data["version"]
         self._repo_name = data["repo_name"]
+        try:
+            self._move_dirs = data["move_dirs"]
+        except:
+            self._move_dirs = None
         self._filename = self._current_version + '.zip'
         self._url = data["repo_parent"] + self._repo_name + '/archive/' + self._filename
         self._zip_file_size = int(data["zip_file_size"])
@@ -230,7 +234,7 @@ class CocosZipInstaller(object):
             data = json.load(data_file)
         return data
 
-    def run(self, folder_for_extracting, remove_downloaded, force_update, download_only):
+    def run(self, workpath, folder_for_extracting, remove_downloaded, force_update, download_only):
         if not force_update and not self.need_to_update():
             print("==> Not need to update!")
             return
@@ -246,6 +250,12 @@ class CocosZipInstaller(object):
             if not os.path.exists(folder_for_extracting):
                 os.mkdir(folder_for_extracting)
             distutils.dir_util.copy_tree(self._extracted_folder_name, folder_for_extracting)
+            if self._move_dirs is not None:
+                for srcDir in self._move_dirs.keys():
+                    distDir = os.path.join( os.path.join(workpath, self._move_dirs[srcDir]), srcDir)
+                    if os.path.exists(distDir):
+                        shutil.rmtree(distDir)
+                    shutil.move( os.path.join(folder_for_extracting, srcDir), distDir)
             print("==> Cleaning...")
             if os.path.exists(self._extracted_folder_name):
                 shutil.rmtree(self._extracted_folder_name)
@@ -293,13 +303,13 @@ def main():
     print("==> Prepare to download external libraries!")
     external_path = os.path.join(workpath, 'external')
     installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version")
-    installer.run(external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
+    installer.run(workpath,external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
     print("=======================================================")
     print("==> Prepare to download lua runtime binaries")
     runtime_path = os.path.join(workpath, 'templates', 'lua-template-runtime', 'runtime')
     installer = CocosZipInstaller(workpath, os.path.join(runtime_path, 'config.json'), os.path.join(runtime_path, 'version.json'))
-    installer.run(runtime_path, opts.remove_downloaded, opts.force_update, opts.download_only)
+    installer.run(workpath, runtime_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
 # -------------- main --------------
 if __name__ == '__main__':
