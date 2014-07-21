@@ -275,7 +275,8 @@ bool UITextFieldTest_LineWrap::init()
         // Create the textfield
         TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
         textField->ignoreContentAdaptWithSize(false);
-        textField->setContentSize(Size(240, 160));
+        ((Label*)(textField->getVirtualRenderer()))->setLineBreakWithoutSpace(true);
+        textField->setContentSize(Size(240, 70));
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
         textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));

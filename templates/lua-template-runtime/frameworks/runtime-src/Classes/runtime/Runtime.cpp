@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "ConfigParser.h"
 #include "Protos.pb.h"
 #include "zlib.h"
+#include "lua.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -49,7 +50,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-extern string getIPAddress();
+
 
 //1M size 
 #define MAXPROTOLENGTH 1048576
@@ -60,11 +61,81 @@ extern string getIPAddress();
 #define usleep(t) usleep(t)
 #endif
 
+extern string getIPAddress();
 const char* getRuntimeVersion()
 {
-    return "1.2";
+    return "1.3";
 }
 
+static string& replaceAll(string& str,const string& old_value,const string& new_value)
+{
+    while(true)
+    {
+        int pos=0;
+        if((pos=str.find(old_value,0))!=string::npos)
+            str.replace(pos,old_value.length(),new_value);
+        else break;
+    }
+    return str;
+}
+static bool resetLuaModule(string fileName)
+{
+    if (fileName.empty())
+    {
+        CCLOG("fileName is null");
+        return false;
+    }
+    auto engine = LuaEngine::getInstance();
+    LuaStack* luaStack = engine->getLuaStack();
+    lua_State* stack=luaStack->getLuaState();
+    lua_getglobal(stack, "package");                         /* L: package */
+    lua_getfield(stack, -1, "loaded");                       /* L: package loaded */
+    lua_pushnil(stack);                                     /* L: lotable ?-.. nil */
+    while ( 0 != lua_next(stack, -2 ) )                     /* L: lotable ?-.. key value */
+    {
+        //CCLOG("%s - %s \n", tolua_tostring(stack, -2, ""), lua_typename(stack, lua_type(stack, -1)));
+        std::string key=tolua_tostring(stack, -2, "");
+        std::string tableKey =key;
+        int found = tableKey.rfind(".lua");
+        if (found!=std::string::npos)
+            tableKey = tableKey.substr(0,found);
+        tableKey=replaceAll(tableKey,".","/");
+        tableKey=replaceAll(tableKey,"\\","/");
+        tableKey.append(".lua");
+        found = fileName.rfind(tableKey);
+        if (0 == found || ( found!=std::string::npos && fileName.at(found-1) == '/'))
+        {
+            lua_pushstring(stack, key.c_str());
+            lua_pushnil(stack);
+            if (lua_istable(stack, -5))
+            {
+                lua_settable(stack, -5);
+            }
+        }
+        lua_pop(stack, 1);
+    }
+    lua_pop(stack, 2);
+    return true;
+}
+bool reloadScript(string modulefile)
+{
+    auto director = Director::getInstance();
+    FontFNT::purgeCachedData();
+    if (director->getOpenGLView())
+    {
+        SpriteFrameCache::getInstance()->removeSpriteFrames();
+        director->getTextureCache()->removeAllTextures();
+    }
+    FileUtils::getInstance()->purgeCachedEntries();
+    if (!resetLuaModule(modulefile))
+    {
+        modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
+    }
+    auto engine = LuaEngine::getInstance();
+    LuaStack* luaStack = engine->getLuaStack();
+    std::string require = "require \'" + modulefile + "\'";
+    return luaStack->executeString(require.c_str());
+}
 void startScript(string strDebugArg)
 {
     // register lua engine
@@ -77,28 +148,8 @@ void startScript(string strDebugArg)
     engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-bool reloadScript(const string& modulefile)
-{
-    string strfile = modulefile;
-    if (strfile.empty())
-    {
-        strfile = ConfigParser::getInstance()->getEntryFile().c_str();
-    }
 
-    auto director = Director::getInstance();
-    FontFNT::purgeCachedData();
-    if (director->getOpenGLView())
-    {
-        SpriteFrameCache::getInstance()->removeSpriteFrames();
-        director->getTextureCache()->removeAllTextures();
-    }
-    FileUtils::getInstance()->purgeCachedEntries();
-
-    director->getScheduler()->unscheduleAll();
-    director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
-
-    return (LuaEngine::getInstance()->reload(strfile.c_str())==0);
-}
+    
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -231,7 +282,7 @@ void FileServer::readResFileFinfo()
         if (!pFile) return ;
         fwrite(str,sizeof(char),strlen(str),pFile);
         fclose(pFile);
-    },this, 10.0f, false, "fileinfo");
+    },this, 5.0f, false, "fileinfo");
 }
 
 void FileServer::addResFileInfo(const char* filename,uint64_t u64)
@@ -337,19 +388,8 @@ void FileServer::stop()
     }
 }
 
-string& replaceAll(string& str,const string& old_value,const string& new_value)
-{
-    while(true)
-    {
-        int pos=0;
-        if((pos=str.find(old_value,0))!=string::npos)
-            str.replace(pos,old_value.length(),new_value);
-        else break;
-    }
-    return str;
-}
 
-bool CreateDir(const char *sPathName)
+static bool CreateDir(const char *sPathName)
 {
     char   DirName[256]={0};
     strcpy(DirName,   sPathName);
@@ -382,7 +422,7 @@ bool CreateDir(const char *sPathName)
     return   true;  
 }
 
-void recvBuf(int fd,char *pbuf,int bufsize)
+static void recvBuf(int fd,char *pbuf,int bufsize)
 {
     int startFlagLen = bufsize;
     while (startFlagLen != 0){
@@ -447,7 +487,14 @@ void FileServer::loopReceiveFile()
             }
         }
         int contentSize = recvDataBuf.fileProto.content_size();
-        if (contentSize>0){  
+        if (contentSize == 0)
+        {
+            recvDataBuf.contentBuf="";
+            _recvBufListMutex.lock();
+            _recvBufList.push_back(recvDataBuf);
+            _recvBufListMutex.unlock();
+        }else if(contentSize>0)
+        {  
             //recv body data
             Bytef *contentbuf= new Bytef[contentSize+1];
             memset(contentbuf,0,contentSize+1);
@@ -513,7 +560,7 @@ void FileServer::loopWriteFile()
          _fileNameMutex.lock();
          _strFileName = filename;
          _fileNameMutex.unlock();
-         cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
+         //cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
          CreateDir(fullfilename.substr(0,fullfilename.find_last_of("/")).c_str());
 
          FILE *fp= nullptr;
@@ -531,7 +578,7 @@ void FileServer::loopWriteFile()
               continue;
          }
          if (fp){
-             if (0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
+             if (recvDataBuf.contentBuf.size() > 0 && 0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
                  addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno);
                  fclose(fp);
                  continue;
@@ -751,16 +798,23 @@ public:
         for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
             _console->addCommand(commands[i]);
         }
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
+#else
         _console->listenOnTCP(6010);
-
+#endif
+        _fileserver = nullptr;
+#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
         _fileserver->listenOnTCP(6020);
         _fileserver->readResFileFinfo();
+#endif
     }
 
     ~ConsoleCustomCommand()
     {
         Director::getInstance()->getConsole()->stop();
+        if(_fileserver)
         _fileserver->stop();
     }
 
@@ -810,9 +864,11 @@ public:
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                    for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                        bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                    if(_fileserver){
+                        rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
+                        for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
+                            bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
@@ -1056,6 +1112,11 @@ bool initRuntime()
     searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    LuaStack* stack = engine->getLuaStack();
+    register_runtime_override_function(stack->getLuaState());
+    luaopen_debugger(engine->getLuaStack()->getLuaState());
     return true;
 }
 
@@ -1075,16 +1136,13 @@ bool startRuntime()
 #endif
 #endif
 
-    static ConsoleCustomCommand s_customCommand;
-    s_customCommand.init();
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    // turn on display FPS
+    Director::getInstance()->setDisplayStats(true);
 
-    LuaStack* stack = engine->getLuaStack();
-    register_runtime_override_function(stack->getLuaState());
-
-    luaopen_debugger(engine->getLuaStack()->getLuaState());
-    
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
+ 
     auto scene = Scene::create();
     auto connectLayer = new ConnectWaitLayer();
     connectLayer->autorelease();

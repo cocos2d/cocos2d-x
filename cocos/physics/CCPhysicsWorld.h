@@ -207,7 +207,7 @@ protected:
 };
 
 
-class PhysicsDebugDraw
+class CC_DLL PhysicsDebugDraw
 {
 protected:
     virtual bool begin();

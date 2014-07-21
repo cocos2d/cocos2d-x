@@ -170,7 +170,7 @@ public:
      *
      * @see BrightStyle
      *
-     * @param style   BRIGHT_NORMAL the widget is normal state, BRIGHT_HIGHLIGHT the widget is height light state.
+     * @param style   BrightStyle::NORMAL means the widget is in normal state, BrightStyle::HIGHLIGHT means the widget is in highlight state.
      */
     void setBrightStyle(BrightStyle style);
 
@@ -198,7 +198,7 @@ public:
     void setHighlighted(bool hilight);
 
     /**
-     * Gets the left boundary position of this widget.
+     * Gets the left boundary position of this widget in parent's coordination system.
      *
      * @return The left boundary position of this widget.
      */
@@ -206,7 +206,7 @@ public:
     float getLeftBoundary() const;
 
     /**
-     * Gets the bottom boundary position of this widget.
+     * Gets the bottom boundary position of this widget in parent's coordination system.
      *
      * @return The bottom boundary position of this widget.
      */
@@ -214,7 +214,7 @@ public:
     float getBottomBoundary() const;
 
     /**
-     * Gets the right boundary position of this widget.
+     * Gets the right boundary position of this widget in parent's coordination system.
      *
      * @return The right boundary position of this widget.
      */
@@ -222,7 +222,7 @@ public:
     float getRightBoundary() const;
 
     /**
-     * Gets the top boundary position of this widget.
+     * Gets the top boundary position of this widget in parent's coordination system.
      *
      * @return The top boundary position of this widget.
      */
@@ -637,19 +637,19 @@ protected:
     void cleanupWidget();
 
 protected:
-    bool _enabled;            ///< Highest control of widget
-    bool _bright;             ///< is this widget bright
-    bool _touchEnabled;       ///< is this widget touch endabled
-    bool _highlight;              ///< is the widget on focus
+    bool _enabled;
+    bool _bright;
+    bool _touchEnabled;
+    bool _highlight;
     bool _reorderWidgetChildDirty;
     bool _affectByClipping;
     bool _ignoreSize;
 
-    BrightStyle _brightStyle; ///< bright style
+    BrightStyle _brightStyle;
     SizeType _sizeType;
     PositionType _positionType;
 
-    //use
+    //used for search widget by action tag in UIHelper class
     int _actionTag;
 
     Size _customSize;
@@ -659,9 +659,9 @@ protected:
 
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;
-    Vec2 _touchBeganPosition;    ///< touch began point
-    Vec2 _touchMovePosition;     ///< touch moved point
-    Vec2 _touchEndPosition;      ///< touch ended point
+    Vec2 _touchBeganPosition;
+    Vec2 _touchMovePosition;
+    Vec2 _touchEndPosition;
 
     bool _flippedX;
     bool _flippedY;
@@ -677,7 +677,6 @@ protected:
      */
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
 
-    //if use the old API, we must retain the _touchEventListener
     Ref*       _touchEventListener;
     #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
     #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

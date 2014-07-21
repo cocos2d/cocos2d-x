@@ -1241,9 +1241,9 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
                 SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
             }
         }else if (key == "designWidth"){
-            fileDesignWidth =  atof(tpChildArray[i].GetValue(cocoLoader));
+            fileDesignWidth =  utils::atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "designHeight"){
-            fileDesignHeight = atof(tpChildArray[i].GetValue(cocoLoader));
+            fileDesignHeight = utils::atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "widgetTree"){
             
             if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {

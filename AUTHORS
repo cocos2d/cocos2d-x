@@ -888,6 +888,7 @@ Developers:
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
         Fix UITextField IME can't auto detach
+        Add getChildByName method for get a node that can be cast to Type T
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
@@ -912,6 +913,16 @@ Developers:
         
     chareice
         Make `setup.py` work on zsh
+        
+    taug
+        Could add seach path and resolution order path in front.
+        
+    CaiCQ
+        Fix a but that LabelTTF may lost chinese characters on linux
+        
+    chenguangqi
+        Fixed a compiling error on Android
+        Fixed an error when importing project using Eclipse on Android
     
 Retired Core Developers:
     WenSheng Yang

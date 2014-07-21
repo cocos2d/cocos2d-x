@@ -45,6 +45,8 @@ class Texture2D;
 class Sprite;
 struct _ccCArray;
 
+namespace experimental{
+
 /**
  * @addtogroup tilemap_parallax_nodes
  * @{
@@ -76,20 +78,20 @@ http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
 @since v3.2
 */
 
-class CC_DLL FastTMXLayer : public Node
+class CC_DLL TMXLayer : public Node
 {
 public:
     /** creates a FastTMXLayer with an tileset info, a layer info and a map info */
-    static FastTMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
      * @js ctor
      */
-    FastTMXLayer();
+    TMXLayer();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~FastTMXLayer();
+    virtual ~TMXLayer();
 
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      */
@@ -256,7 +258,7 @@ public:
 
 // end of tilemap_parallax_nodes group
 /// @}
-
+} //end of namespace experimental
 NS_CC_END
 
 #endif //__CCTMX_LAYER2_H__

@@ -987,10 +987,14 @@ LayoutManager* Layout::createLayoutManager()
 
 void Layout::doLayout()
 {
+    
     if (!_doLayoutDirty)
     {
         return;
     }
+    
+    sortAllChildren();
+
     LayoutManager* executant = this->createLayoutManager();
     
     if (executant)
