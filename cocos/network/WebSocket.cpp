@@ -128,6 +128,7 @@ WsThreadHelper::WsThreadHelper()
 WsThreadHelper::~WsThreadHelper()
 {
     Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+    quitSubThread();
     joinSubThread();
     CC_SAFE_DELETE(_subThreadInstance);
     delete _UIWsMessageQueue;
@@ -152,7 +153,7 @@ void WsThreadHelper::wsThreadEntryFunc()
 {
     _ws->onSubThreadStarted();
     
-    while (!_needQuit)
+    while (!_needQuit && _ws != NULL)
     {
         if (_ws->onSubThreadLoop())
         {
@@ -236,6 +237,7 @@ WebSocket::WebSocket()
 WebSocket::~WebSocket()
 {
     close();
+    _wsHelper->_ws = NULL;
     CC_SAFE_RELEASE_NULL(_wsHelper);
     
     for (int i = 0; _wsProtocols[i].callback != nullptr; ++i)
@@ -374,7 +376,7 @@ void WebSocket::close()
     CCLOG("websocket (%p) connection closed by client", this);
     _readyState = State::CLOSED;
 
-    _wsHelper->joinSubThread();
+    //_wsHelper->joinSubThread();
     
     // onClose callback needs to be invoked at the end of this method
     // since websocket instance may be deleted in 'onClose'.
@@ -533,7 +535,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 
                         size_t remaining = data->len - data->issued;
                         size_t n = std::min(remaining, c_bufferSize );
-                        CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", static_cast<int>(data->len), static_cast<int>(data->issued), static_cast<int>(remaining), static_cast<int>(n));
+                        //CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", static_cast<int>(data->len), static_cast<int>(data->issued), static_cast<int>(remaining), static_cast<int>(n));
 
                         unsigned char* buf = new unsigned char[LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING];
 
@@ -563,7 +565,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         }
 
                         bytesWrite = libwebsocket_write(wsi,  &buf[LWS_SEND_BUFFER_PRE_PADDING], n, (libwebsocket_write_protocol)writeProtocol);
-                        CCLOG("[websocket:send] bytesWrite => %d", bytesWrite);
+                        //CCLOG("[websocket:send] bytesWrite => %d", bytesWrite);
 
                         // Buffer overrun?
                         if (bytesWrite < 0)
