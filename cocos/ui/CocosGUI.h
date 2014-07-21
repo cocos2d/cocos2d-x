@@ -49,6 +49,7 @@ THE SOFTWARE.
 #include "ui/UIVideoPlayer.h"
 #endif
 #include "ui/UIDeprecated.h"
+#include "ui/GUIExport.h"
 
 
 NS_CC_BEGIN

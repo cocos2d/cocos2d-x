@@ -120,7 +120,6 @@ project.properties
 /external/freetype2/
 /external/glfw3/
 /external/jpeg/
-/external/json/
 /external/linux-specific/
 /external/lua/
 /external/png/

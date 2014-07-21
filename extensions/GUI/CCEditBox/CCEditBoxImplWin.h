@@ -32,12 +32,13 @@
 
 #include "extensions/ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
 class EditBox;
 
-class EditBoxImplWin : public EditBoxImpl
+class CC_EX_DLL EditBoxImplWin : public EditBoxImpl
 {
 public:
     /**

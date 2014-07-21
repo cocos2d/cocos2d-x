@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "base/CCPlatformMacros.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +39,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class Helper
+class CC_GUI_DLL Helper
 {
 public:
     /**

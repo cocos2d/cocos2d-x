@@ -90,6 +90,9 @@
     <ClInclude Include="..\UIDeprecated.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="..\GUIExport.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
