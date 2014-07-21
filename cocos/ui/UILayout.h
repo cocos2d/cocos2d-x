@@ -266,7 +266,14 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
+    /**
+     * force refresh widget layout
+     */
+    void forceDoLayout();
     
+    /**
+     * request to refresh widget layout
+     */
     void requestDoLayout();
     
     virtual void onEnter() override;
