@@ -1436,7 +1436,7 @@ public:
     /** 
      *   removes a component by its pointer      
      */
-    virtual bool removeComponent(Component *pComponent);
+    virtual bool removeComponent(Component *component);
     /**
      *   removes all components
      */
