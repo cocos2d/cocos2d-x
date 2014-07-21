@@ -43,7 +43,7 @@ class Node;
  *  If you need custom listener which with different callback, you need to inherit this class.
  *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
  */
-class EventListener : public Ref
+class CC_DLL EventListener : public Ref
 {
 public:
     enum class Type

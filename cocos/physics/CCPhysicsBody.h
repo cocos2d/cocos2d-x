@@ -53,7 +53,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
-class PhysicsBody : public Ref
+class CC_DLL PhysicsBody : public Ref
 {
 public:
     /** create a body with defult mass and moment. */

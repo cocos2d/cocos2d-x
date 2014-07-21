@@ -40,7 +40,7 @@ NS_CC_BEGIN
 class EventListenerCustom;
 class EventCustom;
 
-class RenderMeshData
+class CC_DLL RenderMeshData
 {
     friend class Mesh;
 public:
@@ -66,7 +66,7 @@ protected:
  * Mesh: Geometry with a collection of vertex. 
  * Supporting various vertex formats.
  */
-class Mesh : public Ref
+class CC_DLL Mesh : public Ref
 {
 public:
     /** Defines supported index formats. */
