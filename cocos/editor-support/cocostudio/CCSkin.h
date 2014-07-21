@@ -30,10 +30,11 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
-class Skin : public cocos2d::Sprite
+class CC_STUDIO_DLL Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();

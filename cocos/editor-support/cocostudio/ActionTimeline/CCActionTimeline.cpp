@@ -215,13 +215,17 @@ void ActionTimeline::startWithTarget(Node *target)
         [this, target](Node* child)
     {
         ActionTimelineData* data = dynamic_cast<ActionTimelineData*>(child->getUserObject());
-        int actionTag = data->getActionTag();
-        if(_timelineMap.find(actionTag) != _timelineMap.end())
+
+        if(data)
         {
-            auto timelines = this->_timelineMap[actionTag];
-            for (auto timeline : timelines)
+            int actionTag = data->getActionTag();
+            if(_timelineMap.find(actionTag) != _timelineMap.end())
             {
-                timeline->setNode(child);
+                auto timelines = this->_timelineMap[actionTag];
+                for (auto timeline : timelines)
+                {
+                    timeline->setNode(child);
+                }
             }
         }
     });
