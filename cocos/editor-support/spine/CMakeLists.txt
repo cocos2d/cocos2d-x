@@ -12,20 +12,23 @@ set(SPINE_SRC
   Event.cpp
   EventData.cpp
   Json.cpp
+  MeshAttachment.cpp
   RegionAttachment.cpp
   Skeleton.cpp
+  SkeletonAnimation.cpp
   SkeletonBounds.cpp
   SkeletonData.cpp
   SkeletonJson.cpp
+  SkeletonRenderer.cpp
   Skin.cpp
+  SkinnedMeshAttachment.cpp
   Slot.cpp
   SlotData.cpp
   Slot.cpp
   SlotData.cpp
+  PolygonBatch.cpp
   extension.cpp
   spine-cocos2dx.cpp
-  CCSkeleton.cpp
-  CCSkeletonAnimation.cpp
   BoundingBoxAttachment.cpp
   Event.cpp
   EventData.cpp

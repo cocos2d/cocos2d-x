@@ -111,7 +111,7 @@ static const char* parse_string (Json *item, const char* str) {
 	while (*ptr != '\"' && *ptr && ++len)
 		if (*ptr++ == '\\') ptr++; /* Skip escaped quotes. */
 
-	out = (char*)malloc(len + 1); /* This is how long we need for the string, roughly. */
+	out = MALLOC(char, len + 1); /* The length needed for the string, roughly. */
 	if (!out) return 0;
 
 	ptr = str + 1;
