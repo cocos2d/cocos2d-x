@@ -87,7 +87,7 @@ public:
     /**
      * Returns the position of the file pointer.
      */
-    long int tell();
+    ssize_t tell();
 
     /**
      * Sets the position of the file pointer.

@@ -25,7 +25,7 @@ Developers:
     longlene
         Improve android project creation script
         
-    simpliplant
+    reneklacan
         Hardware keyboard support
     
     liuyq
@@ -919,6 +919,10 @@ Developers:
         
     CaiCQ
         Fix a but that LabelTTF may lost chinese characters on linux
+        
+    chenguangqi
+        Fixed a compiling error on Android
+        Fixed an error when importing project using Eclipse on Android
     
 Retired Core Developers:
     WenSheng Yang

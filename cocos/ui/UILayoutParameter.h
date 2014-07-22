@@ -27,7 +27,7 @@
 
 #include <string>
 #include "base/CCRef.h"
-
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +37,7 @@ namespace ui {
  *   @js NA
  *   @lua NA
  */
-class Margin
+class CC_GUI_DLL Margin
 {
 public:
     float left;
@@ -69,7 +69,7 @@ public:
 #endif
 #endif
 
-class LayoutParameter : public Ref
+class CC_GUI_DLL LayoutParameter : public Ref
 {
 public:
     enum class Type
@@ -146,7 +146,7 @@ public:
 *   @js NA
 *   @lua NA
 */
-class LinearLayoutParameter : public LayoutParameter
+class CC_GUI_DLL LinearLayoutParameter : public LayoutParameter
 {
 public:
     enum class LinearGravity
@@ -209,7 +209,7 @@ protected:
 */
 
     
-class RelativeLayoutParameter : public LayoutParameter
+class CC_GUI_DLL RelativeLayoutParameter : public LayoutParameter
 {
 public:
     enum class RelativeAlign
