@@ -55,7 +55,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 namespace ui {
 
-const char* CocosGUIVersion();
+CC_GUI_DLL const char* CocosGUIVersion();
 
 }
 NS_CC_END
