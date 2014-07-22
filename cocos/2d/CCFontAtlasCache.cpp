@@ -179,7 +179,7 @@ FontAtlas * FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidt
 FontAtlas * FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     char tmp[255];
-    sprintf(tmp,"name:%s_%d_%d_%d",charMapFile.c_str(),itemWidth,itemHeight,startCharMap);
+    snprintf(tmp,200,"name:%s_%d_%d_%d",charMapFile.c_str(),itemWidth,itemHeight,startCharMap);
 
     std::string atlasName = generateFontName(tmp, 0, GlyphCollection::CUSTOM,false);
 
