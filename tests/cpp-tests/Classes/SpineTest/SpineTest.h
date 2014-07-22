@@ -44,7 +44,6 @@ public:
 
 	virtual bool init ();
 	virtual void update (float deltaTime);
-    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
     
 	CREATE_FUNC (SpineTestLayer);
 };

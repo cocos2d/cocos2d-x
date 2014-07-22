@@ -28,21 +28,40 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/BoneData.h>
-#include <spine/extension.h>
+#ifndef SPINE_POLYGONBATCH_H_
+#define SPINE_POLYGONBATCH_H_
 
-spBoneData* spBoneData_create (const char* name, spBoneData* parent) {
-	spBoneData* self = NEW(spBoneData);
-	MALLOC_STR(self->name, name);
-	CONST_CAST(spBoneData*, self->parent) = parent;
-	self->scaleX = 1;
-	self->scaleY = 1;
-	self->inheritScale = 1;
-	self->inheritRotation = 1;
-	return self;
+#include "cocos2d.h"
+
+namespace spine {
+
+class PolygonBatch : public cocos2d::Ref {
+public:
+	static PolygonBatch* createWithCapacity (int capacity);
+
+	/** @js ctor */
+	PolygonBatch();
+
+	/** @js NA
+	  * @lua NA */
+	virtual ~PolygonBatch();
+
+	bool initWithCapacity (int capacity);
+	void add (const cocos2d::Texture2D* texture,
+		const float* vertices, const float* uvs, int verticesCount,
+		const int* triangles, int trianglesCount,
+		cocos2d::Color4B* color);
+	void flush ();
+
+private:
+	int capacity;
+	cocos2d::V2F_C4B_T2F* vertices;
+	int verticesCount;
+	GLushort* triangles;
+	int trianglesCount;
+	const cocos2d::Texture2D* texture;
+};
+
 }
 
-void spBoneData_dispose (spBoneData* self) {
-	FREE(self->name);
-	FREE(self);
-}
+#endif // SPINE_POLYGONBATCH_H_
