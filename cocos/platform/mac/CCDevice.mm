@@ -68,13 +68,14 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:text];
+        
+		NSFont *font = nil;
 		
-		// font
-		NSFont *font = [[NSFontManager sharedFontManager]
-                        fontWithFamily:[NSString stringWithUTF8String:fontName]
-						traits:NSUnboldFontMask | NSUnitalicFontMask
-                        weight:0
-                        size:size];
+		NSArray *descriptors = ( NSArray *)CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)[NSURL fileURLWithPath:[NSString stringWithUTF8String:fontName]]);
+		for (NSFontDescriptor *desc in descriptors) {
+			font = [NSFont fontWithDescriptor:desc size:size];
+		break;
+		}
 		
 		if (font == nil) {
 			font = [[NSFontManager sharedFontManager]
