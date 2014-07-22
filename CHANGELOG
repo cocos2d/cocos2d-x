@@ -1,4 +1,6 @@
 cocos2d-x-3.3  ??
+    [NEW]           CCImage: support of software PVRTC v1 decompression
+
     [FIX]           UIListView: can not insert an item in specific position, it is added at bottom
     [FIX]           TextField: can not use backspace to delete a character
     [FIX]           Others: can not import java library shift by engine correctly when using Eclispe on Android
