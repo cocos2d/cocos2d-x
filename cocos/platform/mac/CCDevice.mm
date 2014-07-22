@@ -59,7 +59,7 @@ typedef struct
     unsigned char*  data;
 } tImageInfo;
 
-static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, Color3B* strokeColor)
+static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, const Color3B* strokeColor)
 {
     bool ret = false;
     
@@ -232,7 +232,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.width = textDefinition._dimensions.width;
         info.height = textDefinition._dimensions.height;
         
-        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, nullptr)) //pStrokeColor))
+        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, &textDefinition._fontFillColor)) //pStrokeColor))
         {
             break;
         }
