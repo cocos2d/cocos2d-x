@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ui/UIWidget.h"
 #include "2d/CCTextFieldTTF.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -36,7 +37,7 @@ namespace ui {
  *  @js NA
  *  @lua NA
  */
-class UICCTextField: public TextFieldTTF, public TextFieldDelegate
+class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     UICCTextField();
@@ -106,7 +107,7 @@ typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 *   @js NA
 *   @lua NA
 */
-class TextField : public Widget
+class CC_GUI_DLL TextField : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
