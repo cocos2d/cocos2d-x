@@ -16,11 +16,13 @@
 -- @param #string str
 
 --------------------------------
--- @function [parent=#Node] removeComponent 
+-- @overload self, cc.Component         
+-- @overload self, string         
+-- @function [parent=#Node] removeComponent
 -- @param self
 -- @param #string str
--- @return bool#bool ret (return value: bool)
-        
+-- @return bool#bool ret (retunr value: bool)
+
 --------------------------------
 -- @function [parent=#Node] setPhysicsBody 
 -- @param self
