@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCActionTimeline.h"
 
 #include "cocostudio/CCSGUIReader.h"
+#include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 using namespace ui;
@@ -238,6 +239,15 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
             Node* child = loadNode(dic);
             if (child) 
             {
+				if(dynamic_cast<Widget *>(node)&& !dynamic_cast<Layout*>(node)&& dynamic_cast<Widget*>(child))
+				{
+					auto widgetChild = dynamic_cast<Widget*>(child);
+					if (widgetChild->getPositionType()==ui::Widget::PositionType::PERCENT)
+					{
+						widgetChild->setPositionPercent(Vec2(widgetChild->getPositionPercent().x+node->getAnchorPoint().x,widgetChild->getPositionPercent().y +node->getAnchorPoint().y ));
+					}
+					widgetChild->setPosition(Vec2(widgetChild->getPositionX() + node->getAnchorPointInPoints().x ,widgetChild->getPositionY() + node->getAnchorPointInPoints().y));
+				}
                 node->addChild(child);
                 child->release();
             }
