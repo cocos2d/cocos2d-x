@@ -631,8 +631,6 @@
 		460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168531807AF4E005B8026 /* CCEditBoxImplAndroid.h */; };
 		460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168541807AF4E005B8026 /* CCEditBoxImplIOS.h */; };
 		460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A168551807AF4E005B8026 /* CCEditBoxImplIOS.mm */; };
-		460E47B61808090B000CDD6D /* CCEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168561807AF4E005B8026 /* CCEditBoxImplMac.h */; };
-		460E47B71808090B000CDD6D /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A168571807AF4E005B8026 /* CCEditBoxImplMac.mm */; };
 		460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168581807AF4E005B8026 /* CCEditBoxImplNone.cpp */; };
 		460E47BB1808090B000CDD6D /* CCEditBoxImplWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685B1807AF4E005B8026 /* CCEditBoxImplWin.cpp */; };
 		460E47BC1808090B000CDD6D /* CCEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */; };
@@ -643,8 +641,6 @@
 		460E47C11808090D000CDD6D /* CCEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168531807AF4E005B8026 /* CCEditBoxImplAndroid.h */; };
 		460E47C21808090D000CDD6D /* CCEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168541807AF4E005B8026 /* CCEditBoxImplIOS.h */; };
 		460E47C31808090D000CDD6D /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A168551807AF4E005B8026 /* CCEditBoxImplIOS.mm */; };
-		460E47C41808090D000CDD6D /* CCEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168561807AF4E005B8026 /* CCEditBoxImplMac.h */; };
-		460E47C51808090D000CDD6D /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A168571807AF4E005B8026 /* CCEditBoxImplMac.mm */; };
 		460E47C61808090D000CDD6D /* CCEditBoxImplNone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168581807AF4E005B8026 /* CCEditBoxImplNone.cpp */; };
 		460E47C91808090D000CDD6D /* CCEditBoxImplWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685B1807AF4E005B8026 /* CCEditBoxImplWin.cpp */; };
 		460E47CA1808090D000CDD6D /* CCEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */; };
@@ -660,6 +656,10 @@
 		460E47D818080914000CDD6D /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168631807AF4E005B8026 /* CCTableView.h */; };
 		460E47D918080914000CDD6D /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168641807AF4E005B8026 /* CCTableViewCell.cpp */; };
 		460E47DA18080914000CDD6D /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168651807AF4E005B8026 /* CCTableViewCell.h */; };
+		464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464AD6E3197EBB1400E502D8 /* pvr.cpp */; };
+		464AD6E6197EBB1400E502D8 /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464AD6E3197EBB1400E502D8 /* pvr.cpp */; };
+		464AD6E7197EBB1400E502D8 /* pvr.h in Headers */ = {isa = PBXBuildFile; fileRef = 464AD6E4197EBB1400E502D8 /* pvr.h */; };
+		464AD6E8197EBB1400E502D8 /* pvr.h in Headers */ = {isa = PBXBuildFile; fileRef = 464AD6E4197EBB1400E502D8 /* pvr.h */; };
 		46A160421807A5D4005B8026 /* Export.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE11807A56F005B8026 /* Export.h */; };
 		46A160431807A5D4005B8026 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */; };
 		46A160441807A5D4005B8026 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FF41807A56F005B8026 /* CDAudioManager.h */; };
@@ -1957,7 +1957,7 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
-		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
@@ -2374,6 +2374,8 @@
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
 		3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBundleReader.cpp; sourceTree = "<group>"; };
 		3EA4786F195478E00068D9D1 /* CCBundleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundleReader.h; sourceTree = "<group>"; };
+		464AD6E3197EBB1400E502D8 /* pvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pvr.cpp; path = ../base/pvr.cpp; sourceTree = "<group>"; };
+		464AD6E4197EBB1400E502D8 /* pvr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvr.h; path = ../base/pvr.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -2434,8 +2436,6 @@
 		46A168531807AF4E005B8026 /* CCEditBoxImplAndroid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplAndroid.h; sourceTree = "<group>"; };
 		46A168541807AF4E005B8026 /* CCEditBoxImplIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplIOS.h; sourceTree = "<group>"; };
 		46A168551807AF4E005B8026 /* CCEditBoxImplIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplIOS.mm; sourceTree = "<group>"; };
-		46A168561807AF4E005B8026 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplMac.h; sourceTree = "<group>"; };
-		46A168571807AF4E005B8026 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCEditBoxImplMac.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A168581807AF4E005B8026 /* CCEditBoxImplNone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBoxImplNone.cpp; sourceTree = "<group>"; };
 		46A1685B1807AF4E005B8026 /* CCEditBoxImplWin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBoxImplWin.cpp; sourceTree = "<group>"; };
 		46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplWin.h; sourceTree = "<group>"; };
@@ -3160,7 +3160,7 @@
 		1551A340158F2AB200E66CFE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1551A33F158F2AB200E66CFE /* libcocos2dx Mac.dylib */,
+				1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */,
 				A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */,
 				A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */,
 				A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */,
@@ -3284,6 +3284,8 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				464AD6E3197EBB1400E502D8 /* pvr.cpp */,
+				464AD6E4197EBB1400E502D8 /* pvr.h */,
 				3E61781C1966A5A300DE83F5 /* CCController.cpp */,
 				3E6176551960F89B00DE83F5 /* CCController-iOS.mm */,
 				3E6176561960F89B00DE83F5 /* CCController.h */,
@@ -4383,8 +4385,6 @@
 				46A168531807AF4E005B8026 /* CCEditBoxImplAndroid.h */,
 				46A168541807AF4E005B8026 /* CCEditBoxImplIOS.h */,
 				46A168551807AF4E005B8026 /* CCEditBoxImplIOS.mm */,
-				46A168561807AF4E005B8026 /* CCEditBoxImplMac.h */,
-				46A168571807AF4E005B8026 /* CCEditBoxImplMac.mm */,
 				46A168581807AF4E005B8026 /* CCEditBoxImplNone.cpp */,
 				46A1685B1807AF4E005B8026 /* CCEditBoxImplWin.cpp */,
 				46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */,
@@ -5329,6 +5329,7 @@
 				50ABBE531925AB6F00A911A9 /* CCEventDispatcher.h in Headers */,
 				B6B2633F19381FBF0088FE25 /* CCAnimationCurve.h in Headers */,
 				B6B26345193884D60088FE25 /* CCAnimation3D.h in Headers */,
+				464AD6E7197EBB1400E502D8 /* pvr.h in Headers */,
 				B6ACD899193D6693005E0B8A /* CCMeshSkin.h in Headers */,
 				B6ACD8A0193DC0CC005E0B8A /* CCAnimate3D.h in Headers */,
 				B6AAF84319404E0D0069DE01 /* CCBundle3D.h in Headers */,
@@ -5445,7 +5446,6 @@
 				460E477E18080902000CDD6D /* CCControl.h in Headers */,
 				460E47B11808090B000CDD6D /* CCEditBoxImpl.h in Headers */,
 				460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */,
-				460E47B61808090B000CDD6D /* CCEditBoxImplMac.h in Headers */,
 				460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */,
 				460E479118080902000CDD6D /* CCControlUtils.h in Headers */,
 				460E468118080832000CDD6D /* cocos-ext.h in Headers */,
@@ -5673,6 +5673,7 @@
 				50ABBD471925AB0000A911A9 /* CCVertex.h in Headers */,
 				1A9DCA2A180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
 				1A01C69F18F57BE800EFE3A6 /* CCString.h in Headers */,
+				464AD6E8197EBB1400E502D8 /* pvr.h in Headers */,
 				1A01C69118F57BE800EFE3A6 /* CCDictionary.h in Headers */,
 				5034CA36191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */,
@@ -5718,7 +5719,6 @@
 				460E47A418080904000CDD6D /* CCControlSlider.h in Headers */,
 				460E479E18080904000CDD6D /* CCControlHuePicker.h in Headers */,
 				460E468218080836000CDD6D /* cocos-ext.h in Headers */,
-				460E47C41808090D000CDD6D /* CCEditBoxImplMac.h in Headers */,
 				460E47BF1808090D000CDD6D /* CCEditBoxImpl.h in Headers */,
 				460E47AE18080904000CDD6D /* CCScale9Sprite.h in Headers */,
 				460E477C180808F7000CDD6D /* ExtensionMacros.h in Headers */,
@@ -6212,7 +6212,7 @@
 			);
 			name = "cocos2dx Mac";
 			productName = cocos2dx;
-			productReference = 1551A33F158F2AB200E66CFE /* libcocos2dx Mac.dylib */;
+			productReference = 1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		A03F2B781780BD04006731B9 /* chipmunk Mac */ = {
@@ -6723,6 +6723,7 @@
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
 				50ABBEA71925AB6F00A911A9 /* CCTouch.cpp in Sources */,
 				50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
+				464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */,
 				50ABBDA31925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				B29594C61926D61F003EEF37 /* CCObjLoader.cpp in Sources */,
 				50ABC01D1926664800A911A9 /* CCThread.cpp in Sources */,
@@ -6898,7 +6899,6 @@
 				460E478E18080902000CDD6D /* CCControlSwitch.cpp in Sources */,
 				460E479218080902000CDD6D /* CCInvocation.cpp in Sources */,
 				460E477F18080902000CDD6D /* CCControlButton.cpp in Sources */,
-				460E47B71808090B000CDD6D /* CCEditBoxImplMac.mm in Sources */,
 				460E47AF1808090B000CDD6D /* CCEditBox.cpp in Sources */,
 				460E479418080902000CDD6D /* CCScale9Sprite.cpp in Sources */,
 				460E478118080902000CDD6D /* CCControlColourPicker.cpp in Sources */,
@@ -7039,6 +7039,7 @@
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				1A570301180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				1A57030D180BCF190088DEC7 /* CCComponent.cpp in Sources */,
+				464AD6E6197EBB1400E502D8 /* pvr.cpp in Sources */,
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread.mm in Sources */,
@@ -7121,7 +7122,6 @@
 				460E47D718080914000CDD6D /* CCTableView.cpp in Sources */,
 				460E479F18080904000CDD6D /* CCControlPotentiometer.cpp in Sources */,
 				460E479818080904000CDD6D /* CCControlButton.cpp in Sources */,
-				460E47C51808090D000CDD6D /* CCEditBoxImplMac.mm in Sources */,
 				460E479D18080904000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E47A318080904000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E47AB18080904000CDD6D /* CCInvocation.cpp in Sources */,
@@ -7635,7 +7635,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -7673,7 +7673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -7708,8 +7708,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				EXECUTABLE_EXTENSION = dylib;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				EXECUTABLE_EXTENSION = a;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7731,7 +7731,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
@@ -7740,8 +7740,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				EXECUTABLE_EXTENSION = dylib;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				EXECUTABLE_EXTENSION = a;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
@@ -7764,7 +7764,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Release;
@@ -7870,6 +7870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -7886,6 +7887,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",

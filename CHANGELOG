@@ -1,6 +1,11 @@
 cocos2d-x-3.3  ??
+    [NEW]           CCImage: support of software PVRTC v1 decompression
+
+    [FIX]           Label: can not set charmap after it is created
+    [FIX]           Scale9Sprite: new added sprite will be hidden
     [FIX]           UIListView: can not insert an item in specific position, it is added at bottom
     [FIX]           TextField: can not use backspace to delete a character
+    
     [FIX]           Others: can not import java library shift by engine correctly when using Eclispe on Android
 
 cocos2d-x-3.2  Jul.17 2014

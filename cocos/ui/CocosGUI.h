@@ -49,12 +49,13 @@ THE SOFTWARE.
 #include "ui/UIVideoPlayer.h"
 #endif
 #include "ui/UIDeprecated.h"
+#include "ui/GUIExport.h"
 
 
 NS_CC_BEGIN
 namespace ui {
 
-const char* CocosGUIVersion();
+CC_GUI_DLL const char* CocosGUIVersion();
 
 }
 NS_CC_END

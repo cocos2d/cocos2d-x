@@ -31,10 +31,11 @@
 
 
 #include "2d/CCNode.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
-
-class ProtectedNode : public Node
+	
+class  CC_GUI_DLL ProtectedNode : public Node
 {
 public:
     static ProtectedNode * create(void);
