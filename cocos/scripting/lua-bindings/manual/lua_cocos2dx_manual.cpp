@@ -6589,7 +6589,7 @@ static int tolua_cocos2d_utils_captureScreen(lua_State* tolua_S)
     }
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'captureScreen'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_utils_captureScreen'.",&tolua_err);
     return 0;
 #endif
 }
@@ -6627,7 +6627,7 @@ static int tolua_cocos2d_utils_findChildren(lua_State* tolua_S)
     }
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'findChildren'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_utils_findChildren'.",&tolua_err);
     return 0;
 #endif
 }
