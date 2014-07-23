@@ -101,7 +101,7 @@ public:
 		return _rootDict;
     }
 
-	ValueMap dictionaryWithDataOfFile(const char* filedata, int filesize)
+    ValueMap dictionaryWithDataOfFile(const char* filedata, int filesize)
 	{
 		_resultType = SAX_RESULT_DICT;
 		SAXParser parser;
@@ -113,7 +113,7 @@ public:
 		return _rootDict;
 	}	
 
-	ValueVector arrayWithContentsOfFile(const std::string& fileName)
+    ValueVector arrayWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
