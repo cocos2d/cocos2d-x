@@ -152,7 +152,7 @@ static int tolua_cocos2d_MenuItemLabel_create(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_MenuItemImage_create'.",&tolua_err);
     return 0;
 #endif
 }
@@ -192,7 +192,7 @@ static int tolua_cocos2d_MenuItemFont_create(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_MenuItemImage_create'.",&tolua_err);
     return 0;
 #endif
 }
@@ -246,7 +246,7 @@ static int tolua_cocos2d_MenuItemSprite_create(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_MenuItemImage_create'.",&tolua_err);
     return 0;
 #endif
 }
@@ -391,7 +391,7 @@ static int tolua_cocos2dx_Menu_alignItemsInColumns(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-	tolua_error(tolua_S,"#ferror in function 'alignItemsInColumns'.\n",&tolua_err);
+	tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_Menu_alignItemsInColumns'.\n",&tolua_err);
 #endif
 	return 0;
 }
@@ -441,7 +441,7 @@ static int tolua_cocos2d_MenuItemToggle_create(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_MenuItemToggle_create'.",&tolua_err);
     return 0;
 #endif
 }
@@ -482,7 +482,7 @@ static int tolua_cocos2d_MenuItem_registerScriptTapHandler(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptTapHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_MenuItem_registerScriptTapHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -522,7 +522,7 @@ static int tolua_cocos2d_MenuItem_unregisterScriptTapHandler(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptTapHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_MenuItem_unregisterScriptTapHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -681,7 +681,7 @@ static int lua_cocos2dx_Layer_setTouchEnabled(lua_State* L)
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setTouchEnabled'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_setTouchEnabled'.",&tolua_err);
     return 0;
 #endif
     
@@ -728,7 +728,7 @@ static int lua_cocos2dx_Layer_isTouchEnabled(lua_State* L)
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'isTouchEnabled'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_isTouchEnabled'.",&tolua_err);
     return 0;
 #endif
     
@@ -796,7 +796,7 @@ static int lua_cocos2dx_Layer_setTouchMode(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setTouchMode'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_setTouchMode'.",&tolua_err);
     return 0;
 #endif
 }
@@ -844,7 +844,7 @@ static int lua_cocos2dx_Layer_getTouchMode(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'getTouchMode'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_getTouchMode'.",&tolua_err);
     return 0;
 #endif
 }
@@ -911,7 +911,7 @@ static int lua_cocos2dx_Layer_setSwallowsTouches(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setSwallowsTouches'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_setSwallowsTouches'.",&tolua_err);
     return 0;
 #endif
 }
@@ -957,7 +957,7 @@ static int lua_cocos2dx_Layer_isSwallowsTouches(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'isSwallowsTouches'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_isSwallowsTouches'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1029,7 +1029,7 @@ static int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setKeyboardEnabled'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_setKeyboardEnabled'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1076,7 +1076,7 @@ static int lua_cocos2dx_Layer_isKeyboardEnabled(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'isKeyboardEnabled'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_isKeyboardEnabled'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1149,7 +1149,7 @@ static int lua_cocos2dx_Layer_setAccelerometerEnabled(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setAccelerometerEnabled'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_setAccelerometerEnabled'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1198,7 +1198,7 @@ static int lua_cocos2dx_Layer_isAccelerometerEnabled(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'isAccelerometerEnabled'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_isAccelerometerEnabled'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1243,7 +1243,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setAccelerometerInterval'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Layer_setAccelerometerInterval'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1373,7 +1373,7 @@ static int tolua_cocos2d_Layer_registerScriptTouchHandler(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptTouchHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_Layer_registerScriptTouchHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1426,7 +1426,7 @@ static int tolua_cocos2d_Layer_unregisterScriptTouchHandler(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptTapHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_Layer_unregisterScriptTouchHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1473,7 +1473,7 @@ static int tolua_cocos2d_Layer_registerScriptKeypadHandler(lua_State* tolua_S)
 
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptKeypadHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_Layer_registerScriptKeypadHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1526,7 +1526,7 @@ static int tolua_cocos2d_Layer_unregisterScriptKeypadHandler(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptKeypadHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_Layer_unregisterScriptKeypadHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1571,7 +1571,7 @@ static int tolua_cocos2d_Layer_registerScriptAccelerateHandler(lua_State* tolua_
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptAccelerateHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_Layer_registerScriptAccelerateHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -2991,12 +2991,12 @@ static int tolua_cocos2dx_GLProgram_create(lua_State* tolua_S)
         
     }
     
-    CCLOG("'create' function of GLProgram wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("%s wrong number of arguments: %d, was expecting %d\n", "cc.GLProgram:create", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_GLProgram_create'.",&tolua_err);
     return 0;
 #endif
 }
@@ -3032,12 +3032,12 @@ static int tolua_cocos2d_GLProgram_getProgram(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("'getProgram' function of GLProgram wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.GLProgram:getProgram",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getProgram'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_GLProgram_getProgram'.",&tolua_err);
     return 0;
 #endif
 }
@@ -3137,12 +3137,12 @@ static int tolua_cocos2dx_GLProgram_setUniformLocationF32(lua_State* tolua_S)
         }
     }
     
-    CCLOG("'setUniformLocationF32' function of GLProgram wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG(" %s has wrong number of arguments: %d, was expecting %d\n", "cc.GLProgram:setUniformLocationF32",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setUniformLocationF32'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_GLProgram_getProgram'.",&tolua_err);
     return 0;
 #endif
 }

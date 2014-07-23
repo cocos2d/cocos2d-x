@@ -635,7 +635,7 @@ static int tolua_cocos2d_CCBProxy_getNodeTypeName(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG(" %s function of CCBProxy  has wrong number of arguments: %d, was expecting %d\n", "cc.CCBProxy:getNodeTypeName", argc, 1);
+    CCLOG(" %s has wrong number of arguments: %d, was expecting %d\n", "cc.CCBProxy:getNodeTypeName", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -685,12 +685,12 @@ static int tolua_cocos2d_CCBProxy_setCallback(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'setCallback' function of CCBProxy  has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG(" %s has wrong number of arguments: %d, was expecting %d\n", "cc.CCBProxy:setCallback", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setCallback'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_CCBProxy_setCallback'.",&tolua_err);
     return 0;
 #endif
 }
@@ -785,12 +785,12 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
         
     }
     
-    CCLOG("'load' function of CCBReader  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.CCBReader:load",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'load'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_CCBReader_load'.",&tolua_err);
     return 0;
 #endif
 }
@@ -852,12 +852,12 @@ static int tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed(lua_
         return 0;
     }
     
-    CCLOG("'setCallFuncForLuaCallbackNamed' function of CCBAnimationManager  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.CCBAnimationManager:setCallFuncForLuaCallbackNamed",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setCallFuncForLuaCallbackNamed'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed'.",&tolua_err);
     return 0;
 #endif
 }
@@ -968,12 +968,12 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setDelegate' function of AssetsManager has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'setDelegate'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_AssetsManager_setDelegate'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1358,7 +1358,7 @@ static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"cc.TableView",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<TableView*>(tolua_tousertype(L,1,0));
@@ -1386,12 +1386,12 @@ static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("'registerScriptHandler' function of TableView has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'tolua_cocos2d_TableView_registerScriptHandler'.",&tolua_err);
     return 0;
 #endif
 }
@@ -1431,12 +1431,12 @@ static int lua_cocos2d_TableView_unregisterScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("'unregisterScriptHandler' function of TableView  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2d_TableView_unregisterScriptHandler'.",&tolua_err);
     return 0;
 #endif
 }
