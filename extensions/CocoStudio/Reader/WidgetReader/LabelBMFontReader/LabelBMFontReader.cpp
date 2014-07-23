@@ -56,7 +56,7 @@ void LabelBMFontReader::setPropsFromJsonDictionary(ui::Widget *widget, const rap
             break;
     }
     
-    const char* text = DICTOOL->getStringValue_json(options, "text");
+    const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
     labelBMFont->setText(text);
     
     
@@ -69,11 +69,11 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
     
     ui::LabelBMFont* labelBMFont = static_cast<ui::LabelBMFont*>(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "ignoreSize") {
             widget->ignoreContentAdaptWithSize(valueToBool(value));
@@ -121,7 +121,7 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -130,7 +130,7 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
@@ -188,8 +188,8 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
             _originalAnchorPoint.y = valueToFloat(value);
         }
         else if(key == "fileNameData"){
-            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray();
-            std::string resType = backGroundChildren[2].GetValue();;
+            stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
+            std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
             ui::TextureResType imageFileNameType = (ui::TextureResType)valueToInt(resType);
             

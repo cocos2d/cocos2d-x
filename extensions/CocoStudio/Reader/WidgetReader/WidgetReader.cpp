@@ -61,10 +61,9 @@ void WidgetReader::purge()
 
 void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
-    if (ignoreSizeExsit)
-    {
-        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize"));
+    bool ignoreSizeExsits = DICTOOL->checkObjectExist_json(options, "ignoreSize");
+    if (ignoreSizeExsits) {
+        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, "ignoreSize",false));
     }
     
     widget->setSizeType((ui::SizeType)DICTOOL->getIntValue_json(options, "sizeType"));
@@ -90,21 +89,13 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
     widget->setPosition(ccp(x,y));
-    bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
-    if (sx)
-    {
-        widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX"));
-    }
-    bool sy = DICTOOL->checkObjectExist_json(options, "scaleY");
-    if (sy)
-    {
-        widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY"));
-    }
-    bool rt = DICTOOL->checkObjectExist_json(options, "rotation");
-    if (rt)
-    {
-        widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
-    }
+   
+    widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX",1.0));
+    
+    widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY",1.0));
+    
+    widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation",0));
+    
     bool vb = DICTOOL->checkObjectExist_json(options, "visible");
     if (vb)
     {
@@ -159,23 +150,26 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
 
 void WidgetReader::setColorPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    bool op = DICTOOL->checkObjectExist_json(options, "opacity");
-    if (op)
-    {
-        widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity"));
+    widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity",255));
+   
+    bool isColorRExists = DICTOOL->checkObjectExist_json(options, "colorR");
+    bool isColorGExists = DICTOOL->checkObjectExist_json(options, "colorG");
+    bool isColorBExists = DICTOOL->checkObjectExist_json(options, "colorB");
+   
+    int colorR = DICTOOL->getIntValue_json(options, "colorR");
+    int colorG = DICTOOL->getIntValue_json(options, "colorG");
+    int colorB = DICTOOL->getIntValue_json(options, "colorB");
+    
+    if (isColorRExists && isColorGExists && isColorBExists) {
+        widget->setColor(ccc3(colorR, colorG, colorB));
     }
-    bool cr = DICTOOL->checkObjectExist_json(options, "colorR");
-    bool cg = DICTOOL->checkObjectExist_json(options, "colorG");
-    bool cb = DICTOOL->checkObjectExist_json(options, "colorB");
-    int colorR = cr ? DICTOOL->getIntValue_json(options, "colorR") : 255;
-    int colorG = cg ? DICTOOL->getIntValue_json(options, "colorG") : 255;
-    int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
-    widget->setColor(ccc3(colorR, colorG, colorB));
+    
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
     float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == ui::WidgetTypeWidget) ? 0.5f : 0.0f);
     bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
     float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == ui::WidgetTypeWidget) ? 0.5f : 0.0f);
     widget->setAnchorPoint(ccp(apxf, apyf));
+    
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
     widget->setFlipX(flipX);
@@ -213,8 +207,8 @@ std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader,
                                           stExpCocoNode *pCocoNode,
                                           cocos2d::ui::TextureResType texType)
 {
-    stExpCocoNode *backGroundChildren = pCocoNode->GetChildArray();
-    std::string backgroundValue = backGroundChildren[0].GetValue();
+    stExpCocoNode *backGroundChildren = pCocoNode->GetChildArray(pCocoLoader);
+    std::string backgroundValue = backGroundChildren[0].GetValue(pCocoLoader);
     
     if (backgroundValue.size() < 3) {
         return "";
@@ -240,12 +234,12 @@ std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader,
 
 void WidgetReader::setPropsFromBinary(cocos2d::ui::Widget *widget, cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
 {
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "ignoreSize") {
             widget->ignoreContentAdaptWithSize(valueToBool(value));
@@ -289,7 +283,7 @@ void WidgetReader::setPropsFromBinary(cocos2d::ui::Widget *widget, cocos2d::exte
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -298,7 +292,7 @@ void WidgetReader::setPropsFromBinary(cocos2d::ui::Widget *widget, cocos2d::exte
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);

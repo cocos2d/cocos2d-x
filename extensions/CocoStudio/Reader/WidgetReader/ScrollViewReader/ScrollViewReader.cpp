@@ -37,11 +37,11 @@ void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
     
     ui::ScrollView* scrollView = (ui::ScrollView*)widget;
     
-    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
-    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth",200);
+    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight",200);
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
     
-	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	int direction = DICTOOL->getFloatValue_json(options, "direction",1);
 	scrollView->setDirection((ui::SCROLLVIEW_DIR)direction);
     
     scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
@@ -57,12 +57,12 @@ void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoade
     
     ui::ScrollView* scrollView = static_cast<ui::ScrollView*>(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     float innerWidth = 0.0f;
     float innerHeight = 0.0f;
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         if (key == "innerWidth") {
             innerWidth = valueToFloat(value);
         }

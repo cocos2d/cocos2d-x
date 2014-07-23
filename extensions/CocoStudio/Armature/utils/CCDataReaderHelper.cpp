@@ -1811,7 +1811,7 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 		rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
 		if (rapidjson::kObjectType  == tType)
 		{
-			stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+			stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
 			int nCount = tpRootCocoNode->GetChildNum();
 
 			dataInfo->contentScale = 1.0f;
@@ -1823,12 +1823,12 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 			    key = tpChildArray[i].GetName(&tCocoLoader);
 				if (key.compare(CONTENT_SCALE) == 0)
 				{
-					std::string value = tpChildArray[i].GetValue();
+					std::string value = tpChildArray[i].GetValue(&tCocoLoader);
 					dataInfo->contentScale = atof(value.c_str());
 				}
 				else if ( 0 == key.compare(ARMATURE_DATA))
 				{
-					pDataArray = tpChildArray[i].GetChildArray();
+					pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
 					length = tpChildArray[i].GetChildNum();
 					CCArmatureData * armatureData;
 					for (int i = 0; i < length; ++i)
@@ -1848,7 +1848,7 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 				}
 				else if ( 0 == key.compare(ANIMATION_DATA))
 				{
-					pDataArray = tpChildArray[i].GetChildArray();
+					pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
 					length = tpChildArray[i].GetChildNum();
 					CCAnimationData *animationData;
 					for (int i = 0; i < length; ++i)
@@ -1868,7 +1868,7 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 				}
 				else if (key.compare(TEXTURE_DATA) == 0)
 				{
-					pDataArray = tpChildArray[i].GetChildArray();
+					pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
 					length = tpChildArray[i].GetChildNum();
 					for (int i = 0; i < length; ++i)
 					{
@@ -1898,10 +1898,10 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 						continue;
 					}
 					length = tpChildArray[i].GetChildNum();
-					stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray();
+					stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray(&tCocoLoader);
 					for (int i = 0; i < length; i++)
 					{
-						const char *path = pConfigFilePath[i].GetValue();
+						const char *path = pConfigFilePath[i].GetValue(&tCocoLoader);
 						if (path == NULL)
 						{
 							CCLOG("load CONFIG_FILE_PATH error.");
@@ -1933,18 +1933,18 @@ CCArmatureData* CCDataReaderHelper::decodeArmature(CocoLoader *pCocoLoader, stEx
 {
 	CCArmatureData *armatureData = new CCArmatureData();
 	armatureData->init();
-	stExpCocoNode *pAramtureDataArray = pCocoNode->GetChildArray();
-	const char *name = pAramtureDataArray[2].GetValue(); //DICTOOL->getStringValue_json(json, A_NAME);
+	stExpCocoNode *pAramtureDataArray = pCocoNode->GetChildArray(pCocoLoader);
+	const char *name = pAramtureDataArray[2].GetValue(pCocoLoader); //DICTOOL->getStringValue_json(json, A_NAME);
 	if(name != NULL)
 	{
 		armatureData->name = name;
 	}
 
-	float version = atof(pAramtureDataArray[1].GetValue());
+	float version = atof(pAramtureDataArray[1].GetValue(pCocoLoader));
 	dataInfo->cocoStudioVersion = armatureData->dataVersion = version; //DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
 
 	int length = pAramtureDataArray[3].GetChildNum(); //DICTOOL->getArrayCount_json(json, BONE_DATA, 0); 
-	stExpCocoNode *pBoneChildren = pAramtureDataArray[3].GetChildArray();
+	stExpCocoNode *pBoneChildren = pAramtureDataArray[3].GetChildArray(pCocoLoader);
 	stExpCocoNode* child;
 	for (int i = 0; i < length; i++)
 	{
@@ -1966,7 +1966,7 @@ CCBoneData* CCDataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNod
 	decodeNode(boneData, pCocoLoader, pCocoNode, dataInfo);
 
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *pBoneChildren = pCocoNode->GetChildArray();
+	stExpCocoNode *pBoneChildren = pCocoNode->GetChildArray(pCocoLoader);
 	stExpCocoNode* child;
 	const char *str = NULL;
 	std::string key;
@@ -1974,7 +1974,7 @@ CCBoneData* CCDataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNod
 	{
 		child = &pBoneChildren[i];
 		key = child->GetName(pCocoLoader);
-		str = child->GetValue();
+		str = child->GetValue(pCocoLoader);
 		if (key.compare(A_NAME) == 0)
 		{
 			 //DICTOOL->getStringValue_json(json, A_NAME);
@@ -1994,7 +1994,7 @@ CCBoneData* CCDataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNod
 		else if (key.compare(DISPLAY_DATA) == 0)
 		{
 			int count = child->GetChildNum();
-			stExpCocoNode *pDisplayData = child->GetChildArray();
+			stExpCocoNode *pDisplayData = child->GetChildArray(pCocoLoader);
 			for (int i = 0; i < count; ++i)
 			{
 				CCDisplayData *displayData = decodeBoneDisplay(pCocoLoader, &pDisplayData[i], dataInfo);
@@ -2011,18 +2011,18 @@ CCBoneData* CCDataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNod
 
 CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
 {
-	stExpCocoNode* children = pCocoNode->GetChildArray();
+	stExpCocoNode* children = pCocoNode->GetChildArray(pCocoLoader);
 	stExpCocoNode* child = &children[1];
 	const char *str = NULL;
 
 	std::string key = child->GetName(pCocoLoader);
-	str = child->GetValue();
+	str = child->GetValue(pCocoLoader);
 	CCDisplayData *displayData = NULL;
 	DisplayType displayType = CS_DISPLAY_SPRITE;
 
 	if (key.compare(A_DISPLAY_TYPE) == 0)
 	{
-		str = child->GetValue();
+		str = child->GetValue(pCocoLoader);
 		DisplayType displayType = (DisplayType)(atoi(str));
 
 		int length = 0;
@@ -2032,12 +2032,12 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 			{
 				displayData = new CCSpriteDisplayData();
 
-				const char *name =  children[0].GetValue(); 
+				const char *name =  children[0].GetValue(pCocoLoader); 
 				if(name != NULL)
 				{
 					((CCSpriteDisplayData *)displayData)->displayName = name;
 				}
-				stExpCocoNode *pSkinDataArray = children[2].GetChildArray();
+				stExpCocoNode *pSkinDataArray = children[2].GetChildArray(pCocoLoader);
 				if (pSkinDataArray != NULL)
 				{
 					stExpCocoNode *pSkinData = &pSkinDataArray[0];
@@ -2045,11 +2045,11 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 					{
 						CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
 						int length = pSkinData->GetChildNum();
-						stExpCocoNode *SkinDataValue = pSkinData->GetChildArray();
+						stExpCocoNode *SkinDataValue = pSkinData->GetChildArray(pCocoLoader);
 						for (int i = 0; i < length; ++i)
 						{
 							key = SkinDataValue[i].GetName(pCocoLoader);
-							str = SkinDataValue[i].GetValue();
+							str = SkinDataValue[i].GetValue(pCocoLoader);
 							if (key.compare(A_X) == 0)
 							{
 								sdd->skinData.x = atof(str) * s_PositionReadScale; 
@@ -2087,7 +2087,7 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 			{
 				displayData = new CCArmatureDisplayData();
 
-				const char *name = pCocoNode[0].GetValue();
+				const char *name = pCocoNode[0].GetValue(pCocoLoader);
 				if(name != NULL)
 				{
 					((CCArmatureDisplayData *)displayData)->displayName = name;
@@ -2098,11 +2098,11 @@ CCDisplayData* CCDataReaderHelper::decodeBoneDisplay(CocoLoader *pCocoLoader, st
 			{
 				displayData = new CCParticleDisplayData();
 				length = pCocoNode->GetChildNum();
-				stExpCocoNode *pDisplayData = pCocoNode->GetChildArray();
+				stExpCocoNode *pDisplayData = pCocoNode->GetChildArray(pCocoLoader);
 				for (int i = 0; i < length; ++i)
 				{
 					key = pDisplayData[i].GetName(pCocoLoader);
-                    str = pDisplayData[i].GetValue();
+                    str = pDisplayData[i].GetValue(pCocoLoader);
 					if (key.compare(A_PLIST) == 0)
 					{
                         const char *plist = str;
@@ -2136,7 +2136,7 @@ CCAnimationData* CCDataReaderHelper::decodeAnimation(CocoLoader *pCocoLoader, st
 	CCAnimationData *aniData = new CCAnimationData();
 
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *pAnimationData = pCocoNode->GetChildArray();
+	stExpCocoNode *pAnimationData = pCocoNode->GetChildArray(pCocoLoader);
 	const char *str = NULL;
 	std::string key;
 	stExpCocoNode* child;
@@ -2145,7 +2145,7 @@ CCAnimationData* CCDataReaderHelper::decodeAnimation(CocoLoader *pCocoLoader, st
 	{
 		child = &pAnimationData[i];
 		key = child->GetName(pCocoLoader);
-		str = child->GetValue();
+		str = child->GetValue(pCocoLoader);
 		if (key.compare(A_NAME) == 0)
 		{
 			if(str != NULL)
@@ -2156,7 +2156,7 @@ CCAnimationData* CCDataReaderHelper::decodeAnimation(CocoLoader *pCocoLoader, st
 		else if (key.compare(MOVEMENT_DATA) == 0)
 		{
 			int movcount = child->GetChildNum();
-			stExpCocoNode* movArray =  child->GetChildArray();
+			stExpCocoNode* movArray =  child->GetChildArray(pCocoLoader);
 			for( int movnum =0; movnum <movcount; movnum++)
 			{
 				movementData = decodeMovement(pCocoLoader, &movArray[movnum], dataInfo);
@@ -2174,7 +2174,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 	movementData->scale = 1.0f;
 	
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *pMoveDataArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pMoveDataArray = pCocoNode->GetChildArray(pCocoLoader);
 
 	const char *str = NULL;
 	std::string key;
@@ -2183,7 +2183,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 	{
 		child = &pMoveDataArray[i];
 		key = child->GetName(pCocoLoader);
-		str = child->GetValue();
+		str = child->GetValue(pCocoLoader);
 		if (key.compare(A_NAME) == 0)
 		{
 			if(str != NULL)
@@ -2245,7 +2245,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 		else if (key.compare(MOVEMENT_BONE_DATA) == 0)
 		{
 			int count = child->GetChildNum();
-			stExpCocoNode *pMoveBoneData = child->GetChildArray();
+			stExpCocoNode *pMoveBoneData = child->GetChildArray(pCocoLoader);
 			CCMovementBoneData *movementBoneData;
 			for (int i = 0; i < count; ++i)
 			{
@@ -2264,14 +2264,14 @@ CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoad
 	movementBoneData->init();
 
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *pMovementBoneDataArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pMovementBoneDataArray = pCocoNode->GetChildArray(pCocoLoader);
 	stExpCocoNode* movebonechild;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		movebonechild = &pMovementBoneDataArray[i];
 		std::string key = movebonechild->GetName(pCocoLoader);
-		str = movebonechild->GetValue();
+		str = movebonechild->GetValue(pCocoLoader);
 		if (key.compare(A_NAME) == 0)
 		{
 			if(str != NULL)
@@ -2289,7 +2289,7 @@ CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoad
 		else if (key.compare(FRAME_DATA) == 0)
 		{
 			int count =movebonechild->GetChildNum();
-			stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray();
+			stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray(pCocoLoader);
 			for (int i = 0; i < count; ++i)
 			{
 				CCFrameData *frameData = decodeFrame(pCocoLoader, &pFrameDataArray[i], dataInfo);
@@ -2355,12 +2355,12 @@ CCFrameData* CCDataReaderHelper::decodeFrame(CocoLoader *pCocoLoader, stExpCocoN
 	decodeNode(frameData, pCocoLoader, pCocoNode, dataInfo);
 
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *pFrameDataArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pFrameDataArray = pCocoNode->GetChildArray(pCocoLoader);
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		std::string key = pFrameDataArray[i].GetName(pCocoLoader);
-		str = pFrameDataArray[i].GetValue();
+		str = pFrameDataArray[i].GetValue(pCocoLoader);
 		if (key.compare(A_TWEEN_EASING) == 0)
 		{
 			frameData->tweenEasing = Linear;
@@ -2435,10 +2435,10 @@ CCFrameData* CCDataReaderHelper::decodeFrame(CocoLoader *pCocoLoader, stExpCocoN
 			if (count != 0 )
 			{
 				frameData->easingParams = new float[count];
-				stExpCocoNode *pFrameData = pFrameDataArray[i].GetChildArray();
+				stExpCocoNode *pFrameData = pFrameDataArray[i].GetChildArray(pCocoLoader);
 				for (int i = 0; i < count; ++i)
 				{
-					str = pFrameData[i].GetValue();
+					str = pFrameData[i].GetValue(pCocoLoader);
 					if (str != NULL)
 					{
 						frameData->easingParams[i] = atof(str);
@@ -2463,12 +2463,12 @@ CCTextureData* CCDataReaderHelper::decodeTexture(CocoLoader *pCocoLoader, stExpC
 	}
 
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *pTextureDataArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pTextureDataArray = pCocoNode->GetChildArray(pCocoLoader);
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		std::string key = pTextureDataArray[i].GetName(pCocoLoader);
-		str = pTextureDataArray[i].GetValue();
+		str = pTextureDataArray[i].GetValue(pCocoLoader);
 		if (key.compare(A_NAME) == 0)
 		{
 			if(str != NULL)
@@ -2507,7 +2507,7 @@ CCTextureData* CCDataReaderHelper::decodeTexture(CocoLoader *pCocoLoader, stExpC
 		else if (key.compare(CONTOUR_DATA) == 0)
 		{
 			int count = pTextureDataArray[i].GetChildNum();
-			stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray();
+			stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray(pCocoLoader);
 			for (int i = 0; i < count; ++i)
 			{
 				CCContourData *contourData = decodeContour(pCocoLoader, &pContourArray[i]);
@@ -2525,23 +2525,23 @@ CCContourData* CCDataReaderHelper::decodeContour(CocoLoader *pCocoLoader, stExpC
 	contourData->init();
 
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *verTexPointArray = pCocoNode->GetChildArray();
+	stExpCocoNode *verTexPointArray = pCocoNode->GetChildArray(pCocoLoader);
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		std::string key = verTexPointArray[i].GetName(pCocoLoader);
-		str = verTexPointArray[i].GetValue();
+		str = verTexPointArray[i].GetValue(pCocoLoader);
 		if (key.compare(VERTEX_POINT) == 0)
 		{
 			int count = verTexPointArray[i].GetChildNum();
-			stExpCocoNode *pVerTexPointArray = verTexPointArray[i].GetChildArray();
+			stExpCocoNode *pVerTexPointArray = verTexPointArray[i].GetChildArray(pCocoLoader);
 			for (int i = count - 1; i >= 0; --i)
 			{
 				int num = pVerTexPointArray[i].GetChildNum();
-				stExpCocoNode *pVerTexPoint = pVerTexPointArray[i].GetChildArray();
+				stExpCocoNode *pVerTexPoint = pVerTexPointArray[i].GetChildArray(pCocoLoader);
 				CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
-				vertex->x = atof(pVerTexPoint[0].GetValue());
-				vertex->y = atof(pVerTexPoint[1].GetValue());
+				vertex->x = atof(pVerTexPoint[0].GetValue(pCocoLoader));
+				vertex->y = atof(pVerTexPoint[1].GetValue(pCocoLoader));
 				contourData->vertexList.addObject(vertex);
 					vertex->release();
 			}
@@ -2554,7 +2554,7 @@ CCContourData* CCDataReaderHelper::decodeContour(CocoLoader *pCocoLoader, stExpC
 void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)
 {
 	int length = pCocoNode->GetChildNum();
-	stExpCocoNode *NodeArray = pCocoNode->GetChildArray();
+	stExpCocoNode *NodeArray = pCocoNode->GetChildArray(pCocoLoader);
 	const char *str = NULL;
 
 	bool isVersionL = dataInfo->cocoStudioVersion < VERSION_COLOR_READING;
@@ -2563,7 +2563,7 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 	{
 		child = &NodeArray[i];
 		std::string key = child->GetName(pCocoLoader);
-		str = child->GetValue();
+		str = child->GetValue(pCocoLoader);
 		if (key.compare(A_X) == 0)
 		{
 			node->x = atof(str) * dataInfo->contentScale;
@@ -2600,12 +2600,12 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 				{
 					if(child->GetChildNum() == 4)
 					{
-						stExpCocoNode *ChildArray = child->GetChildArray();
+						stExpCocoNode *ChildArray = child->GetChildArray(pCocoLoader);
 
-						node->a = atoi(ChildArray[0].GetValue());
-						node->r = atoi(ChildArray[1].GetValue());
-						node->g = atoi(ChildArray[2].GetValue());
-						node->b = atoi(ChildArray[3].GetValue());
+						node->a = atoi(ChildArray[0].GetValue(pCocoLoader));
+						node->r = atoi(ChildArray[1].GetValue(pCocoLoader));
+						node->g = atoi(ChildArray[2].GetValue(pCocoLoader));
+						node->b = atoi(ChildArray[3].GetValue(pCocoLoader));
 					}
 
 				}
@@ -2627,12 +2627,12 @@ void CCDataReaderHelper::decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, s
 			{
 				if(NodeArray[0].GetChildNum() == 4)
 				{
-					stExpCocoNode *ChildArray = NodeArray[0].GetChildArray();
+					stExpCocoNode *ChildArray = NodeArray[0].GetChildArray(pCocoLoader);
 
-					node->a = atoi(ChildArray[0].GetValue());
-					node->r = atoi(ChildArray[1].GetValue());
-					node->g = atoi(ChildArray[2].GetValue());
-					node->b = atoi(ChildArray[3].GetValue());
+					node->a = atoi(ChildArray[0].GetValue(pCocoLoader));
+					node->r = atoi(ChildArray[1].GetValue(pCocoLoader));
+					node->g = atoi(ChildArray[2].GetValue(pCocoLoader));
+					node->b = atoi(ChildArray[3].GetValue(pCocoLoader));
 				}
 			}
 

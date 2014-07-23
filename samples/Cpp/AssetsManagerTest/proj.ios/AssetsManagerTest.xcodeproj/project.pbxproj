@@ -108,6 +108,11 @@
 		2961DF9918C9B3EA0017F5DB /* SliderReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DF8618C9B3EA0017F5DB /* SliderReader.cpp */; };
 		2961DF9A18C9B3EA0017F5DB /* TextFieldReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DF8918C9B3EA0017F5DB /* TextFieldReader.cpp */; };
 		2961DF9B18C9B3EA0017F5DB /* WidgetReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2961DF8B18C9B3EA0017F5DB /* WidgetReader.cpp */; };
+		29D49657196E6721002DF8B5 /* CCActionTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D4964C196E6721002DF8B5 /* CCActionTimeline.cpp */; };
+		29D49658196E6721002DF8B5 /* CCActionTimelineCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D4964E196E6721002DF8B5 /* CCActionTimelineCache.cpp */; };
+		29D49659196E6721002DF8B5 /* CCFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D49650196E6721002DF8B5 /* CCFrame.cpp */; };
+		29D4965A196E6721002DF8B5 /* CCNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D49652196E6721002DF8B5 /* CCNodeReader.cpp */; };
+		29D4965B196E6721002DF8B5 /* CCTimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D49654196E6721002DF8B5 /* CCTimeLine.cpp */; };
 		375BD42E18683E8B0024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD42618683E8B0024609E /* ObjectFactory.cpp */; };
 		375BD42F18683E8B0024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD42818683E8B0024609E /* TriggerBase.cpp */; };
 		375BD43018683E8B0024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD42A18683E8B0024609E /* TriggerMng.cpp */; };
@@ -443,6 +448,17 @@
 		2961DF8B18C9B3EA0017F5DB /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		2961DF8C18C9B3EA0017F5DB /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		2961DF8D18C9B3EA0017F5DB /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
+		29D4964C196E6721002DF8B5 /* CCActionTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimeline.cpp; sourceTree = "<group>"; };
+		29D4964D196E6721002DF8B5 /* CCActionTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimeline.h; sourceTree = "<group>"; };
+		29D4964E196E6721002DF8B5 /* CCActionTimelineCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimelineCache.cpp; sourceTree = "<group>"; };
+		29D4964F196E6721002DF8B5 /* CCActionTimelineCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimelineCache.h; sourceTree = "<group>"; };
+		29D49650196E6721002DF8B5 /* CCFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrame.cpp; sourceTree = "<group>"; };
+		29D49651196E6721002DF8B5 /* CCFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrame.h; sourceTree = "<group>"; };
+		29D49652196E6721002DF8B5 /* CCNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNodeReader.cpp; sourceTree = "<group>"; };
+		29D49653196E6721002DF8B5 /* CCNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeReader.h; sourceTree = "<group>"; };
+		29D49654196E6721002DF8B5 /* CCTimeLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTimeLine.cpp; sourceTree = "<group>"; };
+		29D49655196E6721002DF8B5 /* CCTimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimeLine.h; sourceTree = "<group>"; };
+		29D49656196E6721002DF8B5 /* CCTimelineMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTimelineMacro.h; sourceTree = "<group>"; };
 		375BD42618683E8B0024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		375BD42718683E8B0024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
 		375BD42818683E8B0024609E /* TriggerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerBase.cpp; sourceTree = "<group>"; };
@@ -689,6 +705,7 @@
 		1A5E729317F085BC00B9ACAE /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				29D4964B196E6721002DF8B5 /* ActionTimeline */,
 				375BD45018683F1F0024609E /* Action */,
 				375BD42518683E8B0024609E /* Trigger */,
 				1A5E729F17F085BC00B9ACAE /* Armature */,
@@ -1183,6 +1200,24 @@
 				2961DF8A18C9B3EA0017F5DB /* TextFieldReader.h */,
 			);
 			path = TextFieldReader;
+			sourceTree = "<group>";
+		};
+		29D4964B196E6721002DF8B5 /* ActionTimeline */ = {
+			isa = PBXGroup;
+			children = (
+				29D4964C196E6721002DF8B5 /* CCActionTimeline.cpp */,
+				29D4964D196E6721002DF8B5 /* CCActionTimeline.h */,
+				29D4964E196E6721002DF8B5 /* CCActionTimelineCache.cpp */,
+				29D4964F196E6721002DF8B5 /* CCActionTimelineCache.h */,
+				29D49650196E6721002DF8B5 /* CCFrame.cpp */,
+				29D49651196E6721002DF8B5 /* CCFrame.h */,
+				29D49652196E6721002DF8B5 /* CCNodeReader.cpp */,
+				29D49653196E6721002DF8B5 /* CCNodeReader.h */,
+				29D49654196E6721002DF8B5 /* CCTimeLine.cpp */,
+				29D49655196E6721002DF8B5 /* CCTimeLine.h */,
+				29D49656196E6721002DF8B5 /* CCTimelineMacro.h */,
+			);
+			path = ActionTimeline;
 			sourceTree = "<group>";
 		};
 		375BD42518683E8B0024609E /* Trigger */ = {
@@ -1804,6 +1839,7 @@
 				2961DF9818C9B3EA0017F5DB /* ScrollViewReader.cpp in Sources */,
 				375BD43018683E8B0024609E /* TriggerMng.cpp in Sources */,
 				1A5E728117F084FD00B9ACAE /* js_bindings_chipmunk_functions.cpp in Sources */,
+				29D49657196E6721002DF8B5 /* CCActionTimeline.cpp in Sources */,
 				1A5E728217F084FD00B9ACAE /* js_bindings_chipmunk_manual.cpp in Sources */,
 				1A5E728317F084FD00B9ACAE /* js_bindings_chipmunk_registration.cpp in Sources */,
 				1A5E728417F084FD00B9ACAE /* js_bindings_opengl.cpp in Sources */,
@@ -1814,6 +1850,7 @@
 				1A5E728E17F0852700B9ACAE /* jsb_chipmunk_constants.js in Sources */,
 				1A5E728F17F0852700B9ACAE /* jsb_cocos2d_constants.js in Sources */,
 				43B91EE51949BA2300F7F815 /* CocoLoader.cpp in Sources */,
+				29D4965B196E6721002DF8B5 /* CCTimeLine.cpp in Sources */,
 				1A5E729017F0852700B9ACAE /* jsb_cocos2d_extension.js in Sources */,
 				1A5E729117F0852700B9ACAE /* jsb_deprecated.js in Sources */,
 				1A5E729217F0852700B9ACAE /* jsb_opengl_constants.js in Sources */,
@@ -1823,6 +1860,8 @@
 				1A5E733217F085BC00B9ACAE /* CCTween.cpp in Sources */,
 				1A5E733317F085BC00B9ACAE /* CCArmature.cpp in Sources */,
 				1A5E733417F085BC00B9ACAE /* CCBone.cpp in Sources */,
+				29D49659196E6721002DF8B5 /* CCFrame.cpp in Sources */,
+				29D49658196E6721002DF8B5 /* CCActionTimelineCache.cpp in Sources */,
 				1A5E733517F085BC00B9ACAE /* CCDatas.cpp in Sources */,
 				375BD45D18683F1F0024609E /* CCActionEaseEx.cpp in Sources */,
 				1A5E733617F085BC00B9ACAE /* CCBatchNode.cpp in Sources */,
@@ -1898,6 +1937,7 @@
 				1A5E73E817F085D600B9ACAE /* cpShape.c in Sources */,
 				1A5E73E917F085D600B9ACAE /* cpSpace.c in Sources */,
 				1A5E73EA17F085D600B9ACAE /* cpSpaceComponent.c in Sources */,
+				29D4965A196E6721002DF8B5 /* CCNodeReader.cpp in Sources */,
 				1A5E73EB17F085D600B9ACAE /* cpSpaceHash.c in Sources */,
 				1A5E73EC17F085D600B9ACAE /* cpSpaceQuery.c in Sources */,
 				2961DF9518C9B3EA0017F5DB /* ListViewReader.cpp in Sources */,

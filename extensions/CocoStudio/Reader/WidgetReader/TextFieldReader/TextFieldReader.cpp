@@ -34,22 +34,15 @@ void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
     
     
     ui::TextField* textField = (ui::TextField*)widget;
-    bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
-    if (ph)
-    {
-        textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
-    }
-    textField->setText(DICTOOL->getStringValue_json(options, "text"));
-    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
-    if (fs)
-    {
-        textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
-    }
-    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
-    if (fn)
-    {
-        textField->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
-    }
+   
+    textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder","inputs words here"));
+    
+    textField->setText(DICTOOL->getStringValue_json(options, "text","Text Field"));
+   
+    textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
+   
+    textField->setFontName(DICTOOL->getStringValue_json(options, "fontName","微软雅黑"));
+    
     bool tsw = DICTOOL->checkObjectExist_json(options, "touchSizeWidth");
     bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
     if (tsw && tsh)
@@ -68,14 +61,14 @@ void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
     
     if (maxLengthEnable)
     {
-        int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
+        int maxLength = DICTOOL->getIntValue_json(options, "maxLength",10);
         textField->setMaxLength(maxLength);
     }
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
     textField->setPasswordEnabled(passwordEnable);
     if (passwordEnable)
     {
-        textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
+        textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText","*"));
     }
     
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
@@ -106,11 +99,11 @@ void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader
     
     ui::TextField* textField = static_cast<ui::TextField*>(widget);
     
-    stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+    stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     
     for (int i = 0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
-        std::string value = stChildArray[i].GetValue();
+        std::string value = stChildArray[i].GetValue(pCocoLoader);
         
         if (key == "ignoreSize") {
             widget->ignoreContentAdaptWithSize(valueToBool(value));
@@ -158,7 +151,7 @@ void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader
         }else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
         }else if(key == "layoutParameter"){
-            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray();
+            stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
             ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();
@@ -167,7 +160,7 @@ void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader
             int paramType = -1;
             for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {
                 std::string innerKey = layoutCocosNode[j].GetName(pCocoLoader);
-                std::string innerValue = layoutCocosNode[j].GetValue();
+                std::string innerValue = layoutCocosNode[j].GetValue(pCocoLoader);
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);

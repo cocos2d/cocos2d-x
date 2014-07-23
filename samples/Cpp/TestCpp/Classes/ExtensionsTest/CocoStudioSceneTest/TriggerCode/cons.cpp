@@ -51,15 +51,15 @@ void TimeElapsed::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "TotalTime")
 		{
 			if (str != NULL)
@@ -152,15 +152,15 @@ void ArmatureActionState::serialize(cocos2d::extension::CocoLoader *pCocoLoader,
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -281,15 +281,15 @@ void NodeInRect::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)
@@ -384,15 +384,15 @@ void NodeVisible::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d
 {
 	int length = pCocoNode->GetChildNum();
 	int count = 0;
-	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray();
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
 	const char *str = NULL;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
-		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray();
-		key = pDataItemArray[0].GetValue();
-		str = pDataItemArray[1].GetValue();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
 			if (str != NULL)

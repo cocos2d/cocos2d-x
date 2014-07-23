@@ -95,6 +95,7 @@ bool CCComRender::serialize(void* r)
 		SerData *pSerData = (SerData *)(r);
         const rapidjson::Value *v = pSerData->prData;
 		stExpCocoNode *pCocoNode = pSerData->pCocoNode;
+		CocoLoader *pCocoLoader = pSerData->pCocoLoader;
 		const char *pClassName = NULL;
 		const char *pComName = NULL;
 		const char *pFile = NULL;
@@ -116,15 +117,15 @@ bool CCComRender::serialize(void* r)
 		}
 		else if(pCocoNode != NULL)
 		{
-			pClassName = pCocoNode[1].GetValue();
+			pClassName = pCocoNode[1].GetValue(pCocoLoader);
 			CC_BREAK_IF(pClassName == NULL);
-			pComName = pCocoNode[2].GetValue();
-			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray();
+			pComName = pCocoNode[2].GetValue(pCocoLoader);
+			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray(pCocoLoader);
 			CC_BREAK_IF(!pfileData);
-			pFile = pfileData[0].GetValue(); 
-			pPlist = pfileData[1].GetValue(); 
+			pFile = pfileData[0].GetValue(pCocoLoader); 
+			pPlist = pfileData[1].GetValue(pCocoLoader); 
 			CC_BREAK_IF(pFile == NULL && pPlist == NULL);
-			nResType = atoi(pfileData[2].GetValue());
+			nResType = atoi(pfileData[2].GetValue(pCocoLoader));
 		}  
 		if (pComName != NULL)
 		{
@@ -193,7 +194,7 @@ bool CCComRender::serialize(void* r)
 					const char *actionName = NULL;
 					if (pCocoNode != NULL)
 					{
-						actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+						actionName = pCocoNode[6].GetValue(pCocoLoader);//DICTOOL->getStringValue_json(*v, "selectedactionname");
 					}
 					else
 					{
@@ -220,26 +221,26 @@ bool CCComRender::serialize(void* r)
 						if (rapidjson::kObjectType  == tType)
 						{
                             int count = tpRootCocoNode->GetChildNum();
-                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                            stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
                             for (int i = 0; i < count; ++i)
                             {
                                 std::string key = tpChildArray[i].GetName(&tCocoLoader);
-                                const char *str = tpChildArray[i].GetValue();
+                                const char *str = tpChildArray[i].GetValue(&tCocoLoader);
                                 if (key.compare("armature_data") == 0)
                                 {
                                     int length = tpChildArray[i].GetChildNum();
-                                    stExpCocoNode *armature_dataArray = tpChildArray[i].GetChildArray();
+                                    stExpCocoNode *armature_dataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                                     if (length < 1)
                                     {
                                         continue;
                                     }
 
                                     length = armature_dataArray[0].GetChildNum();
-                                    stExpCocoNode *armature_data = armature_dataArray[0].GetChildArray();
+                                    stExpCocoNode *armature_data = armature_dataArray[0].GetChildArray(&tCocoLoader);
                                     for (int i = 0; i < length; ++i)
                                     {
                                         std::string key = armature_data[i].GetName(&tCocoLoader);
-                                        const char *str = armature_data[i].GetValue();
+                                        const char *str = armature_data[i].GetValue(&tCocoLoader);
                                         if (key.compare("name") == 0)
                                         {
                                             if (str != NULL)
@@ -251,7 +252,7 @@ bool CCComRender::serialize(void* r)
                                                 const char *actionName = NULL;
                                                 if (pCocoNode != NULL)
                                                 {
-                                                    actionName = pCocoNode[6].GetValue();//DICTOOL->getStringValue_json(*v, "selectedactionname");
+                                                    actionName = pCocoNode[6].GetValue(&tCocoLoader);//DICTOOL->getStringValue_json(*v, "selectedactionname");
                                                 }
                                                 else
                                                 {

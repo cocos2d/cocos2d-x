@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   02 01 00
-#define COCOS2D_VERSION 0x00020100
+// 00   02 02 05
+#define COCOS2D_VERSION 0x00020205
 
 //
 // all cocos2d include files

@@ -75,6 +75,7 @@ bool CCComAudio::serialize(void* r)
 		SerData *pSerData = (SerData *)(r);
 		const rapidjson::Value *v = pSerData->prData;
 		stExpCocoNode *pCocoNode = pSerData->pCocoNode;
+		CocoLoader *pCocoLoader = pSerData->pCocoLoader;
 		const char *pClassName = NULL;
 		const char *pComName = NULL;
 		const char *pFile = NULL;
@@ -96,16 +97,16 @@ bool CCComAudio::serialize(void* r)
 		}
 		else if (pCocoNode != NULL)
 		{
-			pClassName = pCocoNode[1].GetValue();
+			pClassName = pCocoNode[1].GetValue(pCocoLoader);
 			CC_BREAK_IF(pClassName == NULL);
-			pComName = pCocoNode[2].GetValue();
-			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray();
+			pComName = pCocoNode[2].GetValue(pCocoLoader);
+			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray(pCocoLoader);
 			CC_BREAK_IF(!pfileData);
-			pFile = pfileData[0].GetValue();
+			pFile = pfileData[0].GetValue(pCocoLoader);
 			CC_BREAK_IF(pFile == NULL);
-			nResType = atoi(pfileData[2].GetValue());
+			nResType = atoi(pfileData[2].GetValue(pCocoLoader));
 			CC_BREAK_IF(nResType != 0);
-			bLoop = atoi(pCocoNode[5].GetValue()) != 0? true:false;
+			bLoop = atoi(pCocoNode[5].GetValue(pCocoLoader)) != 0? true:false;
 			bRet = true;
 		}
 		if (pComName != NULL)

@@ -53,10 +53,12 @@ struct SerData
 {
 	const rapidjson::Value *prData;
 	cocos2d::extension::stExpCocoNode *pCocoNode;
+	cocos2d::extension::CocoLoader *pCocoLoader;
 	SerData()
 	{
 		prData = NULL;
 		pCocoNode = NULL;
+		pCocoLoader = NULL;
 	}
 };
 
