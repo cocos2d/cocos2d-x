@@ -410,12 +410,13 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 }
                 else
                 {
-                    if (_blendFunc == BlendFunc::ALPHA_PREMULTIPLIED)
+                    if (_blendFunc == BlendFunc::ALPHA_PREMULTIPLIED && !skin->getTexture()->hasPremultipliedAlpha())
                     {
-                        if(skin->getTexture()->hasPremultipliedAlpha())
-                            skin->setBlendFunc(_blendFunc);
-                        else
-                            skin->setBlendFunc(_blendFunc.ALPHA_NON_PREMULTIPLIED);
+                        skin->setBlendFunc(_blendFunc.ALPHA_NON_PREMULTIPLIED);
+                    }
+                    else
+                    {
+                        skin->setBlendFunc(_blendFunc);
                     }
                 }
                 skin->draw(renderer, transform, flags);
