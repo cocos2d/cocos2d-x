@@ -404,7 +404,7 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 
                 BlendFunc func = bone->getBlendFunc();
                 
-                if (func.src != _blendFunc.src || func.dst != _blendFunc.dst)
+                if (func.src != BlendFunc::ALPHA_NON_PREMULTIPLIED.src || func.dst != BlendFunc::ALPHA_NON_PREMULTIPLIED.dst)
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
