@@ -137,6 +137,17 @@
     <ClInclude Include="..\WidgetReader\WidgetReader.h" />
     <ClInclude Include="..\WidgetReader\WidgetReaderProtocol.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\2d\cocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\audio\proj.win32\CocosDenshion.vcxproj">
+      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ui\proj.win32\libGUI.vcxproj">
+      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B57CF53F-2E49-4031-9822-047CC0E6BDE2}</ProjectGuid>
     <RootNamespace>libCocosStudio</RootNamespace>

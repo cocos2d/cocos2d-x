@@ -22,6 +22,11 @@
     <ClCompile Include="..\SocketIO.cpp" />
     <ClCompile Include="..\WebSocket.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\2d\cocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>libNetwork</ProjectName>
     <ProjectGuid>{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}</ProjectGuid>

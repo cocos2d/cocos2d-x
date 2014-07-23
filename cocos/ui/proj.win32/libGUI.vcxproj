@@ -63,6 +63,14 @@
     <ClCompile Include="..\UIVBox.cpp" />
     <ClCompile Include="..\UIWidget.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
+      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\2d\cocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7E06E92C-537A-442B-9E4A-4761C84F8A1A}</ProjectGuid>
     <RootNamespace>libGUI</RootNamespace>
