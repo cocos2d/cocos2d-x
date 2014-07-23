@@ -530,6 +530,7 @@ Developers:
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
         fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
         Fixed a bug that Websocket doesn't support send/receive data which larger than 4096 bytes.
+        Show detail class & function name in error message of lua-binding
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
@@ -797,6 +798,7 @@ Developers:
         Adds support for get response when Activity's onActivityResult is triggered
         Improve Android projects
         Android jni error clear & more readable log
+        Add support of software PVRTC v1 decompression
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
