@@ -491,7 +491,7 @@ void CCArmature::draw()
                 CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
 
                 ccBlendFunc func = bone->getBlendFunc();
-                bool blendDirty = func.src != m_sBlendFunc.src || func.dst != m_sBlendFunc.dst;
+                bool blendDirty = func.src != CC_BLEND_SRC || func.dst != CC_BLEND_DST;
 
                 if(m_pAtlas != textureAtlas || blendDirty)
                 {
