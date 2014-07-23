@@ -1246,6 +1246,10 @@
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B27AEE0219768934008BD575 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
+		B27C7E97197E51730007A91A /* CCVertexIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27C7E95197E51730007A91A /* CCVertexIndexBuffer.cpp */; };
+		B27C7E98197E51730007A91A /* CCVertexIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B27C7E95197E51730007A91A /* CCVertexIndexBuffer.cpp */; };
+		B27C7E99197E51730007A91A /* CCVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B27C7E96197E51730007A91A /* CCVertexIndexBuffer.h */; };
+		B27C7E9A197E51730007A91A /* CCVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B27C7E96197E51730007A91A /* CCVertexIndexBuffer.h */; };
 		B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B61926D5EC003EEF37 /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
@@ -2897,6 +2901,8 @@
 		B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosSpine iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosNetwork iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B27C7E95197E51730007A91A /* CCVertexIndexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexBuffer.cpp; sourceTree = "<group>"; };
+		B27C7E96197E51730007A91A /* CCVertexIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexBuffer.h; sourceTree = "<group>"; };
 		B29594AF1926D5D9003EEF37 /* ccShader_3D_Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Color.frag; sourceTree = "<group>"; };
 		B29594B01926D5D9003EEF37 /* ccShader_3D_ColorTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorTex.frag; sourceTree = "<group>"; };
 		B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
@@ -4812,6 +4818,8 @@
 				50ABBD811925AB4100A911A9 /* CCTextureCache.cpp */,
 				50ABBD821925AB4100A911A9 /* CCTextureCache.h */,
 				5034CA5D191D591900CE6051 /* shaders */,
+				B27C7E95197E51730007A91A /* CCVertexIndexBuffer.cpp */,
+				B27C7E96197E51730007A91A /* CCVertexIndexBuffer.h */,
 			);
 			name = renderer;
 			path = ../cocos/renderer;
@@ -5122,6 +5130,7 @@
 				50ABBD461925AB0000A911A9 /* CCVertex.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
 				46A170EB1807CECA005B8026 /* CCPhysicsJoint.h in Headers */,
+				B27C7E99197E51730007A91A /* CCVertexIndexBuffer.h in Headers */,
 				50ABBD3E1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				50ABBE631925AB6F00A911A9 /* CCEventListenerAcceleration.h in Headers */,
 				B37510771823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
@@ -5601,6 +5610,7 @@
 				1A57028D180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				1A570295180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				50ABBDB81925AB4100A911A9 /* CCTexture2D.h in Headers */,
+				B27C7E9A197E51730007A91A /* CCVertexIndexBuffer.h in Headers */,
 				50ABBE341925AB6F00A911A9 /* CCConfiguration.h in Headers */,
 				1A570299180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				50ABBEAA1925AB6F00A911A9 /* CCTouch.h in Headers */,
@@ -6656,6 +6666,7 @@
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
+				B27C7E97197E51730007A91A /* CCVertexIndexBuffer.cpp in Sources */,
 				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
@@ -6999,6 +7010,7 @@
 				50ABBD611925AB0000A911A9 /* Vec4.cpp in Sources */,
 				50ABBD9C1925AB4100A911A9 /* ccGLStateCache.cpp in Sources */,
 				1A5701E7180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
+				B27C7E98197E51730007A91A /* CCVertexIndexBuffer.cpp in Sources */,
 				50ABC01E1926664800A911A9 /* CCThread.cpp in Sources */,
 				1A5701EB180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				1A5701EF180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
