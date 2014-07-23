@@ -79,4 +79,17 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIButtonTest_RemoveSelf : public UIScene
+{
+public:
+    UIButtonTest_RemoveSelf();
+    ~UIButtonTest_RemoveSelf();
+    bool init();
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTest_RemoveSelf)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */

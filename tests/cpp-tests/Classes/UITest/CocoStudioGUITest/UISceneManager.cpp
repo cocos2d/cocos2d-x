@@ -45,6 +45,7 @@ static const char* s_testArray[] =
     "UIButtonTest_Scale9",
     "UIButtonTest_PressedAction",
     "UIButtonTest_Title",
+    "UIButtonTest_RemoveSelf",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
@@ -190,7 +191,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIButtonTest_Title:
             return UIButtonTest_Title::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUIButtonTest_RemoveSelf:
+            return UIButtonTest_RemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
