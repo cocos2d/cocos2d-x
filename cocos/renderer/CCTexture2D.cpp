@@ -79,7 +79,7 @@ namespace {
 #endif
         
 #ifdef GL_ETC1_RGB8_OES
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
         
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT

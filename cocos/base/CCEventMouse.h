@@ -39,7 +39,7 @@
 
 NS_CC_BEGIN
 
-class EventMouse : public Event
+class CC_DLL EventMouse : public Event
 {
 public:
     /**

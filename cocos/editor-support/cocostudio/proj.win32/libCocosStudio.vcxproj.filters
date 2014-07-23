@@ -455,5 +455,6 @@
     <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocosStudioExport.h" />
   </ItemGroup>
 </Project>

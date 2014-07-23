@@ -35,7 +35,7 @@ namespace ui {
     class Widget;
 }
 
-class EventListenerFocus : public EventListener
+class CC_DLL EventListenerFocus : public EventListener
 {
 public:
     static const std::string LISTENER_ID;

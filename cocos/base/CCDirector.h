@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "base/CCVector.h"
 #include "CCGL.h"
 #include "2d/CCLabelAtlas.h"
+#include "2d/CCScene.h"
 #include <stack>
 #include "math/CCMath.h"
 
