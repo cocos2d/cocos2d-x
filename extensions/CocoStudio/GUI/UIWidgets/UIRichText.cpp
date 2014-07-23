@@ -281,8 +281,16 @@ void RichText::handleTextRenderer(const char *text, const char *fontName, float 
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        int stringLength = _calcCharCount(text);;
+        int stringLength = curText.length(); //_calcCharCount(text);;
         int leftLength = stringLength * (1.0f - overstepPercent);
+
+        while(leftLength < stringLength){
+            if(0x80 != (0xC0 & curText[leftLength])){
+                break;
+            }
+            leftLength++;
+        }
+
         std::string leftWords = curText.substr(0, leftLength);
         std::string cutWords = curText.substr(leftLength, curText.length()-1);
         if (leftLength > 0)
