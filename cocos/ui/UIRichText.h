@@ -103,7 +103,7 @@ public:
     void pushBackElement(RichElement* element);
     void removeElement(int index);
     void removeElement(RichElement* element);
-    virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+
     void setVerticalSpace(float space);
     virtual void setAnchorPoint(const Vec2 &pt);
     virtual const Size& getVirtualRendererSize() const override;
@@ -115,6 +115,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
+    virtual void adaptRenderers();
+
     virtual void initRenderer();
     void pushToContainer(Node* renderer);
     void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
