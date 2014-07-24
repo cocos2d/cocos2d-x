@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UICHECKBOX_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +47,7 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 *   @js NA
 *   @lua NA
 */
-class CheckBox : public Widget
+class CC_GUI_DLL CheckBox : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -86,7 +87,7 @@ public:
      *
      * @param frontCrossDisabled    cross dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     static CheckBox* create(const std::string& backGround,
                             const std::string& backGroundSeleted,
@@ -106,7 +107,7 @@ public:
      *
      * @param frontCrossDisabled    cross dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextures(const std::string& backGround,
                       const std::string& backGroundSelected,
@@ -120,7 +121,7 @@ public:
      *
      * @param backGround    backGround texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureBackGround(const std::string& backGround,TextureResType type = TextureResType::LOCAL);
 
@@ -129,7 +130,7 @@ public:
      *
      * @param backGroundSelected     backGround selected state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType = TextureResType::LOCAL);
 
@@ -138,7 +139,7 @@ public:
      *
      * @param cross    cross texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureFrontCross(const std::string&,TextureResType texType = TextureResType::LOCAL);
 
@@ -147,7 +148,7 @@ public:
      *
      * @param backGroundDisabled    backGroundDisabled texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType = TextureResType::LOCAL);
 
@@ -156,7 +157,7 @@ public:
      *
      * @param frontCrossDisabled    frontCrossDisabled texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType = TextureResType::LOCAL);
 

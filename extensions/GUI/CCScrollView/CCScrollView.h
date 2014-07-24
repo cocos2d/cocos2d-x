@@ -30,6 +30,7 @@
 #include "base/CCEventListenerTouch.h"
 #include "2d/CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -52,12 +53,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void scrollViewDidScroll(ScrollView* view) = 0;
+    virtual void scrollViewDidScroll(ScrollView* view) {};
     /**
      * @js NA
      * @lua NA
      */
-    virtual void scrollViewDidZoom(ScrollView* view) = 0;
+    virtual void scrollViewDidZoom(ScrollView* view) {};
 };
 
 
@@ -65,7 +66,7 @@ public:
  * ScrollView support for cocos2d-x.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
-class ScrollView : public Layer, public ActionTweenDelegate
+class CC_EX_DLL  ScrollView : public Layer, public ActionTweenDelegate
 {
 public:
     enum class Direction

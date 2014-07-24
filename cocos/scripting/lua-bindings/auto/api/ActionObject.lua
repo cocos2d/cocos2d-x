@@ -38,10 +38,8 @@
 -- @param self
         
 --------------------------------
--- overload function: play(cc.CallFunc)
---          
--- overload function: play()
---          
+-- @overload self, cc.CallFunc         
+-- @overload self         
 -- @function [parent=#ActionObject] play
 -- @param self
 -- @param #cc.CallFunc callfunc
@@ -60,13 +58,6 @@
 -- @function [parent=#ActionObject] getLoop 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#ActionObject] initWithBinary 
--- @param self
--- @param #ccs.CocoLoader cocoloader
--- @param #ccs.stExpCocoNode stexpcoconode
--- @param #cc.Ref ref
         
 --------------------------------
 -- @function [parent=#ActionObject] addActionNode 

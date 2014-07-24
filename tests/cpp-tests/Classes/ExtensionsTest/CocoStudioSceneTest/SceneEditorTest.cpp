@@ -277,6 +277,7 @@ cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
 {
     _filePath = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+    ActionManagerEx::getInstance()->playActionByName("startMenu_1.json", "Animation1");
 	if (_rootNode == nullptr)
 	{
 		return nullptr;
@@ -820,7 +821,6 @@ void TriggerTest::onEnter()
     listener->onTouchCancelled = CC_CALLBACK_2(SceneEditorTestLayer::onTouchCancelled, this);
     dispatcher->addEventListenerWithFixedPriority(listener, 1);
     _touchListener = listener;
-    sendEvent(TRIGGEREVENT_ENTERSCENE);
 }
 
 
@@ -879,4 +879,5 @@ cocos2d::Node* TriggerTest::createGameScene()
 }
 void TriggerTest::defaultPlay()
 {
+    sendEvent(TRIGGEREVENT_ENTERSCENE);
 }

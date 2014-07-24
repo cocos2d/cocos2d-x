@@ -118,7 +118,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 				NSMutableString *lineBreak = [[[NSMutableString alloc] init] autorelease];
 				NSUInteger length = [string length];
 				NSRange range = NSMakeRange(0, 1);
-                CGSize textSize;
+                NSSize textSize;
 				NSUInteger lastBreakLocation = 0;
                 NSUInteger insertCount = 0;
 				for (NSUInteger i = 0; i < length; i++) {
@@ -128,7 +128,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) {
                         lastBreakLocation = i + insertCount;
                     }
-                    textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
+                    //textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
                     if(textSize.height > info->height)
                         break;
 					if (textSize.width > info->width) {

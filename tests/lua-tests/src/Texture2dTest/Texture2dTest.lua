@@ -969,23 +969,16 @@ local function TextureAsync()
     local  seq = cc.Sequence:create(scale, scale_back)
     label:runAction(cc.RepeatForever:create(seq))
 
-    local function imageLoaded(pObj)
-        local  tex = pObj
+    local function imageLoaded(texture)
         local director = cc.Director:getInstance()
 
-        --cc.ASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
-
-        -- IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
-
-        -- This test just creates a sprite based on the Texture
-
-        local sprite = cc.Sprite:createWithTexture(tex)
+        local sprite = cc.Sprite:createWithTexture(texture)
         sprite:setAnchorPoint(cc.p(0,0))
         ret:addChild(sprite, -1)
 
         local size = director:getWinSize()
         local i = m_nImageOffset * 32
-        sprite:setPosition(cc.p( i % size.width, (i / size.width) * 32 ))
+        sprite:setPosition(cc.p( i % size.width, math.floor((i / size.width)) * 32 ))
 
         m_nImageOffset = m_nImageOffset + 1
         cclog("Image loaded:...")-- %p", tex)
@@ -1008,14 +1001,15 @@ local function TextureAsync()
         cc.Director:getInstance():getTextureCache():addImageAsync("Images/background.png", imageLoaded)
         cc.Director:getInstance():getTextureCache():addImageAsync("Images/atlastest.png", imageLoaded)
         cc.Director:getInstance():getTextureCache():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
+
+        ret:unscheduleUpdate()
     end
 
-    local schedulerEntry = nil
     local function onNodeEvent(event)
         if event == "enter" then
-            schedulerEntry = scheduler:scheduleScriptFunc(loadImages, 1.0, false)
+            ret:scheduleUpdateWithPriorityLua(loadImages,0)
         elseif event == "exit" then
-            scheduler:unscheduleScriptEntry(schedulerEntry)
+            ret:unscheduleUpdate()
             cc.Director:getInstance():getTextureCache():removeAllTextures()
         end
     end
@@ -1266,31 +1260,17 @@ local function TextureMemoryAlloc()
         local targetPlatform = cc.Application:getInstance():getTargetPlatform()
         local file = ""
 
-        if targetPlatform == cc.PLATFORM_OS_ANDROID then
-            if tag == 0 then
-                file = "Images/background.png"
+        if tag == 0 then
+                file = "Images/test_image.png"
             elseif tag == 1 then
-                file = "Images/fire_rgba8888.pvr"
+                file = "Images/test_image_rgba8888.pvr"
             elseif tag == 2 then
-                file = "Images/grossini_pvr_rgba8888.pvr"
+                file = "Images/test_image_rgb888.pvr"
             elseif tag == 3 then
-                 file = "Images/grossini_pvr_rgba4444.pvr"
+                file = "Images/test_image_rgba4444.pvr"
             elseif tag == 4 then
                 file = "Images/test_image_a8.pvr"
             end
-        else
-            if tag == 0 then
-                file = "Images/background.png"
-            elseif tag == 1 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            elseif tag == 2 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            elseif tag == 3 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            elseif tag == 4 then
-                file = "Images/test_image_rgba4444.pvr.gz"
-            end
-        end
 
         m_pBackground = cc.Sprite:create(file)
         ret:addChild(m_pBackground, -10)

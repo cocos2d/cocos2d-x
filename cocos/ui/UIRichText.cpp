@@ -26,26 +26,47 @@
 #include "platform/CCFileUtils.h"
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
 namespace ui {
     
-static int _calcCharCount(const char * pszText)
+static std::string utf8_substr(const std::string& str, unsigned long start, unsigned long leng)
 {
-    int n = 0;
-    char ch = 0;
-    while ((ch = *pszText))
+    if (leng==0)
     {
-        CC_BREAK_IF(! ch);
-        
-        if (0x80 != (0xC0 & ch))
-        {
-            ++n;
-        }
-        ++pszText;
+        return "";
     }
-    return n;
+    unsigned long c, i, ix, q, min=std::string::npos, max=std::string::npos;
+    for (q=0, i=0, ix=str.length(); i < ix; i++, q++)
+    {
+        if (q==start)
+        {
+            min = i;
+        }
+        if (q <= start+leng || leng==std::string::npos)
+        {
+            max = i;
+        }
+        
+        c = (unsigned char) str[i];
+        
+        if      (c<=127) i+=0;
+        else if ((c & 0xE0) == 0xC0) i+=1;
+        else if ((c & 0xF0) == 0xE0) i+=2;
+        else if ((c & 0xF8) == 0xF0) i+=3;
+        else return "";//invalid utf8
+    }
+    if (q <= start+leng || leng == std::string::npos)
+    {
+        max = i;
+    }
+    if (min==std::string::npos || max==std::string::npos)
+    {
+        return "";
+    }
+    return str.substr(min,max);
 }
     
 bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
@@ -295,20 +316,20 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        size_t stringLength = _calcCharCount(text.c_str());
+        size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
-        std::string leftWords = curText.substr(0, leftLength);
-        std::string cutWords = curText.substr(leftLength, curText.length()-1);
+        std::string leftWords = utf8_substr(curText,0,leftLength);
+        std::string cutWords = utf8_substr(curText, leftLength, stringLength - leftLength);
         if (leftLength > 0)
         {
             Label* leftRenderer = nullptr;
             if (fileExist)
             {
-                leftRenderer = Label::createWithTTF(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
-            } 
+                leftRenderer = Label::createWithTTF(utf8_substr(leftWords, 0, leftLength), fontName, fontSize);
+            }
             else
             {
-                leftRenderer = Label::createWithSystemFont(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+                leftRenderer = Label::createWithSystemFont(utf8_substr(leftWords, 0, leftLength), fontName, fontSize);
             }
             if (leftRenderer)
             {

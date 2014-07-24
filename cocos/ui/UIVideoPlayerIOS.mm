@@ -171,7 +171,7 @@ using namespace cocos2d::experimental::ui;
     {
         if([self.moviePlayer playbackState] != MPMoviePlaybackStateStopped)
         {
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::COMPLETED);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::COMPLETED);
         }
     }
 }
@@ -181,13 +181,13 @@ using namespace cocos2d::experimental::ui;
     MPMoviePlaybackState state = [self.moviePlayer playbackState];
     switch (state) {
         case MPMoviePlaybackStatePaused:
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::PAUSED);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
             break;
         case MPMoviePlaybackStateStopped:
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::STOPPED);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
             break;
         case MPMoviePlaybackStatePlaying:
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::PLAYING);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
             break;
         case MPMoviePlaybackStateInterrupted:
             break;
@@ -449,9 +449,9 @@ void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& cal
     _eventCallback = callback;
 }
 
-void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
+void VideoPlayer::onPlayEvent(int event)
 {
-    if (event == VideoPlayer::EventType::PLAYING) {
+    if (event == (int)VideoPlayer::EventType::PLAYING) {
         _isPlaying = true;
     } else {
         _isPlaying = false;
@@ -459,7 +459,7 @@ void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
     
     if (_eventCallback)
     {
-        _eventCallback(this,event);
+        _eventCallback(this, (VideoPlayer::EventType)event);
     }
 }
 

@@ -13,6 +13,7 @@ import platform
 import subprocess
 import codecs
 from shutil import copy
+import MySQLdb
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description
@@ -61,10 +62,25 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
+def save_build_stats(pr_num, key, value):
+    db_host = os.environ['db_host']
+    db_user = os.environ['db_user']
+    db_pw = os.environ['db_pw']
+    db = MySQLdb.connect(db_host, db_user, db_pw, "jenkins" )
+    cursor = db.cursor()
+    sql = '''INSERT INTO PullRequestBuild (pr_number, %s) 
+    VALUES(%d, %d) ON DUPLICATE KEY UPDATE pr_number=VALUES(pr_number), 
+    %s=VALUES(%s)''' % (key, pr_num, value, key, key)
+    print sql
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+
 http_proxy = ''
 if(os.environ.has_key('HTTP_PROXY')):
     http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
+
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -201,6 +217,13 @@ def main():
           local_apk = sample_dir + 'bin/CppTests-debug.apk'
           backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
           os.system('cp ' + local_apk + ' ' + backup_apk)
+          ret = os.system("python build/android-build.py -p 10 -b release cpp-empty-test")
+          if(ret == 0):
+            _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
+            filesize = os.path.getsize(_path)
+            pr_desc = pr_desc + '<h3>size of libcpp_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
+            set_description(pr_desc, target_url)
+            save_build_stats(pr_num, 'cpp_empty_test_so', filesize/1024)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):

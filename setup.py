@@ -98,7 +98,11 @@ class SetEnvVar(object):
         return sys.platform == 'darwin'
 
     def _is_zsh(self):
-        return os.environ.get('SHELL')[-3:] == "zsh"
+        shellItem = os.environ.get('SHELL')
+        if shellItem is not None:
+            if len(shellItem) >= 3:
+                return shellItem[-3:] == "zsh"
+        return False
 
     def _get_unix_file_list(self):
         file_list = None
@@ -218,7 +222,7 @@ class SetEnvVar(object):
         return ret
 
     def _find_environment_variable(self, var):
-        print("  ->Find environment variable %s..." % var)
+        print("  ->Search for environment variable %s..." % var)
         ret = None
         try:
             ret = os.environ[var]
@@ -529,49 +533,31 @@ class SetEnvVar(object):
         return ret
 
     def _get_ant_path(self):
-        print("  ->Find command ant in system...")
-        ret = None
-        if not self._isWindows():
-            import commands
-            state, result = commands.getstatusoutput("which ant")
-            if state == 0:
-                ret = os.path.dirname(result)
-
-        if ret is not None:
-            print("    ->Path \"%s\" was found\n" % ret)
-        else:
-            print("    ->Command ant not found\n")
-        return ret
+        return self._get_sdkpath_for_cmd("ant", False)
 
     def _get_androidsdk_path(self):
-        print("  ->Find command android in system...")
-        ret = None
-        if not self._isWindows():
-            import commands
-            state, result = commands.getstatusoutput("which android")
-            if state == 0:
-                ret = os.path.dirname(result)
-
-        if ret is not None:
-            ret = os.path.abspath(os.path.join(ret,os.pardir))
-            print("    ->Path \"%s\" was found\n" % ret)
-        else:
-            print("    ->Command android not found\n")
-        return ret
+        return self._get_sdkpath_for_cmd("android")
 
     def _get_ndkbuild_path(self):
-        print("  ->Find command ndk-build in system...")
+        return self._get_sdkpath_for_cmd("ndk-build", False)
+
+    def _get_sdkpath_for_cmd(self, cmd, has_bin_folder=True):
         ret = None
+        print("  ->Search for command " + cmd + " in system...")
         if not self._isWindows():
             import commands
-            state, result = commands.getstatusoutput("which ndk-build")
+            state, result = commands.getstatusoutput("which " + cmd)
             if state == 0:
-                ret = os.path.dirname(result)
+                ret = os.path.realpath(result)
+                ret = os.path.dirname(ret)
+                # Use parent folder if has_bin_folder was set
+                if has_bin_folder:
+                    ret = os.path.dirname(ret)
 
         if ret is not None:
-            print("    ->Path \"%s\" was found\n" % ret)
+            print("    ->Path " + ret + " was found\n")
         else:
-            print("    ->Command ndk-build not found\n")
+            print("    ->Command " + cmd + " not found\n")
         return ret
 
     def _find_value_from_sys(self, var_name):

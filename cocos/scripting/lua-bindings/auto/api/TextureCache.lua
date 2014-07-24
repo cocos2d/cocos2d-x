@@ -34,10 +34,8 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: addImage(cc.Image, string)
---          
--- overload function: addImage(string)
---          
+-- @overload self, cc.Image, string         
+-- @overload self, string         
 -- @function [parent=#TextureCache] addImage
 -- @param self
 -- @param #cc.Image image

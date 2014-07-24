@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/UIHelper.h"
 #include "cocostudio/CocoLoader.h"
+#include "base/ccUtils.h"
 
 using namespace cocos2d;
 using namespace ui;
@@ -184,7 +185,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     }
     float ActionNode::valueToFloat(const std::string& value)
     {
-        return atof(value.c_str());
+        return utils::atof(value.c_str());
     }
     
     void ActionNode::initWithBinary(CocoLoader *cocoLoader,

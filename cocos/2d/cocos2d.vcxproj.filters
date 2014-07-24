@@ -55,6 +55,9 @@
     <Filter Include="3d">
       <UniqueIdentifier>{a20c4bdc-bd4c-40c1-a78a-fe31cd3ec76a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="storage">
+      <UniqueIdentifier>{44bdf58f-4af2-433c-b4af-58dc05ef96b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -403,9 +406,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -417,6 +417,9 @@
     </ClCompile>
     <ClCompile Include="..\base\etc1.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\pvr.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\base\s3tc.cpp">
       <Filter>base</Filter>
@@ -588,6 +591,9 @@
     </ClCompile>
     <ClCompile Include="CCFastTMXTiledMap.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\storage\local-storage\LocalStorage.cpp">
+      <Filter>storage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -988,6 +994,9 @@
     <ClInclude Include="..\base\etc1.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\base\pvr.h">
+      <Filter>platform</Filter>
+    </ClInclude>
     <ClInclude Include="..\base\firePngData.h">
       <Filter>base</Filter>
     </ClInclude>
@@ -1198,6 +1207,9 @@
     <ClInclude Include="CCFastTMXLayer.h">
       <Filter>2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\storage\local-storage\LocalStorage.h">
+      <Filter>storage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -1224,5 +1236,6 @@
     <None Include="..\3d\CCAnimationCurve.inl">
       <Filter>3d</Filter>
     </None>
+    <None Include="cocos2d.def" />
   </ItemGroup>
 </Project>

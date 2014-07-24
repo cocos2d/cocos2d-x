@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UIBUTTON_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +38,7 @@ namespace ui{
 *   @js NA
 *   @lua NA
 */
-class Button : public Widget
+class CC_GUI_DLL Button : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -80,7 +81,7 @@ public:
      *
      * @param disabled    disabled state texture name.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextures(const std::string& normal,
                       const std::string& selected,
@@ -92,7 +93,7 @@ public:
      *
      * @param normal    normal state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureNormal(const std::string& normal, TextureResType texType = TextureResType::LOCAL);
 
@@ -101,7 +102,7 @@ public:
      *
      * @param selected    selected state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTexturePressed(const std::string& selected, TextureResType texType = TextureResType::LOCAL);
 
@@ -110,7 +111,7 @@ public:
      *
      * @param disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
 

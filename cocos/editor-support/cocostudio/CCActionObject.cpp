@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "2d/CCActionInstant.h"
+#include "base/ccUtils.h"
 
 using namespace cocos2d;
 
@@ -189,7 +190,7 @@ bool ActionObject::valueToBool(const std::string& value)
 }
 float ActionObject::valueToFloat(const std::string& value)
 {
-    return atof(value.c_str());
+    return utils::atof(value.c_str());
 }
 
 void ActionObject::addActionNode(ActionNode* node)

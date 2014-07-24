@@ -34,7 +34,6 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
-    { "3D: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
 	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
 	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
@@ -51,15 +50,7 @@ Controller g_aTestNames[] = {
 
 #endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "Curl", []() { return new CurlTestScene(); } },
-#endif
-#endif
-#endif
-#endif
 #endif
 	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
@@ -84,8 +75,11 @@ Controller g_aTestNames[] = {
 	{ "Node: Scene", [](){return new SceneTestScene();} },
 	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
+    { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
+#endif
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
@@ -95,8 +89,10 @@ Controller g_aTestNames[] = {
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
 	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
 	{ "Scheduler", [](){return new SchedulerTestScene(); } },
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
     { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
+#endif
 	{ "Texture2D", [](){return new TextureTestScene(); } },
 	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
 	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },

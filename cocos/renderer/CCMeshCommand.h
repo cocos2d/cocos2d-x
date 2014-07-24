@@ -40,7 +40,7 @@ class EventListenerCustom;
 class EventCustom;
 
 //it is a common mesh
-class MeshCommand : public RenderCommand
+class CC_DLL MeshCommand : public RenderCommand
 {
 public:
 
@@ -74,7 +74,7 @@ public:
     
     uint32_t getMaterialID() const { return _materialID; }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     void listenRendererRecreated(EventCustom* event);
 #endif
 

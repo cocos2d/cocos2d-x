@@ -38,6 +38,7 @@ using namespace cocos2d;
 
 WNDPROC g_oldProc=NULL;
 bool g_landscape=false;
+bool g_windTop = true;
 CCSize g_screenSize;
 GLView* g_eglView=NULL;
 INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -70,6 +71,7 @@ void updateMenu()
 {
     HMENU hSysMenu = GetSystemMenu(glfwGetWin32Window(g_eglView->getWindow()), FALSE);
     HMENU viewMenu = GetSubMenu(hSysMenu, 8);
+    HMENU viewControl = GetSubMenu(hSysMenu, 9);
 
     if (g_landscape)
     {
@@ -82,6 +84,16 @@ void updateMenu()
         CheckMenuItem(viewMenu, ID_VIEW_LANDSCAPE, MF_BYCOMMAND | MF_UNCHECKED);
     }
 
+    if (g_windTop)
+    {
+        ::SetWindowPos(glfwGetWin32Window(g_eglView->getWindow()),HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+        CheckMenuItem(viewControl, ID_CONTROL_TOP, MF_BYCOMMAND | MF_CHECKED);
+
+    }else
+    {
+        ::SetWindowPos(glfwGetWin32Window(g_eglView->getWindow()),HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+        CheckMenuItem(viewControl, ID_CONTROL_TOP, MF_BYCOMMAND | MF_UNCHECKED);
+    }
     int width = g_screenSize.width;
     int height = g_screenSize.height;
     if (height > width)
@@ -244,6 +256,10 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 
             switch (wmId)
             {
+            case ID_CONTROL_TOP:
+                g_windTop = !g_windTop;
+                updateView();
+                break;
             case ID_FILE_EXIT:
                 shutDownApp();
                 break;
@@ -324,6 +340,7 @@ void createSimulator(const char* viewName, float width, float height, bool isLan
         width = height;
         height = tmpvalue;
     }
+    g_windTop = true;
 
     g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();

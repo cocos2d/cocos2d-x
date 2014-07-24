@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UISCROLLVIEW_H__
 
 #include "ui/UILayout.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +51,7 @@ typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class ScrollView : public Layout
+class CC_GUI_DLL ScrollView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -95,18 +96,18 @@ public:
     /**
      * Changes scroll direction of scrollview.
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see Direction      Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
      *
-     * @param SCROLLVIEW_DIR
+     * @param dir
      */
     virtual void setDirection(Direction dir);
     
     /**
      * Gets scroll direction of scrollview.
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see Direction      Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
      *
-     * @return SCROLLVIEW_DIR
+     * @return Direction
      */
     Direction getDirection()const;
     

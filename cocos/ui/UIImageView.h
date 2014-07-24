@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UIIMAGEVIEW_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +36,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class ImageView : public Widget
+class CC_GUI_DLL ImageView : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -61,7 +62,7 @@ public:
      *
      * @param imageFileName   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     static ImageView* create(const std::string& imageFileName, TextureResType texType = TextureResType::LOCAL);
     
@@ -71,7 +72,7 @@ public:
      *
      * @param fileName   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
 

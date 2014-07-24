@@ -23,6 +23,8 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           manual/lua_cocos2dx_ui_manual.cpp \
           manual/lua_cocos2dx_spine_manual.cpp \
           manual/lua_cocos2dx_physics_manual.cpp \
+          manual/lua_cocos2dx_experimental_manual.cpp \
+          manual/lua_cocos2dx_experimental_video_manual.cpp \
           manual/lua_cocos2dx_deprecated.cpp \
           manual/lua_xml_http_request.cpp \
           manual/platform/android/CCLuaJavaBridge.cpp \
@@ -35,6 +37,8 @@ LOCAL_SRC_FILES := manual/CCLuaBridge.cpp \
           auto/lua_cocos2dx_ui_auto.cpp \
           auto/lua_cocos2dx_spine_auto.cpp \
           auto/lua_cocos2dx_physics_auto.cpp \
+          auto/lua_cocos2dx_experimental_auto.cpp \
+          auto/lua_cocos2dx_experimental_video_auto.cpp \
           ../../../external/lua/tolua/tolua_event.c \
           ../../../external/lua/tolua/tolua_is.c \
           ../../../external/lua/tolua/tolua_map.c \
@@ -90,6 +94,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi
@@ -104,3 +109,4 @@ $(call import-module,network)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/spine)
+$(call import-module,audio/android)
