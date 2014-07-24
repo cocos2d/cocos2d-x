@@ -260,6 +260,8 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         // the '.ttf' extensions when referring to custom fonts.
         fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
         
+        CTFontManagerCreateFontDescriptorsFromURL
+        
         // create the font
         id font = [UIFont fontWithName:fntName size:size];
         
