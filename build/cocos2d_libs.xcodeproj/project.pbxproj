@@ -8482,7 +8482,7 @@
 				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/huabingxu/work/cocos2d-x/external/websockets/prebuilt/mac",
+					"$(SRCROOT)/../external/websockets/prebuilt/mac",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
@@ -8503,7 +8503,7 @@
 				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/huabingxu/work/cocos2d-x/external/websockets/prebuilt/mac",
+					"$(SRCROOT)/../external/websockets/prebuilt/mac",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
