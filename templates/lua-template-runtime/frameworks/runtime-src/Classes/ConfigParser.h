@@ -38,6 +38,7 @@ public:
     const SimulatorScreenSize getScreenSize(int index);
     int getConsolePort();
     bool isLanscape();
+    bool isWindowTop();
     bool isInit();
     
 private:
@@ -49,6 +50,7 @@ private:
     string _entryfile;
     bool _isLandscape;
     bool _isInit;
+    bool _isWindowTop;
     int _consolePort;
     
     rapidjson::Document _docRootjson;

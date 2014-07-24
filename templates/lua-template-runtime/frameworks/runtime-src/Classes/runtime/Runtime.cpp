@@ -148,9 +148,6 @@ void startScript(string strDebugArg)
     engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-
-    
-
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
 #include <WS2tcpip.h>
