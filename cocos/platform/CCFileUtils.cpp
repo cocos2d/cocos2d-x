@@ -101,6 +101,18 @@ public:
 		return _rootDict;
     }
 
+    ValueMap dictionaryWithDataOfFile(const char* filedata, int filesize)
+    {
+        _resultType = SAX_RESULT_DICT;
+        SAXParser parser;
+
+        CCASSERT(parser.init("UTF-8"), "The file format isn't UTF-8");
+        parser.setDelegator(this);
+
+        parser.parse(filedata, filesize);
+        return _rootDict;
+    }    
+
     ValueVector arrayWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_ARRAY;
@@ -315,6 +327,12 @@ ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
     const std::string fullPath = fullPathForFilename(filename.c_str());
     DictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
+}
+
+ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize)
+{
+    DictMaker tMaker;
+    return tMaker.dictionaryWithDataOfFile(filedata, filesize);
 }
 
 ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
