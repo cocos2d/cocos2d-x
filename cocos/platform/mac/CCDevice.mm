@@ -68,10 +68,13 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:text];
+        NSString * fntName = [NSString stringWithUTF8String:fontName];
+        
+        fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
 		
 		// font
 		NSFont *font = [[NSFontManager sharedFontManager]
-                        fontWithFamily:[NSString stringWithUTF8String:fontName]
+                        fontWithFamily:fntName
 						traits:NSUnboldFontMask | NSUnitalicFontMask
                         weight:0
                         size:size];
