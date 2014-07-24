@@ -313,7 +313,7 @@ protected:
 *  @js NA
 *  @lua NA
 */
-class ActionRotationFrame:public ActionFrame
+class CC_STUDIO_DLL ActionRotationFrame:public ActionFrame
 {
 public:
 
@@ -366,7 +366,7 @@ public:
 *  @js NA
 *  @lua NA
 */
-class ActionFadeFrame:public ActionFrame
+class CC_STUDIO_DLL ActionFadeFrame:public ActionFrame
 {
 public:
 
@@ -409,7 +409,7 @@ protected:
 *  @js NA
 *  @lua NA
 */
-class ActionTintFrame:public ActionFrame
+class CC_STUDIO_DLL ActionTintFrame:public ActionFrame
 {
 
 public:
