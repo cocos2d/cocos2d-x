@@ -1,5 +1,6 @@
 cocos2d-x-3.3  ??
-    [NEW]           CCImage: support of software PVRTC v1 decompression
+    [NEW]           FileUtilsApple: Allow setting bundle to use in file utils on iOS and Mac OS X
+    [NEW]           Image: support of software PVRTC v1 decompression
 
     [FIX]           Label: can not set charmap after it is created
     [FIX]           Scale9Sprite: new added sprite will be hidden
