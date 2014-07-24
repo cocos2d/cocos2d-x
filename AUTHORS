@@ -926,6 +926,9 @@ Developers:
     chenguangqi
         Fixed a compiling error on Android
         Fixed an error when importing project using Eclipse on Android
+        
+    uorbe001
+        Allow setting bundle to use in file utils on iOS and Mac OS X
     
 Retired Core Developers:
     WenSheng Yang
