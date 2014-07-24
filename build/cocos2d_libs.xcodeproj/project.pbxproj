@@ -627,13 +627,6 @@
 		460E47AF1808090B000CDD6D /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1684F1807AF4E005B8026 /* CCEditBox.cpp */; };
 		460E47B01808090B000CDD6D /* CCEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168501807AF4E005B8026 /* CCEditBox.h */; };
 		460E47B11808090B000CDD6D /* CCEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168511807AF4E005B8026 /* CCEditBoxImpl.h */; };
-		460E47B21808090B000CDD6D /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168521807AF4E005B8026 /* CCEditBoxImplAndroid.cpp */; };
-		460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168531807AF4E005B8026 /* CCEditBoxImplAndroid.h */; };
-		460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168541807AF4E005B8026 /* CCEditBoxImplIOS.h */; };
-		460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A168551807AF4E005B8026 /* CCEditBoxImplIOS.mm */; };
-		460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168581807AF4E005B8026 /* CCEditBoxImplNone.cpp */; };
-		460E47BB1808090B000CDD6D /* CCEditBoxImplWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685B1807AF4E005B8026 /* CCEditBoxImplWin.cpp */; };
-		460E47BC1808090B000CDD6D /* CCEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */; };
 		460E47BD1808090D000CDD6D /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1684F1807AF4E005B8026 /* CCEditBox.cpp */; };
 		460E47BE1808090D000CDD6D /* CCEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168501807AF4E005B8026 /* CCEditBox.h */; };
 		460E47BF1808090D000CDD6D /* CCEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168511807AF4E005B8026 /* CCEditBoxImpl.h */; };
@@ -1246,6 +1239,8 @@
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B27AEE0219768934008BD575 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
+		B282B4801980E08F00666787 /* CCEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */; };
+		B282B4811980E0A300666787 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */; };
 		B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B61926D5EC003EEF37 /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
@@ -2897,6 +2892,8 @@
 		B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosSpine iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosNetwork iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplMac.mm; sourceTree = "<group>"; };
+		B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		B29594AF1926D5D9003EEF37 /* ccShader_3D_Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Color.frag; sourceTree = "<group>"; };
 		B29594B01926D5D9003EEF37 /* ccShader_3D_ColorTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorTex.frag; sourceTree = "<group>"; };
 		B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
@@ -4378,6 +4375,8 @@
 		46A1684E1807AF4E005B8026 /* CCEditBox */ = {
 			isa = PBXGroup;
 			children = (
+				B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */,
+				B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */,
 				46A1684F1807AF4E005B8026 /* CCEditBox.cpp */,
 				46A168501807AF4E005B8026 /* CCEditBox.h */,
 				46A168511807AF4E005B8026 /* CCEditBoxImpl.h */,
@@ -5442,14 +5441,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B282B4801980E08F00666787 /* CCEditBoxImplMac.h in Headers */,
 				460E478318080902000CDD6D /* CCControlExtensions.h in Headers */,
 				460E477E18080902000CDD6D /* CCControl.h in Headers */,
 				460E47B11808090B000CDD6D /* CCEditBoxImpl.h in Headers */,
-				460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */,
 				460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */,
 				460E479118080902000CDD6D /* CCControlUtils.h in Headers */,
 				460E468118080832000CDD6D /* cocos-ext.h in Headers */,
-				460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */,
 				460E47CC18080913000CDD6D /* CCScrollView.h in Headers */,
 				460E47B01808090B000CDD6D /* CCEditBox.h in Headers */,
 				460E478918080902000CDD6D /* CCControlSaturationBrightnessPicker.h in Headers */,
@@ -5457,7 +5455,6 @@
 				460E478F18080902000CDD6D /* CCControlSwitch.h in Headers */,
 				460E479518080902000CDD6D /* CCScale9Sprite.h in Headers */,
 				460E478718080902000CDD6D /* CCControlPotentiometer.h in Headers */,
-				460E47BC1808090B000CDD6D /* CCEditBoxImplWin.h in Headers */,
 				460E478B18080902000CDD6D /* CCControlSlider.h in Headers */,
 				460E478218080902000CDD6D /* CCControlColourPicker.h in Headers */,
 				460E478518080902000CDD6D /* CCControlHuePicker.h in Headers */,
@@ -6884,18 +6881,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				460E477D18080902000CDD6D /* CCControl.cpp in Sources */,
+				B282B4811980E0A300666787 /* CCEditBoxImplMac.mm in Sources */,
 				460E47CB18080913000CDD6D /* CCScrollView.cpp in Sources */,
 				460E47D118080913000CDD6D /* CCTableViewCell.cpp in Sources */,
 				460E47CF18080913000CDD6D /* CCTableView.cpp in Sources */,
 				460E478618080902000CDD6D /* CCControlPotentiometer.cpp in Sources */,
 				460E478C18080902000CDD6D /* CCControlStepper.cpp in Sources */,
-				460E47BB1808090B000CDD6D /* CCEditBoxImplWin.cpp in Sources */,
-				460E47B21808090B000CDD6D /* CCEditBoxImplAndroid.cpp in Sources */,
-				460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E478818080902000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
-				460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */,
 				460E478E18080902000CDD6D /* CCControlSwitch.cpp in Sources */,
 				460E479218080902000CDD6D /* CCInvocation.cpp in Sources */,
 				460E477F18080902000CDD6D /* CCControlButton.cpp in Sources */,
