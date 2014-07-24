@@ -320,7 +320,7 @@ public:
      *  Converts the contents of a file to a ValueMap.
      *  @note This method is used internally.
      */
-	virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
+    virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
 
     /**
      *  Write a ValueMap to a plist file.
