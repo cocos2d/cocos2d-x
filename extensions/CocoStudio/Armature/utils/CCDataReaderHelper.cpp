@@ -1490,8 +1490,8 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
 				sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
 				sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
 				sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
-				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
-				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
+				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 0.0f);
+				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 0.0f);
 
                 sdd->skinData.x *= dataInfo->contentScale;
                 sdd->skinData.y *= dataInfo->contentScale;
