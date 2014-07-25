@@ -207,6 +207,18 @@ TextVAlignment Text::getTextVerticalAlignment()const
 {
     return _labelRenderer->getVerticalAlignment();
 }
+    
+void Text::setTextColor(Color4B color)
+{
+    _labelRenderer->setTextColor(color);
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
+}
+    
+const Color4B& Text::getTextColor()const
+{
+    return _labelRenderer->getTextColor();
+}
 
 void Text::setTouchScaleChangeEnabled(bool enable)
 {
