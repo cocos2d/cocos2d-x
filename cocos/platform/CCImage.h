@@ -122,10 +122,10 @@ public:
     inline Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
     inline int               getWidth()              { return _width; }
     inline int               getHeight()             { return _height; }
-    inline bool              isPremultipliedAlpha()  { return _preMulti;   }
     inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
     inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
     inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
+    CC_DEPRECATED_ATTRIBUTE inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
 
     int                      getBitPerPixel();
     bool                     hasAlpha();
@@ -171,7 +171,6 @@ protected:
     bool _unpack;
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
-    bool _preMulti;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.

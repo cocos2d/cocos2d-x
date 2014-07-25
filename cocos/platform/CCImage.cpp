@@ -455,7 +455,6 @@ Image::Image()
 , _unpack(false)
 , _fileType(Format::UNKOWN)
 , _renderFormat(Texture2D::PixelFormat::NONE)
-, _preMulti(false)
 , _numberOfMipmaps(0)
 , _hasPremultipliedAlpha(true)
 {
@@ -875,7 +874,7 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
         /* init image info */
         _width  = cinfo.output_width;
         _height = cinfo.output_height;
-        _preMulti = false;
+        _hasPremultipliedAlpha = false;
         row_pointer[0] = static_cast<unsigned char*>(malloc(cinfo.output_width*cinfo.output_components * sizeof(unsigned char)));
         CC_BREAK_IF(! row_pointer[0]);
 
@@ -1043,7 +1042,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         }
         else
         {
-            _preMulti = false;
+            _hasPremultipliedAlpha = false;
         }
 
         if (row_pointers != nullptr)
@@ -1216,7 +1215,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
            {
                 /* the raster data is pre-multiplied by the alpha component 
                    after invoking TIFFReadRGBAImageOriented*/
-                _preMulti = true;
+                _hasPremultipliedAlpha = true;
 
                memcpy(_data, raster, npixels*sizeof (uint32));
            }
@@ -1288,7 +1287,9 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     
     Configuration *configuration = Configuration::getInstance();
     
-    _hasPremultipliedAlpha = false;
+    //can not detect the premultiplied alpha from pvr file.
+    
+    
     unsigned int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     PVR2TexturePixelFormat formatFlags = static_cast<PVR2TexturePixelFormat>(flags & PVR_TEXTURE_FLAG_TYPE_MASK);
     bool flipped = (flags & (unsigned int)PVR2TextureFlag::VerticalFlip) ? true : false;
@@ -1478,7 +1479,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     // PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
     if (flags & (unsigned int)PVR3TextureFlag::PremultipliedAlpha)
     {
-        _preMulti = true;
+        _hasPremultipliedAlpha = true;
     }
     
 	// sizing
@@ -1706,7 +1707,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         _dataLen = _width * _height * tgaData->pixelDepth / 8;
         _fileType = Format::TGA;
         
-        _preMulti = false;
+        _hasPremultipliedAlpha = false;
         
         ret = true;
         
@@ -2056,7 +2057,7 @@ bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int wid
 
         _height   = height;
         _width    = width;
-        _preMulti = preMulti;
+        _hasPremultipliedAlpha = preMulti;
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
 
         // only RGBA8888 supported
@@ -2351,7 +2352,7 @@ void Image::premultipliedAlpha()
         fourBytes[i] = CC_RGB_PREMULTIPLY_ALPHA(p[0], p[1], p[2], p[3]);
     }
     
-    _preMulti = true;
+    _hasPremultipliedAlpha = true;
 }
 
 NS_CC_END
