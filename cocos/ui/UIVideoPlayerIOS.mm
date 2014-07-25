@@ -323,7 +323,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
         auto directorInstance = Director::getInstance();
         auto glView = directorInstance->getOpenGLView();
         auto frameSize = glView->getFrameSize();
-        auto scaleFactor = directorInstance->getContentScaleFactor();
+        auto scaleFactor = [((CCEAGLView*) glView->getEAGLView()) contentScaleFactor];
         
         auto winSize = directorInstance->getWinSize();
         
@@ -333,13 +333,9 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
         auto uiLeft = (frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX()) / scaleFactor;
         auto uiTop = (frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY()) / scaleFactor;
         
-        CCEAGLView *eaglView = (CCEAGLView*) glView->getEAGLView();
-        auto uiHeight = (rightTop.x - leftBottom.x) * glView->getScaleX() / scaleFactor / [eaglView contentScaleFactor];
-        auto uiWidth = (rightTop.y - leftBottom.y) * glView->getScaleY()/scaleFactor  / [eaglView contentScaleFactor];
-        
         [((UIVideoViewWrapperIos*)_videoView) setFrame :uiLeft :uiTop
-                                                          :uiHeight
-                                                          :uiWidth];
+                                                          :(rightTop.x - leftBottom.x) * glView->getScaleX() / scaleFactor
+                                                          :( (rightTop.y - leftBottom.y) * glView->getScaleY()/scaleFactor)];
     }
     
 #if CC_VIDEOPLAYER_DEBUG_DRAW
