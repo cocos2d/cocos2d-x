@@ -25,71 +25,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_VERTEX_INDEX_BUFFER_H__
-#define __CC_VERTEX_INDEX_BUFFER_H__
-
-#include "base/CCRef.h"
-#include "base/CCDirector.h"
-
+#include "renderer/CCVertexIndexData.h"
 NS_CC_BEGIN
 
-class VertexBuffer : public Ref
+VertexData* VertexData::create()
 {
-public:
-    static VertexBuffer* create(int sizePerVertex, int vertexNumber);
-    
-    int getSizePerVertex() const;
-    int getVertexNumber() const;
-    bool updateVertices(const void* verts, int count, int begin);
-    //bool getVertices(void* verts, int count, int begin) const;
+    return nullptr;
+}
 
-    int getSize() const;
-    
-protected:
-    VertexBuffer();
-    virtual ~VertexBuffer();
-    
-    bool init(int sizePerVertex, int vertexNumber);
-    
-protected:
-    GLuint _vbo;
-    int _sizePerVertex;
-    int _vertexNumber;
-};
+int VertexData::getVertexStreamCount() const
+{}
 
-class IndexBuffer : public Ref
+bool VertexData::setStream(int index, VertexBuffer* buffer, const VertexStreamAttribute& stream)
 {
-public:
-    enum class IndexType
-    {
-        INDEX_TYPE_SHORT_16,
-        INDEX_TYPE_UINT_32
-    };
-    
-public:
-    static IndexBuffer* create(IndexType type, int number);
-    
-    IndexType getType() const;
-    int getSizePerIndex() const;
-    int getIndexNumber() const;
-    bool updateIndices(const void* indices, int count, int begin);
-    //bool getIndices(void* indices, int count, int begin);
+}
 
-    int getSize() const;
+void VertexData::removeStream(int index)
+{}
 
-protected:
-    IndexBuffer();
-    virtual ~IndexBuffer();
-    
-    bool init(IndexType type, int number);
-    
-protected:
-    GLuint _vbo;
-    IndexType _type;
-    int _indexNumber;
-};
+const VertexStreamAttribute& VertexData::getStreamAttribute(int index) const
+{}
 
+VertexStreamAttribute& VertexData::getStreamAttribute(int index)
+{}
+
+VertexBuffer* VertexData::getStreamBuffer(int index) const
+{
+    
+}
+
+VertexData::VertexData()
+{}
+
+VertexData::~VertexData()
+{}
 
 NS_CC_END
-
-#endif /* __CC_VERTEX_INDEX_BUFFER_H__*/

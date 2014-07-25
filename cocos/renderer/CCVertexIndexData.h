@@ -25,71 +25,76 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_VERTEX_INDEX_BUFFER_H__
-#define __CC_VERTEX_INDEX_BUFFER_H__
+#ifndef __CC_VERTEX_INDEX_DATA_H__
+#define __CC_VERTEX_INDEX_DATA_H__
 
 #include "base/CCRef.h"
-#include "base/CCDirector.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "base/CCMap.h"
+#include <map>
 
 NS_CC_BEGIN
 
-class VertexBuffer : public Ref
-{
-public:
-    static VertexBuffer* create(int sizePerVertex, int vertexNumber);
-    
-    int getSizePerVertex() const;
-    int getVertexNumber() const;
-    bool updateVertices(const void* verts, int count, int begin);
-    //bool getVertices(void* verts, int count, int begin) const;
+class VertexBuffer;
 
-    int getSize() const;
-    
-protected:
-    VertexBuffer();
-    virtual ~VertexBuffer();
-    
-    bool init(int sizePerVertex, int vertexNumber);
-    
-protected:
-    GLuint _vbo;
-    int _sizePerVertex;
-    int _vertexNumber;
+enum class VertexSemantic
+{
+    UNKNOWN,
+    POSITION,
+    COLOR,
+    NORMAL,
+    BLEND_WEIGHT,
+    BLEND_INDEX,
+    TEXTURECOORD0,
+    TEXTURECOORD1,
+    TEXTURECOORD2,
+    TEXTURECOORD3
 };
 
-class IndexBuffer : public Ref
+enum class VertexType
 {
-public:
-    enum class IndexType
+    UNKNOWN,
+    FLOAT1,
+    FLOAT2,
+    FLOAT3,
+    FLOAT4,
+    BYTE4
+};
+
+struct VertexStreamAttribute
+{
+    VertexStreamAttribute()
+    : _index(-1), _offset(0),_semantic(VertexSemantic::UNKNOWN),_type(VertexType::UNKNOWN)
     {
-        INDEX_TYPE_SHORT_16,
-        INDEX_TYPE_UINT_32
-    };
-    
-public:
-    static IndexBuffer* create(IndexType type, int number);
-    
-    IndexType getType() const;
-    int getSizePerIndex() const;
-    int getIndexNumber() const;
-    bool updateIndices(const void* indices, int count, int begin);
-    //bool getIndices(void* indices, int count, int begin);
-
-    int getSize() const;
-
-protected:
-    IndexBuffer();
-    virtual ~IndexBuffer();
-    
-    bool init(IndexType type, int number);
-    
-protected:
-    GLuint _vbo;
-    IndexType _type;
-    int _indexNumber;
+    }
+    int _index;
+    int _offset;
+    VertexSemantic _semantic;
+    VertexType _type;
 };
 
+class VertexData : public Ref
+{
+public:
+    static VertexData* create();
+    
+    int getVertexStreamCount() const;
+    bool setStream(int index, VertexBuffer* buffer, const VertexStreamAttribute& stream);
+    void removeStream(int index);
+    const VertexStreamAttribute& getStreamAttribute(int index) const;
+    VertexStreamAttribute& getStreamAttribute(int index);
+    
+    VertexBuffer* getStreamBuffer(int index) const;
+    
+protected:
+    VertexData();
+    virtual ~VertexData();
+protected:
+    Map<int, VertexBuffer*> _vertexBufferBinding;
+    std::map<int, VertexStreamAttribute> _vertexStreamBinding;
+    
+};
 
 NS_CC_END
 
-#endif /* __CC_VERTEX_INDEX_BUFFER_H__*/
+#endif //__CC_VERTEX_INDEX_DATA_H__

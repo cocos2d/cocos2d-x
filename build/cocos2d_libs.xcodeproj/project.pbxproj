@@ -1270,6 +1270,10 @@
 		B29594CF1926D61F003EEF37 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */; };
 		B29594D01926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
 		B29594D11926D61F003EEF37 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
+		B2A1567B1980E61D0070540A /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A156791980E61D0070540A /* CCVertexIndexData.cpp */; };
+		B2A1567C1980E61D0070540A /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A156791980E61D0070540A /* CCVertexIndexData.cpp */; };
+		B2A1567D1980E61D0070540A /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1567A1980E61D0070540A /* CCVertexIndexData.h */; };
+		B2A1567E1980E61D0070540A /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A1567A1980E61D0070540A /* CCVertexIndexData.h */; };
 		B2C599BF1977703300B452DF /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71CFB180E26E600808F54 /* CCBAnimationManager.h */; };
 		B2C599C01977703300B452DF /* CCBFileLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71CFD180E26E600808F54 /* CCBFileLoader.h */; };
 		B2C599C11977703300B452DF /* CCBKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71CFF180E26E600808F54 /* CCBKeyframe.h */; };
@@ -2916,6 +2920,8 @@
 		B29594BE1926D61F003EEF37 /* CCSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3D.h; sourceTree = "<group>"; };
 		B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3DMaterial.cpp; sourceTree = "<group>"; };
 		B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3DMaterial.h; sourceTree = "<group>"; };
+		B2A156791980E61D0070540A /* CCVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexData.cpp; sourceTree = "<group>"; };
+		B2A1567A1980E61D0070540A /* CCVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexData.h; sourceTree = "<group>"; };
 		B2D3D3B81948613300BA4831 /* CCBundle3DData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundle3DData.h; sourceTree = "<group>"; };
 		B2DB47D2197669A100411E16 /* libcocosBuilder Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosStudio Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4820,6 +4826,8 @@
 				5034CA5D191D591900CE6051 /* shaders */,
 				B27C7E95197E51730007A91A /* CCVertexIndexBuffer.cpp */,
 				B27C7E96197E51730007A91A /* CCVertexIndexBuffer.h */,
+				B2A156791980E61D0070540A /* CCVertexIndexData.cpp */,
+				B2A1567A1980E61D0070540A /* CCVertexIndexData.h */,
 			);
 			name = renderer;
 			path = ../cocos/renderer;
@@ -5269,6 +5277,7 @@
 				B29594C41926D61F003EEF37 /* CCMesh.h in Headers */,
 				50ABBE331925AB6F00A911A9 /* CCConfiguration.h in Headers */,
 				50ABC01F1926664800A911A9 /* CCThread.h in Headers */,
+				B2A1567D1980E61D0070540A /* CCVertexIndexData.h in Headers */,
 				1A57035A180BD0B00088DEC7 /* unzip.h in Headers */,
 				50ABBDBF1925AB4100A911A9 /* CCTextureCache.h in Headers */,
 				B37510741823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
@@ -5715,6 +5724,7 @@
 				B6ACD89A193D6693005E0B8A /* CCMeshSkin.h in Headers */,
 				B6ACD8A1193DC0CC005E0B8A /* CCAnimate3D.h in Headers */,
 				B6AAF84419404E0D0069DE01 /* CCBundle3D.h in Headers */,
+				B2A1567E1980E61D0070540A /* CCVertexIndexData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6733,6 +6743,7 @@
 				50ABBEB51925AB6F00A911A9 /* CCUserDefaultAndroid.cpp in Sources */,
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
 				50ABBEA71925AB6F00A911A9 /* CCTouch.cpp in Sources */,
+				B2A1567B1980E61D0070540A /* CCVertexIndexData.cpp in Sources */,
 				50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				50ABBDA31925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				B29594C61926D61F003EEF37 /* CCObjLoader.cpp in Sources */,
@@ -7040,6 +7051,7 @@
 				1A5702C9180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				1A5702EB180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				1A5702EF180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
+				B2A1567C1980E61D0070540A /* CCVertexIndexData.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				50ABBD3D1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				50ABBECC1925AB6F00A911A9 /* s3tc.cpp in Sources */,
