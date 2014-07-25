@@ -1050,7 +1050,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
         {
         case BLEND_NORMAL:
             {
-                frameData->blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+                frameData->blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
             }
             break;
         case BLEND_ADD:
@@ -1614,8 +1614,8 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
 
 	frameData->tweenEasing = (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, cocos2d::tweenfunc::Linear));
 	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
-	frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, BlendFunc::ALPHA_NON_PREMULTIPLIED.src));
-	frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst));
+	frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, BlendFunc::ALPHA_PREMULTIPLIED.src));
+	frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, BlendFunc::ALPHA_PREMULTIPLIED.dst));
 	frameData->isTween = DICTOOL->getBooleanValue_json(json, A_TWEEN_FRAME, true);
 
 	const char *event =  DICTOOL->getStringValue_json(json, A_EVENT);

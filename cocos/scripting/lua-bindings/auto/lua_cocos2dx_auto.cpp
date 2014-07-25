@@ -15237,6 +15237,53 @@ int lua_cocos2dx_FileUtils_setFilenameLookupDictionary(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_FileUtils_removeFile(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_removeFile'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.FileUtils:removeFile");
+        if(!ok)
+            return 0;
+        bool ret = cobj->removeFile(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:removeFile",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_removeFile'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15280,6 +15327,59 @@ int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_isAbsolutePath'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_FileUtils_renameFile(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_renameFile'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.FileUtils:renameFile");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.FileUtils:renameFile");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "cc.FileUtils:renameFile");
+        if(!ok)
+            return 0;
+        bool ret = cobj->renameFile(arg0, arg1, arg2);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:renameFile",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_renameFile'.",&tolua_err);
 #endif
 
     return 0;
@@ -15562,6 +15662,53 @@ int lua_cocos2dx_FileUtils_getValueMapFromFile(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_FileUtils_removeDirectory(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_removeDirectory'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.FileUtils:removeDirectory");
+        if(!ok)
+            return 0;
+        bool ret = cobj->removeDirectory(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:removeDirectory",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_removeDirectory'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_FileUtils_setSearchPaths(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15604,6 +15751,53 @@ int lua_cocos2dx_FileUtils_setSearchPaths(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_setSearchPaths'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_FileUtils_getFileSize(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_getFileSize'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.FileUtils:getFileSize");
+        if(!ok)
+            return 0;
+        long ret = cobj->getFileSize(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:getFileSize",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_getFileSize'.",&tolua_err);
 #endif
 
     return 0;
@@ -15958,6 +16152,53 @@ int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_FileUtils_isDirectoryExist(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_isDirectoryExist'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.FileUtils:isDirectoryExist");
+        if(!ok)
+            return 0;
+        bool ret = cobj->isDirectoryExist(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:isDirectoryExist",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_isDirectoryExist'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_FileUtils_getSearchResolutionsOrder(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15998,6 +16239,53 @@ int lua_cocos2dx_FileUtils_getSearchResolutionsOrder(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_getSearchResolutionsOrder'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_FileUtils_createDirectory(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::FileUtils* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_createDirectory'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.FileUtils:createDirectory");
+        if(!ok)
+            return 0;
+        bool ret = cobj->createDirectory(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:createDirectory",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_createDirectory'.",&tolua_err);
 #endif
 
     return 0;
@@ -16122,14 +16410,18 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
         tolua_function(tolua_S,"fullPathForFilename",lua_cocos2dx_FileUtils_fullPathForFilename);
         tolua_function(tolua_S,"getStringFromFile",lua_cocos2dx_FileUtils_getStringFromFile);
         tolua_function(tolua_S,"setFilenameLookupDictionary",lua_cocos2dx_FileUtils_setFilenameLookupDictionary);
+        tolua_function(tolua_S,"removeFile",lua_cocos2dx_FileUtils_removeFile);
         tolua_function(tolua_S,"isAbsolutePath",lua_cocos2dx_FileUtils_isAbsolutePath);
+        tolua_function(tolua_S,"renameFile",lua_cocos2dx_FileUtils_renameFile);
         tolua_function(tolua_S,"loadFilenameLookup",lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile);
         tolua_function(tolua_S,"isPopupNotify",lua_cocos2dx_FileUtils_isPopupNotify);
         tolua_function(tolua_S,"getValueVectorFromFile",lua_cocos2dx_FileUtils_getValueVectorFromFile);
         tolua_function(tolua_S,"getSearchPaths",lua_cocos2dx_FileUtils_getSearchPaths);
         tolua_function(tolua_S,"writeToFile",lua_cocos2dx_FileUtils_writeToFile);
         tolua_function(tolua_S,"getValueMapFromFile",lua_cocos2dx_FileUtils_getValueMapFromFile);
+        tolua_function(tolua_S,"removeDirectory",lua_cocos2dx_FileUtils_removeDirectory);
         tolua_function(tolua_S,"setSearchPaths",lua_cocos2dx_FileUtils_setSearchPaths);
+        tolua_function(tolua_S,"getFileSize",lua_cocos2dx_FileUtils_getFileSize);
         tolua_function(tolua_S,"setSearchResolutionsOrder",lua_cocos2dx_FileUtils_setSearchResolutionsOrder);
         tolua_function(tolua_S,"addSearchResolutionsOrder",lua_cocos2dx_FileUtils_addSearchResolutionsOrder);
         tolua_function(tolua_S,"addSearchPath",lua_cocos2dx_FileUtils_addSearchPath);
@@ -16137,7 +16429,9 @@ int lua_register_cocos2dx_FileUtils(lua_State* tolua_S)
         tolua_function(tolua_S,"purgeCachedEntries",lua_cocos2dx_FileUtils_purgeCachedEntries);
         tolua_function(tolua_S,"fullPathFromRelativeFile",lua_cocos2dx_FileUtils_fullPathFromRelativeFile);
         tolua_function(tolua_S,"setPopupNotify",lua_cocos2dx_FileUtils_setPopupNotify);
+        tolua_function(tolua_S,"isDirectoryExist",lua_cocos2dx_FileUtils_isDirectoryExist);
         tolua_function(tolua_S,"getSearchResolutionsOrder",lua_cocos2dx_FileUtils_getSearchResolutionsOrder);
+        tolua_function(tolua_S,"createDirectory",lua_cocos2dx_FileUtils_createDirectory);
         tolua_function(tolua_S,"getWritablePath",lua_cocos2dx_FileUtils_getWritablePath);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_FileUtils_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_FileUtils_getInstance);

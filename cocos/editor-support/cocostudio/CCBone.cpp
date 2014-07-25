@@ -74,7 +74,7 @@ Bone::Bone()
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _worldTransform = Mat4::IDENTITY;
     _boneTransformDirty = true;
-    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     _blendDirty = false;
     _worldInfo = nullptr;
 
