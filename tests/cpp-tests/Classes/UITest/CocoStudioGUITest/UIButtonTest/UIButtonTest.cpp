@@ -347,17 +347,17 @@ void UIButtonTest_Title::touchEvent(Ref *pSender, Widget::TouchEventType type)
 
 
 // UIButtonTest_RemoveSelf
-UIButtonTest_RemoveSelf::UIButtonTest_RemoveSelf()
+UIButtonTestRemoveSelf::UIButtonTestRemoveSelf()
 : _displayValueLabel(nullptr)
 {
     
 }
 
-UIButtonTest_RemoveSelf::~UIButtonTest_RemoveSelf()
+UIButtonTestRemoveSelf::~UIButtonTestRemoveSelf()
 {
 }
 
-bool UIButtonTest_RemoveSelf::init()
+bool UIButtonTestRemoveSelf::init()
 {
     if (UIScene::init())
     {
@@ -370,11 +370,11 @@ bool UIButtonTest_RemoveSelf::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("Button Callback RemoveSelf shouldn't crash!","fonts/Marker Felt.ttf",30);
+        Text* alert = Text::create("Remove Self in the Button's Callback shouldn't cause crash!","fonts/Marker Felt.ttf",10);
         alert->setColor(Color3B(159, 168, 176));
         
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 2.75f));
         
         _uiLayer->addChild(alert);
         
@@ -383,7 +383,7 @@ bool UIButtonTest_RemoveSelf::init()
                                         "cocosui/animationbuttonpressed.png");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
-        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_RemoveSelf::touchEvent, this));
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestRemoveSelf::touchEvent, this));
         _uiLayer->addChild(button);
         
         
@@ -393,7 +393,7 @@ bool UIButtonTest_RemoveSelf::init()
     return false;
 }
 
-void UIButtonTest_RemoveSelf::touchEvent(Ref *pSender, Widget::TouchEventType type)
+void UIButtonTestRemoveSelf::touchEvent(Ref *pSender, Widget::TouchEventType type)
 {
     switch (type)
     {

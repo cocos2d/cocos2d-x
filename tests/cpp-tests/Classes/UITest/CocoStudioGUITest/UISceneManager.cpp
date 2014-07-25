@@ -192,7 +192,7 @@ Scene *UISceneManager::currentUIScene()
         case kUIButtonTest_Title:
             return UIButtonTest_Title::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTest_RemoveSelf:
-            return UIButtonTest_RemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
+            return UIButtonTestRemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
