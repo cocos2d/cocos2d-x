@@ -78,11 +78,11 @@ class VertexData : public Ref
 public:
     static VertexData* create();
     
-    int getVertexStreamCount() const;
+    size_t getVertexStreamCount() const;
     bool setStream(int index, VertexBuffer* buffer, const VertexStreamAttribute& stream);
     void removeStream(int index);
-    const VertexStreamAttribute& getStreamAttribute(int index) const;
-    VertexStreamAttribute& getStreamAttribute(int index);
+    const VertexStreamAttribute* getStreamAttribute(int index) const;
+    VertexStreamAttribute* getStreamAttribute(int index);
     
     VertexBuffer* getStreamBuffer(int index) const;
     
@@ -90,9 +90,31 @@ protected:
     VertexData();
     virtual ~VertexData();
 protected:
-    Map<int, VertexBuffer*> _vertexBufferBinding;
-    std::map<int, VertexStreamAttribute> _vertexStreamBinding;
+    struct BufferAttribute
+    {
+        VertexBuffer* _buffer;
+        VertexStreamAttribute _stream;
+    };
     
+    std::map<int, BufferAttribute> _vertexStreams;
+    
+};
+
+class IndexData : public Ref
+{
+public:
+    static IndexData* create(IndexBuffer* buffer, int start, int count);
+    
+protected:
+    IndexData();
+    virtual ~IndexData();
+    
+    void init(IndexBuffer* buffer, int start, int count);
+protected:
+    IndexBuffer* _buffer;
+public:
+    int _offset;
+    int _count;
 };
 
 NS_CC_END

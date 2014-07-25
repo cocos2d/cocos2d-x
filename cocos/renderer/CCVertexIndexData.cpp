@@ -30,34 +30,105 @@ NS_CC_BEGIN
 
 VertexData* VertexData::create()
 {
+    VertexData* result = new (std::nothrow) VertexData();
+    if(result)
+    {
+        result->autorelease();
+        return result;
+    }
+
+    CC_SAFE_DELETE(result);
     return nullptr;
 }
 
-int VertexData::getVertexStreamCount() const
-{}
+size_t VertexData::getVertexStreamCount() const
+{
+    return _vertexStreams.size();
+}
 
 bool VertexData::setStream(int index, VertexBuffer* buffer, const VertexStreamAttribute& stream)
 {
+    if( buffer == nullptr ) return false;
+    
+    auto iter = _vertexStreams.find(index);
+    if(iter == _vertexStreams.end())
+    {
+        buffer->retain();
+        auto& bufferAttribute = _vertexStreams[index];
+        bufferAttribute._buffer = buffer;
+        bufferAttribute._stream = stream;
+    }
+    else
+    {
+        buffer->retain();
+        iter->second._buffer->release();
+        iter->second._stream = stream;
+        iter->second._buffer = buffer;
+    }
+    
+    return true;
 }
 
 void VertexData::removeStream(int index)
-{}
+{
+    auto iter = _vertexStreams.find(index);
+    if(iter != _vertexStreams.end())
+    {
+        iter->second._buffer->release();
+        _vertexStreams.erase(iter);
+    }
+}
 
-const VertexStreamAttribute& VertexData::getStreamAttribute(int index) const
-{}
+const VertexStreamAttribute* VertexData::getStreamAttribute(int index) const
+{
+    auto iter = _vertexStreams.find(index);
+    if(iter == _vertexStreams.end()) return nullptr;
+    else return &iter->second._stream;
+}
 
-VertexStreamAttribute& VertexData::getStreamAttribute(int index)
-{}
+VertexStreamAttribute* VertexData::getStreamAttribute(int index)
+{
+    auto iter = _vertexStreams.find(index);
+    if(iter == _vertexStreams.end()) return nullptr;
+    else return &iter->second._stream;
+}
 
 VertexBuffer* VertexData::getStreamBuffer(int index) const
+{
+    auto iter = _vertexStreams.find(index);
+    if(iter == _vertexStreams.end()) return nullptr;
+    else return iter->second._buffer;
+}
+
+VertexData::VertexData()
 {
     
 }
 
-VertexData::VertexData()
-{}
-
 VertexData::~VertexData()
-{}
+{
+    for(auto& element : _vertexStreams)
+    {
+        element.second._buffer->release();
+    }
+    _vertexStreams.clear();
+}
+
+IndexData* IndexData::create(IndexBuffer* buffer, int start, int count)
+{
+    return nullptr;
+}
+
+IndexData::IndexData()
+{
+}
+
+IndexData::~IndexData()
+{
+}
+
+void init(IndexBuffer* buffer, int start, int count)
+{
+}
 
 NS_CC_END
