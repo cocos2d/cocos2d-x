@@ -318,7 +318,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
             auto typeIter = g_luaType.find(name);
             if (g_luaType.end() != typeIter)
             {
-                lua_pushstring(L, name.c_str());
+                lua_pushstring(L, key.c_str());
                 int ID = (obj) ? (int)obj->_ID : -1;
                 int* luaID = (obj) ? &obj->_luaID : NULL;
                 toluafix_pushusertype_ccobject(L, ID, luaID, (void*)obj,typeIter->second.c_str());

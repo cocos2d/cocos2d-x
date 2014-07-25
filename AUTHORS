@@ -799,6 +799,7 @@ Developers:
         Improve Android projects
         Android jni error clear & more readable log
         Add support of software PVRTC v1 decompression
+        Fixed a bug that ttf font have not effect on Mac OS X
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -929,6 +930,10 @@ Developers:
         
     uorbe001
         Allow setting bundle to use in file utils on iOS and Mac OS X
+        
+    yongkangchen
+        Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
+        Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
     
 Retired Core Developers:
     WenSheng Yang
