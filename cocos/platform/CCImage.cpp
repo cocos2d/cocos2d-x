@@ -97,6 +97,8 @@ namespace
 {
     static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
     
+    static bool _PVRHaveAlphaPremultiplied = false;
+    
     // Values taken from PVRTexture.h from http://www.imgtec.com
     enum class PVR2TextureFlag
     {
@@ -1287,8 +1289,8 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     
     Configuration *configuration = Configuration::getInstance();
     
-    //can not detect the premultiplied alpha from pvr file.
-    
+    //can not detect the premultiplied alpha from pvr file, use _PVRHaveAlphaPremultiplied instead.
+    _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
     
     unsigned int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     PVR2TexturePixelFormat formatFlags = static_cast<PVR2TexturePixelFormat>(flags & PVR_TEXTURE_FLAG_TYPE_MASK);
@@ -2353,6 +2355,12 @@ void Image::premultipliedAlpha()
     }
     
     _hasPremultipliedAlpha = true;
+}
+
+
+void Image::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+{
+    _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
 NS_CC_END

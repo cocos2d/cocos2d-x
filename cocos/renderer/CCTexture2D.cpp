@@ -121,8 +121,6 @@ const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePix
 // Default is: RGBA8888 (32-bit textures)
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
-static bool _PVRHaveAlphaPremultiplied = false;
-
 //////////////////////////////////////////////////////////////////////////
 //conventer function
 
@@ -779,20 +777,8 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         }
 
         // set the premultiplied tag
-        if (!image->hasPremultipliedAlpha())
-        {
-            if (image->getFileType() == Image::Format::PVR)
-            {
-                _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
-            }else
-            {
-                CCLOG("wanning: We cann't find the data is premultiplied or not, we will assume it's false.");
-                _hasPremultipliedAlpha = false;
-            }
-        }else
-        {
-            _hasPremultipliedAlpha = image->isPremultipliedAlpha();
-        }
+        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        
         return true;
     }
 }
@@ -1218,10 +1204,10 @@ void Texture2D::drawInRect(const Rect& rect)
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
+    Image::PVRImagesHavePremultipliedAlpha(haveAlphaPremultiplied);
 }
 
-    
+
 //
 // Use to apply MIN/MAG filter
 //

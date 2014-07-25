@@ -138,6 +138,15 @@ public:
      @param    isToRGB        whether the image is saved as RGB format.
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
+    
+    
+    /** treats (or not) PVR files as if they have alpha premultiplied.
+     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+     possible load them as if they have (or not) the alpha channel premultiplied.
+     
+     By default it is disabled.
+     */
+    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 protected:
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
