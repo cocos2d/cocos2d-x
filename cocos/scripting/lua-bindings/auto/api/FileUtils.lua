@@ -21,8 +21,22 @@
 -- @param #map_table map
         
 --------------------------------
+-- @function [parent=#FileUtils] removeFile 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#FileUtils] isAbsolutePath 
 -- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#FileUtils] renameFile 
+-- @param self
+-- @param #string str
+-- @param #string str
 -- @param #string str
 -- @return bool#bool ret (return value: bool)
         
@@ -61,9 +75,21 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
+-- @function [parent=#FileUtils] removeDirectory 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#FileUtils] setSearchPaths 
 -- @param self
 -- @param #array_table array
+        
+--------------------------------
+-- @function [parent=#FileUtils] getFileSize 
+-- @param self
+-- @param #string str
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- @function [parent=#FileUtils] setSearchResolutionsOrder 
@@ -105,9 +131,21 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#FileUtils] isDirectoryExist 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#FileUtils] getSearchResolutionsOrder 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
+-- @function [parent=#FileUtils] createDirectory 
+-- @param self
+-- @param #string str
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#FileUtils] getWritablePath 
