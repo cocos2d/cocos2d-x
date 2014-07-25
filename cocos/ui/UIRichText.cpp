@@ -461,6 +461,11 @@ void RichText::formarRenderers()
     _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
     
+void RichText::adaptRenderers()
+{
+    this->formatText();
+}
+    
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
     if (_elementRenders.size() <= 0)
@@ -468,15 +473,6 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
         return;
     }
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
-}
-
-void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
-{
-    if (_enabled)
-    {
-        formatText();
-        Widget::visit(renderer, parentTransform, parentFlags);
-    }
 }
     
 void RichText::setVerticalSpace(float space)
