@@ -307,7 +307,10 @@ bool EditBoxImplMac::initWithSize(const Size& size)
 void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 {
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-	NSFont *textFont = [NSFont fontWithName:fntName size:fontSize];
+    float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+	NSFont *textFont = [NSFont fontWithName:fntName size:fontSize  * scaleFactor / retinaFactor];
 	if (textFont != nil) {
 		[_sysEdit.textField setFont:textFont];
         [_sysEdit.secureTextField setFont:textFont];
@@ -317,7 +320,10 @@ void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     NSString *fontName = [NSString stringWithUTF8String:pFontName];
-    NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+    float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+    NSFont *font = [NSFont fontWithName:fontName size:fontSize  * scaleFactor / retinaFactor];
     
     if (!font) {
         CCLOGWARN("Font not found: %s", pFontName);
