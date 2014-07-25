@@ -211,8 +211,6 @@ TextVAlignment Text::getTextVerticalAlignment()const
 void Text::setTextColor(Color4B color)
 {
     _labelRenderer->setTextColor(color);
-    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
-    _labelRendererAdaptDirty = true;
 }
     
 const Color4B& Text::getTextColor()const
