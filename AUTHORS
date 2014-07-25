@@ -799,6 +799,7 @@ Developers:
         Improve Android projects
         Android jni error clear & more readable log
         Add support of software PVRTC v1 decompression
+        Fixed a bug that ttf font have not effect on Mac OS X
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
