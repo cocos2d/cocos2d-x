@@ -323,7 +323,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
         auto directorInstance = Director::getInstance();
         auto glView = directorInstance->getOpenGLView();
         auto frameSize = glView->getFrameSize();
-        auto scaleFactor = [((CCEAGLView*) glView->getEAGLView()) contentScaleFactor];
+        auto scaleFactor = [static_cast<CCEAGLView *>(glView->getEAGLView()) contentScaleFactor];
         
         auto winSize = directorInstance->getWinSize();
         
