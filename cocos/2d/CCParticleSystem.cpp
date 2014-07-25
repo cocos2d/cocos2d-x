@@ -773,7 +773,7 @@ void ParticleSystem::update(float dt)
 
                 if (_positionType == PositionType::FREE)
                 {
-                    Vec2 diff = converToNodeSpace(currentPosition) - convertToNodeSpace(p-> startPos);
+                    Vec2 diff = convertToNodeSpace(currentPosition) - convertToNodeSpace(p-> startPos);
                     newPos = p->pos - diff;
                 }
                 else if(_positionType == PositionType::RELATIVE)
