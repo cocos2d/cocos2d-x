@@ -131,6 +131,8 @@ def main():
 
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE']);
+    #pull latest code
+    os.system("git pull origin V3")
     os.system("git checkout v3")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
@@ -142,9 +144,16 @@ def main():
     if(ret != 0):
         return(2)
  
-    #checkout
-    git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
+    #checkout a new branch from v3
+    git_checkout = "git checkout -b " + "pull" + str(pr_num)
     os.system(git_checkout)
+    #merge pull reqeust head
+    p = os.popen('git merge --no-edit FETCH_HEAD')
+    r = p.read()
+    #check if merge fail
+    if r.find('CONFLICT') > 0:
+        print r
+        return(3)
  
     # After checkout a new branch, clean workspace again
     print "After checkout: git clean -xdf -f"    
