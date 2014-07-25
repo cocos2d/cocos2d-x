@@ -14,26 +14,15 @@ enum {
 
 static int fontIdx = 0;
 
+//you don't need any ifdef anymore
 static std::string fontList[] =
 {
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
-    // custom ttf files are defined in Test-info.plist
-    "American Typewriter",
-    "Marker Felt",
-    "A Damn Mess",
-    "Abberancy",
-    "Abduction",
-    "Paint Boy",
-    "Schwarzwald Regular",
-    "Scissor Cuts",
-#else
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
-    "fonts/Schwarzwald Regular.ttf",
+    "fonts/Schwarzwald.ttf",
     "fonts/Scissor Cuts.ttf",
-#endif
 };
 
 static int fontCount = sizeof(fontList) / sizeof(*fontList);

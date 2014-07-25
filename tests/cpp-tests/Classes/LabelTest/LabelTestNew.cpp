@@ -1167,7 +1167,7 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
         "fonts/Abduction.ttf",
         "fonts/American Typewriter.ttf",
         "fonts/Paint Boy.ttf",
-        "fonts/Schwarzwald Regular.ttf",
+        "fonts/Schwarzwald.ttf",
         "fonts/Scissor Cuts.ttf",
     };
 #define arraysize(ar)  (sizeof(ar) / sizeof(ar[0]))
