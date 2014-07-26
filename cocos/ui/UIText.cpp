@@ -213,7 +213,7 @@ void Text::setTextColor(Color4B color)
     _labelRenderer->setTextColor(color);
 }
     
-const Color4B& Text::getTextColor()const
+const Color4B& Text::getTextColor() const
 {
     return _labelRenderer->getTextColor();
 }
