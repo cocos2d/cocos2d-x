@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A03F2D5D1780BDF7006731B9"
                BuildableName = "libbox2d Mac.a"
-               BlueprintName = "box2d Mac"
+               BlueprintName = "libbox2d Mac"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

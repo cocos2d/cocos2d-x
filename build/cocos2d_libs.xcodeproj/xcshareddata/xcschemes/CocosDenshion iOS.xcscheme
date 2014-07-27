@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A07A4F9F178387730073F6A7"
                BuildableName = "libCocosDenshion iOS.a"
-               BlueprintName = "CocosDenshion iOS"
+               BlueprintName = "libcocosdenshion iOS"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

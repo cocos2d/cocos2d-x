@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A03F2B781780BD04006731B9"
                BuildableName = "libchipmunk Mac.a"
-               BlueprintName = "chipmunk Mac"
+               BlueprintName = "libchipmunk Mac"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

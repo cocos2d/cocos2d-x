@@ -659,6 +659,7 @@ Developers:
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
         Added HttpClient::sendImmediate()
         Added operator == != for Value
+        Replace dynamic_cast to std::is_base_of in object_to_luaval
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
