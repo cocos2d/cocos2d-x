@@ -50,7 +50,7 @@ NS_CC_BEGIN
 /* Forward declarations. */
 class LabelAtlas;
 class Scene;
-class GLView;
+class GLViewProtocol;
 class DirectorDelegate;
 class Node;
 class Scheduler;
@@ -171,8 +171,8 @@ public:
     * @js NA
     * @lua NA
     */
-    inline GLView* getOpenGLView() { return _openGLView; }
-    void setOpenGLView(GLView *openGLView);
+    inline GLViewProtocol* getOpenGLView() { return _openGLView; }
+    void setOpenGLView(GLViewProtocol *openGLView);
 
     TextureCache* getTextureCache() const;
 
@@ -442,8 +442,9 @@ protected:
     /* delta time since last tick to main loop */
 	float _deltaTime;
     
-    /* The GLView, where everything is rendered */
-    GLView *_openGLView;
+    /* The openGLView, where everything is rendered GLViewProtocol is a abstract class,cocos2d-x provide GLView 
+     which inherit from it as default renderer context,you can haveyour own by inherit from it*/
+    GLViewProtocol *_openGLView;
 
     //texture cache belongs to this director
     TextureCache *_textureCache;

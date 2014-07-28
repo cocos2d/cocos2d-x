@@ -86,7 +86,6 @@ void GLViewProtocol::pollInputEvents()
 {
 }
 
-
 void GLViewProtocol::updateDesignResolutionSize()
 {
     if (_screenSize.width > 0 && _screenSize.height > 0

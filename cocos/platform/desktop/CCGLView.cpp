@@ -432,7 +432,7 @@ bool GLView::windowShouldClose()
         return true;
 }
 
-void GLView::pollEvents()
+void GLView::pollInputEvents()
 {
     glfwPollEvents();
 }
@@ -473,7 +473,7 @@ void GLView::setFrameZoomFactor(float zoomFactor)
     updateFrameSize();
 }
 
-float GLView::getFrameZoomFactor()
+float GLView::getFrameZoomFactor() const
 {
     return _frameZoomFactor;
 }
