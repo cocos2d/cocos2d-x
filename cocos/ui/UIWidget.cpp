@@ -717,6 +717,7 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void Widget::pushDownEvent()
 {
+    this->retain();
     if (_touchEventCallback) {
         _touchEventCallback(this, TouchEventType::BEGAN);
     }
@@ -725,10 +726,12 @@ void Widget::pushDownEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
     }
+    this->release();
 }
 
 void Widget::moveEvent()
 {
+    this->retain();
     if (_touchEventCallback) {
         _touchEventCallback(this, TouchEventType::MOVED);
     }
@@ -737,11 +740,12 @@ void Widget::moveEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
     }
+    this->release();
 }
 
 void Widget::releaseUpEvent()
 {
-    
+    this->retain();
     if (_touchEventCallback) {
         _touchEventCallback(this, TouchEventType::ENDED);
     }
@@ -750,10 +754,12 @@ void Widget::releaseUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
+    this->release();
 }
 
 void Widget::cancelUpEvent()
 {
+    this->retain();
     if (_touchEventCallback)
     {
         _touchEventCallback(this, TouchEventType::CANCELED);
@@ -763,7 +769,7 @@ void Widget::cancelUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
-   
+    this->release();
 }
 
 void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
