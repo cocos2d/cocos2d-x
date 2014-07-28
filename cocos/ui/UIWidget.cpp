@@ -319,7 +319,6 @@ void Widget::setSizePercent(const Vec2 &percent)
         this->setContentSize(cSize);
     }
     _customSize = cSize;
-    onSizeChanged();
 }
 
 void Widget::updateSizeAndPosition()
@@ -373,7 +372,8 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
         default:
             break;
     }
-    onSizeChanged();
+    
+    //update position & position percent
     Vec2 absPos = getPosition();
     switch (_positionType)
     {
@@ -426,7 +426,6 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
     {
         this->setContentSize(_customSize);
     }
-    onSizeChanged();
 }
 
 bool Widget::isIgnoreContentAdaptWithSize() const
@@ -486,7 +485,6 @@ void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
     {
         this->setContentSize(_customSize);
     }
-    onSizeChanged();
 }
 
 void Widget::setTouchEnabled(bool enable)
@@ -1036,7 +1034,6 @@ void Widget::copyProperties(Widget *widget)
     {
         setLayoutParameter(iter->second->clone());
     }
-    onSizeChanged();
 }
     
 void Widget::setFlippedX(bool flippedX)

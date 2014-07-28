@@ -48,6 +48,7 @@ enum
      */
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
+    kUIImageViewTest_ContentSize,
     kUILoadingBarTest_Left,
     kUILoadingBarTest_Right,
     kUILoadingBarTest_Left_Scale9,
