@@ -66,6 +66,18 @@ public:
     
     /*temp action*/
     static Widget* seekActionWidgetByActionTag(Widget* root, int tag);
+    
+    /**
+     * @brief Get a utf8 substring from a std::string with a given start position and length
+     *  Sample:  std::string str = "中国中国中国”;  substr = utf8_substr(str,0,2) will = "中国"
+     * @param start The start position of the substring.
+     * @param length The length of the substring in utf8 count
+     * @return a utf8 substring
+     */
+    static std::string utf8_substr(const std::string& str,
+                                   unsigned long start,
+                                   unsigned long length);
+
 };
 }
 
