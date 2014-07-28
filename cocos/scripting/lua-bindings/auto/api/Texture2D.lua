@@ -151,11 +151,6 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#Texture2D] PVRImagesHavePremultipliedAlpha 
--- @param self
--- @param #bool bool
-        
---------------------------------
 -- @function [parent=#Texture2D] Texture2D 
 -- @param self
         
