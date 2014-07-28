@@ -407,12 +407,16 @@ protected:
     virtual std::string getNewFilename(const std::string &filename) const;
     
     /**
-     *  Checks whether file exists without considering search paths and resolution orders.
+     *  Checks whether a file exists without considering search paths and resolution orders.
+     *  @param The file (with absolute path) to look up for
+     *  @return Returns true if the file found at the given absolute path, otherwise returns false
      */
     virtual bool isFileExistInternal(const std::string& filename) const = 0;
     
     /**
-     *  Checks whether file exists without considering search paths and resolution orders.
+     *  Checks whether a directory exists without considering search paths and resolution orders.
+     *  @param The directory (with absolute path) to look up for
+     *  @return Returns true if the directory found at the given absolute path, otherwise returns false
      */
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const;
     
@@ -438,7 +442,14 @@ protected:
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
     
-    
+    /** 
+     *  Returns the fullpath for a given filename.
+     *  This is an alternative for fullPathForFilename, there are two main differences:
+     *  First, it returns empty string instead of the original filename when no file found for the given name.
+     *  Secondly, it's a const function.
+     *  @param filename The file name to look up for
+     *  @return The full path for the file, if not found, the return value will be an empty string
+     */
     virtual std::string searchFullPathForFilename(const std::string& filename) const;
     
     
