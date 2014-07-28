@@ -939,6 +939,9 @@ Developers:
         
     wagulu
         Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
     
 Retired Core Developers:
     WenSheng Yang
