@@ -1204,7 +1204,7 @@ void Texture2D::drawInRect(const Rect& rect)
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    Image::PVRImagesHavePremultipliedAlpha(haveAlphaPremultiplied);
+    Image::setPVRImagesHavePremultipliedAlpha(haveAlphaPremultiplied);
 }
 
 

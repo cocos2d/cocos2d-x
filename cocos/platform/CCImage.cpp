@@ -2358,7 +2358,7 @@ void Image::premultipliedAlpha()
 }
 
 
-void Image::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+void Image::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
     _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }

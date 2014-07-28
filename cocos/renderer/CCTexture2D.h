@@ -183,7 +183,7 @@ public:
 
      By default it is disabled.
      
-     deprecated, please use Image::PVRImagesHavePremultipliedAlpha() instead.
+     deprecated, please use Image::setPVRImagesHavePremultipliedAlpha() instead.
 
      @since v0.99.5
      */

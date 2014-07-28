@@ -146,7 +146,7 @@ public:
      
      By default it is disabled.
      */
-    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 protected:
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
