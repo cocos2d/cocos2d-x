@@ -146,7 +146,7 @@ bool LuaStack::init(void)
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {
         {"print", lua_print},
-        {NULL, NULL}
+        {nullptr, nullptr}
     };
     luaL_register(_state, "_G", global_functions);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -559,7 +559,7 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
                     
                 }else{
                     
-                    resultArray.addObject(static_cast<Ref*>(tolua_tousertype(_state, -1, NULL)));
+                    resultArray.addObject(static_cast<Ref*>(tolua_tousertype(_state, -1, nullptr)));
                 }
                 // remove return value from stack
                 lua_pop(_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/
@@ -729,7 +729,7 @@ const char* LuaStack::getXXTEASign(int *len)
     return nullptr;
 }
 
-static LuaStack *curStack = NULL;
+static LuaStack *curStack = nullptr;
 
 int LuaStack::loadChunksFromZIP(const char *zipFilePath)
 {
@@ -757,9 +757,9 @@ int LuaStack::lua_loadChunksFromZIP(lua_State *L)
     
     do {
         ssize_t size = 0;
-        void *buffer = NULL;
+        void *buffer = nullptr;
         unsigned char *zipFileData = utils->getFileData(zipFilePath.c_str(), "rb", &size);
-        ZipFile *zip = NULL;
+        ZipFile *zip = nullptr;
         
         bool isXXTEA = stack && stack->_xxteaEnabled && zipFileData;
         for (int i = 0; isXXTEA && i < stack->_xxteaSignLen && i < size; ++i) {
@@ -774,7 +774,7 @@ int LuaStack::lua_loadChunksFromZIP(lua_State *L)
                                    (xxtea_long)stack->_xxteaKeyLen,
                                    &len);
             delete []zipFileData;
-            zipFileData = NULL;
+            zipFileData = nullptr;
             zip = ZipFile::createWithBuffer(buffer, len);
         } else {
             if (zipFileData) {

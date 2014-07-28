@@ -509,7 +509,7 @@ ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
         return zip;
     } else {
         if (zip) delete zip;
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -631,7 +631,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
     return buffer;
 }
 
-const std::string ZipFile::getFirstFilename(void)
+const std::string ZipFile::getFirstFilename()
 {
     if (unzGoToFirstFile(_data->zipFile) != UNZ_OK) return emptyFilename;
     std::string path;
@@ -640,7 +640,7 @@ const std::string ZipFile::getFirstFilename(void)
     return path;
 }
 
-const std::string ZipFile::getNextFilename(void)
+const std::string ZipFile::getNextFilename()
 {
     if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
     std::string path;
@@ -652,7 +652,7 @@ const std::string ZipFile::getNextFilename(void)
 int ZipFile::getCurrentFileInfo(std::string *filename, unz_file_info *info)
 {
     char path[FILENAME_MAX + 1];
-    int ret = unzGetCurrentFileInfo(_data->zipFile, info, path, sizeof(path), NULL, 0, NULL, 0);
+    int ret = unzGetCurrentFileInfo(_data->zipFile, info, path, sizeof(path), nullptr, 0, nullptr, 0);
     if (ret != UNZ_OK) {
         *filename = emptyFilename;
     } else {

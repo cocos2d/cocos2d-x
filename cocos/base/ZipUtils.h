@@ -271,8 +271,8 @@ namespace cocos2d
         */
         unsigned char *getFileData(const std::string &fileName, ssize_t *size);
 
-        const std::string getFirstFilename(void);
-        const std::string getNextFilename(void);
+        const std::string getFirstFilename();
+        const std::string getNextFilename();
         
         static ZipFile *createWithBuffer(const void* buffer, unsigned long size);
         
