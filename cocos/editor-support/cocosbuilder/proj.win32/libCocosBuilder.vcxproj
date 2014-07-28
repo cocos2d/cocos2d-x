@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{811C0DAB-7B96-4BD3-A154-B7572B58E4AB}</ProjectGuid>
-    <RootNamespace>libCocosBuilder</RootNamespace>
+    <RootNamespace>libcocosbuilder</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
