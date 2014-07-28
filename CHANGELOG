@@ -13,6 +13,7 @@ cocos2d-x-3.3  ??
     [FIX]           TabelView: can handle touch event though its parents are invisible
     [FIX]           TextField: can not use backspace to delete a character
     [FIX]           UIVideoPlayer: video frame size is not calculated correctly on iOS
+    [FIX]           UIWidget: may crash if remove itself in touch call back function
     
     [FIX]           Others: can not import java library shift by engine correctly when using Eclispe on Android
     [FIX]           Others: optimize FPS contorl algorithm on Android
