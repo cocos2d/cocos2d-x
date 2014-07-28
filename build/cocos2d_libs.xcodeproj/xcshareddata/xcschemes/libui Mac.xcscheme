@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1ABCA28518CD91510087CE3A"
-               BuildableName = "lua-tests Mac.app"
-               BlueprintName = "lua-tests Mac"
-               ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+               BlueprintIdentifier = "B245F10019766132001920FD"
+               BuildableName = "libui Mac.a"
+               BlueprintName = "libui Mac"
+               ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1ABCA28518CD91510087CE3A"
-            BuildableName = "lua-tests Mac.app"
-            BlueprintName = "lua-tests Mac"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,15 +39,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1ABCA28518CD91510087CE3A"
-            BuildableName = "lua-tests Mac.app"
-            BlueprintName = "lua-tests Mac"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+            BlueprintIdentifier = "B245F10019766132001920FD"
+            BuildableName = "libui Mac.a"
+            BlueprintName = "libui Mac"
+            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +57,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1ABCA28518CD91510087CE3A"
-            BuildableName = "lua-tests Mac.app"
-            BlueprintName = "lua-tests Mac"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+            BlueprintIdentifier = "B245F10019766132001920FD"
+            BuildableName = "libui Mac.a"
+            BlueprintName = "libui Mac"
+            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
