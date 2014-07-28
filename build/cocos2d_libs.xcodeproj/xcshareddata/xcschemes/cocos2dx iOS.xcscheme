@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A07A4C241783777C0073F6A7"
                BuildableName = "libcocos2dx iOS.a"
-               BlueprintName = "cocos2dx iOS"
+               BlueprintName = "libcocos2d iOS"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
