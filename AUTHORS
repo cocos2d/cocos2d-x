@@ -909,6 +909,7 @@ Developers:
     gin0606
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        Fix video scale issue in iOS
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
