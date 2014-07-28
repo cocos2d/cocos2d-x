@@ -1,4 +1,5 @@
 cocos2d-x-2.2.6 ???
+     [FIX]    CCClippingNode: effect is wrong if apply CCClippingNode in a Node and its children
      [FIX]    LabelReader: compilation fix on Android
 
 cocos2d-x-2.2.5 @Jul.10 2014
