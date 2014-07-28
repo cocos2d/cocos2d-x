@@ -193,11 +193,11 @@ xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\.
     <ProjectReference Include="..\..\..\..\cocos\scripting\lua-bindings\proj.win32\liblua.vcxproj">
       <Project>{ddc3e27f-004d-4dd4-9dd3-931a013d2159}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\ui\proj.win32\libGUI.vcxproj">
-      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos\network\proj.win32\libNetwork.vcxproj">
       <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\ui\proj.win32\libui.vcxproj">
+      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\extensions\proj.win32\libExtensions.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>

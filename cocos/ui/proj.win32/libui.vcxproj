@@ -73,7 +73,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7E06E92C-537A-442B-9E4A-4761C84F8A1A}</ProjectGuid>
-    <RootNamespace>libGUI</RootNamespace>
+    <RootNamespace>libui</RootNamespace>
     <ProjectName>libui</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
