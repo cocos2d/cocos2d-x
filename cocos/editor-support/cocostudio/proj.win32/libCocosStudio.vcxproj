@@ -141,7 +141,7 @@
     <ProjectReference Include="..\..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\audio\proj.win32\CocosDenshion.vcxproj">
+    <ProjectReference Include="..\..\..\audio\proj.win32\libcocosdenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ui\proj.win32\libGUI.vcxproj">
