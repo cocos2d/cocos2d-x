@@ -75,8 +75,8 @@ public:
      * @return a utf8 substring
      */
     static std::string utf8_substr(const std::string& str,
-                                   unsigned long start,
-                                   unsigned long length);
+                                   std::string::size_type start,
+                                   std::string::size_type length);
 
 };
 }
