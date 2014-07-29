@@ -208,7 +208,7 @@ TextVAlignment Text::getTextVerticalAlignment()const
     return _labelRenderer->getVerticalAlignment();
 }
     
-void Text::setTextColor(Color4B color)
+void Text::setTextColor(const Color4B color)
 {
     _labelRenderer->setTextColor(color);
 }
