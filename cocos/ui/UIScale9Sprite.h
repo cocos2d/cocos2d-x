@@ -305,6 +305,43 @@ namespace ui {
         
         Sprite* getSprite()const;
         
+        /**
+         * Sets whether the widget should be flipped horizontally or not.
+         *
+         * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+         */
+        virtual void setFlippedX(bool flippedX);
+        
+        /**
+         * Returns the flag which indicates whether the widget is flipped horizontally or not.
+         *
+         * It only flips the texture of the widget, and not the texture of the widget's children.
+         * Also, flipping the texture doesn't alter the anchorPoint.
+         * If you want to flip the anchorPoint too, and/or to flip the children too use:
+         * widget->setScaleX(sprite->getScaleX() * -1);
+         *
+         * @return true if the widget is flipped horizaontally, false otherwise.
+         */
+        virtual bool isFlippedX()const;
+        
+        /**
+         * Sets whether the widget should be flipped vertically or not.
+         *
+         * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+         */
+        virtual void setFlippedY(bool flippedY);
+
+        /**
+         * Return the flag which indicates whether the widget is flipped vertically or not.
+         *
+         * It only flips the texture of the widget, and not the texture of the widget's children.
+         * Also, flipping the texture doesn't alter the anchorPoint.
+         * If you want to flip the anchorPoint too, and/or to flip the children too use:
+         * widget->setScaleY(widget->getScaleY() * -1);
+         *
+         * @return true if the widget is flipped vertically, flase otherwise.
+         */
+        virtual bool isFlippedY()const;
         
     protected:
         void updateCapInset();
@@ -364,6 +401,9 @@ namespace ui {
         
         Vector<Node*> _protectedChildren;        ///holds the 9 sprites
         bool _reorderProtectedChildDirty;
+        
+        bool _flippedX;
+        bool _flippedY;
     };
     
 }}  //end of namespace
