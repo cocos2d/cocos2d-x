@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{21B2C324-891F-48EA-AD1A-5AE13DE12E28}</ProjectGuid>
-    <RootNamespace>Extensions.win32</RootNamespace>
+    <RootNamespace>libextension.win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>libextension</ProjectName>
   </PropertyGroup>

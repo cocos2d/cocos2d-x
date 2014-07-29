@@ -202,7 +202,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ProjectReference Include="..\..\..\..\cocos\ui\proj.win32\libui.vcxproj">
       <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\extensions\proj.win32\libExtensions.vcxproj">
+    <ProjectReference Include="..\..\..\..\extensions\proj.win32\libextension.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\external\chipmunk\proj.win32\chipmunk.vcxproj">

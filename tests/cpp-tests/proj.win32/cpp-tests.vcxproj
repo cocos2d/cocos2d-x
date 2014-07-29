@@ -579,9 +579,8 @@
     <ProjectReference Include="..\..\..\cocos\ui\proj.win32\libui.vcxproj">
       <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
+    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\..\..\external\Box2D\proj.win32\libbox2d.vcxproj">
       <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>

@@ -64,7 +64,7 @@
     <ClCompile Include="..\UIWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
+    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
