@@ -58,7 +58,7 @@ local function main()
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
     -- add the moving dog
-    local function creatDog()
+    local function createDog()
         local frameWidth = 105
         local frameHeight = 95
 
@@ -130,7 +130,7 @@ local function main()
         end
 
         -- add moving dog
-        local spriteDog = creatDog()
+        local spriteDog = createDog()
         layerFarm:addChild(spriteDog)
 
         -- handing touch events
