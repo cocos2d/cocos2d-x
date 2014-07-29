@@ -318,7 +318,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
             auto typeIter = g_luaType.find(name);
             if (g_luaType.end() != typeIter)
             {
-                lua_pushstring(L, name.c_str());
+                lua_pushstring(L, key.c_str());
                 int ID = (obj) ? (int)obj->_ID : -1;
                 int* luaID = (obj) ? &obj->_luaID : NULL;
                 toluafix_pushusertype_ccobject(L, ID, luaID, (void*)obj,typeIter->second.c_str());
@@ -361,11 +361,10 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
 {
     if(nullptr != ret)
     {
-      
-        cocos2d::Ref* dynObject = dynamic_cast<cocos2d::Ref *>(ret);
-
-        if (nullptr != dynObject)
+        if (std::is_base_of<cocos2d::Ref, T>::value)
         {
+            // use c style cast, T may not polymorphic
+            cocos2d::Ref* dynObject = (cocos2d::Ref*)(ret);
             int ID = (int)(dynObject->_ID) ;
             int* luaID = &(dynObject->_luaID);
             toluafix_pushusertype_ccobject(L,ID, luaID, (void*)ret,type);

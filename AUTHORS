@@ -659,6 +659,7 @@ Developers:
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
         Added HttpClient::sendImmediate()
         Added operator == != for Value
+        Replace dynamic_cast to std::is_base_of in object_to_luaval
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -799,6 +800,7 @@ Developers:
         Improve Android projects
         Android jni error clear & more readable log
         Add support of software PVRTC v1 decompression
+        Fixed a bug that ttf font have not effect on Mac OS X
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -907,6 +909,7 @@ Developers:
     gin0606
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        Fix video scale issue in iOS
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
@@ -926,6 +929,19 @@ Developers:
     chenguangqi
         Fixed a compiling error on Android
         Fixed an error when importing project using Eclipse on Android
+        
+    uorbe001
+        Allow setting bundle to use in file utils on iOS and Mac OS X
+        
+    yongkangchen
+        Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
+        Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
+        
+    wagulu
+        Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
     
 Retired Core Developers:
     WenSheng Yang

@@ -41,7 +41,7 @@ NS_CC_EXT_BEGIN
 
 class ScrollView;
 
-class ScrollViewDelegate
+class CC_EX_DLL ScrollViewDelegate
 {
 public:
     /**

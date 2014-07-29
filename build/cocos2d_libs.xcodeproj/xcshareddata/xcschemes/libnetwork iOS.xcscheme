@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0600"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A07A4F9F178387730073F6A7"
-               BuildableName = "libCocosDenshion iOS.a"
-               BlueprintName = "CocosDenshion iOS"
+               BlueprintIdentifier = "B24EEA7F19775EF3004493CC"
+               BuildableName = "libnetwork iOS.a"
+               BlueprintName = "libnetwork iOS"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -39,6 +39,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B24EEA7F19775EF3004493CC"
+            BuildableName = "libnetwork iOS.a"
+            BlueprintName = "libnetwork iOS"
+            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +57,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B24EEA7F19775EF3004493CC"
+            BuildableName = "libnetwork iOS.a"
+            BlueprintName = "libnetwork iOS"
+            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

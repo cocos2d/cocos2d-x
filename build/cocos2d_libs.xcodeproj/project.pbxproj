@@ -627,13 +627,6 @@
 		460E47AF1808090B000CDD6D /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1684F1807AF4E005B8026 /* CCEditBox.cpp */; };
 		460E47B01808090B000CDD6D /* CCEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168501807AF4E005B8026 /* CCEditBox.h */; };
 		460E47B11808090B000CDD6D /* CCEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168511807AF4E005B8026 /* CCEditBoxImpl.h */; };
-		460E47B21808090B000CDD6D /* CCEditBoxImplAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168521807AF4E005B8026 /* CCEditBoxImplAndroid.cpp */; };
-		460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168531807AF4E005B8026 /* CCEditBoxImplAndroid.h */; };
-		460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168541807AF4E005B8026 /* CCEditBoxImplIOS.h */; };
-		460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A168551807AF4E005B8026 /* CCEditBoxImplIOS.mm */; };
-		460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168581807AF4E005B8026 /* CCEditBoxImplNone.cpp */; };
-		460E47BB1808090B000CDD6D /* CCEditBoxImplWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1685B1807AF4E005B8026 /* CCEditBoxImplWin.cpp */; };
-		460E47BC1808090B000CDD6D /* CCEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1685C1807AF4E005B8026 /* CCEditBoxImplWin.h */; };
 		460E47BD1808090D000CDD6D /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1684F1807AF4E005B8026 /* CCEditBox.cpp */; };
 		460E47BE1808090D000CDD6D /* CCEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168501807AF4E005B8026 /* CCEditBox.h */; };
 		460E47BF1808090D000CDD6D /* CCEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168511807AF4E005B8026 /* CCEditBoxImpl.h */; };
@@ -1246,6 +1239,8 @@
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B27AEE0219768934008BD575 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
+		B282B4801980E08F00666787 /* CCEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */; };
+		B282B4811980E0A300666787 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */; };
 		B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B61926D5EC003EEF37 /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
@@ -1957,7 +1952,7 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
-		1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
@@ -2871,13 +2866,13 @@
 		50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A07A4EFC1783867C0073F6A7 /* libcocos2dx-extensions iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03F2ED617814268006731B9 /* libcocosdenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosdenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03F2FD617814595006731B9 /* libextension Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libextension Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A4EFC1783867C0073F6A7 /* libextension iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libextension iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A4FB4178387730073F6A7 /* libcocosdenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosdenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B217703F1977ECE6009EE11B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -2887,16 +2882,18 @@
 		B21770481977ED4C009EE11B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		B217704A1977ED55009EE11B /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B217704C1977ED8B009EE11B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		B245F13A19766132001920FD /* libcocosGUI Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosGUI Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B245F13A19766132001920FD /* libui Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libui Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXLayer.cpp; sourceTree = "<group>"; };
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
 		B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
 		B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXTiledMap.h; sourceTree = "<group>"; };
-		B24EEA6619775E92004493CC /* libcocosGUI iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosGUI iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24EEA6E19775EBB004493CC /* libcocosStudio iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosStudio iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosSpine iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosNetwork iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA6619775E92004493CC /* libui iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libui iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA6E19775EBB004493CC /* libcocostudio iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocostudio iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA7619775ECE004493CC /* libcocosbuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosbuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA7E19775EE1004493CC /* libspine iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libspine iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B24EEA8619775EF3004493CC /* libnetwork iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libnetwork iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplMac.mm; sourceTree = "<group>"; };
+		B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		B29594AF1926D5D9003EEF37 /* ccShader_3D_Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Color.frag; sourceTree = "<group>"; };
 		B29594B01926D5D9003EEF37 /* ccShader_3D_ColorTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorTex.frag; sourceTree = "<group>"; };
 		B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
@@ -2911,10 +2908,10 @@
 		B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3DMaterial.cpp; sourceTree = "<group>"; };
 		B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite3DMaterial.h; sourceTree = "<group>"; };
 		B2D3D3B81948613300BA4831 /* CCBundle3DData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundle3DData.h; sourceTree = "<group>"; };
-		B2DB47D2197669A100411E16 /* libcocosBuilder Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosBuilder Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosStudio Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosSpine Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosNetwork Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2DB47D2197669A100411E16 /* libcocosbuilder Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosbuilder Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2DB484D1976716E00411E16 /* libcocostudio Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocostudio Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2DB490119767F1F00411E16 /* libspine Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libspine Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2DB49C4197686CB00411E16 /* libnetwork Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libnetwork Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37510451823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBodyInfo_chipmunk.cpp; sourceTree = "<group>"; };
 		B37510461823AC7B00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBodyInfo_chipmunk.h; sourceTree = "<group>"; };
 		B37510471823AC7B00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContactInfo_chipmunk.cpp; sourceTree = "<group>"; };
@@ -3160,26 +3157,26 @@
 		1551A340158F2AB200E66CFE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */,
+				1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */,
 				A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */,
 				A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */,
-				A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */,
-				A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */,
-				A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */,
-				A07A4EFC1783867C0073F6A7 /* libcocos2dx-extensions iOS.a */,
+				A03F2ED617814268006731B9 /* libcocosdenshion Mac.a */,
+				A03F2FD617814595006731B9 /* libextension Mac.a */,
+				A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */,
+				A07A4EFC1783867C0073F6A7 /* libextension iOS.a */,
 				A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */,
 				A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */,
-				A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */,
-				B245F13A19766132001920FD /* libcocosGUI Mac.a */,
-				B2DB47D2197669A100411E16 /* libcocosBuilder Mac.a */,
-				B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */,
-				B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */,
-				B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */,
-				B24EEA6619775E92004493CC /* libcocosGUI iOS.a */,
-				B24EEA6E19775EBB004493CC /* libcocosStudio iOS.a */,
-				B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */,
-				B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */,
-				B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */,
+				A07A4FB4178387730073F6A7 /* libcocosdenshion iOS.a */,
+				B245F13A19766132001920FD /* libui Mac.a */,
+				B2DB47D2197669A100411E16 /* libcocosbuilder Mac.a */,
+				B2DB484D1976716E00411E16 /* libcocostudio Mac.a */,
+				B2DB490119767F1F00411E16 /* libspine Mac.a */,
+				B2DB49C4197686CB00411E16 /* libnetwork Mac.a */,
+				B24EEA6619775E92004493CC /* libui iOS.a */,
+				B24EEA6E19775EBB004493CC /* libcocostudio iOS.a */,
+				B24EEA7619775ECE004493CC /* libcocosbuilder iOS.a */,
+				B24EEA7E19775EE1004493CC /* libspine iOS.a */,
+				B24EEA8619775EF3004493CC /* libnetwork iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4378,6 +4375,8 @@
 		46A1684E1807AF4E005B8026 /* CCEditBox */ = {
 			isa = PBXGroup;
 			children = (
+				B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */,
+				B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */,
 				46A1684F1807AF4E005B8026 /* CCEditBox.cpp */,
 				46A168501807AF4E005B8026 /* CCEditBox.h */,
 				46A168511807AF4E005B8026 /* CCEditBoxImpl.h */,
@@ -5442,14 +5441,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B282B4801980E08F00666787 /* CCEditBoxImplMac.h in Headers */,
 				460E478318080902000CDD6D /* CCControlExtensions.h in Headers */,
 				460E477E18080902000CDD6D /* CCControl.h in Headers */,
 				460E47B11808090B000CDD6D /* CCEditBoxImpl.h in Headers */,
-				460E47B31808090B000CDD6D /* CCEditBoxImplAndroid.h in Headers */,
 				460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */,
 				460E479118080902000CDD6D /* CCControlUtils.h in Headers */,
 				460E468118080832000CDD6D /* cocos-ext.h in Headers */,
-				460E47B41808090B000CDD6D /* CCEditBoxImplIOS.h in Headers */,
 				460E47CC18080913000CDD6D /* CCScrollView.h in Headers */,
 				460E47B01808090B000CDD6D /* CCEditBox.h in Headers */,
 				460E478918080902000CDD6D /* CCControlSaturationBrightnessPicker.h in Headers */,
@@ -5457,7 +5455,6 @@
 				460E478F18080902000CDD6D /* CCControlSwitch.h in Headers */,
 				460E479518080902000CDD6D /* CCScale9Sprite.h in Headers */,
 				460E478718080902000CDD6D /* CCControlPotentiometer.h in Headers */,
-				460E47BC1808090B000CDD6D /* CCEditBoxImplWin.h in Headers */,
 				460E478B18080902000CDD6D /* CCControlSlider.h in Headers */,
 				460E478218080902000CDD6D /* CCControlColourPicker.h in Headers */,
 				460E478518080902000CDD6D /* CCControlHuePicker.h in Headers */,
@@ -6197,9 +6194,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1551A33E158F2AB200E66CFE /* cocos2dx Mac */ = {
+		1551A33E158F2AB200E66CFE /* libcocos2d Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "cocos2dx Mac" */;
+			buildConfigurationList = 1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "libcocos2d Mac" */;
 			buildPhases = (
 				1551A33B158F2AB200E66CFE /* Sources */,
 				1551A33C158F2AB200E66CFE /* Frameworks */,
@@ -6210,14 +6207,14 @@
 			dependencies = (
 				460E44F41807E241000CDD6D /* PBXTargetDependency */,
 			);
-			name = "cocos2dx Mac";
+			name = "libcocos2d Mac";
 			productName = cocos2dx;
-			productReference = 1551A33F158F2AB200E66CFE /* libcocos2dx Mac.a */;
+			productReference = 1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A03F2B781780BD04006731B9 /* chipmunk Mac */ = {
+		A03F2B781780BD04006731B9 /* libchipmunk Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A03F2CB51780BD04006731B9 /* Build configuration list for PBXNativeTarget "chipmunk Mac" */;
+			buildConfigurationList = A03F2CB51780BD04006731B9 /* Build configuration list for PBXNativeTarget "libchipmunk Mac" */;
 			buildPhases = (
 				A03F2B791780BD04006731B9 /* Sources */,
 				A03F2C011780BD04006731B9 /* Frameworks */,
@@ -6227,14 +6224,14 @@
 			);
 			dependencies = (
 			);
-			name = "chipmunk Mac";
+			name = "libchipmunk Mac";
 			productName = cocos2dx;
 			productReference = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A03F2D5D1780BDF7006731B9 /* box2d Mac */ = {
+		A03F2D5D1780BDF7006731B9 /* libbox2d Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A03F2D981780BDF7006731B9 /* Build configuration list for PBXNativeTarget "box2d Mac" */;
+			buildConfigurationList = A03F2D981780BDF7006731B9 /* Build configuration list for PBXNativeTarget "libbox2d Mac" */;
 			buildPhases = (
 				A03F2D5E1780BDF7006731B9 /* Sources */,
 				A03F2D7C1780BDF7006731B9 /* Frameworks */,
@@ -6244,14 +6241,14 @@
 			);
 			dependencies = (
 			);
-			name = "box2d Mac";
+			name = "libbox2d Mac";
 			productName = cocos2dx;
 			productReference = A03F2D9B1780BDF7006731B9 /* libbox2d Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A03F2E9817814268006731B9 /* CocosDenshion Mac */ = {
+		A03F2E9817814268006731B9 /* libcocosdenshion Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A03F2ED317814268006731B9 /* Build configuration list for PBXNativeTarget "CocosDenshion Mac" */;
+			buildConfigurationList = A03F2ED317814268006731B9 /* Build configuration list for PBXNativeTarget "libcocosdenshion Mac" */;
 			buildPhases = (
 				A03F2E9917814268006731B9 /* Sources */,
 				A03F2EB717814268006731B9 /* Frameworks */,
@@ -6261,14 +6258,14 @@
 			);
 			dependencies = (
 			);
-			name = "CocosDenshion Mac";
+			name = "libcocosdenshion Mac";
 			productName = cocos2dx;
-			productReference = A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */;
+			productReference = A03F2ED617814268006731B9 /* libcocosdenshion Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A03F2FC117814595006731B9 /* cocos2dx-extensions Mac */ = {
+		A03F2FC117814595006731B9 /* libextension Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A03F2FD317814595006731B9 /* Build configuration list for PBXNativeTarget "cocos2dx-extensions Mac" */;
+			buildConfigurationList = A03F2FD317814595006731B9 /* Build configuration list for PBXNativeTarget "libextension Mac" */;
 			buildPhases = (
 				A03F2FC217814595006731B9 /* Sources */,
 				A03F2FC917814595006731B9 /* Frameworks */,
@@ -6278,14 +6275,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocos2dx-extensions Mac";
+			name = "libextension Mac";
 			productName = cocos2dx;
-			productReference = A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */;
+			productReference = A03F2FD617814595006731B9 /* libextension Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4C241783777C0073F6A7 /* cocos2dx iOS */ = {
+		A07A4C241783777C0073F6A7 /* libcocos2d iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "cocos2dx iOS" */;
+			buildConfigurationList = A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iOS" */;
 			buildPhases = (
 				A07A4C251783777C0073F6A7 /* Sources */,
 				A07A4CAD1783777C0073F6A7 /* Frameworks */,
@@ -6296,14 +6293,14 @@
 			dependencies = (
 				46A173D31807D330005B8026 /* PBXTargetDependency */,
 			);
-			name = "cocos2dx iOS";
+			name = "libcocos2d iOS";
 			productName = cocos2dx;
-			productReference = A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */;
+			productReference = A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4E111783867C0073F6A7 /* cocos2dx-extensions iOS */ = {
+		A07A4E111783867C0073F6A7 /* libextension iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07A4EF91783867C0073F6A7 /* Build configuration list for PBXNativeTarget "cocos2dx-extensions iOS" */;
+			buildConfigurationList = A07A4EF91783867C0073F6A7 /* Build configuration list for PBXNativeTarget "libextension iOS" */;
 			buildPhases = (
 				A07A4E121783867C0073F6A7 /* Sources */,
 				A07A4E7B1783867C0073F6A7 /* Frameworks */,
@@ -6313,14 +6310,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocos2dx-extensions iOS";
+			name = "libextension iOS";
 			productName = cocos2dx;
-			productReference = A07A4EFC1783867C0073F6A7 /* libcocos2dx-extensions iOS.a */;
+			productReference = A07A4EFC1783867C0073F6A7 /* libextension iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4EFD178387670073F6A7 /* chipmunk iOS */ = {
+		A07A4EFD178387670073F6A7 /* libchipmunk iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07A4F38178387670073F6A7 /* Build configuration list for PBXNativeTarget "chipmunk iOS" */;
+			buildConfigurationList = A07A4F38178387670073F6A7 /* Build configuration list for PBXNativeTarget "libchipmunk iOS" */;
 			buildPhases = (
 				A07A4EFE178387670073F6A7 /* Sources */,
 				A07A4F1C178387670073F6A7 /* Frameworks */,
@@ -6330,14 +6327,14 @@
 			);
 			dependencies = (
 			);
-			name = "chipmunk iOS";
+			name = "libchipmunk iOS";
 			productName = cocos2dx;
 			productReference = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4F3C1783876B0073F6A7 /* box2d iOS */ = {
+		A07A4F3C1783876B0073F6A7 /* libbox2d iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07A4F9B1783876B0073F6A7 /* Build configuration list for PBXNativeTarget "box2d iOS" */;
+			buildConfigurationList = A07A4F9B1783876B0073F6A7 /* Build configuration list for PBXNativeTarget "libbox2d iOS" */;
 			buildPhases = (
 				A07A4F3D1783876B0073F6A7 /* Sources */,
 				A07A4F6B1783876B0073F6A7 /* Frameworks */,
@@ -6347,14 +6344,14 @@
 			);
 			dependencies = (
 			);
-			name = "box2d iOS";
+			name = "libbox2d iOS";
 			productName = cocos2dx;
 			productReference = A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4F9F178387730073F6A7 /* CocosDenshion iOS */ = {
+		A07A4F9F178387730073F6A7 /* libcocosdenshion iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07A4FB1178387730073F6A7 /* Build configuration list for PBXNativeTarget "CocosDenshion iOS" */;
+			buildConfigurationList = A07A4FB1178387730073F6A7 /* Build configuration list for PBXNativeTarget "libcocosdenshion iOS" */;
 			buildPhases = (
 				A07A4FA0178387730073F6A7 /* Sources */,
 				A07A4FA7178387730073F6A7 /* Frameworks */,
@@ -6364,14 +6361,14 @@
 			);
 			dependencies = (
 			);
-			name = "CocosDenshion iOS";
+			name = "libcocosdenshion iOS";
 			productName = cocos2dx;
-			productReference = A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */;
+			productReference = A07A4FB4178387730073F6A7 /* libcocosdenshion iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B245F10019766132001920FD /* cocosGUI Mac */ = {
+		B245F10019766132001920FD /* libui Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B245F13719766132001920FD /* Build configuration list for PBXNativeTarget "cocosGUI Mac" */;
+			buildConfigurationList = B245F13719766132001920FD /* Build configuration list for PBXNativeTarget "libui Mac" */;
 			buildPhases = (
 				B245F10119766132001920FD /* Sources */,
 				B245F11A19766132001920FD /* Frameworks */,
@@ -6381,14 +6378,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosGUI Mac";
+			name = "libui Mac";
 			productName = cocos2dx;
-			productReference = B245F13A19766132001920FD /* libcocosGUI Mac.a */;
+			productReference = B245F13A19766132001920FD /* libui Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B24EEA2C19775E92004493CC /* cocosGUI iOS */ = {
+		B24EEA2C19775E92004493CC /* libui iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24EEA6319775E92004493CC /* Build configuration list for PBXNativeTarget "cocosGUI iOS" */;
+			buildConfigurationList = B24EEA6319775E92004493CC /* Build configuration list for PBXNativeTarget "libui iOS" */;
 			buildPhases = (
 				B24EEA2D19775E92004493CC /* Sources */,
 				B24EEA4619775E92004493CC /* Frameworks */,
@@ -6398,14 +6395,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosGUI iOS";
+			name = "libui iOS";
 			productName = cocos2dx;
-			productReference = B24EEA6619775E92004493CC /* libcocosGUI iOS.a */;
+			productReference = B24EEA6619775E92004493CC /* libui iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B24EEA6719775EBB004493CC /* cocosStudio iOS */ = {
+		B24EEA6719775EBB004493CC /* libcocostudio iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24EEA6B19775EBB004493CC /* Build configuration list for PBXNativeTarget "cocosStudio iOS" */;
+			buildConfigurationList = B24EEA6B19775EBB004493CC /* Build configuration list for PBXNativeTarget "libcocostudio iOS" */;
 			buildPhases = (
 				B24EEA6819775EBB004493CC /* Sources */,
 				B24EEA6919775EBB004493CC /* Frameworks */,
@@ -6415,14 +6412,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosStudio iOS";
+			name = "libcocostudio iOS";
 			productName = cocos2dx;
-			productReference = B24EEA6E19775EBB004493CC /* libcocosStudio iOS.a */;
+			productReference = B24EEA6E19775EBB004493CC /* libcocostudio iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B24EEA6F19775ECE004493CC /* cocosBuilder iOS */ = {
+		B24EEA6F19775ECE004493CC /* libcocosbuilder iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24EEA7319775ECE004493CC /* Build configuration list for PBXNativeTarget "cocosBuilder iOS" */;
+			buildConfigurationList = B24EEA7319775ECE004493CC /* Build configuration list for PBXNativeTarget "libcocosbuilder iOS" */;
 			buildPhases = (
 				B24EEA7019775ECE004493CC /* Sources */,
 				B24EEA7119775ECE004493CC /* Frameworks */,
@@ -6432,14 +6429,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosBuilder iOS";
+			name = "libcocosbuilder iOS";
 			productName = cocos2dx;
-			productReference = B24EEA7619775ECE004493CC /* libcocosBuilder iOS.a */;
+			productReference = B24EEA7619775ECE004493CC /* libcocosbuilder iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B24EEA7719775EE1004493CC /* cocosSpine iOS */ = {
+		B24EEA7719775EE1004493CC /* libspine iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24EEA7B19775EE1004493CC /* Build configuration list for PBXNativeTarget "cocosSpine iOS" */;
+			buildConfigurationList = B24EEA7B19775EE1004493CC /* Build configuration list for PBXNativeTarget "libspine iOS" */;
 			buildPhases = (
 				B24EEA7819775EE1004493CC /* Sources */,
 				B24EEA7919775EE1004493CC /* Frameworks */,
@@ -6449,14 +6446,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosSpine iOS";
+			name = "libspine iOS";
 			productName = cocos2dx;
-			productReference = B24EEA7E19775EE1004493CC /* libcocosSpine iOS.a */;
+			productReference = B24EEA7E19775EE1004493CC /* libspine iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B24EEA7F19775EF3004493CC /* cocosNetwork iOS */ = {
+		B24EEA7F19775EF3004493CC /* libnetwork iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24EEA8319775EF3004493CC /* Build configuration list for PBXNativeTarget "cocosNetwork iOS" */;
+			buildConfigurationList = B24EEA8319775EF3004493CC /* Build configuration list for PBXNativeTarget "libnetwork iOS" */;
 			buildPhases = (
 				B24EEA8019775EF3004493CC /* Sources */,
 				B24EEA8119775EF3004493CC /* Frameworks */,
@@ -6466,14 +6463,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosNetwork iOS";
+			name = "libnetwork iOS";
 			productName = cocos2dx;
-			productReference = B24EEA8619775EF3004493CC /* libcocosNetwork iOS.a */;
+			productReference = B24EEA8619775EF3004493CC /* libnetwork iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B2DB479B197669A100411E16 /* cocosBuilder Mac */ = {
+		B2DB479B197669A100411E16 /* libcocosbuilder Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2DB47CF197669A100411E16 /* Build configuration list for PBXNativeTarget "cocosBuilder Mac" */;
+			buildConfigurationList = B2DB47CF197669A100411E16 /* Build configuration list for PBXNativeTarget "libcocosbuilder Mac" */;
 			buildPhases = (
 				B2DB479C197669A100411E16 /* Sources */,
 				B2DB47B5197669A100411E16 /* Frameworks */,
@@ -6483,14 +6480,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosBuilder Mac";
+			name = "libcocosbuilder Mac";
 			productName = cocos2dx;
-			productReference = B2DB47D2197669A100411E16 /* libcocosBuilder Mac.a */;
+			productReference = B2DB47D2197669A100411E16 /* libcocosbuilder Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B2DB48161976716E00411E16 /* cocosStudio Mac */ = {
+		B2DB48161976716E00411E16 /* libcocostudio Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2DB484A1976716E00411E16 /* Build configuration list for PBXNativeTarget "cocosStudio Mac" */;
+			buildConfigurationList = B2DB484A1976716E00411E16 /* Build configuration list for PBXNativeTarget "libcocostudio Mac" */;
 			buildPhases = (
 				B2DB48171976716E00411E16 /* Sources */,
 				B2DB48301976716E00411E16 /* Frameworks */,
@@ -6500,14 +6497,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosStudio Mac";
+			name = "libcocostudio Mac";
 			productName = cocos2dx;
-			productReference = B2DB484D1976716E00411E16 /* libcocosStudio Mac.a */;
+			productReference = B2DB484D1976716E00411E16 /* libcocostudio Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B2DB48CA19767F1F00411E16 /* cocosSpine Mac */ = {
+		B2DB48CA19767F1F00411E16 /* libspine Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2DB48FE19767F1F00411E16 /* Build configuration list for PBXNativeTarget "cocosSpine Mac" */;
+			buildConfigurationList = B2DB48FE19767F1F00411E16 /* Build configuration list for PBXNativeTarget "libspine Mac" */;
 			buildPhases = (
 				B2DB48CB19767F1F00411E16 /* Sources */,
 				B2DB48E419767F1F00411E16 /* Frameworks */,
@@ -6517,14 +6514,14 @@
 			);
 			dependencies = (
 			);
-			name = "cocosSpine Mac";
+			name = "libspine Mac";
 			productName = cocos2dx;
-			productReference = B2DB490119767F1F00411E16 /* libcocosSpine Mac.a */;
+			productReference = B2DB490119767F1F00411E16 /* libspine Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B2DB498D197686CB00411E16 /* cocosNetwork Mac */ = {
+		B2DB498D197686CB00411E16 /* libnetwork Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2DB49C1197686CB00411E16 /* Build configuration list for PBXNativeTarget "cocosNetwork Mac" */;
+			buildConfigurationList = B2DB49C1197686CB00411E16 /* Build configuration list for PBXNativeTarget "libnetwork Mac" */;
 			buildPhases = (
 				B2DB498E197686CB00411E16 /* Sources */,
 				B2DB49A7197686CB00411E16 /* Frameworks */,
@@ -6534,9 +6531,9 @@
 			);
 			dependencies = (
 			);
-			name = "cocosNetwork Mac";
+			name = "libnetwork Mac";
 			productName = cocos2dx;
-			productReference = B2DB49C4197686CB00411E16 /* libcocosNetwork Mac.a */;
+			productReference = B2DB49C4197686CB00411E16 /* libnetwork Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -6561,27 +6558,27 @@
 			projectRoot = "";
 			targets = (
 				A03F2E8E178141C1006731B9 /* build all libs Mac */,
-				1551A33E158F2AB200E66CFE /* cocos2dx Mac */,
-				A03F2FC117814595006731B9 /* cocos2dx-extensions Mac */,
-				B245F10019766132001920FD /* cocosGUI Mac */,
-				B2DB48161976716E00411E16 /* cocosStudio Mac */,
-				B2DB479B197669A100411E16 /* cocosBuilder Mac */,
-				B2DB48CA19767F1F00411E16 /* cocosSpine Mac */,
-				B2DB498D197686CB00411E16 /* cocosNetwork Mac */,
-				A03F2B781780BD04006731B9 /* chipmunk Mac */,
-				A03F2D5D1780BDF7006731B9 /* box2d Mac */,
-				A03F2E9817814268006731B9 /* CocosDenshion Mac */,
+				1551A33E158F2AB200E66CFE /* libcocos2d Mac */,
+				A03F2FC117814595006731B9 /* libextension Mac */,
+				B245F10019766132001920FD /* libui Mac */,
+				B2DB48161976716E00411E16 /* libcocostudio Mac */,
+				B2DB479B197669A100411E16 /* libcocosbuilder Mac */,
+				B2DB48CA19767F1F00411E16 /* libspine Mac */,
+				B2DB498D197686CB00411E16 /* libnetwork Mac */,
+				A03F2B781780BD04006731B9 /* libchipmunk Mac */,
+				A03F2D5D1780BDF7006731B9 /* libbox2d Mac */,
+				A03F2E9817814268006731B9 /* libcocosdenshion Mac */,
 				A07A4E0B178386390073F6A7 /* build all libs iOS */,
-				A07A4C241783777C0073F6A7 /* cocos2dx iOS */,
-				A07A4E111783867C0073F6A7 /* cocos2dx-extensions iOS */,
-				A07A4EFD178387670073F6A7 /* chipmunk iOS */,
-				A07A4F3C1783876B0073F6A7 /* box2d iOS */,
-				A07A4F9F178387730073F6A7 /* CocosDenshion iOS */,
-				B24EEA2C19775E92004493CC /* cocosGUI iOS */,
-				B24EEA6719775EBB004493CC /* cocosStudio iOS */,
-				B24EEA6F19775ECE004493CC /* cocosBuilder iOS */,
-				B24EEA7719775EE1004493CC /* cocosSpine iOS */,
-				B24EEA7F19775EF3004493CC /* cocosNetwork iOS */,
+				A07A4C241783777C0073F6A7 /* libcocos2d iOS */,
+				A07A4E111783867C0073F6A7 /* libextension iOS */,
+				A07A4EFD178387670073F6A7 /* libchipmunk iOS */,
+				A07A4F3C1783876B0073F6A7 /* libbox2d iOS */,
+				A07A4F9F178387730073F6A7 /* libcocosdenshion iOS */,
+				B24EEA2C19775E92004493CC /* libui iOS */,
+				B24EEA6719775EBB004493CC /* libcocostudio iOS */,
+				B24EEA6F19775ECE004493CC /* libcocosbuilder iOS */,
+				B24EEA7719775EE1004493CC /* libspine iOS */,
+				B24EEA7F19775EF3004493CC /* libnetwork iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -6884,18 +6881,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				460E477D18080902000CDD6D /* CCControl.cpp in Sources */,
+				B282B4811980E0A300666787 /* CCEditBoxImplMac.mm in Sources */,
 				460E47CB18080913000CDD6D /* CCScrollView.cpp in Sources */,
 				460E47D118080913000CDD6D /* CCTableViewCell.cpp in Sources */,
 				460E47CF18080913000CDD6D /* CCTableView.cpp in Sources */,
 				460E478618080902000CDD6D /* CCControlPotentiometer.cpp in Sources */,
 				460E478C18080902000CDD6D /* CCControlStepper.cpp in Sources */,
-				460E47BB1808090B000CDD6D /* CCEditBoxImplWin.cpp in Sources */,
-				460E47B21808090B000CDD6D /* CCEditBoxImplAndroid.cpp in Sources */,
-				460E47B81808090B000CDD6D /* CCEditBoxImplNone.cpp in Sources */,
 				460E478418080902000CDD6D /* CCControlHuePicker.cpp in Sources */,
 				460E478A18080902000CDD6D /* CCControlSlider.cpp in Sources */,
 				460E478818080902000CDD6D /* CCControlSaturationBrightnessPicker.cpp in Sources */,
-				460E47B51808090B000CDD6D /* CCEditBoxImplIOS.mm in Sources */,
 				460E478E18080902000CDD6D /* CCControlSwitch.cpp in Sources */,
 				460E479218080902000CDD6D /* CCInvocation.cpp in Sources */,
 				460E477F18080902000CDD6D /* CCControlButton.cpp in Sources */,
@@ -7570,62 +7564,62 @@
 /* Begin PBXTargetDependency section */
 		460E44F41807E241000CDD6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A03F2B781780BD04006731B9 /* chipmunk Mac */;
+			target = A03F2B781780BD04006731B9 /* libchipmunk Mac */;
 			targetProxy = 460E44F31807E241000CDD6D /* PBXContainerItemProxy */;
 		};
 		46A173D31807D330005B8026 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A07A4EFD178387670073F6A7 /* chipmunk iOS */;
+			target = A07A4EFD178387670073F6A7 /* libchipmunk iOS */;
 			targetProxy = 46A173D21807D330005B8026 /* PBXContainerItemProxy */;
 		};
 		A03F2E93178141D1006731B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1551A33E158F2AB200E66CFE /* cocos2dx Mac */;
+			target = 1551A33E158F2AB200E66CFE /* libcocos2d Mac */;
 			targetProxy = A03F2E92178141D1006731B9 /* PBXContainerItemProxy */;
 		};
 		A03F2E95178141D1006731B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A03F2B781780BD04006731B9 /* chipmunk Mac */;
+			target = A03F2B781780BD04006731B9 /* libchipmunk Mac */;
 			targetProxy = A03F2E94178141D1006731B9 /* PBXContainerItemProxy */;
 		};
 		A03F2E97178141D1006731B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A03F2D5D1780BDF7006731B9 /* box2d Mac */;
+			target = A03F2D5D1780BDF7006731B9 /* libbox2d Mac */;
 			targetProxy = A03F2E96178141D1006731B9 /* PBXContainerItemProxy */;
 		};
 		A03F2FC01781458C006731B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A03F2E9817814268006731B9 /* CocosDenshion Mac */;
+			target = A03F2E9817814268006731B9 /* libcocosdenshion Mac */;
 			targetProxy = A03F2FBF1781458C006731B9 /* PBXContainerItemProxy */;
 		};
 		A03F31FF178147CB006731B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A03F2FC117814595006731B9 /* cocos2dx-extensions Mac */;
+			target = A03F2FC117814595006731B9 /* libextension Mac */;
 			targetProxy = A03F31FE178147CB006731B9 /* PBXContainerItemProxy */;
 		};
 		A07A4E10178386520073F6A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A07A4C241783777C0073F6A7 /* cocos2dx iOS */;
+			target = A07A4C241783777C0073F6A7 /* libcocos2d iOS */;
 			targetProxy = A07A4E0F178386520073F6A7 /* PBXContainerItemProxy */;
 		};
 		A07A5047178389710073F6A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A07A4E111783867C0073F6A7 /* cocos2dx-extensions iOS */;
+			target = A07A4E111783867C0073F6A7 /* libextension iOS */;
 			targetProxy = A07A5046178389710073F6A7 /* PBXContainerItemProxy */;
 		};
 		A07A5049178389710073F6A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A07A4EFD178387670073F6A7 /* chipmunk iOS */;
+			target = A07A4EFD178387670073F6A7 /* libchipmunk iOS */;
 			targetProxy = A07A5048178389710073F6A7 /* PBXContainerItemProxy */;
 		};
 		A07A504B178389710073F6A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A07A4F3C1783876B0073F6A7 /* box2d iOS */;
+			target = A07A4F3C1783876B0073F6A7 /* libbox2d iOS */;
 			targetProxy = A07A504A178389710073F6A7 /* PBXContainerItemProxy */;
 		};
 		A07A504D178389710073F6A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A07A4F9F178387730073F6A7 /* CocosDenshion iOS */;
+			target = A07A4F9F178387730073F6A7 /* libcocosdenshion iOS */;
 			targetProxy = A07A504C178389710073F6A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -7710,6 +7704,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				EXECUTABLE_EXTENSION = a;
+				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7720,7 +7715,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
-				LD_DYLIB_INSTALL_NAME = "@rpath/../Frameworks/lib$(TARGET_NAME).dylib";
+				LD_DYLIB_INSTALL_NAME = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
@@ -7742,6 +7737,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				EXECUTABLE_EXTENSION = a;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
@@ -7753,7 +7749,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
-				LD_DYLIB_INSTALL_NAME = "@rpath/../Frameworks/lib$(TARGET_NAME).dylib";
+				LD_DYLIB_INSTALL_NAME = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
@@ -7772,6 +7768,7 @@
 		A03F2CB61780BD04006731B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EXECUTABLE_PREFIX = "";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/chipmunk/include/chipmunk/";
@@ -7781,6 +7778,7 @@
 		A03F2CB71780BD04006731B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "";
@@ -7793,6 +7791,7 @@
 			buildSettings = {
 				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				EXECUTABLE_PREFIX = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -7807,6 +7806,7 @@
 			buildSettings = {
 				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_SHADOW = NO;
@@ -7847,6 +7847,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = "";
@@ -7858,6 +7859,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
@@ -7871,6 +7873,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -7888,6 +7891,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -7906,6 +7910,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7935,6 +7940,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/cocos2d-prefix.pch";
@@ -7985,6 +7991,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8004,6 +8011,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8023,6 +8031,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
@@ -8035,6 +8044,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
@@ -8050,6 +8060,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				EXECUTABLE_PREFIX = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
@@ -8068,6 +8079,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_SHADOW = NO;
@@ -8086,6 +8098,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8104,6 +8117,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8122,6 +8136,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8139,6 +8154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8158,6 +8174,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8178,6 +8195,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8199,6 +8217,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8219,6 +8238,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8240,6 +8260,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8260,6 +8281,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8281,6 +8303,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8301,6 +8324,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8322,6 +8346,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8345,6 +8370,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8368,6 +8394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8385,6 +8412,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8403,6 +8431,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8420,6 +8449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8438,6 +8468,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8455,6 +8486,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8473,6 +8505,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8493,6 +8526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8522,7 +8556,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "cocos2dx Mac" */ = {
+		1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "libcocos2d Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1551A34D158F2AB200E66CFE /* Debug */,
@@ -8531,7 +8565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2CB51780BD04006731B9 /* Build configuration list for PBXNativeTarget "chipmunk Mac" */ = {
+		A03F2CB51780BD04006731B9 /* Build configuration list for PBXNativeTarget "libchipmunk Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2CB61780BD04006731B9 /* Debug */,
@@ -8540,7 +8574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2D981780BDF7006731B9 /* Build configuration list for PBXNativeTarget "box2d Mac" */ = {
+		A03F2D981780BDF7006731B9 /* Build configuration list for PBXNativeTarget "libbox2d Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2D991780BDF7006731B9 /* Debug */,
@@ -8558,7 +8592,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2ED317814268006731B9 /* Build configuration list for PBXNativeTarget "CocosDenshion Mac" */ = {
+		A03F2ED317814268006731B9 /* Build configuration list for PBXNativeTarget "libcocosdenshion Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2ED417814268006731B9 /* Debug */,
@@ -8567,7 +8601,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A03F2FD317814595006731B9 /* Build configuration list for PBXNativeTarget "cocos2dx-extensions Mac" */ = {
+		A03F2FD317814595006731B9 /* Build configuration list for PBXNativeTarget "libextension Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A03F2FD417814595006731B9 /* Debug */,
@@ -8576,7 +8610,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "cocos2dx iOS" */ = {
+		A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4D621783777C0073F6A7 /* Debug */,
@@ -8594,7 +8628,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4EF91783867C0073F6A7 /* Build configuration list for PBXNativeTarget "cocos2dx-extensions iOS" */ = {
+		A07A4EF91783867C0073F6A7 /* Build configuration list for PBXNativeTarget "libextension iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4EFA1783867C0073F6A7 /* Debug */,
@@ -8603,7 +8637,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4F38178387670073F6A7 /* Build configuration list for PBXNativeTarget "chipmunk iOS" */ = {
+		A07A4F38178387670073F6A7 /* Build configuration list for PBXNativeTarget "libchipmunk iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4F39178387670073F6A7 /* Debug */,
@@ -8612,7 +8646,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4F9B1783876B0073F6A7 /* Build configuration list for PBXNativeTarget "box2d iOS" */ = {
+		A07A4F9B1783876B0073F6A7 /* Build configuration list for PBXNativeTarget "libbox2d iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4F9C1783876B0073F6A7 /* Debug */,
@@ -8621,7 +8655,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4FB1178387730073F6A7 /* Build configuration list for PBXNativeTarget "CocosDenshion iOS" */ = {
+		A07A4FB1178387730073F6A7 /* Build configuration list for PBXNativeTarget "libcocosdenshion iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4FB2178387730073F6A7 /* Debug */,
@@ -8630,7 +8664,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B245F13719766132001920FD /* Build configuration list for PBXNativeTarget "cocosGUI Mac" */ = {
+		B245F13719766132001920FD /* Build configuration list for PBXNativeTarget "libui Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B245F13819766132001920FD /* Debug */,
@@ -8639,7 +8673,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24EEA6319775E92004493CC /* Build configuration list for PBXNativeTarget "cocosGUI iOS" */ = {
+		B24EEA6319775E92004493CC /* Build configuration list for PBXNativeTarget "libui iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B24EEA6419775E92004493CC /* Debug */,
@@ -8648,7 +8682,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24EEA6B19775EBB004493CC /* Build configuration list for PBXNativeTarget "cocosStudio iOS" */ = {
+		B24EEA6B19775EBB004493CC /* Build configuration list for PBXNativeTarget "libcocostudio iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B24EEA6C19775EBB004493CC /* Debug */,
@@ -8657,7 +8691,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24EEA7319775ECE004493CC /* Build configuration list for PBXNativeTarget "cocosBuilder iOS" */ = {
+		B24EEA7319775ECE004493CC /* Build configuration list for PBXNativeTarget "libcocosbuilder iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B24EEA7419775ECE004493CC /* Debug */,
@@ -8666,7 +8700,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24EEA7B19775EE1004493CC /* Build configuration list for PBXNativeTarget "cocosSpine iOS" */ = {
+		B24EEA7B19775EE1004493CC /* Build configuration list for PBXNativeTarget "libspine iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B24EEA7C19775EE1004493CC /* Debug */,
@@ -8675,7 +8709,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24EEA8319775EF3004493CC /* Build configuration list for PBXNativeTarget "cocosNetwork iOS" */ = {
+		B24EEA8319775EF3004493CC /* Build configuration list for PBXNativeTarget "libnetwork iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B24EEA8419775EF3004493CC /* Debug */,
@@ -8684,7 +8718,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2DB47CF197669A100411E16 /* Build configuration list for PBXNativeTarget "cocosBuilder Mac" */ = {
+		B2DB47CF197669A100411E16 /* Build configuration list for PBXNativeTarget "libcocosbuilder Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2DB47D0197669A100411E16 /* Debug */,
@@ -8693,7 +8727,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2DB484A1976716E00411E16 /* Build configuration list for PBXNativeTarget "cocosStudio Mac" */ = {
+		B2DB484A1976716E00411E16 /* Build configuration list for PBXNativeTarget "libcocostudio Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2DB484B1976716E00411E16 /* Debug */,
@@ -8702,7 +8736,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2DB48FE19767F1F00411E16 /* Build configuration list for PBXNativeTarget "cocosSpine Mac" */ = {
+		B2DB48FE19767F1F00411E16 /* Build configuration list for PBXNativeTarget "libspine Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2DB48FF19767F1F00411E16 /* Debug */,
@@ -8711,7 +8745,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2DB49C1197686CB00411E16 /* Build configuration list for PBXNativeTarget "cocosNetwork Mac" */ = {
+		B2DB49C1197686CB00411E16 /* Build configuration list for PBXNativeTarget "libnetwork Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2DB49C2197686CB00411E16 /* Debug */,
