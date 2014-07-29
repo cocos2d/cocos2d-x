@@ -50,6 +50,17 @@ public:
         PAUSED,
         COMPLETED
     };
+    
+    typedef struct _AudioProfile
+    {
+        /* minimum delay in between sounds */
+        float minDelay;
+        int maxInstance;
+        
+        /*the following property only take effect on 3d audio */
+        float minRange;
+        float maxRange;
+    }AudioProfile;
 
     /** Returns a shared instance of the AudioEngine */
     static AudioEngine* getInstance();
@@ -66,7 +77,7 @@ public:
      * @param volume volume value (range from 0.0 to 1.0)
      * @return an audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
      */
-    int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f);
+    int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f, AudioProfile *profile = nullptr);
 
     /** Sets whether an audio instance loop or not. 
      @param audioID an audioID returned by the play2d/play3d function
@@ -136,6 +147,32 @@ public:
      * @param callback 
      */
     void setFinishCallback(int audioID, const std::function<void(int,const std::string&)>& callback);
+    
+    int getMaxAudioInstance();
+    
+    bool setMaxAudioInstance(int maxInstance);
+    
+    /**  Setup default profiles for audio instances
+     * @param profile a profile for audio instances
+     */
+    void setDefaultProfile(const AudioProfile& profile);
+    
+    /**  Gets the default profile of audio instances
+     * @return the default profile of audio instances
+     */
+    const AudioProfile* getDefaultProfile();
+    
+    /**  Setup profiles for an audio instance.
+     * @param audioID an audioID returned by the play3d function
+     * @param profile a profile for audio instance
+     */
+    void setProfile(int audioID, const AudioProfile& profile);
+    
+    /**  Gets the profiles of audio instance.
+     * @param audioID an audioID returned by the play3d function
+     * @return the profile of audio instance
+     */
+    const AudioProfile* getProfile(int audioID);
 
     /** Place listener
      * In case a Vec2 position is passed in, the z value will always be 0.
@@ -173,27 +210,6 @@ public:
      */
     const Vec3& getPosition(int audioID);
 
-    typedef struct _audioProfile
-    {
-        float miniRange;
-        float maxRange;
-        float dopplerFactor;
-        /* minimum delay in between sounds*/
-        float minDelay;
-    }AudioProfile;
-
-    /**  Setup profiles for an audio instance.
-     * @param audioID an audioID returned by the play3d function
-     * @param profile a profile for audio instance
-     */
-    void setProfile(int audioID, const AudioProfile& profile);
-
-    /**  Gets the profiles of audio instance.
-     * @param audioID an audioID returned by the play3d function
-     * @return the profile of audio instance
-     */
-    const AudioProfile* getProfile(int audioID);
-
     /** Play 3d sound
      * @param filePath The path of an audio file
      * @param position 
@@ -221,6 +237,8 @@ public:
 protected:
     AudioEngine();
     virtual ~AudioEngine();
+    
+    void init();
 };
 
 } // end of namespace experimental
