@@ -113,6 +113,25 @@ enum
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif
+    kUIScale9SpriteTest,
+    kUIScale9SpriteHierarchialTest,
+    kUIScale9SpriteTouchTest,
+    kUIS9BatchNodeBasic,
+    kUIS9FrameNameSpriteSheet,
+    kUIS9FrameNameSpriteSheetRotated,
+    kUIS9BatchNodeScaledNoInsets,
+    kUIS9FrameNameSpriteSheetScaledNoInsets,
+    kUIS9FrameNameSpriteSheetRotatedScaledNoInsets,
+    kUIS9BatchNodeScaleWithCapInsets,
+    kUIS9FrameNameSpriteSheetInsets,
+    kUIS9FrameNameSpriteSheetInsetsScaled,
+    kUIS9FrameNameSpriteSheetRotatedInsets,
+    kUIS9_TexturePacker,
+    kUIS9FrameNameSpriteSheetRotatedInsetsScaled,
+    kUIS9FrameNameSpriteSheetRotatedSetCapInsetLater,
+    kUIS9CascadeOpacityAndColor,
+    kUIS9ZOrder,
+    kUIS9Flip,
     kUITestMax
 };
 

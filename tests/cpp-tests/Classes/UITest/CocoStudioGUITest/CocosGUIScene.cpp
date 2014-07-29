@@ -43,6 +43,18 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(scene);
         }
     },
+    {
+        "Scale9 Sprite Test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIScale9SpriteTest);
+            sceneManager->setMinUISceneId(kUIScale9SpriteTest);
+            sceneManager->setMaxUISceneId(kUIS9Flip);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
 	{
         
         "ButtonTest",

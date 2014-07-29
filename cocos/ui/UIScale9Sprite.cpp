@@ -940,4 +940,34 @@ y+=ytranslate;                       \
     {
         return _scale9Image;
     }
+    
+    void Scale9Sprite::setFlippedX(bool flippedX)
+    {
+        _flippedX = flippedX;
+        if (_scale9Enabled) {
+            this->setScaleX(-1);
+        }else{
+            _scale9Image->setFlippedX(flippedX);
+        }
+    }
+    
+    void Scale9Sprite::setFlippedY(bool flippedY)
+    {
+        _flippedY = flippedY;
+        if (_scale9Enabled) {
+            this->setScaleY(-1);
+        }else{
+            _scale9Image->setFlippedY(flippedY);
+        }
+    }
+    
+    bool Scale9Sprite::isFlippedX()const
+    {
+        return _flippedX;
+    }
+    
+    bool Scale9Sprite::isFlippedY()const
+    {
+        return _flippedY;
+    }
 }}
