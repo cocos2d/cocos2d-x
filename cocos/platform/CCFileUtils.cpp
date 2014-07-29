@@ -335,8 +335,8 @@ ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
 
 ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize)
 {
-	DictMaker tMaker;
-	return tMaker.dictionaryWithDataOfFile(filedata, filesize);
+    DictMaker tMaker;
+    return tMaker.dictionaryWithDataOfFile(filedata, filesize);
 }
 
 ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)

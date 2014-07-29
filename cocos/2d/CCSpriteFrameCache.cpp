@@ -212,8 +212,8 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture
 
 void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture)
 {
-	ValueMap dict = FileUtils::getInstance()->getValueMapFromData(plist_content.c_str(), plist_content.size());
-	addSpriteFramesWithDictionary(dict, texture);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromData(plist_content.c_str(), plist_content.size());
+    addSpriteFramesWithDictionary(dict, texture);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
