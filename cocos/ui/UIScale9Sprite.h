@@ -29,6 +29,7 @@
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "base/CCPlatformMacros.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 namespace ui {
@@ -42,7 +43,7 @@ namespace ui {
      * scaled.
      *
      */
-    class Scale9Sprite : public Node
+    class CC_GUI_DLL Scale9Sprite : public Node
     {
     public:
         /**
