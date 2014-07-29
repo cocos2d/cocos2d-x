@@ -4202,6 +4202,8 @@
 		29CB8F511929D64500C841D6 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				2958244919873D8E00F9746D /* UIScale9Sprite.cpp */,
+				2958244A19873D8E00F9746D /* UIScale9Sprite.h */,
 				29080DEB191B82CE0066F8DF /* UIDeprecated.h */,
 				29BDBA52195D597A003225C9 /* UIDeprecated.cpp */,
 				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
@@ -4253,8 +4255,6 @@
 				2905F9F318CF08D000240AA3 /* UICheckBox.h */,
 				2905F9F618CF08D000240AA3 /* UIImageView.cpp */,
 				2905F9F718CF08D000240AA3 /* UIImageView.h */,
-				2958244919873D8E00F9746D /* UIScale9Sprite.cpp */,
-				2958244A19873D8E00F9746D /* UIScale9Sprite.h */,
 			);
 			name = widgets;
 			sourceTree = "<group>";
