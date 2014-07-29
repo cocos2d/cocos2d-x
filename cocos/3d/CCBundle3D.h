@@ -92,10 +92,14 @@ protected:
     bool loadJson(const std::string& path);
     
     bool loadMeshDataJson(MeshData* meshdata);
+    bool loadMeshDataJson_0_1(MeshData* meshdata);
+    bool loadMeshDataJson_0_2(MeshData* meshdata);
     
     bool loadSkinDataJson(SkinData* skindata);
     
     bool loadMaterialDataJson(MaterialData* materialdata);
+    bool loadMaterialDataJson_0_1(MaterialData* materialdata);
+    bool loadMaterialDataJson_0_2(MaterialData* materialdata);
     
     bool loadAnimationDataJson(Animation3DData* animationdata);
 
@@ -110,6 +114,8 @@ protected:
      * @param meshdata The mesh data pointer
      */
     bool loadMeshDataBinary(MeshData* meshdata);
+    bool loadMeshDataBinary_0_1(MeshData* meshdata);
+    bool loadMeshDataBinary_0_2(MeshData* meshdata);
 
     /**
      * load skin data in binary
@@ -165,6 +171,8 @@ protected:
     
     std::string _modelRelativePath;
     std::string         _path;
+    
+    std::string _version;// the c3b or c3t version
     
     // for json reading
     char* _jsonBuffer;

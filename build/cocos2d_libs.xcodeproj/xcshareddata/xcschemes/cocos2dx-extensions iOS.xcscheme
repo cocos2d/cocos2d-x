@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A07A4E111783867C0073F6A7"
-               BuildableName = "libcocos2dx-extensions iOS.a"
+               BuildableName = "libextension iOS.a"
                BlueprintName = "libextension iOS"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>

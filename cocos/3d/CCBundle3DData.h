@@ -50,9 +50,10 @@ struct MeshVertexAttrib
 /**mesh data*/
 struct MeshData
 {
+    typedef std::vector<unsigned short> IndexArray;
     std::vector<float> vertex;
     int vertexSizeInFloat;
-    std::vector<unsigned short> indices;
+    std::vector<IndexArray> subMeshIndices;
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
@@ -61,7 +62,7 @@ public:
     void resetData()
     {
         vertex.clear();
-        indices.clear();
+        subMeshIndices.clear();
         attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;
@@ -159,7 +160,11 @@ struct SkinData
 /**material data*/
 struct MaterialData
 {
-    std::string texturePath;
+    std::map<int, std::string> texturePaths; //submesh id, texture path
+    void resetData()
+    {
+        texturePaths.clear();
+    }
 };
 
 /**animation data*/
@@ -223,7 +228,7 @@ public:
     {
     }
     
-    void clear()
+    void resetData()
     {
         _totalTime = 0;
         _translationKeys.clear();
