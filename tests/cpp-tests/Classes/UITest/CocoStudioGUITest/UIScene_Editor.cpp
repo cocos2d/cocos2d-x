@@ -26,10 +26,35 @@ bool UIScene_Editor::init()
         _touchGroup = Layer::create();
         addChild(_touchGroup);                
         
+        //add switch
+        MenuItem* pLoadJsonItem = MenuItemFont::create("Switch to Binary Load");
+        MenuItem* pLoadBinaryItem = MenuItemFont::create("Switch to Json Load");
+                                                       
+        pLoadJsonItem->setTag(1);
+        pLoadBinaryItem->setTag(2);
+        
+        Vector<MenuItem*> array;;
+        array.pushBack(pLoadJsonItem);
+        array.pushBack(pLoadBinaryItem);
+        
+        MenuItemToggle *pToggleItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(UIScene_Editor::switchLoadMethod,this), array);
+        
+        pToggleItem->setPosition(Vec2(VisibleRect::right().x - 150, VisibleRect::top().y - 50));;
+        
+        Menu* pMenu =Menu::create(pToggleItem, nullptr);
+        pMenu->setPosition( Vec2::ZERO );
+        
+        addChild(pMenu, 1);
+
         return true;
     }
     
     return false;
+}
+
+void UIScene_Editor::switchLoadMethod(cocos2d::Ref *pSender)
+{
+    //subclass should override this method
 }
 
 void UIScene_Editor::previousCallback(Ref* sender, Widget::TouchEventType event)

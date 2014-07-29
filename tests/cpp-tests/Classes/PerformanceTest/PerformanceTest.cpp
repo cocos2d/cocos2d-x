@@ -155,7 +155,7 @@ void PerformBasicLayer::onEnter()
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(PerformBasicLayer::toMainLayer, this));
     pMainItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menu = Menu::create(pMainItem, NULL);
+    auto menu = Menu::create(pMainItem, nullptr);
     menu->setPosition( Vec2::ZERO );
 
     if (_controlMenuVisible)

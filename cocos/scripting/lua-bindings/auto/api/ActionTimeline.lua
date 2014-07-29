@@ -83,14 +83,10 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: gotoFrameAndPlay(int, bool)
---          
--- overload function: gotoFrameAndPlay(int)
---          
--- overload function: gotoFrameAndPlay(int, int, bool)
---          
--- overload function: gotoFrameAndPlay(int, int, int, bool)
---          
+-- @overload self, int, bool         
+-- @overload self, int         
+-- @overload self, int, int, bool         
+-- @overload self, int, int, int, bool         
 -- @function [parent=#ActionTimeline] gotoFrameAndPlay
 -- @param self
 -- @param #int int

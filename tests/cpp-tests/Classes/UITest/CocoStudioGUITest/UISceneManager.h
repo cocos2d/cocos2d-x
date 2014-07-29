@@ -35,6 +35,7 @@ enum
     kUIButtonTest_Scale9,
     kUIButtonTest_PressedAction,
     kUIButtonTest_Title,
+    kUIButtonTest_RemoveSelf,
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,
@@ -48,6 +49,7 @@ enum
      */
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
+    kUIImageViewTest_ContentSize,
     kUILoadingBarTest_Left,
     kUILoadingBarTest_Right,
     kUILoadingBarTest_Left_Scale9,
@@ -72,6 +74,7 @@ enum
     kUITextFieldTest_MaxLength,
     kUITextFieldTest_Password,
     kUITextFieldTest_LineWrap,
+    kUITextFieldTest_TrueTypeFont,
     kUILayoutTest,
     kUILayoutTest_Color,
     kUILayoutTest_Gradient,
@@ -90,6 +93,7 @@ enum
     kUIScrollViewTest_ScrollToPercentBothDirection,
     kUIScrollViewTest_ScrollToPercentBothDirection_Bounce,    
     kUIPageViewTest,
+    kUIPageViewButtonTest,
     kUIListViewTest_Vertical,
     kUIListViewTest_Horizontal,
     /*

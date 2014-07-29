@@ -351,7 +351,7 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
     const char* fileVersion = "";
     ui::Widget* widget = nullptr;
 
-    if (pBuffer != NULL && nSize > 0)
+    if (pBuffer != nullptr && nSize > 0)
     {
         CocoLoader	tCocoLoader;
         if(true == tCocoLoader.ReadCocoBinBuff((char*)pBuffer))
@@ -494,7 +494,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     if (widget->getContentSize().equals(Size::ZERO))
     {
         Layout* rootWidget = dynamic_cast<Layout*>(widget);
-        rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
+        rootWidget->setContentSize(Size(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -608,7 +608,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(Widget*widg
     
     float w = DICTOOL->getFloatValue_json(options, "width");
     float h = DICTOOL->getFloatValue_json(options, "height");
-    widget->setSize(Size(w, h));
+    widget->setContentSize(Size(w, h));
     
     widget->setTag(DICTOOL->getIntValue_json(options, "tag"));
 	widget->setActionTag(DICTOOL->getIntValue_json(options, "actiontag"));
@@ -707,7 +707,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
         {
             float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
             float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            button->setSize(Size(swf, shf));
+            button->setContentSize(Size(swf, shf));
         }
     }
     else
@@ -823,7 +823,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
         {
             float swf = DICTOOL->getFloatValue_json(options, "scale9Width");
             float shf = DICTOOL->getFloatValue_json(options, "scale9Height");
-            imageView->setSize(Size(swf, shf));
+            imageView->setContentSize(Size(swf, shf));
         }
         
         float cx = DICTOOL->getFloatValue_json(options, "capInsetsX");
@@ -1016,7 +1016,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
             {
                 slider->loadBarTexture(imageFileName_tp);
             }
-            slider->setSize(Size(barLength, slider->getContentSize().height));
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
         }
         else
         {
@@ -1204,7 +1204,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     if (widget->getContentSize().equals(Size::ZERO))
     {
         Layout* rootWidget = dynamic_cast<Layout*>(widget);
-        rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
+        rootWidget->setContentSize(Size(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -1241,9 +1241,9 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
                 SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
             }
         }else if (key == "designWidth"){
-            fileDesignWidth =  atof(tpChildArray[i].GetValue(cocoLoader));
+            fileDesignWidth =  utils::atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "designHeight"){
-            fileDesignHeight = atof(tpChildArray[i].GetValue(cocoLoader));
+            fileDesignHeight = utils::atof(tpChildArray[i].GetValue(cocoLoader));
         }else if (key == "widgetTree"){
             
             if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
@@ -1268,7 +1268,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
             if (widget->getContentSize().equals(Size::ZERO))
             {
                 Layout* rootWidget = dynamic_cast<Layout*>(widget);
-                rootWidget->setSize(Size(fileDesignWidth, fileDesignHeight));
+                rootWidget->setContentSize(Size(fileDesignWidth, fileDesignHeight));
             }
         }
     }
@@ -1340,7 +1340,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
             setPropsForAllWidgetFromBinary(reader, widget, cocoLoader, optionsNode);
             // 2nd., custom widget parse with custom reader
             //2nd. parse custom property
-            const char* customProperty = NULL;
+            const char* customProperty = nullptr;
             stExpCocoNode *optionChildNode = optionsNode->GetChildArray(cocoLoader);
             for (int k = 0; k < optionsNode->GetChildNum(); ++k) {
                 std::string key = optionChildNode[k].GetName(cocoLoader);
@@ -1459,7 +1459,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
             }
             setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
         }else{
-            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your csb file.");
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your json file.");
         }
        
     }

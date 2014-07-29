@@ -948,6 +948,12 @@ Layout::Type Layout::getLayoutType() const
 {
     return _layoutType;
 }
+
+void Layout::forceDoLayout()
+{
+    this->requestDoLayout();
+    this->doLayout();
+}
     
 void Layout::requestDoLayout()
 {
@@ -987,10 +993,14 @@ LayoutManager* Layout::createLayoutManager()
 
 void Layout::doLayout()
 {
+    
     if (!_doLayoutDirty)
     {
         return;
     }
+    
+    sortAllChildren();
+
     LayoutManager* executant = this->createLayoutManager();
     
     if (executant)
@@ -1137,7 +1147,7 @@ float Layout::calculateNearestDistance(Widget* baseWidget)
     return distance;
 }
     
-float Layout::calculateFarestDistance(cocos2d::ui::Widget *baseWidget)
+float Layout::calculateFarthestDistance(cocos2d::ui::Widget *baseWidget)
 {
     float distance = -FLT_MAX;
     
@@ -1147,7 +1157,7 @@ float Layout::calculateFarestDistance(cocos2d::ui::Widget *baseWidget)
         Layout *layout = dynamic_cast<Layout*>(node);
         int length;
         if (layout) {
-            length = layout->calculateFarestDistance(baseWidget);
+            length = layout->calculateFarthestDistance(baseWidget);
         }
         else
         {
@@ -1231,7 +1241,7 @@ int Layout::findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWi
     return 0;
 }
     
-int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Widget *baseWidget)
+int Layout::findFarthestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Widget *baseWidget)
 {
     if (baseWidget == nullptr || baseWidget == this)
     {
@@ -1256,7 +1266,7 @@ int Layout::findFarestChildWidgetIndex(FocusDirection direction, cocos2d::ui::Wi
                 Layout *layout = dynamic_cast<Layout*>(w);
                 if (layout)
                 {
-                    length = layout->calculateFarestDistance(baseWidget);
+                    length = layout->calculateFarthestDistance(baseWidget);
                 }
                 else
                 {
@@ -1337,11 +1347,11 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
         else{
-            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
     }else if(dir == FocusDirection::RIGHT){
         if (previousWidgetPosition.x > widgetPosition.x) {
-            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
         else{
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
@@ -1350,13 +1360,13 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
         if (previousWidgetPosition.y > widgetPosition.y) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }else{
-            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
     }else if(dir == FocusDirection::UP){
         if (previousWidgetPosition.y < widgetPosition.y) {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }else{
-            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarestChildWidgetIndex, this);
+            onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
     }else{
         CCASSERT(0, "invalid direction!");
@@ -1648,7 +1658,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         if (direction == FocusDirection::LEFT) {
             if (index == 0)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
             }
             else
             {
@@ -1658,7 +1668,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         if (direction == FocusDirection::RIGHT) {
             if (index == container.size()-1)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
             }
             else
             {
@@ -1681,7 +1691,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         {
             if (index == 0)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
                 
             }
             else
@@ -1693,7 +1703,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         {
             if (index == container.size() - 1)
             {
-                return true * isLastWidgetInContainer(parent, direction);
+                return isLastWidgetInContainer(parent, direction);
             }
             else
             {

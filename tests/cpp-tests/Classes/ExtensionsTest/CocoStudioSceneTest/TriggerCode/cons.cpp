@@ -53,7 +53,7 @@ void TimeElapsed::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stE
 	int count = 0;
 	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
-	const char *str = NULL;
+	const char *str = nullptr;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
@@ -62,9 +62,9 @@ void TimeElapsed::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stE
 		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "TotalTime")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
-				_totalTime = atof(str); //DICTOOL->getFloatValue_json(subDict, "value");
+				_totalTime = utils::atof(str); //DICTOOL->getFloatValue_json(subDict, "value");
 			}
 		}
 	}
@@ -153,7 +153,7 @@ void ArmatureActionState::serialize(cocostudio::CocoLoader *pCocoLoader, cocostu
 	int count = 0;
 	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
-	const char *str = NULL;
+	const char *str = nullptr;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
@@ -162,14 +162,14 @@ void ArmatureActionState::serialize(cocostudio::CocoLoader *pCocoLoader, cocostu
 		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_tag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
 			}
 		}
 		else if (key == "componentName")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_comName = str; //DICTOOL->getStringValue_json(subDict, "value");
 			}
@@ -177,14 +177,14 @@ void ArmatureActionState::serialize(cocostudio::CocoLoader *pCocoLoader, cocostu
 		}
 		else if (key == "AnimationName")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_aniname = str; //DICTOOL->getStringValue_json(subDict, "value");
 			}
 		}
 		else if (key == "ActionType")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_state = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
 			}
@@ -281,7 +281,7 @@ void NodeInRect::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stEx
 	int count = 0;
 	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
-	const char *str = NULL;
+	const char *str = nullptr;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
@@ -290,35 +290,35 @@ void NodeInRect::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stEx
 		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_tag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
 			}
 		}
 		else if (key == "originX")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_origin.x = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
 			}
 		}
 		else if (key == "originY")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_origin.y = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
 			}
 		}
 		else if (key == "sizeWidth")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_size.width = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
 			}
 		}
 		else if (key == "sizeHeight")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_size.height = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
 			}
@@ -383,7 +383,7 @@ void NodeVisible::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stE
 	int count = 0;
 	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string key;
-	const char *str = NULL;
+	const char *str = nullptr;
 	for (int i = 0; i < length; ++i)
 	{
 		count = pDataItemsArray[i].GetChildNum();
@@ -392,14 +392,14 @@ void NodeVisible::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stE
 		str = pDataItemArray[1].GetValue(pCocoLoader);
 		if (key == "Tag")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_tag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
 			}
 		}
 		else if (key == "Visible")
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_visible = atoi(str) != 0? true:false;//DICTOOL->getIntValue_json(subDict, "value") != 0? true:false;
 			}

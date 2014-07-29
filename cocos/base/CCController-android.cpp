@@ -26,257 +26,93 @@
 #include "CCController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-
-#include "CCGamepad.h"
-#include "CCControllerDirectionPad.h"
-#include "CCControllerButtonInput.h"
-#include "CCControllerAxisInput.h"
-#include "CCControllerThumbstick.h"
-
+#include <functional>
 #include "ccMacros.h"
-#include "CCEventDispatcher.h"
-#include "CCEventController.h"
-#include "CCEventListenerController.h"
 #include "CCDirector.h"
-
 #include "jni/JniHelper.h"
-
+#include "base/CCEventController.h"
 
 NS_CC_BEGIN
-
-enum class AndroidControllerCode
-{
-    THUMBSTICK_LEFT_X = 100,
-    THUMBSTICK_LEFT_Y = 101,
-    THUMBSTICK_RIGHT_X = 102,
-    THUMBSTICK_RIGHT_Y = 103,
-    BUTTON_A = 110,
-    BUTTON_B = 111,
-    BUTTON_C = 112,
-    BUTTON_X = 113,
-    BUTTON_Y = 114,
-    BUTTON_Z = 115,
-    BUTTON_LEFT_SHOULDER = 120,
-    BUTTON_RIGHT_SHOULDER = 121,
-    BUTTON_LEFT_TRIGGER = 122,
-    BUTTON_RIGHT_TRIGGER = 123,
-    BUTTON_DPAD_UP = 130,
-    BUTTON_DPAD_DOWN = 131,
-    BUTTON_DPAD_LEFT = 132,
-    BUTTON_DPAD_RIGHT = 133,
-    BUTTON_DPAD_CENTER = 134,
-    BUTTON_LEFT_THUMBSTICK = 140,
-    BUTTON_RIGHT_THUMBSTICK = 141,
-    BUTTON_START = 150,
-    BUTTON_SELECT = 151,
-};
 
 class ControllerImpl
 {
 public:
     ControllerImpl(Controller* controller)
             : _controller(controller)
-            , _controllerID(-1)
     {
     }
 
-    static std::vector<Controller*>::iterator findController(const std::string& vendorName, int controllerID)
+    static std::vector<Controller*>::iterator findController(const std::string& deviceName, int deviceId)
     {
-        auto iter = std::find_if(Controller::_controllers.begin(), Controller::_controllers.end(), [&](Controller* controller){
-                return (vendorName == controller->getVendorName()) && (controllerID == controller->_impl->_controllerID);
+        auto iter = std::find_if(Controller::s_allController.begin(), Controller::s_allController.end(), [&](Controller* controller){
+                return (deviceName == controller->_deviceName) && (deviceId == controller->_deviceId);
             });
+
+        return iter;
     }
 
-    static void onConnected(const std::string& vendorName, int controllerID)
+    static void onConnected(const std::string& deviceName, int deviceId)
     {
         // Check whether the controller is already connected.
-        auto iter = findController(vendorName, controllerID);
-        if (iter != Controller::_controllers.end())
+        CCLOG("onConnected %s,%d", deviceName.c_str(),deviceId);
+
+        auto iter = findController(deviceName, deviceId);
+        if (iter != Controller::s_allController.end())
             return;
 
         // It's a new controller being connected.
         auto controller = new cocos2d::Controller();
-        controller->_vendorName = vendorName;
-        Controller::_controllers.push_back(controller);
-        controller->_impl->_controllerID = controllerID;
-        EventController evt(EventController::ControllerEventType::CONNECTION, controller, true);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+        controller->_deviceId = deviceId;
+        controller->_deviceName = deviceName;
+        Controller::s_allController.push_back(controller);
+
+        controller->onConnected();
     }
 
-    static void onDisconnected(const std::string& vendorName, int controllerID)
+    static void onDisconnected(const std::string& deviceName, int deviceId)
     {
-        auto iter = findController(vendorName, controllerID);
-        if (iter == Controller::_controllers.end())
+        CCLOG("onDisconnected %s,%d", deviceName.c_str(),deviceId);
+
+        auto iter = findController(deviceName, deviceId);
+        if (iter == Controller::s_allController.end())
         {
             CCLOGERROR("Could not find the controller!");
             return;
         }
 
-        EventController evt(EventController::ControllerEventType::CONNECTION, *iter, false);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
-
-        Controller::_controllers.erase(iter);
+        (*iter)->onDisconnected();
+        Controller::s_allController.erase(iter);
     }
 
-    void sendEventButton(ControllerButtonInput* button, bool isPressed, float value, bool isAnalog)
+    static void onButtonEvent(const std::string& deviceName, int deviceId, int keyCode, bool isPressed, float value, bool isAnalog)
     {
-        button->setPressed(isPressed);
-        button->setValue(value);
-        button->setAnalog(isAnalog);
-        EventController evt(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, _controller, button);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
+        auto iter = findController(deviceName, deviceId);
+        if (iter == Controller::s_allController.end())
+        {
+            CCLOG("onButtonEvent:connect new controller.");
+            onConnected(deviceName, deviceId);
+            iter = findController(deviceName, deviceId);
+        }
+
+        (*iter)->onButtonEvent(keyCode, isPressed, value, isAnalog);
     }
 
-    void sendEventAxis(ControllerAxisInput* axis, float value, bool isAnalog)
+    static void onAxisEvent(const std::string& deviceName, int deviceId, int axisCode, float value, bool isAnalog)
     {
-        axis->setValue(value);
-        axis->setAnalog(isAnalog);
-        EventController evt(EventController::ControllerEventType::AXIS_STATUS_CHANGED, _controller, axis);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&evt);
-    }
-
-    static void onButtonEvent(const std::string& vendorName, int controllerID, AndroidControllerCode btnCode, bool isPressed, float value, bool isAnalog)
-    {
-        auto iter = findController(vendorName, controllerID);
-        if (iter == Controller::_controllers.end())
+        auto iter = findController(deviceName, deviceId);
+        if (iter == Controller::s_allController.end())
         {
-            onConnected(vendorName, controllerID);
-            iter = findController(vendorName, controllerID);
+            CCLOG("onAxisEvent:connect new controller.");
+            onConnected(deviceName, deviceId);
+            iter = findController(deviceName, deviceId);
         }
-
-        auto gamepad = (*iter)->getGamepad();
-        auto thiz = (*iter)->getImpl();
-        switch(btnCode)
-        {
-            case AndroidControllerCode::BUTTON_A:
-                {
-                    thiz->sendEventButton(gamepad->getButtonA(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_B:
-                {
-                    thiz->sendEventButton(gamepad->getButtonB(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_X:
-                {
-                    thiz->sendEventButton(gamepad->getButtonX(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_Y:
-                {
-                    thiz->sendEventButton(gamepad->getButtonY(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_LEFT_SHOULDER:
-                {
-                    thiz->sendEventButton(gamepad->getLeftShoulder(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_RIGHT_SHOULDER:
-                {
-                    thiz->sendEventButton(gamepad->getRightShoulder(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_LEFT_TRIGGER:
-                {
-                    thiz->sendEventButton(gamepad->getLeftTrigger(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_RIGHT_TRIGGER:
-                {
-                    thiz->sendEventButton(gamepad->getRightTrigger(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_DPAD_UP:
-                {
-                    thiz->sendEventButton(gamepad->getDirectionPad()->getUp(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_DPAD_DOWN:
-                {
-                    thiz->sendEventButton(gamepad->getDirectionPad()->getDown(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_DPAD_LEFT:
-                {
-                    thiz->sendEventButton(gamepad->getDirectionPad()->getLeft(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_DPAD_RIGHT:
-                {
-                    thiz->sendEventButton(gamepad->getDirectionPad()->getRight(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_START:
-                {
-                    thiz->sendEventButton(gamepad->getButtonStart(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_SELECT:
-                {
-                    thiz->sendEventButton(gamepad->getButtonSelect(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_LEFT_THUMBSTICK:
-                {
-                    thiz->sendEventButton(gamepad->getLeftThumbstick()->getButton(), isPressed, value, isAnalog);
-                }
-                break;
-            case AndroidControllerCode::BUTTON_RIGHT_THUMBSTICK:
-                {
-                    thiz->sendEventButton(gamepad->getRightThumbstick()->getButton(), isPressed, value, isAnalog);
-                }
-                break;
-            default:
-                //                CCASSERT(false, "Invalid controller button code!");
-                break;
-        }
-    }
-
-    static void onAxisEvent(const std::string& vendorName, int controllerID, AndroidControllerCode axisCode, float value, bool isAnalog)
-    {
-        // log("vendorName: %s, controller id: %d, axis: %d, value: %f", vendorName.c_str(), controllerID, axisCode, value);
-        auto iter = findController(vendorName, controllerID);
-        if (iter == Controller::_controllers.end())
-        {
-            onConnected(vendorName, controllerID);
-            iter = findController(vendorName, controllerID);
-        }
-        auto gamepad = (*iter)->getGamepad();
-        auto thiz = (*iter)->getImpl();
-        switch (axisCode)
-        {
-            case AndroidControllerCode::THUMBSTICK_LEFT_X:
-                thiz->sendEventAxis(gamepad->getLeftThumbstick()->getAxisX(), value, isAnalog);
-                break;
-            case AndroidControllerCode::THUMBSTICK_LEFT_Y:
-                thiz->sendEventAxis(gamepad->getLeftThumbstick()->getAxisY(), value, isAnalog);
-                break;
-            case AndroidControllerCode::THUMBSTICK_RIGHT_X:
-                thiz->sendEventAxis(gamepad->getRightThumbstick()->getAxisX(), value, isAnalog);
-                break;
-            case AndroidControllerCode::THUMBSTICK_RIGHT_Y:
-                thiz->sendEventAxis(gamepad->getRightThumbstick()->getAxisY(), value, isAnalog);
-                break;
-            default:
-                CCASSERT(false, "Invalid controller axis code!");
-                break;
-        }
+        
+        (*iter)->onAxisEvent(axisCode, value, isAnalog);
     }
 
 private:
     Controller* _controller;
-    int _controllerID;
 };
-
-
-std::vector<Controller*> Controller::_controllers;
-
-const std::vector<Controller*>& Controller::getControllers()
-{
-    return _controllers;
-}
 
 void Controller::startDiscoveryController()
 {
@@ -288,9 +124,17 @@ void Controller::stopDiscoveryController()
     // Empty implementation on Android
 }
 
-const std::string& Controller::getVendorName()
+Controller::~Controller()
 {
-    return _vendorName;
+    delete _impl;
+
+    delete _connectEvent;
+    delete _keyEvent;
+    delete _axisEvent;
+}
+
+void Controller::registerListeners()
+{
 }
 
 bool Controller::isConnected() const
@@ -301,61 +145,50 @@ bool Controller::isConnected() const
     return true;
 }
 
-int Controller::getPlayerIndex() const
-{
-    return _playerIndex;
-}
-
-void Controller::setPlayerIndex(int playerIndex)
-{
-    _playerIndex = playerIndex;
-}
-
-Gamepad* Controller::getGamepad() const
-{
-    return _gamepad;
-}
-
 Controller::Controller()
-    : _playerIndex(PLAYER_INDEX_UNSET)
-    , _gamepad(new Gamepad)
+    : _controllerTag(TAG_UNSET)
     , _impl(new ControllerImpl(this))
+    , _connectEvent(nullptr)
+    , _keyEvent(nullptr)
+    , _axisEvent(nullptr)
 {
-    _gamepad->_controller = this;
+    init();
 }
 
-Controller::~Controller()
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
 {
-    CC_SAFE_DELETE(_impl);
-    CC_SAFE_DELETE(_gamepad);
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", "(IIZ)V")) {
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, _deviceId, externalKeyCode, receive);
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 NS_CC_END
 
 extern "C" {
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerConnected(JNIEnv*  env, jobject thiz, jstring vendorName, jint controllerID)
+    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerConnected(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID)
     {
         CCLOG("controller id: %d connected!", controllerID);
-        cocos2d::ControllerImpl::onConnected(cocos2d::JniHelper::jstring2string(vendorName), controllerID);
+        cocos2d::ControllerImpl::onConnected(cocos2d::JniHelper::jstring2string(deviceName), controllerID);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerDisconnected(JNIEnv*  env, jobject thiz, jstring vendorName, jint controllerID)
+    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerDisconnected(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID)
     {
         CCLOG("controller id: %d disconnected!", controllerID);
-        cocos2d::ControllerImpl::onDisconnected(cocos2d::JniHelper::jstring2string(vendorName), controllerID);
+        cocos2d::ControllerImpl::onDisconnected(cocos2d::JniHelper::jstring2string(deviceName), controllerID);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerButtonEvent(JNIEnv*  env, jobject thiz, jstring vendorName, jint controllerID, jint button, jboolean isPressed, jfloat value, jboolean isAnalog)
+    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerButtonEvent(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID, jint button, jboolean isPressed, jfloat value, jboolean isAnalog)
     {
-        CCLOG("controller id: %d, btn code: %d, isPressed: %d, value: %f, isAnalog:%d", controllerID, button, (int)isPressed, value, (int)isAnalog);
-        cocos2d::ControllerImpl::onButtonEvent(cocos2d::JniHelper::jstring2string(vendorName), controllerID, static_cast<cocos2d::AndroidControllerCode>(button), isPressed, value, isAnalog);
+        cocos2d::ControllerImpl::onButtonEvent(cocos2d::JniHelper::jstring2string(deviceName), controllerID, button, isPressed, value, isAnalog);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerAxisEvent(JNIEnv*  env, jobject thiz, jstring vendorName, jint controllerID, jint axis, jfloat value, jboolean isAnalog)
+    void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerAxisEvent(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID, jint axis, jfloat value, jboolean isAnalog)
     {
-        // CCLOG("controller id: %d, axis code: %d, value: %f, isAnalog:%d", controllerID, axis, value, (int)isAnalog);
-        cocos2d::ControllerImpl::onAxisEvent(cocos2d::JniHelper::jstring2string(vendorName), controllerID, static_cast<cocos2d::AndroidControllerCode>(axis), value, isAnalog);
+        cocos2d::ControllerImpl::onAxisEvent(cocos2d::JniHelper::jstring2string(deviceName), controllerID, axis, value, isAnalog);
     }
 
 } // extern "C" {

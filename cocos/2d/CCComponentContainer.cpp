@@ -89,11 +89,32 @@ bool ComponentContainer::remove(const std::string& name)
         com->setOwner(nullptr);
         
         _components->erase(iter);
-        
         ret = true;
     } while(0);
     return ret;
  }
+
+bool ComponentContainer::remove(Component *com)
+{
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(!_components);
+        
+        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        {
+            if (iter->second == com)
+            {
+                com->onExit();
+                com->setOwner(nullptr);
+                _components->erase(iter);
+                break;
+            }
+        }
+        ret = true;
+    } while(0);
+    return ret;
+}
 
 void ComponentContainer::removeAll()
 {

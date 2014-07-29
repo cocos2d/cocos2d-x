@@ -115,7 +115,7 @@ void TriggerMng::parse(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCoc
 
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
-    bool useBindings = engine != NULL;
+    bool useBindings = engine != nullptr;
     
     if (useBindings)
     {
@@ -191,7 +191,7 @@ bool TriggerMng::isEmpty(void) const
 }
 
     
-    void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
 {
     int count = pCocoNode[13].GetChildNum();
     int length = 0;
@@ -234,7 +234,7 @@ bool TriggerMng::isEmpty(void) const
                         const char *str2 = pActionArray[i3].GetValue(pCocoLoader);
                         if (key2.compare("classname") == 0)
                         {
-                            if (str2 != NULL)
+                            if (str2 != nullptr)
                             {
                                 action.AddMember("classname", str2, allocator);
                             }
@@ -255,22 +255,22 @@ bool TriggerMng::isEmpty(void) const
                                     const char *str3 = pDataItemArray[i5].GetValue(pCocoLoader);
                                     if (key3.compare("key") == 0)
                                     {
-                                        if (str3 != NULL)
+                                        if (str3 != nullptr)
                                         {
                                             dataitem.AddMember("key", str3, allocator);
                                         }
                                     }
                                     else
                                     {
-                                        rapidjson::Type type = pDataItemArray[i4].GetType(pCocoLoader);
+                                        rapidjson::Type type = pDataItemArray[i5].GetType(pCocoLoader);
                                         if (type == rapidjson::kStringType)
                                         {
                                             dataitem.AddMember("value", str3, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str3);
-                                            float fV = atof(str3);
+                                            float fV = utils::atof(str3);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -310,7 +310,7 @@ bool TriggerMng::isEmpty(void) const
                         const char *str4 = pConditionArray[i7].GetValue(pCocoLoader);
                         if (key4.compare("classname") == 0)
                         {
-                            if (str4 != NULL)
+                            if (str4 != nullptr)
                             {
                                 cond.AddMember("classname", str4, allocator);
                             }
@@ -331,7 +331,7 @@ bool TriggerMng::isEmpty(void) const
                                     const char *str5 = pDataItemArray[i9].GetValue(pCocoLoader);
                                     if (key5.compare("key") == 0)
                                     {
-                                        if (str5 != NULL)
+                                        if (str5 != nullptr)
                                         {
                                             dataitem.AddMember("key", str5, allocator);
                                         }
@@ -343,10 +343,10 @@ bool TriggerMng::isEmpty(void) const
                                         {
                                             dataitem.AddMember("value", str5, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str5);
-                                            float fV = atof(str5);
+                                            float fV = utils::atof(str5);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -380,7 +380,7 @@ bool TriggerMng::isEmpty(void) const
                     stExpCocoNode *pEventArray = pEventsArray->GetChildArray(pCocoLoader);
                     std::string key6 = pEventArray[0].GetName(pCocoLoader);
                     const char *str6 = pEventArray[0].GetValue(pCocoLoader);
-                    if (key6.compare("id") == 0 && str6 != NULL)
+                    if (key6.compare("id") == 0 && str6 != nullptr)
                     {
                         event.AddMember("id", atoi(str6), allocator);
                         eventsItem.PushBack(event, allocator);
@@ -390,7 +390,7 @@ bool TriggerMng::isEmpty(void) const
             }
             else if (key1.compare("id") == 0)
             {
-                if (str1 != NULL)
+                if (str1 != nullptr)
                 {
                     vElemItem.AddMember("id", atoi(str1), allocator);
                 }

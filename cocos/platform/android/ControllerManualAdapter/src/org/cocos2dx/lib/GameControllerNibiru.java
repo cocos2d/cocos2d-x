@@ -27,7 +27,6 @@ public class GameControllerNibiru implements OnControllerSeviceListener, OnKeyLi
 OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameControllerDelegate {
 
 	private static final String TAG = "NibiruTag";
-	private static final String mVendorName = "Nibiru";
 		
 	private Context mContext;
 	private SparseIntArray mKeyMap;
@@ -74,7 +73,7 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 			mControllerService.setEnableLR2(true);
 			mControllerService.setAutoKeyUpMode(false);
 			
-			mControllerService.checkNibiruInstall(mContext, true);
+			mControllerService.checkNibiruInstall(mContext, false);
 		}
 	}
 	
@@ -114,7 +113,7 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 		{
 			if( !mControllerService.hasDeviceConnected() ){
 				Bundle bun = new Bundle();
-				bun.putBoolean(ControllerService.FLAG_IS_SHOW_GAMEPAD_TIP, true);
+				bun.putBoolean(ControllerService.FLAG_IS_SHOW_GAMEPAD_TIP, false);
 				try {
 					mControllerService.showDeviceManagerUI(mContext, bun); 
 				} catch (ControllerServiceException e) {
@@ -132,7 +131,14 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 		}
 		
 		if (mControllerEventListener != null) {
-			mControllerEventListener.onButtonEvent(mVendorName, playerOrder, mKeyMap.get(keyCode), true, 1.0f, false);
+			try {
+				ControllerDevice controllerDevice = mControllerService.getDeviceByPlayerOrder(playerOrder);
+				
+				mControllerEventListener.onButtonEvent(controllerDevice.getDeviceName(), controllerDevice.getDeviceId(), 
+						mKeyMap.get(keyCode), true, 1.0f, false);
+			} catch (ControllerServiceException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -144,28 +150,52 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 		}
 		
 		if (mControllerEventListener != null) {
-			mControllerEventListener.onButtonEvent(mVendorName, playerOrder, 
-					mKeyMap.get(keyCode), false, 0.0f, false);
+			try {
+				ControllerDevice controllerDevice = mControllerService.getDeviceByPlayerOrder(playerOrder);
+				
+				mControllerEventListener.onButtonEvent(controllerDevice.getDeviceName(), controllerDevice.getDeviceId(), 
+						mKeyMap.get(keyCode), false, 0.0f, false);
+			} catch (ControllerServiceException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void onLeftStickChanged(int playerOrder, float x, float y) {
 		if (mControllerEventListener != null) {
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_LEFT_X, x, true);
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_LEFT_Y, y, true);
+			try {
+				ControllerDevice controllerDevice = mControllerService.getDeviceByPlayerOrder(playerOrder);
+				
+				String deviceName = controllerDevice.getDeviceName();
+				int deviceId = controllerDevice.getDeviceId();
+				
+				mControllerEventListener.onAxisEvent(deviceName, deviceId, 
+						GameControllerDelegate.THUMBSTICK_LEFT_X, x, true);
+				mControllerEventListener.onAxisEvent(deviceName, deviceId, 
+						GameControllerDelegate.THUMBSTICK_LEFT_Y, y, true);				
+			} catch (ControllerServiceException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void onRightStickChanged(int playerOrder, float x, float y) {
 		if (mControllerEventListener != null) {
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_RIGHT_X, x, true);
-			mControllerEventListener.onAxisEvent(mVendorName, playerOrder, 
-					GameControllerDelegate.THUMBSTICK_RIGHT_Y, y, true);
+			try {
+				ControllerDevice controllerDevice = mControllerService.getDeviceByPlayerOrder(playerOrder);
+				
+				String deviceName = controllerDevice.getDeviceName();
+				int deviceId = controllerDevice.getDeviceId();
+				
+				mControllerEventListener.onAxisEvent(deviceName, deviceId, 
+						GameControllerDelegate.THUMBSTICK_RIGHT_X, x, true);
+				mControllerEventListener.onAxisEvent(deviceName, deviceId, 
+						GameControllerDelegate.THUMBSTICK_RIGHT_Y, y, true);
+			} catch (ControllerServiceException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -174,11 +204,11 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 		if (mControllerEventListener != null) {
 			if (state == ControllerDevice.STATE_CONN)
 			{
-				mControllerEventListener.onConnected(mVendorName, playerOrder);
+				mControllerEventListener.onConnected(device.getDeviceName(), device.getDeviceId());
 			}
 			else if (state == ControllerDevice.STATE_DISCONN)
 			{
-				mControllerEventListener.onDisconnected(mVendorName, playerOrder);
+				mControllerEventListener.onDisconnected(device.getDeviceName(), device.getDeviceId());
 			}
 		}
 	}

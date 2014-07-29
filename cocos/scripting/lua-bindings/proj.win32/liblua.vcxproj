@@ -31,6 +31,7 @@
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c" />
     <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="..\manual\LuaSkeletonAnimation.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_coco_studio_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_deprecated.cpp" />
+    <ClCompile Include="..\manual\lua_cocos2dx_experimental_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_manual.cpp" />
     <ClCompile Include="..\manual\lua_cocos2dx_physics_manual.cpp" />
@@ -82,6 +84,7 @@
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h" />
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp" />
@@ -99,6 +102,7 @@
     <ClInclude Include="..\manual\LuaSkeletonAnimation.h" />
     <ClInclude Include="..\manual\lua_cocos2dx_coco_studio_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_deprecated.h" />
+    <ClInclude Include="..\manual\lua_cocos2dx_experimental_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\manual\lua_cocos2dx_manual.hpp" />
     <ClInclude Include="..\manual\lua_cocos2dx_physics_manual.hpp" />
@@ -129,6 +133,11 @@
     <None Include="..\script\Opengl.lua" />
     <None Include="..\script\OpenglConstants.lua" />
     <None Include="..\script\StudioConstants.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\2d\libcocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DDC3E27F-004D-4DD4-9DD3-931A013D2159}</ProjectGuid>

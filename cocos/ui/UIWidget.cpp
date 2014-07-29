@@ -261,10 +261,7 @@ void Widget::setContentSize(const cocos2d::Size &contentSize)
     {
         _contentSize = getVirtualRendererSize();
     }
-    else
-    {
-        _contentSize = contentSize;
-    }
+    
     if (_running)
     {
         Widget* widgetParent = getWidgetParent();
@@ -322,7 +319,6 @@ void Widget::setSizePercent(const Vec2 &percent)
         this->setContentSize(cSize);
     }
     _customSize = cSize;
-    onSizeChanged();
 }
 
 void Widget::updateSizeAndPosition()
@@ -376,7 +372,8 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
         default:
             break;
     }
-    onSizeChanged();
+    
+    //update position & position percent
     Vec2 absPos = getPosition();
     switch (_positionType)
     {
@@ -429,7 +426,6 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
     {
         this->setContentSize(_customSize);
     }
-    onSizeChanged();
 }
 
 bool Widget::isIgnoreContentAdaptWithSize() const
@@ -489,7 +485,6 @@ void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
     {
         this->setContentSize(_customSize);
     }
-    onSizeChanged();
 }
 
 void Widget::setTouchEnabled(bool enable)
@@ -722,6 +717,7 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void Widget::pushDownEvent()
 {
+    this->retain();
     if (_touchEventCallback) {
         _touchEventCallback(this, TouchEventType::BEGAN);
     }
@@ -730,10 +726,12 @@ void Widget::pushDownEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
     }
+    this->release();
 }
 
 void Widget::moveEvent()
 {
+    this->retain();
     if (_touchEventCallback) {
         _touchEventCallback(this, TouchEventType::MOVED);
     }
@@ -742,11 +740,12 @@ void Widget::moveEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
     }
+    this->release();
 }
 
 void Widget::releaseUpEvent()
 {
-    
+    this->retain();
     if (_touchEventCallback) {
         _touchEventCallback(this, TouchEventType::ENDED);
     }
@@ -755,10 +754,12 @@ void Widget::releaseUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
+    this->release();
 }
 
 void Widget::cancelUpEvent()
 {
+    this->retain();
     if (_touchEventCallback)
     {
         _touchEventCallback(this, TouchEventType::CANCELED);
@@ -768,7 +769,7 @@ void Widget::cancelUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
-   
+    this->release();
 }
 
 void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
@@ -1039,7 +1040,6 @@ void Widget::copyProperties(Widget *widget)
     {
         setLayoutParameter(iter->second->clone());
     }
-    onSizeChanged();
 }
     
 void Widget::setFlippedX(bool flippedX)

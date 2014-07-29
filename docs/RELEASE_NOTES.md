@@ -1,8 +1,8 @@
-# cocos2d-x v3.2-alpha0 Release Notes #
+# cocos2d-x v3.2 Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.2-alpha0 Release Notes](#user-content-cocos2d-x-v32-alpha0-release-notes)
+- [cocos2d-x v3.2 Release Notes](#user-content-cocos2d-x-v32-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
@@ -13,18 +13,24 @@
 		- [Windows](#user-content-windows)
 		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Highlights of v3.2 alpha0](#user-content-highlights-of-v32-alpha0)
+- [Highlights of v3.2](#user-content-highlights-of-v32)
+- [Documents](#user-content-documents)
+- [Toolchain requirement changed](#user-content-toolchain-requirement-changed)
+- [atof issue on Android](#user-content-atof-issue-on-android)
 - [Features in detail](#user-content-features-in-detail)
-	- [Animation3D](#user-content-animation3d)
+	- [Sprite3D & Animation3D](#user-content-sprite3d--animation3d)
 		- [fbx-conv usage](#user-content-fbx-conv-usage)
-		- [Sample code](#user-content-sample-code)
-	- [captureScreen](#user-content-capturescreen)
+	- [Game controller](#user-content-game-controller)
+	- [Fast tilemap](#user-content-fast-tilemap)
+	- [Node::enumerateChildren](#user-content-nodeenumeratechildren)
+	- [utils::findChildren](#user-content-utilsfindchildren)
+	- [Node::setNormalizedPosition](#user-content-nodesetnormalizedposition)
 
 # Misc Information
 
-* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2alpha0.zip
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2alpha0/CHANGELOG
-* ~~API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.0/index.html~~
+* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.2.zip
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.2/CHANGELOG
+* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.2/index.html
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -36,14 +42,14 @@
 * OS X 10.7 or newer
 * Windows 7 or newer
 * Windows Phone 8 or newer
-* Linux Ubuntu 12.04 or newer
+* Linux Ubuntu 14.04 or newer
 * ~~Browsers via Emscripten~~ N/A for the moment
 
 ## Compiler Requirements
 
-* Xcode 4.6 or newer for iOS or Mac
-* gcc 4.7 or newer for Linux
-* gcc 4.7 and ndk-r9 or newer for Android
+* Xcode 5.1 or newer for iOS or Mac
+* gcc 4.9 or newer for Linux
+* ndk-r9d or newer for Android
 * Visual Studio 2012  or newer for Windows (win32)
 * Visual Studio 2012  or newer for Windows Phone 8
 
@@ -111,66 +117,179 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# Highlights of v3.2 alpha0
+# Highlights of v3.2
 
-* `Animation3D`/`Animate3d`, new nodes for 3d animation. lua-binding and WP8 is not supported now.
-* Updated libcurl.a to use OpenSSL v1.0.1h, [news](http://cocos2d-x.org/news/286) for it
-* Added `utils::captureScreen` to take screeshot
+* `Animation3D`/`Animate3D`, new nodes for 3d animation
+* `fbx-conv` supports generating binary format which is supported by `Sprite3D`
+* Game controller support
+* Fast tilemap support
+* Added `utils::cpatureScreen` to take screenshot
+* Physics body supports scale and rotation
+* Added `Node::enumerateChildren` and `utils::findChildren`, and support c++ 11 regular expression
+* Added `Node::setNormalizedPosition`, `Node`'s position in pixel will be calculated according its parent's content size
 
+# Documents
+
+* [Sprite3D & Animation3D](http://cocos2d-x.org/wiki/Sprite3D)
+* [Game controller](http://www.cocos2d-x.org/wiki/Game_Controller)
+* [How to compile shader on WP8](http://cocos2d-x.org/wiki/How_to_update_wp8_shader)
+
+# Toolchain requirement changed
+
+`Node::enumerateChildren()` uses `std::regex` which will cause crash using gcc v4.8 or lower version. 
+Because `OTHER_LDFLAGS` can not work in Xcode6 beta3. So we used fat library(including 64-bit libaries) on iOS. But Xcode 5.0 or lower version has building problem by this way.
+
+So
+
+* NDK r9d or newer version is required for Android building
+* gcc 4.9 is required for linux building
+* Xcode 5.1 or newer is required on iOS
+
+# atof issue on Android
+
+We found a bug of `atof` on Android when using libc++. The bug is that, the return value of `atof` may be `-inf` when passing some valid digit string.
+
+For example
+
+```c++
+atof("90.099998474121094"); // -> return value is -inf
+```
+
+We have reported it to google guys, and they confirmed that it is a bug. In order to work around this issue, we added `utils::atof()`.
+
+The corresponding pull request for this issue is [here](https://github.com/cocos2d/cocos2d-x/pull/7440). You can refer to this pull request for demail information.
 
 # Features in detail
 
-## Animation3D
+## Sprite3D & Animation3D
 
-Animation3D is skeletal animation in 3D Game. It allows the artist animate a 3D model using bone in 3D modeling tools. Then export the model file and use it in the game.
+Sample code to use binary version
+```c++
+auto sprite3d = Sprite3D::create("filename.c3b");
+addChild(sprite3d);
 
-Work flow
+auto animation3d = Animation3D("filename.c3b");
+auto animate3d = Animate3D::create(animation3d);
+sprite3d->runAction(RepeatForEver::create(animate));
+```
 
-* Artist produce 3D models in modeling tools and then export it to FBX file
-* Use `fbx-conv` convert FBX file to c3t file
-* Load c3t file in the game
-
-Note
-
-* The API may change in final version
-* binary format of c3t will be added in final version
-* the bones in the FBX file should not be more than 50.
+Detail information please refer to [Sprite3D & Animation3D](http://cocos2d-x.org/wiki/Sprite3D).
 
 ### `fbx-conv` usage
 
-* windows
+* Mac OS X
 
 ```
-cd COCOS2DX_ROOT/tools/fbx-convert/win32
-fbx-conv FBXFile
-```
-* mac os x
-
-```
-cd COCOS2DX_ROOT/tools/fbx-convert/mac
-./fbx-conv FBXFile
+$ cd COCOS2DX_ROOT/tools/fbx-conv/mac
+$ ./fbx-conv [-a|-b|-t] FBXFile
 ```
 
+* Windows
 
-### Sample code
+```
+cd COCOS2DX_ROOT/tools/fbx-conv/windows
+fbx-conv [-a|-b|-t] FBXFile
+```
 
+Options:
+
+* -a: export both text and binary format
+* -b: export binary format
+* -t: export text format
+
+## Game controller
+
+Supported controller type:
+
+* Android standard controllers
+* Amazon tv
+* OUYA
+* Moga
+* Nibiru
+* iOS standard controllers
+
+Sample codes
 ```c++
-//load Sprite3D
-auto sprite = Sprite3D::create("girl.c3t");
-addChild(sprite);
-sprite->setPosition(Vec2( 0, 0));
+// register event listener
+auto listener = EventListenerController::create();
+listner->onKeyDown = ...
+...
+eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-//load animation and play it
-auto animation = Animation3D::getOrCreate("girl.c3t");
-if (animation)
+// start connecting controller
+Controller::startDiscoveryController();
+
+// handler key down/ key up event
+void GameControllerTest::onKeyDown(Controller *controller, int keyCode, Event *event)
 {
-   auto animate = Animate3D::create(animation);
-   sprite->runAction(RepeatForever::create(animate));       
+    switch (keyCode)
+    {
+        case Controller::Key::BUTTON_A:
+        ...
+        break;
+        
+        ...
+    }
 }
 ```
 
-Full sample please refer to [Sprite3D test](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp).
+Detail information please refer to [Game controller](http://www.cocos2d-x.org/wiki/Game_Controller).
 
-## captureScreen
+## Fast tilemap
 
-Please refer to [here](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/NewRendererTest/NewRendererTest.cpp) for usage.
+Fast tilemap has the same API as `TMXTiledMap` without deprecated functions.
+
+Sample code
+```c++
+auto tilemap = cocos2d::experimental::TMXTiledMap::create("MyFile.tmx");
+addChild(tilemap);
+```
+
+Full demo please refer to `COCOS2DX_ROOT/tests/cpp-tests/Classes/TileMapTest/TileMapTest2.cpp`.
+
+## Node::enumerateChildren
+
+This functions is used to enumerate children of a `Node`. It supports c++ 11 regular expression.
+
+```c++
+// Find nodes whose name is 'nameToFind' and end with digits.
+node->enumerateChildren("nameToFind[[:digit:]]+", [](Node* node) -> bool {
+    ...
+    return false; // return true to stop at first match
+});
+
+// Find nodes whose name is 'nameToFind' and end with digits recursively.
+node->enumerateChildren("nameToFind[[:digit:]]+", [](Node* node) -> bool {
+    ...
+    return false; // return true to stop at first match
+});
+```
+
+Full test please refer to `NodeNameTest` in `COCOS2DX_ROOT/tests/cpp-tests/NodeTest/NodeTest.cpp`.
+
+Because this function uses `std::regex` which is not supported well in gcc 4.8 or lower version. So we use `clang` and `stdc++` instead for Android building. This lead to the result that `NDK r9d` or newer is required. And `gcc 4.9` is required on linux.
+
+## utils::findChildren
+
+This is a helper function to find children of a `Node` share a name. The implementation of this function bases on `Node::enumerateChildren`.
+
+```c++
+auto children = utils::findChildren(node, "nameToFind");
+
+...
+```
+
+## Node::setNormalizedPosition
+
+Can use this function to set Node's position(x,y) using value between 0 and 1. `Can use this function when it has a parent node.` The positions in pixels is calculated like the following:
+
+```c++
+// pseudo code
+void setNormalizedPosition(Vec2 pos)
+{
+    Size s = getParent()->getContentSize();
+    _position = pos * s;
+}
+```
+
+Full test please refer to `NodeNormalizedPositionTest1/2` in `tests/cpp-tests/Classes/NodeTest/NodeTest.cpp`.

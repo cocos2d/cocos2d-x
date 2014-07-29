@@ -129,28 +129,18 @@ public class GameControllerMoga implements ControllerListener, GameControllerDel
 		
 		float newLeftTrigger = event.getAxisValue(MotionEvent.AXIS_LTRIGGER);
 		if (newLeftTrigger != mOldLeftTrigger) {
-			boolean isPressed = true;
-			if (Float.compare(newLeftTrigger, 0.0f) == 0) {
-				isPressed = false;
-			}
-			mControllerEventListener.onButtonEvent(mVendorName,
+			mControllerEventListener.onAxisEvent(mVendorName,
 					controllerId,
 					GameControllerDelegate.BUTTON_LEFT_TRIGGER,
-					isPressed,
 					newLeftTrigger, true);
 			mOldLeftTrigger = newLeftTrigger;
 		}
 		
 		float newRightTrigger = event.getAxisValue(MotionEvent.AXIS_RTRIGGER);
 		if (newRightTrigger != mOldRightTrigger) {
-			boolean isPressed = true;
-			if (Float.compare(newRightTrigger, 0.0f) == 0) {
-				isPressed = false;
-			}
-			mControllerEventListener.onButtonEvent(mVendorName,
+			mControllerEventListener.onAxisEvent(mVendorName,
 					controllerId,
 					GameControllerDelegate.BUTTON_RIGHT_TRIGGER,
-					isPressed,
 					newRightTrigger, true);
 			mOldRightTrigger = newRightTrigger;
 		}

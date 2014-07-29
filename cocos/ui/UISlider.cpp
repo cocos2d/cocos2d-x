@@ -148,8 +148,6 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
         default:
             break;
     }
-    _barRenderer->setColor(this->getColor());
-    _barRenderer->setOpacity(this->getOpacity());
     
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
@@ -189,9 +187,6 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
         default:
             break;
     }
-    
-    _progressBarRenderer->setColor(this->getColor());
-    _progressBarRenderer->setOpacity(this->getOpacity());
     
     _progressBarRenderer->setAnchorPoint(Vec2(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
@@ -314,8 +309,6 @@ void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType 
         default:
             break;
     }
-    _slidBallNormalRenderer->setColor(this->getColor());
-    _slidBallNormalRenderer->setOpacity(this->getOpacity());
 }
 
 void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType)
@@ -337,8 +330,6 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
         default:
             break;
     }
-    _slidBallPressedRenderer->setColor(this->getColor());
-    _slidBallPressedRenderer->setOpacity(this->getOpacity());
 }
 
     void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType)
@@ -360,8 +351,6 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
         default:
             break;
     }
-    _slidBallDisabledRenderer->setColor(this->getColor());
-    _slidBallDisabledRenderer->setOpacity(this->getOpacity());
 }
 
 void Slider::setPercent(int percent)

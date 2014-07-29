@@ -849,6 +849,12 @@
     <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp">
       <Filter>Classes\TileMapTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.cpp">
+      <Filter>Classes\UITest\CocosStudioGUITest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.cpp">
+      <Filter>Classes\UITest\CocosStudioGUITest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1571,6 +1577,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h">
       <Filter>Classes\TileMapTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.h">
+      <Filter>Classes\UITest\CocosStudioGUITest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h">
+      <Filter>Classes\UITest\CocosStudioGUITest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

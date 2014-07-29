@@ -93,7 +93,7 @@ HttpClientTest::HttpClientTest()
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
     itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
 }
@@ -369,12 +369,12 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     
     // dump data
     std::vector<char> *buffer = response->getResponseData();
-    printf("Http Test, dump data: ");
+    log("Http Test, dump data: ");
     for (unsigned int i = 0; i < buffer->size(); i++)
     {
-        printf("%c", (*buffer)[i]);
+        log("%c", (*buffer)[i]);
     }
-    printf("\n");
+    log("\n");
     if (response->getHttpRequest()->getReferenceCount() != 2)
     {
         log("request ref count not 2, is %d", response->getHttpRequest()->getReferenceCount());

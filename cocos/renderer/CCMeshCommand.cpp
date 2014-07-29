@@ -56,10 +56,10 @@ MeshCommand::MeshCommand()
 , _vao(0)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // listen the event when app go to foreground
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(MeshCommand::listenBackToForeground, this));
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // listen the event that renderer was recreated on Android/WP8
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
 }
 
@@ -117,8 +117,8 @@ void MeshCommand::setDisplayColor(const Vec4& color)
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
@@ -172,7 +172,7 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, 
 
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 {
-    glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+    glUniform4fv( uniform->location, (GLsizei)_matrixPaletteSize, (const float*)_matrixPalette );
 }
 
 void MeshCommand::preBatchDraw()
@@ -183,12 +183,11 @@ void MeshCommand::preBatchDraw()
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
 
-    if (_vao == 0)
+    if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
         buildVAO();
     if (_vao)
     {
         GL::bindVAO(_vao);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
     else
     {
@@ -265,30 +264,27 @@ void MeshCommand::execute()
 void MeshCommand::buildVAO()
 {
     releaseVAO();
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vao);
-        GL::bindVAO(_vao);
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        auto flags = _glProgramState->getVertexAttribsFlags();
-        for (int i = 0; flags > 0; i++) {
-            int flag = 1 << i;
-            if (flag & flags)
-                glEnableVertexAttribArray(i);
-            flags &= ~flag;
-        }
-        _glProgramState->applyAttributes(false);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-        
-        GL::bindVAO(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glGenVertexArrays(1, &_vao);
+    GL::bindVAO(_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    auto flags = _glProgramState->getVertexAttribsFlags();
+    for (int i = 0; flags > 0; i++) {
+        int flag = 1 << i;
+        if (flag & flags)
+            glEnableVertexAttribArray(i);
+        flags &= ~flag;
     }
+    _glProgramState->applyAttributes(false);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    
+    GL::bindVAO(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 void MeshCommand::releaseVAO()
 {
-    if (Configuration::getInstance()->supportsShareableVAO() && _vao)
+    if (_vao)
     {
         glDeleteVertexArrays(1, &_vao);
         _vao = 0;
@@ -296,10 +292,10 @@ void MeshCommand::releaseVAO()
     }
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-void MeshCommand::listenBackToForeground(EventCustom* event)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
-    releaseVAO();
+    _vao = 0;
 }
 #endif
 

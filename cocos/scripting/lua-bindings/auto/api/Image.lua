@@ -17,11 +17,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Image] getBitPerPixel 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
 -- @function [parent=#Image] hasAlpha 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -48,14 +43,14 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#Image] isPremultipliedAlpha 
+-- @function [parent=#Image] getBitPerPixel 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Image] getFileType 
 -- @param self
--- @return Image::Format#Image::Format ret (return value: cc.Image::Format)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Image] getNumberOfMipmaps 
@@ -65,7 +60,12 @@
 --------------------------------
 -- @function [parent=#Image] getRenderFormat 
 -- @param self
--- @return Texture2D::PixelFormat#Texture2D::PixelFormat ret (return value: cc.Texture2D::PixelFormat)
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#Image] setPVRImagesHavePremultipliedAlpha 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Image] Image 

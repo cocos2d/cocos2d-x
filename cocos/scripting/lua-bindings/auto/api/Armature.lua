@@ -59,12 +59,9 @@
 -- @return BatchNode#BatchNode ret (return value: ccs.BatchNode)
         
 --------------------------------
--- overload function: init(string)
---          
--- overload function: init()
---          
--- overload function: init(string, ccs.Bone)
---          
+-- @overload self, string         
+-- @overload self         
+-- @overload self, string, ccs.Bone         
 -- @function [parent=#Armature] init
 -- @param self
 -- @param #string str
@@ -117,12 +114,9 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
--- overload function: create(string, ccs.Bone)
---          
+-- @overload self, string         
+-- @overload self         
+-- @overload self, string, ccs.Bone         
 -- @function [parent=#Armature] create
 -- @param self
 -- @param #string str

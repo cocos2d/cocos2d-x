@@ -152,7 +152,7 @@ namespace cocostudio
 
         if (button->isScale9Enabled()) {
             button->setCapInsets(Rect(capsx, capsy, capsWidth, capsHeight));
-            button->setSize(Size(scale9Width, scale9Height));
+            button->setContentSize(Size(scale9Width, scale9Height));
         }
         
         button->setTitleColor(Color3B(cri, cgi, cbi));
@@ -203,7 +203,7 @@ namespace cocostudio
             {
                 float swf = DICTOOL->getFloatValue_json(options, P_Scale9Width);
                 float shf = DICTOOL->getFloatValue_json(options, P_Scale9Height);
-                button->setSize(Size(swf, shf));
+                button->setContentSize(Size(swf, shf));
             }
         }
         bool tt = DICTOOL->checkObjectExist_json(options, P_Text);

@@ -749,6 +749,22 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Sprite3DRotationTest : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DRotationTest);
+    Sprite3DRotationTest();
+    virtual std::string title() const override { return "3D Rotation Test"; };
+    virtual std::string subtitle() const override { return "Rotation should based on the anchor point"; };
+    virtual void update(float delta) override;
+    
+protected:
+    Sprite* sprite1;
+    Sprite* sprite2;
+    
+    Vec3 rotation;
+};
+
 class SpriteTestScene : public TestScene
 {
 public:
