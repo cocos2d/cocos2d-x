@@ -45,6 +45,7 @@ static const char* s_testArray[] =
     "UIButtonTest_Scale9",
     "UIButtonTest_PressedAction",
     "UIButtonTest_Title",
+    "UIButtonTest_RemoveSelf",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
@@ -58,6 +59,7 @@ static const char* s_testArray[] =
      */
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
+    "UIImageViewTest_ContentSize",
     "UILoadingBarTest_Left",
     "UILoadingBarTest_Right",
     "UILoadingBarTest_Left_Scale9",
@@ -190,7 +192,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIButtonTest_Title:
             return UIButtonTest_Title::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUIButtonTest_RemoveSelf:
+            return UIButtonTestRemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -205,7 +208,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIImageViewTest_Scale9:
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUIImageViewTest_ContentSize:
+            return UIImageViewTest_ContentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUILoadingBarTest_Left:
             return UILoadingBarTest_Left::sceneWithTitle(s_testArray[_currentUISceneId]);
             
