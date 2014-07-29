@@ -909,6 +909,7 @@ Developers:
     gin0606
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        Fix video scale issue in iOS
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
@@ -935,6 +936,12 @@ Developers:
     yongkangchen
         Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
         Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
+        
+    wagulu
+        Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
     
 Retired Core Developers:
     WenSheng Yang

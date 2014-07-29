@@ -888,39 +888,19 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
 
 std::string FileUtils::searchFullPathForFilename(const std::string& filename) const
 {
-    // If filename is absolute path, we don't need to consider 'search paths' and 'resolution orders'.
     if (isAbsolutePath(filename))
     {
         return filename;
     }
-    
-    // Already Cached ?
-    auto cacheIter = _fullPathCache.find(filename);
-    if( cacheIter != _fullPathCache.end() )
+    std::string path = const_cast<FileUtils*>(this)->fullPathForFilename(filename);
+    if (0 == path.compare(filename))
     {
-        return cacheIter->second;
+        return "";
     }
-    
-    // Get the new file name.
-    const std::string newFilename( getNewFilename(filename) );
-    
-	std::string fullpath;
-    
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    else
     {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
-        {
-            fullpath = const_cast<FileUtils*>(this)->getPathForFilename(newFilename, *resolutionIt, *searchIt);
-            
-            if (!fullpath.empty())
-            {
-                // Using the filename passed in as key.
-                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(filename, fullpath));
-                return fullpath;
-            }
-        }
+        return path;
     }
-    return "";
 }
 
 bool FileUtils::isFileExist(const std::string& filename) const

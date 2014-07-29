@@ -135,8 +135,6 @@ protected:
 class LayoutParameterProtocol
 {
 public:
-    LayoutParameterProtocol(){}
-    virtual ~LayoutParameterProtocol(){}
     
     virtual LayoutParameter* getLayoutParameter() const= 0;
 };

@@ -182,10 +182,12 @@ public:
      possible load them as if they have (or not) the alpha channel premultiplied.
 
      By default it is disabled.
+     
+     deprecated, please use Image::setPVRImagesHavePremultipliedAlpha() instead.
 
      @since v0.99.5
      */
-    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    CC_DEPRECATED_ATTRIBUTE static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
     
 public:
     /**
