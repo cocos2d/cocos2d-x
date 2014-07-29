@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIImageView.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -32,7 +32,7 @@ namespace ui {
 
 
 #define STATIC_CAST_CCSPRITE static_cast<Sprite*>(_imageRenderer)
-#define STATIC_CAST_SCALE9SPRITE static_cast<extension::Scale9Sprite*>(_imageRenderer)
+#define STATIC_CAST_SCALE9SPRITE static_cast<Scale9Sprite*>(_imageRenderer)
     
 static const int IMAGE_RENDERER_Z = (-1);
     
@@ -125,7 +125,7 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
         case TextureResType::LOCAL:
             if (_scale9Enabled)
             {
-                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
+                Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
                 imageRendererScale9->initWithFile(fileName);
                 imageRendererScale9->setCapInsets(_capInsets);
             }
@@ -138,7 +138,7 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
         case TextureResType::PLIST:
             if (_scale9Enabled)
             {
-                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
+                Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
                 imageRendererScale9->initWithSpriteFrameName(fileName);
                 imageRendererScale9->setCapInsets(_capInsets);
             }
@@ -210,7 +210,7 @@ void ImageView::setScale9Enabled(bool able)
     _imageRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _imageRenderer = extension::Scale9Sprite::create();
+        _imageRenderer = Scale9Sprite::create();
     }
     else
     {
@@ -298,7 +298,7 @@ void ImageView::imageTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_contentSize);
+            static_cast<Scale9Sprite*>(_imageRenderer)->setPreferredSize(_contentSize);
         }
         else
         {
