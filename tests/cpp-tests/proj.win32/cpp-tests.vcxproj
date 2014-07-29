@@ -570,7 +570,7 @@
     <ProjectReference Include="..\..\..\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
       <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
+    <ProjectReference Include="..\..\..\cocos\editor-support\spine\proj.win32\libspine.vcxproj">
       <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\cocos\network\proj.win32\libNetwork.vcxproj">
