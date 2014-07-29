@@ -125,7 +125,7 @@ static const char* s_testArray[] =
     "UIFocusTest-NestedLayout3",
     "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    "UIVideoPlayerTest"
+    "UIVideoPlayerTest",
 #endif
     "UIScale9SpriteTest",
     "UIScale9SpriteHierarchialTest",
