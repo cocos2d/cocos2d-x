@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1A6FB50417854BC200CDF010"
-               BuildableName = "libluabindings Mac.a"
-               BlueprintName = "luabindings Mac"
-               ReferencedContainer = "container:cocos2d_lua_bindings.xcodeproj">
+               BlueprintIdentifier = "A035ACBB1782469700987F6C"
+               BuildableName = "build all tests Mac"
+               BlueprintName = "build all tests Mac"
+               ReferencedContainer = "container:cocos2d_tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,10 +42,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1A6FB50417854BC200CDF010"
-            BuildableName = "libluabindings Mac.a"
-            BlueprintName = "luabindings Mac"
-            ReferencedContainer = "container:cocos2d_lua_bindings.xcodeproj">
+            BlueprintIdentifier = "A035ACBB1782469700987F6C"
+            BuildableName = "build all tests Mac"
+            BlueprintName = "build all tests Mac"
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1A6FB50417854BC200CDF010"
-            BuildableName = "libluabindings Mac.a"
-            BlueprintName = "luabindings Mac"
-            ReferencedContainer = "container:cocos2d_lua_bindings.xcodeproj">
+            BlueprintIdentifier = "A035ACBB1782469700987F6C"
+            BuildableName = "build all tests Mac"
+            BlueprintName = "build all tests Mac"
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

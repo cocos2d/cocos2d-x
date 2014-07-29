@@ -936,6 +936,12 @@ Developers:
     yongkangchen
         Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
         Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
+        
+    wagulu
+        Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
     
 Retired Core Developers:
     WenSheng Yang

@@ -23,14 +23,14 @@
     <ClCompile Include="..\WebSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\2d\cocos2d.vcxproj">
+    <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>libNetwork</ProjectName>
+    <ProjectName>libnetwork</ProjectName>
     <ProjectGuid>{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}</ProjectGuid>
-    <RootNamespace>network.win32</RootNamespace>
+    <RootNamespace>libnetwork.win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

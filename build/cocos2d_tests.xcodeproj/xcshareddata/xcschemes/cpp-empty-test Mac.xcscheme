@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1A6FB50417854BC200CDF010"
-               BuildableName = "libluabindings Mac.a"
-               BlueprintName = "luabindings Mac"
-               ReferencedContainer = "container:cocos2d_lua_bindings.xcodeproj">
+               BlueprintIdentifier = "1A0EE1C618CDF6DA004CD58F"
+               BuildableName = "cpp-empty-test Mac.app"
+               BlueprintName = "cpp-empty-test Mac"
+               ReferencedContainer = "container:cocos2d_tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "1A0EE1C618CDF6DA004CD58F"
+            BuildableName = "cpp-empty-test Mac.app"
+            BlueprintName = "cpp-empty-test Mac"
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,15 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1A6FB50417854BC200CDF010"
-            BuildableName = "libluabindings Mac.a"
-            BlueprintName = "luabindings Mac"
-            ReferencedContainer = "container:cocos2d_lua_bindings.xcodeproj">
+            BlueprintIdentifier = "1A0EE1C618CDF6DA004CD58F"
+            BuildableName = "cpp-empty-test Mac.app"
+            BlueprintName = "cpp-empty-test Mac"
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -57,15 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1A6FB50417854BC200CDF010"
-            BuildableName = "libluabindings Mac.a"
-            BlueprintName = "luabindings Mac"
-            ReferencedContainer = "container:cocos2d_lua_bindings.xcodeproj">
+            BlueprintIdentifier = "1A0EE1C618CDF6DA004CD58F"
+            BuildableName = "cpp-empty-test Mac.app"
+            BlueprintName = "cpp-empty-test Mac"
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
