@@ -150,7 +150,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B57CF53F-2E49-4031-9822-047CC0E6BDE2}</ProjectGuid>
-    <RootNamespace>libCocosStudio</RootNamespace>
+    <RootNamespace>libcocostudio</RootNamespace>
     <ProjectName>libcocostudio</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

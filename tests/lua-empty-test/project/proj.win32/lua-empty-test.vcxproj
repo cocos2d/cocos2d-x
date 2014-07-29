@@ -184,7 +184,7 @@ xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\.
     <ProjectReference Include="..\..\..\..\cocos\editor-support\cocosbuilder\proj.win32\libcocosbuilder.vcxproj">
       <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
+    <ProjectReference Include="..\..\..\..\cocos\editor-support\cocostudio\proj.win32\libcocostudio.vcxproj">
       <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win32\libspine.vcxproj">
