@@ -62,6 +62,49 @@ namespace ui {
     
     void Scale9Sprite::cleanupSlicedSprites()
     {
+        if (_topLeft)
+        {
+            _topLeft->onExit();
+        }
+        if (_top)
+        {
+            _top->onExit();
+        }
+        if (_topRight)
+        {
+            _topRight->onExit();
+        }
+        
+        if (_left)
+        {
+            _left->onExit();
+        }
+        
+        if (_centre)
+        {
+            _centre->onExit();
+        }
+        
+        if (_right)
+        {
+            _right->onExit();
+        }
+        
+        if (_bottomLeft)
+        {
+            _bottomLeft->onExit();
+        }
+        
+        if (_bottomRight)
+        {
+            _bottomRight->onExit();
+        }
+        
+        if (_bottom)
+        {
+            _bottom->onExit();
+        }
+        
         CC_SAFE_RELEASE(_topLeft);
         CC_SAFE_RELEASE(_top);
         CC_SAFE_RELEASE(_topRight);
@@ -722,10 +765,6 @@ y+=ytranslate;                       \
             }
         }
         
-        
-        
-        
-        
         //
         // draw self
         //
@@ -742,7 +781,6 @@ y+=ytranslate;                       \
                 _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
         }
-        
         
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
@@ -882,21 +920,22 @@ y+=ytranslate;                       \
         _displayedColor.b = _realColor.b * parentColor.b/255.0;
         updateColor();
         
-        if (_scale9Image) {
+        if (_scale9Image)
+        {
             _scale9Image->updateDisplayedColor(_displayedColor);
         }
         
-        for(const auto &child : _protectedChildren){
+        for(const auto &child : _protectedChildren)
+        {
             child->updateDisplayedColor(_displayedColor);
         }
         
         if (_cascadeColorEnabled)
         {
-            for(const auto &child : _children){
+            for(const auto &child : _children)
+            {
                 child->updateDisplayedColor(_displayedColor);
             }
-            
-            
         }
     }
     
@@ -905,33 +944,37 @@ y+=ytranslate;                       \
         _displayedOpacity = _realOpacity * parentOpacity/255.0;
         updateColor();
         
-        if (_scale9Image) {
+        if (_scale9Image)
+        {
             _scale9Image->updateDisplayedOpacity(_displayedOpacity);
         }
         
-        for(auto child : _protectedChildren){
+        for(auto child : _protectedChildren)
+        {
             child->updateDisplayedOpacity(_displayedOpacity);
         }
         
         if (_cascadeOpacityEnabled)
         {
-            for(auto child : _children){
+            for(auto child : _children)
+            {
                 child->updateDisplayedOpacity(_displayedOpacity);
             }
-            
-            
         }
     }
     
     void Scale9Sprite::disableCascadeColor()
     {
-        for(auto child : _children){
+        for(auto child : _children)
+        {
             child->updateDisplayedColor(Color3B::WHITE);
         }
-        for(auto child : _protectedChildren){
+        for(auto child : _protectedChildren)
+        {
             child->updateDisplayedColor(Color3B::WHITE);
         }
-        if (_scale9Image) {
+        if (_scale9Image)
+        {
             _scale9Image->updateDisplayedColor(Color3B::WHITE);
         }
     }
@@ -944,20 +987,32 @@ y+=ytranslate;                       \
     void Scale9Sprite::setFlippedX(bool flippedX)
     {
         _flippedX = flippedX;
-        if (_scale9Enabled) {
+        if (_scale9Enabled)
+        {
             this->setScaleX(-1);
-        }else{
-            _scale9Image->setFlippedX(flippedX);
+        }
+        else
+        {
+            if (_scale9Image)
+            {
+                _scale9Image->setFlippedX(flippedX);
+            }
         }
     }
     
     void Scale9Sprite::setFlippedY(bool flippedY)
     {
         _flippedY = flippedY;
-        if (_scale9Enabled) {
+        if (_scale9Enabled)
+        {
             this->setScaleY(-1);
-        }else{
-            _scale9Image->setFlippedY(flippedY);
+        }
+        else
+        {
+            if (_scale9Image)
+            {
+                _scale9Image->setFlippedY(flippedY);
+            }
         }
     }
     

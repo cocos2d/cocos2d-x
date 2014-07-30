@@ -246,7 +246,7 @@ namespace ui {
         
         // overrides
         virtual void setContentSize(const Size & size) override;
-        
+
         
         Size getOriginalSize() const;
         void setPreferredSize(const Size& size);
