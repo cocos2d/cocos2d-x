@@ -39,14 +39,6 @@ enum
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,
-    /*
-    kUIPotentiometerTest,
-     */
-    /*
-    kUISwitchTest_Horizontal,
-    kUISwitchTest_Vertical,
-    kUISwitchTest_VerticalAndTitleVertical,
-     */
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
     kUIImageViewTest_ContentSize,
@@ -54,15 +46,6 @@ enum
     kUILoadingBarTest_Right,
     kUILoadingBarTest_Left_Scale9,
     kUILoadingBarTest_Right_Scale9,
-    /*
-    kUIProgressTimerTest_Radial,
-    kUIProgressTimerTest_Horizontal,
-    kUIProgressTimerTest_Vertical,
-    kUIProgressTimerTest_RadialMidpointChanged,
-    kUIProgressTimerTest_BarVarious,
-    kUIProgressTimerTest_BarTintAndFade,
-    kUIProgressTimerTest_WithSpriteFrame,
-     */
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,
@@ -84,9 +67,6 @@ enum
     kUILayoutTest_Layout_Linear_Horizontal,
     kUILayoutTest_Layout_Relative_Align_Parent,
     kUILayoutTest_Layout_Relative_Location,
-    /*
-    kUILayoutTest_Layout_Grid,
-     */
     kUIScrollViewTest_Vertical,
     kUIScrollViewTest_Horizontal,
     kUIScrollViewTest_Both,
@@ -96,12 +76,6 @@ enum
     kUIPageViewButtonTest,
     kUIListViewTest_Vertical,
     kUIListViewTest_Horizontal,
-    /*
-    kUIGridViewTest_Mode_Column,
-    kUIGridViewTest_Mode_Row,
-    kUIPickerViewTest_Vertical,
-    kUIPickerViewTest_Horizontal,
-     */
     kUIWidgetAddNodeTest,
     kUIRichTextTest,
     KUIFocusTest_HBox,
@@ -113,6 +87,25 @@ enum
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif
+    kUIScale9SpriteTest,
+    kUIScale9SpriteHierarchialTest,
+    kUIScale9SpriteTouchTest,
+    kUIS9BatchNodeBasic,
+    kUIS9FrameNameSpriteSheet,
+    kUIS9FrameNameSpriteSheetRotated,
+    kUIS9BatchNodeScaledNoInsets,
+    kUIS9FrameNameSpriteSheetScaledNoInsets,
+    kUIS9FrameNameSpriteSheetRotatedScaledNoInsets,
+    kUIS9BatchNodeScaleWithCapInsets,
+    kUIS9FrameNameSpriteSheetInsets,
+    kUIS9FrameNameSpriteSheetInsetsScaled,
+    kUIS9FrameNameSpriteSheetRotatedInsets,
+    kUIS9_TexturePacker,
+    kUIS9FrameNameSpriteSheetRotatedInsetsScaled,
+    kUIS9FrameNameSpriteSheetRotatedSetCapInsetLater,
+    kUIS9CascadeOpacityAndColor,
+    kUIS9ZOrder,
+    kUIS9Flip,
     kUITestMax
 };
 
