@@ -146,7 +146,15 @@ void ImageView::setTextureRect(const Rect &rect)
     }
     else
     {
-       _imageRenderer->getSprite()->setTextureRect(rect);
+        auto sprite = _imageRenderer->getSprite();
+        if (sprite)
+        {
+            sprite->setTextureRect(rect);
+        }
+        else
+        {
+            CCLOG("Warning!! you should load texture before set the texture's rect!");
+        }
     }
 }
     
