@@ -344,6 +344,9 @@ public:
     /** creates the action */
     static RotateTo* create(float duration, float deltaAngle);
 
+    /** creates the action with 3D rotation angles */
+    static RotateTo* create(float duration, const Vec3& deltaAngle3D);
+
     //
     // Overrides
     //
@@ -353,12 +356,16 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    RotateTo() {}
+    RotateTo();
     virtual ~RotateTo() {}
 
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
     bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
+    bool initWithDuration(float duration, const Vec3& deltaAngle3D);
+
+    /** calculates the start and diff angles */
+    void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
     
 protected:
     float _dstAngleX;
@@ -368,6 +375,11 @@ protected:
     float _dstAngleY;
     float _startAngleY;
     float _diffAngleY;
+
+    bool _is3D;
+    Vec3 _dstAngle3D;
+    Vec3 _startAngle3D;
+    Vec3 _diffAngle3D;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateTo);

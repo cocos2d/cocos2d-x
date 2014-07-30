@@ -733,6 +733,29 @@ RotateTo* RotateTo::create(float duration, float deltaAngle)
     return rotateTo;
 }
 
+RotateTo* RotateTo::create(float duration, float deltaAngleX, float deltaAngleY)
+{
+    RotateTo* rotateTo = new RotateTo();
+    rotateTo->initWithDuration(duration, deltaAngleX, deltaAngleY);
+    rotateTo->autorelease();
+    
+    return rotateTo;
+}
+
+RotateTo* RotateTo::create(float duration, const Vec3& deltaAngle3D)
+{
+    RotateTo* rotateTo = new RotateTo();
+    rotateTo->initWithDuration(duration, deltaAngle3D);
+    rotateTo->autorelease();
+    
+    return rotateTo;
+}
+
+RotateTo::RotateTo()
+: _is3D(false)
+{
+}
+
 bool RotateTo::initWithDuration(float duration, float deltaAngle)
 {
     if (ActionInterval::initWithDuration(duration))
@@ -742,15 +765,6 @@ bool RotateTo::initWithDuration(float duration, float deltaAngle)
     }
 
     return false;
-}
-
-RotateTo* RotateTo::create(float duration, float deltaAngleX, float deltaAngleY)
-{
-    RotateTo* rotateTo = new RotateTo();
-    rotateTo->initWithDuration(duration, deltaAngleX, deltaAngleY);
-    rotateTo->autorelease();
-    
-    return rotateTo;
 }
 
 bool RotateTo::initWithDuration(float duration, float deltaAngleX, float deltaAngleY)
@@ -766,61 +780,72 @@ bool RotateTo::initWithDuration(float duration, float deltaAngleX, float deltaAn
     return false;
 }
 
+bool RotateTo::initWithDuration(float duration, const Vec3& deltaAngle3D)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _dstAngle3D = deltaAngle3D;
+        _is3D = true;
+        
+        return true;
+    }
+    
+    return false;
+}
+
 RotateTo* RotateTo::clone(void) const
 {
 	// no copy constructor
 	auto a = new RotateTo();
-	a->initWithDuration(_duration, _dstAngleX, _dstAngleY);
+    if(_is3D)
+	   a->initWithDuration(_duration, _dstAngle3D);
+    else
+        a->initWithDuration(_duration, _dstAngleX, _dstAngleY);
 	a->autorelease();
 	return a;
+}
+
+void RotateTo::calculateAngles(float &startAngle, float &diffAngle, float dstAngle)
+{
+    if (startAngle > 0)
+    {
+        startAngle = fmodf(startAngle, 360.0f);
+    }
+    else
+    {
+        startAngle = fmodf(startAngle, -360.0f);
+    }
+
+    diffAngle = dstAngle - startAngle;
+    if (diffAngle > 180)
+    {
+        diffAngle -= 360;
+    }
+    if (diffAngle < -180)
+    {
+        diffAngle += 360;
+    }
 }
 
 void RotateTo::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
     
-    // Calculate X
-    _startAngleX = target->getRotationSkewX();
-    if (_startAngleX > 0)
+    if (_is3D)
     {
-        _startAngleX = fmodf(_startAngleX, 360.0f);
+        _startAngle3D = _target->getRotation3D();
+
+        calculateAngles(_startAngle3D.x, _diffAngle3D.x, _dstAngle3D.x);
+        calculateAngles(_startAngle3D.y, _diffAngle3D.y, _dstAngle3D.y);
+        calculateAngles(_startAngle3D.z, _diffAngle3D.z, _dstAngle3D.z);
     }
     else
     {
-        _startAngleX = fmodf(_startAngleX, -360.0f);
-    }
+        _startAngleX = _target->getRotationSkewX();
+        _startAngleY = _target->getRotationSkewY();
 
-    _diffAngleX = _dstAngleX - _startAngleX;
-    if (_diffAngleX > 180)
-    {
-        _diffAngleX -= 360;
-    }
-    if (_diffAngleX < -180)
-    {
-        _diffAngleX += 360;
-    }
-    
-    //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
-    _startAngleY = _target->getRotationSkewY();
-
-    if (_startAngleY > 0)
-    {
-        _startAngleY = fmodf(_startAngleY, 360.0f);
-    }
-    else
-    {
-        _startAngleY = fmodf(_startAngleY, -360.0f);
-    }
-
-    _diffAngleY = _dstAngleY - _startAngleY;
-    if (_diffAngleY > 180)
-    {
-        _diffAngleY -= 360;
-    }
-
-    if (_diffAngleY < -180)
-    {
-        _diffAngleY += 360;
+        calculateAngles(_startAngleX, _diffAngleX, _dstAngleX);
+        calculateAngles(_startAngleY, _diffAngleY, _dstAngleY);
     }
 }
 
@@ -828,26 +853,37 @@ void RotateTo::update(float time)
 {
     if (_target)
     {
-#if CC_USE_PHYSICS
-        if (_startAngleX == _startAngleY && _diffAngleX == _diffAngleY)
+        if(_is3D)
         {
-            _target->setRotation(_startAngleX + _diffAngleX * time);
+            _target->setRotation3D(Vec3(
+                _startAngle3D.x + _diffAngle3D.x * time,
+                _startAngle3D.y + _diffAngle3D.y * time,
+                _startAngle3D.z + _diffAngle3D.z * time
+            ));
         }
         else
         {
-            // _startAngleX != _startAngleY || _diffAngleX != _diffAngleY
-            if (_target->getPhysicsBody() != nullptr)
+#if CC_USE_PHYSICS
+            if (_startAngleX == _startAngleY && _diffAngleX == _diffAngleY)
             {
-                CCLOG("RotateTo WARNING: PhysicsBody doesn't support skew rotation");
+                _target->setRotation(_startAngleX + _diffAngleX * time);
             }
-            
+            else
+            {
+                // _startAngleX != _startAngleY || _diffAngleX != _diffAngleY
+                if (_target->getPhysicsBody() != nullptr)
+                {
+                    CCLOG("RotateTo WARNING: PhysicsBody doesn't support skew rotation");
+                }
+                
+                _target->setRotationSkewX(_startAngleX + _diffAngleX * time);
+                _target->setRotationSkewY(_startAngleY + _diffAngleY * time);
+            }
+#else
             _target->setRotationSkewX(_startAngleX + _diffAngleX * time);
             _target->setRotationSkewY(_startAngleY + _diffAngleY * time);
-        }
-#else
-        _target->setRotationSkewX(_startAngleX + _diffAngleX * time);
-        _target->setRotationSkewY(_startAngleY + _diffAngleY * time);
 #endif // CC_USE_PHYSICS
+        }
     }
 }
 
