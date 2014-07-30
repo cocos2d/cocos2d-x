@@ -1019,6 +1019,8 @@
         "cocos/ui/UIRelativeBox.h", 
         "cocos/ui/UIRichText.cpp", 
         "cocos/ui/UIRichText.h", 
+        "cocos/ui/UIScale9Sprite.cpp", 
+        "cocos/ui/UIScale9Sprite.h", 
         "cocos/ui/UIScrollView.cpp", 
         "cocos/ui/UIScrollView.h", 
         "cocos/ui/UISlider.cpp", 
