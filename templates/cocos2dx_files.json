@@ -3560,6 +3560,12 @@
         "tools/fbx-conv/README.md", 
         "tools/fbx-conv/mac/fbx-conv", 
         "tools/fbx-conv/mac/libfbxsdk.dylib", 
+        "tools/gen-prebuilt/README.md", 
+        "tools/gen-prebuilt/build_config.json", 
+        "tools/gen-prebuilt/excopy.py", 
+        "tools/gen-prebuilt/gen_prebuilt_libs.py", 
+        "tools/gen-prebuilt/module_config.json", 
+        "tools/gen-prebuilt/module_organize.py", 
         "tools/particle/convert_YCoordFlipped.py"
     ], 
     "lua": [
