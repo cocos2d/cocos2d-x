@@ -8,7 +8,7 @@ local  fontList = {
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
-    "fonts/Schwarzwald Regular.ttf",
+    "fonts/Schwarzwald.ttf",
     "fonts/Scissor Cuts.ttf"
 }
 

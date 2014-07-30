@@ -428,7 +428,7 @@ int lua_cocos2dx_studio_NodeReader_getInstance(lua_State* L)
         tolua_pushusertype(L,(void*)ret, "ccs.NodeReader");
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getInstance",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.NodeReader:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -471,7 +471,7 @@ int lua_cocos2dx_studio_ActionTimelineCache_getInstance(lua_State* L)
         tolua_pushusertype(L,(void*)ret, "ccs.ActionTimelineCache");
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getInstance",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ActionTimelineCache:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:

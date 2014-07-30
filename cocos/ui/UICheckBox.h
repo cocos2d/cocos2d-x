@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UICHECKBOX_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +47,7 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 *   @js NA
 *   @lua NA
 */
-class CheckBox : public Widget
+class CC_GUI_DLL CheckBox : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO

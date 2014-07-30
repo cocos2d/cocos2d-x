@@ -26,12 +26,12 @@ THE SOFTWARE.
 #define __CCSSCENEREADER_H__
 
 #include "cocostudio/DictionaryHelper.h"
-
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
 
-class SceneReader
+class CC_STUDIO_DLL SceneReader
 {
 public:
 

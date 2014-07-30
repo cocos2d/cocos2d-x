@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>libBox2D</ProjectName>
+    <ProjectName>libbox2d</ProjectName>
     <ProjectGuid>{929480E7-23C0-4DF6-8456-096D71547116}</ProjectGuid>
-    <RootNamespace>Box2D.win32</RootNamespace>
+    <RootNamespace>libbox2d.win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

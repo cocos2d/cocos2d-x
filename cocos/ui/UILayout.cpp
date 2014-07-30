@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCDirector.h"
@@ -577,7 +577,7 @@ void Layout::onSizeChanged()
         _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
+            static_cast<Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
         }
     }
     if (_colorRender)
@@ -623,7 +623,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     _bgImageTexType = texType;
     if (_backGroundScale9Enabled)
     {
-        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
+        Scale9Sprite* bgiScale9 = static_cast<Scale9Sprite*>(_backGroundImage);
         switch (_bgImageTexType)
         {
             case TextureResType::LOCAL:
@@ -661,7 +661,7 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     _backGroundImageCapInsets = capInsets;
     if (_backGroundScale9Enabled && _backGroundImage)
     {
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
+        static_cast<Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
     
@@ -708,9 +708,9 @@ void Layout::addBackGroundImage()
 {
     if (_backGroundScale9Enabled)
     {
-        _backGroundImage = extension::Scale9Sprite::create();
+        _backGroundImage = Scale9Sprite::create();
         addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
+        static_cast<Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
     }
     else
     {
@@ -947,6 +947,12 @@ void Layout::setLayoutType(Type type)
 Layout::Type Layout::getLayoutType() const
 {
     return _layoutType;
+}
+
+void Layout::forceDoLayout()
+{
+    this->requestDoLayout();
+    this->doLayout();
 }
     
 void Layout::requestDoLayout()

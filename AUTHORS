@@ -530,6 +530,7 @@ Developers:
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
         fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
         Fixed a bug that Websocket doesn't support send/receive data which larger than 4096 bytes.
+        Show detail class & function name in error message of lua-binding
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
@@ -658,6 +659,7 @@ Developers:
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
         Added HttpClient::sendImmediate()
         Added operator == != for Value
+        Replace dynamic_cast to std::is_base_of in object_to_luaval
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -797,6 +799,8 @@ Developers:
         Adds support for get response when Activity's onActivityResult is triggered
         Improve Android projects
         Android jni error clear & more readable log
+        Add support of software PVRTC v1 decompression
+        Fixed a bug that ttf font have not effect on Mac OS X
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -829,6 +833,7 @@ Developers:
         HttpRequest uses std::function as callback
         EditBox: mac secure input
         Fix a bug that can not get/set text in password mode on Mac OS X
+        Make sure TableView parents are visible before handling touch
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -904,6 +909,7 @@ Developers:
     gin0606
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        Fix video scale issue in iOS
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
@@ -923,6 +929,19 @@ Developers:
     chenguangqi
         Fixed a compiling error on Android
         Fixed an error when importing project using Eclipse on Android
+        
+    uorbe001
+        Allow setting bundle to use in file utils on iOS and Mac OS X
+        
+    yongkangchen
+        Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
+        Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
+        
+    wagulu
+        Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
     
 Retired Core Developers:
     WenSheng Yang

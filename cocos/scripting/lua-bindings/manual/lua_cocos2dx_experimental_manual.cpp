@@ -35,7 +35,7 @@ static int lua_cocos2dx_experimental_TMXLayer_getTileGIDAt(lua_State* tolua_S)
     {
         cocos2d::Vec2 arg0;
         
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0);
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "ccexp.TMXLayer:getTileGIDAt");
         if(!ok)
             return 0;
         int ret = cobj->getTileGIDAt(arg0);
@@ -48,8 +48,8 @@ static int lua_cocos2dx_experimental_TMXLayer_getTileGIDAt(lua_State* tolua_S)
         cocos2d::Vec2 arg0;
         int arg1 = 0;
         
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0);
-        ok &= luaval_to_int32(tolua_S, 3, &arg1);
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "ccexp.TMXLayer:getTileGIDAt");
+        ok &= luaval_to_int32(tolua_S, 3, &arg1, "ccexp.TMXLayer:getTileGIDAt");
         
         if(!ok)
             return 0;
@@ -59,7 +59,7 @@ static int lua_cocos2dx_experimental_TMXLayer_getTileGIDAt(lua_State* tolua_S)
         tolua_pushnumber(tolua_S,(lua_Number)arg1);
         return 2;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getTileGIDAt",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:getTileGIDAt",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1

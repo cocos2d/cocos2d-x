@@ -142,6 +142,10 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+-- @function [parent=#Layout] forceDoLayout 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
 -- @return int#int ret (return value: int)
