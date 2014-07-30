@@ -42,6 +42,7 @@ class Texture2D;
 class MeshSkin;
 class AttachNode;
 class SubMeshState;
+class Skeleton3D;
 
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
@@ -109,6 +110,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     Mesh*                        _mesh;//mesh
     MeshSkin*                    _skin;//skin
+    Skeleton3D*                  _skeleton; //skeleton
     
     std::vector<MeshCommand>     _meshCommands; //render command each for one submesh
     

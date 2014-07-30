@@ -49,43 +49,51 @@ class Data;
 class Bundle3D
 {
 public:
+    /**you can define yourself bundle and set it, use default bundle otherwise*/
+    static void setBundleInstance(Bundle3D* bundleInstance);
     
     static Bundle3D* getInstance();
     
     static void destroyInstance();
     
-	void clear();
+	virtual void clear();
 
     /**
      * load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
      * @param path File to be loaded
      * @return result of load
      */
-    bool load(const std::string& path);
+    virtual bool load(const std::string& path);
     
     /**
      * load mesh data from bundle
      * @param id The ID of the mesh, load the first Mesh in the bundle if it is empty
      */
-    bool loadMeshData(const std::string& id, MeshData* meshdata);
+    virtual bool loadMeshData(const std::string& id, MeshData* meshdata);
     
     /**
      * load skin data from bundle
      * @param id The ID of the skin, load the first Skin in the bundle if it is empty
      */
-    bool loadSkinData(const std::string& id, SkinData* skindata);
+    virtual bool loadSkinData(const std::string& id, SkinData* skindata);
     
     /**
      * load material data from bundle
      * @param id The ID of the material, load the first Material in the bundle if it is empty
      */
-    bool loadMaterialData(const std::string& id, MaterialData* materialdata);
+    virtual bool loadMaterialData(const std::string& id, MaterialData* materialdata);
     
     /**
      * load material data from bundle
      * @param id The ID of the animation, load the first animation in the bundle if it is empty
      */
-    bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
+    virtual bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
+    
+    /**
+     * load skeleton data from bundle
+     *
+     */
+    virtual bool loadSkeletonData(const std::string& id, Skeleton3DData* skeletondata);
 
 protected:
 
@@ -135,7 +143,6 @@ protected:
      */
     bool loadAnimationDataBinary(Animation3DData* animationdata);
 
-protected:
     /**
      * get define data type
      * @param str The type in string

@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "3d/CCAttachNode.h"
-#include "3d/CCMeshSkin.h"
+#include "3d/CCSkeleton3D.h"
 
 #include "2d/CCNode.h"
 

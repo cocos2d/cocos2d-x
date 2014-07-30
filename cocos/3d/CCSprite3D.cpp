@@ -31,6 +31,7 @@
 #include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCSubMeshState.h"
+#include "3d/CCSkeleton3D.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
@@ -95,7 +96,9 @@ bool Sprite3D::loadFromCache(const std::string& path)
             _subMeshStates.pushBack(submeshstate);
         }
         
-        _skin = MeshSkin::create(fullPath, "");
+        _skeleton = Skeleton3D::create(fullPath, "");
+        CC_SAFE_RETAIN(_skeleton);
+        _skin = MeshSkin::create(_skeleton, fullPath, "");
         CC_SAFE_RETAIN(_skin);
         
         genGLProgramState();
@@ -172,8 +175,9 @@ bool Sprite3D::loadFromC3x(const std::string& path)
     CC_SAFE_RETAIN(_mesh);
     //add mesh to cache
     MeshCache::getInstance()->addMesh(key, _mesh);
-    
-    _skin = MeshSkin::create(fullPath, "");
+    _skeleton = Skeleton3D::create(fullPath, "");
+    CC_SAFE_RETAIN(_skeleton);
+    _skin = MeshSkin::create(_skeleton, fullPath, "");
     CC_SAFE_RETAIN(_skin);
     
     MaterialData materialdata;
@@ -197,6 +201,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
 Sprite3D::Sprite3D()
 : _mesh(nullptr)
 , _skin(nullptr)
+, _skeleton(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
@@ -206,6 +211,7 @@ Sprite3D::~Sprite3D()
     _subMeshStates.clear();
     CC_SAFE_RELEASE_NULL(_mesh);
     CC_SAFE_RELEASE_NULL(_skin);
+    CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
 }
 
@@ -214,6 +220,7 @@ bool Sprite3D::initWithFile(const std::string &path)
     _subMeshStates.clear();
     CC_SAFE_RELEASE_NULL(_mesh);
     CC_SAFE_RELEASE_NULL(_skin);
+    CC_SAFE_RELEASE_NULL(_skeleton);
     
     if (loadFromCache(path))
         return true;
@@ -348,6 +355,9 @@ void Sprite3D::removeAllAttachNode()
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    if (_skeleton)
+        _skeleton->updateBoneMatrix();
+    
     GLProgramState* programstate = getGLProgramState();
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;

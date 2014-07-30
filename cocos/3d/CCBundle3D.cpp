@@ -143,6 +143,12 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
 
 Bundle3D* Bundle3D::_instance = nullptr;
 
+void Bundle3D::setBundleInstance(Bundle3D* bundleInstance)
+{
+    CC_SAFE_DELETE(_instance);
+    _instance = bundleInstance;
+}
+
 Bundle3D* Bundle3D::getInstance()
 {
     if (_instance == nullptr)
@@ -252,6 +258,14 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     {
         return loadAnimationDataJson(animationdata);
     }
+}
+
+bool Bundle3D::loadSkeletonData(const std::string& id, Skeleton3DData* skeletondata)
+{
+    skeletondata->resetData();
+    
+    //TODO
+    return true;
 }
 
 bool Bundle3D::loadJson(const std::string& path)

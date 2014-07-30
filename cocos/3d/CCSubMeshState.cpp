@@ -22,14 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCSubMesh.h"
-
 #include <list>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
 #include "3d/CCSubMeshState.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCSubMesh.h"
 
 #include "base/ccMacros.h"
 #include "base/CCEventCustom.h"
@@ -48,12 +48,14 @@ NS_CC_BEGIN
 SubMeshState::SubMeshState()
 : _visible(true)
 , _texture(nullptr)
+, _skin(nullptr)
 {
     
 }
 SubMeshState::~SubMeshState()
 {
     CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_skin);
 }
 
 SubMeshState* SubMeshState::create()
@@ -71,6 +73,16 @@ void SubMeshState::setTexture(Texture2D* tex)
         CC_SAFE_RETAIN(tex);
         CC_SAFE_RELEASE(_texture);
         _texture = tex;
+    }
+}
+
+void SubMeshState::setSkin(MeshSkin* skin)
+{
+    if (_skin != skin)
+    {
+        CC_SAFE_RETAIN(skin);
+        CC_SAFE_RELEASE(_skin);
+        _skin = skin;
     }
 }
 

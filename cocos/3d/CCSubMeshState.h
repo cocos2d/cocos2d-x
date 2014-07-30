@@ -38,6 +38,7 @@
 NS_CC_BEGIN
 
 class Texture2D;
+class MeshSkin;
 /** 
  * SubMeshState: visibility and apperence of submesh
  */
@@ -55,6 +56,10 @@ public:
     /**visible getter and setter*/
     void setVisible(bool visible) { _visible = visible; }
     bool isVisible() const { return _visible; }
+    
+    /**skin getter and setter*/
+    void setSkin(MeshSkin* skin);
+    MeshSkin* getSkin() const { return _skin; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -63,6 +68,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     Texture2D* _texture;  //texture that submesh is using
+    MeshSkin*  _skin;     //skin
     bool       _visible; // is the submesh visible
 };
 
