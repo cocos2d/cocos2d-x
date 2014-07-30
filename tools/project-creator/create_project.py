@@ -9,7 +9,7 @@ context = {
 "language"          : "undefined",
 "src_project_name"  : "undefined",
 "src_package_name"  : "undefined", 
-"dst_project_name"  : "undeifned",
+"dst_project_name"  : "undefined",
 "dst_package_name"  : "undefined",
 "src_project_path"  : "undefined",
 "dst_project_path"  : "undefined",
