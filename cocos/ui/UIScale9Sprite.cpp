@@ -390,6 +390,25 @@ y+=ytranslate;                       \
         this->_positionsAreDirty = true;
     }
     
+    void Scale9Sprite::setAnchorPoint(const cocos2d::Vec2 &anchorPoint)
+    {
+        Node::setAnchorPoint(anchorPoint);
+        
+        if (_scale9Enabled) {
+            for(const auto& node : _protectedChildren)
+            {
+                node->setAnchorPoint(anchorPoint);
+            }
+        }
+        else
+        {
+            if (_scale9Image) {
+                _scale9Image->setAnchorPoint(anchorPoint);
+            }
+            
+        }
+    }
+    
     void Scale9Sprite::updatePositions()
     {
         // Check that instances are non-NULL
@@ -866,7 +885,8 @@ y+=ytranslate;                       \
     void Scale9Sprite::adjustScale9ImagePosition()
     {
         if (_scale9Image) {
-            _scale9Image->setPosition(_scale9Image->getPosition() + Vec2(_originalSize.width/2, _originalSize.height/2));
+            _scale9Image->setPosition(_scale9Image->getPosition() + Vec2(_originalSize.width * _anchorPoint.x,
+                                                                         _originalSize.height * _anchorPoint.y));
         }
     }
     

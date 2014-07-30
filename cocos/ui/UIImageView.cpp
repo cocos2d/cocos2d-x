@@ -105,6 +105,8 @@ bool ImageView::init(const std::string &imageFileName, TextureResType texType)
 void ImageView::initRenderer()
 {
     _imageRenderer = Scale9Sprite::create();
+    _imageRenderer->setScale9Enabled(false);
+    
     addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 

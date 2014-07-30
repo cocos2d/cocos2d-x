@@ -246,7 +246,7 @@ namespace ui {
         
         // overrides
         virtual void setContentSize(const Size & size) override;
-
+        virtual void setAnchorPoint(const Vec2& anchorPoint) override;
         
         Size getOriginalSize() const;
         void setPreferredSize(const Size& size);
