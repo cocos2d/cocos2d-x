@@ -283,18 +283,18 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
         std::string curText = text;
         size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
-        std::string leftWords = Helper::utf8_substr(curText,0,leftLength);
-        std::string cutWords = Helper::utf8_substr(curText, leftLength, stringLength - leftLength);
+        std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
+        std::string cutWords = Helper::getSubStringOfUTF8String(curText, leftLength, stringLength - leftLength);
         if (leftLength > 0)
         {
             Label* leftRenderer = nullptr;
             if (fileExist)
             {
-                leftRenderer = Label::createWithTTF(Helper::utf8_substr(leftWords, 0, leftLength), fontName, fontSize);
+                leftRenderer = Label::createWithTTF(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
             }
             else
             {
-                leftRenderer = Label::createWithSystemFont(Helper::utf8_substr(leftWords, 0, leftLength), fontName, fontSize);
+                leftRenderer = Label::createWithSystemFont(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
             }
             if (leftRenderer)
             {

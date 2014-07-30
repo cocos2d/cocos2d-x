@@ -133,7 +133,7 @@ void UICCTextField::insertText(const char*  text, size_t len)
             {
                 long length = _maxLength - text_count;
                 
-                input_text = Helper::utf8_substr(input_text, 0, length);
+                input_text = Helper::getSubStringOfUTF8String(input_text, 0, length);
                 len  = input_text.length();
             }
         }
@@ -415,7 +415,7 @@ void TextField::setText(const std::string& text)
         long total = text_count + StringUtils::getCharacterCountInUTF8String(getStringValue());
         if (total > max)
         {
-            strText = Helper::utf8_substr(strText, 0, max);
+            strText = Helper::getSubStringOfUTF8String(strText, 0, max);
         }
     }
     

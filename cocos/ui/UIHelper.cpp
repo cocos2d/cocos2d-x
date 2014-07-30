@@ -109,7 +109,7 @@ Widget* Helper::seekActionWidgetByActionTag(Widget* root, int tag)
 	return nullptr;
 }
     
-std::string Helper::utf8_substr(const std::string& str, std::string::size_type start, std::string::size_type length)
+std::string Helper::getSubStringOfUTF8String(const std::string& str, std::string::size_type start, std::string::size_type length)
 {
     if (length==0)
     {

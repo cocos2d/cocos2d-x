@@ -26,12 +26,12 @@ bool UIRichTextTest::init()
               str1.c_str(),
               str1.length(),
               StringUtils::getCharacterCountInUTF8String(str1),
-              Helper::utf8_substr(str1, 0, 5).c_str());
+              Helper::getSubStringOfUTF8String(str1, 0, 5).c_str());
         CCLOG("str2:%s ascii length = %ld, utf8 length = %ld, substr = %s",
               str2.c_str(),
               str2.length(),
               StringUtils::getCharacterCountInUTF8String(str2),
-              Helper::utf8_substr(str2, 0, 2).c_str());
+              Helper::getSubStringOfUTF8String(str2, 0, 2).c_str());
         
         // Add the alert
         Text *alert = Text::create("RichText", "fonts/Marker Felt.ttf", 30);
