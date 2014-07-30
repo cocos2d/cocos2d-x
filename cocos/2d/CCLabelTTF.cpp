@@ -280,7 +280,9 @@ const Size& LabelTTF::getContentSize() const
 
 Rect LabelTTF::getBoundingBox() const
 {
-    return _renderLabel->getBoundingBox();
+    Size size = getContentSize();
+    Rect rect = Node::getBoundingBox();
+    return rect;
 }
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
