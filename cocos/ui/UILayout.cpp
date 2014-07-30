@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "ui/UILayoutManager.h"
 #include "2d/CCDrawNode.h"
 #include "2d/CCLayer.h"
-#include "CCGLView.h"
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
 

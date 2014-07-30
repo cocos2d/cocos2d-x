@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCTextureCache.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <jni.h>
@@ -60,7 +60,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     auto glview = director->getOpenGLView();
     if (!glview)
     {
-        glview = cocos2d::GLView::create("Android app");
+        glview = cocos2d::GLViewImpl::create("Android app");
         glview->setFrameSize(w, h);
         director->setOpenGLView(glview);
 
