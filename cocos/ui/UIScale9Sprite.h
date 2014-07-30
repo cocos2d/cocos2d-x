@@ -262,7 +262,7 @@ namespace ui {
         void setInsetBottom(float bottomInset);
         float getInsetBottom()const;
         void setScale9Enabled(bool enabled);
-        bool getScale9Enabled()const;
+        bool isScale9Enabled()const;
         
         
         

@@ -798,7 +798,7 @@ y+=ytranslate;                       \
         _reorderProtectedChildDirty = true;
     }
     
-    bool Scale9Sprite::getScale9Enabled() const
+    bool Scale9Sprite::isScale9Enabled() const
     {
         return _scale9Enabled;
     }
