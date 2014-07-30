@@ -212,7 +212,11 @@ void Director::setDefaultValues(void)
     _displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
 
     // GL projection
+#if DIRECTX_ENABLED == 1
+	std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("2d")).asString();
+#else
     std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("3d")).asString();
+#endif
     if (projection == "3d")
         _projection = Projection::_3D;
     else if (projection == "2d")
@@ -605,6 +609,10 @@ void Director::setProjection(Projection projection)
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if (DIRECTX_ENABLED == 1)
+			if (size.width == 0)
+				size.width = 1;
+			if (size.height == 0)
+				size.height = 1;
 			auto m = DirectX::XMMatrixOrthographicOffCenterLH(0, size.width, 0, size.height, -1024, 1024);			
 			Mat4 orthoMatrix((float*)m.r);		
 			orthoMatrix.transpose();
