@@ -339,9 +339,12 @@ void Slider::setPercent(int percent)
     else
     {
         Sprite* spriteRenderer = _progressBarRenderer->getSprite();
-        Rect rect = spriteRenderer->getTextureRect();
-        rect.size.width = _progressBarTextureSize.width * res;
-        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
+        
+        if (nullptr != spriteRenderer) {
+            Rect rect = spriteRenderer->getTextureRect();
+            rect.size.width = _progressBarTextureSize.width * res;
+            spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
+        }
     }
 }
     
