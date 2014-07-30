@@ -1,4 +1,5 @@
 cocos2d-x-3.3  ??
+    [NEW]           Added UIScale9Sprite
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
     getFileSize()
     [NEW]           FileUtilsApple: allow setting bundle to use in file utils on iOS and Mac OS X
