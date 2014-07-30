@@ -105,15 +105,17 @@ class IndexData : public Ref
 public:
     static IndexData* create(IndexBuffer* buffer, int start, int count);
     
+    IndexBuffer* getIndexBuffer() const { return _buffer; }
+    int getStart() const { return _start; }
+    int getCount() const { return _count; }
 protected:
     IndexData();
     virtual ~IndexData();
     
-    void init(IndexBuffer* buffer, int start, int count);
+    bool init(IndexBuffer* buffer, int start, int count);
 protected:
     IndexBuffer* _buffer;
-public:
-    int _offset;
+    int _start;
     int _count;
 };
 

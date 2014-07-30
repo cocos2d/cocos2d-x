@@ -1242,6 +1242,14 @@
 		B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */; };
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
+		B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
+		B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
+		B276EF611988D1D500CD400F /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */; };
+		B276EF621988D1D500CD400F /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */; };
+		B276EF631988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */; };
+		B276EF641988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */; };
+		B276EF651988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */; };
+		B276EF661988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */; };
 		B27AEE0219768934008BD575 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
 		B282B4801980E08F00666787 /* CCEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */; };
 		B282B4811980E0A300666787 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */; };
@@ -2898,6 +2906,10 @@
 		B24EEA7619775ECE004493CC /* libcocosbuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocosbuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24EEA7E19775EE1004493CC /* libspine iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libspine iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24EEA8619775EF3004493CC /* libnetwork iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libnetwork iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexData.h; sourceTree = "<group>"; };
+		B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexData.cpp; sourceTree = "<group>"; };
+		B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexBuffer.h; sourceTree = "<group>"; };
+		B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexBuffer.cpp; sourceTree = "<group>"; };
 		B282B47C1980E02B00666787 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplMac.mm; sourceTree = "<group>"; };
 		B282B47D1980E02B00666787 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		B29594AF1926D5D9003EEF37 /* ccShader_3D_Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Color.frag; sourceTree = "<group>"; };
@@ -4785,6 +4797,10 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */,
+				B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */,
+				B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */,
+				B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */,
 				50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */,
 				50ABBD651925AB4100A911A9 /* CCBatchCommand.h */,
 				50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */,
@@ -5138,6 +5154,7 @@
 				B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
 				50ABBEC11925AB6F00A911A9 /* CCValue.h in Headers */,
+				B276EF631988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				50ABBE871925AB6F00A911A9 /* ccMacros.h in Headers */,
 				50ABBE731925AB6F00A911A9 /* CCEventListenerMouse.h in Headers */,
 				1A570063180BC5A10088DEC7 /* CCAction.h in Headers */,
@@ -5148,6 +5165,7 @@
 				5034CA3B191D591100CE6051 /* ccShader_PositionColor.vert in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
+				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A01C69A18F57BE800EFE3A6 /* CCSet.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
@@ -5671,6 +5689,7 @@
 				50ABBDBC1925AB4100A911A9 /* CCTextureAtlas.h in Headers */,
 				50ABBE541925AB6F00A911A9 /* CCEventDispatcher.h in Headers */,
 				1A12775A18DFCC4F0005F345 /* CCTweenFunction.h in Headers */,
+				B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				50ABBD5F1925AB0000A911A9 /* Vec3.h in Headers */,
 				50ABBE921925AB6F00A911A9 /* CCPlatformMacros.h in Headers */,
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
@@ -5688,6 +5707,7 @@
 				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				50ABBEDA1925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50ABBDC01925AB4100A911A9 /* CCTextureCache.h in Headers */,
+				B276EF641988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
 				50ABC0201926664800A911A9 /* CCThread.h in Headers */,
 				1A01C69318F57BE800EFE3A6 /* CCDouble.h in Headers */,
@@ -6684,6 +6704,7 @@
 				1A570210180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				50ABBDB51925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				1A570214180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
+				B276EF651988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */,
 				50ABBE411925AB6F00A911A9 /* CCDirector.cpp in Sources */,
 				1A570221180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
 				1A570225180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
@@ -6738,6 +6759,7 @@
 				50ABBD481925AB0000A911A9 /* Mat4.cpp in Sources */,
 				50ABBD8F1925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				50ABBD441925AB0000A911A9 /* CCVertex.cpp in Sources */,
+				B276EF611988D1D500CD400F /* CCVertexIndexData.cpp in Sources */,
 				503DD8F71926B0DB00CD74DD /* CCIMEDispatcher.cpp in Sources */,
 				50ABBE751925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				50ABBE511925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
@@ -7100,11 +7122,13 @@
 				50ABBEB41925AB6F00A911A9 /* CCUserDefault.mm in Sources */,
 				1A1645B1191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				50ABBE3A1925AB6F00A911A9 /* CCData.cpp in Sources */,
+				B276EF661988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */,
 				1A1645B3191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				50ABBE7A1925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
 				B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */,
+				B276EF621988D1D500CD400F /* CCVertexIndexData.cpp in Sources */,
 				B6ACD898193D6693005E0B8A /* CCMeshSkin.cpp in Sources */,
 				B6ACD89F193DC0CC005E0B8A /* CCAnimate3D.cpp in Sources */,
 				B6AAF84219404E0D0069DE01 /* CCBundle3D.cpp in Sources */,

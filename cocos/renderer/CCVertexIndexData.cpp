@@ -116,19 +116,45 @@ VertexData::~VertexData()
 
 IndexData* IndexData::create(IndexBuffer* buffer, int start, int count)
 {
-    return nullptr;
+    IndexData* result = new (std::nothrow) IndexData();
+    if(result && result->init(buffer, start, count))
+    {
+        result->autorelease();
+        return result;
+    }
+    else
+    {
+        CC_SAFE_DELETE(result);
+        return nullptr;
+    }
 }
 
 IndexData::IndexData()
+: _buffer(nullptr)
+, _start(0)
+, _count(0)
 {
 }
 
 IndexData::~IndexData()
 {
+    CC_SAFE_RELEASE_NULL(_buffer);
 }
 
-void init(IndexBuffer* buffer, int start, int count)
+bool IndexData::init(IndexBuffer* buffer, int start, int count)
 {
+    if(count == 0)return false;
+    if(_buffer != buffer)
+    {
+        CC_SAFE_RELEASE_NULL(_buffer);
+        CC_SAFE_RETAIN(buffer);
+        _buffer = buffer;
+    }
+    
+    _start = start;
+    _count = count;
+    
+    return false;
 }
 
 NS_CC_END
