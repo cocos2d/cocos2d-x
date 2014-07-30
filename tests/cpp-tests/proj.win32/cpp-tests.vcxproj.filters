@@ -855,6 +855,9 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1579,6 +1582,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

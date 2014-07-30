@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIButton.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
@@ -163,9 +163,9 @@ void Button::setScale9Enabled(bool able)
     _buttonDisableRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _buttonNormalRenderer = extension::Scale9Sprite::create();
-        _buttonClickedRenderer = extension::Scale9Sprite::create();
-        _buttonDisableRenderer = extension::Scale9Sprite::create();
+        _buttonNormalRenderer = Scale9Sprite::create();
+        _buttonClickedRenderer = Scale9Sprite::create();
+        _buttonDisableRenderer = Scale9Sprite::create();
     }
     else
     {
@@ -230,7 +230,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalTexType = texType;
     if (_scale9Enabled)
     {
-        extension::Scale9Sprite* normalRendererScale9 = static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer);
+        Scale9Sprite* normalRendererScale9 = static_cast<Scale9Sprite*>(_buttonNormalRenderer);
         switch (_normalTexType)
         {
             case TextureResType::LOCAL:
@@ -278,7 +278,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     _pressedTexType = texType;
     if (_scale9Enabled)
     {
-        extension::Scale9Sprite* clickedRendererScale9 = static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer);
+        Scale9Sprite* clickedRendererScale9 = static_cast<Scale9Sprite*>(_buttonClickedRenderer);
         switch (_pressedTexType)
         {
             case TextureResType::LOCAL:
@@ -325,7 +325,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     _disabledTexType = texType;
     if (_scale9Enabled)
     {
-        extension::Scale9Sprite* disabledScale9 = static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer);
+        Scale9Sprite* disabledScale9 = static_cast<Scale9Sprite*>(_buttonDisableRenderer);
         switch (_disabledTexType)
         {
             case TextureResType::LOCAL:
@@ -376,7 +376,7 @@ void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
     {
         return;
     }
-    static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
+    static_cast<Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
 
 const Rect& Button::getCapInsetsNormalRenderer()const
@@ -391,7 +391,7 @@ void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
     {
         return;
     }
-    static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
+    static_cast<Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
 
 const Rect& Button::getCapInsetsPressedRenderer()const
@@ -406,7 +406,7 @@ void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
     {
         return;
     }
-    static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
+    static_cast<Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
 }
 
 const Rect& Button::getCapInsetsDisabledRenderer()const
@@ -605,7 +605,7 @@ void Button::normalTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_contentSize);
+            static_cast<Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_contentSize);
             _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
         }
         else
@@ -641,7 +641,7 @@ void Button::pressedTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_contentSize);
+            static_cast<Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_contentSize);
             _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
         }
         else
@@ -676,7 +676,7 @@ void Button::disabledTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_contentSize);
+            static_cast<Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_contentSize);
         }
         else
         {
