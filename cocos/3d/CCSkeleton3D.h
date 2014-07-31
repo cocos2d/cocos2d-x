@@ -40,7 +40,7 @@ NS_CC_BEGIN
 /**
  * Defines a basic hierachial structure of transformation spaces.
  */
-class Bone3D : public Ref
+class CC_DLL Bone3D : public Ref
 {
     friend class Skeleton3D;
     friend class MeshSkin;
@@ -183,7 +183,7 @@ protected:
  * Skeleton
  *
  */
-class Skeleton3D: public Ref
+class CC_DLL Skeleton3D: public Ref
 {
 public:
     

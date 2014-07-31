@@ -46,7 +46,7 @@ class Data;
  * c3t text file
  * c3b binary file
  */
-class Bundle3D
+class CC_DLL Bundle3D
 {
 public:
     /**you can define yourself bundle and set it, use default bundle otherwise*/
@@ -196,4 +196,4 @@ protected:
 
 NS_CC_END
 
-#endif // __CCANIMATE3D_H__
+#endif // __CCBUNDLE3D_H__
