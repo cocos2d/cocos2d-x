@@ -138,12 +138,12 @@ Bone3D* MeshSkin::getBoneByIndex(unsigned int index) const
 Bone3D* MeshSkin::getBoneByName(const std::string& id) const
 {
     //search from skin bones
-    for (auto it : _skinBones) {
+    for (const auto& it : _skinBones) {
         if (it->getName() == id)
             return it;
     }
     //search from node bones
-    for (auto it : _nodeBones) {
+    for (const auto& it : _nodeBones) {
         if (it->getName() == id )
             return it;
     }

@@ -38,7 +38,6 @@ AttachNode* AttachNode::create(Bone3D* attachBone)
     auto attachnode = new AttachNode();
     attachnode->_attachBone = attachBone;
     attachnode->autorelease();
-    
     return attachnode;
 }
 
