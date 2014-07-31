@@ -162,7 +162,7 @@ ssize_t Bone3D::getChildBoneCount() const
 {
     return _children.size();
 }
-Bone3D* Bone3D::getChildBoneByIndex(int index)
+Bone3D* Bone3D::getChildBoneByIndex(int index) const
 {
     return _children.at(index);
 }
@@ -220,7 +220,8 @@ void Bone3D::updateLocalMat()
             else
             {
                 float invTotal = 1.f / total;
-                for (auto it : _blendStates) {
+                for (const auto& it : _blendStates)
+                {
                     float weight = (it.weight * invTotal);
                     translate += it.localTranslate * weight;
                     scale.x += it.localScale.x * weight;
@@ -263,7 +264,7 @@ Skeleton3D* Skeleton3D::create(const std::string& filename, const std::string& n
 {
     //load skin here;
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-    std::string key = fullPath + "#" + name;
+    std::string key(fullPath + "#" + name);
     const auto skeletondata = Skeleton3DDataCache::getInstance()->getSkeletonData(key);
     if (skeletondata)
     {
@@ -313,7 +314,7 @@ bool Skeleton3D::initFromSkeletonData(const Skeleton3DData& skeletondata)
     
     setRootBone(getBoneByIndex(skeletondata.rootBoneIndex));
     if (_rootBone)
-    _rootBone->resetPose();
+        _rootBone->resetPose();
     
     return true;
 }

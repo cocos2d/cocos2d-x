@@ -110,7 +110,7 @@ public:
     /**get child bone count*/
     ssize_t getChildBoneCount() const;
     /**get child bone by index*/
-    Bone3D* getChildBoneByIndex(int index);
+    Bone3D* getChildBoneByIndex(int index) const;
     /**add child bone*/
     void addChildBone(Bone3D* bone);
     /**remove child bone by index*/

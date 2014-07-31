@@ -62,7 +62,9 @@ Mat4 AttachNode::getWorldToNodeTransform() const
         mat = parent->getWorldToNodeTransform() * _attachBone->getWorldMat() * getNodeToParentTransform();
     }
     else
+    {
         mat = _attachBone->getWorldMat() * getNodeToParentTransform();
+    }
     
     return mat;
 }

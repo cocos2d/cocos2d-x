@@ -105,30 +105,22 @@ struct SkinData
 
     void addSkinBoneNames(const std::string& name)
     {
-        for (auto iter : skinBoneNames)
-        {
-            if ((iter) == name)
-                return;
-        }
-        
-        skinBoneNames.push_back(name);
+        auto it = std::find(skinBoneNames.begin(), skinBoneNames.end(), name);
+        if (it == skinBoneNames.end())
+            skinBoneNames.push_back(name);
     }
     
     void addNodeBoneNames(const std::string& name)
     {
-        for (auto iter : nodeBoneNames)
-        {
-            if ((iter) == name)
-                return;
-        }
-        
-        nodeBoneNames.push_back(name);
+        auto it = std::find(nodeBoneNames.begin(), nodeBoneNames.end(), name);
+        if (it == nodeBoneNames.end())
+            nodeBoneNames.push_back(name);
     }
     
     int getSkinBoneNameIndex(const std::string& name)const
     {
         int i = 0;
-        for (auto iter : skinBoneNames)
+        for (const auto& iter : skinBoneNames)
         {
             if ((iter) == name)
                 return i;
@@ -140,13 +132,13 @@ struct SkinData
     int getBoneNameIndex(const std::string& name)const
     {
         int i = 0;
-        for (auto iter : skinBoneNames)
+        for (const auto& iter : skinBoneNames)
         {
             if ((iter) == name)
                 return i;
             i++;
         }
-        for(auto iter : nodeBoneNames)
+        for(const auto& iter : nodeBoneNames)
         {
             if (iter == name)
                 return i;
@@ -179,13 +171,9 @@ struct Skeleton3DData
     
     void addBoneNames(const std::string& name)
     {
-        for (auto iter : boneNames)
-        {
-            if ((iter) == name)
-                return;
-        }
-        
-        boneNames.push_back(name);
+        auto it = std::find(boneNames.begin(), boneNames.end(), name);
+        if (it == boneNames.end())
+            boneNames.push_back(name);
     }
     
     int getBoneNameIndex(const std::string& name)const
