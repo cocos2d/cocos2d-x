@@ -1012,13 +1012,14 @@ Layer* createParticleLayer(int nIndex)
         case 46: return new Issue3990();
         case 47: return new ParticleAutoBatching();
         case 48: return new ParticleVisibleTest();
+        case 49: return new ParticleResetTotalParticles();
         default:
             break;
     }
 
     return nullptr;
 }
-#define MAX_LAYER    49
+#define MAX_LAYER    50
 
 
 Layer* nextParticleAction()
@@ -2003,6 +2004,52 @@ std::string ParticleAutoBatching::title() const
 std::string ParticleAutoBatching::subtitle() const
 {
     return "All 10 particles should be drawin in one batch";
+}
+
+
+//
+// ParticleResetTotalParticles
+//
+void ParticleResetTotalParticles::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+    _color->setColor(Color3B::BLACK);
+    removeChild(_background, true);
+    _background = nullptr;
+    
+    auto p = ParticleFire::createWithTotalParticles(10);
+    this->addChild(p);
+    
+    auto add = MenuItemFont::create("add 10 particles",
+                                    [p](Ref*)->void
+                                    {
+                                        p->setTotalParticles(p->getTotalParticles() + 10 );
+                                    });
+    add->setPosition(Vec2(0, 25));
+    auto remove = MenuItemFont::create("remove 10 particles",
+                                       [p](Ref*)->void
+                                       {
+                                           int count = p->getTotalParticles() - 10;
+                                           if (count < 0) { count = 0; }
+                                           p->setTotalParticles(count);
+                                       });
+    remove->setPosition(Vec2(0, -25));
+    
+    auto menu = Menu::create(add, remove, nullptr);
+    menu->setPosition(Vec2(VisibleRect::center()));
+    this->addChild(menu);
+    
+}
+
+std::string ParticleResetTotalParticles::title() const
+{
+    return "reset total particles";
+}
+
+std::string ParticleResetTotalParticles::subtitle() const
+{
+    return "it should work as well";
 }
 
 //

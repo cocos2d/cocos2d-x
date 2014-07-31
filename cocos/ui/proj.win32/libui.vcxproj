@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CCProtectedNode.h" />
     <ClInclude Include="..\CocosGUI.h" />
     <ClInclude Include="..\GUIExport.h" />
     <ClInclude Include="..\UIButton.h" />
@@ -28,6 +27,7 @@
     <ClInclude Include="..\UIPageView.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
     <ClInclude Include="..\UIRichText.h" />
+    <ClInclude Include="..\UIScale9Sprite.h" />
     <ClInclude Include="..\UIScrollView.h" />
     <ClInclude Include="..\UISlider.h" />
     <ClInclude Include="..\UIText.h" />
@@ -38,7 +38,6 @@
     <ClInclude Include="..\UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CCProtectedNode.cpp" />
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
@@ -54,6 +53,7 @@
     <ClCompile Include="..\UIPageView.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
     <ClCompile Include="..\UIRichText.cpp" />
+    <ClCompile Include="..\UIScale9Sprite.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
     <ClCompile Include="..\UIText.cpp" />
@@ -64,16 +64,17 @@
     <ClCompile Include="..\UIWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
+    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\2d\cocos2d.vcxproj">
+    <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7E06E92C-537A-442B-9E4A-4761C84F8A1A}</ProjectGuid>
-    <RootNamespace>libGUI</RootNamespace>
+    <RootNamespace>libui</RootNamespace>
+    <ProjectName>libui</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -133,7 +134,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,7 +145,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_CONSTRUCTOR_ACCESS=public;_USEGUIDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USEGUIDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -154,7 +155,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

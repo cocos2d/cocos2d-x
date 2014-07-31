@@ -103,6 +103,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
     <Link>
@@ -338,6 +339,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCParticleSystem.cpp" />
     <ClCompile Include="CCParticleSystemQuad.cpp" />
     <ClCompile Include="CCProgressTimer.cpp" />
+    <ClCompile Include="CCProtectedNode.cpp" />
     <ClCompile Include="CCRenderTexture.cpp" />
     <ClCompile Include="CCScene.cpp" />
     <ClCompile Include="CCSprite.cpp" />
@@ -545,6 +547,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCParticleSystem.h" />
     <ClInclude Include="CCParticleSystemQuad.h" />
     <ClInclude Include="CCProgressTimer.h" />
+    <ClInclude Include="CCProtectedNode.h" />
     <ClInclude Include="CCRenderTexture.h" />
     <ClInclude Include="CCScene.h" />
     <ClInclude Include="CCSprite.h" />

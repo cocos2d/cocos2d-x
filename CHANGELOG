@@ -1,13 +1,16 @@
 cocos2d-x-3.3  ??
+    [NEW]           Added UIScale9Sprite
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
     getFileSize()
     [NEW]           FileUtilsApple: allow setting bundle to use in file utils on iOS and Mac OS X
     [NEW]           Image: support of software PVRTC v1 decompression
+    [NEW]           TextField: support utf8
 
     [FIX]           EditBox: font size is not scaled when glview is scaled on Mac OS X
     [FIX]           Label: can not set charmap after it is created
     [FIX]           Label: setTextColor does not have any effect on Mac OS X
     [FIX]           ParticleSystem: effect is wrong if scene scaled
+    [FIX]           ParticleSystemQuad: setTotalParticles() can't set a value larger than initialized value
     [FIX]           Scale9Sprite: new added sprite will be hidden
     [FIX]           UIListView: can not insert an item in specific position, it is added at bottom
     [FIX]           TabelView: can handle touch event though its parents are invisible

@@ -595,6 +595,9 @@
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp">
       <Filter>storage</Filter>
     </ClCompile>
+    <ClCompile Include="CCProtectedNode.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1209,6 +1212,9 @@
     </ClInclude>
     <ClInclude Include="..\storage\local-storage\LocalStorage.h">
       <Filter>storage</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProtectedNode.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
