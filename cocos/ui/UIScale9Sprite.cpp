@@ -62,58 +62,58 @@ namespace ui {
     
     void Scale9Sprite::cleanupSlicedSprites()
     {
-        if (_topLeft)
+        if (_topLeft && _top->isRunning())
         {
             _topLeft->onExit();
         }
-        if (_top)
+        if (_top && _top->isRunning())
         {
             _top->onExit();
         }
-        if (_topRight)
+        if (_topRight && _top->isRunning())
         {
             _topRight->onExit();
         }
         
-        if (_left)
+        if (_left && _top->isRunning())
         {
             _left->onExit();
         }
         
-        if (_centre)
+        if (_centre && _top->isRunning())
         {
             _centre->onExit();
         }
         
-        if (_right)
+        if (_right && _top->isRunning())
         {
             _right->onExit();
         }
         
-        if (_bottomLeft)
+        if (_bottomLeft && _top->isRunning())
         {
             _bottomLeft->onExit();
         }
         
-        if (_bottomRight)
+        if (_bottomRight && _top->isRunning())
         {
             _bottomRight->onExit();
         }
         
-        if (_bottom)
+        if (_bottom && _top->isRunning())
         {
             _bottom->onExit();
         }
         
-        CC_SAFE_RELEASE(_topLeft);
-        CC_SAFE_RELEASE(_top);
-        CC_SAFE_RELEASE(_topRight);
-        CC_SAFE_RELEASE(_left);
-        CC_SAFE_RELEASE(_centre);
-        CC_SAFE_RELEASE(_right);
-        CC_SAFE_RELEASE(_bottomLeft);
-        CC_SAFE_RELEASE(_bottom);
-        CC_SAFE_RELEASE(_bottomRight);
+        CC_SAFE_RELEASE_NULL(_topLeft);
+        CC_SAFE_RELEASE_NULL(_top);
+        CC_SAFE_RELEASE_NULL(_topRight);
+        CC_SAFE_RELEASE_NULL(_left);
+        CC_SAFE_RELEASE_NULL(_centre);
+        CC_SAFE_RELEASE_NULL(_right);
+        CC_SAFE_RELEASE_NULL(_bottomLeft);
+        CC_SAFE_RELEASE_NULL(_bottom);
+        CC_SAFE_RELEASE_NULL(_bottomRight);
     }
     
     bool Scale9Sprite::init()
@@ -188,8 +188,9 @@ y+=ytranslate;                       \
         _preferredSize = _originalSize;
         _capInsetsInternal = capInsets;
         
-        
-        this->createSlicedSprites(rect, rotated);
+        if (_scale9Enabled) {
+            this->createSlicedSprites(rect, rotated);
+        }
         
         this->setContentSize(rect.size);
         
@@ -852,6 +853,9 @@ y+=ytranslate;                       \
     void Scale9Sprite::setScale9Enabled(bool enabled)
     {
         _scale9Enabled = enabled;
+        if (!_scale9Enabled) {
+            this->cleanupSlicedSprites();
+        }
         _reorderProtectedChildDirty = true;
     }
     
@@ -885,8 +889,8 @@ y+=ytranslate;                       \
     void Scale9Sprite::adjustScale9ImagePosition()
     {
         if (_scale9Image) {
-            _scale9Image->setPosition(_scale9Image->getPosition() + Vec2(_originalSize.width * _anchorPoint.x,
-                                                                         _originalSize.height * _anchorPoint.y));
+            _scale9Image->setPosition(Vec2(_contentSize.width * _anchorPoint.x,
+                                                                         _contentSize.height * _anchorPoint.y));
         }
     }
     

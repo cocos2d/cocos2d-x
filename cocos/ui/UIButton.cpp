@@ -505,8 +505,9 @@ void Button::normalTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_contentSize);
+            _buttonNormalRenderer->setPreferredSize(_contentSize);
             _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize,_normalTextureScaleYInSize);
         }
         else
         {
@@ -541,8 +542,9 @@ void Button::pressedTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_contentSize);
+            _buttonClickedRenderer->setPreferredSize(_contentSize);
             _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
+            _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize,_pressedTextureScaleYInSize);
         }
         else
         {
@@ -576,7 +578,8 @@ void Button::disabledTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_contentSize);
+            _buttonDisableRenderer->setScale(1.0);
+            _buttonDisableRenderer->setPreferredSize(_contentSize);
         }
         else
         {

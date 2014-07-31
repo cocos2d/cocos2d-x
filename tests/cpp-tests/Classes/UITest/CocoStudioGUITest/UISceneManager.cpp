@@ -22,21 +22,7 @@
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
-/*
-#include "UISwitchTest/UISwitchTest.h"
- */
- /*
-#include "UIProgressTimerTest/UIProgressTimerTest.h"
- */
-/*
-#include "UIPotentiometerTest/UIPotentiometerTest.h"
- */
-/*
-#include "UIGridViewTest/UIGridViewTest.h"
- */
-/*
-#include "UIPickerViewTest/UIPickerViewTest.h"
- */
+
 
 USING_NS_CC;
 
@@ -47,17 +33,11 @@ static const char* s_testArray[] =
     "UIButtonTest_PressedAction",
     "UIButtonTest_Title",
     "UIButtonTest_RemoveSelf",
+    "UIButtonTestSwitchScale9",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
-    /*
-    "UIPotentiometerTest",
-     */
-    /*
-    "UISwitchTest_Horizontal",
-    "UISwitchTest_Vertical",
-    "UISwitchTest_VerticalAndTitleVertical",
-     */
+  
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
     "UIImageViewTest_ContentSize",
@@ -65,15 +45,7 @@ static const char* s_testArray[] =
     "UILoadingBarTest_Right",
     "UILoadingBarTest_Left_Scale9",
     "UILoadingBarTest_Right_Scale9",
-    /*
-    "UIProgressTimerTest_Radial",
-    "UIProgressTimerTest_Horizontal",
-    "UIProgressTimerTest_Vertical",
-    "UIProgressTimerTest_RadialMidpointChanged",
-    "UIProgressTimerTest_BarVarious",
-    "UIProgressTimerTest_BarTintAndFade",
-    "UIProgressTimerTest_WithSpriteFrame",
-     */
+  
     "UITextAtlasTest",
     "UITextTest",
     "UITextTest_LineWrap",
@@ -96,9 +68,7 @@ static const char* s_testArray[] =
     "UILayoutTest_Layout_Linear_Horizontal",
     "UILayoutTest_Layout_Relative_Align_Parent",
     "UILayoutTest_Layout_Relative_Location",
-    /*
-    "UILayoutTest_Layout_Grid",
-     */
+   
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
     "UIScrollViewTest_Both",
@@ -108,14 +78,7 @@ static const char* s_testArray[] =
     "UIPageViewButtonTest",
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
-    /*
-    "UIGridViewTest_Mode_Column",
-    "UIGridViewTest_Mode_Row",
-     */
-    /*
-    "UIPickerViewTest_Vertical",
-    "UIPickerViewTest_Horizontal",
-     */
+   
     "UIWidgetAddNodeTest",
     "UIRichTextTest",
     "UIFocusTest-HBox",
@@ -214,6 +177,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTest_Title::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTest_RemoveSelf:
             return UIButtonTestRemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTestSwitchScale9:
+            return UIButtonTestSwitchScale9::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
