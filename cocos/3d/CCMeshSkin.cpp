@@ -73,6 +73,7 @@ MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::string& filename, co
             {
                 auto skin = new MeshSkin();
                 skin->_skeleton = skeleton;
+                skeleton->retain();
                 skin->initFromSkinData(data);
                 skin->autorelease();
                 MeshSkinDataCache::getInstance()->addMeshSkinData(key, data);
