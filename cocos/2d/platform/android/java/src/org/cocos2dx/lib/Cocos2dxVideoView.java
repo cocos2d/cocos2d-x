@@ -638,6 +638,13 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         return 0;
     }
 
+    @Override
+    public int getAudioSessionId() {
+        //returns system mix default.
+        //TODO : fix properly
+        return 0;
+    }
+
     public void seekTo(int msec) {
         if (isInPlaybackState()) {
             mMediaPlayer.seekTo(msec);
