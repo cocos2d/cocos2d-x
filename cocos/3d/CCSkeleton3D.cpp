@@ -202,7 +202,7 @@ void Bone3D::updateLocalMat()
     if (_blendStates.size())
     {
         Vec3 translate(Vec3::ZERO), scale(Vec3::ZERO);
-        Quaternion quat(Quaternion::zero());
+        Quaternion quat(Quaternion::ZERO);
         
         float total = 0.f;
         for (auto it: _blendStates) {

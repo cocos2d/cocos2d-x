@@ -369,6 +369,9 @@ public:
      * @return This quaternion, after the multiplication occurs.
      */
     inline Quaternion& operator*=(const Quaternion& q);
+    
+    /** equals to Quaternion(0,0,0, 0) */
+    static const Quaternion ZERO;
 
 private:
 
