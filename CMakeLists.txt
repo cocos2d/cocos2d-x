@@ -58,7 +58,7 @@ option(BUILD_CppTests "Only build TestCpp sample" ON)
 option(BUILD_LuaTests "Only build TestLua sample" ON)
 endif()#temp
 
-
+#This is ignored on multi configuration IDE like MSVC
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
 else(DEBUG_MODE)

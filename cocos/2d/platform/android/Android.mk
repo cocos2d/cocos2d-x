@@ -31,13 +31,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../../math \
                     $(LOCAL_PATH)/../../../physics
 
-LOCAL_LDLIBS := -lGLESv1_CM \
-                -lGLESv2 \
-                -lEGL \
-                -llog \
-                -lz \
-                -landroid
-
 LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
                        -lGLESv2 \
                        -lEGL \
