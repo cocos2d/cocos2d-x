@@ -50,6 +50,7 @@ THE SOFTWARE.
 #endif
 #include "ui/UIDeprecated.h"
 #include "ui/GUIExport.h"
+#include "ui/UIScale9Sprite.h"
 
 
 NS_CC_BEGIN

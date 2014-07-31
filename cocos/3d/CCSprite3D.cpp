@@ -355,8 +355,8 @@ void Sprite3D::removeAllAttachNode()
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (_skeleton)
-        _skeleton->updateBoneMatrix();
+//    if (_skeleton)
+//        _skeleton->updateBoneMatrix();
     
     GLProgramState* programstate = getGLProgramState();
     Color4F color(getDisplayedColor());

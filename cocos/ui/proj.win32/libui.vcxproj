@@ -11,18 +11,76 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\LocalStorage.cpp" />
+    <ClInclude Include="..\CCProtectedNode.h" />
+    <ClInclude Include="..\CocosGUI.h" />
+    <ClInclude Include="..\GUIExport.h" />
+    <ClInclude Include="..\UIButton.h" />
+    <ClInclude Include="..\UICheckBox.h" />
+    <ClInclude Include="..\UIDeprecated.h" />
+    <ClInclude Include="..\UIHBox.h" />
+    <ClInclude Include="..\UIHelper.h" />
+    <ClInclude Include="..\UIImageView.h" />
+    <ClInclude Include="..\UILayout.h" />
+    <ClInclude Include="..\UILayoutManager.h" />
+    <ClInclude Include="..\UILayoutParameter.h" />
+    <ClInclude Include="..\UIListView.h" />
+    <ClInclude Include="..\UILoadingBar.h" />
+    <ClInclude Include="..\UIPageView.h" />
+    <ClInclude Include="..\UIRelativeBox.h" />
+    <ClInclude Include="..\UIRichText.h" />
+    <ClInclude Include="..\UIScale9Sprite.h" />
+    <ClInclude Include="..\UIScrollView.h" />
+    <ClInclude Include="..\UISlider.h" />
+    <ClInclude Include="..\UIText.h" />
+    <ClInclude Include="..\UITextAtlas.h" />
+    <ClInclude Include="..\UITextBMFont.h" />
+    <ClInclude Include="..\UITextField.h" />
+    <ClInclude Include="..\UIVBox.h" />
+    <ClInclude Include="..\UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\LocalStorage.h" />
+    <ClCompile Include="..\CCProtectedNode.cpp" />
+    <ClCompile Include="..\CocosGUI.cpp" />
+    <ClCompile Include="..\UIButton.cpp" />
+    <ClCompile Include="..\UICheckBox.cpp" />
+    <ClCompile Include="..\UIDeprecated.cpp" />
+    <ClCompile Include="..\UIHBox.cpp" />
+    <ClCompile Include="..\UIHelper.cpp" />
+    <ClCompile Include="..\UIImageView.cpp" />
+    <ClCompile Include="..\UILayout.cpp" />
+    <ClCompile Include="..\UILayoutManager.cpp" />
+    <ClCompile Include="..\UILayoutParameter.cpp" />
+    <ClCompile Include="..\UIListView.cpp" />
+    <ClCompile Include="..\UILoadingBar.cpp" />
+    <ClCompile Include="..\UIPageView.cpp" />
+    <ClCompile Include="..\UIRelativeBox.cpp" />
+    <ClCompile Include="..\UIRichText.cpp" />
+    <ClCompile Include="..\UIScale9Sprite.cpp" />
+    <ClCompile Include="..\UIScrollView.cpp" />
+    <ClCompile Include="..\UISlider.cpp" />
+    <ClCompile Include="..\UIText.cpp" />
+    <ClCompile Include="..\UITextAtlas.cpp" />
+    <ClCompile Include="..\UITextBMFont.cpp" />
+    <ClCompile Include="..\UITextField.cpp" />
+    <ClCompile Include="..\UIVBox.cpp" />
+    <ClCompile Include="..\UIWidget.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
+      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{632A8F38-D0F0-4D22-86B3-D69F5E6BF63A}</ProjectGuid>
-    <RootNamespace>libLocalStorage</RootNamespace>
+    <ProjectGuid>{7E06E92C-537A-442B-9E4A-4761C84F8A1A}</ProjectGuid>
+    <RootNamespace>libui</RootNamespace>
+    <ProjectName>libui</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
@@ -32,7 +90,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
@@ -47,11 +105,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+    <Import Project="..\..\2d\cocos2d_headers.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+    <Import Project="..\..\2d\cocos2d_headers.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -68,14 +126,17 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USEGUIDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,8 +147,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\sqlite3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_CONSTRUCTOR_ACCESS=public;_USEGUIDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
@@ -95,6 +156,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

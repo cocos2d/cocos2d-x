@@ -52,8 +52,7 @@ static std::function<Layer*()> createFunctions[] =
 #endif
     CL(Sprite3DWithSkinTest),
     CL(Animate3DTest),
-    CL(AttachmentTest),
-    CL(Sprite3DWithSubMeshTest)
+    CL(AttachmentTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -867,44 +866,4 @@ void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
         _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
     }
     _hasWeapon = !_hasWeapon;
-}
-
-Sprite3DWithSubMeshTest::Sprite3DWithSubMeshTest()
-{
-    auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSubMeshTest::onTouchesEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    auto s = Director::getInstance()->getWinSize();
-    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
-}
-std::string Sprite3DWithSubMeshTest::title() const
-{
-    return "Testing Sprite3D With SubMesh";
-}
-std::string Sprite3DWithSubMeshTest::subtitle() const
-{
-    return "Tap screen to add more sprite3D";
-}
-void Sprite3DWithSubMeshTest::addNewSpriteWithCoords(Vec2 p)
-{
-    std::string fileName = "Sprite3DTest/lanternfish.c3b";
-    auto sprite = Sprite3D::create(fileName);
-    sprite->setRotation3D(Vec3(0, 40, 0));
-    sprite->setScale(2.f);
-    addChild(sprite);
-    sprite->setPosition( Vec2( p.x, p.y) );
-    auto animation = Animation3D::create(fileName);
-    if (animation)
-    {
-        auto animate = Animate3D::create(animation);
-        sprite->runAction(RepeatForever::create(animate));
-    }
-}
-void Sprite3DWithSubMeshTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-{
-    for (auto touch: touches)
-    {
-        auto location = touch->getLocation();
-        addNewSpriteWithCoords(location);
-    }
 }
