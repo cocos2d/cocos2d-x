@@ -919,7 +919,7 @@ bool RotateBy::initWithDuration(float duration, float deltaAngle)
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _angleZ_X = _angleZ_Y = deltaAngle;
+        _deltaAngle.x = _deltaAngle.y = deltaAngle;
         return true;
     }
 
@@ -930,8 +930,8 @@ bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAn
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _angleZ_X = deltaAngleX;
-        _angleZ_Y = deltaAngleY;
+        _deltaAngle.x = deltaAngleX;
+        _deltaAngle.y = deltaAngleY;
         return true;
     }
     
@@ -942,7 +942,7 @@ bool RotateBy::initWithDuration(float duration, const Vec3& deltaAngle3D)
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _angle3D = deltaAngle3D;
+        _deltaAngle = deltaAngle3D;
         _is3D = true;
         return true;
     }
@@ -956,9 +956,9 @@ RotateBy* RotateBy::clone() const
 	// no copy constructor
 	auto a = new RotateBy();
     if(_is3D)
-        a->initWithDuration(_duration, _angle3D);
+        a->initWithDuration(_duration, _deltaAngle);
     else
-        a->initWithDuration(_duration, _angleZ_X, _angleZ_Y);
+        a->initWithDuration(_duration, _deltaAngle.x, _deltaAngle.y);
 	a->autorelease();
 	return a;
 }
@@ -968,12 +968,12 @@ void RotateBy::startWithTarget(Node *target)
     ActionInterval::startWithTarget(target);
     if(_is3D)
     {
-        _startAngle3D = target->getRotation3D();
+        _startAngle = target->getRotation3D();
     }
     else
     {
-        _startAngleZ_X = target->getRotationSkewX();
-        _startAngleZ_Y = target->getRotationSkewY();
+        _startAngle.x = target->getRotationSkewX();
+        _startAngle.y = target->getRotationSkewY();
     }
 }
 
@@ -985,32 +985,32 @@ void RotateBy::update(float time)
         if(_is3D)
         {
             Vec3 v;
-            v.x = _startAngle3D.x + _angle3D.x * time;
-            v.y = _startAngle3D.y + _angle3D.y * time;
-            v.z = _startAngle3D.z + _angle3D.z * time;
+            v.x = _startAngle.x + _deltaAngle.x * time;
+            v.y = _startAngle.y + _deltaAngle.y * time;
+            v.z = _startAngle.z + _deltaAngle.z * time;
             _target->setRotation3D(v);
         }
         else
         {
 #if CC_USE_PHYSICS
-            if (_startAngleZ_X == _startAngleZ_Y && _angleZ_X == _angleZ_Y)
+            if (_startAngle.x == _startAngle.y && _deltaAngle.x == _deltaAngle.y)
             {
-                _target->setRotation(_startAngleZ_X + _angleZ_X * time);
+                _target->setRotation(_startAngle.x + _deltaAngle.x * time);
             }
             else
             {
-                // _startAngleZ_X != _startAngleZ_Y || _angleZ_X != _angleZ_Y
+                // _startAngle.x != _startAngle.y || _deltaAngle.x != _deltaAngle.y
                 if (_target->getPhysicsBody() != nullptr)
                 {
                     CCLOG("RotateBy WARNING: PhysicsBody doesn't support skew rotation");
                 }
                 
-                _target->setRotationSkewX(_startAngleZ_X + _angleZ_X * time);
-                _target->setRotationSkewY(_startAngleZ_Y + _angleZ_Y * time);
+                _target->setRotationSkewX(_startAngle.x + _deltaAngle.x * time);
+                _target->setRotationSkewY(_startAngle.y + _deltaAngle.y * time);
             }
 #else
-            _target->setRotationSkewX(_startAngleZ_X + _angleZ_X * time);
-            _target->setRotationSkewY(_startAngleZ_Y + _angleZ_Y * time);
+            _target->setRotationSkewX(_startAngle.x + _deltaAngle.x * time);
+            _target->setRotationSkewY(_startAngle.y + _deltaAngle.y * time);
 #endif // CC_USE_PHYSICS
         }
     }
@@ -1021,12 +1021,15 @@ RotateBy* RotateBy::reverse() const
     if(_is3D)
     {
         Vec3 v;
-        v.x = - _angle3D.x;
-        v.y = - _angle3D.y;
-        v.z = - _angle3D.z;
+        v.x = - _deltaAngle.x;
+        v.y = - _deltaAngle.y;
+        v.z = - _deltaAngle.z;
         return RotateBy::create(_duration, v);
     }
-    return RotateBy::create(_duration, -_angleZ_X, -_angleZ_Y);
+    else
+    {
+        return RotateBy::create(_duration, -_deltaAngle.x, -_deltaAngle.y);
+    }
 }
 
 //

@@ -406,14 +406,9 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
 protected:
-    float _angleZ_X;
-    float _startAngleZ_X;
-    float _angleZ_Y;
-    float _startAngleZ_Y;
-
     bool _is3D;
-    Vec3 _angle3D;
-    Vec3 _startAngle3D;
+    Vec3 _deltaAngle;
+    Vec3 _startAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);
