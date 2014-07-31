@@ -72,5 +72,5 @@ void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t
 {
     Node::visit(renderer, parentTransform * _attachBone->getWorldMat(), Node::FLAGS_DIRTY_MASK);
 }
-
 NS_CC_END
+
