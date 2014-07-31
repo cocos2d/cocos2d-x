@@ -36,6 +36,7 @@ enum
     kUIButtonTest_PressedAction,
     kUIButtonTest_Title,
     kUIButtonTest_RemoveSelf,
+    kUIButtonTestSwitchScale9,
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,

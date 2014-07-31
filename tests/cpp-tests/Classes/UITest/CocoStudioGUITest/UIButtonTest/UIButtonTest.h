@@ -92,4 +92,17 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIButtonTestSwitchScale9 : public UIScene
+{
+public:
+    UIButtonTestSwitchScale9();
+    ~UIButtonTestSwitchScale9();
+    bool init();
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTestSwitchScale9)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */
