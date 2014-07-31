@@ -35,7 +35,6 @@
 
 using namespace cocos2d;
 
-
 static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int nLength)
 {
     if (NULL == pTable || nHandler <= 0) {
@@ -464,5 +463,4 @@ TOLUA_API int register_web_socket_manual(lua_State* tolua_S)
     
     return 1;
 }
-
 #endif//(CC_TARGET_PLATFORM == CC_PLATFORM_IOS ...

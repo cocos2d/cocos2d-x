@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -21,18 +21,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H
-#define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H
 
-#ifdef __cplusplus
-extern "C" {
+#ifndef __BASE_CC_MODULE_MANAGER__
+#define __BASE_CC_MODULE_MANAGER__
+
+#include <string>
+#include <unordered_map>
+#include <map>
+
+#include "base/CCPlatformMacros.h"
+
+
+NS_CC_BEGIN
+
+class CC_DLL ModuleManager
+{
+public:
+    static void registerModule(const std::string &moduleName, void* module);
+    static void unRegisterModule(const std::string &moduleName);
+    static void* getModule(const std::string &moduleName);
+    
+private:
+    static std::map<std::string, void*>& createMap();
+};
+
+NS_CC_END
+
 #endif
-#include "tolua++.h"
-#ifdef __cplusplus
-}
-#endif
 
-#include "base/CCRef.h"
-
-TOLUA_API int register_all_cocos2dx_ui_manual(lua_State* L);
-#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H

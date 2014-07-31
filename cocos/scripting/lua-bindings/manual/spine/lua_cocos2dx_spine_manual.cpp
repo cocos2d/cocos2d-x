@@ -30,6 +30,7 @@
 #include "spine.h"
 #include "spine-cocos2dx.h"
 #include "LuaSkeletonAnimation.h"
+#include "CCLuaEngine.h"
 
 using namespace spine;
 

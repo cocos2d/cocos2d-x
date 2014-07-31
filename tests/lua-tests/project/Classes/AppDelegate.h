@@ -32,6 +32,9 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+    
+private:
+    void registerLuaBindings();
 };
 
 #endif  // __APP_DELEGATE_H__

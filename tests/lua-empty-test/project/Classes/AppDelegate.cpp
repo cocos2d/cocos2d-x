@@ -3,6 +3,8 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
+#include "network/lua_extensions.h"
+#include "lua_cocos2dx_cocosdenshion_auto.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -25,6 +27,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     // register lua engine
     LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_getglobal(L, "_G");
+    if (lua_istable(L,-1))//stack:...,_G,
+    {
+        register_all_cocos2dx_cocosdenshion(L);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        luaopen_lua_extensions(L);
+#endif
+    }
+    lua_pop(L, 1);//statck:...
     
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
