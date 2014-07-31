@@ -15722,6 +15722,43 @@ int lua_register_cocos2dx_ui_PageView(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_ui_Helper_getSubStringOfUTF8String(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 3)
+    {
+        std::string arg0;
+        unsigned long arg1;
+        unsigned long arg2;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Helper:getSubStringOfUTF8String");
+        ok &= luaval_to_ulong(tolua_S, 3, &arg1, "ccui.Helper:getSubStringOfUTF8String");
+        ok &= luaval_to_ulong(tolua_S, 4, &arg2, "ccui.Helper:getSubStringOfUTF8String");
+        if(!ok)
+            return 0;
+        std::string ret = cocos2d::ui::Helper::getSubStringOfUTF8String(arg0, arg1, arg2);
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:getSubStringOfUTF8String",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_getSubStringOfUTF8String'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15839,6 +15876,7 @@ int lua_register_cocos2dx_ui_Helper(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Helper","ccui.Helper","",nullptr);
 
     tolua_beginmodule(tolua_S,"Helper");
+        tolua_function(tolua_S,"getSubStringOfUTF8String", lua_cocos2dx_ui_Helper_getSubStringOfUTF8String);
         tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
         tolua_function(tolua_S,"seekActionWidgetByActionTag", lua_cocos2dx_ui_Helper_seekActionWidgetByActionTag);
         tolua_function(tolua_S,"seekWidgetByName", lua_cocos2dx_ui_Helper_seekWidgetByName);
