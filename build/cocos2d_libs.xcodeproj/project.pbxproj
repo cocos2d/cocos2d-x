@@ -50,10 +50,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		155CA3461988C96F006E0A08 /* CCModuleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 155CA3441988C96F006E0A08 /* CCModuleManager.cpp */; };
-		155CA3471988C96F006E0A08 /* CCModuleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 155CA3441988C96F006E0A08 /* CCModuleManager.cpp */; };
-		155CA3481988C96F006E0A08 /* CCModuleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 155CA3451988C96F006E0A08 /* CCModuleManager.h */; };
-		155CA3491988C96F006E0A08 /* CCModuleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 155CA3451988C96F006E0A08 /* CCModuleManager.h */; };
+		15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
+		15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
+		15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
+		15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
 		1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C67718F57BE800EFE3A6 /* CCArray.h */; };
@@ -1344,7 +1344,6 @@
 		B2C59A2919777E7A00B452DF /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9E918CF08D000240AA3 /* CocosGUI.cpp */; };
 		B2C59A2A19777E8300B452DF /* UIDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29BDBA52195D597A003225C9 /* UIDeprecated.cpp */; };
 		B2C59A2B19777E8300B452DF /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1318CF08D100240AA3 /* UIWidget.cpp */; };
-		B2C59A2C19777E8300B452DF /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */; };
 		B2C59A2D19777E8300B452DF /* UIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F418CF08D000240AA3 /* UIHelper.cpp */; };
 		B2C59A2E19777E8C00B452DF /* UIHBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D32E18E174130051CA34 /* UIHBox.cpp */; };
 		B2C59A2F19777E8C00B452DF /* UIRelativeBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D33018E174130051CA34 /* UIRelativeBox.cpp */; };
@@ -1368,7 +1367,6 @@
 		B2C59A4119777EBC00B452DF /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		B2C59A4219777EC700B452DF /* UIDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 29080DEB191B82CE0066F8DF /* UIDeprecated.h */; };
 		B2C59A4319777EC700B452DF /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
-		B2C59A4419777EC700B452DF /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */; };
 		B2C59A4519777EC700B452DF /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F518CF08D000240AA3 /* UIHelper.h */; };
 		B2C59A4619777EC700B452DF /* GUIDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9EB18CF08D000240AA3 /* GUIDefine.h */; };
 		B2C59A4719777ECF00B452DF /* UIHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D32F18E174130051CA34 /* UIHBox.h */; };
@@ -1553,11 +1551,9 @@
 		B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A170721807CE7A005B8026 /* CCPhysicsJoint.cpp */; };
 		B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
 		B2D3D3BA1948613300BA4831 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
-		B2DB4763197661CD00411E16 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */; };
 		B2DB4764197661D500411E16 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1318CF08D100240AA3 /* UIWidget.cpp */; };
 		B2DB4765197661E400411E16 /* UIHBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E6D32E18E174130051CA34 /* UIHBox.cpp */; };
 		B2DB4766197661EE00411E16 /* UILayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F818CF08D000240AA3 /* UILayout.cpp */; };
-		B2DB4767197664EE00411E16 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */; };
 		B2DB47681976650A00411E16 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1418CF08D100240AA3 /* UIWidget.h */; };
 		B2DB47691976651E00411E16 /* UIHBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E6D32F18E174130051CA34 /* UIHBox.h */; };
 		B2DB476A1976653000411E16 /* UILayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F918CF08D000240AA3 /* UILayout.h */; };
@@ -2042,8 +2038,8 @@
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		155CA3441988C96F006E0A08 /* CCModuleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCModuleManager.cpp; path = ../base/CCModuleManager.cpp; sourceTree = "<group>"; };
-		155CA3451988C96F006E0A08 /* CCModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCModuleManager.h; path = ../base/CCModuleManager.h; sourceTree = "<group>"; };
+		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
+		15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		1A01C67818F57BE800EFE3A6 /* CCBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBool.h; sourceTree = "<group>"; };
@@ -2919,8 +2915,6 @@
 		50ABBF541926664700A911A9 /* CCPlatformDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		50ABBF551926664700A911A9 /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
-		50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
-		50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
 		50E6D32E18E174130051CA34 /* UIHBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHBox.cpp; sourceTree = "<group>"; };
 		50E6D32F18E174130051CA34 /* UIHBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHBox.h; sourceTree = "<group>"; };
 		50E6D33018E174130051CA34 /* UIRelativeBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRelativeBox.cpp; sourceTree = "<group>"; };
@@ -3362,6 +3356,8 @@
 		1A570095180BC5B00088DEC7 /* base-nodes */ = {
 			isa = PBXGroup;
 			children = (
+				15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */,
+				15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */,
 				1A57009C180BC5D20088DEC7 /* CCNode.cpp */,
 				1A57009D180BC5D20088DEC7 /* CCNode.h */,
 				1A570096180BC5C10088DEC7 /* CCAtlasNode.cpp */,
@@ -3373,8 +3369,6 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
-				155CA3441988C96F006E0A08 /* CCModuleManager.cpp */,
-				155CA3451988C96F006E0A08 /* CCModuleManager.h */,
 				464AD6E3197EBB1400E502D8 /* pvr.cpp */,
 				464AD6E4197EBB1400E502D8 /* pvr.h */,
 				3E61781C1966A5A300DE83F5 /* CCController.cpp */,
@@ -4296,8 +4290,6 @@
 				29BDBA52195D597A003225C9 /* UIDeprecated.cpp */,
 				2905FA1318CF08D100240AA3 /* UIWidget.cpp */,
 				2905FA1418CF08D100240AA3 /* UIWidget.h */,
-				50E6D30C18DADB5D0051CA34 /* CCProtectedNode.cpp */,
-				50E6D30D18DADB5D0051CA34 /* CCProtectedNode.h */,
 				2905F9F418CF08D000240AA3 /* UIHelper.cpp */,
 				2905F9F518CF08D000240AA3 /* UIHelper.h */,
 				2905F9EB18CF08D000240AA3 /* GUIDefine.h */,
@@ -5330,6 +5322,7 @@
 				50ABBE431925AB6F00A911A9 /* CCDirector.h in Headers */,
 				1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */,
 				1A5702CA180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
+				15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */,
 				1A5702EC180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				1A5702F0180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				50ABC01B1926664800A911A9 /* CCSAXParser.h in Headers */,
@@ -5379,7 +5372,6 @@
 				50ABBD5A1925AB0000A911A9 /* Vec2.h in Headers */,
 				B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
 				50ABBEBD1925AB6F00A911A9 /* ccUtils.h in Headers */,
-				155CA3481988C96F006E0A08 /* CCModuleManager.h in Headers */,
 				50ABC0231926664800A911A9 /* CCGLView.h in Headers */,
 				50ABBFFD1926664800A911A9 /* CCFileUtilsApple.h in Headers */,
 				5034CA41191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
@@ -5599,7 +5591,6 @@
 				1A57006C180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				50ABBEC41925AB6F00A911A9 /* CCVector.h in Headers */,
-				155CA3491988C96F006E0A08 /* CCModuleManager.h in Headers */,
 				50ABBE501925AB6F00A911A9 /* CCEventCustom.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
@@ -5687,6 +5678,7 @@
 				5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
 				50ABBE981925AB6F00A911A9 /* CCProtocols.h in Headers */,
 				50ABBD431925AB0000A911A9 /* CCMathBase.h in Headers */,
+				15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */,
 				50ABBE441925AB6F00A911A9 /* CCDirector.h in Headers */,
 				5034CA4A191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				1A570281180BCC900088DEC7 /* CCSprite.h in Headers */,
@@ -5948,7 +5940,6 @@
 				B2DB47881976663A00411E16 /* UIRichText.h in Headers */,
 				B2DB47801976660200411E16 /* UIButton.h in Headers */,
 				B2DB47821976660C00411E16 /* UICheckBox.h in Headers */,
-				B2DB4767197664EE00411E16 /* CCProtectedNode.h in Headers */,
 				B2DB47861976662D00411E16 /* UILoadingBar.h in Headers */,
 				B2DB47681976650A00411E16 /* UIWidget.h in Headers */,
 				2958244D19873D8E00F9746D /* UIScale9Sprite.h in Headers */,
@@ -5990,7 +5981,6 @@
 				B2C59A4119777EBC00B452DF /* UIVideoPlayer.h in Headers */,
 				B2C59A4219777EC700B452DF /* UIDeprecated.h in Headers */,
 				B2C59A4319777EC700B452DF /* UIWidget.h in Headers */,
-				B2C59A4419777EC700B452DF /* CCProtectedNode.h in Headers */,
 				B2C59A4519777EC700B452DF /* UIHelper.h in Headers */,
 				B2C59A4619777EC700B452DF /* GUIDefine.h in Headers */,
 				B2C59A4719777ECF00B452DF /* UIHBox.h in Headers */,
@@ -6706,6 +6696,7 @@
 				50ABBDA71925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				50ABBD501925AB0000A911A9 /* Quaternion.cpp in Sources */,
 				50ABBEBB1925AB6F00A911A9 /* ccUtils.cpp in Sources */,
+				15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
 				50ABBE271925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
 				50ABBE8B1925AB6F00A911A9 /* CCNS.cpp in Sources */,
@@ -6747,7 +6738,6 @@
 				1A5701B1180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				1A5701B9180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
-				155CA3461988C96F006E0A08 /* CCModuleManager.cpp in Sources */,
 				1A5701BD180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				50ABBE551925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
@@ -7051,7 +7041,6 @@
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				50ABBEC01925AB6F00A911A9 /* CCValue.cpp in Sources */,
 				50ABBD591925AB0000A911A9 /* Vec2.cpp in Sources */,
-				155CA3471988C96F006E0A08 /* CCModuleManager.cpp in Sources */,
 				50ABBE421925AB6F00A911A9 /* CCDirector.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
@@ -7195,6 +7184,7 @@
 				1A1645B3191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				50ABBE7A1925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
+				15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
 				B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */,
 				B6ACD898193D6693005E0B8A /* CCMeshSkin.cpp in Sources */,
@@ -7338,7 +7328,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2DB4763197661CD00411E16 /* CCProtectedNode.cpp in Sources */,
 				B2DB4764197661D500411E16 /* UIWidget.cpp in Sources */,
 				B2DB4765197661E400411E16 /* UIHBox.cpp in Sources */,
 				B2DB4766197661EE00411E16 /* UILayout.cpp in Sources */,
@@ -7387,7 +7376,6 @@
 				B2C59A2819777E7500B452DF /* UIImageView.cpp in Sources */,
 				B2C59A2A19777E8300B452DF /* UIDeprecated.cpp in Sources */,
 				B2C59A2B19777E8300B452DF /* UIWidget.cpp in Sources */,
-				B2C59A2C19777E8300B452DF /* CCProtectedNode.cpp in Sources */,
 				B2C59A2D19777E8300B452DF /* UIHelper.cpp in Sources */,
 				B2C59A2E19777E8C00B452DF /* UIHBox.cpp in Sources */,
 				B2C59A2F19777E8C00B452DF /* UIRelativeBox.cpp in Sources */,
@@ -8690,7 +8678,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/websockets/prebuilt/mac",
 				);
-				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
 			};
@@ -8714,7 +8701,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/websockets/prebuilt/mac",
 				);
-				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../cocos/platform/desktop $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
 			};
