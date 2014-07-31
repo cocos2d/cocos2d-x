@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCDirector.h"
@@ -577,7 +577,7 @@ void Layout::onSizeChanged()
         _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
+            _backGroundImage->setPreferredSize(_contentSize);
         }
     }
     if (_colorRender)
@@ -596,11 +596,13 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     {
         return;
     }
-    removeProtectedChild(_backGroundImage);
-    _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
-    addBackGroundImage();
-    setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
+    if (nullptr == _backGroundImage)
+    {
+        addBackGroundImage();
+        setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
+    }
+    _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
     
@@ -621,36 +623,22 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;
-    if (_backGroundScale9Enabled)
+   
+    switch (_bgImageTexType)
     {
-        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
-        switch (_bgImageTexType)
-        {
-            case TextureResType::LOCAL:
-                bgiScale9->initWithFile(fileName);
-                break;
-            case TextureResType::PLIST:
-                bgiScale9->initWithSpriteFrameName(fileName);
-                break;
-            default:
-                break;
-        }
-        bgiScale9->setPreferredSize(_contentSize);
+        case TextureResType::LOCAL:
+            _backGroundImage->initWithFile(fileName);
+            break;
+        case TextureResType::PLIST:
+            _backGroundImage->initWithSpriteFrameName(fileName);
+            break;
+        default:
+            break;
     }
-    else
-    {
-        switch (_bgImageTexType)
-        {
-            case TextureResType::LOCAL:
-                static_cast<Sprite*>(_backGroundImage)->setTexture(fileName);
-                break;
-            case TextureResType::PLIST:
-                static_cast<Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
-                break;
-            default:
-                break;
-        }
+    if (_backGroundScale9Enabled) {
+        _backGroundImage->setPreferredSize(_contentSize);
     }
+    
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
     updateBackGroundImageRGBA();
@@ -661,7 +649,7 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     _backGroundImageCapInsets = capInsets;
     if (_backGroundScale9Enabled && _backGroundImage)
     {
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
+        _backGroundImage->setCapInsets(capInsets);
     }
 }
     
@@ -706,17 +694,11 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 
 void Layout::addBackGroundImage()
 {
-    if (_backGroundScale9Enabled)
-    {
-        _backGroundImage = extension::Scale9Sprite::create();
-        addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_contentSize);
-    }
-    else
-    {
-        _backGroundImage = Sprite::create();
-        addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-    }
+    _backGroundImage = Scale9Sprite::create();
+    _backGroundImage->setScale9Enabled(false);
+    
+    addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+   
     _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
 }
 

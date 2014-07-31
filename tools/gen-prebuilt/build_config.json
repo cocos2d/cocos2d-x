@@ -1,0 +1,19 @@
+{
+    "xcode_proj_info" : {
+        "build/cocos2d_libs.xcodeproj" : {
+            "outputdir" : "prebuilt",
+            "targets" :[ "build all libs" ]
+        }
+    },
+    "win32_proj_info" : {
+        "build/cocos2d-win32.vc2012.sln" : {
+            "outputdir" : "prebuilt/win32",
+            "targets" : [
+                "libcocosdenshion", "libbox2d", "libchipmunk",
+                "libcocos2d", "libcocosbuilder", "libcocostudio",
+                "libextension", "libui", "liblua",
+                "libnetwork", "libspine"
+            ]
+        }
+    }
+}

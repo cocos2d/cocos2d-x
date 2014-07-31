@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UILoadingBar.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -81,7 +81,8 @@ LoadingBar* LoadingBar::create(const std::string &textureName, float percentage)
 
 void LoadingBar::initRenderer()
 {
-    _barRenderer = Sprite::create();
+    _barRenderer = Scale9Sprite::create();
+    _barRenderer->setScale9Enabled(false);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
     _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
 }
@@ -100,17 +101,15 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
             _barRenderer->setPosition(Vec2(-_totalLength*0.5f,0.0f));
-            if (!_scale9Enabled)
-            {
-                static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
+            if (!_scale9Enabled) {
+                _barRenderer->setFlippedX(false);
             }
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
             _barRenderer->setPosition(Vec2(_totalLength*0.5f,0.0f));
-            if (!_scale9Enabled)
-            {
-                static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
+            if (!_scale9Enabled) {
+                _barRenderer->setFlippedX(true);
             }
             break;
     }
@@ -134,28 +133,10 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     switch (_renderBarTexType)
     {
         case TextureResType::LOCAL:
-            if (_scale9Enabled)
-            {
-                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-                barRendererScale9->initWithFile(texture);
-                barRendererScale9->setCapInsets(_capInsets);
-            }
-            else
-            {
-                static_cast<Sprite*>(_barRenderer)->setTexture(texture);
-            }
+            _barRenderer->initWithFile(texture);
             break;
         case TextureResType::PLIST:
-            if (_scale9Enabled)
-            {
-                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-                barRendererScale9->initWithSpriteFrameName(texture);
-                barRendererScale9->setCapInsets(_capInsets);
-            }
-            else
-            {
-                static_cast<Sprite*>(_barRenderer)->setSpriteFrame(texture);
-            }
+            _barRenderer->initWithSpriteFrameName(texture);
             break;
         default:
             break;
@@ -167,19 +148,19 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     {
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            if (!_scale9Enabled)
-            {
-                static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
+            if (!_scale9Enabled) {
+                _barRenderer->setFlippedX(false);
             }
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-            if (!_scale9Enabled)
-            {
-                static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
+            if (!_scale9Enabled) {
+                _barRenderer->setFlippedX(true);
             }
             break;
     }
+    _barRenderer->setCapInsets(_capInsets);
+
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
     _barRendererAdaptDirty = true;
@@ -192,18 +173,8 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
-    removeProtectedChild(_barRenderer);
-    _barRenderer = nullptr;
-    if (_scale9Enabled)
-    {
-        _barRenderer = extension::Scale9Sprite::create();
-    }
-    else
-    {
-        _barRenderer = Sprite::create();
-    }
-    loadTexture(_textureFile,_renderBarTexType);
-    addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
+    _barRenderer->setScale9Enabled(_scale9Enabled);
+    
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -230,7 +201,7 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     {
         return;
     }
-    static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    _barRenderer->setCapInsets(capInsets);
 }
 
 const Rect& LoadingBar::getCapInsets()const
@@ -257,7 +228,7 @@ void LoadingBar::setPercent(float percent)
     }
     else
     {
-        Sprite* spriteRenderer = static_cast<Sprite*>(_barRenderer);
+        Sprite* spriteRenderer = _barRenderer->getSprite();
         Rect rect = spriteRenderer->getTextureRect();
         rect.size.width = _barRendererTextureSize.width * res;
         spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
@@ -351,7 +322,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100.0f * _totalLength;
-    static_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _contentSize.height));
+    _barRenderer->setPreferredSize(Size(width, _contentSize.height));
 }
 
 std::string LoadingBar::getDescription() const
