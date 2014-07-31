@@ -87,10 +87,6 @@ MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::string& filename, co
 
 bool MeshSkin::initFromSkinData(const SkinData& skindata)
 {
-    //temp init skeleton
-    //_skeleton->
-    //////
-    
     ssize_t i = 0;
     for (; i < skindata.skinBoneNames.size(); i++) {
         auto bone = Bone3D::create(skindata.skinBoneNames[i]);
