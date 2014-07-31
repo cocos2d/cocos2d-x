@@ -32,7 +32,7 @@ bool UITextFieldTest::init()
         _uiLayer->addChild(alert);
         
         // Create the textfield
-        TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
+        TextField* textField = TextField::create("input words here","Arial",30);
 
         textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest::textFieldEvent, this));
@@ -110,7 +110,7 @@ bool UITextFieldTest_MaxLength::init()
         _uiLayer->addChild(alert);
         
         // Create the textfield
-        TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
+        TextField* textField = TextField::create("input words here","Arial",30);
         textField->setMaxLengthEnabled(true);
         textField->setMaxLength(3);
         textField->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -194,7 +194,7 @@ bool UITextFieldTest_Password::init()
         _uiLayer->addChild(alert);
         
         // Create the textfield
-        TextField* textField = TextField::create("input password here","fonts/Marker Felt.ttf",30);
+        TextField* textField = TextField::create("input password here","Arial",30);
         textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
         textField->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
@@ -276,7 +276,8 @@ bool UITextFieldTest_LineWrap::init()
         TextField* textField = TextField::create("input words here","fonts/Marker Felt.ttf",30);
         textField->ignoreContentAdaptWithSize(false);
         ((Label*)(textField->getVirtualRenderer()))->setLineBreakWithoutSpace(true);
-        textField->setContentSize(Size(240, 70));
+        textField->setContentSize(Size(240, 170));
+        textField->setText("input words here");
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
         textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
@@ -297,7 +298,7 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextField::EventType
             TextField* textField = dynamic_cast<TextField*>(pSender);
             Size widgetSize = _widget->getContentSize();
             textField->runAction(CCMoveTo::create(0.225f,
-                                                  Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + textField->getContentSize().height / 2)));
+                                                  Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 30)));
             textField->setTextHorizontalAlignment(TextHAlignment::LEFT);
             textField->setTextVerticalAlignment(TextVAlignment::TOP);
             
