@@ -134,6 +134,11 @@
     <None Include="..\script\OpenglConstants.lua" />
     <None Include="..\script\StudioConstants.lua" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\2d\libcocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DDC3E27F-004D-4DD4-9DD3-931A013D2159}</ProjectGuid>
     <RootNamespace>liblua</RootNamespace>

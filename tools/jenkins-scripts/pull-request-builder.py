@@ -132,7 +132,7 @@ def main():
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE']);
     #pull latest code
-    os.system("git pull origin V3")
+    os.system("git pull origin v3")
     os.system("git checkout v3")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
