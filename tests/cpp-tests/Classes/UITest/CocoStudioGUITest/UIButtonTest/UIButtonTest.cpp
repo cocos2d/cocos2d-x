@@ -378,13 +378,23 @@ bool UIButtonTestRemoveSelf::init()
         
         _uiLayer->addChild(alert);
         
+        Layout *layout = Layout::create();
+        layout->setContentSize(widgetSize * 0.6);
+        layout->setBackGroundColor(Color3B::GREEN);
+        layout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        layout->setBackGroundColorOpacity(100);
+        layout->setPosition(Size(widgetSize.width/2, widgetSize.height/2));
+        layout->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        layout->setTag(12);
+        _uiLayer->addChild(layout);
+        
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestRemoveSelf::touchEvent, this));
-        _uiLayer->addChild(button);
+        layout->addChild(button);
         
         
         
@@ -408,8 +418,86 @@ void UIButtonTestRemoveSelf::touchEvent(Ref *pSender, Widget::TouchEventType typ
         case Widget::TouchEventType::ENDED:
         {
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            auto layout = _uiLayer->getChildByTag(12);
+            layout->removeFromParentAndCleanup(true);
+        }
+            break;
             
-            _uiLayer->removeFromParentAndCleanup(true);
+        case Widget::TouchEventType::CANCELED:
+            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        default:
+            break;
+    }
+}
+
+// UIButtonTestSwitchScale9
+UIButtonTestSwitchScale9::UIButtonTestSwitchScale9()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIButtonTestSwitchScale9::~UIButtonTestSwitchScale9()
+{
+}
+
+bool UIButtonTestSwitchScale9::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestSwitchScale9::touchEvent, this));
+        button->ignoreContentAdaptWithSize(false);
+
+        _uiLayer->addChild(button);
+        
+        
+        
+        return true;
+    }
+    return false;
+}
+
+void UIButtonTestSwitchScale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case Widget::TouchEventType::BEGAN:
+            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            break;
+            
+        case Widget::TouchEventType::MOVED:
+            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            break;
+            
+        case Widget::TouchEventType::ENDED:
+        {
+            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            auto btn = ((Button*)pSender);
+            btn->setScale9Enabled(!btn->isScale9Enabled());
+            btn->setContentSize(Size(200,100));
         }
             break;
             
