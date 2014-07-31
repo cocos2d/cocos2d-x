@@ -1,0 +1,329 @@
+{
+    "cocos2d" : {
+        "module_type" : "compiled",
+        "target_dir" : "cocos",
+        "win32_lib_file_name" : "libcocos2d",
+        "ios_lib_file_name" : "libcocos2d iOS.a",
+        "mac_lib_file_name" : "libcocos2d Mac.a",
+        "android_lib_name" : "cocos2dx_static",
+        "android_lib_file_name" : "libcocos2d",
+        "include" : [
+            {
+                "from": "cocos",
+                "to": "cocos/include",
+                "include" : [
+                    "2d/*.h", "3d/*.h", "3d/*.inl", "base/*.h",
+                    "deprecated/*.h", "math/*.h", "math/*.inl",
+                    "physics/*.h", "platform/*.h", "renderer/*.h",
+                    "storage/*.h", "cocos2d.h", "2d/*.props"
+                ]
+            },
+            {
+                "from": "cocos/platform/android/java",
+                "to": "cocos/include/platform/android/java"
+            },
+            {
+                "from": "external",
+                "to": "external",
+                "include": [
+                    "tinyxml2/*.h",
+                    "unzip/*.h",
+                    "xxhash/*.h",
+                    "json/*.h",
+                    "win32-specific/*"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include",
+            "../../../modules",
+            "../../../external/tinyxml2",
+            "../../../external/unzip",
+            "../../../external/chipmunk/include/chipmunk",
+            "../../../external/edtaa3func",
+            "../../../external/xxhash",
+            "../../../external/ConvertUTF",
+            "../../../external"
+        ],
+        "depend_modules" : [
+            "chipmunk", "freetype", "jpeg",
+            "png", "webp", "tiff",
+            "cocos_android", "curl", "websockets"
+        ],
+        "export_ldlibs" : [
+            "GLESv2", "log", "z", "android"
+        ],
+        "export_cflags" : [
+            "-Wno-psabi", "-DUSE_FILE32API"
+        ],
+        "export_cppflags" : [
+            "-Wno-literal-suffix", "-Wno-deprecated-declarations"
+        ]
+    },
+    "freetype" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/freetype2",
+        "target_dir" : "external/freetype2",
+        "android_lib_name" : "cocos_freetype2_static"
+    },
+    "jpeg" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/jpeg",
+        "target_dir" : "external/jpeg",
+        "android_lib_name" : "cocos_jpeg_static"
+    },
+    "png" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/png",
+        "target_dir" : "external/png",
+        "android_lib_name" : "cocos_png_static"
+    },
+    "webp" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/webp",
+        "target_dir" : "external/webp",
+        "android_lib_name" : "cocos_webp_static"
+    },
+    "tiff" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/tiff",
+        "target_dir" : "external/tiff",
+        "android_lib_name" : "cocos_tiff_static"
+    },
+    "curl" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/curl",
+        "target_dir" : "external/curl",
+        "android_lib_name" : "cocos_curl_static"
+    },
+    "websockets" : {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/websockets",
+        "target_dir" : "external/websockets",
+        "android_lib_name" : "websockets_static"
+    },
+    "glfw3": {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/glfw3",
+        "target_dir" : "external/glfw3"
+    },
+    "cocos_android" : {
+        "module_type" : "compiled",
+        "target_dir" : "cocos/include/platform/android",
+        "android_lib_name" : "cocos2dxandroid_static",
+        "android_lib_file_name" : "libcocos2dandroid",
+        "export_include" : [
+            "../../"
+        ],
+        "export_ldlibs" : [
+            "GLESv1_CM", "GLESv2", "EGL", "log", "z", "android"
+        ]
+    },
+    "chipmunk" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/chipmunk",
+        "win32_lib_file_name" : "libchipmunk",
+        "ios_lib_file_name" : "libchipmunk iOS.a",
+        "mac_lib_file_name" : "libchipmunk Mac.a",
+        "android_lib_name" : "chipmunk_static",
+        "android_lib_file_name" : "libchipmunk",
+        "include" : [
+            {
+                "from": "external/chipmunk",
+                "to": "modules/chipmunk",
+                "include" : [
+                    "include/*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include/chipmunk"
+        ]
+    },
+    "box2d" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/Box2D",
+        "win32_lib_file_name" : "libbox2d",
+        "ios_lib_file_name" : "libbox2d iOS.a",
+        "mac_lib_file_name" : "libbox2d Mac.a",
+        "android_lib_name" : "box2d_static",
+        "android_lib_file_name" : "libbox2d",
+        "include" : [
+            {
+                "from": "external/Box2D",
+                "to": "modules/Box2D/include/Box2D",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ]
+    },
+    "audio" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/audio",
+        "win32_lib_file_name" : "libcocosdenshion",
+        "ios_lib_file_name" : "libcocosdenshion iOS.a",
+        "mac_lib_file_name" : "libcocosdenshion Mac.a",
+        "android_lib_name" : "cocosdenshion_static",
+        "android_lib_file_name" : "libcocosdenshion",
+        "include" : [
+            {
+                "from": "cocos/audio",
+                "to": "modules/audio",
+                "include" : [
+                    "include/*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ]
+    },
+    "network" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/network",
+        "win32_lib_file_name" : "libnetwork",
+        "ios_lib_file_name" : "libnetwork iOS.a",
+        "mac_lib_file_name" : "libnetwork Mac.a",
+        "android_lib_name" : "cocos_network_static",
+        "android_lib_file_name" : "libnetwork",
+        "include" : [
+            {
+                "from": "cocos/network",
+                "to": "modules/network/include/network",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d", "curl", "websockets"
+        ]
+    },
+    "ui" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/ui",
+        "win32_lib_file_name" : "libui",
+        "ios_lib_file_name" : "libui iOS.a",
+        "mac_lib_file_name" : "libui Mac.a",
+        "android_lib_name" : "cocos_ui_static",
+        "android_lib_file_name" : "libui",
+        "include" : [
+            {
+                "from": "cocos/ui",
+                "to": "modules/ui/include/ui",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d", "extensions"
+        ]
+    },
+    "extensions" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/extensions",
+        "win32_lib_file_name" : "libextension",
+        "ios_lib_file_name" : "libextension iOS.a",
+        "mac_lib_file_name" : "libextension Mac.a",
+        "android_lib_name" : "cocos_extension_static",
+        "android_lib_file_name" : "libextension",
+        "include" : [
+            {
+                "from": "extensions",
+                "to": "modules/extensions/include/extensions",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d", "curl", "box2d"
+        ]
+    },
+    "cocostudio" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/cocostudio",
+        "win32_lib_file_name" : "libcocostudio",
+        "ios_lib_file_name" : "libcocostudio iOS.a",
+        "mac_lib_file_name" : "libcocostudio Mac.a",
+        "android_lib_name" : "cocostudio_static",
+        "android_lib_file_name" : "libcocostudio",
+        "include" : [
+            {
+                "from": "cocos/editor-support/cocostudio",
+                "to": "modules/cocostudio/include/cocostudio",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "ui", "audio"
+        ]
+    },
+    "spine" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/spine",
+        "win32_lib_file_name" : "libspine",
+        "ios_lib_file_name" : "libspine iOS.a",
+        "mac_lib_file_name" : "libspine Mac.a",
+        "android_lib_name" : "spine_static",
+        "android_lib_file_name" : "libspine",
+        "include" : [
+            {
+                "from": "cocos/editor-support/spine",
+                "to": "modules/spine/include/spine",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d"
+        ]
+    },
+    "cocosbuilder" : {
+        "module_type" : "compiled",
+        "target_dir" : "modules/cocosbuilder",
+        "win32_lib_file_name" : "libcocosbuilder",
+        "ios_lib_file_name" : "libcocosbuilder iOS.a",
+        "mac_lib_file_name" : "libcocosbuilder Mac.a",
+        "android_lib_name" : "cocosbuilder_static",
+        "android_lib_file_name" : "libcocosbuilder",
+        "include" : [
+            {
+                "from": "cocos/editor-support/cocosbuilder",
+                "to": "modules/cocosbuilder/include/cocosbuilder",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "extensions"
+        ]
+    }
+}
