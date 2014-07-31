@@ -29,11 +29,7 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 
 #include "base/CCDirector.h"
-#include "CCGLView.h"
-
-#define GLFW_EXPOSE_NATIVE_NSGL
-#define GLFW_EXPOSE_NATIVE_COCOA
-#include "glfw3native.h"
+#include "CCGLViewProtocol.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -58,8 +54,8 @@ void MessageBox(const char * msg, const char * title)
 	[alert setInformativeText:tmpTitle];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
-    GLView* glview = Director::getInstance()->getOpenGLView();
-    id window = glfwGetCocoaWindow(glview->getWindow());
+    auto glview = Director::getInstance()->getOpenGLView();
+    id window = glview->getCocoaWindow();
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[window delegate]
 					 didEndSelector:nil

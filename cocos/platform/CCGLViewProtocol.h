@@ -31,6 +31,14 @@ THE SOFTWARE.
 
 #include <vector>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include <windows.h>
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+typedef void* id;
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
+
 enum class ResolutionPolicy
 {
     // The entire application is visible in the specified area without trying to preserve the original aspect ratio.
@@ -63,7 +71,7 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL GLViewProtocol
+class CC_DLL GLViewProtocol : public Ref
 {
 public:
     /**
@@ -87,12 +95,16 @@ public:
 
     /** Open or close IME keyboard , subclass must implement this method. */
     virtual void setIMEKeyboardState(bool open) = 0;
+    
+    virtual bool windowShouldClose() { return false; };
 
     /**
      * Polls input events. Subclass must implement methods if platform
      * does not provide event callbacks.
      */
     virtual void pollInputEvents();
+
+    //virtual void pollEvents();
 
     /**
      * Get the frame size of EGL view.
@@ -104,6 +116,18 @@ public:
      * Set the frame size of EGL view.
      */
     virtual void setFrameSize(float width, float height);
+
+    virtual float getFrameZoomFactor() const { return 1.0; }
+    
+    /** Get retina factor */
+    virtual int getRetinaFactor() const { return 1; }
+    
+    virtual float getContentScaleFactor() const { return 1.0; }
+    
+    /** returns whether or not the view is in Retina Display mode */
+    virtual bool isRetinaDisplay() const { return false; }
+    
+    virtual void* getEAGLView() const { return nullptr; }
 
     /**
      * Get the visible area size of opengl viewport.
@@ -183,6 +207,14 @@ public:
     /** returns the current Resolution policy */
     ResolutionPolicy getResolutionPolicy() const { return _resolutionPolicy; }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    virtual HWND getWin32Window() = 0;
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    virtual id getCocoaWindow() = 0;
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
+    
 protected:
     void updateDesignResolutionSize();
     

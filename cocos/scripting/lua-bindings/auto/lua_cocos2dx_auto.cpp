@@ -12969,8 +12969,8 @@ int lua_cocos2dx_Director_getOpenGLView(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::GLView* ret = cobj->getOpenGLView();
-        object_to_luaval<cocos2d::GLView>(tolua_S, "cc.GLView",(cocos2d::GLView*)ret);
+        auto ret = cobj->getOpenGLView();
+        object_to_luaval<cocos2d::GLViewProtocol>(tolua_S, "cc.GLViewProtocol",(cocos2d::GLViewProtocol*)ret);
         return 1;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getOpenGLView",argc, 0);

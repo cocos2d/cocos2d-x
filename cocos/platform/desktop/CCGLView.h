@@ -31,9 +31,29 @@ THE SOFTWARE.
 #include "platform/CCGLViewProtocol.h"
 #include "glfw3.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
+#endif
+#ifndef GLFW_EXPOSE_NATIVE_WGL
+#define GLFW_EXPOSE_NATIVE_WGL
+#endif
+#include "glfw3native.h"
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#ifndef GLFW_EXPOSE_NATIVE_NSGL
+#define GLFW_EXPOSE_NATIVE_NSGL
+#endif
+#ifndef GLFW_EXPOSE_NATIVE_COCOA
+#define GLFW_EXPOSE_NATIVE_COCOA
+#endif
+#include "glfw3native.h"
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
 NS_CC_BEGIN
 
-class CC_DLL GLView : public GLViewProtocol, public Ref
+class CC_DLL GLView : public GLViewProtocol
 {
 public:
     static GLView* create(const std::string& viewName);
@@ -47,7 +67,7 @@ public:
 
     //void resize(int width, int height);
 
-    float getFrameZoomFactor();
+    float getFrameZoomFactor() const;
     //void centerWindow();
 
     virtual void setViewPortInPoints(float x , float y , float w , float h);
@@ -55,7 +75,7 @@ public:
 
 
     bool windowShouldClose();
-    void pollEvents();
+    void pollInputEvents();
     GLFWwindow* getWindow() const { return _mainWindow; }
 
     /* override functions */
@@ -79,6 +99,14 @@ public:
     
     /** Get retina factor */
     int getRetinaFactor() const { return _retinaFactor; }
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    HWND getWin32Window() { return glfwGetWin32Window(_mainWindow); }
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    id getCocoaWindow() { return glfwGetCocoaWindow(_mainWindow); }
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
     GLView();
