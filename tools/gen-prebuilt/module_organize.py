@@ -46,6 +46,8 @@ class ModuleOrganizer(object):
                 "include $(PREBUILT_STATIC_LIBRARY)\n\n" \
                 "%s\n"
 
+    PROPS_FILE_PATH = "cocos/include/2d/cocos2d_headers.props"
+
     def __init__(self, dst_root):
         self.local_path = os.path.realpath(os.path.dirname(__file__))
         self.modules_info = self._parse_modules()
@@ -226,6 +228,28 @@ class ModuleOrganizer(object):
                 self.gen_compiled_module(module)
             elif module_info[ModuleOrganizer.KEY_MODULE_TYPE] == ModuleOrganizer.MODULE_TYPE_PREBUILT:
                 self.gen_prebuilt_module(module)
+
+        # copy the module config file to dst root
+        cfg_path = os.path.join(self.local_path, ModuleOrganizer.CFG_FILE)
+        shutil.copy2(cfg_path, self.dst_root)
+
+        # modify the cocos2dx.props
+        props_file = os.path.join(self.dst_root, ModuleOrganizer.PROPS_FILE_PATH)
+        if os.path.exists(props_file):
+            f = open(props_file)
+            file_content = f.read()
+            f.close()
+
+            replace_str = {
+                "<EngineRoot>$(MSBuildThisFileDirectory)..\\..\\</EngineRoot>" : "<EngineRoot>$(MSBuildThisFileDirectory)..\\..\\..\\</EngineRoot>",
+                "$(EngineRoot)cocos" : "$(EngineRoot)cocos\\include"
+            }
+            for key in replace_str.keys():
+                file_content = file_content.replace(key, replace_str[key])
+
+            f = open(props_file, "w")
+            f.write(file_content)
+            f.close()
 
 if __name__ == '__main__':
     parser = ArgumentParser(description="Organize the modules of engine from prebuilt engine.")

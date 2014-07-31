@@ -15,7 +15,8 @@
                     "2d/*.h", "3d/*.h", "3d/*.inl", "base/*.h",
                     "deprecated/*.h", "math/*.h", "math/*.inl",
                     "physics/*.h", "platform/*.h", "renderer/*.h",
-                    "storage/*.h", "cocos2d.h", "2d/*.props"
+                    "storage/*.h", "cocos2d.h", "2d/cocos2d_headers.props",
+                    "2d/cocos2dx.props"
                 ]
             },
             {
