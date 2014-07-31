@@ -293,6 +293,7 @@ bool Bundle3D::loadJson(const std::string& path)
 
 bool Bundle3D::loadMeshDataJson(MeshData* meshdata)
 {
+    //1.2 is a wrong version. Our first released fbx-conv write this version id, so we keep on using it.
     if (_version == "1.2")
     {
         return loadMeshDataJson_0_1(meshdata);
@@ -449,6 +450,7 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
 
 bool Bundle3D::loadMaterialDataJson(MaterialData* materialdata)
 {
+    //1.2 is a wrong version. Our first released fbx-conv write this version id, so we keep on using it.
     if (_version == "1.2")
     {
         return loadMaterialDataJson_0_1(materialdata);
