@@ -72,9 +72,6 @@
     <ClInclude Include="..\UIRichText.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCProtectedNode.h">
-      <Filter>BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="..\UIHBox.h">
       <Filter>Layouts</Filter>
     </ClInclude>
@@ -151,9 +148,6 @@
     </ClCompile>
     <ClCompile Include="..\UIRichText.cpp">
       <Filter>UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCProtectedNode.cpp">
-      <Filter>BaseClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\UIHBox.cpp">
       <Filter>Layouts</Filter>
