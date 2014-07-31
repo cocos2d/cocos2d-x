@@ -916,10 +916,6 @@
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
-		B24024DB1978DE1000FDE433 /* libcocos2d Mac.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
-		B24024DD1978EC0700FDE433 /* libcocos2d Mac.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
-		B24024E31978ED5200FDE433 /* libcocos2d Mac.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
-		B24024E51978ED5F00FDE433 /* libcocos2d Mac.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		B2411C9E19822FBD00E093E2 /* libcocostudio iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503B197763A20041958E /* libcocostudio iOS.a */; };
 		B2411CA119822FDD00E093E2 /* libcocosbuilder iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503D197763A20041958E /* libcocosbuilder iOS.a */; };
 		B2411CA419822FF100E093E2 /* libspine iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CC503F197763A20041958E /* libspine iOS.a */; };
@@ -1725,49 +1721,6 @@
 			remoteInfo = "cocosSpine Mac";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B24024D81978DE0800FDE433 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B24024DB1978DE1000FDE433 /* libcocos2d Mac.a in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B24024DC1978EBFE00FDE433 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B24024DD1978EC0700FDE433 /* libcocos2d Mac.a in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B24024E21978ED4B00FDE433 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B24024E31978ED5200FDE433 /* libcocos2d Mac.a in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B24024E41978ED5800FDE433 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B24024E51978ED5F00FDE433 /* libcocos2d Mac.a in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1503FAA918DA8B6C00F6518C /* ftp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ftp.lua; path = ../external/lua/luasocket/ftp.lua; sourceTree = "<group>"; };
@@ -7830,7 +7783,6 @@
 				1A0EE1D118CDF6DA004CD58F /* Resources */,
 				1A0EE1F618CDF6DA004CD58F /* Sources */,
 				1A0EE29F18CDF6DA004CD58F /* Frameworks */,
-				B24024D81978DE0800FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -7851,7 +7803,6 @@
 				1A0EE2C318CDF733004CD58F /* Sources */,
 				1A0EE2C818CDF733004CD58F /* Frameworks */,
 				1A0EE2D818CDF733004CD58F /* Resources */,
-				B24024E21978ED4B00FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -7926,7 +7877,6 @@
 				1ABCA28218CD91510087CE3A /* Sources */,
 				1ABCA28318CD91510087CE3A /* Frameworks */,
 				1ABCA28418CD91510087CE3A /* Resources */,
-				B24024E41978ED5800FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -7981,7 +7931,6 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				B24024DC1978EBFE00FDE433 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -9697,7 +9646,7 @@
 		1A0EE2B018CDF6DA004CD58F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -9712,7 +9661,7 @@
 		1A0EE2B118CDF6DA004CD58F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -9728,7 +9677,7 @@
 		1A0EE31218CDF733004CD58F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -9748,7 +9697,7 @@
 		1A0EE31318CDF733004CD58F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -9835,7 +9784,7 @@
 		1ABCA2B318CD91520087CE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -9855,7 +9804,7 @@
 		1ABCA2B418CD91520087CE3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -9909,7 +9858,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -9923,7 +9872,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
