@@ -38,7 +38,6 @@ option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" OFF)
-option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
@@ -51,7 +50,6 @@ option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" ON)
-option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
@@ -138,6 +136,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
   ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
   ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/sqlite3/include
   ${CMAKE_CURRENT_SOURCE_DIR}/external/edtaa3func
   ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform/desktop
@@ -225,10 +224,8 @@ add_subdirectory(cocos/audio)
 # cocos2d library
 add_subdirectory(cocos)
 
-if(BUILD_EXTENSIONS)
 # extensions
 add_subdirectory(extensions)
-endif(BUILD_EXTENSIONS)
 
 ## Editor Support
 
@@ -260,10 +257,8 @@ add_subdirectory(cocos/scripting/lua-bindings)
 endif(BUILD_LIBS_LUA)
 
 # build tests 
-
-add_subdirectory(tests/cpp-empty-test)
-
 if(BUILD_CppTests)
+add_subdirectory(tests/cpp-empty-test)
 add_subdirectory(tests/cpp-tests)
 endif(BUILD_CppTests)
 

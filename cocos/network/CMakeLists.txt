@@ -5,7 +5,9 @@ if(WIN32)
 
   set(PLATFORM_LINK
     websockets
+    Ws2_32
   )
+  
 elseif(NOT APPLE)
   set(PLATFORM_SRC
     network/WebSocket.cpp
@@ -24,7 +26,14 @@ set(COCOS_NETWORK_SRC
   ${PLATFORM_SRC}
 )
 
+IF ( WIN32 )
+set(COCOS_NETWORK_LINK
+  libcurl_imp
+  ${PLATFORM_LINK}
+)
+ELSE()
 set(COCOS_NETWORK_LINK
   curl
   ${PLATFORM_LINK}
 )
+ENDIF()

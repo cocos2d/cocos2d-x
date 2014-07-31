@@ -43,8 +43,7 @@ _frontCrossRenderer(nullptr),
 _backGroundBoxDisabledRenderer(nullptr),
 _frontCrossDisabledRenderer(nullptr),
 _isSelected(true),
-_checkBoxEventListener(nullptr),
-_checkBoxEventSelector(nullptr),
+_checkBoxEventSelector(),
 _backGroundTexType(UI_TEX_TYPE_LOCAL),
 _backGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 _frontCrossTexType(UI_TEX_TYPE_LOCAL),
@@ -65,7 +64,6 @@ _frontCrossDisabledRendererAdaptDirty(true)
 
 CheckBox::~CheckBox()
 {
-    _checkBoxEventListener = nullptr;
     _checkBoxEventSelector = nullptr;
 }
 
@@ -359,23 +357,22 @@ bool CheckBox::getSelectedState()
 
 void CheckBox::selectedEvent()
 {
-    if (_checkBoxEventListener && _checkBoxEventSelector)
+    if (_checkBoxEventSelector)
     {
-        (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
+        _checkBoxEventSelector(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
 }
 
 void CheckBox::unSelectedEvent()
 {
-    if (_checkBoxEventListener && _checkBoxEventSelector)
+    if (_checkBoxEventSelector)
     {
-        (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
+        _checkBoxEventSelector(this,CHECKBOX_STATE_EVENT_UNSELECTED);
     }
 }
 
-void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
+void CheckBox::addEventListenerCheckBox(std::function<void(Ref*, CheckBoxEventType)> selector)
 {
-    _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;
 }
     

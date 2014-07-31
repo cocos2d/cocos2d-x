@@ -82,8 +82,6 @@ enum class FocusDirection
 };
     
 
-typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
-#define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 /**
 *   @js NA
 *   @lua NA
@@ -222,7 +220,7 @@ public:
     /**
      * Sets the touch event target/selector of the menu item
      */
-    void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
+	void addTouchEventListener(std::function<void(Ref*, TouchEventType)> selector);
 
 
     //cocos2d property
@@ -640,7 +638,7 @@ protected:
     Vector2 _touchMovePos;     ///< touch moved point
     Vector2 _touchEndPos;      ///< touch ended point
     Ref*       _touchEventListener;
-    SEL_TouchEvent    _touchEventSelector;
+	std::function<void(Ref*, TouchEventType)>    _touchEventSelector;
     std::string _name;
     WidgetType _widgetType;
 	int _actionTag;

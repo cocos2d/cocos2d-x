@@ -43,8 +43,7 @@ _brightStyle(BRIGHT_NONE),
 _touchStartPos(Vector2::ZERO),
 _touchMovePos(Vector2::ZERO),
 _touchEndPos(Vector2::ZERO),
-_touchEventListener(nullptr),
-_touchEventSelector(nullptr),
+_touchEventSelector(),
 _name("default"),
 _widgetType(WidgetTypeWidget),
 _actionTag(0),
@@ -72,8 +71,6 @@ _focusEnabled(true)
 
 Widget::~Widget()
 {
-    _touchEventListener = nullptr;
-    _touchEventSelector = nullptr;
     setTouchEnabled(false);
     if (_focusedWidget == this) {
         _focusedWidget = nullptr;
@@ -605,39 +602,38 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void Widget::pushDownEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
+    if (_touchEventSelector)
     {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
+        _touchEventSelector(this,TOUCH_EVENT_BEGAN);
     }
 }
 
 void Widget::moveEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
+    if (_touchEventSelector)
     {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
+        _touchEventSelector(this,TOUCH_EVENT_MOVED);
     }
 }
 
 void Widget::releaseUpEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
+    if (_touchEventSelector)
     {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
+        _touchEventSelector(this,TOUCH_EVENT_ENDED);
     }
 }
 
 void Widget::cancelUpEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
+    if (_touchEventSelector)
     {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
+        _touchEventSelector(this,TOUCH_EVENT_CANCELED);
     }
 }
 
-void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
+void Widget::addTouchEventListener(std::function<void(Ref*, TouchEventType)> selector)
 {
-    _touchEventListener = target;
     _touchEventSelector = selector;
 }
 

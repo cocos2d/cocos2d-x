@@ -37,9 +37,6 @@ typedef enum
     CHECKBOX_STATE_EVENT_UNSELECTED
 }CheckBoxEventType;
 
-typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
-#define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
-
 /**
 *   @js NA
 *   @lua NA
@@ -165,7 +162,7 @@ public:
     bool getSelectedState();
 
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
+	void addEventListenerCheckBox(std::function<void(Ref*, CheckBoxEventType)> selector);
 
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
@@ -219,8 +216,7 @@ protected:
     Sprite* _frontCrossDisabledRenderer;
     bool _isSelected;
 
-    Ref*       _checkBoxEventListener;
-    SEL_SelectedStateEvent    _checkBoxEventSelector;
+	std::function<void(Ref*, CheckBoxEventType)> _checkBoxEventSelector;
 
     TextureResType _backGroundTexType;
     TextureResType _backGroundSelectedTexType;
