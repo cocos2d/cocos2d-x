@@ -594,6 +594,9 @@
     </ClCompile>
     <ClCompile Include="..\platform\CCGLView.cpp">
       <Filter>platform</Filter>
+    </ClCompile> 
+    <ClCompile Include="CCProtectedNode.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1209,6 +1212,9 @@
     </ClInclude>
     <ClInclude Include="..\platform\CCGLView.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProtectedNode.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -268,9 +268,6 @@ THE SOFTWARE.
 #include "3d/CCAnimation3D.h"
 #include "3d/CCSprite3DMaterial.h"
 
-// Audio
-#include "audio/include/SimpleAudioEngine.h"
-
 // Deprecated include
 #include "deprecated/CCDictionary.h"
 #include "deprecated/CCArray.h"

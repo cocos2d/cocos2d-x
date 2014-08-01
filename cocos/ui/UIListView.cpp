@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "ui/UIListView.h"
 #include "ui/UIHelper.h"
-#include "ui/UIScale9Sprite.h"
 
 NS_CC_BEGIN
 
