@@ -24,27 +24,12 @@ THE SOFTWARE.
 
 #include "ui/UITextField.h"
 #include "platform/CCFileUtils.h"
+#include "ui/UIHelper.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-static int _calcCharCount(const char * pszText)
-{
-    int n = 0;
-    char ch = 0;
-    while ((ch = *pszText))
-    {
-        CC_BREAK_IF(! ch);
-        
-        if (0x80 != (0xC0 & ch))
-        {
-            ++n;
-        }
-        ++pszText;
-    }
-    return n;
-}
 
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
@@ -130,7 +115,7 @@ void UICCTextField::insertText(const char*  text, size_t len)
     {
         if (_maxLengthEnabled)
         {
-            int text_count = _calcCharCount(getString().c_str());
+            long text_count = StringUtils::getCharacterCountInUTF8String(getString());
             if (text_count >= _maxLength)
             {
                 // password
@@ -141,69 +126,16 @@ void UICCTextField::insertText(const char*  text, size_t len)
                 return;
             }
             
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32))
-            int input_count = _calcCharCount(text);
-            int total = total = text_count + input_count;
+            long input_count = StringUtils::getCharacterCountInUTF8String(text);
+            long total = text_count + input_count;
             
             if (total > _maxLength)
             {
-                int end = 0;
-                int length = _maxLength - text_count;
+                long length = _maxLength - text_count;
                 
-                for (int i = 0; i < length; ++i)
-                {
-                    char value = text[i];
-                    
-                    if (value >= 0 && value <= 127) // ascii
-                    {
-                        end++;
-                    }
-                    else
-                    {
-                        end += 3;
-                    }
-                }
-                input_text = input_text.substr(0, end);
-                len  = end;
+                input_text = Helper::getSubStringOfUTF8String(input_text, 0, length);
+                len  = input_text.length();
             }
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            int input_count = _calcCharCount(text);
-            int total = text_count + input_count;
-            if (total > _maxLength)
-            {
-                int ascii = 0;
-                int unicode = 0;
-                int end = 0;
-                int count = 0;
-                
-                for (int i = 0; i < total * 3; ++i)
-                {
-                    char value = text[i];
-                    
-                    if (value >= 0 && value <= 127) // ascii
-                    {
-                        ascii++;
-                        count++;
-                    }
-                    else
-                    {
-                        unicode++;
-                        if (unicode % 3 == 0)
-                        {
-                            count++;
-                        }
-                    }
-                    
-                    if (count == _maxLength)
-                    {
-                        break;
-                    }
-                }
-                end = ascii + unicode;
-                input_text = input_text.substr(0, end);
-                len  = end;
-            }
-#endif
         }
     }
     TextFieldTTF::insertText(input_text.c_str(), len);
@@ -294,8 +226,8 @@ void UICCTextField::setPasswordStyleText(const std::string& styleText)
 void UICCTextField::setPasswordText(const std::string& text)
 {
     std::string tempStr = "";
-    int text_count = _calcCharCount(text.c_str());
-    int max = text_count;
+    long text_count = StringUtils::getCharacterCountInUTF8String(text);
+    long max = text_count;
     
     if (_maxLengthEnabled)
     {
@@ -479,40 +411,11 @@ void TextField::setText(const std::string& text)
     if (isMaxLengthEnabled())
     {
         int max = _textFieldRenderer->getMaxLength();
-        int text_count = _calcCharCount(text.c_str());
-        int total = text_count + _calcCharCount(getStringValue().c_str());
+        long text_count = StringUtils::getCharacterCountInUTF8String(text);
+        long total = text_count + StringUtils::getCharacterCountInUTF8String(getStringValue());
         if (total > max)
         {
-            int ascii = 0;
-            int unicode = 0;
-            int end = 0;
-            int count = 0;
-            
-            for (int i = 0; i < total * 3; ++i)
-            {
-                char value = text[i];
-                
-                if (value >= 0 && value <= 127) // ascii
-                {
-                    ascii++;
-                    count++;
-                }
-                else
-                {
-                    unicode++;
-                    if (unicode % 3 == 0)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == max)
-                {
-                    break;
-                }
-            }
-            end = ascii + unicode;
-            strText = strText.substr(0, end);
+            strText = Helper::getSubStringOfUTF8String(strText, 0, max);
         }
     }
     

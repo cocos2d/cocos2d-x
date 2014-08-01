@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>libAudio</ProjectName>
+    <ProjectName>libcocosdenshion</ProjectName>
     <ProjectGuid>{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}</ProjectGuid>
     <RootNamespace>CocosDenshion.win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
@@ -131,7 +131,7 @@
     <ClCompile Include="..\win32\SimpleAudioEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\2d\cocos2d.vcxproj">
+    <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
   </ItemGroup>
