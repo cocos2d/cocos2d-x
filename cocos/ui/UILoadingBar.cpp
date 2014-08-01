@@ -309,10 +309,10 @@ void LoadingBar::barRendererScaleChangedWithSize()
     switch (_direction)
     {
         case Direction::LEFT:
-            _barRenderer->setPosition(Vec2(0.0f, _contentSize.height / 2.0f));
+            _barRenderer->setPosition(Vec2(0.0f, 0.0f));
             break;
         case Direction::RIGHT:
-            _barRenderer->setPosition(Vec2(_totalLength, _contentSize.height / 2.0f));
+            _barRenderer->setPosition(Vec2(_totalLength, 0.0f));
             break;
         default:
             break;
