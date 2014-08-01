@@ -121,8 +121,9 @@ TMXLayer::TMXLayer()
 , _useAutomaticVertexZ(false)
 , _dirty(true)
 , _quadsDirty(true)
+, _vertexBuffer(nullptr)
 {
-    _buffersVBO[0] = _buffersVBO[1] = 0;
+    _buffersVBO = 0;
 }
 
 TMXLayer::~TMXLayer()
@@ -130,15 +131,12 @@ TMXLayer::~TMXLayer()
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_DELETE_ARRAY(_tiles);
-    if(glIsBuffer(_buffersVBO[0]))
+    CC_SAFE_RELEASE(_vertexBuffer);
+    if(glIsBuffer(_buffersVBO))
     {
-        glDeleteBuffers(1, &_buffersVBO[0]);
+        glDeleteBuffers(1, &_buffersVBO);
     }
     
-    if(glIsBuffer(_buffersVBO[1]))
-    {
-        glDeleteBuffers(1, &_buffersVBO[1]);
-    }
 }
 
 void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
@@ -182,8 +180,8 @@ void TMXLayer::onDraw(int offset, int count)
     getGLProgramState()->apply(_modelViewTransform);
     
     GL::bindVAO(0);
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getVBO());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO);
     
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
@@ -291,23 +289,22 @@ void TMXLayer::updateTiles(const Rect& culledRect)
 void TMXLayer::updateVertexBuffer()
 {
     GL::bindVAO(0);
-    if(!glIsBuffer(_buffersVBO[0]))
+    if(nullptr == _vertexBuffer)
     {
-        glGenBuffers(1, &_buffersVBO[0]);
+        _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
+        CC_SAFE_RETAIN(_vertexBuffer);
     }
+    _vertexBuffer->updateVertices((void*)&_totalQuads[0], (int)_totalQuads.size() * 4, 0);
     
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * _totalQuads.size(), (GLvoid*)&_totalQuads[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void TMXLayer::updateIndexBuffer()
 {
-    if(!glIsBuffer(_buffersVBO[1]))
+    if(!glIsBuffer(_buffersVBO))
     {
-        glGenBuffers(1, &_buffersVBO[1]);
+        glGenBuffers(1, &_buffersVBO);
     }
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.size(), &_indices[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

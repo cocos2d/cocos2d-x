@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/CCPrimitiveCommand.h"
 
 #include <map>
 #include <unordered_map>
@@ -228,7 +229,7 @@ protected:
     /** container for sprite children. map<index, pair<sprite, gid> > */
     std::map<int, std::pair<Sprite*, int> > _spriteContainer;
 
-    GLuint _buffersVBO[2]; //0: vertex, 1: indices
+    GLuint _buffersVBO; //0: vertex, 1: indices
 
     Size _screenGridSize;
     Rect _screenGridRect;
@@ -248,6 +249,8 @@ protected:
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<CustomCommand> _renderCommands;
     bool _dirty;
+    
+    VertexBuffer* _vertexBuffer;
     
 public:
     /** Possible orientations of the TMX map */
