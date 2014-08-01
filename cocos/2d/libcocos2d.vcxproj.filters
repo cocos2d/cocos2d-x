@@ -475,9 +475,6 @@
     <ClCompile Include="..\renderer\CCTextureCache.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\desktop\CCGLView.cpp">
-      <Filter>platform\desktop</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCApplication.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -524,9 +521,6 @@
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCFileUtils.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCImage.cpp">
@@ -595,6 +589,12 @@
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp">
       <Filter>storage</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp">
+      <Filter>platform\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCGLView.cpp">
+      <Filter>platform</Filter>
+    </ClCompile> 
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -1066,9 +1066,6 @@
     <ClInclude Include="..\renderer\CCTextureCache.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\desktop\CCGLView.h">
-      <Filter>platform\desktop</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\win32\compat\stdint.h">
       <Filter>platform\win32\compat</Filter>
     </ClInclude>
@@ -1133,9 +1130,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCGLViewProtocol.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCImage.h">
@@ -1212,6 +1206,12 @@
     </ClInclude>
     <ClInclude Include="..\storage\local-storage\LocalStorage.h">
       <Filter>storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\desktop\CCGLViewImpl.h">
+      <Filter>platform\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGLView.h">
+      <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>

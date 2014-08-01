@@ -23,23 +23,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_DESKTOP_H__
-#define __CC_EGLVIEW_DESKTOP_H__
+#ifndef __CC_EGLViewIMPL_DESKTOP_H__
+#define __CC_EGLViewIMPL_DESKTOP_H__
 
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
-#include "platform/CCGLViewProtocol.h"
+#include "platform/CCGLView.h"
 #include "glfw3.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
+#endif
+#ifndef GLFW_EXPOSE_NATIVE_WGL
+#define GLFW_EXPOSE_NATIVE_WGL
+#endif
+#include "glfw3native.h"
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#ifndef GLFW_EXPOSE_NATIVE_NSGL
+#define GLFW_EXPOSE_NATIVE_NSGL
+#endif
+#ifndef GLFW_EXPOSE_NATIVE_COCOA
+#define GLFW_EXPOSE_NATIVE_COCOA
+#endif
+#include "glfw3native.h"
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
 
-class CC_DLL GLView : public GLViewProtocol, public Ref
+class CC_DLL GLViewImpl : public GLView
 {
 public:
-    static GLView* create(const std::string& viewName);
-    static GLView* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
-    static GLView* createWithFullScreen(const std::string& viewName);
-    static GLView* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
+    static GLViewImpl* create(const std::string& viewName);
+    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
+    static GLViewImpl* createWithFullScreen(const std::string& viewName);
+    static GLViewImpl* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
@@ -47,7 +67,7 @@ public:
 
     //void resize(int width, int height);
 
-    float getFrameZoomFactor();
+    float getFrameZoomFactor() const;
     //void centerWindow();
 
     virtual void setViewPortInPoints(float x , float y , float w , float h);
@@ -79,10 +99,18 @@ public:
     
     /** Get retina factor */
     int getRetinaFactor() const { return _retinaFactor; }
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    HWND getWin32Window() { return glfwGetWin32Window(_mainWindow); }
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    id getCocoaWindow() { return glfwGetCocoaWindow(_mainWindow); }
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
-    GLView();
-    virtual ~GLView();
+    GLViewImpl();
+    virtual ~GLViewImpl();
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
@@ -120,9 +148,9 @@ protected:
     friend class GLFWEventHandler;
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(GLView);
+    CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
 };
 
 NS_CC_END   // end of namespace   cocos2d
 
-#endif  // end of __CC_EGLVIEW_DESKTOP_H__
+#endif  // end of __CC_EGLViewImpl_DESKTOP_H__
