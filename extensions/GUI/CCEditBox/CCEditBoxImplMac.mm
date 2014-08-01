@@ -162,7 +162,7 @@
 {
 }
 
-- (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
+- (void)controlTextDidBeginEditing:(NSNotification *)notification
 {
     editState_ = YES;
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
@@ -180,10 +180,9 @@
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    return YES;
 }
 
-- (BOOL)textFieldShouldEndEditing:(NSTextField *)sender
+- (void)controlTextDidEndEditing:(NSNotification *)notification
 {
     editState_ = NO;
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
@@ -206,7 +205,6 @@
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    return YES;
 }
 
 /**
@@ -248,25 +246,6 @@
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-#endif
-}
-
-- (void)controlTextDidEndEditing:(NSNotification *)notification
-{
-    if ( [[[notification userInfo] objectForKey:@"NSTextMovement"] intValue] != NSReturnTextMovement )
-    {
-        return;
-    }
-
-#if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
-    
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
         cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
