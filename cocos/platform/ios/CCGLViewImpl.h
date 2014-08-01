@@ -23,35 +23,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_IPHONE_H__
-#define __CC_EGLVIEW_IPHONE_H__
+#ifndef __CC_EGLVIEWIMPL_IPHONE_H__
+#define __CC_EGLVIEWIMPL_IPHONE_H__
 
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
-#include "platform/CCGLViewProtocol.h"
+#include "platform/CCGLView.h"
 
 NS_CC_BEGIN
 
 
 /** Class that represent the OpenGL View
  */
-class CC_DLL GLView : public GLViewProtocol, public Ref
+class CC_DLL GLViewImpl : public GLView
 {
 public:
-    /** creates a GLView with a objective-c CCEAGLView instance */
-    static GLView* createWithEAGLView(void* eaglview);
+    /** creates a GLViewImpl with a objective-c CCEAGLViewImpl instance */
+    static GLViewImpl* createWithEAGLView(void* eaGLView);
 
-    /** creates a GLView with a title name in fullscreen mode */
-    static GLView* create(const std::string& viewName);
+    /** creates a GLViewImpl with a title name in fullscreen mode */
+    static GLViewImpl* create(const std::string& viewName);
 
-    /** creates a GLView with a title name, a rect and the zoom factor */
-    static GLView* createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor = 1.0f);
+    /** creates a GLViewImpl with a title name, a rect and the zoom factor */
+    static GLViewImpl* createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor = 1.0f);
 
-    /** creates a GLView with a name in fullscreen mode */
-    static GLView* createWithFullScreen(const std::string& viewName);
+    /** creates a GLViewImpl with a name in fullscreen mode */
+    static GLViewImpl* createWithFullScreen(const std::string& viewName);
 
     /** sets the content scale factor */
     bool setContentScaleFactor(float contentScaleFactor);
@@ -72,10 +72,10 @@ public:
     virtual void setIMEKeyboardState(bool bOpen) override;
 
 protected:
-    GLView();
-    virtual ~GLView();
+    GLViewImpl();
+    virtual ~GLViewImpl();
 
-    bool initWithEAGLView(void* eaglview);
+    bool initWithEAGLView(void* eaGLView);
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
 
@@ -87,4 +87,4 @@ NS_CC_END
 
 #endif // CC_PLATFORM_IOS
 
-#endif    // end of __CC_EGLVIEW_IPHONE_H__
+#endif    // end of __CC_EGLViewImpl_IPHONE_H__

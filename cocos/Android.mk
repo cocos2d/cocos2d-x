@@ -83,7 +83,7 @@ cocos2d.cpp \
 3d/CCSprite3DMaterial.cpp \
 3d/CCObjLoader.cpp \
 3d/CCSprite3D.cpp \
-platform/CCGLViewProtocol.cpp \
+platform/CCGLView.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \

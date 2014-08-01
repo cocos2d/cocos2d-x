@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
 #include "jni/IMEJni.h"
@@ -51,9 +51,9 @@ void initExtensions() {
 
 NS_CC_BEGIN
 
-GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    auto ret = new GLView;
+    auto ret = new GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -62,9 +62,9 @@ GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float fra
     return nullptr;
 }
 
-GLView* GLView::create(const std::string& viewName)
+GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLView;
+    auto ret = new GLViewImpl;
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -73,9 +73,9 @@ GLView* GLView::create(const std::string& viewName)
     return nullptr;
 }
 
-GLView* GLView::createWithFullScreen(const std::string& viewName)
+GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new GLView();
+    auto ret = new GLViewImpl();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -84,42 +84,42 @@ GLView* GLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-GLView::GLView()
+GLViewImpl::GLViewImpl()
 {
     initExtensions();
 }
 
-GLView::~GLView()
+GLViewImpl::~GLViewImpl()
 {
 
 }
 
-bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
-{
-    return true;
-}
-
-bool GLView::initWithFullScreen(const std::string& viewName)
+bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     return true;
 }
 
+bool GLViewImpl::initWithFullScreen(const std::string& viewName)
+{
+    return true;
+}
 
-bool GLView::isOpenGLReady()
+
+bool GLViewImpl::isOpenGLReady()
 {
     return (_screenSize.width != 0 && _screenSize.height != 0);
 }
 
-void GLView::end()
+void GLViewImpl::end()
 {
     terminateProcessJNI();
 }
 
-void GLView::swapBuffers()
+void GLViewImpl::swapBuffers()
 {
 }
 
-void GLView::setIMEKeyboardState(bool bOpen)
+void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
     setKeyboardStateJNI((int)bOpen);
 }

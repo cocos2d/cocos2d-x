@@ -30,15 +30,15 @@
 
 #include "CCEAGLView.h"
 #include "CCDirectorCaller.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "CCSet.h"
 #include "base/CCTouch.h"
 
 NS_CC_BEGIN
 
-GLView* GLView::createWithEAGLView(void *eaglview)
+GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 {
-    auto ret = new GLView;
+    auto ret = new GLViewImpl;
     if(ret && ret->initWithEAGLView(eaglview)) {
         ret->autorelease();
         return ret;
@@ -47,9 +47,9 @@ GLView* GLView::createWithEAGLView(void *eaglview)
     return nullptr;
 }
 
-GLView* GLView::create(const std::string& viewName)
+GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLView;
+    auto ret = new GLViewImpl;
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -58,9 +58,9 @@ GLView* GLView::create(const std::string& viewName)
     return nullptr;
 }
 
-GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    auto ret = new GLView;
+    auto ret = new GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -69,9 +69,9 @@ GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float fra
     return nullptr;
 }
 
-GLView* GLView::createWithFullScreen(const std::string& viewName)
+GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new GLView();
+    auto ret = new GLViewImpl();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -80,17 +80,17 @@ GLView* GLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-GLView::GLView()
+GLViewImpl::GLViewImpl()
 {
 }
 
-GLView::~GLView()
+GLViewImpl::~GLViewImpl()
 {
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
     [glview release];
 }
 
-bool GLView::initWithEAGLView(void *eaglview)
+bool GLViewImpl::initWithEAGLView(void *eaglview)
 {
     _eaglview = eaglview;
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
@@ -102,7 +102,7 @@ bool GLView::initWithEAGLView(void *eaglview)
     return true;
 }
 
-bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     CCEAGLView *eaglview = [CCEAGLView viewWithFrame: r
@@ -123,7 +123,7 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
     return true;
 }
 
-bool GLView::initWithFullScreen(const std::string& viewName)
+bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 {
     CGRect rect = [[UIScreen mainScreen] bounds];
     Rect r;
@@ -135,12 +135,12 @@ bool GLView::initWithFullScreen(const std::string& viewName)
     return initWithRect(viewName, r, 1);
 }
 
-bool GLView::isOpenGLReady()
+bool GLViewImpl::isOpenGLReady()
 {
     return _eaglview != nullptr;
 }
 
-bool GLView::setContentScaleFactor(float contentScaleFactor)
+bool GLViewImpl::setContentScaleFactor(float contentScaleFactor)
 {
     CC_ASSERT(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
     _scaleX = _scaleY = contentScaleFactor;
@@ -151,7 +151,7 @@ bool GLView::setContentScaleFactor(float contentScaleFactor)
     return true;
 }
 
-float GLView::getContentScaleFactor() const
+float GLViewImpl::getContentScaleFactor() const
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
@@ -162,7 +162,7 @@ float GLView::getContentScaleFactor() const
     return scaleFactor;
 }
 
-void GLView::end()
+void GLViewImpl::end()
 {
     [CCDirectorCaller destroy];
     
@@ -174,13 +174,13 @@ void GLView::end()
 }
 
 
-void GLView::swapBuffers()
+void GLViewImpl::swapBuffers()
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
     [eaglview swapBuffers];
 }
 
-void GLView::setIMEKeyboardState(bool open)
+void GLViewImpl::setIMEKeyboardState(bool open)
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
