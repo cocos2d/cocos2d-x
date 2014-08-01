@@ -25,75 +25,61 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_VERTEX_INDEX_BUFFER_H__
-#define __CC_VERTEX_INDEX_BUFFER_H__
+#include "CCPrimitiveCommand.h"
 
-#include "base/CCRef.h"
-#include "base/CCDirector.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "xxhash.h"
 
 NS_CC_BEGIN
 
-class VertexBuffer : public Ref
+PrimitiveCommand::PrimitiveCommand()
+: _materialID(0)
+, _textureID(0)
+, _glProgramState(nullptr)
+, _blendType(BlendFunc::DISABLE)
+, _primitive(nullptr)
 {
-public:
-    static VertexBuffer* create(int sizePerVertex, int vertexNumber);
-    
-    int getSizePerVertex() const;
-    int getVertexNumber() const;
-    bool updateVertices(const void* verts, int count, int begin);
-    //bool getVertices(void* verts, int count, int begin) const;
+    _type = RenderCommand::Type::PRIMITIVE_COMMAND;
+}
 
-    int getSize() const;
-    
-    GLuint getVBO() const { return _vbo; }
-    
-protected:
-    VertexBuffer();
-    virtual ~VertexBuffer();
-    
-    bool init(int sizePerVertex, int vertexNumber);
-    
-protected:
-    GLuint _vbo;
-    int _sizePerVertex;
-    int _vertexNumber;
-};
-
-class IndexBuffer : public Ref
+PrimitiveCommand::~PrimitiveCommand()
 {
-public:
-    enum class IndexType
-    {
-        INDEX_TYPE_SHORT_16,
-        INDEX_TYPE_UINT_32
-    };
-    
-public:
-    static IndexBuffer* create(IndexType type, int number);
-    
-    IndexType getType() const;
-    int getSizePerIndex() const;
-    int getIndexNumber() const;
-    bool updateIndices(const void* indices, int count, int begin);
-    //bool getIndices(void* indices, int count, int begin);
+}
 
-    int getSize() const;
+void PrimitiveCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv)
+{
+    CCASSERT(glProgramState, "Invalid GLProgramState");
+    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in PrimitiveCommand");
+    CCASSERT(primitive != nullptr, "Could not render null primitive");
     
-    GLuint getVBO() const { return _vbo; }
+    _globalOrder = globalOrder;
+    
+    _primitive = primitive;
+    
+    _mv = mv;
+    
+    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != glProgramState) {
+        
+        _textureID = textureID;
+        _blendType = blendType;
+        _glProgramState = glProgramState;
+        
+    }
+}
 
-protected:
-    IndexBuffer();
-    virtual ~IndexBuffer();
+void PrimitiveCommand::execute() const
+{
+    //Set texture
+    GL::bindTexture2D(_textureID);
     
-    bool init(IndexType type, int number);
+    //set blend mode
+    GL::blendFunc(_blendType.src, _blendType.dst);
     
-protected:
-    GLuint _vbo;
-    IndexType _type;
-    int _indexNumber;
-};
-
+    _glProgramState->apply(_mv);
+    
+    _primitive->draw();
+}
 
 NS_CC_END
-
-#endif /* __CC_VERTEX_INDEX_BUFFER_H__*/

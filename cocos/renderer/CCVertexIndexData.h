@@ -37,9 +37,9 @@ NS_CC_BEGIN
 
 class VertexBuffer;
 
-enum class VertexSemantic
+enum VertexSemantic
 {
-    UNKNOWN,
+    UNKNOWN = -1,
     POSITION,
     COLOR,
     NORMAL,
@@ -64,10 +64,9 @@ enum class VertexType
 struct VertexStreamAttribute
 {
     VertexStreamAttribute()
-    : _index(-1), _offset(0),_semantic(VertexSemantic::UNKNOWN),_type(VertexType::UNKNOWN)
+    : _offset(0),_semantic(VertexSemantic::UNKNOWN),_type(VertexType::UNKNOWN)
     {
     }
-    int _index;
     int _offset;
     VertexSemantic _semantic;
     VertexType _type;
@@ -79,13 +78,14 @@ public:
     static VertexData* create();
     
     size_t getVertexStreamCount() const;
-    bool setStream(int index, VertexBuffer* buffer, const VertexStreamAttribute& stream);
-    void removeStream(int index);
-    const VertexStreamAttribute* getStreamAttribute(int index) const;
-    VertexStreamAttribute* getStreamAttribute(int index);
+    bool setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream);
+    void removeStream(VertexSemantic semantic);
+    const VertexStreamAttribute* getStreamAttribute(VertexSemantic semantic) const;
+    VertexStreamAttribute* getStreamAttribute(VertexSemantic semantic);
     
-    VertexBuffer* getStreamBuffer(int index) const;
+    VertexBuffer* getStreamBuffer(VertexSemantic semantic) const;
     
+    void use();
 protected:
     VertexData();
     virtual ~VertexData();
@@ -96,8 +96,11 @@ protected:
         VertexStreamAttribute _stream;
     };
     
-    std::map<int, BufferAttribute> _vertexStreams;
-    
+    std::map<VertexSemantic, BufferAttribute> _vertexStreams;
+protected:
+    static GLint getGLSize(VertexType type);
+    static GLenum getGLType(VertexType type);
+    static GLint getGLSemanticBinding(VertexSemantic semantic);
 };
 
 class IndexData : public Ref
@@ -108,6 +111,7 @@ public:
     IndexBuffer* getIndexBuffer() const { return _buffer; }
     int getStart() const { return _start; }
     int getCount() const { return _count; }
+    
 protected:
     IndexData();
     virtual ~IndexData();

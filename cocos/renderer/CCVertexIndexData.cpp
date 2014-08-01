@@ -46,15 +46,14 @@ size_t VertexData::getVertexStreamCount() const
     return _vertexStreams.size();
 }
 
-bool VertexData::setStream(int index, VertexBuffer* buffer, const VertexStreamAttribute& stream)
+bool VertexData::setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream)
 {
     if( buffer == nullptr ) return false;
-    
-    auto iter = _vertexStreams.find(index);
+    auto iter = _vertexStreams.find(stream._semantic);
     if(iter == _vertexStreams.end())
     {
         buffer->retain();
-        auto& bufferAttribute = _vertexStreams[index];
+        auto& bufferAttribute = _vertexStreams[stream._semantic];
         bufferAttribute._buffer = buffer;
         bufferAttribute._stream = stream;
     }
@@ -69,9 +68,9 @@ bool VertexData::setStream(int index, VertexBuffer* buffer, const VertexStreamAt
     return true;
 }
 
-void VertexData::removeStream(int index)
+void VertexData::removeStream(VertexSemantic semantic)
 {
-    auto iter = _vertexStreams.find(index);
+    auto iter = _vertexStreams.find(semantic);
     if(iter != _vertexStreams.end())
     {
         iter->second._buffer->release();
@@ -79,23 +78,23 @@ void VertexData::removeStream(int index)
     }
 }
 
-const VertexStreamAttribute* VertexData::getStreamAttribute(int index) const
+const VertexStreamAttribute* VertexData::getStreamAttribute(VertexSemantic semantic) const
 {
-    auto iter = _vertexStreams.find(index);
+    auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexStreamAttribute* VertexData::getStreamAttribute(int index)
+VertexStreamAttribute* VertexData::getStreamAttribute(VertexSemantic semantic)
 {
-    auto iter = _vertexStreams.find(index);
+    auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexBuffer* VertexData::getStreamBuffer(int index) const
+VertexBuffer* VertexData::getStreamBuffer(VertexSemantic semantic) const
 {
-    auto iter = _vertexStreams.find(index);
+    auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return iter->second._buffer;
 }
@@ -112,6 +111,55 @@ VertexData::~VertexData()
         element.second._buffer->release();
     }
     _vertexStreams.clear();
+}
+
+GLint VertexData::getGLSize(VertexType type)
+{
+    if(VertexType::FLOAT1 == type)
+    {
+        return 1;
+    }
+    else if(VertexType::FLOAT2 == type)
+    {
+        return 2;
+    }
+    else if(VertexType::FLOAT3 == type)
+    {
+        return 3;
+    }
+    else
+    {
+        return 4;
+    }
+}
+
+GLenum VertexData::getGLType(VertexType type)
+{
+    if(VertexType::BYTE4 == type)
+    {
+        return GL_UNSIGNED_BYTE;
+    }
+    else
+    {
+        return GL_FLOAT;
+    }
+}
+
+GLint VertexData::getGLSemanticBinding(VertexSemantic semantic)
+{
+    return GLint(semantic);
+}
+
+void VertexData::use()
+{
+    for(auto& element : _vertexStreams)
+    {
+        glEnableVertexAttribArray(getGLSemanticBinding(element.second._stream._semantic));
+        glBindBuffer(GL_ARRAY_BUFFER, element.second._buffer->getVBO());
+        glVertexAttribPointer(getGLSemanticBinding(element.second._stream._semantic),getGLSize(element.second._stream._type),
+                              getGLType(element.second._stream._type),false, element.second._buffer->getSizePerVertex(), (GLvoid*)element.second._stream._offset);
+        
+    }
 }
 
 IndexData* IndexData::create(IndexBuffer* buffer, int start, int count)
@@ -143,7 +191,7 @@ IndexData::~IndexData()
 
 bool IndexData::init(IndexBuffer* buffer, int start, int count)
 {
-    if(count == 0)return false;
+    if(count == 0) return false;
     if(_buffer != buffer)
     {
         CC_SAFE_RELEASE_NULL(_buffer);

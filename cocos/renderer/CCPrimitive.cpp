@@ -87,4 +87,53 @@ bool Primitive::init(VertexData* verts, IndexData* indices, PrimitiveType type)
     return true;
 }
 
+void Primitive::draw()
+{
+    if(_verts && _indices)
+    {
+        _verts->use();
+        switch (_type) {
+            case PrimitiveType::POINTS:
+                if(_indices->getIndexBuffer() != nullptr)
+                {
+                    GLenum type = (_indices->getIndexBuffer()->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getIndexBuffer()->getVBO());
+                    glDrawElements(GL_POINTS, _indices->getCount(), type, (GLvoid*)_indices->getStart());
+                }
+                else
+                {
+                    glDrawArrays(GL_POINTS, _indices->getStart(), _indices->getCount());
+                }
+                break;
+            case PrimitiveType::LINES:
+                if(_indices->getIndexBuffer() != nullptr)
+                {
+                    GLenum type = (_indices->getIndexBuffer()->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getIndexBuffer()->getVBO());
+                    glDrawElements(GL_LINES, _indices->getCount(), type, (GLvoid*)_indices->getStart());
+                }
+                else
+                {
+                    glDrawArrays(GL_LINES, _indices->getStart(), _indices->getCount());
+                }
+                break;
+            case PrimitiveType::TRIANGLES:
+                if(_indices->getIndexBuffer() != nullptr)
+                {
+                    GLenum type = (_indices->getIndexBuffer()->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getIndexBuffer()->getVBO());
+                    glDrawElements(GL_TRIANGLES, _indices->getCount(), type, (GLvoid*)_indices->getStart());
+                }
+                else
+                {
+                    glDrawArrays(GL_TRIANGLES, _indices->getStart(), _indices->getCount());
+                }
+                break;
+            default:
+                CC_ASSERT(0);
+                break;
+        }
+    }
+}
+
 NS_CC_END

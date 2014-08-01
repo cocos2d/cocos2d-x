@@ -25,75 +25,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_VERTEX_INDEX_BUFFER_H__
-#define __CC_VERTEX_INDEX_BUFFER_H__
+#ifndef _CC_PRIMITIVE_COMMAND_H__
+#define _CC_PRIMITIVE_COMMAND_H__
 
-#include "base/CCRef.h"
-#include "base/CCDirector.h"
+#include "renderer/CCPrimitive.h"
+#include "renderer/CCRenderCommand.h"
 
 NS_CC_BEGIN
-
-class VertexBuffer : public Ref
+class GLProgramState;
+class PrimitiveCommand : public RenderCommand
 {
 public:
-    static VertexBuffer* create(int sizePerVertex, int vertexNumber);
+    PrimitiveCommand();
+    ~PrimitiveCommand();
     
-    int getSizePerVertex() const;
-    int getVertexNumber() const;
-    bool updateVertices(const void* verts, int count, int begin);
-    //bool getVertices(void* verts, int count, int begin) const;
-
-    int getSize() const;
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
     
-    GLuint getVBO() const { return _vbo; }
+    inline uint32_t getMaterialID() const { return _materialID; }
+    inline GLuint getTextureID() const { return _textureID; }
+    inline GLProgramState* getGLProgramState() const { return _glProgramState; }
+    inline BlendFunc getBlendType() const { return _blendType; }
+    inline const Mat4& getModelView() const { return _mv; }
     
+    void execute() const;
 protected:
-    VertexBuffer();
-    virtual ~VertexBuffer();
     
-    bool init(int sizePerVertex, int vertexNumber);
-    
-protected:
-    GLuint _vbo;
-    int _sizePerVertex;
-    int _vertexNumber;
+    uint32_t _materialID;
+    GLuint _textureID;
+    GLProgramState* _glProgramState;
+    BlendFunc _blendType;
+    Primitive* _primitive;
+    Mat4 _mv;
 };
-
-class IndexBuffer : public Ref
-{
-public:
-    enum class IndexType
-    {
-        INDEX_TYPE_SHORT_16,
-        INDEX_TYPE_UINT_32
-    };
-    
-public:
-    static IndexBuffer* create(IndexType type, int number);
-    
-    IndexType getType() const;
-    int getSizePerIndex() const;
-    int getIndexNumber() const;
-    bool updateIndices(const void* indices, int count, int begin);
-    //bool getIndices(void* indices, int count, int begin);
-
-    int getSize() const;
-    
-    GLuint getVBO() const { return _vbo; }
-
-protected:
-    IndexBuffer();
-    virtual ~IndexBuffer();
-    
-    bool init(IndexType type, int number);
-    
-protected:
-    GLuint _vbo;
-    IndexType _type;
-    int _indexNumber;
-};
-
 
 NS_CC_END
 
-#endif /* __CC_VERTEX_INDEX_BUFFER_H__*/
+#endif //_CC_PRIMITIVE_COMMAND_H__

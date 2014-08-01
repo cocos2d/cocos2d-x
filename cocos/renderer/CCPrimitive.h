@@ -48,6 +48,9 @@ public:
     IndexData* getIndexData();
     
     PrimitiveType getType() const { return _type; }
+    
+    //called by rendering framework
+    void draw();
 protected:
     Primitive();
     virtual ~Primitive();
