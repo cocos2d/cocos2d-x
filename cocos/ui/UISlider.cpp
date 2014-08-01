@@ -64,6 +64,7 @@ _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
 _progressBarRendererDirty(true),
+_slidBallRendererDirty(true),
 _eventCallback(nullptr)
 {
     setTouchEnabled(true);
@@ -145,6 +146,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
     
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
+    _slidBallRendererDirty = true;
     updateContentSizeWithTextureSize(_barRenderer->getContentSize());
 }
 
@@ -274,6 +276,7 @@ void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType 
         default:
             break;
     }
+    _slidBallRendererDirty = true;
 }
 
 void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType)
@@ -426,6 +429,7 @@ void Slider::onSizeChanged()
     Widget::onSizeChanged();
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
+    _slidBallRendererDirty = true;
 }
     
 void Slider::adaptRenderers()
@@ -439,6 +443,11 @@ void Slider::adaptRenderers()
     {
         progressBarRendererScaleChangedWithSize();
         _progressBarRendererDirty = false;
+    }
+    if (_slidBallRendererDirty)
+    {
+        slidBallRendererScaleChangedWithSize();
+        _slidBallRendererDirty = false;
     }
 }
 
@@ -520,6 +529,29 @@ void Slider::progressBarRendererScaleChangedWithSize()
         }
     }
     _progressBarRenderer->setPosition(0.0f, _contentSize.height / 2.0f);
+    setPercent(_percent);
+}
+
+void Slider::slidBallRendererScaleChangedWithSize()
+{
+    if (_ignoreSize)
+    {
+        _slidBallSize = _slidBallNormalRenderer->getContentSize();
+        _slidBallRenderer->setScale(1.0f);
+    }
+    else
+    {
+        CCSize slidBallSize = _slidBallSize;
+        if (slidBallSize.width <= 0.0f || slidBallSize.height <= 0.0f)
+        {
+            _slidBallRenderer->setScale(1.0f);
+            return;
+        }
+        float pscaleX = _size.width / slidBallSize.width;
+        float pscaleY = _size.height / slidBallSize.height;
+        _slidBallRenderer->setScaleX(pscaleY);
+        _slidBallRenderer->setScaleY(pscaleY);
+    }
     setPercent(_percent);
 }
 

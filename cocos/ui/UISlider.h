@@ -223,6 +223,7 @@ protected:
    
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
+    void slidBallRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
@@ -273,6 +274,7 @@ protected:
     TextureResType _ballDTexType;
     bool _barRendererAdaptDirty;
     bool _progressBarRendererDirty;
+    bool _slidBallRendererDirty;
 };
 
 }
