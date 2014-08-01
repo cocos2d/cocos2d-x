@@ -62,18 +62,18 @@ public:
     inline float getScrollX() { return _scrollX; };
     inline float getScrollY() { return _scrollY; };
 
-	inline void setCursorPosition(float x, float y) {
-		_x = x;
-		_y = y;
-		_prevPoint = _point;
-		_point.x = x;
-		_point.y = y;
-		if (!_startPointCaptured)
-		{
-			_startPoint = _point;
-			_startPointCaptured = true;
-		}
-	}
+    inline void setCursorPosition(float x, float y) { 
+        _x = x;
+        _y = y;
+        _prevPoint = _point;
+        _point.x = x;
+        _point.y = y;
+        if (!_startPointCaptured)
+        {
+            _startPoint = _point;
+            _startPointCaptured = true;
+        }
+    }
 
     inline void setMouseButton(int button) { _mouseButton = button; };
     inline int getMouseButton() { return _mouseButton; };
