@@ -21,7 +21,10 @@
             },
             {
                 "from": "cocos/platform/android/java",
-                "to": "cocos/include/platform/android/java"
+                "to": "cocos/include/platform/android/java",
+                "exclude": [
+                    "bin/*", "gen/*", "libs/*"
+                ]
             },
             {
                 "from": "external",
@@ -32,6 +35,34 @@
                     "xxhash/*.h",
                     "json/*.h",
                     "win32-specific/*"
+                ]
+            },
+            {
+                "from": "external/lua/tolua",
+                "to": "cocos/lua-bindings/include/tolua",
+                "include": [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "cocos/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "cocos/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual",
+                "to": "cocos/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
                 ]
             }
         ],
@@ -59,54 +90,166 @@
         ],
         "export_cppflags" : [
             "-Wno-literal-suffix", "-Wno-deprecated-declarations"
-        ]
+        ],
+        "is_optional" : false,
+        "lua_bindings" : {
+            "headers" : [
+            ],
+            "registers" : [
+            ],
+            "lua_lib_name" : "liblua",
+            "android_lib_name" : "cocos_lua_static",
+            "depend_modules" : [
+                "luajit"
+            ]
+        }
     },
     "freetype" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/freetype2",
         "target_dir" : "external/freetype2",
-        "android_lib_name" : "cocos_freetype2_static"
+        "android_lib_name" : "cocos_freetype2_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
     },
     "jpeg" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/jpeg",
         "target_dir" : "external/jpeg",
-        "android_lib_name" : "cocos_jpeg_static"
+        "android_lib_name" : "cocos_jpeg_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
     },
     "png" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/png",
         "target_dir" : "external/png",
-        "android_lib_name" : "cocos_png_static"
+        "android_lib_name" : "cocos_png_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
     },
     "webp" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/webp",
         "target_dir" : "external/webp",
-        "android_lib_name" : "cocos_webp_static"
+        "android_lib_name" : "cocos_webp_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/mac/*"
+        ]
     },
     "tiff" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/tiff",
         "target_dir" : "external/tiff",
-        "android_lib_name" : "cocos_tiff_static"
+        "android_lib_name" : "cocos_tiff_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
     },
     "curl" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/curl",
         "target_dir" : "external/curl",
-        "android_lib_name" : "cocos_curl_static"
+        "android_lib_name" : "cocos_curl_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/wp8/*",
+            "prebuilt/ios/*",
+            "prebuilt/wp8/*"
+        ]
     },
     "websockets" : {
         "module_type" : "prebuilt",
         "from_dir" : "external/websockets",
         "target_dir" : "external/websockets",
-        "android_lib_name" : "websockets_static"
+        "android_lib_name" : "websockets_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/mac/*"
+        ]
     },
     "glfw3": {
         "module_type" : "prebuilt",
         "from_dir" : "external/glfw3",
-        "target_dir" : "external/glfw3"
+        "target_dir" : "external/glfw3",
+        "is_optional" : false
+    },
+    "luajit": {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/lua/luajit",
+        "target_dir" : "external/lua/luajit",
+        "android_lib_name" : "luajit_static",
+        "is_optional" : false,
+        "include" : [
+            "include/*",
+            "prebuilt/android/*",
+            "prebuilt/win32/*"
+        ]
+    },
+    "lua": {
+        "module_type" : "prebuilt",
+        "from_dir" : "external/lua/lua",
+        "target_dir" : "external/lua/lua",
+        "is_optional" : false,
+        "include" : [
+            "*.h",
+            "prebuilt/ios/*"
+        ]
     },
     "cocos_android" : {
         "module_type" : "compiled",
@@ -118,7 +261,8 @@
         ],
         "export_ldlibs" : [
             "GLESv1_CM", "GLESv2", "EGL", "log", "z", "android"
-        ]
+        ],
+        "is_optional" : false
     },
     "chipmunk" : {
         "module_type" : "compiled",
@@ -139,7 +283,8 @@
         ],
         "export_include" : [
             "../../include/chipmunk"
-        ]
+        ],
+        "is_optional" : true
     },
     "box2d" : {
         "module_type" : "compiled",
@@ -160,7 +305,8 @@
         ],
         "export_include" : [
             "../../include"
-        ]
+        ],
+        "is_optional" : true
     },
     "audio" : {
         "module_type" : "compiled",
@@ -181,7 +327,8 @@
         ],
         "export_include" : [
             "../../include"
-        ]
+        ],
+        "is_optional" : true
     },
     "network" : {
         "module_type" : "compiled",
@@ -198,6 +345,13 @@
                 "include" : [
                     "*.h"
                 ]
+            },
+            {
+                "from": "external/lua/luasocket",
+                "to": "modules/network/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
             }
         ],
         "export_include" : [
@@ -205,7 +359,8 @@
         ],
         "depend_modules" : [
             "cocos2d", "curl", "websockets"
-        ]
+        ],
+        "is_optional" : true
     },
     "ui" : {
         "module_type" : "compiled",
@@ -229,7 +384,8 @@
         ],
         "depend_modules" : [
             "cocos2d", "extensions"
-        ]
+        ],
+        "is_optional" : true
     },
     "extensions" : {
         "module_type" : "compiled",
@@ -253,7 +409,8 @@
         ],
         "depend_modules" : [
             "cocos2d", "curl", "box2d"
-        ]
+        ],
+        "is_optional" : true
     },
     "cocostudio" : {
         "module_type" : "compiled",
@@ -277,7 +434,8 @@
         ],
         "depend_modules" : [
             "ui", "audio"
-        ]
+        ],
+        "is_optional" : true
     },
     "spine" : {
         "module_type" : "compiled",
@@ -301,7 +459,8 @@
         ],
         "depend_modules" : [
             "cocos2d"
-        ]
+        ],
+        "is_optional" : true
     },
     "cocosbuilder" : {
         "module_type" : "compiled",
@@ -325,6 +484,7 @@
         ],
         "depend_modules" : [
             "extensions"
-        ]
+        ],
+        "is_optional" : true
     }
 }
