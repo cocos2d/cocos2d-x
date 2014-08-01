@@ -263,11 +263,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp" />
+    <ClCompile Include="..\platform\CCGLView.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
-    <ClCompile Include="..\platform\desktop\CCGLView.cpp" />
+    <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon.cpp" />
     <ClCompile Include="..\platform\win32\CCDevice.cpp" />
@@ -469,11 +469,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
-    <ClInclude Include="..\platform\CCGLViewProtocol.h" />
+    <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
-    <ClInclude Include="..\platform\desktop\CCGLView.h" />
+    <ClInclude Include="..\platform\desktop\CCGLViewImpl.h" />
     <ClInclude Include="..\platform\win32\CCApplication.h" />
     <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h" />
     <ClInclude Include="..\platform\win32\CCGL.h" />

@@ -29,7 +29,6 @@
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 #include "CCEAGLView.h"
-#include "CCGLView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #include "base/CCDirector.h"
 
