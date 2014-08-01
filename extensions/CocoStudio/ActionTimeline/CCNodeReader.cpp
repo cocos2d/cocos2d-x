@@ -485,6 +485,8 @@ CCNode* NodeReader::loadWidget(const rapidjson::Value& json, cocos2d::CCNode* pa
     WidgetPropertiesReader* pReader = new WidgetPropertiesReader0300();
     cocos2d::ui::Widget* widget = pReader->widgetFromJsonDictionary(json);
 
+    initNode(widget, json);
+
     return widget;
 }
 
