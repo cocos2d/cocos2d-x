@@ -44,6 +44,7 @@ _slidBallNormalRenderer(nullptr),
 _slidBallPressedRenderer(nullptr),
 _slidBallDisabledRenderer(nullptr),
 _slidBallRenderer(nullptr),
+_slidBallSize(Size::ZERO),
 _barLength(0.0),
 _percent(0),
 _scale9Enabled(false),
@@ -277,6 +278,7 @@ void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType 
             break;
     }
     _slidBallRendererDirty = true;
+    _slidBallSize = _slidBallNormalRenderer->getContentSize();
 }
 
 void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType)
