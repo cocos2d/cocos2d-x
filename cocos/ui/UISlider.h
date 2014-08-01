@@ -231,7 +231,7 @@ protected:
     Scale9Sprite*  _barRenderer;
     Scale9Sprite* _progressBarRenderer;
     Size _progressBarTextureSize;
-    CCSize _slidBallSize;
+    Size _slidBallSize;
     
     Sprite* _slidBallNormalRenderer;
     Sprite* _slidBallPressedRenderer;
