@@ -543,14 +543,14 @@ void Slider::slidBallRendererScaleChangedWithSize()
     }
     else
     {
-        CCSize slidBallSize = _slidBallSize;
+        Size slidBallSize = _slidBallSize;
         if (slidBallSize.width <= 0.0f || slidBallSize.height <= 0.0f)
         {
             _slidBallRenderer->setScale(1.0f);
             return;
         }
-        float pscaleX = _size.width / slidBallSize.width;
-        float pscaleY = _size.height / slidBallSize.height;
+        float pscaleX = _contentSize.width / slidBallSize.width;
+        float pscaleY = _contentSize.height / slidBallSize.height;
         _slidBallRenderer->setScaleX(pscaleY);
         _slidBallRenderer->setScaleY(pscaleY);
     }
