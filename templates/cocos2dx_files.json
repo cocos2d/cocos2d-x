@@ -3726,7 +3726,7 @@
         "cocos/scripting/lua-bindings/auto/api/GLProgramCache.lua", 
         "cocos/scripting/lua-bindings/auto/api/GLProgramState.lua", 
         "cocos/scripting/lua-bindings/auto/api/GLView.lua", 
-        "cocos/scripting/lua-bindings/auto/api/GLViewProtocol.lua", 
+        "cocos/scripting/lua-bindings/auto/api/GLViewImpl.lua", 
         "cocos/scripting/lua-bindings/auto/api/GUIReader.lua", 
         "cocos/scripting/lua-bindings/auto/api/Grid3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/Grid3DAction.lua", 
