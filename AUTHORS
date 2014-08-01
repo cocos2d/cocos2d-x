@@ -942,6 +942,9 @@ Developers:
         
     reckhou
         Optimize FPS control on Android
+        
+    dzl-ian
+        Added getter and setter for TextColor for UIText
     
 Retired Core Developers:
     WenSheng Yang
