@@ -33,7 +33,8 @@ NS_CC_BEGIN
 class Label;
 
 namespace ui{
-
+    
+    class Scale9Sprite;
 /**
 *   @js NA
 *   @lua NA
@@ -205,9 +206,7 @@ protected:
   
     virtual void updateFlippedX() override;
     virtual void updateFlippedY() override;
-    
-    void updateTexturesRGBA();
-    
+        
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
@@ -219,10 +218,11 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
    
 protected:
-    Node* _buttonNormalRenderer;
-    Node* _buttonClickedRenderer;
-    Node* _buttonDisableRenderer;
+    Scale9Sprite* _buttonNormalRenderer;
+    Scale9Sprite* _buttonClickedRenderer;
+    Scale9Sprite* _buttonDisableRenderer;
     Label* _titleRenderer;
+    
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;

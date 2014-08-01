@@ -41,6 +41,8 @@ namespace ui {
      * to specific areas of a sprite. With 9-slice scaling (3x3 grid),
      * you can ensure that the sprite does not become distorted when
      * scaled.
+     *  Note: When you set _scale9Enabled to false, then you could call scale9Sprite->getSprite() to return a new Sprite pointer.
+     *         Then you could call any methods of Sprite class with the return pointers.
      *
      */
     class CC_GUI_DLL Scale9Sprite : public Node
@@ -246,7 +248,7 @@ namespace ui {
         
         // overrides
         virtual void setContentSize(const Size & size) override;
-        
+        virtual void setAnchorPoint(const Vec2& anchorPoint) override;
         
         Size getOriginalSize() const;
         void setPreferredSize(const Size& size);
@@ -262,7 +264,7 @@ namespace ui {
         void setInsetBottom(float bottomInset);
         float getInsetBottom()const;
         void setScale9Enabled(bool enabled);
-        bool getScale9Enabled()const;
+        bool isScale9Enabled()const;
         
         
         
