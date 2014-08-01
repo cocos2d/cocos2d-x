@@ -490,9 +490,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -615,6 +612,9 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCFastTMXTiledMap.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1257,6 +1257,9 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCFastTMXTiledMap.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
