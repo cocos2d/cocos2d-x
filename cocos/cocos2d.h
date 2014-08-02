@@ -223,7 +223,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCGLView.h"
+	#include "platform/wp8/CCGLViewImpl.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"

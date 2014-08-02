@@ -60,7 +60,7 @@ private:
     EventCode _eventCode;
     std::vector<Touch*> _touches;
 
-    friend class GLViewProtocol;
+    friend class GLView;
 };
 
 

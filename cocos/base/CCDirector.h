@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "2d/CCLabelAtlas.h"
 #include <stack>
 #include "math/CCMath.h"
+#include "platform/CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -49,7 +50,7 @@ NS_CC_BEGIN
 /* Forward declarations. */
 class LabelAtlas;
 class Scene;
-class GLView;
+//class GLView;
 class DirectorDelegate;
 class Node;
 class Scheduler;
@@ -509,7 +510,7 @@ protected:
 #endif
 
     // GLViewProtocol will recreate stats labels to fit visible rect
-    friend class GLViewProtocol;
+    friend class GLView;
 };
 
 /** 
