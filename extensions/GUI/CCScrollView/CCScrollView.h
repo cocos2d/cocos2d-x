@@ -146,6 +146,34 @@ public:
      * @param dt    The animation duration
      */
     void setZoomScaleInDuration(float s, float dt);
+
+    /**
+     * Set min/max scale
+     *
+     * @param minScale min scale
+     * @param maxScale max scale
+     */
+    void setMinMaxScale(float minScale, float maxScale) {
+    	setMinScale(minScale);
+    	setMinScale(maxScale);
+    }
+    /**
+     * Set min scale
+     *
+     * @param minScale min scale
+     */
+    void setMinScale(float minScale) {
+        _minScale = minScale;
+    }
+    /**
+     * Set max scale
+     *
+     * @param maxScale max scale
+     */
+    void setMaxScale(float maxScale) {
+        _maxScale = maxScale;
+    }
+
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      */
