@@ -533,7 +533,9 @@ void ScrollView::onBeforeDraw()
             }
         }
         else {
+#if DIRECTX_ENABLED == 0
             glEnable(GL_SCISSOR_TEST);
+#endif			
             glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         }
     }
@@ -560,7 +562,9 @@ void ScrollView::onAfterDraw()
             glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
         }
         else {
+#if DIRECTX_ENABLED == 0
             glDisable(GL_SCISSOR_TEST);
+#endif
         }
     }
 }

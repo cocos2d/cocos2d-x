@@ -119,6 +119,9 @@ bool ClippingNode::init()
 
 bool ClippingNode::init(Node *stencil)
 {
+	DX_NOT_SUPPORTED();
+
+#if DIRECTX_ENABLED == 0
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;
     CC_SAFE_RETAIN(_stencil);
@@ -138,6 +141,9 @@ bool ClippingNode::init(Node *stencil)
     }
     
     return true;
+#else
+	return false;
+#endif
 }
 
 void ClippingNode::onEnter()
@@ -332,6 +338,7 @@ void ClippingNode::setInverted(bool inverted)
 
 void ClippingNode::onBeforeVisit()
 {
+#if DIRECTX_ENABLED == 0
     ///////////////////////////////////
     // INIT
 
@@ -406,28 +413,31 @@ void ClippingNode::onBeforeVisit()
 
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
-    if (_alphaThreshold < 1) {
+	if (_alphaThreshold < 1) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        // manually save the alpha test state
-        _currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
-        glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&_currentAlphaTestFunc);
-        glGetFloatv(GL_ALPHA_TEST_REF, &_currentAlphaTestRef);
-        // enable alpha testing
-        glEnable(GL_ALPHA_TEST);
-        // check for OpenGL error while enabling alpha test
-        CHECK_GL_ERROR_DEBUG();
-        // pixel will be drawn only if greater than an alpha threshold
-        glAlphaFunc(GL_GREATER, _alphaThreshold);
+		// manually save the alpha test state
+		_currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
+		glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&_currentAlphaTestFunc);
+		glGetFloatv(GL_ALPHA_TEST_REF, &_currentAlphaTestRef);
+		// enable alpha testing
+		glEnable(GL_ALPHA_TEST);
+		// check for OpenGL error while enabling alpha test
+		CHECK_GL_ERROR_DEBUG();
+		// pixel will be drawn only if greater than an alpha threshold
+		glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
 		NOT_SUPPORTED();
+	}
 #endif
-    }
-
+#else
+	NOT_SUPPORTED();
+#endif
     //Draw _stencil
 }
 
 void ClippingNode::onAfterDrawStencil()
 {
+#if DIRECTX_ENABLED == 0
     // restore alpha test state
     if (_alphaThreshold < 1)
     {
@@ -462,11 +472,13 @@ void ClippingNode::onAfterDrawStencil()
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
     // draw (according to the stencil test func) this node and its childs
+#endif
 }
 
 
 void ClippingNode::onAfterVisit()
 {
+#if DIRECTX_ENABLED == 0
     ///////////////////////////////////
     // CLEANUP
 
@@ -481,6 +493,7 @@ void ClippingNode::onAfterVisit()
 
     // we are done using this layer, decrement
     s_layer--;
+#endif
 }
 
 NS_CC_END

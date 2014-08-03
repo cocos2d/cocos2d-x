@@ -19,6 +19,7 @@ public:
 
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
+#if DIRECTX_ENABLED == 0
         DrawPrimitives::setDrawColor4B(_touchColor.r, _touchColor.g, _touchColor.b, 255);
         glLineWidth(10);
         DrawPrimitives::drawLine( Vec2(0, _touchPoint.y), Vec2(getContentSize().width, _touchPoint.y) );
@@ -26,6 +27,7 @@ public:
         glLineWidth(1);
         DrawPrimitives::setPointSize(30);
         DrawPrimitives::drawPoint(_touchPoint);
+#endif
     }
 
     void setTouchPos(const Vec2& pt)

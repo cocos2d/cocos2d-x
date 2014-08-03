@@ -933,6 +933,7 @@ void SpriteZVertex::onExit()
 
 SpriteZVertex::SpriteZVertex()
 {
+#if DIRECTX_ENABLED == 0
     //
     // This test tests z-order
     // If you are going to use it is better to use a 3D projection
@@ -947,16 +948,14 @@ SpriteZVertex::SpriteZVertex()
     //
     auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-
-#if DIRECTX_ENABLED == 0
+	
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
     if (getGLProgram())
     {
         getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
     }
-#endif
-    
+   
     
     _dir = 1;
     _time = 0;
@@ -992,6 +991,7 @@ SpriteZVertex::SpriteZVertex()
     }
 
     node->runAction( OrbitCamera::create(10, 1, 0, 0, 360, 0, 0) );
+#endif
 }
 
 std::string SpriteZVertex::title() const
@@ -1025,6 +1025,7 @@ void SpriteBatchNodeZVertex::onExit()
 
 SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
 {
+#if DIRECTX_ENABLED == 0
     //
     // This test tests z-order
     // If you are going to use it is better to use a 3D projection
@@ -1080,6 +1081,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     }
     
     batch->runAction(OrbitCamera::create(10, 1, 0, 0, 360, 0, 0) );
+#endif
 }
 
 std::string SpriteBatchNodeZVertex::title() const

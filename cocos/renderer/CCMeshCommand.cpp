@@ -124,6 +124,7 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
+#if DIRECTX_ENABLED == 0
     if (_cullFaceEnabled)
     {
         glEnable(GL_CULL_FACE);
@@ -137,10 +138,12 @@ void MeshCommand::applyRenderState()
     {
         glDepthMask(GL_TRUE);
     }
+#endif
 }
 
 void MeshCommand::restoreRenderState()
 {
+#if DIRECTX_ENABLED == 0
     if (_cullFaceEnabled)
     {
         glDisable(GL_CULL_FACE);
@@ -153,6 +156,7 @@ void MeshCommand::restoreRenderState()
     {
         glDepthMask(GL_FALSE);
     }
+#endif
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, const BlendFunc& blend)
@@ -223,7 +227,7 @@ void MeshCommand::batchDraw()
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
 #else
-	CCASSERT(false, "Not supported.");
+	DX_NOT_SUPPORTED();
 #endif
 }
 void MeshCommand::postBatchDraw()
@@ -244,7 +248,7 @@ void MeshCommand::postBatchDraw()
 	CCASSERT(false, "Not supported.");
 #endif
 }
-
+    
 void MeshCommand::execute()
 {
 #if DIRECTX_ENABLED == 0

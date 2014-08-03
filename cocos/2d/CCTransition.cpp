@@ -1219,6 +1219,7 @@ void TransitionFade :: onEnter()
     _inScene->setVisible(false);
 
     addChild(l, 2, kSceneFade);
+	l->setGlobalZOrder(1000);
     Node* f = getChildByTag(kSceneFade);
 
     ActionInterval* a = (ActionInterval *)Sequence::create

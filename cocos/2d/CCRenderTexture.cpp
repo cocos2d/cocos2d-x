@@ -71,6 +71,7 @@ RenderTexture::RenderTexture()
 , _depthStencilView(nullptr)
 , _renderTargetViewMap(nullptr)
 , _shaderResourceViewMap(nullptr)
+, _depthStencil(nullptr)
 #endif
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -96,19 +97,17 @@ RenderTexture::~RenderTexture()
         glDeleteRenderbuffers(1, &_depthRenderBufffer);
     }
 #else
-	if (_renderTargetViewMap)
-		_renderTargetViewMap->Release();
-	if (_shaderResourceViewMap)
-		_shaderResourceViewMap->Release();
-	if (_depthStencilView)
-		_depthStencilView->Release();
+	DXResourceManager::getInstance().remove(&_depthStencilView);
+	DXResourceManager::getInstance().remove(&_shaderResourceViewMap);
+	DXResourceManager::getInstance().remove(&_renderTargetViewMap);
+	DXResourceManager::getInstance().remove(&_depthStencil);
 #endif
     CC_SAFE_DELETE(_UITextureImage);
 }
 
 void RenderTexture::listenToBackground(EventCustom *event)
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA && DIRECTX_ENABLED == 0
     CC_SAFE_DELETE(_UITextureImage);
     
     // to get the rendered texture data
@@ -136,7 +135,7 @@ void RenderTexture::listenToBackground(EventCustom *event)
 
 void RenderTexture::listenToForeground(EventCustom *event)
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA && DIRECTX_ENABLED == 0
     // -- regenerate frame buffer object and attach the texture
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     
@@ -295,6 +294,10 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         // check if it worked (probably worth doing :) )
         CCASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
 #else		
+		DXResourceManager::getInstance().remove(&_depthStencilView);
+		DXResourceManager::getInstance().remove(&_shaderResourceViewMap);
+		DXResourceManager::getInstance().remove(&_renderTargetViewMap);
+
 		D3D11_TEXTURE2D_DESC textureDesc;
 		_texture->getTexture()->GetDesc(&textureDesc);
 
@@ -330,13 +333,16 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 			D3D11_BIND_DEPTH_STENCIL
 			);
 
-		// Allocate a 2-D surface as the depth/stencil buffer.
-		ID3D11Texture2D* depthStencil;
-		DX::ThrowIfFailed(view->GetDevice()->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencil));
+		// Allocate a 2-D surface as the depth/stencil buffer.		
+		DX::ThrowIfFailed(view->GetDevice()->CreateTexture2D(&depthStencilDesc, nullptr, &_depthStencil));
 
 		// Create a DepthStencil view on this surface to use on bind.
 		CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
-		DX::ThrowIfFailed(view->GetDevice()->CreateDepthStencilView(depthStencil, &depthStencilViewDesc, &_depthStencilView));
+		DX::ThrowIfFailed(view->GetDevice()->CreateDepthStencilView(_depthStencil, &depthStencilViewDesc, &_depthStencilView));
+		DXResourceManager::getInstance().add(&_depthStencil);
+		DXResourceManager::getInstance().add(&_depthStencilView);
+		DXResourceManager::getInstance().add(&_shaderResourceViewMap);
+		DXResourceManager::getInstance().add(&_renderTargetViewMap);
 #endif
         _texture->setAliasTexParameters();
 
@@ -398,7 +404,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
 }
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
-{
+{	
     setClearColor(Color4F(r, g, b, a));
 
     setClearDepth(depthValue);
@@ -547,7 +553,7 @@ Image* RenderTexture::newImage(bool fliimage)
     GLubyte *buffer = nullptr;
     GLubyte *tempData = nullptr;
     Image *image = new Image();
-
+	
     do
     {
         CC_BREAK_IF(! (buffer = new GLubyte[savedBufferWidth * savedBufferHeight * 4]));
@@ -578,23 +584,23 @@ Image* RenderTexture::newImage(bool fliimage)
         glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
         glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 
-        if ( fliimage ) // -- flip is only required when saving image to file
-        {
-            // to get the actual texture data
-            // #640 the image read from rendertexture is dirty
-            for (int i = 0; i < savedBufferHeight; ++i)
-            {
-                memcpy(&buffer[i * savedBufferWidth * 4],
-                       &tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
-                       savedBufferWidth * 4);
-            }
+		if (fliimage) // -- flip is only required when saving image to file
+		{
+			// to get the actual texture data
+			// #640 the image read from rendertexture is dirty
+			for (int i = 0; i < savedBufferHeight; ++i)
+			{
+				memcpy(&buffer[i * savedBufferWidth * 4],
+					&tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
+					savedBufferWidth * 4);
+			}
 
-            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        }
-        else
-        {
-            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        }
+			image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+		}
+		else
+		{
+			image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+		}
 #else	
 		auto view = GLView::sharedOpenGLView();
 		ID3D11Texture2D* stagingTexture = nullptr;
@@ -637,10 +643,7 @@ Image* RenderTexture::newImage(bool fliimage)
     } while (0);
 
     CC_SAFE_DELETE_ARRAY(buffer);
-
-#if DIRECTX_ENABLED == 0
     CC_SAFE_DELETE_ARRAY(tempData);
-#endif
 
     return image;
 }
@@ -681,7 +684,7 @@ void RenderTexture::onBegin()
 #else
         Mat4 orthoMatrix;
 		Mat4::createOrthographicOffCenter(-widthRatio, widthRatio, -heightRatio, heightRatio, -1, 1, &orthoMatrix);
-        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+		director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
 #endif				
     }
     
@@ -743,7 +746,6 @@ void RenderTexture::onEnd()
     //
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);
-
 }
 
 void RenderTexture::onClear()
@@ -887,9 +889,9 @@ void RenderTexture::begin()
 		director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 		director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, mat);
 #else
-        Mat4 orthoMatrix;
+		Mat4 orthoMatrix;
 		Mat4::createOrthographicOffCenter(-widthRatio, widthRatio, -heightRatio, heightRatio, -1, 1, &orthoMatrix);
-        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+		director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
 #endif	
     }
 

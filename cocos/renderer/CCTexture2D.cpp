@@ -624,6 +624,10 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 		format = DXGI_FORMAT_B4G4R4A4_UNORM; 
 		convertRGBA4444ToBGRA4444(mipmaps->address, mipmaps->len, mipmaps->address);
 	}
+	else if (pixelFormat == PixelFormat::RGB888)
+	{
+		format = DXGI_FORMAT_B8G8R8X8_UNORM;
+	}
 	else if (pixelFormat == PixelFormat::A8)
 	{
 		format = DXGI_FORMAT_A8_UNORM;
@@ -1557,6 +1561,14 @@ void Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat format)
 Texture2D::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
+}
+
+std::string Texture2D::getExtensionFromFormat(Texture2D::PixelFormat format, const std::string& defaultExtension)
+{
+	if (format == Texture2D::PixelFormat::S3TC_DXT1 || format == Texture2D::PixelFormat::S3TC_DXT3 || format == Texture2D::PixelFormat::S3TC_DXT5)
+		return ".dds";
+
+	return defaultExtension;
 }
 
 unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) const

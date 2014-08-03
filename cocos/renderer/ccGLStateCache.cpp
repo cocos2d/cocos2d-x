@@ -395,8 +395,8 @@ void DXStateCache::setBlend(GLint GLsrc, GLint GLdst)
 		_blendDesc.RenderTarget[0].BlendEnable = true;
 		_blendDesc.RenderTarget[0].SrcBlend = src;
 		_blendDesc.RenderTarget[0].DestBlend = dst;
-		_blendDesc.RenderTarget[0].SrcBlendAlpha = src;
-		_blendDesc.RenderTarget[0].DestBlendAlpha = dst;
+		_blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+		_blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 		DX::ThrowIfFailed(_view->GetDevice()->CreateBlendState(&_blendDesc, &_blendState));
 		_view->GetContext()->OMSetBlendState(_blendState, nullptr, 0xffffffff);
 		DXResourceManager::getInstance().add(&_blendState);
@@ -497,6 +497,8 @@ void DXResourceManager::clear()
 	clearrasterizeState();
 	cleartexture();
 	clearshaderView();
+	clearrenderTargetView();
+	cleardepthStencilView();
 }
 
 #endif

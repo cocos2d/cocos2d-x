@@ -210,6 +210,10 @@ void ProgressTimer::updateColor(void)
         {
             _vertexData[i].colors = sc;
         }            
+
+#if DIRECTX_ENABLED == 1
+		_bufferDirty = true;
+#endif
     }
 }
 
@@ -263,9 +267,8 @@ GLubyte ProgressTimer::getOpacity() const
 void ProgressTimer::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     Node::updateDisplayedOpacity(parentOpacity);
-    
-    if(_sprite)
         _sprite->updateDisplayedOpacity(parentOpacity);
+	updateColor();
 }
 
 void ProgressTimer::setMidpoint(const Vec2& midPoint)
@@ -408,7 +411,7 @@ void ProgressTimer::updateRadial(void)
 	_bufferDirty = true;
 
 #if DIRECTX_ENABLED == 1
-	if (_vertexDataCount != originalCount && _vertexDataCount > 0)
+	if (_vertexDataCount != originalCount && _vertexDataCount > 0 || !_bufferIndex)
 	{
 		_triCount = index + 1;
 		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_triCount * 3]);
@@ -544,7 +547,7 @@ void ProgressTimer::updateBar(void)
     updateColor();
 
 #if DIRECTX_ENABLED == 1
-	if (_vertexDataCount != originalCount)
+	if (_vertexDataCount != originalCount || !_bufferIndex)
 	{
 		_triCount = _vertexDataCount / 2;
 		std::unique_ptr<GLushort> indices = std::unique_ptr<GLushort>(new GLushort[_triCount * 3]);
@@ -628,6 +631,11 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 #else
 	if (_triCount == 0)
 		return;
+
+	if (!_bufferVertex)		
+		UpdateVertexBuffer();
+	if (!_bufferIndex)
+		updateProgress();
 
 	DXStateCache::getInstance().setPSTexture(0, _sprite->getTexture()->getView());
 	DXStateCache::getInstance().setBlend(_sprite->getBlendFunc().src, _sprite->getBlendFunc().dst);

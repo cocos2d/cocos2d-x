@@ -246,9 +246,10 @@ void Director::setGLDefaultValues()
     // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
-
+#if DIRECTX_ENABLED == 0
     // set other opengl default values
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+#endif
 }
 
 // Draw the Scene
@@ -274,8 +275,9 @@ void Director::drawScene()
         _scheduler->update(_deltaTime);
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
-
+#if DIRECTX_ENABLED == 0
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
@@ -595,6 +597,8 @@ Mat4 Director::getMatrix(MATRIX_STACK_TYPE type)
 void Director::setProjection(Projection projection)
 {
     Size size = _winSizeInPoints;
+	const auto w = std::max(size.width, 1.0f);
+	const auto h = std::max(size.height, 1.0f);
 
     setViewport();
 
@@ -605,7 +609,7 @@ void Director::setProjection(Projection projection)
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
 #if (DIRECTX_ENABLED == 1)
-			auto m = DirectX::XMMatrixOrthographicOffCenterLH(0, size.width, 0, size.height, -1024, 1024);			
+			auto m = DirectX::XMMatrixOrthographicOffCenterLH(0, w, 0, h, -1024, 1024);			
 			Mat4 orthoMatrix((float*)m.r);		
 			orthoMatrix.transpose();
 #else
@@ -621,27 +625,34 @@ void Director::setProjection(Projection projection)
         {
             float zeye = this->getZEye();
 
-            Mat4 matrixPerspective, matrixLookup;
-
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            
-//#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-//            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-//            GLView* view = getOpenGLView();
-//            if(getOpenGLView() != nullptr)
-//            {
-//                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
-//            }
-//#endif
+            			
+#if (DIRECTX_ENABLED == 1)			
+			const DirectX::XMVECTORF32 eye = { w * 0.5f, h * 0.5f, std::max(zeye, 1.0f) };
+			const DirectX::XMVECTORF32 center = { w * 0.5f, h * 0.5f, 0.0f };
+			const DirectX::XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
+
+			auto m = DirectX::XMMatrixPerspectiveFovRH(60 * DirectX::XM_PI / 180.0f, (GLfloat)w / h, 10, zeye + h * 0.5f);
+			Mat4 matrixPerspective((float*)m.r);
+		
+			m = DirectX::XMMatrixLookAtRH(eye, center, up);
+			Mat4 matrixLookup((float*)m.r);
+
+			auto final = matrixPerspective * matrixLookup;
+			final.transpose();
+			multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, final);			
+#else
+			Mat4 matrixPerspective, matrixLookup;
+			const Vec3 eye(size.width / 2, size.height / 2, zeye), center(size.width / 2, size.height / 2, 0.0f), up(0.0f, 1.0f, 0.0f);
             // issue #1334
             Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
-
-            Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
-            Mat4::createLookAt(eye, center, up, &matrixLookup);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
             
+			Mat4::createLookAt(eye, center, up, &matrixLookup);
+
+			multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
+#endif      
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }
@@ -710,6 +721,7 @@ void Director::setAlphaBlending(bool on)
 
 void Director::setDepthTest(bool on)
 {
+#if DIRECTX_ENABLED == 0
     if (on)
     {
         glClearDepth(1.0f);
@@ -722,6 +734,7 @@ void Director::setDepthTest(bool on)
         glDisable(GL_DEPTH_TEST);
     }
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 static void GLToClipTransform(Mat4 *transformOut)

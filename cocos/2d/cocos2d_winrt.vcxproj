@@ -398,7 +398,6 @@
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\winrt\CCGLView.cpp" />
-    <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
@@ -605,9 +604,7 @@
     <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\platform\winrt\CCGL.h" />
     <ClInclude Include="..\platform\winrt\CCGLView.h" />
-    <ClInclude Include="..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h" />
-    <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\platform\winrt\CCStdC.h" />
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
@@ -750,6 +747,10 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="..\renderer\shaders\ccShader_PositionColorLengthTexture_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\renderer\shaders\ccShader_PositionColor_noMVP_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>

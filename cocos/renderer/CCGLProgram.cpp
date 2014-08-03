@@ -152,7 +152,7 @@ _program(0)
 	memset(_uniformBufferVS, 0, UNIFORM_BUFFER_SIZE);
 	memset(_uniformBufferPS, 0, UNIFORM_BUFFER_SIZE);
 #else
-    memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
+	memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
 #endif
 }
 
@@ -206,8 +206,13 @@ void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderD
 	DXResourceManager::getInstance().remove(&_constantBufferPS);
 
 	// Load shaders asynchronously.
+#if WINRT
+	auto vsData = FileUtils::getInstance()->getDataFromFile("shaders/ccShader_" + vertexShader.name + "_VS.cso");
+	auto psData = FileUtils::getInstance()->getDataFromFile("shaders/ccShader_" + pixelShader.name + "_PS.cso");
+#else
 	auto vsData = FileUtils::getInstance()->getDataFromFile("ccShader_" + vertexShader.name + "_VS.cso");
 	auto psData = FileUtils::getInstance()->getDataFromFile("ccShader_" + pixelShader.name + "_PS.cso");
+#endif
 	
 	// Get uniform descrption from 
 	int location = 0;
@@ -226,17 +231,17 @@ void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderD
 
 		location += i.size;
 	}
-	
+
 	auto view = GLView::sharedOpenGLView();
 	_shaderId = vertexShader.name;
-
+	
 	DX::ThrowIfFailed(
 		view->GetDevice()->CreateVertexShader(
 		vsData.getBytes(),
 		vsData.getSize(),
 		nullptr,
 		&_vertexShader));
-
+	
 	DX::ThrowIfFailed(
 		view->GetDevice()->CreateInputLayout(
 		vertexShader.inputLayout.data(),
@@ -244,31 +249,31 @@ void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderD
 		vsData.getBytes(),
 		vsData.getSize(),
 		&_inputLayout));
-
+	
 	DX::ThrowIfFailed(
 		view->GetDevice()->CreatePixelShader(
 		psData.getBytes(),
 		psData.getSize(),
 		nullptr,
-		&_pixelShader));
-
+		&_pixelShader));	
+	
 	CD3D11_BUFFER_DESC constantBufferDesc(UNIFORM_BUFFER_SIZE, D3D11_BIND_CONSTANT_BUFFER);
 	if (!vertexShader.uniformValues.empty())
 	{
-	DX::ThrowIfFailed(
-		view->GetDevice()->CreateBuffer(
-		&constantBufferDesc,
-		nullptr,
-		&_constantBufferVS));
+		DX::ThrowIfFailed(
+			view->GetDevice()->CreateBuffer(
+			&constantBufferDesc,
+			nullptr,
+			&_constantBufferVS));		
 	}
-
+	
 	if (!pixelShader.uniformValues.empty())
 	{
-	DX::ThrowIfFailed(
-		view->GetDevice()->CreateBuffer(
-		&constantBufferDesc,
-		nullptr,
-		&_constantBufferPS));
+		DX::ThrowIfFailed(
+			view->GetDevice()->CreateBuffer(
+			&constantBufferDesc,
+			nullptr,
+			&_constantBufferPS));
 	}
 
 	DXResourceManager::getInstance().add(&_inputLayout);
@@ -278,7 +283,7 @@ void GLProgram::initWithHLSL(const ShaderDescriptor& vertexShader, const ShaderD
 	DXResourceManager::getInstance().add(&_constantBufferPS);
 	_uniformDirtyPS = _uniformDirtyVS = true;
 #endif
-    }
+}
 
 bool GLProgram::initWithByteArrays(const std::string& vShaderByteArray, const std::string& fShaderByteArray)
 {
@@ -323,7 +328,6 @@ bool GLProgram::initWithByteArrays(const std::string& vShaderByteArray, const st
     
     CHECK_GL_ERROR_DEBUG();
 #endif
-
     return true;
 }
 
@@ -342,22 +346,22 @@ bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std:
 void GLProgram::bindPredefinedVertexAttribs()
 {
 #if (DIRECTX_ENABLED == 0)
-    static const struct {
-        const char *attributeName;
-        int location;
-    } attribute_locations[] =
-    {
-        {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION},
-        {GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD},
-        {GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
-    };
+	static const struct {
+		const char *attributeName;
+		int location;
+	} attribute_locations[] =
+	{
+		{GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION},
+		{GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR},
+		{GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD},
+		{GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
+	};
 
-    const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
+	const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
 
-    for(int i=0; i<size;i++) {
-        glBindAttribLocation(_program, attribute_locations[i].location, attribute_locations[i].attributeName);
-    }
+	for(int i=0; i<size;i++) {
+		glBindAttribLocation(_program, attribute_locations[i].location, attribute_locations[i].attributeName);
+	}
 #endif    
 }
 
@@ -482,7 +486,7 @@ Uniform* GLProgram::getUniform(const std::string& name)
 VertexAttrib* GLProgram::getVertexAttrib(const std::string &name) const
 {
 #if (DIRECTX_ENABLED == 0)
-    const auto itr = _vertexAttribs.find(name);
+	const auto itr = _vertexAttribs.find(name);
     if( itr != _vertexAttribs.end())
         return &itr->second;
     return nullptr;
@@ -501,8 +505,8 @@ std::string GLProgram::getDescription() const
                                       (size_t)this, _program, _vertShader, _fragShader);
 #else
 	return StringUtils::format("<GLProgram = "
-		CC_FORMAT_PRINTF_SIZE_T
-		" | Program = %i, VertexShader = %i, FragmentShader = %i>",
+									CC_FORMAT_PRINTF_SIZE_T
+									" | Program = %i, VertexShader = %i, FragmentShader = %i>",
 									(size_t)this, _program, _vertexShader, _pixelShader);
 #endif
 }
@@ -705,23 +709,23 @@ void GLProgram::set()
 
 	if (_constantBufferVS)
 	{
-	// Prepare the constant buffer to send it to the graphics device.
-	if (_uniformDirtyVS)
-	{
-		view->GetContext()->UpdateSubresource(_constantBufferVS, 0, NULL, &_uniformBufferVS, 0, 0);		
-		_uniformDirtyVS = false;
-	}
+		// Prepare the constant buffer to send it to the graphics device.
+		if (_uniformDirtyVS)
+		{
+			view->GetContext()->UpdateSubresource(_constantBufferVS, 0, NULL, &_uniformBufferVS, 0, 0);
+			_uniformDirtyVS = false;
+		}
 
 		DXStateCache::getInstance().setVSConstantBuffer(0, &_constantBufferVS);		
 	}
 
 	if (_constantBufferPS)
 	{
-	if (_uniformDirtyPS)
-	{		
-		view->GetContext()->UpdateSubresource(_constantBufferPS, 0, NULL, &_uniformBufferPS, 0, 0);
-		_uniformDirtyPS = false;
-	}
+		if (_uniformDirtyPS)
+		{
+			view->GetContext()->UpdateSubresource(_constantBufferPS, 0, NULL, &_uniformBufferPS, 0, 0);
+			_uniformDirtyPS = false;
+		}
 
 		DXStateCache::getInstance().setPSConstantBuffer(0, &_constantBufferPS);		
 	}
@@ -730,6 +734,7 @@ void GLProgram::set()
 
 std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
 {
+#if (DIRECTX_ENABLED == 0)
     std::string ret;
     GLint logLength = 0, charsWritten = 0;
 
@@ -744,6 +749,9 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
 
     free(logBytes);
     return ret;
+#else 
+	return "";
+#endif
 }
 
 std::string GLProgram::getVertexShaderLog() const
@@ -774,7 +782,6 @@ std::string GLProgram::getProgramLog() const
 }
 
 // Uniform cache
-
 bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes)
 {
 #if (DIRECTX_ENABLED == 0)
@@ -1213,12 +1220,11 @@ void GLProgram::reset()
 #if (DIRECTX_ENABLED == 0)
     _vertShader = _fragShader = 0;
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
-    
 
     // it is already deallocated by android
     //GL::deleteProgram(_program);
     _program = 0;
-
+    
     tHashUniformEntry *current_element, *tmp;
     
     // Purge uniform hash

@@ -321,7 +321,7 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             p->INIT_SHADERS(ccPositionColor_vert ,ccPositionColor_frag);
             break;
         case kShaderType_PositionColor_noMVP:
-            p->INIT_SHADERS(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
+            p->INIT_SHADERS(ccPositionColor_noMVP_vert, ccPositionColor_frag);
             break;
         case kShaderType_PositionTexture:
             p->INIT_SHADERS(ccPositionTexture_vert ,ccPositionTexture_frag);

@@ -40,7 +40,14 @@ const ShaderDescriptor ccPosition_uColor_vert = ShaderDescriptor("Position_uColo
 const ShaderDescriptor ccPositionColor_frag = ShaderDescriptor("PositionColor");
 const ShaderDescriptor ccPositionColor_vert = ShaderDescriptor("PositionColor")
 .Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
-.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12);
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
+.Const(GLProgram::UNIFORM_NAME_MVP_MATRIX, sizeof(Mat4), GL_FLOAT_MAT4);
+
+const ShaderDescriptor ccPositionColor_noMVP_vert = ShaderDescriptor("PositionColor_noMVP")
+.Input("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0)
+.Input("COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12)
+.Input("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16)
+.Const(GLProgram::UNIFORM_NAME_P_MATRIX, sizeof(Mat4), GL_FLOAT_MAT4);
 
 const ShaderDescriptor ccPositionTexture_frag = ShaderDescriptor("PositionTexture");
 const ShaderDescriptor ccPositionTexture_vert = ShaderDescriptor("PositionTexture")

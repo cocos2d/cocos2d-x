@@ -41,8 +41,9 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 void GLESDebugDraw::initShader( void )
 {
     mShaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-
+#if DIRECTX_ENABLED == 0
     mColorLocation = glGetUniformLocation( mShaderProgram->getProgram(), "u_color");
+#endif
 }
 
 void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, const b2Color& color)
@@ -59,7 +60,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, con
 
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
+
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
@@ -68,7 +69,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int vertexCount, con
 
 
     CHECK_GL_ERROR_DEBUG();
-
+#endif
     delete[] vertices;
 }
 
@@ -85,21 +86,19 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int vertexCount
     
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
-#endif
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
-#if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
+
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,vertexCount*2);
 
     CHECK_GL_ERROR_DEBUG();
-
+#endif
     delete[] vertices;
 }
 
@@ -124,7 +123,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
     
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
+
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
@@ -132,7 +131,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,vertexCount);
 
     CHECK_GL_ERROR_DEBUG();
-
+#endif
     delete[] glVertices;
 }
 
@@ -157,13 +156,12 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
     
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f, 0.5f);
-#endif
+
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
-#if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
+
     glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 
     // Draw the axis line
@@ -172,7 +170,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,vertexCount*2);
 
     CHECK_GL_ERROR_DEBUG();
-
+#endif
     delete[] glVertices;
 }
 
@@ -183,8 +181,6 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
-
     GLfloat    glVertices[] = 
     {
         p1.x * mRatio, p1.y * mRatio,
@@ -197,6 +193,7 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,2);
 
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 void GLESDebugDraw::DrawTransform(const b2Transform& xf)
@@ -217,7 +214,6 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
 
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
 
     //    glPointSize(size);
 
@@ -233,6 +229,7 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,1);
 
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 void GLESDebugDraw::DrawString(int x, int y, const char *string, ...)
@@ -249,7 +246,6 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 
 #if DIRECTX_ENABLED == 0
     mShaderProgram->setUniformLocationWith4f(mColorLocation, color.r, color.g, color.b, 1);
-#endif
 
     GLfloat                glVertices[] = {
         aabb->lowerBound.x * mRatio, aabb->lowerBound.y * mRatio,
@@ -264,4 +260,5 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 
     CHECK_GL_ERROR_DEBUG();
+#endif
 }

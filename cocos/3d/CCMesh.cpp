@@ -198,6 +198,8 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
 
 bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount)
 {
+	DX_NOT_SUPPORTED();
+
     bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, numIndex, attribs, attribCount);
     if (!bRet)
         return false;
@@ -208,6 +210,7 @@ bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const
 
 void Mesh::cleanAndFreeBuffers()
 {
+#if DIRECTX_ENABLED == 0
     if(glIsBuffer(_vertexBuffer))
     {
         glDeleteBuffers(1, &_vertexBuffer);
@@ -222,10 +225,12 @@ void Mesh::cleanAndFreeBuffers()
     _primitiveType = PrimitiveType::TRIANGLES;
     _indexFormat = IndexFormat::INDEX16;
     _indexCount = 0;
+#endif
 }
 
 void Mesh::buildBuffer()
 {
+#if DIRECTX_ENABLED == 0
     cleanAndFreeBuffers();
 
     glGenBuffers(1, &_vertexBuffer);
@@ -251,6 +256,7 @@ void Mesh::buildBuffer()
     _primitiveType = PrimitiveType::TRIANGLES;
     _indexFormat = indexformat;
     _indexCount = _renderdata._indices.size();
+#endif
 }
 
 void Mesh::restore()

@@ -24,6 +24,7 @@
 #include <wrl/client.h>
 #include <d3d11_1.h>
 #include <d2d1_1.h>
+#include <DXGI1_3.h>
 #include <d2d1effects.h>
 #include <dwrite_1.h>
 #include <wincodec.h>
@@ -41,7 +42,7 @@ internal:
    DirectXBase();
 
 public:
-   virtual void Initialize(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ panel, float dpi);
+   virtual void Initialize(Windows::UI::Core::CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainPanel^ panel, float dpi);
    virtual void CreateDeviceIndependentResources();
    virtual void CreateDeviceResources();
    virtual void SetDpi(float dpi);
@@ -51,15 +52,8 @@ public:
    virtual float ConvertDipsToPixels(float dips);
 
 protected private:
-
    Platform::Agile<Windows::UI::Core::CoreWindow>         m_window;
-   Windows::UI::Xaml::Controls::SwapChainBackgroundPanel^ m_panel;
-
-   // Direct2D Objects
-   Microsoft::WRL::ComPtr<ID2D1Factory1>                  m_d2dFactory;
-   Microsoft::WRL::ComPtr<ID2D1Device>                    m_d2dDevice;
-   Microsoft::WRL::ComPtr<ID2D1DeviceContext>             m_d2dContext;
-   Microsoft::WRL::ComPtr<ID2D1Bitmap1>                   m_d2dTargetBitmap;
+   Windows::UI::Xaml::Controls::SwapChainPanel^ m_panel;
 
    // DirectWrite & Windows Imaging Component Objects
    Microsoft::WRL::ComPtr<IDWriteFactory1>                m_dwriteFactory;
@@ -67,6 +61,7 @@ protected private:
 
    // Direct3D Objects
    Microsoft::WRL::ComPtr<ID3D11Device1>                  m_d3dDevice;
+   Microsoft::WRL::ComPtr<IDXGIDevice3>                   m_dxDevice;
    Microsoft::WRL::ComPtr<ID3D11DeviceContext1>           m_d3dContext;
    Microsoft::WRL::ComPtr<IDXGISwapChain1>                m_swapChain;
    Microsoft::WRL::ComPtr<ID3D11RenderTargetView>         m_renderTargetView;

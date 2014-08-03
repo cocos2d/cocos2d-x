@@ -350,7 +350,8 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2&
 }
 void ParticleSystemQuad::postStep()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+#if DIRECTX_ENABLED == 0
+	glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     
     // Option 1: Sub Data
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0])*_totalParticles, _quads);
@@ -367,6 +368,7 @@ void ParticleSystemQuad::postStep()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 // overriding draw method
@@ -491,7 +493,7 @@ void ParticleSystemQuad::setupVBOandVAO()
     GL::bindVAO(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	
     CHECK_GL_ERROR_DEBUG();
 #else
 	CC_ASSERT(false);

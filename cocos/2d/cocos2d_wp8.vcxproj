@@ -325,7 +325,6 @@
     <ClCompile Include="..\platform\winrt\CCDevice.cpp" />
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp" />
-    <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
@@ -540,9 +539,7 @@
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h" />
     <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\platform\winrt\CCGL.h" />
-    <ClInclude Include="..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h" />
-    <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\platform\winrt\CCStdC.h" />
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
@@ -753,6 +750,11 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)/Assets/%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\renderer\shaders\ccShader_PositionColor_noMVP_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(OutDir)/Assets/Resources/%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(OutDir)/Assets/Resources/%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="..\renderer\shaders\ccShader_PositionColor_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Pixel</ShaderType>

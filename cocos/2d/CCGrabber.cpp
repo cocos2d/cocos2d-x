@@ -35,12 +35,17 @@ Grabber::Grabber(void)
 {
     memset(_oldClearColor, 0, sizeof(_oldClearColor));
 
+#if DIRECTX_ENABLED == 0
     // generate FBO
     glGenFramebuffers(1, &_FBO);
+#endif
+
+	DX_NOT_SUPPORTED();
 }
 
 void Grabber::grab(Texture2D *texture)
 {
+#if DIRECTX_ENABLED == 0
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
     // bind
@@ -57,10 +62,12 @@ void Grabber::grab(Texture2D *texture)
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+#endif
 }
 
 void Grabber::beforeRender(Texture2D *texture)
 {
+#if DIRECTX_ENABLED == 0
     CC_UNUSED_PARAM(texture);
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -79,10 +86,12 @@ void Grabber::beforeRender(Texture2D *texture)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 //  glColorMask(true, true, true, false);    // #631
+#endif
 }
 
 void Grabber::afterRender(cocos2d::Texture2D *texture)
 {
+#if DIRECTX_ENABLED == 0
     CC_UNUSED_PARAM(texture);
 
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
@@ -90,12 +99,15 @@ void Grabber::afterRender(cocos2d::Texture2D *texture)
     
     // Restore clear color
     glClearColor(_oldClearColor[0], _oldClearColor[1], _oldClearColor[2], _oldClearColor[3]);
+#endif
 }
 
 Grabber::~Grabber()
 {
+#if DIRECTX_ENABLED == 0
     CCLOGINFO("deallocing Grabber: %p", this);
     glDeleteFramebuffers(1, &_FBO);
+#endif
 }
 
 NS_CC_END

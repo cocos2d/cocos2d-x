@@ -153,7 +153,6 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.renderer"] = "Native Direct3D Renderer";
 	_valueDict["gl.version"] = "0.9";
 	SET_FEATURE("gl.supports_ETC1", _supportsETC1, false);
-	SET_FEATURE("gl.supports_S3TC", _supportsS3TC, true);
 	SET_FEATURE("gl.supports_ATITC", _supportsATITC, false);
 	SET_FEATURE("gl.supports_PVRTC", _supportsPVRTC, false);
 	SET_FEATURE("gl.supports_NPOT", _supportsNPOT, true);
@@ -198,7 +197,10 @@ void Configuration::gatherGPUInfo()
 
 	UINT format;
 	if(view->GetDevice()->CheckFormatSupport(DXGI_FORMAT_B8G8R8A8_UNORM, &format) == S_OK)
-		SET_FEATURE("gl.supports_BGRA8888", _supportsBGRA8888, format & D3D11_FORMAT_SUPPORT_TEXTURE2D);
+		SET_FEATURE("gl.supports_BGRA8888", _supportsBGRA8888, (format & D3D11_FORMAT_SUPPORT_TEXTURE2D) != 0);
+
+	if (view->GetDevice()->CheckFormatSupport(DXGI_FORMAT_BC3_UNORM, &format) == S_OK)
+		SET_FEATURE("gl.supports_S3TC", _supportsS3TC, (format & D3D11_FORMAT_SUPPORT_TEXTURE2D) != 0);
 #endif
 }
 

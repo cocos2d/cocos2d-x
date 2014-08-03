@@ -21,23 +21,38 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     if(!glview) {
         glview = GLView::create("Cpp Empty Test");
         director->setOpenGLView(glview);
     }
+#else
+	director->setOpenGLView(CCEGLView::sharedOpenGLView());
+	glview = director->getOpenGLView();
+#endif
 
     director->setOpenGLView(glview);
+
+	CCSize frameSize = glview->getFrameSize();
+
+	float frameAspect = frameSize.width / frameSize.height;
+	float designAspect = designResolutionSize.width / designResolutionSize.height;
+	float aspectDif = frameAspect / designAspect;
+
+	CCSize designRes = designResolutionSize;
+	if (aspectDif > 1)
+		designRes.width *= aspectDif;
+	else
+		designRes.height /= aspectDif;
 
     // Set the design resolution
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+	glview->setDesignResolutionSize(designRes.width, designRes.height, ResolutionPolicy::SHOW_ALL);
 #else
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+	glview->setDesignResolutionSize(designRes.width, designRes.height, ResolutionPolicy::NO_BORDER);
 #endif
-
-	Size frameSize = glview->getFrameSize();
-    
+	    
     vector<string> searchPath;
 
     // In this demo, we select resource according to the frame's height.
@@ -75,7 +90,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
+	
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::scene();
 

@@ -56,6 +56,8 @@ TransitionPageTurn::~TransitionPageTurn()
 /** creates a base transition with duration and incoming scene */
 TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool backwards)
 {
+	DX_NOT_SUPPORTED();
+
     TransitionPageTurn * transition = new TransitionPageTurn();
     transition->initWithDuration(t,scene,backwards);
     transition->autorelease();
@@ -82,14 +84,18 @@ void TransitionPageTurn::sceneOrder()
 
 void TransitionPageTurn::onEnablePolygonOffset()
 {
+#if DIRECTX_ENABLED == 0
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonOffset(POLYGON_OFFSET_FACTOR, POLYGON_OFFSET_UNITS);
+#endif
 }
 
 void TransitionPageTurn::onDisablePolygonOffset()
 {
+#if DIRECTX_ENABLED == 0
     glDisable(GL_POLYGON_OFFSET_FILL);
     glPolygonOffset(0, 0);
+#endif
 }
 
 void TransitionPageTurn::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)

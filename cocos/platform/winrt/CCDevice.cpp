@@ -114,8 +114,6 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 break;
             }
 #endif
-	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
-            cocos2d::GLView::sharedOpenGLView()->QueueEvent(event);
 		});
 	}
 	else

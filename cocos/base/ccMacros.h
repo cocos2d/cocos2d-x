@@ -241,6 +241,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CHECK_GL_ERROR_DEBUG()
 #else
+#if DIRECTX_ENABLED == 0
 #define CHECK_GL_ERROR_DEBUG() \
     do { \
         GLenum __error = glGetError(); \
@@ -248,6 +249,9 @@ It should work same as apples CFSwapInt32LittleToHost(..)
             cocos2d::log("OpenGL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__); \
         } \
     } while (false)
+#else
+#define CHECK_GL_ERROR_DEBUG() 
+#endif
 #endif
 
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE
@@ -277,5 +281,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CC_CALLBACK_3(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
 
 #define NOT_SUPPORTED() CCASSERT(false, "Not supported.");
+
+#define DX_NOT_SUPPORTED() if(DIRECTX_ENABLED == 1) { NOT_SUPPORTED(); }
 
 #endif // __BASE_CCMACROS_H__

@@ -738,6 +738,7 @@ void TMXOrthoObjectsTestNew::draw(Renderer *renderer, const Mat4 &transform, uin
 
 void TMXOrthoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
 {
+#if DIRECTX_ENABLED == 0
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -769,6 +770,7 @@ void TMXOrthoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
     }
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+#endif
 }
 
 std::string TMXOrthoObjectsTestNew::title() const
@@ -813,6 +815,7 @@ void TMXIsoObjectsTestNew::draw(Renderer *renderer, const Mat4 &transform, uint3
 
 void TMXIsoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
 {
+#if DIRECTX_ENABLED == 0
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -842,6 +845,7 @@ void TMXIsoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
     }
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+#endif
 }
 
 std::string TMXIsoObjectsTestNew::title() const
@@ -1472,6 +1476,7 @@ void TMXGIDObjectsTestNew::draw(Renderer *renderer, const Mat4 &transform, uint3
 
 void TMXGIDObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
 {
+#if DIRECTX_ENABLED == 0
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -1502,6 +1507,7 @@ void TMXGIDObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
     }
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+#endif
 }
 
 std::string TMXGIDObjectsTestNew::title() const

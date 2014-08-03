@@ -30,6 +30,7 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
 using namespace D2D1;
+using namespace DirectX;
 
 // Constructor.
 DirectXBase::DirectXBase() :
@@ -38,13 +39,18 @@ DirectXBase::DirectXBase() :
 }
 
 // Initialize the DirectX resources required to run.
-void DirectXBase::Initialize(CoreWindow^ window, SwapChainBackgroundPanel^ panel, float dpi)
+void DirectXBase::Initialize(CoreWindow^ window, SwapChainPanel^ panel, float dpi)
 {
    m_window = window;
    m_panel = panel;
 
    CreateDeviceIndependentResources();
    CreateDeviceResources();
+
+   DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
+   if (dpi < 0)
+	   dpi = currentDisplayInformation->LogicalDpi;
+
    SetDpi(dpi);
 }
 
@@ -57,16 +63,6 @@ void DirectXBase::CreateDeviceIndependentResources()
 #if defined(_DEBUG)
     // If the project is in a debug build, enable Direct2D debugging via SDK Layers
    options.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
-#endif
-
-   DX::ThrowIfFailed(
-      D2D1CreateFactory(
-         D2D1_FACTORY_TYPE_SINGLE_THREADED,
-         __uuidof(ID2D1Factory1),
-         &options,
-         &m_d2dFactory
-         )
-      );
 
    DX::ThrowIfFailed(
       DWriteCreateFactory(
@@ -84,6 +80,7 @@ void DirectXBase::CreateDeviceIndependentResources()
          IID_PPV_ARGS(&m_wicFactory)
          )
       );
+#endif
 }
 
 // These are the resources that depend on the device.
@@ -111,7 +108,7 @@ void DirectXBase::CreateDeviceResources()
       D3D_FEATURE_LEVEL_10_0,
       D3D_FEATURE_LEVEL_9_3,
       D3D_FEATURE_LEVEL_9_2,
-      D3D_FEATURE_LEVEL_9_1
+	  D3D_FEATURE_LEVEL_9_1,
    };
 
    // Create the DX11 API device object, and get a corresponding context.
@@ -147,19 +144,9 @@ void DirectXBase::CreateDeviceResources()
       m_d3dDevice.As(&dxgiDevice)
       );
 
-   // Obtain the Direct2D device for 2-D rendering.
-   DX::ThrowIfFailed(
-      m_d2dFactory->CreateDevice(dxgiDevice.Get(), &m_d2dDevice)
-      );
-
-   // And get its corresponding device context object.
-   DX::ThrowIfFailed(
-      m_d2dDevice->CreateDeviceContext(
-         D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-         &m_d2dContext
-         )
-      );
-
+   ComPtr<IDXGIDevice3> dxDevice;
+   DX::ThrowIfFailed(m_d3dDevice.Get()->QueryInterface(__uuidof(IDXGIDevice3), (void **)m_dxDevice.GetAddressOf()));
+   
    // Release the swap chain (if it exists) as it will be incompatible with the new device.
    m_swapChain = nullptr;
 }
@@ -173,9 +160,6 @@ void DirectXBase::SetDpi(float dpi)
       // Save the DPI of this display in our class.
       m_dpi = dpi;
       
-      // Update Direct2D's stored DPI.
-      m_d2dContext->SetDpi(m_dpi, m_dpi);
-
       // Often a DPI change implies a window size change. In some cases Windows will issues
       // both a size changed event and a DPI changed event. In this case, the resulting bounds 
       // will not change, and the window resize code will only be executed once.
@@ -186,15 +170,9 @@ void DirectXBase::SetDpi(float dpi)
 // This routine is called in the event handler for the view SizeChanged event.
 void DirectXBase::UpdateForWindowSizeChange()
 {
-   // Only handle window size changed if there is no pending DPI change.
-   if (m_dpi != DisplayProperties::LogicalDpi)
-      return;
-
    if (m_window->Bounds.Width  != m_windowBounds.Width ||
       m_window->Bounds.Height != m_windowBounds.Height)
-   {
-      m_d2dContext->SetTarget(nullptr);
-      m_d2dTargetBitmap = nullptr;
+   {  
       m_renderTargetView = nullptr;
       m_depthStencilView = nullptr;
       CreateWindowSizeDependentResources();
@@ -272,7 +250,7 @@ void DirectXBase::CreateWindowSizeDependentResources()
             )
          );
 
-      ComPtr<ISwapChainBackgroundPanelNative> panelNative;
+      ComPtr<ISwapChainPanelNative> panelNative;
       DX::ThrowIfFailed(
          reinterpret_cast<IUnknown*>(m_panel)->QueryInterface(IID_PPV_ARGS(&panelNative))
          );
@@ -286,8 +264,20 @@ void DirectXBase::CreateWindowSizeDependentResources()
       // power consumption.
       DX::ThrowIfFailed(
          dxgiDevice->SetMaximumFrameLatency(1)
-         );
+         );	  
    }
+
+   DXGI_MATRIX_3X2_F inverseScale = { 0 };
+   inverseScale._11 = 1.0f / m_panel->CompositionScaleX;
+   inverseScale._22 = 1.0f / m_panel->CompositionScaleY;
+   ComPtr<IDXGISwapChain2> spSwapChain2;
+   DX::ThrowIfFailed(
+	   m_swapChain.As<IDXGISwapChain2>(&spSwapChain2)
+	   );
+
+   DX::ThrowIfFailed(
+	   spSwapChain2->SetMatrixTransform(&inverseScale)
+	   );
 
    // Obtain the backbuffer for this window which will be the final 3D rendertarget.
    ComPtr<ID3D11Texture2D> backBuffer;
@@ -361,21 +351,6 @@ void DirectXBase::CreateWindowSizeDependentResources()
    DX::ThrowIfFailed(
       m_swapChain->GetBuffer(0, IID_PPV_ARGS(&dxgiBackBuffer))
       );
-
-   // Get a D2D surface from the DXGI back buffer to use as the D2D render target.
-   DX::ThrowIfFailed(
-      m_d2dContext->CreateBitmapFromDxgiSurface(
-         dxgiBackBuffer.Get(),
-         &bitmapProperties,
-         &m_d2dTargetBitmap
-         )
-      );
-
-   // So now we can set the Direct2D render target.
-   m_d2dContext->SetTarget(m_d2dTargetBitmap.Get());
-
-   // Set D2D text anti-alias mode to Grayscale to ensure proper rendering of text on intermediate surfaces.
-   m_d2dContext->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
    // Set the blend function.
    ID3D11BlendState* g_pBlendState = NULL;

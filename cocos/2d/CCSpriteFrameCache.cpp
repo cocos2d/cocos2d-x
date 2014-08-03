@@ -245,6 +245,15 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 
         if (!texturePath.empty())
         {
+			if (Texture2D::getDefaultAlphaPixelFormat() == Texture2D::PixelFormat::S3TC_DXT5 || 
+				Texture2D::getDefaultAlphaPixelFormat() == Texture2D::PixelFormat::S3TC_DXT3 ||
+				Texture2D::getDefaultAlphaPixelFormat() == Texture2D::PixelFormat::S3TC_DXT1)
+			{
+				// remove .xxx
+				size_t startPos = texturePath.find_last_of(".");
+				texturePath = texturePath.erase(startPos);
+				texturePath = texturePath.append(".dds");
+			}
             // build texture path relative to plist file
             texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
         }
@@ -257,7 +266,10 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
             size_t startPos = texturePath.find_last_of("."); 
             texturePath = texturePath.erase(startPos);
 
-            // append .png
+			// append extension
+			if (Texture2D::getDefaultAlphaPixelFormat() == Texture2D::PixelFormat::S3TC_DXT5)
+				texturePath = texturePath.append(".dds");
+			else            
             texturePath = texturePath.append(".png");
 
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());

@@ -547,9 +547,6 @@
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -1165,13 +1162,7 @@
     <ClInclude Include="..\platform\winrt\CCGL.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCGL_Angle.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h">
@@ -1366,6 +1357,9 @@
       <Filter>renderer\shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\renderer\shaders\ccShader_PositionTextureColorAlphaTest_PS.hlsl">
+      <Filter>renderer\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\renderer\shaders\ccShader_PositionColor_noMVP_VS.hlsl">
       <Filter>renderer\shaders</Filter>
     </FxCompile>
   </ItemGroup>

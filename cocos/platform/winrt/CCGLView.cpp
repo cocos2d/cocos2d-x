@@ -59,21 +59,32 @@ static GLView* s_pEglView = NULL;
 //////////////////////////////////////////////////////////////////////////
 // impliment GLView
 //////////////////////////////////////////////////////////////////////////
-WinRTWindow::WinRTWindow(CoreWindow^ window) :
+WinRTWindow::WinRTWindow(CoreWindow^ window, Windows::UI::Xaml::Controls::SwapChainPanel^ panel) :
 	m_lastPointValid(false),
 	m_textInputEnabled(false)
 {
+	window->VisibilityChanged +=
+		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &WinRTWindow::OnVisibilityChanged);
+
 	window->SizeChanged += 
 	ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &WinRTWindow::OnWindowSizeChanged);
 
-	DisplayProperties::LogicalDpiChanged +=
-		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnLogicalDpiChanged);
+	DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
 
-	DisplayProperties::OrientationChanged +=
-        ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnOrientationChanged);
+	currentDisplayInformation->DpiChanged +=
+		ref new TypedEventHandler<DisplayInformation^, Object^>(this, &WinRTWindow::OnDpiChanged);
 
-	DisplayProperties::DisplayContentsInvalidated +=
-		ref new DisplayPropertiesEventHandler(this, &WinRTWindow::OnDisplayContentsInvalidated);
+	currentDisplayInformation->OrientationChanged +=
+		ref new TypedEventHandler<DisplayInformation^, Object^>(this, &WinRTWindow::OnOrientationChanged);
+
+	currentDisplayInformation->DisplayContentsInvalidated +=
+		ref new TypedEventHandler<DisplayInformation^, Object^>(this, &WinRTWindow::OnDisplayContentsInvalidated);
+
+	panel->CompositionScaleChanged +=
+		ref new TypedEventHandler<SwapChainPanel^, Object^>(this, &WinRTWindow::OnCompositionScaleChanged);
+
+	panel->SizeChanged +=
+		ref new SizeChangedEventHandler(this, &WinRTWindow::OnSwapChainPanelSizeChanged); 
 	
 	m_eventToken = CompositionTarget::Rendering::add(ref new EventHandler<Object^>(this, &WinRTWindow::OnRendering));
 
@@ -85,6 +96,10 @@ WinRTWindow::WinRTWindow(CoreWindow^ window) :
 		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerMoved);
 	window->PointerWheelChanged +=
 		ref new TypedEventHandler<CoreWindow^, PointerEventArgs^>(this, &WinRTWindow::OnPointerWheelChanged);
+	window->KeyDown += 
+		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &WinRTWindow::OnKeyDown);
+	window->KeyUp +=
+		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &WinRTWindow::OnKeyUp);
 }
 
 
@@ -144,27 +159,6 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
     GLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &p.x, &p.y);
 }
 
-// user pressed the Back Key on the phone
-void GLView::OnBackKeyPress()
-{
-
-}
-
-
-void GLView::OnPointerPressed(PointerEventArgs^ args)
-{
-}
-
-void GLView::OnPointerMoved(PointerEventArgs^ args)
-{
-}
-
-void GLView::OnPointerReleased(PointerEventArgs^ args)
-{
-}
-
-
-
 void WinRTWindow::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
@@ -199,24 +193,72 @@ void WinRTWindow::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
     GLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
 
+void WinRTWindow::OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
+{
+	if (!args->KeyStatus.WasKeyDown)
+	{
+		EventKeyboard keyboardEvent(GetCocosKeyCode(args->VirtualKey), true);
+		auto dispatcher = Director::getInstance()->getEventDispatcher();
+		dispatcher->dispatchEvent(&keyboardEvent);
+	}
+}
+
+void WinRTWindow::OnKeyUp(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
+{
+	if (args->KeyStatus.IsKeyReleased)
+	{
+		EventKeyboard keyboardEvent(GetCocosKeyCode(args->VirtualKey), false);
+		auto dispatcher = Director::getInstance()->getEventDispatcher();
+		dispatcher->dispatchEvent(&keyboardEvent);
+	}
+}
+
+EventKeyboard::KeyCode WinRTWindow::GetCocosKeyCode(Windows::System::VirtualKey key)
+{
+	switch (key)
+	{
+	case VirtualKey::A:
+		return EventKeyboard::KeyCode::KEY_A;		
+		// TODO : add all 
+	case VirtualKey::Escape:
+		return EventKeyboard::KeyCode::KEY_ESCAPE;
+	case VirtualKey::Space:
+		return EventKeyboard::KeyCode::KEY_SPACE;
+	case VirtualKey::Up:
+		return EventKeyboard::KeyCode::KEY_UP_ARROW;
+	case VirtualKey::Down:
+		return EventKeyboard::KeyCode::KEY_DOWN_ARROW;
+	case VirtualKey::Left:
+		return EventKeyboard::KeyCode::KEY_LEFT_ARROW;
+	case VirtualKey::Right:
+		return EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
+	case VirtualKey::Control:	
+		return EventKeyboard::KeyCode::KEY_CTRL;
+	case VirtualKey::Enter:
+		return EventKeyboard::KeyCode::KEY_ENTER;
+	}
+
+	return EventKeyboard::KeyCode::KEY_NONE;
+}
+
 void WinRTWindow::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
 {
 	ResizeWindow();
 	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void WinRTWindow::OnLogicalDpiChanged(Object^ sender)
+void WinRTWindow::OnDpiChanged(DisplayInformation^ sender, Object^ args)
 {
 	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void WinRTWindow::OnOrientationChanged(Object^ sender)
+void WinRTWindow::OnOrientationChanged(DisplayInformation^ sender, Object^ args)
 {
 	ResizeWindow();
 	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
-void WinRTWindow::OnDisplayContentsInvalidated(Object^ sender)
+void WinRTWindow::OnDisplayContentsInvalidated(DisplayInformation^ sender, Object^ args)
 {
 	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
@@ -226,6 +268,20 @@ void WinRTWindow::OnRendering(Object^ sender, Object^ args)
 	GLView::sharedOpenGLView()->OnRendering();
 }
 
+void WinRTWindow::OnCompositionScaleChanged(Windows::UI::Xaml::Controls::SwapChainPanel^ sender, Object^ args)
+{
+	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+}
+
+void WinRTWindow::OnSwapChainPanelSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
+{
+	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+}
+
+void WinRTWindow::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
+{
+	
+}
 
 GLView::GLView()
 	: m_window(nullptr)
@@ -248,14 +304,14 @@ GLView::~GLView()
 	// TODO: cleanup 
 }
 
-bool GLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
+bool GLView::Create(CoreWindow^ window, SwapChainPanel^ panel)
 {
     bool bRet = false;
 	m_window = window;
 
 	m_bSupportTouch = true;
-	m_winRTWindow = ref new WinRTWindow(window);
-	m_winRTWindow->Initialize(window, panel, 96);
+	m_winRTWindow = ref new WinRTWindow(window, panel);
+	m_winRTWindow->Initialize(window, panel, -1);
     m_initialized = false;
 	UpdateForWindowSizeChange();
     return bRet;
@@ -315,10 +371,17 @@ void GLView::centerWindow()
 
 void GLView::OnSuspending()
 {
+	m_running = false;
+
     if (m_winRTWindow)
     {
         m_winRTWindow->OnSuspending();
     }
+}
+
+void GLView::OnResume()
+{
+	m_running = true;
 }
 
 GLView* GLView::sharedOpenGLView()
@@ -382,12 +445,6 @@ void GLView::UpdateForWindowSizeChange()
         GLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
         Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
    }
-}
-
-void GLView::QueueEvent(std::shared_ptr<InputEvent>& event)
-{
-    std::lock_guard<std::mutex> guard(mMutex);
-    mInputEvents.push(event);
 }
 
 NS_CC_END

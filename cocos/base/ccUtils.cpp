@@ -51,6 +51,7 @@ namespace utils
  */
 void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
+#if DIRECTX_ENABLED == 0
     auto glView = Director::getInstance()->getOpenGLView();
     auto frameSize = glView->getFrameSize();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -139,6 +140,9 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
     {
         afterCaptured(succeed, outputFile);
     }
+#else
+	NOT_SUPPORTED();
+#endif
 }
 /*
  * Capture screen interface

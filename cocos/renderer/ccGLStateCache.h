@@ -270,6 +270,8 @@ public:
 	DX_MANAGER_PROPERTY_DEF(ID3D11InputLayout*, inputLayout);
 	DX_MANAGER_PROPERTY_DEF(ID3D11RasterizerState*, rasterizeState);
 	DX_MANAGER_PROPERTY_DEF(ID3D11BlendState*, blendState);
+	DX_MANAGER_PROPERTY_DEF(ID3D11DepthStencilView*, depthStencilView);
+	DX_MANAGER_PROPERTY_DEF(ID3D11RenderTargetView*, renderTargetView);
 
 public:
 	void clear();

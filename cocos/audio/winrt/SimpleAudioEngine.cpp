@@ -132,7 +132,7 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 // effect function
 //////////////////////////////////////////////////////////////////////////
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop, float pitch, float pan, float gain)
 {
     unsigned int sound;
     sharedAudioController()->PlaySoundEffect(pszFilePath, bLoop, sound);

@@ -121,6 +121,7 @@ FastTMXLayer::FastTMXLayer()
 , _dirty(true)
 , _quadsDirty(true)
 {
+	DX_NOT_SUPPORTED();
     _buffersVBO[0] = _buffersVBO[1] = 0;
 }
 
@@ -129,6 +130,7 @@ FastTMXLayer::~FastTMXLayer()
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_DELETE_ARRAY(_tiles);
+#if DIRECTX_ENABLED == 0
     if(glIsBuffer(_buffersVBO[0]))
     {
         glDeleteBuffers(1, &_buffersVBO[0]);
@@ -138,6 +140,7 @@ FastTMXLayer::~FastTMXLayer()
     {
         glDeleteBuffers(1, &_buffersVBO[1]);
     }
+#endif
 }
 
 void FastTMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
@@ -198,6 +201,7 @@ void FastTMXLayer::onDraw(int offset, int count)
 
 void FastTMXLayer::updateTiles(const Rect& culledRect)
 {
+#if DIRECTX_ENABLED == 0
     Rect visibleTiles = culledRect;
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
@@ -286,7 +290,7 @@ void FastTMXLayer::updateTiles(const Rect& culledRect)
             _indicesVertexZNumber.erase(iter.first);
         }
     }
-    
+#endif
 }
 
 void FastTMXLayer::updateVertexBuffer()
@@ -306,6 +310,7 @@ void FastTMXLayer::updateVertexBuffer()
 
 void FastTMXLayer::updateIndexBuffer()
 {
+#if DIRECTX_ENABLED == 0
     if(!glIsBuffer(_buffersVBO[1]))
     {
         glGenBuffers(1, &_buffersVBO[1]);
@@ -313,6 +318,7 @@ void FastTMXLayer::updateIndexBuffer()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.size(), &_indices[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif
 }
 
 // FastTMXLayer - setup Tiles
@@ -695,6 +701,7 @@ Value FastTMXLayer::getProperty(const std::string& propertyName) const
 
 void FastTMXLayer::parseInternalProperties()
 {
+#if DIRECTX_ENABLED == 0
     auto vertexz = getProperty("cc_vertexz");
     if (vertexz.isNull()) return;
     
@@ -710,17 +717,16 @@ void FastTMXLayer::parseInternalProperties()
         GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
         
         // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-        // use shader program to set uniform
-#if DIRECTX_ENABLED == 0
+		// use shader program to set uniform
         getGLProgram()->use();
         getGLProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
         CHECK_GL_ERROR_DEBUG();
-#endif
     }
     else
     {
         _vertexZvalue = vertexz.asInt();
     }
+#endif
 }
 
 //CCTMXLayer2 - obtaining positions, offset

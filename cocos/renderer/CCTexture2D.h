@@ -181,7 +181,8 @@ public:
      @since v0.8
      */
     static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
-    CC_DEPRECATED_ATTRIBUTE static Texture2D::PixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
+	/** Returns right extension from pixel format for lookup */
+	static std::string				getExtensionFromFormat(Texture2D::PixelFormat format, const std::string& defaultExtension);
 
     /** treats (or not) PVR files as if they have alpha premultiplied.
      Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is

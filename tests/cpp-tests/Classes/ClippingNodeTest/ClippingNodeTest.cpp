@@ -580,6 +580,7 @@ std::string RawStencilBufferTest::subtitle() const
 
 void RawStencilBufferTest::setup()
 {
+#if DIRECTX_ENABLED == 0
     glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
     if (_stencilBits < 3) {
         CCLOGWARN("Stencil must be enabled for the current GLView.");
@@ -599,6 +600,7 @@ void RawStencilBufferTest::setup()
     }
 
     Director::getInstance()->setAlphaBlending(true);
+#endif
 }
 
 void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -662,14 +664,18 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint3
 
 void RawStencilBufferTest::onEnableStencil()
 {
+#if DIRECTX_ENABLED == 0
     glEnable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 void RawStencilBufferTest::onDisableStencil()
 {
+#if DIRECTX_ENABLED == 0
     glDisable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
@@ -689,6 +695,7 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
 
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     GLint planeMask = 0x1 << plane;
     glStencilMask(planeMask);
     glClearStencil(0x0);
@@ -696,13 +703,16 @@ void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
     glFlush();
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+#endif
 }
 
 void RawStencilBufferTest::setupStencilForDrawingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     GLint planeMask = 0x1 << plane;
     glStencilFunc(GL_EQUAL, planeMask, planeMask);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+#endif
 }
 
 //@implementation RawStencilBufferTest2
@@ -714,14 +724,18 @@ std::string RawStencilBufferTest2::subtitle() const
 
 void RawStencilBufferTest2::setupStencilForClippingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
     glDepthMask(GL_FALSE);
+#endif
 }
 
 void RawStencilBufferTest2::setupStencilForDrawingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     glDepthMask(GL_TRUE);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
+#endif
 }
 
 //@implementation RawStencilBufferTest3
@@ -733,16 +747,20 @@ std::string RawStencilBufferTest3::subtitle() const
 
 void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+#endif
 }
 
 void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     glDepthMask(GL_TRUE);
     //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
+#endif
 }
 
 void RawStencilBufferTestAlphaTest::setup()
@@ -763,6 +781,7 @@ std::string RawStencilBufferTest4::subtitle() const
 
 void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
     glDepthMask(GL_FALSE);
 
@@ -777,15 +796,18 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
 #endif
 #endif
+#endif
 }
 
 void RawStencilBufferTest4::setupStencilForDrawingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
+#endif
 }
 
 //@implementation RawStencilBufferTest5
@@ -797,6 +819,7 @@ std::string RawStencilBufferTest5::subtitle() const
 
 void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
@@ -812,16 +835,19 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
 #endif
 #endif
+#endif
 }
 
 void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
     glDepthMask(GL_TRUE);
     //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
+#endif
 }
 
 //@implementation RawStencilBufferTest6
@@ -833,6 +859,7 @@ std::string RawStencilBufferTest6::subtitle() const
 
 void RawStencilBufferTest6::setup()
 {
+#if DIRECTX_ENABLED == 0
     RawStencilBufferTestAlphaTest::setup();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
@@ -856,10 +883,12 @@ void RawStencilBufferTest6::setup()
     this->addChild(clearToMaskLabel);
 #endif
     glStencilMask(~0);
+#endif
 }
 
 void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
     GLint planeMask = 0x1 << plane;
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
@@ -881,10 +910,12 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
 #endif
 #endif
     glFlush();
+#endif
 }
 
 void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
 {
+#if DIRECTX_ENABLED == 0
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
@@ -892,6 +923,7 @@ void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
     //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
     glFlush();
+#endif
 }
 
 //#endif // COCOS2D_DEBUG > 1

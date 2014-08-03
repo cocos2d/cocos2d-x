@@ -320,6 +320,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     
 void Layout::onBeforeVisitStencil()
 {
+#if DIRECTX_ENABLED == 0
     s_layer++;
     GLint mask_layer = 0x1 << s_layer;
     GLint mask_layer_l = mask_layer - 1;
@@ -345,6 +346,7 @@ void Layout::onBeforeVisitStencil()
     
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+#endif
 }
     
 void Layout::drawFullScreenQuadClearStencil()
@@ -366,14 +368,17 @@ void Layout::drawFullScreenQuadClearStencil()
 
 void Layout::onAfterDrawStencil()
 {
+#if DIRECTX_ENABLED == 0
     glDepthMask(_currentDepthWriteMask);
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+#endif
 }
 
 
 void Layout::onAfterVisitStencil()
 {
+#if DIRECTX_ENABLED == 0
     glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
     glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
     glStencilMask(_currentStencilWriteMask);
@@ -382,19 +387,24 @@ void Layout::onAfterVisitStencil()
         glDisable(GL_STENCIL_TEST);
     }
     s_layer--;
+#endif
 }
     
 void Layout::onBeforeVisitScissor()
 {
+#if DIRECTX_ENABLED == 0
     Rect clippingRect = getClippingRect();
     glEnable(GL_SCISSOR_TEST);
     auto glview = Director::getInstance()->getOpenGLView();
     glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+#endif
 }
 
 void Layout::onAfterVisitScissor()
 {
+#if DIRECTX_ENABLED == 0
     glDisable(GL_SCISSOR_TEST);
+#endif
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
@@ -412,6 +422,7 @@ void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransfor
 
 void Layout::setClippingEnabled(bool able)
 {
+#if DIRECTX_ENABLED == 0
     if (able == _clippingEnabled)
     {
         return;
@@ -453,6 +464,7 @@ void Layout::setClippingEnabled(bool able)
         default:
             break;
     }
+#endif
 }
     
 void Layout::setClippingType(ClippingType type)

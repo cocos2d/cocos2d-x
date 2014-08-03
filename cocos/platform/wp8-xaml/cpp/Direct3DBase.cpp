@@ -37,13 +37,7 @@ void Direct3DBase::CreateDeviceResources()
 	// description.  All applications are assumed to support 9.3 unless otherwise stated.
 	D3D_FEATURE_LEVEL featureLevels[] = 
 	{
-		D3D_FEATURE_LEVEL_11_1,
-		D3D_FEATURE_LEVEL_11_0,
-		D3D_FEATURE_LEVEL_10_1,
-		D3D_FEATURE_LEVEL_10_0,
 		D3D_FEATURE_LEVEL_9_3,
-		D3D_FEATURE_LEVEL_9_2,
-		D3D_FEATURE_LEVEL_9_1
 	};
 
 	// Create the Direct3D 11 API device object and a corresponding context.
@@ -64,10 +58,6 @@ void Direct3DBase::CreateDeviceResources()
 			)
 		);
 
-	m_depthStencilView = nullptr;
-	m_renderTargetView = nullptr;
-	m_renderTarget = nullptr;
-	
 	// Get the Direct3D 11.1 API device and context interfaces.
 	DX::ThrowIfFailed(
 		device.As(&m_d3dDevice)

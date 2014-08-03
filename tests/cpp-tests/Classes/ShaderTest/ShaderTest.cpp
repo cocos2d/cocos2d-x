@@ -208,6 +208,7 @@ void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
+#if DIRECTX_ENABLED == 0
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
@@ -218,6 +219,7 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
+#endif
 }
 
 /// ShaderMonjori

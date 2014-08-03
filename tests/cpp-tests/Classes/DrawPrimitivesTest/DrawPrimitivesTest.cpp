@@ -123,6 +123,7 @@ void DrawPrimitivesTest::draw(Renderer *renderer, const Mat4 &transform, uint32_
 
 void DrawPrimitivesTest::onDraw(const Mat4 &transform, uint32_t flags)
 {
+#if DIRECTX_ENABLED == 0
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
@@ -237,6 +238,7 @@ void DrawPrimitivesTest::onDraw(const Mat4 &transform, uint32_t flags)
     
     //end draw
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+#endif
 }
 
 string DrawPrimitivesTest::title() const

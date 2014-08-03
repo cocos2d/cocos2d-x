@@ -201,7 +201,7 @@ void Skeleton::onDraw(const Mat4 &transform, uint32_t flags)
         CCASSERT(nullptr != director, "Director is null when seting matrix stack");
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
+#if DIRECTX_ENABLED == 0
         if (debugSlots) {
             // Slots.
             DrawPrimitives::setDrawColor4B(0, 0, 255, 255);
@@ -239,6 +239,7 @@ void Skeleton::onDraw(const Mat4 &transform, uint32_t flags)
                 if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
             }
         }
+#endif
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     }

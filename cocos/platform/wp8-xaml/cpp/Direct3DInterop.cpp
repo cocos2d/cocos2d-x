@@ -78,7 +78,7 @@ IAsyncAction^ Direct3DInterop::OnSuspending()
 
 void Direct3DInterop::OnBackKeyPress()
 {
-	cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(new cocos2d::EventKeyboard(cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE, true));
+	cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(new cocos2d::EventKeyboard(cocos2d::EventKeyboard::KeyCode::KEY_BACK, true));
 }
 
 // Pointer Event Handlers. We need to queue up pointer events to pass them to the drawing thread
@@ -134,6 +134,7 @@ HRESULT Direct3DInterop::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host)
 void Direct3DInterop::Disconnect()
 {
 	m_renderer->Disconnect();
+	//m_renderer = nullptr;
 }
 
 HRESULT Direct3DInterop::PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Out_ BOOL* contentDirty)

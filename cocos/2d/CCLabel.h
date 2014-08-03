@@ -234,7 +234,7 @@ public:
       @since v3.2.0
      */
     float getAdditionalKerning() const;
-
+    
     // string related stuff
     int getStringNumLines() const { return _currNumLines;}
     int getStringLength() const;
@@ -276,7 +276,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE float getCommonLineHeight() const { return getLineHeight();}
 
 protected:
-    void onDraw(const Mat4& transform, bool transformUpdated);
+	void onDraw(const Mat4& transform, uint32_t flags);
 
     struct LetterInfo
     {

@@ -342,14 +342,14 @@ void Label::updateShaderProgram()
     case cocos2d::LabelEffect::NORMAL:
         if (_useDistanceField)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
-        else if (_useA8Shader)
+        else if (_useA8Shader) 
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
         else
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+			setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         break;
-    case cocos2d::LabelEffect::OUTLINE: 
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
+	case cocos2d::LabelEffect::OUTLINE:			
+		setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
 		_uniformEffectColor = getGLProgram()->getUniformLocation("u_effectColor");	
         break;
     case cocos2d::LabelEffect::GLOW:
@@ -361,8 +361,8 @@ void Label::updateShaderProgram()
         break;
     default:
         return;
-    }
-    
+    }    
+
 	_uniformTextColor = getGLProgram()->getUniformLocation("u_textColor");
 }
 
@@ -730,14 +730,14 @@ void Label::enableGlow(const Color4B& glowColor)
             setTTFConfig(config);
             _contentDirty = true;
         }
-        _currLabelEffect = LabelEffect::GLOW;
-        _effectColor = glowColor;
-        _effectColorF.r = _effectColor.r / 255.0f;
-        _effectColorF.g = _effectColor.g / 255.0f;
-        _effectColorF.b = _effectColor.b / 255.0f;
-        _effectColorF.a = _effectColor.a / 255.0f;
-        updateShaderProgram();
-    }
+    _currLabelEffect = LabelEffect::GLOW;
+    _effectColor = glowColor;
+    _effectColorF.r = _effectColor.r / 255.0f;
+    _effectColorF.g = _effectColor.g / 255.0f;
+    _effectColorF.b = _effectColor.b / 255.0f;
+    _effectColorF.a = _effectColor.a / 255.0f;
+    updateShaderProgram();
+}
 }
 
 void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */)
@@ -844,7 +844,7 @@ D3D11_BLEND GetDXBlend2(GLint glBlend)
 }
 #endif
 
-void Label::onDraw(const Mat4& transform, bool transformUpdated)
+void Label::onDraw(const Mat4& transform, uint32_t flags)
 {
     CC_PROFILER_START("Label - draw");
 
@@ -858,28 +858,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
 	glprogram->use();
     
 #if (DIRECTX_ENABLED == 1)
-	auto view = GLView::sharedOpenGLView();
-	D3D11_BLEND src = GetDXBlend2(_blendFunc.src);
-	D3D11_BLEND dst = GetDXBlend2(_blendFunc.dst);
-
-	ID3D11BlendState* state = nullptr;
-	if (state == nullptr)
-	{
-		CD3D11_BLEND_DESC d = CD3D11_BLEND_DESC(CD3D11_DEFAULT());
-		d.AlphaToCoverageEnable = false;
-		d.IndependentBlendEnable = false;
-		d.RenderTarget[0].BlendEnable = true;
-		d.RenderTarget[0].SrcBlend = src;
-		d.RenderTarget[0].DestBlend = dst;
-		d.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-		d.RenderTarget[0].SrcBlendAlpha = src;
-		d.RenderTarget[0].DestBlendAlpha = dst;
-		d.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		d.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-		DX::ThrowIfFailed(view->GetDevice()->CreateBlendState(&d, &state));
-	}
-
-	view->GetContext()->OMSetBlendState(state, nullptr, 0xffffffff);
+	DXStateCache::getInstance().setBlend(_blendFunc.src, _blendFunc.dst);
 #else
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 #endif
@@ -899,7 +878,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         drawShadowWithoutBlur();
     }
 
-    glprogram->setUniformsForBuiltins(transform);
+	glprogram->setUniformsForBuiltins(transform);
 	glprogram->set();
 
     for(const auto &child: _children)

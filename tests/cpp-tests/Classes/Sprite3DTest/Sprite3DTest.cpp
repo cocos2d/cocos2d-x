@@ -403,6 +403,7 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
 
 void Effect3DOutline::draw(const Mat4 &transform)
 {
+#if DIRECTX_ENABLED == 0
     //draw
     if(_sprite && _sprite->getMesh())
     {
@@ -422,6 +423,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
         glDisable(GL_CULL_FACE);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
     }
+#endif
 }
 
 void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)

@@ -36,7 +36,15 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include <http_client.h>
+#include <astreambuf.h>
+#include "cocos/platform/winrt/CCWinRTUtils.h"
+using namespace web;
+#define CURL_ERROR_SIZE 256
+#else
 #include "curl/curl.h"
+#endif
 
 #include "platform/CCFileUtils.h"
 
@@ -200,6 +208,146 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
     });
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+
+class CURLRaii
+{
+	web::http::client::http_client raw_client;
+	web::http::http_request request;
+	std::wstring relativeUri;
+	
+public:
+	CURLRaii(const std::string& baseUrl, web::http::method method) :
+		raw_client(processUri(baseUrl), getConfig()),
+		request(method)
+	{
+		processUri(baseUrl);
+	}
+
+	http::client::http_client_config getConfig()
+	{
+		http::client::http_client_config config;
+		config.set_timeout(utility::seconds(HttpClient::getInstance()->getTimeoutForRead()));
+		return config;
+	}
+
+	std::wstring processUri(const std::string& url)
+	{
+		std::wstring wurl = web::http::uri::encode_uri(std::wstring(url.begin(), url.end()), web::http::uri::components::query);
+		std::wstring output;
+
+		auto prefix = wurl.find(L"https://");
+		if (prefix == std::wstring::npos)
+			prefix = wurl.find(L"http://");
+		if (prefix == std::wstring::npos)
+			output = L"http://";
+		
+		auto f = wurl.find(L"/", prefix != std::wstring::npos ? (prefix + 9) : 0);
+		if (f == std::wstring::npos)
+			return output + wurl;
+
+		output += wurl.substr(0, f);
+		relativeUri = wurl.substr(f);
+
+		return output;
+	}
+	
+	/**
+	* @brief Inits CURL instance for common usage
+	* @param request Null not allowed
+	* @param callback Response write callback
+	* @param stream Response write stream
+	*/
+	bool init(HttpRequest *ureq)
+	{
+		using namespace http;		
+
+		request.set_request_uri(relativeUri);
+		
+		if (request.method() == http::methods::POST || request.method() == http::methods::PUT)
+			request.set_body(ureq->getRequestData());
+
+		/* get custom header data (if set) */
+		std::vector<std::string> headers = ureq->getHeaders();
+		for (auto it = headers.begin(); it != headers.end(); ++it)
+		{
+			std::wstring completeHeader = std::wstring(it->begin(), it->end());
+			auto div = completeHeader.find(L":");
+			if (div != std::wstring::npos)
+			{
+				std::wstring name = completeHeader.substr(0, div);
+				std::wstring value = completeHeader.substr(div + 1);
+				request.headers().add(name, value);
+			}
+		}	
+		
+		return true;
+	}
+	
+	/// @param responseCode Null not allowed
+	bool perform(long *responseCode, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
+	{
+		using namespace http;
+		using namespace concurrency::streams;
+
+		auto task = raw_client.request(request);		
+		auto response = task.get();
+
+		*responseCode = response.status_code();
+		for (auto hdr : response.headers())
+		{
+			std::wstring completeHeader = hdr.first + L": " + hdr.second;
+			std::string stringHeader = std::string(completeHeader.begin(), completeHeader.end());
+
+			headerCallback((void*)stringHeader.data(), stringHeader.size(), sizeof(stringHeader[0]), headerStream);
+		}
+				
+		auto bodyTask = response.extract_vector();
+		auto body = bodyTask.get();
+
+		for (auto c : body)
+			callback((void*)&c, sizeof(c), 1, stream);
+
+		if (response.status_code() < 200 || response.status_code() > 300)
+			return false;
+
+		return true;
+	}
+};
+
+//Process Get Request
+static int processGetTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
+{
+	CURLRaii curl(request->getUrl(), http::methods::GET);
+	bool ok = curl.init(request) && curl.perform(responseCode, callback, stream, headerCallback, headerStream);
+	return ok ? 0 : 1;
+}
+
+//Process POST Request
+static int processPostTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
+{
+	CURLRaii curl(request->getUrl(), http::methods::POST);
+	bool ok = curl.init(request) && curl.perform(responseCode, callback, stream, headerCallback, headerStream);
+	return ok ? 0 : 1;	
+}
+
+//Process PUT Request
+static int processPutTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
+{
+	CURLRaii curl(request->getUrl(), http::methods::PUT);
+	bool ok = curl.init(request) && curl.perform(responseCode, callback, stream, headerCallback, headerStream);
+	return ok ? 0 : 1;
+}
+
+//Process DELETE Request
+static int processDeleteTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
+{
+	CURLRaii curl(request->getUrl(), http::methods::DEL);
+	bool ok = curl.init(request) && curl.perform(responseCode, callback, stream, headerCallback, headerStream);
+	return ok ? 0 : 1;
+}
+
+#else
 //Configure curl's timeout property
 static bool configureCURL(CURL *handle, char *errorBuffer)
 {
@@ -360,7 +508,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
     return ok ? 0 : 1;
 }
 
-
+#endif
 // Process Response
 static void processResponse(HttpResponse* response, char* errorBuffer)
 {
