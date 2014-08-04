@@ -462,8 +462,10 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     CC_SAFE_DELETE(guiReader);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(ActionTimelineData::create(actionTag));
-    
+    widget->setUserObject(ActionTimelineData::create(actionTag)); 
+
+    initNode(widget, json);
+
     return widget;
 }
 
