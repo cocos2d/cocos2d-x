@@ -30,7 +30,6 @@ class ModuleOrganizer(object):
     KEY_MODULE_LUA_BINDINGS = "lua_bindings"
     KEY_MODILE_LUA_LIB_NAME = "lua_lib_name"
     KEY_MODULE_EXCLUDE = "exclude"
-    KEY_MODULE_INCLUDE = "include"
 
     EXPORT_KEYS = [
         KEY_MODULE_TARGET_DIR,
@@ -66,6 +65,8 @@ class ModuleOrganizer(object):
                 "%s\n"
 
     PROPS_FILE_PATH = "cocos/include/2d/cocos2d_headers.props"
+    VERSION_SRC_FILE = "cocos/cocos2d.cpp"
+    VERSION_DST_FILE = "version"
 
     def __init__(self, dst_root):
         self.local_path = os.path.realpath(os.path.dirname(__file__))
@@ -73,6 +74,9 @@ class ModuleOrganizer(object):
 
         self.src_root = os.path.join(self.local_path, os.path.pardir, os.path.pardir)
         self.prebuilt_dir = os.path.join(self.local_path, "prebuilt")
+
+        if not os.path.exists(self.prebuilt_dir):
+            raise Exception("Prebuilt directory is not existed. PLZ run script 'gen_prebuilt_libs.py' first.")
 
         if dst_root is None:
             dst = self.local_path
@@ -256,8 +260,8 @@ class ModuleOrganizer(object):
         module_info = self.modules_info[module_name]
         # copy the include files
         if module_info.has_key(ModuleOrganizer.KEY_MODULE_INCLUDE):
-            for inclue_cfg in module_info[ModuleOrganizer.KEY_MODULE_INCLUDE]:
-                excopy.copy_files_with_config(inclue_cfg, self.src_root, self.dst_root)
+            for include_cfg in module_info[ModuleOrganizer.KEY_MODULE_INCLUDE]:
+                excopy.copy_files_with_config(include_cfg, self.src_root, self.dst_root)
 
         # handle the process for android
         self.handle_for_android(module_info)
@@ -326,6 +330,26 @@ class ModuleOrganizer(object):
 
         # copy the module config file to dst root
         self.export_modules_info()
+
+        # restore the version of engine
+        src_file = os.path.join(self.src_root, ModuleOrganizer.VERSION_SRC_FILE)
+        ver = ""
+        f = open(src_file)
+        import re
+        for line in f.readlines():
+            match = re.match(r".*return[ \t]*\"(.*)\";", line)
+            if match:
+                ver = match.group(1)
+                break
+        f.close()
+
+        if len(ver) <= 0:
+            raise Exception("Can't find version in %s" % src_file)
+        else:
+            dst_file = os.path.join(self.dst_root, ModuleOrganizer.VERSION_DST_FILE)
+            f = open(dst_file, "w")
+            f.write(ver)
+            f.close()
 
         # modify the cocos2dx.props
         props_file = os.path.join(self.dst_root, ModuleOrganizer.PROPS_FILE_PATH)
