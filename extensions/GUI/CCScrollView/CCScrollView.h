@@ -293,19 +293,7 @@ protected:
     void handleZoom();
 
     Rect getViewRect();
-    
-    /**
-     * current zoom scale
-     */
-    float _zoomScale;
-    /**
-     * min zoom scale
-     */
-    float _minZoomScale;
-    /**
-     * max zoom scale
-     */
-    float _maxZoomScale;
+
     /**
      * scroll view delegate
      */
