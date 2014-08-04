@@ -121,6 +121,7 @@ TMXLayer::TMXLayer()
 , _useAutomaticVertexZ(false)
 , _dirty(true)
 , _quadsDirty(true)
+, _vertexBuffer(nullptr)
 , _vData(nullptr)
 , _indexBuffer(nullptr)
 {
@@ -132,6 +133,7 @@ TMXLayer::~TMXLayer()
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_DELETE_ARRAY(_tiles);
     CC_SAFE_RELEASE(_vData);
+    CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
     
 }
@@ -283,29 +285,19 @@ void TMXLayer::updateTiles(const Rect& culledRect)
 void TMXLayer::updateVertexBuffer()
 {
     GL::bindVAO(0);
-    VertexBuffer *vertexBuffer(nullptr);
     if(nullptr == _vData)
     {
-//        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getVBO());
-//        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
-//        glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6 * sizeof(int)));
-        vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
+        _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
         _vData = VertexData::create();
-        _vData->setStream(vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-        _vData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-        _vData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
         CC_SAFE_RETAIN(_vData);
+        CC_SAFE_RETAIN(_vertexBuffer);
     }
-    else
+    if(_vertexBuffer)
     {
-        vertexBuffer = _vData->getStreamBuffer(GLProgram::VERTEX_ATTRIB_POSITION);
-    }
-    if(vertexBuffer)
-    {
-        vertexBuffer->updateVertices((void*)&_totalQuads[0], (int)_totalQuads.size() * 4, 0);
+        _vertexBuffer->updateVertices((void*)&_totalQuads[0], (int)_totalQuads.size() * 4, 0);
     }
     
 }
