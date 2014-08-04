@@ -159,7 +159,7 @@
 {
 }
 
-- (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
+- (void)controlTextDidBeginEditing:(NSNotification *)notification
 {
     editState_ = YES;
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
@@ -177,10 +177,9 @@
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    return YES;
 }
 
-- (BOOL)textFieldShouldEndEditing:(NSTextField *)sender
+- (void)controlTextDidEndEditing:(NSNotification *)notification
 {
     editState_ = NO;
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
@@ -203,7 +202,6 @@
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    return YES;
 }
 
 /**
