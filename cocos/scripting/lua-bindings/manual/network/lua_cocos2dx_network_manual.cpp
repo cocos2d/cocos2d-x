@@ -21,18 +21,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_SPINE_MANUAL_H
-#define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_SPINE_MANUAL_H
-
-#ifdef __cplusplus
+#include "lua_cocos2dx_network_manual.h"
 extern "C" {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "lua_extensions.h"
 #endif
-#include "tolua++.h"
-#ifdef __cplusplus
 }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "Lua_web_socket.h"
 #endif
 
-TOLUA_API int register_all_cocos2dx_spine_manual(lua_State* L);
-TOLUA_API int register_spine_module(lua_State* L);
+#include "lua_xml_http_request.h"
 
-#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_SPINE_MANUAL_H
+
+int register_network_module(lua_State* L)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    luaopen_lua_extensions(L);
+#endif
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    tolua_web_socket_open(L);
+    register_web_socket_manual(L);
+#endif
+    
+    register_xml_http_request(L);
+    
+    return 1;
+}

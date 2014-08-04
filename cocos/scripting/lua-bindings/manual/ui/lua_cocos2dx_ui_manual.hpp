@@ -33,6 +33,6 @@ extern "C" {
 #endif
 
 TOLUA_API int register_all_cocos2dx_ui_manual(lua_State* L);
-TOLUA_API int register_cocos2dx_protectedNode(lua_State* L);
+TOLUA_API int register_ui_moudle(lua_State* L);
 
 #endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H

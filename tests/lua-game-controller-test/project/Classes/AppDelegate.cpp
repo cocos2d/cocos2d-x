@@ -4,7 +4,7 @@
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"
-#include "scripting/lua-bindings/manual/lua_cocos2dx_controller_manual.hpp"
+#include "scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;

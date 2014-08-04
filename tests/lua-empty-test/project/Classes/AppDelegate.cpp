@@ -3,8 +3,7 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
-#include "network/lua_extensions.h"
-#include "lua_cocos2dx_cocosdenshion_auto.hpp"
+#include "lua_module_register.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -31,10 +30,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_getglobal(L, "_G");
     if (lua_istable(L,-1))//stack:...,_G,
     {
-        register_all_cocos2dx_cocosdenshion(L);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        luaopen_lua_extensions(L);
-#endif
+        lua_module_register(L);
     }
     lua_pop(L, 1);//statck:...
     

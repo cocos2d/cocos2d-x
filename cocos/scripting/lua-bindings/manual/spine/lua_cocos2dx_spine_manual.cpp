@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_spine_manual.hpp"
+#include "lua_cocos2dx_spine_auto.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -465,4 +466,11 @@ int register_all_cocos2dx_spine_manual(lua_State* L)
     extendCCSkeletonAnimation(L);
     
     return 0;
+}
+
+int register_spine_module(lua_State* L)
+{
+    register_all_cocos2dx_spine(L);
+    register_all_cocos2dx_spine_manual(L);
+    return 1;
 }

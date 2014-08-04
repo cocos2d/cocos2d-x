@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_extension_manual.h"
+#include "lua_cocos2dx_extension_auto.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -1049,4 +1050,11 @@ int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
     extendScrollView(tolua_S);
     extendTableView(tolua_S);
     return 0;
+}
+
+int register_extension_module(lua_State* tolua_S)
+{
+    register_all_cocos2dx_extension(tolua_S);
+    register_all_cocos2dx_extension_manual(tolua_S);
+    return 1;
 }

@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_coco_studio_manual.hpp"
+#include "lua_cocos2dx_studio_auto.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -566,4 +567,11 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
     extendActionTimeline(L);
     
     return 0;
+}
+
+int register_cocostudio_module(lua_State* L)
+{
+    register_all_cocos2dx_studio(L);
+    register_all_cocos2dx_coco_studio_manual(L);
+    return 1;
 }

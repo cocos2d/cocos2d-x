@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
-#include "LuaScriptHandlerMgr.h"
+#include "cocos2d/LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 #include "CCGameController.h"
