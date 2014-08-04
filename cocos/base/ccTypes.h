@@ -56,6 +56,9 @@ struct CC_DLL Color3B
     bool operator!=(const Color3B& right) const;
     bool operator!=(const Color4B& right) const;
     bool operator!=(const Color4F& right) const;
+    
+    Color3B operator*(float right) const;
+    Color3B operator+(const Color3B& right) const;
 
     bool equals(const Color3B& other)
     {

@@ -1845,6 +1845,12 @@
 		B6B26344193884D60088FE25 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
 		B6B26345193884D60088FE25 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
 		B6B26346193884D60088FE25 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
+		C02FB912198B471D00965242 /* CCGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = C02FB90F198B471D00965242 /* CCGraph.h */; };
+		C02FB913198B471D00965242 /* CCGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = C02FB90F198B471D00965242 /* CCGraph.h */; };
+		C02FB914198B47FA00965242 /* CCGraphImplement.h in Sources */ = {isa = PBXBuildFile; fileRef = C02FB90E198B471D00965242 /* CCGraphImplement.h */; };
+		C02FB915198B5F2400965242 /* CCGraphImplement.h in Sources */ = {isa = PBXBuildFile; fileRef = C02FB90E198B471D00965242 /* CCGraphImplement.h */; };
+		C05B890B198F67F900E7A6F9 /* CCGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C05B890A198F67B400E7A6F9 /* CCGraph.cpp */; };
+		C05B890C198F67FD00E7A6F9 /* CCGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C05B890A198F67B400E7A6F9 /* CCGraph.cpp */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2941,6 +2947,9 @@
 		B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCurve.h; sourceTree = "<group>"; };
 		B6B26341193884D60088FE25 /* CCAnimation3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimation3D.cpp; sourceTree = "<group>"; };
 		B6B26342193884D60088FE25 /* CCAnimation3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimation3D.h; sourceTree = "<group>"; };
+		C02FB90E198B471D00965242 /* CCGraphImplement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGraphImplement.h; path = ../base/CCGraphImplement.h; sourceTree = "<group>"; };
+		C02FB90F198B471D00965242 /* CCGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGraph.h; path = ../base/CCGraph.h; sourceTree = "<group>"; };
+		C05B890A198F67B400E7A6F9 /* CCGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCGraph.cpp; path = ../base/CCGraph.cpp; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3297,6 +3306,9 @@
 				3E6176631960F89B00DE83F5 /* CCEventListenerController.cpp */,
 				3E6176641960F89B00DE83F5 /* CCEventListenerController.h */,
 				3E6176651960F89B00DE83F5 /* CCGameController.h */,
+				C02FB90F198B471D00965242 /* CCGraph.h */,
+				C05B890A198F67B400E7A6F9 /* CCGraph.cpp */,
+				C02FB90E198B471D00965242 /* CCGraphImplement.h */,
 				299754F2193EC95400A54AC3 /* ObjectFactory.cpp */,
 				299754F3193EC95400A54AC3 /* ObjectFactory.h */,
 				50ABBDC11925AB6E00A911A9 /* atitc.cpp */,
@@ -5236,6 +5248,7 @@
 				1A570298180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				B29594C81926D61F003EEF37 /* CCObjLoader.h in Headers */,
 				50ABBE911925AB6F00A911A9 /* CCPlatformMacros.h in Headers */,
+				C02FB912198B471D00965242 /* CCGraph.h in Headers */,
 				50ABC05D1926664800A911A9 /* CCApplication.h in Headers */,
 				50ABC0071926664800A911A9 /* CCApplicationProtocol.h in Headers */,
 				50ABBD4E1925AB0000A911A9 /* MathUtil.h in Headers */,
@@ -5607,6 +5620,7 @@
 				1A570295180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				50ABBDB81925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				50ABBE341925AB6F00A911A9 /* CCConfiguration.h in Headers */,
+				C02FB913198B471D00965242 /* CCGraph.h in Headers */,
 				1A570299180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				50ABBEAA1925AB6F00A911A9 /* CCTouch.h in Headers */,
 				50ABBE741925AB6F00A911A9 /* CCEventListenerMouse.h in Headers */,
@@ -6619,6 +6633,7 @@
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
 				50ABBE271925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
 				50ABBE8B1925AB6F00A911A9 /* CCNS.cpp in Sources */,
+				C05B890B198F67F900E7A6F9 /* CCGraph.cpp in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
 				1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				50ABBEC51925AB6F00A911A9 /* etc1.cpp in Sources */,
@@ -6658,6 +6673,7 @@
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				1A5701B9180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				1A5701BD180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
+				C02FB914198B47FA00965242 /* CCGraphImplement.h in Sources */,
 				50ABBE551925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
@@ -7018,6 +7034,7 @@
 				1A570222180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
 				1A570226180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
 				1A57022A180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
+				C05B890C198F67FD00E7A6F9 /* CCGraph.cpp in Sources */,
 				B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
@@ -7033,6 +7050,7 @@
 				1A5702EB180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				1A5702EF180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
+				C02FB915198B5F2400965242 /* CCGraphImplement.h in Sources */,
 				50ABBD3D1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				50ABBECC1925AB6F00A911A9 /* s3tc.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
