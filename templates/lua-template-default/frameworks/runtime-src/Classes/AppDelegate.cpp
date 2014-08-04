@@ -2,6 +2,7 @@
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
+#include "lua_module_register.h"
 
 using namespace CocosDenshion;
 
@@ -21,6 +22,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_getglobal(L, "_G");
+    if (lua_istable(L,-1))//stack:...,_G,
+    {
+        lua_module_register(L);
+    }
+    lua_pop(L, 1);//statck:...
     if (engine->executeScriptFile("src/main.lua")) {
         return false;
     }
