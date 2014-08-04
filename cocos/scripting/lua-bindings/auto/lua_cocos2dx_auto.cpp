@@ -62703,95 +62703,6 @@ int lua_cocos2dx_Sprite3D_setTexture(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Sprite3D_removeAllAttachNode(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Sprite3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_removeAllAttachNode'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->removeAllAttachNode();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:removeAllAttachNode",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_removeAllAttachNode'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Sprite3D_setBlendFunc(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Sprite3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_setBlendFunc'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::BlendFunc arg0;
-
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
-        if(!ok)
-            return 0;
-        cobj->setBlendFunc(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_setBlendFunc'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Sprite3D_getMesh(lua_State* tolua_S)
 {
     int argc = 0;
@@ -62880,7 +62791,7 @@ int lua_cocos2dx_Sprite3D_getBlendFunc(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Sprite3D_removeAttachNode(lua_State* tolua_S)
+int lua_cocos2dx_Sprite3D_setBlendFunc(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Sprite3D* cobj = nullptr;
@@ -62900,7 +62811,7 @@ int lua_cocos2dx_Sprite3D_removeAttachNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_removeAttachNode'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_setBlendFunc'", nullptr);
         return 0;
     }
 #endif
@@ -62908,67 +62819,20 @@ int lua_cocos2dx_Sprite3D_removeAttachNode(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::string arg0;
+        cocos2d::BlendFunc arg0;
 
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Sprite3D:removeAttachNode");
+        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
         if(!ok)
             return 0;
-        cobj->removeAttachNode(arg0);
+        cobj->setBlendFunc(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:removeAttachNode",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_removeAttachNode'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Sprite3D_getAttachNode(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Sprite3D* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_getAttachNode'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Sprite3D:getAttachNode");
-        if(!ok)
-            return 0;
-        cocos2d::AttachNode* ret = cobj->getAttachNode(arg0);
-        object_to_luaval<cocos2d::AttachNode>(tolua_S, "cc.AttachNode",(cocos2d::AttachNode*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:getAttachNode",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_getAttachNode'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_setBlendFunc'.",&tolua_err);
 #endif
 
     return 0;
@@ -63037,12 +62901,9 @@ int lua_register_cocos2dx_Sprite3D(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Sprite3D");
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_Sprite3D_setTexture);
-        tolua_function(tolua_S,"removeAllAttachNode",lua_cocos2dx_Sprite3D_removeAllAttachNode);
-        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_Sprite3D_setBlendFunc);
         tolua_function(tolua_S,"getMesh",lua_cocos2dx_Sprite3D_getMesh);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_Sprite3D_getBlendFunc);
-        tolua_function(tolua_S,"removeAttachNode",lua_cocos2dx_Sprite3D_removeAttachNode);
-        tolua_function(tolua_S,"getAttachNode",lua_cocos2dx_Sprite3D_getAttachNode);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_Sprite3D_setBlendFunc);
         tolua_function(tolua_S,"create", lua_cocos2dx_Sprite3D_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Sprite3D).name();
@@ -63138,7 +62999,7 @@ int lua_cocos2dx_Mesh_getMeshVertexAttribCount(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Mesh_getSubMesh(lua_State* tolua_S)
+int lua_cocos2dx_Mesh_getIndexFormat(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Mesh* cobj = nullptr;
@@ -63158,29 +63019,26 @@ int lua_cocos2dx_Mesh_getSubMesh(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_getSubMesh'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_getIndexFormat'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        int arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Mesh:getSubMesh");
         if(!ok)
             return 0;
-        cocos2d::SubMesh* ret = cobj->getSubMesh(arg0);
-        object_to_luaval<cocos2d::SubMesh>(tolua_S, "cc.SubMesh",(cocos2d::SubMesh*)ret);
+        int ret = (int)cobj->getIndexFormat();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getSubMesh",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getIndexFormat",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getSubMesh'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getIndexFormat'.",&tolua_err);
 #endif
 
     return 0;
@@ -63229,6 +63087,94 @@ int lua_cocos2dx_Mesh_getVertexSizeInBytes(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Mesh_getPrimitiveType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Mesh* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_getPrimitiveType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        int ret = (int)cobj->getPrimitiveType();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getPrimitiveType",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getPrimitiveType'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Mesh_getIndexCount(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Mesh* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_getIndexCount'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        ssize_t ret = cobj->getIndexCount();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getIndexCount",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getIndexCount'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Mesh_getVertexBuffer(lua_State* tolua_S)
 {
     int argc = 0;
@@ -63269,97 +63215,6 @@ int lua_cocos2dx_Mesh_getVertexBuffer(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getVertexBuffer'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Mesh_getSubMeshCount(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_getSubMeshCount'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        ssize_t ret = cobj->getSubMeshCount();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getSubMeshCount",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getSubMeshCount'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Mesh_hasVertexAttrib(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_hasVertexAttrib'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        int arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Mesh:hasVertexAttrib");
-        if(!ok)
-            return 0;
-        bool ret = cobj->hasVertexAttrib(arg0);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:hasVertexAttrib",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_hasVertexAttrib'.",&tolua_err);
 #endif
 
     return 0;
@@ -63411,6 +63266,97 @@ int lua_cocos2dx_Mesh_getMeshVertexAttribute(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Mesh_getIndexBuffer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Mesh* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_getIndexBuffer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        unsigned int ret = cobj->getIndexBuffer();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getIndexBuffer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_getIndexBuffer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Mesh_hasVertexAttrib(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Mesh* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Mesh_hasVertexAttrib'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Mesh:hasVertexAttrib");
+        if(!ok)
+            return 0;
+        bool ret = cobj->hasVertexAttrib(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:hasVertexAttrib",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Mesh_hasVertexAttrib'.",&tolua_err);
+#endif
+
+    return 0;
+}
 static int lua_cocos2dx_Mesh_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Mesh)");
@@ -63425,12 +63371,14 @@ int lua_register_cocos2dx_Mesh(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Mesh");
         tolua_function(tolua_S,"restore",lua_cocos2dx_Mesh_restore);
         tolua_function(tolua_S,"getMeshVertexAttribCount",lua_cocos2dx_Mesh_getMeshVertexAttribCount);
-        tolua_function(tolua_S,"getSubMesh",lua_cocos2dx_Mesh_getSubMesh);
+        tolua_function(tolua_S,"getIndexFormat",lua_cocos2dx_Mesh_getIndexFormat);
         tolua_function(tolua_S,"getVertexSizeInBytes",lua_cocos2dx_Mesh_getVertexSizeInBytes);
+        tolua_function(tolua_S,"getPrimitiveType",lua_cocos2dx_Mesh_getPrimitiveType);
+        tolua_function(tolua_S,"getIndexCount",lua_cocos2dx_Mesh_getIndexCount);
         tolua_function(tolua_S,"getVertexBuffer",lua_cocos2dx_Mesh_getVertexBuffer);
-        tolua_function(tolua_S,"getSubMeshCount",lua_cocos2dx_Mesh_getSubMeshCount);
-        tolua_function(tolua_S,"hasVertexAttrib",lua_cocos2dx_Mesh_hasVertexAttrib);
         tolua_function(tolua_S,"getMeshVertexAttribute",lua_cocos2dx_Mesh_getMeshVertexAttribute);
+        tolua_function(tolua_S,"getIndexBuffer",lua_cocos2dx_Mesh_getIndexBuffer);
+        tolua_function(tolua_S,"hasVertexAttrib",lua_cocos2dx_Mesh_hasVertexAttrib);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Mesh).name();
     g_luaType[typeName] = "cc.Mesh";
@@ -63803,262 +63751,6 @@ int lua_register_cocos2dx_Animate3D(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::Animate3D).name();
     g_luaType[typeName] = "cc.Animate3D";
     g_typeCast["Animate3D"] = "cc.Animate3D";
-    return 1;
-}
-
-int lua_cocos2dx_SubMeshState_setTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SubMeshState* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SubMeshState",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SubMeshState*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SubMeshState_setTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Texture2D* arg0;
-
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
-        if(!ok)
-            return 0;
-        cobj->setTexture(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SubMeshState:setTexture",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SubMeshState_setTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SubMeshState_getTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SubMeshState* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SubMeshState",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SubMeshState*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SubMeshState_getTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cocos2d::Texture2D* ret = cobj->getTexture();
-        object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SubMeshState:getTexture",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SubMeshState_getTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SubMeshState_isVisible(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SubMeshState* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SubMeshState",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SubMeshState*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SubMeshState_isVisible'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        bool ret = cobj->isVisible();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SubMeshState:isVisible",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SubMeshState_isVisible'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_SubMeshState_setVisible(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::SubMeshState* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.SubMeshState",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::SubMeshState*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SubMeshState_setVisible'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.SubMeshState:setVisible");
-        if(!ok)
-            return 0;
-        cobj->setVisible(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SubMeshState:setVisible",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SubMeshState_setVisible'.",&tolua_err);
-#endif
-
-    return 0;
-}
-static int lua_cocos2dx_SubMeshState_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (SubMeshState)");
-    return 0;
-}
-
-int lua_register_cocos2dx_SubMeshState(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.SubMeshState");
-    tolua_cclass(tolua_S,"SubMeshState","cc.SubMeshState","cc.Ref",nullptr);
-
-    tolua_beginmodule(tolua_S,"SubMeshState");
-        tolua_function(tolua_S,"setTexture",lua_cocos2dx_SubMeshState_setTexture);
-        tolua_function(tolua_S,"getTexture",lua_cocos2dx_SubMeshState_getTexture);
-        tolua_function(tolua_S,"isVisible",lua_cocos2dx_SubMeshState_isVisible);
-        tolua_function(tolua_S,"setVisible",lua_cocos2dx_SubMeshState_setVisible);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::SubMeshState).name();
-    g_luaType[typeName] = "cc.SubMeshState";
-    g_typeCast["SubMeshState"] = "cc.SubMeshState";
-    return 1;
-}
-
-int lua_cocos2dx_AttachNode_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.AttachNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 1)
-    {
-        cocos2d::Bone3D* arg0;
-        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0);
-        if(!ok)
-            return 0;
-        cocos2d::AttachNode* ret = cocos2d::AttachNode::create(arg0);
-        object_to_luaval<cocos2d::AttachNode>(tolua_S, "cc.AttachNode",(cocos2d::AttachNode*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AttachNode:create",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_AttachNode_create'.",&tolua_err);
-#endif
-    return 0;
-}
-static int lua_cocos2dx_AttachNode_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (AttachNode)");
-    return 0;
-}
-
-int lua_register_cocos2dx_AttachNode(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.AttachNode");
-    tolua_cclass(tolua_S,"AttachNode","cc.AttachNode","cc.Node",nullptr);
-
-    tolua_beginmodule(tolua_S,"AttachNode");
-        tolua_function(tolua_S,"create", lua_cocos2dx_AttachNode_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::AttachNode).name();
-    g_luaType[typeName] = "cc.AttachNode";
-    g_typeCast["AttachNode"] = "cc.AttachNode";
     return 1;
 }
 
@@ -65822,7 +65514,6 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_Application(tolua_S);
 	lua_register_cocos2dx_DelayTime(tolua_S);
 	lua_register_cocos2dx_LabelAtlas(tolua_S);
-	lua_register_cocos2dx_AttachNode(tolua_S);
 	lua_register_cocos2dx_ParticleSnow(tolua_S);
 	lua_register_cocos2dx_EaseElasticIn(tolua_S);
 	lua_register_cocos2dx_EaseCircleActionInOut(tolua_S);
@@ -65914,7 +65605,6 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_GLProgramState(tolua_S);
 	lua_register_cocos2dx_Animation3D(tolua_S);
 	lua_register_cocos2dx_PageTurn3D(tolua_S);
-	lua_register_cocos2dx_SubMeshState(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInL(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInT(tolua_S);
 	lua_register_cocos2dx_Grid3D(tolua_S);
