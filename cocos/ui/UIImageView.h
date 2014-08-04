@@ -26,16 +26,17 @@ THE SOFTWARE.
 #define __UIIMAGEVIEW_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-
+    class Scale9Sprite;
 /**
 *   @js NA
 *   @lua NA
 */
-class ImageView : public Widget
+class CC_GUI_DLL ImageView : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -131,7 +132,7 @@ protected:
     bool _scale9Enabled;
     bool _prevIgnoreSize;
     Rect _capInsets;
-    Node* _imageRenderer;
+    Scale9Sprite* _imageRenderer;
     std::string _textureFile;
     TextureResType _imageTexType;
     Size _imageTextureSize;

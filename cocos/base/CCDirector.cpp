@@ -263,7 +263,7 @@ void Director::drawScene()
 
     if (_openGLView)
     {
-        _openGLView->pollInputEvents();
+        _openGLView->pollEvents();
     }
 
     //tick before glClear: issue #533

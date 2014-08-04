@@ -43,6 +43,18 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(scene);
         }
     },
+    {
+        "Scale9 Sprite Test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIScale9SpriteTest);
+            sceneManager->setMinUISceneId(kUIScale9SpriteTest);
+            sceneManager->setMaxUISceneId(kUIS9Flip);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
 	{
         
         "ButtonTest",
@@ -51,7 +63,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIButtonTest);
             sceneManager->setMinUISceneId(kUIButtonTest);
-            sceneManager->setMaxUISceneId(kUIButtonTest_Title);
+            sceneManager->setMaxUISceneId(kUIButtonTestSwitchScale9);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -87,7 +99,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIImageViewTest);
             sceneManager->setMinUISceneId(kUIImageViewTest);
-            sceneManager->setMaxUISceneId(kUIImageViewTest_Scale9);
+            sceneManager->setMaxUISceneId(kUIImageViewTest_ContentSize);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

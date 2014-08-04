@@ -51,6 +51,7 @@ typedef struct _MipmapInfo
 {
     unsigned char* address;
     int len;
+    _MipmapInfo():address(NULL),len(0){}
 }MipmapInfo;
 
 class CC_DLL Image : public Ref
@@ -121,10 +122,10 @@ public:
     inline Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
     inline int               getWidth()              { return _width; }
     inline int               getHeight()             { return _height; }
-    inline bool              isPremultipliedAlpha()  { return _preMulti;   }
     inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
     inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
     inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
+    CC_DEPRECATED_ATTRIBUTE inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
 
     int                      getBitPerPixel();
     bool                     hasAlpha();
@@ -137,6 +138,15 @@ public:
      @param    isToRGB        whether the image is saved as RGB format.
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
+    
+    
+    /** treats (or not) PVR files as if they have alpha premultiplied.
+     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+     possible load them as if they have (or not) the alpha channel premultiplied.
+     
+     By default it is disabled.
+     */
+    static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 protected:
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
@@ -167,9 +177,9 @@ protected:
     ssize_t _dataLen;
     int _width;
     int _height;
+    bool _unpack;
     Format _fileType;
     Texture2D::PixelFormat _renderFormat;
-    bool _preMulti;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.

@@ -38,7 +38,7 @@ int lua_cocos2dx_spine_Skeleton_setToSetupPose(lua_State* tolua_S)
         cobj->setToSetupPose();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setToSetupPose",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:setToSetupPose",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -84,7 +84,7 @@ int lua_cocos2dx_spine_Skeleton_setBlendFunc(lua_State* tolua_S)
         cobj->setBlendFunc(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBlendFunc",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:setBlendFunc",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -125,15 +125,15 @@ int lua_cocos2dx_spine_Skeleton_onDraw(lua_State* tolua_S)
         cocos2d::Mat4 arg0;
         unsigned int arg1;
 
-        ok &= luaval_to_mat4(tolua_S, 2, &arg0);
+        ok &= luaval_to_mat4(tolua_S, 2, &arg0, "sp.Skeleton:onDraw");
 
-        ok &= luaval_to_uint32(tolua_S, 3,&arg1);
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "sp.Skeleton:onDraw");
         if(!ok)
             return 0;
         cobj->onDraw(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "onDraw",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:onDraw",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -176,7 +176,7 @@ int lua_cocos2dx_spine_Skeleton_setSlotsToSetupPose(lua_State* tolua_S)
         cobj->setSlotsToSetupPose();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSlotsToSetupPose",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:setSlotsToSetupPose",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -220,7 +220,7 @@ int lua_cocos2dx_spine_Skeleton_getBlendFunc(lua_State* tolua_S)
         blendfunc_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getBlendFunc",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:getBlendFunc",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -260,14 +260,14 @@ int lua_cocos2dx_spine_Skeleton_setSkin(lua_State* tolua_S)
     {
         const char* arg0;
 
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "sp.Skeleton:setSkin"); arg0 = arg0_tmp.c_str();
         if(!ok)
             return 0;
         bool ret = cobj->setSkin(arg0);
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSkin",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:setSkin",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -310,7 +310,7 @@ int lua_cocos2dx_spine_Skeleton_setBonesToSetupPose(lua_State* tolua_S)
         cobj->setBonesToSetupPose();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setBonesToSetupPose",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.Skeleton:setBonesToSetupPose",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -378,17 +378,17 @@ int lua_cocos2dx_spine_SkeletonAnimation_setMix(lua_State* tolua_S)
         const char* arg1;
         double arg2;
 
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "sp.SkeletonAnimation:setMix"); arg0 = arg0_tmp.c_str();
 
-        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
+        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "sp.SkeletonAnimation:setMix"); arg1 = arg1_tmp.c_str();
 
-        ok &= luaval_to_number(tolua_S, 4,&arg2);
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "sp.SkeletonAnimation:setMix");
         if(!ok)
             return 0;
         cobj->setMix(arg0, arg1, arg2);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setMix",argc, 3);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.SkeletonAnimation:setMix",argc, 3);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -431,7 +431,7 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTracks(lua_State* tolua_S)
         cobj->clearTracks();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "clearTracks",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.SkeletonAnimation:clearTracks",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -478,13 +478,13 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTrack(lua_State* tolua_S)
     {
         int arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "sp.SkeletonAnimation:clearTrack");
         if(!ok)
             return 0;
         cobj->clearTrack(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "clearTrack",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "sp.SkeletonAnimation:clearTrack",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1

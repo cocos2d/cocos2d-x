@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 #define TOUCH_PERF_DEBUG 1
 
-class EventTouch : public Event
+class CC_DLL EventTouch : public Event
 {
 public:
     static const int MAX_TOUCHES = 5;

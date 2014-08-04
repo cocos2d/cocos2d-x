@@ -67,6 +67,16 @@
 
 
 --------------------------------------------------------
+-- the cc Scene
+-- @field [parent=#cc] Scene#Scene Scene preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLView
+-- @field [parent=#cc] GLView#GLView GLView preloaded module
+
+
+--------------------------------------------------------
 -- the cc Director
 -- @field [parent=#cc] Director#Director Director preloaded module
 
@@ -772,11 +782,6 @@
 
 
 --------------------------------------------------------
--- the cc Scene
--- @field [parent=#cc] Scene#Scene Scene preloaded module
-
-
---------------------------------------------------------
 -- the cc TransitionEaseScene
 -- @field [parent=#cc] TransitionEaseScene#TransitionEaseScene TransitionEaseScene preloaded module
 
@@ -1137,13 +1142,8 @@
 
 
 --------------------------------------------------------
--- the cc GLViewProtocol
--- @field [parent=#cc] GLViewProtocol#GLViewProtocol GLViewProtocol preloaded module
-
-
---------------------------------------------------------
--- the cc GLView
--- @field [parent=#cc] GLView#GLView GLView preloaded module
+-- the cc GLViewImpl
+-- @field [parent=#cc] GLViewImpl#GLViewImpl GLViewImpl preloaded module
 
 
 --------------------------------------------------------
@@ -1194,16 +1194,6 @@
 --------------------------------------------------------
 -- the cc TileMapAtlas
 -- @field [parent=#cc] TileMapAtlas#TileMapAtlas TileMapAtlas preloaded module
-
-
---------------------------------------------------------
--- the cc FastTMXTiledMap
--- @field [parent=#cc] FastTMXTiledMap#FastTMXTiledMap FastTMXTiledMap preloaded module
-
-
---------------------------------------------------------
--- the cc FastTMXLayer
--- @field [parent=#cc] FastTMXLayer#FastTMXLayer FastTMXLayer preloaded module
 
 
 --------------------------------------------------------

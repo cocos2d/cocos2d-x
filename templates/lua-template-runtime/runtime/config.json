@@ -1,6 +1,6 @@
 {
-    "version":"v3-lua-runtime-1.2",
-    "zip_file_size":"24461574 ",
+    "version":"v3-lua-runtime-1.3.1",
+    "zip_file_size":"24660780",
     "repo_name":"cocos-runtime-bin",
     "repo_parent":"https://github.com/chukong/"
 }

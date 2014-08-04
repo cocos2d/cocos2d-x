@@ -613,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp">
       <Filter>platform\wp8</Filter>
+    </ClCompile> 
+    <ClCompile Include="CCProtectedNode.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1250,11 +1253,16 @@
     <ClInclude Include="CCFastTMXTiledMap.h">
       <Filter>2d</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\platform\CCGLView.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\CCGLViewImpl.h">
       <Filter>platform\wp8</Filter>
+=======
+    <ClInclude Include="CCProtectedNode.h">
+      <Filter>2d</Filter>
+>>>>>>> v3
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

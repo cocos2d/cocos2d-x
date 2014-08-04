@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __LAYOUT_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 
@@ -35,12 +36,13 @@ class DrawNode;
 class LayerColor;
 class LayerGradient;
 
+
 namespace ui {
     
 class LayoutManager;
+class Scale9Sprite;
 
-
-class LayoutProtocol
+class CC_GUI_DLL LayoutProtocol
 {
 public:
     LayoutProtocol(){}
@@ -62,7 +64,7 @@ public:
 #endif
 #endif
 
-class Layout : public Widget, public LayoutProtocol
+class CC_GUI_DLL Layout : public Widget, public LayoutProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -265,7 +267,14 @@ public:
      */
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
 
+    /**
+     * force refresh widget layout
+     */
+    void forceDoLayout();
     
+    /**
+     * request to refresh widget layout
+     */
     void requestDoLayout();
     
     virtual void onEnter() override;
@@ -458,7 +467,7 @@ protected:
     
     //background
     bool _backGroundScale9Enabled;
-    Node* _backGroundImage;
+    Scale9Sprite* _backGroundImage;
     std::string _backGroundImageFileName;
     Rect _backGroundImageCapInsets;
     BackGroundColorType _colorType;

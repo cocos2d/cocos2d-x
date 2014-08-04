@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventListener.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocos2d {
     class __Set;
@@ -41,7 +42,7 @@ namespace cocostudio {
 /**
  *  @lua NA
  */
-class InputDelegate
+class CC_STUDIO_DLL InputDelegate
 {
 protected:
     /**

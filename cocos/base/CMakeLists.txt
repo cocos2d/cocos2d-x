@@ -40,6 +40,7 @@ set(COCOS_BASE_SRC
   base/ccUTF8.cpp
   base/ccUtils.cpp
   base/etc1.cpp
+  base/pvr.cpp
   base/s3tc.cpp
   base/ObjectFactory.cpp
 )

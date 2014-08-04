@@ -37,7 +37,7 @@ NS_CC_BEGIN
 *
  The `Renderer` knows how to render `RenderCommands` objects.
  */
-class RenderCommand
+class CC_DLL RenderCommand
 {
 public:
 

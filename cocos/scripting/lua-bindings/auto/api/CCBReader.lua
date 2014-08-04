@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#CCBReader] addDocumentCallbackControlEvents 
 -- @param self
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#CCBReader] setCCBRootPath 
@@ -63,7 +63,7 @@
 --------------------------------
 -- @function [parent=#CCBReader] addOwnerCallbackControlEvents 
 -- @param self
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#CCBReader] getOwnerOutletNames 

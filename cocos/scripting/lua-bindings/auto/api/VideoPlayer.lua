@@ -2,7 +2,7 @@
 --------------------------------
 -- @module VideoPlayer
 -- @extend Widget
--- @parent_module ccexprimental
+-- @parent_module ccexp
 
 --------------------------------
 -- @function [parent=#VideoPlayer] getFileName 
@@ -58,7 +58,7 @@
 --------------------------------
 -- @function [parent=#VideoPlayer] onPlayEvent 
 -- @param self
--- @param #cc.experimental::ui::VideoPlayer::EventType eventtype
+-- @param #int int
         
 --------------------------------
 -- @function [parent=#VideoPlayer] isFullScreenEnabled 

@@ -4429,7 +4429,7 @@ static int tolua_cocos2d_DrawPrimitives_drawPoint00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2 vec2;
-        if(luaval_to_vec2(tolua_S, 1, &vec2))
+        if(luaval_to_vec2(tolua_S, 1, &vec2, "cc.DrawPrimitives.drawPoint"))
         {
             DrawPrimitives::drawPoint(vec2);
         }        
@@ -4476,7 +4476,7 @@ static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
                     goto tolua_lerror;
                 }
                 
-                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i]))
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawPrimitives.drawPoints"))
                 {
                     lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);
@@ -4512,11 +4512,11 @@ static int tolua_cocos2d_DrawPrimitives_drawLine00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2 origin;
-        if (!luaval_to_vec2(tolua_S, 1, &origin))
+        if (!luaval_to_vec2(tolua_S, 1, &origin, "cc.DrawPrimitives.drawLine"))
             return 0;
         
         cocos2d::Vec2  destination;
-        if (!luaval_to_vec2(tolua_S, 2, &destination))
+        if (!luaval_to_vec2(tolua_S, 2, &destination, "cc.DrawPrimitives.drawLine"))
             return 0;
         
         DrawPrimitives::drawLine(origin,destination);
@@ -4545,11 +4545,11 @@ static int tolua_cocos2d_DrawPrimitives_drawRect00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2 origin;
-        if (!luaval_to_vec2(tolua_S, 1, &origin))
+        if (!luaval_to_vec2(tolua_S, 1, &origin, "cc.DrawPrimitives.drawRect"))
             return 0;
 
         cocos2d::Vec2 destination;
-        if (!luaval_to_vec2(tolua_S, 2, &destination))
+        if (!luaval_to_vec2(tolua_S, 2, &destination, "cc.DrawPrimitives.drawRect"))
             return 0;
 
         DrawPrimitives::drawRect(origin,destination);
@@ -4580,15 +4580,15 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidRect00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2  origin;
-        if (!luaval_to_vec2(tolua_S, 1, &origin))
+        if (!luaval_to_vec2(tolua_S, 1, &origin, "cc.DrawPrimitives.drawSolidRect"))
             return 0;
         
         cocos2d::Vec2  destination;
-        if (!luaval_to_vec2(tolua_S, 2, &destination))
+        if (!luaval_to_vec2(tolua_S, 2, &destination, "cc.DrawPrimitives.drawSolidRect"))
             return 0;
         
         Color4F color;
-        if (!luaval_to_color4f(tolua_S, 3, &color))
+        if (!luaval_to_color4f(tolua_S, 3, &color, "cc.DrawPrimitives.drawSolidRect"))
             return 0;
 
  
@@ -4638,7 +4638,7 @@ static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
                     goto tolua_lerror;
                 }
                 
-                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i]))
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawPrimitives.drawPoly"))
                 {
                     lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);
@@ -4692,7 +4692,7 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
                     goto tolua_lerror;
                 }
                 
-                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i]))
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawPrimitives.drawSolidPoly"))
                 {
                     lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);
@@ -4702,7 +4702,7 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
             }
             
             Color4F color;
-            if (!luaval_to_color4f(tolua_S, 3, &color))
+            if (!luaval_to_color4f(tolua_S, 3, &color, "cc.DrawPrimitives.drawSolidPoly"))
             {
                 CC_SAFE_DELETE_ARRAY(points);
                 return 0;
@@ -4742,7 +4742,7 @@ static int tolua_cocos2d_DrawPrimitives_drawCircle00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2 center;
-        if (!luaval_to_vec2(tolua_S, 1, &center))
+        if (!luaval_to_vec2(tolua_S, 1, &center, "cc.DrawPrimitives.drawCircle"))
             return 0;
         
         float radius = ((float)  tolua_tonumber(tolua_S,2,0));
@@ -4783,7 +4783,7 @@ static int tolua_cocos2d_DrawPrimitives_drawSolidCircle00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2 center;
-        if (!luaval_to_vec2(tolua_S, 1, &center))
+        if (!luaval_to_vec2(tolua_S, 1, &center, "cc.DrawPrimitives.drawSolidCircle"))
             return 0;
         float radius = ((float)  tolua_tonumber(tolua_S,2,0));
         float angle = ((float)  tolua_tonumber(tolua_S,3,0));
@@ -4820,15 +4820,15 @@ static int tolua_cocos2d_DrawPrimitives_drawQuadBezier00(lua_State* tolua_S)
 #endif
     {
         cocos2d::Vec2 origin;
-        if (!luaval_to_vec2(tolua_S, 1, &origin))
+        if (!luaval_to_vec2(tolua_S, 1, &origin, "cc.DrawPrimitives.drawQuadBezier"))
             return 0;
         
         cocos2d::Vec2 control;
-        if (!luaval_to_vec2(tolua_S, 2, &control))
+        if (!luaval_to_vec2(tolua_S, 2, &control, "cc.DrawPrimitives.drawQuadBezier"))
             return 0;
         
         cocos2d::Vec2 destination;
-        if (!luaval_to_vec2(tolua_S, 3, &destination))
+        if (!luaval_to_vec2(tolua_S, 3, &destination, "cc.DrawPrimitives.drawQuadBezier"))
             return 0;
         
         unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
@@ -4863,19 +4863,19 @@ static int tolua_cocos2d_DrawPrimitives_drawCubicBezier00(lua_State* tolua_S)
     {
         
         cocos2d::Vec2 origin;
-        if (!luaval_to_vec2(tolua_S, 1, &origin))
+        if (!luaval_to_vec2(tolua_S, 1, &origin, "cc.DrawPrimitives.drawCubicBezier"))
             return 0;
         
         cocos2d::Vec2 control1;
-        if (!luaval_to_vec2(tolua_S, 2, &control1))
+        if (!luaval_to_vec2(tolua_S, 2, &control1, "cc.DrawPrimitives.drawCubicBezier"))
             return 0;
         
         cocos2d::Vec2 control2;
-        if (!luaval_to_vec2(tolua_S, 3, &control2))
+        if (!luaval_to_vec2(tolua_S, 3, &control2, "cc.DrawPrimitives.drawCubicBezier"))
             return 0;
         
         cocos2d::Vec2 destination;
-        if (!luaval_to_vec2(tolua_S, 4, &destination))
+        if (!luaval_to_vec2(tolua_S, 4, &destination, "cc.DrawPrimitives.drawCubicBezier"))
             return 0;
         
         unsigned int segments = ((unsigned int)  tolua_tonumber(tolua_S,5,0));
@@ -4907,7 +4907,7 @@ int tolua_cocos2d_DrawPrimitives_drawCatmullRom00(lua_State* tolua_S)
     {
         int num = 0;
         cocos2d::Vec2 *arr = NULL;
-        if (!luaval_to_array_of_vec2(tolua_S, 1, &arr, &num))
+        if (!luaval_to_array_of_vec2(tolua_S, 1, &arr, &num, "cc.DrawPrimitives.drawCatmullRom"))
             return 0;
         
         
@@ -4954,7 +4954,7 @@ int tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(lua_State* tolua_S)
     {
         int num = 0;
         cocos2d::Vec2 *arr = NULL;
-        if (!luaval_to_array_of_vec2(tolua_S, 1, &arr, &num))
+        if (!luaval_to_array_of_vec2(tolua_S, 1, &arr, &num, "cc.DrawPrimitives.drawCatmullRom"))
             return 0;
         
         

@@ -55,6 +55,7 @@ cocos2d.cpp \
 2d/CCParticleSystem.cpp \
 2d/CCParticleSystemQuad.cpp \
 2d/CCProgressTimer.cpp \
+2d/CCProtectedNode.cpp \
 2d/CCRenderTexture.cpp \
 2d/CCScene.cpp \
 2d/CCSprite.cpp \
@@ -82,7 +83,7 @@ cocos2d.cpp \
 3d/CCSprite3DMaterial.cpp \
 3d/CCObjLoader.cpp \
 3d/CCSprite3D.cpp \
-platform/CCGLViewProtocol.cpp \
+platform/CCGLView.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
@@ -140,6 +141,7 @@ base/ccTypes.cpp \
 base/ccUTF8.cpp \
 base/ccUtils.cpp \
 base/etc1.cpp \
+base/pvr.cpp \
 base/s3tc.cpp \
 base/CCController.cpp \
 base/CCController-android.cpp \
@@ -206,12 +208,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/ConvertUTF \
                     $(LOCAL_PATH)/../external/nslog
 
-
-LOCAL_LDLIBS := -lGLESv2 \
-                -llog \
-                -lz \
-                -landroid
-
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -lz \
@@ -220,6 +216,10 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
@@ -232,3 +232,7 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,platform/android)
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,png/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)

@@ -71,7 +71,7 @@ enum {
     kNodeOnCleanup
 };
 
-bool nodeComparisonLess(Node* n1, Node* n2);
+bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -1433,6 +1433,10 @@ public:
      */
     virtual bool removeComponent(const std::string& name);
 
+    /** 
+     *   removes a component by its pointer      
+     */
+    virtual bool removeComponent(Component *component);
     /**
      *   removes all components
      */

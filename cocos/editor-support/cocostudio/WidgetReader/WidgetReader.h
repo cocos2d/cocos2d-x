@@ -29,14 +29,14 @@
 #include "cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
 #include "ui/UIWidget.h"
-
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
     class CocoLoader;
     struct stExpCocoNode;
     
-    class WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
+    class CC_STUDIO_DLL WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
     {
     public:
         DECLARE_CLASS_WIDGET_READER_INFO

@@ -173,49 +173,49 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication.h"
-    #include "platform/ios/CCGLView.h"
+    #include "platform/ios/CCGLViewImpl.h"
     #include "platform/ios/CCGL.h"
     #include "platform/ios/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "platform/android/CCApplication.h"
-    #include "platform/android/CCGLView.h"
+    #include "platform/android/CCGLViewImpl.h"
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
     #include "platform/blackberry/CCApplication.h"
-    #include "platform/blackberry/CCGLView.h"
+    #include "platform/blackberry/CCGLViewImpl.h"
     #include "platform/blackberry/CCGL.h"
     #include "platform/blackberry/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "platform/win32/CCApplication.h"
-    #include "platform/desktop/CCGLView.h"
+    #include "platform/desktop/CCGLViewImpl.h"
     #include "platform/win32/CCGL.h"
     #include "platform/win32/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     #include "platform/mac/CCApplication.h"
-    #include "platform/desktop/CCGLView.h"
+    #include "platform/desktop/CCGLViewImpl.h"
     #include "platform/mac/CCGL.h"
     #include "platform/mac/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     #include "platform/linux/CCApplication.h"
-    #include "platform/desktop/CCGLView.h"
+    #include "platform/desktop/CCGLViewImpl.h"
     #include "platform/linux/CCGL.h"
     #include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	#include "platform/winrt/CCApplication.h"
-	#include "platform/winrt/CCGLView.h"
+	#include "platform/winrt/CCGLViewImpl.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"
@@ -267,9 +267,6 @@ THE SOFTWARE.
 #include "3d/CCAnimate3D.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCSprite3DMaterial.h"
-
-// Audio
-#include "audio/include/SimpleAudioEngine.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

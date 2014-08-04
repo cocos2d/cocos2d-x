@@ -54,10 +54,10 @@ static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
     if (2 == argc)
     {
         GLenum src, dst;
-        if (!luaval_to_int32(tolua_S, 2, (int32_t*)&src))
+        if (!luaval_to_int32(tolua_S, 2, (int32_t*)&src, StringUtils::format("%s%s",className,":setBlendFunc").c_str()))
             return 0;
 
-        if (!luaval_to_int32(tolua_S, 3, (int32_t*)&dst))
+        if (!luaval_to_int32(tolua_S, 3, (int32_t*)&dst,StringUtils::format("%s%s",className,":setBlendFunc").c_str()))
             return 0;
 
         BlendFunc blendFunc = {src, dst};
@@ -338,11 +338,11 @@ static int lua_cocos2dx_spine_SkeletonAnimation_addAnimation(lua_State* tolua_S)
         const char* arg1;
         bool arg2;
         
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "sp.SkeletonAnimation:addAnimation");
         
-        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
+        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "sp.SkeletonAnimation:addAnimation"); arg1 = arg1_tmp.c_str();
         
-        ok &= luaval_to_boolean(tolua_S, 4,&arg2);
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "sp.SkeletonAnimation:addAnimation");
         if(!ok)
             return 0;
         cobj->addAnimation(arg0, arg1, arg2);
@@ -356,13 +356,13 @@ static int lua_cocos2dx_spine_SkeletonAnimation_addAnimation(lua_State* tolua_S)
         bool arg2;
         double arg3;
         
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "sp.SkeletonAnimation:addAnimation");
         
-        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
+        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "sp.SkeletonAnimation:addAnimation"); arg1 = arg1_tmp.c_str();
         
-        ok &= luaval_to_boolean(tolua_S, 4,&arg2);
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "sp.SkeletonAnimation:addAnimation");
         
-        ok &= luaval_to_number(tolua_S, 5,&arg3);
+        ok &= luaval_to_number(tolua_S, 5,&arg3, "sp.SkeletonAnimation:addAnimation");
         if(!ok)
             return 0;
         
@@ -413,11 +413,11 @@ static int lua_cocos2dx_spine_SkeletonAnimation_setAnimation(lua_State* tolua_S)
         const char* arg1;
         bool arg2;
         
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0);
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "sp.SkeletonAnimation:setAnimation");
         
-        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp); arg1 = arg1_tmp.c_str();
+        std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "sp.SkeletonAnimation:setAnimation"); arg1 = arg1_tmp.c_str();
         
-        ok &= luaval_to_boolean(tolua_S, 4,&arg2);
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "sp.SkeletonAnimation:setAnimation");
         if(!ok)
             return 0;
         

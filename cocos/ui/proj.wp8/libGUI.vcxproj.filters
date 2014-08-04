@@ -69,9 +69,6 @@
     <ClInclude Include="..\..\ui\UIWidget.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ui\CCProtectedNode.h">
-      <Filter>BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ui\UIVBox.h">
       <Filter>Layouts</Filter>
     </ClInclude>
@@ -86,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="..\UIDeprecated.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIScale9Sprite.h">
+      <Filter>BaseClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +143,6 @@
     <ClCompile Include="..\..\ui\UIWidget.cpp">
       <Filter>BaseClasses</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ui\CCProtectedNode.cpp">
-      <Filter>BaseClasses</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ui\UIVBox.cpp">
       <Filter>Layouts</Filter>
     </ClCompile>
@@ -160,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="..\UIDeprecated.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIScale9Sprite.cpp">
+      <Filter>BaseClasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

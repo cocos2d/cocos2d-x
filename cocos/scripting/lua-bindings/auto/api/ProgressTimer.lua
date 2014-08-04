@@ -27,7 +27,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] getType 
 -- @param self
--- @return ProgressTimer::Type#ProgressTimer::Type ret (return value: cc.ProgressTimer::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getSprite 
@@ -64,7 +64,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setType 
 -- @param self
--- @param #cc.ProgressTimer::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#ProgressTimer] create 

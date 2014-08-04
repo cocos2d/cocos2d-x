@@ -30,10 +30,8 @@ physics-nodes/CCPhysicsDebugNode.cpp \
 physics-nodes/CCPhysicsSprite.cpp
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
-LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_CXXFLAGS += -fexceptions
 
@@ -46,8 +44,5 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,.)
-$(call import-module,audio/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,Box2D)
-$(call import-module,websockets/prebuilt/android)
-

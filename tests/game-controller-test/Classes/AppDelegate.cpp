@@ -21,7 +21,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("Game Controller Test");
+        glview = GLViewImpl::create("Game Controller Test");
         director->setOpenGLView(glview);
     }
 
