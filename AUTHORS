@@ -946,6 +946,9 @@ Developers:
     dzl-ian
         Added getter and setter for TextColor for UIText
     
+    zii
+        Added utils::gettime().
+    
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
