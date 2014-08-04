@@ -69,8 +69,10 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
 
 if(WIN32)
-  ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
-
+  ADD_DEFINITIONS (-D_USRDLL -D_USEGUIDLL -D_USREXDLL -DIGNORE_EXPORT -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
+  if(BUILD_EDITOR_COCOSTUDIO)
+    ADD_DEFINITIONS (-D_USRSTUDIODLL)
+  endif(BUILD_EDITOR_COCOSTUDIO)
   if(MSVC)
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS 
 					-D_SCL_SECURE_NO_WARNINGS 
@@ -183,10 +185,15 @@ if(WIN32)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/sqlite3/libraries/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER}
   )
   endif()
 
@@ -207,11 +214,13 @@ else()
 
 endif()
 
-# chipmunk library
-add_subdirectory(external/chipmunk/src)
-
-# box2d library
-add_subdirectory(external/Box2D)
+if(USE_CHIPMUNK)
+  # chipmunk library
+  add_subdirectory(external/chipmunk/src)
+elseif(USE_BOX2D)
+  # box2d library
+  add_subdirectory(external/Box2D)
+endif()
 
 # unzip library
 add_subdirectory(external/unzip)
