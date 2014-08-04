@@ -116,26 +116,6 @@ protected:
     static GLint getGLSemanticBinding(VertexSemantic semantic);
 };
 
-class IndexData : public Ref
-{
-public:
-    static IndexData* create(IndexBuffer* buffer, int start, int count);
-    
-    IndexBuffer* getIndexBuffer() const { return _buffer; }
-    int getStart() const { return _start; }
-    int getCount() const { return _count; }
-    
-protected:
-    IndexData();
-    virtual ~IndexData();
-    
-    bool init(IndexBuffer* buffer, int start, int count);
-protected:
-    IndexBuffer* _buffer;
-    int _start;
-    int _count;
-};
-
 NS_CC_END
 
 #endif //__CC_VERTEX_INDEX_DATA_H__

@@ -41,25 +41,33 @@ enum class PrimitiveType
 class Primitive : public Ref
 {
 public:
-    static Primitive* create(VertexData* verts, IndexData* indices, PrimitiveType type);
+    static Primitive* create(VertexData* verts, IndexBuffer* indices, PrimitiveType type);
     
     VertexData* getVertexData();
     
-    IndexData* getIndexData();
+    IndexBuffer* getIndexData();
     
     PrimitiveType getType() const { return _type; }
     
     //called by rendering framework
     void draw();
+    
+    int getStart() const { return _start; }
+    int getCount() const { return _count; }
+    void setStart(int start) { _start = start; }
+    void setCount(int count) { _count = count; }
+    
 protected:
     Primitive();
     virtual ~Primitive();
     
-    bool init(VertexData* verts, IndexData* indices, PrimitiveType type);
+    bool init(VertexData* verts, IndexBuffer* indices, PrimitiveType type);
     
 protected:
     VertexData* _verts;
-    IndexData* _indices;
+    IndexBuffer* _indices;
+    int _start;
+    int _count;
     PrimitiveType _type;
 };
 
