@@ -153,40 +153,46 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         
         updateTiles(rect);
         updateIndexBuffer();
+        updatePrimitives();
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _indicesVertexZNumber.size())
+    if(_renderCommands.size() < _primitives.size())
     {
-        _renderCommands.resize(_indicesVertexZNumber.size());
+        _renderCommands.resize(_primitives.size());
     }
     
     int index = 0;
-    for(const auto& iter : _indicesVertexZNumber)
+//    for(const auto& iter : _indicesVertexZNumber)
+//    {
+//        auto& cmd = _renderCommands[index++];
+//        
+//        cmd.init(iter.first);
+//        cmd.func = CC_CALLBACK_0(TMXLayer::onDraw, this, _indicesVertexZOffsets[iter.first], iter.second);
+//        renderer->addCommand(&cmd);
+//    }
+    for(const auto& iter : _primitives)
     {
-        auto& cmd = _renderCommands[index++];
-        
-        cmd.init(iter.first);
-        cmd.func = CC_CALLBACK_0(TMXLayer::onDraw, this, _indicesVertexZOffsets[iter.first], iter.second);
-        renderer->addCommand(&cmd);
+        if(iter.second->getCount() > 0)
+        {
+            auto& cmd = _renderCommands[index++];
+            cmd.init(iter.first);
+            cmd.func = CC_CALLBACK_0(TMXLayer::onDraw, this, iter.second);
+            renderer->addCommand(&cmd);
+        }
     }
-    
 }
 
-void TMXLayer::onDraw(int offset, int count)
+void TMXLayer::onDraw(Primitive *primitive)
 {
     GL::bindTexture2D(_texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
     GL::bindVAO(0);
-    _vData->use();
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getVBO());
-    glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6 * sizeof(int)));
-    
+    primitive->draw();
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, count * 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, primitive->getCount() * 4);
 }
 
 void TMXLayer::updateTiles(const Rect& culledRect)
@@ -404,6 +410,29 @@ Mat4 TMXLayer::tileToNodeTransform()
         }
     }
     
+}
+
+void TMXLayer::updatePrimitives()
+{
+    for(const auto& iter : _indicesVertexZNumber)
+    {
+        int start = _indicesVertexZOffsets.at(iter.first);
+        
+        auto primitiveIter= _primitives.find(iter.first);
+        if(primitiveIter == _primitives.end())
+        {
+            auto primitive = Primitive::create(_vData, _indexBuffer, PrimitiveType::TRIANGLES);
+            primitive->setCount(iter.second * 6);
+            primitive->setStart(start * 6);
+            
+            _primitives.insert(iter.first, primitive);
+        }
+        else
+        {
+            primitiveIter->second->setCount(iter.second * 6);
+            primitiveIter->second->setStart(start * 6);
+        }
+    }
 }
 
 void TMXLayer::updateTotalQuads()

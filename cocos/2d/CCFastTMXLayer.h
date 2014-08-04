@@ -200,12 +200,12 @@ protected:
     //
     void updateTotalQuads();
     
-    void onDraw(int offset, int count);
-    
+    void onDraw(Primitive* primitive);
     inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
     
     void updateVertexBuffer();
     void updateIndexBuffer();
+    void updatePrimitives();
 protected:
     
     //! name of the layer
@@ -255,6 +255,8 @@ protected:
     VertexData* _vData;
     
     IndexBuffer* _indexBuffer;
+    
+    Map<int , Primitive*> _primitives;
     
 public:
     /** Possible orientations of the TMX map */
