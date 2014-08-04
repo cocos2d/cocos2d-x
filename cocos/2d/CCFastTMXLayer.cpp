@@ -122,8 +122,8 @@ TMXLayer::TMXLayer()
 , _dirty(true)
 , _quadsDirty(true)
 , _vertexBuffer(nullptr)
+, _indexBuffer(nullptr)
 {
-    _buffersVBO = 0;
 }
 
 TMXLayer::~TMXLayer()
@@ -132,10 +132,7 @@ TMXLayer::~TMXLayer()
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_DELETE_ARRAY(_tiles);
     CC_SAFE_RELEASE(_vertexBuffer);
-    if(glIsBuffer(_buffersVBO))
-    {
-        glDeleteBuffers(1, &_buffersVBO);
-    }
+    CC_SAFE_RELEASE(_indexBuffer);
     
 }
 
@@ -181,7 +178,7 @@ void TMXLayer::onDraw(int offset, int count)
     
     GL::bindVAO(0);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer->getVBO());
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getVBO());
     
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
@@ -300,13 +297,13 @@ void TMXLayer::updateVertexBuffer()
 
 void TMXLayer::updateIndexBuffer()
 {
-    if(!glIsBuffer(_buffersVBO))
+    if(nullptr == _indexBuffer)
     {
-        glGenBuffers(1, &_buffersVBO);
+        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_UINT_32, (int)_indices.size());
+        CC_SAFE_RETAIN(_indexBuffer);
     }
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.size(), &_indices[0], GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    _indexBuffer->updateIndices(&_indices[0], (int)_indices.size(), 0);
+    
 }
 
 // FastTMXLayer - setup Tiles

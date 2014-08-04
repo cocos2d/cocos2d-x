@@ -229,7 +229,7 @@ protected:
     /** container for sprite children. map<index, pair<sprite, gid> > */
     std::map<int, std::pair<Sprite*, int> > _spriteContainer;
 
-    GLuint _buffersVBO; //0: vertex, 1: indices
+    //GLuint _buffersVBO; //0: vertex, 1: indices
 
     Size _screenGridSize;
     Rect _screenGridRect;
@@ -251,6 +251,8 @@ protected:
     bool _dirty;
     
     VertexBuffer* _vertexBuffer;
+    
+    IndexBuffer* _indexBuffer;
     
 public:
     /** Possible orientations of the TMX map */
