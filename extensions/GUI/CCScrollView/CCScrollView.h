@@ -154,8 +154,8 @@ public:
      * @param maxScale max scale
      */
     void setMinMaxScale(float minScale, float maxScale) {
-    	setMinScale(minScale);
-    	setMinScale(maxScale);
+        setMinScale(minScale);
+        setMaxScale(maxScale);
     }
     /**
      * Set min scale
