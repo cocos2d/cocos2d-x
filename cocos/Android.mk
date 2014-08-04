@@ -206,7 +206,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/ConvertUTF \
                     $(LOCAL_PATH)/../external/nslog
-
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -lz \
@@ -219,6 +218,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
@@ -235,3 +235,4 @@ $(call import-module,jpeg/prebuilt/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
+$(call import-module,extensions)

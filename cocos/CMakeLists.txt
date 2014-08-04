@@ -91,6 +91,7 @@ set(COCOS_LINK
 endif()
 
 target_link_libraries(cocos2d
+  extensions
   chipmunk_static
   tinyxml2
   unzip
