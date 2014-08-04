@@ -252,6 +252,8 @@ protected:
     
     VertexBuffer* _vertexBuffer;
     
+    VertexData* _vData;
+    
     IndexBuffer* _indexBuffer;
     
 public:

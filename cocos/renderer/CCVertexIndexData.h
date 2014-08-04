@@ -64,12 +64,25 @@ enum class VertexType
 struct VertexStreamAttribute
 {
     VertexStreamAttribute()
-    : _offset(0),_semantic(VertexSemantic::UNKNOWN),_type(VertexType::UNKNOWN)
+    : _offset(0),_semantic(0),_type(0),_size(0), _normalize(false)
     {
     }
+
+    VertexStreamAttribute(int offset, int semantic, int type, int size)
+    : _offset(offset),_semantic(semantic),_type(type),_size(size), _normalize(false)
+    {
+    }
+    
+    VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
+    : _offset(offset),_semantic(semantic),_type(type),_size(size), _normalize(normalize)
+    {
+    }
+    
+    bool _normalize;
     int _offset;
-    VertexSemantic _semantic;
-    VertexType _type;
+    int _semantic;
+    int _type;
+    int _size;
 };
 
 class VertexData : public Ref
@@ -79,11 +92,11 @@ public:
     
     size_t getVertexStreamCount() const;
     bool setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream);
-    void removeStream(VertexSemantic semantic);
-    const VertexStreamAttribute* getStreamAttribute(VertexSemantic semantic) const;
-    VertexStreamAttribute* getStreamAttribute(VertexSemantic semantic);
+    void removeStream(int semantic);
+    const VertexStreamAttribute* getStreamAttribute(int semantic) const;
+    VertexStreamAttribute* getStreamAttribute(int semantic);
     
-    VertexBuffer* getStreamBuffer(VertexSemantic semantic) const;
+    VertexBuffer* getStreamBuffer(int semantic) const;
     
     void use();
 protected:
@@ -96,7 +109,7 @@ protected:
         VertexStreamAttribute _stream;
     };
     
-    std::map<VertexSemantic, BufferAttribute> _vertexStreams;
+    std::map<int, BufferAttribute> _vertexStreams;
 protected:
     static GLint getGLSize(VertexType type);
     static GLenum getGLType(VertexType type);

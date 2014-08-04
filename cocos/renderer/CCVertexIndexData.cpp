@@ -68,7 +68,7 @@ bool VertexData::setStream(VertexBuffer* buffer, const VertexStreamAttribute& st
     return true;
 }
 
-void VertexData::removeStream(VertexSemantic semantic)
+void VertexData::removeStream(int semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter != _vertexStreams.end())
@@ -78,21 +78,21 @@ void VertexData::removeStream(VertexSemantic semantic)
     }
 }
 
-const VertexStreamAttribute* VertexData::getStreamAttribute(VertexSemantic semantic) const
+const VertexStreamAttribute* VertexData::getStreamAttribute(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexStreamAttribute* VertexData::getStreamAttribute(VertexSemantic semantic)
+VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexBuffer* VertexData::getStreamBuffer(VertexSemantic semantic) const
+VertexBuffer* VertexData::getStreamBuffer(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
@@ -154,11 +154,10 @@ void VertexData::use()
 {
     for(auto& element : _vertexStreams)
     {
-        glEnableVertexAttribArray(getGLSemanticBinding(element.second._stream._semantic));
+        glEnableVertexAttribArray((GLint)element.second._stream._semantic);
         glBindBuffer(GL_ARRAY_BUFFER, element.second._buffer->getVBO());
-        glVertexAttribPointer(getGLSemanticBinding(element.second._stream._semantic),getGLSize(element.second._stream._type),
-                              getGLType(element.second._stream._type),false, element.second._buffer->getSizePerVertex(), (GLvoid*)element.second._stream._offset);
-        
+        glVertexAttribPointer(GLint(element.second._stream._semantic),element.second._stream._size,
+                              element.second._stream._type,element.second._stream._normalize, element.second._buffer->getSizePerVertex(), (GLvoid*)element.second._stream._offset);
     }
 }
 
