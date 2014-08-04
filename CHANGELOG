@@ -8,6 +8,7 @@ cocos2d-x-3.3  ??
     [NEW]           TextField: support utf8
 
     [FIX]           EditBox: font size is not scaled when glview is scaled on Mac OS X
+    [FIX]           EditBox: began/end events not work
     [FIX]           Label: can not set charmap after it is created
     [FIX]           Label: setTextColor does not have any effect on Mac OS X
     [FIX]           ParticleSystem: effect is wrong if scene scaled
