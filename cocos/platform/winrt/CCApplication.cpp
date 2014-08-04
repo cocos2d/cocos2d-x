@@ -75,7 +75,7 @@ int Application::run()
         return 0;
     }
 
-	GLView::sharedOpenGLView()->Run();
+	GLViewImpl::sharedOpenGLView()->Run();
 	return 0;
 }
 

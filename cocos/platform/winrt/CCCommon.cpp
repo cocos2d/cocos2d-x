@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCWinRTUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "platform/wp8/CCGLView.h"
+#include "platform/wp8/CCGLViewImpl.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)
@@ -50,7 +50,7 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
     // Show the message dialog
     msg->ShowAsync();
 #else
-    GLView::sharedOpenGLView()->ShowMessageBox(title, message);
+    GLViewImpl::sharedOpenGLView()->ShowMessageBox(title, message);
 #endif
 
 }
