@@ -35,10 +35,35 @@ bool AppDelegate::applicationDidFinishLaunching()
         register_assetsmanager_test_sample(L);
     }
     lua_pop(L, 1);
-
-    pEngine->executeScriptFile("DeprecatedEnum.lua");
-    pEngine->executeScriptFile("DeprecatedClass.lua");
-    pEngine->executeScriptFile("Deprecated.lua");
+    
+    pEngine->executeScriptFile("DeprecatedCocos2dClass");
+    pEngine->executeScriptFile("DeprecatedCocos2dEnum");
+    pEngine->executeScriptFile("DeprecatedCocos2dFunc");
+    
+    pEngine->executeScriptFile("DeprecatedCocosBuilderClass");
+    
+    pEngine->executeScriptFile("DeprecatedCocosDenshionClass");
+    pEngine->executeScriptFile("DeprecatedCocosDenshionFunc");
+    
+    pEngine->executeScriptFile("DeprecatedCocoStudioClass");
+    pEngine->executeScriptFile("DeprecatedCocoStudioFunc");
+    
+    pEngine->executeScriptFile("DeprecatedExtensionClass");
+    pEngine->executeScriptFile("DeprecatedExtensionEnum");
+    pEngine->executeScriptFile("DeprecatedExtensionFunc");
+    
+    pEngine->executeScriptFile("DeprecatedNetworkClass");
+    pEngine->executeScriptFile("DeprecatedNetworkEnum");
+    pEngine->executeScriptFile("DeprecatedNetworkFunc");
+    
+    pEngine->executeScriptFile("DeprecatedNetworkClass");
+    pEngine->executeScriptFile("DeprecatedNetworkEnum");
+    pEngine->executeScriptFile("DeprecatedNetworkFunc");
+    
+    pEngine->executeScriptFile("DeprecatedOpenglEnum");
+    
+    pEngine->executeScriptFile("DeprecatedUIEnum");
+    pEngine->executeScriptFile("DeprecatedUIFunc");
 
     pEngine->executeScriptFile("src/controller.lua");
 

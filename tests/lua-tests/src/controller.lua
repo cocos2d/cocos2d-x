@@ -2,7 +2,6 @@
 -- avoid memory leak
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
-	
 
 ----------------
 -- run
@@ -71,7 +70,6 @@ end
 
 addSearchPath("res/", screenSize.height)
 addSearchPath("", screenSize.height)
-
 
 require "src/mainMenu"
 

@@ -39,6 +39,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_pop(L, 1);//statck:...
 #endif
     
+    engine->executeScriptFile("DeprecatedCocos2dClass");
+    engine->executeScriptFile("DeprecatedCocos2dEnum");
+    engine->executeScriptFile("DeprecatedCocos2dFunc");
+    
     engine->executeString("require 'src/main.lua'");
 
     return true;
