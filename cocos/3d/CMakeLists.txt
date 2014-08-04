@@ -1,6 +1,6 @@
 set(COCOS_3D_SRC
   3d/CCSkeleton3D.cpp
-  3d/AttachNode.cpp
+  3d/CCAttachNode.cpp
   3d/CCSubMesh.cpp
   3d/CCSubMeshState.cpp
   3d/CCMesh.cpp
