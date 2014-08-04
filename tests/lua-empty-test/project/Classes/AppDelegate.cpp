@@ -27,27 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     lua_State* L = engine->getLuaStack()->getLuaState();
-    lua_getglobal(L, "_G");
-    if (lua_istable(L,-1))//stack:...,_G,
-    {
-        lua_module_register(L);
-    }
-    lua_pop(L, 1);//statck:...
-    
-    engine->executeScriptFile("DeprecatedCocos2dClass");
-    engine->executeScriptFile("DeprecatedCocos2dEnum");
-    engine->executeScriptFile("DeprecatedCocos2dFunc");
-    
-    engine->executeScriptFile("DeprecatedCocosDenshionClass");
-    engine->executeScriptFile("DeprecatedCocosDenshionFunc");
-    
-    engine->executeScriptFile("DeprecatedNetworkClass");
-    engine->executeScriptFile("DeprecatedNetworkEnum");
-    engine->executeScriptFile("DeprecatedNetworkFunc");
-    
-    engine->executeScriptFile("DeprecatedOpenglEnum");
-
-    
+    lua_module_register(L);
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
     engine->executeString("require 'src/hello.lua'");

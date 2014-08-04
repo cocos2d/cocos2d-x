@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_LUA_COCOS2DX_COCOSBUILDER_H
-#define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_LUA_COCOS2DX_COCOSBUILDER_H
+#ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOSDENSHION_LUA_COCOS2DX_COCOSDENSHION_MANUAL_H__
+#define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOSDENSHION_LUA_COCOS2DX_COCOSDENSHION_MANUAL_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,13 +32,7 @@ extern "C" {
 }
 #endif
 
-TOLUA_API int register_all_cocos2dx_cocosbuilder_manual(lua_State* tolua_S);
-
-class RegisterLuaCocosBuilderModule
-{
-public:
-    RegisterLuaCocosBuilderModule();
-};
+TOLUA_API int  register_cocosdenshion_module(lua_State* L);
 
 
-#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_LUA_COCOS2DX_COCOSBUILDER_H
+#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOSDENSHION_LUA_COCOS2DX_COCOSDENSHION_MANUAL_H__

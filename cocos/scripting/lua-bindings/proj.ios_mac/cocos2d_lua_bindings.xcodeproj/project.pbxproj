@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15427D44198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15427D42198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp */; };
+		15427D45198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15427D42198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp */; };
+		15427D46198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 15427D43198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h */; };
+		15427D47198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 15427D43198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h */; };
 		155CA35F1988E261006E0A08 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCA22D18CD8F7D0087CE3A /* usocket.c */; };
 		155CA3601988E26D006E0A08 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABCA22E18CD8F7D0087CE3A /* usocket.h */; };
 		15AC69D519876E9300D17520 /* lua_cocos2dx_physics_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AACE75218BC45C200215002 /* lua_cocos2dx_physics_auto.cpp */; };
@@ -253,6 +257,8 @@
 		1503FAA018DA8A1C00F6518C /* io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
 		1540AF55193EC30500717D8E /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		1540AF56193EC30500717D8E /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
+		15427D42198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_cocosdenshion_manual.cpp; sourceTree = "<group>"; };
+		15427D43198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_cocosdenshion_manual.h; sourceTree = "<group>"; };
 		155CA3431988C494006E0A08 /* libluaextension iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluaextension iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15622967197780DE009C9067 /* lua_cocos2dx_experimental_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_experimental_auto.cpp; sourceTree = "<group>"; };
 		15622968197780DE009C9067 /* lua_cocos2dx_experimental_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_experimental_auto.hpp; sourceTree = "<group>"; };
@@ -531,6 +537,15 @@
 			path = ../../../../external/xxtea;
 			sourceTree = "<group>";
 		};
+		15427D41198F73F700DC375D /* cocosdenshion */ = {
+			isa = PBXGroup;
+			children = (
+				15427D42198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp */,
+				15427D43198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h */,
+			);
+			path = cocosdenshion;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -690,6 +705,7 @@
 		1AACE75B18BC45C200215002 /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				15427D41198F73F700DC375D /* cocosdenshion */,
 				15EFA400198B2AB2000C57D3 /* cocostudio */,
 				15C1BCF11986526C00A46ACC /* cocosbuilder */,
 				15C1BCFD1986526C00A46ACC /* extension */,
@@ -874,6 +890,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15427D46198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h in Headers */,
 				15C1BF6B19865AC200A46ACC /* lua_cocos2dx_cocosdenshion_auto.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1036,6 +1053,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15427D47198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.h in Headers */,
 				15EFA59D198B2D69000C57D3 /* lua_cocos2dx_cocosdenshion_auto.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1422,6 +1440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15C1BF6A19865AAB00A46ACC /* lua_cocos2dx_cocosdenshion_auto.cpp in Sources */,
+				15427D44198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1583,6 +1602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15EFA59C198B2D5F000C57D3 /* lua_cocos2dx_cocosdenshion_auto.cpp in Sources */,
+				15427D45198F73F700DC375D /* lua_cocos2dx_cocosdenshion_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

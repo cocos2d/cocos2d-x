@@ -117,6 +117,7 @@
 		15427D3A198F6B4F00DC375D /* DeprecatedNetworkEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15427CFF198F55E000DC375D /* DeprecatedNetworkEnum.lua */; };
 		15427D3B198F6B5300DC375D /* DeprecatedNetworkFunc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15427D00198F55E000DC375D /* DeprecatedNetworkFunc.lua */; };
 		15427D3C198F6B5400DC375D /* DeprecatedNetworkFunc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15427D00198F55E000DC375D /* DeprecatedNetworkFunc.lua */; };
+		15427D49198F7F4C00DC375D /* ControllerConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15427D48198F7F4C00DC375D /* ControllerConstants.lua */; };
 		156229331973D400009C9067 /* bitExtend.lua in Resources */ = {isa = PBXBuildFile; fileRef = 156229321973D400009C9067 /* bitExtend.lua */; };
 		156229341973D400009C9067 /* bitExtend.lua in Resources */ = {isa = PBXBuildFile; fileRef = 156229321973D400009C9067 /* bitExtend.lua */; };
 		156EAE071977D0BD00F53709 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
@@ -1886,6 +1887,7 @@
 		15427D02198F55E000DC375D /* DeprecatedUIFunc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedUIFunc.lua; path = "../cocos/scripting/lua-bindings/script/DeprecatedUIFunc.lua"; sourceTree = "<group>"; };
 		15427D03198F55E000DC375D /* ExtensionConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ExtensionConstants.lua; path = "../cocos/scripting/lua-bindings/script/ExtensionConstants.lua"; sourceTree = "<group>"; };
 		15427D04198F55E000DC375D /* NetworkConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = NetworkConstants.lua; path = "../cocos/scripting/lua-bindings/script/NetworkConstants.lua"; sourceTree = "<group>"; };
+		15427D48198F7F4C00DC375D /* ControllerConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ControllerConstants.lua; path = "../cocos/scripting/lua-bindings/script/ControllerConstants.lua"; sourceTree = "<group>"; };
 		156229321973D400009C9067 /* bitExtend.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bitExtend.lua; path = "../cocos/scripting/lua-bindings/script/bitExtend.lua"; sourceTree = "<group>"; };
 		15AECE1E195D0EC500907DB0 /* experimentalConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = experimentalConstants.lua; path = "../cocos/scripting/lua-bindings/script/experimentalConstants.lua"; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
@@ -6070,6 +6072,7 @@
 		1ABCA36418CD9E060087CE3A /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				15427D48198F7F4C00DC375D /* ControllerConstants.lua */,
 				15427CF3198F55E000DC375D /* DeprecatedCocos2dClass.lua */,
 				15427CF4198F55E000DC375D /* DeprecatedCocos2dEnum.lua */,
 				15427CF5198F55E000DC375D /* DeprecatedCocos2dFunc.lua */,
@@ -8491,6 +8494,7 @@
 				15CBA9AF196EE80B005877BB /* fonts in Resources */,
 				15CBA9B0196EE80B005877BB /* ipad in Resources */,
 				15427D31198F6B3500DC375D /* DeprecatedCocos2dFunc.lua in Resources */,
+				15427D49198F7F4C00DC375D /* ControllerConstants.lua in Resources */,
 				15CBA9B1196EE80B005877BB /* ipadhd in Resources */,
 				15CBA9B2196EE80B005877BB /* iphone in Resources */,
 				15CBA9F2196F8718005877BB /* extern.lua in Resources */,

@@ -470,7 +470,13 @@ int register_all_cocos2dx_spine_manual(lua_State* L)
 
 int register_spine_module(lua_State* L)
 {
-    register_all_cocos2dx_spine(L);
-    register_all_cocos2dx_spine_manual(L);
+    lua_getglobal(L, "_G");
+    if (lua_istable(L,-1))//stack:...,_G,
+    {
+        register_all_cocos2dx_spine(L);
+        register_all_cocos2dx_spine_manual(L);
+    }
+    lua_pop(L, 1);
+
     return 1;
 }

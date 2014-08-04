@@ -8,7 +8,7 @@
 #include "spine/lua_cocos2dx_spine_manual.hpp"
 #include "network/lua_cocos2dx_network_manual.h"
 #include "cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h"
-#include "lua_cocos2dx_cocosdenshion_auto.hpp"
+
 
 
 int lua_module_register(lua_State* L)
@@ -19,7 +19,7 @@ int lua_module_register(lua_State* L)
     register_ui_moudle(L);
     register_spine_module(L);
     register_network_module(L);
-    register_all_cocos2dx_cocosdenshion(L);
+    register_cocosdenshion_module(L);
     return 1;
 }
 

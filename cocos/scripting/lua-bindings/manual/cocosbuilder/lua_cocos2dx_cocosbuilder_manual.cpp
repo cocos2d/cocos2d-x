@@ -458,7 +458,14 @@ int register_all_cocos2dx_cocosbuilder_manual(lua_State* tolua_S)
 
 int register_cocosbuilder_module(lua_State* tolua_S)
 {
-    register_all_cocos2dx_cocosbuilder(tolua_S);
-    register_all_cocos2dx_cocosbuilder_manual(tolua_S);
+    lua_getglobal(tolua_S, "_G");
+    if (lua_istable(tolua_S,-1))//stack:...,_G,
+    {
+        register_all_cocos2dx_cocosbuilder(tolua_S);
+        register_all_cocos2dx_cocosbuilder_manual(tolua_S);
+    }
+    lua_pop(tolua_S, 1);
+
+    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocosBuilderClass");
     return 1;
 }

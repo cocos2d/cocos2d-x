@@ -571,7 +571,15 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
 
 int register_cocostudio_module(lua_State* L)
 {
-    register_all_cocos2dx_studio(L);
-    register_all_cocos2dx_coco_studio_manual(L);
+    lua_getglobal(L, "_G");
+    if (lua_istable(L,-1))//stack:...,_G,
+    {
+        register_all_cocos2dx_studio(L);
+        register_all_cocos2dx_coco_studio_manual(L);
+    }
+    lua_pop(L, 1);
+
+    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocoStudioClass");
+    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocoStudioFunc");
     return 1;
 }
