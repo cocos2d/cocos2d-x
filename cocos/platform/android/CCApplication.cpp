@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCApplication.h"
 #include "base/CCDirector.h"
-#include "CCGLView.h"
 #include <android/log.h>
 #include <jni.h>
 #include <cstring>

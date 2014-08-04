@@ -120,6 +120,16 @@ public:
     
     /**build vertex buffer from renderdata*/
     void restore();
+    
+    /**to be deprecated, those functions have been moved to SubMesh*/
+    /** get primitive type*/
+    CC_DEPRECATED_ATTRIBUTE PrimitiveType getPrimitiveType() const { return _subMeshes.at(0)->getPrimitiveType(); }
+    /**get index count*/
+    CC_DEPRECATED_ATTRIBUTE ssize_t getIndexCount() const { return _subMeshes.at(0)->getIndexCount(); }
+    /**get index format*/
+    CC_DEPRECATED_ATTRIBUTE IndexFormat getIndexFormat() const { return _subMeshes.at(0)->getIndexFormat(); }
+    /**get index buffer*/
+    CC_DEPRECATED_ATTRIBUTE GLuint getIndexBuffer() const {return _subMeshes.at(0)->getIndexBuffer(); }
 
 CC_CONSTRUCTOR_ACCESS:
     

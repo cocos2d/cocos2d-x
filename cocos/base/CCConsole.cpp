@@ -61,7 +61,6 @@
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
-#include "CCGLView.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
 NS_CC_BEGIN

@@ -29,9 +29,6 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #include "CCEditBox.h"
-#define GLFW_EXPOSE_NATIVE_NSGL
-#define GLFW_EXPOSE_NATIVE_COCOA
-#include "glfw3native.h"
 
 
 #define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
@@ -49,7 +46,7 @@
 - (id) getNSWindow
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    return glfwGetCocoaWindow(glview->getWindow());
+    return glview->getCocoaWindow();
 }
 
 - (void)dealloc
@@ -287,7 +284,7 @@ void EditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 
 bool EditBoxImplMac::initWithSize(const Size& size)
 {
-    GLViewProtocol* eglView = Director::getInstance()->getOpenGLView();
+    GLView* eglView = Director::getInstance()->getOpenGLView();
 
     NSRect rect = NSMakeRect(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -437,7 +434,7 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Vec2& designCoord,
     NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
-    GLViewProtocol* eglView = Director::getInstance()->getOpenGLView();
+    GLView* eglView = Director::getInstance()->getOpenGLView();
 
     Vec2 visiblePos = Vec2(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     Vec2 screenGLPos = visiblePos + eglView->getViewPortRect().origin;

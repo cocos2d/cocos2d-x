@@ -87,7 +87,7 @@ cocos2d.cpp \
 3d/CCSprite3D.cpp \
 3d/CCSubMesh.cpp \
 3d/CCSubMeshState.cpp \
-platform/CCGLViewProtocol.cpp \
+platform/CCGLView.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \

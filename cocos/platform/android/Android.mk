@@ -10,7 +10,7 @@ LOCAL_SRC_FILES := \
 CCApplication.cpp \
 CCCommon.cpp \
 CCDevice.cpp \
-CCGLView.cpp \
+CCGLViewImpl.cpp \
 CCFileUtilsAndroid.cpp \
 javaactivity.cpp \
 jni/DPIJni.cpp \
