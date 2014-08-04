@@ -67,7 +67,7 @@ Primitive::~Primitive()
 
 bool Primitive::init(VertexData* verts, IndexBuffer* indices, PrimitiveType type)
 {
-    if(nullptr == verts || nullptr == indices) return false;
+    if( nullptr == verts ) return false;
     if(verts != _verts)
     {
         CC_SAFE_RELEASE(_verts);
