@@ -148,16 +148,6 @@ public:
     void setZoomScaleInDuration(float s, float dt);
 
     /**
-     * Set min/max scale
-     *
-     * @param minScale min scale
-     * @param maxScale max scale
-     */
-    void setMinMaxScale(float minScale, float maxScale) {
-        setMinScale(minScale);
-        setMaxScale(maxScale);
-    }
-    /**
      * Set min scale
      *
      * @param minScale min scale
