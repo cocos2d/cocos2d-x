@@ -82,7 +82,6 @@ namespace utils
     /** Get current exact time, accurate to nanoseconds.
     */
     double CC_DLL gettime();
-
 }
 
 NS_CC_END
