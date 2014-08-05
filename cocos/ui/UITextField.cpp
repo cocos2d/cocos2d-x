@@ -632,6 +632,7 @@ void TextField::setDeleteBackward(bool deleteBackward)
 
 void TextField::attachWithIMEEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
@@ -639,10 +640,12 @@ void TextField::attachWithIMEEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ATTACH_WITH_IME);
     }
+    this->release();
 }
 
 void TextField::detachWithIMEEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
@@ -650,10 +653,12 @@ void TextField::detachWithIMEEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::DETACH_WITH_IME);
     }
+    this->release();
 }
 
 void TextField::insertTextEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
@@ -661,10 +666,12 @@ void TextField::insertTextEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::INSERT_TEXT);
     }
+    this->release();
 }
 
 void TextField::deleteBackwardEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
@@ -672,6 +679,7 @@ void TextField::deleteBackwardEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::DELETE_BACKWARD);
     }
+    this->release();
 }
 
 void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)

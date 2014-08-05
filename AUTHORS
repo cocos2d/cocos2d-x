@@ -910,6 +910,7 @@ Developers:
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
         Fix video scale issue in iOS
+        Fix iOS VideoPlayer memory leak
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
@@ -942,6 +943,18 @@ Developers:
         
     reckhou
         Optimize FPS control on Android
+        
+    dzl-ian
+        Added getter and setter for TextColor for UIText
+    
+    zii
+        Added utils::gettime()
+        
+    takaken1994
+        Added function for setting min/max scale for ScrollView
+        
+    maltium 
+        Added 3D rotation support to RotateTo action
     
 Retired Core Developers:
     WenSheng Yang
