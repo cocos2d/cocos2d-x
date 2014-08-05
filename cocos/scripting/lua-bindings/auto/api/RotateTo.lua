@@ -7,6 +7,7 @@
 --------------------------------
 -- @overload self, float, float         
 -- @overload self, float, float, float         
+-- @overload self, float, vec3_table         
 -- @function [parent=#RotateTo] create
 -- @param self
 -- @param #float float
