@@ -952,6 +952,9 @@ Developers:
         
     takaken1994
         Added function for setting min/max scale for ScrollView
+        
+    maltium 
+        Added 3D rotation support to RotateTo action
     
 Retired Core Developers:
     WenSheng Yang
