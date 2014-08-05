@@ -99,6 +99,8 @@ private:
     std::stack<Mat4> _modelViewMatrixStack;
     std::stack<Mat4> _projectionMatrixStack;
     std::stack<Mat4> _textureMatrixStack;
+
+    float _alphaTestValue;
 protected:
     void initMatrixStack();
 public:
@@ -345,6 +347,12 @@ public:
 
     /** enables/disables OpenGL depth test */
     void setDepthTest(bool on);
+    
+    /** sets the alpha value used in the alpha test shader */
+    void setAlphaTestValue(float alpha);
+
+    /** gets the alpha value used in the alpha test shader */
+    float getAlphaTestValue();
 
     virtual void mainLoop() = 0;
 

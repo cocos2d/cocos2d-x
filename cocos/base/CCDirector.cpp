@@ -710,6 +710,16 @@ void Director::setDepthTest(bool on)
     CHECK_GL_ERROR_DEBUG();
 }
 
+void Director::setAlphaTestValue(float alpha)
+{
+    _alphaTestValue = alpha;
+}
+
+float Director::getAlphaTestValue()
+{
+    return _alphaTestValue;
+}
+
 static void GLToClipTransform(Mat4 *transformOut)
 {
     if(nullptr == transformOut) return;

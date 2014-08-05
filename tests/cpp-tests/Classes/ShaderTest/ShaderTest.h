@@ -182,4 +182,13 @@ public:
     virtual bool init();
 };
 
+class ShaderAlphaTest : public ShaderTestDemo
+{
+ public:
+  ShaderAlphaTest();
+  virtual std::string title() const override;
+  virtual std::string subtitle() const override;
+  virtual bool init();
+};
+
 #endif
