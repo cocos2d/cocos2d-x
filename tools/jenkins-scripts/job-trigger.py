@@ -76,7 +76,7 @@ def main():
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
   
-    r = requests.get(pr['url']+"/commits", proxies = proxyDict)
+    r = requests.get(pr['url']+"/commits", headers=Headers, proxies = proxyDict)
     commits = r.json()
     last_commit = commits[len(commits)-1]
     message = last_commit['commit']['message']
