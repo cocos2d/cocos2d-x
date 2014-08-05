@@ -131,6 +131,7 @@ static std::function<Layer*()> createFunctions[] =
 	CL(AnimationCacheFile),
 	CL(SpriteCullTest1),
 	CL(SpriteCullTest2),
+    CL(Sprite3DRotationTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -259,7 +260,7 @@ void Sprite1::addNewSpriteWithCoords(Vec2 p)
     else 
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -332,7 +333,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Vec2 p)
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction( RepeatForever::create(seq));
 }
@@ -389,19 +390,19 @@ SpriteColorOpacity::SpriteColorOpacity()
     
     auto action = FadeIn::create(2);
     auto action_back = action->reverse();
-    auto fade = RepeatForever::create( Sequence::create( action, action_back, NULL) );
+    auto fade = RepeatForever::create( Sequence::create( action, action_back, nullptr) );
     
     auto tintred = TintBy::create(2, 0, -255, -255);
     auto tintred_back = tintred->reverse();
-    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back, NULL) );
+    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back, nullptr) );
     
     auto tintgreen = TintBy::create(2, -255, 0, -255);
     auto tintgreen_back = tintgreen->reverse();
-    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back, NULL) );
+    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back, nullptr) );
     
     auto tintblue = TintBy::create(2, -255, -255, 0);
     auto tintblue_back = tintblue->reverse();
-    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back, NULL) );
+    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back, nullptr) );
     
     sprite5->runAction(red);
     sprite6->runAction(green);
@@ -480,19 +481,19 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
 
     auto action = FadeIn::create(2);
     auto action_back = action->reverse();
-    auto fade = RepeatForever::create( Sequence::create( action, action_back,NULL) );
+    auto fade = RepeatForever::create( Sequence::create( action, action_back,nullptr) );
 
     auto tintred = TintBy::create(2, 0, -255, -255);
     auto tintred_back = tintred->reverse();
-    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back,NULL) );
+    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back,nullptr) );
 
     auto tintgreen = TintBy::create(2, -255, 0, -255);
     auto tintgreen_back = tintgreen->reverse();
-    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back,NULL) );
+    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back,nullptr) );
 
     auto tintblue = TintBy::create(2, -255, -255, 0);
     auto tintblue_back = tintblue->reverse();
-    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back,NULL) );
+    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back,nullptr) );
     
     
     sprite5->runAction(red);
@@ -1226,12 +1227,12 @@ Sprite6::Sprite6()
 
     // SpriteBatchNode actions
     auto rotate_back = rotate->reverse();
-    auto rotate_seq = Sequence::create(rotate, rotate_back, NULL);
+    auto rotate_seq = Sequence::create(rotate, rotate_back, nullptr);
     auto rotate_forever = RepeatForever::create(rotate_seq);
     
     auto scale = ScaleBy::create(5, 1.5f);
     auto scale_back = scale->reverse();
-    auto scale_seq = Sequence::create( scale, scale_back, NULL);
+    auto scale_seq = Sequence::create( scale, scale_back, nullptr);
     auto scale_forever = RepeatForever::create(scale_seq);
 
     float step = s.width/4;
@@ -1368,7 +1369,7 @@ SpriteAliased::SpriteAliased()
     
     auto scale = ScaleBy::create(2, 5);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create( scale, scale_back, NULL);
+    auto seq = Sequence::create( scale, scale_back, nullptr);
     auto repeat = RepeatForever::create(seq);
     
     auto repeat2 = repeat->clone();
@@ -1433,7 +1434,7 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     
     auto scale = ScaleBy::create(2, 5);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create( scale, scale_back, NULL);
+    auto seq = Sequence::create( scale, scale_back, nullptr);
     auto repeat = RepeatForever::create(seq);
     
     auto repeat2 = repeat->clone();
@@ -1532,7 +1533,7 @@ void SpriteNewTexture::addNewSprite()
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -1637,7 +1638,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     else 
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -2094,7 +2095,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         addChild(sprite, 0);
@@ -2176,7 +2177,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
 
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale) );
         
         spritesheet->addChild(sprite, i);
@@ -2244,7 +2245,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 								  FlipX::create(true),
 								  animate->clone(),
 								  FlipX::create(false),
-								  NULL);
+								  nullptr);
     
     sprite->runAction(RepeatForever::create( seq ) );
 }
@@ -2405,8 +2406,8 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite2->runAction( RepeatForever::create(seq2) );
     
     sprite1->runAction( RepeatForever::create(action_rot));
-    sprite1->runAction( RepeatForever::create(Sequence::create(action, action_back,NULL)) );
-    sprite1->runAction( RepeatForever::create(Sequence::create(action_s, action_s_back,NULL)) );
+    sprite1->runAction( RepeatForever::create(Sequence::create(action, action_back,nullptr)) );
+    sprite1->runAction( RepeatForever::create(Sequence::create(action_s, action_s_back,nullptr)) );
 
 }
 
@@ -3214,7 +3215,7 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
             sprite->setScale(-1.0f);
         }
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         auto child1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
@@ -3273,7 +3274,7 @@ SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
             sprite->setScale(-1.0f);
         }
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         auto child1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
@@ -3314,7 +3315,7 @@ SpriteNilTexture::SpriteNilTexture()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    Sprite* sprite = NULL;
+    Sprite* sprite = nullptr;
     
     // TEST: If no texture is given, then Opacity + Color should work.
 
@@ -3514,7 +3515,7 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     // Actions
     auto scale = ScaleBy::create(2, 0.5);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create(scale, scale_back, NULL);
+    auto seq = Sequence::create(scale, scale_back, nullptr);
 
     auto seq_copy = seq->clone();
 
@@ -3610,7 +3611,7 @@ AnimationCacheTest::AnimationCacheTest()
     auto animG = Animate::create(dance_grey);
     auto animB = Animate::create(dance_blue);
 
-    auto seq = Sequence::create(animN, animG, animB, NULL);
+    auto seq = Sequence::create(animN, animG, animB, nullptr);
 
     // create an sprite without texture
     auto grossini = Sprite::create();
@@ -3666,7 +3667,7 @@ AnimationCacheFile::AnimationCacheFile()
     auto animG = Animate::create(dance_grey);
     auto animB = Animate::create(dance_blue);
 
-    auto seq = Sequence::create(animN, animG, animB, NULL);
+    auto seq = Sequence::create(animN, animG, animB, nullptr);
 
     // create an sprite without texture
     auto grossini = Sprite::create();
@@ -3798,7 +3799,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         addChild(sprite, 0);
@@ -3881,7 +3882,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         spritebatch->addChild(sprite, i);
@@ -3962,13 +3963,13 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         // Scale
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
 
         addChild(sprite, 0);
@@ -4051,13 +4052,13 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         // scale 
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
 
         spritebatch->addChild(sprite, i);
@@ -4136,7 +4137,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         auto flip = FlipY::create(true);
         auto flip_back = FlipY::create(false);
         auto delay = DelayTime::create(1);
-        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, NULL);
+        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, nullptr);
         sprite->runAction(RepeatForever::create(seq));
 
         addChild(sprite, 0);
@@ -4218,7 +4219,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         auto flip = FlipY::create(true);
         auto flip_back = FlipY::create(false);
         auto delay = DelayTime::create(1);
-        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, NULL);
+        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, nullptr);
         sprite->runAction(RepeatForever::create(seq));
 
         spritebatch->addChild(sprite, i);
@@ -4502,7 +4503,7 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         addChild(sprite, 0);
@@ -4585,7 +4586,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         spritebatch->addChild(sprite, i);
@@ -4666,13 +4667,13 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         // Scale
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         addChild(sprite, i);
@@ -4754,13 +4755,13 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         // Scale
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         spritebatch->addChild(sprite, i);
@@ -4820,7 +4821,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
             sprite->setScale(-1.0f);
         }
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         auto child1 = Sprite::create("Images/grossini_dance_01.png");
@@ -4887,7 +4888,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
             sprite->setScale(-1.0f);
         }
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         auto child1 = Sprite::create("Images/grossini_dance_01.png");
@@ -4995,3 +4996,48 @@ std::string SpriteCullTest2::subtitle() const
 {
     return "Look at the GL calls";
 }
+
+//------------------------------------------------------------------
+//
+// Sprite 3D rotation test
+//
+//------------------------------------------------------------------
+Sprite3DRotationTest::Sprite3DRotationTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    
+    //Create reference sprite that's rotating based on there anchor point
+    auto s1 = Sprite::create("Images/grossini.png");
+    s1->setPosition(s.width/4, s.height/4 * 3);
+    s1->setAnchorPoint(Vec2(0, 0));
+    s1->runAction(RepeatForever::create(RotateBy::create(6, 360)));
+    addChild(s1);
+    
+    auto s2 = Sprite::create("Images/grossini.png");
+    s2->setPosition(s.width/4 * 3, s.height/4 * 3);
+    s2->runAction(RepeatForever::create(RotateBy::create(6, 360)));
+    addChild(s2);
+    
+    sprite1 = Sprite::create("Images/grossini.png");
+    sprite1->setPosition(s.width/4, s.height/4);
+    sprite1->setAnchorPoint(Vec2(0,0));
+    
+    addChild(sprite1);
+    
+    sprite2 = Sprite::create("Images/grossini.png");
+    sprite2->setPosition(s.width/4 * 3, s.height/4);
+    
+    addChild(sprite2);
+    
+    scheduleUpdate();
+}
+
+void Sprite3DRotationTest::update(float delta)
+{
+    rotation.y += 1;
+    sprite1->setRotation3D(rotation);
+    sprite2->setRotation3D(rotation);
+}
+
+
+

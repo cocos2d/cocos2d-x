@@ -24,12 +24,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/ccUtils.h"
+
+#include <stdlib.h>
+
 #include "base/CCDirector.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
-#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -160,7 +162,36 @@ std::vector<Node*> findChildren(const Node &node, const std::string &name)
 
     return vec;
 }
+
+#define MAX_ITOA_BUFFER_SIZE 256
+double atof(const char* str)
+{
+    if (str == nullptr)
+    {
+        return 0.0;
+    }
     
+    char buf[MAX_ITOA_BUFFER_SIZE];
+    strncpy(buf, str, MAX_ITOA_BUFFER_SIZE);
+    
+    // strip string, only remain 7 numbers after '.'
+    char* dot = strchr(buf, '.');
+    if (dot != nullptr && dot - buf + 8 <  MAX_ITOA_BUFFER_SIZE)
+    {
+        dot[8] = '\0';
+    }
+    
+    return ::atof(buf);
+}
+
+double gettime()
+{
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+
+    return (double)tv.tv_sec + (double)tv.tv_usec/1000000;
+}
+
 }
 
 NS_CC_END

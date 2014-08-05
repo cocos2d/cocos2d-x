@@ -30,11 +30,11 @@ THE SOFTWARE.
     #define EXPORT_DLL  _EXPORT_
 #elif defined(_WIN32)
     #if defined(_EXPORT_DLL_)
-    #define EXPORT_DLL//     __declspec(dllexport)
+    #define EXPORT_DLL      __declspec(dllexport)
     #elif defined(IGNORE_EXPORT)
     #define EXPORT_DLL
     #else         /* use a DLL library */
-    #define EXPORT_DLL//     __declspec(dllimport)
+    #define EXPORT_DLL     __declspec(dllimport)
     #endif
 #else
     #if defined(_SHARED_)

@@ -215,13 +215,17 @@ void ActionTimeline::startWithTarget(Node *target)
         [this, target](Node* child)
     {
         ActionTimelineData* data = dynamic_cast<ActionTimelineData*>(child->getUserObject());
-        int actionTag = data->getActionTag();
-        if(_timelineMap.find(actionTag) != _timelineMap.end())
+
+        if(data)
         {
-            auto timelines = this->_timelineMap[actionTag];
-            for (auto timeline : timelines)
+            int actionTag = data->getActionTag();
+            if(_timelineMap.find(actionTag) != _timelineMap.end())
             {
-                timeline->setNode(child);
+                auto timelines = this->_timelineMap[actionTag];
+                for (auto timeline : timelines)
+                {
+                    timeline->setNode(child);
+                }
             }
         }
     });
@@ -278,8 +282,8 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
 
 void ActionTimeline::gotoFrame(int frameIndex)
 {
-    int size = _timelineList.size();
-    for(int i = 0; i<size; i++)
+    ssize_t size = _timelineList.size();
+    for(ssize_t i = 0; i < size; i++)
     {      
         _timelineList.at(i)->gotoFrame(frameIndex);
     }
@@ -287,8 +291,8 @@ void ActionTimeline::gotoFrame(int frameIndex)
 
 void ActionTimeline::stepToFrame(int frameIndex)
 {
-    int size = _timelineList.size();
-    for(int i = 0; i<size; i++)
+    ssize_t size = _timelineList.size();
+    for(ssize_t i = 0; i < size; i++)
     {      
         _timelineList.at(i)->stepToFrame(frameIndex);
     }

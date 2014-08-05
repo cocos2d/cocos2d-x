@@ -46,14 +46,15 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     }
 
-    // turn on display FPS
-    director->setDisplayStats(true);
-
+   
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
    
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+
+    LuaStack* stack = engine->getLuaStack();
+    stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
     
     //register custom function
     //LuaStack* stack = engine->getLuaStack();

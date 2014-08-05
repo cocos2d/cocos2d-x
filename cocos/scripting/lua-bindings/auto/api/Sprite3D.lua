@@ -5,14 +5,21 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: setTexture(cc.Texture2D)
---          
--- overload function: setTexture(string)
---          
+-- @overload self, cc.Texture2D         
+-- @overload self, string         
 -- @function [parent=#Sprite3D] setTexture
 -- @param self
 -- @param #string str
 
+--------------------------------
+-- @function [parent=#Sprite3D] removeAllAttachNode 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Sprite3D] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendfunc
+        
 --------------------------------
 -- @function [parent=#Sprite3D] getMesh 
 -- @param self
@@ -24,15 +31,19 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- @function [parent=#Sprite3D] setBlendFunc 
+-- @function [parent=#Sprite3D] removeAttachNode 
 -- @param self
--- @param #cc.BlendFunc blendfunc
+-- @param #string str
         
 --------------------------------
--- overload function: create(string, string)
---          
--- overload function: create(string)
---          
+-- @function [parent=#Sprite3D] getAttachNode 
+-- @param self
+-- @param #string str
+-- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
+        
+--------------------------------
+-- @overload self, string, string         
+-- @overload self, string         
 -- @function [parent=#Sprite3D] create
 -- @param self
 -- @param #string str

@@ -71,7 +71,7 @@ enum {
     kNodeOnCleanup
 };
 
-bool nodeComparisonLess(Node* n1, Node* n2);
+bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -712,22 +712,30 @@ public:
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
+    /**
+     * Gets a child from the container with its name that can be cast to Type T
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node with the given name that can be cast to Type T
+    */
+    template <typename T>
+    inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
-     * @param name The name to search for
+     * @param name The name to search for, supports c++11 regular expression.
      * Search syntax options:
-     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
-     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
-     *       and be performed recursively across the entire node tree.
-     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     * `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
+     * `..`: The search should move up to the node's parent. Can only be placed at the end of string
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
      *
      * @code
-     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
-     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
-     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
+     * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
      * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
      * and whose parent is named `Abby`.
-     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * enumerateChildren("//Abby/Normal", ...): This searches recursively and returns any node whose name is `Normal` and whose
      * parent is named `Abby`.
      * @endcode
      *
@@ -1425,6 +1433,10 @@ public:
      */
     virtual bool removeComponent(const std::string& name);
 
+    /** 
+     *   removes a component by its pointer      
+     */
+    virtual bool removeComponent(Component *component);
     /**
      *   removes all components
      */
@@ -1463,7 +1475,16 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
-    
+
+    void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1602,6 +1623,11 @@ protected:
 
     static int s_globalOrderOfArrival;
     
+    std::function<void()> _onEnterCallback;
+    std::function<void()> _onExitCallback;
+    std::function<void()> _onEnterTransitionDidFinishCallback;
+    std::function<void()> _onExitTransitionDidStartCallback;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     

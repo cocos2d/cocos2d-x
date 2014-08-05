@@ -1106,41 +1106,40 @@ local function TMXOrthoFlipRunTimeTest()
     local  action = cc.ScaleBy:create(2, 0.5)
     map:runAction(action)
     local function flipIt(dt)
+        local map = ret:getChildByTag(kTagTileMap)
+        local layer = map:getLayer("Layer 0")
 
-        -- local map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
-        -- local layer = map:getLayer("Layer 0")
+        local tileCoord = cc.p(1, 10)
+        local flags = 0
+        local GID, flags = layer:getTileGIDAt(tileCoord, flags)
 
-        -- --blue diamond
-        -- local tileCoord = cc.p(1,10)
-        -- local flags = 0
-        -- local GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
-        -- -- Vertical
-        -- if( flags & kcc.TMXTileVerticalFlag )
-        -- flags &= ~kcc.TMXTileVerticalFlag
-        -- else
-        --     flags |= kcc.TMXTileVerticalFlag
-        --     layer:setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags)
+        if 0 ~= bit._and(flags, cc.TMX_TILE_VERTICAL_FLAG) then
+            flags = bit._and(flags, bit._not(cc.TMX_TILE_VERTICAL_FLAG))
+        else
+            flags = bit._or(flags, cc.TMX_TILE_VERTICAL_FLAG)
+        end
+        layer:setTileGID(GID, tileCoord, flags)
 
+        tileCoord = cc.p(1,8)    
+        GID, flags = layer:getTileGIDAt(tileCoord, flags)
+        if 0 ~= bit._and(flags, cc.TMX_TILE_VERTICAL_FLAG) then 
+            flags = bit._and(flags, bit._not(cc.TMX_TILE_VERTICAL_FLAG))
+        else
+            flags = bit._or(flags, cc.TMX_TILE_VERTICAL_FLAG)
+        end 
+        layer:setTileGID(GID ,tileCoord, flags)
 
-        --     tileCoord = cc.p(1,8)
-        --     GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
-        --     -- Vertical
-        --     if( flags & kcc.TMXTileVerticalFlag )
-        --     flags &= ~kcc.TMXTileVerticalFlag
-        --     else
-        --         flags |= kcc.TMXTileVerticalFlag
-        --         layer:setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags)
-
-
-        --         tileCoord = cc.p(2,8)
-        --         GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
-        --         -- Horizontal
-        --         if( flags & kcc.TMXTileHorizontalFlag )
-        --         flags &= ~kcc.TMXTileHorizontalFlag
-        --         else
-        --             flags |= kcc.TMXTileHorizontalFlag
-        --             layer:setTileGID(GID, tileCoord, (ccTMXTileFlags)flags)
+        tileCoord = cc.p(2,8)
+        GID, flags = layer:getTileGIDAt(tileCoord, flags)
+        -- Horizontal
+        if 0~= bit._and(flags, cc.TMX_TILE_HORIZONTAL_FLAG) then
+            flags = bit._and(flags, bit._not(cc.TMX_TILE_HORIZONTAL_FLAG))
+        else
+            flags = bit._or(flags, cc.TMX_TILE_HORIZONTAL_FLAG)
+        end 
+        layer:setTileGID(GID, tileCoord, flags) 
     end
+
     local schedulerEntry = nil
     local function onNodeEvent(event)
         if event == "enter" then
@@ -1149,6 +1148,9 @@ local function TMXOrthoFlipRunTimeTest()
             scheduler:unscheduleScriptEntry(schedulerEntry)
         end
     end
+
+    ret:registerScriptHandler(onNodeEvent)
+
     return ret
 end
 

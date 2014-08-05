@@ -131,7 +131,7 @@ void SceneEditorTestLayer::onEnter()
 	_loadtypelb = cocos2d::Label::createWithSystemFont(_loadtypeStr[0], "Arial", 12);
 	// #endif        
 	MenuItemLabel* itemlb = CCMenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestLayer::changeLoadTypeCallback, this));
-	Menu* loadtypemenu = CCMenu::create(itemlb, NULL);
+	Menu* loadtypemenu = CCMenu::create(itemlb, nullptr);
 	loadtypemenu->setPosition(Point(VisibleRect::rightTop().x -50,VisibleRect::rightTop().y -20));
 	addChild(loadtypemenu,100);
 
@@ -212,11 +212,11 @@ void SceneEditorTestLayer::changeLoadTypeCallback(cocos2d::Ref *pSender)
 	_loadtypelb->setString(_loadtypeStr[(int)_isCsbLoad]);
 	loadFileChangeHelper(_filePath);
 	
-	if(_rootNode != NULL)
+	if(_rootNode != nullptr)
 	{
 		this->removeChild(_rootNode);
 		_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-		if (_rootNode == NULL)
+		if (_rootNode == nullptr)
 		{
 			return ;
 		}
@@ -277,9 +277,10 @@ cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
 {
     _filePath = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+    ActionManagerEx::getInstance()->playActionByName("startMenu_1.json", "Animation1");
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	defaultPlay();
     return _rootNode;
@@ -329,9 +330,9 @@ cocos2d::Node* SpriteComponentTest::createGameScene()
 {
 	_filePath = "scenetest/SpriteComponentTest/SpriteComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	defaultPlay();
@@ -391,9 +392,9 @@ cocos2d::Node* ArmatureComponentTest::createGameScene()
 {
 	_filePath = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	defaultPlay();
     return _rootNode;
@@ -447,9 +448,9 @@ cocos2d::Node* UIComponentTest::createGameScene()
 {
 	_filePath = "scenetest/UIComponentTest/UIComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	defaultPlay();
     
@@ -522,9 +523,9 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 {
 	_filePath = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
     defaultPlay();
     return _rootNode;
@@ -541,9 +542,9 @@ void TmxMapComponentTest::defaultPlay()
 	ActionInterval *rotateToBack = CCRotateTo::create(2, 0);
 	ActionInterval *actionToBack = CCSkewTo::create(2, 0, 0);
 
-	tmxMap->getNode()->runAction(CCSequence::create(actionTo, actionToBack, NULL));
-	tmxMap->getNode()->runAction(CCSequence::create(rotateTo, rotateToBack, NULL));
-	tmxMap->getNode()->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, NULL));
+	tmxMap->getNode()->runAction(CCSequence::create(actionTo, actionToBack, nullptr));
+	tmxMap->getNode()->runAction(CCSequence::create(rotateTo, rotateToBack, nullptr));
+	tmxMap->getNode()->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, nullptr));
 }
 
 ParticleComponentTest::ParticleComponentTest()
@@ -584,9 +585,9 @@ cocos2d::Node* ParticleComponentTest::createGameScene()
 {
 	_filePath = "scenetest/ParticleComponentTest/ParticleComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	defaultPlay();
     return _rootNode;
@@ -596,7 +597,7 @@ void ParticleComponentTest::defaultPlay()
 {
 	ComRender* Particle = static_cast<ComRender*>(_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
 	ActionInterval*  jump = CCJumpBy::create(5, Point(-500,0), 50, 4);
-	FiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), NULL);
+	FiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), nullptr);
 	Particle->getNode()->runAction(action);
 }
 
@@ -639,9 +640,9 @@ cocos2d::Node* EffectComponentTest::createGameScene()
 {
 	_filePath = "scenetest/EffectComponentTest/EffectComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
     defaultPlay();  
 	return _rootNode;
@@ -706,9 +707,9 @@ cocos2d::Node* BackgroundComponentTest::createGameScene()
 {
 	_filePath = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	defaultPlay();
     return _rootNode;
@@ -775,9 +776,9 @@ cocos2d::Node* AttributeComponentTest::createGameScene()
 {
 	_filePath = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
     return _rootNode;
 }
@@ -820,7 +821,6 @@ void TriggerTest::onEnter()
     listener->onTouchCancelled = CC_CALLBACK_2(SceneEditorTestLayer::onTouchCancelled, this);
     dispatcher->addEventListenerWithFixedPriority(listener, 1);
     _touchListener = listener;
-    sendEvent(TRIGGEREVENT_ENTERSCENE);
 }
 
 
@@ -869,9 +869,9 @@ cocos2d::Node* TriggerTest::createGameScene()
 {
 	_filePath = "scenetest/TriggerTest/TriggerTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == NULL)
+	if (_rootNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
     
 	defaultPlay();
@@ -879,4 +879,5 @@ cocos2d::Node* TriggerTest::createGameScene()
 }
 void TriggerTest::defaultPlay()
 {
+    sendEvent(TRIGGEREVENT_ENTERSCENE);
 }

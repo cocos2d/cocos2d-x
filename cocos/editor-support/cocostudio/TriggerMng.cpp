@@ -111,11 +111,11 @@ void TriggerMng::parse(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCoc
     CCLOG("%s", triggerMngVersion());
     
     int count = pCocoNode[13].GetChildNum();
-    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray();
+    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray(pCocoLoader);
 
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
-    bool useBindings = engine != NULL;
+    bool useBindings = engine != nullptr;
     
     if (useBindings)
     {
@@ -191,7 +191,7 @@ bool TriggerMng::isEmpty(void) const
 }
 
     
-    void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
 {
     int count = pCocoNode[13].GetChildNum();
     int length = 0;
@@ -200,7 +200,7 @@ bool TriggerMng::isEmpty(void) const
     int extent = 0;
     int border = 0;
     std::string key0;
-    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray();
+    stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray(pCocoLoader);
     
     document.SetArray();
     
@@ -210,31 +210,31 @@ bool TriggerMng::isEmpty(void) const
         rapidjson::Value vElemItem(rapidjson::kObjectType);
         
         border = pTriggersArray[i0].GetChildNum();
-        stExpCocoNode *pTriggerArray = pTriggersArray[i0].GetChildArray();
+        stExpCocoNode *pTriggerArray = pTriggersArray[i0].GetChildArray(pCocoLoader);
         for (int i1 = 0; i1 < border; ++i1)
         {
             std::string key1 = pTriggerArray[i1].GetName(pCocoLoader);
-            const char *str1 = pTriggerArray[i1].GetValue();
+            const char *str1 = pTriggerArray[i1].GetValue(pCocoLoader);
             
             if (key1.compare("actions") == 0)
             {
                 rapidjson::Value actionsItem(rapidjson::kArrayType);
                 
                 length = pTriggerArray[i1].GetChildNum();
-                stExpCocoNode *pActionsArray = pTriggerArray[i1].GetChildArray();
+                stExpCocoNode *pActionsArray = pTriggerArray[i1].GetChildArray(pCocoLoader);
                 for (int i2 = 0; i2 < length; ++i2)
                 {
                     rapidjson::Value action(rapidjson::kObjectType);
                     
                     num = pActionsArray[i2].GetChildNum();
-                    stExpCocoNode *pActionArray = pActionsArray[i2].GetChildArray();
+                    stExpCocoNode *pActionArray = pActionsArray[i2].GetChildArray(pCocoLoader);
                     for (int i3 = 0; i3 < num; ++i3)
                     {
                         std::string key2 = pActionArray[i3].GetName(pCocoLoader);
-                        const char *str2 = pActionArray[i3].GetValue();
+                        const char *str2 = pActionArray[i3].GetValue(pCocoLoader);
                         if (key2.compare("classname") == 0)
                         {
-                            if (str2 != NULL)
+                            if (str2 != nullptr)
                             {
                                 action.AddMember("classname", str2, allocator);
                             }
@@ -243,34 +243,34 @@ bool TriggerMng::isEmpty(void) const
                         {
                             rapidjson::Value dataitems(rapidjson::kArrayType);
                             size = pActionArray[i3].GetChildNum();
-                            stExpCocoNode *pDataItemsArray = pActionArray[i3].GetChildArray();
+                            stExpCocoNode *pDataItemsArray = pActionArray[i3].GetChildArray(pCocoLoader);
                             for (int i4 = 0; i4 < size; ++i4)
                             {
                                 rapidjson::Value dataitem(rapidjson::kObjectType);
                                 extent = pDataItemsArray[i4].GetChildNum();
-                                stExpCocoNode *pDataItemArray = pDataItemsArray[i4].GetChildArray();
+                                stExpCocoNode *pDataItemArray = pDataItemsArray[i4].GetChildArray(pCocoLoader);
                                 for (int i5 = 0; i5 < extent; ++i5)
                                 {
                                     std::string key3 = pDataItemArray[i5].GetName(pCocoLoader);
-                                    const char *str3 = pDataItemArray[i5].GetValue();
+                                    const char *str3 = pDataItemArray[i5].GetValue(pCocoLoader);
                                     if (key3.compare("key") == 0)
                                     {
-                                        if (str3 != NULL)
+                                        if (str3 != nullptr)
                                         {
                                             dataitem.AddMember("key", str3, allocator);
                                         }
                                     }
                                     else
                                     {
-                                        rapidjson::Type type = pDataItemArray[i4].GetType(pCocoLoader);
+                                        rapidjson::Type type = pDataItemArray[i5].GetType(pCocoLoader);
                                         if (type == rapidjson::kStringType)
                                         {
                                             dataitem.AddMember("value", str3, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str3);
-                                            float fV = atof(str3);
+                                            float fV = utils::atof(str3);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -297,20 +297,20 @@ bool TriggerMng::isEmpty(void) const
                 rapidjson::Value condsItem(rapidjson::kArrayType);
                 
                 length = pTriggerArray[i1].GetChildNum();
-                stExpCocoNode *pConditionsArray = pTriggerArray[i1].GetChildArray();
+                stExpCocoNode *pConditionsArray = pTriggerArray[i1].GetChildArray(pCocoLoader);
                 for (int i6 = 0; i6 < length; ++i6)
                 {
                     rapidjson::Value cond(rapidjson::kObjectType);
                     
                     num = pConditionsArray[i6].GetChildNum();
-                    stExpCocoNode *pConditionArray = pConditionsArray[i6].GetChildArray();
+                    stExpCocoNode *pConditionArray = pConditionsArray[i6].GetChildArray(pCocoLoader);
                     for (int i7 = 0; i7 < num; ++i7)
                     {
                         std::string key4 = pConditionArray[i7].GetName(pCocoLoader);
-                        const char *str4 = pConditionArray[i7].GetValue();
+                        const char *str4 = pConditionArray[i7].GetValue(pCocoLoader);
                         if (key4.compare("classname") == 0)
                         {
-                            if (str4 != NULL)
+                            if (str4 != nullptr)
                             {
                                 cond.AddMember("classname", str4, allocator);
                             }
@@ -319,19 +319,19 @@ bool TriggerMng::isEmpty(void) const
                         {
                             rapidjson::Value dataitems(rapidjson::kArrayType);
                             size = pConditionArray[i7].GetChildNum();
-                            stExpCocoNode *pDataItemsArray = pConditionArray[i7].GetChildArray();
+                            stExpCocoNode *pDataItemsArray = pConditionArray[i7].GetChildArray(pCocoLoader);
                             for (int i8 = 0; i8 < size; ++i8)
                             {
                                 rapidjson::Value dataitem(rapidjson::kObjectType);
                                 extent = pDataItemsArray[i8].GetChildNum();
-                                stExpCocoNode *pDataItemArray = pDataItemsArray[i8].GetChildArray();
+                                stExpCocoNode *pDataItemArray = pDataItemsArray[i8].GetChildArray(pCocoLoader);
                                 for (int i9 = 0; i9 < extent; ++i9)
                                 {
                                     std::string key5 = pDataItemArray[i9].GetName(pCocoLoader);
-                                    const char *str5 = pDataItemArray[i9].GetValue();
+                                    const char *str5 = pDataItemArray[i9].GetValue(pCocoLoader);
                                     if (key5.compare("key") == 0)
                                     {
-                                        if (str5 != NULL)
+                                        if (str5 != nullptr)
                                         {
                                             dataitem.AddMember("key", str5, allocator);
                                         }
@@ -343,10 +343,10 @@ bool TriggerMng::isEmpty(void) const
                                         {
                                             dataitem.AddMember("value", str5, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str5);
-                                            float fV = atof(str5);
+                                            float fV = utils::atof(str5);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -373,14 +373,14 @@ bool TriggerMng::isEmpty(void) const
                 rapidjson::Value eventsItem(rapidjson::kArrayType);
                 
                 length = pTriggerArray[i1].GetChildNum();
-                stExpCocoNode *pEventsArray = pTriggerArray[i1].GetChildArray();
+                stExpCocoNode *pEventsArray = pTriggerArray[i1].GetChildArray(pCocoLoader);
                 for (int i10 = 0; i10 < length; ++i10)
                 {
                     rapidjson::Value event(rapidjson::kObjectType);
-                    stExpCocoNode *pEventArray = pEventsArray->GetChildArray();
+                    stExpCocoNode *pEventArray = pEventsArray->GetChildArray(pCocoLoader);
                     std::string key6 = pEventArray[0].GetName(pCocoLoader);
-                    const char *str6 = pEventArray[0].GetValue();
-                    if (key6.compare("id") == 0 && str6 != NULL)
+                    const char *str6 = pEventArray[0].GetValue(pCocoLoader);
+                    if (key6.compare("id") == 0 && str6 != nullptr)
                     {
                         event.AddMember("id", atoi(str6), allocator);
                         eventsItem.PushBack(event, allocator);
@@ -390,7 +390,7 @@ bool TriggerMng::isEmpty(void) const
             }
             else if (key1.compare("id") == 0)
             {
-                if (str1 != NULL)
+                if (str1 != nullptr)
                 {
                     vElemItem.AddMember("id", atoi(str1), allocator);
                 }

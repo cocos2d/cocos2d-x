@@ -26,6 +26,8 @@
 #include "Sprite3DTest.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
+#include "3d/CCSubMesh.h"
+#include "3d/CCAttachNode.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -43,9 +45,14 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
+    CL(Sprite3DHitTest),
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
+#endif
     CL(Sprite3DWithSkinTest),
-    CL(Animate3DTest)
+    CL(Animate3DTest),
+    CL(AttachmentTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -184,7 +191,7 @@ void Sprite3DBasicTest::addNewSpriteWithCoords(Vec2 p)
     else
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -207,6 +214,87 @@ std::string Sprite3DBasicTest::title() const
 std::string Sprite3DBasicTest::subtitle() const
 {
     return "Tap screen to add more sprites";
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DHitTest
+//
+//------------------------------------------------------------------
+
+
+Sprite3DHitTest::Sprite3DHitTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto sprite1 = Sprite3D::create("Sprite3DTest/boss1.obj");
+    
+    sprite1->setScale(4.f);
+    sprite1->setTexture("Sprite3DTest/boss.png");
+    sprite1->setPosition( Vec2(s.width/2, s.height/2) );
+    sprite1->setContentSize(Size(20, 20));
+    
+    //add to scene
+    addChild( sprite1 );
+    sprite1->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+    
+    auto sprite2 = Sprite3D::create("Sprite3DTest/boss1.obj");
+    
+    sprite2->setScale(4.f);
+    sprite2->setTexture("Sprite3DTest/boss.png");
+    sprite2->setPosition( Vec2(s.width/2, s.height/2) );
+    sprite2->setContentSize(Size(20, 20));
+    sprite2->setAnchorPoint(Vec2(0.5, 0.5));
+    
+    //add to scene
+    addChild( sprite2 );
+    sprite2->runAction(RepeatForever::create(RotateBy::create(3, -360)));
+    
+    
+    // Make sprite1 touchable
+    auto listener1 = EventListenerTouchOneByOne::create();
+    listener1->setSwallowTouches(true);
+    
+    listener1->onTouchBegan = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
+        
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(-s.width/2, -s.height/2, s.width, s.height);
+        
+        if (rect.containsPoint(locationInNode))
+        {
+            log("sprite3d began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setOpacity(100);
+            return true;
+        }
+        return false;
+    };
+    
+    listener1->onTouchMoved = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
+        target->setPosition(target->getPosition() + touch->getDelta());
+    };
+    
+    listener1->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
+        log("sprite3d onTouchesEnded.. ");
+        target->setOpacity(255);
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
+    
+}
+
+std::string Sprite3DHitTest::title() const
+{
+    return "Testing Sprite3D Touch in 2D";
+}
+
+std::string Sprite3DHitTest::subtitle() const
+{
+    return "Tap Sprite3D and Drag";
 }
 
 void Sprite3DTestScene::runThisTest()
@@ -325,7 +413,7 @@ Effect3DOutline::Effect3DOutline()
 , _sprite(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                           [this](EventCustom*)
                                                           {
                                                               auto glProgram = _glProgramState->getGLProgram();
@@ -397,6 +485,9 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
 void Effect3DOutline::draw(const Mat4 &transform)
 {
     //draw
+    Color4F color(_sprite->getDisplayedColor());
+    color.a = _sprite->getDisplayedOpacity() / 255.0f;
+    _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
     if(_sprite && _sprite->getMesh())
     {
         glEnable(GL_CULL_FACE);
@@ -406,14 +497,17 @@ void Effect3DOutline::draw(const Mat4 &transform)
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         _glProgramState->apply(transform);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements((GLenum)mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), (GLenum)mesh->getIndexFormat(), 0);
+        for (ssize_t i = 0; i < mesh->getSubMeshCount(); i++) {
+            auto submesh = mesh->getSubMesh((int)i);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, submesh->getIndexBuffer());
+            glDrawElements((GLenum)submesh->getPrimitiveType(), (GLsizei)submesh->getIndexCount(), (GLenum)submesh->getIndexFormat(), 0);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, submesh->getIndexCount());
+        }
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
         glCullFace(GL_BACK);
         glDisable(GL_CULL_FACE);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
     }
 }
 
@@ -504,7 +598,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     else
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -546,24 +640,23 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y) );
 
-    auto animation = Animation3D::getOrCreate(fileName);
+    auto animation = Animation3D::create(fileName);
     if (animation)
     {
         auto animate = Animate3D::create(animation);
-        if(std::rand() %3 == 0)
-        {
-            animate->setPlayBack(true);
-        }
+        bool inverse = (std::rand() % 3 == 0);
 
         int rand2 = std::rand();
+        float speed = 1.0f;
         if(rand2 % 3 == 1)
         {
-            animate->setSpeed(animate->getSpeed() + CCRANDOM_0_1());
+            speed = animate->getSpeed() + CCRANDOM_0_1();
         }
         else if(rand2 % 3 == 2)
         {
-            animate->setSpeed(animate->getSpeed() - 0.5 * CCRANDOM_0_1());
+            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
         }
+        animate->setSpeed(inverse ? -speed : speed);
 
         sprite->runAction(RepeatForever::create(animate));
     }
@@ -652,7 +745,7 @@ void Animate3DTest::addSprite3D()
     sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
     addChild(sprite);
     _sprite = sprite;
-    auto animation = Animation3D::getOrCreate(fileName);
+    auto animation = Animation3D::create(fileName);
     if (animation)
     {
         auto animate = Animate3D::create(animation, 0.f, 1.933f);
@@ -706,7 +799,7 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 {
                     _sprite->runAction(_hurt);
                     auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
-                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), NULL);
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
                     seq->setTag(101);
                     _sprite->runAction(seq);
                     _state = State::SWIMMING_TO_HURT;
@@ -715,4 +808,62 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
             }
         }
     }
+}
+
+AttachmentTest::AttachmentTest()
+: _hasWeapon(false)
+, _sprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(AttachmentTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+std::string AttachmentTest::title() const
+{
+    return "Testing Sprite3D Attachment";
+}
+std::string AttachmentTest::subtitle() const
+{
+    return "touch to switch weapon";
+}
+
+void AttachmentTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y) );
+    
+    //test attach
+    auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+    _hasWeapon = true;
+}
+
+void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    if (_hasWeapon)
+    {
+        _sprite->removeAllAttachNode();
+    }
+    else
+    {
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    }
+    _hasWeapon = !_hasWeapon;
 }

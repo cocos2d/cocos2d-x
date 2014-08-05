@@ -29,14 +29,14 @@
 #include "cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
 #include "ui/UIWidget.h"
-
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
     class CocoLoader;
     struct stExpCocoNode;
     
-    class WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
+    class CC_STUDIO_DLL WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
     {
     public:
         DECLARE_CLASS_WIDGET_READER_INFO
@@ -174,16 +174,16 @@ namespace cocostudio
     }else if(key == P_Visbile){ \
         widget->setVisible(valueToBool(value)); \
     }else if(key == P_ZOrder){ \
-        widget->setZOrder(valueToInt(value));  \
+        widget->setLocalZOrder(valueToInt(value));  \
     }else if(key == P_LayoutParameter){ \
-        stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(); \
+        stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(cocoLoader); \
         ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();  \
         ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();  \
         ui::Margin mg;  \
         int paramType = -1;  \
         for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {  \
             std::string innerKey = layoutCocosNode[j].GetName(cocoLoader);  \
-            std::string innerValue = layoutCocosNode[j].GetValue(); \
+            std::string innerValue = layoutCocosNode[j].GetValue(cocoLoader); \
             if (innerKey == P_Type) {  \
                 paramType = valueToInt(innerValue); \
             }else if(innerKey == P_Gravity){ \

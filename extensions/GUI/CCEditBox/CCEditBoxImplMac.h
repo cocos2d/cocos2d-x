@@ -39,6 +39,8 @@
 
 @interface CCEditBoxImplMac : NSObject <NSTextFieldDelegate>
 {
+    NSTextField* textField_;
+    NSSecureTextField* secureTextField_;
     void* editBox_;
     BOOL editState_;
     NSMutableDictionary* placeholderAttributes_;

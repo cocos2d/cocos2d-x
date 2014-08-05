@@ -69,7 +69,7 @@ WebSocketTestLayer::WebSocketTestLayer()
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
     itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menuBack = Menu::create(itemBack, NULL);
+    auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
     
@@ -166,15 +166,15 @@ void WebSocketTestLayer::onClose(network::WebSocket* ws)
     log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
     {
-        _wsiSendText = NULL;
+        _wsiSendText = nullptr;
     }
     else if (ws == _wsiSendBinary)
     {
-        _wsiSendBinary = NULL;
+        _wsiSendBinary = nullptr;
     }
     else if (ws == _wsiError)
     {
-        _wsiError = NULL;
+        _wsiError = nullptr;
     }
     // Delete websocket instance.
     CC_SAFE_DELETE(ws);

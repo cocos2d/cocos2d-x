@@ -130,7 +130,7 @@ void Box2DTestLayer::createResetButton()
 		s->release();
 	});
 
-    auto menu = Menu::create(reset, NULL);
+    auto menu = Menu::create(reset, nullptr);
 
     menu->setPosition(Vec2(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);

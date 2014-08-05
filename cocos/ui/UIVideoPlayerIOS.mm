@@ -29,7 +29,6 @@
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 #include "CCEAGLView.h"
-#include "CCGLView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #include "base/CCDirector.h"
 
@@ -133,11 +132,11 @@ using namespace cocos2d::experimental::ui;
     }
     
     if (videoSource == 1) {
-        self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:@(videoUrl.c_str())]];
+        self.moviePlayer = [[[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:@(videoUrl.c_str())]] autorelease];
         self.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
     } else {
         NSString *path = [UIVideoViewWrapperIos fullPathFromRelativePath:@(videoUrl.c_str())];
-        self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:path]];
+        self.moviePlayer = [[[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:path]] autorelease];
         self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
     self.moviePlayer.allowsAirPlay = false;
@@ -171,7 +170,7 @@ using namespace cocos2d::experimental::ui;
     {
         if([self.moviePlayer playbackState] != MPMoviePlaybackStateStopped)
         {
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::COMPLETED);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::COMPLETED);
         }
     }
 }
@@ -181,13 +180,13 @@ using namespace cocos2d::experimental::ui;
     MPMoviePlaybackState state = [self.moviePlayer playbackState];
     switch (state) {
         case MPMoviePlaybackStatePaused:
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::PAUSED);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
             break;
         case MPMoviePlaybackStateStopped:
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::STOPPED);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
             break;
         case MPMoviePlaybackStatePlaying:
-            _videoPlayer->onPlayEvent(VideoPlayer::EventType::PLAYING);
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
             break;
         case MPMoviePlaybackStateInterrupted:
             break;
@@ -323,7 +322,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
         auto directorInstance = Director::getInstance();
         auto glView = directorInstance->getOpenGLView();
         auto frameSize = glView->getFrameSize();
-        auto scaleFactor = directorInstance->getContentScaleFactor();
+        auto scaleFactor = [static_cast<CCEAGLView *>(glView->getEAGLView()) contentScaleFactor];
         
         auto winSize = directorInstance->getWinSize();
         
@@ -449,9 +448,9 @@ void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& cal
     _eventCallback = callback;
 }
 
-void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
+void VideoPlayer::onPlayEvent(int event)
 {
-    if (event == VideoPlayer::EventType::PLAYING) {
+    if (event == (int)VideoPlayer::EventType::PLAYING) {
         _isPlaying = true;
     } else {
         _isPlaying = false;
@@ -459,7 +458,7 @@ void VideoPlayer::onPlayEvent(VideoPlayer::EventType event)
     
     if (_eventCallback)
     {
-        _eventCallback(this,event);
+        _eventCallback(this, (VideoPlayer::EventType)event);
     }
 }
 

@@ -16,12 +16,14 @@
 -- @param #rect_table rect
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
--- overload function: create(map_table)
---          
+-- @function [parent=#ParticleSystemQuad] listenRendererRecreated 
+-- @param self
+-- @param #cc.EventCustom eventcustom
+        
+--------------------------------
+-- @overload self, string         
+-- @overload self         
+-- @overload self, map_table         
 -- @function [parent=#ParticleSystemQuad] create
 -- @param self
 -- @param #map_table map

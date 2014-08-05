@@ -15,10 +15,8 @@
 -- @param #vec2_table vec2
         
 --------------------------------
--- overload function: create(float, size_table, unsigned int)
---          
--- overload function: create(float, size_table)
---          
+-- @overload self, float, size_table, unsigned int         
+-- @overload self, float, size_table         
 -- @function [parent=#TurnOffTiles] create
 -- @param self
 -- @param #float float
