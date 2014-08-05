@@ -51,10 +51,7 @@ static float convertDistanceFromPointToInch(float pointDis)
 
 
 ScrollView::ScrollView()
-: _zoomScale(0.0f)
-, _minZoomScale(0.0f)
-, _maxZoomScale(0.0f)
-, _delegate(nullptr)
+: _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
 , _container(nullptr)
@@ -65,6 +62,7 @@ ScrollView::ScrollView()
 , _minScale(0.0f)
 , _maxScale(0.0f)
 , _touchListener(nullptr)
+, _scissorRestored(false)
 {
 
 }
