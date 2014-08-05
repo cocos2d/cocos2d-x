@@ -1,5 +1,4 @@
 #include "lua_cocos2dx_experimental_manual.hpp"
-#include "UIVideoPlayer.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"

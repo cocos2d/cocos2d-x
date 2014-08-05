@@ -28,7 +28,7 @@
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
-#include "CCBProxy.h"
+#include "CCLuaEngine.h"
 #include "LuaScriptHandlerMgr.h"
 
 USING_NS_CC;
