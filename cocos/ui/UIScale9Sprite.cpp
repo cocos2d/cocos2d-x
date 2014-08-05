@@ -62,7 +62,7 @@ namespace ui {
     
     void Scale9Sprite::cleanupSlicedSprites()
     {
-        if (_topLeft && _top->isRunning())
+        if (_topLeft && _topLeft->isRunning())
         {
             _topLeft->onExit();
         }
@@ -70,37 +70,37 @@ namespace ui {
         {
             _top->onExit();
         }
-        if (_topRight && _top->isRunning())
+        if (_topRight && _topRight->isRunning())
         {
             _topRight->onExit();
         }
         
-        if (_left && _top->isRunning())
+        if (_left && _left->isRunning())
         {
             _left->onExit();
         }
         
-        if (_centre && _top->isRunning())
+        if (_centre && _centre->isRunning())
         {
             _centre->onExit();
         }
         
-        if (_right && _top->isRunning())
+        if (_right && _right->isRunning())
         {
             _right->onExit();
         }
         
-        if (_bottomLeft && _top->isRunning())
+        if (_bottomLeft && _bottomLeft->isRunning())
         {
             _bottomLeft->onExit();
         }
         
-        if (_bottomRight && _top->isRunning())
+        if (_bottomRight && _bottomRight->isRunning())
         {
             _bottomRight->onExit();
         }
         
-        if (_bottom && _top->isRunning())
+        if (_bottom && _bottom->isRunning())
         {
             _bottom->onExit();
         }
@@ -153,10 +153,8 @@ y+=ytranslate;                       \
         Rect rect(originalRect);
         
         // Release old sprites
-        _protectedChildren.clear();
-        
         this->cleanupSlicedSprites();
-        
+        _protectedChildren.clear();
         
         if(this->_scale9Image != sprite)
         {
@@ -188,7 +186,8 @@ y+=ytranslate;                       \
         _preferredSize = _originalSize;
         _capInsetsInternal = capInsets;
         
-        if (_scale9Enabled) {
+        if (_scale9Enabled)
+        {
             this->createSlicedSprites(rect, rotated);
         }
         
@@ -286,8 +285,8 @@ y+=ytranslate;                       \
         Rect rotatedcenterbottombounds = centerbottombounds;
         Rect rotatedcentertopbounds = centertopbounds;
         
-        if (!rotated) {
-            // log("!rotated");
+        if (!rotated)
+        {
             
             AffineTransform t = AffineTransform::IDENTITY;
             t = AffineTransformTranslate(t, rect.origin.x, rect.origin.y);
@@ -391,25 +390,6 @@ y+=ytranslate;                       \
         this->_positionsAreDirty = true;
     }
     
-    void Scale9Sprite::setAnchorPoint(const cocos2d::Vec2 &anchorPoint)
-    {
-        Node::setAnchorPoint(anchorPoint);
-        
-        if (_scale9Enabled) {
-            for(const auto& node : _protectedChildren)
-            {
-                node->setAnchorPoint(anchorPoint);
-            }
-        }
-        else
-        {
-            if (_scale9Image) {
-                _scale9Image->setAnchorPoint(anchorPoint);
-            }
-            
-        }
-    }
-    
     void Scale9Sprite::updatePositions()
     {
         // Check that instances are non-NULL
@@ -417,7 +397,8 @@ y+=ytranslate;                       \
              (_topRight) &&
              (_bottomRight) &&
              (_bottomLeft) &&
-             (_centre))) {
+             (_centre)))
+        {
             // if any of the above sprites are NULL, return
             return;
         }
@@ -769,7 +750,9 @@ y+=ytranslate;                       \
             else
                 break;
         }
-        if (_scale9Enabled) {
+        
+        if (_scale9Enabled)
+        {
             for( ; j < _protectedChildren.size(); j++ )
             {
                 auto node = _protectedChildren.at(j);
@@ -779,8 +762,11 @@ y+=ytranslate;                       \
                 else
                     break;
             }
-        }else{
-            if (_scale9Image) {
+        }
+        else
+        {
+            if (_scale9Image)
+            {
                 _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
         }
@@ -793,11 +779,15 @@ y+=ytranslate;                       \
         //
         // draw children and protectedChildren zOrder >= 0
         //
-        if (_scale9Enabled) {
+        if (_scale9Enabled)
+        {
             for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
                 (*it)->visit(renderer, _modelViewTransform, flags);
-        }else{
-            if (_scale9Image) {
+        }
+        else
+        {
+            if (_scale9Image)
+            {
                 _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
         }
@@ -852,11 +842,25 @@ y+=ytranslate;                       \
     
     void Scale9Sprite::setScale9Enabled(bool enabled)
     {
-        _scale9Enabled = enabled;
-        if (!_scale9Enabled) {
-            this->cleanupSlicedSprites();
+        if (_scale9Enabled == enabled)
+        {
+            return;
         }
-        _reorderProtectedChildDirty = true;
+        _scale9Enabled = enabled;
+        
+        this->cleanupSlicedSprites();
+        _protectedChildren.clear();
+        
+        if (_scale9Enabled)
+        {
+            if (_scale9Image)
+            {
+                this->updateWithSprite(this->_scale9Image,
+                                       this->_spriteRect,
+                                       _spriteFrameRotated, _capInsets);
+            }
+        }
+        _positionsAreDirty = true;
     }
     
     bool Scale9Sprite::isScale9Enabled() const
@@ -875,12 +879,11 @@ y+=ytranslate;                       \
         if(this->_positionsAreDirty)
         {
             this->updatePositions();
+            this->adjustScale9ImagePosition();
             this->_positionsAreDirty = false;
         }
-        if( _reorderProtectedChildDirty ) {
-            if (!_scale9Enabled) {
-                this->adjustScale9ImagePosition();
-            }
+        if( _reorderProtectedChildDirty )
+        {
             std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
             _reorderProtectedChildDirty = false;
         }
@@ -888,9 +891,23 @@ y+=ytranslate;                       \
     
     void Scale9Sprite::adjustScale9ImagePosition()
     {
-        if (_scale9Image) {
-            _scale9Image->setPosition(Vec2(_contentSize.width * _anchorPoint.x,
-                                                                         _contentSize.height * _anchorPoint.y));
+        if (_scale9Image)
+        {
+            _scale9Image->setPosition(Vec2(_contentSize.width * _scale9Image->getAnchorPoint().x,
+                                           _contentSize.height * _scale9Image->getAnchorPoint().y));
+        }
+    }
+    
+    void Scale9Sprite::setAnchorPoint(const cocos2d::Vec2 &position)
+    {
+        Node::setAnchorPoint(position);
+        if (!_scale9Enabled)
+        {
+            if (_scale9Image)
+            {
+                _scale9Image->setAnchorPoint(position);
+                _positionsAreDirty = true;
+            }
         }
     }
     

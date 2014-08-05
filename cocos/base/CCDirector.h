@@ -51,7 +51,7 @@ NS_CC_BEGIN
 /* Forward declarations. */
 class LabelAtlas;
 class Scene;
-class GLView;
+//class GLView;
 class DirectorDelegate;
 class Node;
 class Scheduler;

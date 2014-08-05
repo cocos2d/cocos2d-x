@@ -1222,6 +1222,16 @@
 
 
 --------------------------------------------------------
+-- the cc SubMeshState
+-- @field [parent=#cc] SubMeshState#SubMeshState SubMeshState preloaded module
+
+
+--------------------------------------------------------
+-- the cc AttachNode
+-- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc SimpleAudioEngine
 -- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
 

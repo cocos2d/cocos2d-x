@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -589,12 +589,24 @@
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp">
       <Filter>storage</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCAttachNode.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSkeleton3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSubMesh.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSubMeshState.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
     <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp">
       <Filter>platform\desktop</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCGLView.cpp">
       <Filter>platform</Filter>
-    </ClCompile> 
+    </ClCompile>
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -1206,6 +1218,18 @@
     </ClInclude>
     <ClInclude Include="..\storage\local-storage\LocalStorage.h">
       <Filter>storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAttachNode.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSkeleton3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSubMesh.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSubMeshState.h">
+      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\desktop\CCGLViewImpl.h">
       <Filter>platform\desktop</Filter>

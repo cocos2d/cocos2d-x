@@ -29,6 +29,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "3d/CCSubMesh.h"
 #include "3d/CCObjLoader.h"
 #include "3d/CCSprite3DMaterial.h"
 
@@ -58,7 +59,7 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
 bool RenderMeshData::init(const std::vector<float>& positions,
                               const std::vector<float>& normals,
                               const std::vector<float>& texs,
-                              const std::vector<unsigned short>& indices)
+                              const std::vector<IndexArray>& indices)
 {
     CC_ASSERT(positions.size()<65536 * 3 && "index may out of bound");
     
@@ -120,15 +121,15 @@ bool RenderMeshData::init(const std::vector<float>& positions,
             _vertexs.push_back(texs[i * 2 + 1]);
         }
     }
-    _indices = indices;
+    _subMeshIndices = indices;
     
     return true;
 }
 
-bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs)
+bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
     _vertexs = vertices;
-    _indices = indices;
+    _subMeshIndices = indices;
     _vertexAttribs = attribs;
     
     _vertexsizeBytes = calVertexSizeBytes();
@@ -150,19 +151,23 @@ int RenderMeshData::calVertexSizeBytes()
 
 Mesh::Mesh()
 :_vertexBuffer(0)
-, _indexBuffer(0)
-, _primitiveType(PrimitiveType::TRIANGLES)
-, _indexFormat(IndexFormat::INDEX16)
-, _indexCount(0)
 {
 }
 
 Mesh::~Mesh()
 {
+    _subMeshes.clear();
     cleanAndFreeBuffers();
 }
 
-Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
+Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices)
+{
+    std::vector<IndexArray> submeshIndices;
+    submeshIndices.push_back(indices);
+    return create(positions, normals, texs, submeshIndices);
+}
+
+Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& indices)
 {
     auto mesh = new Mesh();
     if(mesh && mesh->init(positions, normals, texs, indices))
@@ -174,7 +179,14 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
-Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<unsigned short> &indices, const std::vector<MeshVertexAttrib> &attribs)
+Mesh* Mesh::create(const std::vector<float>& vertices, int vertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs)
+{
+    std::vector<IndexArray> submeshIndices;
+    submeshIndices.push_back(indices);
+    return create(vertices, vertexSizeInFloat, submeshIndices, attribs);
+}
+
+Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<IndexArray> &indices, const std::vector<MeshVertexAttrib> &attribs)
 {
     auto mesh = new Mesh();
     if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, attribs))
@@ -186,24 +198,38 @@ Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, co
     return nullptr;
 }
 
-bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
+bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& indices)
 {
     bool bRet = _renderdata.init(positions, normals, texs, indices);
     if (!bRet)
         return false;
     
+    buildSubMeshes();
+    
     buildBuffer();
     return true;
 }
 
-bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs)
+
+bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
     bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, attribs);
     if (!bRet)
         return false;
     
+    buildSubMeshes();
+    
     buildBuffer();
     return true;
+}
+
+void Mesh::buildSubMeshes()
+{
+    _subMeshes.clear();
+    for (auto& it : _renderdata._subMeshIndices) {
+        auto subMesh = SubMesh::create(PrimitiveType::TRIANGLES, IndexFormat::INDEX16, it);
+        _subMeshes.pushBack(subMesh);
+    }
 }
 
 void Mesh::cleanAndFreeBuffers()
@@ -214,14 +240,9 @@ void Mesh::cleanAndFreeBuffers()
         _vertexBuffer = 0;
     }
     
-    if(glIsBuffer(_indexBuffer))
-    {
-        glDeleteBuffers(1, &_indexBuffer);
-        _indexBuffer = 0;
+    for (auto& it : _subMeshes) {
+        (*it).cleanAndFreeBuffers();
     }
-    _primitiveType = PrimitiveType::TRIANGLES;
-    _indexFormat = IndexFormat::INDEX16;
-    _indexCount = 0;
 }
 
 void Mesh::buildBuffer()
@@ -237,25 +258,18 @@ void Mesh::buildBuffer()
                  GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    glGenBuffers(1, &_indexBuffer);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    unsigned int indexSize = 2;
-    
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * _renderdata._indices.size(), &_renderdata._indices[0], GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    _primitiveType = PrimitiveType::TRIANGLES;
-    _indexFormat = IndexFormat::INDEX16;
-    _indexCount = _renderdata._indices.size();
+    for (size_t i = 0; i < _subMeshes.size(); i++) {
+        _subMeshes.at(i)->buildBuffer(_renderdata._subMeshIndices[i]);
+    }
 }
 
 void Mesh::restore()
 {
     _vertexBuffer = 0;
-    _indexBuffer = 0;
+    for (auto& it : _subMeshes) {
+        it->_indexBuffer = 0;
+    }
+    
     buildBuffer();
 }
 

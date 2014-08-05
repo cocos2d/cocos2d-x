@@ -23,12 +23,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_WINRT_H__
-#define __CC_EGLVIEW_WINRT_H__
+#ifndef __CC_EGLVIEWIMPL_WINRT_H__
+#define __CC_EGLVIEWIMPL_WINRT_H__
 
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
-#include "platform/CCGLViewProtocol.h"
+#include "platform/CCGLView.h"
 #include "InputEvent.h"
 
 
@@ -47,13 +47,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class GLView;
+class GLViewImpl;
 
 
-class CC_DLL GLView : public Ref, public GLViewProtocol
+class CC_DLL GLViewImpl : public GLView
 {
 public:
-    static GLView* create(const std::string& viewName);
+    static GLViewImpl* create(const std::string& viewName);
 
     /* override functions */
     virtual bool isOpenGLReady();
@@ -91,7 +91,7 @@ public:
 
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-    void GLView::QueueEvent(std::shared_ptr<InputEvent>& event);
+    void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event);
 
     void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
     void SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate) { m_messageBoxDelegate = delegate; };
@@ -115,7 +115,7 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-	static GLView* sharedOpenGLView();
+	static GLViewImpl* sharedOpenGLView();
 
     void ProcessEvents();
     void AddPointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
@@ -123,8 +123,8 @@ public:
 
 
 protected:
-    GLView();
-    virtual ~GLView();
+    GLViewImpl();
+    virtual ~GLViewImpl();
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
@@ -142,7 +142,7 @@ protected:
 
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(GLView);
+    CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
 
 	void OnRendering();
 	void UpdateWindowSize();
@@ -187,4 +187,4 @@ private:
 
 NS_CC_END
 
-#endif    // end of __CC_EGLVIEW_WINRT_H__
+#endif    // end of __CC_EGLVIEWIMPL_WINRT_H__
