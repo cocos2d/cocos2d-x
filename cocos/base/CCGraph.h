@@ -37,11 +37,16 @@
 
 NS_CC_BEGIN
 
+/**
+ Graph class is similar to a coordinate system, it's only support one-to-one maping:
+ you only can get one "y" value base on one "x" value.
+ */
 template <typename T>
 class Graph : public Ref
 {
 public:
-    static const int MAX_COMPILED_SIZE;
+    enum { MAX_COMPILED_SIZE = 1000 };
+    
 public:
     static Graph<T>* create();
     static Graph<T>* create(const T& defaultValue);
@@ -49,13 +54,34 @@ public:
     static Graph<T>* create(const std::vector<T>& vec, float start, float end, float interval);
     
 public:
-    T get(float time) const;
-    void compile(float start, float end, float interval);
+    /**
+     * get "y" value through "x" value
+     * the order of this is:
+     * if value is compiled, get the compiled value
+     * if value is uncompiled, get the value through _func
+     * if _func doesn't exist either, return the default value
+     */
+    virtual T get(float x) const;
+    /**
+     * compile graph for faster useage.
+     * it will record the sample points, it will return _func(start + i * interval) value
+     when you want get a value between "start + i * interval" to "start + (i + 1) * interval".
+     * if you change _func, you need recompile it.
+     * @note: if will clear the compiled data even compile is not avalible, so you need to make sure you want to compile when you invoke it.
+     */
+    virtual void compile(float start, float end, float interval);
     
 public:
-    void setFunc(CC_GRAPH_FUNC(T) func);
-    void setVector(std::vector<T>& vec, float start, float end, float interval);
-    void setDefault(T& defaultValue);
+    virtual void setFunc(CC_GRAPH_FUNC(T) func);
+    virtual void setVector(const std::vector<T>& vec, float start, float end, float interval);
+    virtual void setDefault(const T& defaultValue);
+    
+    /**
+     * set to false can disable the compile
+     * default is true
+     */
+    void setNeedCompile(bool b) { _isNeedCompile = b; }
+    bool isNeedCompile() { return _isNeedCompile; }
 
 CC_CONSTRUCTOR_ACCESS:
     Graph();
@@ -70,6 +96,7 @@ protected:
     float _start;
     float _end;
     float _interval;
+    bool _isNeedCompile;
 };
 
 template <typename T>
@@ -100,6 +127,11 @@ struct LineGraphPoint
     {}
 };
 
+/**
+ LineGraph contains sevral segments defined by points. each two points defines a segment.
+ All the points are sorted by it's x, you can't get a segment from a lager x to smaller x.
+ Note: You need to make sure the "T" type support (T)*float and (T) + (T) operations.
+ */
 template <typename T>
 class LineGraph : public Graph<T>
 {
@@ -113,7 +145,7 @@ public:
     void removeByIndex(int index);
     
 protected:
-    T compute(float time);
+    T compute(float x);
 
 CC_CONSTRUCTOR_ACCESS:
     LineGraph(){}
@@ -155,6 +187,11 @@ struct BezierGraphPoint
     {}
 };
 
+/**
+ BezierGraph contains sevral bezier curves defined by points. each two points defines a curve.
+ All the points are sorted by it's x, you can't get a curve from a lager x to smaller x.
+ Note: You need to make sure the "T" type support (T)*float and (T) + (T) operations.
+ */
 template <typename T>
 class BezierGraph : public Graph<T>
 {
@@ -167,7 +204,7 @@ public:
     void add(float x, const T& y, float lx, const T& ly, float rx, const T& ry, int tag = 0, int type = BezierGraphPointType::CURVE);
     
 protected:
-    T compute(float time);
+    T compute(float x);
     
 CC_CONSTRUCTOR_ACCESS:
     BezierGraph(){}

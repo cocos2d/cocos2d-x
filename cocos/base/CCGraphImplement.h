@@ -62,14 +62,12 @@ namespace
 
 // Graph implementation
 template<typename T>
-const int Graph<T>::MAX_COMPILED_SIZE = 1000;
-
-template<typename T>
 Graph<T>::Graph()
 : _func(nullptr)
 , _start(0.0f)
 , _end(0.0f)
 , _interval(0.0f)
+, _isNeedCompile(true)
 {
     
 }
@@ -158,13 +156,13 @@ bool Graph<T>::init(CC_GRAPH_FUNC(T) func/* = nullptr*/, const T* defaultValue/*
 }
 
 template<typename T>
-T Graph<T>::get(float time) const
+T Graph<T>::get(float x) const
 {
     if (!_compiled.empty())
     {
-        if (time >= _start && time <= _end)
+        if (x >= _start && x <= _end)
         {
-            return _compiled[(int)((time - _start) / _interval)];
+            return _compiled[(int)((x - _start) / _interval)];
         }
         else
         {
@@ -173,7 +171,7 @@ T Graph<T>::get(float time) const
     }
     else if(_func != nullptr)
     {
-        return _func(time);
+        return _func(x);
     }
     else
     {
@@ -184,7 +182,14 @@ T Graph<T>::get(float time) const
 template<typename T>
 void Graph<T>::compile(float start, float end, float interval)
 {
+    _compiled.clear();
+    
     if ( _func == nullptr )
+    {
+        return;
+    }
+    
+    if ( !_isNeedCompile )
     {
         return;
     }
@@ -201,7 +206,6 @@ void Graph<T>::compile(float start, float end, float interval)
         return;
     }
     
-    _compiled.clear();
     for (float i = start; i <= end; i += interval)
     {
         _compiled.push_back(_func(i));
@@ -219,7 +223,7 @@ void Graph<T>::setFunc(CC_GRAPH_FUNC(T) func)
 }
 
 template<typename T>
-void Graph<T>::setVector(std::vector<T>& vec, float start, float end, float interval)
+void Graph<T>::setVector(const std::vector<T>& vec, float start, float end, float interval)
 {
     _compiled = vec;
     _start = start;
@@ -228,16 +232,16 @@ void Graph<T>::setVector(std::vector<T>& vec, float start, float end, float inte
 }
 
 template<typename T>
-void Graph<T>::setDefault(T& defaultValue)
+void Graph<T>::setDefault(const T& defaultValue)
 {
-    defaultValue = defaultValue;
+    _default = defaultValue;
 }
 
 namespace
 {
     //TODO: use binary insert stable sort
     template<typename T>
-    bool compareLineGraphPoint(const T& a, const T& b)
+    bool compareGraphPoint(const T& a, const T& b)
     {
         return a.p.x < b.p.x;
     }
@@ -248,7 +252,8 @@ template<typename T>
 void LineGraph<T>::add(const LineGraphPoint<T>& point)
 {
     _points.push_back(point);
-    std::sort(_points.begin(), _points.end(), compareLineGraphPoint<LineGraphPoint<T>>);
+    std::sort(_points.begin(), _points.end(), compareGraphPoint<LineGraphPoint<T>>);
+    Graph<T>::setNeedCompile(_points.size() > 1);
 }
 
 template<typename T>
@@ -268,6 +273,7 @@ void LineGraph<T>::removeByTag(int tag)
             break;
         }
     }
+    Graph<T>::setNeedCompile(_points.size() > 1);
 }
 
 template<typename T>
@@ -277,10 +283,11 @@ void LineGraph<T>::removeByIndex(int index)
     {
         _points.erase(_points.begin() + index);
     }
+    Graph<T>::setNeedCompile(_points.size() > 1);
 }
 
 template<typename T>
-T LineGraph<T>::compute(float time)
+T LineGraph<T>::compute(float x)
 {
     // return default when empty
     if (_points.empty())
@@ -294,15 +301,15 @@ T LineGraph<T>::compute(float time)
         return _points[0].p.y;
     }
     
-    // find the area of time
+    // find the area of x
     int a = -1, b = -1;
     for(int i = 0; i < _points.size(); ++i)
     {
-        if ( time == _points[i].p.x)
+        if ( x == _points[i].p.x)
         {
             return _points[i].p.y;
         }
-        else if (time > _points[i].p.x)
+        else if (x > _points[i].p.x)
         {
             a = i;
         }
@@ -313,19 +320,19 @@ T LineGraph<T>::compute(float time)
         }
     }
 
-    // time < min
+    // x < min
     if (a == -1)
     {
         return _points[0].p.y;
     }
     
-    // time > max
+    // x > max
     if(b == -1)
     {
         return _points[_points.size() - 1].p.y;
     }
     
-    return linear_bezier(_points[a].p.x, _points[a].p.y, _points[b].p.x, _points[b].p.y, time);
+    return linear_bezier(_points[a].p.x, _points[a].p.y, _points[b].p.x, _points[b].p.y, x);
 }
 
 template<typename T>
@@ -354,7 +361,15 @@ bool LineGraph<T>::init()
 template<typename T>
 BezierGraph<T>* BezierGraph<T>::create()
 {
+    auto ret = new BezierGraph<T>();
+    if (ret != nullptr && ret->init())
+    {
+        ret->autorelease();
+        return ret;
+    }
     
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 template<typename T>
@@ -388,10 +403,12 @@ template<typename T>
 void BezierGraph<T>::add(float x, const T& y, float lx, const T& ly, float rx, const T& ry, int tag/* = 0*/, int type/* = BezierGraphPointType::CURVE*/)
 {
     _points.push_back(BezierGraphPoint<T>(GraphPoint<T>(x, y), GraphPoint<T>(lx, ly), GraphPoint<T>(rx, ry), tag, type));
+    std::sort(_points.begin(), _points.end(), compareGraphPoint<BezierGraphPoint<T>>);
+    Graph<T>::setNeedCompile(_points.size() > 1);
 }
 
 template<typename T>
-T BezierGraph<T>::compute(float time)
+T BezierGraph<T>::compute(float x)
 {
     
     // return default when empty
@@ -406,14 +423,14 @@ T BezierGraph<T>::compute(float time)
         return _points[0].p.y;
     }
     
-    // find the area of time
+    // find the area of x
     int a = -1, b = -1;
     for(int i = 0; i < _points.size(); ++i)
     {
-        if ( time == _points[i].p.x)
+        if ( x == _points[i].p.x)
         {
             return _points[i].p.y;
-        }else if (time > _points[i].p.x)
+        }else if (x > _points[i].p.x)
         {
             a = i;
         }
@@ -424,13 +441,13 @@ T BezierGraph<T>::compute(float time)
         }
     }
     
-    // time < min
+    // x < min
     if (a == -1)
     {
         return _points[0].p.y;
     }
     
-    // time > max
+    // x > max
     if(b == -1)
     {
         return _points[_points.size() - 1].p.y;
@@ -441,7 +458,7 @@ T BezierGraph<T>::compute(float time)
     {
         return linear_bezier(_points[a].p.x, _points[a].p.y,
                              _points[b].p.x, _points[b].p.y,
-                             time);
+                             x);
     }
     else if((_points[a].t & BezierGraphPointType::RCURVE) != 0
             && (_points[b].t & BezierGraphPointType::LCURVE) == 0)
@@ -449,7 +466,7 @@ T BezierGraph<T>::compute(float time)
         return quadratic_bezier(_points[a].p.x, _points[a].p.y,
                                 _points[a].r.x, _points[a].r.y,
                                 _points[b].p.x, _points[b].p.y,
-                                time);
+                                x);
     }
     else if((_points[a].t & BezierGraphPointType::RCURVE) == 0
             && (_points[b].t & BezierGraphPointType::LCURVE) != 0)
@@ -457,7 +474,7 @@ T BezierGraph<T>::compute(float time)
         return quadratic_bezier(_points[a].p.x, _points[a].p.y,
                                 _points[b].r.x, _points[b].r.y,
                                 _points[b].p.x, _points[b].p.y,
-                                time);
+                                x);
     }
     else if((_points[a].t & BezierGraphPointType::RCURVE) != 0
             && (_points[b].t & BezierGraphPointType::LCURVE) != 0)
@@ -466,7 +483,7 @@ T BezierGraph<T>::compute(float time)
                              _points[a].r.x, _points[a].r.y,
                              _points[b].l.x, _points[b].l.y,
                              _points[b].p.x, _points[b].p.y,
-                             time);
+                             x);
     }
     else
     {
