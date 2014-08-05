@@ -23,78 +23,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __cocos2d_libs__CCGradient__
+#define __cocos2d_libs__CCGradient__
+
+#include "CCRef.h"
+#include "ccTypes.h"
 #include "CCGraph.h"
 
 NS_CC_BEGIN
 
-// Gradient implement
-Gradient::Gradient()
-: _colors(nullptr)
-, _alphas(nullptr)
+class Gradient : public Ref
 {
+public:
+    static Gradient* create();
     
-}
-
-Gradient::~Gradient()
-{
-    CC_SAFE_RELEASE(_colors);
-    CC_SAFE_RELEASE(_alphas);
-}
-
-Gradient* Gradient::create()
-{
-    auto ret = new Gradient();
-    if (ret != nullptr && ret->init())
-    {
-        ret->autorelease();
-        return ret;
-    }
+public:
+    void add(float x, const Color3B& color, int tag = 0);
+    void add(float x, float alpha, int tag = 0);
+    void add(float x, const Color4B& color, int tag = 0);
+    void removeRGBByTag(int tag);
+    void removeAlphaByTag(int tag);
+    void removeRGBAByTag(int tag);
     
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-bool Gradient::init()
-{
-    _colors = LineGraph<Color3B>::create();
-    _colors->retain();
+CC_CONSTRUCTOR_ACCESS:
+    Gradient();
+    virtual ~Gradient();
     
-    _alphas = LineGraph<float>::create();
-    _alphas->retain();
+    bool init();
     
-    return true;
-}
-
-void Gradient::add(float x, const Color3B& color, int tag/* = 0*/)
-{
-    _colors->add(x, color, tag);
-}
-
-void Gradient::add(float x, float alpha, int tag/* = 0*/)
-{
-    _alphas->add(x, alpha, tag);
-}
-
-void Gradient::add(float x, const Color4B& color, int tag/* = 0*/)
-{
-    _colors->add(x, Color3B(color), tag);
-    _alphas->add(x, color.a, tag);
-}
-
-void Gradient::removeRGBByTag(int tag)
-{
-    _colors->removeByTag(tag);
-}
-
-void Gradient::removeAlphaByTag(int tag)
-{
-    _alphas->removeByTag(tag);
-}
-
-void Gradient::removeRGBAByTag(int tag)
-{
-    _colors->removeByTag(tag);
-    _alphas->removeByTag(tag);
-}
+protected:
+    LineGraph<Color3B>* _colors;
+    LineGraph<float>* _alphas;
+};
 
 NS_CC_END
+
+#endif /* defined(__cocos2d_libs__CCGradient__) */

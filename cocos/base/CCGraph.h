@@ -80,8 +80,10 @@ struct GraphPoint
     GraphPoint(float ax, const T& ay)
     : x(ax)
     , y(ay)
-    {
-    }
+    {}
+    GraphPoint()
+    : x(0.0f)
+    {}
 };
 
 template <typename T>
@@ -92,8 +94,10 @@ struct LineGraphPoint
     LineGraphPoint(const GraphPoint<T>& ap, int atag)
     : p(ap)
     , tag(atag)
-    {
-    }
+    {}
+    LineGraphPoint()
+    : tag(0)
+    {}
 };
 
 template <typename T>
@@ -121,29 +125,61 @@ protected:
     std::vector<LineGraphPoint<T>> _points;
 };
 
-class Gradient : public Ref
+struct BezierGraphPointType
+{
+    static const int LINE = 0;
+    static const int LCURVE = 1;
+    static const int RCURVE = 2;
+    static const int CURVE = LCURVE & RCURVE;
+};
+
+template <typename T>
+struct BezierGraphPoint
+{
+    GraphPoint<T> p;
+    GraphPoint<T> l;
+    GraphPoint<T> r;
+    int t;
+    int tag;
+    
+    BezierGraphPoint(const GraphPoint<T>& ap, const GraphPoint<T>& al, const GraphPoint<T>& ar, int at, int atag)
+    : p(ap)
+    , l(al)
+    , r(ar)
+    , t(at)
+    , tag(atag)
+    {}
+    BezierGraphPoint()
+    : t(BezierGraphPointType::LINE)
+    , tag(0)
+    {}
+};
+
+template <typename T>
+class BezierGraph : public Graph<T>
 {
 public:
-    static Gradient* create();
+    static BezierGraph* create();
     
 public:
-    void add(float x, const Color3B& color, int tag = 0);
-    void add(float x, float alpha, int tag = 0);
-    void add(float x, const Color4B& color, int tag = 0);
-    void removeRGBByTag(int tag);
-    void removeAlphaByTag(int tag);
-    void removeRGBAByTag(int tag);
+    void add(float x, const T& y, int tag = 0);
+    void add(float x, const T& y, float cx, const T& cy, int tag = 0, int type = BezierGraphPointType::LCURVE);
+    void add(float x, const T& y, float lx, const T& ly, float rx, const T& ry, int tag = 0, int type = BezierGraphPointType::CURVE);
+    
+protected:
+    T compute(float time);
     
 CC_CONSTRUCTOR_ACCESS:
-    Gradient();
-    virtual ~Gradient();
+    BezierGraph(){}
+    virtual ~BezierGraph(){}
     
     bool init();
     
 protected:
-    LineGraph<Color3B>* _colors;
-    LineGraph<float>* _alphas;
+    std::vector<BezierGraphPoint<T>> _points;
 };
+
+typedef BezierGraph<float> FloatBezierGraph;
 
 NS_CC_END
 
