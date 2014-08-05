@@ -31,7 +31,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-
+    class Scale9Sprite;
 /**
 *   @js NA
 *   @lua NA
@@ -132,7 +132,7 @@ protected:
     bool _scale9Enabled;
     bool _prevIgnoreSize;
     Rect _capInsets;
-    Node* _imageRenderer;
+    Scale9Sprite* _imageRenderer;
     std::string _textureFile;
     TextureResType _imageTexType;
     Size _imageTextureSize;

@@ -116,6 +116,15 @@ protected:
     static GLProgram* getOrCreateProgram();
 };
 
+class Sprite3DHitTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DHitTest);
+    Sprite3DHitTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class EffectSprite3D : public Sprite3D
 {
 public:
@@ -196,6 +205,23 @@ protected:
     State   _state;
     
     MoveTo* _moveAction;
+};
+
+class AttachmentTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AttachmentTest);
+    AttachmentTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+protected:
+    bool _hasWeapon;
+    cocos2d::Sprite3D* _sprite;
 };
 
 class Sprite3DTestScene : public TestScene

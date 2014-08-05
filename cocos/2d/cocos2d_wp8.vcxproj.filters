@@ -490,9 +490,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -517,9 +514,6 @@
     <ClCompile Include="..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCImage.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -528,9 +522,6 @@
     </ClCompile>
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\wp8\CCGLView.cpp">
-      <Filter>platform\wp8</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
       <Filter>platform\wp8</Filter>
@@ -615,6 +606,15 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCFastTMXTiledMap.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCGLView.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp">
+      <Filter>platform\wp8</Filter>
+    </ClCompile> 
+    <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1141,9 +1141,6 @@
     <ClInclude Include="..\platform\CCFileUtils.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCGLViewProtocol.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCImage.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -1154,9 +1151,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\DirectXBase.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\CCGLView.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\Direct3DBase.h">
@@ -1257,6 +1251,15 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCFastTMXTiledMap.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGLView.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl.h">
+      <Filter>platform\wp8</Filter>
+    </ClInclude> 
+    <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>

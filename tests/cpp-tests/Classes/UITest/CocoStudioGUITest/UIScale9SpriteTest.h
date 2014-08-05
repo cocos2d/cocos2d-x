@@ -255,5 +255,14 @@ protected:
     UI_SCENE_CREATE_FUNC(UIS9Flip)
 };
 
+class UIS9ChangeAnchorPoint : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9ChangeAnchorPoint);
+    
+    bool init();
+protected:
+    UI_SCENE_CREATE_FUNC(UIS9ChangeAnchorPoint)
+};
 
 #endif /* defined(__cocos2d_tests__UIScale9SpriteTest__) */

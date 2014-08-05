@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UIWIDGET_H__
 #define __UIWIDGET_H__
 
-#include "ui/CCProtectedNode.h"
+#include "2d/CCProtectedNode.h"
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
 #include "ui/GUIExport.h"
