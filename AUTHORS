@@ -948,7 +948,10 @@ Developers:
         Added getter and setter for TextColor for UIText
     
     zii
-        Added utils::gettime().
+        Added utils::gettime()
+        
+    takaken1994
+        Added function for setting min/max scale for ScrollView
     
 Retired Core Developers:
     WenSheng Yang
