@@ -176,8 +176,9 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         if(iter.second->getCount() > 0)
         {
             auto& cmd = _renderCommands[index++];
-            cmd.init(iter.first);
-            cmd.func = CC_CALLBACK_0(TMXLayer::onDraw, this, iter.second);
+            //cmd.init(iter.first);
+            //cmd.func = CC_CALLBACK_0(TMXLayer::onDraw, this, iter.second);
+            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform);
             renderer->addCommand(&cmd);
         }
     }

@@ -247,7 +247,7 @@ protected:
     std::vector<int> _indices;
     std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
-    std::vector<CustomCommand> _renderCommands;
+    std::vector<PrimitiveCommand> _renderCommands;
     bool _dirty;
     
     VertexBuffer* _vertexBuffer;
