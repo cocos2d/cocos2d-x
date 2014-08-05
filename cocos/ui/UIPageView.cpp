@@ -521,6 +521,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
 
 void PageView::pageTurningEvent()
 {
+    this->retain();
     if (_pageViewEventListener && _pageViewEventSelector)
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
@@ -528,6 +529,7 @@ void PageView::pageTurningEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::TURNING);
     }
+    this->release();
 }
 
 void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
