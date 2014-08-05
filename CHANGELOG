@@ -1,4 +1,5 @@
 cocos2d-x-3.3  ??
+    [NEW]           Added submesh support, and support attaching a Sprite3D object to a bone
     [NEW]           Added UIScale9Sprite
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
     getFileSize()
