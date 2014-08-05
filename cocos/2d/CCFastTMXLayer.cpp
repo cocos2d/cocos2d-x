@@ -422,7 +422,7 @@ void TMXLayer::updatePrimitives()
         auto primitiveIter= _primitives.find(iter.first);
         if(primitiveIter == _primitives.end())
         {
-            auto primitive = Primitive::create(_vData, _indexBuffer, PrimitiveType::TRIANGLES);
+            auto primitive = Primitive::create(_vData, _indexBuffer, GL_TRIANGLES);
             primitive->setCount(iter.second * 6);
             primitive->setStart(start * 6);
             

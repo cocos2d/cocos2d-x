@@ -37,30 +37,6 @@ NS_CC_BEGIN
 
 class VertexBuffer;
 
-enum VertexSemantic
-{
-    UNKNOWN = -1,
-    POSITION,
-    COLOR,
-    NORMAL,
-    BLEND_WEIGHT,
-    BLEND_INDEX,
-    TEXTURECOORD0,
-    TEXTURECOORD1,
-    TEXTURECOORD2,
-    TEXTURECOORD3
-};
-
-enum class VertexType
-{
-    UNKNOWN,
-    FLOAT1,
-    FLOAT2,
-    FLOAT3,
-    FLOAT4,
-    BYTE4
-};
-
 struct VertexStreamAttribute
 {
     VertexStreamAttribute()
@@ -110,10 +86,6 @@ protected:
     };
     
     std::map<int, BufferAttribute> _vertexStreams;
-protected:
-    static GLint getGLSize(VertexType type);
-    static GLenum getGLType(VertexType type);
-    static GLint getGLSemanticBinding(VertexSemantic semantic);
 };
 
 NS_CC_END

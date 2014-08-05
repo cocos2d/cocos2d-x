@@ -113,43 +113,6 @@ VertexData::~VertexData()
     _vertexStreams.clear();
 }
 
-GLint VertexData::getGLSize(VertexType type)
-{
-    if(VertexType::FLOAT1 == type)
-    {
-        return 1;
-    }
-    else if(VertexType::FLOAT2 == type)
-    {
-        return 2;
-    }
-    else if(VertexType::FLOAT3 == type)
-    {
-        return 3;
-    }
-    else
-    {
-        return 4;
-    }
-}
-
-GLenum VertexData::getGLType(VertexType type)
-{
-    if(VertexType::BYTE4 == type)
-    {
-        return GL_UNSIGNED_BYTE;
-    }
-    else
-    {
-        return GL_FLOAT;
-    }
-}
-
-GLint VertexData::getGLSemanticBinding(VertexSemantic semantic)
-{
-    return GLint(semantic);
-}
-
 void VertexData::use()
 {
     uint32_t flags;

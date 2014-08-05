@@ -31,23 +31,17 @@
 #include "renderer/CCVertexIndexData.h"
 
 NS_CC_BEGIN
-enum class PrimitiveType
-{
-    POINTS,
-    LINES,
-    TRIANGLES
-};
 
 class Primitive : public Ref
 {
 public:
-    static Primitive* create(VertexData* verts, IndexBuffer* indices, PrimitiveType type);
+    static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
     
     VertexData* getVertexData();
     
     IndexBuffer* getIndexData();
     
-    PrimitiveType getType() const { return _type; }
+    int getType() const { return _type; }
     
     //called by rendering framework
     void draw();
@@ -61,14 +55,14 @@ protected:
     Primitive();
     virtual ~Primitive();
     
-    bool init(VertexData* verts, IndexBuffer* indices, PrimitiveType type);
+    bool init(VertexData* verts, IndexBuffer* indices, int type);
     
 protected:
     VertexData* _verts;
     IndexBuffer* _indices;
     int _start;
     int _count;
-    PrimitiveType _type;
+    int _type;
 };
 
 NS_CC_END

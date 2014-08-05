@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-Primitive* Primitive::create(VertexData* verts, IndexBuffer* indices, PrimitiveType type)
+Primitive* Primitive::create(VertexData* verts, IndexBuffer* indices, int type)
 {
     auto result = new (std::nothrow) Primitive();
     if( result && result->init(verts, indices, type))
@@ -55,7 +55,7 @@ IndexBuffer* Primitive::getIndexData()
 Primitive::Primitive()
 : _verts(nullptr)
 , _indices(nullptr)
-, _type(PrimitiveType::POINTS)
+, _type(GL_POINTS)
 {
 }
 
@@ -65,7 +65,7 @@ Primitive::~Primitive()
     CC_SAFE_RELEASE_NULL(_indices);
 }
 
-bool Primitive::init(VertexData* verts, IndexBuffer* indices, PrimitiveType type)
+bool Primitive::init(VertexData* verts, IndexBuffer* indices, int type)
 {
     if( nullptr == verts ) return false;
     if(verts != _verts)
@@ -92,46 +92,15 @@ void Primitive::draw()
     if(_verts && _indices)
     {
         _verts->use();
-        switch (_type) {
-            case PrimitiveType::POINTS:
-                if(_indices!= nullptr)
-                {
-                    GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
-                    glDrawElements(GL_POINTS, _count, type, (GLvoid*)(_start * _indices->getSizePerIndex()));
-                }
-                else
-                {
-                    glDrawArrays(GL_POINTS, _count, _start);
-                }
-                break;
-            case PrimitiveType::LINES:
-                if(_indices!= nullptr)
-                {
-                    GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
-                    glDrawElements(GL_LINES, _count, type, (GLvoid*)(_start * _indices->getSizePerIndex()));
-                }
-                else
-                {
-                    glDrawArrays(GL_LINES, _count, _start);
-                }
-                break;
-            case PrimitiveType::TRIANGLES:
-                if(_indices!= nullptr)
-                {
-                    GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
-                    glDrawElements(GL_TRIANGLES, _count, type, (GLvoid*)(_start * _indices->getSizePerIndex()));
-                }
-                else
-                {
-                    glDrawArrays(GL_TRIANGLES, _count, _start);
-                }
-                break;
-            default:
-                CC_ASSERT(0);
-                break;
+        if(_indices!= nullptr)
+        {
+            GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
+            glDrawElements((GLenum)_type, _count, type, (GLvoid*)(_start * _indices->getSizePerIndex()));
+        }
+        else
+        {
+            glDrawArrays((GLenum)_type, _count, _start);
         }
     }
 }
