@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-tests", "..\tests\cpp-t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnetwork", "..\cocos\network\proj.win32\libNetwork.vcxproj", "{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblua", "..\cocos\scripting\lua-bindings\proj.win32\liblua.vcxproj", "{DDC3E27F-004D-4DD4-9DD3-931A013D2159}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-tests", "..\tests\lua-tests\project\proj.win32\lua-tests.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-empty-test", "..\tests\cpp-empty-test\proj.win32\cpp-empty-test.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
@@ -65,10 +63,6 @@ Global
 		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Debug|Win32.Build.0 = Debug|Win32
 		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Release|Win32.ActiveCfg = Release|Win32
 		{DF2638C0-8128-4847-867C-6EAFE3DEE7B5}.Release|Win32.Build.0 = Release|Win32
-		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.ActiveCfg = Debug|Win32
-		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Debug|Win32.Build.0 = Debug|Win32
-		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.ActiveCfg = Release|Win32
-		{DDC3E27F-004D-4DD4-9DD3-931A013D2159}.Release|Win32.Build.0 = Release|Win32
 		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.ActiveCfg = Debug|Win32
 		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.Build.0 = Debug|Win32
 		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.ActiveCfg = Release|Win32
