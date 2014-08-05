@@ -131,6 +131,11 @@ public:
     virtual void* getEAGLView() const { return nullptr; }
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	virtual Size getRenerTargetSize() const = 0;
+	virtual const Mat4& getOrientationMatrix() const = 0;
+	virtual const Mat4& getReverseOrientationMatrix() const = 0;
+#endif
     /**
      * Get the visible area size of opengl viewport.
      */

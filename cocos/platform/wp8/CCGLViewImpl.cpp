@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "deprecated/CCSet.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
@@ -54,11 +54,11 @@ using namespace PhoneDirect3DXamlAppComponent;
 
 NS_CC_BEGIN
 
-static GLView* s_pEglView = NULL;
+static GLViewImpl* s_pEglView = NULL;
 
-GLView* GLView::create(const std::string& viewName)
+GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLView;
+    auto ret = new GLViewImpl;
     if(ret && ret->initWithFullScreen(viewName))
     {
         ret->autorelease();
@@ -69,7 +69,7 @@ GLView* GLView::create(const std::string& viewName)
 }
 
 
-GLView::GLView()
+GLViewImpl::GLViewImpl()
 	: _frameZoomFactor(1.0f)
 	, _supportTouch(true)
     , _isRetina(false)
@@ -91,7 +91,7 @@ GLView::GLView()
     _viewName =  "cocos2dx";
 }
 
-GLView::~GLView()
+GLViewImpl::~GLViewImpl()
 {
 	CC_ASSERT(this == s_pEglView);
     s_pEglView = NULL;
@@ -99,7 +99,7 @@ GLView::~GLView()
 	// TODO: cleanup 
 }
 
-bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     setViewName(viewName);
     setFrameSize(rect.size.width, rect.size.height);
@@ -107,13 +107,13 @@ bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoo
     return true;
 }
 
-bool GLView::initWithFullScreen(const std::string& viewName)
+bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 {
     return initWithRect(viewName, Rect(0, 0, m_width, m_height), 1.0f);
 }
 
 
-bool GLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height, DisplayOrientations orientation)
+bool GLViewImpl::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height, DisplayOrientations orientation)
 {
     m_orientation = orientation;
     m_eglDisplay = eglDisplay;
@@ -123,7 +123,7 @@ bool GLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface egl
     return true;
 }
 
-void GLView::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface)
+void GLViewImpl::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface)
 {
     m_eglDisplay = eglDisplay;
     m_eglContext = eglContext;
@@ -132,7 +132,7 @@ void GLView::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurfa
     //UpdateForWindowSizeChange(width, height);
 }
 
-void GLView::setIMEKeyboardState(bool bOpen)
+void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
     if(m_delegate)
     {
@@ -147,34 +147,34 @@ void GLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-void GLView::swapBuffers()
+void GLViewImpl::swapBuffers()
 {
     eglSwapBuffers(m_eglDisplay, m_eglSurface);  
 }
 
 
-bool GLView::isOpenGLReady()
+bool GLViewImpl::isOpenGLReady()
 {
 	// TODO: need to revisit this
     return (m_eglDisplay && m_orientation != DisplayOrientations::None);
 }
 
-void GLView::end()
+void GLViewImpl::end()
 {
 	m_windowClosed = true;
 }
 
 
-void GLView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
+void GLViewImpl::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
 }
 
-void GLView::OnResuming(Platform::Object^ sender, Platform::Object^ args)
+void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 {
 }
 
 // user pressed the Back Key on the phone
-void GLView::OnBackKeyPress()
+void GLViewImpl::OnBackKeyPress()
 {
     if(m_delegate)
     {
@@ -182,12 +182,12 @@ void GLView::OnBackKeyPress()
     }
 }
 
-void GLView::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
+void GLViewImpl::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
     OnPointerPressed(args);
 }
 
-void GLView::OnPointerPressed(PointerEventArgs^ args)
+void GLViewImpl::OnPointerPressed(PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
     Vec2 pt = GetPoint(args);
@@ -195,7 +195,7 @@ void GLView::OnPointerPressed(PointerEventArgs^ args)
 }
 
 
-void GLView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
+void GLViewImpl::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
@@ -206,22 +206,22 @@ void GLView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
     handleTouchesEnd(1, &id, &p.x, &p.y);
 }
 
-void GLView::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEventArgs^ args)
+void GLViewImpl::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEventArgs^ args)
 {
 	m_windowVisible = args->Visible;
 }
 
-void GLView::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
+void GLViewImpl::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
 {
 	m_windowClosed = true;
 }
 
-void GLView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
+void GLViewImpl::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 {
     OnPointerMoved(args);   
 }
 
-void GLView::OnPointerMoved( PointerEventArgs^ args)
+void GLViewImpl::OnPointerMoved( PointerEventArgs^ args)
 {
 	auto currentPoint = args->CurrentPoint;
 	if (currentPoint->IsInContact)
@@ -241,12 +241,12 @@ void GLView::OnPointerMoved( PointerEventArgs^ args)
 	}
 }
 
-void GLView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
+void GLViewImpl::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
     OnPointerReleased(args);
 }
 
-void GLView::OnPointerReleased(PointerEventArgs^ args)
+void GLViewImpl::OnPointerReleased(PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
     Vec2 pt = GetPoint(args);
@@ -255,46 +255,46 @@ void GLView::OnPointerReleased(PointerEventArgs^ args)
 
 
 
-void GLView::resize(int width, int height)
+void GLViewImpl::resize(int width, int height)
 {
 
 }
 
-void GLView::setFrameZoomFactor(float fZoomFactor)
+void GLViewImpl::setFrameZoomFactor(float fZoomFactor)
 {
     _frameZoomFactor = fZoomFactor;
     Director::getInstance()->setProjection(Director::getInstance()->getProjection());
     //resize(m_obScreenSize.width * fZoomFactor, m_obScreenSize.height * fZoomFactor);
 }
 
-float GLView::getFrameZoomFactor()
+float GLViewImpl::getFrameZoomFactor()
 {
     return _frameZoomFactor;
 }
 
-void GLView::centerWindow()
+void GLViewImpl::centerWindow()
 {
 	// not implemented in WinRT. Window is always full screen
 }
 
-GLView* GLView::sharedOpenGLView()
+GLViewImpl* GLViewImpl::sharedOpenGLView()
 {
     return s_pEglView;
 }
 
-int GLView::Run() 
+int GLViewImpl::Run() 
 {
     // XAML version does not have a run loop
 	m_running = true; 
     return 0;
 };
 
-void GLView::Render()
+void GLViewImpl::Render()
 {
     OnRendering();
 }
 
-void GLView::OnRendering()
+void GLViewImpl::OnRendering()
 {
 	if(m_running && m_initialized)
 	{
@@ -304,7 +304,7 @@ void GLView::OnRendering()
 
 
 
-bool GLView::ShowMessageBox(Platform::String^ title, Platform::String^ message)
+bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ message)
 {
     if(m_messageBoxDelegate)
     {
@@ -314,7 +314,7 @@ bool GLView::ShowMessageBox(Platform::String^ title, Platform::String^ message)
     return false;
 }
 
-bool GLView::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
+bool GLViewImpl::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
 {
     if(m_editBoxDelegate)
     {
@@ -327,7 +327,7 @@ bool GLView::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^
 
 
 // called by orientation change from WP8 XAML
-void GLView::UpdateOrientation(DisplayOrientations orientation)
+void GLViewImpl::UpdateOrientation(DisplayOrientations orientation)
 {
     if(m_orientation != orientation)
     {
@@ -337,7 +337,7 @@ void GLView::UpdateOrientation(DisplayOrientations orientation)
 }
 
 // called by size change from WP8 XAML
-void GLView::UpdateForWindowSizeChange(float width, float height)
+void GLViewImpl::UpdateForWindowSizeChange(float width, float height)
 {
     m_width = width;
     m_height = height;
@@ -361,7 +361,7 @@ void GLViewEventHandler::OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int wi
 }
 #endif
 
-void GLView::UpdateWindowSize()
+void GLViewImpl::UpdateWindowSize()
 {
     float width, height;
 
@@ -382,7 +382,7 @@ void GLView::UpdateWindowSize()
     if(!m_initialized)
     {
         m_initialized = true;
-        GLViewProtocol::setFrameSize(width, height);
+        GLView::setFrameSize(width, height);
     }
 
     auto view = Director::getInstance()->getOpenGLView();
@@ -397,13 +397,13 @@ void GLView::UpdateWindowSize()
 	}
 }
 
-const Mat4& GLView::getOrientationMatrix() const 
+const Mat4& GLViewImpl::getOrientationMatrix() const 
 {
     return m_orientationMatrix;
 };
 
 
-void GLView::UpdateOrientationMatrix()
+void GLViewImpl::UpdateOrientationMatrix()
 {
     kmMat4Identity(&m_orientationMatrix);
     kmMat4Identity(&m_reverseOrientationMatrix);
@@ -429,7 +429,7 @@ void GLView::UpdateOrientationMatrix()
 	}
 }
 
-cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
+cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
 {
     cocos2d::Vec2 returnValue;
 
@@ -453,7 +453,7 @@ cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
             break;
     }
 
-	float zoomFactor = GLView::sharedOpenGLView()->getFrameZoomFactor();
+	float zoomFactor = GLViewImpl::sharedOpenGLView()->getFrameZoomFactor();
 	if(zoomFactor > 0.0f) {
 		returnValue.x /= zoomFactor;
 		returnValue.y /= zoomFactor;
@@ -464,14 +464,14 @@ cocos2d::Vec2 GLView::TransformToOrientation(Windows::Foundation::Point p)
     return returnValue;
 }
 
-Vec2 GLView::GetPoint(PointerEventArgs^ args) {
+Vec2 GLViewImpl::GetPoint(PointerEventArgs^ args) {
 
 	return TransformToOrientation(args->CurrentPoint->Position);
 
 }
 
 
-void GLView::setViewPortInPoints(float x , float y , float w , float h)
+void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
     switch(m_orientation)
 	{
@@ -491,7 +491,7 @@ void GLView::setViewPortInPoints(float x , float y , float w , float h)
 	}
 }
 
-void GLView::setScissorInPoints(float x , float y , float w , float h)
+void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 {
     switch(m_orientation)
 	{
@@ -511,27 +511,27 @@ void GLView::setScissorInPoints(float x , float y , float w , float h)
 	}
 }
 
-void GLView::QueueBackKeyPress()
+void GLViewImpl::QueueBackKeyPress()
 {
     std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
     mInputEvents.push(e);
 }
 
-void GLView::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
+void GLViewImpl::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
     std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mInputEvents.push(e);
 }
 
-void GLView::QueueEvent(std::shared_ptr<InputEvent>& event)
+void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)
 {
     std::lock_guard<std::mutex> guard(mMutex);
     mInputEvents.push(event);
 }
 
-void GLView::ProcessEvents()
+void GLViewImpl::ProcessEvents()
 {
     std::lock_guard<std::mutex> guard(mMutex);
 
