@@ -208,9 +208,6 @@ bool Widget::init()
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
 
         ignoreContentAdaptWithSize(true);
-
-        this->setCascadeColorEnabled(true);
-        this->setCascadeOpacityEnabled(true);
         
         return true;
     }
