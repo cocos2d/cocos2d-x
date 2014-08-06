@@ -960,6 +960,9 @@ Developers:
         
     Hamken100per
         Added a function getAssetManager() on CCFileUtilsAndroid
+        
+    rny
+        Fixed LabelTTF::getBoundingBox() position error
     
 Retired Core Developers:
     WenSheng Yang
