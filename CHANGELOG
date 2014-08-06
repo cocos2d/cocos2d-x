@@ -15,6 +15,8 @@ cocos2d-x-3.3  ??
     [FIX]           EditBox: began/end events not work
     [FIX]           Label: can not set charmap after it is created
     [FIX]           Label: setTextColor does not have any effect on Mac OS X
+    [FIX]           Label: result of LabelTTF::getBoundingBox() is wrong
+    [FIX]           LabelBMFont: result of LabelBMFont::getBoundingBox() is wrong
     [FIX]           ParticleSystem: effect is wrong if scene scaled
     [FIX]           ParticleSystemQuad: setTotalParticles() can't set a value larger than initialized value
     [FIX]           Scale9Sprite: new added sprite will be hidden
