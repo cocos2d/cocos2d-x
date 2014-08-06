@@ -38,7 +38,6 @@ option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" OFF)
-option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
@@ -51,7 +50,6 @@ option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" ON)
-option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
@@ -60,19 +58,21 @@ option(BUILD_CppTests "Only build TestCpp sample" ON)
 option(BUILD_LuaTests "Only build TestLua sample" ON)
 endif()#temp
 
-
+#This is ignored on multi configuration IDE like MSVC
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
 else(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
 
-set(CMAKE_C_FLAGS_DEBUG "-DCOCOS2D_DEBUG=1")
-set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
 
 if(WIN32)
-  ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
-
+  ADD_DEFINITIONS (-D_USRDLL -D_USEGUIDLL -D_USREXDLL -DIGNORE_EXPORT -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
+  if(BUILD_EDITOR_COCOSTUDIO)
+    ADD_DEFINITIONS (-D_USRSTUDIODLL)
+  endif(BUILD_EDITOR_COCOSTUDIO)
   if(MSVC)
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS 
 					-D_SCL_SECURE_NO_WARNINGS 
@@ -143,6 +143,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
   ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
   ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/sqlite3/include
   ${CMAKE_CURRENT_SOURCE_DIR}/external/edtaa3func
   ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
   ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
@@ -184,10 +185,15 @@ if(WIN32)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/sqlite3/libraries/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER}
   )
   endif()
 
@@ -208,11 +214,13 @@ else()
 
 endif()
 
-# chipmunk library
-add_subdirectory(external/chipmunk/src)
-
-# box2d library
-add_subdirectory(external/Box2D)
+if(USE_CHIPMUNK)
+  # chipmunk library
+  add_subdirectory(external/chipmunk/src)
+elseif(USE_BOX2D)
+  # box2d library
+  add_subdirectory(external/Box2D)
+endif()
 
 # unzip library
 add_subdirectory(external/unzip)
@@ -229,10 +237,8 @@ add_subdirectory(cocos/audio)
 # cocos2d library
 add_subdirectory(cocos)
 
-if(BUILD_EXTENSIONS)
 # extensions
 add_subdirectory(extensions)
-endif(BUILD_EXTENSIONS)
 
 ## Editor Support
 
@@ -267,10 +273,8 @@ add_subdirectory(external/xxtea)
 endif(BUILD_LIBS_LUA)
 
 # build tests 
-
-add_subdirectory(tests/cpp-empty-test)
-
 if(BUILD_CppTests)
+add_subdirectory(tests/cpp-empty-test)
 add_subdirectory(tests/cpp-tests)
 endif(BUILD_CppTests)
 
