@@ -1,7 +1,7 @@
 #/****************************************************************************
 # Copyright (c) 2013 cocos2d-x.org
-# Copyright (c) 2012-2013 martell malone
-# 
+# Copyright (c) 2014 martell malone
+#
 # http://www.cocos2d-x.org
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,38 +28,28 @@ project (Cocos2dx)
 
 # The version number
 set(Cocos2dxSamples_VERSION_MAJOR 3)
-set(Cocos2dxSamples_VERSION_MINOR 0)
+set(Cocos2dxSamples_VERSION_MINOR 1)
 
 include(build/BuildHelpers.CMakeLists.txt)
 
-if(WIN32 OR APPLE)
+message(${BUILDING_STRING})
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
-option(BUILD_LIBS_LUA "Build lua libraries" OFF)
 option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-
 option(BUILD_CppTests "Only build TestCpp sample" ON)
-option(BUILD_LuaTests "Only build TestLua sample" OFF)
-else()#temp
 
-option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
-option(USE_BOX2D "Use box2d for physics library" OFF)
-option(DEBUG_MODE "Debug or release?" ON)
-option(BUILD_LIBS_LUA "Build lua libraries" ON)
-option(BUILD_EXTENSIONS "Build extension library" ON)
-option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
-option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
-option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-
-option(BUILD_CppTests "Only build TestCpp sample" ON)
-option(BUILD_LuaTests "Only build TestLua sample" ON)
-endif()#temp
-
+if(NOT LINUX)
+  option(BUILD_LIBS_LUA "Build lua libraries" OFF)
+  option(BUILD_LuaTests "Only build TestLua sample" OFF)
+else()
+  option(BUILD_LIBS_LUA "Build lua libraries" ON)
+  option(BUILD_LuaTests "Only build TestLua sample" ON)
+endif()
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -70,31 +60,25 @@ endif(DEBUG_MODE)
 set(CMAKE_C_FLAGS_DEBUG "-DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
-if(WIN32)
+if(MSVC)
+  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
+                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
+                  -wd4514 -wd4056 -wd4996 -wd4099)
+else()
+  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
+  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+  set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} " -fno-exceptions -std=c99")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11")
+endif(MSVC)
+
+if(WINDOWS)
   ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
-
-  if(MSVC)
-    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS 
-					-D_SCL_SECURE_NO_WARNINGS 
-					-wd4251 -wd4244 -wd4334 
-					-wd4005 -wd4820 -wd4710
-					-wd4514 -wd4056 -wd4996 -wd4099)
-  else(MSVC)#MINGW
-  
-  endif(MSVC)
-elseif(APPLE)
-
-
-else()#Linux
-ADD_DEFINITIONS(-DLINUX)
-endif()
-
-
-if(NOT MSVC)# all gcc
-set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
-set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-std=c99")
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
+  set(PLATFORM_FOLDER win32)
+elseif(MACOSX)
+  set(PLATFORM_FOLDER mac)
+else(LINUX)
+  ADD_DEFINITIONS(-DLINUX)
+  set(PLATFORM_FOLDER linux)
 endif()
 
 if(MINGW)
@@ -102,8 +86,12 @@ if(MINGW)
   add_definitions(-D__SSIZE_T)
   set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES} -lws2_32")
   set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lws2_32")
-endif()
 
+  if(CLANG)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions ")
+  endif()
+endif()
 
 if(USE_CHIPMUNK)
   message("Using chipmunk ...")
@@ -120,14 +108,6 @@ if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 set(ARCH_DIR "64-bit")
 else()
 set(ARCH_DIR "32-bit")
-endif()
-
-if(WIN32) # Win32
-  set(PLATFORM_FOLDER win32)
-elseif(APPLE)# osx or ios
-  set(PLATFORM_FOLDER mac)
-else() # Assume Linux
-  set(PLATFORM_FOLDER linux)
 endif()
 
 include_directories(
@@ -156,18 +136,18 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external/xxtea
 )
 
-if(WIN32 AND NOT MINGW)
+if(MSVC)
   include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/zlib/include
     external/curl/include/${PLATFORM_FOLDER}
   )
-elseif(APPLE)
+elseif(MACOSX)
   include_directories(
-  	${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
+   ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
   )
-else()
+elseif(LINUX)
   include_directories(
     /usr/include
     /usr/include/GLFW
@@ -177,9 +157,8 @@ else()
 endif()
 
 
-if(WIN32)
+if(MSVC)
 
-  if(NOT MINGW)
   link_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER}
@@ -189,11 +168,8 @@ if(WIN32)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt
     ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt
   )
-  endif()
 
-elseif(APPLE)
-
-else()
+elseif(LINUX)
 
   link_directories(
     /usr/local/lib
@@ -266,7 +242,7 @@ add_subdirectory(cocos/scripting/lua-bindings)
 add_subdirectory(external/xxtea)
 endif(BUILD_LIBS_LUA)
 
-# build tests 
+# build tests
 
 add_subdirectory(tests/cpp-empty-test)
 

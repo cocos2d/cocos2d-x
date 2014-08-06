@@ -13,4 +13,3 @@ set(COCOS_3D_SRC
   3d/CCMeshSkin.cpp
   3d/CCBundleReader.cpp
 )
-

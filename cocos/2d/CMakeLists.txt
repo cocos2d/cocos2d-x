@@ -1,9 +1,3 @@
-if(WIN32)
-
-ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
-
-endif()
-
 include_directories(
   ../external/ConvertUTF
 )
@@ -76,4 +70,3 @@ set(COCOS_2D_SRC
   2d/CCTransitionProgress.cpp
   2d/CCTweenFunction.cpp
 )
-
