@@ -55,6 +55,18 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(scene);
         }
     },
+    {
+        "LayoutComponent Test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kLayoutComponentBasicTest);
+            sceneManager->setMinUISceneId(kLayoutComponentBasicTest);
+            sceneManager->setMaxUISceneId(kLayoutComponentBasicTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
 	{
         
         "ButtonTest",
