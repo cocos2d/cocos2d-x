@@ -694,7 +694,7 @@ Developers:
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
         Fixed that ScrollView should implement ActionTweenDelegate.
-        Fixed LabelTTF::getBoundingBox() position error
+        Fixed LabelBMFont::getBoundingBox() position error
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
