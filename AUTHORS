@@ -743,6 +743,7 @@ Developers:
         Corrected a few mistakes in the README file of project-creator.
         Corrected a mistake in README.
         Fixed a bug that a string which only contains CJK characters can't make a line-break when it's needed.
+        Fixed a bug that if the UISlider is faded, the slide ball won't fade together
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
