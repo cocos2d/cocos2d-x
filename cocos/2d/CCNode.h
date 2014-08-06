@@ -1483,7 +1483,10 @@ public:
     void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
     const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
     void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
-    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
+    
+    unsigned short getCameraMask() const { return _cameraMask; }
+    void setCameraMask(unsigned short mask, bool applyChildren = true);
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1622,6 +1625,9 @@ protected:
     bool        _cascadeOpacityEnabled;
 
     static int s_globalOrderOfArrival;
+    
+    // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
+    unsigned short _cameraMask;
     
     std::function<void()> _onEnterCallback;
     std::function<void()> _onExitCallback;

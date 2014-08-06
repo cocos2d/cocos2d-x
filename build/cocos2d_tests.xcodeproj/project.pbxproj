@@ -904,6 +904,8 @@
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
+		3EA3EDC81992205100645534 /* Camera3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA3EDC61992205100645534 /* Camera3DTest.cpp */; };
+		3EA3EDC91992205100645534 /* Camera3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA3EDC61992205100645534 /* Camera3DTest.cpp */; };
 		59620E8F1921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		59620E901921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -3502,6 +3504,8 @@
 		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
 		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
+		3EA3EDC61992205100645534 /* Camera3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera3DTest.cpp; path = Camera3DTest/Camera3DTest.cpp; sourceTree = "<group>"; };
+		3EA3EDC71992205100645534 /* Camera3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera3DTest.h; path = Camera3DTest/Camera3DTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		59620E8D1921E5CF002021B6 /* Bug-Child.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-Child.cpp"; sourceTree = "<group>"; };
 		59620E8E1921E5CF002021B6 /* Bug-Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-Child.h"; sourceTree = "<group>"; };
@@ -6033,6 +6037,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3EA3EDC51992202600645534 /* Camera3DTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
 				1AC3592E18CECF0A00F37B72 /* ActionsProgressTest */,
@@ -7719,6 +7724,15 @@
 			path = UIVideoPlayerTest;
 			sourceTree = "<group>";
 		};
+		3EA3EDC51992202600645534 /* Camera3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				3EA3EDC61992205100645534 /* Camera3DTest.cpp */,
+				3EA3EDC71992205100645534 /* Camera3DTest.h */,
+			);
+			name = Camera3DTest;
+			sourceTree = "<group>";
+		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -8787,6 +8801,7 @@
 				1AC35C2718CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BEF18CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				29080D91191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
+				3EA3EDC81992205100645534 /* Camera3DTest.cpp in Sources */,
 				29080DC1191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
 				1AC35B2B18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35B7D18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
@@ -8946,6 +8961,7 @@
 				1AC35C1618CECF0C00F37B72 /* MenuTest.cpp in Sources */,
 				1AC35C6818CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
 				29080D1D191B574B0066F8DF /* UITest.cpp in Sources */,
+				3EA3EDC91992205100645534 /* Camera3DTest.cpp in Sources */,
 				1AF152DA18FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */,
 				29080DA0191B595E0066F8DF /* CustomReader.cpp in Sources */,
 				1AC35C2218CECF0C00F37B72 /* ParallaxTest.cpp in Sources */,
