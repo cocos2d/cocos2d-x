@@ -302,7 +302,7 @@ void VideoPlayer::setURL(const std::string& videoUrl)
 void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     cocos2d::ui::Widget::draw(renderer,transform,flags);
-
+    
     if (flags & FLAGS_TRANSFORM_DIRTY)
     {
         auto directorInstance = Director::getInstance();
@@ -322,7 +322,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
                                                           :(rightTop.x - leftBottom.x) * glView->getScaleX() / scaleFactor
                                                           :( (rightTop.y - leftBottom.y) * glView->getScaleY()/scaleFactor)];
     }
-
+    
 #if CC_VIDEOPLAYER_DEBUG_DRAW
     _customDebugDrawCommand.init(_globalZOrder);
     _customDebugDrawCommand.func = CC_CALLBACK_0(VideoPlayer::drawDebugData, this);
