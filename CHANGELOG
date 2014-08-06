@@ -21,6 +21,7 @@ cocos2d-x-3.3  ??
     [FIX]           UIListView: can not insert an item in specific position, it is added at bottom
     [FIX]           TabelView: can handle touch event though its parents are invisible
     [FIX]           TextField: can not use backspace to delete a character
+    [FIX]           UISlider: if the UISlider is faded, the slide ball won't fade together
     [FIX]           UIVideoPlayer: video frame size is not calculated correctly on iOS
     [FIX]           UIWidget: may crash if remove itself in touch call back function
     [FIX]           VideoPlayer: memory leak on iOS
