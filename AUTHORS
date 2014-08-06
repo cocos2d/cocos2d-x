@@ -956,6 +956,9 @@ Developers:
         
     maltium 
         Added 3D rotation support to RotateTo action
+        
+    Hamken100per
+        Added a function getAssetManager() on CCFileUtilsAndroid
     
 Retired Core Developers:
     WenSheng Yang
