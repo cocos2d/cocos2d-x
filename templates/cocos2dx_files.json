@@ -2031,6 +2031,7 @@
         "external/linux-specific/fmod/prebuilt/64-bit/libfmodex64.so", 
         "external/linux-specific/fmod/prebuilt/64-bit/libfmodexL64-4.38.00.so", 
         "external/linux-specific/fmod/prebuilt/64-bit/libfmodexL64.so", 
+        "external/missing files?.txt", 
         "external/nslog/CCNSLog.h", 
         "external/nslog/ios/CCNSLog.mm", 
         "external/nslog/ios/LoggerClient.h", 
@@ -3574,6 +3575,7 @@
         "tools/gen-prebuilt/gen_prebuilt_libs.py", 
         "tools/gen-prebuilt/module_config.json", 
         "tools/gen-prebuilt/module_organize.py", 
+        "tools/missing tools?.txt", 
         "tools/particle/convert_YCoordFlipped.py"
     ], 
     "lua": [
