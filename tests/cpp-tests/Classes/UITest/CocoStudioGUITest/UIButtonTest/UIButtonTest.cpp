@@ -219,6 +219,11 @@ bool UIButtonTest_PressedAction::init()
         button->setName("button");
         _uiLayer->addChild(button);
         
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setPosition(button->getPosition() + Vec2(100,0));
+        button2->setName("button2");
+        _uiLayer->addChild(button2);
+        
         return true;
     }
     return false;
@@ -241,6 +246,9 @@ void UIButtonTest_PressedAction::touchEvent(Ref *pSender, Widget::TouchEventType
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
             Button* btn = (Button*)_uiLayer->getChildByName("button");
             btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
+            
+            Button* btn2 = (Button*)_uiLayer->getChildByName("button2");
+            btn2->setAnchorPoint(Vec2(0,0.5));
         }
             break;
             

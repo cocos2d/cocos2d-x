@@ -12,6 +12,15 @@
 -- @param #string str
 
 --------------------------------
+-- @function [parent=#Sprite3D] removeAllAttachNode 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Sprite3D] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendfunc
+        
+--------------------------------
 -- @function [parent=#Sprite3D] getMesh 
 -- @param self
 -- @return Mesh#Mesh ret (return value: cc.Mesh)
@@ -22,9 +31,15 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- @function [parent=#Sprite3D] setBlendFunc 
+-- @function [parent=#Sprite3D] removeAttachNode 
 -- @param self
--- @param #cc.BlendFunc blendfunc
+-- @param #string str
+        
+--------------------------------
+-- @function [parent=#Sprite3D] getAttachNode 
+-- @param self
+-- @param #string str
+-- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
         
 --------------------------------
 -- @overload self, string, string         

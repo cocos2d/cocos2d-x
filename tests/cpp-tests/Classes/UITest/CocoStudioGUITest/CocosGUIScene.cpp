@@ -50,7 +50,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScale9SpriteTest);
             sceneManager->setMinUISceneId(kUIScale9SpriteTest);
-            sceneManager->setMaxUISceneId(kUIS9Flip);
+            sceneManager->setMaxUISceneId(kUIS9ChangeAnchorPoint);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

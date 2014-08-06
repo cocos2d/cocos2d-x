@@ -20,8 +20,12 @@ bool UIRichTextTest::init()
     {
         Size widgetSize = _widget->getContentSize();
         
-        std::string str1 = "中国中国中";
-        std::string str2 = "ご静聴ありがとうございました！！ご静聴ありがとうございました！！";
+        auto config = Configuration::getInstance();
+        config->loadConfigFile("configs/config-test-ok.plist");
+        
+        
+        std::string str1 = config->getValue("Chinese").asString();
+        std::string str2 = config->getValue("Japanese").asString();
         CCLOG("str1:%s ascii length = %ld, utf8 length = %ld, substr = %s",
               str1.c_str(),
               str1.length(),
@@ -54,9 +58,9 @@ bool UIRichTextTest::init()
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
         
-        RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, "中国中国中国中国中国中国中国中国中国中国", "Marker Felt", 10);
+        RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, str1, "Marker Felt", 10);
         RichElementText* re2 = RichElementText::create(2, Color3B::YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
-        RichElementText* re3 = RichElementText::create(3, Color3B::GRAY, 255, "ご静聴ありがとうございました！！ご静聴ありがとうございました！！", "Helvetica", 10);
+        RichElementText* re3 = RichElementText::create(3, Color3B::GRAY, 255, str2, "Helvetica", 10);
         RichElementText* re4 = RichElementText::create(4, Color3B::GREEN, 255, "And green with TTF support. ", "fonts/Marker Felt.ttf", 10);
         RichElementText* re5 = RichElementText::create(5, Color3B::RED, 255, "Last one is red ", "Helvetica", 10);
         

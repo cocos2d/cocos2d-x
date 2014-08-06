@@ -84,7 +84,7 @@ void Device::setAccelerometerEnabled(bool isEnabled)
             acc.timestamp = 0;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            auto orientation = GLView::sharedOpenGLView()->getDeviceOrientation();
+            auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
 
             switch (orientation)
             {
@@ -115,7 +115,7 @@ void Device::setAccelerometerEnabled(bool isEnabled)
             }
 #endif
 	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
-            cocos2d::GLView::sharedOpenGLView()->QueueEvent(event);
+            cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
 		});
 	}
 	else

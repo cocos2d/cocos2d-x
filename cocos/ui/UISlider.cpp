@@ -119,6 +119,8 @@ void Slider::initRenderer()
     _slidBallRenderer->addChild(_slidBallNormalRenderer);
     _slidBallRenderer->addChild(_slidBallPressedRenderer);
     _slidBallRenderer->addChild(_slidBallDisabledRenderer);
+    _slidBallRenderer->setCascadeColorEnabled(true);
+    _slidBallRenderer->setCascadeOpacityEnabled(true);
     
     addProtectedChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
 }
@@ -407,6 +409,7 @@ void Slider::addEventListener(const ccSliderCallback& callback)
 
 void Slider::percentChangedEvent()
 {
+    this->retain();
     if (_sliderEventListener && _sliderEventSelector)
     {
         (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
@@ -414,6 +417,7 @@ void Slider::percentChangedEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
+    this->release();
 }
 
 int Slider::getPercent()const

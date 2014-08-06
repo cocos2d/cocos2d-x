@@ -107,6 +107,7 @@ enum
     kUIS9CascadeOpacityAndColor,
     kUIS9ZOrder,
     kUIS9Flip,
+    kUIS9ChangeAnchorPoint,
     kUITestMax
 };
 

@@ -1577,6 +1577,7 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
 
 void ScrollView::scrollToTopEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
@@ -1584,10 +1585,12 @@ void ScrollView::scrollToTopEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_TOP);
     }
+    this->release();
 }
 
 void ScrollView::scrollToBottomEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
@@ -1595,10 +1598,12 @@ void ScrollView::scrollToBottomEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_BOTTOM);
     }
+    this->release();
 }
 
 void ScrollView::scrollToLeftEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
@@ -1606,10 +1611,12 @@ void ScrollView::scrollToLeftEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_LEFT);
     }
+    this->release();
 }
 
 void ScrollView::scrollToRightEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
@@ -1617,10 +1624,12 @@ void ScrollView::scrollToRightEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_RIGHT);
     }
+    this->release();
 }
 
 void ScrollView::scrollingEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
@@ -1628,10 +1637,12 @@ void ScrollView::scrollingEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLLING);
     }
+    this->release();
 }
 
 void ScrollView::bounceTopEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
@@ -1639,10 +1650,12 @@ void ScrollView::bounceTopEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_TOP);
     }
+    this->release();
 }
 
 void ScrollView::bounceBottomEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
@@ -1650,10 +1663,12 @@ void ScrollView::bounceBottomEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_BOTTOM);
     }
+    this->release();
 }
 
 void ScrollView::bounceLeftEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
@@ -1661,10 +1676,12 @@ void ScrollView::bounceLeftEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_LEFT);
     }
+    this->release();
 }
 
 void ScrollView::bounceRightEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
@@ -1672,6 +1689,7 @@ void ScrollView::bounceRightEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_RIGHT);
     }
+    this->release();
 }
 
 void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)

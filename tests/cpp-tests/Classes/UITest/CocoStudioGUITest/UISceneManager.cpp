@@ -109,6 +109,7 @@ static const char* s_testArray[] =
     "UIS9CascadeOpacityAndColor",
     "UIS9ZOrder",
     "UIS9Flip",
+    "UIS9ChangeAnchorPoint",
 };
 
 static UISceneManager *sharedInstance = nullptr;
@@ -352,6 +353,8 @@ Scene *UISceneManager::currentUIScene()
             return UIS9ZOrder::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9Flip:
             return UIS9Flip::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9ChangeAnchorPoint:
+            return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return nullptr;
 }

@@ -50,9 +50,10 @@ struct MeshVertexAttrib
 /**mesh data*/
 struct MeshData
 {
+    typedef std::vector<unsigned short> IndexArray;
     std::vector<float> vertex;
     int vertexSizeInFloat;
-    std::vector<unsigned short> indices;
+    std::vector<IndexArray> subMeshIndices;
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
@@ -61,7 +62,7 @@ public:
     void resetData()
     {
         vertex.clear();
-        indices.clear();
+        subMeshIndices.clear();
         attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;
@@ -104,30 +105,22 @@ struct SkinData
 
     void addSkinBoneNames(const std::string& name)
     {
-        for (auto iter : skinBoneNames)
-        {
-            if ((iter) == name)
-                return;
-        }
-        
-        skinBoneNames.push_back(name);
+        auto it = std::find(skinBoneNames.begin(), skinBoneNames.end(), name);
+        if (it == skinBoneNames.end())
+            skinBoneNames.push_back(name);
     }
     
     void addNodeBoneNames(const std::string& name)
     {
-        for (auto iter : nodeBoneNames)
-        {
-            if ((iter) == name)
-                return;
-        }
-        
-        nodeBoneNames.push_back(name);
+        auto it = std::find(nodeBoneNames.begin(), nodeBoneNames.end(), name);
+        if (it == nodeBoneNames.end())
+            nodeBoneNames.push_back(name);
     }
     
     int getSkinBoneNameIndex(const std::string& name)const
     {
         int i = 0;
-        for (auto iter : skinBoneNames)
+        for (const auto& iter : skinBoneNames)
         {
             if ((iter) == name)
                 return i;
@@ -139,13 +132,13 @@ struct SkinData
     int getBoneNameIndex(const std::string& name)const
     {
         int i = 0;
-        for (auto iter : skinBoneNames)
+        for (const auto& iter : skinBoneNames)
         {
             if ((iter) == name)
                 return i;
             i++;
         }
-        for(auto iter : nodeBoneNames)
+        for(const auto& iter : nodeBoneNames)
         {
             if (iter == name)
                 return i;
@@ -156,10 +149,54 @@ struct SkinData
 
 };
 
+/**skin data*/
+struct Skeleton3DData
+{
+    std::vector<std::string> boneNames; //bone names
+    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone
+    std::vector<Mat4>        boneOriginMatrices; // original bone transform
+    
+    //bone child info, both skinbone and node bone
+    std::map<int, std::vector<int> > boneChild;//key parent, value child
+    int                              rootBoneIndex;
+    
+    void resetData()
+    {
+        boneNames.clear();
+        inverseBindPoseMatrices.clear();
+        boneOriginMatrices.clear();
+        boneChild.clear();
+        rootBoneIndex = -1;
+    }
+    
+    void addBoneNames(const std::string& name)
+    {
+        auto it = std::find(boneNames.begin(), boneNames.end(), name);
+        if (it == boneNames.end())
+            boneNames.push_back(name);
+    }
+    
+    int getBoneNameIndex(const std::string& name)const
+    {
+        int i = 0;
+        for (auto iter : boneNames)
+        {
+            if ((iter) == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+};
+
 /**material data*/
 struct MaterialData
 {
-    std::string texturePath;
+    std::map<int, std::string> texturePaths; //submesh id, texture path
+    void resetData()
+    {
+        texturePaths.clear();
+    }
 };
 
 /**animation data*/
@@ -223,7 +260,7 @@ public:
     {
     }
     
-    void clear()
+    void resetData()
     {
         _totalTime = 0;
         _translationKeys.clear();

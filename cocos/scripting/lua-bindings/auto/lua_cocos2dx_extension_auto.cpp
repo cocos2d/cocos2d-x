@@ -9758,7 +9758,7 @@ int lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_updateTweenAction(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -9778,7 +9778,56 @@ int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setBounceable'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_updateTweenAction'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        double arg0;
+        std::string arg1;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.ScrollView:updateTweenAction");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.ScrollView:updateTweenAction");
+        if(!ok)
+            return 0;
+        cobj->updateTweenAction(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:updateTweenAction",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_updateTweenAction'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_ScrollView_setMaxScale(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setMaxScale'", nullptr);
         return 0;
     }
 #endif
@@ -9786,20 +9835,20 @@ int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        bool arg0;
+        double arg0;
 
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ScrollView:setBounceable");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.ScrollView:setMaxScale");
         if(!ok)
             return 0;
-        cobj->setBounceable(arg0);
+        cobj->setMaxScale(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setBounceable",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setMaxScale",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setBounceable'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setMaxScale'.",&tolua_err);
 #endif
 
     return 0;
@@ -9892,7 +9941,7 @@ int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_ScrollView_updateTweenAction(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setMinScale(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -9912,31 +9961,28 @@ int lua_cocos2dx_extension_ScrollView_updateTweenAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_updateTweenAction'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setMinScale'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 1) 
     {
         double arg0;
-        std::string arg1;
 
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.ScrollView:updateTweenAction");
-
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.ScrollView:updateTweenAction");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.ScrollView:setMinScale");
         if(!ok)
             return 0;
-        cobj->updateTweenAction(arg0, arg1);
+        cobj->setMinScale(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:updateTweenAction",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setMinScale",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_updateTweenAction'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setMinScale'.",&tolua_err);
 #endif
 
     return 0;
@@ -10830,6 +10876,52 @@ int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setBounceable'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ScrollView:setBounceable");
+        if(!ok)
+            return 0;
+        cobj->setBounceable(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setBounceable",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setBounceable'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_extension_ScrollView_onTouchBegan(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11185,10 +11277,11 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"onTouchEnded",lua_cocos2dx_extension_ScrollView_onTouchEnded);
         tolua_function(tolua_S,"setContentOffsetInDuration",lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration);
         tolua_function(tolua_S,"setZoomScaleInDuration",lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration);
-        tolua_function(tolua_S,"setBounceable",lua_cocos2dx_extension_ScrollView_setBounceable);
+        tolua_function(tolua_S,"updateTweenAction",lua_cocos2dx_extension_ScrollView_updateTweenAction);
+        tolua_function(tolua_S,"setMaxScale",lua_cocos2dx_extension_ScrollView_setMaxScale);
         tolua_function(tolua_S,"getDirection",lua_cocos2dx_extension_ScrollView_getDirection);
         tolua_function(tolua_S,"getContainer",lua_cocos2dx_extension_ScrollView_getContainer);
-        tolua_function(tolua_S,"updateTweenAction",lua_cocos2dx_extension_ScrollView_updateTweenAction);
+        tolua_function(tolua_S,"setMinScale",lua_cocos2dx_extension_ScrollView_setMinScale);
         tolua_function(tolua_S,"getZoomScale",lua_cocos2dx_extension_ScrollView_getZoomScale);
         tolua_function(tolua_S,"updateInset",lua_cocos2dx_extension_ScrollView_updateInset);
         tolua_function(tolua_S,"initWithViewSize",lua_cocos2dx_extension_ScrollView_initWithViewSize);
@@ -11208,6 +11301,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"onTouchCancelled",lua_cocos2dx_extension_ScrollView_onTouchCancelled);
         tolua_function(tolua_S,"getViewSize",lua_cocos2dx_extension_ScrollView_getViewSize);
         tolua_function(tolua_S,"maxContainerOffset",lua_cocos2dx_extension_ScrollView_maxContainerOffset);
+        tolua_function(tolua_S,"setBounceable",lua_cocos2dx_extension_ScrollView_setBounceable);
         tolua_function(tolua_S,"onTouchBegan",lua_cocos2dx_extension_ScrollView_onTouchBegan);
         tolua_function(tolua_S,"isTouchMoved",lua_cocos2dx_extension_ScrollView_isTouchMoved);
         tolua_function(tolua_S,"isNodeVisible",lua_cocos2dx_extension_ScrollView_isNodeVisible);
