@@ -337,6 +337,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class SpriteFramesFromFileContent : public SpriteTestDemo
+{
+public:
+	CREATE_FUNC(SpriteFramesFromFileContent);
+
+	virtual void onEnter() override;
+	virtual void onExit() override;
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+};
+
 class SpriteOffsetAnchorRotation: public SpriteTestDemo
 {
 public:

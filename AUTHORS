@@ -108,6 +108,7 @@ Developers:
         Added support for x64 target of windows.
         Added Dutch Language support.
         Added clang support for Windows.
+        Cmake update and remove old scripts from build folder
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -963,6 +964,7 @@ Developers:
         
     rny
         Fixed LabelTTF::getBoundingBox() position error
+        SpriteFrameCache load from plist file content data
     
 Retired Core Developers:
     WenSheng Yang

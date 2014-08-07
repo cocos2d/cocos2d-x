@@ -16,4 +16,3 @@ set(COCOS_RENDERER_SRC
 	renderer/CCTextureAtlas.cpp
 	renderer/CCTextureCache.cpp
 )
-
