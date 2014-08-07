@@ -79,6 +79,7 @@ cocos2d.cpp \
 3d/CCAttachNode.cpp \
 3d/CCBundle3D.cpp \
 3d/CCBundleReader.cpp \
+3d/CCDrawNode3D.cpp \
 3d/CCMesh.cpp \
 3d/CCMeshSkin.cpp \
 3d/CCSprite3DMaterial.cpp \
@@ -103,6 +104,7 @@ math/Vec2.cpp \
 math/Vec3.cpp \
 math/Vec4.cpp \
 base/CCAutoreleasePool.cpp \
+base/CCCamera.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
 base/CCData.cpp \
