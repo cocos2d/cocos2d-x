@@ -182,6 +182,7 @@ bool UILayoutComponentNonNormalizedPositionTest::init()
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_LEFT);
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+                        imageView->setContentSize(Size(400,240));
                     }
                         break;
                     case 2:
@@ -194,6 +195,7 @@ bool UILayoutComponentNonNormalizedPositionTest::init()
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_RIGHT);
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+                        imageView->setContentSize(Size(300,180));
                     }
                         break;
                     default:
