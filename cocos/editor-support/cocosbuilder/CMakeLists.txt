@@ -23,17 +23,12 @@ set(CCB_SRC
   CCNode+CCBRelativePositioning.cpp
 )
 
-include_directories(
-  ..
-)
+include_directories( .. )
 
-add_library(cocosbuilder STATIC
-  ${CCB_SRC}
-)
+add_library(cocosbuilder STATIC ${CCB_SRC})
 
 set_target_properties(cocosbuilder
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
-

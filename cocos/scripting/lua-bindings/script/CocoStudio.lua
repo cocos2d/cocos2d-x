@@ -371,3 +371,9 @@ end
 function ccs.TriggerMng:isEmpty()
     return (not (nil == self._eventTriggers)) or table.getn(self._eventTriggers) <= 0
 end
+
+function __onParseConfig(configType,jasonStr)
+    if configType == cc.ConfigType.COCOSTUDIO then
+        ccs.TriggerMng.getInstance():parse(jasonStr)
+    end
+end

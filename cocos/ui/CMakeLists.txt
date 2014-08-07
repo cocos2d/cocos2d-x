@@ -24,4 +24,3 @@ set(COCOS_UI_SRC
   ui/UIDeprecated.cpp
   ui/UIScale9Sprite.cpp
 )
-

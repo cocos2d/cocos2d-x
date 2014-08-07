@@ -1859,7 +1859,10 @@ bool Node::removeComponent(const std::string& name)
 
 bool Node::removeComponent(Component *component)
 {
-    return _componentContainer->remove(component);
+    if (_componentContainer) {
+        return _componentContainer->remove(component);
+    }
+    return false;
 }
 
 void Node::removeAllComponents()

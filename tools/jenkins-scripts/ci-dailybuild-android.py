@@ -42,28 +42,33 @@ def strip_android_libs():
     _cmd = strip_cmd + ' ./tests/cpp-tests/proj.android/obj/local/armeabi/*.a'
     os.system(_cmd)
 
-def save_build_stats(filename, size):
+def connect_db():
     db_host = os.environ['db_host']
     db_user = os.environ['db_user']
     db_pw = os.environ['db_pw']
     db = MySQLdb.connect(db_host, db_user, db_pw, "dailybuild" )
+    return db
+
+def close_db(db):
+    db.close()
+
+def save_build_stats(db, filename, size):
     cursor = db.cursor()
     sql = "INSERT INTO %s (size, createdTime) VALUES(%d, now())" % (filename, size)
     print sql
     cursor.execute(sql)
     db.commit()
-    db.close()
 
-def scan_all_libs():
+def scan_all_libs(db):
     stats = {}
     _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
     filesize = os.path.getsize(_path)/1024
     stats['libcpp_empty_test'] = filesize
-    save_build_stats('libcpp_empty_test', filesize)
+    save_build_stats(db, 'libcpp_empty_test', filesize)
     _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
     filesize = os.path.getsize(_path)/1024
     stats['liblua_empty_test'] = filesize
-    save_build_stats('liblua_empty_test', filesize)
+    save_build_stats(db, 'liblua_empty_test', filesize)
     lib_path = './tests/cpp-tests/proj.android/obj/local/armeabi'
     for root, dirs, files in os.walk(lib_path):
       for _file in files:
@@ -74,7 +79,7 @@ def scan_all_libs():
         _filename = _file.split('.')[0]
         filesize = os.path.getsize(libfile)/1024
         stats[_filename]=filesize
-        save_build_stats(_filename, filesize)
+        save_build_stats(db, _filename, filesize)
     return stats
 
 def send_mail(sub,title,content):
@@ -138,7 +143,9 @@ def main():
     ret = os.system('python build/android-build.py -b release all')
     if(ret == 0):
       strip_android_libs()
-      stats = scan_all_libs()
+      db = connect_db()
+      stats = scan_all_libs(db)
+      close_db(db)
       sendEmail(stats)
     os.system('git clean -xdf -f')
     print 'build exit'

@@ -157,9 +157,9 @@ void Camera3DTestDemo::onEnter()
     addNewSpriteWithCoords( Vec3(0,0,0),"CameraTest/girl.c3b",true,0.2,true);
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"zoom out");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,-1));
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,1));
     auto label2 = Label::createWithTTF(ttfConfig,"zoom in");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,1));
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,-1));
     auto label3 = Label::createWithTTF(ttfConfig,"rotate+");
     auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Camera3DTestDemo::rotateCameraCallback,this,10));
     auto label4 = Label::createWithTTF(ttfConfig,"rotate-");

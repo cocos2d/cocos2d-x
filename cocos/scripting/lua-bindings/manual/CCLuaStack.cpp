@@ -31,9 +31,6 @@ extern "C" {
 #include "tolua++.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "lua_extensions.h"
-#endif
 }
 
 #include "Cocos2dxLuaLoader.h"
@@ -46,37 +43,17 @@ extern "C" {
 #include "platform/android/CCLuaJavaBridge.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCLuaJavaBridge.h"
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "Lua_web_socket.h"
-#endif
-
 #include "LuaOpengl.h"
 #include "LuaScriptHandlerMgr.h"
 #include "lua_cocos2dx_auto.hpp"
-#include "lua_cocos2dx_extension_auto.hpp"
 #include "lua_cocos2dx_manual.hpp"
 #include "LuaBasicConversions.h"
-#include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_deprecated.h"
-#include "lua_xml_http_request.h"
-#include "lua_cocos2dx_studio_auto.hpp"
-#include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_spine_auto.hpp"
-#include "lua_cocos2dx_spine_manual.hpp"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
-#include "lua_cocos2dx_ui_auto.hpp"
-#include "lua_cocos2dx_ui_manual.hpp"
 #include "lua_cocos2dx_experimental_auto.hpp"
 #include "lua_cocos2dx_experimental_manual.hpp"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "lua_cocos2dx_experimental_video_auto.hpp"
-#include "lua_cocos2dx_experimental_video_manual.hpp"
-#endif
+
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -160,23 +137,15 @@ bool LuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    luaopen_lua_extensions(_state);
-#endif
+
     g_luaType.clear();
     register_all_cocos2dx(_state);
-    register_all_cocos2dx_extension(_state);
-    register_cocos2dx_extension_CCBProxy(_state);
     tolua_opengl_open(_state);
-    register_all_cocos2dx_ui(_state);
-    register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_module_manual(_state);
-    register_all_cocos2dx_extension_manual(_state);
-    register_all_cocos2dx_coco_studio_manual(_state);
-    register_all_cocos2dx_ui_manual(_state);
-    register_all_cocos2dx_spine(_state);
-    register_all_cocos2dx_spine_manual(_state);
+    register_all_cocos2dx_experimental(_state);
+    register_all_cocos2dx_experimental_manual(_state);
+
     register_glnode_manual(_state);
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
@@ -186,24 +155,10 @@ bool LuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
-    register_all_cocos2dx_experimental(_state);
-    register_all_cocos2dx_experimental_manual(_state);
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    register_all_cocos2dx_experimental_video(_state);
-    register_all_cocos2dx_experimental_video_manual(_state);
-#endif
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     LuaJavaBridge::luaopen_luaj(_state);
 #endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    tolua_web_socket_open(_state);
-    register_web_socket_manual(_state);
-#endif
-    
-    register_xml_http_request(_state);
     register_all_cocos2dx_deprecated(_state);
     register_all_cocos2dx_manual_deprecated(_state);
     
