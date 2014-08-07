@@ -293,7 +293,7 @@ void Director::drawScene()
         for (ssize_t i = 0; i < _runningScene->getCameraCount(); i++)
         {
             _currentCamera = _runningScene->getCameraByIndex((int)i);
-            if (_currentCamera->getCameraFlag() == CameraFlag::CAMERA_DEFAULT)
+            if (_currentCamera->getCameraFlag() == CameraFlag::DEFAULT)
             {
                 defaultCamera = _currentCamera;
                 continue;
@@ -339,8 +339,8 @@ void Director::drawScene()
     if (_displayStats)
     {
         showStats();
-        _renderer->render();
     }
+    _renderer->render();
 
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 

@@ -34,15 +34,15 @@ class Scene;
 
 enum class CameraFlag
 {
-    CAMERA_DEFAULT = 1,
-    CAMERA_USER1 = 1 << 1,
-    CAMERA_USER2 = 1 << 2,
-    CAMERA_USER3 = 1 << 3,
-    CAMERA_USER4 = 1 << 4,
-    CAMERA_USER5 = 1 << 5,
-    CAMERA_USER6 = 1 << 6,
-    CAMERA_USER7 = 1 << 7,
-    CAMERA_USER8 = 1 << 8,
+    DEFAULT = 1,
+    USER1 = 1 << 1,
+    USER2 = 1 << 2,
+    USER3 = 1 << 3,
+    USER4 = 1 << 4,
+    USER5 = 1 << 5,
+    USER6 = 1 << 6,
+    USER7 = 1 << 7,
+    USER8 = 1 << 8,
 };
 
 /**
@@ -88,7 +88,7 @@ public:
     *
     * @return The camera type.
     */
-    Camera::Type  getCameraType() const;
+    Camera::Type  getType() const { return _type; }
 
     /**get & set Camera flag*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
@@ -112,7 +112,7 @@ public:
     *
     * @return The camera projection matrix.
     */
-    const Mat4& getProjectionMatrix();
+    const Mat4& getProjectionMatrix() const;
     /**
     * Gets the camera's view matrix.
     *

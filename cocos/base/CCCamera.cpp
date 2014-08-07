@@ -109,10 +109,6 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
     CC_SAFE_DELETE(ret);
     return nullptr;
 }
-Camera::Type Camera::getCameraType() const
-{
-    return _type;
-}
 
 Camera::Camera()
 : _cameraFlag(1)
@@ -134,7 +130,7 @@ void Camera::setPosition3D(const Vec3& position)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
-const Mat4& Camera::getProjectionMatrix()
+const Mat4& Camera::getProjectionMatrix() const
 {
     return _projection;
 }

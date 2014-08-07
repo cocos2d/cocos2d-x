@@ -185,7 +185,7 @@ void Camera3DTestDemo::onEnter()
     if (_camera == nullptr)
     {
         _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
-        _camera->setCameraFlag(CameraFlag::CAMERA_USER1);
+        _camera->setCameraFlag(CameraFlag::USER1);
         _layer3D->addChild(_camera);
     }
     SwitchViewCallback(this,CameraType::ThirdCamera);
