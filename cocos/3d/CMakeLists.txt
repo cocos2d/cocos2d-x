@@ -1,4 +1,6 @@
 set(COCOS_3D_SRC
+  3d/CCAABB.cpp
+  3d/CCOBB.cpp
   3d/CCDrawNode3D.cpp
   3d/CCSkeleton3D.cpp
   3d/CCAttachNode.cpp
