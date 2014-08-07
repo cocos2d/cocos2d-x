@@ -963,6 +963,7 @@ Developers:
         
     rny
         Fixed LabelTTF::getBoundingBox() position error
+        SpriteFrameCache load from plist file content data
     
 Retired Core Developers:
     WenSheng Yang
