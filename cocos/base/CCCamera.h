@@ -92,7 +92,7 @@ public:
 
     /**get & set Camera flag*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
-    void setCameraFlag(CameraFlag mask) { _cameraFlag = (unsigned short)mask; }
+    void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
     /**
     * Sets the position (X, Y, and Z) in its parent's coordinate system
     */
