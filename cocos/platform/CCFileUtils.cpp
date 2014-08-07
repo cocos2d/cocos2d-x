@@ -926,16 +926,21 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if !((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8))
 	struct stat st;
 	if (stat(dirPath.c_str(), &st) == 0)
     {
         return S_ISDIR(st.st_mode);
-    }
-    
+    }    
+	return false;
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+	if (GetFileAttributesExA(dirPath.c_str(), GetFileExInfoStandard, NULL))
+	{
+		return true;
+	}
 	return false;
 #else
-    unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
+	unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
     if (fAttrib != INVALID_FILE_ATTRIBUTES &&
         (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
     {
@@ -1012,7 +1017,7 @@ bool FileUtils::createDirectory(const std::string& path)
         }
     }
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if !((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8))
     DIR *dir = NULL;
     
     // Create path recursively
@@ -1030,6 +1035,21 @@ bool FileUtils::createDirectory(const std::string& path)
         }
     }
     return true;
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+	if (!(GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, NULL)))
+	{
+		subpath = "";
+		for(int i = 0 ; i < dirs.size() ; ++i)
+		{
+			subpath += dirs[i];
+			BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
+			if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 #else
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
@@ -1057,7 +1077,7 @@ bool FileUtils::removeDirectory(const std::string& path)
     }
     
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if !((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8))
     std::string command = "rm -r ";
     // Path may include space.
     command += "\"" + path + "\"";
@@ -1065,6 +1085,12 @@ bool FileUtils::removeDirectory(const std::string& path)
         return true;
     else
         return false;
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+	if (RemoveDirectoryA(path.c_str()))
+	{
+		return true;
+	}
+	return false;
 #else
     std::string command = "rd /s /q ";
     // Path may include space.
@@ -1079,7 +1105,7 @@ bool FileUtils::removeDirectory(const std::string& path)
 bool FileUtils::removeFile(const std::string &path)
 {
     // Remove downloaded file
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if !((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8))
     std::string command = "rm -f ";
     // Path may include space.
     command += "\"" + path + "\"";
@@ -1087,6 +1113,12 @@ bool FileUtils::removeFile(const std::string &path)
         return true;
     else
         return false;
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+	if (DeleteFileA(path.c_str()))
+	{
+		return true;
+	}
+	return false;
 #else
     std::string command = "del /q ";
     // Path may include space.
