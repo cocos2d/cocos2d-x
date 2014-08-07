@@ -68,7 +68,7 @@ bool VertexData::setStream(VertexBuffer* buffer, const VertexStreamAttribute& st
     return true;
 }
 
-void VertexData::removeStream(VertexSemantic semantic)
+void VertexData::removeStream(int semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter != _vertexStreams.end())
@@ -78,21 +78,21 @@ void VertexData::removeStream(VertexSemantic semantic)
     }
 }
 
-const VertexStreamAttribute* VertexData::getStreamAttribute(VertexSemantic semantic) const
+const VertexStreamAttribute* VertexData::getStreamAttribute(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexStreamAttribute* VertexData::getStreamAttribute(VertexSemantic semantic)
+VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexBuffer* VertexData::getStreamBuffer(VertexSemantic semantic) const
+VertexBuffer* VertexData::getStreamBuffer(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
@@ -113,96 +113,23 @@ VertexData::~VertexData()
     _vertexStreams.clear();
 }
 
-GLint VertexData::getGLSize(VertexType type)
-{
-    if(VertexType::FLOAT1 == type)
-    {
-        return 1;
-    }
-    else if(VertexType::FLOAT2 == type)
-    {
-        return 2;
-    }
-    else if(VertexType::FLOAT3 == type)
-    {
-        return 3;
-    }
-    else
-    {
-        return 4;
-    }
-}
-
-GLenum VertexData::getGLType(VertexType type)
-{
-    if(VertexType::BYTE4 == type)
-    {
-        return GL_UNSIGNED_BYTE;
-    }
-    else
-    {
-        return GL_FLOAT;
-    }
-}
-
-GLint VertexData::getGLSemanticBinding(VertexSemantic semantic)
-{
-    return GLint(semantic);
-}
-
 void VertexData::use()
 {
+    uint32_t flags;
     for(auto& element : _vertexStreams)
     {
-        glEnableVertexAttribArray(getGLSemanticBinding(element.second._stream._semantic));
+        flags = flags | (1 << element.second._stream._semantic);
+    }
+    
+    GL::enableVertexAttribs(flags);
+    
+    for(auto& element : _vertexStreams)
+    {
+        //glEnableVertexAttribArray((GLint)element.second._stream._semantic);
         glBindBuffer(GL_ARRAY_BUFFER, element.second._buffer->getVBO());
-        glVertexAttribPointer(getGLSemanticBinding(element.second._stream._semantic),getGLSize(element.second._stream._type),
-                              getGLType(element.second._stream._type),false, element.second._buffer->getSizePerVertex(), (GLvoid*)element.second._stream._offset);
-        
+        glVertexAttribPointer(GLint(element.second._stream._semantic),element.second._stream._size,
+                              element.second._stream._type,element.second._stream._normalize, element.second._buffer->getSizePerVertex(), (GLvoid*)element.second._stream._offset);
     }
-}
-
-IndexData* IndexData::create(IndexBuffer* buffer, int start, int count)
-{
-    IndexData* result = new (std::nothrow) IndexData();
-    if(result && result->init(buffer, start, count))
-    {
-        result->autorelease();
-        return result;
-    }
-    else
-    {
-        CC_SAFE_DELETE(result);
-        return nullptr;
-    }
-}
-
-IndexData::IndexData()
-: _buffer(nullptr)
-, _start(0)
-, _count(0)
-{
-}
-
-IndexData::~IndexData()
-{
-    CC_SAFE_RELEASE_NULL(_buffer);
-}
-
-bool IndexData::init(IndexBuffer* buffer, int start, int count)
-{
-    if(count == 0) return false;
-    if(_buffer != buffer)
-    {
-        CC_SAFE_RELEASE_NULL(_buffer);
-        CC_SAFE_RETAIN(buffer);
-        _buffer = buffer;
-    }
-    
-    _start = start;
-    _count = count;
-    
-    return false;
 }
 
 NS_CC_END

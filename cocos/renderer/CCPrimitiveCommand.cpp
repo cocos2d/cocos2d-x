@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPrimitiveCommand.h"
+#include "renderer/CCPrimitiveCommand.h"
 
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
