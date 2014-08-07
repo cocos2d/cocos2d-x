@@ -45,18 +45,28 @@ public:
 
     int getSize() const;
     
-    GLuint getVBO() const { return _vbo; }
+    GLuint getVBO() const;
     
 protected:
     VertexBuffer();
     virtual ~VertexBuffer();
     
     bool init(int sizePerVertex, int vertexNumber);
-    
 protected:
-    GLuint _vbo;
+    //event listener for foreground and background
+    void listenToBackground(EventCustom *event);
+    void recreateVBO() const;
+protected:
+    mutable GLuint _vbo;
     int _sizePerVertex;
     int _vertexNumber;
+    //buffer used for shadow copy
+    std::vector<unsigned char> _shadowCopy;
+protected:
+    static bool _enableShadowCopy;
+public:
+    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
 class IndexBuffer : public Ref
@@ -79,7 +89,7 @@ public:
 
     int getSize() const;
     
-    GLuint getVBO() const { return _vbo; }
+    GLuint getVBO() const;
 
 protected:
     IndexBuffer();
@@ -88,9 +98,22 @@ protected:
     bool init(IndexType type, int number);
     
 protected:
-    GLuint _vbo;
+    mutable GLuint _vbo;
     IndexType _type;
     int _indexNumber;
+    
+protected:
+    //event listener for foreground and background
+    void listenToBackground(EventCustom *event);
+    void recreateVBO() const;
+    
+    //buffer used for shadow copy
+    std::vector<unsigned char> _shadowCopy;
+protected:
+    static bool _enableShadowCopy;
+public:
+    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
 
