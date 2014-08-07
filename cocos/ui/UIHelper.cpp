@@ -164,13 +164,13 @@ namespace ui {
                 Mat4 additionalMatrix;
                 switch (referencePoint) {
                     case LayoutComponent::ReferencePoint::LEFT_TOP:
-                        additionalMatrix.translate(0, parentContentSize.height - nodePosition.y, 0);
+                        additionalMatrix.translate(0, parentContentSize.height - nodePosition.y * 2, 0);
                         break;
                     case LayoutComponent::ReferencePoint::RIGHT_BOTTOM:
-                        additionalMatrix.translate(parentContentSize.width - nodePosition.x, 0, 0);
+                        additionalMatrix.translate(parentContentSize.width - nodePosition.x * 2, 0, 0);
                         break;
                     case LayoutComponent::ReferencePoint::RIGHT_TOP:
-                        additionalMatrix.translate(parentContentSize.width - nodePosition.x, parentContentSize.height - nodePosition.y, 0);
+                        additionalMatrix.translate(parentContentSize.width - nodePosition.x * 2, parentContentSize.height - nodePosition.y * 2, 0);
                         break;
                     default:
                         break;

@@ -56,10 +56,10 @@ bool UILayoutComponentBaiscTest::init()
         button->ignoreContentAdaptWithSize(false);
         auto layoutComponent = LayoutComponent::create();
         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
-        layoutComponent->setUsingPercentContentSize(true);
-        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
-//        button->setNormalizedPosition(Vec2(0.1,0.1));
-        button->setAnchorPoint(Vec2(0.5,0.5));
+//        layoutComponent->setUsingPercentContentSize(true);
+//        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
+        button->setNormalizedPosition(Vec2(0.1,0.1));
+        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         button->addComponent(layoutComponent);
 
         
@@ -79,28 +79,28 @@ bool UILayoutComponentBaiscTest::init()
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
                         layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
-//                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
                     }
                         break;
                     case 1:
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_TOP);
-//                        layoutComponent->setPercentContentSize(Vec2(0.3,0.3));
-//                        button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+                        layoutComponent->setPercentContentSize(Vec2(0.3,0.3));
+                        button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
                     }
                         break;
                     case 2:
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
-//                        layoutComponent->setPercentContentSize(Vec2(0.4,0.4));
-//                        button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+                        layoutComponent->setPercentContentSize(Vec2(0.4,0.4));
+                        button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
                     }
                         break;
                     case 3:
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_BOTTOM);
-//                        layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
-//                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+                        layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
+                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
                     }
                         break;
                     default:
