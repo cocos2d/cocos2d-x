@@ -36,10 +36,11 @@ class DrawNode;
 class LayerColor;
 class LayerGradient;
 
+
 namespace ui {
     
 class LayoutManager;
-
+class Scale9Sprite;
 
 class CC_GUI_DLL LayoutProtocol
 {
@@ -466,7 +467,7 @@ protected:
     
     //background
     bool _backGroundScale9Enabled;
-    Node* _backGroundImage;
+    Scale9Sprite* _backGroundImage;
     std::string _backGroundImageFileName;
     Rect _backGroundImageCapInsets;
     BackGroundColorType _colorType;

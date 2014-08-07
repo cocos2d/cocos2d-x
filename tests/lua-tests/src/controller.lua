@@ -2,14 +2,13 @@
 -- avoid memory leak
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
-	
 
 ----------------
 -- run
 local director = cc.Director:getInstance()
 local glView   = director:getOpenGLView()
 if nil == glView then
-    glView = cc.GLView:createWithRect("Lua Tests", cc.rect(0,0,900,640))
+    glView = cc.GLViewImpl:createWithRect("Lua Tests", cc.rect(0,0,900,640))
     director:setOpenGLView(glView)
 end
 
@@ -71,7 +70,6 @@ end
 
 addSearchPath("res/", screenSize.height)
 addSearchPath("", screenSize.height)
-
 
 require "src/mainMenu"
 

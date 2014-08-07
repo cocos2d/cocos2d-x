@@ -316,7 +316,7 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp" />
+    <ClCompile Include="..\platform\CCGLView.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
@@ -332,7 +332,7 @@
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
-    <ClCompile Include="..\platform\wp8\CCGLView.cpp" />
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\DirectXBase.cpp" />
     <ClCompile Include="..\platform\wp8\pch.cpp">
@@ -406,6 +406,7 @@
     <ClCompile Include="CCParticleSystem.cpp" />
     <ClCompile Include="CCParticleSystemQuad.cpp" />
     <ClCompile Include="CCProgressTimer.cpp" />
+    <ClCompile Include="CCProtectedNode.cpp" />
     <ClCompile Include="CCRenderTexture.cpp" />
     <ClCompile Include="CCScene.cpp" />
     <ClCompile Include="CCSprite.cpp" />
@@ -533,7 +534,7 @@
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
-    <ClInclude Include="..\platform\CCGLViewProtocol.h" />
+    <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
@@ -552,7 +553,7 @@
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
-    <ClInclude Include="..\platform\wp8\CCGLView.h" />
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\DirectXBase.h" />
     <ClInclude Include="..\platform\wp8\pch.h" />
@@ -622,6 +623,7 @@
     <ClInclude Include="CCParticleSystem.h" />
     <ClInclude Include="CCParticleSystemQuad.h" />
     <ClInclude Include="CCProgressTimer.h" />
+    <ClInclude Include="CCProtectedNode.h" />
     <ClInclude Include="CCRenderTexture.h" />
     <ClInclude Include="CCScene.h" />
     <ClInclude Include="CCSprite.h" />

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="auto">
+      <UniqueIdentifier>{8d269c90-26ad-4ce8-b355-d8df01d59914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual">
+      <UniqueIdentifier>{25c7b94b-a9a1-4b93-b285-93c9b620e2ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script">
+      <UniqueIdentifier>{af4b7d5f-f563-4069-ade8-c1a954e6fe5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\extension">
+      <UniqueIdentifier>{af407ec6-3b69-4f0f-a053-6f68467c82e9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\extension\lua_cocos2dx_extension_manual.cpp">
+      <Filter>manual\extension</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\extension\lua_cocos2dx_extension_manual.h">
+      <Filter>manual\extension</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\script\DeprecatedExtensionClass.lua">
+      <Filter>script</Filter>
+    </None>
+    <None Include="..\script\DeprecatedExtensionEnum.lua">
+      <Filter>script</Filter>
+    </None>
+    <None Include="..\script\DeprecatedExtensionFunc.lua">
+      <Filter>script</Filter>
+    </None>
+    <None Include="..\script\ExtensionConstants.lua">
+      <Filter>script</Filter>
+    </None>
+  </ItemGroup>
+</Project>

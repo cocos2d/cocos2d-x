@@ -1,5 +1,4 @@
 set(COCOS_UI_SRC
-  ui/CCProtectedNode.cpp
   ui/CocosGUI.cpp
   ui/UIButton.cpp
   ui/UICheckBox.cpp
@@ -25,4 +24,3 @@ set(COCOS_UI_SRC
   ui/UIDeprecated.cpp
   ui/UIScale9Sprite.cpp
 )
-

@@ -428,6 +428,26 @@ ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
     return ret;
 }
 
+ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
+{
+    NSData* file = [NSData dataWithBytes:filedata length:filesize];
+    NSPropertyListFormat format;
+    NSError* error;
+    NSDictionary* dict = [NSPropertyListSerialization propertyListWithData:file options:NSPropertyListImmutable format:&format error:&error];
+    
+    ValueMap ret;
+    
+    if (dict != nil)
+    {
+        for (id key in [dict allKeys])
+        {
+            id value = [dict objectForKey:key];
+            addValueToDict(key, value, ret);
+        }
+    }
+    return ret;
+}
+
 bool FileUtilsApple::writeToFile(ValueMap& dict, const std::string &fullPath)
 {
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());

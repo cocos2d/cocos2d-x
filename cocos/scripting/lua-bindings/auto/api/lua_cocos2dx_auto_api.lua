@@ -72,6 +72,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLView
+-- @field [parent=#cc] GLView#GLView GLView preloaded module
+
+
+--------------------------------------------------------
 -- the cc Director
 -- @field [parent=#cc] Director#Director Director preloaded module
 
@@ -1137,13 +1142,8 @@
 
 
 --------------------------------------------------------
--- the cc GLViewProtocol
--- @field [parent=#cc] GLViewProtocol#GLViewProtocol GLViewProtocol preloaded module
-
-
---------------------------------------------------------
--- the cc GLView
--- @field [parent=#cc] GLView#GLView GLView preloaded module
+-- the cc GLViewImpl
+-- @field [parent=#cc] GLViewImpl#GLViewImpl GLViewImpl preloaded module
 
 
 --------------------------------------------------------
@@ -1222,8 +1222,13 @@
 
 
 --------------------------------------------------------
--- the cc SimpleAudioEngine
--- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
+-- the cc SubMeshState
+-- @field [parent=#cc] SubMeshState#SubMeshState SubMeshState preloaded module
+
+
+--------------------------------------------------------
+-- the cc AttachNode
+-- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
 
 
 --------------------------------------------------------

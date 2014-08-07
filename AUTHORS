@@ -108,6 +108,7 @@ Developers:
         Added support for x64 target of windows.
         Added Dutch Language support.
         Added clang support for Windows.
+        Cmake update and remove old scripts from build folder
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -694,6 +695,7 @@ Developers:
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
         Fixed that ScrollView should implement ActionTweenDelegate.
+        Fixed LabelBMFont::getBoundingBox() position error
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -743,6 +745,7 @@ Developers:
         Corrected a few mistakes in the README file of project-creator.
         Corrected a mistake in README.
         Fixed a bug that a string which only contains CJK characters can't make a line-break when it's needed.
+        Fixed a bug that if the UISlider is faded, the slide ball won't fade together
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
@@ -910,6 +913,7 @@ Developers:
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
         Fix video scale issue in iOS
+        Fix iOS VideoPlayer memory leak
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
@@ -942,6 +946,25 @@ Developers:
         
     reckhou
         Optimize FPS control on Android
+        
+    dzl-ian
+        Added getter and setter for TextColor for UIText
+    
+    zii
+        Added utils::gettime()
+        
+    takaken1994
+        Added function for setting min/max scale for ScrollView
+        
+    maltium 
+        Added 3D rotation support to RotateTo action
+        
+    Hamken100per
+        Added a function getAssetManager() on CCFileUtilsAndroid
+        
+    rny
+        Fixed LabelTTF::getBoundingBox() position error
+        SpriteFrameCache load from plist file content data
     
 Retired Core Developers:
     WenSheng Yang

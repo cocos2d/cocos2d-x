@@ -69,9 +69,6 @@
     <ClInclude Include="..\..\ui\UIWidget.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ui\CCProtectedNode.h">
-      <Filter>BaseClasses</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ui\UIVBox.h">
       <Filter>Layouts</Filter>
     </ClInclude>
@@ -144,9 +141,6 @@
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ui\UIWidget.cpp">
-      <Filter>BaseClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ui\CCProtectedNode.cpp">
       <Filter>BaseClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ui\UIVBox.cpp">
