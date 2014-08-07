@@ -46,10 +46,10 @@ namespace ui {
          */
         enum class ReferencePoint
         {
-            LEFT_BOTTOM,
-            LEFT_TOP,
-            RIGHT_BOTTOM,
-            RIGHT_TOP
+            BOTTOM_LEFT,
+            TOP_LEFT,
+            BOTTOM_RIGHT,
+            TOP_RIGHT
         };
    
         const Vec2& getPercentContentSize()const;

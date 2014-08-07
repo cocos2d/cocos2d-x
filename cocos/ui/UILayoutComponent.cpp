@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 namespace ui {
     LayoutComponent::LayoutComponent()
-    :_referencePoint(ReferencePoint::LEFT_BOTTOM)
+    :_referencePoint(ReferencePoint::BOTTOM_LEFT)
     {
         _name = __LAYOUT_COMPONENT_NAME;
     }

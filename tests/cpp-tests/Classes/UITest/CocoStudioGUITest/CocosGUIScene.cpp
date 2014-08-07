@@ -62,7 +62,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kLayoutComponentBasicTest);
             sceneManager->setMinUISceneId(kLayoutComponentBasicTest);
-            sceneManager->setMaxUISceneId(kLayoutComponentBasicTest);
+            sceneManager->setMaxUISceneId(kUILayoutComponentNonNormalizedPositionTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

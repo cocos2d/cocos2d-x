@@ -38,4 +38,15 @@ protected:
     UI_SCENE_CREATE_FUNC(UILayoutComponentBaiscTest)
 };
 
+class UILayoutComponentNonNormalizedPositionTest : public UIScene
+{
+public:
+    UILayoutComponentNonNormalizedPositionTest();
+    ~UILayoutComponentNonNormalizedPositionTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UILayoutComponentNonNormalizedPositionTest)
+};
+
 #endif /* defined(__cocos2d_tests__LayoutComponentTest__) */

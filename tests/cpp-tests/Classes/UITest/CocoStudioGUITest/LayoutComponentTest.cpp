@@ -55,9 +55,9 @@ bool UILayoutComponentBaiscTest::init()
 
         button->ignoreContentAdaptWithSize(false);
         auto layoutComponent = LayoutComponent::create();
-        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
-//        layoutComponent->setUsingPercentContentSize(true);
-//        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
+        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_LEFT);
+        layoutComponent->setUsingPercentContentSize(true);
+        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
         button->setNormalizedPosition(Vec2(0.1,0.1));
         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         button->addComponent(layoutComponent);
@@ -77,28 +77,28 @@ bool UILayoutComponentBaiscTest::init()
                 switch (i) {
                     case 0:
                     {
-                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_LEFT);
                         layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
                     }
                         break;
                     case 1:
                     {
-                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_TOP);
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_LEFT);
                         layoutComponent->setPercentContentSize(Vec2(0.3,0.3));
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
                     }
                         break;
                     case 2:
                     {
-                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_RIGHT);
                         layoutComponent->setPercentContentSize(Vec2(0.4,0.4));
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
                     }
                         break;
                     case 3:
                     {
-                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_BOTTOM);
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_RIGHT);
                         layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
                     }
@@ -113,6 +113,99 @@ bool UILayoutComponentBaiscTest::init()
                 Helper::doLayout(imageView);
             }
            
+        });
+        imageView->addChild(button2);
+        
+        this->addChild(imageView);
+        
+        return true;
+    }
+    return false;
+}
+
+// UILayoutComponentNonNormalizedPositionTest
+UILayoutComponentNonNormalizedPositionTest::UILayoutComponentNonNormalizedPositionTest()
+{
+    
+}
+
+UILayoutComponentNonNormalizedPositionTest::~UILayoutComponentNonNormalizedPositionTest()
+{
+}
+
+bool UILayoutComponentNonNormalizedPositionTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        ImageView* imageView = ImageView::create("cocosui/buttonHighlighted.png");
+        imageView->setScale9Enabled(true);
+        imageView->setContentSize(Size(400, 240));
+        imageView->setNormalizedPosition(Vec2(0.9,0.9));
+        imageView->setAnchorPoint(Vec2(1,1));
+        
+        
+        
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        
+        button->ignoreContentAdaptWithSize(false);
+        auto layoutComponent = LayoutComponent::create();
+        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_LEFT);
+        layoutComponent->setUsingPercentContentSize(true);
+        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
+        button->setPosition(Vec2(20,20));
+        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+        button->addComponent(layoutComponent);
+        
+        
+        imageView->addChild(button);
+        
+        
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png",
+                                         "cocosui/animationbuttonpressed.png");
+        button2->setAnchorPoint(Vec2::ZERO);
+        button2->setNormalizedPosition(Vec2(0.5,0.5));
+        button2->setTitleText("Click Me!");
+        button2->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::ENDED) {
+                static int i = 1;
+                switch (i) {
+                    case 0:
+                    {
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_LEFT);
+                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+                    }
+                        break;
+                    case 1:
+                    {
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_LEFT);
+                        button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+                    }
+                        break;
+                    case 2:
+                    {
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_RIGHT);
+                        button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+                    }
+                        break;
+                    case 3:
+                    {
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_RIGHT);
+                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+                    }
+                        break;
+                    default:
+                        break;
+                }
+                i++;
+                if (i > 3) {
+                    i = 0;
+                }
+                Helper::doLayout(imageView);
+            }
+            
         });
         imageView->addChild(button2);
         

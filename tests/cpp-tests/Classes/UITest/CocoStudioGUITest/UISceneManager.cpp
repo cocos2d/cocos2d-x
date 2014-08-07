@@ -110,8 +110,9 @@ static const char* s_testArray[] =
     "UIS9CascadeOpacityAndColor",
     "UIS9ZOrder",
     "UIS9Flip",
-    "UILayoutComponentBasic",
     "UIS9ChangeAnchorPoint",
+    "UILayoutComponentBasic",
+    "UILayoutComponentNonNormalizedPositionTest"
 };
 
 static UISceneManager *sharedInstance = nullptr;
@@ -359,6 +360,8 @@ Scene *UISceneManager::currentUIScene()
             return UILayoutComponentBaiscTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9ChangeAnchorPoint:
             return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUILayoutComponentNonNormalizedPositionTest:
+            return UILayoutComponentNonNormalizedPositionTest::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return nullptr;
 }
