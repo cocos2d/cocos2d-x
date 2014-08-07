@@ -1,5 +1,6 @@
 set(COCOS_BASE_SRC
   base/CCAutoreleasePool.cpp
+  base/CCCamera.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
   base/CCData.cpp

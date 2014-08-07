@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "base/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
@@ -157,6 +158,7 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new Renderer;
+    _currentCamera = nullptr;
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _console = new Console;
@@ -283,11 +285,48 @@ void Director::drawScene()
     }
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    if (_runningScene)
+    {
+        Camera* defaultCamera = nullptr;
+        //draw with camera
+        for (ssize_t i = 0; i < _runningScene->getCameraCount(); i++)
+        {
+            _currentCamera = _runningScene->getCameraByIndex((int)i);
+            if (_currentCamera->getCameraFlag() == CameraFlag::DEFAULT)
+            {
+                defaultCamera = _currentCamera;
+                continue;
+            }
+            
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _currentCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        //draw with default camera
+        if (defaultCamera)
+        {
+            _currentCamera = defaultCamera;
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _currentCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        _currentCamera = nullptr;
+    }
 
     // draw the scene
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, Mat4::IDENTITY, false);
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
@@ -301,8 +340,8 @@ void Director::drawScene()
     {
         showStats();
     }
-
     _renderer->render();
+
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);

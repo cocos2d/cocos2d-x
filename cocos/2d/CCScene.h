@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Camera;
 /**
  * @addtogroup scene
  * @{
@@ -64,6 +65,11 @@ public:
     using Node::addChild;
     virtual std::string getDescription() const override;
     
+    /** get camera count */
+    ssize_t getCameraCount() const { return _cameras.size(); }
+    /** get camera */
+    Camera* getCameraByIndex(int index) const;
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
@@ -75,6 +81,9 @@ protected:
     friend class Node;
     friend class ProtectedNode;
     friend class SpriteBatchNode;
+    friend class Camera;
+    
+    std::vector<Camera*> _cameras; //weak ref to Camera
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);

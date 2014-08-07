@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "base/CCEvent.h"
 #include "base/CCEventTouch.h"
 #include "base/ccCArray.h"
+#include "base/CCCamera.h"
 #include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
 #include "base/CCScriptSupport.h"
@@ -128,6 +129,7 @@ Node::Node(void)
 , _usingNormalizedPosition(false)
 , _name("")
 , _hashOfName(0)
+, _cameraMask(1)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -1239,6 +1241,9 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    auto camera = director->getCurrentCamera();
+    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
 
     int i = 0;
 
@@ -1256,14 +1261,16 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else
     {
-        this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
     }
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -2164,6 +2171,17 @@ void Node::disableCascadeColor()
 {
     for(auto child : _children){
         child->updateDisplayedColor(Color3B::WHITE);
+    }
+}
+
+void Node::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    _cameraMask = mask;
+    if (applyChildren)
+    {
+        for (auto child : _children) {
+            child->setCameraMask(mask, applyChildren);
+        }
     }
 }
 

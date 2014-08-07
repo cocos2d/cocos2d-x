@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -609,6 +609,12 @@
     </ClCompile>
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCDrawNode3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCCamera.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1239,6 +1245,12 @@
     </ClInclude>
     <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCDrawNode3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCCamera.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
