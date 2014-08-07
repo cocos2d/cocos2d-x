@@ -25,10 +25,9 @@
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
-//#include "3d/CCRay.h"
-NS_CC_BEGIN
+#include "2d/CCNode.h"
 
-Vector<Camera*> Camera::_cameras;
+NS_CC_BEGIN
 
 Camera* Camera::create()
 {
@@ -77,6 +76,7 @@ Camera* Camera::createPerspective(float fieldOfView, float aspectRatio, float ne
             setAdditionalProjection(view->getOrientationMatrix());
         }
 #endif
+        ret->_viewProjectionDirty = true;
         ret->autorelease();
         return ret;
     }
@@ -102,6 +102,7 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
             setAdditionalProjection(view->getOrientationMatrix());
         }
 #endif
+        ret->_viewProjectionDirty = true;
         ret->autorelease();
         return ret;
     }
@@ -116,6 +117,7 @@ Camera::Type Camera::getCameraType() const
 Camera::Camera()
 : _cameraFlag(1)
 , _scene(nullptr)
+, _viewProjectionDirty(true)
 {
     
 }
@@ -138,8 +140,14 @@ const Mat4& Camera::getProjectionMatrix()
 }
 const Mat4& Camera::getViewMatrix()
 {
-    //FIX ME
-    _view=getNodeToWorldTransform().getInversed();
+    Mat4 viewInv(getNodeToWorldTransform());
+    static int count = sizeof(float) * 16;
+    if (memcmp(viewInv.m, _viewInv.m, count) != 0)
+    {
+        _viewProjectionDirty = true;
+        _viewInv = viewInv;
+        _view = viewInv.getInversed();
+    }
     return _view;
 }
 void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
@@ -178,18 +186,25 @@ void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
     float fYaw   = atan2(2 * (quaternion.w * quaternion.y + quaternion.z * quaternion.x) , 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y));
     setRotation3D(Vec3(CC_RADIANS_TO_DEGREES(fPitch),CC_RADIANS_TO_DEGREES(fYaw),CC_RADIANS_TO_DEGREES(fRoll)));
 }
+
 const Mat4& Camera::getViewProjectionMatrix()
 {
-    //FIX ME
     getViewMatrix();
-    Mat4::multiply(_projection, _view, &_viewProjection);
+    if (_viewProjectionDirty)
+    {
+        _viewProjectionDirty = false;
+        Mat4::multiply(_projection, _view, &_viewProjection);
+    }
+    
     return _viewProjection;
 }
+
 void Camera::setAdditionalProjection(const Mat4& mat)
 {
     _projection = mat * _projection;
     getViewProjectionMatrix();
 }
+
 void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst)
 {
     assert(dst);
@@ -227,6 +242,7 @@ void Camera::onEnter()
     }
     Node::onEnter();
 }
+
 void Camera::onExit()
 {
     // remove this camera from scene

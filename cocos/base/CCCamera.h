@@ -146,6 +146,7 @@ protected:
     Scene* _scene; //Scene camera belongs to
     Mat4 _projection;
     Mat4 _view;
+    Mat4 _viewInv;
     Mat4 _viewProjection;
     Vec3 _up;
     Camera::Type _type;
@@ -154,8 +155,10 @@ protected:
     float _aspectRatio;
     float _nearPlane;
     float _farPlane;
+    bool  _viewProjectionDirty;
     unsigned short _cameraFlag; // camera flag
-    static Vector<Camera*> _cameras;
 };
+
 NS_CC_END
+
 #endif// __CCCAMERA_H_
