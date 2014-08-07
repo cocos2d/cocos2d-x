@@ -322,11 +322,7 @@ void Director::drawScene()
             popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         }
         _currentCamera = nullptr;
-    }
-
-    // draw the scene
-    if (_runningScene)
-    {
+        
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
