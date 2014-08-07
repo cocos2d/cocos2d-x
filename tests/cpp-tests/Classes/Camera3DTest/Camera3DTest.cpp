@@ -154,7 +154,7 @@ void Camera3DTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
     _curState=State_None;
-    addNewSpriteWithCoords( Vec3(0,0,0),"CameraTest/girl.c3b",true,0.2,true);
+    addNewSpriteWithCoords( Vec3(0,0,0),"Sprite3DTest/girl.c3b",true,0.2,true);
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"zoom out");
     auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,1));
