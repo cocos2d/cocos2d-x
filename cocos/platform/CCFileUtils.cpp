@@ -953,7 +953,8 @@ bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
     }    
 	return false;
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-	if (GetFileAttributesExA(dirPath.c_str(), GetFileExInfoStandard, NULL))
+	WIN32_FILE_ATTRIBUTE_DATA wfad;
+	if (GetFileAttributesExA(dirPath.c_str(), GetFileExInfoStandard, &wfad))
 	{
 		return true;
 	}
@@ -1055,7 +1056,8 @@ bool FileUtils::createDirectory(const std::string& path)
     }
     return true;
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-	if (!(GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, NULL)))
+	WIN32_FILE_ATTRIBUTE_DATA wfad;
+	if (!(GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, &wfad)))
 	{
 		subpath = "";
 		for(int i = 0 ; i < dirs.size() ; ++i)
