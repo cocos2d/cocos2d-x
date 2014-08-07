@@ -24,16 +24,16 @@
 
 #include "UILayoutComponent.h"
 #include "2d/CCNode.h"
+#include "GUIDefine.h"
 
 
 NS_CC_BEGIN
 
 namespace ui {
     LayoutComponent::LayoutComponent()
-    :_referencePoint(ReferencePoint::LEFT_BOTTOM),
-    _dirtyFlag(0)
+    :_referencePoint(ReferencePoint::LEFT_BOTTOM)
     {
-        _name = "__ui_layout";
+        _name = __LAYOUT_COMPONENT_NAME;
     }
     
     LayoutComponent::~LayoutComponent()
@@ -44,8 +44,10 @@ namespace ui {
     bool LayoutComponent::init()
     {
         bool ret = true;
-        do {
-            if (!Component::init()) {
+        do
+        {
+            if (!Component::init())
+            {
                 ret = false;
                 break;
             }
@@ -56,37 +58,14 @@ namespace ui {
         return ret;
     }
     
-    uint32_t LayoutComponent::getDirtyFlag()const
-    {
-        return _dirtyFlag;
-    }
-    
-    void LayoutComponent::setDirtyFlag(uint32_t flag)
-    {
-        _dirtyFlag = _dirtyFlag | flag;
-    }
-    
-    const Vec2& LayoutComponent::getPercentPosition()const
-    {
-        return _percentPosition;
-    }
-    
-    void LayoutComponent::setPercentPosition(const Vec2& percent)
-    {
-        _percentPosition = percent;
-        this->setDirtyFlag(DIRTY_FLAG_PERCENT_POSITION);
-//        this->changeOwnerNormalizedPosition();
-    }
-    
     const Vec2& LayoutComponent::getPercentContentSize()const
     {
-        return _percentPosition;
+        return _percentContentSize;
     }
     
     void LayoutComponent::setPercentContentSize(const Vec2& percent)
     {
         _percentContentSize = percent;
-        this->setDirtyFlag(DIRTY_FLAG_PERCENT_CONTENT_SIZE);
     }
     
     void LayoutComponent::setReferencePoint(ReferencePoint point)
@@ -98,43 +77,17 @@ namespace ui {
     {
         return _referencePoint;
     }
-    
-    void LayoutComponent::onEnter()
-    {
-        Component::onEnter();
-        if (_owner) {
-            _owner->scheduleUpdate();
-        }
-//        this->changeOwnerNormalizedPosition();
-    }
-    
-    void LayoutComponent::changeOwnerNormalizedPosition()
-    {
-        if (nullptr != _owner) {
-            if (_dirtyFlag & DIRTY_FLAG_PERCENT_POSITION) {
-                CCLOG("changeOwnerNormalizedPosition");
-                _owner->setNormalizedPosition(_percentPosition);
-//                Size oldSize = _owner->getContentSize();
-//                _owner->setContentSize(Size::ZERO);
-//                _owner->setContentSize(oldSize);
-                _dirtyFlag = _dirtyFlag & ~DIRTY_FLAG_PERCENT_POSITION;
-            }
-        }
-    }
-    
-    void LayoutComponent::onExit()
-    {
-        Component::onExit();
-    }
-    
-    void LayoutComponent::update(float delta)
-    {
-        Component::update(delta);
-        this->changeOwnerNormalizedPosition();
-    }
 
     
-
+    bool LayoutComponent::isUsingPercentContentSize()
+    {
+        return _usingPercentContentSize;
+    }
+    
+    void LayoutComponent::setUsingPercentContentSize(bool flag)
+    {
+        _usingPercentContentSize = flag;
+    }
 }
 
 NS_CC_END

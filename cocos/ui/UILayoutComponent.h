@@ -31,13 +31,6 @@ NS_CC_BEGIN
 namespace ui {
     class LayoutComponent : public Component
     {
-        enum
-        {
-            DIRTY_FLAG_PERCENT_POSITION = (1 << 0),
-            DIRTY_FLAG_PERCENT_CONTENT_SIZE = (1 << 1),
-            DIRTY_FLAG_ALL = DIRTY_FLAG_PERCENT_POSITION | DIRTY_FLAG_PERCENT_CONTENT_SIZE
-        };
-        
     public:
         LayoutComponent();
         ~LayoutComponent();
@@ -58,33 +51,17 @@ namespace ui {
             RIGHT_BOTTOM,
             RIGHT_TOP
         };
-        uint32_t getDirtyFlag()const;
-        void setDirtyFlag(uint32_t flag);
-        
-        /**
-         * @js NA
-         * @lua NA
-         */
-        virtual void onEnter() override;
-        /**
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExit() override;
-        virtual void update(float delta) override;
-        
-        const Vec2& getPercentPosition()const;
-        void setPercentPosition(const Vec2& percent);
+   
         const Vec2& getPercentContentSize()const;
         void setPercentContentSize(const Vec2& percent);
         void setReferencePoint(ReferencePoint point);
         ReferencePoint getReferencePoint();
+        bool isUsingPercentContentSize();
+        void setUsingPercentContentSize(bool flag);
     private:
-        void changeOwnerNormalizedPosition();
-        
-        Vec2 _percentPosition;
+
         Vec2 _percentContentSize;
-        uint32_t _dirtyFlag;
+        bool _usingPercentContentSize;
         ReferencePoint _referencePoint;
     };
 }

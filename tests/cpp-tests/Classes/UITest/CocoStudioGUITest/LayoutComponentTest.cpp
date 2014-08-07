@@ -50,26 +50,57 @@ bool UILayoutComponentBaiscTest::init()
         
        
         
-        auto sprite = Sprite::create("cocosui/animationbuttonpressed.png");
-//        sprite->setNormalizedPosition(Vec2::ANCHOR_TOP_RIGHT * 0.9);
-        sprite->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
-        auto layoutComponent = LayoutComponent::create();
-        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
-        sprite->addComponent(layoutComponent);
-        layoutComponent->setPercentPosition(Vec2::ANCHOR_TOP_RIGHT * 0.9);
-
-        
-        imageView->addChild(sprite);
-
-
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
-        button->setAnchorPoint(Vec2::ZERO);
-        button->setNormalizedPosition(Vec2::ZERO);
-        button->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
-            sprite->setNormalizedPosition(Vec2::ANCHOR_TOP_RIGHT);
-        });
+
+        button->ignoreContentAdaptWithSize(false);
+        button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+        auto layoutComponent = LayoutComponent::create();
+        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
+        layoutComponent->setUsingPercentContentSize(true);
+        layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
+        button->addComponent(layoutComponent);
+
+        
         imageView->addChild(button);
+
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        button2->setAnchorPoint(Vec2::ZERO);
+        button2->setNormalizedPosition(Vec2::ZERO);
+        button2->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::ENDED) {
+                static int i = 0;
+                switch (i) {
+                    case 0:
+                    {
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
+                    }
+                        break;
+                    case 1:
+                    {
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_TOP);
+                    }
+                        break;
+                    case 2:
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
+                        break;
+                    case 3:
+                        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_BOTTOM);
+                        break;
+                    default:
+                        break;
+                }
+                i++;
+                if (i > 3) {
+                    i = 0;
+                }
+                Helper::doLayout(imageView);
+            }
+           
+        });
+        imageView->addChild(button2);
         
         this->addChild(imageView);
         
