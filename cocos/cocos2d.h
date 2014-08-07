@@ -262,6 +262,8 @@ THE SOFTWARE.
 #include "2d/CCComponentContainer.h"
 
 //3d
+#include "3d/CCAABB.h"
+#include "3d/CCOBB.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCMesh.h"
 #include "3d/CCMeshSkin.h"
