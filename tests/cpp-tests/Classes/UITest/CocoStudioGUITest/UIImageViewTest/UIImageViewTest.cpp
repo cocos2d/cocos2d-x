@@ -96,8 +96,6 @@ bool UIImageViewTest_ContentSize::init()
         imageViewChild->setPositionType(Widget::PositionType::PERCENT);
         imageViewChild->setSizePercent(Vec2::ANCHOR_MIDDLE);
         imageViewChild->setPositionPercent(Vec2::ANCHOR_MIDDLE);
-        imageViewChild->setPosition(Vec2(widgetSize.width / 2.0f,
-                                    widgetSize.height / 2.0f));
         
         ImageView* imageViewChild2 = ImageView::create("cocosui/buttonHighlighted.png");
         imageViewChild2->setScale9Enabled(true);
