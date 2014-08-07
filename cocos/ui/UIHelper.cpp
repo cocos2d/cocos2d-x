@@ -158,8 +158,24 @@ namespace ui {
                 
                 Size parentContentSize = parent->getContentSize();
                 Vec2 nodePosition = node->getPosition();
-  
-                node->setPosition(nodePosition);
+                LayoutComponent::ReferencePoint referencePoint = layoutComponent->getReferencePoint();
+                Vec2 normalizedPosition = node->getNormalizedPosition();
+                
+                Mat4 additionalMatrix;
+                switch (referencePoint) {
+                    case LayoutComponent::ReferencePoint::LEFT_TOP:
+                        additionalMatrix.translate(0, parentContentSize.height - nodePosition.y, 0);
+                        break;
+                    case LayoutComponent::ReferencePoint::RIGHT_BOTTOM:
+                        additionalMatrix.translate(parentContentSize.width - nodePosition.x, 0, 0);
+                        break;
+                    case LayoutComponent::ReferencePoint::RIGHT_TOP:
+                        additionalMatrix.translate(parentContentSize.width - nodePosition.x, parentContentSize.height - nodePosition.y, 0);
+                        break;
+                    default:
+                        break;
+                }
+                node->setAdditionalTransform(&additionalMatrix);
                 
                 //apater content size
                 bool isUsingPercentContentSize = layoutComponent->isUsingPercentContentSize();

@@ -45,7 +45,7 @@ bool UILayoutComponentBaiscTest::init()
         ImageView* imageView = ImageView::create("cocosui/buttonHighlighted.png");
         imageView->setScale9Enabled(true);
         imageView->setContentSize(Size(400, 240));
-        imageView->setNormalizedPosition(Vec2(1,1));
+        imageView->setNormalizedPosition(Vec2(0.9,0.9));
         imageView->setAnchorPoint(Vec2(1,1));
         
        
@@ -54,11 +54,12 @@ bool UILayoutComponentBaiscTest::init()
                                         "cocosui/animationbuttonpressed.png");
 
         button->ignoreContentAdaptWithSize(false);
-        button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
         auto layoutComponent = LayoutComponent::create();
-        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
+        layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
         layoutComponent->setUsingPercentContentSize(true);
-        layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
+        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
+//        button->setNormalizedPosition(Vec2(0.1,0.1));
+        button->setAnchorPoint(Vec2(0.5,0.5));
         button->addComponent(layoutComponent);
 
         
@@ -68,26 +69,39 @@ bool UILayoutComponentBaiscTest::init()
         Button* button2 = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
         button2->setAnchorPoint(Vec2::ZERO);
-        button2->setNormalizedPosition(Vec2::ZERO);
+        button2->setNormalizedPosition(Vec2(0.5,0.5));
+        button2->setTitleText("Click Me!");
         button2->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
             if (type == Widget::TouchEventType::ENDED) {
-                static int i = 0;
+                static int i = 1;
                 switch (i) {
                     case 0:
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_BOTTOM);
+                        layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
+//                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
                     }
                         break;
                     case 1:
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::LEFT_TOP);
+//                        layoutComponent->setPercentContentSize(Vec2(0.3,0.3));
+//                        button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
                     }
                         break;
                     case 2:
+                    {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_TOP);
+//                        layoutComponent->setPercentContentSize(Vec2(0.4,0.4));
+//                        button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+                    }
                         break;
                     case 3:
+                    {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::RIGHT_BOTTOM);
+//                        layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
+//                        button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+                    }
                         break;
                     default:
                         break;
