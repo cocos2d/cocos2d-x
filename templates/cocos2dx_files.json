@@ -344,6 +344,7 @@
         "cocos/base/CCProfiling.cpp", 
         "cocos/base/CCProfiling.h", 
         "cocos/base/CCProtocols.h", 
+        "cocos/base/ccRanrom.h", 
         "cocos/base/CCRef.cpp", 
         "cocos/base/CCRef.h", 
         "cocos/base/CCRefPtr.h", 
