@@ -36,13 +36,16 @@ lua/main.cpp
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \
 $(LOCAL_PATH)/../../Classes/runtime \
-$(LOCAL_PATH)/../../Classes
+$(LOCAL_PATH)/../../Classes \
+$(LOCAL_PATH)/../../../cocos2d-x/external
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,scripting/lua-bindings)
+$(call import-module,scripting/lua-bindings/proj.android)
 
