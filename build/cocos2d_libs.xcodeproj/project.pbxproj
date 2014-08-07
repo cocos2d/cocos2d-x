@@ -1853,6 +1853,10 @@
 		C05B890C198F67FD00E7A6F9 /* CCGradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C05B890A198F67B400E7A6F9 /* CCGradient.cpp */; };
 		C05B891A1990728C00E7A6F9 /* CCGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = C05B89191990728C00E7A6F9 /* CCGradient.h */; };
 		C05B891B1990728C00E7A6F9 /* CCGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = C05B89191990728C00E7A6F9 /* CCGradient.h */; };
+		C0C92594199209EC00B04333 /* CCParticleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0C92592199209EC00B04333 /* CCParticleBase.cpp */; };
+		C0C92595199209EC00B04333 /* CCParticleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0C92592199209EC00B04333 /* CCParticleBase.cpp */; };
+		C0C92596199209EC00B04333 /* CCParticleBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C0C92593199209EC00B04333 /* CCParticleBase.h */; };
+		C0C92597199209EC00B04333 /* CCParticleBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C0C92593199209EC00B04333 /* CCParticleBase.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2953,6 +2957,8 @@
 		C02FB90F198B471D00965242 /* CCGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGraph.h; path = ../base/CCGraph.h; sourceTree = "<group>"; };
 		C05B890A198F67B400E7A6F9 /* CCGradient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCGradient.cpp; path = ../base/CCGradient.cpp; sourceTree = "<group>"; };
 		C05B89191990728C00E7A6F9 /* CCGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGradient.h; path = ../base/CCGradient.h; sourceTree = "<group>"; };
+		C0C92592199209EC00B04333 /* CCParticleBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCParticleBase.cpp; sourceTree = "<group>"; };
+		C0C92593199209EC00B04333 /* CCParticleBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBase.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3516,6 +3522,8 @@
 		1A570218180BCC000088DEC7 /* particle-nodes */ = {
 			isa = PBXGroup;
 			children = (
+				C0C92592199209EC00B04333 /* CCParticleBase.cpp */,
+				C0C92593199209EC00B04333 /* CCParticleBase.h */,
 				1A570219180BCC1A0088DEC7 /* CCParticleBatchNode.cpp */,
 				1A57021A180BCC1A0088DEC7 /* CCParticleBatchNode.h */,
 				1A57021B180BCC1A0088DEC7 /* CCParticleExamples.cpp */,
@@ -5178,6 +5186,7 @@
 				B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
+				C0C92596199209EC00B04333 /* CCParticleBase.h in Headers */,
 				1A570093180BC5A10088DEC7 /* CCActionTween.h in Headers */,
 				50ABBD4A1925AB0000A911A9 /* Mat4.h in Headers */,
 				1A57009A180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
@@ -5641,6 +5650,7 @@
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				50ABBE2A1925AB6F00A911A9 /* CCAutoreleasePool.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
+				C0C92597199209EC00B04333 /* CCParticleBase.h in Headers */,
 				1A570313180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				1A087AEB1860400400196EF5 /* edtaa3func.h in Headers */,
 				B375107F1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
@@ -6712,6 +6722,7 @@
 				1A570229180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				1A57022D180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				1A57027E180BCC900088DEC7 /* CCSprite.cpp in Sources */,
+				C0C92594199209EC00B04333 /* CCParticleBase.cpp in Sources */,
 				1A570282180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
 				B24AA989195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
@@ -7007,6 +7018,7 @@
 				3E61781D1966A5A300DE83F5 /* CCController.cpp in Sources */,
 				50ABC00E1926664800A911A9 /* CCFileUtils.cpp in Sources */,
 				50ABBE241925AB6F00A911A9 /* base64.cpp in Sources */,
+				C0C92595199209EC00B04333 /* CCParticleBase.cpp in Sources */,
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				1A5701B2180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,

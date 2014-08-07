@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-// Gradient implement
+// Gradient implementation
 Gradient::Gradient()
 : _colors(nullptr)
 , _alphas(nullptr)

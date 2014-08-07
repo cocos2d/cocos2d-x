@@ -241,7 +241,7 @@ namespace
 {
     //TODO: use binary insert stable sort
     template<typename T>
-    bool compareGraphPoint(const T& a, const T& b)
+    bool graphPointComparisonLess(const T& a, const T& b)
     {
         return a.p.x < b.p.x;
     }
@@ -252,7 +252,7 @@ template<typename T>
 void LineGraph<T>::add(const LineGraphPoint<T>& point)
 {
     _points.push_back(point);
-    std::sort(_points.begin(), _points.end(), compareGraphPoint<LineGraphPoint<T>>);
+    std::sort(_points.begin(), _points.end(), graphPointComparisonLess<LineGraphPoint<T>>);
     Graph<T>::setNeedCompile(_points.size() > 1);
 }
 
@@ -403,7 +403,7 @@ template<typename T>
 void BezierGraph<T>::add(float x, const T& y, float lx, const T& ly, float rx, const T& ry, int tag/* = 0*/, int type/* = BezierGraphPointType::CURVE*/)
 {
     _points.push_back(BezierGraphPoint<T>(GraphPoint<T>(x, y), GraphPoint<T>(lx, ly), GraphPoint<T>(rx, ry), tag, type));
-    std::sort(_points.begin(), _points.end(), compareGraphPoint<BezierGraphPoint<T>>);
+    std::sort(_points.begin(), _points.end(), graphPointComparisonLess<BezierGraphPoint<T>>);
     Graph<T>::setNeedCompile(_points.size() > 1);
 }
 
