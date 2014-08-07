@@ -348,7 +348,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         }
         
         // text color
-        CGContextSetRGBFillColor(context, info->tintColorR / 255.0f, info->tintColorG / 255.0f, info->tintColorB / 255.0f, 1);
+        CGContextSetRGBFillColor(context, info->tintColorR, info->tintColorG, info->tintColorB, 1);
         // move Y rendering to the top of the image
         CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
@@ -456,13 +456,13 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.shadowBlur             = textDefinition._shadow._shadowBlur;
         info.shadowOpacity          = textDefinition._shadow._shadowOpacity;
         info.hasStroke              = textDefinition._stroke._strokeEnabled;
-        info.strokeColorR           = textDefinition._stroke._strokeColor.r;
-        info.strokeColorG           = textDefinition._stroke._strokeColor.g;
-        info.strokeColorB           = textDefinition._stroke._strokeColor.b;
+        info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
+        info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
+        info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
         info.strokeSize             = textDefinition._stroke._strokeSize;
-        info.tintColorR             = textDefinition._fontFillColor.r;
-        info.tintColorG             = textDefinition._fontFillColor.g;
-        info.tintColorB             = textDefinition._fontFillColor.b;
+        info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
+        info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
+        info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
         
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info))
         {
