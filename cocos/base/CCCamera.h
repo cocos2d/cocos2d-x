@@ -118,15 +118,15 @@ public:
     *
     * @return The camera view matrix.
     */
-    const Mat4& getViewMatrix();
+    const Mat4& getViewMatrix() const;
 
     /**get view projection matrix*/
-    const Mat4& getViewProjectionMatrix();
+    const Mat4& getViewProjectionMatrix() const;
 
     /**
     * Convert the specified point of viewport from screenspace coordinate into the worldspace coordinate.
     */
-    void unproject(const Size& viewport, Vec3* src, Vec3* dst);
+    void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
     
     //override
     virtual void onEnter() override;
@@ -145,9 +145,9 @@ protected:
 
     Scene* _scene; //Scene camera belongs to
     Mat4 _projection;
-    Mat4 _view;
-    Mat4 _viewInv;
-    Mat4 _viewProjection;
+    mutable Mat4 _view;
+    mutable Mat4 _viewInv;
+    mutable Mat4 _viewProjection;
     Vec3 _up;
     Camera::Type _type;
     float _fieldOfView;
@@ -155,7 +155,7 @@ protected:
     float _aspectRatio;
     float _nearPlane;
     float _farPlane;
-    bool  _viewProjectionDirty;
+    mutable bool  _viewProjectionDirty;
     unsigned short _cameraFlag; // camera flag
 };
 
