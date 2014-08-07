@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
+#include "base/CCCamera.h"
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
@@ -53,6 +54,10 @@ Scene::~Scene()
 
 bool Scene::init()
 {
+    //create default camera
+    auto camera = Camera::create();
+    addChild(camera);
+    
     auto size = Director::getInstance()->getWinSize();
     return initWithSize(size);
 }
@@ -179,6 +184,13 @@ void Scene::addChildToPhysicsWorld(Node* child)
         addToPhysicsWorldFunc(child);
     }
 }
+
+Camera* Scene::getCameraByIndex(int index) const
+{
+    CCASSERT(index < _cameras.size(), "invalid index");
+    return _cameras[index];
+}
+
 #endif
 
 NS_CC_END
