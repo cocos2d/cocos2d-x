@@ -1,5 +1,5 @@
 set(COCOS_STORAGE_SRC 
-    storage/local-storage/LocalStorage.cpp
+    local-storage/LocalStorage.cpp
 )
 
 add_library(sqlite3 STATIC
