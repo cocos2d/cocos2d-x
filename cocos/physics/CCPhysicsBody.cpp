@@ -324,7 +324,7 @@ void PhysicsBody::setGravityEnable(bool enable)
     if (_gravityEnabled != enable)
     {
         _gravityEnabled = enable;
-        _info->getBody()->gravity_enable = enable;
+        _info->getBody()->gravity_enable = enable ? cpTrue : cpFalse;
     }
 }
 
