@@ -7,7 +7,7 @@ set(SAMPLE_SRC
 
 include_directories(
   Classes
-  ../../../cocos/scripting/lua/bindings
+  ../../../cocos/scripting/lua-bindings
   ../../../external/lua/lua
   ../../../external/lua/tolua
 )
@@ -23,6 +23,7 @@ target_link_libraries(${APP_NAME}
   luanetwork
   audio
   cocos2d
+  network
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

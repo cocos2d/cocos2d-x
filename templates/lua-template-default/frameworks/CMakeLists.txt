@@ -148,11 +148,9 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  luabinding
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
+  luacocos2d
+  luacocosdenshion
+  luanetwork
   audio
   cocos2d
   xxtea

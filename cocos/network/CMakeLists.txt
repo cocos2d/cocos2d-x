@@ -1,6 +1,6 @@
 if(WIN32)
   set(PLATFORM_SRC
-    network/WebSocket.cpp
+    WebSocket.cpp
   )
 
   set(PLATFORM_LINK
@@ -8,7 +8,7 @@ if(WIN32)
   )
 elseif(NOT APPLE)
   set(PLATFORM_SRC
-    network/WebSocket.cpp
+    WebSocket.cpp
   )
 
   set(PLATFORM_LINK
@@ -19,9 +19,13 @@ elseif(NOT APPLE)
 endif()
 
 set(COCOS_NETWORK_SRC
-  network/HttpClient.cpp
-  network/SocketIO.cpp
+  HttpClient.cpp
+  SocketIO.cpp
   ${PLATFORM_SRC}
+)
+
+add_library(network STATIC
+	${COCOS_NETWORK_SRC}
 )
 
 IF (WIN32 AND NOT MINGW)
@@ -35,3 +39,13 @@ ELSE()
     ${PLATFORM_LINK}
   )
 ENDIF()
+
+target_link_libraries(network
+  ${COCOS_NETWORK_LINK}
+)
+
+set_target_properties(network
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+)
