@@ -60,6 +60,8 @@ cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 	body->v_limit = (cpFloat)INFINITY;
 	body->w_limit = (cpFloat)INFINITY;
 	
+	body->gravity_enable = cpTrue;
+
 	body->data = NULL;
 	
 	// Setters must be called after full initialization so the sanity checks don't assert on garbage data.
