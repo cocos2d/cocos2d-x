@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
@@ -54,7 +54,7 @@ using namespace Windows::UI::ViewManagement;
 
 NS_CC_BEGIN
 
-static GLView* s_pEglView = NULL;
+static GLViewImpl* s_pEglView = NULL;
 
 //////////////////////////////////////////////////////////////////////////
 // impliment GLView
@@ -165,7 +165,7 @@ void WinRTWindow::OnSuspending()
 
 void WinRTWindow::ResizeWindow()
 {
-     GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+     GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
 cocos2d::Vec2 WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
@@ -174,7 +174,7 @@ cocos2d::Vec2 WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
 	float y = getScaledDPIValue(p->Position.Y);
     Vec2 pt(x, y);
 
-	float zoomFactor = GLView::sharedOpenGLView()->getFrameZoomFactor();
+	float zoomFactor = GLViewImpl::sharedOpenGLView()->getFrameZoomFactor();
 
 	if(zoomFactor > 0.0f) {
 		pt.x /= zoomFactor;
@@ -185,12 +185,12 @@ cocos2d::Vec2 WinRTWindow::GetCCPoint(PointerEventArgs^ args) {
 
 void WinRTWindow::ShowKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
 {
-    GLView::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
+    GLViewImpl::sharedOpenGLView()->ShowKeyboard(args->OccludedRect);
 }
 
 void WinRTWindow::HideKeyboard(InputPane^ inputPane, InputPaneVisibilityEventArgs^ args)
 {
-    GLView::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
+    GLViewImpl::sharedOpenGLView()->HideKeyboard(args->OccludedRect);
 }
 
 void WinRTWindow::setIMEKeyboardState(bool bOpen)
@@ -268,14 +268,14 @@ void WinRTWindow::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ ar
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
     int id = 0;
     Vec2 p(0.0f,0.0f);
-    GLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &p.x, &p.y);
+    GLViewImpl::sharedOpenGLView()->handleTouchesBegin(1, &id, &p.x, &p.y);
     p.y += direction;
-    GLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
-    GLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &p.x, &p.y);
+    GLViewImpl::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
+    GLViewImpl::sharedOpenGLView()->handleTouchesEnd(1, &id, &p.x, &p.y);
 }
 
 // user pressed the Back Key on the phone
-void GLView::OnBackKeyPress()
+void GLViewImpl::OnBackKeyPress()
 {
 #if 0
     if (m_delegate)
@@ -287,7 +287,7 @@ void GLView::OnBackKeyPress()
 }
 
 
-void GLView::OnPointerPressed(PointerEventArgs^ args)
+void GLViewImpl::OnPointerPressed(PointerEventArgs^ args)
 {
 #if 0
     int id = args->CurrentPoint->PointerId;
@@ -296,7 +296,7 @@ void GLView::OnPointerPressed(PointerEventArgs^ args)
 #endif
 }
 
-void GLView::OnPointerMoved(PointerEventArgs^ args)
+void GLViewImpl::OnPointerMoved(PointerEventArgs^ args)
 {
 #if 0
     auto currentPoint = args->CurrentPoint;
@@ -318,7 +318,7 @@ void GLView::OnPointerMoved(PointerEventArgs^ args)
 #endif
 }
 
-void GLView::OnPointerReleased(PointerEventArgs^ args)
+void GLViewImpl::OnPointerReleased(PointerEventArgs^ args)
 {
 #if 0
     int id = args->CurrentPoint->PointerId;
@@ -334,7 +334,7 @@ void WinRTWindow::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
     Vec2 pt = GetCCPoint(args);
-    GLView::sharedOpenGLView()->handleTouchesBegin(1, &id, &pt.x, &pt.y);
+    GLViewImpl::sharedOpenGLView()->handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
 
 void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
@@ -346,7 +346,7 @@ void WinRTWindow::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 		{
 			int id = args->CurrentPoint->PointerId;
 			Vec2 p = GetCCPoint(args);
-			GLView::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
+			GLViewImpl::sharedOpenGLView()->handleTouchesMove(1, &id, &p.x, &p.y);
 		}
 		m_lastPoint = currentPoint->Position;
 		m_lastPointValid = true;
@@ -361,38 +361,38 @@ void WinRTWindow::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
     int id = args->CurrentPoint->PointerId;
     Vec2 pt = GetCCPoint(args);
-    GLView::sharedOpenGLView()->handleTouchesEnd(1, &id, &pt.x, &pt.y);
+    GLViewImpl::sharedOpenGLView()->handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
 
 void WinRTWindow::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
 {
 	ResizeWindow();
-	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+	GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
 void WinRTWindow::OnLogicalDpiChanged(Object^ sender)
 {
-	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+	GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
 void WinRTWindow::OnOrientationChanged(Object^ sender)
 {
 	ResizeWindow();
-	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+	GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
 void WinRTWindow::OnDisplayContentsInvalidated(Object^ sender)
 {
-	GLView::sharedOpenGLView()->UpdateForWindowSizeChange();
+	GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange();
 }
 
 void WinRTWindow::OnRendering(Object^ sender, Object^ args)
 {
-	GLView::sharedOpenGLView()->OnRendering();
+	GLViewImpl::sharedOpenGLView()->OnRendering();
 }
 
 
-GLView::GLView()
+GLViewImpl::GLViewImpl()
 	: m_window(nullptr)
 	, m_fFrameZoomFactor(1.0f)
 	, m_bSupportTouch(false)
@@ -405,7 +405,7 @@ GLView::GLView()
     _viewName = "Cocos2dxWinRT";
 }
 
-GLView::~GLView()
+GLViewImpl::~GLViewImpl()
 {
 	CC_ASSERT(this == s_pEglView);
     s_pEglView = NULL;
@@ -413,7 +413,7 @@ GLView::~GLView()
 	// TODO: cleanup 
 }
 
-bool GLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
+bool GLViewImpl::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
 {
     bool bRet = false;
 	m_window = window;
@@ -426,25 +426,25 @@ bool GLView::Create(CoreWindow^ window, SwapChainBackgroundPanel^ panel)
     return bRet;
 }
 
-bool GLView::isOpenGLReady()
+bool GLViewImpl::isOpenGLReady()
 {
 	// TODO: need to revisit this
     return (m_window.Get() != nullptr);
 }
 
-void GLView::end()
+void GLViewImpl::end()
 {
 	// TODO: need to implement
 
 }
 
-void GLView::swapBuffers()
+void GLViewImpl::swapBuffers()
 {
 	m_winRTWindow->swapBuffers();
 }
 
 
-void GLView::setIMEKeyboardState(bool bOpen)
+void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
 	if(m_winRTWindow) 
 	{
@@ -453,12 +453,12 @@ void GLView::setIMEKeyboardState(bool bOpen)
 }
 
 
-void GLView::resize(int width, int height)
+void GLViewImpl::resize(int width, int height)
 {
 
 }
 
-void GLView::setFrameZoomFactor(float fZoomFactor)
+void GLViewImpl::setFrameZoomFactor(float fZoomFactor)
 {
     m_fFrameZoomFactor = fZoomFactor;
     resize((int) (_screenSize.width * fZoomFactor), (int) (_screenSize.height * fZoomFactor));
@@ -467,23 +467,23 @@ void GLView::setFrameZoomFactor(float fZoomFactor)
 }
 
 
-float GLView::getFrameZoomFactor()
+float GLViewImpl::getFrameZoomFactor()
 {
     return m_fFrameZoomFactor;
 }
 
-void GLView::setFrameSize(float width, float height)
+void GLViewImpl::setFrameSize(float width, float height)
 {
 	// not implemented in WinRT. Window is always full screen
     // GLViewProtocol::setFrameSize(width, height);
 }
 
-void GLView::centerWindow()
+void GLViewImpl::centerWindow()
 {
 	// not implemented in WinRT. Window is always full screen
 }
 
-void GLView::OnSuspending()
+void GLViewImpl::OnSuspending()
 {
     if (m_winRTWindow)
     {
@@ -491,12 +491,12 @@ void GLView::OnSuspending()
     }
 }
 
-GLView* GLView::sharedOpenGLView()
+GLViewImpl* GLViewImpl::sharedOpenGLView()
 {
     return s_pEglView;
 }
 
-int GLView::Run() 
+int GLViewImpl::Run() 
 {
 	m_running = true; 
 
@@ -504,7 +504,7 @@ int GLView::Run()
 };
 
 
-void GLView::OnRendering()
+void GLViewImpl::OnRendering()
 {
 	if(m_running && m_initialized)
 	{
@@ -512,7 +512,7 @@ void GLView::OnRendering()
 	}
 }
 
-void GLView::HideKeyboard(Windows::Foundation::Rect r)
+void GLViewImpl::HideKeyboard(Windows::Foundation::Rect r)
 {
     return; // not implemented
 #if 0
@@ -532,7 +532,7 @@ void GLView::HideKeyboard(Windows::Foundation::Rect r)
 #endif
 }
 
-void GLView::ShowKeyboard(Windows::Foundation::Rect r)
+void GLViewImpl::ShowKeyboard(Windows::Foundation::Rect r)
 {
     return; // not implemented
 #if 0
@@ -554,7 +554,7 @@ void GLView::ShowKeyboard(Windows::Foundation::Rect r)
 }
 
 
-void GLView::UpdateForWindowSizeChange()
+void GLViewImpl::UpdateForWindowSizeChange()
 {
     float width = ConvertDipsToPixels(m_window->Bounds.Width);
     float height = ConvertDipsToPixels(m_window->Bounds.Height);
@@ -562,18 +562,18 @@ void GLView::UpdateForWindowSizeChange()
 	if(!m_initialized)
     {
         m_initialized = true;
-        GLViewProtocol::setFrameSize(width, height);
+        GLView::setFrameSize(width, height);
     }
     else
     {
         setFrameSize(width, height);
         Size designSize = getDesignResolutionSize();
-        GLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
+        GLViewImpl::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
         Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
    }
 }
 
-void GLView::QueueEvent(std::shared_ptr<InputEvent>& event)
+void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)
 {
     std::lock_guard<std::mutex> guard(mMutex);
     mInputEvents.push(event);
