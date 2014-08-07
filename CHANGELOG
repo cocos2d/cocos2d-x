@@ -7,6 +7,7 @@ cocos2d-x-3.3  ??
     [NEW]           Image: support of software PVRTC v1 decompression
     [NEW]           RotateTo: added 3D rotation support
     [NEW]           ScrollView: added `setMinScale()` and `setMaxScale()`
+    [NEW]           SpriteFrameCache: load from plist file content data
     [NEW]           UIText: added getter and setter for TextColor
     [NEW]           utils: added gettime()
     [NEW]           TextField: support utf8
