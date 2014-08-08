@@ -84,7 +84,7 @@ void LoadingBar::initRenderer()
     _barRenderer = Scale9Sprite::create();
     _barRenderer->setScale9Enabled(false);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
-    _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
+    _barRenderer->setAnchorPoint(Vec2(0.0,0.0));
 }
 
     
@@ -99,15 +99,15 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
     switch (_direction)
     {
         case Direction::LEFT:
-            _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            _barRenderer->setPosition(Vec2(-_totalLength*0.5f,0.0f));
+            _barRenderer->setAnchorPoint(Vec2(0.0f,0.0f));
+            _barRenderer->setPosition(Vec2(0.0f,0.0f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(false);
             }
             break;
         case Direction::RIGHT:
-            _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-            _barRenderer->setPosition(Vec2(_totalLength*0.5f,0.0f));
+            _barRenderer->setAnchorPoint(Vec2(1.0f,0.0f));
+            _barRenderer->setPosition(Vec2(_totalLength,0.0f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(true);
             }
@@ -147,13 +147,13 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     switch (_direction)
     {
         case Direction::LEFT:
-            _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
+            _barRenderer->setAnchorPoint(Vec2(0.0f,0.0f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(false);
             }
             break;
         case Direction::RIGHT:
-            _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
+            _barRenderer->setAnchorPoint(Vec2(1.0f,0.0f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(true);
             }
@@ -309,10 +309,10 @@ void LoadingBar::barRendererScaleChangedWithSize()
     switch (_direction)
     {
         case Direction::LEFT:
-            _barRenderer->setPosition(Vec2(0.0f, _contentSize.height / 2.0f));
+            _barRenderer->setPosition(Vec2(0.0f, 0.0f));
             break;
         case Direction::RIGHT:
-            _barRenderer->setPosition(Vec2(_totalLength, _contentSize.height / 2.0f));
+            _barRenderer->setPosition(Vec2(_totalLength, 0.0f));
             break;
         default:
             break;
