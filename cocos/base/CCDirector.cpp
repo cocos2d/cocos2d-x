@@ -303,7 +303,7 @@ void Director::drawScene()
             loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
             
             //visit the scene
-            _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
             _renderer->render();
             
             popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -316,7 +316,7 @@ void Director::drawScene()
             loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
             
             //visit the scene
-            _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
             _renderer->render();
             
             popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -329,7 +329,7 @@ void Director::drawScene()
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, false);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     if (_displayStats)
