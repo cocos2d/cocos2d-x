@@ -399,4 +399,29 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
+AABB Sprite3D::getAABB() const
+{
+    AABB aabb = _mesh->getOriginAABB();
+    Mat4 transform;
+    
+    if (getSkin() && getSkin()->getRootBone())
+    {
+        transform = getNodeToWorldTransform() * getSkin()->getRootBone()->getWorldMat();
+    }
+    else
+    {
+        transform = getNodeToWorldTransform();
+    }
+    
+    aabb.transform(transform);
+    return aabb;
+}
+
+Rect Sprite3D::getBoundingBox() const
+{
+    AABB aabb = getAABB();
+    Rect ret(aabb._min.x, aabb._min.y, (aabb._max.x - aabb._min.x), (aabb._max.y - aabb._min.y));
+    return ret;
+}
+
 NS_CC_END
