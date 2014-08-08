@@ -555,7 +555,7 @@ void RenderTexture::onBegin()
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
         Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        modifiedProjection = GLViewImpl::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
 #endif
 
@@ -574,7 +574,7 @@ void RenderTexture::onBegin()
     {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
         Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        modifiedProjection = GLViewImpl::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, modifiedProjection);
 #endif
     }

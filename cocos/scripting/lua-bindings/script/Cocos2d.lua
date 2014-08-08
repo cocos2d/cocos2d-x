@@ -1,9 +1,4 @@
-require "CocoStudio"
-
 cc = cc or {}
-
-cc.DIRECTOR_PROJECTION_2D = 0
-cc.DIRECTOR_PROJECTION_3D = 1
 
 function cc.clampf(value, min_inclusive, max_inclusive)
     -- body
@@ -366,16 +361,4 @@ end
 --PhysicsMaterial
 function cc.PhysicsMaterial(_density, _restitution, _friction)
 	return { density = _density, restitution = _restitution, friction = _friction }
-end
-
-local ConfigType = 
-{
-    NONE = 0,
-    COCOSTUDIO = 1,
-}
-
-function __onParseConfig(configType,jasonStr)
-    if configType == ConfigType.COCOSTUDIO then
-        ccs.TriggerMng.getInstance():parse(jasonStr)
-    end
 end

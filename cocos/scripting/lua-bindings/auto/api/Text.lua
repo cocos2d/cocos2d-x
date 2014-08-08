@@ -5,9 +5,32 @@
 -- @parent_module ccui
 
 --------------------------------
--- @function [parent=#Text] getStringLength 
+-- @function [parent=#Text] enableShadow 
 -- @param self
--- @return long#long ret (return value: long)
+        
+--------------------------------
+-- @function [parent=#Text] getFontSize 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#Text] getString 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Text] disableEffect 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#Text] getTextColor 
+-- @param self
+-- @return color4b_table#color4b_table ret (return value: color4b_table)
+        
+--------------------------------
+-- @function [parent=#Text] setTextVerticalAlignment 
+-- @param self
+-- @param #int textvalignment
         
 --------------------------------
 -- @function [parent=#Text] setFontName 
@@ -20,78 +43,14 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Text] getFontSize 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#Text] enableOutline 
--- @param self
--- @param #color4b_table color4b
--- @param #int int
-        
---------------------------------
--- @function [parent=#Text] getTextVerticalAlignment 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#Text] getString 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- @function [parent=#Text] enableShadow 
--- @param self
-        
---------------------------------
 -- @function [parent=#Text] setString 
 -- @param self
 -- @param #string str
         
 --------------------------------
--- @function [parent=#Text] getTextHorizontalAlignment 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#Text] setTextVerticalAlignment 
--- @param self
--- @param #int textvalignment
-        
---------------------------------
--- @function [parent=#Text] enableGlow 
--- @param self
--- @param #color4b_table color4b
-        
---------------------------------
--- @function [parent=#Text] getTextAreaSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
-        
---------------------------------
--- @function [parent=#Text] setTextHorizontalAlignment 
--- @param self
--- @param #int texthalignment
-        
---------------------------------
--- @function [parent=#Text] setFontSize 
--- @param self
--- @param #int int
-        
---------------------------------
 -- @function [parent=#Text] isTouchScaleChangeEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Text] getType 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#Text] disableEffect 
--- @param self
         
 --------------------------------
 -- @function [parent=#Text] getFontName 
@@ -102,6 +61,57 @@
 -- @function [parent=#Text] setTextAreaSize 
 -- @param self
 -- @param #size_table size
+        
+--------------------------------
+-- @function [parent=#Text] getStringLength 
+-- @param self
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+-- @function [parent=#Text] enableOutline 
+-- @param self
+-- @param #color4b_table color4b
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#Text] getType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#Text] getTextHorizontalAlignment 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#Text] setFontSize 
+-- @param self
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#Text] setTextColor 
+-- @param self
+-- @param #color4b_table color4b
+        
+--------------------------------
+-- @function [parent=#Text] enableGlow 
+-- @param self
+-- @param #color4b_table color4b
+        
+--------------------------------
+-- @function [parent=#Text] getTextVerticalAlignment 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#Text] getTextAreaSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#Text] setTextHorizontalAlignment 
+-- @param self
+-- @param #int texthalignment
         
 --------------------------------
 -- @overload self, string, string, int         

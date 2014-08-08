@@ -61,7 +61,7 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "math/CCMath.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 
 /**
  Position of the FPS
@@ -263,7 +263,7 @@ void Director::drawScene()
 
     if (_openGLView)
     {
-        _openGLView->pollInputEvents();
+        _openGLView->pollEvents();
     }
 
     //tick before glClear: issue #533

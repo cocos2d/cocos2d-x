@@ -89,7 +89,7 @@ void CCEditBoxImplWp8::openKeyboard()
 		}
 	});
 
-    GLView::sharedOpenGLView()->OpenXamlEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, (int)m_eEditBoxInputMode, (int)m_eEditBoxInputFlag, receiveHandler);
+    GLViewImpl::sharedOpenGLView()->OpenXamlEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, (int)m_eEditBoxInputMode, (int)m_eEditBoxInputFlag, receiveHandler);
 }
 
 bool CCEditBoxImplWp8::initWithSize( const Size& size )

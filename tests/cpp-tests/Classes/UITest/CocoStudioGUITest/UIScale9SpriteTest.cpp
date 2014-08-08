@@ -659,3 +659,68 @@ bool UIS9Flip::init()
     }
     return false;
 }
+
+bool UIS9ChangeAnchorPoint::init()
+{
+    if (UIScene::init()) {
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2 + 50);
+        
+        
+        auto normalSprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+        normalSprite->setPosition(Vec2(x, y ));
+//        normalSprite->setScale9Enabled(false);
+//        normalSprite->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+
+        this->addChild(normalSprite);
+        
+        
+        Button* button1 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button1->setPosition(Vec2(winSize.width/2 - 100,winSize.height/2 - 50));
+        button1->setName("button2");
+        button1->setTitleText("Vec(0,0)");
+        button1->addTouchEventListener([=](Ref*, Widget::TouchEventType type)
+                                       {
+                                           if (type == Widget::TouchEventType::ENDED) {
+                                               normalSprite->setAnchorPoint(Vec2::ZERO);
+                                               normalSprite->setScale9Enabled(true);
+                                               CCLOG("position = %f, %f,  anchor point = %f, %f", normalSprite->getPosition().x,
+                                                     normalSprite->getPosition().y,
+                                                     normalSprite->getAnchorPoint().x,
+                                                     normalSprite->getAnchorPoint().y);
+                                               CCLOG("tests:content size : width = %f, height = %f",
+                                                     normalSprite->getContentSize().width,
+                                                     normalSprite->getContentSize().height);
+                                           }
+                                       });
+        this->addChild(button1);
+        
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setPosition(Vec2(winSize.width/2 + 100,winSize.height/2 - 50));
+        button2->setName("button2");
+        button2->setTitleText("Vec(1,1)");
+        button2->addTouchEventListener([=](Ref*, Widget::TouchEventType type)
+                                       {
+                                           if (type == Widget::TouchEventType::ENDED) {
+                                               normalSprite->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+                                               normalSprite->setScale9Enabled(false);
+                                               CCLOG("position = %f, %f,  anchor point = %f, %f", normalSprite->getPosition().x,
+                                                     normalSprite->getPosition().y,
+                                                     normalSprite->getAnchorPoint().x,
+                                                     normalSprite->getAnchorPoint().y);
+                                               CCLOG("tests:content size : width = %f, height = %f",
+                                                     normalSprite->getContentSize().width,
+                                                     normalSprite->getContentSize().height);
+                                               
+                                           }
+                                       });
+        this->addChild(button2);
+        
+        
+        return true;
+    }
+    return false;
+}

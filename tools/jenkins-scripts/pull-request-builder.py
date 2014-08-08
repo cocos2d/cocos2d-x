@@ -62,19 +62,38 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
-def save_build_stats(pr_num, key, value):
+def connect_db():
     db_host = os.environ['db_host']
     db_user = os.environ['db_user']
     db_pw = os.environ['db_pw']
-    db = MySQLdb.connect(db_host, db_user, db_pw, "jenkins" )
+    db_name=os.environ['db_name']
+    db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
+    return db
+
+def close_db(db):
+    db.close()
+
+def save_build_stats(db, pr, filename, size):
     cursor = db.cursor()
-    sql = '''INSERT INTO PullRequestBuild (pr_number, %s) 
-    VALUES(%d, %d) ON DUPLICATE KEY UPDATE pr_number=VALUES(pr_number), 
-    %s=VALUES(%s)''' % (key, pr_num, value, key, key)
+    sql = "INSERT INTO %s (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
     print sql
     cursor.execute(sql)
     db.commit()
-    db.close()
+
+def scan_all_libs(db, pr_num):
+    stats = {}
+    lib_path = './tests/cpp-tests/proj.android/obj/local/armeabi'
+    for root, dirs, files in os.walk(lib_path):
+      for _file in files:
+        if not _file.endswith(".a"):
+          continue
+        print _file
+        libfile = lib_path + '/' + _file
+        _filename = _file.split('.')[0]
+        filesize = os.path.getsize(libfile)/1024
+        stats[_filename]=filesize
+        save_build_stats(db, pr_num, _filename, filesize)
+    return stats
 
 http_proxy = ''
 if(os.environ.has_key('HTTP_PROXY')):
@@ -226,13 +245,23 @@ def main():
           local_apk = sample_dir + 'bin/CppTests-debug.apk'
           backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
           os.system('cp ' + local_apk + ' ' + backup_apk)
+          db = connect_db()
+          scan_all_libs(db, pr_num)
           ret = os.system("python build/android-build.py -p 10 -b release cpp-empty-test")
           if(ret == 0):
             _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
             filesize = os.path.getsize(_path)
             pr_desc = pr_desc + '<h3>size of libcpp_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
             set_description(pr_desc, target_url)
-            save_build_stats(pr_num, 'cpp_empty_test_so', filesize/1024)
+            save_build_stats(db, pr_num, 'libcpp_empty_test', filesize/1024)
+          ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
+          if(ret == 0):
+            _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
+            filesize = os.path.getsize(_path)
+            pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
+            set_description(pr_desc, target_url)
+            save_build_stats(db, pr_num, 'liblua_empty_test', filesize/1024)
+          close_db(db)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):

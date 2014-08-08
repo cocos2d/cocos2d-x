@@ -146,6 +146,24 @@ public:
      * @param dt    The animation duration
      */
     void setZoomScaleInDuration(float s, float dt);
+
+    /**
+     * Set min scale
+     *
+     * @param minScale min scale
+     */
+    void setMinScale(float minScale) {
+        _minScale = minScale;
+    }
+    /**
+     * Set max scale
+     *
+     * @param maxScale max scale
+     */
+    void setMaxScale(float maxScale) {
+        _maxScale = maxScale;
+    }
+
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      */
@@ -275,19 +293,7 @@ protected:
     void handleZoom();
 
     Rect getViewRect();
-    
-    /**
-     * current zoom scale
-     */
-    float _zoomScale;
-    /**
-     * min zoom scale
-     */
-    float _minZoomScale;
-    /**
-     * max zoom scale
-     */
-    float _maxZoomScale;
+
     /**
      * scroll view delegate
      */

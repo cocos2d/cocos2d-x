@@ -135,6 +135,8 @@ def main():
                     'cocos2dx_experimental_video.ini' : ('cocos2dx_experimental_video', 'lua_cocos2dx_experimental_video_auto'), \
                     'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'lua_cocos2dx_experimental_auto'), \
                     'cocos2dx_controller.ini' : ('cocos2dx_controller', 'lua_cocos2dx_controller_auto'), \
+                    'cocos2dx_cocosbuilder.ini': ('cocos2dx_cocosbuilder', 'lua_cocos2dx_cocosbuilder_auto'), \
+                    'cocos2dx_cocosdenshion.ini': ('cocos2dx_cocosdenshion', 'lua_cocos2dx_cocosdenshion_auto'), \
                     }
         target = 'lua'
         generator_py = '%s/generator.py' % cxx_generator_root

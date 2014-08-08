@@ -29,9 +29,11 @@
 #include <vector>
 
 #include "3d/CCBundle3DData.h"
+#include "3d/CCSubMesh.h"
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
+#include "base/CCVector.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
 
@@ -42,14 +44,15 @@ class EventCustom;
 
 class CC_DLL RenderMeshData
 {
+    typedef std::vector<unsigned short> IndexArray;
     friend class Mesh;
 public:
     RenderMeshData(): _vertexsizeBytes(0)
     {
     }
     bool hasVertexAttrib(int attrib);
-    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
+    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& subMeshIndices);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& subMeshIndices, const std::vector<MeshVertexAttrib>& attribs);
     
 protected:
     
@@ -58,7 +61,7 @@ protected:
     int _vertexsizeBytes;
     ssize_t _vertexNum;
     std::vector<float> _vertexs;
-    std::vector<unsigned short> _indices;
+    std::vector<IndexArray> _subMeshIndices;
     std::vector<MeshVertexAttrib> _vertexAttribs;
 };
 
@@ -68,32 +71,34 @@ protected:
  */
 class CC_DLL Mesh : public Ref
 {
+    typedef std::vector<unsigned short> IndexArray;
 public:
-    /** Defines supported index formats. */
-    enum class IndexFormat
-    {
-        INDEX8 = GL_UNSIGNED_BYTE,
-        INDEX16 = GL_UNSIGNED_SHORT,
-    };
-
-    /** Defines supported primitive types. */
-    enum class PrimitiveType
-    {
-        TRIANGLES = GL_TRIANGLES,
-        TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-        LINES = GL_LINES,
-        LINE_STRIP = GL_LINE_STRIP,
-        POINTS = GL_POINTS
-    };
-
-    /**create mesh from positions, normals, and so on*/
-    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    /**create mesh from positions, normals, and so on, sigle SubMesh*/
+    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices);
+    
+    /**create mesh from positions, normals, and so on, multi-SubMesh*/
+    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& subMeshIndices);
     
     /**create mesh with vertex attributes*/
-    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount) { return create(vertices, vertexSizeInFloat, indices, attribs); }
+    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const IndexArray& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount) { return create(vertices, vertexSizeInFloat, indices, attribs); }
     
-    /**create mesh with vertex attributes*/
-    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
+    /**
+     * create Mesh
+     * @param vertices vertices buffer data
+     * @param vertexSizeInFloat size of each vertex
+     * @param indices index buffer data that denotes how to connect the vertex, sigle SubMesh
+     * @param attribs vertex attributes
+     */
+    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs);
+    
+    /**
+     * create Mesh
+     * @param vertices vertices buffer data
+     * @param vertexSizeInFloat size of each vertex
+     * @param subMeshIndices index buffer data that denotes how to connect the vertex, multi-SubMesh
+     * @param attribs vertex attributes
+     */
+    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& subMeshIndices, const std::vector<MeshVertexAttrib>& attribs);
 
     /**get vertex buffer*/
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
@@ -107,39 +112,45 @@ public:
     /**get per vertex size in bytes*/
     int getVertexSizeInBytes() const { return _renderdata._vertexsizeBytes; }
     
-    /** get primitive type*/
-    PrimitiveType getPrimitiveType() const { return _primitiveType; }
-    /**get index count*/
-    ssize_t getIndexCount() const { return _indexCount; }
-    /**get index format*/
-    IndexFormat getIndexFormat() const { return _indexFormat; }
-    /**get index buffer*/
-    GLuint getIndexBuffer() const {return _indexBuffer; }
+    /**get sub mesh count*/
+    ssize_t getSubMeshCount() const { return _subMeshes.size(); }
+    
+    /**get sub mesh by index*/
+    SubMesh* getSubMesh(int index) const { return _subMeshes.at(index); }
     
     /**build vertex buffer from renderdata*/
     void restore();
+    
+    /**to be deprecated, those functions have been moved to SubMesh*/
+    /** get primitive type*/
+    CC_DEPRECATED_ATTRIBUTE PrimitiveType getPrimitiveType() const { return _subMeshes.at(0)->getPrimitiveType(); }
+    /**get index count*/
+    CC_DEPRECATED_ATTRIBUTE ssize_t getIndexCount() const { return _subMeshes.at(0)->getIndexCount(); }
+    /**get index format*/
+    CC_DEPRECATED_ATTRIBUTE IndexFormat getIndexFormat() const { return _subMeshes.at(0)->getIndexFormat(); }
+    /**get index buffer*/
+    CC_DEPRECATED_ATTRIBUTE GLuint getIndexBuffer() const {return _subMeshes.at(0)->getIndexBuffer(); }
 
 CC_CONSTRUCTOR_ACCESS:
     
     Mesh();
     virtual ~Mesh();
     /**init mesh*/
-    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& indices);
     
     /**init mesh*/
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
+    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& indices, const std::vector<MeshVertexAttrib>& attribs);
 
+    /**build sub meshes*/
+    void buildSubMeshes();
     /**build buffer*/
     void buildBuffer();
     /**free buffer*/
     void cleanAndFreeBuffers();
 
 protected:
-    PrimitiveType _primitiveType;
-    IndexFormat _indexFormat;
     GLuint _vertexBuffer;
-    GLuint _indexBuffer;
-    ssize_t _indexCount;
+    Vector<SubMesh*> _subMeshes;
 
     RenderMeshData _renderdata;
 };
