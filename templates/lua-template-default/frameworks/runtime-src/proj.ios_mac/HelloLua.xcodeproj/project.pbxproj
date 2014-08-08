@@ -91,8 +91,6 @@
 		C03781E418BF656A00FE4F13 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781C718BF656A00FE4F13 /* extern.lua */; };
 		C03781E718BF656A00FE4F13 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781C918BF656A00FE4F13 /* json.lua */; };
 		C03781E818BF656A00FE4F13 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781C918BF656A00FE4F13 /* json.lua */; };
-		C03781E918BF656A00FE4F13 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781CA18BF656A00FE4F13 /* luaj.lua */; };
-		C03781EA18BF656A00FE4F13 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781CA18BF656A00FE4F13 /* luaj.lua */; };
 		C03781EB18BF656A00FE4F13 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781CB18BF656A00FE4F13 /* luaoc.lua */; };
 		C03781EC18BF656A00FE4F13 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781CB18BF656A00FE4F13 /* luaoc.lua */; };
 		C03781ED18BF656A00FE4F13 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = C03781CC18BF656A00FE4F13 /* Opengl.lua */; };
@@ -507,7 +505,6 @@
 		C03781C618BF656A00FE4F13 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DrawPrimitives.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/DrawPrimitives.lua"; sourceTree = "<group>"; };
 		C03781C718BF656A00FE4F13 /* extern.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = extern.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/extern.lua"; sourceTree = "<group>"; };
 		C03781C918BF656A00FE4F13 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/json.lua"; sourceTree = "<group>"; };
-		C03781CA18BF656A00FE4F13 /* luaj.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaj.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/luaj.lua"; sourceTree = "<group>"; };
 		C03781CB18BF656A00FE4F13 /* luaoc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaoc.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/luaoc.lua"; sourceTree = "<group>"; };
 		C03781CC18BF656A00FE4F13 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/Opengl.lua"; sourceTree = "<group>"; };
 		C03781CD18BF656A00FE4F13 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = "../../cocos2d-x/cocos/scripting/lua-bindings/script/OpenglConstants.lua"; sourceTree = "<group>"; };
@@ -624,7 +621,6 @@
 				C03781C618BF656A00FE4F13 /* DrawPrimitives.lua */,
 				C03781C718BF656A00FE4F13 /* extern.lua */,
 				C03781C918BF656A00FE4F13 /* json.lua */,
-				C03781CA18BF656A00FE4F13 /* luaj.lua */,
 				C03781CB18BF656A00FE4F13 /* luaoc.lua */,
 				C03781CC18BF656A00FE4F13 /* Opengl.lua */,
 				C03781CD18BF656A00FE4F13 /* OpenglConstants.lua */,
@@ -1141,7 +1137,6 @@
 				15427D76198F82DA00DC375D /* DeprecatedCocos2dFunc.lua in Resources */,
 				15427D7E198F82DA00DC375D /* DeprecatedNetworkEnum.lua in Resources */,
 				15427D80198F82DA00DC375D /* DeprecatedNetworkFunc.lua in Resources */,
-				C03781EA18BF656A00FE4F13 /* luaj.lua in Resources */,
 				15427D74198F82DA00DC375D /* DeprecatedCocos2dEnum.lua in Resources */,
 				C03781E818BF656A00FE4F13 /* json.lua in Resources */,
 				15427D82198F82DA00DC375D /* NetworkConstants.lua in Resources */,
@@ -1159,7 +1154,6 @@
 				15427D7D198F82DA00DC375D /* DeprecatedNetworkEnum.lua in Resources */,
 				5023811D17EBBCAC00990C9B /* Icon-120.png in Resources */,
 				5091733B17ECE17A00D62437 /* Icon-100.png in Resources */,
-				C03781E918BF656A00FE4F13 /* luaj.lua in Resources */,
 				5023811B17EBBCAC00990C9B /* Default@2x.png in Resources */,
 				5091733617ECE17A00D62437 /* Icon-29.png in Resources */,
 				C03781E718BF656A00FE4F13 /* json.lua in Resources */,

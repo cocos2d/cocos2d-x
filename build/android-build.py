@@ -123,6 +123,10 @@ def copy_files(src, dst):
             os.mkdir(new_dst)
             copy_files(path, new_dst)
 
+def copy_file(src_file, dst):
+    if not src_file.startswith('.') and not src_file.endswith('.gz') and os.path.isfile(src_file):
+        shutil.copy(src_file, dst)
+
 def copy_resources(target, app_android_root):
 
     # remove app_android_root/assets if it exists
@@ -154,7 +158,45 @@ def copy_resources(target, app_android_root):
         copy_files(src_dir, assets_src_dir)
 
         common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
-        copy_files(common_script_dir, assets_dir)
+        if target == "lua-tests":
+            copy_files(common_script_dir, assets_dir)
+        elif target == "lua-empty-test":
+            copy_file(os.path.join(common_script_dir, "AudioEngine.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "bitExtend.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "Cocos2d.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "Cocos2dConstants.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocos2dClass.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocos2dEnum.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocos2dFunc.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocosDenshionClass.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocosDenshionFunc.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedNetworkClass.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedNetworkEnum.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedNetworkFunc.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedOpenglEnum.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DrawPrimitives.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "extern.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "json.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "luaj.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "NetworkConstants.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "Opengl.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "OpenglConstants.lua"), assets_dir)
+        elif target == "lua-game-controller-test":
+            copy_file(os.path.join(common_script_dir, "bitExtend.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "Cocos2d.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "Cocos2dConstants.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocos2dClass.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocos2dEnum.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedCocos2dFunc.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DeprecatedOpenglEnum.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "DrawPrimitives.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "extern.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "json.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "luaj.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "luaoc.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "Opengl.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "OpenglConstants.lua"), assets_dir)
+            copy_file(os.path.join(common_script_dir, "ControllerConstants.lua"), assets_dir)
 
         luasocket_script_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
         for root, dirs, files in os.walk(luasocket_script_dir):
