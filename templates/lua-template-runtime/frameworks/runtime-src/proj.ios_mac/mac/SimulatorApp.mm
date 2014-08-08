@@ -103,11 +103,11 @@ std::string getCurAppPath(void)
         height = tmpvalue;
     }
     g_windTop = true;
-    g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
+    g_eglView = cocos2d::GLViewImpl::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
 
-    window = glfwGetCocoaWindow(g_eglView->getWindow());
+    window = g_eglView->getCocoaWindow();
     [NSApp setDelegate: self];
     
     [self createViewMenu];
@@ -336,7 +336,7 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
 {
     if ([sender state] == NSOnState) return;
     float scale = (float)[sender tag] / 100.0f;
-    g_eglView->setFrameZoomFactor(scale);
+    (dynamic_cast<GLViewImpl*>(g_eglView))->setFrameZoomFactor(scale);
     [self updateView];
 }
 
