@@ -108,6 +108,7 @@ Developers:
         Added support for x64 target of windows.
         Added Dutch Language support.
         Added clang support for Windows.
+        Cmake update and remove old scripts from build folder
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -694,6 +695,7 @@ Developers:
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
         Fixed that ScrollView should implement ActionTweenDelegate.
+        Fixed LabelBMFont::getBoundingBox() position error
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -956,6 +958,19 @@ Developers:
         
     maltium 
         Added 3D rotation support to RotateTo action
+        
+    Hamken100per
+        Added a function getAssetManager() on CCFileUtilsAndroid
+        
+    rny
+        Fixed LabelTTF::getBoundingBox() position error
+        SpriteFrameCache load from plist file content data
+        
+    AppleJDay
+        Add Feature:EventMouse should support getDelta, getDeltaX, getDeltaY functions
+        
+    GavinThornton
+        Fixed a bug that when a sprite added into SpriteBatchNod it will turn black if setting opacity
     
 Retired Core Developers:
     WenSheng Yang

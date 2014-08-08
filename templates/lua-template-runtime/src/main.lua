@@ -1,5 +1,6 @@
 
 require "Cocos2d"
+require "extern"
 
 -- cclog
 local cclog = function(...)

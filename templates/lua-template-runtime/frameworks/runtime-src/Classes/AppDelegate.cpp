@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
+#include "lua_module_register.h"
 
 using namespace CocosDenshion;
 
@@ -41,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
         createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
-        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
+        glview = cocos2d::GLViewImpl::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
 #endif
     }
@@ -52,6 +53,13 @@ bool AppDelegate::applicationDidFinishLaunching()
    
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_getglobal(L, "_G");
+    if (lua_istable(L,-1))//stack:...,_G,
+    {
+        lua_module_register(L);
+    }
+    lua_pop(L, 1);//statck:...
 
     LuaStack* stack = engine->getLuaStack();
     stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));

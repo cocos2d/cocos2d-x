@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "Cocos2dRenderer.h"
 #include "cocos2d.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "AppDelegate.h"
 #include <ppltasks.h>
 

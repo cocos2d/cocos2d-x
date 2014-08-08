@@ -75,6 +75,13 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
+-- @function [parent=#FileUtils] getValueMapFromData 
+-- @param self
+-- @param #char char
+-- @param #int int
+-- @return map_table#map_table ret (return value: map_table)
+        
+--------------------------------
 -- @function [parent=#FileUtils] removeDirectory 
 -- @param self
 -- @param #string str

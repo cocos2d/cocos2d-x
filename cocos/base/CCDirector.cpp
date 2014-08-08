@@ -825,8 +825,13 @@ void Director::runWithScene(Scene *scene)
 
 void Director::replaceScene(Scene *scene)
 {
-    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
+    
+    if (_runningScene == nullptr) {
+        runWithScene(scene);
+        return;
+    }
     
     if (scene == _nextScene)
         return;

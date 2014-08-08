@@ -1,12 +1,14 @@
 cocos2d-x-3.3  ??
     [NEW]           Added submesh support, and support attaching a Sprite3D object to a bone
     [NEW]           Added UIScale9Sprite
+    [NEW]           EventMouse: support getDelta, getDeltaX, getDeltaY functions
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
     getFileSize()
     [NEW]           FileUtilsApple: allow setting bundle to use in file utils on iOS and Mac OS X
     [NEW]           Image: support of software PVRTC v1 decompression
     [NEW]           RotateTo: added 3D rotation support
     [NEW]           ScrollView: added `setMinScale()` and `setMaxScale()`
+    [NEW]           SpriteFrameCache: load from plist file content data
     [NEW]           UIText: added getter and setter for TextColor
     [NEW]           utils: added gettime()
     [NEW]           TextField: support utf8
@@ -15,9 +17,14 @@ cocos2d-x-3.3  ??
     [FIX]           EditBox: began/end events not work
     [FIX]           Label: can not set charmap after it is created
     [FIX]           Label: setTextColor does not have any effect on Mac OS X
+    [FIX]           Label: result of LabelTTF::getBoundingBox() is wrong
+    [FIX]           Label: can not set outline color correctly if using system font on iOS
+    [FIX]           LabelBMFont: result of LabelBMFont::getBoundingBox() is wrong
+    [FIX]           LoadingBar: position is changed if changing direction
     [FIX]           ParticleSystem: effect is wrong if scene scaled
     [FIX]           ParticleSystemQuad: setTotalParticles() can't set a value larger than initialized value
     [FIX]           Scale9Sprite: new added sprite will be hidden
+    [FIX]           Sprite: will turn black if opacity is set other than 255 and be added into SpriteBatchNode
     [FIX]           UIListView: can not insert an item in specific position, it is added at bottom
     [FIX]           TabelView: can handle touch event though its parents are invisible
     [FIX]           TextField: can not use backspace to delete a character
