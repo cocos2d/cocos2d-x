@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "InputEvent.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "base/CCEventAcceleration.h"
 
 NS_CC_BEGIN

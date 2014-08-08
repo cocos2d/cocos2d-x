@@ -357,6 +357,7 @@
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\pvr.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
     <ClCompile Include="..\base\TGAlib.cpp" />
     <ClCompile Include="..\base\ZipUtils.cpp" />
@@ -388,7 +389,7 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp" />
+    <ClCompile Include="..\platform\CCGLView.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
@@ -397,7 +398,7 @@
     <ClCompile Include="..\platform\winrt\CCDevice.cpp" />
     <ClCompile Include="..\platform\winrt\CCFileUtilsWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp" />
-    <ClCompile Include="..\platform\winrt\CCGLView.cpp" />
+    <ClCompile Include="..\platform\winrt\CCGLViewImpl.cpp" />
     <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
@@ -552,6 +553,7 @@
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\firePngData.h" />
+    <ClInclude Include="..\base\pvr.h" />
     <ClInclude Include="..\base\s3tc.h" />
     <ClInclude Include="..\base\TGAlib.h" />
     <ClInclude Include="..\base\uthash.h" />
@@ -595,7 +597,7 @@
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
-    <ClInclude Include="..\platform\CCGLViewProtocol.h" />
+    <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
@@ -603,7 +605,7 @@
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h" />
     <ClInclude Include="..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\platform\winrt\CCGL.h" />
-    <ClInclude Include="..\platform\winrt\CCGLView.h" />
+    <ClInclude Include="..\platform\winrt\CCGLViewImpl.h" />
     <ClInclude Include="..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h" />
     <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h" />
