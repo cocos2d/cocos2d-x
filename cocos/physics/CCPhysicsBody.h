@@ -184,7 +184,7 @@ public:
      * it have high priority than bit masks
      */
     void setGroup(int group);
-    /** Return bitmask of first shape, if there is no shape in body, return default value.(0) */
+    /** Return group of first shape, if there is no shape in body, return default value.(0) */
     int getGroup() const;
     
     /** get the body position. */
