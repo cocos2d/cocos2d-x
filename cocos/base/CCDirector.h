@@ -61,6 +61,7 @@ class EventCustom;
 class EventListenerCustom;
 class TextureCache;
 class Renderer;
+class Camera;
 
 #if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class Console;
