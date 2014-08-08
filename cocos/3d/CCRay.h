@@ -83,11 +83,6 @@ public:
      */
     void transform(const Mat4& matrix);
 
-    /**
-     * Normalizes the ray.
-     */
-    void normalize();
-
     Vec3 _origin;        // The ray origin position.
     Vec3 _direction;     // The ray direction vector.
 };
