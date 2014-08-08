@@ -18586,6 +18586,94 @@ int lua_register_cocos2dx_EventListenerKeyboard(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_EventMouse_getPreviousLocationInView(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getPreviousLocationInView'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getPreviousLocationInView();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getPreviousLocationInView",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getPreviousLocationInView'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EventMouse_getLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getLocation'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getLocation();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getLocation",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getLocation'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_EventMouse_getMouseButton(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18626,6 +18714,94 @@ int lua_cocos2dx_EventMouse_getMouseButton(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getMouseButton'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EventMouse_getPreviousLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getPreviousLocation'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getPreviousLocation();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getPreviousLocation",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getPreviousLocation'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EventMouse_getDelta(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getDelta'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getDelta();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getDelta",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getDelta'.",&tolua_err);
 #endif
 
     return 0;
@@ -18679,6 +18855,94 @@ int lua_cocos2dx_EventMouse_setScrollData(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_EventMouse_getStartLocationInView(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getStartLocationInView'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getStartLocationInView();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getStartLocationInView",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getStartLocationInView'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EventMouse_getStartLocation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getStartLocation'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getStartLocation();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getStartLocation",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getStartLocation'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_EventMouse_setMouseButton(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18721,6 +18985,50 @@ int lua_cocos2dx_EventMouse_setMouseButton(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_setMouseButton'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EventMouse_getLocationInView(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventMouse* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventMouse",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventMouse*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventMouse_getLocationInView'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Vec2 ret = cobj->getLocationInView();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventMouse:getLocationInView",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventMouse_getLocationInView'.",&tolua_err);
 #endif
 
     return 0;
@@ -19000,9 +19308,16 @@ int lua_register_cocos2dx_EventMouse(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"EventMouse");
         tolua_function(tolua_S,"new",lua_cocos2dx_EventMouse_constructor);
+        tolua_function(tolua_S,"getPreviousLocationInView",lua_cocos2dx_EventMouse_getPreviousLocationInView);
+        tolua_function(tolua_S,"getLocation",lua_cocos2dx_EventMouse_getLocation);
         tolua_function(tolua_S,"getMouseButton",lua_cocos2dx_EventMouse_getMouseButton);
+        tolua_function(tolua_S,"getPreviousLocation",lua_cocos2dx_EventMouse_getPreviousLocation);
+        tolua_function(tolua_S,"getDelta",lua_cocos2dx_EventMouse_getDelta);
         tolua_function(tolua_S,"setScrollData",lua_cocos2dx_EventMouse_setScrollData);
+        tolua_function(tolua_S,"getStartLocationInView",lua_cocos2dx_EventMouse_getStartLocationInView);
+        tolua_function(tolua_S,"getStartLocation",lua_cocos2dx_EventMouse_getStartLocation);
         tolua_function(tolua_S,"setMouseButton",lua_cocos2dx_EventMouse_setMouseButton);
+        tolua_function(tolua_S,"getLocationInView",lua_cocos2dx_EventMouse_getLocationInView);
         tolua_function(tolua_S,"getScrollY",lua_cocos2dx_EventMouse_getScrollY);
         tolua_function(tolua_S,"getScrollX",lua_cocos2dx_EventMouse_getScrollX);
         tolua_function(tolua_S,"getCursorX",lua_cocos2dx_EventMouse_getCursorX);
