@@ -27,7 +27,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Ray::Ray()
-    : _direction(0, 0, 1)
+: _direction(0, 0, 1)
 {
 }
 
@@ -146,7 +146,6 @@ void Ray::set(const Vec3& origin, const Vec3& direction)
 {
     _origin = origin;
     _direction = direction;
-    normalize();
 }
 
 void Ray::transform(const Mat4& matrix)
@@ -154,23 +153,6 @@ void Ray::transform(const Mat4& matrix)
     matrix.transformPoint(&_origin);
     matrix.transformVector(&_direction);
     _direction.normalize();
-}
-
-void Ray::normalize()
-{
-    if (_direction.isZero())
-    {
-        return;
-    }
-
-    // Normalize the ray's direction vector.
-    float normalizeFactor = 1.0f / sqrt(_direction.x * _direction.x + _direction.y * _direction.y + _direction.z * _direction.z);
-    if (normalizeFactor != 1.0f)
-    {
-        _direction.x *= normalizeFactor;
-        _direction.y *= normalizeFactor;
-        _direction.z *= normalizeFactor;
-    }
 }
 
 NS_CC_END
