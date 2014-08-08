@@ -29,6 +29,8 @@
 
 NS_CC_BEGIN
 
+Camera* Camera::_visitingCamera = nullptr;
+
 Camera* Camera::create()
 {
     Camera* camera = nullptr;
@@ -224,17 +226,9 @@ void Camera::onEnter()
 {
     if (_scene == nullptr)
     {
-        auto parent = getParent();
-        while (parent)
-        {
-            auto scene = dynamic_cast<Scene*>(parent);
-            if (scene)
-            {
-                setScene(scene);
-                break;
-            }
-            parent = parent->getParent();
-        }
+        auto scene = getScene();
+        if (scene)
+            setScene(scene);
     }
     Node::onEnter();
 }

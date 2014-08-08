@@ -158,7 +158,6 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new Renderer;
-    _currentCamera = nullptr;
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _console = new Console;
@@ -289,18 +288,19 @@ void Director::drawScene()
     if (_runningScene)
     {
         Camera* defaultCamera = nullptr;
+        const auto& cameras = _runningScene->_cameras;
         //draw with camera
-        for (ssize_t i = 0; i < _runningScene->getCameraCount(); i++)
+        for (size_t i = 0; i < cameras.size(); i++)
         {
-            _currentCamera = _runningScene->getCameraByIndex((int)i);
-            if (_currentCamera->getCameraFlag() == CameraFlag::DEFAULT)
+            Camera::_visitingCamera = cameras[i];
+            if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
             {
-                defaultCamera = _currentCamera;
+                defaultCamera = Camera::_visitingCamera;
                 continue;
             }
             
             pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _currentCamera->getViewProjectionMatrix());
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
             
             //visit the scene
             _runningScene->visit(_renderer, Mat4::IDENTITY, false);
@@ -311,9 +311,9 @@ void Director::drawScene()
         //draw with default camera
         if (defaultCamera)
         {
-            _currentCamera = defaultCamera;
+            Camera::_visitingCamera = defaultCamera;
             pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _currentCamera->getViewProjectionMatrix());
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
             
             //visit the scene
             _runningScene->visit(_renderer, Mat4::IDENTITY, false);
@@ -321,7 +321,7 @@ void Director::drawScene()
             
             popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         }
-        _currentCamera = nullptr;
+        Camera::_visitingCamera = nullptr;
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }

@@ -131,6 +131,8 @@ public:
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
+    
+    static const Camera* getVisitingCamera() { return _visitingCamera; }
 
 CC_CONSTRUCTOR_ACCESS:
     Camera();
@@ -157,6 +159,10 @@ protected:
     float _farPlane;
     mutable bool  _viewProjectionDirty;
     unsigned short _cameraFlag; // camera flag
+    
+    static Camera* _visitingCamera;
+    
+    friend class Director;
 };
 
 NS_CC_END

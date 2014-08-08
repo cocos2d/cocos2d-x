@@ -1242,7 +1242,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    auto camera = director->getCurrentCamera();
+    auto camera = Camera::getVisitingCamera();
     bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
 
     int i = 0;

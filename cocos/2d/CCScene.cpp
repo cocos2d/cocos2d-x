@@ -185,12 +185,6 @@ void Scene::addChildToPhysicsWorld(Node* child)
     }
 }
 
-Camera* Scene::getCameraByIndex(int index) const
-{
-    CCASSERT(index < _cameras.size(), "invalid index");
-    return _cameras[index];
-}
-
 #endif
 
 NS_CC_END

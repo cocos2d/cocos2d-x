@@ -65,10 +65,8 @@ public:
     using Node::addChild;
     virtual std::string getDescription() const override;
     
-    /** get camera count */
-    ssize_t getCameraCount() const { return _cameras.size(); }
-    /** get camera */
-    Camera* getCameraByIndex(int index) const;
+    /** get all cameras */
+    const std::vector<Camera*>& getCameras() const { return _cameras; }
     
 CC_CONSTRUCTOR_ACCESS:
     Scene();
@@ -82,6 +80,7 @@ protected:
     friend class ProtectedNode;
     friend class SpriteBatchNode;
     friend class Camera;
+    friend class Director;
     
     std::vector<Camera*> _cameras; //weak ref to Camera
     
