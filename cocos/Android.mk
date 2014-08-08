@@ -79,7 +79,6 @@ cocos2d.cpp \
 3d/CCAttachNode.cpp \
 3d/CCBundle3D.cpp \
 3d/CCBundleReader.cpp \
-3d/CCDrawNode3D.cpp \
 3d/CCMesh.cpp \
 3d/CCMeshSkin.cpp \
 3d/CCSprite3DMaterial.cpp \

@@ -270,7 +270,6 @@ THE SOFTWARE.
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCSubMeshState.h"
 #include "3d/CCAttachNode.h"
-#include "3d/CCDrawNode3D.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

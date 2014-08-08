@@ -604,10 +604,6 @@
 		3EA3EDBD1991CDFA00645534 /* CCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA3EDBA1991CDFA00645534 /* CCCamera.cpp */; };
 		3EA3EDBE1991CDFA00645534 /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA3EDBB1991CDFA00645534 /* CCCamera.h */; };
 		3EA3EDBF1991CDFA00645534 /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA3EDBB1991CDFA00645534 /* CCCamera.h */; };
-		3EA3EDCC199234B500645534 /* CCDrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA3EDCA199234B500645534 /* CCDrawNode3D.cpp */; };
-		3EA3EDCD199234B500645534 /* CCDrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA3EDCA199234B500645534 /* CCDrawNode3D.cpp */; };
-		3EA3EDCE199234B500645534 /* CCDrawNode3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA3EDCB199234B500645534 /* CCDrawNode3D.h */; };
-		3EA3EDCF199234B500645534 /* CCDrawNode3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA3EDCB199234B500645534 /* CCDrawNode3D.h */; };
 		3EA47870195478E00068D9D1 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */; };
 		3EA47871195478E00068D9D1 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */; };
 		3EA47872195478E00068D9D1 /* CCBundleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA4786F195478E00068D9D1 /* CCBundleReader.h */; };
@@ -2489,8 +2485,6 @@
 		3EA2A83F1987A6810077B3D4 /* CCSkeleton3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkeleton3D.h; sourceTree = "<group>"; };
 		3EA3EDBA1991CDFA00645534 /* CCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCCamera.cpp; path = ../base/CCCamera.cpp; sourceTree = "<group>"; };
 		3EA3EDBB1991CDFA00645534 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCCamera.h; path = ../base/CCCamera.h; sourceTree = "<group>"; };
-		3EA3EDCA199234B500645534 /* CCDrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDrawNode3D.cpp; sourceTree = "<group>"; };
-		3EA3EDCB199234B500645534 /* CCDrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode3D.h; sourceTree = "<group>"; };
 		3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBundleReader.cpp; sourceTree = "<group>"; };
 		3EA4786F195478E00068D9D1 /* CCBundleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundleReader.h; sourceTree = "<group>"; };
 		464AD6E3197EBB1400E502D8 /* pvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pvr.cpp; path = ../base/pvr.cpp; sourceTree = "<group>"; };
@@ -5202,8 +5196,6 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
-				3EA3EDCA199234B500645534 /* CCDrawNode3D.cpp */,
-				3EA3EDCB199234B500645534 /* CCDrawNode3D.h */,
 				3EA2A83E1987A6810077B3D4 /* CCSkeleton3D.cpp */,
 				3EA2A83F1987A6810077B3D4 /* CCSkeleton3D.h */,
 				3E9E80E3198639EF00FA95D0 /* CCAttachNode.cpp */,
@@ -5338,7 +5330,6 @@
 				1A570212180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
 				1A570216180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A01C69618F57BE800EFE3A6 /* CCInteger.h in Headers */,
-				3EA3EDCE199234B500645534 /* CCDrawNode3D.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
 				50ABBD891925AB4100A911A9 /* CCCustomCommand.h in Headers */,
 				5034CA43191D591100CE6051 /* ccShader_Label.vert in Headers */,
@@ -5844,7 +5835,6 @@
 				503DD8F11926736A00CD74DD /* OpenGL_Internal.h in Headers */,
 				B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
 				50ABBDAA1925AB4100A911A9 /* CCRenderCommand.h in Headers */,
-				3EA3EDCF199234B500645534 /* CCDrawNode3D.h in Headers */,
 				3E9E80F4198639EF00FA95D0 /* CCSubMeshState.h in Headers */,
 				50ABBE601925AB6F00A911A9 /* CCEventListener.h in Headers */,
 				50ABBEB21925AB6F00A911A9 /* CCUserDefault.h in Headers */,
@@ -6836,7 +6826,6 @@
 				1A570229180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				1A57022D180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				1A57027E180BCC900088DEC7 /* CCSprite.cpp in Sources */,
-				3EA3EDCC199234B500645534 /* CCDrawNode3D.cpp in Sources */,
 				1A570282180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
 				B24AA989195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
@@ -7100,7 +7089,6 @@
 				50ABBE461925AB6F00A911A9 /* CCEvent.cpp in Sources */,
 				50ABBEA01925AB6F00A911A9 /* CCScheduler.cpp in Sources */,
 				3E9E80EA198639EF00FA95D0 /* CCAttachNode.cpp in Sources */,
-				3EA3EDCD199234B500645534 /* CCDrawNode3D.cpp in Sources */,
 				50ABBE4E1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				50ABBE761925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				50ABBE5A1925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,

@@ -205,8 +205,6 @@
         "cocos/3d/CCBundle3DData.h", 
         "cocos/3d/CCBundleReader.cpp", 
         "cocos/3d/CCBundleReader.h", 
-        "cocos/3d/CCDrawNode3D.cpp",
-        "cocos/3d/CCDrawNode3D.h",
         "cocos/3d/CCMesh.cpp", 
         "cocos/3d/CCMesh.h", 
         "cocos/3d/CCMeshSkin.cpp", 
