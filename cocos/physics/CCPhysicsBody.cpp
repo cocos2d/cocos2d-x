@@ -289,13 +289,6 @@ void PhysicsBody::setDynamic(bool dynamic)
             
             if (_world != nullptr)
             {
-                // reset the gravity enable
-                if (isGravityEnabled())
-                {
-                    _gravityEnabled = false;
-                    setGravityEnable(true);
-                }
-                
                 cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
             }
         }
@@ -331,17 +324,7 @@ void PhysicsBody::setGravityEnable(bool enable)
     if (_gravityEnabled != enable)
     {
         _gravityEnabled = enable;
-        
-        if (_world != nullptr)
-        {
-            if (enable)
-            {
-                applyForce(_world->getGravity() * _mass);
-            }else
-            {
-                applyForce(-_world->getGravity() * _mass);
-            }
-        }
+        _info->getBody()->gravity_enable = enable ? cpTrue : cpFalse;
     }
 }
 
@@ -448,12 +431,6 @@ void PhysicsBody::applyForce(const Vect& force, const Vec2& offset)
 void PhysicsBody::resetForces()
 {
     cpBodyResetForces(_info->getBody());
-    
-    // if _gravityEnabled is false, add a reverse of gravity force to body
-    if (_world != nullptr && _dynamic && !_gravityEnabled && _mass != PHYSICS_INFINITY)
-    {
-        applyForce(-_world->getGravity() * _mass);
-    }
 }
 
 void PhysicsBody::applyImpulse(const Vect& impulse)
@@ -907,17 +884,7 @@ Vec2 PhysicsBody::local2World(const Vec2& point)
 
 void PhysicsBody::updateMass(float oldMass, float newMass)
 {
-    if (_dynamic && !_gravityEnabled && _world != nullptr && oldMass != PHYSICS_INFINITY)
-    {
-        applyForce(_world->getGravity() * oldMass);
-    }
-    
     cpBodySetMass(_info->getBody(), newMass);
-    
-    if (_dynamic && !_gravityEnabled && _world != nullptr && newMass != PHYSICS_INFINITY)
-    {
-        applyForce(-_world->getGravity() * newMass);
-    }
 }
 
 NS_CC_END

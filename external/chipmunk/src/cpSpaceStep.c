@@ -393,7 +393,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		cpVect gravity = space->gravity;
 		for(int i=0; i<bodies->num; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
-			body->velocity_func(body, gravity, damping, dt);
+			body->velocity_func(body, body->gravity_enable ? gravity : cpvzero, damping, dt);
 		}
 		
 		// Apply cached impulses

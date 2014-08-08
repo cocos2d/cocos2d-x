@@ -86,7 +86,10 @@ struct cpBody {
 	cpFloat v_limit;
 	/// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
 	cpFloat w_limit;
-	
+
+	/// Whether the body is affected by the gravity.
+	cpBool gravity_enable;
+
 	CP_PRIVATE(cpVect v_bias);
 	CP_PRIVATE(cpFloat w_bias);
 	

@@ -396,7 +396,7 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
         }
     }
     
-    if (body != nullptr)
+    if (body != nullptr && body->getMass() != PHYSICS_INFINITY)
     {
         Node* mouse = Node::create();
         mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
@@ -1636,6 +1636,14 @@ void PhysicsSetGravityEnableTest::onEnter()
     auto commonBox = makeBox(Vec2(100, 100), Size(50, 50), 1);
     commonBox->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     addChild(commonBox);
+
+    // infinity box
+    auto infinityBox = makeBox(Vec2(300, 100), Size(50, 50), 1);
+    infinityBox->setTag(3);
+    infinityBox->getPhysicsBody()->setMass(PHYSICS_INFINITY);
+    infinityBox->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    infinityBox->getPhysicsBody()->setGravityEnable(false);
+    addChild(infinityBox);
     
     auto box = makeBox(Vec2(200, 100), Size(50, 50), 2);
     box->getPhysicsBody()->setMass(20);
