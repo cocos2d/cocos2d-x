@@ -610,9 +610,6 @@
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCDrawNode3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\CCCamera.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -1245,9 +1242,6 @@
     </ClInclude>
     <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCDrawNode3D.h">
-      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCCamera.h">
       <Filter>base</Filter>
