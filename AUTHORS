@@ -965,6 +965,9 @@ Developers:
     rny
         Fixed LabelTTF::getBoundingBox() position error
         SpriteFrameCache load from plist file content data
+        
+    AppleJDay
+        Add Feature:EventMouse should support getDelta, getDeltaX, getDeltaY functions
     
 Retired Core Developers:
     WenSheng Yang
