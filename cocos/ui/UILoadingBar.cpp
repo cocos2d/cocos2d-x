@@ -100,14 +100,14 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
     {
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            _barRenderer->setPosition(Vec2(-_totalLength*0.5f,0.0f));
+            _barRenderer->setPosition(Vec2(0,0.0f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(false);
             }
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-            _barRenderer->setPosition(Vec2(_totalLength*0.5f,0.0f));
+            _barRenderer->setPosition(Vec2(_totalLength,0.0f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(true);
             }
