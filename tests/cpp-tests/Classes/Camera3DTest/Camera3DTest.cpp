@@ -27,8 +27,108 @@ THE SOFTWARE.
 #include <algorithm>
 #include "../testResource.h"
 
-#include "3d/CCDrawNode3D.h"
 #include "3d/CCAttachNode.h"
+
+////////////DrawLine/////////////////////
+
+class DrawLine3D: public Node
+{
+public:
+    /** creates and initialize a node */
+    static DrawLine3D* create();
+    
+    /**
+     * Draw 3D Line
+     */
+    void drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color);
+    
+    /** Clear the geometry in the node's buffer. */
+    void clear()
+    {
+        _buffer.clear();
+    }
+    
+    void onDraw(const Mat4 &transform, uint32_t flags);
+    
+    // Overrides
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    DrawLine3D()
+    {
+        
+    }
+    virtual ~DrawLine3D()
+    {
+        
+    }
+    virtual bool init();
+    
+protected:
+    struct V3F_C4B
+    {
+        Vec3     vertices;
+        Color4B  colors;
+    };
+    
+    std::vector<V3F_C4B> _buffer;
+    
+    CustomCommand _customCommand;
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(DrawLine3D);
+};
+
+DrawLine3D* DrawLine3D::create()
+{
+    auto ret = new DrawLine3D();
+    if (ret && ret->init())
+        return ret;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+bool DrawLine3D::init()
+{
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR));
+    return true;
+}
+
+void DrawLine3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color)
+{
+    Color4B col = Color4B(color);
+    DrawLine3D::V3F_C4B vertex;
+    vertex.vertices = from;
+    vertex.colors = col;
+    _buffer.push_back(vertex);
+    vertex.vertices = to;
+    _buffer.push_back(vertex);
+}
+
+void DrawLine3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(DrawLine3D::onDraw, this, transform, flags);
+    renderer->addCommand(&_customCommand);
+}
+
+void DrawLine3D::onDraw(const Mat4 &transform, uint32_t flags)
+{
+    auto glProgram = getGLProgram();
+    glProgram->use();
+    glProgram->setUniformsForBuiltins(transform);
+    glEnable(GL_DEPTH_TEST);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), &(_buffer[0].vertices));
+    
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), &(_buffer[0].colors));
+    glDrawArrays(GL_LINES, 0, _buffer.size());
+    glDisable(GL_DEPTH_TEST);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 enum
 {
@@ -189,7 +289,7 @@ void Camera3DTestDemo::onEnter()
         _layer3D->addChild(_camera);
     }
     SwitchViewCallback(this,CameraType::ThirdCamera);
-    DrawNode3D* line =DrawNode3D::create();
+    DrawLine3D* line =DrawLine3D::create();
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
