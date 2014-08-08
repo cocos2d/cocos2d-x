@@ -33,6 +33,7 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
+#include "CCAABB.h"
 
 NS_CC_BEGIN
 
@@ -79,6 +80,20 @@ public:
     // overrides
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
+    
+    /*
+     * Get AABB
+     * If the sprite has animation, it can't be calculated accuratly,
+     * because bone can drive the vertices, we just use the origin vertices
+     * to calculate the AABB.
+     */
+    AABB getAABB() const;
+    
+    /**
+     * Returns 2d bounding-box
+     * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
+     */
+    virtual Rect getBoundingBox() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     

@@ -29,6 +29,7 @@
 #include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
+#include "DrawNode3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -1026,9 +1027,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
     seq->setTag(100);
     sprite->runAction(seq);
     
-    //Generate OBB by AABB
-    Vec3 extents = Vec3(50, 25, 25);
-    AABB aabb(-extents, extents);
+    AABB aabb = _sprite->getAABB();
     _obbt = OBB(aabb);
     
     _drawDebug = DrawNode3D::create();

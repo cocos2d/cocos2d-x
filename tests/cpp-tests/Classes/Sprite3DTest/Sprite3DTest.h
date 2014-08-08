@@ -34,6 +34,7 @@ namespace cocos2d {
     class Sprite3D;
     class Delay;
     class Ray;
+    class DrawNode3D;
 }
 
 class Sprite3DTestDemo : public BaseTest
