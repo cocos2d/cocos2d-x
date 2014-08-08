@@ -952,14 +952,16 @@ bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
         return S_ISDIR(st.st_mode);
     }    
 	return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	WIN32_FILE_ATTRIBUTE_DATA wfad;
 	if (GetFileAttributesExA(dirPath.c_str(), GetFileExInfoStandard, &wfad))
 	{
 		return true;
 	}
 	return false;
-#else
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
     if (fAttrib != INVALID_FILE_ATTRIBUTES &&
         (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
@@ -1055,7 +1057,8 @@ bool FileUtils::createDirectory(const std::string& path)
         }
     }
     return true;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	WIN32_FILE_ATTRIBUTE_DATA wfad;
 	if (!(GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, &wfad)))
 	{
@@ -1071,7 +1074,8 @@ bool FileUtils::createDirectory(const std::string& path)
 		}
 	}
 	return true;
-#else
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
 		subpath = "";
@@ -1106,13 +1110,15 @@ bool FileUtils::removeDirectory(const std::string& path)
         return true;
     else
         return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	if (RemoveDirectoryA(path.c_str()))
 	{
 		return true;
 	}
 	return false;
-#else
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     std::string command = "rd /s /q ";
     // Path may include space.
     command += "\"" + path + "\"";
@@ -1134,13 +1140,15 @@ bool FileUtils::removeFile(const std::string &path)
         return true;
     else
         return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	if (DeleteFileA(path.c_str()))
 	{
 		return true;
 	}
 	return false;
-#else
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     std::string command = "del /q ";
     // Path may include space.
     command += "\"" + path + "\"";
