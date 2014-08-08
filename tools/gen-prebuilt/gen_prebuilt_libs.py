@@ -56,7 +56,7 @@ class Generator(object):
 
     def __init__(self, args):
         self.need_clean = args.need_clean
-        self.enable_strip = args.enable_strip
+        self.disable_strip = args.disable_strip
         self.use_incredibuild = args.use_incredibuild
         self.tool_dir = os.path.realpath(os.path.dirname(__file__))
         self.no_android = args.no_android
@@ -114,7 +114,7 @@ class Generator(object):
         }
         excopy.copy_files_with_config(copy_cfg, obj_dir, prebuilt_dir)
 
-        if self.enable_strip:
+        if not self.disable_strip:
             # strip the android libs
             ndk_root = os.environ["NDK_ROOT"]
             if os_is_win32():
@@ -318,7 +318,7 @@ class Generator(object):
             shutil.rmtree(ios_sim_libs_dir)
             shutil.rmtree(ios_dev_libs_dir)
 
-            if self.enable_strip:
+            if not self.disable_strip:
                 # strip the libs
                 ios_strip_cmd = "xcrun -sdk iphoneos strip -S %s/*.a" % ios_out_dir
                 run_shell(ios_strip_cmd)
@@ -347,7 +347,7 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="Generate prebuilt engine for Cocos Engine.")
     parser.add_argument('-c', dest='need_clean', action="store_true", help='Remove the \"prebuilt\" directory first.')
     parser.add_argument('-n', "--no-android", dest='no_android', action="store_true", help='Not build android libs.')
-    parser.add_argument('-s', "--strip", dest='enable_strip', action="store_true", help='Strip the generated libs.')
+    parser.add_argument('-d', "--disable-strip", dest='disable_strip', action="store_true", help='Disable the strip of the generated libs.')
     parser.add_argument('-i', "--incredibuild", dest='use_incredibuild', action="store_true", help='Use incredibuild to build win32 projects. Only available on windows.')
     (args, unknown) = parser.parse_known_args()
 

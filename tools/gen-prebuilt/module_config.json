@@ -39,7 +39,7 @@
             },
             {
                 "from": "external/lua/tolua",
-                "to": "cocos/lua-bindings/include/tolua",
+                "to": "cocos/lua-bindings/include",
                 "include": [
                     "*.h"
                 ]
@@ -48,18 +48,46 @@
                 "from": "cocos/scripting/lua-bindings/script",
                 "to": "cocos/lua-bindings/script",
                 "include": [
-                    "*.lua"
+                    "bitExtend.lua",
+                    "Cocos2d.lua",
+                    "Cocos2dConstants.lua",
+                    "DeprecatedCocos2dClass.lua",
+                    "DeprecatedCocos2dEnum.lua",
+                    "DeprecatedCocos2dFunc.lua",
+                    "DeprecatedOpenglEnum.lua",
+                    "DrawPrimitives.lua",
+                    "extern.lua",
+                    "luaj.lua",
+                    "luaoc.lua",
+                    "Opengl.lua",
+                    "OpenglConstants.lua"
                 ]
             },
             {
                 "from": "cocos/scripting/lua-bindings/auto",
                 "to": "cocos/lua-bindings/include",
                 "include": [
-                    "*.hpp", "*.h"
+                    "lua_cocos2dx_auto.hpp",
+                    "lua_cocos2dx_experimental_auto.hpp",
+                    "lua_cocos2dx_physics_auto.hpp"
                 ]
             },
             {
                 "from": "cocos/scripting/lua-bindings/manual",
+                "to": "cocos/lua-bindings/include",
+                "include": [
+                    "CCLuaBridge.h",
+                    "CCLuaStack.h",
+                    "Cocos2dxLuaLoader.h",
+                    "lua_debugger.h",
+                    "CCLuaEngine.h",
+                    "CCLuaValue.h",
+                    "LuaBasicConversions.h",
+                    "tolua_fix.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocos2d",
                 "to": "cocos/lua-bindings/include",
                 "include": [
                     "*.hpp", "*.h"
@@ -93,12 +121,8 @@
         ],
         "is_optional" : false,
         "lua_bindings" : {
-            "headers" : [
-            ],
-            "registers" : [
-            ],
-            "lua_lib_name" : "liblua",
-            "android_lib_name" : "cocos_lua_static",
+            "lua_lib_name" : "libluacocos2d",
+            "android_lib_name" : "cocos2d_lua_static",
             "depend_modules" : [
                 "luajit"
             ]
@@ -323,12 +347,45 @@
                 "include" : [
                     "include/*.h"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "modules/audio/lua-bindings/script",
+                "include": [
+                    "AudioEngine.lua",
+                    "DeprecatedCocosDenshionClass.lua",
+                    "DeprecatedCocosDenshionFunc.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/audio/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_cocosdenshion_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocosdenshion",
+                "to": "modules/audio/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
             "../../include"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocosdenshion",
+            "android_lib_name" : "cocosdenshion_lua_static",
+            "headers" : [
+                "lua_cocos2dx_cocosdenshion_manual.h"
+            ],
+            "registers" : [
+                "register_cocosdenshion_module"
+            ]
+        }
     },
     "network" : {
         "module_type" : "compiled",
@@ -352,6 +409,23 @@
                 "include": [
                     "*.lua"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "modules/network/lua-bindings/script",
+                "include": [
+                    "DeprecatedNetworkClass.lua",
+                    "DeprecatedNetworkEnum.lua",
+                    "DeprecatedNetworkFunc.lua",
+                    "NetworkConstants.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/network",
+                "to": "modules/network/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
@@ -360,7 +434,17 @@
         "depend_modules" : [
             "cocos2d", "curl", "websockets"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluanetwork",
+            "android_lib_name" : "network_lua_static",
+            "headers" : [
+                "lua_cocos2dx_network_manual.h"
+            ],
+            "registers" : [
+                "register_network_module"
+            ]
+        }
     },
     "ui" : {
         "module_type" : "compiled",
@@ -377,6 +461,31 @@
                 "include" : [
                     "*.h"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "modules/ui/lua-bindings/script",
+                "include": [
+                    "DeprecatedUIEnum.lua",
+                    "DeprecatedUIFunc.lua",
+                    "GuiConstants.lua",
+                    "experimentalConstants.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/ui/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_ui_auto.hpp",
+                    "lua_cocos2dx_experimental_video_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/ui",
+                "to": "modules/ui/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
@@ -385,7 +494,17 @@
         "depend_modules" : [
             "cocos2d", "extensions"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaui",
+            "android_lib_name" : "ui_lua_static",
+            "headers" : [
+                "lua_cocos2dx_ui_manual.hpp"
+            ],
+            "registers" : [
+                "register_ui_moudle"
+            ]
+        }
     },
     "extensions" : {
         "module_type" : "compiled",
@@ -402,6 +521,30 @@
                 "include" : [
                     "*.h"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "modules/extensions/lua-bindings/script",
+                "include": [
+                    "DeprecatedExtensionClass.lua",
+                    "DeprecatedExtensionEnum.lua",
+                    "DeprecatedExtensionFunc.lua",
+                    "ExtensionConstants.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/extensions/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_extension_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/extension",
+                "to": "modules/extensions/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
@@ -410,7 +553,17 @@
         "depend_modules" : [
             "cocos2d", "curl", "box2d"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaextension",
+            "android_lib_name" : "extension_lua_static",
+            "headers" : [
+                "lua_cocos2dx_extension_manual.h"
+            ],
+            "registers" : [
+                "register_extension_module"
+            ]
+        }
     },
     "cocostudio" : {
         "module_type" : "compiled",
@@ -427,6 +580,30 @@
                 "include" : [
                     "*.h"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "modules/cocostudio/lua-bindings/script",
+                "include": [
+                    "CocoStudio.lua",
+                    "DeprecatedCocoStudioClass.lua",
+                    "DeprecatedCocoStudioFunc.lua",
+                    "StudioConstants.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/cocostudio/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_studio_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocostudio",
+                "to": "modules/cocostudio/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
@@ -435,7 +612,17 @@
         "depend_modules" : [
             "ui", "audio"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocostudio",
+            "android_lib_name" : "cocostudio_lua_static",
+            "headers" : [
+                "lua_cocos2dx_coco_studio_manual.hpp"
+            ],
+            "registers" : [
+                "register_cocostudio_module"
+            ]
+        }
     },
     "spine" : {
         "module_type" : "compiled",
@@ -452,6 +639,20 @@
                 "include" : [
                     "*.h"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/spine/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_spine_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/spine",
+                "to": "modules/spine/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
@@ -460,7 +661,17 @@
         "depend_modules" : [
             "cocos2d"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaspine",
+            "android_lib_name" : "spine_lua_static",
+            "headers" : [
+                "lua_cocos2dx_spine_manual.hpp"
+            ],
+            "registers" : [
+                "register_spine_module"
+            ]
+        }
     },
     "cocosbuilder" : {
         "module_type" : "compiled",
@@ -477,6 +688,28 @@
                 "include" : [
                     "*.h"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "modules/cocosbuilder/lua-bindings/script",
+                "include": [
+                    "CCBReaderLoad.lua",
+                    "DeprecatedCocosBuilderClass.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/cocosbuilder/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_cocosbuilder_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocosbuilder",
+                "to": "modules/cocosbuilder/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
             }
         ],
         "export_include" : [
@@ -485,6 +718,16 @@
         "depend_modules" : [
             "extensions"
         ],
-        "is_optional" : true
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocosbuilder",
+            "android_lib_name" : "cocosbuilder_lua_static",
+            "headers" : [
+                "lua_cocos2dx_cocosbuilder_manual.h"
+            ],
+            "registers" : [
+                "register_cocosbuilder_module"
+            ]
+        }
     }
 }

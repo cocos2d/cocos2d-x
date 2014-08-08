@@ -6,7 +6,7 @@
         },
         "cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj" : {
             "outputdir" : "prebuilt",
-            "targets" : [ "luabindings" ]
+            "targets" : [ "build all luabindings" ]
         }
     },
     "win32_proj_info" : {
@@ -15,8 +15,10 @@
             "targets" : [
                 "libcocosdenshion", "libbox2d", "libchipmunk",
                 "libcocos2d", "libcocosbuilder", "libcocostudio",
-                "libextension", "libui", "liblua",
-                "libnetwork", "libspine"
+                "libextension", "libui", "libnetwork", "libspine",
+                "libluacocos2d", "libluacocosbuilder", "libluacocosdenshion",
+                "libluacocostudio", "libluaextension", "libluanetwork",
+                "libluaspine", "libluaui"
             ]
         }
     }

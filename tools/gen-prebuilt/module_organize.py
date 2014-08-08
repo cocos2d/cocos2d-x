@@ -28,7 +28,7 @@ class ModuleOrganizer(object):
     KEY_MODULE_MAC_LIB_FILE_NAME = "mac_lib_file_name"
     KEY_MODULE_IS_OPTIONAL = "is_optional"
     KEY_MODULE_LUA_BINDINGS = "lua_bindings"
-    KEY_MODILE_LUA_LIB_NAME = "lua_lib_name"
+    KEY_MODULE_LUA_LIB_NAME = "lua_lib_name"
     KEY_MODULE_EXCLUDE = "exclude"
 
     EXPORT_KEYS = [
@@ -218,7 +218,7 @@ class ModuleOrganizer(object):
     def handle_for_lua_bindings(self, module_name):
         module_info = self.modules_info[module_name]
         lua_binding_info = module_info[ModuleOrganizer.KEY_MODULE_LUA_BINDINGS]
-        lua_lib_name = lua_binding_info[ModuleOrganizer.KEY_MODILE_LUA_LIB_NAME]
+        lua_lib_name = lua_binding_info[ModuleOrganizer.KEY_MODULE_LUA_LIB_NAME]
         platforms = {
             "android" : "*/%s.a" % lua_lib_name,
             "ios" : "%s iOS.a" % lua_lib_name,
