@@ -210,7 +210,7 @@ using namespace cocos2d::experimental::ui;
 -(void) setVisible:(bool)visible
 {
     if (self.moviePlayer != NULL) {
-        [self.moviePlayer.view setHidden:visible];
+        [self.moviePlayer.view setHidden:!visible];
     }
 }
 
