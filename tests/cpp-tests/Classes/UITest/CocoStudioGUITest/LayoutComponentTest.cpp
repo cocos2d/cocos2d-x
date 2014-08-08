@@ -60,6 +60,7 @@ bool UILayoutComponentBaiscTest::init()
         layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
         button->setNormalizedPosition(Vec2(0.1,0.1));
         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+        button->setTitleText("Dock: Bottom Left");
         button->addComponent(layoutComponent);
 
         
@@ -80,6 +81,7 @@ bool UILayoutComponentBaiscTest::init()
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_LEFT);
                         layoutComponent->setPercentContentSize(Vec2(0.2,0.2));
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+                        button->setTitleText("Dock: Bottom Left");
                     }
                         break;
                     case 1:
@@ -87,6 +89,7 @@ bool UILayoutComponentBaiscTest::init()
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_LEFT);
                         layoutComponent->setPercentContentSize(Vec2(0.3,0.3));
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+                        button->setTitleText("Dock: Top Left");
                     }
                         break;
                     case 2:
@@ -94,6 +97,7 @@ bool UILayoutComponentBaiscTest::init()
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_RIGHT);
                         layoutComponent->setPercentContentSize(Vec2(0.4,0.4));
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+                        button->setTitleText("Dock: Top Right");
                     }
                         break;
                     case 3:
@@ -101,6 +105,7 @@ bool UILayoutComponentBaiscTest::init()
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_RIGHT);
                         layoutComponent->setPercentContentSize(Vec2(0.5,0.5));
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+                        button->setTitleText("Dock: Bottom Right");
                     }
                         break;
                     default:
@@ -158,7 +163,8 @@ bool UILayoutComponentNonNormalizedPositionTest::init()
         button->setPosition(Vec2(20,20));
         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         button->addComponent(layoutComponent);
-        
+        button->setTitleText("Dock: Bottom Left");
+
         
         imageView->addChild(button);
         
@@ -176,6 +182,7 @@ bool UILayoutComponentNonNormalizedPositionTest::init()
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_LEFT);
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+                        button->setTitleText("Dock: Bottom Left");
                     }
                         break;
                     case 1:
@@ -183,12 +190,14 @@ bool UILayoutComponentNonNormalizedPositionTest::init()
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_LEFT);
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
                         imageView->setContentSize(Size(400,240));
+                        button->setTitleText("Dock: Top Left");
                     }
                         break;
                     case 2:
                     {
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::TOP_RIGHT);
                         button->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+                        button->setTitleText("Dock: Top Right");
                     }
                         break;
                     case 3:
@@ -196,6 +205,7 @@ bool UILayoutComponentNonNormalizedPositionTest::init()
                         layoutComponent->setReferencePoint(LayoutComponent::ReferencePoint::BOTTOM_RIGHT);
                         button->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
                         imageView->setContentSize(Size(300,180));
+                        button->setTitleText("Dock: Bottom Right");
                     }
                         break;
                     default:
