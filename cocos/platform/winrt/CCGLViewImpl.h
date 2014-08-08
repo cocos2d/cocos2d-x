@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_WINRT_H__
-#define __CC_EGLVIEW_WINRT_H__
+#ifndef __CC_EGLVIEWIMPL_WINRT_H__
+#define __CC_EGLVIEWIMPL_WINRT_H__
 
 #include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "platform/CCCommon.h"
 #include "InputEvent.h"
-#include "platform/CCGLViewProtocol.h"
+#include "platform/CCGLView.h"
 #include <agile.h>
 
 #include <wrl/client.h>
@@ -46,7 +46,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class CCEGL;
-class GLView;
+class GLViewImpl;
 
 ref class WinRTWindow sealed
 {
@@ -93,14 +93,14 @@ private:
     ESContext m_esContext;
 
 
-    friend GLView;
+    friend GLViewImpl;
 };
 
-class CC_DLL GLView : public Ref, public GLViewProtocol
+class CC_DLL GLViewImpl : public GLView
 {
 public:
-    GLView();
-    virtual ~GLView();
+    GLViewImpl();
+    virtual ~GLViewImpl();
 
     /* override functions */
     virtual bool isOpenGLReady();
@@ -114,7 +114,7 @@ public:
 	void UpdateForWindowSizeChange();
 	void OnRendering();
     void OnSuspending();
-    void GLView::QueueEvent(std::shared_ptr<InputEvent>& event);
+    void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event);
 
     void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
     void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -148,7 +148,7 @@ public:
     /**
     @brief    get the shared main open gl window
     */
-	static GLView* sharedOpenGLView();
+	static GLViewImpl* sharedOpenGLView();
 
 protected:
 
@@ -169,4 +169,4 @@ NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#endif    // end of __CC_EGLVIEW_WINRT_H__
+#endif    // end of __CC_EGLVIEWIMPL_WINRT_H__

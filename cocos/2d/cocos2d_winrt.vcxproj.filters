@@ -71,9 +71,6 @@
     <ClCompile Include="..\platform\winrt\CCFreeTypeFont.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\CCGLView.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCFileUtils.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCImage.cpp">
@@ -410,9 +404,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -581,6 +572,15 @@
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp">
       <Filter>physics</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CCGLView.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCGLViewImpl.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\pvr.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d.h" />
@@ -598,9 +598,6 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCGL_Angle.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\winrt\CCGLView.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCPlatformDefine.h">
@@ -643,9 +640,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCGLViewProtocol.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCImage.h">
@@ -1184,6 +1178,15 @@
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGLView.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCGLViewImpl.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\pvr.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
