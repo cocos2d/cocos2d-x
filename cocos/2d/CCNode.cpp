@@ -833,12 +833,12 @@ Node* Node::getChildByName(const std::string& name) const
     }
     
     std::hash<std::string> h;
-    size_t hash = h(name);
+    size_t hash = h(first_name);
     
     for (const auto& child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
-        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
+        if(child->_hashOfName == hash && child->_name.compare(first_name) == 0)
             return suffix.empty() ? child : child->getChildByName(suffix);
     }
     return nullptr;
