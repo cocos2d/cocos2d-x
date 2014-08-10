@@ -822,24 +822,24 @@ Node* Node::getChildByName(const std::string& name) const
 {
     CCASSERT(name.length() != 0, "Invalid name");
 
-    std::string first_name = name;
-    std::string suffix = "";
+    std::string head = name;
+    std::string tail = "";
 
     int dotpos = name.find('.');
     if (dotpos > 0)
     {
-        first_name = name.substr(0, dotpos);
-        suffix = name.substr(dotpos+1);
+        head = name.substr(0, dotpos);
+        tail = name.substr(dotpos+1);
     }
     
     std::hash<std::string> h;
-    size_t hash = h(first_name);
+    size_t hash = h(head);
     
     for (const auto& child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
-        if(child->_hashOfName == hash && child->_name.compare(first_name) == 0)
-            return suffix.empty() ? child : child->getChildByName(suffix);
+        if(child->_hashOfName == hash && child->_name.compare(head) == 0)
+            return tail.empty() ? child : child->getChildByName(tail);
     }
     return nullptr;
 }
