@@ -11,6 +11,58 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\code_generator.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\command_line_interface.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_enum.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_enum_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_extension.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_file.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_generator.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_helpers.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_message.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_message_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_primitive_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_service.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_string_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\importer.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\parser.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\plugin.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\plugin.pb.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\subprocess.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\zip_writer.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor.pb.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor_database.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\dynamic_message.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set_heavy.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_reflection.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\gzip_stream.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\printer.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\tokenizer.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\reflection_ops.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\service.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_gcc.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\structurally_valid.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\strutil.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\substitute.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\text_format.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\unknown_field_set.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite.cc" />
     <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="..\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp" />
@@ -47,6 +99,7 @@
     <ClCompile Include="..\CCTween.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\CocoLoader.cpp" />
+    <ClCompile Include="..\CSParseBinary.pb.cc" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\TriggerBase.cpp" />
     <ClCompile Include="..\TriggerMng.cpp" />
@@ -77,6 +130,77 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\code_generator.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\command_line_interface.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_enum.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_enum_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_extension.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_file.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_generator.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_helpers.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_message.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_message_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_options.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_primitive_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_service.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\cpp\cpp_string_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\importer.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\package_info.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\parser.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\plugin.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\plugin.pb.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\subprocess.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\zip_writer.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor.pb.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor_database.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\dynamic_message.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_enum_reflection.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_reflection.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\gzip_stream.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\package_info.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\printer.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\tokenizer.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\package_info.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\reflection_ops.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\service.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_arm_gcc.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_arm_qnx.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_atomicword_compat.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_macosx.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_mips_gcc.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_pnacl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_gcc.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\strutil.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\substitute.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\text_format.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\unknown_field_set.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\win32\config.h" />
     <ClInclude Include="..\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="..\ActionTimeline\CCFrame.h" />
     <ClInclude Include="..\ActionTimeline\CCNodeReader.h" />
@@ -116,6 +240,7 @@
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\CocoLoader.h" />
     <ClInclude Include="..\CocoStudio.h" />
+    <ClInclude Include="..\CSParseBinary.pb.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
     <ClInclude Include="..\CocosStudioExport.h" />
     <ClInclude Include="..\TriggerBase.h" />
@@ -147,6 +272,10 @@
     <ProjectReference Include="..\..\..\ui\proj.win32\libui.vcxproj">
       <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\external\protocolBuf\src\google\protobuf\compiler\plugin.proto" />
+    <None Include="..\..\..\..\external\protocolBuf\src\google\protobuf\descriptor.proto" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B57CF53F-2E49-4031-9822-047CC0E6BDE2}</ProjectGuid>
@@ -201,7 +330,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\protocolBuf\src;$(EngineRoot)external\protocolBuf\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRSTUDIODLL;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2DXWIN32_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -223,7 +352,7 @@
       <SDLCheck>
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRSTUDIODLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\protocolBuf\src;$(EngineRoot)external\protocolBuf\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
