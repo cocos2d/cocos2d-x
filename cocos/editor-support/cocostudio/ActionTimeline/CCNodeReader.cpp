@@ -468,17 +468,21 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     
     std::string classname = str;
     
-    std::string guiClassName = getGUIClassName(classname);
     
-    Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(guiClassName));
-    widget->retain();
     
     WidgetPropertiesReader0300* widgetPropertiesReader = new WidgetPropertiesReader0300();
+    Widget* widget = nullptr;
     
     if (isWidget(classname))
     {
         std::string readerName = getGUIClassName(classname);
         readerName.append("Reader");
+    
+        std::string guiClassName = getGUIClassName(classname);
+        widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(guiClassName));
+        widget->retain();
+        
+        initNode(widget, json);
         
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         
@@ -486,12 +490,17 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     }
     else if (isCustomWidget(classname))
     {
+        widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(classname));
+        widget->retain();
+        
         //
         // 1st., custom widget parse properties of parent widget with parent widget reader
         std::string readerName = getWidgetReaderClassName(widget);
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         if (reader && widget)
         {
+            initNode(widget, json);
+            
             widgetPropertiesReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
             
             // 2nd., custom widget parse with custom reader
@@ -514,8 +523,6 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
     widget->setUserObject(ActionTimelineData::create(actionTag));
-    
-    initNode(widget, json);
     
     return widget;
 }
