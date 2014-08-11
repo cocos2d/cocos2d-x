@@ -368,7 +368,6 @@ namespace cocostudio
         
         widget->setSizeType((Widget::SizeType)options.sizetype());
         widget->setPositionType((Widget::PositionType)options.positiontype());
-        CCLOG("widget position type = %d", widget->getPositionType());
         
         widget->setSizePercent(Vec2(options.sizepercentx(), options.sizepercenty()));
         widget->setPositionPercent(Vec2(options.positionpercentx(), options.positionpercenty()));
