@@ -576,8 +576,6 @@
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
 		299754F7193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
-		381BC0241993565000B4B0D4 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 381BC0231993565000B4B0D4 /* config.h */; };
-		381BC0251993565000B4B0D4 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 381BC0231993565000B4B0D4 /* config.h */; };
 		381BC0A81993565C00B4B0D4 /* code_generator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 381BC0291993565C00B4B0D4 /* code_generator.cc */; };
 		381BC0A91993565C00B4B0D4 /* code_generator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 381BC0291993565C00B4B0D4 /* code_generator.cc */; };
 		381BC0AA1993565C00B4B0D4 /* code_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 381BC02A1993565C00B4B0D4 /* code_generator.h */; };
@@ -826,6 +824,8 @@
 		38BCC5A31994AE8D00619F1D /* CSParseBinary.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 38BCC5A01994AE8D00619F1D /* CSParseBinary.pb.cc */; };
 		38BCC5A41994AE8D00619F1D /* CSParseBinary.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 38BCC5A11994AE8D00619F1D /* CSParseBinary.pb.h */; };
 		38BCC5A51994AE8D00619F1D /* CSParseBinary.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 38BCC5A11994AE8D00619F1D /* CSParseBinary.pb.h */; };
+		38BCC5B81998A84900619F1D /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 38BCC5B71998A84900619F1D /* config.h */; };
+		38BCC5B91998A84900619F1D /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 38BCC5B71998A84900619F1D /* config.h */; };
 		3E6176681960F89B00DE83F5 /* CCController-iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176551960F89B00DE83F5 /* CCController-iOS.mm */; };
 		3E6176691960F89B00DE83F5 /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176561960F89B00DE83F5 /* CCController.h */; };
 		3E6176741960F89B00DE83F5 /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176611960F89B00DE83F5 /* CCEventController.cpp */; };
@@ -2711,7 +2711,6 @@
 		37936A3C1869B76800E974DD /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		37936A3D1869B76800E974DD /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		381BC0231993565000B4B0D4 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ios_mac/config.h; sourceTree = "<group>"; };
 		381BC0291993565C00B4B0D4 /* code_generator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = code_generator.cc; sourceTree = "<group>"; };
 		381BC02A1993565C00B4B0D4 /* code_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = code_generator.h; sourceTree = "<group>"; };
 		381BC02B1993565C00B4B0D4 /* command_line_interface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command_line_interface.cc; sourceTree = "<group>"; };
@@ -2838,6 +2837,7 @@
 		381BC0A71993565C00B4B0D4 /* wire_format_lite_inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wire_format_lite_inl.h; sourceTree = "<group>"; };
 		38BCC5A01994AE8D00619F1D /* CSParseBinary.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSParseBinary.pb.cc; sourceTree = "<group>"; };
 		38BCC5A11994AE8D00619F1D /* CSParseBinary.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSParseBinary.pb.h; sourceTree = "<group>"; };
+		38BCC5B71998A84900619F1D /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		3E6176551960F89B00DE83F5 /* CCController-iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "CCController-iOS.mm"; path = "../base/CCController-iOS.mm"; sourceTree = "<group>"; };
 		3E6176561960F89B00DE83F5 /* CCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCController.h; path = ../base/CCController.h; sourceTree = "<group>"; };
 		3E6176611960F89B00DE83F5 /* CCEventController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventController.cpp; path = ../base/CCEventController.cpp; sourceTree = "<group>"; };
@@ -4756,7 +4756,6 @@
 		381BBEA11993564100B4B0D4 /* protocolBuf */ = {
 			isa = PBXGroup;
 			children = (
-				381BC0231993565000B4B0D4 /* config.h */,
 				381BC0261993565C00B4B0D4 /* google */,
 			);
 			name = protocolBuf;
@@ -4775,6 +4774,7 @@
 		381BC0271993565C00B4B0D4 /* protobuf */ = {
 			isa = PBXGroup;
 			children = (
+				38BCC5B71998A84900619F1D /* config.h */,
 				381BC0281993565C00B4B0D4 /* compiler */,
 				381BC0551993565C00B4B0D4 /* descriptor.cc */,
 				381BC0561993565C00B4B0D4 /* descriptor.h */,
@@ -5857,7 +5857,6 @@
 				381BC0E01993565C00B4B0D4 /* cpp_string_field.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				B2D3D3B91948613300BA4831 /* CCBundle3DData.h in Headers */,
-				381BC0241993565000B4B0D4 /* config.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				1A570093180BC5A10088DEC7 /* CCActionTween.h in Headers */,
@@ -5956,6 +5955,7 @@
 				1A570298180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				381BC0D41993565C00B4B0D4 /* cpp_options.h in Headers */,
 				B29594C81926D61F003EEF37 /* CCObjLoader.h in Headers */,
+				38BCC5B81998A84900619F1D /* config.h in Headers */,
 				50ABBE911925AB6F00A911A9 /* CCPlatformMacros.h in Headers */,
 				50ABC05D1926664800A911A9 /* CCApplication.h in Headers */,
 				50ABC0071926664800A911A9 /* CCApplicationProtocol.h in Headers */,
@@ -6503,6 +6503,7 @@
 				381BC1431993565C00B4B0D4 /* message_lite.h in Headers */,
 				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				50ABBEDA1925AB6F00A911A9 /* ZipUtils.h in Headers */,
+				38BCC5B91998A84900619F1D /* config.h in Headers */,
 				50ABBDC01925AB4100A911A9 /* CCTextureCache.h in Headers */,
 				381BC0BF1993565C00B4B0D4 /* cpp_field.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
@@ -6526,7 +6527,6 @@
 				B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
 				381BC0AB1993565C00B4B0D4 /* code_generator.h in Headers */,
 				381BC13F1993565C00B4B0D4 /* message.h in Headers */,
-				381BC0251993565000B4B0D4 /* config.h in Headers */,
 				50ABBDAA1925AB4100A911A9 /* CCRenderCommand.h in Headers */,
 				3E9E80F4198639EF00FA95D0 /* CCSubMeshState.h in Headers */,
 				50ABBE601925AB6F00A911A9 /* CCEventListener.h in Headers */,
