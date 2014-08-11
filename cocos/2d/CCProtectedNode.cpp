@@ -381,9 +381,10 @@ void ProtectedNode::updateDisplayedOpacity(GLubyte parentOpacity)
         for(auto child : _children){
             child->updateDisplayedOpacity(_displayedOpacity);
         }
-        for(auto child : _protectedChildren){
-            child->updateDisplayedOpacity(_displayedOpacity);
-        }
+    }
+    
+    for(auto child : _protectedChildren){
+        child->updateDisplayedOpacity(_displayedOpacity);
     }
 }
 
@@ -399,9 +400,9 @@ void ProtectedNode::updateDisplayedColor(const Color3B& parentColor)
         for(const auto &child : _children){
             child->updateDisplayedColor(_displayedColor);
         }
-        for(const auto &child : _protectedChildren){
-            child->updateDisplayedColor(_displayedColor);
-        }
+    }
+    for(const auto &child : _protectedChildren){
+        child->updateDisplayedColor(_displayedColor);
     }
 }
 

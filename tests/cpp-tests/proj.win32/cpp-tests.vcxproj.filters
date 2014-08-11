@@ -328,6 +328,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
       <UniqueIdentifier>{fa88df83-76d7-4f41-ad48-801dafd44889}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Camera3DTest">
+      <UniqueIdentifier>{7f85be1c-98c5-4412-afc5-6f39ae1452a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -857,6 +860,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Camera3DTest\Camera3DTest.cpp">
+      <Filter>Classes\Camera3DTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1585,6 +1591,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Camera3DTest\Camera3DTest.h">
+      <Filter>Classes\Camera3DTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

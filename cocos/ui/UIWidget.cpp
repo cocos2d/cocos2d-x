@@ -208,9 +208,6 @@ bool Widget::init()
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
 
         ignoreContentAdaptWithSize(true);
-
-        this->setCascadeColorEnabled(true);
-        this->setCascadeOpacityEnabled(true);
         
         return true;
     }
@@ -593,6 +590,12 @@ void Widget::onPressStateChangedToPressed()
 void Widget::onPressStateChangedToDisabled()
 {
 
+}
+    
+void Widget::updateChildrenDisplayedRGBA()
+{
+    this->setColor(this->getColor());
+    this->setOpacity(this->getOpacity());
 }
 
     
