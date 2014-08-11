@@ -184,5 +184,9 @@ namespace cocostudio
             imageView->setCapInsets(Rect(cx, cy, cw, ch));
             
         }
+        
+        
+        // other commonly protperties
+        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
 }

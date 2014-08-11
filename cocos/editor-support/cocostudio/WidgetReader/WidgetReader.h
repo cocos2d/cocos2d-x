@@ -56,6 +56,8 @@ namespace cocostudio
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
         
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
+        virtual void setColorPropsFromProtocolBuffers(cocos2d::ui::Widget* widget,
+                                                      const protocolbuffers::NodeTree& nodeTree);
         
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,

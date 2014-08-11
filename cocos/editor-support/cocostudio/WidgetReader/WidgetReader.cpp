@@ -404,30 +404,7 @@ namespace cocostudio
         }
         
         int z = options.zorder();
-        widget->setLocalZOrder(z);
-        
-        
-        widget->setOpacity(options.opacity());
-        
-        bool isColorRExists = options.has_colorr();
-        bool isColorGExists = options.has_colorg();
-        bool isColorBExists = options.has_colorb();
-        
-        int colorR = options.colorr();
-        int colorG = options.colorg();
-        int colorB = options.colorb();
-        
-        if (isColorRExists && isColorGExists && isColorBExists)
-        {
-            widget->setColor(Color3B(colorR, colorG, colorB));
-        }
-        
-        setAnchorPointForWidget(widget, nodeTree);
-        
-        bool flipX = options.flipx();
-        bool flipY = options.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        widget->setLocalZOrder(z);        
         
         
         bool layout = options.has_layoutparameter();
@@ -475,6 +452,33 @@ namespace cocostudio
             }
         }
         
+    }
+    
+    void WidgetReader::setColorPropsFromProtocolBuffers(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
+        
+        widget->setOpacity(options.opacity());
+        
+        bool isColorRExists = options.has_colorr();
+        bool isColorGExists = options.has_colorg();
+        bool isColorBExists = options.has_colorb();
+        
+        int colorR = options.colorr();
+        int colorG = options.colorg();
+        int colorB = options.colorb();
+        
+        if (isColorRExists && isColorGExists && isColorBExists)
+        {
+            widget->setColor(Color3B(colorR, colorG, colorB));
+        }
+        
+        setAnchorPointForWidget(widget, nodeTree);
+        
+        bool flipX = options.flipx();
+        bool flipY = options.flipy();
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);
     }
     
     void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)

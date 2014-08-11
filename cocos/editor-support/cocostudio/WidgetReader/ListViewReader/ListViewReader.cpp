@@ -172,6 +172,15 @@ namespace cocostudio
         
         float itemMargin = options.itemmargin();
         listView->setItemsMargin(itemMargin);
+        
+        
+        // other commonly protperties
+        setAnchorPointForWidget(widget, nodeTree);
+        
+        bool flipX = widgetOptions.flipx();
+        bool flipY = widgetOptions.flipy();
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);
     }
 }
 

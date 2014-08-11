@@ -172,5 +172,9 @@ namespace cocostudio
             default:
                 break;
         }
+        
+        
+        // other commonly protperties
+        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
 }

@@ -180,5 +180,9 @@ namespace cocostudio
         loadingBar->setDirection(LoadingBar::Direction(options.direction()));
         int percent = options.has_percent() ? options.percent() : 100;
         loadingBar->setPercent(percent);
+        
+        
+        // other commonly protperties
+        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
 }

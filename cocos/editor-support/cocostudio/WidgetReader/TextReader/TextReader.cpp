@@ -184,5 +184,9 @@ namespace cocostudio
         {
             label->setTextVerticalAlignment((TextVAlignment)options.valignment());
         }
+        
+        
+        // other commonly protperties
+        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
 }

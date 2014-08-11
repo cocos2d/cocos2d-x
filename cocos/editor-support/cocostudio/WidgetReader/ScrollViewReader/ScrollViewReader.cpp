@@ -171,5 +171,14 @@ namespace cocostudio
         int direction = options.has_direction() ? options.direction() : 1;
         scrollView->setDirection((ScrollView::Direction)direction);
         scrollView->setBounceEnabled(options.bounceenable());
+        
+        
+        // other commonly protperties
+        setAnchorPointForWidget(widget, nodeTree);
+        
+        bool flipX = widgetOptions.flipx();
+        bool flipY = widgetOptions.flipy();
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);
     }
 }

@@ -300,7 +300,13 @@ namespace cocostudio
         panel->setBackGroundImageOpacity(bgimgopacity);
         
         
-        WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+        // other properties
+        this->setAnchorPointForWidget(widget, options);
+        
+        bool flipX = DICTOOL->getBooleanValue_json(options, P_FlipX);
+        bool flipY = DICTOOL->getBooleanValue_json(options, P_FlipY);
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);                
     }
     
     void LayoutReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
@@ -422,5 +428,14 @@ namespace cocostudio
         
         int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
         panel->setBackGroundImageOpacity(bgimgopacity);
+        
+        
+        // other commonly protperties
+        setAnchorPointForWidget(widget, nodeTree);
+        
+        bool flipX = widgetOptions.flipx();
+        bool flipY = widgetOptions.flipy();
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);
     }
 }

@@ -482,8 +482,6 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
         widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(guiClassName));
         widget->retain();
         
-        initNode(widget, json);
-        
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         
         widgetPropertiesReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
@@ -499,8 +497,6 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         if (reader && widget)
         {
-            initNode(widget, json);
-            
             widgetPropertiesReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
             
             // 2nd., custom widget parse with custom reader
@@ -521,8 +517,20 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     }
     CC_SAFE_DELETE(widgetPropertiesReader);
     
-    int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(ActionTimelineData::create(actionTag));
+    if (widget)
+    {
+        float rotationSkewX = DICTOOL->getFloatValue_json(json, ROTATION_SKEW_X);
+        float rotationSkewY = DICTOOL->getFloatValue_json(json, ROTATION_SKEW_Y);
+        float skewx         = DICTOOL->getFloatValue_json(json, SKEW_X);
+        float skewy         = DICTOOL->getFloatValue_json(json, SKEW_Y);
+        widget->setRotationSkewX(rotationSkewX);
+        widget->setRotationSkewY(rotationSkewY);
+        widget->setSkewX(skewx);
+        widget->setSkewY(skewy);
+        
+        int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
+        widget->setUserObject(ActionTimelineData::create(actionTag));
+    }
     
     return widget;
 }
