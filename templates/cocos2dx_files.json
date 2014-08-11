@@ -3626,6 +3626,7 @@
         "cocos/scripting/lua-bindings/auto/api/CCBAnimationManager.lua", 
         "cocos/scripting/lua-bindings/auto/api/CCBReader.lua", 
         "cocos/scripting/lua-bindings/auto/api/CallFunc.lua", 
+        "cocos/scripting/lua-bindings/auto/api/Camera.lua", 
         "cocos/scripting/lua-bindings/auto/api/CardinalSplineBy.lua", 
         "cocos/scripting/lua-bindings/auto/api/CardinalSplineTo.lua", 
         "cocos/scripting/lua-bindings/auto/api/CatmullRomBy.lua", 
