@@ -179,6 +179,8 @@ static Layer* restartSpriteTestAction()
 Camera3DTestDemo::Camera3DTestDemo(void)
 : BaseTest()
 , _camera(nullptr)
+, _incRot(nullptr)
+, _decRot(nullptr)
 {
 }
 Camera3DTestDemo::~Camera3DTestDemo(void)
@@ -225,19 +227,25 @@ void Camera3DTestDemo::SwitchViewCallback(Ref* sender, CameraType cameraType)
     {
          _camera->setPosition3D(Vec3(0, 130, 130) + _sprite3D->getPosition3D());
          _camera->lookAt(_sprite3D->getPosition3D(), Vec3(0,1,0));
+        _incRot->setEnabled(true);
+        _decRot->setEnabled(true);
     }
     else if(_cameraType==CameraType::FirstCamera)
     {
-           Vec3 newFaceDir;
-           _sprite3D->getWorldToNodeTransform().getForwardVector(&newFaceDir);
-           newFaceDir.normalize();
-           _camera->setPosition3D(Vec3(0,35,0) + _sprite3D->getPosition3D());
-           _camera->lookAt(_sprite3D->getPosition3D() + newFaceDir*50, Vec3(0, 1, 0));
+        Vec3 newFaceDir;
+        _sprite3D->getWorldToNodeTransform().getForwardVector(&newFaceDir);
+        newFaceDir.normalize();
+        _camera->setPosition3D(Vec3(0,35,0) + _sprite3D->getPosition3D());
+        _camera->lookAt(_sprite3D->getPosition3D() + newFaceDir*50, Vec3(0, 1, 0));
+        _incRot->setEnabled(true);
+        _decRot->setEnabled(true);
     }
     else if(_cameraType==CameraType::ThirdCamera)
     {
-           _camera->setPosition3D(Vec3(0, 130, 130) + _sprite3D->getPosition3D());
-           _camera->lookAt(_sprite3D->getPosition3D(), Vec3(0,1,0));
+        _camera->setPosition3D(Vec3(0, 130, 130) + _sprite3D->getPosition3D());
+        _camera->lookAt(_sprite3D->getPosition3D(), Vec3(0,1,0));
+        _incRot->setEnabled(false);
+        _decRot->setEnabled(false);
     }
 }
 void Camera3DTestDemo::onEnter()
@@ -262,8 +270,10 @@ void Camera3DTestDemo::onEnter()
     auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,-1));
     auto label3 = Label::createWithTTF(ttfConfig,"rotate+");
     auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Camera3DTestDemo::rotateCameraCallback,this,10));
+    _incRot = menuItem3;
     auto label4 = Label::createWithTTF(ttfConfig,"rotate-");
     auto menuItem4 = MenuItemLabel::create(label4, CC_CALLBACK_1(Camera3DTestDemo::rotateCameraCallback,this,-10));
+    _decRot = menuItem4;
     auto label5 = Label::createWithTTF(ttfConfig,"free ");
     auto menuItem5 = MenuItemLabel::create(label5, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::FreeCamera));
     auto label6 = Label::createWithTTF(ttfConfig,"third person");

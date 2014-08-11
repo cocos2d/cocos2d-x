@@ -83,6 +83,8 @@ protected:
     Sprite3D*      _sprite3D;
     Vec3           _targetPos;
     CameraType     _cameraType;
+    MenuItem*      _incRot;
+    MenuItem*      _decRot;
     unsigned int   _curState;
     Camera*      _camera;
     MoveTo* _moveAction;
