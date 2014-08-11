@@ -968,6 +968,12 @@ Developers:
         
     AppleJDay
         Add Feature:EventMouse should support getDelta, getDeltaX, getDeltaY functions
+        
+    GavinThornton
+        Fixed a bug that when a sprite added into SpriteBatchNod it will turn black if setting opacity
+        
+    DavidPartouche
+        Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
     
 Retired Core Developers:
     WenSheng Yang

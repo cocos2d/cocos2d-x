@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCEditBoxImplWp8.h"
 #include "CCEditBox.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "base/CCScriptSupport.h"
 #include "base/ccUTF8.h"
 

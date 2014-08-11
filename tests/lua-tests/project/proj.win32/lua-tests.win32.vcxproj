@@ -108,7 +108,13 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\.." /e /Y
+      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
       <Message>copy files</Message>
@@ -157,7 +163,13 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\.." /e /Y
+      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
       <Message>copy files</Message>

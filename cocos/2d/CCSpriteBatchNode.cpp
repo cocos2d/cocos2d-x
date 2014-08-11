@@ -85,7 +85,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-    if(tex->hasPremultipliedAlpha())
+    if(!tex->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     }
