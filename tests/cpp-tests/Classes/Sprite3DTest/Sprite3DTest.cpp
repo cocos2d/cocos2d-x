@@ -365,7 +365,7 @@ const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
 const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outline";
 
-const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/OutLine.vert";
+const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutLine.vert";
 const std::string Effect3DOutline::_fragSkinnedShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keySkinnedInGLProgramCache = "Effect3DLibrary_Outline";
 GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
@@ -410,21 +410,6 @@ Effect3DOutline* Effect3DOutline::create()
 
 bool Effect3DOutline::init()
 {
-
-    GLProgram* glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
-    if(nullptr == glprogram)
-    {
-        CC_SAFE_DELETE(glprogram);
-        return false;
-    }
-    _glProgramState = GLProgramState::create(glprogram);
-    if(nullptr == _glProgramState)
-    {
-        return false;
-    }
-    _glProgramState->retain();
-    _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
-    _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
     
     return true;
 }
@@ -480,6 +465,19 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     
     if(sprite != _sprite)
     {
+        GLProgram* glprogram;
+        if(!sprite->getSkin())
+            glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
+        else
+            glprogram = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
+
+        _glProgramState = GLProgramState::create(glprogram);
+
+        _glProgramState->retain();
+        _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
+        _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
+    
+        
         _sprite = sprite;
         
         auto mesh = sprite->getMesh();
@@ -504,6 +502,11 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     
 }
 
+static void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform, int paletteSize, const float* palette)
+{
+    glUniform4fv( uniform->location, (GLsizei)paletteSize, (const float*)palette );
+}
+
 void Effect3DOutline::draw(const Mat4 &transform)
 {
     //draw
@@ -518,7 +521,17 @@ void Effect3DOutline::draw(const Mat4 &transform)
         
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
-        _glProgramState->apply(transform);
+        
+        if(_sprite && _sprite->getSkin())
+        {
+            auto function = std::bind(MatrixPalleteCallBack, std::placeholders::_1, std::placeholders::_2,
+                                      _sprite->getSkin()->getMatrixPaletteSize(), (float*)_sprite->getSkin()->getMatrixPalette());
+            _glProgramState->setUniformCallback("u_matrixPalette", function);
+        }
+        
+        if(_sprite)
+            _glProgramState->apply(transform);
+ 
         for (ssize_t i = 0; i < mesh->getSubMeshCount(); i++) {
             auto submesh = mesh->getSubMesh((int)i);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, submesh->getIndexBuffer());
@@ -591,13 +604,14 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     //option 2: load obj and assign the texture
     auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
     Effect3DOutline* effect = Effect3DOutline::create();
+    sprite->addEffect(effect, -1);
     effect->setOutlineColor(Vec3(1,0,0));
     effect->setOutlineWidth(0.01f);
-    sprite->addEffect(effect, -1);
+    
     Effect3DOutline* effect2 = Effect3DOutline::create();
+    sprite->addEffect(effect2, -2);
     effect2->setOutlineWidth(0.02f);
     effect2->setOutlineColor(Vec3(1,1,0));
-    sprite->addEffect(effect2, -2);
     //sprite->setEffect3D(effect);
     sprite->setScale(6.f);
     
@@ -656,7 +670,7 @@ std::string Sprite3DWithSkinTest::subtitle() const
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
     std::string fileName = "Sprite3DTest/orc.c3b";
-    auto sprite = Sprite3D::create(fileName);
+    auto sprite = EffectSprite3D::create(fileName);
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
@@ -719,13 +733,14 @@ void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::createFromObjFileAndTexture(fileName, "");
     
     Effect3DOutline* effect = Effect3DOutline::create();
+    sprite->addEffect(effect, -1);
     effect->setOutlineColor(Vec3(1,0,0));
     effect->setOutlineWidth(0.01f);
-    sprite->addEffect(effect, -1);
+    
     Effect3DOutline* effect2 = Effect3DOutline::create();
+    sprite->addEffect(effect2, -2);
     effect2->setOutlineWidth(0.02f);
     effect2->setOutlineColor(Vec3(1,1,0));
-    sprite->addEffect(effect2, -2);
     
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
