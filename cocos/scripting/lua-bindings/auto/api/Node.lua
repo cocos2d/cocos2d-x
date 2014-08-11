@@ -87,6 +87,11 @@
 -- @param #unsigned char char
         
 --------------------------------
+-- @function [parent=#Node] getCameraMask 
+-- @param self
+-- @return unsigned short#unsigned short ret (return value: unsigned short)
+        
+--------------------------------
 -- @function [parent=#Node] setRotation 
 -- @param self
 -- @param #float float
@@ -124,6 +129,12 @@
 -- @function [parent=#Node] _setLocalZOrder 
 -- @param self
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#Node] setCameraMask 
+-- @param self
+-- @param #unsigned short short
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Node] getTag 

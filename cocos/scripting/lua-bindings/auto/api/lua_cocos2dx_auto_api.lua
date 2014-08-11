@@ -102,6 +102,11 @@
 
 
 --------------------------------------------------------
+-- the cc Camera
+-- @field [parent=#cc] Camera#Camera Camera preloaded module
+
+
+--------------------------------------------------------
 -- the cc EventListenerTouchOneByOne
 -- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
 
