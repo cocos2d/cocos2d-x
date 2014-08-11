@@ -117,12 +117,15 @@ public:
      */
     virtual void setFrameSize(float width, float height);
 
+    /** Set and get zoom factor for frame. This two methods are for
+     debugging big resolution (e.g.new ipad) app on desktop.*/
     virtual void setFrameZoomFactor(float zoomFactor) {}
     virtual float getFrameZoomFactor() const { return 1.0; }
     
     /** Get retina factor */
     virtual int getRetinaFactor() const { return 1; }
 
+    /** only works on ios platform*/
     virtual bool setContentScaleFactor(float scaleFactor) { return false; }
     virtual float getContentScaleFactor() const { return 1.0; }
     
