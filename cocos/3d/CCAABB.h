@@ -102,7 +102,10 @@ public:
     /**
      * Transforms the bounding box by the given transformation matrix.
      */
-    void transform(const Mat4& matrix);
+    void transform(const Mat4& mat);
+
+private:
+    Mat4 _transform;
 
 public:
     Vec3 _min;

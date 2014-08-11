@@ -42,7 +42,7 @@ public:
     /*
      * Construct obb from points
      */
-    OBB(const Vec3* verts, int nVerts);
+    OBB(const Vec3* verts, int num);
     
     /*
      * Check point in
@@ -103,7 +103,10 @@ protected:
      * Get the face of x y z axis direction
      */
     Vec3 getFaceDir(int index) const;
-    
+
+private:
+    Mat4 _transform;
+
 public:
     Vec3 _center;   // obb center
     Vec3 _xAxis;    // x axis of obb, unit vector
