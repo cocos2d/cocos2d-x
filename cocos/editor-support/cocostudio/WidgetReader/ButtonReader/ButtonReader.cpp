@@ -3,6 +3,7 @@
 #include "ButtonReader.h"
 #include "ui/UIButton.h"
 #include "cocostudio/CocoLoader.h"
+#include "../../CSParseBinary.pb.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -231,5 +232,79 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }
+    
+    void ButtonReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        Button* button = static_cast<Button*>(widget);
+        const protocolbuffers::ButtonOptions& options = nodeTree.buttonoptions();
+        
+        std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();;
+        
+        bool scale9Enable = options.scale9enable();
+        button->setScale9Enabled(scale9Enable);
+        
+        
+		const protocolbuffers::ResourceData& normalDic = options.normaldata();
+        int normalType = normalDic.resourcetype();
+        std::string normalTexturePath = this->getResourcePath(normalDic.path(), (Widget::TextureResType)normalType);
+        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        
+        
+        const protocolbuffers::ResourceData& pressedDic = options.presseddata();
+        int pressedType = pressedDic.resourcetype();
+        
+        std::string pressedTexturePath = this->getResourcePath(pressedDic.path(), (Widget::TextureResType)pressedType);
+        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        
+        
+        const protocolbuffers::ResourceData& disabledDic = options.disableddata();
+        int disabledType = disabledDic.resourcetype();
+        
+        std::string disabledTexturePath = this->getResourcePath(disabledDic.path(), (Widget::TextureResType)disabledType);
+        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        
+        if (scale9Enable)
+        {
+            float cx = options.capinsetsx();
+            float cy = options.capinsetsy();
+            float cw = options.capinsetswidth();
+            float ch = options.capinsetsheight();
+            
+            button->setCapInsets(Rect(cx, cy, cw, ch));
+            bool sw = options.has_scale9width();
+            bool sh = options.has_scale9height();
+            if (sw && sh)
+            {
+                float swf = options.scale9width();
+                float shf = options.scale9height();
+                button->setContentSize(Size(swf, shf));
+            }
+        }
+        bool tt = options.has_text();
+        if (tt)
+        {
+            const char* text = options.text().c_str();
+            if (text)
+            {
+                button->setTitleText(text);
+            }
+        }
+        
+        
+        int cri = options.has_textcolorr() ? options.textcolorr() : 255;
+        int cgi = options.has_textcolorg() ? options.textcolorg() : 255;
+        int cbi = options.has_textcolorb() ? options.textcolorb() : 255;
+        button->setTitleColor(Color3B(cri,cgi,cbi));
+        
+        
+        int fontSize = options.has_fontsize() ? options.fontsize() : 14;
+        button->setTitleFontSize(fontSize);
+        
+        
+        const char* fontName = options.has_fontname() ? options.fontname().c_str() : "微软雅黑";
+        button->setTitleFontName(fontName);
     }
 }

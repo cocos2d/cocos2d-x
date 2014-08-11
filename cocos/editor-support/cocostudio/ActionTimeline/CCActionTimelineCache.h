@@ -30,6 +30,19 @@ THE SOFTWARE.
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
 
+namespace protocolbuffers
+{
+    class NodeAction;
+    class TimeLine;
+    class Frame;
+    class TimeLineBoolFrame;
+    class TimeLinePointFrame;
+    class TimeLineIntFrame;
+    class TimeLineColorFrame;
+    class TimeLineTextureFrame;
+    class TimeLineStringFrame;
+}
+
 NS_TIMELINE_BEGIN
 
 class ActionTimeline;
@@ -57,6 +70,10 @@ public:
 
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
+    
+    ActionTimeline* createActionFromProtocolBuffers(const std::string& fileName);
+    ActionTimeline* loadAnimationActionWithFileFromProtocolBuffers(const std::string& fileName);
+    
 protected:
 
     Timeline* loadTimeline(const rapidjson::Value& json);
@@ -73,6 +90,18 @@ protected:
     Frame* loadTextureFrame     (const rapidjson::Value& json);
     Frame* loadEventFrame       (const rapidjson::Value& json);
     Frame* loadZOrderFrame      (const rapidjson::Value& json);
+    
+    Timeline* loadTimelineFromProtocolBuffers(const protocolbuffers::TimeLine& timelineProtobuf);
+    
+    Frame* loadVisibleFrameFromProtocolBuffers     (const protocolbuffers::TimeLineBoolFrame& frameProtobuf);
+    Frame* loadPositionFrameFromProtocolBuffers    (const protocolbuffers::TimeLinePointFrame& frameProtobuf);
+    Frame* loadScaleFrameFromProtocolBuffers       (const protocolbuffers::TimeLinePointFrame& frameProtobuf);
+	Frame* loadRotationSkewFrameFromProtocolBuffers(const protocolbuffers::TimeLinePointFrame& frameProtobuf);
+    Frame* loadAnchorPointFrameFromProtocolBuffers (const protocolbuffers::TimeLinePointFrame& frameProtobuf);
+    Frame* loadColorFrameFromProtocolBuffers       (const protocolbuffers::TimeLineColorFrame& frameProtobuf);
+    Frame* loadTextureFrameFromProtocolBuffers     (const protocolbuffers::TimeLineTextureFrame& frameProtobuf);
+    Frame* loadEventFrameFromProtocolBuffers       (const protocolbuffers::TimeLineStringFrame& frameProtobuf);
+    Frame* loadZOrderFrameFromProtocolBuffers      (const protocolbuffers::TimeLineIntFrame& frameProtobuf);
 
 protected:
 

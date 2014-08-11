@@ -3,6 +3,7 @@
 #include "TextReader.h"
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
+#include "../../CSParseBinary.pb.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -136,5 +137,52 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }
+    
+    void TextReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        
+        Text* label = static_cast<Text*>(widget);
+        const protocolbuffers::LabelOptions& options = nodeTree.labeloptions();
+        
+        bool touchScaleChangeAble = options.touchscaleenable();
+        label->setTouchScaleChangeEnabled(touchScaleChangeAble);
+        const char* text = options.has_text() ? options.text().c_str() : "Text Label";
+        label->setString(text);
+        
+        int fontSize = options.has_fontsize() ? options.fontsize() : 20;
+        label->setFontSize(fontSize);
+        
+        std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
+        
+        std::string fontFilePath = jsonPath.append(fontName);
+		if (FileUtils::getInstance()->isFileExist(fontFilePath))
+		{
+			label->setFontName(fontFilePath);
+		}
+		else{
+			label->setFontName(fontName);
+		}
+        
+        bool aw = options.has_areawidth();
+        bool ah = options.has_areaheight();
+        if (aw && ah)
+        {
+            Size size = Size(options.areawidth(), options.areaheight());
+            label->setTextAreaSize(size);
+        }
+        bool ha = options.has_halignment();
+        if (ha)
+        {
+            label->setTextHorizontalAlignment((TextHAlignment)options.halignment());
+        }
+        bool va = options.has_valignment();
+        if (va)
+        {
+            label->setTextVerticalAlignment((TextVAlignment)options.valignment());
+        }
     }
 }

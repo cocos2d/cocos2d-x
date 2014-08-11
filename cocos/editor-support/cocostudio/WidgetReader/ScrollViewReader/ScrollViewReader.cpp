@@ -3,6 +3,7 @@
 #include "ScrollViewReader.h"
 #include "ui/UIScrollView.h"
 #include "cocostudio/CocoLoader.h"
+#include "../../CSParseBinary.pb.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -81,5 +82,94 @@ namespace cocostudio
         
         
         LayoutReader::setColorPropsFromJsonDictionary(widget, options);
+    }
+    
+    void ScrollViewReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        
+        ScrollView* scrollView = static_cast<ScrollView*>(widget);
+		const protocolbuffers::ScrollViewOptions& options = nodeTree.scrollviewoptions();
+        
+        scrollView->setClippingEnabled(options.clipable());
+        
+        bool backGroundScale9Enable = options.backgroundscale9enable();
+        scrollView->setBackGroundImageScale9Enabled(backGroundScale9Enable);
+        
+        
+        int cr;
+        int cg;
+        int cb;
+        int scr;
+        int scg;
+        int scb;
+        int ecr;
+        int ecg;
+        int ecb;
+        
+        
+        
+        cr = options.has_bgcolorr() ? options.bgcolorr() : 255;
+        cg = options.has_bgcolorg() ? options.bgcolorg() : 150;
+        cb = options.has_bgcolorb() ? options.bgcolorb() : 100;
+        
+        scr = options.has_bgstartcolorr() ? options.bgstartcolorr() : 255;
+        scg = options.has_bgstartcolorg() ? options.bgstartcolorg() : 255;
+        scb = options.has_bgstartcolorb() ? options.bgstartcolorb() : 255;
+        
+        ecr = options.has_bgendcolorr() ? options.bgendcolorr() : 255;
+        ecg = options.has_bgendcolorg() ? options.bgendcolorg() : 150;
+        ecb = options.has_bgendcolorb() ? options.bgendcolorb() : 100;
+        
+        float bgcv1 = options.vectorx();
+        float bgcv2 = options.has_vectory() ? options.vectory() : -0.5f;
+        scrollView->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
+        
+        int co = options.has_bgcoloropacity() ? options.bgcoloropacity() : 100;
+        
+        int colorType = options.has_colortype() ? options.colortype() : 1;
+        scrollView->setBackGroundColorType(Layout::BackGroundColorType(colorType));
+        
+        scrollView->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
+        scrollView->setBackGroundColor(Color3B(cr, cg, cb));
+        scrollView->setBackGroundColorOpacity(co);
+        
+        
+		const protocolbuffers::ResourceData& imageFileNameDic = options.backgroundimagedata();
+        int imageFileNameType = imageFileNameDic.resourcetype();
+        std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
+        scrollView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+        
+        
+        if (backGroundScale9Enable)
+        {
+            float cx = options.capinsetsx();
+            float cy = options.capinsetsy();
+            float cw = options.has_capinsetswidth() ? options.capinsetswidth() : 1;
+            float ch = options.has_capinsetsheight() ? options.capinsetsheight() : 1;
+            scrollView->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
+        }
+        
+        scrollView->setLayoutType((Layout::Type)options.layouttype());
+        
+        const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
+        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
+        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
+        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
+        scrollView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
+        
+        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+        scrollView->setBackGroundImageOpacity(bgimgopacity);
+        
+        
+        
+        
+        float innerWidth = options.has_innerwidth() ? options.innerwidth() : 200;
+        float innerHeight = options.has_innerheight() ? options.innerheight() : 200;
+        scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
+        int direction = options.has_direction() ? options.direction() : 1;
+        scrollView->setDirection((ScrollView::Direction)direction);
+        scrollView->setBounceEnabled(options.bounceenable());
     }
 }

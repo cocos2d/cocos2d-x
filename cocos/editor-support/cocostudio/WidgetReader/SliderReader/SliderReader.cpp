@@ -3,6 +3,7 @@
 #include "SliderReader.h"
 #include "ui/UISlider.h"
 #include "cocostudio/CocoLoader.h"
+#include "../../CSParseBinary.pb.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -185,5 +186,59 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }
+    
+    void SliderReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        Slider* slider = static_cast<Slider*>(widget);
+        const protocolbuffers::SliderOptions& options = nodeTree.slideroptions();
+        
+        bool barTextureScale9Enable = options.scale9enable();
+        slider->setScale9Enabled(barTextureScale9Enable);
+        
+        slider->setPercent(options.percent());
+        
+        
+        //        bool bt = DICTOOL->checkObjectExist_json(options, P_BarFileName);
+        float barLength = options.has_length() ? options.length() : 290;
+        
+		const protocolbuffers::ResourceData& imageFileNameDic = options.barfilenamedata();
+        int imageFileNameType = imageFileNameDic.resourcetype();
+        std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
+        slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+        
+        
+        
+        if (barTextureScale9Enable)
+        {
+            slider->setContentSize(Size(barLength, slider->getContentSize().height));
+        }
+        
+        //loading normal slider ball texture
+        const protocolbuffers::ResourceData& normalDic = options.ballnormaldata();
+        int normalType = normalDic.resourcetype();
+        imageFileName = this->getResourcePath(normalDic.path(), (Widget::TextureResType)normalType);
+        slider->loadSlidBallTextureNormal(imageFileName, (Widget::TextureResType)normalType);
+        
+        
+        //loading slider ball press texture
+        const protocolbuffers::ResourceData& pressedDic = options.ballpresseddata();
+        int pressedType = pressedDic.resourcetype();
+        std::string pressedFileName = this->getResourcePath(pressedDic.path(), (Widget::TextureResType)pressedType);
+        slider->loadSlidBallTexturePressed(pressedFileName, (Widget::TextureResType)pressedType);
+        
+        //loading silder ball disable texture
+        const protocolbuffers::ResourceData& disabledDic = options.balldisableddata();
+        int disabledType = disabledDic.resourcetype();
+        std::string disabledFileName = this->getResourcePath(disabledDic.path(), (Widget::TextureResType)disabledType);
+        slider->loadSlidBallTextureDisabled(disabledFileName, (Widget::TextureResType)disabledType);
+        
+        //load slider progress texture
+        const protocolbuffers::ResourceData& progressBarDic = options.progressbardata();
+        int progressBarType = progressBarDic.resourcetype();
+        std::string progressBarFileName = this->getResourcePath(progressBarDic.path(), (Widget::TextureResType)progressBarType);
+        slider->loadProgressBarTexture(progressBarFileName, (Widget::TextureResType)progressBarType);
     }
 }

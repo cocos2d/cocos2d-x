@@ -3,6 +3,7 @@
 #include "TextAtlasReader.h"
 #include "ui/UITextAtlas.h"
 #include "cocostudio/CocoLoader.h"
+#include "../../CSParseBinary.pb.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -130,5 +131,46 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }
+    
+    void TextAtlasReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        
+        TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
+        const protocolbuffers::LabelAtlasOptions& options = nodeTree.labelatlasoptions();
+        //        bool sv = DICTOOL->checkObjectExist_json(options, P_StringValue);
+        //        bool cmf = DICTOOL->checkObjectExist_json(options, P_CharMapFile);
+        //        bool iw = DICTOOL->checkObjectExist_json(options, P_ItemWidth);
+        //        bool ih = DICTOOL->checkObjectExist_json(options, P_ItemHeight);
+        //        bool scm = DICTOOL->checkObjectExist_json(options, P_StartCharMap);
+        
+        const protocolbuffers::ResourceData& cmftDic = options.charmapfiledata();
+        int cmfType = cmftDic.resourcetype();
+        switch (cmfType)
+        {
+            case 0:
+            {
+                std::string tp_c = jsonPath;
+                const char* cmfPath = cmftDic.path().c_str();
+                const char* cmf_tp = tp_c.append(cmfPath).c_str();
+                std::string stringValue = options.has_stringvalue() ? options.stringvalue() : "12345678";
+                int itemWidth = options.has_itemwidth() ? options.itemwidth() : 24;
+                int itemHeight = options.has_itemheight() ? options.itemheight() : 32;
+                labelAtlas->setProperty(stringValue,
+                                        cmf_tp,
+                                        itemWidth,
+                                        itemHeight,
+                                        options.startcharmap().c_str());
+                break;
+            }
+            case 1:
+                CCLOG("Wrong res type of LabelAtlas!");
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -3,6 +3,7 @@
 #include "TextFieldReader.h"
 #include "ui/UITextField.h"
 #include "cocostudio/CocoLoader.h"
+#include "../../CSParseBinary.pb.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -133,5 +134,60 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }
+    
+    void TextFieldReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        
+        TextField* textField = static_cast<TextField*>(widget);
+        const protocolbuffers::TextFieldOptions& options = nodeTree.textfieldoptions();
+        
+        
+        bool ph = options.has_placeholder();
+        if (ph)
+        {
+            std::string placeholder = options.has_placeholder() ? options.placeholder() : "inputs words here";
+            textField->setPlaceHolder(placeholder);
+        }
+        std::string text = options.has_text() ? options.text() : "Text Field";
+        textField->setText(text);
+        
+        int fontSize = options.has_fontsize() ? options.fontsize() : 20;
+        textField->setFontSize(fontSize);
+        
+        
+        std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
+        textField->setFontName(fontName);
+        
+        //        bool tsw = options.has_touchsizewidth();
+        //        bool tsh = options.has_touchsizeheight();
+        //        if (tsw && tsh)
+        //        {
+        //            textField->setTouchSize(Size(options.touchsizewidth(), options.touchsizeheight()));
+        //        }
+        
+        //        float dw = DICTOOL->getFloatValue_json(options, "width");
+        //        float dh = DICTOOL->getFloatValue_json(options, "height");
+        //        if (dw > 0.0f || dh > 0.0f)
+        //        {
+        //            //textField->setSize(Size(dw, dh));
+        //        }
+        bool maxLengthEnable = options.maxlengthenable();
+        textField->setMaxLengthEnabled(maxLengthEnable);
+        
+        if (maxLengthEnable)
+        {
+            int maxLength = options.has_maxlength() ? options.maxlength() : 10;
+            textField->setMaxLength(maxLength);
+        }
+        bool passwordEnable = options.passwordenable();
+        textField->setPasswordEnabled(passwordEnable);
+        if (passwordEnable)
+        {
+            std::string passwordStyleText = options.has_passwordstyletext() ? options.passwordstyletext() : "*";
+            textField->setPasswordStyleText(passwordStyleText.c_str());
+        }
     }
 }
