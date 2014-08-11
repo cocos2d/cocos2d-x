@@ -706,7 +706,14 @@ public:
      * Gets a child from the container with its name
      *
      * @param name   An identifier to find the child node.
-     *
+     * 
+     * Support DOT syntax for index grandchild.
+     * @code
+     * getChildByName("cat")
+     * getChildByName("cat.apple")
+     * removeChildByName("cat.apple")
+     * @endcode
+     * 
      * @return a Node object whose name equals to the input parameter
      *
      * @since v3.2

@@ -821,15 +821,25 @@ Node* Node::getChildByTag(int tag) const
 Node* Node::getChildByName(const std::string& name) const
 {
     CCASSERT(name.length() != 0, "Invalid name");
+
+    std::string head = name;
+    std::string tail = "";
+
+    int dotpos = name.find('.');
+    if (dotpos > 0)
+    {
+        head = name.substr(0, dotpos);
+        tail = name.substr(dotpos+1);
+    }
     
     std::hash<std::string> h;
-    size_t hash = h(name);
+    size_t hash = h(head);
     
     for (const auto& child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
-        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
-            return child;
+        if(child->_hashOfName == hash && child->_name.compare(head) == 0)
+            return tail.empty() ? child : child->getChildByName(tail);
     }
     return nullptr;
 }
