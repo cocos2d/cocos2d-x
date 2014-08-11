@@ -117,11 +117,13 @@ public:
      */
     virtual void setFrameSize(float width, float height);
 
+    virtual void setFrameZoomFactor(float zoomFactor) {}
     virtual float getFrameZoomFactor() const { return 1.0; }
     
     /** Get retina factor */
     virtual int getRetinaFactor() const { return 1; }
-    
+
+    virtual bool setContentScaleFactor(float scaleFactor) { return false; }
     virtual float getContentScaleFactor() const { return 1.0; }
     
     /** returns whether or not the view is in Retina Display mode */
