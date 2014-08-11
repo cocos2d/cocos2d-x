@@ -39,12 +39,12 @@ Primitive* Primitive::create(VertexData* verts, IndexBuffer* indices, int type)
     return  nullptr;
 }
 
-VertexData* Primitive::getVertexData()
+const VertexData* Primitive::getVertexData() const
 {
     return _verts;
 }
 
-IndexBuffer* Primitive::getIndexData()
+const IndexBuffer* Primitive::getIndexData() const
 {
     return _indices;
 }

@@ -34,9 +34,9 @@ class Primitive : public Ref
 public:
     static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
     
-    VertexData* getVertexData();
+    const VertexData* getVertexData() const;
     
-    IndexBuffer* getIndexData();
+    const IndexBuffer* getIndexData() const;
     
     int getType() const { return _type; }
     

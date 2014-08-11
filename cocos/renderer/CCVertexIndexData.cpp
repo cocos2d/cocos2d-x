@@ -112,7 +112,7 @@ VertexData::~VertexData()
 
 void VertexData::use()
 {
-    uint32_t flags;
+    uint32_t flags(0);
     for(auto& element : _vertexStreams)
     {
         flags = flags | (1 << element.second._stream._semantic);
