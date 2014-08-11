@@ -591,6 +591,12 @@ void Widget::onPressStateChangedToDisabled()
 {
 
 }
+    
+void Widget::updateChildrenDisplayedRGBA()
+{
+    this->setColor(this->getColor());
+    this->setOpacity(this->getOpacity());
+}
 
     
 Widget* Widget::getAncensterWidget(Node* node)
