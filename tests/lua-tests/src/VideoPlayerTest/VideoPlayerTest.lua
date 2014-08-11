@@ -1,4 +1,4 @@
-require("experimentalConstants")
+require("experimentalUIConstants")
 
 
 local visibleRect = cc.Director:getInstance():getOpenGLView():getVisibleRect()
