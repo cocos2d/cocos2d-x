@@ -33,6 +33,7 @@ Classes/BugsTest/BugsTest.cpp \
 Classes/BugsTest/Bug-Child.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
+Classes/Camera3DTest/Camera3DTest.cpp \
 Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \

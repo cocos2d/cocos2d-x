@@ -617,6 +617,7 @@ protected:
     virtual void updateFlippedX(){};
     virtual void updateFlippedY(){};
     virtual void adaptRenderers(){};
+    void updateChildrenDisplayedRGBA();
     
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();

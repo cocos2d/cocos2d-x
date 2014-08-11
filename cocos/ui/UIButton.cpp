@@ -231,6 +231,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
+    this->updateChildrenDisplayedRGBA();
     
     updateContentSizeWithTextureSize(_normalTextureSize);
     _normalTextureLoaded = true;
@@ -262,7 +263,8 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     //TODO: mark as dirty
     updateFlippedX();
     updateFlippedY();
-    
+    this->updateChildrenDisplayedRGBA();
+
     _pressedTextureLoaded = true;
     _pressedTextureAdaptDirty = true;
 }
@@ -291,7 +293,8 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    
+    this->updateChildrenDisplayedRGBA();
+
     _disabledTextureLoaded = true;
     _disabledTextureAdaptDirty = true;
 }

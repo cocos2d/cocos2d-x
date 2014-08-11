@@ -109,6 +109,15 @@ add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 # cocos 2d library
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
+# network library
+add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+
+# ui library
+add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
+
+# sqlite3 library
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
+
 # extensions
 add_subdirectory(${COCOS2D_ROOT}/extensions)
 
@@ -153,6 +162,7 @@ target_link_libraries(${APP_NAME}
   luanetwork
   audio
   cocos2d
+  network
   xxtea
   )
 
@@ -165,6 +175,7 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
   )
   

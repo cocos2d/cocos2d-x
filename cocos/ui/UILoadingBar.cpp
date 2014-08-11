@@ -160,6 +160,7 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
             break;
     }
     _barRenderer->setCapInsets(_capInsets);
+    this->updateChildrenDisplayedRGBA();
 
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
