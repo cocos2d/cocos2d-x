@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCApplication.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include "platform/winrt/CCGLView.h"
+#include "platform/winrt/CCGLViewImpl.h"
 #else
 #include "platform/wp8/CCGLViewImpl.h"
 #endif

@@ -381,9 +381,9 @@ void ProtectedNode::updateDisplayedOpacity(GLubyte parentOpacity)
         for(auto child : _children){
             child->updateDisplayedOpacity(_displayedOpacity);
         }
-        for(auto child : _protectedChildren){
-            child->updateDisplayedOpacity(_displayedOpacity);
-        }
+    }
+    for(auto child : _protectedChildren){
+        child->setOpacity(_realOpacity);
     }
 }
 
@@ -399,9 +399,9 @@ void ProtectedNode::updateDisplayedColor(const Color3B& parentColor)
         for(const auto &child : _children){
             child->updateDisplayedColor(_displayedColor);
         }
-        for(const auto &child : _protectedChildren){
-            child->updateDisplayedColor(_displayedColor);
-        }
+    }
+    for(const auto &child : _protectedChildren){
+        child->setColor(_realColor);
     }
 }
 
@@ -411,7 +411,7 @@ void ProtectedNode::disableCascadeColor()
         child->updateDisplayedColor(Color3B::WHITE);
     }
     for(auto child : _protectedChildren){
-        child->updateDisplayedColor(Color3B::WHITE);
+        child->setColor(Color3B::WHITE);
     }
 }
 

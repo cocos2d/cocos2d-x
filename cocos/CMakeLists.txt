@@ -11,10 +11,7 @@ include(physics/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
 include(base/CMakeLists.txt)
-include(ui/CMakeLists.txt)
 include(deprecated/CMakeLists.txt)
-include(network/CMakeLists.txt)
-include(storage/CMakeLists.txt)
 
 add_library(cocos2d STATIC
   ${COCOS_SRC}
@@ -25,9 +22,6 @@ add_library(cocos2d STATIC
   ${COCOS_RENDERER_SRC}
   ${COCOS_MATH_SRC}
   ${COCOS_PHYSICS_SRC}
-  ${COCOS_UI_SRC}
-  ${COCOS_NETWORK_SRC}
-  ${COCOS_STORAGE_SRC}
   ${COCOS_DEPRECATED_SRC}
 )
 
@@ -44,8 +38,6 @@ target_link_libraries(cocos2d
   tinyxml2
   unzip
   xxhash
-  ${COCOS_STORAGE_LINK}
-  ${COCOS_NETWORK_LINK}
   ${COCOS_LINK}
 )
 

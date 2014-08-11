@@ -204,6 +204,15 @@ add_subdirectory(cocos/audio)
 # cocos2d library
 add_subdirectory(cocos)
 
+# network library
+add_subdirectory(cocos/network)
+
+# ui library
+add_subdirectory(cocos/ui)
+
+# sqlite3 library
+add_subdirectory(cocos/storage)
+
 if(BUILD_EXTENSIONS)
 # extensions
 add_subdirectory(extensions)

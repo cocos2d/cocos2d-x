@@ -297,34 +297,17 @@
 		15C1BD1A1986526C00A46ACC /* lua_cocos2dx_ui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_ui_manual.cpp; sourceTree = "<group>"; };
 		15C1BD1B1986526C00A46ACC /* lua_cocos2dx_ui_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_ui_manual.hpp; sourceTree = "<group>"; };
 		15C1BDDA1986538000A46ACC /* libluaextension Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluaextension Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1BDDF1986543D00A46ACC /* libextension Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libextension Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libextension Mac.a"; sourceTree = "<group>"; };
 		15C1BEE1198654BE00A46ACC /* libluacocosbuilder Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluacocosbuilder Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1BEE81986555D00A46ACC /* libcocosbuilder Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocosbuilder Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libcocosbuilder Mac.a"; sourceTree = "<group>"; };
 		15C1BF6919865A0600A46ACC /* libluacocosdenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluacocosdenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1BF6C19865AD000A46ACC /* libcocosdenshion Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocosdenshion Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libcocosdenshion Mac.a"; sourceTree = "<group>"; };
 		15C1BFED19865C2000A46ACC /* libluacocostudio Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluacocostudio Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1BFF219865CEA00A46ACC /* libcocostudio Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocostudio Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libcocostudio Mac.a"; sourceTree = "<group>"; };
 		15C1C07319865E5F00A46ACC /* libluaspine Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluaspine Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1C07A198731E200A46ACC /* libspine Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libspine Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libspine Mac.a"; sourceTree = "<group>"; };
 		15C1C0FB1987328E00A46ACC /* libluaui Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluaui Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1C1001987332900A46ACC /* libui Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libui Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libui Mac.a"; sourceTree = "<group>"; };
 		15C1C1811987340C00A46ACC /* libluanetwork Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluanetwork Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1C1C5198737B400A46ACC /* libnetwork Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libnetwork Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libnetwork Mac.a"; sourceTree = "<group>"; };
-		15C1C1C7198737BF00A46ACC /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		15C1C24B1987473200A46ACC /* lua_cocos2dx_experimental_video_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_experimental_video_manual.cpp; sourceTree = "<group>"; };
 		15C1C24C1987473200A46ACC /* lua_cocos2dx_experimental_video_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_experimental_video_manual.hpp; sourceTree = "<group>"; };
 		15C1C24F198747E400A46ACC /* LuaOpengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaOpengl.cpp; sourceTree = "<group>"; };
 		15C1C250198747E400A46ACC /* LuaOpengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaOpengl.h; sourceTree = "<group>"; };
 		15C1C2CC198748D200A46ACC /* libluacocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluacocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		15C1C2EF19874CCD00A46ACC /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Debug/libcocos2d Mac.a"; sourceTree = "<group>"; };
-		15EFA25E198A500A000C57D3 /* libextension Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libextension Mac.a"; path = "../../../../build/build/Debug/libextension Mac.a"; sourceTree = "<group>"; };
-		15EFA260198A5013000C57D3 /* libui Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libui Mac.a"; path = "../../../../build/build/Debug/libui Mac.a"; sourceTree = "<group>"; };
-		15EFA262198A501E000C57D3 /* libcocostudio Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocostudio Mac.a"; path = "../../../../build/build/Debug/libcocostudio Mac.a"; sourceTree = "<group>"; };
-		15EFA264198A502A000C57D3 /* libcocosbuilder Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocosbuilder Mac.a"; path = "../../../../build/build/Debug/libcocosbuilder Mac.a"; sourceTree = "<group>"; };
-		15EFA266198A5034000C57D3 /* libspine Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libspine Mac.a"; path = "../../../../build/build/Debug/libspine Mac.a"; sourceTree = "<group>"; };
-		15EFA268198A503F000C57D3 /* libnetwork Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libnetwork Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Release/libnetwork Mac.a"; sourceTree = "<group>"; };
-		15EFA26A198A504A000C57D3 /* libcocosdenshion Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocosdenshion Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Release/libcocosdenshion Mac.a"; sourceTree = "<group>"; };
-		15EFA26C198A5056000C57D3 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/cocos2d_tests-hfwnhsdtjxbycbgwztnpjtkcaupu/Build/Products/Release/libcocos2d Mac.a"; sourceTree = "<group>"; };
 		15EFA2F9198B2791000C57D3 /* libluacocosbuilder iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluacocosbuilder iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15EFA37A198B28A8000C57D3 /* libluaui iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluaui iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15EFA3FB198B2934000C57D3 /* libluacocostudio iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluacocostudio iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -549,23 +532,6 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
-				15EFA26C198A5056000C57D3 /* libcocos2d Mac.a */,
-				15EFA26A198A504A000C57D3 /* libcocosdenshion Mac.a */,
-				15EFA268198A503F000C57D3 /* libnetwork Mac.a */,
-				15EFA266198A5034000C57D3 /* libspine Mac.a */,
-				15EFA264198A502A000C57D3 /* libcocosbuilder Mac.a */,
-				15EFA262198A501E000C57D3 /* libcocostudio Mac.a */,
-				15EFA260198A5013000C57D3 /* libui Mac.a */,
-				15EFA25E198A500A000C57D3 /* libextension Mac.a */,
-				15C1C2EF19874CCD00A46ACC /* libcocos2d Mac.a */,
-				15C1C1C7198737BF00A46ACC /* libcurl.dylib */,
-				15C1C1C5198737B400A46ACC /* libnetwork Mac.a */,
-				15C1C1001987332900A46ACC /* libui Mac.a */,
-				15C1C07A198731E200A46ACC /* libspine Mac.a */,
-				15C1BFF219865CEA00A46ACC /* libcocostudio Mac.a */,
-				15C1BF6C19865AD000A46ACC /* libcocosdenshion Mac.a */,
-				15C1BEE81986555D00A46ACC /* libcocosbuilder Mac.a */,
-				15C1BDDF1986543D00A46ACC /* libextension Mac.a */,
 				C0D9BAFA1974D30000EC35BB /* liblua.a */,
 				1ABCA1E218CD8F230087CE3A /* external */,
 				1AACE74818BC45C200215002 /* auto */,

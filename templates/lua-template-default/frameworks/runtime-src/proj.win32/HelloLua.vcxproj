@@ -172,42 +172,18 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\2d\cocos2d.vcxproj">
-      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\audio\proj.win32\CocosDenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\editor-support\cocosbuilder\proj.win32\libCocosBuilder.vcxproj">
-      <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\editor-support\cocostudio\proj.win32\libCocosStudio.vcxproj">
-      <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
-      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\ui\proj.win32\libGUI.vcxproj">
-      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\network\proj.win32\libNetwork.vcxproj">
-      <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\liblua.vcxproj">
-      <Project>{ddc3e27f-004d-4dd4-9dd3-931a013d2159}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
-      <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\extensions\proj.win32\libExtensions.vcxproj">
-      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\external\chipmunk\proj.win32\chipmunk.vcxproj">
-      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
-    </ProjectReference>
+    <Image Include="res\game.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\game.ico" />
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj">
+      <Project>{9f2d6ce6-c893-4400-b50c-6db70cc2562f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocosdenshion.vcxproj">
+      <Project>{46a7d57a-7f25-4f52-823b-ffac4ff3a624}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluanetwork.vcxproj">
+      <Project>{65e52f4b-703f-419e-ad67-926241a10042}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

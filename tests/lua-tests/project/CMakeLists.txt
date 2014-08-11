@@ -33,6 +33,8 @@ target_link_libraries(${APP_NAME}
   spine
   cocosbuilder
   extensions
+  ui
+  network
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
