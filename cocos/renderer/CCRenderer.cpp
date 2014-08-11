@@ -30,6 +30,7 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
@@ -319,6 +320,12 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         {
             flush();
             auto cmd = static_cast<BatchCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
+        {
+            flush();
+            auto cmd = static_cast<PrimitiveCommand*>(command);
             cmd->execute();
         }
         else if (RenderCommand::Type::MESH_COMMAND == commandType)
