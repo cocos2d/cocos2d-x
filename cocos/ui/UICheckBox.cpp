@@ -184,7 +184,8 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
     }
     updateFlippedX();
     updateFlippedY();
-    
+    this->updateChildrenDisplayedRGBA();
+
     updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
     _backGroundBoxRendererAdaptDirty = true;
 }
@@ -210,7 +211,8 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
     }
     updateFlippedX();
     updateFlippedY();
-    
+    this->updateChildrenDisplayedRGBA();
+
     _backGroundSelectedBoxRendererAdaptDirty = true;
 }
 
@@ -235,7 +237,8 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
     }
     updateFlippedX();
     updateFlippedY();
-   
+    this->updateChildrenDisplayedRGBA();
+
     _frontCrossRendererAdaptDirty = true;
 }
 
@@ -260,7 +263,8 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    
+    this->updateChildrenDisplayedRGBA();
+
     _backGroundBoxDisabledRendererAdaptDirty = true;
 }
 
@@ -285,7 +289,8 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    
+    this->updateChildrenDisplayedRGBA();
+
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
