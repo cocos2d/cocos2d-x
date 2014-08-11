@@ -27,11 +27,14 @@
 #define __cocos2d_libs__CCParticleBase__
 
 #include <vector>
+#include <map>
+#include <unordered_map>
 
 #include "2d/CCNode.h"
 #include "base/ccTypes.h"
 #include "math/CCGeometry.h"
-#include "CCTextureAtlas.h"
+#include "renderer/CCTexture2D.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 class ParticleEmitter;
@@ -117,12 +120,12 @@ public:
     Vec2 velocity;
     Vec2 position;
     Vec2 size;
+    Vec2 anchor;
     float positionZ;
     float rotationX;
     float rotationY;
     float frame;
-    float alpha;
-    Color3B color;
+    Color4B color;
     Vector<ParticleEmitter*> emitters;
     ParticleEffector::ShapeType shapeType;
     ParticleEffector::ContactType contactType;
@@ -140,11 +143,16 @@ public:
     enum { PARTICLEFRAME_MAX = 32 };
     
 public:
-    void setParticleParent(Node* parent);
+    void setParticleParent(Node* parent) { _particleParent = parent; }
+    Node* getParticleParent() const { return _particleParent; }
     /** set shapeType for frame, if particle set to this frame, it will be treat as the shape you specified.
      *  Default is ParticleEffector::ShapeType::RECTANGLE
     */
     void setParticleShape(int frame, ParticleEffector::ShapeType type, bool updateExist = false);
+    
+    int getTotalParticles() const { return (int)_particles.size(); }
+    const Vector<Particle*>& getParticles() const { return _particles; }
+    
     virtual void addEffector(ParticleEffector* effector);
     virtual void removeEffector(ParticleEffector* effector);
     virtual void setRenderer(ParticleRendererProtocol* renderer);
@@ -152,6 +160,7 @@ public:
     virtual void spawnParticles(float delta, int need) = 0;
     virtual void updateParticles(float delta) = 0;
     virtual void updateEffectors(float delta);
+    virtual void updateQuads();
     virtual void update(float delta);
     
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
@@ -178,7 +187,8 @@ protected:
 class ParticleRendererProtocol : public Ref
 {
 public:
-    virtual void draw(ParticleEmitter* emitter, Renderer *renderer, const Mat4& transform, uint32_t flags) = 0;
+    virtual void updateQuads(ParticleEmitter* emitter) = 0;
+    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) = 0;
     
 CC_CONSTRUCTOR_ACCESS:
     ParticleRendererProtocol(){}
@@ -188,15 +198,44 @@ CC_CONSTRUCTOR_ACCESS:
 class ParticleTextureAtlasRenderer : public ParticleRendererProtocol
 {
 public:
-    virtual void draw(ParticleEmitter* emitter, Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+    static ParticleTextureAtlasRenderer* create(Texture2D* texture);
+    
+public:
+    virtual void updateQuads(ParticleEmitter* emitter) override;
+    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+    
+    virtual void setTextureRectForFrame(int frame, const Rect& rect);
+    virtual Rect getTextureRectForFrame(int frame);
+    
+protected:
+    struct RenderStruct;
+    void initIndices(RenderStruct* render);
+    void updateVertexBuffer(RenderStruct* render);
+    void updateIndexBuffer(RenderStruct* render);
+    
+    void onDraw(RenderStruct* render);
     
 CC_CONSTRUCTOR_ACCESS:
     ParticleTextureAtlasRenderer();
     virtual ~ParticleTextureAtlasRenderer();
     
+    bool init(Texture2D* texture);
+    
 protected:
-    V2F_C4B_T2F_Quad* _quads;
-    TextureAtlas* _atlas;
+    struct RenderStruct
+    {
+        std::vector<V2F_C4B_T2F_Quad>   quads;        // quads to be rendered
+        std::vector<GLushort> indices;      // indices
+        GLuint              buffersVBO[2]; //0: vertex  1: indices
+        CustomCommand command;           //command
+        int nextAvalibleQuads;
+    };
+    
+    std::map<int, RenderStruct*> _render;   // each global z use a render command
+    std::unordered_map<int, Rect> _rectForFrame;
+    
+    Texture2D* _texture;
+    bool _lock;
 };
 
 NS_CC_END
