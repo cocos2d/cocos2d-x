@@ -61,7 +61,6 @@ ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
 CSParseBinary.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/descriptor.cc \
-../../../external/protocolBuf/src/google/protobuf/descriptor.cc \
 ../../../external/protocolBuf/src/google/protobuf/descriptor.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/descriptor_database.cc \
 ../../../external/protocolBuf/src/google/protobuf/dynamic_message.cc \
