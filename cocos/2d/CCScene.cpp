@@ -54,16 +54,16 @@ Scene::~Scene()
 
 bool Scene::init()
 {
-    //create default camera
-    auto camera = Camera::create();
-    addChild(camera);
-    
     auto size = Director::getInstance()->getWinSize();
     return initWithSize(size);
 }
 
 bool Scene::initWithSize(const Size& size)
 {
+    //create default camera
+    auto camera = Camera::create();
+    addChild(camera);
+    
     setContentSize(size);
     return true;
 }
