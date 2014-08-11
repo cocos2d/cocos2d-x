@@ -61,6 +61,7 @@ ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
 CSParseBinary.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/descriptor.cc \
+../../../external/protocolBuf/src/google/protobuf/descriptor.cc \
 ../../../external/protocolBuf/src/google/protobuf/descriptor.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/descriptor_database.cc \
 ../../../external/protocolBuf/src/google/protobuf/dynamic_message.cc \
@@ -82,10 +83,13 @@ CSParseBinary.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_extension.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_field.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_file.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_generator.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_helpers.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_message.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_message_field.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_primitive_field.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_service.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_string_field.cc \
 ../../../external/protocolBuf/src/google/protobuf/io/coded_stream.cc \
 ../../../external/protocolBuf/src/google/protobuf/io/gzip_stream.cc \
 ../../../external/protocolBuf/src/google/protobuf/io/printer.cc \
@@ -98,14 +102,14 @@ CSParseBinary.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/stubs/stringprintf.cc \
 ../../../external/protocolBuf/src/google/protobuf/stubs/structurally_valid.cc \
 ../../../external/protocolBuf/src/google/protobuf/stubs/strutil.cc \
-../../../external/protocolBuf/src/google/protobuf/stubs/substitute.cc 
+../../../external/protocolBuf/src/google/protobuf/stubs/substitute.cc \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/../../../external \
-$(LOCAL_PATH)/../../../external/protocolBuf/android \
+$(LOCAL_PATH)/../../../external/protocolBuf/src/google/protobuf \
 $(LOCAL_PATH)/../../../external/protocolBuf/src \
 $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../..
