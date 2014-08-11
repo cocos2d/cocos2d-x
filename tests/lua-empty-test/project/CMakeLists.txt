@@ -35,23 +35,7 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/AudioEngine.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/bitExtend.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/Cocos2d.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/Cocos2dConstants.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedCocos2dClass.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedCocos2dEnum.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedCocos2dFunc.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedCocosDenshionClass.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedCocosDenshionFunc.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedNetworkClass.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedNetworkEnum.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedNetworkFunc.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DeprecatedOpenglEnum.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/DrawPrimitives.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/extern.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/json.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/NetworkConstants.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/Opengl.lua ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/OpenglConstants.lua ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
   )

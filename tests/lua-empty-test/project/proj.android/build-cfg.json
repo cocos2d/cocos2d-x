@@ -14,83 +14,15 @@
             "to": "res"
         },
         {
-            "from": "../../../../cocos/scripting/lua-bindings/script/AudioEngine.lua",
+            "from": "../../../../cocos/scripting/lua-bindings/script/cocos2d",
             "to": ""
         },
         {
-            "from": "../../../../cocos/scripting/lua-bindings/script/bitExtend.lua",
+            "from": "../../../../cocos/scripting/lua-bindings/script/network",
             "to": ""
         },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/Cocos2d.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/Cocos2dConstants.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedCocos2dClass.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedCocos2dEnum.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedCocos2dFunc.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedCocosDenshionClass.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedCocosDenshionFunc.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedNetworkClass.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedNetworkEnum.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedNetworkFunc.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DeprecatedOpenglEnum.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/DrawPrimitives.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/extern.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/json.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/luaj.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/NetworkConstants.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/Opengl.lua",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/OpenglConstants.lua",
+                {
+            "from": "../../../../cocos/scripting/lua-bindings/script/cocosdenshion",
             "to": ""
         },
         {

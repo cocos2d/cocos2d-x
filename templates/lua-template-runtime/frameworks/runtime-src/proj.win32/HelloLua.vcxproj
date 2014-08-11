@@ -109,25 +109,8 @@
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\AudioEngine.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\bitExtend.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\Cocos2d.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\Cocos2dConstants.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocos2dClass.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocos2dEnum.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocos2dFunc.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocosDenshionClass.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocosDenshionFunc.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedNetworkClass.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedNetworkEnum.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedNetworkFunc.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedOpenglEnum.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DrawPrimitives.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extern.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\json.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\NetworkConstants.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\Opengl.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\OpenglConstants.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
@@ -180,25 +163,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     </Midl>
     <PreBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\AudioEngine.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\bitExtend.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\Cocos2d.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\Cocos2dConstants.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocos2dClass.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocos2dEnum.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocos2dFunc.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocosDenshionClass.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedCocosDenshionFunc.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedNetworkClass.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedNetworkEnum.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedNetworkFunc.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DeprecatedOpenglEnum.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\DrawPrimitives.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extern.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\json.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\NetworkConstants.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\Opengl.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\OpenglConstants.lua" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
