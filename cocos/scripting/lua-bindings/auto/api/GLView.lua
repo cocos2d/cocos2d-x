@@ -16,6 +16,12 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- @function [parent=#GLView] setContentScaleFactor 
+-- @param self
+-- @param #float float
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#GLView] getContentScaleFactor 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -66,6 +72,11 @@
 -- @function [parent=#GLView] getFrameSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#GLView] setFrameZoomFactor 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#GLView] getFrameZoomFactor 

@@ -22,55 +22,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef _CC_PRIMITIVE_COMMAND_H__
+#define _CC_PRIMITIVE_COMMAND_H__
 
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
-
-#include <stdint.h>
-
-#include "base/CCPlatformMacros.h"
-#include "base/ccTypes.h"
+#include "renderer/CCPrimitive.h"
+#include "renderer/CCRenderCommand.h"
 
 NS_CC_BEGIN
-
-/** Base class of the `RenderCommand` hierarchy.
-*
- The `Renderer` knows how to render `RenderCommands` objects.
- */
-class CC_DLL RenderCommand
+class GLProgramState;
+class CC_DLL PrimitiveCommand : public RenderCommand
 {
 public:
-
-    enum class Type
-    {
-        UNKNOWN_COMMAND,
-        QUAD_COMMAND,
-        CUSTOM_COMMAND,
-        BATCH_COMMAND,
-        GROUP_COMMAND,
-        MESH_COMMAND,
-        PRIMITIVE_COMMAND,
-    };
-
-    /** Get Render Command Id */
-    inline float getGlobalOrder() const { return _globalOrder; }
-
-    /** Returns the Command type */
-    inline Type getType() const { return _type; }
-
+    PrimitiveCommand();
+    ~PrimitiveCommand();
+    
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
+    
+    inline uint32_t getMaterialID() const { return _materialID; }
+    inline GLuint getTextureID() const { return _textureID; }
+    inline GLProgramState* getGLProgramState() const { return _glProgramState; }
+    inline BlendFunc getBlendType() const { return _blendType; }
+    inline const Mat4& getModelView() const { return _mv; }
+    
+    void execute() const;
 protected:
-    RenderCommand();
-    virtual ~RenderCommand();
-
-    void printID();
-
-    // Type used in order to avoid dynamic cast, faster
-    Type _type;
-
-    // commands are sort by depth
-    float _globalOrder;
+    
+    uint32_t _materialID;
+    GLuint _textureID;
+    GLProgramState* _glProgramState;
+    BlendFunc _blendType;
+    Primitive* _primitive;
+    Mat4 _mv;
 };
 
 NS_CC_END
 
-#endif //__CCRENDERCOMMAND_H_
+#endif //_CC_PRIMITIVE_COMMAND_H__

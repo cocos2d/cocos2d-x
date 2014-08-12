@@ -9,10 +9,7 @@ class ModuleOrganizer(object):
 
     CFG_FILE = "module_config.json"
 
-    KEY_MODULE_TYPE = "module_type"
-    MODULE_TYPE_COMPILED = "compiled"
-    MODULE_TYPE_PREBUILT = "prebuilt"
-
+    KEY_MODULE_IS_COMPILED = "is_compiled"
     KEY_MODULE_FROM_DIR = "from_dir"
     KEY_MODULE_TARGET_DIR = "target_dir"
     KEY_MODULE_INCLUDE = "include"
@@ -26,6 +23,27 @@ class ModuleOrganizer(object):
     KEY_MODULE_WIN32_LIB_FILE_NAME = "win32_lib_file_name"
     KEY_MODULE_IOS_LIB_FILE_NAME = "ios_lib_file_name"
     KEY_MODULE_MAC_LIB_FILE_NAME = "mac_lib_file_name"
+    KEY_MODULE_IS_OPTIONAL = "is_optional"
+    KEY_MODULE_LUA_BINDINGS = "lua_bindings"
+    KEY_MODULE_LUA_LIB_NAME = "lua_lib_name"
+    KEY_MODULE_EXCLUDE = "exclude"
+    KEY_MODULE_ADDITIONAL_LINK = "additional_link"
+
+    EXPORT_KEYS = [
+        KEY_MODULE_IS_COMPILED,
+        KEY_MODULE_TARGET_DIR,
+        KEY_MODULE_ANDROID_LIB_NAME,
+        KEY_MODULE_ANDROID_LIB_FILE_NAME,
+        KEY_MODULE_DEPEND_MODULES,
+        KEY_MODULE_WIN32_LIB_FILE_NAME,
+        KEY_MODULE_IOS_LIB_FILE_NAME,
+        KEY_MODULE_MAC_LIB_FILE_NAME,
+        KEY_MODULE_IS_OPTIONAL,
+        KEY_MODULE_LUA_BINDINGS,
+        KEY_MODULE_ADDITIONAL_LINK
+    ]
+
+    EXPORT_MODULE_INFO_FILE_NAME = "modules-info.json"
 
     # Parameter 5--9 means:
     # 5. LOCAL_EXPORT_LDLIBS
@@ -46,12 +64,19 @@ class ModuleOrganizer(object):
                 "include $(PREBUILT_STATIC_LIBRARY)\n\n" \
                 "%s\n"
 
+    PROPS_FILE_PATH = "cocos/include/2d/cocos2d_headers.props"
+    VERSION_SRC_FILE = "cocos/cocos2d.cpp"
+    VERSION_DST_FILE = "version"
+
     def __init__(self, dst_root):
         self.local_path = os.path.realpath(os.path.dirname(__file__))
         self.modules_info = self._parse_modules()
 
         self.src_root = os.path.join(self.local_path, os.path.pardir, os.path.pardir)
         self.prebuilt_dir = os.path.join(self.local_path, "prebuilt")
+
+        if not os.path.exists(self.prebuilt_dir):
+            raise Exception("Prebuilt directory is not existed. PLZ run script 'gen_prebuilt_libs.py' first.")
 
         if dst_root is None:
             dst = self.local_path
@@ -190,13 +215,53 @@ class ModuleOrganizer(object):
             else:
                 print("\t%s is not existed" % src_lib_file)
 
+    def handle_for_lua_bindings(self, module_name):
+        module_info = self.modules_info[module_name]
+        lua_binding_info = module_info[ModuleOrganizer.KEY_MODULE_LUA_BINDINGS]
+        lua_lib_name = lua_binding_info[ModuleOrganizer.KEY_MODULE_LUA_LIB_NAME]
+        platforms = {
+            "android" : "*/%s.a" % lua_lib_name,
+            "ios" : "%s iOS.a" % lua_lib_name,
+            "mac" : "%s Mac.a" % lua_lib_name,
+            "win32" : "%s.lib" % lua_lib_name
+        }
+
+        target_dir = os.path.join(self.dst_root, module_info[ModuleOrganizer.KEY_MODULE_TARGET_DIR], "lua-bindings", "prebuilt")
+        for p in platforms.keys():
+            cpy_info = {
+                "from" : p,
+                "to" : p,
+                "include" : [
+                    platforms[p]
+                ]
+            }
+            excopy.copy_files_with_config(cpy_info, self.prebuilt_dir, target_dir)
+
+        # write the Android.mk for lua-bindings lib
+        android_lib_name = lua_binding_info[ModuleOrganizer.KEY_MODULE_ANDROID_LIB_NAME]
+        mk_file_path = os.path.join(target_dir, "android", "Android.mk")
+
+        depends = [ module_name ]
+        if lua_binding_info.has_key(ModuleOrganizer.KEY_MODULE_DEPEND_MODULES):
+            depends += lua_binding_info[ModuleOrganizer.KEY_MODULE_DEPEND_MODULES]
+        whole_libs, call_libs = self.gen_android_depend_str(depends)
+        file_content = ModuleOrganizer.MK_FORMAT % \
+                     (android_lib_name,
+                      lua_lib_name,
+                      "./$(TARGET_ARCH_ABI)/%s.a" % lua_lib_name,
+                      "${LOCAL_PATH}/../../include",
+                      "", "", "", whole_libs, call_libs )
+        f = open(mk_file_path, "w")
+        f.write(file_content)
+        f.close()
+
     def gen_compiled_module(self, module_name):
         print("generate compiled module : %s" % module_name)
         module_info = self.modules_info[module_name]
         # copy the include files
         if module_info.has_key(ModuleOrganizer.KEY_MODULE_INCLUDE):
-            for inclue_cfg in module_info[ModuleOrganizer.KEY_MODULE_INCLUDE]:
-                excopy.copy_files_with_config(inclue_cfg, self.src_root, self.dst_root)
+            for include_cfg in module_info[ModuleOrganizer.KEY_MODULE_INCLUDE]:
+                excopy.copy_files_with_config(include_cfg, self.src_root, self.dst_root)
 
         # handle the process for android
         self.handle_for_android(module_info)
@@ -207,14 +272,50 @@ class ModuleOrganizer(object):
         # handle the process for ios and mac
         self.handle_for_ios_mac(module_info)
 
+        # handle the lua-bindings
+        if module_info.has_key(ModuleOrganizer.KEY_MODULE_LUA_BINDINGS):
+            self.handle_for_lua_bindings(module_name)
+
     def gen_prebuilt_module(self, module_name):
         print("generate prebuilt module : %s" % module_name)
         module_info = self.modules_info[module_name]
+        if module_info.has_key(ModuleOrganizer.KEY_MODULE_EXCLUDE):
+            exclude = module_info[ModuleOrganizer.KEY_MODULE_EXCLUDE]
+        else:
+            exclude = []
+
+        if module_info.has_key(ModuleOrganizer.KEY_MODULE_INCLUDE):
+            include = module_info[ModuleOrganizer.KEY_MODULE_INCLUDE]
+        else:
+            include = []
+
         copy_cfg = {
             "from" : module_info[ModuleOrganizer.KEY_MODULE_FROM_DIR],
             "to": module_info[ModuleOrganizer.KEY_MODULE_TARGET_DIR]
         }
+
+        if len(include) > 0:
+            copy_cfg["include"] = include
+        elif len(exclude) > 0:
+            copy_cfg["exclude"] = exclude
+
         excopy.copy_files_with_config(copy_cfg, self.src_root, self.dst_root)
+
+    def export_modules_info(self):
+        export_file_path = os.path.join(self.dst_root, ModuleOrganizer.EXPORT_MODULE_INFO_FILE_NAME)
+        export_info = {}
+        for module_name in self.modules_info.keys():
+            module_info = self.modules_info[module_name]
+            dst_info = {}
+            for key in ModuleOrganizer.EXPORT_KEYS:
+                if module_info.has_key(key):
+                    dst_info[key] = module_info[key]
+
+            export_info[module_name] = dst_info
+
+        outfile = open(export_file_path, "w")
+        json.dump(export_info, outfile, sort_keys = True, indent = 4)
+        outfile.close()
 
     def gen_modules(self):
         if os.path.exists(self.dst_root):
@@ -222,10 +323,51 @@ class ModuleOrganizer(object):
 
         for module in self.modules_info.keys():
             module_info = self.modules_info[module]
-            if module_info[ModuleOrganizer.KEY_MODULE_TYPE] == ModuleOrganizer.MODULE_TYPE_COMPILED:
+            if module_info[ModuleOrganizer.KEY_MODULE_IS_COMPILED]:
                 self.gen_compiled_module(module)
-            elif module_info[ModuleOrganizer.KEY_MODULE_TYPE] == ModuleOrganizer.MODULE_TYPE_PREBUILT:
+            else:
                 self.gen_prebuilt_module(module)
+
+        # copy the module config file to dst root
+        self.export_modules_info()
+
+        # restore the version of engine
+        src_file = os.path.join(self.src_root, ModuleOrganizer.VERSION_SRC_FILE)
+        ver = ""
+        f = open(src_file)
+        import re
+        for line in f.readlines():
+            match = re.match(r".*return[ \t]*\"(.*)\";", line)
+            if match:
+                ver = match.group(1)
+                break
+        f.close()
+
+        if len(ver) <= 0:
+            raise Exception("Can't find version in %s" % src_file)
+        else:
+            dst_file = os.path.join(self.dst_root, ModuleOrganizer.VERSION_DST_FILE)
+            f = open(dst_file, "w")
+            f.write(ver)
+            f.close()
+
+        # modify the cocos2dx.props
+        props_file = os.path.join(self.dst_root, ModuleOrganizer.PROPS_FILE_PATH)
+        if os.path.exists(props_file):
+            f = open(props_file)
+            file_content = f.read()
+            f.close()
+
+            replace_str = {
+                "<EngineRoot>$(MSBuildThisFileDirectory)..\\..\\</EngineRoot>" : "<EngineRoot>$(MSBuildThisFileDirectory)..\\..\\..\\</EngineRoot>",
+                "$(EngineRoot)cocos" : "$(EngineRoot)cocos\\include"
+            }
+            for key in replace_str.keys():
+                file_content = file_content.replace(key, replace_str[key])
+
+            f = open(props_file, "w")
+            f.write(file_content)
+            f.close()
 
 if __name__ == '__main__':
     parser = ArgumentParser(description="Organize the modules of engine from prebuilt engine.")

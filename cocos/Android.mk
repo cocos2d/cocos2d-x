@@ -167,6 +167,10 @@ renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
 renderer/ccGLStateCache.cpp \
 renderer/ccShaders.cpp \
+renderer/CCVertexIndexBuffer.cpp \
+renderer/CCVertexIndexData.cpp \
+renderer/CCPrimitive.cpp \
+renderer/CCPrimitiveCommand.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
