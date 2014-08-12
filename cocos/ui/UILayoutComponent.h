@@ -25,11 +25,12 @@
 #ifndef __cocos2d_libs__LayoutComponent__
 #define __cocos2d_libs__LayoutComponent__
 #include "2d/CCComponent.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    class LayoutComponent : public Component
+    class CC_GUI_DLL LayoutComponent : public Component
     {
     public:
         LayoutComponent();

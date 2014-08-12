@@ -87,6 +87,9 @@
     <ClInclude Include="..\UIScale9Sprite.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
+    <ClInclude Include="..\UILayoutComponent.h">
+      <Filter>BaseClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\UILayout.cpp">
@@ -159,6 +162,9 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\UIScale9Sprite.cpp">
+      <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayoutComponent.cpp">
       <Filter>BaseClasses</Filter>
     </ClCompile>
   </ItemGroup>

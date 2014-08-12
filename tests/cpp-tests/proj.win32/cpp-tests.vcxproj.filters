@@ -864,6 +864,9 @@
     <ClCompile Include="..\Classes\Camera3DTest\Camera3DTest.cpp">
       <Filter>Classes\Camera3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\LayoutComponentTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1594,6 +1597,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Camera3DTest\Camera3DTest.h">
       <Filter>Classes\Camera3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\LayoutComponentTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
