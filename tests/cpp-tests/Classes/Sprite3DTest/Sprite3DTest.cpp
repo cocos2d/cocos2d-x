@@ -446,7 +446,8 @@ void Effect3DOutline::setOutlineColor(const Vec3& color)
     if(_outlineColor != color)
     {
         _outlineColor = color;
-        _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
+        if(_glProgramState)
+            _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
     }
 }
 
@@ -455,7 +456,8 @@ void Effect3DOutline::setOutlineWidth(float width)
     if(_outlineWidth != width)
     {
         _outlineWidth = width;
-        _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
+        if(_glProgramState)
+            _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
     }
 }
 
@@ -733,14 +735,16 @@ void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::createFromObjFileAndTexture(fileName, "");
     
     Effect3DOutline* effect = Effect3DOutline::create();
-    sprite->addEffect(effect, -1);
     effect->setOutlineColor(Vec3(1,0,0));
     effect->setOutlineWidth(0.01f);
+    sprite->addEffect(effect, -1);
+
     
     Effect3DOutline* effect2 = Effect3DOutline::create();
-    sprite->addEffect(effect2, -2);
     effect2->setOutlineWidth(0.02f);
     effect2->setOutlineColor(Vec3(1,1,0));
+    sprite->addEffect(effect2, -2);
+
     
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
