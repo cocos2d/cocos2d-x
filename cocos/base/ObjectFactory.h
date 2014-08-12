@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <unordered_map>
+#include <functional>
 #include "base/CCRef.h"
 #include "base/CCPlatformMacros.h"
 
@@ -40,8 +41,8 @@ public:
     struct CC_DLL TInfo
     {
         TInfo(void);
-        TInfo(const std::string& type, Instance ins = NULL);
-        TInfo(const std::string& type, InstanceFunc ins = NULL);
+        TInfo(const std::string& type, Instance ins = nullptr);
+        TInfo(const std::string& type, InstanceFunc ins = nullptr);
         TInfo(const TInfo &t);
         ~TInfo(void);
         TInfo& operator= (const TInfo &t);
