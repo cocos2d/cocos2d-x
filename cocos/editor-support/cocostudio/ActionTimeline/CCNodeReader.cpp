@@ -523,10 +523,14 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
         float rotationSkewY = DICTOOL->getFloatValue_json(json, ROTATION_SKEW_Y);
         float skewx         = DICTOOL->getFloatValue_json(json, SKEW_X);
         float skewy         = DICTOOL->getFloatValue_json(json, SKEW_Y);
-        widget->setRotationSkewX(rotationSkewX);
-        widget->setRotationSkewY(rotationSkewY);
-        widget->setSkewX(skewx);
-        widget->setSkewY(skewy);
+        if(rotationSkewX != 0)
+            widget->setRotationSkewX(rotationSkewX);
+        if(rotationSkewY != 0)
+            widget->setRotationSkewY(rotationSkewY);
+        if(skewx != 0)
+            widget->setSkewX(skewx);
+        if(skewy != 0)
+            widget->setSkewY(skewy);
         
         int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
         widget->setUserObject(ActionTimelineData::create(actionTag));
