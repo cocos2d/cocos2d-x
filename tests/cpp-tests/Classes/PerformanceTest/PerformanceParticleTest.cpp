@@ -72,7 +72,6 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 {
     //srandom(0);
 
-    init();
     subtestNumber = asubtest;
     auto s = Director::getInstance()->getWinSize();
 
