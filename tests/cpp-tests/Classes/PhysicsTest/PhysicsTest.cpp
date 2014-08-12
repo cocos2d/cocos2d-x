@@ -157,7 +157,7 @@ void PhysicsDemo::onEnter()
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
     
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
     menu->setPosition(Vec2(VisibleRect::right().x-50, VisibleRect::top().y-10));
 }
@@ -553,7 +553,7 @@ void PhysicsDemoRayCast::onEnter()
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Change Mode(any)", CC_CALLBACK_1(PhysicsDemoRayCast::changeModeCallback, this));
     
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
     menu->setPosition(Vec2(VisibleRect::left().x+100, VisibleRect::top().y-10));
     
@@ -943,9 +943,9 @@ void PhysicsDemoActions::onEnter()
     auto actionByBack = actionBy->reverse();
     
     sp1->runAction(RepeatForever::create(actionUp));
-    sp2->runAction(RepeatForever::create(Sequence::create(actionBy, actionByBack, NULL)));
+    sp2->runAction(RepeatForever::create(Sequence::create(actionBy, actionByBack, nullptr)));
     sp3->runAction(actionTo);
-    sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), NULL)));
+    sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), nullptr)));
 }
 
 std::string PhysicsDemoActions::title() const
@@ -1308,7 +1308,7 @@ void PhysicsContactTest::onEnter()
     decrease1->setTag(1);
     increase1->setTag(1);
     
-    auto menu1 = Menu::create(decrease1, increase1, NULL);
+    auto menu1 = Menu::create(decrease1, increase1, nullptr);
     menu1->alignItemsHorizontally();
     menu1->setPosition(Vec2(s.width/2, s.height-50));
     addChild(menu1, 1);
@@ -1324,7 +1324,7 @@ void PhysicsContactTest::onEnter()
     decrease2->setTag(2);
     increase2->setTag(2);
     
-    auto menu2 = Menu::create(decrease2, increase2, NULL);
+    auto menu2 = Menu::create(decrease2, increase2, nullptr);
     menu2->alignItemsHorizontally();
     menu2->setPosition(Vec2(s.width/2, s.height-90));
     addChild(menu2, 1);
@@ -1340,7 +1340,7 @@ void PhysicsContactTest::onEnter()
     decrease3->setTag(3);
     increase3->setTag(3);
     
-    auto menu3 = Menu::create(decrease3, increase3, NULL);
+    auto menu3 = Menu::create(decrease3, increase3, nullptr);
     menu3->alignItemsHorizontally();
     menu3->setPosition(Vec2(s.width/2, s.height-130));
     addChild(menu3, 1);
@@ -1356,7 +1356,7 @@ void PhysicsContactTest::onEnter()
     decrease4->setTag(4);
     increase4->setTag(4);
     
-    auto menu4 = Menu::create(decrease4, increase4, NULL);
+    auto menu4 = Menu::create(decrease4, increase4, nullptr);
     menu4->alignItemsHorizontally();
     menu4->setPosition(Vec2(s.width/2, s.height-170));
     addChild(menu4, 1);
