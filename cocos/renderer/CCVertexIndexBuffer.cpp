@@ -168,30 +168,6 @@ void VertexBuffer::recreateVBO() const
     }
 }
 
-//bool VertexBuffer::getVertices(void* verts, int count, int begin) const
-//{
-//    if(count <= 0 || nullptr == verts) return false;
-//    
-//    if(begin < 0)
-//    {
-//        CCLOGERROR("get vertices with begin = %d, will set begin to 0", begin);
-//        begin = 0;
-//    }
-//    
-//    if(count + begin > _vertexNumber)
-//    {
-//        CCLOGERROR("get vertices exceed the max size of vertex buffer, will set count to _vertexNumber-begin");
-//        count = _vertexNumber - begin;
-//    }
-//    
-//    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-//    GLvoid* data = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-//    memcpy(verts, ((char*)data) + begin * _sizePerVertex, count * _sizePerVertex);
-//    glUnmapBuffer(GL_ARRAY_BUFFER);
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    return true;
-//}
-
 int VertexBuffer::getSize() const
 {
     return _sizePerVertex * _vertexNumber;
@@ -291,30 +267,6 @@ bool IndexBuffer::updateIndices(const void* indices, int count, int begin)
     
     return true;
 }
-
-//bool IndexBuffer::getIndices(void* indices, int count, int begin)
-//{
-//    if(count <= 0 || nullptr == indices) return false;
-//    
-//    if(begin < 0)
-//    {
-//        CCLOGERROR("get indices with begin = %d, will set begin to 0", begin);
-//        begin = 0;
-//    }
-//    
-//    if(count + begin > _indexNumber)
-//    {
-//        CCLOGERROR("get indices exceed the max size of vertex buffer, will set count to _indexNumber-begin");
-//        count = _indexNumber - begin;
-//    }
-//    
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbo);
-//    GLvoid* data = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-//    memcpy(indices, ((char*)data) + begin * getSizePerIndex(), count * getSizePerIndex());
-//    glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//    return true;
-//}
 
 int IndexBuffer::getSize() const
 {

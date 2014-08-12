@@ -38,7 +38,6 @@ public:
     int getSizePerVertex() const;
     int getVertexNumber() const;
     bool updateVertices(const void* verts, int count, int begin);
-    //bool getVertices(void* verts, int count, int begin) const;
 
     int getSize() const;
     
@@ -82,7 +81,6 @@ public:
     int getSizePerIndex() const;
     int getIndexNumber() const;
     bool updateIndices(const void* indices, int count, int begin);
-    //bool getIndices(void* indices, int count, int begin);
 
     int getSize() const;
     
