@@ -371,6 +371,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 {
     //srandom(0);
 
+    init();
     subtestNumber = asubtest;
     _subTest = new SubTest;
     _subTest->initWithSubTest(asubtest, this);
