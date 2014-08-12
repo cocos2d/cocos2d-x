@@ -642,7 +642,6 @@ protected:
     bool _bright;
     bool _touchEnabled;
     bool _highlight;
-    bool _reorderWidgetChildDirty;
     bool _affectByClipping;
     bool _ignoreSize;
 
