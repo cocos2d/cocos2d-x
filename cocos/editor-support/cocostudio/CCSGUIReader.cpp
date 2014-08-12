@@ -177,6 +177,27 @@ void GUIReader::registerTypeAndCallBack(const std::string& classType,
     }
 }
 
+void GUIReader::registerTypeAndCallBack(const std::string& classType,
+                                        ObjectFactory::InstanceFunc ins,
+                                        Ref *object,
+                                        SEL_ParseEvent callBack)
+{
+    ObjectFactory* factoryCreate = ObjectFactory::getInstance();
+
+    ObjectFactory::TInfo t(classType, ins);
+    factoryCreate->registerType(t);
+
+    if (object)
+    {
+        _mapObject.insert(ParseObjectMap::value_type(classType, object));
+    }
+
+    if (callBack)
+    {
+        _mapParseSelector.insert(ParseCallBackMap::value_type(classType, callBack));
+    }
+}
+
 
 Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 {

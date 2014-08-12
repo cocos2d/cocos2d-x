@@ -72,6 +72,11 @@ public:
                                  cocos2d::ObjectFactory::Instance ins,
                                  Ref* object,
                                  SEL_ParseEvent callBack);
+
+    void registerTypeAndCallBack(const std::string& classType,
+                                 cocos2d::ObjectFactory::InstanceFunc ins,
+                                 Ref* object,
+                                 SEL_ParseEvent callBack);
 protected:
     GUIReader();
     ~GUIReader();
