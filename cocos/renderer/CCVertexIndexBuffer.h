@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class VertexBuffer : public Ref
+class CC_DLL VertexBuffer : public Ref
 {
 public:
     static VertexBuffer* create(int sizePerVertex, int vertexNumber);
@@ -65,7 +65,7 @@ public:
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
-class IndexBuffer : public Ref
+class CC_DLL IndexBuffer : public Ref
 {
 public:
     enum class IndexType

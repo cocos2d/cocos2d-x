@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-class Primitive : public Ref
+class CC_DLL Primitive : public Ref
 {
 public:
     static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);

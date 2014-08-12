@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 class GLProgramState;
-class PrimitiveCommand : public RenderCommand
+class CC_DLL PrimitiveCommand : public RenderCommand
 {
 public:
     PrimitiveCommand();

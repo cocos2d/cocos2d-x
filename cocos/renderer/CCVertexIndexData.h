@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 class VertexBuffer;
 
-struct VertexStreamAttribute
+struct CC_DLL VertexStreamAttribute
 {
     VertexStreamAttribute()
     : _offset(0),_semantic(0),_type(0),_size(0), _normalize(false)
@@ -58,7 +58,7 @@ struct VertexStreamAttribute
     int _size;
 };
 
-class VertexData : public Ref
+class CC_DLL VertexData : public Ref
 {
 public:
     static VertexData* create();
