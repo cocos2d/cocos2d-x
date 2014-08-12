@@ -210,6 +210,8 @@ void AssetsManager::downloadAndUncompress()
         if (! uncompress())
         {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            	UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),"");
+                UserDefault::getInstance()->flush();
                 if (this->_delegate)
                     this->_delegate->onError(ErrorCode::UNCOMPRESS);
             });
