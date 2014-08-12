@@ -327,6 +327,21 @@ EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &o
     return nullptr;
 }
 
+EffectSprite3D* EffectSprite3D::create(const std::string &path)
+{
+    if (path.length() < 4)
+        CCASSERT(false, "improper name specified when creating Sprite3D");
+    
+    auto sprite = new EffectSprite3D();
+    if (sprite && sprite->initWithFile(path))
+    {
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
 EffectSprite3D::EffectSprite3D()
 : _defaultEffect(nullptr)
 {
@@ -732,7 +747,7 @@ void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
 {
     
     std::string fileName = "Sprite3DTest/orc.c3b";
-    auto sprite = EffectSprite3D::createFromObjFileAndTexture(fileName, "");
+    auto sprite = EffectSprite3D::create(fileName);
     
     Effect3DOutline* effect = Effect3DOutline::create();
     effect->setOutlineColor(Vec3(1,0,0));
