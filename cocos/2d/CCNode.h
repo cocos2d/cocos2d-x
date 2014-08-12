@@ -676,11 +676,10 @@ public:
      *
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
-     * 
-     * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
+     * @param name      A string to identify the node easily. Please refer to `setName(int)`
+     *
      */
-     virtual void addChild(Node* child, int localZOrder, int tag);
+    virtual void addChild(Node* child, int localZOrder, const std::string &name);
     /**
      * Adds a child to the container with z order and tag
      *
@@ -688,10 +687,11 @@ public:
      *
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @param name      A string to identify the node easily. Please refer to `setName(int)`
-     *
+     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
+     * 
+     * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
-    virtual void addChild(Node* child, int localZOrder, const std::string &name);
+     virtual void addChild(Node* child, int localZOrder, int tag);
     /**
      * Gets a child from the container with its tag
      *
