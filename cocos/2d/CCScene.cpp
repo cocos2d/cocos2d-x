@@ -45,8 +45,13 @@ Scene::Scene()
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
-    _event = nullptr;
-    _defaultCamera = nullptr;
+    
+    //create default camera
+    _defaultCamera = Camera::create();
+    addChild(_defaultCamera);
+    
+    _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
+    _event->retain();
 }
 
 Scene::~Scene()
@@ -66,16 +71,6 @@ bool Scene::init()
 
 bool Scene::initWithSize(const Size& size)
 {
-    //create default camera
-    _defaultCamera = Camera::create();
-    addChild(_defaultCamera);
-    CCLOG("camera %p", _defaultCamera);
-    
-    _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
-    _event->retain();
-    static int tag = 0;
-    setTag(tag++);
-    
     setContentSize(size);
     return true;
 }
@@ -165,11 +160,6 @@ bool Scene::initWithPhysics()
     {
         Director * director;
         CC_BREAK_IF( ! (director = Director::getInstance()) );
-        // add camera
-        _defaultCamera = Camera::create();
-        addChild(_defaultCamera);
-        _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
-        _event->retain();
         
         this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));

@@ -81,7 +81,6 @@ int  LabelMainScene::_s_labelCurCase = 0;
 
 void LabelMainScene::initWithSubTest(int nodes)
 {
-    init();
     //srandom(0);
     auto s = Director::getInstance()->getWinSize();
 
