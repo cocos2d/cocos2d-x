@@ -9,10 +9,7 @@ class ModuleOrganizer(object):
 
     CFG_FILE = "module_config.json"
 
-    KEY_MODULE_TYPE = "module_type"
-    MODULE_TYPE_COMPILED = "compiled"
-    MODULE_TYPE_PREBUILT = "prebuilt"
-
+    KEY_MODULE_IS_COMPILED = "is_compiled"
     KEY_MODULE_FROM_DIR = "from_dir"
     KEY_MODULE_TARGET_DIR = "target_dir"
     KEY_MODULE_INCLUDE = "include"
@@ -30,8 +27,10 @@ class ModuleOrganizer(object):
     KEY_MODULE_LUA_BINDINGS = "lua_bindings"
     KEY_MODULE_LUA_LIB_NAME = "lua_lib_name"
     KEY_MODULE_EXCLUDE = "exclude"
+    KEY_MODULE_ADDITIONAL_LINK = "additional_link"
 
     EXPORT_KEYS = [
+        KEY_MODULE_IS_COMPILED,
         KEY_MODULE_TARGET_DIR,
         KEY_MODULE_ANDROID_LIB_NAME,
         KEY_MODULE_ANDROID_LIB_FILE_NAME,
@@ -40,7 +39,8 @@ class ModuleOrganizer(object):
         KEY_MODULE_IOS_LIB_FILE_NAME,
         KEY_MODULE_MAC_LIB_FILE_NAME,
         KEY_MODULE_IS_OPTIONAL,
-        KEY_MODULE_LUA_BINDINGS
+        KEY_MODULE_LUA_BINDINGS,
+        KEY_MODULE_ADDITIONAL_LINK
     ]
 
     EXPORT_MODULE_INFO_FILE_NAME = "modules-info.json"
@@ -323,9 +323,9 @@ class ModuleOrganizer(object):
 
         for module in self.modules_info.keys():
             module_info = self.modules_info[module]
-            if module_info[ModuleOrganizer.KEY_MODULE_TYPE] == ModuleOrganizer.MODULE_TYPE_COMPILED:
+            if module_info[ModuleOrganizer.KEY_MODULE_IS_COMPILED]:
                 self.gen_compiled_module(module)
-            elif module_info[ModuleOrganizer.KEY_MODULE_TYPE] == ModuleOrganizer.MODULE_TYPE_PREBUILT:
+            else:
                 self.gen_prebuilt_module(module)
 
         # copy the module config file to dst root
