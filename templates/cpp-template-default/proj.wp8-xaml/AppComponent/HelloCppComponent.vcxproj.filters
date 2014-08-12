@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
-    <ClCompile Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
@@ -13,14 +8,23 @@
     <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cocos2dRenderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct3DContentProvider.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct3DInterop.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectXBase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditBoxEvent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
-    <ClInclude Include="..\..\cocos2d\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
@@ -28,10 +32,31 @@
     <ClInclude Include="..\..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cocos2dRenderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct3DContentProvider.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct3DInterop.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectXBase.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectXHelper.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EditBoxEvent.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
       <UniqueIdentifier>{facbd0ff-d271-46ef-8324-beff0cbcb424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

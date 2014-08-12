@@ -27,6 +27,7 @@
 #define __cocos2d_libs__CCMouseEvent__
 
 #include "base/CCEvent.h"
+#include "math/CCGeometry.h"
 
 #define MOUSE_BUTTON_LEFT       0
 #define MOUSE_BUTTON_RIGHT      1
@@ -39,7 +40,7 @@
 
 NS_CC_BEGIN
 
-class EventMouse : public Event
+class CC_DLL EventMouse : public Event
 {
 public:
     /**
@@ -61,11 +62,39 @@ public:
     inline float getScrollX() { return _scrollX; };
     inline float getScrollY() { return _scrollY; };
 
-    inline void setCursorPosition(float x, float y) { _x = x; _y = y; };
+    inline void setCursorPosition(float x, float y) { 
+        _x = x;
+        _y = y;
+        _prevPoint = _point;
+        _point.x = x;
+        _point.y = y;
+        if (!_startPointCaptured)
+        {
+            _startPoint = _point;
+            _startPointCaptured = true;
+        }
+    }
+
     inline void setMouseButton(int button) { _mouseButton = button; };
     inline int getMouseButton() { return _mouseButton; };
     inline float getCursorX() { return _x; };
     inline float getCursorY() { return _y; };
+
+    /** returns the current touch location in OpenGL coordinates */
+    Vec2 getLocation() const;
+    /** returns the previous touch location in OpenGL coordinates */
+    Vec2 getPreviousLocation() const;
+    /** returns the start touch location in OpenGL coordinates */
+    Vec2 getStartLocation() const;
+    /** returns the delta of 2 current touches locations in screen coordinates */
+    Vec2 getDelta() const;
+    /** returns the current touch location in screen coordinates */
+    Vec2 getLocationInView() const;
+    /** returns the previous touch location in screen coordinates */
+    Vec2 getPreviousLocationInView() const;
+    /** returns the start touch location in screen coordinates */
+    Vec2 getStartLocationInView() const;
+
 
 private:
     MouseEventType _mouseEventType;
@@ -74,6 +103,11 @@ private:
     float _y;
     float _scrollX;
     float _scrollY;
+
+    bool _startPointCaptured;
+    Vec2 _startPoint;
+    Vec2 _point;
+    Vec2 _prevPoint;
 
     friend class EventListenerMouse;
 };

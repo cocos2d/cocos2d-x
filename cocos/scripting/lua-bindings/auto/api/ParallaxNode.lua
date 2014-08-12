@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParallaxNode
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParallaxNode] addChild 
@@ -17,22 +18,19 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ParallaxNode] setParallaxArray 
--- @param self
--- @param #cc._ccArray _ccarray
-        
---------------------------------
 -- @function [parent=#ParallaxNode] create 
 -- @param self
 -- @return ParallaxNode#ParallaxNode ret (return value: cc.ParallaxNode)
         
 --------------------------------
--- @function [parent=#ParallaxNode] addChild 
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
+-- @function [parent=#ParallaxNode] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#ParallaxNode] visit 
 -- @param self

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module BatchNode
 -- @extend Node
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#BatchNode] init 
@@ -14,12 +15,8 @@
 -- @return BatchNode#BatchNode ret (return value: ccs.BatchNode)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#BatchNode] addChild
 -- @param self
 -- @param #cc.Node node

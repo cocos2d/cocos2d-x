@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Grid3DAction
 -- @extend GridAction
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Grid3DAction] getGrid 

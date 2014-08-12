@@ -2,26 +2,27 @@
 --------------------------------
 -- @module Node
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
 -- @function [parent=#Node] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
--- @function [parent=#Node] removeComponent 
+-- @overload self, cc.Component         
+-- @overload self, string         
+-- @function [parent=#Node] removeComponent
 -- @param self
 -- @param #string str
--- @return bool#bool ret (return value: bool)
-        
+-- @return bool#bool ret (retunr value: bool)
+
 --------------------------------
 -- @function [parent=#Node] setPhysicsBody 
 -- @param self
@@ -48,14 +49,17 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: getChildren()
---          
--- overload function: getChildren()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#Node] getChildren
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)
 
+--------------------------------
+-- @function [parent=#Node] setOnExitCallback 
+-- @param self
+-- @param #function func
+        
 --------------------------------
 -- @function [parent=#Node] pause 
 -- @param self
@@ -72,9 +76,20 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @function [parent=#Node] getChildByName 
+-- @param self
+-- @param #string str
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
 -- @function [parent=#Node] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#Node] getCameraMask 
+-- @param self
+-- @return unsigned short#unsigned short ret (return value: unsigned short)
         
 --------------------------------
 -- @function [parent=#Node] setRotation 
@@ -102,6 +117,11 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#Node] setonEnterTransitionDidFinishCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] removeAllComponents 
 -- @param self
         
@@ -109,6 +129,12 @@
 -- @function [parent=#Node] _setLocalZOrder 
 -- @param self
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#Node] setCameraMask 
+-- @param self
+-- @param #unsigned short short
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Node] getTag 
@@ -163,6 +189,11 @@
 -- @param #cc.GLProgramState glprogramstate
         
 --------------------------------
+-- @function [parent=#Node] setOnEnterCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -173,16 +204,19 @@
 -- @param #vec2_table vec2
         
 --------------------------------
+-- @function [parent=#Node] setonExitTransitionDidStartCallback 
+-- @param self
+-- @param #function func
+        
+--------------------------------
 -- @function [parent=#Node] convertTouchToNodeSpace 
 -- @param self
 -- @param #cc.Touch touch
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- overload function: removeAllChildrenWithCleanup(bool)
---          
--- overload function: removeAllChildrenWithCleanup()
---          
+-- @overload self, bool         
+-- @overload self         
 -- @function [parent=#Node] removeAllChildrenWithCleanup
 -- @param self
 -- @param #bool bool
@@ -201,6 +235,11 @@
 -- @function [parent=#Node] setParent 
 -- @param self
 -- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#Node] getName 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#Node] getRotation3D 
@@ -234,10 +273,8 @@
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
--- overload function: setPosition(float, float)
---          
--- overload function: setPosition(vec2_table)
---          
+-- @overload self, float, float         
+-- @overload self, vec2_table         
 -- @function [parent=#Node] setPosition
 -- @param self
 -- @param #float float
@@ -347,16 +384,20 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- overload function: visit()
---          
--- overload function: visit(cc.Renderer, mat4_table, unsigned int)
---          
+-- @overload self         
+-- @overload self, cc.Renderer, mat4_table, unsigned int         
 -- @function [parent=#Node] visit
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table mat4
 -- @param #unsigned int int
 
+--------------------------------
+-- @function [parent=#Node] removeChildByName 
+-- @param self
+-- @param #string str
+-- @param #bool bool
+        
 --------------------------------
 -- @function [parent=#Node] getGLProgramState 
 -- @param self
@@ -393,10 +434,13 @@
 -- @return Action#Action ret (return value: cc.Action)
         
 --------------------------------
--- overload function: setAdditionalTransform(cc.AffineTransform)
---          
--- overload function: setAdditionalTransform(mat4_table)
---          
+-- @function [parent=#Node] setName 
+-- @param self
+-- @param #string str
+        
+--------------------------------
+-- @overload self, cc.AffineTransform         
+-- @overload self, mat4_table         
 -- @function [parent=#Node] setAdditionalTransform
 -- @param self
 -- @param #mat4_table mat4
@@ -412,10 +456,8 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- overload function: getScheduler()
---          
--- overload function: getScheduler()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#Node] getScheduler
 -- @param self
 -- @return Scheduler#Scheduler ret (retunr value: cc.Scheduler)
@@ -446,10 +488,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: getParent()
---          
--- overload function: getParent()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#Node] getParent
 -- @param self
 -- @return Node#Node ret (retunr value: cc.Node)
@@ -506,10 +546,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: setScale(float, float)
---          
--- overload function: setScale(float)
---          
+-- @overload self, float, float         
+-- @overload self, float         
 -- @function [parent=#Node] setScale
 -- @param self
 -- @param #float float
@@ -597,10 +635,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: draw()
---          
--- overload function: draw(cc.Renderer, mat4_table, unsigned int)
---          
+-- @overload self         
+-- @overload self, cc.Renderer, mat4_table, unsigned int         
 -- @function [parent=#Node] draw
 -- @param self
 -- @param #cc.Renderer renderer
@@ -613,10 +649,8 @@
 -- @param #cc.Ref ref
         
 --------------------------------
--- overload function: removeFromParentAndCleanup(bool)
---          
--- overload function: removeFromParentAndCleanup()
---          
+-- @overload self, bool         
+-- @overload self         
 -- @function [parent=#Node] removeFromParentAndCleanup
 -- @param self
 -- @param #bool bool
@@ -676,10 +710,8 @@
 -- @param #cc.Action action
         
 --------------------------------
--- overload function: getActionManager()
---          
--- overload function: getActionManager()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#Node] getActionManager
 -- @param self
 -- @return ActionManager#ActionManager ret (retunr value: cc.ActionManager)

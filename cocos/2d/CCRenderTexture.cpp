@@ -94,6 +94,9 @@ RenderTexture::~RenderTexture()
 
 void RenderTexture::listenToBackground(EventCustom *event)
 {
+    // We have not found a way to dispatch the enter background message before the texture data are destroyed.
+    // So we disable this pair of message handler at present.
+#if 0
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CC_SAFE_DELETE(_UITextureImage);
     
@@ -118,10 +121,12 @@ void RenderTexture::listenToBackground(EventCustom *event)
     glDeleteFramebuffers(1, &_FBO);
     _FBO = 0;
 #endif
+#endif
 }
 
 void RenderTexture::listenToForeground(EventCustom *event)
 {
+#if 0
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -138,6 +143,7 @@ void RenderTexture::listenToForeground(EventCustom *event)
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+#endif
 #endif
 }
 
@@ -409,29 +415,47 @@ void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint3
     _orderOfArrival = 0;
 }
 
-bool RenderTexture::saveToFile(const std::string& filename)
+bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA)
 {
-    return saveToFile(filename,Image::Format::JPG);
+    std::string basename(filename);
+    std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
+    
+    if (basename.find(".png") != std::string::npos)
+    {
+        return saveToFile(filename, Image::Format::PNG, isRGBA);
+    }
+    else if (basename.find(".jpg") != std::string::npos)
+    {
+        if (isRGBA) CCLOG("RGBA is not supported for JPG format.");
+        return saveToFile(filename, Image::Format::JPG, false);
+    }
+    else
+    {
+        CCLOG("Only PNG and JPG format are supported now!");
+    }
+    
+    return saveToFile(filename, Image::Format::JPG, false);
 }
-bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format)
+bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA)
 {
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
              "the image can only be saved as JPG or PNG format");
+    if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
     
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
-    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile,this,fullpath);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA);
     
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
 
-void RenderTexture::onSaveToFile(const std::string& filename)
+void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
     Image *image = newImage(true);
     if (image)
     {
-        image->saveToFile(filename.c_str(), true);
+        image->saveToFile(filename.c_str(), !isRGBA);
     }
 
     CC_SAFE_DELETE(image);
@@ -531,7 +555,7 @@ void RenderTexture::onBegin()
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
         Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        modifiedProjection = GLViewImpl::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
 #endif
 
@@ -545,6 +569,14 @@ void RenderTexture::onBegin()
         Mat4 orthoMatrix;
         Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
         director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+    }
+    else
+    {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+        Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        modifiedProjection = GLViewImpl::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, modifiedProjection);
+#endif
     }
     
     //calculate viewport

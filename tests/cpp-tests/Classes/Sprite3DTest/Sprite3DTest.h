@@ -29,6 +29,12 @@
 #include "../BaseTest.h"
 #include <string>
 
+namespace cocos2d {
+    class Animate3D;
+    class Sprite3D;
+    class Delay;
+}
+
 class Sprite3DTestDemo : public BaseTest
 {
 public:
@@ -97,6 +103,7 @@ protected:
     
     Vec3 _outlineColor;
     float _outlineWidth;
+    //weak reference
     EffectSprite3D* _sprite;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     EventListenerCustom* _backToForegroundListener;
@@ -107,6 +114,15 @@ protected:
     static const std::string _fragShaderFile;
     static const std::string _keyInGLProgramCache;
     static GLProgram* getOrCreateProgram();
+};
+
+class Sprite3DHitTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DHitTest);
+    Sprite3DHitTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class EffectSprite3D : public Sprite3D
@@ -136,6 +152,76 @@ public:
     void addNewSpriteWithCoords(Vec2 p);
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class Sprite3DWithSkinTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithSkinTest);
+    Sprite3DWithSkinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class Animate3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DTest);
+    Animate3DTest();
+    ~Animate3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+    virtual void update(float dt) override;
+    
+protected:
+    void addSprite3D();
+    
+    enum class State
+    {
+        SWIMMING,
+        SWIMMING_TO_HURT,
+        HURT,
+        HURT_TO_SWIMMING,
+    };
+    
+    void reachEndCallBack();
+    
+    void renewCallBack();
+    
+    cocos2d::Sprite3D* _sprite;
+    
+    cocos2d::Animate3D* _swim;
+    cocos2d::Animate3D* _hurt;
+    float _transTime;
+    float _elapseTransTime;
+    
+    State   _state;
+    
+    MoveTo* _moveAction;
+};
+
+class AttachmentTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AttachmentTest);
+    AttachmentTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+protected:
+    bool _hasWeapon;
+    cocos2d::Sprite3D* _sprite;
 };
 
 class Sprite3DTestScene : public TestScene

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Menu
 -- @extend Layer
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Menu] setEnabled 
@@ -32,17 +33,15 @@
 -- @param self
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
 -- @function [parent=#Menu] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#Menu] isOpacityModifyRGB 

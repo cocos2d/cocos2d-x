@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ControlColourPicker
 -- @extend Control
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ControlColourPicker] setEnabled 
@@ -22,7 +23,7 @@
 -- @function [parent=#ControlColourPicker] hueSliderValueChanged 
 -- @param self
 -- @param #cc.Ref ref
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#ControlColourPicker] getcolourPicker 
@@ -48,7 +49,7 @@
 -- @function [parent=#ControlColourPicker] colourSliderValueChanged 
 -- @param self
 -- @param #cc.Ref ref
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#ControlColourPicker] setHuePicker 

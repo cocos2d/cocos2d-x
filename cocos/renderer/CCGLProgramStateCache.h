@@ -43,7 +43,7 @@ class GLProgramState;
 // GLProgramStateCache
 //
 //
-class GLProgramStateCache
+class CC_DLL GLProgramStateCache
 {
 public:
     static GLProgramStateCache* getInstance();

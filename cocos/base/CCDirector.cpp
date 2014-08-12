@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "base/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
@@ -61,7 +62,7 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "math/CCMath.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 
 /**
  Position of the FPS
@@ -177,7 +178,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     
-
     delete _eventAfterUpdate;
     delete _eventAfterDraw;
     delete _eventAfterVisit;
@@ -191,11 +191,10 @@ Director::~Director(void)
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
-    // clean auto release pool
-    PoolManager::destroyInstance();
-
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
+
+    Configuration::destroyInstance();
 
     s_SharedDirector = nullptr;
 }
@@ -265,7 +264,7 @@ void Director::drawScene()
 
     if (_openGLView)
     {
-        _openGLView->pollInputEvents();
+        _openGLView->pollEvents();
     }
 
     //tick before glClear: issue #533
@@ -285,26 +284,60 @@ void Director::drawScene()
     }
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    // draw the scene
+    
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+        Camera* defaultCamera = nullptr;
+        const auto& cameras = _runningScene->_cameras;
+        //draw with camera
+        for (size_t i = 0; i < cameras.size(); i++)
+        {
+            Camera::_visitingCamera = cameras[i];
+            if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
+            {
+                defaultCamera = Camera::_visitingCamera;
+                continue;
+            }
+            
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        //draw with default camera
+        if (defaultCamera)
+        {
+            Camera::_visitingCamera = defaultCamera;
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        Camera::_visitingCamera = nullptr;
+        
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, false);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     if (_displayStats)
     {
         showStats();
     }
-
     _renderer->render();
+
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -763,6 +796,18 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
     Vec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
     transform.transformVector(glCoord, &clipCoord);
 
+	/*
+	BUG-FIX #5506
+
+	a = (Vx, Vy, Vz, 1)
+	b = (a×M)T
+	Out = 1 ⁄ bw(bx, by, bz)
+	*/
+	
+	clipCoord.x = clipCoord.x / clipCoord.w;
+	clipCoord.y = clipCoord.y / clipCoord.w;
+	clipCoord.z = clipCoord.z / clipCoord.w;
+
     Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0/glCoord.w;
     return Vec2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
@@ -815,8 +860,13 @@ void Director::runWithScene(Scene *scene)
 
 void Director::replaceScene(Scene *scene)
 {
-    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
+    
+    if (_runningScene == nullptr) {
+        runWithScene(scene);
+        return;
+    }
     
     if (scene == _nextScene)
         return;
@@ -964,7 +1014,6 @@ void Director::purgeDirector()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
-    Configuration::destroyInstance();
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();

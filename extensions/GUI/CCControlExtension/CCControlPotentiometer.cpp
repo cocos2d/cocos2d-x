@@ -48,7 +48,7 @@ ControlPotentiometer::~ControlPotentiometer()
 ControlPotentiometer* ControlPotentiometer::create(const char* backgroundFile, const char* progressFile, const char* thumbFile)
 {
     ControlPotentiometer* pRet = new ControlPotentiometer();
-    if (pRet != NULL)
+    if (pRet != nullptr)
     {
         // Prepare track for potentiometer
         Sprite *backgroundSprite      = Sprite::create(backgroundFile);
@@ -97,7 +97,7 @@ bool ControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite*
 void ControlPotentiometer::setEnabled(bool enabled)
 {
     Control::setEnabled(enabled);
-    if (_thumbSprite != NULL)
+    if (_thumbSprite != nullptr)
     {
         _thumbSprite->setOpacity((enabled) ? 255 : 128);
     }

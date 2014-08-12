@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class TextureAtlas;
 
-class BatchCommand : public RenderCommand
+class CC_DLL BatchCommand : public RenderCommand
 {
 public:
 

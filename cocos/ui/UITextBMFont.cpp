@@ -88,8 +88,6 @@ void TextBMFont::setFntFile(const std::string& fileName)
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
     
-    _labelBMFontRenderer->setColor(this->getColor());
-    _labelBMFontRenderer->setOpacity(this->getOpacity());
     _fntFileHasInit = true;
     setString(_stringValue);
 }
@@ -155,8 +153,8 @@ void TextBMFont::labelBMFontScaleChangedWithSize()
             _labelBMFontRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _labelBMFontRenderer->setScaleX(scaleX);
         _labelBMFontRenderer->setScaleY(scaleY);
     }

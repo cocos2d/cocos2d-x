@@ -1,9 +1,3 @@
-if(WIN32)
-
-ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
-
-endif()
-
 include_directories(
   ../external/ConvertUTF
 )
@@ -30,6 +24,8 @@ set(COCOS_2D_SRC
   2d/CCComponent.cpp
   2d/CCDrawingPrimitives.cpp
   2d/CCDrawNode.cpp
+  2d/CCFastTMXLayer.cpp
+  2d/CCFastTMXTiledMap.cpp
   2d/CCFontAtlasCache.cpp
   2d/CCFontAtlas.cpp
   2d/CCFontCharMap.cpp
@@ -56,6 +52,7 @@ set(COCOS_2D_SRC
   2d/CCParticleSystem.cpp
   2d/CCParticleSystemQuad.cpp
   2d/CCProgressTimer.cpp
+  2d/CCProtectedNode.cpp
   2d/CCRenderTexture.cpp
   2d/CCScene.cpp
   2d/CCSpriteBatchNode.cpp
@@ -73,4 +70,3 @@ set(COCOS_2D_SRC
   2d/CCTransitionProgress.cpp
   2d/CCTweenFunction.cpp
 )
-

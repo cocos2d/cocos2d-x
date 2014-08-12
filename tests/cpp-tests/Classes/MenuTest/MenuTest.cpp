@@ -102,10 +102,10 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     
     auto color_action = TintBy::create(0.5f, 0, -255, -255);
     auto color_back = color_action->reverse();
-    auto seq = Sequence::create(color_action, color_back, NULL);
+    auto seq = Sequence::create(color_action, color_back, nullptr);
     item7->runAction(RepeatForever::create(seq));
 
-    auto menu = Menu::create( item1, item2, item3, item4, item5, item6, item7, item8,  NULL);
+    auto menu = Menu::create( item1, item2, item3, item4, item5, item6, item7, item8,  nullptr);
     menu->alignItemsVertically();
     
     
@@ -221,7 +221,7 @@ MenuLayer2::MenuLayer2()
         item2->setScaleX( 0.5f );
         item3->setScaleX( 0.5f );
         
-        auto menu = Menu::create(item1, item2, item3, NULL);
+        auto menu = Menu::create(item1, item2, item3, nullptr);
         
         auto s = Director::getInstance()->getWinSize();
         menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -344,7 +344,7 @@ MenuLayer3::MenuLayer3()
     _disabledItem = item3;  item3->retain();
     _disabledItem->setEnabled( false );
     
-    auto menu = Menu::create( item1, item2, item3, NULL);    
+    auto menu = Menu::create( item1, item2, item3, nullptr);    
     menu->setPosition( Vec2(0,0) );
 
     auto s = Director::getInstance()->getWinSize();
@@ -354,7 +354,7 @@ MenuLayer3::MenuLayer3()
     item3->setPosition( Vec2(s.width/2, s.height/2 - 100) );
     
     auto jump = JumpBy::create(3, Vec2(400,0), 50, 4);
-    item2->runAction( RepeatForever::create(Sequence::create( jump, jump->reverse(), NULL)));
+    item2->runAction( RepeatForever::create(Sequence::create( jump, jump->reverse(), nullptr)));
 
     auto spin1 = RotateBy::create(3, 360);
     auto spin2 = spin1->clone();
@@ -390,7 +390,7 @@ MenuLayer4::MenuLayer4()
     auto item1 = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "On" ),
                                                                 MenuItemFont::create( "Off"),
-                                                                NULL );
+                                                                nullptr );
     
     MenuItemFont::setFontName( "American Typewriter" );
     MenuItemFont::setFontSize(18);
@@ -401,7 +401,7 @@ MenuLayer4::MenuLayer4()
     auto item2 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "On" ),
                                                                 MenuItemFont::create( "Off"),
-                                                                NULL );
+                                                                nullptr );
     
     MenuItemFont::setFontName( "American Typewriter" );
     MenuItemFont::setFontSize(18);
@@ -412,7 +412,7 @@ MenuLayer4::MenuLayer4()
     auto item3 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "High" ),
                                                                 MenuItemFont::create( "Low" ),
-                                                                NULL );
+                                                                nullptr );
     
     MenuItemFont::setFontName( "American Typewriter" );
     MenuItemFont::setFontSize(18);
@@ -422,7 +422,7 @@ MenuLayer4::MenuLayer4()
     MenuItemFont::setFontSize(34);
     auto item4 = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer4::menuCallback, this),
                                                                 MenuItemFont::create( "Off" ), 
-                                                                NULL );
+                                                                nullptr );
     
     // TIP: you can manipulate the items like any other MutableArray
     item4->getSubItems().pushBack( MenuItemFont::create( "33%" ) );
@@ -443,7 +443,7 @@ MenuLayer4::MenuLayer4()
                   item1, item2,
                   title3, title4,
                   item3, item4,
-                  back, NULL ); // 9 items.
+                  back, nullptr ); // 9 items.
     
     menu->alignItemsInColumns(2, 2, 2, 2, 1, NULL);
     
@@ -474,7 +474,7 @@ BugsTest::BugsTest()
     auto issue1410_2 = MenuItemFont::create("Issue 1410 #2", CC_CALLBACK_1(BugsTest::issue1410v2MenuCallback, this));
     auto back = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTest::backMenuCallback, this));
     
-    auto menu = Menu::create(issue1410, issue1410_2, back, NULL);
+    auto menu = Menu::create(issue1410, issue1410_2, back, nullptr);
     addChild(menu);
     menu->alignItemsVertically();
     
@@ -518,7 +518,7 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
     auto back = MenuItemFont::create("go back", CC_CALLBACK_1(RemoveMenuItemWhenMove::goBack, this));
     
-    auto menu = Menu::create(item, back, NULL);
+    auto menu = Menu::create(item, back, nullptr);
     addChild(menu);
     menu->alignItemsVertically();
     
@@ -557,7 +557,7 @@ void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
     {
         item->removeFromParentAndCleanup(true);
         item->release();
-        item = NULL;
+        item = nullptr;
     }
 }
 
@@ -572,7 +572,7 @@ void MenuTestScene::runThisTest()
     auto layer5 = new BugsTest();
     auto layer6 = new RemoveMenuItemWhenMove();
 
-    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, NULL);
+    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, nullptr);
     addChild(layer, 0); 
 
     layer1->release();

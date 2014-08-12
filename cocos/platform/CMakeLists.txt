@@ -31,10 +31,10 @@ include_directories(
 set(COCOS_PLATFORM_SRC
   platform/CCSAXParser.cpp
   platform/CCThread.cpp
-  platform/CCGLViewProtocol.cpp
+  platform/CCGLView.cpp
   platform/CCFileUtils.cpp
   platform/CCImage.cpp
-  platform/desktop/CCGLView.cpp
+  platform/desktop/CCGLViewImpl.cpp
   ../external/edtaa3func/edtaa3func.cpp
   ../external/ConvertUTF/ConvertUTFWrapper.cpp
   ../external/ConvertUTF/ConvertUTF.c

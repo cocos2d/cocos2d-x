@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TransitionSlideInB
 -- @extend TransitionSlideInL
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TransitionSlideInB] action 

@@ -1,6 +1,7 @@
 
 --------------------------------
 -- @module PhysicsWorld
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsWorld] getGravity 
@@ -23,10 +24,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: removeBody(int)
---          
--- overload function: removeBody(cc.PhysicsBody)
---          
+-- @overload self, int         
+-- @overload self, cc.PhysicsBody         
 -- @function [parent=#PhysicsWorld] removeBody
 -- @param self
 -- @param #cc.PhysicsBody physicsbody

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Texture2D
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Texture2D] getMaxT 
@@ -14,14 +15,12 @@
 -- @return char#char ret (return value: char)
         
 --------------------------------
--- overload function: initWithImage(cc.Image, cc.Texture2D::PixelFormat)
---          
--- overload function: initWithImage(cc.Image)
---          
+-- @overload self, cc.Image, int         
+-- @overload self, cc.Image         
 -- @function [parent=#Texture2D] initWithImage
 -- @param self
 -- @param #cc.Image image
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
@@ -30,28 +29,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Texture2D] updateWithData 
+-- @function [parent=#Texture2D] releaseGLTexture 
 -- @param self
--- @param #void void
--- @param #int int
--- @param #int int
--- @param #int int
--- @param #int int
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Texture2D] hasPremultipliedAlpha 
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Texture2D] initWithMipmaps 
--- @param self
--- @param #cc._MipmapInfo map
--- @param #int int
--- @param #cc.Texture2D::PixelFormat pixelformat
--- @param #int int
--- @param #int int
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -60,13 +43,11 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- overload function: getBitsPerPixelForFormat(cc.Texture2D::PixelFormat)
---          
--- overload function: getBitsPerPixelForFormat()
---          
+-- @overload self, int         
+-- @overload self         
 -- @function [parent=#Texture2D] getBitsPerPixelForFormat
 -- @param self
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
 -- @return unsigned int#unsigned int ret (retunr value: unsigned int)
 
 --------------------------------
@@ -75,18 +56,16 @@
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
--- overload function: initWithString(char, cc.FontDefinition)
---          
--- overload function: initWithString(char, string, float, size_table, cc.TextHAlignment, cc.TextVAlignment)
---          
+-- @overload self, char, cc.FontDefinition         
+-- @overload self, char, string, float, size_table, int, int         
 -- @function [parent=#Texture2D] initWithString
 -- @param self
 -- @param #char char
 -- @param #string str
 -- @param #float float
 -- @param #size_table size
--- @param #cc.TextHAlignment texthalignment
--- @param #cc.TextVAlignment textvalignment
+-- @param #int texthalignment
+-- @param #int textvalignment
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
@@ -124,7 +103,7 @@
 --------------------------------
 -- @function [parent=#Texture2D] getPixelFormat 
 -- @param self
--- @return Texture2D::PixelFormat#Texture2D::PixelFormat ret (return value: cc.Texture2D::PixelFormat)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Texture2D] setGLProgram 
@@ -164,17 +143,12 @@
 --------------------------------
 -- @function [parent=#Texture2D] setDefaultAlphaPixelFormat 
 -- @param self
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
         
 --------------------------------
 -- @function [parent=#Texture2D] getDefaultAlphaPixelFormat 
 -- @param self
--- @return Texture2D::PixelFormat#Texture2D::PixelFormat ret (return value: cc.Texture2D::PixelFormat)
-        
---------------------------------
--- @function [parent=#Texture2D] PVRImagesHavePremultipliedAlpha 
--- @param self
--- @param #bool bool
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Texture2D] Texture2D 

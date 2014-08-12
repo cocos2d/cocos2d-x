@@ -39,7 +39,7 @@ class Node;
 /**
  *   Base class of all kinds of events.
  */
-class Event : public Ref
+class CC_DLL Event : public Ref
 {
 public:
     enum class Type
@@ -49,6 +49,9 @@ public:
         ACCELERATION,
         MOUSE,
         FOCUS,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        GAME_CONTROLLER,
+#endif
         CUSTOM
     };
     

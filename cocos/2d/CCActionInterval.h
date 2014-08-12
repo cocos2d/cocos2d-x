@@ -77,13 +77,23 @@ public:
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
-    virtual ActionInterval* reverse() const override = 0;
-	virtual ActionInterval *clone() const override = 0;
+    virtual ActionInterval* reverse() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
-protected:
+    virtual ActionInterval *clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+
+CC_CONSTRUCTOR_ACCESS:
     /** initializes the action */
     bool initWithDuration(float d);
 
+protected:
     float _elapsed;
     bool   _firstTick;
 };
@@ -131,7 +141,7 @@ public:
     // Overrides
     //
     virtual Sequence* clone() const override;
-	virtual Sequence* reverse() const override;
+    virtual Sequence* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float t) override;
@@ -180,7 +190,7 @@ public:
     // Overrides
     //
     virtual Repeat* clone() const override;
-	virtual Repeat* reverse() const override;
+    virtual Repeat* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float dt) override;
@@ -234,7 +244,7 @@ public:
     // Overrides
     //
     virtual RepeatForever* clone() const override;
-	virtual RepeatForever* reverse(void) const override;
+    virtual RepeatForever* reverse(void) const override;
     virtual void startWithTarget(Node* target) override;
     virtual void step(float dt) override;
     virtual bool isDone(void) const override;
@@ -301,7 +311,7 @@ public:
     // Overrides
     //
     virtual Spawn* clone() const override;
-	virtual Spawn* reverse(void) const override;
+    virtual Spawn* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
@@ -329,10 +339,13 @@ class CC_DLL RotateTo : public ActionInterval
 {
 public:
     /** creates the action with separate rotation angles */
-    static RotateTo* create(float duration, float deltaAngleX, float deltaAngleY);
+    static RotateTo* create(float duration, float dstAngleX, float dstAngleY);
 
     /** creates the action */
-    static RotateTo* create(float duration, float deltaAngle);
+    static RotateTo* create(float duration, float dstAngle);
+
+    /** creates the action with 3D rotation angles */
+    static RotateTo* create(float duration, const Vec3& dstAngle3D);
 
     //
     // Overrides
@@ -343,21 +356,21 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    RotateTo() {}
+    RotateTo();
     virtual ~RotateTo() {}
 
     /** initializes the action */
-    bool initWithDuration(float duration, float deltaAngle);
-    bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
+    bool initWithDuration(float duration, float dstAngleX, float dstAngleY);
+    bool initWithDuration(float duration, const Vec3& dstAngle3D);
+
+    /** calculates the start and diff angles */
+    void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
     
 protected:
-    float _dstAngleX;
-    float _startAngleX;
-    float _diffAngleX;
-    
-    float _dstAngleY;
-    float _startAngleY;
-    float _diffAngleY;
+    bool _is3D;
+    Vec3 _dstAngle;
+    Vec3 _startAngle;
+    Vec3 _diffAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateTo);
@@ -370,6 +383,7 @@ class CC_DLL RotateBy : public ActionInterval
 public:
     /** creates the action */
     static RotateBy* create(float duration, float deltaAngle);
+    /** @warning The physics body contained in Node doesn't support rotate with different x and y angle. */
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
@@ -377,7 +391,7 @@ public:
     // Override
     //
     virtual RotateBy* clone() const override;
-	virtual RotateBy* reverse(void) const override;
+    virtual RotateBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -387,18 +401,14 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
+    /** @warning The physics body contained in Node doesn't support rotate with different x and y angle. */
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
 protected:
-    float _angleZ_X;
-    float _startAngleZ_X;
-    float _angleZ_Y;
-    float _startAngleZ_Y;
-
     bool _is3D;
-    Vec3 _angle3D;
-    Vec3 _startAngle3D;
+    Vec3 _deltaAngle;
+    Vec3 _startAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);
@@ -420,7 +430,7 @@ public:
     // Overrides
     //
     virtual MoveBy* clone() const override;
-	virtual MoveBy* reverse(void) const  override;
+    virtual MoveBy* reverse(void) const  override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -484,7 +494,7 @@ public:
     // Overrides
     //
     virtual SkewTo* clone() const override;
-	virtual SkewTo* reverse(void) const override;
+    virtual SkewTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -522,7 +532,7 @@ public:
     //
     virtual void startWithTarget(Node *target) override;
     virtual SkewBy* clone() const  override;
-	virtual SkewBy* reverse(void) const override;
+    virtual SkewBy* reverse(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     SkewBy() {}
@@ -546,7 +556,7 @@ public:
     // Overrides
     //
     virtual JumpBy* clone() const override;
-	virtual JumpBy* reverse(void) const override;
+    virtual JumpBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -581,11 +591,13 @@ public:
     //
     virtual void startWithTarget(Node *target) override;
     virtual JumpTo* clone() const override;
-	virtual JumpTo* reverse(void) const override;
+    virtual JumpTo* reverse(void) const override;
 
-private:
+CC_CONSTRUCTOR_ACCESS:
     JumpTo() {}
     virtual ~JumpTo() {}
+
+private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };
 
@@ -618,7 +630,7 @@ public:
     // Overrides
     //
     virtual BezierBy* clone() const override;
-	virtual BezierBy* reverse(void) const override;
+    virtual BezierBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -658,7 +670,7 @@ public:
     //
     virtual void startWithTarget(Node *target) override;
     virtual BezierTo* clone() const override;
-	virtual BezierTo* reverse(void) const override;
+    virtual BezierTo* reverse(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     BezierTo() {}
@@ -675,6 +687,7 @@ private:
 
 /** @brief Scales a Node object to a zoom factor by modifying it's scale attribute.
  @warning This action doesn't support "reverse"
+ @warning The physics body contained in Node doesn't support this action.
  */
 class CC_DLL ScaleTo : public ActionInterval
 {
@@ -692,7 +705,7 @@ public:
     // Overrides
     //
     virtual ScaleTo* clone() const override;
-	virtual ScaleTo* reverse(void) const override;
+    virtual ScaleTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -726,6 +739,7 @@ private:
 };
 
 /** @brief Scales a Node object a zoom factor by modifying it's scale attribute.
+ @warning The physics body contained in Node doesn't support this action.
 */
 class CC_DLL ScaleBy : public ScaleTo
 {
@@ -744,9 +758,9 @@ public:
     //
     virtual void startWithTarget(Node *target) override;
     virtual ScaleBy* clone() const override;
-	virtual ScaleBy* reverse(void) const override;
+    virtual ScaleBy* reverse(void) const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     ScaleBy() {}
     virtual ~ScaleBy() {}
 
@@ -766,7 +780,7 @@ public:
     // Overrides
     //
     virtual Blink* clone() const override;
-	virtual Blink* reverse() const override;
+    virtual Blink* reverse() const override;
     virtual void update(float time) override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
@@ -800,7 +814,7 @@ public:
     // Overrides
     //
     virtual FadeTo* clone() const override;
-	virtual FadeTo* reverse(void) const override;
+    virtual FadeTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -834,11 +848,11 @@ public:
     //
     virtual void startWithTarget(Node *target) override;
     virtual FadeIn* clone() const override;
-	virtual FadeTo* reverse(void) const override;
+    virtual FadeTo* reverse(void) const override;
     
     void setReverseAction(FadeTo* ac);
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeIn():_reverseAction(nullptr) {}
     virtual ~FadeIn() {}
 
@@ -861,11 +875,11 @@ public:
     //
     virtual void startWithTarget(Node *target) override;
     virtual FadeOut* clone() const  override;
-	virtual FadeTo* reverse(void) const override;
+    virtual FadeTo* reverse(void) const override;
     
     void setReverseAction(FadeTo* ac);
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOut():_reverseAction(nullptr) {}
     virtual ~FadeOut() {}
 private:
@@ -886,7 +900,7 @@ public:
     // Overrides
     //
     virtual TintTo* clone() const override;
-	virtual TintTo* reverse(void) const override;
+    virtual TintTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -918,7 +932,7 @@ public:
     // Overrides
     //
     virtual TintBy* clone() const override;
-	virtual TintBy* reverse() const override;
+    virtual TintBy* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -957,7 +971,7 @@ public:
     virtual DelayTime* reverse() const override;
     virtual DelayTime* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     DelayTime() {}
     virtual ~DelayTime() {}
 
@@ -981,7 +995,7 @@ public:
     //
     // Overrides
     //
-	virtual ReverseTime* reverse() const override;
+    virtual ReverseTime* reverse() const override;
     virtual ReverseTime* clone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;

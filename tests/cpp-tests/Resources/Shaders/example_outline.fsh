@@ -24,12 +24,10 @@ void main()
     accum += texture2D(CC_Texture0, vec2(v_texCoord.x - radius, v_texCoord.y + radius));
     
     accum *= u_threshold;
+    accum.rgb =  u_outlineColor * accum.a;
+    accum.a = 1.0;
     
-    accum.r = u_outlineColor.x;
-    accum.g = u_outlineColor.y;
-    accum.b = u_outlineColor.z;
-    
-    normal = (accum * (1.0 - normal.a)) + (normal * normal.a);
+    normal = ( accum * (1.0 - normal.a)) + (normal * normal.a);
     
     gl_FragColor = v_fragmentColor * normal;
 }

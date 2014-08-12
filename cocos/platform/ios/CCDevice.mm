@@ -215,26 +215,14 @@ static inline void lazyCheckIOS7()
 
 static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
-    NSArray *listItems = [str componentsSeparatedByString: @"\n"];
-    CGSize dim = CGSizeZero;
     CGSize textRect = CGSizeZero;
     textRect.width = constrainSize->width > 0 ? constrainSize->width
     : 0x7fffffff;
     textRect.height = constrainSize->height > 0 ? constrainSize->height
     : 0x7fffffff;
     
-    for (NSString *s in listItems)
-    {
-        CGSize tmp = [s sizeWithFont:font constrainedToSize:textRect];
-        
-        if (tmp.width > dim.width)
-        {
-            dim.width = tmp.width;
-        }
-        
-        dim.height += tmp.height;
-    }
-    
+    CGSize dim = [str sizeWithFont:font constrainedToSize:textRect];
+
     dim.width = ceilf(dim.width);
     dim.height = ceilf(dim.height);
     
@@ -468,13 +456,13 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.shadowBlur             = textDefinition._shadow._shadowBlur;
         info.shadowOpacity          = textDefinition._shadow._shadowOpacity;
         info.hasStroke              = textDefinition._stroke._strokeEnabled;
-        info.strokeColorR           = textDefinition._stroke._strokeColor.r;
-        info.strokeColorG           = textDefinition._stroke._strokeColor.g;
-        info.strokeColorB           = textDefinition._stroke._strokeColor.b;
+        info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
+        info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
+        info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
         info.strokeSize             = textDefinition._stroke._strokeSize;
-        info.tintColorR             = textDefinition._fontFillColor.r;
-        info.tintColorG             = textDefinition._fontFillColor.g;
-        info.tintColorB             = textDefinition._fontFillColor.b;
+        info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
+        info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
+        info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
         
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info))
         {

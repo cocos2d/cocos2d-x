@@ -2,14 +2,12 @@
 --------------------------------
 -- @module ScaleTo
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
--- overload function: create(float, float, float)
---          
--- overload function: create(float, float)
---          
--- overload function: create(float, float, float, float)
---          
+-- @overload self, float, float, float         
+-- @overload self, float, float         
+-- @overload self, float, float, float, float         
 -- @function [parent=#ScaleTo] create
 -- @param self
 -- @param #float float

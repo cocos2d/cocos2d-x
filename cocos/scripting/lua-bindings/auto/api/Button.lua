@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Button
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Button] getTitleText 
@@ -42,7 +43,7 @@
 -- @function [parent=#Button] loadTextureDisabled 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Button] setTitleText 
@@ -58,7 +59,7 @@
 -- @function [parent=#Button] loadTexturePressed 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Button] setTitleFontName 
@@ -81,7 +82,7 @@
 -- @param #string str
 -- @param #string str
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Button] isScale9Enabled 
@@ -92,7 +93,7 @@
 -- @function [parent=#Button] loadTextureNormal 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Button] setCapInsetsPressedRenderer 
@@ -120,16 +121,14 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: create(string, string, string, ccui.Widget::TextureResType)
---          
--- overload function: create()
---          
+-- @overload self, string, string, string, int         
+-- @overload self         
 -- @function [parent=#Button] create
 -- @param self
 -- @param #string str
 -- @param #string str
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
 -- @return Button#Button ret (retunr value: ccui.Button)
 
 --------------------------------

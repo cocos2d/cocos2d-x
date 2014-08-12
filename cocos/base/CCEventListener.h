@@ -43,7 +43,7 @@ class Node;
  *  If you need custom listener which with different callback, you need to inherit this class.
  *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
  */
-class EventListener : public Ref
+class CC_DLL EventListener : public Ref
 {
 public:
     enum class Type
@@ -55,6 +55,9 @@ public:
         MOUSE,
         ACCELERATION,
         FOCUS,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		GAME_CONTROLLER,
+#endif
         CUSTOM
     };
 

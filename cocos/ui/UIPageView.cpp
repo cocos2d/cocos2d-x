@@ -46,6 +46,7 @@ _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
+    this->setTouchEnabled(true);
 }
 
 PageView::~PageView()
@@ -68,6 +69,14 @@ PageView* PageView::create()
     
 void PageView::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Layout::onEnter();
     scheduleUpdate();
 }
@@ -113,7 +122,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
 Layout* PageView::createPage()
 {
     Layout* newPage = Layout::create();
-    newPage->setSize(getSize());
+    newPage->setContentSize(getContentSize());
     return newPage;
 }
 
@@ -125,7 +134,7 @@ void PageView::addPage(Layout* page)
     }
 
     
-    addProtectedChild(page);
+    addChild(page);
     _pages.pushBack(page);
     
     _doLayoutDirty = true;
@@ -147,7 +156,7 @@ void PageView::insertPage(Layout* page, int idx)
     else
     {
         _pages.insert(idx, page);
-        addProtectedChild(page);
+        addChild(page);
         
     }
     
@@ -160,7 +169,7 @@ void PageView::removePage(Layout* page)
     {
         return;
     }
-    removeProtectedChild(page);
+    removeChild(page);
     _pages.eraseObject(page);
     
     _doLayoutDirty = true;
@@ -180,7 +189,7 @@ void PageView::removeAllPages()
 {
     for(const auto& node : _pages)
     {
-        removeProtectedChild(node);
+        removeChild(node);
     }
     _pages.clear();
 }
@@ -204,23 +213,23 @@ ssize_t PageView::getPageCount()const
 
 float PageView::getPositionXByIndex(ssize_t idx)const
 {
-    return (getSize().width * (idx-_curPageIdx));
+    return (getContentSize().width * (idx-_curPageIdx));
 }
 
 void PageView::onSizeChanged()
 {
     Layout::onSizeChanged();
-    _rightBoundary = getSize().width;
+    _rightBoundary = getContentSize().width;
     
     _doLayoutDirty = true;
 }
 
 void PageView::updateAllPagesSize()
 {
-    Size selfSize = getSize();
+    Size selfSize = getContentSize();
     for (auto& page : _pages)
     {
-        page->setSize(selfSize);
+        page->setContentSize(selfSize);
     }
 }
 
@@ -239,7 +248,7 @@ void PageView::updateAllPagesPosition()
         _curPageIdx = pageCount-1;
     }
     
-    float pageWidth = getSize().width;
+    float pageWidth = getContentSize().width;
     for (int i=0; i<pageCount; i++)
     {
         Layout* page = _pages.at(i);
@@ -327,10 +336,6 @@ void PageView::autoScroll(float dt)
 bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
-    if (_hitted)
-    {
-        handlePressLogic(touch);
-    }
     return pass;
 }
 
@@ -424,10 +429,6 @@ bool PageView::scrollPages(float touchOffset)
     return true;
 }
 
-void PageView::handlePressLogic(Touch *touch)
-{
-    //no-op
-}
 
 void PageView::handleMoveLogic(Touch *touch)
 {
@@ -459,7 +460,7 @@ void PageView::handleReleaseLogic(Touch *touch)
         Vec2 curPagePos = curPage->getPosition();
         ssize_t pageCount = this->getPageCount();
         float curPageLocation = curPagePos.x;
-        float pageWidth = getSize().width;
+        float pageWidth = getContentSize().width;
         float boundary = pageWidth/2.0f;
         if (curPageLocation <= -boundary)
         {
@@ -498,7 +499,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
     switch (event)
     {
         case TouchEventType::BEGAN:
-            handlePressLogic(touch);
+            //no-op
             break;
         case TouchEventType::MOVED:
         {
@@ -520,6 +521,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
 
 void PageView::pageTurningEvent()
 {
+    this->retain();
     if (_pageViewEventListener && _pageViewEventSelector)
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
@@ -527,6 +529,7 @@ void PageView::pageTurningEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::TURNING);
     }
+    this->release();
 }
 
 void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)

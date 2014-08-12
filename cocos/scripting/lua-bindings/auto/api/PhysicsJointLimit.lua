@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointLimit
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointLimit] setAnchr2 
@@ -44,10 +45,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: construct(cc.PhysicsBody, cc.PhysicsBody, vec2_table, vec2_table, float, float)
---          
--- overload function: construct(cc.PhysicsBody, cc.PhysicsBody, vec2_table, vec2_table)
---          
+-- @overload self, cc.PhysicsBody, cc.PhysicsBody, vec2_table, vec2_table, float, float         
+-- @overload self, cc.PhysicsBody, cc.PhysicsBody, vec2_table, vec2_table         
 -- @function [parent=#PhysicsJointLimit] construct
 -- @param self
 -- @param #cc.PhysicsBody physicsbody

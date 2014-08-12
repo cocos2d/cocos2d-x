@@ -25,7 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCMenu.h"
 #include "base/CCDirector.h"
-#include "CCApplication.h"
 #include "base/CCTouch.h"
 #include "CCStdC.h"
 #include "base/CCEventListenerTouch.h"
@@ -191,6 +190,12 @@ void Menu::addChild(Node * child, int zOrder, int tag)
 {
     CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
     Layer::addChild(child, zOrder, tag);
+}
+
+void Menu::addChild(Node * child, int zOrder, const std::string &name)
+{
+    CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
+    Layer::addChild(child, zOrder, name);
 }
 
 void Menu::onEnter()

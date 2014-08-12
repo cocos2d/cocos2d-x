@@ -29,10 +29,18 @@
 #include <iostream>
 #include <sstream>
 
+#include "3d/CCSubMesh.h"
+#include "3d/CCObjLoader.h"
+#include "3d/CCSprite3DMaterial.h"
+
 #include "base/ccMacros.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "renderer/ccGLStateCache.h"
-#include "CCObjLoader.h"
-#include "CCSprite3DDataCache.h"
+
 
 using namespace std;
 
@@ -48,15 +56,14 @@ bool RenderMeshData::hasVertexAttrib(int attrib)
     return false;
 }
 
-bool RenderMeshData::initFrom(const std::vector<float>& positions,
+bool RenderMeshData::init(const std::vector<float>& positions,
                               const std::vector<float>& normals,
                               const std::vector<float>& texs,
-                              const std::vector<unsigned short>& indices)
+                              const std::vector<IndexArray>& indices)
 {
     CC_ASSERT(positions.size()<65536 * 3 && "index may out of bound");
     
     _vertexAttribs.clear();
-    _vertexsizeBytes = 0;
     
     _vertexNum = positions.size() / 3; //number of vertex
     if (_vertexNum == 0)
@@ -65,7 +72,6 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     if ((normals.size() != 0 && _vertexNum * 3 != normals.size()) || (texs.size() != 0 && _vertexNum * 2 != texs.size()))
         return false;
     
-    _vertexsizeBytes += 3;
     MeshVertexAttrib meshvertexattrib;
     meshvertexattrib.size = 3;
     meshvertexattrib.type = GL_FLOAT;
@@ -77,14 +83,12 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     if (normals.size())
     {
         //add normal flag
-        _vertexsizeBytes += 3;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
         _vertexAttribs.push_back(meshvertexattrib);
     }
     //
     if (texs.size())
     {
-        _vertexsizeBytes += 2;
         meshvertexattrib.size = 2;
         meshvertexattrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
         meshvertexattrib.attribSizeBytes = meshvertexattrib.size * sizeof(float);
@@ -92,8 +96,8 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
     }
     
     _vertexs.clear();
-    _vertexs.reserve(_vertexNum * _vertexsizeBytes);
-    _vertexsizeBytes *= sizeof(float);
+    _vertexsizeBytes = calVertexSizeBytes();
+    _vertexs.reserve(_vertexNum * _vertexsizeBytes / sizeof(float));
     
     bool hasNormal = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
     bool hasTexCoord = hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
@@ -117,26 +121,53 @@ bool RenderMeshData::initFrom(const std::vector<float>& positions,
             _vertexs.push_back(texs[i * 2 + 1]);
         }
     }
-    _indices = indices;
+    _subMeshIndices = indices;
     
     return true;
 }
 
+bool RenderMeshData::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& indices, const std::vector<MeshVertexAttrib>& attribs)
+{
+    _vertexs = vertices;
+    _subMeshIndices = indices;
+    _vertexAttribs = attribs;
+    
+    _vertexsizeBytes = calVertexSizeBytes();
+    
+    return true;
+}
+
+int RenderMeshData::calVertexSizeBytes()
+{
+    int sizeBytes = 0;
+    for (auto it = _vertexAttribs.begin(); it != _vertexAttribs.end(); it++) {
+        sizeBytes += (*it).size;
+        CCASSERT((*it).type == GL_FLOAT, "use float");
+    }
+    sizeBytes *= sizeof(float);
+    
+    return sizeBytes;
+}
+
 Mesh::Mesh()
 :_vertexBuffer(0)
-, _indexBuffer(0)
-, _primitiveType(PrimitiveType::TRIANGLES)
-, _indexFormat(IndexFormat::INDEX16)
-, _indexCount(0)
 {
 }
 
 Mesh::~Mesh()
 {
+    _subMeshes.clear();
     cleanAndFreeBuffers();
 }
 
-Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
+Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices)
+{
+    std::vector<IndexArray> submeshIndices;
+    submeshIndices.push_back(indices);
+    return create(positions, normals, texs, submeshIndices);
+}
+
+Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& indices)
 {
     auto mesh = new Mesh();
     if(mesh && mesh->init(positions, normals, texs, indices))
@@ -148,14 +179,57 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return nullptr;
 }
 
-bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices)
+Mesh* Mesh::create(const std::vector<float>& vertices, int vertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
-    bool bRet = _renderdata.initFrom(positions, normals, texs, indices);
+    std::vector<IndexArray> submeshIndices;
+    submeshIndices.push_back(indices);
+    return create(vertices, vertexSizeInFloat, submeshIndices, attribs);
+}
+
+Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, const std::vector<IndexArray> &indices, const std::vector<MeshVertexAttrib> &attribs)
+{
+    auto mesh = new Mesh();
+    if (mesh && mesh->init(vertices, vertexSizeInFloat, indices, attribs))
+    {
+        mesh->autorelease();
+        return mesh;
+    }
+    CC_SAFE_DELETE(mesh);
+    return nullptr;
+}
+
+bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& indices)
+{
+    bool bRet = _renderdata.init(positions, normals, texs, indices);
     if (!bRet)
         return false;
     
-    restore();
+    buildSubMeshes();
+    
+    buildBuffer();
     return true;
+}
+
+
+bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& indices, const std::vector<MeshVertexAttrib>& attribs)
+{
+    bool bRet = _renderdata.init(vertices, vertexSizeInFloat, indices, attribs);
+    if (!bRet)
+        return false;
+    
+    buildSubMeshes();
+    
+    buildBuffer();
+    return true;
+}
+
+void Mesh::buildSubMeshes()
+{
+    _subMeshes.clear();
+    for (auto& it : _renderdata._subMeshIndices) {
+        auto subMesh = SubMesh::create(PrimitiveType::TRIANGLES, IndexFormat::INDEX16, it);
+        _subMeshes.pushBack(subMesh);
+    }
 }
 
 void Mesh::cleanAndFreeBuffers()
@@ -166,14 +240,9 @@ void Mesh::cleanAndFreeBuffers()
         _vertexBuffer = 0;
     }
     
-    if(glIsBuffer(_indexBuffer))
-    {
-        glDeleteBuffers(1, &_indexBuffer);
-        _indexBuffer = 0;
+    for (auto& it : _subMeshes) {
+        (*it).cleanAndFreeBuffers();
     }
-    _primitiveType = PrimitiveType::TRIANGLES;
-    _indexFormat = IndexFormat::INDEX16;
-    _indexCount = 0;
 }
 
 void Mesh::buildBuffer()
@@ -189,26 +258,107 @@ void Mesh::buildBuffer()
                  GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    glGenBuffers(1, &_indexBuffer);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    unsigned int indexSize = 2;
-    IndexFormat indexformat = IndexFormat::INDEX16;
-    
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * _renderdata._indices.size(), &_renderdata._indices[0], GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    _primitiveType = PrimitiveType::TRIANGLES;
-    _indexFormat = indexformat;
-    _indexCount = _renderdata._indices.size();
+    for (size_t i = 0; i < _subMeshes.size(); i++) {
+        _subMeshes.at(i)->buildBuffer(_renderdata._subMeshIndices[i]);
+    }
 }
 
 void Mesh::restore()
 {
-    cleanAndFreeBuffers();
+    _vertexBuffer = 0;
+    for (auto& it : _subMeshes) {
+        it->_indexBuffer = 0;
+    }
+    
     buildBuffer();
 }
+
+/**
+ * MeshCache
+ */
+MeshCache* MeshCache::_cacheInstance = nullptr;
+
+MeshCache* MeshCache::getInstance()
+{
+    if (_cacheInstance == nullptr)
+        _cacheInstance = new MeshCache();
+    
+    return _cacheInstance;
+}
+void MeshCache::destroyInstance()
+{
+    if (_cacheInstance)
+        CC_SAFE_DELETE(_cacheInstance);
+}
+
+Mesh* MeshCache::getMesh(const std::string& key) const
+{
+    auto it = _meshes.find(key);
+    if (it != _meshes.end())
+        return it->second;
+    
+    return nullptr;
+}
+
+bool MeshCache::addMesh(const std::string& key, Mesh* mesh)
+{
+    auto it = _meshes.find(key);
+    if (it == _meshes.end())
+    {
+        mesh->retain();
+        _meshes[key] = mesh;
+        
+        return true;
+    }
+    return false;
+}
+
+void MeshCache::removeAllMeshes()
+{
+    for (auto it : _meshes) {
+        CC_SAFE_RELEASE(it.second);
+    }
+    _meshes.clear();
+}
+
+void MeshCache::removeUnusedMesh()
+{
+    for( auto it=_meshes.cbegin(); it!=_meshes.cend(); /* nothing */) {
+        if(it->second->getReferenceCount() == 1)
+        {
+            it->second->release();
+            _meshes.erase(it++);
+        }
+        else
+            ++it;
+    }
+}
+
+MeshCache::MeshCache()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // listen the event that renderer was recreated on Android/WP8
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCache::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
+#endif
+}
+MeshCache::~MeshCache()
+{
+    removeAllMeshes();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
+#endif
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+void MeshCache::listenRendererRecreated(EventCustom* event)
+{
+    for (auto iter = _meshes.begin(); iter != _meshes.end(); ++iter)
+    {
+        auto mesh = iter->second;
+        mesh->restore();
+    }
+}
+#endif
 
 NS_CC_END

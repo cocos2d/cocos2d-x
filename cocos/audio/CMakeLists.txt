@@ -1,29 +1,26 @@
 # architecture
-if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-set(ARCH_DIR "64-bit")
-else()
-set(ARCH_DIR "32-bit")
-endif()
+#if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+#set(ARCH_DIR "64-bit")
+#else()
+#set(ARCH_DIR "32-bit")
+#endif()
 
-if(WIN32)
+if(WINDOWS)
   set(AUDIO_SRC
     win32/SimpleAudioEngine.cpp
     win32/MciPlayer.cpp
-	win32/MciPlayer.h
+	  win32/MciPlayer.h
   )
-elseif(APPLE)
 
-else()
+elseif(LINUX)
   set(AUDIO_SRC
     linux/SimpleAudioEngineFMOD.cpp
     linux/FmodAudioPlayer.cpp
-	linux/FmodAudioPlayer.h
-	linux/AudioPlayer.h
+	  linux/FmodAudioPlayer.h
+	  linux/AudioPlayer.h
   )
 
-  include_directories(
-    ../../external/linux-specific/fmod/include/${ARCH_DIR}
-  )
+  include_directories( ../../external/linux-specific/fmod/include/${ARCH_DIR} )
 
 endif()
 
@@ -33,17 +30,18 @@ add_library(audio STATIC
   include/SimpleAudioEngine.h
 )
 
-if((NOT APPLE) AND (NOT WIN32))
+if(LINUX)
 
-if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-set(FMOD_LIB "fmodex64")
-else()
-set(FMOD_LIB "fmodex")
+  if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+    set(FMOD_LIB "fmodex64")
+  else()
+    set(FMOD_LIB "fmodex")
+  endif()
+
+  target_link_libraries(audio ${FMOD_LIB})
+elseif(WINDOWS)
+  target_link_libraries(audio Winmm)
 endif()
-
-target_link_libraries(audio
-  ${FMOD_LIB}
-)
 
 set_target_properties(audio
     PROPERTIES
@@ -51,10 +49,4 @@ set_target_properties(audio
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
-elseif(WIN32)
 
-target_link_libraries(audio
-  Winmm
-)
-
-endif()

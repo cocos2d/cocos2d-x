@@ -2,12 +2,11 @@
 --------------------------------
 -- @module Animate
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
--- overload function: getAnimation()
---          
--- overload function: getAnimation()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#Animate] getAnimation
 -- @param self
 -- @return Animation#Animation ret (retunr value: cc.Animation)

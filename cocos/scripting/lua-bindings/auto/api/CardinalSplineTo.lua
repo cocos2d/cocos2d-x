@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CardinalSplineTo
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#CardinalSplineTo] getPoints 

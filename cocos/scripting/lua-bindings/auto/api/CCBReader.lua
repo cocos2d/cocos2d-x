@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CCBReader
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#CCBReader] addOwnerOutletName 
@@ -16,7 +17,7 @@
 --------------------------------
 -- @function [parent=#CCBReader] addDocumentCallbackControlEvents 
 -- @param self
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#CCBReader] setCCBRootPath 
@@ -62,7 +63,7 @@
 --------------------------------
 -- @function [parent=#CCBReader] addOwnerCallbackControlEvents 
 -- @param self
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#CCBReader] getOwnerOutletNames 
@@ -101,12 +102,9 @@
 -- @param #float float
         
 --------------------------------
--- overload function: CCBReader(cc.CCBReader)
---          
--- overload function: CCBReader(cc.NodeLoaderLibrary, cc.CCBMemberVariableAssigner, cc.CCBSelectorResolver, cc.NodeLoaderListener)
---          
--- overload function: CCBReader()
---          
+-- @overload self, cc.CCBReader         
+-- @overload self, cc.NodeLoaderLibrary, cc.CCBMemberVariableAssigner, cc.CCBSelectorResolver, cc.NodeLoaderListener         
+-- @overload self         
 -- @function [parent=#CCBReader] CCBReader
 -- @param self
 -- @param #cc.NodeLoaderLibrary nodeloaderlibrary

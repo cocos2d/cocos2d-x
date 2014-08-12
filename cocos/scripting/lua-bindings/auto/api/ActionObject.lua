@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ActionObject
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#ActionObject] setCurrentTime 
@@ -37,10 +38,8 @@
 -- @param self
         
 --------------------------------
--- overload function: play(cc.CallFunc)
---          
--- overload function: play()
---          
+-- @overload self, cc.CallFunc         
+-- @overload self         
 -- @function [parent=#ActionObject] play
 -- @param self
 -- @param #cc.CallFunc callfunc

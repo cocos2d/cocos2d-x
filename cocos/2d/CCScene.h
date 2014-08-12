@@ -28,11 +28,13 @@ THE SOFTWARE.
 #ifndef __CCSCENE_H__
 #define __CCSCENE_H__
 
+#include <string>
 #include "2d/CCNode.h"
 #include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
+class Camera;
 /**
  * @addtogroup scene
  * @{
@@ -58,10 +60,13 @@ public:
     static Scene *createWithSize(const Size& size);
 
     // Overrides
-    virtual Scene *getScene() override;
+    virtual Scene *getScene() const override;
 
     using Node::addChild;
     virtual std::string getDescription() const override;
+    
+    /** get all cameras */
+    const std::vector<Camera*>& getCameras() const { return _cameras; }
     
 CC_CONSTRUCTOR_ACCESS:
     Scene();
@@ -74,6 +79,10 @@ protected:
     friend class Node;
     friend class ProtectedNode;
     friend class SpriteBatchNode;
+    friend class Camera;
+    friend class Director;
+    
+    std::vector<Camera*> _cameras; //weak ref to Camera
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
@@ -81,6 +90,7 @@ private:
 #if CC_USE_PHYSICS
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void update(float delta) override;
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     static Scene *createWithPhysics();

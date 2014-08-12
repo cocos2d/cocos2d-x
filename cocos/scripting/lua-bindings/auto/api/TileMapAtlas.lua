@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TileMapAtlas
 -- @extend AtlasNode
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TileMapAtlas] initWithTileFile 
@@ -27,11 +28,6 @@
 -- @param self
 -- @param #color3b_table color3b
 -- @param #vec2_table vec2
-        
---------------------------------
--- @function [parent=#TileMapAtlas] setTGAInfo 
--- @param self
--- @param #cc.sImageTGA simagetga
         
 --------------------------------
 -- @function [parent=#TileMapAtlas] create 

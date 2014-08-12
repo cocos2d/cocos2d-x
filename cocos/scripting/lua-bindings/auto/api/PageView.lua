@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PageView
 -- @extend Layout
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#PageView] getCurPageIndex 
@@ -74,7 +75,7 @@
 --------------------------------
 -- @function [parent=#PageView] getLayoutType 
 -- @param self
--- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#PageView] getDescription 
@@ -89,7 +90,7 @@
 --------------------------------
 -- @function [parent=#PageView] setLayoutType 
 -- @param self
--- @param #ccui.Layout::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#PageView] PageView 

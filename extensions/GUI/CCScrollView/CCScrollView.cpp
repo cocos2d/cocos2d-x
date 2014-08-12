@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
-#include "CCGLView.h"
 #include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
@@ -52,10 +51,7 @@ static float convertDistanceFromPointToInch(float pointDis)
 
 
 ScrollView::ScrollView()
-: _zoomScale(0.0f)
-, _minZoomScale(0.0f)
-, _maxZoomScale(0.0f)
-, _delegate(nullptr)
+: _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
 , _container(nullptr)
@@ -66,6 +62,7 @@ ScrollView::ScrollView()
 , _minScale(0.0f)
 , _maxScale(0.0f)
 , _touchListener(nullptr)
+, _scissorRestored(false)
 {
 
 }
@@ -75,7 +72,7 @@ ScrollView::~ScrollView()
 
 }
 
-ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
+ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 {
     ScrollView* pRet = new ScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
@@ -104,7 +101,7 @@ ScrollView* ScrollView::create()
 }
 
 
-bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
+bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
 {
     if (Layer::init())
     {
@@ -123,7 +120,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
-        _delegate = NULL;
+        _delegate = nullptr;
         _bounceable = true;
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
@@ -142,7 +139,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
 bool ScrollView::init()
 {
-    return this->initWithViewSize(Size(200, 200), NULL);
+    return this->initWithViewSize(Size(200, 200), nullptr);
 }
 
 bool ScrollView::isNodeVisible(Node* node)
@@ -225,7 +222,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 
         _container->setPosition(offset);
 
-        if (_delegate != NULL)
+        if (_delegate != nullptr)
         {
             _delegate->scrollViewDidScroll(this);   
         }
@@ -269,7 +266,7 @@ void ScrollView::setZoomScale(float s)
         newCenter = _container->convertToWorldSpace(oldCenter);
         
         const Vec2 offset = center - newCenter;
-        if (_delegate != NULL)
+        if (_delegate != nullptr)
         {
             _delegate->scrollViewDidZoom(this);
         }
@@ -329,9 +326,9 @@ Node * ScrollView::getContainer()
 
 void ScrollView::setContainer(Node * pContainer)
 {
-    // Make sure that '_container' has a non-NULL value since there are
+    // Make sure that '_container' has a non-nullptr value since there are
     // lots of logic that use '_container'.
-    if (NULL == pContainer)
+    if (nullptr == pContainer)
         return;
 
     this->removeAllChildrenWithCleanup(true);
@@ -430,7 +427,7 @@ void ScrollView::stoppedAnimatedScroll(Node * node)
 {
     this->unschedule(schedule_selector(ScrollView::performedAnimatedScroll));
     // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
-    if (_delegate != NULL)
+    if (_delegate != nullptr)
     {
         _delegate->scrollViewDidScroll(this);
     }
@@ -444,7 +441,7 @@ void ScrollView::performedAnimatedScroll(float dt)
         return;
     }
 
-    if (_delegate != NULL)
+    if (_delegate != nullptr)
     {
         _delegate->scrollViewDidScroll(this);
     }
@@ -458,7 +455,7 @@ const Size& ScrollView::getContentSize() const
 
 void ScrollView::setContentSize(const Size & size)
 {
-    if (this->getContainer() != NULL)
+    if (this->getContainer() != nullptr)
     {
         this->getContainer()->setContentSize(size);
 		this->updateInset();
@@ -467,7 +464,7 @@ void ScrollView::setContentSize(const Size & size)
 
 void ScrollView::updateInset()
 {
-	if (this->getContainer() != NULL)
+	if (this->getContainer() != nullptr)
 	{
 		_maxInset = this->maxContainerOffset();
 		_maxInset = Vec2(_maxInset.x + _viewSize.width * INSET_RATIO,
@@ -487,6 +484,18 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
         _container->addChild(child, zOrder, tag);
     } else {
         Layer::addChild(child, zOrder, tag);
+    }
+}
+
+void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
+{
+    if (_container != child)
+    {
+        _container->addChild(child, zOrder, name);
+    }
+    else
+    {
+        Layer::addChild(child, zOrder, name);
     }
 }
 
@@ -800,7 +809,7 @@ Rect ScrollView::getViewRect()
     float scaleX = this->getScaleX();
     float scaleY = this->getScaleY();
     
-    for (Node *p = _parent; p != NULL; p = p->getParent()) {
+    for (Node *p = _parent; p != nullptr; p = p->getParent()) {
         scaleX *= p->getScaleX();
         scaleY *= p->getScaleY();
     }

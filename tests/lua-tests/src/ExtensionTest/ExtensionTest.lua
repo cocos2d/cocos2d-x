@@ -1,3 +1,4 @@
+require "ExtensionConstants"
 require "src/ExtensionTest/CocosBuilderTest"
 require "src/ExtensionTest/WebProxyTest"
 
@@ -1267,7 +1268,7 @@ local function ExtensionsMainLayer()
 
     local listener = cc.EventListenerTouchAllAtOnce:create()
     listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
-    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
 
     local eventDispatcher = layer:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)

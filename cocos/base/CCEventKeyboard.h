@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class EventKeyboard : public Event
+class CC_DLL EventKeyboard : public Event
 {
 public:
     /**
@@ -45,6 +45,7 @@ public:
         KEY_SYSREQ,
         KEY_BREAK,
         KEY_ESCAPE,
+        KEY_BACK = KEY_ESCAPE,
         KEY_BACKSPACE,
         KEY_TAB,
         KEY_BACK_TAB,

@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
+#include "base/CCCamera.h"
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
@@ -59,6 +60,10 @@ bool Scene::init()
 
 bool Scene::initWithSize(const Size& size)
 {
+    //create default camera
+    auto camera = Camera::create();
+    addChild(camera);
+    
     setContentSize(size);
     return true;
 }
@@ -98,15 +103,22 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-Scene* Scene::getScene()
+Scene* Scene::getScene() const
 {
-    return this;
+    // FIX ME: should use const_case<> to fix compiling error
+    return const_cast<Scene*>(this);
 }
 
 #if CC_USE_PHYSICS
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
+    addChildToPhysicsWorld(child);
+}
+
+void Scene::addChild(Node* child, int zOrder, const std::string &name)
+{
+    Node::addChild(child, zOrder, name);
     addChildToPhysicsWorld(child);
 }
 
@@ -141,6 +153,10 @@ bool Scene::initWithPhysics()
     {
         Director * director;
         CC_BREAK_IF( ! (director = Director::getInstance()) );
+        // add camera
+        auto camera = Camera::create();
+        addChild(camera);
+        
         this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
@@ -172,6 +188,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
         addToPhysicsWorldFunc(child);
     }
 }
+
 #endif
 
 NS_CC_END

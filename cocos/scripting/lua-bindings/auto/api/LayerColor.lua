@@ -2,6 +2,7 @@
 --------------------------------
 -- @module LayerColor
 -- @extend Layer,BlendProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#LayerColor] changeWidthAndHeight 
@@ -20,12 +21,9 @@
 -- @param #float float
         
 --------------------------------
--- overload function: create(color4b_table, float, float)
---          
--- overload function: create()
---          
--- overload function: create(color4b_table)
---          
+-- @overload self, color4b_table, float, float         
+-- @overload self         
+-- @overload self, color4b_table         
 -- @function [parent=#LayerColor] create
 -- @param self
 -- @param #color4b_table color4b
