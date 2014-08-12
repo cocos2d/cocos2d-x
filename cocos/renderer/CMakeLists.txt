@@ -15,4 +15,8 @@ set(COCOS_RENDERER_SRC
 	renderer/CCTexture2D.cpp
 	renderer/CCTextureAtlas.cpp
 	renderer/CCTextureCache.cpp
+	renderer/CCVertexIndexBuffer.cpp
+	renderer/CCVertexIndexData.cpp
+	renderer/CCPrimitive.cpp
+	renderer/CCPrimitiveCommand.cpp
 )
