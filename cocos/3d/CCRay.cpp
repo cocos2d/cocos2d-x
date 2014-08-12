@@ -42,50 +42,50 @@ Ray::~Ray()
 
 bool Ray::intersects(const AABB& aabb) const
 {
-	Vec3 ptOnPlane;
-	Vec3 min = aabb._min;
-	Vec3 max = aabb._max;
+    Vec3 ptOnPlane;
+    Vec3 min = aabb._min;
+    Vec3 max = aabb._max;
     
-	const Vec3& origin = _origin;
+    const Vec3& origin = _origin;
     const Vec3& dir = _direction;
     
     float t;
     
-	if (dir.x != 0.f)
-	{
+    if (dir.x != 0.f)
+    {
         if (dir.x > 0)
             t = (min.x - origin.x) / dir.x;
         else
             t = (max.x - origin.x) / dir.x;
         
-		if (t > 0.f)
-		{
-			ptOnPlane = origin + t * dir;
-            
-			if (min.y < ptOnPlane.y && ptOnPlane.y < max.y && min.z < ptOnPlane.z && ptOnPlane.z < max.z)
-			{
-				return true;
-			}
-		}
-	}
+        if (t > 0.f)
+        {
+            ptOnPlane = origin + t * dir;
+
+            if (min.y < ptOnPlane.y && ptOnPlane.y < max.y && min.z < ptOnPlane.z && ptOnPlane.z < max.z)
+            {
+                return true;
+            }
+        }
+    }
     
-	if (dir.y != 0.f)
-	{
+    if (dir.y != 0.f)
+    {
         if (dir.y > 0)
             t = (min.y - origin.y) / dir.y;
         else
             t = (max.y - origin.y) / dir.y;
         
-		if (t > 0.f)
-		{
-			ptOnPlane = origin + t * dir;
-            
-			if (min.z < ptOnPlane.z && ptOnPlane.z < max.z && min.x < ptOnPlane.x && ptOnPlane.x < max.x)
-			{
-				return true;
-			}
-		}
-	}
+        if (t > 0.f)
+        {
+            ptOnPlane = origin + t * dir;
+
+            if (min.z < ptOnPlane.z && ptOnPlane.z < max.z && min.x < ptOnPlane.x && ptOnPlane.x < max.x)
+            {
+                return true;
+            }
+        }
+    }
     
 	if (dir.z != 0.f)
 	{
@@ -94,18 +94,18 @@ bool Ray::intersects(const AABB& aabb) const
         else
             t = (max.z - origin.z) / dir.z;
         
-		if (t > 0.f)
-		{
-			ptOnPlane = origin + t * dir;
+        if (t > 0.f)
+        {
+            ptOnPlane = origin + t * dir;
             
-			if (min.x < ptOnPlane.x && ptOnPlane.x < max.x && min.y < ptOnPlane.y && ptOnPlane.y < max.y)
-			{
-				return true;
-			}
-		}
-	}
+            if (min.x < ptOnPlane.x && ptOnPlane.x < max.x && min.y < ptOnPlane.y && ptOnPlane.y < max.y)
+            {
+                return true;
+            }
+        }
+    }
     
-	return false;
+    return false;
 }
 
 bool Ray::intersects(const OBB& obb) const
