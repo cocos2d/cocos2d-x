@@ -421,10 +421,6 @@ bool OBB::intersects(const OBB& box) const
 
 void OBB::transform(const Mat4& mat)
 {
-    int size = sizeof(Mat4);
-    if (memcmp(&_transform, &mat, size) == 0)
-        return;
-
     Vec4 newcenter = mat * Vec4(_center.x, _center.y, _center.z, 1.0f);// center;
     _center.x = newcenter.x;
     _center.y = newcenter.y;

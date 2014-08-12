@@ -104,9 +104,6 @@ protected:
      */
     Vec3 getFaceDir(int index) const;
 
-private:
-    Mat4 _transform;
-
 public:
     Vec3 _center;   // obb center
     Vec3 _xAxis;    // x axis of obb, unit vector

@@ -104,9 +104,6 @@ public:
      */
     void transform(const Mat4& mat);
 
-private:
-    Mat4 _transform;
-
 public:
     Vec3 _min;
     Vec3 _max;

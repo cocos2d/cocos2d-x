@@ -151,11 +151,6 @@ void AABB::updateMinMax(const Vec3* point, ssize_t num)
 
 void AABB::transform(const Mat4& mat)
 {
-    // if _transform matrix isn't changed, just return.
-    int size = sizeof(Mat4);
-    if (memcmp(&_transform, &mat, size) == 0)
-        return;
-
     Vec3 corners[8];
 	 // Near face, specified counter-clockwise
     // Left-top-front.

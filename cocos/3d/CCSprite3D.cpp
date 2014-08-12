@@ -401,20 +401,28 @@ const BlendFunc& Sprite3D::getBlendFunc() const
 
 AABB Sprite3D::getAABB() const
 {
-    AABB aabb = _mesh->getOriginAABB();
-    Mat4 transform;
+    Mat4 nodeToWorldTransform(getNodeToWorldTransform());
     
-    if (getSkin() && getSkin()->getRootBone())
+    // If nodeToWorldTransform matrix isn't changed, we don't need to transform aabb.
+    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(Mat4)) == 0)
     {
-        transform = getNodeToWorldTransform() * getSkin()->getRootBone()->getWorldMat();
+        return _aabb;
     }
     else
     {
-        transform = getNodeToWorldTransform();
+        Mat4 transform(nodeToWorldTransform);
+        _aabb = _mesh->getOriginAABB();
+        
+        if (getSkin() && getSkin()->getRootBone())
+        {
+            transform = nodeToWorldTransform * getSkin()->getRootBone()->getWorldMat();
+        }
+        
+        _aabb.transform(transform);
+        _nodeToWorldTransform = nodeToWorldTransform;
     }
     
-    aabb.transform(transform);
-    return aabb;
+    return _aabb;
 }
 
 Rect Sprite3D::getBoundingBox() const
