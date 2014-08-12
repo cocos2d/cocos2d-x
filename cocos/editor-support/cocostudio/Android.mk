@@ -77,6 +77,14 @@ CSParseBinary.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/unknown_field_set.cc \
 ../../../external/protocolBuf/src/google/protobuf/wire_format.cc \
 ../../../external/protocolBuf/src/google/protobuf/wire_format_lite.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/code_generator.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/command_line_interface.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/importer.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/parser.cc\
+../../../external/protocolBuf/src/google/protobuf/compiler/plugin.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/plugin.pb.cc \
+../../../external/protocolBuf/src/google/protobuf/compiler/subprocess.cc\
+../../../external/protocolBuf/src/google/protobuf/compiler/zip_writer.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_enum.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_enum_field.cc \
 ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_extension.cc \
