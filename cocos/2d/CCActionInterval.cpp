@@ -1953,6 +1953,66 @@ void FadeTo::update(float time)
 }
 
 //
+// FadeBy
+//
+
+FadeBy* FadeBy::create(float duration, GLubyte opacity)
+{
+    FadeBy *fadeBy = new FadeBy();
+    fadeBy->initWithDuration(duration, opacity);
+    fadeBy->autorelease();
+	
+    return fadeBy;
+}
+
+bool FadeBy::initWithDuration(float duration, GLubyte opacity)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _byOpacity = opacity;
+        return true;
+    }
+	
+    return false;
+}
+
+FadeBy* FadeBy::clone() const
+{
+	// no copy constructor
+	auto a = new FadeBy();
+	a->initWithDuration(_duration, _byOpacity);
+	a->autorelease();
+	return a;
+}
+
+FadeBy* FadeBy::reverse() const
+{
+	CCASSERT(false, "reverse() not supported in FadeBy");
+	return nullptr;
+}
+
+void FadeBy::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+	
+    if (target)
+    {
+        _fromOpacity = target->getOpacity();
+		_toOpacity = _fromOpacity + _byOpacity; // m_toOpacity is actually m_byOpacity
+    }
+    /*_fromOpacity = target->getOpacity();*/
+}
+
+void FadeBy::update(float time)
+{
+    if (_target)
+    {
+        _target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+    }
+    /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
+}
+
+//
 // TintTo
 //
 TintTo* TintTo::create(float duration, GLubyte red, GLubyte green, GLubyte blue)
