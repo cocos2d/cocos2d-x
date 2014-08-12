@@ -132,10 +132,10 @@ protected:
     Type _layoutParameterType;
 };
     
-class LayoutParameterProtocol
+class CC_GUI_DLL LayoutParameterProtocol
 {
 public:
-    
+    virtual ~LayoutParameterProtocol(){}
     virtual LayoutParameter* getLayoutParameter() const= 0;
 };
 

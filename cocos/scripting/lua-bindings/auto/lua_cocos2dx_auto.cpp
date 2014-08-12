@@ -11932,6 +11932,53 @@ int lua_cocos2dx_GLView_getViewPortRect(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_GLView_setContentScaleFactor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::GLView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLView_setContentScaleFactor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.GLView:setContentScaleFactor");
+        if(!ok)
+            return 0;
+        bool ret = cobj->setContentScaleFactor(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLView:setContentScaleFactor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_setContentScaleFactor'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_GLView_getContentScaleFactor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -12380,6 +12427,52 @@ int lua_cocos2dx_GLView_getFrameSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_getFrameSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_GLView_setFrameZoomFactor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::GLView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLView_setFrameZoomFactor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.GLView:setFrameZoomFactor");
+        if(!ok)
+            return 0;
+        cobj->setFrameZoomFactor(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLView:setFrameZoomFactor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_setFrameZoomFactor'.",&tolua_err);
 #endif
 
     return 0;
@@ -13077,6 +13170,7 @@ int lua_register_cocos2dx_GLView(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"GLView");
         tolua_function(tolua_S,"setFrameSize",lua_cocos2dx_GLView_setFrameSize);
         tolua_function(tolua_S,"getViewPortRect",lua_cocos2dx_GLView_getViewPortRect);
+        tolua_function(tolua_S,"setContentScaleFactor",lua_cocos2dx_GLView_setContentScaleFactor);
         tolua_function(tolua_S,"getContentScaleFactor",lua_cocos2dx_GLView_getContentScaleFactor);
         tolua_function(tolua_S,"setIMEKeyboardState",lua_cocos2dx_GLView_setIMEKeyboardState);
         tolua_function(tolua_S,"setScissorInPoints",lua_cocos2dx_GLView_setScissorInPoints);
@@ -13087,6 +13181,7 @@ int lua_register_cocos2dx_GLView(lua_State* tolua_S)
         tolua_function(tolua_S,"getScaleX",lua_cocos2dx_GLView_getScaleX);
         tolua_function(tolua_S,"getVisibleOrigin",lua_cocos2dx_GLView_getVisibleOrigin);
         tolua_function(tolua_S,"getFrameSize",lua_cocos2dx_GLView_getFrameSize);
+        tolua_function(tolua_S,"setFrameZoomFactor",lua_cocos2dx_GLView_setFrameZoomFactor);
         tolua_function(tolua_S,"getFrameZoomFactor",lua_cocos2dx_GLView_getFrameZoomFactor);
         tolua_function(tolua_S,"getDesignResolutionSize",lua_cocos2dx_GLView_getDesignResolutionSize);
         tolua_function(tolua_S,"windowShouldClose",lua_cocos2dx_GLView_windowShouldClose);

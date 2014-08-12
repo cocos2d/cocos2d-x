@@ -22,55 +22,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __CC_PRIMITIVE_H__
+#define __CC_PRIMITIVE_H__
 
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
-
-#include <stdint.h>
-
-#include "base/CCPlatformMacros.h"
-#include "base/ccTypes.h"
+#include "renderer/CCVertexIndexData.h"
 
 NS_CC_BEGIN
 
-/** Base class of the `RenderCommand` hierarchy.
-*
- The `Renderer` knows how to render `RenderCommands` objects.
- */
-class CC_DLL RenderCommand
+class CC_DLL Primitive : public Ref
 {
 public:
-
-    enum class Type
-    {
-        UNKNOWN_COMMAND,
-        QUAD_COMMAND,
-        CUSTOM_COMMAND,
-        BATCH_COMMAND,
-        GROUP_COMMAND,
-        MESH_COMMAND,
-        PRIMITIVE_COMMAND,
-    };
-
-    /** Get Render Command Id */
-    inline float getGlobalOrder() const { return _globalOrder; }
-
-    /** Returns the Command type */
-    inline Type getType() const { return _type; }
-
+    static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
+    
+    const VertexData* getVertexData() const;
+    
+    const IndexBuffer* getIndexData() const;
+    
+    int getType() const { return _type; }
+    
+    //called by rendering framework
+    void draw();
+    
+    int getStart() const { return _start; }
+    int getCount() const { return _count; }
+    void setStart(int start) { _start = start; }
+    void setCount(int count) { _count = count; }
+    
 protected:
-    RenderCommand();
-    virtual ~RenderCommand();
-
-    void printID();
-
-    // Type used in order to avoid dynamic cast, faster
-    Type _type;
-
-    // commands are sort by depth
-    float _globalOrder;
+    Primitive();
+    virtual ~Primitive();
+    
+    bool init(VertexData* verts, IndexBuffer* indices, int type);
+    
+protected:
+    VertexData* _verts;
+    IndexBuffer* _indices;
+    int _start;
+    int _count;
+    int _type;
 };
 
 NS_CC_END
 
-#endif //__CCRENDERCOMMAND_H_
+#endif //__CC_PRIMITIVE_H__
