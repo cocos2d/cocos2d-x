@@ -1512,11 +1512,11 @@ void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromJsonDictionary(co
 {
     GUIReader* guiReader = GUIReader::getInstance();
     
-    std::map<std::string, Ref*> object_map = GUIReader::getInstance()->getParseObjectMap();
-    Ref* object = object_map[classType];
+    std::map<std::string, Ref*> *object_map = guiReader->getParseObjectMap();
+    Ref* object = (*object_map)[classType];
     
-    std::map<std::string, SEL_ParseEvent> selector_map = guiReader->getParseCallBackMap();
-    SEL_ParseEvent selector = selector_map[classType];
+    std::map<std::string, SEL_ParseEvent> *selector_map = guiReader->getParseCallBackMap();
+    SEL_ParseEvent selector = (*selector_map)[classType];
     
     if (object && selector)
     {

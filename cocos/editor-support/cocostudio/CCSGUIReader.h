@@ -85,8 +85,8 @@ protected:
     ParseObjectMap _mapObject;
     
 public:
-    ParseCallBackMap getParseCallBackMap() { return _mapParseSelector; };
-    ParseObjectMap getParseObjectMap() { return _mapObject; };
+    ParseCallBackMap* getParseCallBackMap() { return &_mapParseSelector; };
+    ParseObjectMap* getParseObjectMap() { return &_mapObject; };
     
 };
 
