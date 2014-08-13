@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "2d/CCActionInstant.h"
+#include "base/ccUtils.h"
 
 using namespace cocos2d;
 
@@ -132,12 +133,12 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
                                   stExpCocoNode *cocoNode,
                                   cocos2d::Ref *root)
 {
-    stExpCocoNode *stChildNode = cocoNode->GetChildArray();
+    stExpCocoNode *stChildNode = cocoNode->GetChildArray(cocoLoader);
     stExpCocoNode *actionNodeList = nullptr;
     int count = cocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
         std::string key = stChildNode[i].GetName(cocoLoader);
-        std::string value = stChildNode[i].GetValue();
+        std::string value = stChildNode[i].GetValue(cocoLoader);
         if (key == "name") {
             setName(value.c_str());
         }else if (key == "loop"){
@@ -152,7 +153,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
     if(nullptr != actionNodeList)
     {
         int actionNodeCount = actionNodeList->GetChildNum();
-        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray();
+        stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(cocoLoader);
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
             ActionNode* actionNode = new ActionNode();
@@ -189,7 +190,7 @@ bool ActionObject::valueToBool(const std::string& value)
 }
 float ActionObject::valueToFloat(const std::string& value)
 {
-    return atof(value.c_str());
+    return utils::atof(value.c_str());
 }
 
 void ActionObject::addActionNode(ActionNode* node)

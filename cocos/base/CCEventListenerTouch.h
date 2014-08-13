@@ -33,7 +33,7 @@
 
 NS_CC_BEGIN
 
-class EventListenerTouchOneByOne : public EventListener
+class CC_DLL EventListenerTouchOneByOne : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
@@ -67,7 +67,7 @@ private:
 };
 
 
-class EventListenerTouchAllAtOnce : public EventListener
+class CC_DLL EventListenerTouchAllAtOnce : public EventListener
 {
 public:
     static const std::string LISTENER_ID;

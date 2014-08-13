@@ -122,7 +122,7 @@ bool Armature::init(const std::string& name)
         _boneDic.clear();
         _topBoneList.clear();
 
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
         _name = name;
 
@@ -402,11 +402,22 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 Skin *skin = static_cast<Skin *>(node);
                 skin->updateTransform();
                 
-                bool blendDirty = bone->isBlendDirty();
+                BlendFunc func = bone->getBlendFunc();
                 
-                if (blendDirty)
+                if (func.src != BlendFunc::ALPHA_PREMULTIPLIED.src || func.dst != BlendFunc::ALPHA_PREMULTIPLIED.dst)
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
+                }
+                else
+                {
+                    if (_blendFunc == BlendFunc::ALPHA_PREMULTIPLIED && !skin->getTexture()->hasPremultipliedAlpha())
+                    {
+                        skin->setBlendFunc(_blendFunc.ALPHA_NON_PREMULTIPLIED);
+                    }
+                    else
+                    {
+                        skin->setBlendFunc(_blendFunc);
+                    }
                 }
                 skin->draw(renderer, transform, flags);
             }

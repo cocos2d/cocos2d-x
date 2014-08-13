@@ -5,19 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
--- @function [parent=#Animate3D] setPlayBack 
--- @param self
--- @param #bool bool
-        
---------------------------------
 -- @function [parent=#Animate3D] setSpeed 
 -- @param self
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Animate3D] getPlayBack 
+-- @function [parent=#Animate3D] setWeight 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#Animate3D] getSpeed 
@@ -25,11 +20,20 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Animate3D] create 
+-- @function [parent=#Animate3D] getWeight 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @overload self, cc.Animation3D, float, float         
+-- @overload self, cc.Animation3D         
+-- @function [parent=#Animate3D] create
 -- @param self
 -- @param #cc.Animation3D animation3d
--- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
-        
+-- @param #float float
+-- @param #float float
+-- @return Animate3D#Animate3D ret (retunr value: cc.Animate3D)
+
 --------------------------------
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self

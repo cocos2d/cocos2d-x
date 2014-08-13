@@ -1,7 +1,16 @@
 
 --------------------------------
 -- @module Helper
+-- @parent_module ccui
 
+--------------------------------
+-- @function [parent=#Helper] getSubStringOfUTF8String 
+-- @param self
+-- @param #string str
+-- @param #unsigned long long
+-- @param #unsigned long long
+-- @return string#string ret (return value: string)
+        
 --------------------------------
 -- @function [parent=#Helper] seekWidgetByTag 
 -- @param self

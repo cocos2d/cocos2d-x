@@ -58,7 +58,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(ChipmunkTestLayer::toggleDebugCallback, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
     menu->setPosition(cocos2d::Vec2(VisibleRect::right().x-100, VisibleRect::top().y-60));
 
@@ -158,7 +158,7 @@ void ChipmunkTestLayer::createResetButton()
 {
     auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ChipmunkTestLayer::reset, this));
 
-    auto menu = Menu::create(reset, NULL);
+    auto menu = Menu::create(reset, nullptr);
 
     menu->setPosition(cocos2d::Vec2(VisibleRect::center().x, VisibleRect::bottom().y + 30));
     this->addChild(menu, -1);

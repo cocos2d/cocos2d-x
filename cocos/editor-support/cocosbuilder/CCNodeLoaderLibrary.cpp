@@ -79,10 +79,10 @@ void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
 
 
 
-static NodeLoaderLibrary * sSharedNodeLoaderLibrary = NULL;
+static NodeLoaderLibrary * sSharedNodeLoaderLibrary = nullptr;
 
 NodeLoaderLibrary * NodeLoaderLibrary::getInstance() {
-    if(sSharedNodeLoaderLibrary == NULL) {
+    if(sSharedNodeLoaderLibrary == nullptr) {
         sSharedNodeLoaderLibrary = new NodeLoaderLibrary();
 
         sSharedNodeLoaderLibrary->registerDefaultNodeLoaders();

@@ -102,10 +102,16 @@ void ActionTimeline::gotoFrameAndPlay(int startIndex, bool loop)
 
 void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, bool loop)
 {
-    _startFrame = _currentFrame = startIndex;
-    _endFrame   = endIndex;
-    _loop       = loop;
-    _time       = _currentFrame * _frameInternal;
+    gotoFrameAndPlay(startIndex, endIndex, startIndex, loop);
+}
+
+void ActionTimeline::gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop)
+{
+    _startFrame = startIndex;
+    _endFrame = endIndex;
+    _currentFrame = currentFrameIndex;
+    _loop = loop;
+    _time = _currentFrame*_frameInternal;
 
     resume();
     gotoFrame(_currentFrame);
@@ -133,6 +139,19 @@ void ActionTimeline::resume()
 bool ActionTimeline::isPlaying() const
 {
     return _playing;
+}
+
+void ActionTimeline::setCurrentFrame(int frameIndex)
+{
+    if (frameIndex >= _startFrame && frameIndex >= _endFrame)
+    {
+        _currentFrame = frameIndex;
+        _time = _currentFrame*_frameInternal;
+    }
+    else
+    {
+        CCLOG("frame index is not between start frame and end frame");
+    }
 }
 
 ActionTimeline* ActionTimeline::clone() const
@@ -196,13 +215,17 @@ void ActionTimeline::startWithTarget(Node *target)
         [this, target](Node* child)
     {
         ActionTimelineData* data = dynamic_cast<ActionTimelineData*>(child->getUserObject());
-        int actionTag = data->getActionTag();
-        if(_timelineMap.find(actionTag) != _timelineMap.end())
+
+        if(data)
         {
-            auto timelines = this->_timelineMap[actionTag];
-            for (auto timeline : timelines)
+            int actionTag = data->getActionTag();
+            if(_timelineMap.find(actionTag) != _timelineMap.end())
             {
-                timeline->setNode(child);
+                auto timelines = this->_timelineMap[actionTag];
+                for (auto timeline : timelines)
+                {
+                    timeline->setNode(child);
+                }
             }
         }
     });
@@ -259,8 +282,8 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
 
 void ActionTimeline::gotoFrame(int frameIndex)
 {
-    int size = _timelineList.size();
-    for(int i = 0; i<size; i++)
+    ssize_t size = _timelineList.size();
+    for(ssize_t i = 0; i < size; i++)
     {      
         _timelineList.at(i)->gotoFrame(frameIndex);
     }
@@ -268,8 +291,8 @@ void ActionTimeline::gotoFrame(int frameIndex)
 
 void ActionTimeline::stepToFrame(int frameIndex)
 {
-    int size = _timelineList.size();
-    for(int i = 0; i<size; i++)
+    ssize_t size = _timelineList.size();
+    for(ssize_t i = 0; i < size; i++)
     {      
         _timelineList.at(i)->stepToFrame(frameIndex);
     }

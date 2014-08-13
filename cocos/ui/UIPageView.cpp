@@ -134,7 +134,7 @@ void PageView::addPage(Layout* page)
     }
 
     
-    addProtectedChild(page);
+    addChild(page);
     _pages.pushBack(page);
     
     _doLayoutDirty = true;
@@ -156,7 +156,7 @@ void PageView::insertPage(Layout* page, int idx)
     else
     {
         _pages.insert(idx, page);
-        addProtectedChild(page);
+        addChild(page);
         
     }
     
@@ -169,7 +169,7 @@ void PageView::removePage(Layout* page)
     {
         return;
     }
-    removeProtectedChild(page);
+    removeChild(page);
     _pages.eraseObject(page);
     
     _doLayoutDirty = true;
@@ -189,7 +189,7 @@ void PageView::removeAllPages()
 {
     for(const auto& node : _pages)
     {
-        removeProtectedChild(node);
+        removeChild(node);
     }
     _pages.clear();
 }
@@ -336,10 +336,6 @@ void PageView::autoScroll(float dt)
 bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
-    if (_hitted)
-    {
-        handlePressLogic(touch);
-    }
     return pass;
 }
 
@@ -433,10 +429,6 @@ bool PageView::scrollPages(float touchOffset)
     return true;
 }
 
-void PageView::handlePressLogic(Touch *touch)
-{
-    //no-op
-}
 
 void PageView::handleMoveLogic(Touch *touch)
 {
@@ -507,7 +499,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
     switch (event)
     {
         case TouchEventType::BEGAN:
-            handlePressLogic(touch);
+            //no-op
             break;
         case TouchEventType::MOVED:
         {
@@ -529,6 +521,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
 
 void PageView::pageTurningEvent()
 {
+    this->retain();
     if (_pageViewEventListener && _pageViewEventSelector)
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
@@ -536,6 +529,7 @@ void PageView::pageTurningEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::TURNING);
     }
+    this->release();
 }
 
 void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)

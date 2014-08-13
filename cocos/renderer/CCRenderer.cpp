@@ -30,6 +30,7 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
@@ -108,6 +109,7 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
+,_lastBatchedMeshCommand(nullptr)
 ,_numQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
@@ -144,8 +146,8 @@ Renderer::~Renderer()
 void Renderer::initGLView()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-        /** listen the event that coming to foreground on Android */
+    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+        /** listen the event that renderer was recreated on Android/WP8 */
         this->setupBuffer();
     });
     
@@ -283,6 +285,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         auto commandType = command->getType();
         if(RenderCommand::Type::QUAD_COMMAND == commandType)
         {
+            flush3D();
             auto cmd = static_cast<QuadCommand*>(command);
             //Batch quads
             if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
@@ -319,11 +322,27 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             auto cmd = static_cast<BatchCommand*>(command);
             cmd->execute();
         }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
         {
             flush();
-            auto cmd = static_cast<MeshCommand*>(command);
+            auto cmd = static_cast<PrimitiveCommand*>(command);
             cmd->execute();
+        }
+        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        {
+            flush2D();
+            auto cmd = static_cast<MeshCommand*>(command);
+            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            {
+                flush3D();
+                cmd->preBatchDraw();
+                cmd->batchDraw();
+                _lastBatchedMeshCommand = cmd;
+            }
+            else
+            {
+                cmd->batchDraw();
+            }
         }
         else
         {
@@ -376,6 +395,7 @@ void Renderer::clean()
     _numQuads = 0;
 
     _lastMaterialID = 0;
+    _lastBatchedMeshCommand = nullptr;
 }
 
 void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
@@ -506,8 +526,23 @@ void Renderer::drawBatchedQuads()
 
 void Renderer::flush()
 {
+    flush2D();
+    flush3D();
+}
+
+void Renderer::flush2D()
+{
     drawBatchedQuads();
     _lastMaterialID = 0;
+}
+
+void Renderer::flush3D()
+{
+    if (_lastBatchedMeshCommand)
+    {
+        _lastBatchedMeshCommand->postBatchDraw();
+        _lastBatchedMeshCommand = nullptr;
+    }
 }
 
 // helpers

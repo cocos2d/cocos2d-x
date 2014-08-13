@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "base/CCPlatformMacros.h"
 #include "cocostudio/CCArmatureDefine.h"
+#include "cocostudio/CocosStudioExport.h"
 #include <stack>
 #include <string>
 
@@ -35,7 +36,7 @@ namespace cocostudio {
  *  @js NA
  *  @lua NA
  */
-class  SpriteFrameCacheHelper
+class CC_STUDIO_DLL SpriteFrameCacheHelper
 {
 public:
 	/** @deprecated Use getInstance() instead */

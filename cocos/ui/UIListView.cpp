@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "ui/UIListView.h"
 #include "ui/UIHelper.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -149,7 +148,7 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(MarginZero);
+                    defaultLp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -161,7 +160,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(MarginZero);
+                    llp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -204,7 +203,7 @@ void ListView::remedyLayoutParameter(Widget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(MarginZero);
+                    defaultLp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -216,7 +215,7 @@ void ListView::remedyLayoutParameter(Widget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(MarginZero);
+                    llp->setMargin(Margin::ZERO);
                 }
                 else
                 {
@@ -473,6 +472,7 @@ void ListView::addEventListener(const ccListViewCallback& callback)
     
 void ListView::selectedItemEvent(TouchEventType event)
 {
+    this->retain();
     switch (event)
     {
         case TouchEventType::BEGAN:
@@ -498,7 +498,7 @@ void ListView::selectedItemEvent(TouchEventType event)
         }
         break;
     }
-
+    this->release();
 }
     
 void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* touch)

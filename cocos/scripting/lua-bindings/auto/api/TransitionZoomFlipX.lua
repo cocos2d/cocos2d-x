@@ -5,15 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: create(float, cc.Scene)
---          
--- overload function: create(float, cc.Scene, cc.TransitionScene::Orientation)
---          
+-- @overload self, float, cc.Scene         
+-- @overload self, float, cc.Scene, int         
 -- @function [parent=#TransitionZoomFlipX] create
 -- @param self
 -- @param #float float
 -- @param #cc.Scene scene
--- @param #cc.TransitionScene::Orientation orientation
+-- @param #int orientation
 -- @return TransitionZoomFlipX#TransitionZoomFlipX ret (retunr value: cc.TransitionZoomFlipX)
 
 return nil

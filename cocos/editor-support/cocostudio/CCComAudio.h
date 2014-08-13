@@ -27,14 +27,16 @@ THE SOFTWARE.
 
 #include "CCComBase.h"
 #include "2d/CCComponent.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
-class ComAudio : public cocos2d::Component
+class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
 
     DECLARE_CLASS_COMPONENT_INFO
-protected:
+
+public:
     /**
      * @js ctor
      */

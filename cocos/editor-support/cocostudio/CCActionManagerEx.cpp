@@ -42,7 +42,12 @@ ActionManagerEx* ActionManagerEx::getInstance()
 
 void ActionManagerEx::destroyInstance()
 {
-	CC_SAFE_DELETE(sharedActionManager);
+    if(sharedActionManager != nullptr)
+    {
+        sharedActionManager->releaseActions();
+        CC_SAFE_DELETE(sharedActionManager);
+    }
+
 }
 
 ActionManagerEx::ActionManagerEx()
@@ -83,7 +88,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
         CCLOG("filename == %s",fileName.c_str());
         cocos2d::Vector<ActionObject*> actionList;
         
-        stExpCocoNode *stChildArray = pCocoNode->GetChildArray();
+        stExpCocoNode *stChildArray = pCocoNode->GetChildArray(cocoLoader);
         stExpCocoNode *actionNode = nullptr;
         for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
@@ -99,7 +104,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
                 ActionObject* action = new ActionObject();
                 action->autorelease();
                 
-                action->initWithBinary(cocoLoader, actionNode->GetChildArray(), root);
+                action->initWithBinary(cocoLoader, actionNode->GetChildArray(cocoLoader), root);
                 
                 actionList.pushBack(action);
             }
@@ -154,6 +159,13 @@ void ActionManagerEx::releaseActions()
     for (iter = _actionDic.begin(); iter != _actionDic.end(); iter++)
     {
         cocos2d::Vector<ActionObject*> objList = iter->second;
+        int listCount = objList.size();
+        for (int i = 0; i < listCount; i++) {
+            ActionObject* action = objList.at(i);
+            if (action != nullptr) {
+                action->stop();
+            }
+        }
         objList.clear();
     }
     

@@ -184,9 +184,8 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
     }
     updateFlippedX();
     updateFlippedY();
-    _backGroundBoxRenderer->setColor(this->getColor());
-    _backGroundBoxRenderer->setOpacity(this->getOpacity());
-    
+    this->updateChildrenDisplayedRGBA();
+
     updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
     _backGroundBoxRendererAdaptDirty = true;
 }
@@ -212,8 +211,8 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
     }
     updateFlippedX();
     updateFlippedY();
-    _backGroundSelectedBoxRenderer->setColor(this->getColor());
-    _backGroundSelectedBoxRenderer->setOpacity(this->getOpacity());
+    this->updateChildrenDisplayedRGBA();
+
     _backGroundSelectedBoxRendererAdaptDirty = true;
 }
 
@@ -238,8 +237,8 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
     }
     updateFlippedX();
     updateFlippedY();
-    _frontCrossRenderer->setColor(this->getColor());
-    _frontCrossRenderer->setOpacity(this->getOpacity());
+    this->updateChildrenDisplayedRGBA();
+
     _frontCrossRendererAdaptDirty = true;
 }
 
@@ -264,9 +263,8 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    _backGroundBoxDisabledRenderer->setColor(this->getColor());
-    _backGroundBoxDisabledRenderer->setOpacity(this->getOpacity());
-    
+    this->updateChildrenDisplayedRGBA();
+
     _backGroundBoxDisabledRendererAdaptDirty = true;
 }
 
@@ -291,9 +289,8 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    _frontCrossDisabledRenderer->setColor(this->getColor());
-    _frontCrossDisabledRenderer->setOpacity(this->getOpacity());
-    
+    this->updateChildrenDisplayedRGBA();
+
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 

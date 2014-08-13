@@ -55,6 +55,7 @@ cocos2d.cpp \
 2d/CCParticleSystem.cpp \
 2d/CCParticleSystemQuad.cpp \
 2d/CCProgressTimer.cpp \
+2d/CCProtectedNode.cpp \
 2d/CCRenderTexture.cpp \
 2d/CCScene.cpp \
 2d/CCSprite.cpp \
@@ -62,8 +63,10 @@ cocos2d.cpp \
 2d/CCSpriteFrame.cpp \
 2d/CCSpriteFrameCache.cpp \
 2d/CCTMXLayer.cpp \
+2d/CCFastTMXLayer.cpp \
 2d/CCTMXObjectGroup.cpp \
 2d/CCTMXTiledMap.cpp \
+2d/CCFastTMXTiledMap.cpp \
 2d/CCTMXXMLParser.cpp \
 2d/CCTextFieldTTF.cpp \
 2d/CCTileMapAtlas.cpp \
@@ -73,13 +76,18 @@ cocos2d.cpp \
 2d/CCTweenFunction.cpp \
 3d/CCAnimate3D.cpp \
 3d/CCAnimation3D.cpp \
+3d/CCAttachNode.cpp \
 3d/CCBundle3D.cpp \
+3d/CCBundleReader.cpp \
 3d/CCMesh.cpp \
 3d/CCMeshSkin.cpp \
 3d/CCSprite3DMaterial.cpp \
 3d/CCObjLoader.cpp \
+3d/CCSkeleton3D.cpp \
 3d/CCSprite3D.cpp \
-platform/CCGLViewProtocol.cpp \
+3d/CCSubMesh.cpp \
+3d/CCSubMeshState.cpp \
+platform/CCGLView.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
@@ -95,6 +103,7 @@ math/Vec2.cpp \
 math/Vec3.cpp \
 math/Vec4.cpp \
 base/CCAutoreleasePool.cpp \
+base/CCCamera.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
 base/CCData.cpp \
@@ -106,7 +115,9 @@ base/CCEventCustom.cpp \
 base/CCEventDispatcher.cpp \
 base/CCEventFocus.cpp \
 base/CCEventKeyboard.cpp \
+base/CCEventController.cpp \
 base/CCEventListener.cpp \
+base/CCEventListenerController.cpp \
 base/CCEventListenerAcceleration.cpp \
 base/CCEventListenerCustom.cpp \
 base/CCEventListenerFocus.cpp \
@@ -135,7 +146,10 @@ base/ccTypes.cpp \
 base/ccUTF8.cpp \
 base/ccUtils.cpp \
 base/etc1.cpp \
+base/pvr.cpp \
 base/s3tc.cpp \
+base/CCController.cpp \
+base/CCController-android.cpp \
 base/ObjectFactory.cpp \
 renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
@@ -153,6 +167,10 @@ renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
 renderer/ccGLStateCache.cpp \
 renderer/ccShaders.cpp \
+renderer/CCVertexIndexBuffer.cpp \
+renderer/CCVertexIndexData.cpp \
+renderer/CCPrimitive.cpp \
+renderer/CCPrimitiveCommand.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
@@ -184,7 +202,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
-                    $(LOCAL_PATH)/../external/xxhash
+                    $(LOCAL_PATH)/../external/xxhash \
+                    $(LOCAL_PATH)/../external/nslog
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
@@ -195,13 +214,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/ConvertUTF 
-
-
-LOCAL_LDLIBS := -lGLESv2 \
-                -llog \
-                -lz \
-                -landroid
+                    $(LOCAL_PATH)/../external/ConvertUTF \
+                    $(LOCAL_PATH)/../external/nslog
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -211,15 +225,23 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_jpeg_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_tiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_webp_static
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
-LOCAL_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
-LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
+LOCAL_CFLAGS   :=  -DUSE_FILE32API
+LOCAL_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
+LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
+LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,platform/android)
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,png/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)

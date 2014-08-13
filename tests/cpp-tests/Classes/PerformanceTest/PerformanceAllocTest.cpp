@@ -137,7 +137,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 	});
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height/2+15));
     addChild(menu, 1);
@@ -230,7 +230,7 @@ void NodeCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Node: %lu\n", sizeof(Node));
+    log("Size of Node: %u\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -278,7 +278,7 @@ void NodeDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Node: %lu\n", sizeof(Node));
+    log("Size of Node: %u\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -331,7 +331,7 @@ void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(Sprite));
+    log("Size of Sprite: %u\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -381,7 +381,7 @@ void SpriteCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(Sprite));
+    log("Size of Sprite: %u\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -431,7 +431,7 @@ void SpriteDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of sprite: %lu\n", sizeof(Sprite));
+    log("Size of sprite: %u\n", sizeof(Sprite));
 
     scheduleUpdate();
 }

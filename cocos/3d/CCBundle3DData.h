@@ -34,7 +34,7 @@
  
 NS_CC_BEGIN
 
-//mesh vertex attribute
+/**mesh vertex attribute*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -47,11 +47,13 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+/**mesh data*/
 struct MeshData
 {
+    typedef std::vector<unsigned short> IndexArray;
     std::vector<float> vertex;
     int vertexSizeInFloat;
-    std::vector<unsigned short> indices;
+    std::vector<IndexArray> subMeshIndices;
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
@@ -60,7 +62,7 @@ public:
     void resetData()
     {
         vertex.clear();
-        indices.clear();
+        subMeshIndices.clear();
         attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;
@@ -78,41 +80,126 @@ public:
     }
 };
 
+/**skin data*/
 struct SkinData
 {
-    std::vector<std::string> boneNames;
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of bone
+    std::vector<std::string> skinBoneNames; //skin bones affect skin
+    std::vector<std::string> nodeBoneNames; //node bones don't affect skin, all bones [skinBone, nodeBone]
+    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone, only for skin bone
+    std::vector<Mat4>        skinBoneOriginMatrices; // original bone transform, for skin bone
+    std::vector<Mat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
     
+    //bone child info, both skinbone and node bone
     std::map<int, std::vector<int> > boneChild;//key parent, value child
     int                              rootBoneIndex;
     void resetData()
     {
-        boneNames.clear();
+        skinBoneNames.clear();
+        nodeBoneNames.clear();
         inverseBindPoseMatrices.clear();
+        skinBoneOriginMatrices.clear();
+        nodeBoneOriginMatrices.clear();
         boneChild.clear();
         rootBoneIndex = -1;
     }
 
+    void addSkinBoneNames(const std::string& name)
+    {
+        auto it = std::find(skinBoneNames.begin(), skinBoneNames.end(), name);
+        if (it == skinBoneNames.end())
+            skinBoneNames.push_back(name);
+    }
+    
+    void addNodeBoneNames(const std::string& name)
+    {
+        auto it = std::find(nodeBoneNames.begin(), nodeBoneNames.end(), name);
+        if (it == nodeBoneNames.end())
+            nodeBoneNames.push_back(name);
+    }
+    
+    int getSkinBoneNameIndex(const std::string& name)const
+    {
+        int i = 0;
+        for (const auto& iter : skinBoneNames)
+        {
+            if ((iter) == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+    
     int getBoneNameIndex(const std::string& name)const
     {
-        std::vector<std::string>::const_iterator iter = boneNames.begin();
-        for (int i = 0; iter != boneNames.end(); ++iter, ++i)
+        int i = 0;
+        for (const auto& iter : skinBoneNames)
         {
-            if ((*iter) == name)
-            {
+            if ((iter) == name)
                 return i;
-            }
+            i++;
+        }
+        for(const auto& iter : nodeBoneNames)
+        {
+            if (iter == name)
+                return i;
+            i++;
         }
         return -1;
     }
 
 };
 
-struct MaterialData
+/**skin data*/
+struct Skeleton3DData
 {
-    std::string texturePath;
+    std::vector<std::string> boneNames; //bone names
+    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone
+    std::vector<Mat4>        boneOriginMatrices; // original bone transform
+    
+    //bone child info, both skinbone and node bone
+    std::map<int, std::vector<int> > boneChild;//key parent, value child
+    int                              rootBoneIndex;
+    
+    void resetData()
+    {
+        boneNames.clear();
+        inverseBindPoseMatrices.clear();
+        boneOriginMatrices.clear();
+        boneChild.clear();
+        rootBoneIndex = -1;
+    }
+    
+    void addBoneNames(const std::string& name)
+    {
+        auto it = std::find(boneNames.begin(), boneNames.end(), name);
+        if (it == boneNames.end())
+            boneNames.push_back(name);
+    }
+    
+    int getBoneNameIndex(const std::string& name)const
+    {
+        int i = 0;
+        for (auto iter : boneNames)
+        {
+            if ((iter) == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
 };
 
+/**material data*/
+struct MaterialData
+{
+    std::map<int, std::string> texturePaths; //submesh id, texture path
+    void resetData()
+    {
+        texturePaths.clear();
+    }
+};
+
+/**animation data*/
 struct Animation3DData
 {
 public:
@@ -173,13 +260,26 @@ public:
     {
     }
     
-    void clear()
+    void resetData()
     {
         _totalTime = 0;
         _translationKeys.clear();
         _rotationKeys.clear();
         _scaleKeys.clear();
     }
+};
+
+/**reference data*/
+struct Reference
+{
+public:
+    std::string id;
+    unsigned int type;
+    unsigned int offset;
+
+    Reference(){}
+
+    ~Reference(){}
 };
 
 NS_CC_END

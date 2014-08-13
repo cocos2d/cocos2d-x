@@ -52,7 +52,7 @@
 --------------------------------
 -- @function [parent=#Widget] setPositionType 
 -- @param self
--- @param #ccui.Widget::PositionType positiontype
+-- @param #int positiontype
         
 --------------------------------
 -- @function [parent=#Widget] isIgnoreContentAdaptWithSize 
@@ -77,14 +77,14 @@
 --------------------------------
 -- @function [parent=#Widget] findNextFocusedWidget 
 -- @param self
--- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #int focusdirection
 -- @param #ccui.Widget widget
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Widget] getPositionType 
 -- @param self
--- @return Widget::PositionType#Widget::PositionType ret (return value: ccui.Widget::PositionType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Widget] getTopBoundary 
@@ -159,7 +159,7 @@
 --------------------------------
 -- @function [parent=#Widget] setBrightStyle 
 -- @param self
--- @param #ccui.Widget::BrightStyle brightstyle
+-- @param #int brightstyle
         
 --------------------------------
 -- @function [parent=#Widget] setLayoutParameter 
@@ -196,10 +196,8 @@
 -- @param self
         
 --------------------------------
--- overload function: updateSizeAndPosition(size_table)
---          
--- overload function: updateSizeAndPosition()
---          
+-- @overload self, size_table         
+-- @overload self         
 -- @function [parent=#Widget] updateSizeAndPosition
 -- @param self
 -- @param #size_table size
@@ -212,7 +210,7 @@
 --------------------------------
 -- @function [parent=#Widget] getSizeType 
 -- @param self
--- @return Widget::SizeType#Widget::SizeType ret (return value: ccui.Widget::SizeType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Widget] addTouchEventListener 
@@ -254,7 +252,7 @@
 --------------------------------
 -- @function [parent=#Widget] setSizeType 
 -- @param self
--- @param #ccui.Widget::SizeType sizetype
+-- @param #int sizetype
         
 --------------------------------
 -- @function [parent=#Widget] setBright 

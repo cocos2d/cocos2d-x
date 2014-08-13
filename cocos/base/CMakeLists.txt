@@ -1,5 +1,6 @@
 set(COCOS_BASE_SRC
   base/CCAutoreleasePool.cpp
+  base/CCCamera.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
   base/CCData.cpp
@@ -40,6 +41,7 @@ set(COCOS_BASE_SRC
   base/ccUTF8.cpp
   base/ccUtils.cpp
   base/etc1.cpp
+  base/pvr.cpp
   base/s3tc.cpp
   base/ObjectFactory.cpp
 )

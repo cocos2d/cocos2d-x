@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "Cocos2dRenderer.h"
 #include "cocos2d.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "AppDelegate.h"
 #include <ppltasks.h>
 
@@ -53,7 +53,7 @@ void Cocos2dRenderer::CreateGLResources()
     if(!mInitialized)
     {
         mInitialized = true;
-        GLView* glview = GLView::create("Test Cpp");
+        GLViewImpl* glview = GLViewImpl::create("Test Cpp");
 	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height,m_orientation);
         director->setOpenGLView(glview);
         CCApplication::getInstance()->run();
@@ -67,8 +67,8 @@ void Cocos2dRenderer::CreateGLResources()
         cocos2d::ShaderCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
-        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
-        director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+        cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+        director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
         director->setGLDefaultValues();
   }
@@ -102,14 +102,14 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
 
 void Cocos2dRenderer::OnUpdateDevice()
 {
-    GLView* glview = GLView::sharedOpenGLView();
-    glview->UpdateDevice(m_eglDisplay, m_eglContext, m_eglSurface);
+    //GLView* glview = GLView::sharedOpenGLView();
+	GLViewImpl::sharedOpenGLView()->UpdateDevice(m_eglDisplay, m_eglContext, m_eglSurface);
 }
 
 void Cocos2dRenderer::OnOrientationChanged(Windows::Graphics::Display::DisplayOrientations orientation)
 {
 	DirectXBase::OnOrientationChanged(orientation);
-    GLView::sharedOpenGLView()->UpdateOrientation(orientation);
+    GLViewImpl::sharedOpenGLView()->UpdateOrientation(orientation);
 }
 
 // return true if eglSwapBuffers was called by OnRender()
@@ -117,8 +117,8 @@ bool Cocos2dRenderer::OnRender()
 {
     if(m_loadingComplete)
     {
-        GLView* glview = GLView::sharedOpenGLView();
-        glview->Render();
+        //GLView* glview = GLView::sharedOpenGLView();
+		GLViewImpl::sharedOpenGLView()->Render();
         return true; // eglSwapBuffers was called by glview->Render();
     }
     return false;
@@ -154,7 +154,7 @@ void Cocos2dRenderer::OnCocos2dKeyEvent(Cocos2dKeyEvent event)
 void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate)
 {
     m_delegate = delegate;
-    GLView* eglView = GLView::sharedOpenGLView();
+    GLViewImpl* eglView = GLViewImpl::sharedOpenGLView();
     if(eglView)
     {
         eglView->SetXamlEventDelegate(delegate);
@@ -164,7 +164,7 @@ void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2
 void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate)
 {
     m_messageBoxDelegate = delegate;
-    GLView* eglView = GLView::sharedOpenGLView();
+    GLViewImpl* eglView = GLViewImpl::sharedOpenGLView();
     if(eglView)
     {
         eglView->SetXamlMessageBoxDelegate(delegate);
@@ -174,7 +174,7 @@ void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::C
 void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate)
 {
     m_editBoxDelegate = delegate;
-    GLView* eglView = GLView::sharedOpenGLView();
+    GLViewImpl* eglView = GLViewImpl::sharedOpenGLView();
     if(eglView)
     {
         eglView->SetXamlEditBoxDelegate(delegate);

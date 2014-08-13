@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCApplication.h"
 #include "base/CCDirector.h"
-#include "CCGLView.h"
 #include <android/log.h>
 #include <jni.h>
 #include <cstring>
@@ -68,7 +67,16 @@ int Application::run()
 
 void Application::setAnimationInterval(double interval)
 {
-    // NYI
+  JniMethodInfo methodInfo;
+  if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval",
+                                       "(D)V"))
+  {
+    CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
+  }
+  else
+  {
+    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, interval);
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////

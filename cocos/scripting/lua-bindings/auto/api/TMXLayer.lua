@@ -1,8 +1,8 @@
 
 --------------------------------
 -- @module TMXLayer
--- @extend SpriteBatchNode
--- @parent_module cc
+-- @extend Node
+-- @parent_module ccexp
 
 --------------------------------
 -- @function [parent=#TMXLayer] getPositionAt 
@@ -14,10 +14,6 @@
 -- @function [parent=#TMXLayer] setLayerOrientation 
 -- @param self
 -- @param #int int
-        
---------------------------------
--- @function [parent=#TMXLayer] releaseMap 
--- @param self
         
 --------------------------------
 -- @function [parent=#TMXLayer] getLayerSize 
@@ -50,27 +46,31 @@
 -- @param #vec2_table vec2
         
 --------------------------------
--- @function [parent=#TMXLayer] initWithTilesetInfo 
+-- @overload self         
+-- @overload self         
+-- @function [parent=#TMXLayer] getProperties
 -- @param self
--- @param #cc.TMXTilesetInfo tmxtilesetinfo
--- @param #cc.TMXLayerInfo tmxlayerinfo
--- @param #cc.TMXMapInfo map
--- @return bool#bool ret (return value: bool)
-        
+-- @return map_table#map_table ret (retunr value: map_table)
+
 --------------------------------
 -- @function [parent=#TMXLayer] setupTiles 
 -- @param self
         
 --------------------------------
--- overload function: setTileGID(unsigned int, vec2_table, cc.TMXTileFlags_)
---          
--- overload function: setTileGID(unsigned int, vec2_table)
---          
+-- @function [parent=#TMXLayer] setupTileSprite 
+-- @param self
+-- @param #cc.Sprite sprite
+-- @param #vec2_table vec2
+-- @param #int int
+        
+--------------------------------
+-- @overload self, int, vec2_table, int         
+-- @overload self, int, vec2_table         
 -- @function [parent=#TMXLayer] setTileGID
 -- @param self
--- @param #unsigned int int
+-- @param #int int
 -- @param #vec2_table vec2
--- @param #cc.TMXTileFlags_ tmxtileflags_
+-- @param #int tmxtileflags_
 
 --------------------------------
 -- @function [parent=#TMXLayer] getMapTileSize 
@@ -104,15 +104,6 @@
 -- @return TMXTilesetInfo#TMXTilesetInfo ret (return value: cc.TMXTilesetInfo)
         
 --------------------------------
--- overload function: getProperties()
---          
--- overload function: getProperties()
---          
--- @function [parent=#TMXLayer] getProperties
--- @param self
--- @return map_table#map_table ret (retunr value: map_table)
-
---------------------------------
 -- @function [parent=#TMXLayer] getTileAt 
 -- @param self
 -- @param #vec2_table vec2
@@ -124,25 +115,25 @@
 -- @param #cc.TMXTilesetInfo tmxtilesetinfo
 -- @param #cc.TMXLayerInfo tmxlayerinfo
 -- @param #cc.TMXMapInfo map
--- @return TMXLayer#TMXLayer ret (return value: cc.TMXLayer)
-        
---------------------------------
--- @function [parent=#TMXLayer] addChild 
--- @param self
--- @param #cc.Node node
--- @param #int int
--- @param #int int
-        
---------------------------------
--- @function [parent=#TMXLayer] getDescription 
--- @param self
--- @return string#string ret (return value: string)
+-- @return experimental::TMXLayer#experimental::TMXLayer ret (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- @function [parent=#TMXLayer] removeChild 
 -- @param self
 -- @param #cc.Node node
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#TMXLayer] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table mat4
+-- @param #unsigned int int
+        
+--------------------------------
+-- @function [parent=#TMXLayer] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#TMXLayer] TMXLayer 

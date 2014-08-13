@@ -40,7 +40,7 @@ public class Cocos2dxVideoHelper {
 	private FrameLayout mLayout = null;
 	private Cocos2dxActivity mActivity = null;	
 	private SparseArray<Cocos2dxVideoView> sVideoViews = null;
-	private static VideoHandler mVideoHandler = null;
+	static VideoHandler mVideoHandler = null;
 	
 	Cocos2dxVideoHelper(Cocos2dxActivity activity,FrameLayout layout)
 	{
@@ -64,6 +64,8 @@ public class Cocos2dxVideoHelper {
 	private final static int VideoTaskSetVisible = 9;
 	private final static int VideoTaskRestart = 10;
 	private final static int VideoTaskKeepRatio = 11;
+	private final static int VideoTaskFullScreen = 12;
+	final static int KeyEventBack = 1000;
 	
 	static class VideoHandler extends Handler{
 		WeakReference<Cocos2dxVideoHelper> mReference;
@@ -99,6 +101,16 @@ public class Cocos2dxVideoHelper {
 				Cocos2dxVideoHelper helper = mReference.get();
 				Rect rect = (Rect)msg.obj;
 				helper._setVideoRect(msg.arg1, rect.left, rect.top, rect.right, rect.bottom);
+				break;
+			}
+			case VideoTaskFullScreen:{
+				Cocos2dxVideoHelper helper = mReference.get();
+				Rect rect = (Rect)msg.obj;
+				if (msg.arg2 == 1) {
+					helper._setFullScreenEnabled(msg.arg1, true, rect.right, rect.bottom);
+				} else {
+					helper._setFullScreenEnabled(msg.arg1, false, rect.right, rect.bottom);
+				}
 				break;
 			}
 			case VideoTaskPause: {
@@ -142,6 +154,11 @@ public class Cocos2dxVideoHelper {
 				} else {
 					helper._setVideoKeepRatio(msg.arg1, false);
 				}
+				break;
+			}
+			case KeyEventBack: {
+				Cocos2dxVideoHelper helper = mReference.get();
+				helper.onBackKeyEvent();
 				break;
 			}
 			default:
@@ -252,6 +269,38 @@ public class Cocos2dxVideoHelper {
 		Cocos2dxVideoView videoView = sVideoViews.get(index);
 		if (videoView != null) {
 			videoView.setVideoRect(left,top,maxWidth,maxHeight);
+		}
+	}
+	
+	public static void setFullScreenEnabled(int index,boolean enabled, int width,int height) {
+		Message msg = new Message();
+		msg.what = VideoTaskFullScreen;
+		msg.arg1 = index;
+		if (enabled) {
+			msg.arg2 = 1;
+		} else {
+			msg.arg2 = 0;
+		}
+		msg.obj = new Rect(0, 0, width, height);
+		mVideoHandler.sendMessage(msg);
+	}
+	
+	private void _setFullScreenEnabled(int index, boolean enabled, int width,int height) {
+		Cocos2dxVideoView videoView = sVideoViews.get(index);
+		if (videoView != null) {
+			videoView.setFullScreenEnabled(enabled, width, height);
+		}
+	}
+	
+	private void onBackKeyEvent() {
+		int viewCount = sVideoViews.size();
+		for (int i = 0; i < viewCount; i++) {
+			int key = sVideoViews.keyAt(i);
+			Cocos2dxVideoView videoView = sVideoViews.get(key);
+			if (videoView != null) {
+				videoView.setFullScreenEnabled(false, 0, 0);
+				mActivity.runOnGLThread(new VideoEventRunnable(key, KeyEventBack));
+			}
 		}
 	}
 	
