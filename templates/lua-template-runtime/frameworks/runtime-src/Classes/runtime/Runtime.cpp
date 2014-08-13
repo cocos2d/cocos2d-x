@@ -730,7 +730,7 @@ public:
         }
 
         char szVersion[1024]={0};
-        sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
+        sprintf(szVersion,"runtimeVersion:%s \nengineVersion:%s",getRuntimeVersion(),cocos2dVersion());
         Label* verLable = Label::createWithSystemFont(szVersion,"",24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
@@ -921,6 +921,32 @@ public:
 #else
                     exit(0);
 #endif	
+                }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
+                {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    extern void shutDownApp();
+                    shutDownApp();
+#else
+                    exit(0);
+#endif	
+                }else if (strcmp(strcmd.c_str(),"getplatform")==0)
+                {
+                    string platform="UNKNOW";
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    platform = "WIN32";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+                    platform = "MAC";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                    platform = "IOS";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                    platform = "ANDROID";
+#endif
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value platformValue(rapidjson::kStringType);
+                    platformValue.SetString(platform.c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("platform",platformValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }
                 
                 rapidjson::StringBuffer buffer;
@@ -1094,8 +1120,7 @@ bool initRuntime()
 #endif
         resourcePath =replaceAll(resourcePath,"\\","/");
         g_resourcePath = resourcePath;
-    }
-    
+    }    
 #else
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
     g_resourcePath += "debugruntime/";
@@ -1114,6 +1139,13 @@ bool initRuntime()
     LuaStack* stack = engine->getLuaStack();
     register_runtime_override_function(stack->getLuaState());
     luaopen_debugger(engine->getLuaStack()->getLuaState());
+
+    if (!ConfigParser::getInstance()->isInit()) {
+        ConfigParser::getInstance()->readConfig();
+    }
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
     return true;
 }
 
@@ -1135,17 +1167,11 @@ bool startRuntime()
 
     // turn on display FPS
     Director::getInstance()->setDisplayStats(true);
-
-    static ConsoleCustomCommand *g_customCommand;
-    g_customCommand = new ConsoleCustomCommand();
-    g_customCommand->init();
- 
     auto scene = Scene::create();
     auto connectLayer = new ConnectWaitLayer();
     connectLayer->autorelease();
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
-
     return true;
 }
