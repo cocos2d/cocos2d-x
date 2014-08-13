@@ -581,6 +581,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     this->beforeDraw();
+    bool visibleByCamera = checkCameraMask();
 
 	if (!_children.empty())
     {
@@ -601,7 +602,8 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
 		}
 		
 		// this draw
-		this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+		    this->draw(renderer, _modelViewTransform, flags);
         
 		// draw children zOrder >= 0
 		for( ; i < _children.size(); i++ )
@@ -611,7 +613,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
 		}
         
 	}
-    else
+    else if (visibleByCamera)
     {
 		this->draw(renderer, _modelViewTransform, flags);
     }

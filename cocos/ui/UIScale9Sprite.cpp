@@ -774,7 +774,8 @@ y+=ytranslate;                       \
         //
         // draw self
         //
-        this->draw(renderer, _modelViewTransform, flags);
+        if (checkCameraMask())
+            this->draw(renderer, _modelViewTransform, flags);
         
         //
         // draw children and protectedChildren zOrder >= 0
