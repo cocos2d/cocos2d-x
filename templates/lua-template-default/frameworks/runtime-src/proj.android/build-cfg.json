@@ -15,11 +15,11 @@
             "to": "res"
         },
         {
-            "from": "../../../../cocos/scripting/lua-bindings/script/cocos2d",
+            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script/cocos2d",
             "to": ""
         },
         {
-            "from": "../../../../cocos/scripting/lua-bindings/script/cocosdenshion",
+            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script/cocosdenshion",
             "to": ""
         }
     ]
