@@ -10,1268 +10,53 @@
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/generated_message_reflection.h>
-#include <google/protobuf/reflection_ops.h>
-#include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
 namespace protocolbuffers {
 
-namespace {
-
-const ::google::protobuf::Descriptor* CSParseBinary_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  CSParseBinary_reflection_ = NULL;
-const ::google::protobuf::Descriptor* NodeTree_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  NodeTree_reflection_ = NULL;
-const ::google::protobuf::Descriptor* WidgetOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  WidgetOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LayoutParameter_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  LayoutParameter_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ButtonOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ButtonOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ResourceData_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ResourceData_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CheckBoxOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  CheckBoxOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ImageViewOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ImageViewOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LabelAtlasOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  LabelAtlasOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LabelBMFontOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  LabelBMFontOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LabelOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  LabelOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* LoadingBarOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  LoadingBarOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ListViewOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ListViewOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* PageViewOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  PageViewOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* PanelOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  PanelOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ScrollViewOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ScrollViewOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SliderOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  SliderOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SpriteOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  SpriteOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TextFieldOptions_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TextFieldOptions_reflection_ = NULL;
-const ::google::protobuf::Descriptor* NodeAction_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  NodeAction_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLine_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLine_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Frame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Frame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLineBoolFrame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLineBoolFrame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLineIntFrame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLineIntFrame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLineStringFrame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLineStringFrame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLinePointFrame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLinePointFrame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLineColorFrame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLineColorFrame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* TimeLineTextureFrame_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TimeLineTextureFrame_reflection_ = NULL;
-
-}  // namespace
-
-
-void protobuf_AssignDesc_CSParseBinary_2eproto() {
-  protobuf_AddDesc_CSParseBinary_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "CSParseBinary.proto");
-  GOOGLE_CHECK(file != NULL);
-  CSParseBinary_descriptor_ = file->message_type(0);
-  static const int CSParseBinary_offsets_[10] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, datascale_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, designheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, designwidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, version_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, textures_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, texturespng_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, nodetree_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, action_),
-  };
-  CSParseBinary_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      CSParseBinary_descriptor_,
-      CSParseBinary::default_instance_,
-      CSParseBinary_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSParseBinary, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(CSParseBinary));
-  NodeTree_descriptor_ = file->message_type(1);
-  static const int NodeTree_offsets_[18] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, children_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, widgetoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, buttonoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, checkboxoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, imageviewoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, spriteoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, labelatlasoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, labelbmfontoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, labeloptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, loadingbaroptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, slideroptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, textfieldoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, scrollviewoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, pageviewoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, listviewoptions_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, paneloptions_),
-  };
-  NodeTree_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      NodeTree_descriptor_,
-      NodeTree::default_instance_,
-      NodeTree_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeTree, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(NodeTree));
-  WidgetOptions_descriptor_ = file->message_type(2);
-  static const int WidgetOptions_offsets_[33] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, scalex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, scaley_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, rotation_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, flipx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, flipy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, colorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, colorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, colorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, opacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, touchable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, visible_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, zorder_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, classtype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, width_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, height_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, positiontype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, positionpercentx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, positionpercenty_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, sizetype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, sizepercentx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, sizepercenty_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, usemergedtexture_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, actiontag_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, tag_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, anchorpointx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, anchorpointy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, ignoresize_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, layoutparameter_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, customproperty_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, frameevent_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, name_),
-  };
-  WidgetOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      WidgetOptions_descriptor_,
-      WidgetOptions::default_instance_,
-      WidgetOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WidgetOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(WidgetOptions));
-  LayoutParameter_descriptor_ = file->message_type(3);
-  static const int LayoutParameter_offsets_[14] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, gravity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, relativename_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, relativetoname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, align_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, marginleft_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, margintop_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, marginright_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, margindown_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, layouteagetype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, layoutnormalhorizontal_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, layoutnormalvertical_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, layoutparenthorizontal_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, layoutparentvertical_),
-  };
-  LayoutParameter_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      LayoutParameter_descriptor_,
-      LayoutParameter::default_instance_,
-      LayoutParameter_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayoutParameter, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LayoutParameter));
-  ButtonOptions_descriptor_ = file->message_type(4);
-  static const int ButtonOptions_offsets_[21] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, normal_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, pressed_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, disabled_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, normaldata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, presseddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, disableddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, text_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, fontname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, fontsize_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, textcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, textcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, textcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, scale9width_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, scale9height_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, scale9enable_),
-  };
-  ButtonOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      ButtonOptions_descriptor_,
-      ButtonOptions::default_instance_,
-      ButtonOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ButtonOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ButtonOptions));
-  ResourceData_descriptor_ = file->message_type(5);
-  static const int ResourceData_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceData, path_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceData, plistfile_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceData, resourcetype_),
-  };
-  ResourceData_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      ResourceData_descriptor_,
-      ResourceData::default_instance_,
-      ResourceData_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceData, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceData, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ResourceData));
-  CheckBoxOptions_descriptor_ = file->message_type(6);
-  static const int CheckBoxOptions_offsets_[13] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, backgroundbox_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, backgroundboxselected_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, backgroundboxdisabled_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, frontcross_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, frontcrossdisabled_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, backgroundboxdata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, backgroundboxselecteddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, frontcrossdata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, backgroundboxdisableddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, frontcrossdisableddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, selectedstate_),
-  };
-  CheckBoxOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      CheckBoxOptions_descriptor_,
-      CheckBoxOptions::default_instance_,
-      CheckBoxOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CheckBoxOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(CheckBoxOptions));
-  ImageViewOptions_descriptor_ = file->message_type(7);
-  static const int ImageViewOptions_offsets_[11] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, filename_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, filenamedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, scale9width_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, scale9height_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, scale9enable_),
-  };
-  ImageViewOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      ImageViewOptions_descriptor_,
-      ImageViewOptions::default_instance_,
-      ImageViewOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ImageViewOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ImageViewOptions));
-  LabelAtlasOptions_descriptor_ = file->message_type(8);
-  static const int LabelAtlasOptions_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, stringvalue_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, charmapfile_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, charmapfiledata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, startcharmap_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, itemwidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, itemheight_),
-  };
-  LabelAtlasOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      LabelAtlasOptions_descriptor_,
-      LabelAtlasOptions::default_instance_,
-      LabelAtlasOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelAtlasOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LabelAtlasOptions));
-  LabelBMFontOptions_descriptor_ = file->message_type(9);
-  static const int LabelBMFontOptions_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelBMFontOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelBMFontOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelBMFontOptions, text_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelBMFontOptions, filenamedata_),
-  };
-  LabelBMFontOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      LabelBMFontOptions_descriptor_,
-      LabelBMFontOptions::default_instance_,
-      LabelBMFontOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelBMFontOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelBMFontOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LabelBMFontOptions));
-  LabelOptions_descriptor_ = file->message_type(10);
-  static const int LabelOptions_offsets_[11] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, fontname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, fontfile_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, fontsize_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, text_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, areawidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, areaheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, halignment_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, valignment_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, touchscaleenable_),
-  };
-  LabelOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      LabelOptions_descriptor_,
-      LabelOptions::default_instance_,
-      LabelOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LabelOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LabelOptions));
-  LoadingBarOptions_descriptor_ = file->message_type(11);
-  static const int LoadingBarOptions_offsets_[11] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, texture_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, texturedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, percent_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, direction_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, scale9enable_),
-  };
-  LoadingBarOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      LoadingBarOptions_descriptor_,
-      LoadingBarOptions::default_instance_,
-      LoadingBarOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoadingBarOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LoadingBarOptions));
-  ListViewOptions_descriptor_ = file->message_type(12);
-  static const int ListViewOptions_offsets_[29] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, backgroundimage_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, backgroundimagedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgstartcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgstartcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgstartcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgendcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgendcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgendcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, colortype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bgcoloropacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, vectorx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, vectory_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, backgroundscale9enable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, innerwidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, innerheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, clipable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, bounceenable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, direction_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, gravity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, itemmargin_),
-  };
-  ListViewOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      ListViewOptions_descriptor_,
-      ListViewOptions::default_instance_,
-      ListViewOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ListViewOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ListViewOptions));
-  PageViewOptions_descriptor_ = file->message_type(13);
-  static const int PageViewOptions_offsets_[23] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, backgroundimage_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, backgroundimagedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, clipable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgstartcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgstartcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgstartcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgendcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgendcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgendcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, colortype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, bgcoloropacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, vectorx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, vectory_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, backgroundscale9enable_),
-  };
-  PageViewOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      PageViewOptions_descriptor_,
-      PageViewOptions::default_instance_,
-      PageViewOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PageViewOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(PageViewOptions));
-  PanelOptions_descriptor_ = file->message_type(14);
-  static const int PanelOptions_offsets_[25] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, backgroundimage_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, backgroundimagedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, clipable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgstartcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgstartcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgstartcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgendcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgendcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgendcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, colortype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, bgcoloropacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, vectorx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, vectory_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, backgroundscale9enable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, layouttype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, adaptscreen_),
-  };
-  PanelOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      PanelOptions_descriptor_,
-      PanelOptions::default_instance_,
-      PanelOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PanelOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(PanelOptions));
-  ScrollViewOptions_descriptor_ = file->message_type(15);
-  static const int ScrollViewOptions_offsets_[28] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, backgroundimage_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, backgroundimagedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgstartcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgstartcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgstartcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgendcolorr_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgendcolorg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgendcolorb_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, colortype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bgcoloropacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, vectorx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, vectory_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, backgroundscale9enable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, innerwidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, innerheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, direction_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, clipable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, bounceenable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, layouttype_),
-  };
-  ScrollViewOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      ScrollViewOptions_descriptor_,
-      ScrollViewOptions::default_instance_,
-      ScrollViewOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ScrollViewOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(ScrollViewOptions));
-  SliderOptions_descriptor_ = file->message_type(16);
-  static const int SliderOptions_offsets_[30] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, barfilename_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, ballnormal_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, ballpressed_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, balldisabled_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, barfilenamedata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, ballnormaldata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, ballpresseddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, balldisableddata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, progressbardata_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, percent_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, capinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, capinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, capinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, capinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, barcapinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, barcapinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, barcapinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, barcapinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, progressbarcapinsetsx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, progressbarcapinsetsy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, progressbarcapinsetswidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, progressbarcapinsetsheight_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, scale9width_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, scale9height_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, scale9enable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, slidballanchorpointx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, slidballanchorpointy_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, length_),
-  };
-  SliderOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      SliderOptions_descriptor_,
-      SliderOptions::default_instance_,
-      SliderOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SliderOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SliderOptions));
-  SpriteOptions_descriptor_ = file->message_type(17);
-  static const int SpriteOptions_offsets_[15] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, touchable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, positiontype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, positionpercentx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, positionpercenty_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, sizetype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, sizepercentx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, sizepercenty_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, usemergedtexture_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, ignoresize_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, layoutparameter_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, customproperty_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, filename_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, filenamedata_),
-  };
-  SpriteOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      SpriteOptions_descriptor_,
-      SpriteOptions::default_instance_,
-      SpriteOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SpriteOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SpriteOptions));
-  TextFieldOptions_descriptor_ = file->message_type(18);
-  static const int TextFieldOptions_offsets_[13] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, fontname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, fontfile_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, fontsize_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, text_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, placeholder_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, passwordenable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, passwordstyletext_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, maxlengthenable_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, maxlength_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, areawidth_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, areaheight_),
-  };
-  TextFieldOptions_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TextFieldOptions_descriptor_,
-      TextFieldOptions::default_instance_,
-      TextFieldOptions_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TextFieldOptions, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TextFieldOptions));
-  NodeAction_descriptor_ = file->message_type(19);
-  static const int NodeAction_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, duration_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, speed_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, timelines_),
-  };
-  NodeAction_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      NodeAction_descriptor_,
-      NodeAction::default_instance_,
-      NodeAction_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NodeAction, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(NodeAction));
-  TimeLine_descriptor_ = file->message_type(20);
-  static const int TimeLine_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, frametype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, actiontag_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, frames_),
-  };
-  TimeLine_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLine_descriptor_,
-      TimeLine::default_instance_,
-      TimeLine_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLine, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLine));
-  Frame_descriptor_ = file->message_type(21);
-  static const int Frame_offsets_[9] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, visibleframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, zorderframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, rotationskewframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, eventframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, anchorpointframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, positionframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, scaleframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, colorframe_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, textureframe_),
-  };
-  Frame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      Frame_descriptor_,
-      Frame::default_instance_,
-      Frame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Frame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Frame));
-  TimeLineBoolFrame_descriptor_ = file->message_type(22);
-  static const int TimeLineBoolFrame_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, frameindex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, tween_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, value_),
-  };
-  TimeLineBoolFrame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLineBoolFrame_descriptor_,
-      TimeLineBoolFrame::default_instance_,
-      TimeLineBoolFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineBoolFrame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLineBoolFrame));
-  TimeLineIntFrame_descriptor_ = file->message_type(23);
-  static const int TimeLineIntFrame_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, frameindex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, tween_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, value_),
-  };
-  TimeLineIntFrame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLineIntFrame_descriptor_,
-      TimeLineIntFrame::default_instance_,
-      TimeLineIntFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineIntFrame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLineIntFrame));
-  TimeLineStringFrame_descriptor_ = file->message_type(24);
-  static const int TimeLineStringFrame_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, frameindex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, tween_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, value_),
-  };
-  TimeLineStringFrame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLineStringFrame_descriptor_,
-      TimeLineStringFrame::default_instance_,
-      TimeLineStringFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineStringFrame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLineStringFrame));
-  TimeLinePointFrame_descriptor_ = file->message_type(25);
-  static const int TimeLinePointFrame_offsets_[6] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, frameindex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, tween_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, y_),
-  };
-  TimeLinePointFrame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLinePointFrame_descriptor_,
-      TimeLinePointFrame::default_instance_,
-      TimeLinePointFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLinePointFrame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLinePointFrame));
-  TimeLineColorFrame_descriptor_ = file->message_type(26);
-  static const int TimeLineColorFrame_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, frameindex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, tween_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, alpha_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, red_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, green_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, blue_),
-  };
-  TimeLineColorFrame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLineColorFrame_descriptor_,
-      TimeLineColorFrame::default_instance_,
-      TimeLineColorFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineColorFrame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLineColorFrame));
-  TimeLineTextureFrame_descriptor_ = file->message_type(27);
-  static const int TimeLineTextureFrame_offsets_[6] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, classname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, frameindex_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, tween_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, filepath_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, plistfile_),
-  };
-  TimeLineTextureFrame_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      TimeLineTextureFrame_descriptor_,
-      TimeLineTextureFrame::default_instance_,
-      TimeLineTextureFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TimeLineTextureFrame, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(TimeLineTextureFrame));
-}
-
-namespace {
-
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_CSParseBinary_2eproto);
-}
-
-void protobuf_RegisterTypes(const ::std::string&) {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    CSParseBinary_descriptor_, &CSParseBinary::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    NodeTree_descriptor_, &NodeTree::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    WidgetOptions_descriptor_, &WidgetOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LayoutParameter_descriptor_, &LayoutParameter::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ButtonOptions_descriptor_, &ButtonOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ResourceData_descriptor_, &ResourceData::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    CheckBoxOptions_descriptor_, &CheckBoxOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ImageViewOptions_descriptor_, &ImageViewOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LabelAtlasOptions_descriptor_, &LabelAtlasOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LabelBMFontOptions_descriptor_, &LabelBMFontOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LabelOptions_descriptor_, &LabelOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LoadingBarOptions_descriptor_, &LoadingBarOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ListViewOptions_descriptor_, &ListViewOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    PageViewOptions_descriptor_, &PageViewOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    PanelOptions_descriptor_, &PanelOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ScrollViewOptions_descriptor_, &ScrollViewOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SliderOptions_descriptor_, &SliderOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SpriteOptions_descriptor_, &SpriteOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TextFieldOptions_descriptor_, &TextFieldOptions::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    NodeAction_descriptor_, &NodeAction::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLine_descriptor_, &TimeLine::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Frame_descriptor_, &Frame::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLineBoolFrame_descriptor_, &TimeLineBoolFrame::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLineIntFrame_descriptor_, &TimeLineIntFrame::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLineStringFrame_descriptor_, &TimeLineStringFrame::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLinePointFrame_descriptor_, &TimeLinePointFrame::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLineColorFrame_descriptor_, &TimeLineColorFrame::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    TimeLineTextureFrame_descriptor_, &TimeLineTextureFrame::default_instance());
-}
-
-}  // namespace
-
 void protobuf_ShutdownFile_CSParseBinary_2eproto() {
   delete CSParseBinary::default_instance_;
-  delete CSParseBinary_reflection_;
   delete NodeTree::default_instance_;
-  delete NodeTree_reflection_;
   delete WidgetOptions::default_instance_;
-  delete WidgetOptions_reflection_;
   delete LayoutParameter::default_instance_;
-  delete LayoutParameter_reflection_;
   delete ButtonOptions::default_instance_;
-  delete ButtonOptions_reflection_;
   delete ResourceData::default_instance_;
-  delete ResourceData_reflection_;
   delete CheckBoxOptions::default_instance_;
-  delete CheckBoxOptions_reflection_;
   delete ImageViewOptions::default_instance_;
-  delete ImageViewOptions_reflection_;
   delete LabelAtlasOptions::default_instance_;
-  delete LabelAtlasOptions_reflection_;
   delete LabelBMFontOptions::default_instance_;
-  delete LabelBMFontOptions_reflection_;
   delete LabelOptions::default_instance_;
-  delete LabelOptions_reflection_;
   delete LoadingBarOptions::default_instance_;
-  delete LoadingBarOptions_reflection_;
   delete ListViewOptions::default_instance_;
-  delete ListViewOptions_reflection_;
   delete PageViewOptions::default_instance_;
-  delete PageViewOptions_reflection_;
   delete PanelOptions::default_instance_;
-  delete PanelOptions_reflection_;
   delete ScrollViewOptions::default_instance_;
-  delete ScrollViewOptions_reflection_;
   delete SliderOptions::default_instance_;
-  delete SliderOptions_reflection_;
   delete SpriteOptions::default_instance_;
-  delete SpriteOptions_reflection_;
   delete TextFieldOptions::default_instance_;
-  delete TextFieldOptions_reflection_;
   delete NodeAction::default_instance_;
-  delete NodeAction_reflection_;
   delete TimeLine::default_instance_;
-  delete TimeLine_reflection_;
   delete Frame::default_instance_;
-  delete Frame_reflection_;
   delete TimeLineBoolFrame::default_instance_;
-  delete TimeLineBoolFrame_reflection_;
   delete TimeLineIntFrame::default_instance_;
-  delete TimeLineIntFrame_reflection_;
   delete TimeLineStringFrame::default_instance_;
-  delete TimeLineStringFrame_reflection_;
   delete TimeLinePointFrame::default_instance_;
-  delete TimeLinePointFrame_reflection_;
   delete TimeLineColorFrame::default_instance_;
-  delete TimeLineColorFrame_reflection_;
   delete TimeLineTextureFrame::default_instance_;
-  delete TimeLineTextureFrame_reflection_;
 }
 
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+void protobuf_AddDesc_CSParseBinary_2eproto_impl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#else
 void protobuf_AddDesc_CSParseBinary_2eproto() {
   static bool already_here = false;
   if (already_here) return;
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\023CSParseBinary.proto\022\017protocolbuffers\"\200"
-    "\002\n\rCSParseBinary\022\021\n\tclassname\030\001 \001(\t\022\014\n\004n"
-    "ame\030\002 \001(\t\022\021\n\tdataScale\030\003 \001(\002\022\024\n\014designHe"
-    "ight\030\004 \001(\005\022\023\n\013designWidth\030\005 \001(\005\022\017\n\007versi"
-    "on\030\006 \001(\t\022\020\n\010textures\030\007 \003(\t\022\023\n\013texturesPn"
-    "g\030\010 \003(\t\022+\n\010nodeTree\030\t \001(\0132\031.protocolbuff"
-    "ers.NodeTree\022+\n\006action\030\n \001(\0132\033.protocolb"
-    "uffers.NodeAction\"\307\007\n\010NodeTree\022\021\n\tclassn"
-    "ame\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022+\n\010children\030\003 \003("
-    "\0132\031.protocolbuffers.NodeTree\0225\n\rwidgetOp"
-    "tions\030\004 \001(\0132\036.protocolbuffers.WidgetOpti"
-    "ons\0225\n\rbuttonOptions\030\005 \001(\0132\036.protocolbuf"
-    "fers.ButtonOptions\0229\n\017checkBoxOptions\030\006 "
-    "\001(\0132 .protocolbuffers.CheckBoxOptions\022;\n"
-    "\020imageViewOptions\030\007 \001(\0132!.protocolbuffer"
-    "s.ImageViewOptions\0225\n\rspriteOptions\030\010 \001("
-    "\0132\036.protocolbuffers.SpriteOptions\022=\n\021lab"
-    "elAtlasOptions\030\n \001(\0132\".protocolbuffers.L"
-    "abelAtlasOptions\022\?\n\022labelBMFontOptions\030\013"
-    " \001(\0132#.protocolbuffers.LabelBMFontOption"
-    "s\0223\n\014labelOptions\030\014 \001(\0132\035.protocolbuffer"
-    "s.LabelOptions\022=\n\021loadingBarOptions\030\r \001("
-    "\0132\".protocolbuffers.LoadingBarOptions\0225\n"
-    "\rsliderOptions\030\016 \001(\0132\036.protocolbuffers.S"
-    "liderOptions\022;\n\020textFieldOptions\030\017 \001(\0132!"
-    ".protocolbuffers.TextFieldOptions\022=\n\021scr"
-    "ollViewOptions\030\020 \001(\0132\".protocolbuffers.S"
-    "crollViewOptions\0229\n\017pageViewOptions\030\021 \001("
-    "\0132 .protocolbuffers.PageViewOptions\0229\n\017l"
-    "istViewOptions\030\022 \001(\0132 .protocolbuffers.L"
-    "istViewOptions\0223\n\014PanelOptions\030\023 \001(\0132\035.p"
-    "rotocolbuffers.PanelOptions\"\223\005\n\rWidgetOp"
-    "tions\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\016\n\006scaleX\030\003 "
-    "\001(\002\022\016\n\006scaleY\030\004 \001(\002\022\020\n\010rotation\030\005 \001(\002\022\r\n"
-    "\005flipX\030\006 \001(\010\022\r\n\005flipY\030\007 \001(\010\022\016\n\006colorB\030\010 "
-    "\001(\005\022\016\n\006colorG\030\t \001(\005\022\016\n\006colorR\030\n \001(\005\022\017\n\007o"
-    "pacity\030\013 \001(\005\022\021\n\ttouchAble\030\014 \001(\010\022\017\n\007visib"
-    "le\030\r \001(\010\022\016\n\006zorder\030\016 \001(\005\022\021\n\tclassType\030\017 "
-    "\001(\t\022\r\n\005width\030\020 \001(\002\022\016\n\006height\030\021 \001(\002\022\024\n\014po"
-    "sitionType\030\022 \001(\005\022\030\n\020positionPercentX\030\023 \001"
-    "(\002\022\030\n\020positionPercentY\030\024 \001(\002\022\020\n\010sizeType"
-    "\030\025 \001(\005\022\024\n\014sizePercentX\030\026 \001(\002\022\024\n\014sizePerc"
-    "entY\030\027 \001(\002\022\030\n\020useMergedTexture\030\030 \001(\010\022\021\n\t"
-    "actionTag\030\031 \001(\005\022\013\n\003tag\030\032 \001(\005\022\024\n\014anchorPo"
-    "intX\030\033 \001(\002\022\024\n\014anchorPointY\030\034 \001(\002\022\022\n\nigno"
-    "reSize\030\035 \001(\010\0229\n\017layoutParameter\030\036 \001(\0132 ."
-    "protocolbuffers.LayoutParameter\022\026\n\016custo"
-    "mProperty\030\037 \001(\t\022\022\n\nframeEvent\030  \001(\t\022\014\n\004n"
-    "ame\030! \001(\t\"\321\002\n\017LayoutParameter\022\014\n\004type\030\001 "
-    "\001(\005\022\017\n\007gravity\030\002 \001(\005\022\024\n\014relativeName\030\003 \001"
-    "(\t\022\026\n\016relativeToName\030\004 \001(\t\022\r\n\005align\030\005 \001("
-    "\005\022\022\n\nmarginLeft\030\006 \001(\005\022\021\n\tmarginTop\030\007 \001(\005"
-    "\022\023\n\013marginRight\030\010 \001(\005\022\022\n\nmarginDown\030\t \001("
-    "\005\022\026\n\016layoutEageType\030\n \001(\005\022\036\n\026layoutNorma"
-    "lHorizontal\030\013 \001(\005\022\034\n\024layoutNormalVertica"
-    "l\030\014 \001(\005\022\036\n\026layoutParentHorizontal\030\r \001(\005\022"
-    "\034\n\024layoutParentVertical\030\016 \001(\005\"\207\004\n\rButton"
-    "Options\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t"
-    "\022\016\n\006normal\030\003 \001(\t\022\017\n\007pressed\030\004 \001(\t\022\020\n\010dis"
-    "abled\030\005 \001(\t\0221\n\nnormalData\030\006 \001(\0132\035.protoc"
-    "olbuffers.ResourceData\0222\n\013pressedData\030\007 "
-    "\001(\0132\035.protocolbuffers.ResourceData\0223\n\014di"
-    "sabledData\030\010 \001(\0132\035.protocolbuffers.Resou"
-    "rceData\022\014\n\004text\030\t \001(\t\022\020\n\010fontName\030\n \001(\t\022"
-    "\020\n\010fontSize\030\013 \001(\005\022\022\n\ntextColorR\030\014 \001(\005\022\022\n"
-    "\ntextColorG\030\r \001(\005\022\022\n\ntextColorB\030\016 \001(\005\022\022\n"
-    "\ncapInsetsX\030\017 \001(\002\022\022\n\ncapInsetsY\030\020 \001(\002\022\026\n"
-    "\016capInsetsWidth\030\021 \001(\002\022\027\n\017capInsetsHeight"
-    "\030\022 \001(\002\022\023\n\013scale9Width\030\023 \001(\002\022\024\n\014scale9Hei"
-    "ght\030\024 \001(\002\022\024\n\014scale9Enable\030\025 \001(\010\"E\n\014Resou"
-    "rceData\022\014\n\004path\030\001 \001(\t\022\021\n\tplistFile\030\002 \001(\t"
-    "\022\024\n\014resourceType\030\003 \001(\005\"\202\004\n\017CheckBoxOptio"
-    "ns\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\025\n\rb"
-    "ackGroundBox\030\003 \001(\t\022\035\n\025backGroundBoxSelec"
-    "ted\030\004 \001(\t\022\035\n\025backGroundBoxDisabled\030\005 \001(\t"
-    "\022\022\n\nfrontCross\030\006 \001(\t\022\032\n\022frontCrossDisabl"
-    "ed\030\007 \001(\t\0228\n\021backGroundBoxData\030\010 \001(\0132\035.pr"
-    "otocolbuffers.ResourceData\022@\n\031backGround"
-    "BoxSelectedData\030\t \001(\0132\035.protocolbuffers."
-    "ResourceData\0225\n\016frontCrossData\030\n \001(\0132\035.p"
-    "rotocolbuffers.ResourceData\022@\n\031backGroun"
-    "dBoxDisabledData\030\013 \001(\0132\035.protocolbuffers"
-    ".ResourceData\022=\n\026frontCrossDisabledData\030"
-    "\014 \001(\0132\035.protocolbuffers.ResourceData\022\025\n\r"
-    "selectedState\030\r \001(\010\"\224\002\n\020ImageViewOptions"
-    "\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\020\n\010fil"
-    "eName\030\003 \001(\t\0223\n\014fileNameData\030\004 \001(\0132\035.prot"
-    "ocolbuffers.ResourceData\022\022\n\ncapInsetsX\030\005"
-    " \001(\002\022\022\n\ncapInsetsY\030\006 \001(\002\022\027\n\017capInsetsHei"
-    "ght\030\007 \001(\002\022\026\n\016capInsetsWidth\030\010 \001(\002\022\023\n\013sca"
-    "le9Width\030\t \001(\002\022\024\n\014scale9Height\030\n \001(\002\022\024\n\014"
-    "scale9Enable\030\013 \001(\010\"\323\001\n\021LabelAtlasOptions"
-    "\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\023\n\013str"
-    "ingValue\030\003 \001(\t\022\023\n\013charMapFile\030\004 \001(\t\0226\n\017c"
-    "harMapFileData\030\005 \001(\0132\035.protocolbuffers.R"
-    "esourceData\022\024\n\014startCharMap\030\006 \001(\t\022\021\n\tite"
-    "mWidth\030\007 \001(\005\022\022\n\nitemHeight\030\010 \001(\005\"x\n\022Labe"
-    "lBMFontOptions\022\014\n\004name\030\001 \001(\t\022\021\n\tclassnam"
-    "e\030\002 \001(\t\022\014\n\004text\030\003 \001(\t\0223\n\014fileNameData\030\004 "
-    "\001(\0132\035.protocolbuffers.ResourceData\"\373\001\n\014L"
-    "abelOptions\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002"
-    " \001(\t\022\020\n\010fontName\030\003 \001(\t\022/\n\010fontFile\030\004 \001(\013"
-    "2\035.protocolbuffers.ResourceData\022\020\n\010fontS"
-    "ize\030\005 \001(\005\022\014\n\004text\030\006 \001(\t\022\021\n\tareaWidth\030\007 \001"
-    "(\002\022\022\n\nareaHeight\030\010 \001(\002\022\022\n\nhAlignment\030\t \001"
-    "(\005\022\022\n\nvAlignment\030\n \001(\005\022\030\n\020touchScaleEnab"
-    "le\030\013 \001(\010\"\214\002\n\021LoadingBarOptions\022\014\n\004name\030\001"
-    " \001(\t\022\021\n\tclassname\030\002 \001(\t\022\017\n\007texture\030\003 \001(\t"
-    "\0222\n\013textureData\030\004 \001(\0132\035.protocolbuffers."
-    "ResourceData\022\017\n\007percent\030\005 \001(\005\022\021\n\tdirecti"
-    "on\030\006 \001(\005\022\022\n\ncapInsetsX\030\007 \001(\002\022\022\n\ncapInset"
-    "sY\030\010 \001(\002\022\026\n\016capInsetsWidth\030\t \001(\002\022\027\n\017capI"
-    "nsetsHeight\030\n \001(\002\022\024\n\014scale9Enable\030\013 \001(\010\""
-    "\220\005\n\017ListViewOptions\022\014\n\004name\030\001 \001(\t\022\021\n\tcla"
-    "ssname\030\002 \001(\t\022\027\n\017backGroundImage\030\003 \001(\t\022:\n"
-    "\023backGroundImageData\030\004 \001(\0132\035.protocolbuf"
-    "fers.ResourceData\022\020\n\010bgColorR\030\005 \001(\005\022\020\n\010b"
-    "gColorG\030\006 \001(\005\022\020\n\010bgColorB\030\007 \001(\005\022\025\n\rbgSta"
-    "rtColorR\030\010 \001(\005\022\025\n\rbgStartColorG\030\t \001(\005\022\025\n"
-    "\rbgStartColorB\030\n \001(\005\022\023\n\013bgEndColorR\030\013 \001("
-    "\005\022\023\n\013bgEndColorG\030\014 \001(\005\022\023\n\013bgEndColorB\030\r "
-    "\001(\005\022\021\n\tcolorType\030\016 \001(\005\022\026\n\016bgColorOpacity"
-    "\030\017 \001(\005\022\017\n\007vectorX\030\020 \001(\002\022\017\n\007vectorY\030\021 \001(\002"
-    "\022\022\n\ncapInsetsX\030\022 \001(\002\022\022\n\ncapInsetsY\030\023 \001(\002"
-    "\022\026\n\016capInsetsWidth\030\024 \001(\002\022\027\n\017capInsetsHei"
-    "ght\030\025 \001(\002\022\036\n\026backGroundScale9Enable\030\026 \001("
-    "\010\022\022\n\ninnerWidth\030\027 \001(\002\022\023\n\013innerHeight\030\030 \001"
-    "(\002\022\020\n\010clipAble\030\031 \001(\010\022\024\n\014bounceEnable\030\032 \001"
-    "(\010\022\021\n\tdirection\030\033 \001(\005\022\017\n\007gravity\030\034 \001(\005\022\022"
-    "\n\nitemMargin\030\035 \001(\005\"\231\004\n\017PageViewOptions\022\014"
-    "\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\027\n\017backG"
-    "roundImage\030\003 \001(\t\022:\n\023backGroundImageData\030"
-    "\004 \001(\0132\035.protocolbuffers.ResourceData\022\020\n\010"
-    "clipAble\030\005 \001(\010\022\020\n\010bgColorR\030\006 \001(\005\022\020\n\010bgCo"
-    "lorG\030\007 \001(\005\022\020\n\010bgColorB\030\010 \001(\005\022\025\n\rbgStartC"
-    "olorR\030\t \001(\005\022\025\n\rbgStartColorG\030\n \001(\005\022\025\n\rbg"
-    "StartColorB\030\013 \001(\005\022\023\n\013bgEndColorR\030\014 \001(\005\022\023"
-    "\n\013bgEndColorG\030\r \001(\005\022\023\n\013bgEndColorB\030\016 \001(\005"
-    "\022\021\n\tcolorType\030\017 \001(\005\022\026\n\016bgColorOpacity\030\020 "
-    "\001(\005\022\017\n\007vectorX\030\021 \001(\002\022\017\n\007vectorY\030\022 \001(\002\022\022\n"
-    "\ncapInsetsX\030\023 \001(\002\022\022\n\ncapInsetsY\030\024 \001(\002\022\026\n"
-    "\016capInsetsWidth\030\025 \001(\002\022\027\n\017capInsetsHeight"
-    "\030\026 \001(\002\022\036\n\026backGroundScale9Enable\030\027 \001(\010\"\277"
-    "\004\n\014PanelOptions\022\014\n\004name\030\001 \001(\t\022\021\n\tclassna"
-    "me\030\002 \001(\t\022\027\n\017backGroundImage\030\003 \001(\t\022:\n\023bac"
-    "kGroundImageData\030\004 \001(\0132\035.protocolbuffers"
-    ".ResourceData\022\020\n\010clipAble\030\005 \001(\010\022\020\n\010bgCol"
-    "orR\030\006 \001(\005\022\020\n\010bgColorG\030\007 \001(\005\022\020\n\010bgColorB\030"
-    "\010 \001(\005\022\025\n\rbgStartColorR\030\t \001(\005\022\025\n\rbgStartC"
-    "olorG\030\n \001(\005\022\025\n\rbgStartColorB\030\013 \001(\005\022\023\n\013bg"
-    "EndColorR\030\014 \001(\005\022\023\n\013bgEndColorG\030\r \001(\005\022\023\n\013"
-    "bgEndColorB\030\016 \001(\005\022\021\n\tcolorType\030\017 \001(\005\022\026\n\016"
-    "bgColorOpacity\030\020 \001(\005\022\017\n\007vectorX\030\021 \001(\002\022\017\n"
-    "\007vectorY\030\022 \001(\002\022\022\n\ncapInsetsX\030\023 \001(\002\022\022\n\nca"
-    "pInsetsY\030\024 \001(\002\022\026\n\016capInsetsWidth\030\025 \001(\002\022\027"
-    "\n\017capInsetsHeight\030\026 \001(\002\022\036\n\026backGroundSca"
-    "le9Enable\030\027 \001(\010\022\022\n\nlayoutType\030\030 \001(\005\022\023\n\013a"
-    "daptScreen\030\031 \001(\010\"\201\005\n\021ScrollViewOptions\022\014"
-    "\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\027\n\017backG"
-    "roundImage\030\003 \001(\t\022:\n\023backGroundImageData\030"
-    "\004 \001(\0132\035.protocolbuffers.ResourceData\022\020\n\010"
-    "bgColorR\030\005 \001(\005\022\020\n\010bgColorG\030\006 \001(\005\022\020\n\010bgCo"
-    "lorB\030\007 \001(\005\022\025\n\rbgStartColorR\030\010 \001(\005\022\025\n\rbgS"
-    "tartColorG\030\t \001(\005\022\025\n\rbgStartColorB\030\n \001(\005\022"
-    "\023\n\013bgEndColorR\030\013 \001(\005\022\023\n\013bgEndColorG\030\014 \001("
-    "\005\022\023\n\013bgEndColorB\030\r \001(\005\022\021\n\tcolorType\030\016 \001("
-    "\005\022\026\n\016bgColorOpacity\030\017 \001(\005\022\017\n\007vectorX\030\020 \001"
-    "(\002\022\017\n\007vectorY\030\021 \001(\002\022\022\n\ncapInsetsX\030\022 \001(\002\022"
-    "\022\n\ncapInsetsY\030\023 \001(\002\022\026\n\016capInsetsWidth\030\024 "
-    "\001(\002\022\027\n\017capInsetsHeight\030\025 \001(\002\022\036\n\026backGrou"
-    "ndScale9Enable\030\026 \001(\010\022\022\n\ninnerWidth\030\027 \001(\002"
-    "\022\023\n\013innerHeight\030\030 \001(\002\022\021\n\tdirection\030\031 \001(\005"
-    "\022\020\n\010clipAble\030\032 \001(\010\022\024\n\014bounceEnable\030\033 \001(\010"
-    "\022\022\n\nlayoutType\030\034 \001(\005\"\375\006\n\rSliderOptions\022\014"
-    "\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\023\n\013barFi"
-    "leName\030\003 \001(\t\022\022\n\nballNormal\030\004 \001(\t\022\023\n\013ball"
-    "Pressed\030\005 \001(\t\022\024\n\014ballDisabled\030\006 \001(\t\0226\n\017b"
-    "arFileNameData\030\007 \001(\0132\035.protocolbuffers.R"
-    "esourceData\0225\n\016ballNormalData\030\010 \001(\0132\035.pr"
-    "otocolbuffers.ResourceData\0226\n\017ballPresse"
-    "dData\030\t \001(\0132\035.protocolbuffers.ResourceDa"
-    "ta\0227\n\020ballDisabledData\030\n \001(\0132\035.protocolb"
-    "uffers.ResourceData\0226\n\017progressBarData\030\013"
-    " \001(\0132\035.protocolbuffers.ResourceData\022\017\n\007p"
-    "ercent\030\014 \001(\005\022\022\n\ncapInsetsX\030\r \001(\002\022\022\n\ncapI"
-    "nsetsY\030\016 \001(\002\022\026\n\016capInsetsWidth\030\017 \001(\002\022\027\n\017"
-    "capInsetsHeight\030\020 \001(\002\022\025\n\rbarCapInsetsX\030\021"
-    " \001(\002\022\025\n\rbarCapInsetsY\030\022 \001(\002\022\031\n\021barCapIns"
-    "etsWidth\030\023 \001(\002\022\032\n\022barCapInsetsHeight\030\024 \001"
-    "(\002\022\035\n\025progressBarCapInsetsX\030\025 \001(\002\022\035\n\025pro"
-    "gressBarCapInsetsY\030\026 \001(\002\022!\n\031progressBarC"
-    "apInsetsWidth\030\027 \001(\002\022\"\n\032progressBarCapIns"
-    "etsHeight\030\030 \001(\002\022\023\n\013scale9Width\030\031 \001(\002\022\024\n\014"
-    "scale9Height\030\032 \001(\002\022\024\n\014scale9Enable\030\033 \001(\010"
-    "\022\034\n\024slidBallAnchorPointX\030\034 \001(\002\022\034\n\024slidBa"
-    "llAnchorPointY\030\035 \001(\002\022\016\n\006length\030\036 \001(\002\"\223\003\n"
-    "\rSpriteOptions\022\014\n\004name\030\001 \001(\t\022\021\n\tclassnam"
-    "e\030\002 \001(\t\022\021\n\ttouchAble\030\003 \001(\010\022\024\n\014positionTy"
-    "pe\030\004 \001(\005\022\030\n\020positionPercentX\030\005 \001(\002\022\030\n\020po"
-    "sitionPercentY\030\006 \001(\002\022\020\n\010sizeType\030\007 \001(\005\022\024"
-    "\n\014sizePercentX\030\010 \001(\002\022\024\n\014sizePercentY\030\t \001"
-    "(\002\022\030\n\020useMergedTexture\030\n \001(\010\022\022\n\nignoreSi"
-    "ze\030\013 \001(\010\0229\n\017layoutParameter\030\014 \001(\0132 .prot"
-    "ocolbuffers.LayoutParameter\022\026\n\016customPro"
-    "perty\030\r \001(\t\022\020\n\010fileName\030\016 \001(\t\0223\n\014fileNam"
-    "eData\030\017 \001(\0132\035.protocolbuffers.ResourceDa"
-    "ta\"\261\002\n\020TextFieldOptions\022\014\n\004name\030\001 \001(\t\022\021\n"
-    "\tclassname\030\002 \001(\t\022\020\n\010fontName\030\003 \001(\t\022/\n\010fo"
-    "ntFile\030\004 \001(\0132\035.protocolbuffers.ResourceD"
-    "ata\022\020\n\010fontSize\030\005 \001(\005\022\014\n\004text\030\006 \001(\t\022\023\n\013p"
-    "laceHolder\030\007 \001(\t\022\026\n\016passwordEnable\030\010 \001(\010"
-    "\022\031\n\021passwordStyleText\030\t \001(\t\022\027\n\017maxLength"
-    "Enable\030\n \001(\010\022\021\n\tmaxLength\030\013 \001(\005\022\021\n\tareaW"
-    "idth\030\014 \001(\002\022\022\n\nareaHeight\030\r \001(\002\"|\n\nNodeAc"
-    "tion\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\020\n"
-    "\010duration\030\003 \001(\005\022\r\n\005speed\030\004 \001(\002\022,\n\ttimeli"
-    "nes\030\005 \003(\0132\031.protocolbuffers.TimeLine\"y\n\010"
-    "TimeLine\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001("
-    "\t\022\021\n\tframeType\030\003 \001(\t\022\021\n\tactionTag\030\004 \001(\005\022"
-    "&\n\006frames\030\005 \003(\0132\026.protocolbuffers.Frame\""
-    "\235\004\n\005Frame\0228\n\014visibleFrame\030\005 \001(\0132\".protoc"
-    "olbuffers.TimeLineBoolFrame\0226\n\013zOrderFra"
-    "me\030\006 \001(\0132!.protocolbuffers.TimeLineIntFr"
-    "ame\022>\n\021rotationSkewFrame\030\007 \001(\0132#.protoco"
-    "lbuffers.TimeLinePointFrame\0228\n\neventFram"
-    "e\030\010 \001(\0132$.protocolbuffers.TimeLineString"
-    "Frame\022=\n\020anchorPointFrame\030\t \001(\0132#.protoc"
-    "olbuffers.TimeLinePointFrame\022:\n\rposition"
-    "Frame\030\n \001(\0132#.protocolbuffers.TimeLinePo"
-    "intFrame\0227\n\nscaleFrame\030\013 \001(\0132#.protocolb"
-    "uffers.TimeLinePointFrame\0227\n\ncolorFrame\030"
-    "\014 \001(\0132#.protocolbuffers.TimeLineColorFra"
-    "me\022;\n\014textureFrame\030\r \001(\0132%.protocolbuffe"
-    "rs.TimeLineTextureFrame\"f\n\021TimeLineBoolF"
-    "rame\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\022\n"
-    "\nframeIndex\030\003 \001(\005\022\r\n\005tween\030\004 \001(\010\022\r\n\005valu"
-    "e\030\005 \001(\010\"e\n\020TimeLineIntFrame\022\014\n\004name\030\001 \001("
-    "\t\022\021\n\tclassname\030\002 \001(\t\022\022\n\nframeIndex\030\003 \001(\005"
-    "\022\r\n\005tween\030\004 \001(\010\022\r\n\005value\030\005 \001(\005\"h\n\023TimeLi"
-    "neStringFrame\022\014\n\004name\030\001 \001(\t\022\021\n\tclassname"
-    "\030\002 \001(\t\022\022\n\nframeIndex\030\003 \001(\005\022\r\n\005tween\030\004 \001("
-    "\010\022\r\n\005value\030\005 \001(\t\"n\n\022TimeLinePointFrame\022\014"
-    "\n\004name\030\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\022\n\nframe"
-    "Index\030\003 \001(\005\022\r\n\005tween\030\004 \001(\010\022\t\n\001x\030\005 \001(\002\022\t\n"
-    "\001y\030\006 \001(\002\"\221\001\n\022TimeLineColorFrame\022\014\n\004name\030"
-    "\001 \001(\t\022\021\n\tclassname\030\002 \001(\t\022\022\n\nframeIndex\030\003"
-    " \001(\005\022\r\n\005tween\030\004 \001(\010\022\r\n\005alpha\030\005 \001(\005\022\013\n\003re"
-    "d\030\006 \001(\005\022\r\n\005green\030\007 \001(\005\022\014\n\004blue\030\010 \001(\005\"\177\n\024"
-    "TimeLineTextureFrame\022\014\n\004name\030\001 \001(\t\022\021\n\tcl"
-    "assname\030\002 \001(\t\022\022\n\nframeIndex\030\003 \001(\005\022\r\n\005twe"
-    "en\030\004 \001(\010\022\020\n\010filePath\030\005 \001(\t\022\021\n\tplistFile\030"
-    "\006 \001(\t", 10045);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "CSParseBinary.proto", &protobuf_RegisterTypes);
+#endif
   CSParseBinary::default_instance_ = new CSParseBinary();
   NodeTree::default_instance_ = new NodeTree();
   WidgetOptions::default_instance_ = new WidgetOptions();
@@ -1331,12 +116,20 @@ void protobuf_AddDesc_CSParseBinary_2eproto() {
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_CSParseBinary_2eproto);
 }
 
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_CSParseBinary_2eproto_once_);
+void protobuf_AddDesc_CSParseBinary_2eproto() {
+  ::google::protobuf::::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_CSParseBinary_2eproto_once_,
+                 &protobuf_AddDesc_CSParseBinary_2eproto_impl);
+}
+#else
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_CSParseBinary_2eproto {
   StaticDescriptorInitializer_CSParseBinary_2eproto() {
     protobuf_AddDesc_CSParseBinary_2eproto();
   }
 } static_descriptor_initializer_CSParseBinary_2eproto_;
+#endif
 
 // ===================================================================
 
@@ -1351,20 +144,31 @@ const int CSParseBinary::kTexturesFieldNumber;
 const int CSParseBinary::kTexturesPngFieldNumber;
 const int CSParseBinary::kNodeTreeFieldNumber;
 const int CSParseBinary::kActionFieldNumber;
+const int CSParseBinary::kCocos2DVersionFieldNumber;
 #endif  // !_MSC_VER
 
 CSParseBinary::CSParseBinary()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void CSParseBinary::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  nodetree_ = const_cast< ::protocolbuffers::NodeTree*>(
+      ::protocolbuffers::NodeTree::internal_default_instance());
+#else
   nodetree_ = const_cast< ::protocolbuffers::NodeTree*>(&::protocolbuffers::NodeTree::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  action_ = const_cast< ::protocolbuffers::NodeAction*>(
+      ::protocolbuffers::NodeAction::internal_default_instance());
+#else
   action_ = const_cast< ::protocolbuffers::NodeAction*>(&::protocolbuffers::NodeAction::default_instance());
+#endif
 }
 
 CSParseBinary::CSParseBinary(const CSParseBinary& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -1379,6 +183,7 @@ void CSParseBinary::SharedCtor() {
   version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   nodetree_ = NULL;
   action_ = NULL;
+  cocos2dversion_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1396,7 +201,14 @@ void CSParseBinary::SharedDtor() {
   if (version_ != &::google::protobuf::internal::kEmptyString) {
     delete version_;
   }
+  if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
+    delete cocos2dversion_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete nodetree_;
     delete action_;
   }
@@ -1407,13 +219,12 @@ void CSParseBinary::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CSParseBinary::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return CSParseBinary_descriptor_;
-}
-
 const CSParseBinary& CSParseBinary::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -1451,11 +262,15 @@ void CSParseBinary::Clear() {
     if (has_action()) {
       if (action_ != NULL) action_->::protocolbuffers::NodeAction::Clear();
     }
+    if (has_cocos2dversion()) {
+      if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
+        cocos2dversion_->clear();
+      }
+    }
   }
   textures_.Clear();
   texturespng_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool CSParseBinary::MergePartialFromCodedStream(
@@ -1470,9 +285,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1487,9 +299,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
          parse_name:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1552,9 +361,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
          parse_version:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_version()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->version().data(), this->version().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1569,10 +375,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
          parse_textures:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->add_textures()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->textures(this->textures_size() - 1).data(),
-            this->textures(this->textures_size() - 1).length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1588,10 +390,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
          parse_texturesPng:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->add_texturespng()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->texturespng(this->texturespng_size() - 1).data(),
-            this->texturespng(this->texturespng_size() - 1).length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -1624,6 +422,20 @@ bool CSParseBinary::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(90)) goto parse_cocos2dVersion;
+        break;
+      }
+
+      // optional string cocos2dVersion = 11;
+      case 11: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_cocos2dVersion:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cocos2dversion()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1634,8 +446,7 @@ bool CSParseBinary::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -1648,18 +459,12 @@ void CSParseBinary::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string classname = 1;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->classname(), output);
   }
 
   // optional string name = 2;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->name(), output);
   }
@@ -1681,133 +486,40 @@ void CSParseBinary::SerializeWithCachedSizes(
 
   // optional string version = 6;
   if (has_version()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->version().data(), this->version().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->version(), output);
   }
 
   // repeated string textures = 7;
   for (int i = 0; i < this->textures_size(); i++) {
-  ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-    this->textures(i).data(), this->textures(i).length(),
-    ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       7, this->textures(i), output);
   }
 
   // repeated string texturesPng = 8;
   for (int i = 0; i < this->texturespng_size(); i++) {
-  ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-    this->texturespng(i).data(), this->texturespng(i).length(),
-    ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       8, this->texturespng(i), output);
   }
 
   // optional .protocolbuffers.NodeTree nodeTree = 9;
   if (has_nodetree()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       9, this->nodetree(), output);
   }
 
   // optional .protocolbuffers.NodeAction action = 10;
   if (has_action()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       10, this->action(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* CSParseBinary::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string classname = 1;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->classname(), target);
+  // optional string cocos2dVersion = 11;
+  if (has_cocos2dversion()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      11, this->cocos2dversion(), output);
   }
 
-  // optional string name = 2;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->name(), target);
-  }
-
-  // optional float dataScale = 3;
-  if (has_datascale()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->datascale(), target);
-  }
-
-  // optional int32 designHeight = 4;
-  if (has_designheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->designheight(), target);
-  }
-
-  // optional int32 designWidth = 5;
-  if (has_designwidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->designwidth(), target);
-  }
-
-  // optional string version = 6;
-  if (has_version()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->version().data(), this->version().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->version(), target);
-  }
-
-  // repeated string textures = 7;
-  for (int i = 0; i < this->textures_size(); i++) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->textures(i).data(), this->textures(i).length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteStringToArray(7, this->textures(i), target);
-  }
-
-  // repeated string texturesPng = 8;
-  for (int i = 0; i < this->texturespng_size(); i++) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->texturespng(i).data(), this->texturespng(i).length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteStringToArray(8, this->texturespng(i), target);
-  }
-
-  // optional .protocolbuffers.NodeTree nodeTree = 9;
-  if (has_nodetree()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        9, this->nodetree(), target);
-  }
-
-  // optional .protocolbuffers.NodeAction action = 10;
-  if (has_action()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->action(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int CSParseBinary::ByteSize() const {
@@ -1870,6 +582,13 @@ int CSParseBinary::ByteSize() const {
           this->action());
     }
 
+    // optional string cocos2dVersion = 11;
+    if (has_cocos2dversion()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->cocos2dversion());
+    }
+
   }
   // repeated string textures = 7;
   total_size += 1 * this->textures_size();
@@ -1885,27 +604,15 @@ int CSParseBinary::ByteSize() const {
       this->texturespng(i));
   }
 
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void CSParseBinary::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const CSParseBinary* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const CSParseBinary*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void CSParseBinary::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const CSParseBinary*>(&from));
 }
 
 void CSParseBinary::MergeFrom(const CSParseBinary& from) {
@@ -1939,14 +646,10 @@ void CSParseBinary::MergeFrom(const CSParseBinary& from) {
     if (from.has_action()) {
       mutable_action()->::protocolbuffers::NodeAction::MergeFrom(from.action());
     }
+    if (from.has_cocos2dversion()) {
+      set_cocos2dversion(from.cocos2dversion());
+    }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void CSParseBinary::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void CSParseBinary::CopyFrom(const CSParseBinary& from) {
@@ -1972,18 +675,14 @@ void CSParseBinary::Swap(CSParseBinary* other) {
     texturespng_.Swap(&other->texturespng_);
     std::swap(nodetree_, other->nodetree_);
     std::swap(action_, other->action_);
+    std::swap(cocos2dversion_, other->cocos2dversion_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata CSParseBinary::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CSParseBinary_descriptor_;
-  metadata.reflection = CSParseBinary_reflection_;
-  return metadata;
+::std::string CSParseBinary::GetTypeName() const {
+  return "protocolbuffers.CSParseBinary";
 }
 
 
@@ -2011,30 +710,105 @@ const int NodeTree::kPanelOptionsFieldNumber;
 #endif  // !_MSC_VER
 
 NodeTree::NodeTree()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void NodeTree::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  widgetoptions_ = const_cast< ::protocolbuffers::WidgetOptions*>(
+      ::protocolbuffers::WidgetOptions::internal_default_instance());
+#else
   widgetoptions_ = const_cast< ::protocolbuffers::WidgetOptions*>(&::protocolbuffers::WidgetOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  buttonoptions_ = const_cast< ::protocolbuffers::ButtonOptions*>(
+      ::protocolbuffers::ButtonOptions::internal_default_instance());
+#else
   buttonoptions_ = const_cast< ::protocolbuffers::ButtonOptions*>(&::protocolbuffers::ButtonOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  checkboxoptions_ = const_cast< ::protocolbuffers::CheckBoxOptions*>(
+      ::protocolbuffers::CheckBoxOptions::internal_default_instance());
+#else
   checkboxoptions_ = const_cast< ::protocolbuffers::CheckBoxOptions*>(&::protocolbuffers::CheckBoxOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  imageviewoptions_ = const_cast< ::protocolbuffers::ImageViewOptions*>(
+      ::protocolbuffers::ImageViewOptions::internal_default_instance());
+#else
   imageviewoptions_ = const_cast< ::protocolbuffers::ImageViewOptions*>(&::protocolbuffers::ImageViewOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  spriteoptions_ = const_cast< ::protocolbuffers::SpriteOptions*>(
+      ::protocolbuffers::SpriteOptions::internal_default_instance());
+#else
   spriteoptions_ = const_cast< ::protocolbuffers::SpriteOptions*>(&::protocolbuffers::SpriteOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  labelatlasoptions_ = const_cast< ::protocolbuffers::LabelAtlasOptions*>(
+      ::protocolbuffers::LabelAtlasOptions::internal_default_instance());
+#else
   labelatlasoptions_ = const_cast< ::protocolbuffers::LabelAtlasOptions*>(&::protocolbuffers::LabelAtlasOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  labelbmfontoptions_ = const_cast< ::protocolbuffers::LabelBMFontOptions*>(
+      ::protocolbuffers::LabelBMFontOptions::internal_default_instance());
+#else
   labelbmfontoptions_ = const_cast< ::protocolbuffers::LabelBMFontOptions*>(&::protocolbuffers::LabelBMFontOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  labeloptions_ = const_cast< ::protocolbuffers::LabelOptions*>(
+      ::protocolbuffers::LabelOptions::internal_default_instance());
+#else
   labeloptions_ = const_cast< ::protocolbuffers::LabelOptions*>(&::protocolbuffers::LabelOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  loadingbaroptions_ = const_cast< ::protocolbuffers::LoadingBarOptions*>(
+      ::protocolbuffers::LoadingBarOptions::internal_default_instance());
+#else
   loadingbaroptions_ = const_cast< ::protocolbuffers::LoadingBarOptions*>(&::protocolbuffers::LoadingBarOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  slideroptions_ = const_cast< ::protocolbuffers::SliderOptions*>(
+      ::protocolbuffers::SliderOptions::internal_default_instance());
+#else
   slideroptions_ = const_cast< ::protocolbuffers::SliderOptions*>(&::protocolbuffers::SliderOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  textfieldoptions_ = const_cast< ::protocolbuffers::TextFieldOptions*>(
+      ::protocolbuffers::TextFieldOptions::internal_default_instance());
+#else
   textfieldoptions_ = const_cast< ::protocolbuffers::TextFieldOptions*>(&::protocolbuffers::TextFieldOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  scrollviewoptions_ = const_cast< ::protocolbuffers::ScrollViewOptions*>(
+      ::protocolbuffers::ScrollViewOptions::internal_default_instance());
+#else
   scrollviewoptions_ = const_cast< ::protocolbuffers::ScrollViewOptions*>(&::protocolbuffers::ScrollViewOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  pageviewoptions_ = const_cast< ::protocolbuffers::PageViewOptions*>(
+      ::protocolbuffers::PageViewOptions::internal_default_instance());
+#else
   pageviewoptions_ = const_cast< ::protocolbuffers::PageViewOptions*>(&::protocolbuffers::PageViewOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  listviewoptions_ = const_cast< ::protocolbuffers::ListViewOptions*>(
+      ::protocolbuffers::ListViewOptions::internal_default_instance());
+#else
   listviewoptions_ = const_cast< ::protocolbuffers::ListViewOptions*>(&::protocolbuffers::ListViewOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  paneloptions_ = const_cast< ::protocolbuffers::PanelOptions*>(
+      ::protocolbuffers::PanelOptions::internal_default_instance());
+#else
   paneloptions_ = const_cast< ::protocolbuffers::PanelOptions*>(&::protocolbuffers::PanelOptions::default_instance());
+#endif
 }
 
 NodeTree::NodeTree(const NodeTree& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -2072,7 +846,11 @@ void NodeTree::SharedDtor() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete widgetoptions_;
     delete buttonoptions_;
     delete checkboxoptions_;
@@ -2096,13 +874,12 @@ void NodeTree::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* NodeTree::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return NodeTree_descriptor_;
-}
-
 const NodeTree& NodeTree::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -2176,7 +953,6 @@ void NodeTree::Clear() {
   }
   children_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool NodeTree::MergePartialFromCodedStream(
@@ -2191,9 +967,6 @@ bool NodeTree::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -2208,9 +981,6 @@ bool NodeTree::MergePartialFromCodedStream(
          parse_name:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -2449,8 +1219,7 @@ bool NodeTree::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -2463,263 +1232,112 @@ void NodeTree::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string classname = 1;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->classname(), output);
   }
 
   // optional string name = 2;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->name(), output);
   }
 
   // repeated .protocolbuffers.NodeTree children = 3;
   for (int i = 0; i < this->children_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       3, this->children(i), output);
   }
 
   // optional .protocolbuffers.WidgetOptions widgetOptions = 4;
   if (has_widgetoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->widgetoptions(), output);
   }
 
   // optional .protocolbuffers.ButtonOptions buttonOptions = 5;
   if (has_buttonoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->buttonoptions(), output);
   }
 
   // optional .protocolbuffers.CheckBoxOptions checkBoxOptions = 6;
   if (has_checkboxoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       6, this->checkboxoptions(), output);
   }
 
   // optional .protocolbuffers.ImageViewOptions imageViewOptions = 7;
   if (has_imageviewoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       7, this->imageviewoptions(), output);
   }
 
   // optional .protocolbuffers.SpriteOptions spriteOptions = 8;
   if (has_spriteoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       8, this->spriteoptions(), output);
   }
 
   // optional .protocolbuffers.LabelAtlasOptions labelAtlasOptions = 10;
   if (has_labelatlasoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       10, this->labelatlasoptions(), output);
   }
 
   // optional .protocolbuffers.LabelBMFontOptions labelBMFontOptions = 11;
   if (has_labelbmfontoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       11, this->labelbmfontoptions(), output);
   }
 
   // optional .protocolbuffers.LabelOptions labelOptions = 12;
   if (has_labeloptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       12, this->labeloptions(), output);
   }
 
   // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 13;
   if (has_loadingbaroptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       13, this->loadingbaroptions(), output);
   }
 
   // optional .protocolbuffers.SliderOptions sliderOptions = 14;
   if (has_slideroptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       14, this->slideroptions(), output);
   }
 
   // optional .protocolbuffers.TextFieldOptions textFieldOptions = 15;
   if (has_textfieldoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       15, this->textfieldoptions(), output);
   }
 
   // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 16;
   if (has_scrollviewoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       16, this->scrollviewoptions(), output);
   }
 
   // optional .protocolbuffers.PageViewOptions pageViewOptions = 17;
   if (has_pageviewoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       17, this->pageviewoptions(), output);
   }
 
   // optional .protocolbuffers.ListViewOptions listViewOptions = 18;
   if (has_listviewoptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       18, this->listviewoptions(), output);
   }
 
   // optional .protocolbuffers.PanelOptions PanelOptions = 19;
   if (has_paneloptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       19, this->paneloptions(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* NodeTree::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string classname = 1;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->classname(), target);
-  }
-
-  // optional string name = 2;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->name(), target);
-  }
-
-  // repeated .protocolbuffers.NodeTree children = 3;
-  for (int i = 0; i < this->children_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->children(i), target);
-  }
-
-  // optional .protocolbuffers.WidgetOptions widgetOptions = 4;
-  if (has_widgetoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->widgetoptions(), target);
-  }
-
-  // optional .protocolbuffers.ButtonOptions buttonOptions = 5;
-  if (has_buttonoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->buttonoptions(), target);
-  }
-
-  // optional .protocolbuffers.CheckBoxOptions checkBoxOptions = 6;
-  if (has_checkboxoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        6, this->checkboxoptions(), target);
-  }
-
-  // optional .protocolbuffers.ImageViewOptions imageViewOptions = 7;
-  if (has_imageviewoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        7, this->imageviewoptions(), target);
-  }
-
-  // optional .protocolbuffers.SpriteOptions spriteOptions = 8;
-  if (has_spriteoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->spriteoptions(), target);
-  }
-
-  // optional .protocolbuffers.LabelAtlasOptions labelAtlasOptions = 10;
-  if (has_labelatlasoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->labelatlasoptions(), target);
-  }
-
-  // optional .protocolbuffers.LabelBMFontOptions labelBMFontOptions = 11;
-  if (has_labelbmfontoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        11, this->labelbmfontoptions(), target);
-  }
-
-  // optional .protocolbuffers.LabelOptions labelOptions = 12;
-  if (has_labeloptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        12, this->labeloptions(), target);
-  }
-
-  // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 13;
-  if (has_loadingbaroptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        13, this->loadingbaroptions(), target);
-  }
-
-  // optional .protocolbuffers.SliderOptions sliderOptions = 14;
-  if (has_slideroptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        14, this->slideroptions(), target);
-  }
-
-  // optional .protocolbuffers.TextFieldOptions textFieldOptions = 15;
-  if (has_textfieldoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        15, this->textfieldoptions(), target);
-  }
-
-  // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 16;
-  if (has_scrollviewoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        16, this->scrollviewoptions(), target);
-  }
-
-  // optional .protocolbuffers.PageViewOptions pageViewOptions = 17;
-  if (has_pageviewoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        17, this->pageviewoptions(), target);
-  }
-
-  // optional .protocolbuffers.ListViewOptions listViewOptions = 18;
-  if (has_listviewoptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        18, this->listviewoptions(), target);
-  }
-
-  // optional .protocolbuffers.PanelOptions PanelOptions = 19;
-  if (has_paneloptions()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        19, this->paneloptions(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int NodeTree::ByteSize() const {
@@ -2858,27 +1476,15 @@ int NodeTree::ByteSize() const {
         this->children(i));
   }
 
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void NodeTree::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const NodeTree* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const NodeTree*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void NodeTree::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const NodeTree*>(&from));
 }
 
 void NodeTree::MergeFrom(const NodeTree& from) {
@@ -2941,13 +1547,6 @@ void NodeTree::MergeFrom(const NodeTree& from) {
       mutable_paneloptions()->::protocolbuffers::PanelOptions::MergeFrom(from.paneloptions());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void NodeTree::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void NodeTree::CopyFrom(const NodeTree& from) {
@@ -2982,17 +1581,12 @@ void NodeTree::Swap(NodeTree* other) {
     std::swap(listviewoptions_, other->listviewoptions_);
     std::swap(paneloptions_, other->paneloptions_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata NodeTree::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = NodeTree_descriptor_;
-  metadata.reflection = NodeTree_reflection_;
-  return metadata;
+::std::string NodeTree::GetTypeName() const {
+  return "protocolbuffers.NodeTree";
 }
 
 
@@ -3035,16 +1629,21 @@ const int WidgetOptions::kNameFieldNumber;
 #endif  // !_MSC_VER
 
 WidgetOptions::WidgetOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void WidgetOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  layoutparameter_ = const_cast< ::protocolbuffers::LayoutParameter*>(
+      ::protocolbuffers::LayoutParameter::internal_default_instance());
+#else
   layoutparameter_ = const_cast< ::protocolbuffers::LayoutParameter*>(&::protocolbuffers::LayoutParameter::default_instance());
+#endif
 }
 
 WidgetOptions::WidgetOptions(const WidgetOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -3104,7 +1703,11 @@ void WidgetOptions::SharedDtor() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete layoutparameter_;
   }
 }
@@ -3114,13 +1717,12 @@ void WidgetOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* WidgetOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return WidgetOptions_descriptor_;
-}
-
 const WidgetOptions& WidgetOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -3193,7 +1795,6 @@ void WidgetOptions::Clear() {
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool WidgetOptions::MergePartialFromCodedStream(
@@ -3432,9 +2033,6 @@ bool WidgetOptions::MergePartialFromCodedStream(
          parse_classType:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classtype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classtype().data(), this->classtype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3687,9 +2285,6 @@ bool WidgetOptions::MergePartialFromCodedStream(
          parse_customProperty:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_customproperty()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->customproperty().data(), this->customproperty().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3704,9 +2299,6 @@ bool WidgetOptions::MergePartialFromCodedStream(
          parse_frameEvent:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_frameevent()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->frameevent().data(), this->frameevent().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3721,9 +2313,6 @@ bool WidgetOptions::MergePartialFromCodedStream(
          parse_name:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -3737,8 +2326,7 @@ bool WidgetOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -3821,9 +2409,6 @@ void WidgetOptions::SerializeWithCachedSizes(
 
   // optional string classType = 15;
   if (has_classtype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classtype().data(), this->classtype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       15, this->classtype(), output);
   }
@@ -3900,237 +2485,28 @@ void WidgetOptions::SerializeWithCachedSizes(
 
   // optional .protocolbuffers.LayoutParameter layoutParameter = 30;
   if (has_layoutparameter()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       30, this->layoutparameter(), output);
   }
 
   // optional string customProperty = 31;
   if (has_customproperty()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->customproperty().data(), this->customproperty().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       31, this->customproperty(), output);
   }
 
   // optional string frameEvent = 32;
   if (has_frameevent()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frameevent().data(), this->frameevent().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       32, this->frameevent(), output);
   }
 
   // optional string name = 33;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       33, this->name(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* WidgetOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional float x = 1;
-  if (has_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->x(), target);
-  }
-
-  // optional float y = 2;
-  if (has_y()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->y(), target);
-  }
-
-  // optional float scaleX = 3;
-  if (has_scalex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->scalex(), target);
-  }
-
-  // optional float scaleY = 4;
-  if (has_scaley()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->scaley(), target);
-  }
-
-  // optional float rotation = 5;
-  if (has_rotation()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->rotation(), target);
-  }
-
-  // optional bool flipX = 6;
-  if (has_flipx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(6, this->flipx(), target);
-  }
-
-  // optional bool flipY = 7;
-  if (has_flipy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->flipy(), target);
-  }
-
-  // optional int32 colorB = 8;
-  if (has_colorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->colorb(), target);
-  }
-
-  // optional int32 colorG = 9;
-  if (has_colorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->colorg(), target);
-  }
-
-  // optional int32 colorR = 10;
-  if (has_colorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->colorr(), target);
-  }
-
-  // optional int32 opacity = 11;
-  if (has_opacity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->opacity(), target);
-  }
-
-  // optional bool touchAble = 12;
-  if (has_touchable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(12, this->touchable(), target);
-  }
-
-  // optional bool visible = 13;
-  if (has_visible()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(13, this->visible(), target);
-  }
-
-  // optional int32 zorder = 14;
-  if (has_zorder()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->zorder(), target);
-  }
-
-  // optional string classType = 15;
-  if (has_classtype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classtype().data(), this->classtype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        15, this->classtype(), target);
-  }
-
-  // optional float width = 16;
-  if (has_width()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(16, this->width(), target);
-  }
-
-  // optional float height = 17;
-  if (has_height()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->height(), target);
-  }
-
-  // optional int32 positionType = 18;
-  if (has_positiontype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(18, this->positiontype(), target);
-  }
-
-  // optional float positionPercentX = 19;
-  if (has_positionpercentx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->positionpercentx(), target);
-  }
-
-  // optional float positionPercentY = 20;
-  if (has_positionpercenty()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->positionpercenty(), target);
-  }
-
-  // optional int32 sizeType = 21;
-  if (has_sizetype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(21, this->sizetype(), target);
-  }
-
-  // optional float sizePercentX = 22;
-  if (has_sizepercentx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(22, this->sizepercentx(), target);
-  }
-
-  // optional float sizePercentY = 23;
-  if (has_sizepercenty()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(23, this->sizepercenty(), target);
-  }
-
-  // optional bool useMergedTexture = 24;
-  if (has_usemergedtexture()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(24, this->usemergedtexture(), target);
-  }
-
-  // optional int32 actionTag = 25;
-  if (has_actiontag()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(25, this->actiontag(), target);
-  }
-
-  // optional int32 tag = 26;
-  if (has_tag()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(26, this->tag(), target);
-  }
-
-  // optional float anchorPointX = 27;
-  if (has_anchorpointx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(27, this->anchorpointx(), target);
-  }
-
-  // optional float anchorPointY = 28;
-  if (has_anchorpointy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(28, this->anchorpointy(), target);
-  }
-
-  // optional bool ignoreSize = 29;
-  if (has_ignoresize()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(29, this->ignoresize(), target);
-  }
-
-  // optional .protocolbuffers.LayoutParameter layoutParameter = 30;
-  if (has_layoutparameter()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        30, this->layoutparameter(), target);
-  }
-
-  // optional string customProperty = 31;
-  if (has_customproperty()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->customproperty().data(), this->customproperty().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        31, this->customproperty(), target);
-  }
-
-  // optional string frameEvent = 32;
-  if (has_frameevent()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frameevent().data(), this->frameevent().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        32, this->frameevent(), target);
-  }
-
-  // optional string name = 33;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        33, this->name(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int WidgetOptions::ByteSize() const {
@@ -4339,27 +2715,15 @@ int WidgetOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void WidgetOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const WidgetOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const WidgetOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void WidgetOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const WidgetOptions*>(&from));
 }
 
 void WidgetOptions::MergeFrom(const WidgetOptions& from) {
@@ -4473,13 +2837,6 @@ void WidgetOptions::MergeFrom(const WidgetOptions& from) {
       set_name(from.name());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void WidgetOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void WidgetOptions::CopyFrom(const WidgetOptions& from) {
@@ -4530,17 +2887,12 @@ void WidgetOptions::Swap(WidgetOptions* other) {
     std::swap(name_, other->name_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata WidgetOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = WidgetOptions_descriptor_;
-  metadata.reflection = WidgetOptions_reflection_;
-  return metadata;
+::std::string WidgetOptions::GetTypeName() const {
+  return "protocolbuffers.WidgetOptions";
 }
 
 
@@ -4564,7 +2916,7 @@ const int LayoutParameter::kLayoutParentVerticalFieldNumber;
 #endif  // !_MSC_VER
 
 LayoutParameter::LayoutParameter()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -4572,7 +2924,7 @@ void LayoutParameter::InitAsDefaultInstance() {
 }
 
 LayoutParameter::LayoutParameter(const LayoutParameter& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -4607,7 +2959,11 @@ void LayoutParameter::SharedDtor() {
   if (relativetoname_ != &::google::protobuf::internal::kEmptyString) {
     delete relativetoname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -4616,13 +2972,12 @@ void LayoutParameter::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* LayoutParameter::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return LayoutParameter_descriptor_;
-}
-
 const LayoutParameter& LayoutParameter::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -4660,7 +3015,6 @@ void LayoutParameter::Clear() {
     layoutparentvertical_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool LayoutParameter::MergePartialFromCodedStream(
@@ -4707,9 +3061,6 @@ bool LayoutParameter::MergePartialFromCodedStream(
          parse_relativeName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_relativename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->relativename().data(), this->relativename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4724,9 +3075,6 @@ bool LayoutParameter::MergePartialFromCodedStream(
          parse_relativeToName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_relativetoname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->relativetoname().data(), this->relativetoname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -4900,8 +3248,7 @@ bool LayoutParameter::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -4924,18 +3271,12 @@ void LayoutParameter::SerializeWithCachedSizes(
 
   // optional string relativeName = 3;
   if (has_relativename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->relativename().data(), this->relativename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->relativename(), output);
   }
 
   // optional string relativeToName = 4;
   if (has_relativetoname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->relativetoname().data(), this->relativetoname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       4, this->relativetoname(), output);
   }
@@ -4990,99 +3331,6 @@ void LayoutParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->layoutparentvertical(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* LayoutParameter::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional int32 type = 1;
-  if (has_type()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->type(), target);
-  }
-
-  // optional int32 gravity = 2;
-  if (has_gravity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->gravity(), target);
-  }
-
-  // optional string relativeName = 3;
-  if (has_relativename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->relativename().data(), this->relativename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->relativename(), target);
-  }
-
-  // optional string relativeToName = 4;
-  if (has_relativetoname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->relativetoname().data(), this->relativetoname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->relativetoname(), target);
-  }
-
-  // optional int32 align = 5;
-  if (has_align()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->align(), target);
-  }
-
-  // optional int32 marginLeft = 6;
-  if (has_marginleft()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->marginleft(), target);
-  }
-
-  // optional int32 marginTop = 7;
-  if (has_margintop()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->margintop(), target);
-  }
-
-  // optional int32 marginRight = 8;
-  if (has_marginright()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->marginright(), target);
-  }
-
-  // optional int32 marginDown = 9;
-  if (has_margindown()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->margindown(), target);
-  }
-
-  // optional int32 layoutEageType = 10;
-  if (has_layouteagetype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->layouteagetype(), target);
-  }
-
-  // optional int32 layoutNormalHorizontal = 11;
-  if (has_layoutnormalhorizontal()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->layoutnormalhorizontal(), target);
-  }
-
-  // optional int32 layoutNormalVertical = 12;
-  if (has_layoutnormalvertical()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->layoutnormalvertical(), target);
-  }
-
-  // optional int32 layoutParentHorizontal = 13;
-  if (has_layoutparenthorizontal()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->layoutparenthorizontal(), target);
-  }
-
-  // optional int32 layoutParentVertical = 14;
-  if (has_layoutparentvertical()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->layoutparentvertical(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int LayoutParameter::ByteSize() const {
@@ -5190,27 +3438,15 @@ int LayoutParameter::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void LayoutParameter::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LayoutParameter* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LayoutParameter*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void LayoutParameter::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const LayoutParameter*>(&from));
 }
 
 void LayoutParameter::MergeFrom(const LayoutParameter& from) {
@@ -5261,13 +3497,6 @@ void LayoutParameter::MergeFrom(const LayoutParameter& from) {
       set_layoutparentvertical(from.layoutparentvertical());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void LayoutParameter::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void LayoutParameter::CopyFrom(const LayoutParameter& from) {
@@ -5298,17 +3527,12 @@ void LayoutParameter::Swap(LayoutParameter* other) {
     std::swap(layoutparenthorizontal_, other->layoutparenthorizontal_);
     std::swap(layoutparentvertical_, other->layoutparentvertical_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata LayoutParameter::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LayoutParameter_descriptor_;
-  metadata.reflection = LayoutParameter_reflection_;
-  return metadata;
+::std::string LayoutParameter::GetTypeName() const {
+  return "protocolbuffers.LayoutParameter";
 }
 
 
@@ -5339,18 +3563,33 @@ const int ButtonOptions::kScale9EnableFieldNumber;
 #endif  // !_MSC_VER
 
 ButtonOptions::ButtonOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void ButtonOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  normaldata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   normaldata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  presseddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   presseddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  disableddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   disableddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 ButtonOptions::ButtonOptions(const ButtonOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -5407,7 +3646,11 @@ void ButtonOptions::SharedDtor() {
   if (fontname_ != &::google::protobuf::internal::kEmptyString) {
     delete fontname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete normaldata_;
     delete presseddata_;
     delete disableddata_;
@@ -5419,13 +3662,12 @@ void ButtonOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ButtonOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ButtonOptions_descriptor_;
-}
-
 const ButtonOptions& ButtonOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -5498,7 +3740,6 @@ void ButtonOptions::Clear() {
     scale9enable_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool ButtonOptions::MergePartialFromCodedStream(
@@ -5513,9 +3754,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5530,9 +3768,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5547,9 +3782,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
          parse_normal:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_normal()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->normal().data(), this->normal().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5564,9 +3796,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
          parse_pressed:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_pressed()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->pressed().data(), this->pressed().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5581,9 +3810,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
          parse_disabled:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_disabled()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->disabled().data(), this->disabled().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5640,9 +3866,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
          parse_text:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_text()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->text().data(), this->text().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5657,9 +3880,6 @@ bool ButtonOptions::MergePartialFromCodedStream(
          parse_fontName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_fontname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->fontname().data(), this->fontname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -5849,8 +4069,7 @@ bool ButtonOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -5863,81 +4082,60 @@ void ButtonOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string normal = 3;
   if (has_normal()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->normal().data(), this->normal().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->normal(), output);
   }
 
   // optional string pressed = 4;
   if (has_pressed()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->pressed().data(), this->pressed().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       4, this->pressed(), output);
   }
 
   // optional string disabled = 5;
   if (has_disabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->disabled().data(), this->disabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       5, this->disabled(), output);
   }
 
   // optional .protocolbuffers.ResourceData normalData = 6;
   if (has_normaldata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       6, this->normaldata(), output);
   }
 
   // optional .protocolbuffers.ResourceData pressedData = 7;
   if (has_presseddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       7, this->presseddata(), output);
   }
 
   // optional .protocolbuffers.ResourceData disabledData = 8;
   if (has_disableddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       8, this->disableddata(), output);
   }
 
   // optional string text = 9;
   if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       9, this->text(), output);
   }
 
   // optional string fontName = 10;
   if (has_fontname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->fontname().data(), this->fontname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       10, this->fontname(), output);
   }
@@ -5997,165 +4195,6 @@ void ButtonOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(21, this->scale9enable(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* ButtonOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string normal = 3;
-  if (has_normal()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->normal().data(), this->normal().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->normal(), target);
-  }
-
-  // optional string pressed = 4;
-  if (has_pressed()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->pressed().data(), this->pressed().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->pressed(), target);
-  }
-
-  // optional string disabled = 5;
-  if (has_disabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->disabled().data(), this->disabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->disabled(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData normalData = 6;
-  if (has_normaldata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        6, this->normaldata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData pressedData = 7;
-  if (has_presseddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        7, this->presseddata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData disabledData = 8;
-  if (has_disableddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->disableddata(), target);
-  }
-
-  // optional string text = 9;
-  if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        9, this->text(), target);
-  }
-
-  // optional string fontName = 10;
-  if (has_fontname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->fontname().data(), this->fontname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->fontname(), target);
-  }
-
-  // optional int32 fontSize = 11;
-  if (has_fontsize()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->fontsize(), target);
-  }
-
-  // optional int32 textColorR = 12;
-  if (has_textcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->textcolorr(), target);
-  }
-
-  // optional int32 textColorG = 13;
-  if (has_textcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->textcolorg(), target);
-  }
-
-  // optional int32 textColorB = 14;
-  if (has_textcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->textcolorb(), target);
-  }
-
-  // optional float capInsetsX = 15;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(15, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 16;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(16, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 17;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 18;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(18, this->capinsetsheight(), target);
-  }
-
-  // optional float scale9Width = 19;
-  if (has_scale9width()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->scale9width(), target);
-  }
-
-  // optional float scale9Height = 20;
-  if (has_scale9height()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->scale9height(), target);
-  }
-
-  // optional bool scale9Enable = 21;
-  if (has_scale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(21, this->scale9enable(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int ButtonOptions::ByteSize() const {
@@ -6300,27 +4339,15 @@ int ButtonOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void ButtonOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const ButtonOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ButtonOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void ButtonOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ButtonOptions*>(&from));
 }
 
 void ButtonOptions::MergeFrom(const ButtonOptions& from) {
@@ -6394,13 +4421,6 @@ void ButtonOptions::MergeFrom(const ButtonOptions& from) {
       set_scale9enable(from.scale9enable());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void ButtonOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void ButtonOptions::CopyFrom(const ButtonOptions& from) {
@@ -6438,17 +4458,12 @@ void ButtonOptions::Swap(ButtonOptions* other) {
     std::swap(scale9height_, other->scale9height_);
     std::swap(scale9enable_, other->scale9enable_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata ButtonOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ButtonOptions_descriptor_;
-  metadata.reflection = ButtonOptions_reflection_;
-  return metadata;
+::std::string ButtonOptions::GetTypeName() const {
+  return "protocolbuffers.ButtonOptions";
 }
 
 
@@ -6461,7 +4476,7 @@ const int ResourceData::kResourceTypeFieldNumber;
 #endif  // !_MSC_VER
 
 ResourceData::ResourceData()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -6469,7 +4484,7 @@ void ResourceData::InitAsDefaultInstance() {
 }
 
 ResourceData::ResourceData(const ResourceData& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -6493,7 +4508,11 @@ void ResourceData::SharedDtor() {
   if (plistfile_ != &::google::protobuf::internal::kEmptyString) {
     delete plistfile_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -6502,13 +4521,12 @@ void ResourceData::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ResourceData::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ResourceData_descriptor_;
-}
-
 const ResourceData& ResourceData::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -6533,7 +4551,6 @@ void ResourceData::Clear() {
     resourcetype_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool ResourceData::MergePartialFromCodedStream(
@@ -6548,9 +4565,6 @@ bool ResourceData::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_path()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->path().data(), this->path().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -6565,9 +4579,6 @@ bool ResourceData::MergePartialFromCodedStream(
          parse_plistFile:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_plistfile()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->plistfile().data(), this->plistfile().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -6597,8 +4608,7 @@ bool ResourceData::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -6611,18 +4621,12 @@ void ResourceData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string path = 1;
   if (has_path()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->path().data(), this->path().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->path(), output);
   }
 
   // optional string plistFile = 2;
   if (has_plistfile()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->plistfile().data(), this->plistfile().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->plistfile(), output);
   }
@@ -6632,44 +4636,6 @@ void ResourceData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->resourcetype(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* ResourceData::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string path = 1;
-  if (has_path()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->path().data(), this->path().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->path(), target);
-  }
-
-  // optional string plistFile = 2;
-  if (has_plistfile()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->plistfile().data(), this->plistfile().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->plistfile(), target);
-  }
-
-  // optional int32 resourceType = 3;
-  if (has_resourcetype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->resourcetype(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int ResourceData::ByteSize() const {
@@ -6698,27 +4664,15 @@ int ResourceData::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void ResourceData::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const ResourceData* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ResourceData*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void ResourceData::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ResourceData*>(&from));
 }
 
 void ResourceData::MergeFrom(const ResourceData& from) {
@@ -6734,13 +4688,6 @@ void ResourceData::MergeFrom(const ResourceData& from) {
       set_resourcetype(from.resourcetype());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void ResourceData::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void ResourceData::CopyFrom(const ResourceData& from) {
@@ -6760,17 +4707,12 @@ void ResourceData::Swap(ResourceData* other) {
     std::swap(plistfile_, other->plistfile_);
     std::swap(resourcetype_, other->resourcetype_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata ResourceData::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ResourceData_descriptor_;
-  metadata.reflection = ResourceData_reflection_;
-  return metadata;
+::std::string ResourceData::GetTypeName() const {
+  return "protocolbuffers.ResourceData";
 }
 
 
@@ -6793,20 +4735,45 @@ const int CheckBoxOptions::kSelectedStateFieldNumber;
 #endif  // !_MSC_VER
 
 CheckBoxOptions::CheckBoxOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void CheckBoxOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundboxdata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundboxdata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundboxselecteddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundboxselecteddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  frontcrossdata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   frontcrossdata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundboxdisableddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundboxdisableddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  frontcrossdisableddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   frontcrossdisableddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 CheckBoxOptions::CheckBoxOptions(const CheckBoxOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -6855,7 +4822,11 @@ void CheckBoxOptions::SharedDtor() {
   if (frontcrossdisabled_ != &::google::protobuf::internal::kEmptyString) {
     delete frontcrossdisabled_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete backgroundboxdata_;
     delete backgroundboxselecteddata_;
     delete frontcrossdata_;
@@ -6869,13 +4840,12 @@ void CheckBoxOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CheckBoxOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return CheckBoxOptions_descriptor_;
-}
-
 const CheckBoxOptions& CheckBoxOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -6942,7 +4912,6 @@ void CheckBoxOptions::Clear() {
     selectedstate_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool CheckBoxOptions::MergePartialFromCodedStream(
@@ -6957,9 +4926,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -6974,9 +4940,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -6991,9 +4954,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
          parse_backGroundBox:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundbox()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundbox().data(), this->backgroundbox().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7008,9 +4968,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
          parse_backGroundBoxSelected:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundboxselected()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundboxselected().data(), this->backgroundboxselected().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7025,9 +4982,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
          parse_backGroundBoxDisabled:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundboxdisabled()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundboxdisabled().data(), this->backgroundboxdisabled().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7042,9 +4996,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
          parse_frontCross:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_frontcross()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->frontcross().data(), this->frontcross().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7059,9 +5010,6 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
          parse_frontCrossDisabled:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_frontcrossdisabled()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->frontcrossdisabled().data(), this->frontcrossdisabled().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7161,8 +5109,7 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -7175,94 +5122,73 @@ void CheckBoxOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string backGroundBox = 3;
   if (has_backgroundbox()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundbox().data(), this->backgroundbox().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->backgroundbox(), output);
   }
 
   // optional string backGroundBoxSelected = 4;
   if (has_backgroundboxselected()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundboxselected().data(), this->backgroundboxselected().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       4, this->backgroundboxselected(), output);
   }
 
   // optional string backGroundBoxDisabled = 5;
   if (has_backgroundboxdisabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundboxdisabled().data(), this->backgroundboxdisabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       5, this->backgroundboxdisabled(), output);
   }
 
   // optional string frontCross = 6;
   if (has_frontcross()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frontcross().data(), this->frontcross().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->frontcross(), output);
   }
 
   // optional string frontCrossDisabled = 7;
   if (has_frontcrossdisabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frontcrossdisabled().data(), this->frontcrossdisabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       7, this->frontcrossdisabled(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundBoxData = 8;
   if (has_backgroundboxdata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       8, this->backgroundboxdata(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundBoxSelectedData = 9;
   if (has_backgroundboxselecteddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       9, this->backgroundboxselecteddata(), output);
   }
 
   // optional .protocolbuffers.ResourceData frontCrossData = 10;
   if (has_frontcrossdata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       10, this->frontcrossdata(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundBoxDisabledData = 11;
   if (has_backgroundboxdisableddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       11, this->backgroundboxdisableddata(), output);
   }
 
   // optional .protocolbuffers.ResourceData frontCrossDisabledData = 12;
   if (has_frontcrossdisableddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       12, this->frontcrossdisableddata(), output);
   }
 
@@ -7271,129 +5197,6 @@ void CheckBoxOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(13, this->selectedstate(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* CheckBoxOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string backGroundBox = 3;
-  if (has_backgroundbox()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundbox().data(), this->backgroundbox().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->backgroundbox(), target);
-  }
-
-  // optional string backGroundBoxSelected = 4;
-  if (has_backgroundboxselected()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundboxselected().data(), this->backgroundboxselected().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->backgroundboxselected(), target);
-  }
-
-  // optional string backGroundBoxDisabled = 5;
-  if (has_backgroundboxdisabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundboxdisabled().data(), this->backgroundboxdisabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->backgroundboxdisabled(), target);
-  }
-
-  // optional string frontCross = 6;
-  if (has_frontcross()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frontcross().data(), this->frontcross().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->frontcross(), target);
-  }
-
-  // optional string frontCrossDisabled = 7;
-  if (has_frontcrossdisabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frontcrossdisabled().data(), this->frontcrossdisabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->frontcrossdisabled(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundBoxData = 8;
-  if (has_backgroundboxdata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->backgroundboxdata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundBoxSelectedData = 9;
-  if (has_backgroundboxselecteddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        9, this->backgroundboxselecteddata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData frontCrossData = 10;
-  if (has_frontcrossdata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->frontcrossdata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundBoxDisabledData = 11;
-  if (has_backgroundboxdisableddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        11, this->backgroundboxdisableddata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData frontCrossDisabledData = 12;
-  if (has_frontcrossdisableddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        12, this->frontcrossdisableddata(), target);
-  }
-
-  // optional bool selectedState = 13;
-  if (has_selectedstate()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(13, this->selectedstate(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int CheckBoxOptions::ByteSize() const {
@@ -7492,27 +5295,15 @@ int CheckBoxOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void CheckBoxOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const CheckBoxOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const CheckBoxOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void CheckBoxOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const CheckBoxOptions*>(&from));
 }
 
 void CheckBoxOptions::MergeFrom(const CheckBoxOptions& from) {
@@ -7560,13 +5351,6 @@ void CheckBoxOptions::MergeFrom(const CheckBoxOptions& from) {
       set_selectedstate(from.selectedstate());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void CheckBoxOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void CheckBoxOptions::CopyFrom(const CheckBoxOptions& from) {
@@ -7596,17 +5380,12 @@ void CheckBoxOptions::Swap(CheckBoxOptions* other) {
     std::swap(frontcrossdisableddata_, other->frontcrossdisableddata_);
     std::swap(selectedstate_, other->selectedstate_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata CheckBoxOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CheckBoxOptions_descriptor_;
-  metadata.reflection = CheckBoxOptions_reflection_;
-  return metadata;
+::std::string CheckBoxOptions::GetTypeName() const {
+  return "protocolbuffers.CheckBoxOptions";
 }
 
 
@@ -7627,16 +5406,21 @@ const int ImageViewOptions::kScale9EnableFieldNumber;
 #endif  // !_MSC_VER
 
 ImageViewOptions::ImageViewOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void ImageViewOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 ImageViewOptions::ImageViewOptions(const ImageViewOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -7671,7 +5455,11 @@ void ImageViewOptions::SharedDtor() {
   if (filename_ != &::google::protobuf::internal::kEmptyString) {
     delete filename_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete filenamedata_;
   }
 }
@@ -7681,13 +5469,12 @@ void ImageViewOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ImageViewOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ImageViewOptions_descriptor_;
-}
-
 const ImageViewOptions& ImageViewOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -7728,7 +5515,6 @@ void ImageViewOptions::Clear() {
     scale9enable_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool ImageViewOptions::MergePartialFromCodedStream(
@@ -7743,9 +5529,6 @@ bool ImageViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7760,9 +5543,6 @@ bool ImageViewOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7777,9 +5557,6 @@ bool ImageViewOptions::MergePartialFromCodedStream(
          parse_fileName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_filename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->filename().data(), this->filename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -7919,8 +5696,7 @@ bool ImageViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -7933,34 +5709,25 @@ void ImageViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string fileName = 3;
   if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->filename(), output);
   }
 
   // optional .protocolbuffers.ResourceData fileNameData = 4;
   if (has_filenamedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->filenamedata(), output);
   }
 
@@ -7999,91 +5766,6 @@ void ImageViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->scale9enable(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* ImageViewOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string fileName = 3;
-  if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->filename(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData fileNameData = 4;
-  if (has_filenamedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->filenamedata(), target);
-  }
-
-  // optional float capInsetsX = 5;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 6;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsHeight = 7;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->capinsetsheight(), target);
-  }
-
-  // optional float capInsetsWidth = 8;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->capinsetswidth(), target);
-  }
-
-  // optional float scale9Width = 9;
-  if (has_scale9width()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->scale9width(), target);
-  }
-
-  // optional float scale9Height = 10;
-  if (has_scale9height()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(10, this->scale9height(), target);
-  }
-
-  // optional bool scale9Enable = 11;
-  if (has_scale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->scale9enable(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int ImageViewOptions::ByteSize() const {
@@ -8156,27 +5838,15 @@ int ImageViewOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void ImageViewOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const ImageViewOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ImageViewOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void ImageViewOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ImageViewOptions*>(&from));
 }
 
 void ImageViewOptions::MergeFrom(const ImageViewOptions& from) {
@@ -8218,13 +5888,6 @@ void ImageViewOptions::MergeFrom(const ImageViewOptions& from) {
       set_scale9enable(from.scale9enable());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void ImageViewOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void ImageViewOptions::CopyFrom(const ImageViewOptions& from) {
@@ -8252,17 +5915,12 @@ void ImageViewOptions::Swap(ImageViewOptions* other) {
     std::swap(scale9height_, other->scale9height_);
     std::swap(scale9enable_, other->scale9enable_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata ImageViewOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ImageViewOptions_descriptor_;
-  metadata.reflection = ImageViewOptions_reflection_;
-  return metadata;
+::std::string ImageViewOptions::GetTypeName() const {
+  return "protocolbuffers.ImageViewOptions";
 }
 
 
@@ -8280,16 +5938,21 @@ const int LabelAtlasOptions::kItemHeightFieldNumber;
 #endif  // !_MSC_VER
 
 LabelAtlasOptions::LabelAtlasOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void LabelAtlasOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  charmapfiledata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   charmapfiledata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 LabelAtlasOptions::LabelAtlasOptions(const LabelAtlasOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -8327,7 +5990,11 @@ void LabelAtlasOptions::SharedDtor() {
   if (startcharmap_ != &::google::protobuf::internal::kEmptyString) {
     delete startcharmap_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete charmapfiledata_;
   }
 }
@@ -8337,13 +6004,12 @@ void LabelAtlasOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* LabelAtlasOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return LabelAtlasOptions_descriptor_;
-}
-
 const LabelAtlasOptions& LabelAtlasOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -8387,7 +6053,6 @@ void LabelAtlasOptions::Clear() {
     itemheight_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool LabelAtlasOptions::MergePartialFromCodedStream(
@@ -8402,9 +6067,6 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8419,9 +6081,6 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8436,9 +6095,6 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
          parse_stringValue:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_stringvalue()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->stringvalue().data(), this->stringvalue().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8453,9 +6109,6 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
          parse_charMapFile:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_charmapfile()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->charmapfile().data(), this->charmapfile().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8484,9 +6137,6 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
          parse_startCharMap:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_startcharmap()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->startcharmap().data(), this->startcharmap().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8532,8 +6182,7 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -8546,51 +6195,36 @@ void LabelAtlasOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string stringValue = 3;
   if (has_stringvalue()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->stringvalue().data(), this->stringvalue().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->stringvalue(), output);
   }
 
   // optional string charMapFile = 4;
   if (has_charmapfile()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->charmapfile().data(), this->charmapfile().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       4, this->charmapfile(), output);
   }
 
   // optional .protocolbuffers.ResourceData charMapFileData = 5;
   if (has_charmapfiledata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->charmapfiledata(), output);
   }
 
   // optional string startCharMap = 6;
   if (has_startcharmap()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->startcharmap().data(), this->startcharmap().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->startcharmap(), output);
   }
@@ -8605,86 +6239,6 @@ void LabelAtlasOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->itemheight(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* LabelAtlasOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string stringValue = 3;
-  if (has_stringvalue()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->stringvalue().data(), this->stringvalue().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->stringvalue(), target);
-  }
-
-  // optional string charMapFile = 4;
-  if (has_charmapfile()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->charmapfile().data(), this->charmapfile().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->charmapfile(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData charMapFileData = 5;
-  if (has_charmapfiledata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->charmapfiledata(), target);
-  }
-
-  // optional string startCharMap = 6;
-  if (has_startcharmap()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->startcharmap().data(), this->startcharmap().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->startcharmap(), target);
-  }
-
-  // optional int32 itemWidth = 7;
-  if (has_itemwidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->itemwidth(), target);
-  }
-
-  // optional int32 itemHeight = 8;
-  if (has_itemheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->itemheight(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int LabelAtlasOptions::ByteSize() const {
@@ -8748,27 +6302,15 @@ int LabelAtlasOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void LabelAtlasOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LabelAtlasOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LabelAtlasOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void LabelAtlasOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const LabelAtlasOptions*>(&from));
 }
 
 void LabelAtlasOptions::MergeFrom(const LabelAtlasOptions& from) {
@@ -8799,13 +6341,6 @@ void LabelAtlasOptions::MergeFrom(const LabelAtlasOptions& from) {
       set_itemheight(from.itemheight());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void LabelAtlasOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void LabelAtlasOptions::CopyFrom(const LabelAtlasOptions& from) {
@@ -8830,17 +6365,12 @@ void LabelAtlasOptions::Swap(LabelAtlasOptions* other) {
     std::swap(itemwidth_, other->itemwidth_);
     std::swap(itemheight_, other->itemheight_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata LabelAtlasOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LabelAtlasOptions_descriptor_;
-  metadata.reflection = LabelAtlasOptions_reflection_;
-  return metadata;
+::std::string LabelAtlasOptions::GetTypeName() const {
+  return "protocolbuffers.LabelAtlasOptions";
 }
 
 
@@ -8854,16 +6384,21 @@ const int LabelBMFontOptions::kFileNameDataFieldNumber;
 #endif  // !_MSC_VER
 
 LabelBMFontOptions::LabelBMFontOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void LabelBMFontOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 LabelBMFontOptions::LabelBMFontOptions(const LabelBMFontOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -8891,7 +6426,11 @@ void LabelBMFontOptions::SharedDtor() {
   if (text_ != &::google::protobuf::internal::kEmptyString) {
     delete text_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete filenamedata_;
   }
 }
@@ -8901,13 +6440,12 @@ void LabelBMFontOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* LabelBMFontOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return LabelBMFontOptions_descriptor_;
-}
-
 const LabelBMFontOptions& LabelBMFontOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -8939,7 +6477,6 @@ void LabelBMFontOptions::Clear() {
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool LabelBMFontOptions::MergePartialFromCodedStream(
@@ -8954,9 +6491,6 @@ bool LabelBMFontOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8971,9 +6505,6 @@ bool LabelBMFontOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -8988,9 +6519,6 @@ bool LabelBMFontOptions::MergePartialFromCodedStream(
          parse_text:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_text()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->text().data(), this->text().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -9018,8 +6546,7 @@ bool LabelBMFontOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -9032,87 +6559,28 @@ void LabelBMFontOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string text = 3;
   if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->text(), output);
   }
 
   // optional .protocolbuffers.ResourceData fileNameData = 4;
   if (has_filenamedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->filenamedata(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* LabelBMFontOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string text = 3;
-  if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->text(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData fileNameData = 4;
-  if (has_filenamedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->filenamedata(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int LabelBMFontOptions::ByteSize() const {
@@ -9148,27 +6616,15 @@ int LabelBMFontOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void LabelBMFontOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LabelBMFontOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LabelBMFontOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void LabelBMFontOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const LabelBMFontOptions*>(&from));
 }
 
 void LabelBMFontOptions::MergeFrom(const LabelBMFontOptions& from) {
@@ -9187,13 +6643,6 @@ void LabelBMFontOptions::MergeFrom(const LabelBMFontOptions& from) {
       mutable_filenamedata()->::protocolbuffers::ResourceData::MergeFrom(from.filenamedata());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void LabelBMFontOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void LabelBMFontOptions::CopyFrom(const LabelBMFontOptions& from) {
@@ -9214,17 +6663,12 @@ void LabelBMFontOptions::Swap(LabelBMFontOptions* other) {
     std::swap(text_, other->text_);
     std::swap(filenamedata_, other->filenamedata_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata LabelBMFontOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LabelBMFontOptions_descriptor_;
-  metadata.reflection = LabelBMFontOptions_reflection_;
-  return metadata;
+::std::string LabelBMFontOptions::GetTypeName() const {
+  return "protocolbuffers.LabelBMFontOptions";
 }
 
 
@@ -9245,16 +6689,21 @@ const int LabelOptions::kTouchScaleEnableFieldNumber;
 #endif  // !_MSC_VER
 
 LabelOptions::LabelOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void LabelOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 LabelOptions::LabelOptions(const LabelOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -9292,7 +6741,11 @@ void LabelOptions::SharedDtor() {
   if (text_ != &::google::protobuf::internal::kEmptyString) {
     delete text_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete fontfile_;
   }
 }
@@ -9302,13 +6755,12 @@ void LabelOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* LabelOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return LabelOptions_descriptor_;
-}
-
 const LabelOptions& LabelOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -9353,7 +6805,6 @@ void LabelOptions::Clear() {
     touchscaleenable_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool LabelOptions::MergePartialFromCodedStream(
@@ -9368,9 +6819,6 @@ bool LabelOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -9385,9 +6833,6 @@ bool LabelOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -9402,9 +6847,6 @@ bool LabelOptions::MergePartialFromCodedStream(
          parse_fontName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_fontname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->fontname().data(), this->fontname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -9449,9 +6891,6 @@ bool LabelOptions::MergePartialFromCodedStream(
          parse_text:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_text()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->text().data(), this->text().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -9545,8 +6984,7 @@ bool LabelOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -9559,34 +6997,25 @@ void LabelOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string fontName = 3;
   if (has_fontname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->fontname().data(), this->fontname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->fontname(), output);
   }
 
   // optional .protocolbuffers.ResourceData fontFile = 4;
   if (has_fontfile()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->fontfile(), output);
   }
 
@@ -9597,9 +7026,6 @@ void LabelOptions::SerializeWithCachedSizes(
 
   // optional string text = 6;
   if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->text(), output);
   }
@@ -9629,96 +7055,6 @@ void LabelOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->touchscaleenable(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* LabelOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string fontName = 3;
-  if (has_fontname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->fontname().data(), this->fontname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->fontname(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData fontFile = 4;
-  if (has_fontfile()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->fontfile(), target);
-  }
-
-  // optional int32 fontSize = 5;
-  if (has_fontsize()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->fontsize(), target);
-  }
-
-  // optional string text = 6;
-  if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->text(), target);
-  }
-
-  // optional float areaWidth = 7;
-  if (has_areawidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->areawidth(), target);
-  }
-
-  // optional float areaHeight = 8;
-  if (has_areaheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->areaheight(), target);
-  }
-
-  // optional int32 hAlignment = 9;
-  if (has_halignment()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->halignment(), target);
-  }
-
-  // optional int32 vAlignment = 10;
-  if (has_valignment()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->valignment(), target);
-  }
-
-  // optional bool touchScaleEnable = 11;
-  if (has_touchscaleenable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->touchscaleenable(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int LabelOptions::ByteSize() const {
@@ -9799,27 +7135,15 @@ int LabelOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void LabelOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LabelOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LabelOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void LabelOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const LabelOptions*>(&from));
 }
 
 void LabelOptions::MergeFrom(const LabelOptions& from) {
@@ -9861,13 +7185,6 @@ void LabelOptions::MergeFrom(const LabelOptions& from) {
       set_touchscaleenable(from.touchscaleenable());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void LabelOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void LabelOptions::CopyFrom(const LabelOptions& from) {
@@ -9895,17 +7212,12 @@ void LabelOptions::Swap(LabelOptions* other) {
     std::swap(valignment_, other->valignment_);
     std::swap(touchscaleenable_, other->touchscaleenable_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata LabelOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LabelOptions_descriptor_;
-  metadata.reflection = LabelOptions_reflection_;
-  return metadata;
+::std::string LabelOptions::GetTypeName() const {
+  return "protocolbuffers.LabelOptions";
 }
 
 
@@ -9926,16 +7238,21 @@ const int LoadingBarOptions::kScale9EnableFieldNumber;
 #endif  // !_MSC_VER
 
 LoadingBarOptions::LoadingBarOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void LoadingBarOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  texturedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   texturedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 LoadingBarOptions::LoadingBarOptions(const LoadingBarOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -9970,7 +7287,11 @@ void LoadingBarOptions::SharedDtor() {
   if (texture_ != &::google::protobuf::internal::kEmptyString) {
     delete texture_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete texturedata_;
   }
 }
@@ -9980,13 +7301,12 @@ void LoadingBarOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* LoadingBarOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return LoadingBarOptions_descriptor_;
-}
-
 const LoadingBarOptions& LoadingBarOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -10027,7 +7347,6 @@ void LoadingBarOptions::Clear() {
     scale9enable_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool LoadingBarOptions::MergePartialFromCodedStream(
@@ -10042,9 +7361,6 @@ bool LoadingBarOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -10059,9 +7375,6 @@ bool LoadingBarOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -10076,9 +7389,6 @@ bool LoadingBarOptions::MergePartialFromCodedStream(
          parse_texture:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_texture()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->texture().data(), this->texture().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -10218,8 +7528,7 @@ bool LoadingBarOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -10232,34 +7541,25 @@ void LoadingBarOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string texture = 3;
   if (has_texture()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->texture().data(), this->texture().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->texture(), output);
   }
 
   // optional .protocolbuffers.ResourceData textureData = 4;
   if (has_texturedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->texturedata(), output);
   }
 
@@ -10298,91 +7598,6 @@ void LoadingBarOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->scale9enable(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* LoadingBarOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string texture = 3;
-  if (has_texture()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->texture().data(), this->texture().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->texture(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData textureData = 4;
-  if (has_texturedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->texturedata(), target);
-  }
-
-  // optional int32 percent = 5;
-  if (has_percent()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->percent(), target);
-  }
-
-  // optional int32 direction = 6;
-  if (has_direction()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->direction(), target);
-  }
-
-  // optional float capInsetsX = 7;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 8;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 9;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 10;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(10, this->capinsetsheight(), target);
-  }
-
-  // optional bool scale9Enable = 11;
-  if (has_scale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->scale9enable(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int LoadingBarOptions::ByteSize() const {
@@ -10459,27 +7674,15 @@ int LoadingBarOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void LoadingBarOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LoadingBarOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LoadingBarOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void LoadingBarOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const LoadingBarOptions*>(&from));
 }
 
 void LoadingBarOptions::MergeFrom(const LoadingBarOptions& from) {
@@ -10521,13 +7724,6 @@ void LoadingBarOptions::MergeFrom(const LoadingBarOptions& from) {
       set_scale9enable(from.scale9enable());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void LoadingBarOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void LoadingBarOptions::CopyFrom(const LoadingBarOptions& from) {
@@ -10555,17 +7751,12 @@ void LoadingBarOptions::Swap(LoadingBarOptions* other) {
     std::swap(capinsetsheight_, other->capinsetsheight_);
     std::swap(scale9enable_, other->scale9enable_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata LoadingBarOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = LoadingBarOptions_descriptor_;
-  metadata.reflection = LoadingBarOptions_reflection_;
-  return metadata;
+::std::string LoadingBarOptions::GetTypeName() const {
+  return "protocolbuffers.LoadingBarOptions";
 }
 
 
@@ -10604,16 +7795,21 @@ const int ListViewOptions::kItemMarginFieldNumber;
 #endif  // !_MSC_VER
 
 ListViewOptions::ListViewOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void ListViewOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 ListViewOptions::ListViewOptions(const ListViewOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -10666,7 +7862,11 @@ void ListViewOptions::SharedDtor() {
   if (backgroundimage_ != &::google::protobuf::internal::kEmptyString) {
     delete backgroundimage_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete backgroundimagedata_;
   }
 }
@@ -10676,13 +7876,12 @@ void ListViewOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ListViewOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ListViewOptions_descriptor_;
-}
-
 const ListViewOptions& ListViewOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -10745,7 +7944,6 @@ void ListViewOptions::Clear() {
     itemmargin_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool ListViewOptions::MergePartialFromCodedStream(
@@ -10760,9 +7958,6 @@ bool ListViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -10777,9 +7972,6 @@ bool ListViewOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -10794,9 +7986,6 @@ bool ListViewOptions::MergePartialFromCodedStream(
          parse_backGroundImage:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundimage()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundimage().data(), this->backgroundimage().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -11224,8 +8413,7 @@ bool ListViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -11238,34 +8426,25 @@ void ListViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string backGroundImage = 3;
   if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->backgroundimage(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundImageData = 4;
   if (has_backgroundimagedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->backgroundimagedata(), output);
   }
 
@@ -11394,181 +8573,6 @@ void ListViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(29, this->itemmargin(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* ListViewOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string backGroundImage = 3;
-  if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->backgroundimage(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundImageData = 4;
-  if (has_backgroundimagedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->backgroundimagedata(), target);
-  }
-
-  // optional int32 bgColorR = 5;
-  if (has_bgcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->bgcolorr(), target);
-  }
-
-  // optional int32 bgColorG = 6;
-  if (has_bgcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->bgcolorg(), target);
-  }
-
-  // optional int32 bgColorB = 7;
-  if (has_bgcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->bgcolorb(), target);
-  }
-
-  // optional int32 bgStartColorR = 8;
-  if (has_bgstartcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->bgstartcolorr(), target);
-  }
-
-  // optional int32 bgStartColorG = 9;
-  if (has_bgstartcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->bgstartcolorg(), target);
-  }
-
-  // optional int32 bgStartColorB = 10;
-  if (has_bgstartcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->bgstartcolorb(), target);
-  }
-
-  // optional int32 bgEndColorR = 11;
-  if (has_bgendcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->bgendcolorr(), target);
-  }
-
-  // optional int32 bgEndColorG = 12;
-  if (has_bgendcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->bgendcolorg(), target);
-  }
-
-  // optional int32 bgEndColorB = 13;
-  if (has_bgendcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->bgendcolorb(), target);
-  }
-
-  // optional int32 colorType = 14;
-  if (has_colortype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->colortype(), target);
-  }
-
-  // optional int32 bgColorOpacity = 15;
-  if (has_bgcoloropacity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->bgcoloropacity(), target);
-  }
-
-  // optional float vectorX = 16;
-  if (has_vectorx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(16, this->vectorx(), target);
-  }
-
-  // optional float vectorY = 17;
-  if (has_vectory()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->vectory(), target);
-  }
-
-  // optional float capInsetsX = 18;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(18, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 19;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 20;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 21;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(21, this->capinsetsheight(), target);
-  }
-
-  // optional bool backGroundScale9Enable = 22;
-  if (has_backgroundscale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(22, this->backgroundscale9enable(), target);
-  }
-
-  // optional float innerWidth = 23;
-  if (has_innerwidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(23, this->innerwidth(), target);
-  }
-
-  // optional float innerHeight = 24;
-  if (has_innerheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(24, this->innerheight(), target);
-  }
-
-  // optional bool clipAble = 25;
-  if (has_clipable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(25, this->clipable(), target);
-  }
-
-  // optional bool bounceEnable = 26;
-  if (has_bounceenable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(26, this->bounceenable(), target);
-  }
-
-  // optional int32 direction = 27;
-  if (has_direction()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(27, this->direction(), target);
-  }
-
-  // optional int32 gravity = 28;
-  if (has_gravity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(28, this->gravity(), target);
-  }
-
-  // optional int32 itemMargin = 29;
-  if (has_itemmargin()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(29, this->itemmargin(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int ListViewOptions::ByteSize() const {
@@ -11763,27 +8767,15 @@ int ListViewOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void ListViewOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const ListViewOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ListViewOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void ListViewOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ListViewOptions*>(&from));
 }
 
 void ListViewOptions::MergeFrom(const ListViewOptions& from) {
@@ -11883,13 +8875,6 @@ void ListViewOptions::MergeFrom(const ListViewOptions& from) {
       set_itemmargin(from.itemmargin());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void ListViewOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void ListViewOptions::CopyFrom(const ListViewOptions& from) {
@@ -11935,17 +8920,12 @@ void ListViewOptions::Swap(ListViewOptions* other) {
     std::swap(gravity_, other->gravity_);
     std::swap(itemmargin_, other->itemmargin_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata ListViewOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ListViewOptions_descriptor_;
-  metadata.reflection = ListViewOptions_reflection_;
-  return metadata;
+::std::string ListViewOptions::GetTypeName() const {
+  return "protocolbuffers.ListViewOptions";
 }
 
 
@@ -11978,16 +8958,21 @@ const int PageViewOptions::kBackGroundScale9EnableFieldNumber;
 #endif  // !_MSC_VER
 
 PageViewOptions::PageViewOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void PageViewOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 PageViewOptions::PageViewOptions(const PageViewOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -12034,7 +9019,11 @@ void PageViewOptions::SharedDtor() {
   if (backgroundimage_ != &::google::protobuf::internal::kEmptyString) {
     delete backgroundimage_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete backgroundimagedata_;
   }
 }
@@ -12044,13 +9033,12 @@ void PageViewOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* PageViewOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return PageViewOptions_descriptor_;
-}
-
 const PageViewOptions& PageViewOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -12105,7 +9093,6 @@ void PageViewOptions::Clear() {
     backgroundscale9enable_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool PageViewOptions::MergePartialFromCodedStream(
@@ -12120,9 +9107,6 @@ bool PageViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -12137,9 +9121,6 @@ bool PageViewOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -12154,9 +9135,6 @@ bool PageViewOptions::MergePartialFromCodedStream(
          parse_backGroundImage:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundimage()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundimage().data(), this->backgroundimage().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -12488,8 +9466,7 @@ bool PageViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -12502,34 +9479,25 @@ void PageViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string backGroundImage = 3;
   if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->backgroundimage(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundImageData = 4;
   if (has_backgroundimagedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->backgroundimagedata(), output);
   }
 
@@ -12628,151 +9596,6 @@ void PageViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(23, this->backgroundscale9enable(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* PageViewOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string backGroundImage = 3;
-  if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->backgroundimage(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundImageData = 4;
-  if (has_backgroundimagedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->backgroundimagedata(), target);
-  }
-
-  // optional bool clipAble = 5;
-  if (has_clipable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->clipable(), target);
-  }
-
-  // optional int32 bgColorR = 6;
-  if (has_bgcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->bgcolorr(), target);
-  }
-
-  // optional int32 bgColorG = 7;
-  if (has_bgcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->bgcolorg(), target);
-  }
-
-  // optional int32 bgColorB = 8;
-  if (has_bgcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->bgcolorb(), target);
-  }
-
-  // optional int32 bgStartColorR = 9;
-  if (has_bgstartcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->bgstartcolorr(), target);
-  }
-
-  // optional int32 bgStartColorG = 10;
-  if (has_bgstartcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->bgstartcolorg(), target);
-  }
-
-  // optional int32 bgStartColorB = 11;
-  if (has_bgstartcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->bgstartcolorb(), target);
-  }
-
-  // optional int32 bgEndColorR = 12;
-  if (has_bgendcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->bgendcolorr(), target);
-  }
-
-  // optional int32 bgEndColorG = 13;
-  if (has_bgendcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->bgendcolorg(), target);
-  }
-
-  // optional int32 bgEndColorB = 14;
-  if (has_bgendcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->bgendcolorb(), target);
-  }
-
-  // optional int32 colorType = 15;
-  if (has_colortype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->colortype(), target);
-  }
-
-  // optional int32 bgColorOpacity = 16;
-  if (has_bgcoloropacity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->bgcoloropacity(), target);
-  }
-
-  // optional float vectorX = 17;
-  if (has_vectorx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->vectorx(), target);
-  }
-
-  // optional float vectorY = 18;
-  if (has_vectory()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(18, this->vectory(), target);
-  }
-
-  // optional float capInsetsX = 19;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 20;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 21;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(21, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 22;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(22, this->capinsetsheight(), target);
-  }
-
-  // optional bool backGroundScale9Enable = 23;
-  if (has_backgroundscale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(23, this->backgroundscale9enable(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int PageViewOptions::ByteSize() const {
@@ -12929,27 +9752,15 @@ int PageViewOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void PageViewOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const PageViewOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const PageViewOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void PageViewOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const PageViewOptions*>(&from));
 }
 
 void PageViewOptions::MergeFrom(const PageViewOptions& from) {
@@ -13029,13 +9840,6 @@ void PageViewOptions::MergeFrom(const PageViewOptions& from) {
       set_backgroundscale9enable(from.backgroundscale9enable());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void PageViewOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void PageViewOptions::CopyFrom(const PageViewOptions& from) {
@@ -13075,17 +9879,12 @@ void PageViewOptions::Swap(PageViewOptions* other) {
     std::swap(capinsetsheight_, other->capinsetsheight_);
     std::swap(backgroundscale9enable_, other->backgroundscale9enable_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata PageViewOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = PageViewOptions_descriptor_;
-  metadata.reflection = PageViewOptions_reflection_;
-  return metadata;
+::std::string PageViewOptions::GetTypeName() const {
+  return "protocolbuffers.PageViewOptions";
 }
 
 
@@ -13120,16 +9919,21 @@ const int PanelOptions::kAdaptScreenFieldNumber;
 #endif  // !_MSC_VER
 
 PanelOptions::PanelOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void PanelOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 PanelOptions::PanelOptions(const PanelOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -13178,7 +9982,11 @@ void PanelOptions::SharedDtor() {
   if (backgroundimage_ != &::google::protobuf::internal::kEmptyString) {
     delete backgroundimage_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete backgroundimagedata_;
   }
 }
@@ -13188,13 +9996,12 @@ void PanelOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* PanelOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return PanelOptions_descriptor_;
-}
-
 const PanelOptions& PanelOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -13253,7 +10060,6 @@ void PanelOptions::Clear() {
     adaptscreen_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool PanelOptions::MergePartialFromCodedStream(
@@ -13268,9 +10074,6 @@ bool PanelOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -13285,9 +10088,6 @@ bool PanelOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -13302,9 +10102,6 @@ bool PanelOptions::MergePartialFromCodedStream(
          parse_backGroundImage:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundimage()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundimage().data(), this->backgroundimage().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -13668,8 +10465,7 @@ bool PanelOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -13682,34 +10478,25 @@ void PanelOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string backGroundImage = 3;
   if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->backgroundimage(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundImageData = 4;
   if (has_backgroundimagedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->backgroundimagedata(), output);
   }
 
@@ -13818,161 +10605,6 @@ void PanelOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(25, this->adaptscreen(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* PanelOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string backGroundImage = 3;
-  if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->backgroundimage(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundImageData = 4;
-  if (has_backgroundimagedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->backgroundimagedata(), target);
-  }
-
-  // optional bool clipAble = 5;
-  if (has_clipable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->clipable(), target);
-  }
-
-  // optional int32 bgColorR = 6;
-  if (has_bgcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->bgcolorr(), target);
-  }
-
-  // optional int32 bgColorG = 7;
-  if (has_bgcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->bgcolorg(), target);
-  }
-
-  // optional int32 bgColorB = 8;
-  if (has_bgcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->bgcolorb(), target);
-  }
-
-  // optional int32 bgStartColorR = 9;
-  if (has_bgstartcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->bgstartcolorr(), target);
-  }
-
-  // optional int32 bgStartColorG = 10;
-  if (has_bgstartcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->bgstartcolorg(), target);
-  }
-
-  // optional int32 bgStartColorB = 11;
-  if (has_bgstartcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->bgstartcolorb(), target);
-  }
-
-  // optional int32 bgEndColorR = 12;
-  if (has_bgendcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->bgendcolorr(), target);
-  }
-
-  // optional int32 bgEndColorG = 13;
-  if (has_bgendcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->bgendcolorg(), target);
-  }
-
-  // optional int32 bgEndColorB = 14;
-  if (has_bgendcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->bgendcolorb(), target);
-  }
-
-  // optional int32 colorType = 15;
-  if (has_colortype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->colortype(), target);
-  }
-
-  // optional int32 bgColorOpacity = 16;
-  if (has_bgcoloropacity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->bgcoloropacity(), target);
-  }
-
-  // optional float vectorX = 17;
-  if (has_vectorx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->vectorx(), target);
-  }
-
-  // optional float vectorY = 18;
-  if (has_vectory()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(18, this->vectory(), target);
-  }
-
-  // optional float capInsetsX = 19;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 20;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 21;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(21, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 22;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(22, this->capinsetsheight(), target);
-  }
-
-  // optional bool backGroundScale9Enable = 23;
-  if (has_backgroundscale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(23, this->backgroundscale9enable(), target);
-  }
-
-  // optional int32 layoutType = 24;
-  if (has_layouttype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(24, this->layouttype(), target);
-  }
-
-  // optional bool adaptScreen = 25;
-  if (has_adaptscreen()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(25, this->adaptscreen(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int PanelOptions::ByteSize() const {
@@ -14143,27 +10775,15 @@ int PanelOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void PanelOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const PanelOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const PanelOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void PanelOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const PanelOptions*>(&from));
 }
 
 void PanelOptions::MergeFrom(const PanelOptions& from) {
@@ -14251,13 +10871,6 @@ void PanelOptions::MergeFrom(const PanelOptions& from) {
       set_adaptscreen(from.adaptscreen());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void PanelOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void PanelOptions::CopyFrom(const PanelOptions& from) {
@@ -14299,17 +10912,12 @@ void PanelOptions::Swap(PanelOptions* other) {
     std::swap(layouttype_, other->layouttype_);
     std::swap(adaptscreen_, other->adaptscreen_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata PanelOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = PanelOptions_descriptor_;
-  metadata.reflection = PanelOptions_reflection_;
-  return metadata;
+::std::string PanelOptions::GetTypeName() const {
+  return "protocolbuffers.PanelOptions";
 }
 
 
@@ -14347,16 +10955,21 @@ const int ScrollViewOptions::kLayoutTypeFieldNumber;
 #endif  // !_MSC_VER
 
 ScrollViewOptions::ScrollViewOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void ScrollViewOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   backgroundimagedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 ScrollViewOptions::ScrollViewOptions(const ScrollViewOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -14408,7 +11021,11 @@ void ScrollViewOptions::SharedDtor() {
   if (backgroundimage_ != &::google::protobuf::internal::kEmptyString) {
     delete backgroundimage_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete backgroundimagedata_;
   }
 }
@@ -14418,13 +11035,12 @@ void ScrollViewOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ScrollViewOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return ScrollViewOptions_descriptor_;
-}
-
 const ScrollViewOptions& ScrollViewOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -14486,7 +11102,6 @@ void ScrollViewOptions::Clear() {
     layouttype_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool ScrollViewOptions::MergePartialFromCodedStream(
@@ -14501,9 +11116,6 @@ bool ScrollViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -14518,9 +11130,6 @@ bool ScrollViewOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -14535,9 +11144,6 @@ bool ScrollViewOptions::MergePartialFromCodedStream(
          parse_backGroundImage:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_backgroundimage()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->backgroundimage().data(), this->backgroundimage().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -14949,8 +11555,7 @@ bool ScrollViewOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -14963,34 +11568,25 @@ void ScrollViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string backGroundImage = 3;
   if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->backgroundimage(), output);
   }
 
   // optional .protocolbuffers.ResourceData backGroundImageData = 4;
   if (has_backgroundimagedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->backgroundimagedata(), output);
   }
 
@@ -15114,176 +11710,6 @@ void ScrollViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(28, this->layouttype(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* ScrollViewOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string backGroundImage = 3;
-  if (has_backgroundimage()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->backgroundimage().data(), this->backgroundimage().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->backgroundimage(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData backGroundImageData = 4;
-  if (has_backgroundimagedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->backgroundimagedata(), target);
-  }
-
-  // optional int32 bgColorR = 5;
-  if (has_bgcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->bgcolorr(), target);
-  }
-
-  // optional int32 bgColorG = 6;
-  if (has_bgcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->bgcolorg(), target);
-  }
-
-  // optional int32 bgColorB = 7;
-  if (has_bgcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->bgcolorb(), target);
-  }
-
-  // optional int32 bgStartColorR = 8;
-  if (has_bgstartcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->bgstartcolorr(), target);
-  }
-
-  // optional int32 bgStartColorG = 9;
-  if (has_bgstartcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->bgstartcolorg(), target);
-  }
-
-  // optional int32 bgStartColorB = 10;
-  if (has_bgstartcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->bgstartcolorb(), target);
-  }
-
-  // optional int32 bgEndColorR = 11;
-  if (has_bgendcolorr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->bgendcolorr(), target);
-  }
-
-  // optional int32 bgEndColorG = 12;
-  if (has_bgendcolorg()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->bgendcolorg(), target);
-  }
-
-  // optional int32 bgEndColorB = 13;
-  if (has_bgendcolorb()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->bgendcolorb(), target);
-  }
-
-  // optional int32 colorType = 14;
-  if (has_colortype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->colortype(), target);
-  }
-
-  // optional int32 bgColorOpacity = 15;
-  if (has_bgcoloropacity()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(15, this->bgcoloropacity(), target);
-  }
-
-  // optional float vectorX = 16;
-  if (has_vectorx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(16, this->vectorx(), target);
-  }
-
-  // optional float vectorY = 17;
-  if (has_vectory()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->vectory(), target);
-  }
-
-  // optional float capInsetsX = 18;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(18, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 19;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 20;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 21;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(21, this->capinsetsheight(), target);
-  }
-
-  // optional bool backGroundScale9Enable = 22;
-  if (has_backgroundscale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(22, this->backgroundscale9enable(), target);
-  }
-
-  // optional float innerWidth = 23;
-  if (has_innerwidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(23, this->innerwidth(), target);
-  }
-
-  // optional float innerHeight = 24;
-  if (has_innerheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(24, this->innerheight(), target);
-  }
-
-  // optional int32 direction = 25;
-  if (has_direction()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(25, this->direction(), target);
-  }
-
-  // optional bool clipAble = 26;
-  if (has_clipable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(26, this->clipable(), target);
-  }
-
-  // optional bool bounceEnable = 27;
-  if (has_bounceenable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(27, this->bounceenable(), target);
-  }
-
-  // optional int32 layoutType = 28;
-  if (has_layouttype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(28, this->layouttype(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int ScrollViewOptions::ByteSize() const {
@@ -15471,27 +11897,15 @@ int ScrollViewOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void ScrollViewOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const ScrollViewOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const ScrollViewOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void ScrollViewOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ScrollViewOptions*>(&from));
 }
 
 void ScrollViewOptions::MergeFrom(const ScrollViewOptions& from) {
@@ -15588,13 +12002,6 @@ void ScrollViewOptions::MergeFrom(const ScrollViewOptions& from) {
       set_layouttype(from.layouttype());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void ScrollViewOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void ScrollViewOptions::CopyFrom(const ScrollViewOptions& from) {
@@ -15639,17 +12046,12 @@ void ScrollViewOptions::Swap(ScrollViewOptions* other) {
     std::swap(bounceenable_, other->bounceenable_);
     std::swap(layouttype_, other->layouttype_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata ScrollViewOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = ScrollViewOptions_descriptor_;
-  metadata.reflection = ScrollViewOptions_reflection_;
-  return metadata;
+::std::string ScrollViewOptions::GetTypeName() const {
+  return "protocolbuffers.ScrollViewOptions";
 }
 
 
@@ -15689,20 +12091,45 @@ const int SliderOptions::kLengthFieldNumber;
 #endif  // !_MSC_VER
 
 SliderOptions::SliderOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void SliderOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  barfilenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   barfilenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  ballnormaldata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   ballnormaldata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  ballpresseddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   ballpresseddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  balldisableddata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   balldisableddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  progressbardata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   progressbardata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 SliderOptions::SliderOptions(const SliderOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -15765,7 +12192,11 @@ void SliderOptions::SharedDtor() {
   if (balldisabled_ != &::google::protobuf::internal::kEmptyString) {
     delete balldisabled_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete barfilenamedata_;
     delete ballnormaldata_;
     delete ballpresseddata_;
@@ -15779,13 +12210,12 @@ void SliderOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SliderOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return SliderOptions_descriptor_;
-}
-
 const SliderOptions& SliderOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -15869,7 +12299,6 @@ void SliderOptions::Clear() {
     length_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool SliderOptions::MergePartialFromCodedStream(
@@ -15884,9 +12313,6 @@ bool SliderOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -15901,9 +12327,6 @@ bool SliderOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -15918,9 +12341,6 @@ bool SliderOptions::MergePartialFromCodedStream(
          parse_barFileName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_barfilename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->barfilename().data(), this->barfilename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -15935,9 +12355,6 @@ bool SliderOptions::MergePartialFromCodedStream(
          parse_ballNormal:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_ballnormal()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->ballnormal().data(), this->ballnormal().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -15952,9 +12369,6 @@ bool SliderOptions::MergePartialFromCodedStream(
          parse_ballPressed:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_ballpressed()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->ballpressed().data(), this->ballpressed().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -15969,9 +12383,6 @@ bool SliderOptions::MergePartialFromCodedStream(
          parse_ballDisabled:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_balldisabled()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->balldisabled().data(), this->balldisabled().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -16359,8 +12770,7 @@ bool SliderOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -16373,85 +12783,67 @@ void SliderOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string barFileName = 3;
   if (has_barfilename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->barfilename().data(), this->barfilename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->barfilename(), output);
   }
 
   // optional string ballNormal = 4;
   if (has_ballnormal()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ballnormal().data(), this->ballnormal().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       4, this->ballnormal(), output);
   }
 
   // optional string ballPressed = 5;
   if (has_ballpressed()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ballpressed().data(), this->ballpressed().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       5, this->ballpressed(), output);
   }
 
   // optional string ballDisabled = 6;
   if (has_balldisabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->balldisabled().data(), this->balldisabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->balldisabled(), output);
   }
 
   // optional .protocolbuffers.ResourceData barFileNameData = 7;
   if (has_barfilenamedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       7, this->barfilenamedata(), output);
   }
 
   // optional .protocolbuffers.ResourceData ballNormalData = 8;
   if (has_ballnormaldata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       8, this->ballnormaldata(), output);
   }
 
   // optional .protocolbuffers.ResourceData ballPressedData = 9;
   if (has_ballpresseddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       9, this->ballpresseddata(), output);
   }
 
   // optional .protocolbuffers.ResourceData ballDisabledData = 10;
   if (has_balldisableddata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       10, this->balldisableddata(), output);
   }
 
   // optional .protocolbuffers.ResourceData progressBarData = 11;
   if (has_progressbardata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       11, this->progressbardata(), output);
   }
 
@@ -16550,209 +12942,6 @@ void SliderOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(30, this->length(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* SliderOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string barFileName = 3;
-  if (has_barfilename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->barfilename().data(), this->barfilename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->barfilename(), target);
-  }
-
-  // optional string ballNormal = 4;
-  if (has_ballnormal()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ballnormal().data(), this->ballnormal().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->ballnormal(), target);
-  }
-
-  // optional string ballPressed = 5;
-  if (has_ballpressed()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ballpressed().data(), this->ballpressed().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->ballpressed(), target);
-  }
-
-  // optional string ballDisabled = 6;
-  if (has_balldisabled()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->balldisabled().data(), this->balldisabled().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->balldisabled(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData barFileNameData = 7;
-  if (has_barfilenamedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        7, this->barfilenamedata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData ballNormalData = 8;
-  if (has_ballnormaldata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->ballnormaldata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData ballPressedData = 9;
-  if (has_ballpresseddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        9, this->ballpresseddata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData ballDisabledData = 10;
-  if (has_balldisableddata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->balldisableddata(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData progressBarData = 11;
-  if (has_progressbardata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        11, this->progressbardata(), target);
-  }
-
-  // optional int32 percent = 12;
-  if (has_percent()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->percent(), target);
-  }
-
-  // optional float capInsetsX = 13;
-  if (has_capinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(13, this->capinsetsx(), target);
-  }
-
-  // optional float capInsetsY = 14;
-  if (has_capinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(14, this->capinsetsy(), target);
-  }
-
-  // optional float capInsetsWidth = 15;
-  if (has_capinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(15, this->capinsetswidth(), target);
-  }
-
-  // optional float capInsetsHeight = 16;
-  if (has_capinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(16, this->capinsetsheight(), target);
-  }
-
-  // optional float barCapInsetsX = 17;
-  if (has_barcapinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(17, this->barcapinsetsx(), target);
-  }
-
-  // optional float barCapInsetsY = 18;
-  if (has_barcapinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(18, this->barcapinsetsy(), target);
-  }
-
-  // optional float barCapInsetsWidth = 19;
-  if (has_barcapinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(19, this->barcapinsetswidth(), target);
-  }
-
-  // optional float barCapInsetsHeight = 20;
-  if (has_barcapinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(20, this->barcapinsetsheight(), target);
-  }
-
-  // optional float progressBarCapInsetsX = 21;
-  if (has_progressbarcapinsetsx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(21, this->progressbarcapinsetsx(), target);
-  }
-
-  // optional float progressBarCapInsetsY = 22;
-  if (has_progressbarcapinsetsy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(22, this->progressbarcapinsetsy(), target);
-  }
-
-  // optional float progressBarCapInsetsWidth = 23;
-  if (has_progressbarcapinsetswidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(23, this->progressbarcapinsetswidth(), target);
-  }
-
-  // optional float progressBarCapInsetsHeight = 24;
-  if (has_progressbarcapinsetsheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(24, this->progressbarcapinsetsheight(), target);
-  }
-
-  // optional float scale9Width = 25;
-  if (has_scale9width()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(25, this->scale9width(), target);
-  }
-
-  // optional float scale9Height = 26;
-  if (has_scale9height()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(26, this->scale9height(), target);
-  }
-
-  // optional bool scale9Enable = 27;
-  if (has_scale9enable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(27, this->scale9enable(), target);
-  }
-
-  // optional float slidBallAnchorPointX = 28;
-  if (has_slidballanchorpointx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(28, this->slidballanchorpointx(), target);
-  }
-
-  // optional float slidBallAnchorPointY = 29;
-  if (has_slidballanchorpointy()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(29, this->slidballanchorpointy(), target);
-  }
-
-  // optional float length = 30;
-  if (has_length()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(30, this->length(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int SliderOptions::ByteSize() const {
@@ -16940,27 +13129,15 @@ int SliderOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void SliderOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const SliderOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SliderOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void SliderOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const SliderOptions*>(&from));
 }
 
 void SliderOptions::MergeFrom(const SliderOptions& from) {
@@ -17063,13 +13240,6 @@ void SliderOptions::MergeFrom(const SliderOptions& from) {
       set_length(from.length());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void SliderOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void SliderOptions::CopyFrom(const SliderOptions& from) {
@@ -17116,17 +13286,12 @@ void SliderOptions::Swap(SliderOptions* other) {
     std::swap(slidballanchorpointy_, other->slidballanchorpointy_);
     std::swap(length_, other->length_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata SliderOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SliderOptions_descriptor_;
-  metadata.reflection = SliderOptions_reflection_;
-  return metadata;
+::std::string SliderOptions::GetTypeName() const {
+  return "protocolbuffers.SliderOptions";
 }
 
 
@@ -17151,17 +13316,27 @@ const int SpriteOptions::kFileNameDataFieldNumber;
 #endif  // !_MSC_VER
 
 SpriteOptions::SpriteOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void SpriteOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  layoutparameter_ = const_cast< ::protocolbuffers::LayoutParameter*>(
+      ::protocolbuffers::LayoutParameter::internal_default_instance());
+#else
   layoutparameter_ = const_cast< ::protocolbuffers::LayoutParameter*>(&::protocolbuffers::LayoutParameter::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 SpriteOptions::SpriteOptions(const SpriteOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -17203,7 +13378,11 @@ void SpriteOptions::SharedDtor() {
   if (filename_ != &::google::protobuf::internal::kEmptyString) {
     delete filename_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete layoutparameter_;
     delete filenamedata_;
   }
@@ -17214,13 +13393,12 @@ void SpriteOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SpriteOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return SpriteOptions_descriptor_;
-}
-
 const SpriteOptions& SpriteOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -17271,7 +13449,6 @@ void SpriteOptions::Clear() {
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool SpriteOptions::MergePartialFromCodedStream(
@@ -17286,9 +13463,6 @@ bool SpriteOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -17303,9 +13477,6 @@ bool SpriteOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -17478,9 +13649,6 @@ bool SpriteOptions::MergePartialFromCodedStream(
          parse_customProperty:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_customproperty()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->customproperty().data(), this->customproperty().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -17495,9 +13663,6 @@ bool SpriteOptions::MergePartialFromCodedStream(
          parse_fileName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_filename()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->filename().data(), this->filename().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -17525,8 +13690,7 @@ bool SpriteOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -17539,18 +13703,12 @@ void SpriteOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -17602,146 +13760,28 @@ void SpriteOptions::SerializeWithCachedSizes(
 
   // optional .protocolbuffers.LayoutParameter layoutParameter = 12;
   if (has_layoutparameter()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       12, this->layoutparameter(), output);
   }
 
   // optional string customProperty = 13;
   if (has_customproperty()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->customproperty().data(), this->customproperty().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       13, this->customproperty(), output);
   }
 
   // optional string fileName = 14;
   if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       14, this->filename(), output);
   }
 
   // optional .protocolbuffers.ResourceData fileNameData = 15;
   if (has_filenamedata()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       15, this->filenamedata(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* SpriteOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional bool touchAble = 3;
-  if (has_touchable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->touchable(), target);
-  }
-
-  // optional int32 positionType = 4;
-  if (has_positiontype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->positiontype(), target);
-  }
-
-  // optional float positionPercentX = 5;
-  if (has_positionpercentx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->positionpercentx(), target);
-  }
-
-  // optional float positionPercentY = 6;
-  if (has_positionpercenty()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->positionpercenty(), target);
-  }
-
-  // optional int32 sizeType = 7;
-  if (has_sizetype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->sizetype(), target);
-  }
-
-  // optional float sizePercentX = 8;
-  if (has_sizepercentx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->sizepercentx(), target);
-  }
-
-  // optional float sizePercentY = 9;
-  if (has_sizepercenty()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->sizepercenty(), target);
-  }
-
-  // optional bool useMergedTexture = 10;
-  if (has_usemergedtexture()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(10, this->usemergedtexture(), target);
-  }
-
-  // optional bool ignoreSize = 11;
-  if (has_ignoresize()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->ignoresize(), target);
-  }
-
-  // optional .protocolbuffers.LayoutParameter layoutParameter = 12;
-  if (has_layoutparameter()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        12, this->layoutparameter(), target);
-  }
-
-  // optional string customProperty = 13;
-  if (has_customproperty()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->customproperty().data(), this->customproperty().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        13, this->customproperty(), target);
-  }
-
-  // optional string fileName = 14;
-  if (has_filename()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filename().data(), this->filename().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        14, this->filename(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData fileNameData = 15;
-  if (has_filenamedata()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        15, this->filenamedata(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int SpriteOptions::ByteSize() const {
@@ -17842,27 +13882,15 @@ int SpriteOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void SpriteOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const SpriteOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SpriteOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void SpriteOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const SpriteOptions*>(&from));
 }
 
 void SpriteOptions::MergeFrom(const SpriteOptions& from) {
@@ -17916,13 +13944,6 @@ void SpriteOptions::MergeFrom(const SpriteOptions& from) {
       mutable_filenamedata()->::protocolbuffers::ResourceData::MergeFrom(from.filenamedata());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void SpriteOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void SpriteOptions::CopyFrom(const SpriteOptions& from) {
@@ -17954,17 +13975,12 @@ void SpriteOptions::Swap(SpriteOptions* other) {
     std::swap(filename_, other->filename_);
     std::swap(filenamedata_, other->filenamedata_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata SpriteOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SpriteOptions_descriptor_;
-  metadata.reflection = SpriteOptions_reflection_;
-  return metadata;
+::std::string SpriteOptions::GetTypeName() const {
+  return "protocolbuffers.SpriteOptions";
 }
 
 
@@ -17987,16 +14003,21 @@ const int TextFieldOptions::kAreaHeightFieldNumber;
 #endif  // !_MSC_VER
 
 TextFieldOptions::TextFieldOptions()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void TextFieldOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
   fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
 TextFieldOptions::TextFieldOptions(const TextFieldOptions& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -18042,7 +14063,11 @@ void TextFieldOptions::SharedDtor() {
   if (passwordstyletext_ != &::google::protobuf::internal::kEmptyString) {
     delete passwordstyletext_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete fontfile_;
   }
 }
@@ -18052,13 +14077,12 @@ void TextFieldOptions::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TextFieldOptions::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TextFieldOptions_descriptor_;
-}
-
 const TextFieldOptions& TextFieldOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -18113,7 +14137,6 @@ void TextFieldOptions::Clear() {
     areaheight_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TextFieldOptions::MergePartialFromCodedStream(
@@ -18128,9 +14151,6 @@ bool TextFieldOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18145,9 +14165,6 @@ bool TextFieldOptions::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18162,9 +14179,6 @@ bool TextFieldOptions::MergePartialFromCodedStream(
          parse_fontName:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_fontname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->fontname().data(), this->fontname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18209,9 +14223,6 @@ bool TextFieldOptions::MergePartialFromCodedStream(
          parse_text:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_text()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->text().data(), this->text().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18226,9 +14237,6 @@ bool TextFieldOptions::MergePartialFromCodedStream(
          parse_placeHolder:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_placeholder()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->placeholder().data(), this->placeholder().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18259,9 +14267,6 @@ bool TextFieldOptions::MergePartialFromCodedStream(
          parse_passwordStyleText:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_passwordstyletext()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->passwordstyletext().data(), this->passwordstyletext().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18339,8 +14344,7 @@ bool TextFieldOptions::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -18353,34 +14357,25 @@ void TextFieldOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string fontName = 3;
   if (has_fontname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->fontname().data(), this->fontname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->fontname(), output);
   }
 
   // optional .protocolbuffers.ResourceData fontFile = 4;
   if (has_fontfile()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->fontfile(), output);
   }
 
@@ -18391,18 +14386,12 @@ void TextFieldOptions::SerializeWithCachedSizes(
 
   // optional string text = 6;
   if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->text(), output);
   }
 
   // optional string placeHolder = 7;
   if (has_placeholder()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->placeholder().data(), this->placeholder().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       7, this->placeholder(), output);
   }
@@ -18414,9 +14403,6 @@ void TextFieldOptions::SerializeWithCachedSizes(
 
   // optional string passwordStyleText = 9;
   if (has_passwordstyletext()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->passwordstyletext().data(), this->passwordstyletext().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       9, this->passwordstyletext(), output);
   }
@@ -18441,116 +14427,6 @@ void TextFieldOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(13, this->areaheight(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TextFieldOptions::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string fontName = 3;
-  if (has_fontname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->fontname().data(), this->fontname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->fontname(), target);
-  }
-
-  // optional .protocolbuffers.ResourceData fontFile = 4;
-  if (has_fontfile()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->fontfile(), target);
-  }
-
-  // optional int32 fontSize = 5;
-  if (has_fontsize()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->fontsize(), target);
-  }
-
-  // optional string text = 6;
-  if (has_text()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->text().data(), this->text().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->text(), target);
-  }
-
-  // optional string placeHolder = 7;
-  if (has_placeholder()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->placeholder().data(), this->placeholder().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->placeholder(), target);
-  }
-
-  // optional bool passwordEnable = 8;
-  if (has_passwordenable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->passwordenable(), target);
-  }
-
-  // optional string passwordStyleText = 9;
-  if (has_passwordstyletext()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->passwordstyletext().data(), this->passwordstyletext().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        9, this->passwordstyletext(), target);
-  }
-
-  // optional bool maxLengthEnable = 10;
-  if (has_maxlengthenable()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(10, this->maxlengthenable(), target);
-  }
-
-  // optional int32 maxLength = 11;
-  if (has_maxlength()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->maxlength(), target);
-  }
-
-  // optional float areaWidth = 12;
-  if (has_areawidth()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(12, this->areawidth(), target);
-  }
-
-  // optional float areaHeight = 13;
-  if (has_areaheight()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(13, this->areaheight(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TextFieldOptions::ByteSize() const {
@@ -18643,27 +14519,15 @@ int TextFieldOptions::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TextFieldOptions::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TextFieldOptions* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TextFieldOptions*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TextFieldOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TextFieldOptions*>(&from));
 }
 
 void TextFieldOptions::MergeFrom(const TextFieldOptions& from) {
@@ -18711,13 +14575,6 @@ void TextFieldOptions::MergeFrom(const TextFieldOptions& from) {
       set_areaheight(from.areaheight());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TextFieldOptions::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TextFieldOptions::CopyFrom(const TextFieldOptions& from) {
@@ -18747,17 +14604,12 @@ void TextFieldOptions::Swap(TextFieldOptions* other) {
     std::swap(areawidth_, other->areawidth_);
     std::swap(areaheight_, other->areaheight_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TextFieldOptions::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TextFieldOptions_descriptor_;
-  metadata.reflection = TextFieldOptions_reflection_;
-  return metadata;
+::std::string TextFieldOptions::GetTypeName() const {
+  return "protocolbuffers.TextFieldOptions";
 }
 
 
@@ -18772,7 +14624,7 @@ const int NodeAction::kTimelinesFieldNumber;
 #endif  // !_MSC_VER
 
 NodeAction::NodeAction()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -18780,7 +14632,7 @@ void NodeAction::InitAsDefaultInstance() {
 }
 
 NodeAction::NodeAction(const NodeAction& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -18805,7 +14657,11 @@ void NodeAction::SharedDtor() {
   if (classname_ != &::google::protobuf::internal::kEmptyString) {
     delete classname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -18814,13 +14670,12 @@ void NodeAction::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* NodeAction::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return NodeAction_descriptor_;
-}
-
 const NodeAction& NodeAction::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -18847,7 +14702,6 @@ void NodeAction::Clear() {
   }
   timelines_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool NodeAction::MergePartialFromCodedStream(
@@ -18862,9 +14716,6 @@ bool NodeAction::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18879,9 +14730,6 @@ bool NodeAction::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -18942,8 +14790,7 @@ bool NodeAction::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -18956,18 +14803,12 @@ void NodeAction::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -18984,60 +14825,10 @@ void NodeAction::SerializeWithCachedSizes(
 
   // repeated .protocolbuffers.TimeLine timelines = 5;
   for (int i = 0; i < this->timelines_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->timelines(i), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* NodeAction::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 duration = 3;
-  if (has_duration()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->duration(), target);
-  }
-
-  // optional float speed = 4;
-  if (has_speed()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->speed(), target);
-  }
-
-  // repeated .protocolbuffers.TimeLine timelines = 5;
-  for (int i = 0; i < this->timelines_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->timelines(i), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int NodeAction::ByteSize() const {
@@ -19079,27 +14870,15 @@ int NodeAction::ByteSize() const {
         this->timelines(i));
   }
 
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void NodeAction::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const NodeAction* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const NodeAction*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void NodeAction::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const NodeAction*>(&from));
 }
 
 void NodeAction::MergeFrom(const NodeAction& from) {
@@ -19119,13 +14898,6 @@ void NodeAction::MergeFrom(const NodeAction& from) {
       set_speed(from.speed());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void NodeAction::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void NodeAction::CopyFrom(const NodeAction& from) {
@@ -19147,17 +14919,12 @@ void NodeAction::Swap(NodeAction* other) {
     std::swap(speed_, other->speed_);
     timelines_.Swap(&other->timelines_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata NodeAction::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = NodeAction_descriptor_;
-  metadata.reflection = NodeAction_reflection_;
-  return metadata;
+::std::string NodeAction::GetTypeName() const {
+  return "protocolbuffers.NodeAction";
 }
 
 
@@ -19172,7 +14939,7 @@ const int TimeLine::kFramesFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLine::TimeLine()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -19180,7 +14947,7 @@ void TimeLine::InitAsDefaultInstance() {
 }
 
 TimeLine::TimeLine(const TimeLine& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -19208,7 +14975,11 @@ void TimeLine::SharedDtor() {
   if (frametype_ != &::google::protobuf::internal::kEmptyString) {
     delete frametype_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -19217,13 +14988,12 @@ void TimeLine::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLine::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLine_descriptor_;
-}
-
 const TimeLine& TimeLine::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -19254,7 +15024,6 @@ void TimeLine::Clear() {
   }
   frames_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLine::MergePartialFromCodedStream(
@@ -19269,9 +15038,6 @@ bool TimeLine::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -19286,9 +15052,6 @@ bool TimeLine::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -19303,9 +15066,6 @@ bool TimeLine::MergePartialFromCodedStream(
          parse_frameType:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_frametype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->frametype().data(), this->frametype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -19350,8 +15110,7 @@ bool TimeLine::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -19364,27 +15123,18 @@ void TimeLine::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
 
   // optional string frameType = 3;
   if (has_frametype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frametype().data(), this->frametype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->frametype(), output);
   }
@@ -19396,65 +15146,10 @@ void TimeLine::SerializeWithCachedSizes(
 
   // repeated .protocolbuffers.Frame frames = 5;
   for (int i = 0; i < this->frames_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->frames(i), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLine::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional string frameType = 3;
-  if (has_frametype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->frametype().data(), this->frametype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->frametype(), target);
-  }
-
-  // optional int32 actionTag = 4;
-  if (has_actiontag()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->actiontag(), target);
-  }
-
-  // repeated .protocolbuffers.Frame frames = 5;
-  for (int i = 0; i < this->frames_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->frames(i), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLine::ByteSize() const {
@@ -19498,27 +15193,15 @@ int TimeLine::ByteSize() const {
         this->frames(i));
   }
 
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLine::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLine* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLine*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLine::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLine*>(&from));
 }
 
 void TimeLine::MergeFrom(const TimeLine& from) {
@@ -19538,13 +15221,6 @@ void TimeLine::MergeFrom(const TimeLine& from) {
       set_actiontag(from.actiontag());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLine::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLine::CopyFrom(const TimeLine& from) {
@@ -19566,17 +15242,12 @@ void TimeLine::Swap(TimeLine* other) {
     std::swap(actiontag_, other->actiontag_);
     frames_.Swap(&other->frames_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLine::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLine_descriptor_;
-  metadata.reflection = TimeLine_reflection_;
-  return metadata;
+::std::string TimeLine::GetTypeName() const {
+  return "protocolbuffers.TimeLine";
 }
 
 
@@ -19595,24 +15266,69 @@ const int Frame::kTextureFrameFieldNumber;
 #endif  // !_MSC_VER
 
 Frame::Frame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
 void Frame::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  visibleframe_ = const_cast< ::protocolbuffers::TimeLineBoolFrame*>(
+      ::protocolbuffers::TimeLineBoolFrame::internal_default_instance());
+#else
   visibleframe_ = const_cast< ::protocolbuffers::TimeLineBoolFrame*>(&::protocolbuffers::TimeLineBoolFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  zorderframe_ = const_cast< ::protocolbuffers::TimeLineIntFrame*>(
+      ::protocolbuffers::TimeLineIntFrame::internal_default_instance());
+#else
   zorderframe_ = const_cast< ::protocolbuffers::TimeLineIntFrame*>(&::protocolbuffers::TimeLineIntFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  rotationskewframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(
+      ::protocolbuffers::TimeLinePointFrame::internal_default_instance());
+#else
   rotationskewframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(&::protocolbuffers::TimeLinePointFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  eventframe_ = const_cast< ::protocolbuffers::TimeLineStringFrame*>(
+      ::protocolbuffers::TimeLineStringFrame::internal_default_instance());
+#else
   eventframe_ = const_cast< ::protocolbuffers::TimeLineStringFrame*>(&::protocolbuffers::TimeLineStringFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  anchorpointframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(
+      ::protocolbuffers::TimeLinePointFrame::internal_default_instance());
+#else
   anchorpointframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(&::protocolbuffers::TimeLinePointFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  positionframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(
+      ::protocolbuffers::TimeLinePointFrame::internal_default_instance());
+#else
   positionframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(&::protocolbuffers::TimeLinePointFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  scaleframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(
+      ::protocolbuffers::TimeLinePointFrame::internal_default_instance());
+#else
   scaleframe_ = const_cast< ::protocolbuffers::TimeLinePointFrame*>(&::protocolbuffers::TimeLinePointFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  colorframe_ = const_cast< ::protocolbuffers::TimeLineColorFrame*>(
+      ::protocolbuffers::TimeLineColorFrame::internal_default_instance());
+#else
   colorframe_ = const_cast< ::protocolbuffers::TimeLineColorFrame*>(&::protocolbuffers::TimeLineColorFrame::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  textureframe_ = const_cast< ::protocolbuffers::TimeLineTextureFrame*>(
+      ::protocolbuffers::TimeLineTextureFrame::internal_default_instance());
+#else
   textureframe_ = const_cast< ::protocolbuffers::TimeLineTextureFrame*>(&::protocolbuffers::TimeLineTextureFrame::default_instance());
+#endif
 }
 
 Frame::Frame(const Frame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -19636,7 +15352,11 @@ Frame::~Frame() {
 }
 
 void Frame::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
     delete visibleframe_;
     delete zorderframe_;
     delete rotationskewframe_;
@@ -19654,13 +15374,12 @@ void Frame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* Frame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return Frame_descriptor_;
-}
-
 const Frame& Frame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -19703,7 +15422,6 @@ void Frame::Clear() {
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool Frame::MergePartialFromCodedStream(
@@ -19843,8 +15561,7 @@ bool Frame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -19857,134 +15574,58 @@ void Frame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional .protocolbuffers.TimeLineBoolFrame visibleFrame = 5;
   if (has_visibleframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->visibleframe(), output);
   }
 
   // optional .protocolbuffers.TimeLineIntFrame zOrderFrame = 6;
   if (has_zorderframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       6, this->zorderframe(), output);
   }
 
   // optional .protocolbuffers.TimeLinePointFrame rotationSkewFrame = 7;
   if (has_rotationskewframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       7, this->rotationskewframe(), output);
   }
 
   // optional .protocolbuffers.TimeLineStringFrame eventFrame = 8;
   if (has_eventframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       8, this->eventframe(), output);
   }
 
   // optional .protocolbuffers.TimeLinePointFrame anchorPointFrame = 9;
   if (has_anchorpointframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       9, this->anchorpointframe(), output);
   }
 
   // optional .protocolbuffers.TimeLinePointFrame positionFrame = 10;
   if (has_positionframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       10, this->positionframe(), output);
   }
 
   // optional .protocolbuffers.TimeLinePointFrame scaleFrame = 11;
   if (has_scaleframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       11, this->scaleframe(), output);
   }
 
   // optional .protocolbuffers.TimeLineColorFrame colorFrame = 12;
   if (has_colorframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       12, this->colorframe(), output);
   }
 
   // optional .protocolbuffers.TimeLineTextureFrame textureFrame = 13;
   if (has_textureframe()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       13, this->textureframe(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* Frame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional .protocolbuffers.TimeLineBoolFrame visibleFrame = 5;
-  if (has_visibleframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->visibleframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLineIntFrame zOrderFrame = 6;
-  if (has_zorderframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        6, this->zorderframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLinePointFrame rotationSkewFrame = 7;
-  if (has_rotationskewframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        7, this->rotationskewframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLineStringFrame eventFrame = 8;
-  if (has_eventframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->eventframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLinePointFrame anchorPointFrame = 9;
-  if (has_anchorpointframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        9, this->anchorpointframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLinePointFrame positionFrame = 10;
-  if (has_positionframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        10, this->positionframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLinePointFrame scaleFrame = 11;
-  if (has_scaleframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        11, this->scaleframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLineColorFrame colorFrame = 12;
-  if (has_colorframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        12, this->colorframe(), target);
-  }
-
-  // optional .protocolbuffers.TimeLineTextureFrame textureFrame = 13;
-  if (has_textureframe()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        13, this->textureframe(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int Frame::ByteSize() const {
@@ -20057,27 +15698,15 @@ int Frame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void Frame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const Frame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Frame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void Frame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const Frame*>(&from));
 }
 
 void Frame::MergeFrom(const Frame& from) {
@@ -20113,13 +15742,6 @@ void Frame::MergeFrom(const Frame& from) {
       mutable_textureframe()->::protocolbuffers::TimeLineTextureFrame::MergeFrom(from.textureframe());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void Frame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void Frame::CopyFrom(const Frame& from) {
@@ -20145,17 +15767,12 @@ void Frame::Swap(Frame* other) {
     std::swap(colorframe_, other->colorframe_);
     std::swap(textureframe_, other->textureframe_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata Frame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Frame_descriptor_;
-  metadata.reflection = Frame_reflection_;
-  return metadata;
+::std::string Frame::GetTypeName() const {
+  return "protocolbuffers.Frame";
 }
 
 
@@ -20170,7 +15787,7 @@ const int TimeLineBoolFrame::kValueFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLineBoolFrame::TimeLineBoolFrame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -20178,7 +15795,7 @@ void TimeLineBoolFrame::InitAsDefaultInstance() {
 }
 
 TimeLineBoolFrame::TimeLineBoolFrame(const TimeLineBoolFrame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -20204,7 +15821,11 @@ void TimeLineBoolFrame::SharedDtor() {
   if (classname_ != &::google::protobuf::internal::kEmptyString) {
     delete classname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -20213,13 +15834,12 @@ void TimeLineBoolFrame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLineBoolFrame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLineBoolFrame_descriptor_;
-}
-
 const TimeLineBoolFrame& TimeLineBoolFrame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -20246,7 +15866,6 @@ void TimeLineBoolFrame::Clear() {
     value_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLineBoolFrame::MergePartialFromCodedStream(
@@ -20261,9 +15880,6 @@ bool TimeLineBoolFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -20278,9 +15894,6 @@ bool TimeLineBoolFrame::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -20342,8 +15955,7 @@ bool TimeLineBoolFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -20356,18 +15968,12 @@ void TimeLineBoolFrame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -20387,54 +15993,6 @@ void TimeLineBoolFrame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->value(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLineBoolFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 frameIndex = 3;
-  if (has_frameindex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->frameindex(), target);
-  }
-
-  // optional bool tween = 4;
-  if (has_tween()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->tween(), target);
-  }
-
-  // optional bool value = 5;
-  if (has_value()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->value(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLineBoolFrame::ByteSize() const {
@@ -20473,27 +16031,15 @@ int TimeLineBoolFrame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLineBoolFrame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLineBoolFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLineBoolFrame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLineBoolFrame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLineBoolFrame*>(&from));
 }
 
 void TimeLineBoolFrame::MergeFrom(const TimeLineBoolFrame& from) {
@@ -20515,13 +16061,6 @@ void TimeLineBoolFrame::MergeFrom(const TimeLineBoolFrame& from) {
       set_value(from.value());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLineBoolFrame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLineBoolFrame::CopyFrom(const TimeLineBoolFrame& from) {
@@ -20543,17 +16082,12 @@ void TimeLineBoolFrame::Swap(TimeLineBoolFrame* other) {
     std::swap(tween_, other->tween_);
     std::swap(value_, other->value_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLineBoolFrame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLineBoolFrame_descriptor_;
-  metadata.reflection = TimeLineBoolFrame_reflection_;
-  return metadata;
+::std::string TimeLineBoolFrame::GetTypeName() const {
+  return "protocolbuffers.TimeLineBoolFrame";
 }
 
 
@@ -20568,7 +16102,7 @@ const int TimeLineIntFrame::kValueFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLineIntFrame::TimeLineIntFrame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -20576,7 +16110,7 @@ void TimeLineIntFrame::InitAsDefaultInstance() {
 }
 
 TimeLineIntFrame::TimeLineIntFrame(const TimeLineIntFrame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -20602,7 +16136,11 @@ void TimeLineIntFrame::SharedDtor() {
   if (classname_ != &::google::protobuf::internal::kEmptyString) {
     delete classname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -20611,13 +16149,12 @@ void TimeLineIntFrame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLineIntFrame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLineIntFrame_descriptor_;
-}
-
 const TimeLineIntFrame& TimeLineIntFrame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -20644,7 +16181,6 @@ void TimeLineIntFrame::Clear() {
     value_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLineIntFrame::MergePartialFromCodedStream(
@@ -20659,9 +16195,6 @@ bool TimeLineIntFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -20676,9 +16209,6 @@ bool TimeLineIntFrame::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -20740,8 +16270,7 @@ bool TimeLineIntFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -20754,18 +16283,12 @@ void TimeLineIntFrame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -20785,54 +16308,6 @@ void TimeLineIntFrame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->value(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLineIntFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 frameIndex = 3;
-  if (has_frameindex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->frameindex(), target);
-  }
-
-  // optional bool tween = 4;
-  if (has_tween()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->tween(), target);
-  }
-
-  // optional int32 value = 5;
-  if (has_value()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->value(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLineIntFrame::ByteSize() const {
@@ -20873,27 +16348,15 @@ int TimeLineIntFrame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLineIntFrame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLineIntFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLineIntFrame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLineIntFrame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLineIntFrame*>(&from));
 }
 
 void TimeLineIntFrame::MergeFrom(const TimeLineIntFrame& from) {
@@ -20915,13 +16378,6 @@ void TimeLineIntFrame::MergeFrom(const TimeLineIntFrame& from) {
       set_value(from.value());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLineIntFrame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLineIntFrame::CopyFrom(const TimeLineIntFrame& from) {
@@ -20943,17 +16399,12 @@ void TimeLineIntFrame::Swap(TimeLineIntFrame* other) {
     std::swap(tween_, other->tween_);
     std::swap(value_, other->value_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLineIntFrame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLineIntFrame_descriptor_;
-  metadata.reflection = TimeLineIntFrame_reflection_;
-  return metadata;
+::std::string TimeLineIntFrame::GetTypeName() const {
+  return "protocolbuffers.TimeLineIntFrame";
 }
 
 
@@ -20968,7 +16419,7 @@ const int TimeLineStringFrame::kValueFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLineStringFrame::TimeLineStringFrame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -20976,7 +16427,7 @@ void TimeLineStringFrame::InitAsDefaultInstance() {
 }
 
 TimeLineStringFrame::TimeLineStringFrame(const TimeLineStringFrame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -21005,7 +16456,11 @@ void TimeLineStringFrame::SharedDtor() {
   if (value_ != &::google::protobuf::internal::kEmptyString) {
     delete value_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -21014,13 +16469,12 @@ void TimeLineStringFrame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLineStringFrame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLineStringFrame_descriptor_;
-}
-
 const TimeLineStringFrame& TimeLineStringFrame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -21051,7 +16505,6 @@ void TimeLineStringFrame::Clear() {
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLineStringFrame::MergePartialFromCodedStream(
@@ -21066,9 +16519,6 @@ bool TimeLineStringFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -21083,9 +16533,6 @@ bool TimeLineStringFrame::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -21132,9 +16579,6 @@ bool TimeLineStringFrame::MergePartialFromCodedStream(
          parse_value:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_value()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->value().data(), this->value().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -21148,8 +16592,7 @@ bool TimeLineStringFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -21162,18 +16605,12 @@ void TimeLineStringFrame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -21190,66 +16627,10 @@ void TimeLineStringFrame::SerializeWithCachedSizes(
 
   // optional string value = 5;
   if (has_value()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->value().data(), this->value().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       5, this->value(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLineStringFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 frameIndex = 3;
-  if (has_frameindex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->frameindex(), target);
-  }
-
-  // optional bool tween = 4;
-  if (has_tween()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->tween(), target);
-  }
-
-  // optional string value = 5;
-  if (has_value()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->value().data(), this->value().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->value(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLineStringFrame::ByteSize() const {
@@ -21290,27 +16671,15 @@ int TimeLineStringFrame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLineStringFrame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLineStringFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLineStringFrame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLineStringFrame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLineStringFrame*>(&from));
 }
 
 void TimeLineStringFrame::MergeFrom(const TimeLineStringFrame& from) {
@@ -21332,13 +16701,6 @@ void TimeLineStringFrame::MergeFrom(const TimeLineStringFrame& from) {
       set_value(from.value());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLineStringFrame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLineStringFrame::CopyFrom(const TimeLineStringFrame& from) {
@@ -21360,17 +16722,12 @@ void TimeLineStringFrame::Swap(TimeLineStringFrame* other) {
     std::swap(tween_, other->tween_);
     std::swap(value_, other->value_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLineStringFrame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLineStringFrame_descriptor_;
-  metadata.reflection = TimeLineStringFrame_reflection_;
-  return metadata;
+::std::string TimeLineStringFrame::GetTypeName() const {
+  return "protocolbuffers.TimeLineStringFrame";
 }
 
 
@@ -21386,7 +16743,7 @@ const int TimeLinePointFrame::kYFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLinePointFrame::TimeLinePointFrame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -21394,7 +16751,7 @@ void TimeLinePointFrame::InitAsDefaultInstance() {
 }
 
 TimeLinePointFrame::TimeLinePointFrame(const TimeLinePointFrame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -21421,7 +16778,11 @@ void TimeLinePointFrame::SharedDtor() {
   if (classname_ != &::google::protobuf::internal::kEmptyString) {
     delete classname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -21430,13 +16791,12 @@ void TimeLinePointFrame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLinePointFrame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLinePointFrame_descriptor_;
-}
-
 const TimeLinePointFrame& TimeLinePointFrame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -21464,7 +16824,6 @@ void TimeLinePointFrame::Clear() {
     y_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLinePointFrame::MergePartialFromCodedStream(
@@ -21479,9 +16838,6 @@ bool TimeLinePointFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -21496,9 +16852,6 @@ bool TimeLinePointFrame::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -21576,8 +16929,7 @@ bool TimeLinePointFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -21590,18 +16942,12 @@ void TimeLinePointFrame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -21626,59 +16972,6 @@ void TimeLinePointFrame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->y(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLinePointFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 frameIndex = 3;
-  if (has_frameindex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->frameindex(), target);
-  }
-
-  // optional bool tween = 4;
-  if (has_tween()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->tween(), target);
-  }
-
-  // optional float x = 5;
-  if (has_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->x(), target);
-  }
-
-  // optional float y = 6;
-  if (has_y()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->y(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLinePointFrame::ByteSize() const {
@@ -21722,27 +17015,15 @@ int TimeLinePointFrame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLinePointFrame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLinePointFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLinePointFrame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLinePointFrame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLinePointFrame*>(&from));
 }
 
 void TimeLinePointFrame::MergeFrom(const TimeLinePointFrame& from) {
@@ -21767,13 +17048,6 @@ void TimeLinePointFrame::MergeFrom(const TimeLinePointFrame& from) {
       set_y(from.y());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLinePointFrame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLinePointFrame::CopyFrom(const TimeLinePointFrame& from) {
@@ -21796,17 +17070,12 @@ void TimeLinePointFrame::Swap(TimeLinePointFrame* other) {
     std::swap(x_, other->x_);
     std::swap(y_, other->y_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLinePointFrame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLinePointFrame_descriptor_;
-  metadata.reflection = TimeLinePointFrame_reflection_;
-  return metadata;
+::std::string TimeLinePointFrame::GetTypeName() const {
+  return "protocolbuffers.TimeLinePointFrame";
 }
 
 
@@ -21824,7 +17093,7 @@ const int TimeLineColorFrame::kBlueFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLineColorFrame::TimeLineColorFrame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -21832,7 +17101,7 @@ void TimeLineColorFrame::InitAsDefaultInstance() {
 }
 
 TimeLineColorFrame::TimeLineColorFrame(const TimeLineColorFrame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -21861,7 +17130,11 @@ void TimeLineColorFrame::SharedDtor() {
   if (classname_ != &::google::protobuf::internal::kEmptyString) {
     delete classname_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -21870,13 +17143,12 @@ void TimeLineColorFrame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLineColorFrame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLineColorFrame_descriptor_;
-}
-
 const TimeLineColorFrame& TimeLineColorFrame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -21906,7 +17178,6 @@ void TimeLineColorFrame::Clear() {
     blue_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLineColorFrame::MergePartialFromCodedStream(
@@ -21921,9 +17192,6 @@ bool TimeLineColorFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -21938,9 +17206,6 @@ bool TimeLineColorFrame::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -22050,8 +17315,7 @@ bool TimeLineColorFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -22064,18 +17328,12 @@ void TimeLineColorFrame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -22110,69 +17368,6 @@ void TimeLineColorFrame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->blue(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLineColorFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 frameIndex = 3;
-  if (has_frameindex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->frameindex(), target);
-  }
-
-  // optional bool tween = 4;
-  if (has_tween()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->tween(), target);
-  }
-
-  // optional int32 alpha = 5;
-  if (has_alpha()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->alpha(), target);
-  }
-
-  // optional int32 red = 6;
-  if (has_red()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->red(), target);
-  }
-
-  // optional int32 green = 7;
-  if (has_green()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->green(), target);
-  }
-
-  // optional int32 blue = 8;
-  if (has_blue()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->blue(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLineColorFrame::ByteSize() const {
@@ -22234,27 +17429,15 @@ int TimeLineColorFrame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLineColorFrame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLineColorFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLineColorFrame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLineColorFrame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLineColorFrame*>(&from));
 }
 
 void TimeLineColorFrame::MergeFrom(const TimeLineColorFrame& from) {
@@ -22285,13 +17468,6 @@ void TimeLineColorFrame::MergeFrom(const TimeLineColorFrame& from) {
       set_blue(from.blue());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLineColorFrame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLineColorFrame::CopyFrom(const TimeLineColorFrame& from) {
@@ -22316,17 +17492,12 @@ void TimeLineColorFrame::Swap(TimeLineColorFrame* other) {
     std::swap(green_, other->green_);
     std::swap(blue_, other->blue_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLineColorFrame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLineColorFrame_descriptor_;
-  metadata.reflection = TimeLineColorFrame_reflection_;
-  return metadata;
+::std::string TimeLineColorFrame::GetTypeName() const {
+  return "protocolbuffers.TimeLineColorFrame";
 }
 
 
@@ -22342,7 +17513,7 @@ const int TimeLineTextureFrame::kPlistFileFieldNumber;
 #endif  // !_MSC_VER
 
 TimeLineTextureFrame::TimeLineTextureFrame()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
@@ -22350,7 +17521,7 @@ void TimeLineTextureFrame::InitAsDefaultInstance() {
 }
 
 TimeLineTextureFrame::TimeLineTextureFrame(const TimeLineTextureFrame& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
@@ -22383,7 +17554,11 @@ void TimeLineTextureFrame::SharedDtor() {
   if (plistfile_ != &::google::protobuf::internal::kEmptyString) {
     delete plistfile_;
   }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
   if (this != default_instance_) {
+  #endif
   }
 }
 
@@ -22392,13 +17567,12 @@ void TimeLineTextureFrame::SetCachedSize(int size) const {
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* TimeLineTextureFrame::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TimeLineTextureFrame_descriptor_;
-}
-
 const TimeLineTextureFrame& TimeLineTextureFrame::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
   if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
   return *default_instance_;
 }
 
@@ -22434,7 +17608,6 @@ void TimeLineTextureFrame::Clear() {
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
 }
 
 bool TimeLineTextureFrame::MergePartialFromCodedStream(
@@ -22449,9 +17622,6 @@ bool TimeLineTextureFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -22466,9 +17636,6 @@ bool TimeLineTextureFrame::MergePartialFromCodedStream(
          parse_classname:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_classname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->classname().data(), this->classname().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -22515,9 +17682,6 @@ bool TimeLineTextureFrame::MergePartialFromCodedStream(
          parse_filePath:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_filepath()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->filepath().data(), this->filepath().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -22532,9 +17696,6 @@ bool TimeLineTextureFrame::MergePartialFromCodedStream(
          parse_plistFile:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_plistfile()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->plistfile().data(), this->plistfile().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -22548,8 +17709,7 @@ bool TimeLineTextureFrame::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           return true;
         }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
         break;
       }
     }
@@ -22562,18 +17722,12 @@ void TimeLineTextureFrame::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->name(), output);
   }
 
   // optional string classname = 2;
   if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->classname(), output);
   }
@@ -22590,85 +17744,16 @@ void TimeLineTextureFrame::SerializeWithCachedSizes(
 
   // optional string filePath = 5;
   if (has_filepath()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filepath().data(), this->filepath().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       5, this->filepath(), output);
   }
 
   // optional string plistFile = 6;
   if (has_plistfile()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->plistfile().data(), this->plistfile().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       6, this->plistfile(), output);
   }
 
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* TimeLineTextureFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string name = 1;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->name(), target);
-  }
-
-  // optional string classname = 2;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->classname().data(), this->classname().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->classname(), target);
-  }
-
-  // optional int32 frameIndex = 3;
-  if (has_frameindex()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->frameindex(), target);
-  }
-
-  // optional bool tween = 4;
-  if (has_tween()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->tween(), target);
-  }
-
-  // optional string filePath = 5;
-  if (has_filepath()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->filepath().data(), this->filepath().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->filepath(), target);
-  }
-
-  // optional string plistFile = 6;
-  if (has_plistfile()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->plistfile().data(), this->plistfile().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->plistfile(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
 }
 
 int TimeLineTextureFrame::ByteSize() const {
@@ -22716,27 +17801,15 @@ int TimeLineTextureFrame::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
-void TimeLineTextureFrame::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const TimeLineTextureFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const TimeLineTextureFrame*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
+void TimeLineTextureFrame::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TimeLineTextureFrame*>(&from));
 }
 
 void TimeLineTextureFrame::MergeFrom(const TimeLineTextureFrame& from) {
@@ -22761,13 +17834,6 @@ void TimeLineTextureFrame::MergeFrom(const TimeLineTextureFrame& from) {
       set_plistfile(from.plistfile());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void TimeLineTextureFrame::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
 }
 
 void TimeLineTextureFrame::CopyFrom(const TimeLineTextureFrame& from) {
@@ -22790,17 +17856,12 @@ void TimeLineTextureFrame::Swap(TimeLineTextureFrame* other) {
     std::swap(filepath_, other->filepath_);
     std::swap(plistfile_, other->plistfile_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata TimeLineTextureFrame::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TimeLineTextureFrame_descriptor_;
-  metadata.reflection = TimeLineTextureFrame_reflection_;
-  return metadata;
+::std::string TimeLineTextureFrame::GetTypeName() const {
+  return "protocolbuffers.TimeLineTextureFrame";
 }
 
 

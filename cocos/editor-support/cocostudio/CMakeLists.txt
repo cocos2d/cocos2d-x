@@ -58,50 +58,19 @@ set(CS_SRC
   ActionTimeline/CCFrame.cpp
   ActionTimeline/CCNodeReader.cpp
   ActionTimeline/CCTimeLine.cpp
-  CSParseBinary.pb.cc \
-  ../../../external/protocolBuf/src/google/protobuf/descriptor.cc \
-  ../../../external/protocolBuf/src/google/protobuf/descriptor.cc \
-  ../../../external/protocolBuf/src/google/protobuf/descriptor.pb.cc \
-  ../../../external/protocolBuf/src/google/protobuf/descriptor_database.cc \
-  ../../../external/protocolBuf/src/google/protobuf/dynamic_message.cc \
-  ../../../external/protocolBuf/src/google/protobuf/extension_set.cc \
-  ../../../external/protocolBuf/src/google/protobuf/extension_set_heavy.cc \
-  ../../../external/protocolBuf/src/google/protobuf/generated_message_reflection.cc \
+  CSParseBinary.pb.cc \  
+  ../../../external/protocolBuf/src/google/protobuf/extension_set.cc \  
   ../../../external/protocolBuf/src/google/protobuf/generated_message_util.cc \
-  ../../../external/protocolBuf/src/google/protobuf/message.cc \
   ../../../external/protocolBuf/src/google/protobuf/message_lite.cc \
-  ../../../external/protocolBuf/src/google/protobuf/reflection_ops.cc \
   ../../../external/protocolBuf/src/google/protobuf/repeated_field.cc \
-  ../../../external/protocolBuf/src/google/protobuf/service.cc \
-  ../../../external/protocolBuf/src/google/protobuf/text_format.cc \
-  ../../../external/protocolBuf/src/google/protobuf/unknown_field_set.cc \
-  ../../../external/protocolBuf/src/google/protobuf/wire_format.cc \
   ../../../external/protocolBuf/src/google/protobuf/wire_format_lite.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_enum.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_enum_field.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_extension.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_field.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_file.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_generator.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_helpers.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_message.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_message_field.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_primitive_field.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_service.cc \
-  ../../../external/protocolBuf/src/google/protobuf/compiler/cpp/cpp_string_field.cc \
   ../../../external/protocolBuf/src/google/protobuf/io/coded_stream.cc \
-  ../../../external/protocolBuf/src/google/protobuf/io/gzip_stream.cc \
-  ../../../external/protocolBuf/src/google/protobuf/io/printer.cc \
-  ../../../external/protocolBuf/src/google/protobuf/io/tokenizer.cc \
   ../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream.cc \
   ../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream_impl.cc \
   ../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream_impl_lite.cc \
   ../../../external/protocolBuf/src/google/protobuf/stubs/common.cc \
   ../../../external/protocolBuf/src/google/protobuf/stubs/once.cc \
   ../../../external/protocolBuf/src/google/protobuf/stubs/stringprintf.cc \
-  ../../../external/protocolBuf/src/google/protobuf/stubs/structurally_valid.cc \
-  ../../../external/protocolBuf/src/google/protobuf/stubs/strutil.cc \
-  ../../../external/protocolBuf/src/google/protobuf/stubs/substitute.cc \
 )
 
 add_library(cocostudio STATIC ${CS_SRC} )

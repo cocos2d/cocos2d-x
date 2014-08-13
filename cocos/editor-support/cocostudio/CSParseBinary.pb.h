@@ -20,10 +20,9 @@
 #endif
 
 #include <google/protobuf/generated_message_util.h>
-#include <google/protobuf/message.h>
+#include <google/protobuf/message_lite.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
-#include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
 namespace protocolbuffers {
@@ -64,7 +63,7 @@ class TimeLineTextureFrame;
 
 // ===================================================================
 
-class CSParseBinary : public ::google::protobuf::Message {
+class CSParseBinary : public ::google::protobuf::MessageLite {
  public:
   CSParseBinary();
   virtual ~CSParseBinary();
@@ -76,24 +75,24 @@ class CSParseBinary : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const CSParseBinary& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const CSParseBinary* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(CSParseBinary* other);
 
   // implements Message ----------------------------------------------
 
   CSParseBinary* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const CSParseBinary& from);
   void MergeFrom(const CSParseBinary& from);
   void Clear();
@@ -104,7 +103,6 @@ class CSParseBinary : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -112,7 +110,7 @@ class CSParseBinary : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -225,6 +223,18 @@ class CSParseBinary : public ::google::protobuf::Message {
   inline ::protocolbuffers::NodeAction* release_action();
   inline void set_allocated_action(::protocolbuffers::NodeAction* action);
 
+  // optional string cocos2dVersion = 11;
+  inline bool has_cocos2dversion() const;
+  inline void clear_cocos2dversion();
+  static const int kCocos2DVersionFieldNumber = 11;
+  inline const ::std::string& cocos2dversion() const;
+  inline void set_cocos2dversion(const ::std::string& value);
+  inline void set_cocos2dversion(const char* value);
+  inline void set_cocos2dversion(const char* value, size_t size);
+  inline ::std::string* mutable_cocos2dversion();
+  inline ::std::string* release_cocos2dversion();
+  inline void set_allocated_cocos2dversion(::std::string* cocos2dversion);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.CSParseBinary)
  private:
   inline void set_has_classname();
@@ -243,8 +253,8 @@ class CSParseBinary : public ::google::protobuf::Message {
   inline void clear_has_nodetree();
   inline void set_has_action();
   inline void clear_has_action();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  inline void set_has_cocos2dversion();
+  inline void clear_has_cocos2dversion();
 
   ::std::string* classname_;
   ::std::string* name_;
@@ -255,12 +265,17 @@ class CSParseBinary : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::std::string> texturespng_;
   ::protocolbuffers::NodeTree* nodetree_;
   ::protocolbuffers::NodeAction* action_;
+  ::std::string* cocos2dversion_;
   ::google::protobuf::int32 designwidth_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -269,7 +284,7 @@ class CSParseBinary : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class NodeTree : public ::google::protobuf::Message {
+class NodeTree : public ::google::protobuf::MessageLite {
  public:
   NodeTree();
   virtual ~NodeTree();
@@ -281,24 +296,24 @@ class NodeTree : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const NodeTree& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const NodeTree* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(NodeTree* other);
 
   // implements Message ----------------------------------------------
 
   NodeTree* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const NodeTree& from);
   void MergeFrom(const NodeTree& from);
   void Clear();
@@ -309,7 +324,6 @@ class NodeTree : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -317,7 +331,7 @@ class NodeTree : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -531,8 +545,6 @@ class NodeTree : public ::google::protobuf::Message {
   inline void set_has_paneloptions();
   inline void clear_has_paneloptions();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* classname_;
   ::std::string* name_;
   ::google::protobuf::RepeatedPtrField< ::protocolbuffers::NodeTree > children_;
@@ -555,7 +567,11 @@ class NodeTree : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -564,7 +580,7 @@ class NodeTree : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class WidgetOptions : public ::google::protobuf::Message {
+class WidgetOptions : public ::google::protobuf::MessageLite {
  public:
   WidgetOptions();
   virtual ~WidgetOptions();
@@ -576,24 +592,24 @@ class WidgetOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const WidgetOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const WidgetOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(WidgetOptions* other);
 
   // implements Message ----------------------------------------------
 
   WidgetOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const WidgetOptions& from);
   void MergeFrom(const WidgetOptions& from);
   void Clear();
@@ -604,7 +620,6 @@ class WidgetOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -612,7 +627,7 @@ class WidgetOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -940,8 +955,6 @@ class WidgetOptions : public ::google::protobuf::Message {
   inline void set_has_name();
   inline void clear_has_name();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   float x_;
   float y_;
   float scalex_;
@@ -979,7 +992,11 @@ class WidgetOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(33 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -988,7 +1005,7 @@ class WidgetOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class LayoutParameter : public ::google::protobuf::Message {
+class LayoutParameter : public ::google::protobuf::MessageLite {
  public:
   LayoutParameter();
   virtual ~LayoutParameter();
@@ -1000,24 +1017,24 @@ class LayoutParameter : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const LayoutParameter& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LayoutParameter* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(LayoutParameter* other);
 
   // implements Message ----------------------------------------------
 
   LayoutParameter* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const LayoutParameter& from);
   void MergeFrom(const LayoutParameter& from);
   void Clear();
@@ -1028,7 +1045,6 @@ class LayoutParameter : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1036,7 +1052,7 @@ class LayoutParameter : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1181,8 +1197,6 @@ class LayoutParameter : public ::google::protobuf::Message {
   inline void set_has_layoutparentvertical();
   inline void clear_has_layoutparentvertical();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::google::protobuf::int32 type_;
   ::google::protobuf::int32 gravity_;
   ::std::string* relativename_;
@@ -1201,7 +1215,11 @@ class LayoutParameter : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -1210,7 +1228,7 @@ class LayoutParameter : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class ButtonOptions : public ::google::protobuf::Message {
+class ButtonOptions : public ::google::protobuf::MessageLite {
  public:
   ButtonOptions();
   virtual ~ButtonOptions();
@@ -1222,24 +1240,24 @@ class ButtonOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const ButtonOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ButtonOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(ButtonOptions* other);
 
   // implements Message ----------------------------------------------
 
   ButtonOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const ButtonOptions& from);
   void MergeFrom(const ButtonOptions& from);
   void Clear();
@@ -1250,7 +1268,6 @@ class ButtonOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1258,7 +1275,7 @@ class ButtonOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1497,8 +1514,6 @@ class ButtonOptions : public ::google::protobuf::Message {
   inline void set_has_scale9enable();
   inline void clear_has_scale9enable();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* normal_;
@@ -1524,7 +1539,11 @@ class ButtonOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(21 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -1533,7 +1552,7 @@ class ButtonOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class ResourceData : public ::google::protobuf::Message {
+class ResourceData : public ::google::protobuf::MessageLite {
  public:
   ResourceData();
   virtual ~ResourceData();
@@ -1545,24 +1564,24 @@ class ResourceData : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const ResourceData& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ResourceData* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(ResourceData* other);
 
   // implements Message ----------------------------------------------
 
   ResourceData* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const ResourceData& from);
   void MergeFrom(const ResourceData& from);
   void Clear();
@@ -1573,7 +1592,6 @@ class ResourceData : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1581,7 +1599,7 @@ class ResourceData : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1627,8 +1645,6 @@ class ResourceData : public ::google::protobuf::Message {
   inline void set_has_resourcetype();
   inline void clear_has_resourcetype();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* path_;
   ::std::string* plistfile_;
   ::google::protobuf::int32 resourcetype_;
@@ -1636,7 +1652,11 @@ class ResourceData : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -1645,7 +1665,7 @@ class ResourceData : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CheckBoxOptions : public ::google::protobuf::Message {
+class CheckBoxOptions : public ::google::protobuf::MessageLite {
  public:
   CheckBoxOptions();
   virtual ~CheckBoxOptions();
@@ -1657,24 +1677,24 @@ class CheckBoxOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const CheckBoxOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const CheckBoxOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(CheckBoxOptions* other);
 
   // implements Message ----------------------------------------------
 
   CheckBoxOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const CheckBoxOptions& from);
   void MergeFrom(const CheckBoxOptions& from);
   void Clear();
@@ -1685,7 +1705,6 @@ class CheckBoxOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1693,7 +1712,7 @@ class CheckBoxOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1864,8 +1883,6 @@ class CheckBoxOptions : public ::google::protobuf::Message {
   inline void set_has_selectedstate();
   inline void clear_has_selectedstate();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* backgroundbox_;
@@ -1883,7 +1900,11 @@ class CheckBoxOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -1892,7 +1913,7 @@ class CheckBoxOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class ImageViewOptions : public ::google::protobuf::Message {
+class ImageViewOptions : public ::google::protobuf::MessageLite {
  public:
   ImageViewOptions();
   virtual ~ImageViewOptions();
@@ -1904,24 +1925,24 @@ class ImageViewOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const ImageViewOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ImageViewOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(ImageViewOptions* other);
 
   // implements Message ----------------------------------------------
 
   ImageViewOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const ImageViewOptions& from);
   void MergeFrom(const ImageViewOptions& from);
   void Clear();
@@ -1932,7 +1953,6 @@ class ImageViewOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1940,7 +1960,7 @@ class ImageViewOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -2065,8 +2085,6 @@ class ImageViewOptions : public ::google::protobuf::Message {
   inline void set_has_scale9enable();
   inline void clear_has_scale9enable();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* filename_;
@@ -2082,7 +2100,11 @@ class ImageViewOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -2091,7 +2113,7 @@ class ImageViewOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class LabelAtlasOptions : public ::google::protobuf::Message {
+class LabelAtlasOptions : public ::google::protobuf::MessageLite {
  public:
   LabelAtlasOptions();
   virtual ~LabelAtlasOptions();
@@ -2103,24 +2125,24 @@ class LabelAtlasOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const LabelAtlasOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LabelAtlasOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(LabelAtlasOptions* other);
 
   // implements Message ----------------------------------------------
 
   LabelAtlasOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const LabelAtlasOptions& from);
   void MergeFrom(const LabelAtlasOptions& from);
   void Clear();
@@ -2131,7 +2153,6 @@ class LabelAtlasOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -2139,7 +2160,7 @@ class LabelAtlasOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -2247,8 +2268,6 @@ class LabelAtlasOptions : public ::google::protobuf::Message {
   inline void set_has_itemheight();
   inline void clear_has_itemheight();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* stringvalue_;
@@ -2261,7 +2280,11 @@ class LabelAtlasOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -2270,7 +2293,7 @@ class LabelAtlasOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class LabelBMFontOptions : public ::google::protobuf::Message {
+class LabelBMFontOptions : public ::google::protobuf::MessageLite {
  public:
   LabelBMFontOptions();
   virtual ~LabelBMFontOptions();
@@ -2282,24 +2305,24 @@ class LabelBMFontOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const LabelBMFontOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LabelBMFontOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(LabelBMFontOptions* other);
 
   // implements Message ----------------------------------------------
 
   LabelBMFontOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const LabelBMFontOptions& from);
   void MergeFrom(const LabelBMFontOptions& from);
   void Clear();
@@ -2310,7 +2333,6 @@ class LabelBMFontOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -2318,7 +2340,7 @@ class LabelBMFontOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -2380,8 +2402,6 @@ class LabelBMFontOptions : public ::google::protobuf::Message {
   inline void set_has_filenamedata();
   inline void clear_has_filenamedata();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* text_;
@@ -2390,7 +2410,11 @@ class LabelBMFontOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -2399,7 +2423,7 @@ class LabelBMFontOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class LabelOptions : public ::google::protobuf::Message {
+class LabelOptions : public ::google::protobuf::MessageLite {
  public:
   LabelOptions();
   virtual ~LabelOptions();
@@ -2411,24 +2435,24 @@ class LabelOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const LabelOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LabelOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(LabelOptions* other);
 
   // implements Message ----------------------------------------------
 
   LabelOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const LabelOptions& from);
   void MergeFrom(const LabelOptions& from);
   void Clear();
@@ -2439,7 +2463,6 @@ class LabelOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -2447,7 +2470,7 @@ class LabelOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -2577,8 +2600,6 @@ class LabelOptions : public ::google::protobuf::Message {
   inline void set_has_touchscaleenable();
   inline void clear_has_touchscaleenable();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* fontname_;
@@ -2594,7 +2615,11 @@ class LabelOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -2603,7 +2628,7 @@ class LabelOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class LoadingBarOptions : public ::google::protobuf::Message {
+class LoadingBarOptions : public ::google::protobuf::MessageLite {
  public:
   LoadingBarOptions();
   virtual ~LoadingBarOptions();
@@ -2615,24 +2640,24 @@ class LoadingBarOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const LoadingBarOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LoadingBarOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(LoadingBarOptions* other);
 
   // implements Message ----------------------------------------------
 
   LoadingBarOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const LoadingBarOptions& from);
   void MergeFrom(const LoadingBarOptions& from);
   void Clear();
@@ -2643,7 +2668,6 @@ class LoadingBarOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -2651,7 +2675,7 @@ class LoadingBarOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -2776,8 +2800,6 @@ class LoadingBarOptions : public ::google::protobuf::Message {
   inline void set_has_scale9enable();
   inline void clear_has_scale9enable();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* texture_;
@@ -2793,7 +2815,11 @@ class LoadingBarOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -2802,7 +2828,7 @@ class LoadingBarOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class ListViewOptions : public ::google::protobuf::Message {
+class ListViewOptions : public ::google::protobuf::MessageLite {
  public:
   ListViewOptions();
   virtual ~ListViewOptions();
@@ -2814,24 +2840,24 @@ class ListViewOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const ListViewOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ListViewOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(ListViewOptions* other);
 
   // implements Message ----------------------------------------------
 
   ListViewOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const ListViewOptions& from);
   void MergeFrom(const ListViewOptions& from);
   void Clear();
@@ -2842,7 +2868,6 @@ class ListViewOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -2850,7 +2875,7 @@ class ListViewOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -3137,8 +3162,6 @@ class ListViewOptions : public ::google::protobuf::Message {
   inline void set_has_itemmargin();
   inline void clear_has_itemmargin();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* backgroundimage_;
@@ -3172,7 +3195,11 @@ class ListViewOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(29 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -3181,7 +3208,7 @@ class ListViewOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class PageViewOptions : public ::google::protobuf::Message {
+class PageViewOptions : public ::google::protobuf::MessageLite {
  public:
   PageViewOptions();
   virtual ~PageViewOptions();
@@ -3193,24 +3220,24 @@ class PageViewOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const PageViewOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const PageViewOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(PageViewOptions* other);
 
   // implements Message ----------------------------------------------
 
   PageViewOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const PageViewOptions& from);
   void MergeFrom(const PageViewOptions& from);
   void Clear();
@@ -3221,7 +3248,6 @@ class PageViewOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -3229,7 +3255,7 @@ class PageViewOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -3462,8 +3488,6 @@ class PageViewOptions : public ::google::protobuf::Message {
   inline void set_has_backgroundscale9enable();
   inline void clear_has_backgroundscale9enable();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* backgroundimage_;
@@ -3491,7 +3515,11 @@ class PageViewOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(23 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -3500,7 +3528,7 @@ class PageViewOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class PanelOptions : public ::google::protobuf::Message {
+class PanelOptions : public ::google::protobuf::MessageLite {
  public:
   PanelOptions();
   virtual ~PanelOptions();
@@ -3512,24 +3540,24 @@ class PanelOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const PanelOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const PanelOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(PanelOptions* other);
 
   // implements Message ----------------------------------------------
 
   PanelOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const PanelOptions& from);
   void MergeFrom(const PanelOptions& from);
   void Clear();
@@ -3540,7 +3568,6 @@ class PanelOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -3548,7 +3575,7 @@ class PanelOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -3799,8 +3826,6 @@ class PanelOptions : public ::google::protobuf::Message {
   inline void set_has_adaptscreen();
   inline void clear_has_adaptscreen();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* backgroundimage_;
@@ -3830,7 +3855,11 @@ class PanelOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(25 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -3839,7 +3868,7 @@ class PanelOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class ScrollViewOptions : public ::google::protobuf::Message {
+class ScrollViewOptions : public ::google::protobuf::MessageLite {
  public:
   ScrollViewOptions();
   virtual ~ScrollViewOptions();
@@ -3851,24 +3880,24 @@ class ScrollViewOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const ScrollViewOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ScrollViewOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(ScrollViewOptions* other);
 
   // implements Message ----------------------------------------------
 
   ScrollViewOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const ScrollViewOptions& from);
   void MergeFrom(const ScrollViewOptions& from);
   void Clear();
@@ -3879,7 +3908,6 @@ class ScrollViewOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -3887,7 +3915,7 @@ class ScrollViewOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -4165,8 +4193,6 @@ class ScrollViewOptions : public ::google::protobuf::Message {
   inline void set_has_layouttype();
   inline void clear_has_layouttype();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* backgroundimage_;
@@ -4199,7 +4225,11 @@ class ScrollViewOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(28 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -4208,7 +4238,7 @@ class ScrollViewOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class SliderOptions : public ::google::protobuf::Message {
+class SliderOptions : public ::google::protobuf::MessageLite {
  public:
   SliderOptions();
   virtual ~SliderOptions();
@@ -4220,24 +4250,24 @@ class SliderOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const SliderOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const SliderOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(SliderOptions* other);
 
   // implements Message ----------------------------------------------
 
   SliderOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const SliderOptions& from);
   void MergeFrom(const SliderOptions& from);
   void Clear();
@@ -4248,7 +4278,6 @@ class SliderOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -4256,7 +4285,7 @@ class SliderOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -4575,8 +4604,6 @@ class SliderOptions : public ::google::protobuf::Message {
   inline void set_has_length();
   inline void clear_has_length();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* barfilename_;
@@ -4611,7 +4638,11 @@ class SliderOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(30 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -4620,7 +4651,7 @@ class SliderOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class SpriteOptions : public ::google::protobuf::Message {
+class SpriteOptions : public ::google::protobuf::MessageLite {
  public:
   SpriteOptions();
   virtual ~SpriteOptions();
@@ -4632,24 +4663,24 @@ class SpriteOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const SpriteOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const SpriteOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(SpriteOptions* other);
 
   // implements Message ----------------------------------------------
 
   SpriteOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const SpriteOptions& from);
   void MergeFrom(const SpriteOptions& from);
   void Clear();
@@ -4660,7 +4691,6 @@ class SpriteOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -4668,7 +4698,7 @@ class SpriteOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -4836,8 +4866,6 @@ class SpriteOptions : public ::google::protobuf::Message {
   inline void set_has_filenamedata();
   inline void clear_has_filenamedata();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 positiontype_;
@@ -4857,7 +4885,11 @@ class SpriteOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(15 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -4866,7 +4898,7 @@ class SpriteOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TextFieldOptions : public ::google::protobuf::Message {
+class TextFieldOptions : public ::google::protobuf::MessageLite {
  public:
   TextFieldOptions();
   virtual ~TextFieldOptions();
@@ -4878,24 +4910,24 @@ class TextFieldOptions : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TextFieldOptions& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TextFieldOptions* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TextFieldOptions* other);
 
   // implements Message ----------------------------------------------
 
   TextFieldOptions* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TextFieldOptions& from);
   void MergeFrom(const TextFieldOptions& from);
   void Clear();
@@ -4906,7 +4938,6 @@ class TextFieldOptions : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -4914,7 +4945,7 @@ class TextFieldOptions : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5072,8 +5103,6 @@ class TextFieldOptions : public ::google::protobuf::Message {
   inline void set_has_areaheight();
   inline void clear_has_areaheight();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* fontname_;
@@ -5091,7 +5120,11 @@ class TextFieldOptions : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5100,7 +5133,7 @@ class TextFieldOptions : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class NodeAction : public ::google::protobuf::Message {
+class NodeAction : public ::google::protobuf::MessageLite {
  public:
   NodeAction();
   virtual ~NodeAction();
@@ -5112,24 +5145,24 @@ class NodeAction : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const NodeAction& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const NodeAction* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(NodeAction* other);
 
   // implements Message ----------------------------------------------
 
   NodeAction* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const NodeAction& from);
   void MergeFrom(const NodeAction& from);
   void Clear();
@@ -5140,7 +5173,6 @@ class NodeAction : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -5148,7 +5180,7 @@ class NodeAction : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5215,8 +5247,6 @@ class NodeAction : public ::google::protobuf::Message {
   inline void set_has_speed();
   inline void clear_has_speed();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 duration_;
@@ -5226,7 +5256,11 @@ class NodeAction : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5235,7 +5269,7 @@ class NodeAction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLine : public ::google::protobuf::Message {
+class TimeLine : public ::google::protobuf::MessageLite {
  public:
   TimeLine();
   virtual ~TimeLine();
@@ -5247,24 +5281,24 @@ class TimeLine : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLine& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLine* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLine* other);
 
   // implements Message ----------------------------------------------
 
   TimeLine* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLine& from);
   void MergeFrom(const TimeLine& from);
   void Clear();
@@ -5275,7 +5309,6 @@ class TimeLine : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -5283,7 +5316,7 @@ class TimeLine : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5355,8 +5388,6 @@ class TimeLine : public ::google::protobuf::Message {
   inline void set_has_actiontag();
   inline void clear_has_actiontag();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::std::string* frametype_;
@@ -5366,7 +5397,11 @@ class TimeLine : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5375,7 +5410,7 @@ class TimeLine : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class Frame : public ::google::protobuf::Message {
+class Frame : public ::google::protobuf::MessageLite {
  public:
   Frame();
   virtual ~Frame();
@@ -5387,24 +5422,24 @@ class Frame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const Frame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const Frame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(Frame* other);
 
   // implements Message ----------------------------------------------
 
   Frame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const Frame& from);
   void MergeFrom(const Frame& from);
   void Clear();
@@ -5415,7 +5450,6 @@ class Frame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -5423,7 +5457,7 @@ class Frame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5531,8 +5565,6 @@ class Frame : public ::google::protobuf::Message {
   inline void set_has_textureframe();
   inline void clear_has_textureframe();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::protocolbuffers::TimeLineBoolFrame* visibleframe_;
   ::protocolbuffers::TimeLineIntFrame* zorderframe_;
   ::protocolbuffers::TimeLinePointFrame* rotationskewframe_;
@@ -5546,7 +5578,11 @@ class Frame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5555,7 +5591,7 @@ class Frame : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLineBoolFrame : public ::google::protobuf::Message {
+class TimeLineBoolFrame : public ::google::protobuf::MessageLite {
  public:
   TimeLineBoolFrame();
   virtual ~TimeLineBoolFrame();
@@ -5567,24 +5603,24 @@ class TimeLineBoolFrame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLineBoolFrame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLineBoolFrame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLineBoolFrame* other);
 
   // implements Message ----------------------------------------------
 
   TimeLineBoolFrame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLineBoolFrame& from);
   void MergeFrom(const TimeLineBoolFrame& from);
   void Clear();
@@ -5595,7 +5631,6 @@ class TimeLineBoolFrame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -5603,7 +5638,7 @@ class TimeLineBoolFrame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5667,8 +5702,6 @@ class TimeLineBoolFrame : public ::google::protobuf::Message {
   inline void set_has_value();
   inline void clear_has_value();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 frameindex_;
@@ -5678,7 +5711,11 @@ class TimeLineBoolFrame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5687,7 +5724,7 @@ class TimeLineBoolFrame : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLineIntFrame : public ::google::protobuf::Message {
+class TimeLineIntFrame : public ::google::protobuf::MessageLite {
  public:
   TimeLineIntFrame();
   virtual ~TimeLineIntFrame();
@@ -5699,24 +5736,24 @@ class TimeLineIntFrame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLineIntFrame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLineIntFrame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLineIntFrame* other);
 
   // implements Message ----------------------------------------------
 
   TimeLineIntFrame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLineIntFrame& from);
   void MergeFrom(const TimeLineIntFrame& from);
   void Clear();
@@ -5727,7 +5764,6 @@ class TimeLineIntFrame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -5735,7 +5771,7 @@ class TimeLineIntFrame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5799,8 +5835,6 @@ class TimeLineIntFrame : public ::google::protobuf::Message {
   inline void set_has_value();
   inline void clear_has_value();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 frameindex_;
@@ -5810,7 +5844,11 @@ class TimeLineIntFrame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5819,7 +5857,7 @@ class TimeLineIntFrame : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLineStringFrame : public ::google::protobuf::Message {
+class TimeLineStringFrame : public ::google::protobuf::MessageLite {
  public:
   TimeLineStringFrame();
   virtual ~TimeLineStringFrame();
@@ -5831,24 +5869,24 @@ class TimeLineStringFrame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLineStringFrame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLineStringFrame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLineStringFrame* other);
 
   // implements Message ----------------------------------------------
 
   TimeLineStringFrame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLineStringFrame& from);
   void MergeFrom(const TimeLineStringFrame& from);
   void Clear();
@@ -5859,7 +5897,6 @@ class TimeLineStringFrame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -5867,7 +5904,7 @@ class TimeLineStringFrame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -5936,8 +5973,6 @@ class TimeLineStringFrame : public ::google::protobuf::Message {
   inline void set_has_value();
   inline void clear_has_value();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 frameindex_;
@@ -5947,7 +5982,11 @@ class TimeLineStringFrame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -5956,7 +5995,7 @@ class TimeLineStringFrame : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLinePointFrame : public ::google::protobuf::Message {
+class TimeLinePointFrame : public ::google::protobuf::MessageLite {
  public:
   TimeLinePointFrame();
   virtual ~TimeLinePointFrame();
@@ -5968,24 +6007,24 @@ class TimeLinePointFrame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLinePointFrame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLinePointFrame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLinePointFrame* other);
 
   // implements Message ----------------------------------------------
 
   TimeLinePointFrame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLinePointFrame& from);
   void MergeFrom(const TimeLinePointFrame& from);
   void Clear();
@@ -5996,7 +6035,6 @@ class TimeLinePointFrame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -6004,7 +6042,7 @@ class TimeLinePointFrame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -6077,8 +6115,6 @@ class TimeLinePointFrame : public ::google::protobuf::Message {
   inline void set_has_y();
   inline void clear_has_y();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 frameindex_;
@@ -6089,7 +6125,11 @@ class TimeLinePointFrame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -6098,7 +6138,7 @@ class TimeLinePointFrame : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLineColorFrame : public ::google::protobuf::Message {
+class TimeLineColorFrame : public ::google::protobuf::MessageLite {
  public:
   TimeLineColorFrame();
   virtual ~TimeLineColorFrame();
@@ -6110,24 +6150,24 @@ class TimeLineColorFrame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLineColorFrame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLineColorFrame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLineColorFrame* other);
 
   // implements Message ----------------------------------------------
 
   TimeLineColorFrame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLineColorFrame& from);
   void MergeFrom(const TimeLineColorFrame& from);
   void Clear();
@@ -6138,7 +6178,6 @@ class TimeLineColorFrame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -6146,7 +6185,7 @@ class TimeLineColorFrame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -6237,8 +6276,6 @@ class TimeLineColorFrame : public ::google::protobuf::Message {
   inline void set_has_blue();
   inline void clear_has_blue();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 frameindex_;
@@ -6251,7 +6288,11 @@ class TimeLineColorFrame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -6260,7 +6301,7 @@ class TimeLineColorFrame : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TimeLineTextureFrame : public ::google::protobuf::Message {
+class TimeLineTextureFrame : public ::google::protobuf::MessageLite {
  public:
   TimeLineTextureFrame();
   virtual ~TimeLineTextureFrame();
@@ -6272,24 +6313,24 @@ class TimeLineTextureFrame : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const TimeLineTextureFrame& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const TimeLineTextureFrame* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(TimeLineTextureFrame* other);
 
   // implements Message ----------------------------------------------
 
   TimeLineTextureFrame* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const TimeLineTextureFrame& from);
   void MergeFrom(const TimeLineTextureFrame& from);
   void Clear();
@@ -6300,7 +6341,6 @@ class TimeLineTextureFrame : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -6308,7 +6348,7 @@ class TimeLineTextureFrame : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -6391,8 +6431,6 @@ class TimeLineTextureFrame : public ::google::protobuf::Message {
   inline void set_has_plistfile();
   inline void clear_has_plistfile();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* name_;
   ::std::string* classname_;
   ::google::protobuf::int32 frameindex_;
@@ -6403,7 +6441,11 @@ class TimeLineTextureFrame : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_CSParseBinary_2eproto();
+  #endif
   friend void protobuf_AssignDesc_CSParseBinary_2eproto();
   friend void protobuf_ShutdownFile_CSParseBinary_2eproto();
 
@@ -6796,7 +6838,11 @@ inline void CSParseBinary::clear_nodetree() {
   clear_has_nodetree();
 }
 inline const ::protocolbuffers::NodeTree& CSParseBinary::nodetree() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return nodetree_ != NULL ? *nodetree_ : *default_instance().nodetree_;
+#else
   return nodetree_ != NULL ? *nodetree_ : *default_instance_->nodetree_;
+#endif
 }
 inline ::protocolbuffers::NodeTree* CSParseBinary::mutable_nodetree() {
   set_has_nodetree();
@@ -6834,7 +6880,11 @@ inline void CSParseBinary::clear_action() {
   clear_has_action();
 }
 inline const ::protocolbuffers::NodeAction& CSParseBinary::action() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return action_ != NULL ? *action_ : *default_instance().action_;
+#else
   return action_ != NULL ? *action_ : *default_instance_->action_;
+#endif
 }
 inline ::protocolbuffers::NodeAction* CSParseBinary::mutable_action() {
   set_has_action();
@@ -6854,6 +6904,76 @@ inline void CSParseBinary::set_allocated_action(::protocolbuffers::NodeAction* a
     set_has_action();
   } else {
     clear_has_action();
+  }
+}
+
+// optional string cocos2dVersion = 11;
+inline bool CSParseBinary::has_cocos2dversion() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void CSParseBinary::set_has_cocos2dversion() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void CSParseBinary::clear_has_cocos2dversion() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void CSParseBinary::clear_cocos2dversion() {
+  if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
+    cocos2dversion_->clear();
+  }
+  clear_has_cocos2dversion();
+}
+inline const ::std::string& CSParseBinary::cocos2dversion() const {
+  return *cocos2dversion_;
+}
+inline void CSParseBinary::set_cocos2dversion(const ::std::string& value) {
+  set_has_cocos2dversion();
+  if (cocos2dversion_ == &::google::protobuf::internal::kEmptyString) {
+    cocos2dversion_ = new ::std::string;
+  }
+  cocos2dversion_->assign(value);
+}
+inline void CSParseBinary::set_cocos2dversion(const char* value) {
+  set_has_cocos2dversion();
+  if (cocos2dversion_ == &::google::protobuf::internal::kEmptyString) {
+    cocos2dversion_ = new ::std::string;
+  }
+  cocos2dversion_->assign(value);
+}
+inline void CSParseBinary::set_cocos2dversion(const char* value, size_t size) {
+  set_has_cocos2dversion();
+  if (cocos2dversion_ == &::google::protobuf::internal::kEmptyString) {
+    cocos2dversion_ = new ::std::string;
+  }
+  cocos2dversion_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CSParseBinary::mutable_cocos2dversion() {
+  set_has_cocos2dversion();
+  if (cocos2dversion_ == &::google::protobuf::internal::kEmptyString) {
+    cocos2dversion_ = new ::std::string;
+  }
+  return cocos2dversion_;
+}
+inline ::std::string* CSParseBinary::release_cocos2dversion() {
+  clear_has_cocos2dversion();
+  if (cocos2dversion_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = cocos2dversion_;
+    cocos2dversion_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CSParseBinary::set_allocated_cocos2dversion(::std::string* cocos2dversion) {
+  if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
+    delete cocos2dversion_;
+  }
+  if (cocos2dversion) {
+    set_has_cocos2dversion();
+    cocos2dversion_ = cocos2dversion;
+  } else {
+    clear_has_cocos2dversion();
+    cocos2dversion_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -7041,7 +7161,11 @@ inline void NodeTree::clear_widgetoptions() {
   clear_has_widgetoptions();
 }
 inline const ::protocolbuffers::WidgetOptions& NodeTree::widgetoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return widgetoptions_ != NULL ? *widgetoptions_ : *default_instance().widgetoptions_;
+#else
   return widgetoptions_ != NULL ? *widgetoptions_ : *default_instance_->widgetoptions_;
+#endif
 }
 inline ::protocolbuffers::WidgetOptions* NodeTree::mutable_widgetoptions() {
   set_has_widgetoptions();
@@ -7079,7 +7203,11 @@ inline void NodeTree::clear_buttonoptions() {
   clear_has_buttonoptions();
 }
 inline const ::protocolbuffers::ButtonOptions& NodeTree::buttonoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return buttonoptions_ != NULL ? *buttonoptions_ : *default_instance().buttonoptions_;
+#else
   return buttonoptions_ != NULL ? *buttonoptions_ : *default_instance_->buttonoptions_;
+#endif
 }
 inline ::protocolbuffers::ButtonOptions* NodeTree::mutable_buttonoptions() {
   set_has_buttonoptions();
@@ -7117,7 +7245,11 @@ inline void NodeTree::clear_checkboxoptions() {
   clear_has_checkboxoptions();
 }
 inline const ::protocolbuffers::CheckBoxOptions& NodeTree::checkboxoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return checkboxoptions_ != NULL ? *checkboxoptions_ : *default_instance().checkboxoptions_;
+#else
   return checkboxoptions_ != NULL ? *checkboxoptions_ : *default_instance_->checkboxoptions_;
+#endif
 }
 inline ::protocolbuffers::CheckBoxOptions* NodeTree::mutable_checkboxoptions() {
   set_has_checkboxoptions();
@@ -7155,7 +7287,11 @@ inline void NodeTree::clear_imageviewoptions() {
   clear_has_imageviewoptions();
 }
 inline const ::protocolbuffers::ImageViewOptions& NodeTree::imageviewoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return imageviewoptions_ != NULL ? *imageviewoptions_ : *default_instance().imageviewoptions_;
+#else
   return imageviewoptions_ != NULL ? *imageviewoptions_ : *default_instance_->imageviewoptions_;
+#endif
 }
 inline ::protocolbuffers::ImageViewOptions* NodeTree::mutable_imageviewoptions() {
   set_has_imageviewoptions();
@@ -7193,7 +7329,11 @@ inline void NodeTree::clear_spriteoptions() {
   clear_has_spriteoptions();
 }
 inline const ::protocolbuffers::SpriteOptions& NodeTree::spriteoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return spriteoptions_ != NULL ? *spriteoptions_ : *default_instance().spriteoptions_;
+#else
   return spriteoptions_ != NULL ? *spriteoptions_ : *default_instance_->spriteoptions_;
+#endif
 }
 inline ::protocolbuffers::SpriteOptions* NodeTree::mutable_spriteoptions() {
   set_has_spriteoptions();
@@ -7231,7 +7371,11 @@ inline void NodeTree::clear_labelatlasoptions() {
   clear_has_labelatlasoptions();
 }
 inline const ::protocolbuffers::LabelAtlasOptions& NodeTree::labelatlasoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return labelatlasoptions_ != NULL ? *labelatlasoptions_ : *default_instance().labelatlasoptions_;
+#else
   return labelatlasoptions_ != NULL ? *labelatlasoptions_ : *default_instance_->labelatlasoptions_;
+#endif
 }
 inline ::protocolbuffers::LabelAtlasOptions* NodeTree::mutable_labelatlasoptions() {
   set_has_labelatlasoptions();
@@ -7269,7 +7413,11 @@ inline void NodeTree::clear_labelbmfontoptions() {
   clear_has_labelbmfontoptions();
 }
 inline const ::protocolbuffers::LabelBMFontOptions& NodeTree::labelbmfontoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return labelbmfontoptions_ != NULL ? *labelbmfontoptions_ : *default_instance().labelbmfontoptions_;
+#else
   return labelbmfontoptions_ != NULL ? *labelbmfontoptions_ : *default_instance_->labelbmfontoptions_;
+#endif
 }
 inline ::protocolbuffers::LabelBMFontOptions* NodeTree::mutable_labelbmfontoptions() {
   set_has_labelbmfontoptions();
@@ -7307,7 +7455,11 @@ inline void NodeTree::clear_labeloptions() {
   clear_has_labeloptions();
 }
 inline const ::protocolbuffers::LabelOptions& NodeTree::labeloptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return labeloptions_ != NULL ? *labeloptions_ : *default_instance().labeloptions_;
+#else
   return labeloptions_ != NULL ? *labeloptions_ : *default_instance_->labeloptions_;
+#endif
 }
 inline ::protocolbuffers::LabelOptions* NodeTree::mutable_labeloptions() {
   set_has_labeloptions();
@@ -7345,7 +7497,11 @@ inline void NodeTree::clear_loadingbaroptions() {
   clear_has_loadingbaroptions();
 }
 inline const ::protocolbuffers::LoadingBarOptions& NodeTree::loadingbaroptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return loadingbaroptions_ != NULL ? *loadingbaroptions_ : *default_instance().loadingbaroptions_;
+#else
   return loadingbaroptions_ != NULL ? *loadingbaroptions_ : *default_instance_->loadingbaroptions_;
+#endif
 }
 inline ::protocolbuffers::LoadingBarOptions* NodeTree::mutable_loadingbaroptions() {
   set_has_loadingbaroptions();
@@ -7383,7 +7539,11 @@ inline void NodeTree::clear_slideroptions() {
   clear_has_slideroptions();
 }
 inline const ::protocolbuffers::SliderOptions& NodeTree::slideroptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return slideroptions_ != NULL ? *slideroptions_ : *default_instance().slideroptions_;
+#else
   return slideroptions_ != NULL ? *slideroptions_ : *default_instance_->slideroptions_;
+#endif
 }
 inline ::protocolbuffers::SliderOptions* NodeTree::mutable_slideroptions() {
   set_has_slideroptions();
@@ -7421,7 +7581,11 @@ inline void NodeTree::clear_textfieldoptions() {
   clear_has_textfieldoptions();
 }
 inline const ::protocolbuffers::TextFieldOptions& NodeTree::textfieldoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return textfieldoptions_ != NULL ? *textfieldoptions_ : *default_instance().textfieldoptions_;
+#else
   return textfieldoptions_ != NULL ? *textfieldoptions_ : *default_instance_->textfieldoptions_;
+#endif
 }
 inline ::protocolbuffers::TextFieldOptions* NodeTree::mutable_textfieldoptions() {
   set_has_textfieldoptions();
@@ -7459,7 +7623,11 @@ inline void NodeTree::clear_scrollviewoptions() {
   clear_has_scrollviewoptions();
 }
 inline const ::protocolbuffers::ScrollViewOptions& NodeTree::scrollviewoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return scrollviewoptions_ != NULL ? *scrollviewoptions_ : *default_instance().scrollviewoptions_;
+#else
   return scrollviewoptions_ != NULL ? *scrollviewoptions_ : *default_instance_->scrollviewoptions_;
+#endif
 }
 inline ::protocolbuffers::ScrollViewOptions* NodeTree::mutable_scrollviewoptions() {
   set_has_scrollviewoptions();
@@ -7497,7 +7665,11 @@ inline void NodeTree::clear_pageviewoptions() {
   clear_has_pageviewoptions();
 }
 inline const ::protocolbuffers::PageViewOptions& NodeTree::pageviewoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return pageviewoptions_ != NULL ? *pageviewoptions_ : *default_instance().pageviewoptions_;
+#else
   return pageviewoptions_ != NULL ? *pageviewoptions_ : *default_instance_->pageviewoptions_;
+#endif
 }
 inline ::protocolbuffers::PageViewOptions* NodeTree::mutable_pageviewoptions() {
   set_has_pageviewoptions();
@@ -7535,7 +7707,11 @@ inline void NodeTree::clear_listviewoptions() {
   clear_has_listviewoptions();
 }
 inline const ::protocolbuffers::ListViewOptions& NodeTree::listviewoptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return listviewoptions_ != NULL ? *listviewoptions_ : *default_instance().listviewoptions_;
+#else
   return listviewoptions_ != NULL ? *listviewoptions_ : *default_instance_->listviewoptions_;
+#endif
 }
 inline ::protocolbuffers::ListViewOptions* NodeTree::mutable_listviewoptions() {
   set_has_listviewoptions();
@@ -7573,7 +7749,11 @@ inline void NodeTree::clear_paneloptions() {
   clear_has_paneloptions();
 }
 inline const ::protocolbuffers::PanelOptions& NodeTree::paneloptions() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return paneloptions_ != NULL ? *paneloptions_ : *default_instance().paneloptions_;
+#else
   return paneloptions_ != NULL ? *paneloptions_ : *default_instance_->paneloptions_;
+#endif
 }
 inline ::protocolbuffers::PanelOptions* NodeTree::mutable_paneloptions() {
   set_has_paneloptions();
@@ -8301,7 +8481,11 @@ inline void WidgetOptions::clear_layoutparameter() {
   clear_has_layoutparameter();
 }
 inline const ::protocolbuffers::LayoutParameter& WidgetOptions::layoutparameter() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return layoutparameter_ != NULL ? *layoutparameter_ : *default_instance().layoutparameter_;
+#else
   return layoutparameter_ != NULL ? *layoutparameter_ : *default_instance_->layoutparameter_;
+#endif
 }
 inline ::protocolbuffers::LayoutParameter* WidgetOptions::mutable_layoutparameter() {
   set_has_layoutparameter();
@@ -9311,7 +9495,11 @@ inline void ButtonOptions::clear_normaldata() {
   clear_has_normaldata();
 }
 inline const ::protocolbuffers::ResourceData& ButtonOptions::normaldata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return normaldata_ != NULL ? *normaldata_ : *default_instance().normaldata_;
+#else
   return normaldata_ != NULL ? *normaldata_ : *default_instance_->normaldata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* ButtonOptions::mutable_normaldata() {
   set_has_normaldata();
@@ -9349,7 +9537,11 @@ inline void ButtonOptions::clear_presseddata() {
   clear_has_presseddata();
 }
 inline const ::protocolbuffers::ResourceData& ButtonOptions::presseddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return presseddata_ != NULL ? *presseddata_ : *default_instance().presseddata_;
+#else
   return presseddata_ != NULL ? *presseddata_ : *default_instance_->presseddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* ButtonOptions::mutable_presseddata() {
   set_has_presseddata();
@@ -9387,7 +9579,11 @@ inline void ButtonOptions::clear_disableddata() {
   clear_has_disableddata();
 }
 inline const ::protocolbuffers::ResourceData& ButtonOptions::disableddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return disableddata_ != NULL ? *disableddata_ : *default_instance().disableddata_;
+#else
   return disableddata_ != NULL ? *disableddata_ : *default_instance_->disableddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* ButtonOptions::mutable_disableddata() {
   set_has_disableddata();
@@ -10467,7 +10663,11 @@ inline void CheckBoxOptions::clear_backgroundboxdata() {
   clear_has_backgroundboxdata();
 }
 inline const ::protocolbuffers::ResourceData& CheckBoxOptions::backgroundboxdata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundboxdata_ != NULL ? *backgroundboxdata_ : *default_instance().backgroundboxdata_;
+#else
   return backgroundboxdata_ != NULL ? *backgroundboxdata_ : *default_instance_->backgroundboxdata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* CheckBoxOptions::mutable_backgroundboxdata() {
   set_has_backgroundboxdata();
@@ -10505,7 +10705,11 @@ inline void CheckBoxOptions::clear_backgroundboxselecteddata() {
   clear_has_backgroundboxselecteddata();
 }
 inline const ::protocolbuffers::ResourceData& CheckBoxOptions::backgroundboxselecteddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundboxselecteddata_ != NULL ? *backgroundboxselecteddata_ : *default_instance().backgroundboxselecteddata_;
+#else
   return backgroundboxselecteddata_ != NULL ? *backgroundboxselecteddata_ : *default_instance_->backgroundboxselecteddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* CheckBoxOptions::mutable_backgroundboxselecteddata() {
   set_has_backgroundboxselecteddata();
@@ -10543,7 +10747,11 @@ inline void CheckBoxOptions::clear_frontcrossdata() {
   clear_has_frontcrossdata();
 }
 inline const ::protocolbuffers::ResourceData& CheckBoxOptions::frontcrossdata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return frontcrossdata_ != NULL ? *frontcrossdata_ : *default_instance().frontcrossdata_;
+#else
   return frontcrossdata_ != NULL ? *frontcrossdata_ : *default_instance_->frontcrossdata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* CheckBoxOptions::mutable_frontcrossdata() {
   set_has_frontcrossdata();
@@ -10581,7 +10789,11 @@ inline void CheckBoxOptions::clear_backgroundboxdisableddata() {
   clear_has_backgroundboxdisableddata();
 }
 inline const ::protocolbuffers::ResourceData& CheckBoxOptions::backgroundboxdisableddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundboxdisableddata_ != NULL ? *backgroundboxdisableddata_ : *default_instance().backgroundboxdisableddata_;
+#else
   return backgroundboxdisableddata_ != NULL ? *backgroundboxdisableddata_ : *default_instance_->backgroundboxdisableddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* CheckBoxOptions::mutable_backgroundboxdisableddata() {
   set_has_backgroundboxdisableddata();
@@ -10619,7 +10831,11 @@ inline void CheckBoxOptions::clear_frontcrossdisableddata() {
   clear_has_frontcrossdisableddata();
 }
 inline const ::protocolbuffers::ResourceData& CheckBoxOptions::frontcrossdisableddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return frontcrossdisableddata_ != NULL ? *frontcrossdisableddata_ : *default_instance().frontcrossdisableddata_;
+#else
   return frontcrossdisableddata_ != NULL ? *frontcrossdisableddata_ : *default_instance_->frontcrossdisableddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* CheckBoxOptions::mutable_frontcrossdisableddata() {
   set_has_frontcrossdisableddata();
@@ -10893,7 +11109,11 @@ inline void ImageViewOptions::clear_filenamedata() {
   clear_has_filenamedata();
 }
 inline const ::protocolbuffers::ResourceData& ImageViewOptions::filenamedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return filenamedata_ != NULL ? *filenamedata_ : *default_instance().filenamedata_;
+#else
   return filenamedata_ != NULL ? *filenamedata_ : *default_instance_->filenamedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* ImageViewOptions::mutable_filenamedata() {
   set_has_filenamedata();
@@ -11369,7 +11589,11 @@ inline void LabelAtlasOptions::clear_charmapfiledata() {
   clear_has_charmapfiledata();
 }
 inline const ::protocolbuffers::ResourceData& LabelAtlasOptions::charmapfiledata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return charmapfiledata_ != NULL ? *charmapfiledata_ : *default_instance().charmapfiledata_;
+#else
   return charmapfiledata_ != NULL ? *charmapfiledata_ : *default_instance_->charmapfiledata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* LabelAtlasOptions::mutable_charmapfiledata() {
   set_has_charmapfiledata();
@@ -11735,7 +11959,11 @@ inline void LabelBMFontOptions::clear_filenamedata() {
   clear_has_filenamedata();
 }
 inline const ::protocolbuffers::ResourceData& LabelBMFontOptions::filenamedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return filenamedata_ != NULL ? *filenamedata_ : *default_instance().filenamedata_;
+#else
   return filenamedata_ != NULL ? *filenamedata_ : *default_instance_->filenamedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* LabelBMFontOptions::mutable_filenamedata() {
   set_has_filenamedata();
@@ -11987,7 +12215,11 @@ inline void LabelOptions::clear_fontfile() {
   clear_has_fontfile();
 }
 inline const ::protocolbuffers::ResourceData& LabelOptions::fontfile() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return fontfile_ != NULL ? *fontfile_ : *default_instance().fontfile_;
+#else
   return fontfile_ != NULL ? *fontfile_ : *default_instance_->fontfile_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* LabelOptions::mutable_fontfile() {
   set_has_fontfile();
@@ -12441,7 +12673,11 @@ inline void LoadingBarOptions::clear_texturedata() {
   clear_has_texturedata();
 }
 inline const ::protocolbuffers::ResourceData& LoadingBarOptions::texturedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return texturedata_ != NULL ? *texturedata_ : *default_instance().texturedata_;
+#else
   return texturedata_ != NULL ? *texturedata_ : *default_instance_->texturedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* LoadingBarOptions::mutable_texturedata() {
   set_has_texturedata();
@@ -12847,7 +13083,11 @@ inline void ListViewOptions::clear_backgroundimagedata() {
   clear_has_backgroundimagedata();
 }
 inline const ::protocolbuffers::ResourceData& ListViewOptions::backgroundimagedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance().backgroundimagedata_;
+#else
   return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance_->backgroundimagedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* ListViewOptions::mutable_backgroundimagedata() {
   set_has_backgroundimagedata();
@@ -13649,7 +13889,11 @@ inline void PageViewOptions::clear_backgroundimagedata() {
   clear_has_backgroundimagedata();
 }
 inline const ::protocolbuffers::ResourceData& PageViewOptions::backgroundimagedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance().backgroundimagedata_;
+#else
   return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance_->backgroundimagedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* PageViewOptions::mutable_backgroundimagedata() {
   set_has_backgroundimagedata();
@@ -14319,7 +14563,11 @@ inline void PanelOptions::clear_backgroundimagedata() {
   clear_has_backgroundimagedata();
 }
 inline const ::protocolbuffers::ResourceData& PanelOptions::backgroundimagedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance().backgroundimagedata_;
+#else
   return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance_->backgroundimagedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* PanelOptions::mutable_backgroundimagedata() {
   set_has_backgroundimagedata();
@@ -15033,7 +15281,11 @@ inline void ScrollViewOptions::clear_backgroundimagedata() {
   clear_has_backgroundimagedata();
 }
 inline const ::protocolbuffers::ResourceData& ScrollViewOptions::backgroundimagedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance().backgroundimagedata_;
+#else
   return backgroundimagedata_ != NULL ? *backgroundimagedata_ : *default_instance_->backgroundimagedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* ScrollViewOptions::mutable_backgroundimagedata() {
   set_has_backgroundimagedata();
@@ -16023,7 +16275,11 @@ inline void SliderOptions::clear_barfilenamedata() {
   clear_has_barfilenamedata();
 }
 inline const ::protocolbuffers::ResourceData& SliderOptions::barfilenamedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return barfilenamedata_ != NULL ? *barfilenamedata_ : *default_instance().barfilenamedata_;
+#else
   return barfilenamedata_ != NULL ? *barfilenamedata_ : *default_instance_->barfilenamedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* SliderOptions::mutable_barfilenamedata() {
   set_has_barfilenamedata();
@@ -16061,7 +16317,11 @@ inline void SliderOptions::clear_ballnormaldata() {
   clear_has_ballnormaldata();
 }
 inline const ::protocolbuffers::ResourceData& SliderOptions::ballnormaldata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return ballnormaldata_ != NULL ? *ballnormaldata_ : *default_instance().ballnormaldata_;
+#else
   return ballnormaldata_ != NULL ? *ballnormaldata_ : *default_instance_->ballnormaldata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* SliderOptions::mutable_ballnormaldata() {
   set_has_ballnormaldata();
@@ -16099,7 +16359,11 @@ inline void SliderOptions::clear_ballpresseddata() {
   clear_has_ballpresseddata();
 }
 inline const ::protocolbuffers::ResourceData& SliderOptions::ballpresseddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return ballpresseddata_ != NULL ? *ballpresseddata_ : *default_instance().ballpresseddata_;
+#else
   return ballpresseddata_ != NULL ? *ballpresseddata_ : *default_instance_->ballpresseddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* SliderOptions::mutable_ballpresseddata() {
   set_has_ballpresseddata();
@@ -16137,7 +16401,11 @@ inline void SliderOptions::clear_balldisableddata() {
   clear_has_balldisableddata();
 }
 inline const ::protocolbuffers::ResourceData& SliderOptions::balldisableddata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return balldisableddata_ != NULL ? *balldisableddata_ : *default_instance().balldisableddata_;
+#else
   return balldisableddata_ != NULL ? *balldisableddata_ : *default_instance_->balldisableddata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* SliderOptions::mutable_balldisableddata() {
   set_has_balldisableddata();
@@ -16175,7 +16443,11 @@ inline void SliderOptions::clear_progressbardata() {
   clear_has_progressbardata();
 }
 inline const ::protocolbuffers::ResourceData& SliderOptions::progressbardata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return progressbardata_ != NULL ? *progressbardata_ : *default_instance().progressbardata_;
+#else
   return progressbardata_ != NULL ? *progressbardata_ : *default_instance_->progressbardata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* SliderOptions::mutable_progressbardata() {
   set_has_progressbardata();
@@ -16973,7 +17245,11 @@ inline void SpriteOptions::clear_layoutparameter() {
   clear_has_layoutparameter();
 }
 inline const ::protocolbuffers::LayoutParameter& SpriteOptions::layoutparameter() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return layoutparameter_ != NULL ? *layoutparameter_ : *default_instance().layoutparameter_;
+#else
   return layoutparameter_ != NULL ? *layoutparameter_ : *default_instance_->layoutparameter_;
+#endif
 }
 inline ::protocolbuffers::LayoutParameter* SpriteOptions::mutable_layoutparameter() {
   set_has_layoutparameter();
@@ -17151,7 +17427,11 @@ inline void SpriteOptions::clear_filenamedata() {
   clear_has_filenamedata();
 }
 inline const ::protocolbuffers::ResourceData& SpriteOptions::filenamedata() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return filenamedata_ != NULL ? *filenamedata_ : *default_instance().filenamedata_;
+#else
   return filenamedata_ != NULL ? *filenamedata_ : *default_instance_->filenamedata_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* SpriteOptions::mutable_filenamedata() {
   set_has_filenamedata();
@@ -17403,7 +17683,11 @@ inline void TextFieldOptions::clear_fontfile() {
   clear_has_fontfile();
 }
 inline const ::protocolbuffers::ResourceData& TextFieldOptions::fontfile() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return fontfile_ != NULL ? *fontfile_ : *default_instance().fontfile_;
+#else
   return fontfile_ != NULL ? *fontfile_ : *default_instance_->fontfile_;
+#endif
 }
 inline ::protocolbuffers::ResourceData* TextFieldOptions::mutable_fontfile() {
   set_has_fontfile();
@@ -18261,7 +18545,11 @@ inline void Frame::clear_visibleframe() {
   clear_has_visibleframe();
 }
 inline const ::protocolbuffers::TimeLineBoolFrame& Frame::visibleframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return visibleframe_ != NULL ? *visibleframe_ : *default_instance().visibleframe_;
+#else
   return visibleframe_ != NULL ? *visibleframe_ : *default_instance_->visibleframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLineBoolFrame* Frame::mutable_visibleframe() {
   set_has_visibleframe();
@@ -18299,7 +18587,11 @@ inline void Frame::clear_zorderframe() {
   clear_has_zorderframe();
 }
 inline const ::protocolbuffers::TimeLineIntFrame& Frame::zorderframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return zorderframe_ != NULL ? *zorderframe_ : *default_instance().zorderframe_;
+#else
   return zorderframe_ != NULL ? *zorderframe_ : *default_instance_->zorderframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLineIntFrame* Frame::mutable_zorderframe() {
   set_has_zorderframe();
@@ -18337,7 +18629,11 @@ inline void Frame::clear_rotationskewframe() {
   clear_has_rotationskewframe();
 }
 inline const ::protocolbuffers::TimeLinePointFrame& Frame::rotationskewframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return rotationskewframe_ != NULL ? *rotationskewframe_ : *default_instance().rotationskewframe_;
+#else
   return rotationskewframe_ != NULL ? *rotationskewframe_ : *default_instance_->rotationskewframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLinePointFrame* Frame::mutable_rotationskewframe() {
   set_has_rotationskewframe();
@@ -18375,7 +18671,11 @@ inline void Frame::clear_eventframe() {
   clear_has_eventframe();
 }
 inline const ::protocolbuffers::TimeLineStringFrame& Frame::eventframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return eventframe_ != NULL ? *eventframe_ : *default_instance().eventframe_;
+#else
   return eventframe_ != NULL ? *eventframe_ : *default_instance_->eventframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLineStringFrame* Frame::mutable_eventframe() {
   set_has_eventframe();
@@ -18413,7 +18713,11 @@ inline void Frame::clear_anchorpointframe() {
   clear_has_anchorpointframe();
 }
 inline const ::protocolbuffers::TimeLinePointFrame& Frame::anchorpointframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return anchorpointframe_ != NULL ? *anchorpointframe_ : *default_instance().anchorpointframe_;
+#else
   return anchorpointframe_ != NULL ? *anchorpointframe_ : *default_instance_->anchorpointframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLinePointFrame* Frame::mutable_anchorpointframe() {
   set_has_anchorpointframe();
@@ -18451,7 +18755,11 @@ inline void Frame::clear_positionframe() {
   clear_has_positionframe();
 }
 inline const ::protocolbuffers::TimeLinePointFrame& Frame::positionframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return positionframe_ != NULL ? *positionframe_ : *default_instance().positionframe_;
+#else
   return positionframe_ != NULL ? *positionframe_ : *default_instance_->positionframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLinePointFrame* Frame::mutable_positionframe() {
   set_has_positionframe();
@@ -18489,7 +18797,11 @@ inline void Frame::clear_scaleframe() {
   clear_has_scaleframe();
 }
 inline const ::protocolbuffers::TimeLinePointFrame& Frame::scaleframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return scaleframe_ != NULL ? *scaleframe_ : *default_instance().scaleframe_;
+#else
   return scaleframe_ != NULL ? *scaleframe_ : *default_instance_->scaleframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLinePointFrame* Frame::mutable_scaleframe() {
   set_has_scaleframe();
@@ -18527,7 +18839,11 @@ inline void Frame::clear_colorframe() {
   clear_has_colorframe();
 }
 inline const ::protocolbuffers::TimeLineColorFrame& Frame::colorframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return colorframe_ != NULL ? *colorframe_ : *default_instance().colorframe_;
+#else
   return colorframe_ != NULL ? *colorframe_ : *default_instance_->colorframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLineColorFrame* Frame::mutable_colorframe() {
   set_has_colorframe();
@@ -18565,7 +18881,11 @@ inline void Frame::clear_textureframe() {
   clear_has_textureframe();
 }
 inline const ::protocolbuffers::TimeLineTextureFrame& Frame::textureframe() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return textureframe_ != NULL ? *textureframe_ : *default_instance().textureframe_;
+#else
   return textureframe_ != NULL ? *textureframe_ : *default_instance_->textureframe_;
+#endif
 }
 inline ::protocolbuffers::TimeLineTextureFrame* Frame::mutable_textureframe() {
   set_has_textureframe();
@@ -20106,15 +20426,6 @@ inline void TimeLineTextureFrame::set_allocated_plistfile(::std::string* plistfi
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace protocolbuffers
-
-#ifndef SWIG
-namespace google {
-namespace protobuf {
-
-
-}  // namespace google
-}  // namespace protobuf
-#endif  // SWIG
 
 // @@protoc_insertion_point(global_scope)
 
