@@ -1217,6 +1217,11 @@
 
 
 --------------------------------------------------------
+-- the cc Skeleton3D
+-- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
+
+
+--------------------------------------------------------
 -- the cc Animation3D
 -- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
 
