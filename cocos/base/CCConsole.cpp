@@ -45,6 +45,11 @@
 #include "CCWinRTUtils.h"
 #endif
 #else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/ifaddrs.h"
+#else
+#include <ifaddrs.h>
+#endif
 #include <netdb.h>
 #include <unistd.h>
 #include <arpa/inet.h>
@@ -109,6 +114,13 @@ static bool isFloat( std::string myString ) {
     iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
     // Check the entire string was consumed and if either failbit or badbit is set
     return iss.eof() && !iss.fail(); 
+}
+
+//sleep for t seconds
+static void wait(int t)
+{
+    std::chrono::milliseconds dura( t * 1000 );
+    std::this_thread::sleep_for( dura );
 }
 
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT
@@ -314,6 +326,52 @@ Console::~Console()
     stop();
 }
 
+int Console::broadcastLocalIP()
+{
+    
+    int sock;
+    if( (sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
+    {
+        perror("broadcastLocalIP: create socket error!");
+        return -1;
+    }
+
+    int broadcast = 1;
+    if( setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &broadcast, sizeof(broadcast)) != 0 )
+    {
+        perror("broadcastLocalIP:setsockopt error!");
+        close(sock);
+        return -1;
+    }
+    while(!_endThread)
+    {
+        char ip[] = "255.255.255.255";
+        for(const auto &localIP:_localIPList)
+        {
+            const char *msg = localIP.c_str();
+            struct sockaddr_in si;
+            si.sin_family = AF_INET;
+            si.sin_port   = htons( 4444 );
+            inet_aton( ip, (struct in_addr *)&si.sin_addr.s_addr );
+
+            /* send data */
+            size_t nBytes = sendto(sock, msg, strlen(msg), 0,
+                        (struct sockaddr*) &si, sizeof(si));
+
+            //printf("Sent msg: %s, %d bytes with socket %d to %s\n", msg, nBytes, sock, ip);
+            wait(5);
+        }
+    }
+    CCLOG("close broadcast socket.");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        closesocket(sock);
+#else
+        close(sock);
+#endif
+    return 0;
+}
+
+
 bool Console::listenOnTCP(int port)
 {
     int listenfd = -1, n;
@@ -384,12 +442,101 @@ bool Console::listenOnTCP(int port)
         else
             perror("inet_ntop");
     }
-
-
+    
+//    char szName[255];
+//    gethostname(szName, 255);
+//    struct hostent *hosts;
+//    hosts = gethostbyname(szName);
+//    if(hosts != nullptr)
+//    {
+//        char * szLocalIP;
+//        int i = 0;
+//        while(hosts->h_addr_list[i] != 0)
+//        {
+//            szLocalIP = inet_ntoa (*(struct in_addr *)hosts->h_addr_list[i++]);
+//            printf("%s", szLocalIP);
+//        }
+//        _localIP = std::string(szLocalIP);
+//    }
+    
+    queryLocalIP();
+    _broadcast = std::thread( std::bind( &Console::broadcastLocalIP, this) );
     freeaddrinfo(ressave);
     return listenOnFileDescriptor(listenfd);
 }
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
+void Console::queryLocalIP()
+{
+    struct ifaddrs * ifAddrStruct=NULL;
+    struct ifaddrs * ifa=NULL;
+    void * tmpAddrPtr=NULL;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _getifaddrs(&ifAddrStruct);
+#else
+    getifaddrs(&ifAddrStruct);
+#endif
+
+    for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next) {
+        if (ifa ->ifa_addr->sa_family==AF_INET) { // check it is IP4
+            // is a valid IP4 Address
+            tmpAddrPtr=&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
+            char addressBuffer[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+            CCLOG("%s IP Address %s\n", ifa->ifa_name, addressBuffer);
+            char* ptrIp = &addressBuffer[0];
+            std::string ip = std::string(ptrIp);
+            std::string loopAddr= "127.0.0.1";
+            if(ip != loopAddr)
+            {
+                _localIPList.push_back(ip);
+            }
+        }
+        else if (ifa->ifa_addr->sa_family==AF_INET6) { // check it is IP6
+            // is a valid IP6 Address
+            tmpAddrPtr=&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr;
+            char addressBuffer[INET6_ADDRSTRLEN];
+            inet_ntop(AF_INET6, tmpAddrPtr, addressBuffer, INET6_ADDRSTRLEN);
+            CCLOG("%s IP Address %s\n", ifa->ifa_name, addressBuffer);
+        }
+    }
+    if (ifAddrStruct!=NULL) 
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        _freeifaddrs(ifAddrStruct);
+#else
+        freeifaddrs(ifAddrStruct);
+#endif
+    }
+}
+#else
+void Console::queryLocalIP()
+{
+   char hostname[255];
+   char *szLocalIP;
+   struct addrinfo hints, *res;
+   struct in_addr addr;
+   memset(&hints, 0, sizeof(hints));
+   hints.ai_socktype = SOCK_STREAM;
+   hints.ai_family = AF_INET;
+   int err;
+   
+   gethostname(hostname, 255);
+   if ((err = getaddrinfo(hostname, NULL, &hints, &res)) != 0) {
+       printf("error %d\n", err);
+       return;
+   }
+
+   addr.s_addr = ((struct sockaddr_in *)(res->ai_addr))->sin_addr.s_addr;
+
+   szLocalIP = inet_ntoa(addr);
+   CCLOG("ip address : %s\n", szLocalIP);
+   std::string ip = std::string(szLocalIP);
+
+
+   freeaddrinfo(res);
+}
+#endif
 bool Console::listenOnFileDescriptor(int fd)
 {
     if(_running) {
@@ -408,7 +555,9 @@ void Console::stop()
     if( _running ) {
         _endThread = true;
         _thread.join();
+        _broadcast.join();
     }
+
 }
 
 void Console::addCommand(const Command& cmd)
@@ -772,9 +921,78 @@ void Console::commandTouch(int fd, const std::string& args)
                 const char msg[] = "touch: invalid arguments.\n";
                 send(fd, msg, sizeof(msg) - 1, 0);
             }
-            
+            return;
         }
-
+        
+        if(argv[0]=="begin")
+        {
+            if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
+            {
+                //CCLOG("console touch begin");
+                auto director = Director::getInstance();
+                Size points = director->getWinSizeInPixels();
+                _x = std::atof(argv[1].c_str()) * points.width;
+                _y = (1 - std::atof(argv[2].c_str())) * points.height;
+                srand ((unsigned)time(nullptr));
+                _touchId = rand();
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &_x, &_y);
+                    //Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x, &y);
+                });
+            }
+            else
+            {
+                const char msg[] = "touch: invalid arguments.\n";
+                send(fd, msg, sizeof(msg) - 1, 0);
+            }
+            return;
+        }
+        
+        if(argv[0]=="move")
+        {
+            if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
+            {
+                //CCLOG("console touch move");
+                auto director = Director::getInstance();
+                Size points = director->getWinSizeInPixels();
+                _x = std::atof(argv[1].c_str()) * points.width ;
+                _y = (1 - std::atof(argv[2].c_str())) * points.height;
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesMove(1, &_touchId, &_x, &_y);
+                    //Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x, &y);
+                });
+            }
+            else
+            {
+                const char msg[] = "touch: invalid arguments.\n";
+                send(fd, msg, sizeof(msg) - 1, 0);
+            }
+            return;
+        }
+        
+        if(argv[0]=="end")
+        {
+            if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
+            {
+                auto director = Director::getInstance();
+                Size points = director->getWinSizeInPixels();
+                _x = std::atof(argv[1].c_str()) * points.width;
+                _y = (1 - std::atof(argv[2].c_str())) * points.height;
+                Scheduler *sched = Director::getInstance()->getScheduler();
+                sched->performFunctionInCocosThread( [&](){
+                    Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &_x, &_y);
+                    //Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x, &y);
+                });
+            }
+            else
+            {
+                const char msg[] = "touch: invalid arguments.\n";
+                send(fd, msg, sizeof(msg) - 1, 0);
+            }
+            return;
+        }
     }
 }
 
