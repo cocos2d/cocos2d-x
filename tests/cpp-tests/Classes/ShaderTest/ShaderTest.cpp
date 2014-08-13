@@ -853,7 +853,6 @@ bool ShaderAlphaTest::init()
     }
 
     Director::getInstance()->setDepthTest(true);
-    Director::getInstance()->setAlphaTestValue(0.90f);
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -866,6 +865,8 @@ bool ShaderAlphaTest::init()
     layer->setZOrder(-1);
     cushion->setGLProgram(GLProgramCache::getInstance()->getProgram(
          GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV));
+    auto state = cushion->getGLProgramState();
+    state->setAlphaTestValue(0.9f);
     layer->addChild(cushion);
 
     this->addChild(layer);

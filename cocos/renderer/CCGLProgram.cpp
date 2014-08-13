@@ -500,7 +500,7 @@ void GLProgram::updateUniforms()
                        _builtInUniforms[UNIFORM_COS_TIME] != -1
                        );
     _flags.usesRandom = _builtInUniforms[UNIFORM_RANDOM01] != -1;
-    _flags.usesAlpha = _builtInUniforms[UNIFORM_ALPHA];
+    _flags.usesAlpha = _builtInUniforms[UNIFORM_ALPHA] != -1;
 
     this->use();
     
@@ -878,7 +878,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 
     if(_flags.usesAlpha) {
-        setUniformLocationWith1f(_builtInUniforms[GLProgram::UNIFORM_ALPHA], director->getAlphaTestValue());
+        setUniformLocationWith1f(_builtInUniforms[GLProgram::UNIFORM_ALPHA], _alphaTestValue);
     }
 }
 

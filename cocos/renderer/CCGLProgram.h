@@ -347,6 +347,8 @@ protected:
 
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
+
+    float _alphaTestValue;
 };
 
 NS_CC_END
