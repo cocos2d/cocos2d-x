@@ -197,16 +197,15 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromProtocolBuff
     //	_protocolBuffersPath = path.substr(0, pos + 1);
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
-    std::fstream in(fullPath.c_str(), std::ios::in | std::ios::binary);
+    Data content = FileUtils::getInstance()->getDataFromFile(fullPath);
     protocolbuffers::CSParseBinary gpbwp;
     //    protocolbuffers::GUIProtocolBuffersProtobuf gpbwp;
-    if (!gpbwp.ParseFromIstream(&in))
+    if (!gpbwp.ParseFromArray(content.getBytes(), content.getSize()))
     {
         return NULL;
     }
-    in.close();
-    
-    
+
+
     const protocolbuffers::NodeAction& actionProtobuf = gpbwp.action();
     
     action = ActionTimeline::create();
