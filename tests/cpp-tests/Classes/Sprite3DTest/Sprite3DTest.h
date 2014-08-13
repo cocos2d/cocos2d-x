@@ -244,6 +244,22 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
+class Sprite3DMirrorTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DMirrorTest);
+    Sprite3DMirrorTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+protected:
+    bool _hasWeapon;
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::Sprite3D* _mirrorSprite;
+};
+
 class Sprite3DTestScene : public TestScene
 {
 public:
