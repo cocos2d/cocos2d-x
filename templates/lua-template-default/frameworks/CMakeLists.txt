@@ -159,10 +159,8 @@ endif()
 target_link_libraries(${APP_NAME}
   luacocos2d
   luacocosdenshion
-  luanetwork
   audio
   cocos2d
-  network
   xxtea
   )
 
