@@ -159,7 +159,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextFieldTest);
             sceneManager->setMinUISceneId(kUITextFieldTest);
-            sceneManager->setMaxUISceneId(kUITextFieldTest_TrueTypeFont);
+            sceneManager->setMaxUISceneId(kUITextFieldTest_PlaceHolderColor);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
