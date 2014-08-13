@@ -159,6 +159,7 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(_curl, CURLOPT_FOLLOWLOCATION, 1 );
     res = curl_easy_perform(_curl);
     
     if (res != 0)
@@ -209,6 +210,8 @@ void AssetsManager::downloadAndUncompress()
         if (! uncompress())
         {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            	UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),"");
+                UserDefault::getInstance()->flush();
                 if (this->_delegate)
                     this->_delegate->onError(ErrorCode::UNCOMPRESS);
             });
@@ -525,6 +528,7 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(_curl, CURLOPT_FOLLOWLOCATION, 1 );
 
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
