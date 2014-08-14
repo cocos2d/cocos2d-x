@@ -46,7 +46,7 @@ _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
 _eventCallback(nullptr),
 _customScrollThreshold(0.0),
-_usingCustomCrollThreshold(false)
+_usingCustomScrollThreshold(false)
 {
     this->setTouchEnabled(true);
 }
@@ -464,12 +464,12 @@ float PageView::getCustomScrollThreshold()const
     
 void PageView::setUsingCustomScrollThreshold(bool flag)
 {
-    _usingCustomCrollThreshold = flag;
+    _usingCustomScrollThreshold = flag;
 }
     
 bool PageView::isUsingCustomScrollThreshold()const
 {
-    return _usingCustomCrollThreshold;
+    return _usingCustomScrollThreshold;
 }
 
 void PageView::handleReleaseLogic(Touch *touch)
@@ -485,7 +485,7 @@ void PageView::handleReleaseLogic(Touch *touch)
         ssize_t pageCount = this->getPageCount();
         float curPageLocation = curPagePos.x;
         float pageWidth = getContentSize().width;
-        if (!_usingCustomCrollThreshold) {
+        if (!_usingCustomScrollThreshold) {
             _customScrollThreshold = pageWidth / 2.0;
         }
         float boundary = _customScrollThreshold;

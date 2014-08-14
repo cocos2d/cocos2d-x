@@ -237,7 +237,7 @@ protected:
     float _leftBoundary;
     float _rightBoundary;
     float _customScrollThreshold;
-    bool _usingCustomCrollThreshold;
+    bool _usingCustomScrollThreshold;
 
     float _childFocusCancelOffset;
 
