@@ -126,6 +126,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     }
     
     int i = 0;
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     if(!_children.empty())
     {
@@ -141,13 +142,14 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
                 break;
         }
         // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
-        this->draw(renderer, _modelViewTransform, dirty);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
             (*it)->visit(renderer, _modelViewTransform, dirty);
         }
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, dirty);
     }
