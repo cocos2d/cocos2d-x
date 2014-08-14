@@ -617,6 +617,8 @@ void PageView::copySpecialProperties(Widget *widget)
         _eventCallback = pageView->_eventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
+        _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;
+        _customScrollThreshold = pageView->_customScrollThreshold;
     }
 }
 

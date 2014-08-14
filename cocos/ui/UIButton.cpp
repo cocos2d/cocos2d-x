@@ -704,6 +704,7 @@ void Button::copySpecialProperties(Widget *widget)
         setTitleFontSize(button->getTitleFontSize());
         setTitleColor(button->getTitleColor());
         setPressedActionEnabled(button->_pressedActionEnabled);
+        setZoomScale(button->_zoomScale);
     }
 }
 
