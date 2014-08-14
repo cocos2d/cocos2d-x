@@ -59,6 +59,7 @@ enum
     kUITextFieldTest_Password,
     kUITextFieldTest_LineWrap,
     kUITextFieldTest_TrueTypeFont,
+    kUITextFieldTest_PlaceHolderColor,
     kUILayoutTest,
     kUILayoutTest_Color,
     kUILayoutTest_Gradient,
