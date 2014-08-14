@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCCamera.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
@@ -43,6 +45,13 @@ Scene::Scene()
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
+    
+    //create default camera
+    _defaultCamera = Camera::create();
+    addChild(_defaultCamera);
+    
+    _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
+    _event->retain();
 }
 
 Scene::~Scene()
@@ -50,14 +59,12 @@ Scene::~Scene()
 #if CC_USE_PHYSICS
     CC_SAFE_DELETE(_physicsWorld);
 #endif
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
+    CC_SAFE_RELEASE(_event);
 }
 
 bool Scene::init()
 {
-    //create default camera
-    auto camera = Camera::create();
-    addChild(camera);
-    
     auto size = Director::getInstance()->getWinSize();
     return initWithSize(size);
 }
@@ -125,7 +132,7 @@ void Scene::addChild(Node* child, int zOrder, const std::string &name)
 void Scene::update(float delta)
 {
     Node::update(delta);
-    if (nullptr != _physicsWorld)
+    if (nullptr != _physicsWorld && _physicsWorld->isAutoStep())
     {
         _physicsWorld->update(delta);
     }
@@ -153,6 +160,7 @@ bool Scene::initWithPhysics()
     {
         Director * director;
         CC_BREAK_IF( ! (director = Director::getInstance()) );
+        
         this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
@@ -182,6 +190,14 @@ void Scene::addChildToPhysicsWorld(Node* child)
         };
         
         addToPhysicsWorldFunc(child);
+    }
+}
+
+void Scene::onProjectionChanged(EventCustom* event)
+{
+    if (_defaultCamera)
+    {
+        _defaultCamera->initDefault();
     }
 }
 

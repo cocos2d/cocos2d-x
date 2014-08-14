@@ -59,6 +59,7 @@ static const char* s_testArray[] =
     "UITextFieldTest_Password",
     "UITextFieldTest_LineWrap",
     "UITextFieldTest_TrueTypeFont",
+    "UITextFieldTest_PlaceHolderColor",
     "UILayoutTest",
     "UILayoutTest_Color",
     "UILayoutTest_Gradient",
@@ -241,7 +242,8 @@ Scene *UISceneManager::currentUIScene()
             return UITextFieldTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUITextFieldTest_TrueTypeFont:
             return UITextFieldTest_TrueTypeFont::sceneWithTitle(s_testArray[_currentUISceneId]);
-        
+        case kUITextFieldTest_PlaceHolderColor:
+            return UITextFieldTest_PlaceHolderColor::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUILayoutTest:
             return UILayoutTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             

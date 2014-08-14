@@ -1284,12 +1284,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    void resume(void);
+    virtual void resume(void);
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    void pause(void);
+    virtual void pause(void);
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.

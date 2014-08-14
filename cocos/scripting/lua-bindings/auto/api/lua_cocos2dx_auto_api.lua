@@ -102,6 +102,11 @@
 
 
 --------------------------------------------------------
+-- the cc Camera
+-- @field [parent=#cc] Camera#Camera Camera preloaded module
+
+
+--------------------------------------------------------
 -- the cc EventListenerTouchOneByOne
 -- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
 
@@ -1209,6 +1214,11 @@
 --------------------------------------------------------
 -- the cc Mesh
 -- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
+
+
+--------------------------------------------------------
+-- the cc Skeleton3D
+-- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
 
 
 --------------------------------------------------------
