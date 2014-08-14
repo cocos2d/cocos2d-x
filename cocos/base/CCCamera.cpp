@@ -33,30 +33,10 @@ Camera* Camera::_visitingCamera = nullptr;
 
 Camera* Camera::create()
 {
-    Camera* camera = nullptr;
-    auto size = Director::getInstance()->getWinSize();
-    //create default camera
-    auto projection = Director::getInstance()->getProjection();
-    switch (projection)
-    {
-        case Director::Projection::_2D:
-        {
-            camera = Camera::createOrthographic(size.width, size.height, -1024, 1024);
-            break;
-        }
-        case Director::Projection::_3D:
-        {
-            float zeye = Director::getInstance()->getZEye();
-            camera = Camera::createPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);
-            Vec3 eye(size.width/2, size.height/2.0f, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
-            camera->setPosition3D(eye);
-            camera->lookAt(center, up);
-            break;
-        }
-        default:
-            CCLOG("unrecognized projection");
-            break;
-    }
+    Camera* camera = new Camera();
+    camera->initDefault();
+    camera->autorelease();
+    
     return camera;
 }
 
@@ -187,6 +167,8 @@ bool Camera::initDefault()
         case Director::Projection::_2D:
         {
             initOrthographic(size.width, size.height, -1024, 1024);
+            setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+            setRotation3D(Vec3(0.f, 0.f, 0.f));
             break;
         }
         case Director::Projection::_3D:
@@ -231,7 +213,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     _zoom[1] = zoomY;
     _nearPlane = nearPlane;
     _farPlane = farPlane;
-    Mat4::createOrthographic(_zoom[0], _zoom[1], _nearPlane, _farPlane, &_projection);
+    Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
     GLView* view = Director::getInstance()->getOpenGLView();
