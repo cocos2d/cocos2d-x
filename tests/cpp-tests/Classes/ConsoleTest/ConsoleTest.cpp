@@ -355,7 +355,7 @@ std::string ConsoleRemoteControl::subtitle() const
     return "";
 }
 
-void ConsoleRemoteControl::sendTouchCommand(const std::vector<Touch*>& touches, std::string& cmd)
+void ConsoleRemoteControl::sendTouchCommand(const std::vector<Touch*>& touches, std::string& _cmd)
 {
     auto director = Director::getInstance();
     Size points = director->getWinSize();
@@ -368,7 +368,7 @@ void ConsoleRemoteControl::sendTouchCommand(const std::vector<Touch*>& touches, 
         auto location = touch->getLocation();
         //CCLOG("onTouchesMoved:%f, %f",location.x, location.y);
         //addNewSpriteWithCoords( location );
-        std::string tmp = cmd;
+        std::string tmp = _cmd;
         char buf[30];
         tmp += " ";
         snprintf(buf, sizeof(buf)-1, "%f", location.x/points.width);
@@ -380,7 +380,7 @@ void ConsoleRemoteControl::sendTouchCommand(const std::vector<Touch*>& touches, 
         char cmd[512];
         
         strcpy(cmd, tmp.c_str());
-        CCLOG(cmd);
+        //CCLOG(cmd);
         int ret = send(_sfd,cmd,strlen(cmd),0);
         if (ret < 0)
         {

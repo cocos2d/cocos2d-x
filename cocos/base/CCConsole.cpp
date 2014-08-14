@@ -46,7 +46,9 @@
 #endif
 #else
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/ifaddrs.h"
+#include "jni.h"
+#include "jni/JniHelper.h"
+//#include "platform/android/ifaddrs.h"
 #else
 #include <ifaddrs.h>
 #endif
@@ -361,6 +363,7 @@ int Console::broadcastLocalIP()
             //printf("Sent msg: %s, %d bytes with socket %d to %s\n", msg, nBytes, sock, ip);
             wait(5);
         }
+        wait(5);
     }
     CCLOG("close broadcast socket.");
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
@@ -442,42 +445,21 @@ bool Console::listenOnTCP(int port)
         else
             perror("inet_ntop");
     }
-    
-//    char szName[255];
-//    gethostname(szName, 255);
-//    struct hostent *hosts;
-//    hosts = gethostbyname(szName);
-//    if(hosts != nullptr)
-//    {
-//        char * szLocalIP;
-//        int i = 0;
-//        while(hosts->h_addr_list[i] != 0)
-//        {
-//            szLocalIP = inet_ntoa (*(struct in_addr *)hosts->h_addr_list[i++]);
-//            printf("%s", szLocalIP);
-//        }
-//        _localIP = std::string(szLocalIP);
-//    }
-    
     queryLocalIP();
     _broadcast = std::thread( std::bind( &Console::broadcastLocalIP, this) );
     freeaddrinfo(ressave);
     return listenOnFileDescriptor(listenfd);
 }
-#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
 void Console::queryLocalIP()
 {
     struct ifaddrs * ifAddrStruct=NULL;
     struct ifaddrs * ifa=NULL;
     void * tmpAddrPtr=NULL;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _getifaddrs(&ifAddrStruct);
-#else
     getifaddrs(&ifAddrStruct);
-#endif
 
-    for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next) {
+    //CCLOG("Scan Network Interface...");
+    for (ifa = ifAddrStruct; ifa != NULL && ifa->ifa_addr != NULL; ifa = ifa->ifa_next) {
         if (ifa ->ifa_addr->sa_family==AF_INET) { // check it is IP4
             // is a valid IP4 Address
             tmpAddrPtr=&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
@@ -502,14 +484,32 @@ void Console::queryLocalIP()
     }
     if (ifAddrStruct!=NULL) 
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        _freeifaddrs(ifAddrStruct);
-#else
         freeifaddrs(ifAddrStruct);
-#endif
     }
 }
-#else
+#endif
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+void Console::queryLocalIP()
+{
+    JniMethodInfo t;
+    std::string addr;
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalIp", "getIpAddressV4", "()Ljava/lang/String;")) 
+    {
+        jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+        addr = JniHelper::jstring2string(jret);
+        t.env->DeleteLocalRef(t.classID);
+        CCLOG("Get IP via jni: %s", addr.c_str());
+        std::string loopAddr= "127.0.0.1";
+        if(addr.length() > 0 && addr != loopAddr)
+        {
+            _localIPList.push_back(addr);
+        }
+    }
+}
+#endif
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 void Console::queryLocalIP()
 {
    char hostname[255];
@@ -537,6 +537,7 @@ void Console::queryLocalIP()
    freeaddrinfo(res);
 }
 #endif
+
 bool Console::listenOnFileDescriptor(int fd)
 {
     if(_running) {
