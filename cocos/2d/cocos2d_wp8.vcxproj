@@ -356,6 +356,8 @@
     <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\renderer\CCMeshCommand.cpp" />
+    <ClCompile Include="..\renderer\CCPrimitive.cpp" />
+    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp" />
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
@@ -363,6 +365,8 @@
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
+    <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
     <ClCompile Include="CCActionCatmullRom.cpp" />
@@ -578,6 +582,8 @@
     <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\renderer\CCMeshCommand.h" />
+    <ClInclude Include="..\renderer\CCPrimitive.h" />
+    <ClInclude Include="..\renderer\CCPrimitiveCommand.h" />
     <ClInclude Include="..\renderer\CCQuadCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
@@ -586,6 +592,8 @@
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
+    <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />
     <ClInclude Include="CCActionCatmullRom.h" />
