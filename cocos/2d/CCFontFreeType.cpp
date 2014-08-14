@@ -267,7 +267,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         }
         else
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER))
+            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
