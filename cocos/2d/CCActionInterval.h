@@ -862,8 +862,6 @@ protected:
     GLubyte _byOpacity;
     GLubyte _toOpacity;
     GLubyte _fromOpacity;
-    friend class FadeOut;
-    friend class FadeIn;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
 };
