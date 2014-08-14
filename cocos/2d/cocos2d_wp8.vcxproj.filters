@@ -632,6 +632,9 @@
     <ClCompile Include="..\3d\CCAttachNode.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCCamera.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1291,6 +1294,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCAttachNode.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCCamera.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
