@@ -2338,14 +2338,22 @@
 		15D1F2C21994B2DA00302043 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		15D1F2C31994B2DA00302043 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -2760,7 +2768,6 @@
 				15D1F2AE1994B2AD00302043 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		15D1F2C11994B2DA00302043 /* Build configuration list for PBXAggregateTarget "build all lualibs iOS" */ = {
 			isa = XCConfigurationList;
@@ -2769,7 +2776,6 @@
 				15D1F2C31994B2DA00302043 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		15EFA2F6198B2791000C57D3 /* Build configuration list for PBXNativeTarget "libluacocosbuilder iOS" */ = {
 			isa = XCConfigurationList;
