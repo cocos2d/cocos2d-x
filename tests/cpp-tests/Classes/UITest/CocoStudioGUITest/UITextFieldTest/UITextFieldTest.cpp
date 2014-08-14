@@ -407,3 +407,80 @@ void UITextFieldTest_TrueTypeFont::textFieldEvent(Ref *pSender, TextField::Event
             break;
     }
 }
+
+// UITextFieldTest_PlaceHolderColor
+UITextFieldTest_PlaceHolderColor::UITextFieldTest_PlaceHolderColor()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UITextFieldTest_PlaceHolderColor::~UITextFieldTest_PlaceHolderColor()
+{
+}
+
+bool UITextFieldTest_PlaceHolderColor::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the textfield events will be displayed
+        _displayValueLabel = Text::create("Set place hold color","fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("TextField","fonts/Marker Felt.ttf",30);
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+        
+        // Create the textfield
+        TextField* textField = TextField::create("input words here","Arial",30);
+        textField->setPlaceHolder("input text here");
+        textField->setPlaceHolderColor(Color4B::GREEN);
+        textField->setTextColor(Color4B::RED);
+        textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_PlaceHolderColor::textFieldEvent, this));
+        _uiLayer->addChild(textField);
+        return true;
+    }
+    return false;
+}
+
+void UITextFieldTest_PlaceHolderColor::textFieldEvent(Ref *pSender, TextField::EventType type)
+{
+    switch (type)
+    {
+        case TextField::EventType::ATTACH_WITH_IME:
+        {
+            TextField* textField = dynamic_cast<TextField*>(pSender);
+            Size screenSize = CCDirector::getInstance()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.225f,
+                                                  Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("attach with IME")->getCString());
+        }
+            break;
+            
+        case TextField::EventType::DETACH_WITH_IME:
+        {
+            TextField* textField = dynamic_cast<TextField*>(pSender);
+            Size screenSize = CCDirector::getInstance()->getWinSize();
+            textField->runAction(CCMoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            _displayValueLabel->setString(String::createWithFormat("detach with IME")->getCString());
+        }
+            break;
+            
+        case TextField::EventType::INSERT_TEXT:
+            _displayValueLabel->setString(String::createWithFormat("insert words")->getCString());
+            break;
+            
+        case TextField::EventType::DELETE_BACKWARD:
+            _displayValueLabel->setString(String::createWithFormat("delete word")->getCString());
+            break;
+            
+        default:
+            break;
+    }
+}

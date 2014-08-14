@@ -399,4 +399,18 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
+void Sprite3D::setCullFace(GLenum cullFace)
+{
+    for (auto& it : _meshCommands) {
+        it.setCullFace(cullFace);
+    }
+}
+
+void Sprite3D::setCullFaceEnabled(bool enable)
+{
+    for (auto& it : _meshCommands) {
+        it.setCullFaceEnabled(enable);
+    }
+}
+
 NS_CC_END

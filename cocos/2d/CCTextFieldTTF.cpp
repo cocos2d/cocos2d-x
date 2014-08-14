@@ -259,7 +259,9 @@ const std::string& TextFieldTTF::getContentText()
 void TextFieldTTF::setTextColor(const Color4B &color)
 {
     _colorText = color;
-    Label::setTextColor(_colorText);
+    if (_inputText.length() > 0) {
+        Label::setTextColor(_colorText);
+    }
 }
 
 void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
@@ -282,11 +284,18 @@ void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
     _colorSpaceHolder.g = color.g;
     _colorSpaceHolder.b = color.b;
     _colorSpaceHolder.a = 255;
+    if (0 == _inputText.length())
+    {
+        Label::setTextColor(_colorSpaceHolder);
+    }
 }
 
 void TextFieldTTF::setColorSpaceHolder(const Color4B& color)
 {
     _colorSpaceHolder = color;
+    if (0 == _inputText.length()) {
+        Label::setTextColor(_colorSpaceHolder);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -321,7 +330,7 @@ void TextFieldTTF::setString(const std::string &text)
     }
 
     // if there is no input text, display placeholder instead
-    if (! _inputText.length())
+    if (0 == _inputText.length())
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
@@ -343,7 +352,7 @@ const std::string& TextFieldTTF::getString() const
 void TextFieldTTF::setPlaceHolder(const std::string& text)
 {
     _placeHolder = text;
-    if (! _inputText.length())
+    if (0 == _inputText.length())
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);

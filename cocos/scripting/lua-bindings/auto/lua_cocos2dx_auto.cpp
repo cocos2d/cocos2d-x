@@ -48199,6 +48199,34 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
     }while(0);
     ok  = true;
     do{
+        if (argc == 4) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            cocos2d::Image::Format arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::basic_string<char> &)> arg3;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFile(arg0, arg1, arg2, arg3);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
         if (argc == 1) {
             std::string arg0;
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFile");
@@ -48221,6 +48249,30 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
 
             if (!ok) { break; }
             bool ret = cobj->saveToFile(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.RenderTexture:saveToFile");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::basic_string<char> &)> arg2;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFile(arg0, arg1, arg2);
             tolua_pushboolean(tolua_S,(bool)ret);
             return 1;
         }
@@ -63866,6 +63918,52 @@ int lua_register_cocos2dx_Component(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_Sprite3D_setCullFaceEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_setCullFaceEnabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Sprite3D:setCullFaceEnabled");
+        if(!ok)
+            return 0;
+        cobj->setCullFaceEnabled(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setCullFaceEnabled",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_setCullFaceEnabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Sprite3D_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
@@ -64096,6 +64194,52 @@ int lua_cocos2dx_Sprite3D_getBlendFunc(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Sprite3D_setCullFace(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite3D_setCullFace'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        unsigned int arg0;
+
+        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Sprite3D:setCullFace");
+        if(!ok)
+            return 0;
+        cobj->setCullFace(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setCullFace",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite3D_setCullFace'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Sprite3D_removeAttachNode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -64252,11 +64396,13 @@ int lua_register_cocos2dx_Sprite3D(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Sprite3D","cc.Sprite3D","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Sprite3D");
+        tolua_function(tolua_S,"setCullFaceEnabled",lua_cocos2dx_Sprite3D_setCullFaceEnabled);
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_Sprite3D_setTexture);
         tolua_function(tolua_S,"removeAllAttachNode",lua_cocos2dx_Sprite3D_removeAllAttachNode);
         tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_Sprite3D_setBlendFunc);
         tolua_function(tolua_S,"getMesh",lua_cocos2dx_Sprite3D_getMesh);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_Sprite3D_getBlendFunc);
+        tolua_function(tolua_S,"setCullFace",lua_cocos2dx_Sprite3D_setCullFace);
         tolua_function(tolua_S,"removeAttachNode",lua_cocos2dx_Sprite3D_removeAttachNode);
         tolua_function(tolua_S,"getAttachNode",lua_cocos2dx_Sprite3D_getAttachNode);
         tolua_function(tolua_S,"create", lua_cocos2dx_Sprite3D_create);
@@ -64651,6 +64797,386 @@ int lua_register_cocos2dx_Mesh(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::Mesh).name();
     g_luaType[typeName] = "cc.Mesh";
     g_typeCast["Mesh"] = "cc.Mesh";
+    return 1;
+}
+
+int lua_cocos2dx_Skeleton3D_getBoneByName(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_getBoneByName'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Skeleton3D:getBoneByName");
+        if(!ok)
+            return 0;
+        cocos2d::Bone3D* ret = cobj->getBoneByName(arg0);
+        object_to_luaval<cocos2d::Bone3D>(tolua_S, "cc.Bone3D",(cocos2d::Bone3D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:getBoneByName",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_getBoneByName'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_getRootBone(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_getRootBone'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cocos2d::Bone3D* ret = cobj->getRootBone();
+        object_to_luaval<cocos2d::Bone3D>(tolua_S, "cc.Bone3D",(cocos2d::Bone3D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:getRootBone",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_getRootBone'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_updateBoneMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_updateBoneMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->updateBoneMatrix();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:updateBoneMatrix",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_updateBoneMatrix'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_getBoneByIndex(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_getBoneByIndex'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        unsigned int arg0;
+
+        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Skeleton3D:getBoneByIndex");
+        if(!ok)
+            return 0;
+        cocos2d::Bone3D* ret = cobj->getBoneByIndex(arg0);
+        object_to_luaval<cocos2d::Bone3D>(tolua_S, "cc.Bone3D",(cocos2d::Bone3D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:getBoneByIndex",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_getBoneByIndex'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_setRootBone(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_setRootBone'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Bone3D* arg0;
+
+        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0);
+        if(!ok)
+            return 0;
+        cobj->setRootBone(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:setRootBone",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_setRootBone'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_getBoneIndex(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_getBoneIndex'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Bone3D* arg0;
+
+        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0);
+        if(!ok)
+            return 0;
+        int ret = cobj->getBoneIndex(arg0);
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:getBoneIndex",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_getBoneIndex'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_getBoneCount(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Skeleton3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Skeleton3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Skeleton3D_getBoneCount'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        ssize_t ret = cobj->getBoneCount();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:getBoneCount",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_getBoneCount'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Skeleton3D_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Skeleton3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        std::string arg0;
+        std::string arg1;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Skeleton3D:create");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.Skeleton3D:create");
+        if(!ok)
+            return 0;
+        cocos2d::Skeleton3D* ret = cocos2d::Skeleton3D::create(arg0, arg1);
+        object_to_luaval<cocos2d::Skeleton3D>(tolua_S, "cc.Skeleton3D",(cocos2d::Skeleton3D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Skeleton3D:create",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Skeleton3D_create'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_Skeleton3D_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (Skeleton3D)");
+    return 0;
+}
+
+int lua_register_cocos2dx_Skeleton3D(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.Skeleton3D");
+    tolua_cclass(tolua_S,"Skeleton3D","cc.Skeleton3D","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"Skeleton3D");
+        tolua_function(tolua_S,"getBoneByName",lua_cocos2dx_Skeleton3D_getBoneByName);
+        tolua_function(tolua_S,"getRootBone",lua_cocos2dx_Skeleton3D_getRootBone);
+        tolua_function(tolua_S,"updateBoneMatrix",lua_cocos2dx_Skeleton3D_updateBoneMatrix);
+        tolua_function(tolua_S,"getBoneByIndex",lua_cocos2dx_Skeleton3D_getBoneByIndex);
+        tolua_function(tolua_S,"setRootBone",lua_cocos2dx_Skeleton3D_setRootBone);
+        tolua_function(tolua_S,"getBoneIndex",lua_cocos2dx_Skeleton3D_getBoneIndex);
+        tolua_function(tolua_S,"getBoneCount",lua_cocos2dx_Skeleton3D_getBoneCount);
+        tolua_function(tolua_S,"create", lua_cocos2dx_Skeleton3D_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::Skeleton3D).name();
+    g_luaType[typeName] = "cc.Skeleton3D";
+    g_typeCast["Skeleton3D"] = "cc.Skeleton3D";
     return 1;
 }
 
@@ -65982,6 +66508,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_EventFocus(tolua_S);
 	lua_register_cocos2dx_EaseQuinticActionInOut(tolua_S);
 	lua_register_cocos2dx_SpriteFrameCache(tolua_S);
+	lua_register_cocos2dx_Skeleton3D(tolua_S);
 	lua_register_cocos2dx_TransitionCrossFade(tolua_S);
 	lua_register_cocos2dx_Ripple3D(tolua_S);
 	lua_register_cocos2dx_Lens3D(tolua_S);

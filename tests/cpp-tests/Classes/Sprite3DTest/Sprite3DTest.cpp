@@ -55,7 +55,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DWithSkinOutlineTest),
 #endif
     CL(Animate3DTest),
-    CL(AttachmentTest)
+    CL(AttachmentTest),
+    CL(Sprite3DMirrorTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -380,7 +381,7 @@ const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
 const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outline";
 
-const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutLine.vert";
+const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutline.vert";
 const std::string Effect3DOutline::_fragSkinnedShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keySkinnedInGLProgramCache = "Effect3DLibrary_Outline";
 GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
@@ -992,4 +993,66 @@ void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
         _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
     }
     _hasWeapon = !_hasWeapon;
+}
+
+Sprite3DMirrorTest::Sprite3DMirrorTest()
+: _sprite(nullptr)
+, _mirrorSprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DMirrorTest::title() const
+{
+    return "Sprite3D Mirror Test";
+}
+std::string Sprite3DMirrorTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x - 80, p.y) );
+    
+    //test attach
+    auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+    _hasWeapon = true;
+    
+    //create mirror Sprite3D
+    sprite = Sprite3D::create(fileName);
+    sprite->setScale(5);
+    sprite->setScaleX(-5);
+    sprite->setCullFace(GL_FRONT);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x + 80, p.y) );
+    
+    //test attach
+    sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _mirrorSprite = sprite;
 }
