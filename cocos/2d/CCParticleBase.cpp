@@ -31,6 +31,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"
 #include "base/CCDirector.h"
+#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 
@@ -87,7 +88,7 @@ void Particle::addEmitter(ParticleEmitter* emitter)
     std::size_t i = emitters.size();
     for (; i > 0; ++i )
     {
-        if (emitters[i - 1]->getZOrder() <= emitter->getZOrder())
+        if (emitters.at(i - 1)->getZOrder() <= emitter->getZOrder())
         {
             break;
         }
@@ -220,13 +221,13 @@ void ParticleEmitter::updateQuads()
     int i = 0;
     for (; i < _emitters.size(); ++i)
     {
-        if (_emitters[i]->getZOrder() < 0)
+        if (_emitters.at(i)->getZOrder() < 0)
         {
             for (auto particle : _particles)
             {
-                if (particle->emitters[i] != nullptr)
+                if (particle->emitters.at(i) != nullptr)
                 {
-                    particle->emitters[i]->updateQuads();
+                    particle->emitters.at(i)->updateQuads();
                 }
             }
         }
@@ -241,9 +242,9 @@ void ParticleEmitter::updateQuads()
     {
         for (auto particle : _particles)
         {
-            if (particle->emitters[i] != nullptr)
+            if (particle->emitters.at(i) != nullptr)
             {
-                particle->emitters[i]->updateQuads();
+                particle->emitters.at(i)->updateQuads();
             }
         }
     }
@@ -253,7 +254,7 @@ void ParticleEmitter::updateParticlesLife(float delta)
 {
     for (int i = 0; i < _particles.size();)
     {
-        auto particle = _particles[i];
+        auto particle = _particles.at(i);
         particle->live += delta;
         
         // life end
@@ -423,6 +424,13 @@ void ParticleEmitter::reset()
     _active = true;
 }
 
+void ParticleEmitter::end()
+{
+    clearParticles();
+    _running = false;
+    _active = false;
+}
+
 void ParticleEmitter::onEnter()
 {
     Node::onEnter();
@@ -456,7 +464,17 @@ ParticleTextureAtlasRenderer::~ParticleTextureAtlasRenderer()
 {
     for (auto each : _render)
     {
-        delete each.second;
+        auto render = each.second;
+        if(glIsBuffer(render->buffersVBO[0]))
+        {
+            glDeleteBuffers(1, &render->buffersVBO[0]);
+        }
+        
+        if(glIsBuffer(render->buffersVBO[1]))
+        {
+            glDeleteBuffers(1, &render->buffersVBO[1]);
+        }
+        delete render;
     }
     
     _render.clear();
@@ -517,6 +535,8 @@ Rect ParticleTextureAtlasRenderer::getTextureRectForFrame(int frame)
 
 void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
 {
+    emitter->setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    
     int total = emitter->getParticlesCount();
     int z = emitter->getGlobalZOrder();
     auto it = _render.find(z);
@@ -547,13 +567,13 @@ void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
     }
     
     auto particles = emitter->getParticles();
-    auto parent = emitter->getParent();
+    auto parent = emitter->getParticleParent();
     auto transform = parent->getNodeToWorldTransform();
-    auto texSize = _texture->getContentSize();
+    auto texSize = _texture->getContentSizeInPixels();
     for (int i = 0; i < total; ++i)
     {
         V2F_C4B_T2F_Quad& quad = render->quads[render->nextAvalibleQuads + i];
-        auto particle = particles[i];
+        auto particle = particles.at(i);
         
         CC_ASSERT(particle != nullptr);
         
@@ -652,7 +672,7 @@ void ParticleTextureAtlasRenderer::updateVertexBuffer(RenderStruct* render)
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, render->buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * render->nextAvalibleQuads, (GLvoid*)&render->quads[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F_Quad) * render->nextAvalibleQuads, (GLvoid*)&render->quads[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -682,12 +702,12 @@ void ParticleTextureAtlasRenderer::draw(Renderer *renderer, const Mat4& transfor
     for (auto each : _render)
     {
         auto render = each.second;
-        if (render != nullptr)
+        if (render != nullptr && render->nextAvalibleQuads > 0)
         {
             updateVertexBuffer(render);
             updateIndexBuffer(render);
             render->command.init(each.first);
-            render->command.func = CC_CALLBACK_0(ParticleTextureAtlasRenderer::onDraw, this, render);
+            render->command.func = CC_CALLBACK_0(ParticleTextureAtlasRenderer::onDraw, this, render, render->nextAvalibleQuads);
             renderer->addCommand(&render->command);
             render->nextAvalibleQuads = 0;
         }
@@ -695,7 +715,8 @@ void ParticleTextureAtlasRenderer::draw(Renderer *renderer, const Mat4& transfor
     
     _lock = true;
 }
-void ParticleTextureAtlasRenderer::onDraw(RenderStruct* render)
+
+void ParticleTextureAtlasRenderer::onDraw(RenderStruct* render, int num)
 {
     GL::bindTexture2D(_texture->getName());
     
@@ -704,13 +725,13 @@ void ParticleTextureAtlasRenderer::onDraw(RenderStruct* render)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, render->buffersVBO[1]);
     
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
-    glDrawElements(GL_TRIANGLES, (GLsizei)render->nextAvalibleQuads * 6, GL_UNSIGNED_INT, (GLvoid*)0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offsetof(V2F_C4B_T2F, colors));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offsetof(V2F_C4B_T2F, texCoords));
+    glDrawElements(GL_TRIANGLES, (GLsizei)num * 6, GL_UNSIGNED_INT, (GLvoid*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, render->nextAvalibleQuads * 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, num * 4);
 }
 
 NS_CC_END

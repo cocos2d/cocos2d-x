@@ -1729,7 +1729,7 @@ void ParticleSystemNew::updateParticles(float dt)
     for (int i = 0; i < _particles.size(); ++i)
     {
         
-        PDParticle* p = dynamic_cast<PDParticle*>(_particles[i]);
+        PDParticle* p = dynamic_cast<PDParticle*>(_particles.at(i));
         
         // Mode A: gravity, direction, tangential accel & radial accel
         if (_emitterMode == Mode::GRAVITY)

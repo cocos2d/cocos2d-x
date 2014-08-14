@@ -199,6 +199,7 @@ public:
     virtual void stop();
     virtual void pause();
     virtual void reset();
+    virtual void end();
     
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
     
@@ -269,7 +270,7 @@ protected:
     void updateVertexBuffer(RenderStruct* render);
     void updateIndexBuffer(RenderStruct* render);
     
-    void onDraw(RenderStruct* render);
+    void onDraw(RenderStruct* render, int num);
     
 CC_CONSTRUCTOR_ACCESS:
     ParticleTextureAtlasRenderer();
@@ -285,6 +286,13 @@ protected:
         GLuint              buffersVBO[2]; //0: vertex  1: indices
         CustomCommand command;           //command
         int nextAvalibleQuads;
+        
+        RenderStruct()
+        : nextAvalibleQuads(0)
+        {
+            buffersVBO[0] = 0;
+            buffersVBO[1] = 0;
+        }
     };
     
     std::map<int, RenderStruct*> _render;   // each global z use a render command
