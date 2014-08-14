@@ -159,9 +159,20 @@ endif()
 target_link_libraries(${APP_NAME}
   luacocos2d
   luacocosdenshion
-  audio
+  luanetwork
+  luacocosbuilder
+  luacocostudio
+  luaspine
+  luaextension
+  luaui
   cocos2d
-  xxtea
+  audio
+  cocostudio
+  spine
+  cocosbuilder
+  extensions
+  ui
+  network
   )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
