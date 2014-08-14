@@ -34,6 +34,7 @@ static const char* s_testArray[] =
     "UIButtonTest_Title",
     "UIButtonTest_RemoveSelf",
     "UIButtonTestSwitchScale9",
+    "UIButtonTestZoomScale",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
@@ -181,6 +182,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTestRemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTestSwitchScale9:
             return UIButtonTestSwitchScale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTestZoomScale:
+            return UIButtonTestZoomScale::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -290,6 +293,8 @@ Scene *UISceneManager::currentUIScene()
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewButtonTest:
             return UIPageViewButtonTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewCustomScrollThreshold:
+            return UIPageViewCustomScrollThreshold::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
