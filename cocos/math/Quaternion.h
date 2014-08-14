@@ -249,6 +249,20 @@ public:
      * @param dst A quaternion to store the result in.
      */
     Quaternion getNormalized() const;
+    
+    /** http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles */
+    /**
+     * rotation about the X-axis
+     */
+    float getRoll() const;
+    /**
+     * rotation about the Y-axis
+     */
+    float getPitch() const;
+    /**
+     * rotation about the Z-axis
+     */
+    float getYaw() const;
 
     /**
      * Sets the elements of the quaternion to the specified values.
