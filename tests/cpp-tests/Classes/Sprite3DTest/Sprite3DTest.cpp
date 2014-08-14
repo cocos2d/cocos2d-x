@@ -381,7 +381,7 @@ const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
 const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outline";
 
-const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutLine.vert";
+const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutline.vert";
 const std::string Effect3DOutline::_fragSkinnedShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keySkinnedInGLProgramCache = "Effect3DLibrary_Outline";
 GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
