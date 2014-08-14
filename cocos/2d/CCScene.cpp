@@ -71,10 +71,6 @@ bool Scene::init()
 
 bool Scene::initWithSize(const Size& size)
 {
-    //create default camera
-    auto camera = Camera::create();
-    addChild(camera);
-    
     setContentSize(size);
     return true;
 }
