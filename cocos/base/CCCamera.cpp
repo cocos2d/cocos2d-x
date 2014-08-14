@@ -33,30 +33,10 @@ Camera* Camera::_visitingCamera = nullptr;
 
 Camera* Camera::create()
 {
-    Camera* camera = nullptr;
-    auto size = Director::getInstance()->getWinSize();
-    //create default camera
-    auto projection = Director::getInstance()->getProjection();
-    switch (projection)
-    {
-        case Director::Projection::_2D:
-        {
-            camera = Camera::createOrthographic(size.width, size.height, -1024, 1024);
-            break;
-        }
-        case Director::Projection::_3D:
-        {
-            float zeye = Director::getInstance()->getZEye();
-            camera = Camera::createPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);
-            Vec3 eye(size.width/2, size.height/2.0f, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
-            camera->setPosition3D(eye);
-            camera->lookAt(center, up);
-            break;
-        }
-        default:
-            CCLOG("unrecognized projection");
-            break;
-    }
+    Camera* camera = new Camera();
+    camera->initDefault();
+    camera->autorelease();
+    
     return camera;
 }
 
@@ -65,20 +45,7 @@ Camera* Camera::createPerspective(float fieldOfView, float aspectRatio, float ne
     auto ret = new Camera();
     if (ret)
     {
-        ret->_fieldOfView = fieldOfView;
-        ret->_aspectRatio = aspectRatio;
-        ret->_nearPlane = nearPlane;
-        ret->_farPlane = farPlane;
-        Mat4::createPerspective(ret->_fieldOfView, ret->_aspectRatio, ret->_nearPlane, ret->_farPlane, &ret->_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-        //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-        GLView* view = Director::getInstance()->getOpenGLView();
-        if(view != nullptr)
-        {
-            setAdditionalProjection(view->getOrientationMatrix());
-        }
-#endif
-        ret->_viewProjectionDirty = true;
+        ret->initPerspective(fieldOfView, aspectRatio, nearPlane, farPlane);
         ret->autorelease();
         return ret;
     }
@@ -91,20 +58,7 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
     auto ret = new Camera();
     if (ret)
     {
-        ret->_zoom[0] = zoomX;
-        ret->_zoom[1] = zoomY;
-        ret->_nearPlane = nearPlane;
-        ret->_farPlane = farPlane;
-        Mat4::createOrthographic(ret->_zoom[0], ret->_zoom[1], ret->_nearPlane, ret->_farPlane, &ret->_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-        //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-        GLView* view = Director::getInstance()->getOpenGLView();
-        if(view != nullptr)
-        {
-            setAdditionalProjection(view->getOrientationMatrix());
-        }
-#endif
-        ret->_viewProjectionDirty = true;
+        ret->initOrthographic(zoomX, zoomY, nearPlane, farPlane);
         ret->autorelease();
         return ret;
     }
@@ -201,6 +155,76 @@ void Camera::setAdditionalProjection(const Mat4& mat)
 {
     _projection = mat * _projection;
     getViewProjectionMatrix();
+}
+
+bool Camera::initDefault()
+{
+    auto size = Director::getInstance()->getWinSize();
+    //create default camera
+    auto projection = Director::getInstance()->getProjection();
+    switch (projection)
+    {
+        case Director::Projection::_2D:
+        {
+            initOrthographic(size.width, size.height, -1024, 1024);
+            setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+            setRotation3D(Vec3(0.f, 0.f, 0.f));
+            break;
+        }
+        case Director::Projection::_3D:
+        {
+            float zeye = Director::getInstance()->getZEye();
+            initPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);
+            Vec3 eye(size.width/2, size.height/2.0f, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            setPosition3D(eye);
+            lookAt(center, up);
+            break;
+        }
+        default:
+            CCLOG("unrecognized projection");
+            break;
+    }
+    return true;
+}
+
+bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane)
+{
+    _fieldOfView = fieldOfView;
+    _aspectRatio = aspectRatio;
+    _nearPlane = nearPlane;
+    _farPlane = farPlane;
+    Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
+    GLView* view = Director::getInstance()->getOpenGLView();
+    if(view != nullptr)
+    {
+        setAdditionalProjection(view->getOrientationMatrix());
+    }
+#endif
+    _viewProjectionDirty = true;
+    
+    return true;
+}
+
+bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane)
+{
+    _zoom[0] = zoomX;
+    _zoom[1] = zoomY;
+    _nearPlane = nearPlane;
+    _farPlane = farPlane;
+    Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
+    GLView* view = Director::getInstance()->getOpenGLView();
+    if(view != nullptr)
+    {
+        setAdditionalProjection(view->getOrientationMatrix());
+    }
+#endif
+    _viewProjectionDirty = true;
+    
+    return true;
 }
 
 void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const

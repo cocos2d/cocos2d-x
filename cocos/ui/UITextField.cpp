@@ -445,6 +445,26 @@ const std::string& TextField::getPlaceHolder()const
 {
     return _textFieldRenderer->getPlaceHolder();
 }
+    
+const Color4B& TextField::getPlaceHolderColor()const
+{
+    return _textFieldRenderer->getColorSpaceHolder();
+}
+    
+void TextField::setPlaceHolderColor(const cocos2d::Color3B &color)
+{
+    _textFieldRenderer->setColorSpaceHolder(color);
+}
+    
+void TextField::setPlaceHolderColor(const cocos2d::Color4B &color)
+{
+    _textFieldRenderer->setColorSpaceHolder(color);
+}
+    
+void TextField::setTextColor(const cocos2d::Color4B &textColor)
+{
+    _textFieldRenderer->setTextColor(textColor);
+}
 
 void TextField::setFontSize(int size)
 {

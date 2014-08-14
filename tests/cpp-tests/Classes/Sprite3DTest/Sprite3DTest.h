@@ -115,7 +115,12 @@ protected:
     static const std::string _vertShaderFile;
     static const std::string _fragShaderFile;
     static const std::string _keyInGLProgramCache;
-    static GLProgram* getOrCreateProgram();
+    
+    static const std::string _vertSkinnedShaderFile;
+    static const std::string _fragSkinnedShaderFile;
+    static const std::string _keySkinnedInGLProgramCache;
+    
+    static GLProgram* getOrCreateProgram(bool isSkinned = false);
 };
 
 class Sprite3DHitTest : public Sprite3DTestDemo
@@ -131,6 +136,8 @@ class EffectSprite3D : public Sprite3D
 {
 public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
+    static EffectSprite3D* create(const std::string& path);
+    
     void setEffect3D(Effect3D* effect);
     void addEffect(Effect3DOutline* effect, ssize_t order);
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -161,6 +168,19 @@ class Sprite3DWithSkinTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DWithSkinTest);
     Sprite3DWithSkinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithSkinOutlineTest);
+    Sprite3DWithSkinOutlineTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
@@ -258,6 +278,22 @@ protected:
     
     void unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst);
     void calculateRayByLocationInView(Ray* ray, const Vec2& location);
+};
+
+class Sprite3DMirrorTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DMirrorTest);
+    Sprite3DMirrorTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    
+protected:
+    bool _hasWeapon;
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::Sprite3D* _mirrorSprite;
 };
 
 class Sprite3DTestScene : public TestScene

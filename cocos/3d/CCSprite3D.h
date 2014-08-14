@@ -95,6 +95,11 @@ public:
      */
     virtual Rect getBoundingBox() const override;
 
+    // set which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK, default GL_BACK
+    void setCullFace(GLenum cullFace);
+    // set cull face enable or not
+    void setCullFaceEnabled(bool enable);
+
 CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();

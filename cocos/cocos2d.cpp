@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-const char* cocos2dVersion()
+CC_DLL const char* cocos2dVersion()
 {
     return "cocos2d-x 3.2";
 }

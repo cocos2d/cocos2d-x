@@ -74,6 +74,8 @@ CC_CONSTRUCTOR_ACCESS:
     
     bool init();
     bool initWithSize(const Size& size);
+    
+    void onProjectionChanged(EventCustom* event);
 
 protected:
     friend class Node;
@@ -83,6 +85,8 @@ protected:
     friend class Director;
     
     std::vector<Camera*> _cameras; //weak ref to Camera
+    Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
+    EventListenerCustom*       _event;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);

@@ -42,7 +42,8 @@ bool UIButtonTest::init()
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
         _uiLayer->addChild(button);
-        
+//        button->setColor(Color3B::RED);
+        button->setOpacity(100);
         // Create the imageview
         ImageView* imageView = ImageView::create();
     
@@ -80,6 +81,8 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             imageView->setOpacity(0);
             imageView->setVisible(true);
             imageView->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
+            Button *btn = (Button*)pSender;
+            btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
         }
             break;
             
