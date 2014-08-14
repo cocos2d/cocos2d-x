@@ -213,6 +213,10 @@ protected:
     CustomCommand _clearCommand;
     CustomCommand _beginCommand;
     CustomCommand _endCommand;
+    /*this command is used to encapsulate saveToFile,
+     call saveToFile twice will overwrite this command and callback
+     and the command and callback will be executed twice.
+    */
     CustomCommand _saveToFileCommand;
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback;
 protected:
