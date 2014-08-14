@@ -189,6 +189,15 @@ add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 # cocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
+# network library
+add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+
+# ui library
+add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
+
+# sqlite3 library
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
+
 # extensions
 add_subdirectory(${COCOS2D_ROOT}/extensions)
 
@@ -223,11 +232,6 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
-  audio
   cocos2d
   )
 
