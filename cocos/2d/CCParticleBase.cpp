@@ -36,17 +36,39 @@ NS_CC_BEGIN
 
 // Particle implementation
 Particle::Particle()
-: positionZ(0.0f)
-, rotationX(0.0f)
-, rotationY(0.0f)
+: anchor(0.5f, 0.5f)
+, positionZ(0.0f)
+, rotationZ_X(0.0f)
+, rotationZ_Y(0.0f)
 , frame(0.0f)
-, shapeType(ParticleEffector::ShapeType::RECTANGLE)
-, contactType(ParticleEffector::ContactType::OUT)
+, color(Color4B::WHITE)
+, psPositionZ(0.0f)
+, psRotationZ_X(0.0f)
+, psRotationZ_Y(0.0f)
+, shapeType(ParticleEffector::ShapeType::CIRCLE)
+, follow(false)
+, life(0.0f)
+, live(0.0f)
+, dead(false)
 {
 }
 
 Particle::~Particle()
 {
+}
+
+Particle* Particle::create()
+{
+    auto ret = new Particle();
+    
+    if (ret != nullptr)
+    {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 void Particle::setEmitters(const Vector<ParticleEmitter*>& es)
@@ -65,7 +87,7 @@ void Particle::addEmitter(ParticleEmitter* emitter)
     std::size_t i = emitters.size();
     for (; i > 0; ++i )
     {
-        if (emitters.at(i - 1)->getZOrder() <= emitter->getZOrder())
+        if (emitters[i - 1]->getZOrder() <= emitter->getZOrder())
         {
             break;
         }
@@ -78,6 +100,11 @@ ParticleEffector::ParticleEffector()
 : _psRotation(0.0f)
 {
     memset(&_shape, 0, sizeof(_shape));
+}
+
+ParticleEffector::~ParticleEffector()
+{
+    
 }
 
 void ParticleEffector::setShape(Vec2 position, float width, float height)
@@ -108,14 +135,25 @@ void ParticleEffector::updateContact(float delta)
 ParticleEmitter::ParticleEmitter()
 : _renderer(nullptr)
 , _particleParent(nullptr)
-, _psRotation(0.0f)
+, _psPositionZ(0.0f)
+, _psRotationZ_X(0.0f)
+, _psRotationZ_Y(0.0f)
+, _psScaleX(0.0f)
+, _psScaleY(0.0f)
+, _psScaleZ(0.0)
+, _follow(false)
 , _need(0)
+, _running(true)
+, _active(true)
+, _elapsed(0.0f)
+, _duration(-1.0f)
 {
     memset(&_particleShapeType, 0, sizeof(_particleShapeType));
 }
 
 ParticleEmitter::~ParticleEmitter()
 {
+    clearParticles();
 }
 
 void ParticleEmitter::setParticleShape(int frame, ParticleEffector::ShapeType type, bool updateExist/* = false*/)
@@ -159,6 +197,16 @@ void ParticleEmitter::setRenderer(ParticleRendererProtocol* renderer)
     CC_SAFE_RETAIN(_renderer);
 }
 
+void ParticleEmitter::clearParticles()
+{
+    for (auto particle : _particles)
+    {
+        particle->dead = true;
+    }
+    
+    _particles.clear();
+}
+
 void ParticleEmitter::updateEffectors(float delta)
 {
     for (auto effector : _effectors)
@@ -172,38 +220,221 @@ void ParticleEmitter::updateQuads()
     int i = 0;
     for (; i < _emitters.size(); ++i)
     {
-        if (_emitters.at(i)->getZOrder() < 0)
+        if (_emitters[i]->getZOrder() < 0)
         {
             for (auto particle : _particles)
             {
-                if (particle->emitters.at(i) != nullptr)
+                if (particle->emitters[i] != nullptr)
                 {
-                    particle->emitters.at(i)->updateQuads();
+                    particle->emitters[i]->updateQuads();
                 }
             }
         }
     }
     
-    _renderer->updateQuads(this);
+    if(_renderer != nullptr)
+    {
+        _renderer->updateQuads(this);
+    }
     
     for (; i < _emitters.size(); ++i)
     {
         for (auto particle : _particles)
         {
-            if (particle->emitters.at(i) != nullptr)
+            if (particle->emitters[i] != nullptr)
             {
-                particle->emitters.at(i)->updateQuads();
+                particle->emitters[i]->updateQuads();
             }
         }
     }
 }
 
+void ParticleEmitter::updateParticlesLife(float delta)
+{
+    for (int i = 0; i < _particles.size();)
+    {
+        auto particle = _particles[i];
+        particle->live += delta;
+        
+        // life end
+        if (particle->live >= particle->life)
+        {
+            particle->dead = true;
+            
+            auto last = _particles.back();
+            _particles.replace(i, last);
+            _particles.popBack();
+            continue;
+        }
+        ++i;
+    }
+}
+
+void ParticleEmitter::updateEmitterTransform()
+{
+    if (_particleParent == nullptr)
+    {
+        return;
+    }
+    
+    if (_particleParent == this->getParent())
+    {
+        _emitterTransform = getNodeToParentTransform();
+    }
+    else
+    {
+        _emitterTransform = getNodeToWorldTransform();
+        _emitterTransform.multiply(_particleParent->getWorldToNodeTransform());
+    }
+}
+
+void ParticleEmitter::updateParticlesTransform()
+{
+    for (auto particle : _particles)
+    {
+        // build particle Mat4
+        float x = particle->position.x;
+        float y = particle->position.y;
+        float z = particle->positionZ;
+        
+        float cx = 1, sx = 0, cy = 1, sy = 0;
+        if (particle->rotationZ_X || particle->rotationZ_Y)
+        {
+            float radiansX = -CC_DEGREES_TO_RADIANS(particle->rotationZ_X);
+            float radiansY = -CC_DEGREES_TO_RADIANS(particle->rotationZ_Y);
+            cx = cosf(radiansX);
+            sx = sinf(radiansX);
+            cy = cosf(radiansY);
+            sy = sinf(radiansY);
+        }
+        
+        float mat[] =
+        {
+            cy,             sy,             0,          0,
+            -sx,            cx,             0,          0,
+            0,              0,              1,          0,
+            x,              y,              z,          1
+        };
+        Mat4 particleTransform(mat);
+        
+        // tramsfrom for particle
+        Mat4& transform = particle->follow ? _emitterTransform : particle->psEmitTransform;
+        particleTransform.multiply(transform);
+        
+        Vec3 position;
+        Quaternion rotation;
+        Vec3 scale;
+        transform.getTranslation(&position);
+        transform.getRotation(&rotation);
+        transform.getScale(&scale);
+        
+        particle->psPosition = Vec2(position.x, position.y);
+        particle->psRotationZ_X = rotation.getRoll();
+        particle->psRotationZ_Y = rotation.getPitch();
+        particle->psSize.x = particle->size.x * scale.x;
+        particle->psSize.y = particle->size.y * scale.y;
+    }
+}
+
+int ParticleEmitter::spawnParticles(int need)
+{
+    int start = (int)_particles.size();
+    
+    spawnParticlesHelper(need);
+    
+    int end = (int)_particles.size();
+    
+    for (int i = start; i < end; ++i)
+    {
+        auto particle = _particles.at(i);
+        particle->psEmitTransform = _emitterTransform;
+        particle->follow = _follow;
+    }
+    
+    return end - start;
+}
+
 void ParticleEmitter::update(float delta)
 {
-    updateParticles(delta);
-    spawnParticles(delta, _need);
-    updateEffectors(delta);
-    updateQuads();
+    CC_PROFILER_START_CATEGORY(kProfilerCategoryParticles , "ParticleEmitter - update");
+    
+    if (_particleParent == nullptr && getParent() == nullptr)
+    {
+        return;
+    }
+    
+    if (_particleParent == nullptr)
+    {
+        this->setParticleParent(getParent());
+    }
+    
+    if (_running)
+    {
+        _elapsed += delta;
+        updateEmitterTransform();
+        updateParticlesLife(delta);
+        updateParticles(delta);
+        if (_active)
+        {
+            if (_duration != -1 && _elapsed > _duration)
+            {
+                stop();
+            }
+            else
+            {
+                spawnParticles(_need);
+            }
+        }
+        updateParticlesTransform();
+        updateEffectors(delta);
+        updateQuads();
+    }
+    else
+    {
+        updateEmitterTransform();
+        updateParticlesTransform();
+        updateQuads();
+    }
+    
+    
+    CC_PROFILER_STOP_CATEGORY(kProfilerCategoryParticles , "ParticleEmitter - update");
+}
+
+void ParticleEmitter::start()
+{
+    _running = true;
+    _active = true;
+}
+void ParticleEmitter::stop()
+{
+    _active = false;
+    _elapsed = 0.0f;
+}
+
+void ParticleEmitter::pause()
+{
+    _running = false;
+}
+
+void ParticleEmitter::reset()
+{
+    clearParticles();
+    _running = true;
+    _active = true;
+}
+
+void ParticleEmitter::onEnter()
+{
+    Node::onEnter();
+    
+    // update after action in run!
+    this->scheduleUpdateWithPriority(1);
+}
+
+void ParticleEmitter::onExit()
+{
+    this->unscheduleUpdate();
+    Node::onExit();
 }
 
 void ParticleEmitter::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
@@ -229,6 +460,8 @@ ParticleTextureAtlasRenderer::~ParticleTextureAtlasRenderer()
     }
     
     _render.clear();
+    
+    CC_SAFE_RELEASE(_texture);
 }
 
 ParticleTextureAtlasRenderer* ParticleTextureAtlasRenderer::create(Texture2D* texture)
@@ -246,11 +479,12 @@ ParticleTextureAtlasRenderer* ParticleTextureAtlasRenderer::create(Texture2D* te
 
 bool ParticleTextureAtlasRenderer::init(Texture2D* texture)
 {
-    _texture = texture;
-    Size size = _texture->getContentSize();
-    
-    // set frame 0 as whole texture by default
-    setTextureRectForFrame(0, Rect(0, 0, size.width, size.height));
+    setTexture(texture);
+    if (texture != nullptr)
+    {
+        // set frame 0 as whole texture by default
+        setTextureRectForFrame(0, Rect(0, 0, texture->getPixelsWide(), texture->getPixelsHigh()));
+    }
     
     return true;
 }
@@ -283,7 +517,7 @@ Rect ParticleTextureAtlasRenderer::getTextureRectForFrame(int frame)
 
 void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
 {
-    int total = emitter->getTotalParticles();
+    int total = emitter->getParticlesCount();
     int z = emitter->getGlobalZOrder();
     auto it = _render.find(z);
     RenderStruct* render = nullptr;
@@ -296,6 +530,8 @@ void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
             CCLOG("ParticleTextureAtlasRenderer: out of memory");
             return;
         }
+        
+        _render.insert(std::pair<int, RenderStruct*>(z, render));
     }
     else
     {
@@ -313,27 +549,25 @@ void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
     auto particles = emitter->getParticles();
     auto parent = emitter->getParent();
     auto transform = parent->getNodeToWorldTransform();
-    auto scaleX = emitter->getScaleX();
-    auto scaleY = emitter->getScaleY();
     auto texSize = _texture->getContentSize();
     for (int i = 0; i < total; ++i)
     {
         V2F_C4B_T2F_Quad& quad = render->quads[render->nextAvalibleQuads + i];
-        auto particle = particles.at(i);
+        auto particle = particles[i];
         
         CC_ASSERT(particle != nullptr);
         
         // ignore z
-        Vec3 pos = Vec3(particle->position.x, particle->position.y, 0);
+        Vec3 pos = Vec3(particle->psPosition.x, particle->psPosition.y, 0);
         transform.transformPoint(&pos);
         
         float left, right, top, bottom;
         
         // vertices
-        left = (pos.x - particle->anchor.x * particle->size.x) * scaleX;
-        right = (pos.x + (1 - particle->anchor.x) * particle->size.x) * scaleX;
-        top = (pos.y - particle->anchor.y * particle->size.y) * scaleY;
-        bottom = (pos.y + (1 - particle->anchor.y) * particle->size.y) * scaleY;
+        left = pos.x - particle->anchor.x * particle->psSize.x;
+        right = pos.x + (1 - particle->anchor.x) * particle->psSize.x;
+        top = pos.y - particle->anchor.y * particle->psSize.y;
+        bottom = pos.y + (1 - particle->anchor.y) * particle->psSize.y;
         
         
         quad.bl.vertices.x = left;
@@ -390,6 +624,18 @@ void ParticleTextureAtlasRenderer::initIndices(RenderStruct* render)
         render->indices[i6+4] = (GLushort) i4+2;
         render->indices[i6+3] = (GLushort) i4+3;
     }
+}
+
+void ParticleTextureAtlasRenderer::setTexture(Texture2D* texture)
+{
+    CC_SAFE_RETAIN(texture);
+    CC_SAFE_RELEASE(_texture);
+    _texture = texture;
+}
+
+Texture2D* ParticleTextureAtlasRenderer::getTexture()
+{
+    return _texture;
 }
 
 void ParticleTextureAtlasRenderer::updateVertexBuffer(RenderStruct* render)

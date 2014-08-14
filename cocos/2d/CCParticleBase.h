@@ -45,8 +45,8 @@ class ParticleEffector : public Node
 public:
     enum class ShapeType
     {
-        RECTANGLE,
         CIRCLE,
+        RECTANGLE,
     };
     
     enum class ContactType
@@ -74,14 +74,14 @@ protected:
         {
             struct
             {
+                float radius;
+            }circle;
+
+            struct
+            {
                 float width;
                 float height;
             }rectangle;
-            
-            struct
-            {
-                float radius;
-            }circle;
         }shape;
         
         ShapeType type;
@@ -99,7 +99,7 @@ protected:
     Vector<Particle*> _out;
 };
 
-class Particle : public Ref, public Clonable
+class Particle : public Ref
 {
 public:
     static Particle* create();
@@ -122,17 +122,35 @@ public:
     Vec2 size;
     Vec2 anchor;
     float positionZ;
-    float rotationX;
-    float rotationY;
+    float rotationZ_X;
+    float rotationZ_Y;
     float frame;
     Color4B color;
-    Vector<ParticleEmitter*> emitters;
     ParticleEffector::ShapeType shapeType;
-    ParticleEffector::ContactType contactType;
+    Vector<ParticleEmitter*> emitters;
+    
+    Vec2 psPosition;
+    Vec2 psSize;
+    float psPositionZ;
+    float psRotationZ_X;
+    float psRotationZ_Y;
+    
+    Mat4 psEmitTransform;
+    bool follow;
+    
+    //! the time particle can exist
+    float life;
+    //! the time particle already exist
+    float live;
+    //! when a particle life is end or deleted by emitter, it will be set to true
+    bool dead;
     
 CC_CONSTRUCTOR_ACCESS:
     Particle();
     virtual ~Particle();
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Particle);
 };
 
 class ParticleRendererProtocol;
@@ -150,18 +168,37 @@ public:
     */
     void setParticleShape(int frame, ParticleEffector::ShapeType type, bool updateExist = false);
     
-    int getTotalParticles() const { return (int)_particles.size(); }
+    int getParticlesCount() const { return (int)_particles.size(); }
     const Vector<Particle*>& getParticles() const { return _particles; }
+    
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    inline float getDuration() const { return _duration; }
+    inline void setDuration(float duration) { _duration = duration; }
+    
+    inline float getFollow() const { return _follow; }
+    inline void setFollow(bool follow) { _follow = follow; }
+    
+    virtual void clearParticles();
     
     virtual void addEffector(ParticleEffector* effector);
     virtual void removeEffector(ParticleEffector* effector);
     virtual void setRenderer(ParticleRendererProtocol* renderer);
     
-    virtual void spawnParticles(float delta, int need) = 0;
+    virtual void updateParticlesLife(float delta);
+    virtual int spawnParticles(int need);
     virtual void updateParticles(float delta) = 0;
+    virtual void updateEmitterTransform();
+    virtual void updateParticlesTransform();
     virtual void updateEffectors(float delta);
     virtual void updateQuads();
-    virtual void update(float delta);
+    virtual void update(float delta) override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual void start();
+    virtual void stop();
+    virtual void pause();
+    virtual void reset();
     
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
     
@@ -170,18 +207,35 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ParticleEmitter();
     
 protected:
+    virtual void spawnParticlesHelper(int need) = 0;
+    
+protected:
     Vector<Particle*> _particles;
     Vector<ParticleEffector*> _effectors;
     Vector<ParticleEmitter*> _emitters;
     ParticleRendererProtocol* _renderer;
     Node* _particleParent;
-    // position in particle coordinate system.
+    //! position in particle coordinate system.
     Vec2 _psPosition;
-    // rotation in particle coordinate system.
-    float _psRotation;
+    //! rotation in particle coordinate system.
+    float _psPositionZ;
+    float _psRotationZ_X;
+    float _psRotationZ_Y;
+    float _psScaleX;
+    float _psScaleY;
+    float _psScaleZ;
+    bool _follow;
     int _need;
+    bool _running;
+    bool _active;
+    //! time elapsed since the start of the system (in seconds)
+    float _elapsed;
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    float _duration;
     
     ParticleEffector::ShapeType _particleShapeType[PARTICLEFRAME_MAX];
+    
+    Mat4 _emitterTransform;
 };
 
 class ParticleRendererProtocol : public Ref
@@ -204,6 +258,8 @@ public:
     virtual void updateQuads(ParticleEmitter* emitter) override;
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
     
+    void setTexture(Texture2D* texture);
+    Texture2D* getTexture();
     virtual void setTextureRectForFrame(int frame, const Rect& rect);
     virtual Rect getTextureRectForFrame(int frame);
     
