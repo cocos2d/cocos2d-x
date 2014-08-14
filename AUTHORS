@@ -974,9 +974,9 @@ Developers:
         
     DavidPartouche
         Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
-		
-	zaWasp
-		Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
+        
+    zaWasp
+        Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
     
 Retired Core Developers:
     WenSheng Yang
