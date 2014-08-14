@@ -160,10 +160,19 @@ target_link_libraries(${APP_NAME}
   luacocos2d
   luacocosdenshion
   luanetwork
-  audio
+  luacocosbuilder
+  luacocostudio
+  luaspine
+  luaextension
+  luaui
   cocos2d
+  audio
+  cocostudio
+  spine
+  cocosbuilder
+  extensions
+  ui
   network
-  xxtea
   )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")

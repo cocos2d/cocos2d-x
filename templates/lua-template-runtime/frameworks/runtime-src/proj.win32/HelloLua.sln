@@ -20,6 +20,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluacocos2d", "..\..\coco
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluacocosdenshion", "..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocosdenshion.vcxproj", "{46A7D57A-7F25-4F52-823B-FFAC4FF3A624}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluanetwork", "..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluanetwork.vcxproj", "{65E52F4B-703F-419E-AD67-926241A10042}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -54,6 +56,10 @@ Global
 		{46A7D57A-7F25-4F52-823B-FFAC4FF3A624}.Debug|Win32.Build.0 = Debug|Win32
 		{46A7D57A-7F25-4F52-823B-FFAC4FF3A624}.Release|Win32.ActiveCfg = Release|Win32
 		{46A7D57A-7F25-4F52-823B-FFAC4FF3A624}.Release|Win32.Build.0 = Release|Win32
+		{65E52F4B-703F-419E-AD67-926241A10042}.Debug|Win32.ActiveCfg = Debug|Win32
+		{65E52F4B-703F-419E-AD67-926241A10042}.Debug|Win32.Build.0 = Debug|Win32
+		{65E52F4B-703F-419E-AD67-926241A10042}.Release|Win32.ActiveCfg = Release|Win32
+		{65E52F4B-703F-419E-AD67-926241A10042}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,6 +23,10 @@
             "to": ""
         },
         {
+            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script/network",
+            "to": ""
+        },
+        {
             "from": "../../cocos2d-x/external/lua/luasocket",
             "to": "",
             "include": [

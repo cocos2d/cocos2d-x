@@ -4042,8 +4042,6 @@
         "cocos/scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp", 
         "cocos/scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.cpp", 
         "cocos/scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h", 
-        "cocos/scripting/lua-bindings/manual/lua_debugger.c", 
-        "cocos/scripting/lua-bindings/manual/lua_debugger.h", 
         "cocos/scripting/lua-bindings/manual/network/Lua_web_socket.cpp", 
         "cocos/scripting/lua-bindings/manual/network/Lua_web_socket.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.cpp", 
