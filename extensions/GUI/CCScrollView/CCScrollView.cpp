@@ -603,19 +603,18 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
 		
 		// this draw
         if (visibleByCamera)
-		    this->draw(renderer, _modelViewTransform, flags);
+            this->draw(renderer, _modelViewTransform, flags);
         
-		// draw children zOrder >= 0
-		for( ; i < _children.size(); i++ )
+        // draw children zOrder >= 0
+        for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
 			child->visit(renderer, _modelViewTransform, flags);
-		}
-        
-	}
+        }
+    }
     else if (visibleByCamera)
     {
-		this->draw(renderer, _modelViewTransform, flags);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     this->afterDraw();
