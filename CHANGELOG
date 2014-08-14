@@ -16,7 +16,8 @@ cocos2d-x-3.3  ??
     [NEW]           Sprite3D: added setCullFace() and setCullFaceEnabled()
     [NEW]           SpriteFrameCache: load from plist file content data
     [NEW]           utils: added gettime()
-    [NEW]           TextField: support utf8
+    [NEW]           ui::TextField: support utf8
+    [NEW]           ui::TextField: support set color and placehold color
     [NEW]           Text: added getter and setter for TextColor
 
     [FIX]           EditBox: font size is not scaled when glview is scaled on Mac OS X
