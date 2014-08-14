@@ -20,6 +20,7 @@ namespace
         CL(PhysicsContactTest),
         CL(PhysicsPositionRotationTest),
         CL(PhysicsSetGravityEnableTest),
+        CL(PhysicsSetDynamicTest),
         CL(Bug5482),
         CL(PhysicsFixedUpdate),
         CL(PhysicsTransformTest),
@@ -397,7 +398,7 @@ bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
         }
     }
     
-    if (body != nullptr)
+    if (body != nullptr && body->isDynamic() && body->getMass() != PHYSICS_INFINITY)
     {
         Node* mouse = Node::create();
         mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
@@ -1649,6 +1650,7 @@ void PhysicsSetGravityEnableTest::onEnter()
     ball->getPhysicsBody()->setGravityEnable(false);
     addChild(ball);
     ball->getPhysicsBody()->setMass(50);
+
     scheduleOnce(schedule_selector(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
 }
 
@@ -1668,6 +1670,57 @@ std::string PhysicsSetGravityEnableTest::title() const
 std::string PhysicsSetGravityEnableTest::subtitle() const
 {
     return "only yellow box drop down";
+}
+
+void PhysicsSetDynamicTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    // dyamic box
+    auto dyamicBox = makeBox(Vec2(200, 100), Size(50, 50), 2);
+    dyamicBox->getPhysicsBody()->setMass(20);
+    dyamicBox->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(dyamicBox);
+
+    // static box
+    auto staticBox = makeBox(Vec2(300, 100), Size(50, 50), 1);
+    staticBox->setTag(3);
+    staticBox->getPhysicsBody()->setDynamic(false);
+    staticBox->getPhysicsBody()->setVelocity(Vect(-10, 0));
+    staticBox->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(staticBox);
+
+    scheduleOnce(schedule_selector(PhysicsSetDynamicTest::onScheduleOnce), 2.0);
+}
+
+void PhysicsSetDynamicTest::onScheduleOnce(float delta)
+{
+    auto staticBox = getChildByTag(3);
+    staticBox->getPhysicsBody()->setVelocity(Vect(0, 10));
+    
+    _scene->getPhysicsWorld()->setGravity(Vect(0, 98));
+}
+
+std::string PhysicsSetDynamicTest::title() const
+{
+    return "Set Dyamic Test";
+}
+
+std::string PhysicsSetDynamicTest::subtitle() const
+{
+    return "the yellow box is static, and it has velocity.";
 }
 
 void Bug5482::onEnter()

@@ -588,12 +588,6 @@ void PhysicsBody::addMoment(float moment)
 
 void PhysicsBody::setVelocity(const Vec2& velocity)
 {
-    if (!_dynamic)
-    {
-        CCLOG("physics warning: your can't set velocity for a static body.");
-        return;
-    }
-    
     cpBodySetVel(_info->getBody(), PhysicsHelper::point2cpv(velocity));
 }
 
@@ -789,6 +783,11 @@ void PhysicsBody::update(float delta)
         for (auto shape : _shapes)
         {
             shape->update(delta);
+        }
+
+        if (!_dynamic)
+        {
+            _info->_body->position_func(_info->_body, delta);
         }
         
         Node* parent = _node->getParent();

@@ -236,6 +236,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class PhysicsSetDynamicTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsSetDynamicTest);
+    void onEnter() override;
+    void onScheduleOnce(float delta);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Bug5482 : public PhysicsDemo
 {
 public:
