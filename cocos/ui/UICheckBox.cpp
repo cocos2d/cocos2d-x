@@ -356,6 +356,7 @@ bool CheckBox::getSelectedState()const
 
 void CheckBox::selectedEvent()
 {
+    this->retain();
     if (_checkBoxEventCallback)
     {
         _checkBoxEventCallback(this, EventType::SELECTED);
@@ -365,10 +366,12 @@ void CheckBox::selectedEvent()
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
+    this->release();
 }
 
 void CheckBox::unSelectedEvent()
 {
+    this->retain();
     if (_checkBoxEventCallback) {
         _checkBoxEventCallback(this, EventType::UNSELECTED);
     }
@@ -376,6 +379,7 @@ void CheckBox::unSelectedEvent()
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
     }
+    this->release();
 }
 
 void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
