@@ -199,6 +199,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\LayoutComponentTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\LayoutComponentTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />

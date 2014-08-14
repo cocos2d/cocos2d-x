@@ -185,6 +185,7 @@
     <ClInclude Include="..\..\ui\UIWidget.h" />
     <ClInclude Include="..\UIDeprecated.h" />
     <ClInclude Include="..\UIHBox.h" />
+    <ClInclude Include="..\UILayoutComponent.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
     <ClInclude Include="..\UIScale9Sprite.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
     <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIHBox.cpp" />
+    <ClCompile Include="..\UILayoutComponent.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
     <ClCompile Include="..\UIScale9Sprite.cpp" />

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include "base/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -77,6 +78,8 @@ public:
     static std::string getSubStringOfUTF8String(const std::string& str,
                                    std::string::size_type start,
                                    std::string::size_type length);
+    
+    static void doLayout(Node *rootNode);
 
 };
 }

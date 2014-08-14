@@ -575,6 +575,10 @@
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
 		299754F7193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
+		29BB4C7619906C70005417A6 /* UILayoutComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29BB4C7419906C70005417A6 /* UILayoutComponent.cpp */; };
+		29BB4C7719906C70005417A6 /* UILayoutComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29BB4C7419906C70005417A6 /* UILayoutComponent.cpp */; };
+		29BB4C7819906C70005417A6 /* UILayoutComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 29BB4C7519906C70005417A6 /* UILayoutComponent.h */; };
+		29BB4C7919906C70005417A6 /* UILayoutComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 29BB4C7519906C70005417A6 /* UILayoutComponent.h */; };
 		3E6176681960F89B00DE83F5 /* CCController-iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176551960F89B00DE83F5 /* CCController-iOS.mm */; };
 		3E6176691960F89B00DE83F5 /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176561960F89B00DE83F5 /* CCController.h */; };
 		3E6176741960F89B00DE83F5 /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176611960F89B00DE83F5 /* CCEventController.cpp */; };
@@ -2457,6 +2461,8 @@
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
 		299754F3193EC95400A54AC3 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFactory.h; path = ../base/ObjectFactory.h; sourceTree = "<group>"; };
+		29BB4C7419906C70005417A6 /* UILayoutComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutComponent.cpp; sourceTree = "<group>"; };
+		29BB4C7519906C70005417A6 /* UILayoutComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutComponent.h; sourceTree = "<group>"; };
 		29BDBA52195D597A003225C9 /* UIDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDeprecated.cpp; sourceTree = "<group>"; };
 		29CB8F4A1929D1BB00C841D6 /* UILayoutManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutManager.cpp; sourceTree = "<group>"; };
 		29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutManager.h; sourceTree = "<group>"; };
@@ -4350,6 +4356,8 @@
 				2905F9F418CF08D000240AA3 /* UIHelper.cpp */,
 				2905F9F518CF08D000240AA3 /* UIHelper.h */,
 				2905F9EB18CF08D000240AA3 /* GUIDefine.h */,
+				29BB4C7419906C70005417A6 /* UILayoutComponent.cpp */,
+				29BB4C7519906C70005417A6 /* UILayoutComponent.h */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -6035,6 +6043,7 @@
 				2958244D19873D8E00F9746D /* UIScale9Sprite.h in Headers */,
 				B2DB47691976651E00411E16 /* UIHBox.h in Headers */,
 				B2DB478F1976666100411E16 /* UIText.h in Headers */,
+				29BB4C7819906C70005417A6 /* UILayoutComponent.h in Headers */,
 				B2DB47901976666100411E16 /* UITextAtlas.h in Headers */,
 				B2DB47911976666100411E16 /* UITextBMFont.h in Headers */,
 				B2DB47921976666100411E16 /* UITextField.h in Headers */,
@@ -6063,6 +6072,7 @@
 				B2C59A3919777EB600B452DF /* UISlider.h in Headers */,
 				B2C59A3A19777EB600B452DF /* UIText.h in Headers */,
 				B2C59A3B19777EB600B452DF /* UITextAtlas.h in Headers */,
+				29BB4C7919906C70005417A6 /* UILayoutComponent.h in Headers */,
 				B2C59A3C19777EB600B452DF /* UITextBMFont.h in Headers */,
 				B2C59A3D19777EB600B452DF /* UITextField.h in Headers */,
 				B2C59A3E19777EB600B452DF /* UIButton.h in Headers */,
@@ -7438,6 +7448,7 @@
 			files = (
 				B2DB4764197661D500411E16 /* UIWidget.cpp in Sources */,
 				B2DB4765197661E400411E16 /* UIHBox.cpp in Sources */,
+				29BB4C7619906C70005417A6 /* UILayoutComponent.cpp in Sources */,
 				B2DB4766197661EE00411E16 /* UILayout.cpp in Sources */,
 				B2DB476B1976654800411E16 /* UILayoutManager.cpp in Sources */,
 				B2DB477F1976660000411E16 /* UIButton.cpp in Sources */,
@@ -7476,6 +7487,7 @@
 				B2C59A2119777E7500B452DF /* UISlider.cpp in Sources */,
 				B2C59A2219777E7500B452DF /* UIText.cpp in Sources */,
 				B2C59A2319777E7500B452DF /* UITextAtlas.cpp in Sources */,
+				29BB4C7719906C70005417A6 /* UILayoutComponent.cpp in Sources */,
 				B2C59A2419777E7500B452DF /* UITextBMFont.cpp in Sources */,
 				B2C59A2519777E7500B452DF /* UITextField.cpp in Sources */,
 				B2C59A2619777E7500B452DF /* UIButton.cpp in Sources */,

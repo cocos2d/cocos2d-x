@@ -22,6 +22,7 @@
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
+#include "LayoutComponentTest.h"
 
 
 USING_NS_CC;
@@ -111,6 +112,8 @@ static const char* s_testArray[] =
     "UIS9ZOrder",
     "UIS9Flip",
     "UIS9ChangeAnchorPoint",
+    "UILayoutComponentBasic",
+    "UILayoutComponentNonNormalizedPositionTest"
 };
 
 static UISceneManager *sharedInstance = nullptr;
@@ -355,8 +358,12 @@ Scene *UISceneManager::currentUIScene()
             return UIS9ZOrder::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9Flip:
             return UIS9Flip::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kLayoutComponentBasicTest:
+            return UILayoutComponentBaiscTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9ChangeAnchorPoint:
             return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUILayoutComponentNonNormalizedPositionTest:
+            return UILayoutComponentNonNormalizedPositionTest::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return nullptr;
 }

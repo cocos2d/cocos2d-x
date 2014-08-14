@@ -20,6 +20,7 @@
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
     <ClInclude Include="..\UILayout.h" />
+    <ClInclude Include="..\UILayoutComponent.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UILayoutParameter.h" />
     <ClInclude Include="..\UIListView.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
     <ClCompile Include="..\UILayout.cpp" />
+    <ClCompile Include="..\UILayoutComponent.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UILayoutParameter.cpp" />
     <ClCompile Include="..\UIListView.cpp" />

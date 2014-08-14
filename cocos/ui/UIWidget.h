@@ -37,7 +37,7 @@ class EventListenerTouchOneByOne;
 
 
 namespace ui {
-    
+    class LayoutComponent;
 typedef enum
 {
     TOUCH_EVENT_BEGAN,
@@ -412,7 +412,7 @@ public:
      *
      * @return size percent
      */
-    const Vec2& getSizePercent() const;
+    const Vec2& getSizePercent();
 
     /**
      * Checks a point if is in widget's space
@@ -497,10 +497,6 @@ public:
 
     virtual void onEnter() override;
     virtual void onExit() override;
-
-    void updateSizeAndPosition();
-
-    void updateSizeAndPosition(const Size& parentSize);
     
     /*temp action*/
     void setActionTag(int tag);
@@ -636,7 +632,7 @@ protected:
     bool isAncestorsVisible(Node* node);
 
     void cleanupWidget();
-
+    LayoutComponent* getOrCreateLayoutComponent();
 protected:
     bool _enabled;
     bool _bright;
@@ -654,9 +650,6 @@ protected:
     int _actionTag;
 
     Size _customSize;
-
-    Vec2 _sizePercent;
-    Vec2 _positionPercent;
 
     bool _hitted;
     EventListenerTouchOneByOne* _touchListener;

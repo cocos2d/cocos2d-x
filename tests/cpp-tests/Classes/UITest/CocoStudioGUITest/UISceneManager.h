@@ -109,6 +109,8 @@ enum
     kUIS9ZOrder,
     kUIS9Flip,
     kUIS9ChangeAnchorPoint,
+    kLayoutComponentBasicTest,
+    kUILayoutComponentNonNormalizedPositionTest,
     kUITestMax
 };
 

@@ -1200,6 +1200,7 @@ NodeNormalizedPositionTest2::NodeNormalizedPositionTest2()
         sprites[i] = Sprite::create("Images/grossini.png");
         sprites[i]->setNormalizedPosition(positions[i]);
         addChild(sprites[i]);
+        sprites[i]->setTag(2);
     }
     scheduleUpdate();
 
@@ -1229,7 +1230,10 @@ void NodeNormalizedPositionTest2::update(float dt)
 
     Size s = Size(_copyContentSize.width*norm, _copyContentSize.height*norm);
     setContentSize(s);
-
+    if (norm > 0.5) {
+        auto node = this->getChildByTag(2);
+        node->setNormalizedPosition(Vec2(0.2,0.2));
+    }
     CCLOG("s: %f,%f", s.width, s.height);
 }
 

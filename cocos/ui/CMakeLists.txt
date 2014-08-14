@@ -23,6 +23,7 @@ set(COCOS_UI_SRC
   UIWidget.cpp
   UIDeprecated.cpp
   UIScale9Sprite.cpp
+  UILayoutComponent.cpp
 )
 
 include_directories(
