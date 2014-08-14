@@ -55,16 +55,11 @@ set(CS_SRC
   ActionTimeline/CCTimeLine.cpp
 )
 
-include_directories(
-  ..
-)
+include_directories( .. )
 
-add_library(cocostudio STATIC
-  ${CS_SRC}
-)
+add_library(cocostudio STATIC ${CS_SRC} )
 
-target_link_libraries(cocostudio
-)
+target_link_libraries(cocostudio)
 
 set_target_properties(cocostudio
     PROPERTIES

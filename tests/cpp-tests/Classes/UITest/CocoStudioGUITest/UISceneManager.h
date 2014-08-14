@@ -36,6 +36,7 @@ enum
     kUIButtonTest_PressedAction,
     kUIButtonTest_Title,
     kUIButtonTest_RemoveSelf,
+    kUIButtonTestSwitchScale9,
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,
@@ -58,6 +59,7 @@ enum
     kUITextFieldTest_Password,
     kUITextFieldTest_LineWrap,
     kUITextFieldTest_TrueTypeFont,
+    kUITextFieldTest_PlaceHolderColor,
     kUILayoutTest,
     kUILayoutTest_Color,
     kUILayoutTest_Gradient,
@@ -106,6 +108,7 @@ enum
     kUIS9CascadeOpacityAndColor,
     kUIS9ZOrder,
     kUIS9Flip,
+    kUIS9ChangeAnchorPoint,
     kUITestMax
 };
 

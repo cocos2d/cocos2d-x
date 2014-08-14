@@ -50,7 +50,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScale9SpriteTest);
             sceneManager->setMinUISceneId(kUIScale9SpriteTest);
-            sceneManager->setMaxUISceneId(kUIS9Flip);
+            sceneManager->setMaxUISceneId(kUIS9ChangeAnchorPoint);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -63,7 +63,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIButtonTest);
             sceneManager->setMinUISceneId(kUIButtonTest);
-            sceneManager->setMaxUISceneId(kUIButtonTest_RemoveSelf);
+            sceneManager->setMaxUISceneId(kUIButtonTestSwitchScale9);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -159,7 +159,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextFieldTest);
             sceneManager->setMinUISceneId(kUITextFieldTest);
-            sceneManager->setMaxUISceneId(kUITextFieldTest_TrueTypeFont);
+            sceneManager->setMaxUISceneId(kUITextFieldTest_PlaceHolderColor);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

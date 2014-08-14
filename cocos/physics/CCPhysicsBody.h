@@ -171,12 +171,12 @@ public:
      * The default value is 0xFFFFFFFF (all bits set).
      */
     void setCollisionBitmask(int bitmask);
-    /** get the category bit mask */
-    inline int getCategoryBitmask() const { return _categoryBitmask; }
-    /** get the contact test bit mask */
-    inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    /** get the collision bit mask */
-    inline int getCollisionBitmask() const { return _collisionBitmask; }
+    /** Return bitmask of first shape, if there is no shape in body, return default value.(0xFFFFFFFF) */
+    int getCategoryBitmask() const;
+    /** Return bitmask of first shape, if there is no shape in body, return default value.(0x00000000) */
+    int getContactTestBitmask() const;
+    /** Return bitmask of first shape, if there is no shape in body, return default value.(0xFFFFFFFF) */
+    int getCollisionBitmask() const;
     
     /** 
      * set the group of body
@@ -184,8 +184,8 @@ public:
      * it have high priority than bit masks
      */
     void setGroup(int group);
-    /** get the group of body */
-    inline int getGroup() const { return _group; }
+    /** Return group of first shape, if there is no shape in body, return default value.(0) */
+    int getGroup() const;
     
     /** get the body position. */
     Vec2 getPosition() const;
@@ -338,11 +338,6 @@ protected:
     float _linearDamping;
     float _angularDamping;
     int _tag;
-    
-    int _categoryBitmask;
-    int _collisionBitmask;
-    int _contactTestBitmask;
-    int _group;
     
     bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
     bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().

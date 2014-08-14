@@ -72,6 +72,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLView
+-- @field [parent=#cc] GLView#GLView GLView preloaded module
+
+
+--------------------------------------------------------
 -- the cc Director
 -- @field [parent=#cc] Director#Director Director preloaded module
 
@@ -94,6 +99,11 @@
 --------------------------------------------------------
 -- the cc UserDefault
 -- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
+
+
+--------------------------------------------------------
+-- the cc Camera
+-- @field [parent=#cc] Camera#Camera Camera preloaded module
 
 
 --------------------------------------------------------
@@ -1137,13 +1147,8 @@
 
 
 --------------------------------------------------------
--- the cc GLViewProtocol
--- @field [parent=#cc] GLViewProtocol#GLViewProtocol GLViewProtocol preloaded module
-
-
---------------------------------------------------------
--- the cc GLView
--- @field [parent=#cc] GLView#GLView GLView preloaded module
+-- the cc GLViewImpl
+-- @field [parent=#cc] GLViewImpl#GLViewImpl GLViewImpl preloaded module
 
 
 --------------------------------------------------------
@@ -1212,6 +1217,11 @@
 
 
 --------------------------------------------------------
+-- the cc Skeleton3D
+-- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
+
+
+--------------------------------------------------------
 -- the cc Animation3D
 -- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
 
@@ -1222,8 +1232,13 @@
 
 
 --------------------------------------------------------
--- the cc SimpleAudioEngine
--- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
+-- the cc SubMeshState
+-- @field [parent=#cc] SubMeshState#SubMeshState SubMeshState preloaded module
+
+
+--------------------------------------------------------
+-- the cc AttachNode
+-- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
 
 
 --------------------------------------------------------

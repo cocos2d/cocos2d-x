@@ -25,7 +25,6 @@ UILoadingBar.cpp \
 UISlider.cpp \
 UITextField.cpp \
 UIRichText.cpp \
-CCProtectedNode.cpp \
 UIHBox.cpp \
 UIVBox.cpp \
 UIRelativeBox.cpp \

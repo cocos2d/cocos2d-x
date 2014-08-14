@@ -7,7 +7,7 @@ set(SAMPLE_SRC
 
 include_directories(
   Classes
-  ../../../cocos/scripting/lua/bindings
+  ../../../cocos/scripting/lua-bindings
   ../../../external/lua/lua
   ../../../external/lua/tolua
 )
@@ -18,12 +18,12 @@ add_executable(${APP_NAME}
 )
 
 target_link_libraries(${APP_NAME}
-  luabinding
-  cocostudio
-  cocosbuilder
-  extensions
+  luacocos2d
+  luacocosdenshion
+  luanetwork
   audio
   cocos2d
+  network
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
@@ -35,5 +35,7 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
   )

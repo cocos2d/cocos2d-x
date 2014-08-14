@@ -339,10 +339,13 @@ class CC_DLL RotateTo : public ActionInterval
 {
 public:
     /** creates the action with separate rotation angles */
-    static RotateTo* create(float duration, float deltaAngleX, float deltaAngleY);
+    static RotateTo* create(float duration, float dstAngleX, float dstAngleY);
 
     /** creates the action */
-    static RotateTo* create(float duration, float deltaAngle);
+    static RotateTo* create(float duration, float dstAngle);
+
+    /** creates the action with 3D rotation angles */
+    static RotateTo* create(float duration, const Vec3& dstAngle3D);
 
     //
     // Overrides
@@ -353,21 +356,21 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    RotateTo() {}
+    RotateTo();
     virtual ~RotateTo() {}
 
     /** initializes the action */
-    bool initWithDuration(float duration, float deltaAngle);
-    bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
+    bool initWithDuration(float duration, float dstAngleX, float dstAngleY);
+    bool initWithDuration(float duration, const Vec3& dstAngle3D);
+
+    /** calculates the start and diff angles */
+    void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
     
 protected:
-    float _dstAngleX;
-    float _startAngleX;
-    float _diffAngleX;
-    
-    float _dstAngleY;
-    float _startAngleY;
-    float _diffAngleY;
+    bool _is3D;
+    Vec3 _dstAngle;
+    Vec3 _startAngle;
+    Vec3 _diffAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateTo);
@@ -403,14 +406,9 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
 protected:
-    float _angleZ_X;
-    float _startAngleZ_X;
-    float _angleZ_Y;
-    float _startAngleZ_Y;
-
     bool _is3D;
-    Vec3 _angle3D;
-    Vec3 _startAngle3D;
+    Vec3 _deltaAngle;
+    Vec3 _startAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);

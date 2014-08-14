@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
-#include "CCGLView.h"
 #include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
@@ -52,10 +51,7 @@ static float convertDistanceFromPointToInch(float pointDis)
 
 
 ScrollView::ScrollView()
-: _zoomScale(0.0f)
-, _minZoomScale(0.0f)
-, _maxZoomScale(0.0f)
-, _delegate(nullptr)
+: _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
 , _container(nullptr)
@@ -66,6 +62,7 @@ ScrollView::ScrollView()
 , _minScale(0.0f)
 , _maxScale(0.0f)
 , _touchListener(nullptr)
+, _scissorRestored(false)
 {
 
 }
@@ -567,10 +564,10 @@ void ScrollView::onAfterDraw()
 
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-	// quick return if not visible
-	if (!isVisible())
+    // quick return if not visible
+    if (!isVisible())
     {
-		return;
+        return;
     }
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -584,44 +581,45 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     this->beforeDraw();
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
-	if (!_children.empty())
+    if (!_children.empty())
     {
-		int i=0;
+        int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children.size(); i++ )
+        for( ; i < _children.size(); i++ )
         {
-			Node *child = _children.at(i);
-			if ( child->getLocalZOrder() < 0 )
+            Node *child = _children.at(i);
+            if ( child->getLocalZOrder() < 0 )
             {
-				child->visit(renderer, _modelViewTransform, flags);
-			}
+                child->visit(renderer, _modelViewTransform, flags);
+            }
             else
             {
-				break;
+                break;
             }
-		}
+        }
 		
 		// this draw
-		this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
         
-		// draw children zOrder >= 0
-		for( ; i < _children.size(); i++ )
+        // draw children zOrder >= 0
+        for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
 			child->visit(renderer, _modelViewTransform, flags);
-		}
-        
-	}
-    else
+        }
+    }
+    else if (visibleByCamera)
     {
-		this->draw(renderer, _modelViewTransform, flags);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     this->afterDraw();
 
-	director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* event)

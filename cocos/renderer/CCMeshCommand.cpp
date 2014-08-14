@@ -41,6 +41,12 @@
 
 NS_CC_BEGIN
 
+//render state
+static bool   s_cullFaceEnabled = false;
+static GLenum s_cullFace = 0;
+static bool   s_depthTestEnabled = false;
+static bool   s_depthWriteEnabled = false;
+
 MeshCommand::MeshCommand()
 : _textureID(0)
 , _blendType(BlendFunc::DISABLE)
@@ -86,7 +92,7 @@ void MeshCommand::init(float globalOrder,
     _primitive = primitive;
     _indexFormat = indexFormat;
     _indexCount = indexCount;
-    _mv = mv;
+    _mv.set(mv);
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
@@ -124,35 +130,46 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
-    if (_cullFaceEnabled)
+    if (_cullFaceEnabled && !s_cullFaceEnabled)
     {
         glEnable(GL_CULL_FACE);
-        glCullFace(_cullFace);
+        if (s_cullFace != _cullFace)
+        {
+            glCullFace(_cullFace);
+            s_cullFace = _cullFace;
+        }
+        s_cullFaceEnabled = true;
     }
-    if (_depthTestEnabled)
+    if (_depthTestEnabled && !s_depthTestEnabled)
     {
         glEnable(GL_DEPTH_TEST);
+        s_depthTestEnabled = true;
     }
-    if (_depthWriteEnabled)
+    if (_depthWriteEnabled && !s_depthWriteEnabled)
     {
         glDepthMask(GL_TRUE);
+        s_depthWriteEnabled = true;
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (_cullFaceEnabled)
+    if (s_cullFaceEnabled)
     {
         glDisable(GL_CULL_FACE);
+        s_cullFaceEnabled = false;
     }
-    if (_depthTestEnabled)
+    if (s_depthTestEnabled)
     {
         glDisable(GL_DEPTH_TEST);
+        s_depthTestEnabled = false;
     }
-    if (_depthWriteEnabled)
+    if (s_depthWriteEnabled)
     {
         glDepthMask(GL_FALSE);
+        s_depthWriteEnabled = false;
     }
+    s_cullFace = 0;
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, void* mesh, const BlendFunc& blend)
@@ -177,8 +194,6 @@ void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 
 void MeshCommand::preBatchDraw()
 {
-    // set render state
-    applyRenderState();
     // Set material
     GL::bindTexture2D(_textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
@@ -198,6 +213,9 @@ void MeshCommand::preBatchDraw()
 }
 void MeshCommand::batchDraw()
 {
+    // set render state
+    applyRenderState();
+    
     _glProgramState->setUniformVec4("u_color", _displayColor);
     
     if (_matrixPaletteSize && _matrixPalette)

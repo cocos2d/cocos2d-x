@@ -1,3 +1,5 @@
+require("extern")
+require("ControllerConstants")
 
 local ControllerHolder = class("ControllerHolder")
 

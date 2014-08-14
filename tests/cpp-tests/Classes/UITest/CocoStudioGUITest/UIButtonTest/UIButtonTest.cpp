@@ -42,7 +42,8 @@ bool UIButtonTest::init()
 //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
         _uiLayer->addChild(button);
-        
+//        button->setColor(Color3B::RED);
+        button->setOpacity(100);
         // Create the imageview
         ImageView* imageView = ImageView::create();
     
@@ -80,6 +81,8 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             imageView->setOpacity(0);
             imageView->setVisible(true);
             imageView->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
+            Button *btn = (Button*)pSender;
+            btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
         }
             break;
             
@@ -219,6 +222,11 @@ bool UIButtonTest_PressedAction::init()
         button->setName("button");
         _uiLayer->addChild(button);
         
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setPosition(button->getPosition() + Vec2(100,0));
+        button2->setName("button2");
+        _uiLayer->addChild(button2);
+        
         return true;
     }
     return false;
@@ -241,6 +249,9 @@ void UIButtonTest_PressedAction::touchEvent(Ref *pSender, Widget::TouchEventType
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
             Button* btn = (Button*)_uiLayer->getChildByName("button");
             btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
+            
+            Button* btn2 = (Button*)_uiLayer->getChildByName("button2");
+            btn2->setAnchorPoint(Vec2(0,0.5));
         }
             break;
             
@@ -378,13 +389,23 @@ bool UIButtonTestRemoveSelf::init()
         
         _uiLayer->addChild(alert);
         
+        Layout *layout = Layout::create();
+        layout->setContentSize(widgetSize * 0.6);
+        layout->setBackGroundColor(Color3B::GREEN);
+        layout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        layout->setBackGroundColorOpacity(100);
+        layout->setPosition(Size(widgetSize.width/2, widgetSize.height/2));
+        layout->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        layout->setTag(12);
+        _uiLayer->addChild(layout);
+        
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
         //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestRemoveSelf::touchEvent, this));
-        _uiLayer->addChild(button);
+        layout->addChild(button);
         
         
         
@@ -408,8 +429,86 @@ void UIButtonTestRemoveSelf::touchEvent(Ref *pSender, Widget::TouchEventType typ
         case Widget::TouchEventType::ENDED:
         {
             _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            auto layout = _uiLayer->getChildByTag(12);
+            layout->removeFromParentAndCleanup(true);
+        }
+            break;
             
-            _uiLayer->removeFromParentAndCleanup(true);
+        case Widget::TouchEventType::CANCELED:
+            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        default:
+            break;
+    }
+}
+
+// UIButtonTestSwitchScale9
+UIButtonTestSwitchScale9::UIButtonTestSwitchScale9()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIButtonTestSwitchScale9::~UIButtonTestSwitchScale9()
+{
+}
+
+bool UIButtonTestSwitchScale9::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestSwitchScale9::touchEvent, this));
+        button->ignoreContentAdaptWithSize(false);
+
+        _uiLayer->addChild(button);
+        
+        
+        
+        return true;
+    }
+    return false;
+}
+
+void UIButtonTestSwitchScale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case Widget::TouchEventType::BEGAN:
+            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            break;
+            
+        case Widget::TouchEventType::MOVED:
+            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            break;
+            
+        case Widget::TouchEventType::ENDED:
+        {
+            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            auto btn = ((Button*)pSender);
+            btn->setScale9Enabled(!btn->isScale9Enabled());
+            btn->setContentSize(Size(200,100));
         }
             break;
             

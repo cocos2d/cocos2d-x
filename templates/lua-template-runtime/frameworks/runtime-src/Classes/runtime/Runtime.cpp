@@ -51,6 +51,9 @@ using namespace cocos2d;
 
 std::string g_resourcePath;
 
+namespace cocos2d {
+    extern const char* cocos2dVersion();
+};
 
 //1M size 
 #define MAXPROTOLENGTH 1048576
@@ -733,6 +736,7 @@ public:
         }
 
         char szVersion[1024]={0};
+
         sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
         Label* verLable = Label::createWithSystemFont(szVersion,"",24);
         verLable->setAnchorPoint(Vec2(0,0));

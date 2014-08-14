@@ -96,8 +96,8 @@ function TimelineTestLayer.create()
 end
 
 function TimelineTestLayer.backCallback()
-    local newScene = TimelineTestScene.create()
-    newScene:addChild(backimelineTest())
+    local newScene = TimelineTestScene.create()             
+    newScene:addChild(backTimelineTest())
     cc.Director:getInstance():replaceScene(newScene)
 end
 

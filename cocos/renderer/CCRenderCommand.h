@@ -49,6 +49,7 @@ public:
         BATCH_COMMAND,
         GROUP_COMMAND,
         MESH_COMMAND,
+        PRIMITIVE_COMMAND,
     };
 
     /** Get Render Command Id */

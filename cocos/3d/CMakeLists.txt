@@ -1,4 +1,8 @@
 set(COCOS_3D_SRC
+  3d/CCSkeleton3D.cpp
+  3d/CCAttachNode.cpp
+  3d/CCSubMesh.cpp
+  3d/CCSubMeshState.cpp
   3d/CCMesh.cpp
   3d/CCObjLoader.cpp
   3d/CCSprite3D.cpp
@@ -9,4 +13,3 @@ set(COCOS_3D_SRC
   3d/CCMeshSkin.cpp
   3d/CCBundleReader.cpp
 )
-

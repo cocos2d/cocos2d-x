@@ -140,6 +140,11 @@ public:
     inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
+    /**
+     * set the group of body
+     * Collision groups let you specify an integral group index. You can have all fixtures with the same group index always collide (positive index) or never collide (negative index)
+     * it have high priority than bit masks
+     */
     void setGroup(int group);
     inline int getGroup() { return _group; }
     

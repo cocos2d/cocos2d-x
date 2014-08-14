@@ -20,6 +20,11 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- @function [parent=#TextField] setPasswordStyleText 
+-- @param self
+-- @param #char char
+        
+--------------------------------
 -- @function [parent=#TextField] getDeleteBackward 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -93,6 +98,11 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#TextField] getPlaceHolderColor 
+-- @param self
+-- @return color4b_table#color4b_table ret (return value: color4b_table)
+        
+--------------------------------
 -- @function [parent=#TextField] getPasswordStyleText 
 -- @param self
 -- @return char#char ret (return value: char)
@@ -103,9 +113,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#TextField] setPasswordStyleText 
+-- @function [parent=#TextField] isPasswordEnabled 
 -- @param self
--- @param #char char
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#TextField] setDeleteBackward 
@@ -123,14 +133,21 @@
 -- @param #string str
         
 --------------------------------
--- @function [parent=#TextField] isPasswordEnabled 
+-- @overload self, color4b_table         
+-- @overload self, color3b_table         
+-- @function [parent=#TextField] setPlaceHolderColor
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
+-- @param #color3b_table color3b
+
 --------------------------------
 -- @function [parent=#TextField] setTextHorizontalAlignment 
 -- @param self
 -- @param #int texthalignment
+        
+--------------------------------
+-- @function [parent=#TextField] setTextColor 
+-- @param self
+-- @param #color4b_table color4b
         
 --------------------------------
 -- @function [parent=#TextField] getMaxLength 
