@@ -8,7 +8,6 @@ LOCAL_MODULE_FILENAME := libluacocos2d
 LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/CCLuaEngine.cpp \
           ../manual/CCLuaStack.cpp \
-          ../manual/lua_debugger.c \
           ../manual/CCLuaValue.cpp \
           ../manual/Cocos2dxLuaLoader.cpp \
           ../manual/LuaBasicConversions.cpp \

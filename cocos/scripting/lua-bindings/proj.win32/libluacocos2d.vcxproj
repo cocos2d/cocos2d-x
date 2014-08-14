@@ -32,7 +32,6 @@
     <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_manual.cpp" />
     <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_physics_manual.cpp" />
     <ClCompile Include="..\manual\LuaBasicConversions.cpp" />
-    <ClCompile Include="..\manual\lua_debugger.c" />
     <ClCompile Include="..\manual\tolua_fix.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +57,6 @@
     <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_manual.hpp" />
     <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_physics_manual.hpp" />
     <ClInclude Include="..\manual\LuaBasicConversions.h" />
-    <ClInclude Include="..\manual\lua_debugger.h" />
     <ClInclude Include="..\manual\tolua_fix.h" />
   </ItemGroup>
   <ItemGroup>
