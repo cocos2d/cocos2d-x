@@ -159,7 +159,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @param the vertices list
      * @param stride the stride between two vertex's position data.
      */
-    void calcuOriginAABB(const std::vector<float>& vertices, unsigned int stride);
+    void calOriginAABB(const std::vector<float>& vertices, unsigned int stride);
 
 protected:
     GLuint _vertexBuffer;

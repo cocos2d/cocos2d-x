@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 #define ROTATE(a,i,j,k,l) g=a.m[i + 4 * j]; h=a.m[k + 4 * l]; a.m[i + 4 * j]=(float)(g-s*(h+g*tau)); a.m[k + 4 * l]=(float)(h+s*(g-h*tau));
 
-static Mat4 _convarianceMatrix(const Vec3* aVertPos, int nVertCount)
+static Mat4 _getConvarianceMatrix(const Vec3* vertPos, int vertCount)
 {
     int i;
     Mat4 Cov;
@@ -42,21 +42,21 @@ static Mat4 _convarianceMatrix(const Vec3* aVertPos, int nVertCount)
     S2[0][2] = S2[1][2] = S2[2][2] = 0.0;
 
     // get center of mass
-    for(i=0; i<nVertCount; i++)
+    for(i=0; i<vertCount; i++)
     {
-        S1[0] += aVertPos[i].x;
-        S1[1] += aVertPos[i].y;
-        S1[2] += aVertPos[i].z;
+        S1[0] += vertPos[i].x;
+        S1[1] += vertPos[i].y;
+        S1[2] += vertPos[i].z;
 
-        S2[0][0] += aVertPos[i].x * aVertPos[i].x;
-        S2[1][1] += aVertPos[i].y * aVertPos[i].y;
-        S2[2][2] += aVertPos[i].z * aVertPos[i].z;
-        S2[0][1] += aVertPos[i].x * aVertPos[i].y;
-        S2[0][2] += aVertPos[i].x * aVertPos[i].z;
-        S2[1][2] += aVertPos[i].y * aVertPos[i].z;
+        S2[0][0] += vertPos[i].x * vertPos[i].x;
+        S2[1][1] += vertPos[i].y * vertPos[i].y;
+        S2[2][2] += vertPos[i].z * vertPos[i].z;
+        S2[0][1] += vertPos[i].x * vertPos[i].y;
+        S2[0][2] += vertPos[i].x * vertPos[i].z;
+        S2[1][2] += vertPos[i].y * vertPos[i].z;
     }
 
-    float n = (float)nVertCount;
+    float n = (float)vertCount;
     // now get covariances
     Cov.m[0] = (float)(S2[0][0] - S1[0]*S1[0] / n) / n;
     Cov.m[5] = (float)(S2[1][1] - S1[1]*S1[1] / n) / n;
@@ -84,11 +84,11 @@ static float& _getElement( Vec3& point, int index)
     return point.x;
 }
 
-static void _eigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
+static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
 {
     int n = 3;
     int j,iq,ip,i;
-    double tresh,theta,tau,t,sm,s,h,g,c;
+    double tresh, theta, tau, t, sm, s, h, g, c;
     int nrot;
     Vec3 b;
     Vec3 z;
@@ -96,7 +96,7 @@ static void _eigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
     Vec3 d;
 
     v = Mat4::IDENTITY;
-    for(ip=0; ip<n; ip++)
+    for(ip = 0; ip < n; ip++)
     {
         _getElement(b, ip) = a.m[ip + 4 * ip];
         _getElement(d, ip) = a.m[ip + 4 * ip];
@@ -105,11 +105,11 @@ static void _eigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
 
     nrot = 0;
 
-    for(i=0; i<50; i++)
+    for(i = 0; i < 50; i++)
     {
-        sm=0.0;
-        for(ip=0; ip<n; ip++) for(iq=ip+1;iq<n;iq++) sm+=fabs(a.m[ip + 4 * iq]);
-        if( sm == 0.0 )
+        sm = 0.0;
+        for(ip = 0; ip < n; ip++) for(iq = ip+1; iq < n; iq++) sm += fabs(a.m[ip + 4 * iq]);
+        if( fabs(sm) < FLT_EPSILON )
         {
             v.transpose();
             *vout = v;
@@ -117,48 +117,55 @@ static void _eigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
             return;
         }
 
-        if (i < 3) tresh = 0.2 * sm / (n*n);
-        else tresh=0.0;
+        if (i < 3)
+            tresh = 0.2 * sm / (n*n);
+        else 
+            tresh = 0.0;
 
-        for(ip=0; ip<n; ip++)
+        for(ip = 0; ip < n; ip++)
         {
-            for(iq=ip+1; iq<n; iq++)
+            for(iq = ip + 1; iq < n; iq++)
             {
-                g = 100.0*fabs(a.m[ip + iq * 4]);
-
+                g = 100.0 * fabs(a.m[ip + iq * 4]);
                 float dmip = _getElement(d, ip);
                 float dmiq = _getElement(d, iq);
-                if( i>3 && fabs(dmip)+g==fabs(dmip) && fabs(dmiq)+g==fabs(dmiq) )
-                    a.m[ip + 4 * iq]=0.0;
-                else if (fabs(a.m[ip + 4 * iq])>tresh)
+
+                if( i>3 && fabs(dmip) + g == fabs(dmip) && fabs(dmiq) + g == fabs(dmiq) )
                 {
-                    h = dmiq-dmip;
-                    if (fabs(h)+g == fabs(h))
+                    a.m[ip + 4 * iq] = 0.0;
+                }
+                else if (fabs(a.m[ip + 4 * iq]) > tresh)
+                {
+                    h = dmiq - dmip;
+                    if (fabs(h) + g == fabs(h))
+                    {
                         t=(a.m[ip + 4 * iq])/h;
+                    }
                     else
                     {
-                        theta=0.5*h/(a.m[ip + 4 * iq]);
-                        t=1.0/(fabs(theta)+sqrt(1.0+theta*theta));
+                        theta = 0.5 * h / (a.m[ip + 4 * iq]);
+                        t=1.0 / (fabs(theta) + sqrt(1.0 + theta * theta));
                         if (theta < 0.0) t = -t;
                     }
-                    c=1.0/sqrt(1+t*t);
-                    s=t*c;
-                    tau=s/(1.0+c);
-                    h=t*a.m[ip + 4 * iq];
+                    c = 1.0 / sqrt(1+t*t);
+                    s = t*c;
+                    tau = s / (1.0+c);
+                    h = t * a.m[ip + 4 * iq];
                     _getElement(z, ip) -= (float)h;
                     _getElement(z, iq) += (float)h;
                     _getElement(d, ip) -= (float)h;
                     _getElement(d, iq) += (float)h;
                     a.m[ip + 4 * iq]=0.0;
-                    for(j=0;j<ip;j++) { ROTATE(a,j,ip,j,iq); }
-                    for(j=ip+1;j<iq;j++) { ROTATE(a,ip,j,j,iq); }
-                    for(j=iq+1;j<n;j++) { ROTATE(a,ip,j,iq,j); }
-                    for(j=0;j<n;j++) { ROTATE(v,j,ip,j,iq); }
+                    for(j = 0; j < ip; j++) { ROTATE(a,j,ip,j,iq); }
+                    for(j = ip + 1; j < iq; j++) { ROTATE(a,ip,j,j,iq); }
+                    for(j = iq + 1; j < n; j++) { ROTATE(a,ip,j,iq,j); }
+                    for(j = 0; j < n; j++) { ROTATE(v,j,ip,j,iq); }
                     nrot++;
                 }
             }
         }
-        for(ip=0;ip<n;ip++)
+
+        for(ip = 0; ip < n; ip++)
         {
             _getElement(b, ip) += _getElement(z, ip);
             _getElement(d, ip) = _getElement(b, ip);
@@ -172,19 +179,19 @@ static void _eigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
     return;
 }
 
-static Mat4 _GetOBBOrientation(const Vec3* aVertPos, int nVertCount)
+static Mat4 _getOBBOrientation(const Vec3* vertPos, int num)
 {
     Mat4 Cov;
 
-    if (nVertCount <= 0)
+    if (num <= 0)
         return Mat4::IDENTITY;
 
-    Cov = _convarianceMatrix(aVertPos, nVertCount);
+    Cov = _getConvarianceMatrix(vertPos, num);
 
     // now get eigenvectors
     Mat4 Evecs;
     Vec3 Evals;
-    _eigenVectors(&Evecs, &Evals, Cov);
+    _getEigenVectors(&Evecs, &Evals, Cov);
 
     Evecs.transpose();
 
@@ -210,13 +217,13 @@ OBB::OBB(const AABB& aabb)
     _extents.scale(0.5f);
 }
 
-OBB::OBB(const Vec3* verts, int nVerts)
+OBB::OBB(const Vec3* verts, int num)
 {
-    if (!nVerts) return;
+    if (!verts) return;
     
     reset();
     
-    Mat4 matTransform = _GetOBBOrientation(verts, nVerts);
+    Mat4 matTransform = _getOBBOrientation(verts, num);
     
     //	For matTransform is orthogonal, so the inverse matrix is just rotate it;
     matTransform.transpose();
@@ -225,7 +232,7 @@ OBB::OBB(const Vec3* verts, int nVerts)
     
     Vec3 vecMin = vecMax;
     
-    for (int i=1; i < nVerts; i++)
+    for (int i = 1; i < num; i++)
     {
         Vec3 vect = matTransform * Vec3(verts[i].x, verts[i].y, verts[i].z);
         
@@ -325,7 +332,7 @@ void OBB::getInterval(const OBB& box, const Vec3& axis, float &min, float &max)c
     }
 }
 
-Vec3 OBB::getEdgeDir(int index)const
+Vec3 OBB::getEdgeDirection(int index)const
 {
     Vec3 corners[8];
     getCorners(corners);
@@ -345,38 +352,44 @@ Vec3 OBB::getEdgeDir(int index)const
             tmpLine = corners[1] - corners[6];
             tmpLine.normalize();
             break;
+        default:
+            CCASSERT(0, "Invalid index!");
+            break;
     }
     return tmpLine;
 }
 
-Vec3 OBB::getFaceDir(int index) const
+Vec3 OBB::getFaceDirection(int index) const
 {
     Vec3 corners[8];
     getCorners(corners);
     
-    Vec3 faceDir, v0, v1;
+    Vec3 faceDirection, v0, v1;
     switch(index)
     {
         case 0:// front and back
             v0 = corners[2] - corners[1];
             v1 = corners[0] - corners[1];
-            Vec3::cross(v0, v1, &faceDir);
-            faceDir.normalize();
+            Vec3::cross(v0, v1, &faceDirection);
+            faceDirection.normalize();
             break;
         case 1:// left and right
             v0 = corners[5] - corners[2];
             v1 = corners[3] - corners[2];
-            Vec3::cross(v0, v1, &faceDir);
-            faceDir.normalize();
+            Vec3::cross(v0, v1, &faceDirection);
+            faceDirection.normalize();
             break;
         case 2:// top and bottom
             v0 = corners[1] - corners[2];
             v1 = corners[5] - corners[2];
-            Vec3::cross(v0, v1, &faceDir);
-            faceDir.normalize();
+            Vec3::cross(v0, v1, &faceDirection);
+            faceDirection.normalize();
+            break;
+        default:
+            CCASSERT(0, "Invalid index!");
             break;
     }
-    return faceDir;
+    return faceDirection;
 }
 
 bool OBB::intersects(const OBB& box) const
@@ -384,15 +397,15 @@ bool OBB::intersects(const OBB& box) const
     float min1, max1, min2, max2;
     for (int i = 0; i < 3; i++)
     {
-        getInterval(*this, getFaceDir(i), min1, max1);
-        getInterval(box, getFaceDir(i), min2, max2);
+        getInterval(*this, getFaceDirection(i), min1, max1);
+        getInterval(box, getFaceDirection(i), min2, max2);
         if (max1 < min2 || max2 < min1) return false;
     }
     
     for (int i = 0; i < 3; i++)
     {
-        getInterval(*this, box.getFaceDir(i), min1, max1);
-        getInterval(box, box.getFaceDir(i), min2, max2);
+        getInterval(*this, box.getFaceDirection(i), min1, max1);
+        getInterval(box, box.getFaceDirection(i), min2, max2);
         if (max1 < min2 || max2 < min1) return false;
     }
     
@@ -401,7 +414,7 @@ bool OBB::intersects(const OBB& box) const
         for (int j = 0; j < 3; j++)
         {
             Vec3 axis;
-            Vec3::cross(getEdgeDir(i), box.getEdgeDir(j), &axis);
+            Vec3::cross(getFaceDirection(i), box.getFaceDirection(j), &axis);
             getInterval(*this, axis, min1, max1);
             getInterval(box, axis, min2, max2);
             if (max1 < min2 || max2 < min1) return false;

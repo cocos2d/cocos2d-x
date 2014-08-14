@@ -149,7 +149,7 @@ void AABB::updateMinMax(const Vec3* point, ssize_t num)
     }
 }
 
-void AABB::transform(const Mat4& matrix)
+void AABB::transform(const Mat4& mat)
 {
     Vec3 corners[8];
 	 // Near face, specified counter-clockwise
@@ -172,11 +172,9 @@ void AABB::transform(const Mat4& matrix)
     // Left-top-back.
     corners[7].set(_min.x, _max.y, _min.z);
 
-    // Transform the corners, recalculating the min and max points along the way.
-    //matrix.transformPoint(&corners[0]);
-
+    // Transform the corners, recalculate the min and max points along the way.
     for (int i = 0; i < 8; i++)
-        matrix.transformPoint(&corners[i]);
+        mat.transformPoint(&corners[i]);
     
     reset();
     

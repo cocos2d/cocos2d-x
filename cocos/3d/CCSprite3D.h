@@ -139,6 +139,9 @@ protected:
     std::unordered_map<std::string, AttachNode*> _attachments;
 
     BlendFunc                    _blend;
+    
+    mutable AABB                 _aabb;                 // cache current aabb
+    mutable Mat4                 _nodeToWorldTransform; // cache the matrix
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
