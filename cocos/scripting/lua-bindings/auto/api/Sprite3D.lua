@@ -5,6 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
+-- @function [parent=#Sprite3D] setCullFaceEnabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @overload self, cc.Texture2D         
 -- @overload self, string         
 -- @function [parent=#Sprite3D] setTexture
@@ -29,6 +34,11 @@
 -- @function [parent=#Sprite3D] getBlendFunc 
 -- @param self
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+-- @function [parent=#Sprite3D] setCullFace 
+-- @param self
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Sprite3D] removeAttachNode 
