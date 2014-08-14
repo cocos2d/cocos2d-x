@@ -1053,7 +1053,7 @@ void Label::drawTextSprite(Renderer *renderer, uint32_t parentFlags)
 
 void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (! _visible || _originalUTF8String.empty() || !checkCameraMask())
+    if (! _visible || _originalUTF8String.empty() || !isVisibleByVisitingCamera())
     {
         return;
     }

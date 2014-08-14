@@ -393,7 +393,7 @@ void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint3
 {
     // override visit.
 	// Don't call visit on its children
-    if (!_visible || !checkCameraMask())
+    if (!_visible || !isVisibleByVisitingCamera())
     {
         return;
     }

@@ -318,7 +318,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     //
     // draw self
     //
-    if (checkCameraMask())
+    if (isVisibleByVisitingCamera())
         this->draw(renderer, _modelViewTransform, flags);
     
     //

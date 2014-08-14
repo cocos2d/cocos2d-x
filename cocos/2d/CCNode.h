@@ -1522,7 +1522,7 @@ protected:
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
     //check whether this camera mask is visible by the current visiting camera
-    bool checkCameraMask() const;
+    bool isVisibleByVisitingCamera() const;
     
 #if CC_USE_PHYSICS
     void updatePhysicsBodyTransform(Scene* layer);

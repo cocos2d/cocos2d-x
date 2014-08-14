@@ -126,7 +126,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     }
     
     int i = 0;
-    bool visibleByCamera = checkCameraMask();
+    bool visibleByCamera = isVisibleByVisitingCamera();
 
     if(!_children.empty())
     {

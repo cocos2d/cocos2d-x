@@ -467,7 +467,7 @@ void Armature::onExit()
 void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible || !checkCameraMask())
+    if (!_visible || !isVisibleByVisitingCamera())
     {
         return;
     }
