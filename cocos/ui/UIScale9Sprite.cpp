@@ -774,7 +774,7 @@ y+=ytranslate;                       \
         //
         // draw self
         //
-        if (isVisibleByVisitingCamera())
+        if (isVisitableByVisitingCamera())
             this->draw(renderer, _modelViewTransform, flags);
         
         //

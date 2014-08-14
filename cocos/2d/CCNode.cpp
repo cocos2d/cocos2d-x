@@ -1225,7 +1225,7 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
     return flags;
 }
 
-bool Node::isVisibleByVisitingCamera() const
+bool Node::isVisitableByVisitingCamera() const
 {
     auto camera = Camera::getVisitingCamera();
     bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
@@ -1249,7 +1249,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    bool visibleByCamera = isVisibleByVisitingCamera();
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     int i = 0;
 

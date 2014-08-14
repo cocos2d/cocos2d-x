@@ -581,7 +581,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     this->beforeDraw();
-    bool visibleByCamera = isVisibleByVisitingCamera();
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
 	if (!_children.empty())
     {
