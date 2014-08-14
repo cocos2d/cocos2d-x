@@ -238,6 +238,7 @@
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\base\CCCamera.cpp" />
     <ClCompile Include="..\base\ccCArray.cpp" />
     <ClCompile Include="..\base\CCConfiguration.cpp" />
     <ClCompile Include="..\base\CCConsole.cpp" />
@@ -454,6 +455,7 @@
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
+    <ClInclude Include="..\base\CCCamera.h" />
     <ClInclude Include="..\base\ccCArray.h" />
     <ClInclude Include="..\base\ccConfig.h" />
     <ClInclude Include="..\base\CCConfiguration.h" />
