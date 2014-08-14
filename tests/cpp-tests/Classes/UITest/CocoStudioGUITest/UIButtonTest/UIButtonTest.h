@@ -105,4 +105,17 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIButtonTestZoomScale : public UIScene
+{
+public:
+    UIButtonTestZoomScale();
+    ~UIButtonTestZoomScale();
+    bool init();
+    void sliderEvent(Ref* pSender, Slider::EventType type);
+
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTestZoomScale)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */
