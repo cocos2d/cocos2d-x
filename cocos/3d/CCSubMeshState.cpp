@@ -39,6 +39,7 @@
 #include "base/CCDirector.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/CCTextureCache.h"
 
 
 using namespace std;
@@ -68,15 +69,20 @@ SubMeshState* SubMeshState::create()
     return state;
 }
 
-SubMeshState* SubMeshState::create(const ModelNodeData& modelNodeData)
+SubMeshState* SubMeshState::create(const std::string& name)
 {
     auto state = new SubMeshState();
     state->autorelease();
     
-    state->_name = modelNodeData.id;
-    //not finished
+    state->_name = name;
     
     return state;
+}
+
+void SubMeshState::setTexture(const std::string& texPath)
+{
+    auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
+    setTexture(tex);
 }
 
 void SubMeshState::setTexture(Texture2D* tex)

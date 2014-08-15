@@ -372,25 +372,26 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
     const rapidjson::Value& material_array = _jsonReader[MATERIALDATA_MATERIALS];
     for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
     {
-        NMaterialData materialData;
-        const rapidjson::Value& material_val = material_array[i];
-        materialData.id = material_val[ID].GetString();
-
-        if (material_val.HasMember(MATERIALDATA_TEXTURES))
-        {
-            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
-            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
-            {
-                NTextureData  textureData;
-                const rapidjson::Value& texture_val = testure_array[j];
-                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
-                textureData.filename = _modelRelativePath + filename;
-                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
-                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
-                materialData.textures.push_back(textureData);
-            }
-        }
-        materialdatas.materials.push_back(materialData);
+        //TODO, FIXME
+//        NMaterialData materialData;
+//        const rapidjson::Value& material_val = material_array[i];
+//        materialData.id = material_val[ID].GetString();
+//
+//        if (material_val.HasMember(MATERIALDATA_TEXTURES))
+//        {
+//            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
+//            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
+//            {
+//                NTextureData  textureData;
+//                const rapidjson::Value& texture_val = testure_array[j];
+//                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
+//                textureData.filename = _modelRelativePath + filename;
+//                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
+//                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
+//                materialData.textures.push_back(textureData);
+//            }
+//        }
+//        materialdatas.materials.push_back(materialData);
     }
     return true;
 }

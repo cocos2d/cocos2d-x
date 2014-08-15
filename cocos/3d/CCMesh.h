@@ -102,6 +102,8 @@ public:
      * @param attribs vertex attributes
      */
     static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& subMeshIndices, const std::vector<MeshVertexAttrib>& attribs);
+    
+    static Mesh* create(const MeshData& meshdata);
 
     /**get vertex buffer*/
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
