@@ -33,6 +33,7 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
+#include "CCAABB.h"
 
 NS_CC_BEGIN
 
@@ -80,6 +81,20 @@ public:
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
     
+    /*
+     * Get AABB
+     * If the sprite has animation, it can't be calculated accuratly,
+     * because bone can drive the vertices, we just use the origin vertices
+     * to calculate the AABB.
+     */
+    AABB getAABB() const;
+    
+    /**
+     * Returns 2d bounding-box
+     * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
+     */
+    virtual Rect getBoundingBox() const override;
+
     // set which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK, default GL_BACK
     void setCullFace(GLenum cullFace);
     // set cull face enable or not
@@ -124,6 +139,9 @@ protected:
     std::unordered_map<std::string, AttachNode*> _attachments;
 
     BlendFunc                    _blend;
+    
+    mutable AABB                 _aabb;                 // cache current aabb
+    mutable Mat4                 _nodeToWorldTransform; // cache the matrix
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array

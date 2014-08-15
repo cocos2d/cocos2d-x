@@ -52,17 +52,6 @@ BillBorad* BillBorad::createWithTexture(Texture2D *texture)
     return nullptr;
 }
 
-BillBorad* BillBorad::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
-{
-    BillBorad *billborad = new (std::nothrow) BillBorad();
-    if (billborad && billborad->initWithTexture(texture, rect, rotated))
-    {
-        billborad->autorelease();
-        return billborad;
-    }
-    CC_SAFE_DELETE(billborad);
-    return nullptr;
-}
 
 BillBorad* BillBorad::create(const std::string& filename)
 {
@@ -86,31 +75,6 @@ BillBorad* BillBorad::create(const std::string& filename, const Rect& rect)
     }
     CC_SAFE_DELETE(billborad);
     return nullptr;
-}
-
-BillBorad* BillBorad::createWithSpriteFrame(SpriteFrame *spriteFrame)
-{
-    BillBorad *billborad = new (std::nothrow) BillBorad();
-    if (billborad && spriteFrame && billborad->initWithSpriteFrame(spriteFrame))
-    {
-        billborad->autorelease();
-        return billborad;
-    }
-    CC_SAFE_DELETE(billborad);
-    return nullptr;
-}
-
-BillBorad* BillBorad::createWithSpriteFrameName(const std::string& spriteFrameName)
-{
-    SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    
-#if COCOS2D_DEBUG > 0
-    char msg[256] = {0};
-    sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
-    CCASSERT(frame != nullptr, msg);
-#endif
-    
-    return createWithSpriteFrame(frame);
 }
 
 BillBorad* BillBorad::create()

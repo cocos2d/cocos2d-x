@@ -26,6 +26,8 @@ THE SOFTWARE.
 #ifndef __CC_IMAGE_H__
 #define __CC_IMAGE_H__
 
+#include <functional>
+#include <string>
 #include "base/CCRef.h"
 #include "renderer/CCTexture2D.h"
 
@@ -167,6 +169,7 @@ protected:
     
     void premultipliedAlpha();
     
+    
 protected:
     /**
      @brief Determine how many mipmaps can we have.
@@ -211,6 +214,35 @@ protected:
     bool isS3TC(const unsigned char * data,ssize_t dataLen);
     bool isATITC(const unsigned char *data, ssize_t dataLen);
 };
+
+/* Data returned from jpeg/tiff/webp module initialization
+ */
+typedef struct DataFromModule
+{
+    Texture2D::PixelFormat renderFormat;
+    int width;
+    int height;
+    ssize_t dataLength;
+    unsigned char* data;
+    bool hasPremultiAlpha;
+} DataFromModule;
+
+struct JPEGModule
+{
+    std::function<bool(const std::string &filePath, Image *image)> saveImage;
+    std::function<bool(const unsigned char*, ssize_t, DataFromModule &dataFromJPEGInit)> initWithJPEGData;
+};
+
+struct TIFFModule
+{
+    std::function<bool(const unsigned char*, ssize_t, DataFromModule &dataFromJPEGInit)> initWithTIFFData;
+};
+
+struct WEBPModule
+{
+    std::function<bool(const unsigned char*, ssize_t, DataFromModule &dataFromJPEGInit)> initWithWEBPData;
+};
+
 
 // end of platform group
 /// @}

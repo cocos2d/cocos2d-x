@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLViewImpl.h"
+#include "CCApplication.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCEventDispatcher.h"
@@ -99,6 +100,14 @@ public:
     static void setGLViewImpl(GLViewImpl* view)
     {
         _view = view;
+    }
+
+    static void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
+    {
+        if (_view)
+        {
+            _view->onGLFWWindowIconifyCallback(window, iconified);
+        }
     }
 
 private:
@@ -352,6 +361,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetWindowPosCallback(_mainWindow, GLFWEventHandler::onGLFWWindowPosCallback);
     glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
     glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
+    glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
 
@@ -703,6 +713,18 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
     {
         updateDesignResolutionSize();
         Director::getInstance()->setViewport();
+    }
+}
+
+void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
+{
+    if (iconified == GL_TRUE)
+    {
+        Application::getInstance()->applicationDidEnterBackground();
+    }
+    else
+    {
+        Application::getInstance()->applicationWillEnterForeground();
     }
 }
 

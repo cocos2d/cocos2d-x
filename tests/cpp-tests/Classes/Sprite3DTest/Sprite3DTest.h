@@ -34,7 +34,9 @@ namespace cocos2d {
     class Animate3D;
     class Sprite3D;
     class Delay;
-    class BillBorad;
+    class Ray;
+    class DrawNode3D;
+	class BillBorad;
 }
 
 class Sprite3DTestDemo : public BaseTest
@@ -246,6 +248,40 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
+class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithOBBPerfromanceTest);
+    Sprite3DWithOBBPerfromanceTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
+    void addNewOBBWithCoords(Vec2 p);
+    void addNewSpriteWithCoords(Vec2 p);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void addOBBCallback(Ref* sender);
+    void delOBBCallback(Ref* sender);
+    void addOBBWithCount(float value);
+    void delOBBWithCount(float value);
+protected:
+    cocos2d::Sprite3D*        _sprite;
+    std::vector<OBB>          _obb;
+    DrawNode3D*               _drawOBB;
+    Label*                    _labelCubeCount;
+    MoveTo*                   _moveAction;
+    OBB                       _obbt;
+    DrawNode3D*               _drawDebug;
+    bool                      _hasCollider;
+    std::set<int>             _intersetList;
+    void initDrawBox();
+    void reachEndCallBack();
+    
+    void unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst);
+    void calculateRayByLocationInView(Ray* ray, const Vec2& location);
+};
+
 class Sprite3DMirrorTest : public Sprite3DTestDemo
 {
 public:
@@ -260,6 +296,12 @@ protected:
     bool _hasWeapon;
     cocos2d::Sprite3D* _sprite;
     cocos2d::Sprite3D* _mirrorSprite;
+};
+
+class Sprite3DTestScene : public TestScene
+{
+public:
+    virtual void runThisTest();
 };
 
 class BillBoardTest : public Sprite3DTestDemo
@@ -282,12 +324,6 @@ protected:
     Camera*           _camera;
     Layer*            _layerBillBorad;
 
-};
-
-class Sprite3DTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif
