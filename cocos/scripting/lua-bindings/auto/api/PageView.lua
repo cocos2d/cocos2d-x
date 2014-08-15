@@ -5,6 +5,11 @@
 -- @parent_module ccui
 
 --------------------------------
+-- @function [parent=#PageView] getCustomScrollThreshold 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- @function [parent=#PageView] getCurPageIndex 
 -- @param self
 -- @return long#long ret (return value: long)
@@ -15,6 +20,11 @@
 -- @param #ccui.Widget widget
 -- @param #long long
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#PageView] isUsingCustomScrollThreshold 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#PageView] getPage 
@@ -31,6 +41,16 @@
 -- @function [parent=#PageView] addEventListener 
 -- @param self
 -- @param #function func
+        
+--------------------------------
+-- @function [parent=#PageView] setUsingCustomScrollThreshold 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#PageView] setCustomScrollThreshold 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#PageView] insertPage 
