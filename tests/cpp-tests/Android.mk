@@ -168,6 +168,7 @@ Classes/ShaderTest/ShaderTest.cpp \
 Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
+Classes/Sprite3DTest/DrawNode3D.cpp \
 Classes/Sprite3DTest/Sprite3DTest.cpp \
 Classes/TextInputTest/TextInputTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -612,6 +612,15 @@
     </ClCompile>
     <ClCompile Include="..\base\CCCamera.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAABB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCOBB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCRay.cpp">
+      <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCPrimitive.cpp">
       <Filter>renderer</Filter>
@@ -1260,6 +1269,15 @@
     </ClInclude>
     <ClInclude Include="..\base\CCCamera.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAABB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCOBB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCRay.h">
+      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCPrimitive.h">
       <Filter>renderer</Filter>
