@@ -339,6 +339,8 @@
         "cocos/base/CCIMEDispatcher.cpp", 
         "cocos/base/CCIMEDispatcher.h", 
         "cocos/base/CCMap.h", 
+        "cocos/base/CCModuleManager.cpp", 
+        "cocos/base/CCModuleManager.h", 
         "cocos/base/CCNS.cpp", 
         "cocos/base/CCNS.h", 
         "cocos/base/CCPlatformConfig.h", 
