@@ -195,7 +195,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIPageViewTest);
             sceneManager->setMinUISceneId(kUIPageViewTest);
-            sceneManager->setMaxUISceneId(kUIPageViewCustomScrollThreshold);
+            sceneManager->setMaxUISceneId(kUIPageViewTouchPropagationTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
