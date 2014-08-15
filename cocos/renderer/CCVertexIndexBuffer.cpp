@@ -57,11 +57,17 @@ VertexBuffer::VertexBuffer()
 : _vbo(0)
 , _vertexNumber(0)
 , _sizePerVertex(0)
+, _recreateVBOEventListener(nullptr)
 {
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(VertexBuffer::listenToBackground, this));
-    
+    auto callBack = [this](EventCustom* event)
+    {
+        this->recreateVBO();
+    };
+
+    _recreateVBOEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, callBack);
+
 #endif
 }
 
@@ -72,6 +78,9 @@ VertexBuffer::~VertexBuffer()
         glDeleteBuffers(1, &_vbo);
         _vbo = 0;
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
+#endif
 }
 
 bool VertexBuffer::init(int sizePerVertex, int vertexNumber)
@@ -131,21 +140,8 @@ bool VertexBuffer::updateVertices(const void* verts, int count, int begin)
     return true;
 }
 
-void VertexBuffer::listenToBackground(EventCustom *event)
-{
-    if(glIsBuffer(_vbo))
-    {
-        glDeleteBuffers(1, &_vbo);
-        _vbo = 0;
-    }
-}
-
 GLuint VertexBuffer::getVBO() const
 {
-    if(0 == _vbo)
-    {
-        recreateVBO();
-    }
     return _vbo;
 }
 
@@ -159,7 +155,7 @@ void VertexBuffer::recreateVBO() const
     {
         buffer = &_shadowCopy[0];
     }
-    
+    CCLOG("recreate IndexBuffer with size %d %d", getSizePerVertex(), _vertexNumber);
     glBufferData(GL_ARRAY_BUFFER, _sizePerVertex * _vertexNumber, buffer, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     if(!glIsBuffer(_vbo))
@@ -189,10 +185,15 @@ IndexBuffer::IndexBuffer()
 : _vbo(0)
 , _type(IndexType::INDEX_TYPE_SHORT_16)
 , _indexNumber(0)
+, _recreateVBOEventListener(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(IndexBuffer::listenToBackground, this));
-    
+    auto callBack = [this](EventCustom* event)
+    {
+        this->recreateVBO();
+    };
+
+    _recreateVBOEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, callBack);
 #endif
 }
 
@@ -203,6 +204,9 @@ IndexBuffer::~IndexBuffer()
         glDeleteBuffers(1, &_vbo);
         _vbo = 0;
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
+#endif
 }
 
 bool IndexBuffer::init(IndexBuffer::IndexType type, int number)
@@ -273,22 +277,8 @@ int IndexBuffer::getSize() const
     return getSizePerIndex() * _indexNumber;
 }
 
-void IndexBuffer::listenToBackground(EventCustom *event)
-{
-    if(glIsBuffer(_vbo))
-    {
-        glDeleteBuffers(1, &_vbo);
-        _vbo = 0;
-    }
-}
-
 GLuint IndexBuffer::getVBO() const
 {
-    if(0 == _vbo)
-    {
-        recreateVBO();
-    }
-
     return _vbo;
 }
 
@@ -302,7 +292,7 @@ void IndexBuffer::recreateVBO() const
     {
         buffer = &_shadowCopy[0];
     }
-    
+    CCLOG("recreate IndexBuffer with size %d %d ", getSizePerIndex(), _indexNumber);
     glBufferData(GL_ARRAY_BUFFER, getSize(), buffer, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     if(!glIsBuffer(_vbo))

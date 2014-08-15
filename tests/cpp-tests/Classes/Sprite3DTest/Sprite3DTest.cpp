@@ -28,6 +28,8 @@
 #include "3d/CCAnimate3D.h"
 #include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
+#include "3d/CCRay.h"
+#include "DrawNode3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -56,6 +58,7 @@ static std::function<Layer*()> createFunctions[] =
 #endif
     CL(Animate3DTest),
     CL(AttachmentTest),
+    CL(Sprite3DWithOBBPerfromanceTest),
     CL(Sprite3DMirrorTest)
 };
 
@@ -993,6 +996,261 @@ void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
         _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
     }
     _hasWeapon = !_hasWeapon;
+}
+
+Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesEnded, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto s = Director::getInstance()->getWinSize();
+    initDrawBox();
+    
+    addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(65);
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::delOBBCallback, this));
+    decrease->setColor(Color3B(0,200,20));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::addOBBCallback, this));
+    increase->setColor(Color3B(0,200,20));
+    
+    auto menu = Menu::create(decrease, increase, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setPosition(Vec2(s.width/2, s.height-65));
+    addChild(menu, 1);
+    
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 30);
+    _labelCubeCount = Label::createWithTTF(ttfCount,"0 cubes");
+    _labelCubeCount->setColor(Color3B(0,200,20));
+    _labelCubeCount->setPosition(Vec2(s.width/2, s.height-90));
+    addChild(_labelCubeCount);
+    _hasCollider = false;
+    scheduleUpdate();
+}
+std::string Sprite3DWithOBBPerfromanceTest::title() const
+{
+    return "OBB Collison Perfromance Test";
+}
+std::string Sprite3DWithOBBPerfromanceTest::subtitle() const
+{
+    return "";
+}
+void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
+{
+    Vec3 extents = Vec3(10, 10, 10);
+    AABB aabb(-extents, extents);
+    auto obb = OBB(aabb);
+    obb._center = Vec3(p.x,p.y,0);
+    _obb.push_back(obb);
+}
+
+void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocationInView();
+        
+        if(_obb.size() > 0)
+        {
+            _intersetList.clear();
+            Ray ray;
+            calculateRayByLocationInView(&ray,location);
+            for(int i = 0; i < _obb.size(); i++)
+            {
+                if(ray.intersects(_obb[i]))
+                {
+                    _intersetList.insert(i);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
+void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        for(int i = 0; i < _obb.size(); i++)
+        {
+            if(_intersetList.find(i) != _intersetList.end())
+                _obb[i]._center = Vec3(location.x,location.y,0);
+        }
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::update(float dt)
+{
+    char szText[16];
+    sprintf(szText,"%lu cubes",_obb.size());
+    _labelCubeCount->setString(szText);
+    
+    if (_drawDebug)
+    {
+        _drawDebug->clear();
+        
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        mat.getRightVector(&_obbt._xAxis);
+        _obbt._xAxis.normalize();
+        
+        mat.getUpVector(&_obbt._yAxis);
+        _obbt._yAxis.normalize();
+        
+        mat.getForwardVector(&_obbt._zAxis);
+        _obbt._zAxis.normalize();
+        
+        _obbt._center = _sprite->getPosition3D();
+        
+        Vec3 corners[8] = {};
+        _obbt.getCorners(corners);
+        _drawDebug->drawCube(corners, Color4F(0,0,1,1));
+    }
+    if(_obb.size() > 0)
+    {
+        _drawOBB->clear();
+        for(int i =0; i < _obb.size(); i++)
+        {
+            Vec3 corners[8] = {};
+            _obb[i].getCorners(corners);
+            _drawOBB->drawCube(corners, _obbt.intersects(_obb[i])?Color4F(1,0,0,1):Color4F(0,1,0,1));
+        }
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::initDrawBox()
+{
+    _drawOBB = DrawNode3D::create();
+    addChild(_drawOBB);
+}
+
+void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
+    
+    AABB aabb = _sprite->getAABB();
+    _obbt = OBB(aabb);
+    
+    _drawDebug = DrawNode3D::create();
+    addChild(_drawDebug);
+}
+
+void Sprite3DWithOBBPerfromanceTest::reachEndCallBack()
+{
+    _sprite->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Sprite3DWithOBBPerfromanceTest::addOBBCallback(Ref* sender)
+{
+    addOBBWithCount(10);
+}
+
+void Sprite3DWithOBBPerfromanceTest::addOBBWithCount(float value)
+{
+    for(int i = 0; i < value; i++)
+    {
+        Vec2 randompos = Vec2(CCRANDOM_0_1() * Director::getInstance()->getWinSize().width,CCRANDOM_0_1() * Director::getInstance()->getWinSize().height);
+        Vec3 extents = Vec3(10, 10, 10);
+        AABB aabb(-extents, extents);
+        auto obb = OBB(aabb);
+        obb._center = Vec3(randompos.x,randompos.y,0);
+        _obb.push_back(obb);
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::delOBBCallback(Ref* sender)
+{
+    delOBBWithCount(10);
+}
+
+void Sprite3DWithOBBPerfromanceTest::delOBBWithCount(float value)
+{
+    if(_obb.size() >= 10)
+    {
+        _obb.erase(_obb.begin(),_obb.begin() + value);
+        _drawOBB->clear();
+    }
+    else
+        return;
+}
+void Sprite3DWithOBBPerfromanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
+{
+    assert(dst);
+    
+    assert(viewport->width != 0.0f && viewport->height != 0.0f);
+    Vec4 screen(src->x / viewport->width, ((viewport->height - src->y)) / viewport->height, src->z, 1.0f);
+    
+    screen.x = screen.x * 2.0f - 1.0f;
+    screen.y = screen.y * 2.0f - 1.0f;
+    screen.z = screen.z * 2.0f - 1.0f;
+    
+    viewProjection.getInversed().transformVector(screen, &screen);
+    
+    if (screen.w != 0.0f)
+    {
+        screen.x /= screen.w;
+        screen.y /= screen.w;
+        screen.z /= screen.w;
+    }
+    
+    dst->set(screen.x, screen.y, screen.z);
+}
+
+void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
+{
+    auto dir = Director::getInstance();
+    auto view = dir->getWinSize();
+    Mat4 mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+    Vec3 src = Vec3(location.x, location.y, -1);
+    Vec3 nearPoint;
+    unproject(mat, &view, &src, &nearPoint);
+    
+    src = Vec3(location.x, location.y, 1);
+    Vec3 farPoint;
+    unproject(mat, &view, &src, &farPoint);
+    
+    Vec3 direction;
+    Vec3::subtract(farPoint, nearPoint, &direction);
+    direction.normalize();
+    
+    ray->_origin = nearPoint;
+    ray->_direction = direction;
 }
 
 Sprite3DMirrorTest::Sprite3DMirrorTest()

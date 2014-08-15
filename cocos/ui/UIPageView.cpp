@@ -44,7 +44,9 @@ _autoScrollDirection(AutoScrollDirection::LEFT),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
-_eventCallback(nullptr)
+_eventCallback(nullptr),
+_customScrollThreshold(0.0),
+_usingCustomScrollThreshold(false)
 {
     this->setTouchEnabled(true);
 }
@@ -447,6 +449,28 @@ void PageView::handleMoveLogic(Touch *touch)
     }
     scrollPages(offset);
 }
+    
+void PageView::setCustomScrollThreshold(float threshold)
+{
+    CCASSERT(threshold > 0, "Invalid threshold!");
+    _customScrollThreshold = threshold;
+    this->setUsingCustomScrollThreshold(true);
+}
+
+float PageView::getCustomScrollThreshold()const
+{
+    return _customScrollThreshold;
+}
+    
+void PageView::setUsingCustomScrollThreshold(bool flag)
+{
+    _usingCustomScrollThreshold = flag;
+}
+    
+bool PageView::isUsingCustomScrollThreshold()const
+{
+    return _usingCustomScrollThreshold;
+}
 
 void PageView::handleReleaseLogic(Touch *touch)
 {
@@ -461,7 +485,10 @@ void PageView::handleReleaseLogic(Touch *touch)
         ssize_t pageCount = this->getPageCount();
         float curPageLocation = curPagePos.x;
         float pageWidth = getContentSize().width;
-        float boundary = pageWidth/2.0f;
+        if (!_usingCustomScrollThreshold) {
+            _customScrollThreshold = pageWidth / 2.0;
+        }
+        float boundary = _customScrollThreshold;
         if (curPageLocation <= -boundary)
         {
             if (_curPageIdx >= pageCount-1)
@@ -590,6 +617,8 @@ void PageView::copySpecialProperties(Widget *widget)
         _eventCallback = pageView->_eventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
+        _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;
+        _customScrollThreshold = pageView->_customScrollThreshold;
     }
 }
 

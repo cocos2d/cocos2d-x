@@ -1,8 +1,9 @@
 cocos2d-x-3.3  ??
     [NEW]           Added submesh support, and support attaching a Sprite3D object to a bone
     [NEW]           Added UIScale9Sprite
-    [NEW]           Added Camera
+    [NEW]           Added Camera, AABB, OBB and Ray
     [NEW]           Added render primitive and render primitive command, support passing point, line and triangle data
+    [NEW]           Added support for applicationDidEnterBackground / applicationWillEnterForeground on desktop
     [NEW]           EventMouse: support getDelta, getDeltaX, getDeltaY functions
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
     getFileSize()
@@ -14,8 +15,11 @@ cocos2d-x-3.3  ??
     [NEW]           RotateTo: added 3D rotation support
     [NEW]           ScrollView: added `setMinScale()` and `setMaxScale()`
     [NEW]           Sprite3D: added setCullFace() and setCullFaceEnabled()
+    [NEW]           Sprite3D: added getBoundingBox() and getAABB()
     [NEW]           SpriteFrameCache: load from plist file content data
     [NEW]           utils: added gettime()
+    [NEW]           ui::Button: support customize how much zoom scale is when pressing a button
+    [NEW]           ui::PageView: added `customScrollThreshold`, could determine the swipe distance to trigger a PageView scroll event
     [NEW]           ui::TextField: support utf8
     [NEW]           ui::TextField: support set color and placehold color
     [NEW]           Text: added getter and setter for TextColor
