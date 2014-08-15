@@ -97,11 +97,14 @@ public:
     
     //since 3.3, to support reskin
     virtual bool loadMeshDatas(MeshDatas& meshdatas);
+    bool         loadMeshDatasJson(MeshDatas& meshdatas);
+    bool         loadMeshDatasBinary(MeshDatas& meshdatas);
     //since 3.3, to support reskin
     virtual bool loadNodes(NodeDatas& nodedatas);
     //since 3.3, to support reskin
     virtual bool loadMaterials(MaterialDatas& materialdatas);
-
+    bool         loadMaterialsJson(MaterialDatas& materialdatas);
+    bool         loadMaterialsBinary(MaterialDatas& materialdatas);
 protected:
 
     bool loadJson(const std::string& path);
