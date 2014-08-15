@@ -206,7 +206,7 @@ public:
     void setAlphaTestValue(float alpha);
 
     /** gets the alpha value used in the alpha test shader */
-    float getAlphaTestValue();
+    float getAlphaTestValue() const;
 
 protected:
     GLProgramState();

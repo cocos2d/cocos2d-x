@@ -417,7 +417,7 @@ VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
     return nullptr;
 }
 
-float GLProgramState::getAlphaTestValue()
+float GLProgramState::getAlphaTestValue() const
 {
     return _alphaTestValue;
 }
