@@ -664,15 +664,17 @@ bool Widget::isPropagateTouchEvents()const
     
 void Widget::setSwallowTouches(bool swallow)
 {
-    if (_touchListener) {
+    if (_touchListener)
+    {
         _touchListener->setSwallowTouches(swallow);
     }
 }
     
 bool Widget::isSwallowTouches()const
 {
-    if (_touchListener) {
-        _touchListener->isSwallowTouches();
+    if (_touchListener)
+    {
+        return _touchListener->isSwallowTouches();
     }
     return false;
 }
@@ -697,7 +699,8 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     /*
      * Propagate touch events to its parents
      */
-    if (_propagateTouchEvents) {
+    if (_propagateTouchEvents)
+    {
         this->propagateTouchEvent(TouchEventType::BEGAN, this, touch);
     }
   
@@ -723,7 +726,8 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
     /*
      * Propagate touch events to its parents
      */
-    if (_propagateTouchEvents) {
+    if (_propagateTouchEvents)
+    {
         this->propagateTouchEvent(TouchEventType::MOVED, this, touch);
     }
     
@@ -737,7 +741,8 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     /*
      * Propagate touch events to its parents
      */
-    if (_propagateTouchEvents) {
+    if (_propagateTouchEvents)
+    {
         this->propagateTouchEvent(TouchEventType::ENDED, this, touch);
     }
     
@@ -763,7 +768,8 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 void Widget::pushDownEvent()
 {
     this->retain();
-    if (_touchEventCallback) {
+    if (_touchEventCallback)
+    {
         _touchEventCallback(this, TouchEventType::BEGAN);
     }
     
@@ -777,7 +783,8 @@ void Widget::pushDownEvent()
 void Widget::moveEvent()
 {
     this->retain();
-    if (_touchEventCallback) {
+    if (_touchEventCallback)
+    {
         _touchEventCallback(this, TouchEventType::MOVED);
     }
     
@@ -791,7 +798,8 @@ void Widget::moveEvent()
 void Widget::releaseUpEvent()
 {
     this->retain();
-    if (_touchEventCallback) {
+    if (_touchEventCallback)
+    {
         _touchEventCallback(this, TouchEventType::ENDED);
     }
     
