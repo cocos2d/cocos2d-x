@@ -230,7 +230,7 @@ void NodeCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    log("Size of Node: %u\n", sizeof(Node));
+    log("Size of Node: %lu\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -278,7 +278,7 @@ void NodeDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    log("Size of Node: %u\n", sizeof(Node));
+    log("Size of Node: %lu\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -331,7 +331,7 @@ void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    log("Size of Sprite: %u\n", sizeof(Sprite));
+    log("Size of Sprite: %lu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -381,7 +381,7 @@ void SpriteCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    log("Size of Sprite: %u\n", sizeof(Sprite));
+    log("Size of Sprite: %lu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -431,7 +431,7 @@ void SpriteDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    log("Size of sprite: %u\n", sizeof(Sprite));
+    log("Size of sprite: %lu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }

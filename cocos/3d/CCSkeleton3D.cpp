@@ -294,6 +294,18 @@ Skeleton3D* Skeleton3D::create(const std::string& filename, const std::string& n
     return nullptr;
 }
 
+Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
+{
+    auto skeleton = new Skeleton3D();
+    for (const auto& it : skeletondata) {
+        auto bone = createBone3D(*it);
+        skeleton->_rootBones.pushBack(bone);
+        bone->release();
+    }
+    skeleton->autorelease();
+    return skeleton;
+}
+
 bool Skeleton3D::initFromSkeletonData(const Skeleton3DData& skeletondata)
 {
     ssize_t i = 0;
@@ -361,7 +373,7 @@ ssize_t Skeleton3D::getRootCount() const
 
 Bone3D* Skeleton3D::getRootBone(int index) const
 {
-    return _rootBones[index];
+    return _rootBones.at(index);
 }
 
 int Skeleton3D::getBoneIndex(Bone3D* bone) const
@@ -386,11 +398,23 @@ void Skeleton3D::removeAllBones()
 {
     _bones.clear();
     CC_SAFE_RELEASE(_rootBone);
+    _rootBones.clear();
 }
 
 void Skeleton3D::addBone(Bone3D* bone)
 {
     _bones.pushBack(bone);
+}
+
+Bone3D* Skeleton3D::createBone3D(const NodeData& nodedata)
+{
+    auto bone = Bone3D::create(nodedata.id);
+    for (const auto& it : nodedata.children) {
+        auto child = createBone3D(*it);
+        bone->addChildBone(child);
+        child->release();
+    }
+    return bone;
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -190,6 +190,8 @@ public:
     /**create a new meshskin if do not want to share Skeleton3D*/
     static Skeleton3D* create(const std::string& filename, const std::string& name);
     
+    static Skeleton3D* create(const std::vector<NodeData*>& skeletondata);
+    
     /**get total bone count*/
     ssize_t getBoneCount() const;
     
@@ -224,12 +226,15 @@ CC_CONSTRUCTOR_ACCESS:
     /**add bone*/
     void addBone(Bone3D* bone);
     
+    /** create Bone3D from NodeData */
+    static Bone3D* createBone3D(const NodeData& nodedata);
+    
 protected:
     
     Vector<Bone3D*> _bones; // bones
 
     Bone3D* _rootBone;
-    std::vector<Bone3D*> _rootBones;
+    Vector<Bone3D*> _rootBones;
 };
 
 /**

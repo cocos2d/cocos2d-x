@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -22,52 +22,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __BASE_CC_MODULE_MANAGER__
+#define __BASE_CC_MODULE_MANAGER__
 
-#include "../UIScene.h"
+#include <string>
+#include <unordered_map>
 
-class UIPageViewTest : public UIScene
+#include "base/CCPlatformMacros.h"
+
+
+NS_CC_BEGIN
+
+class CC_DLL ModuleManager
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
-    bool init();
+    static void registerModule(const std::string &moduleName, void* module);
+    static void unRegisterModule(const std::string &moduleName);
+    static void* getModule(const std::string &moduleName);
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    Text* _displayValueLabel;
+private:
+    static std::unordered_map<std::string, void*>& createMap();
 };
 
-class UIPageViewButtonTest : public UIScene
-{
-public:
-    UIPageViewButtonTest();
-    ~UIPageViewButtonTest();
-    bool init();
-    
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    void onButtonClicked(Ref* pSender, Widget::TouchEventType type);
-protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewButtonTest)
-    Text* _displayValueLabel;
-};
+NS_CC_END
 
-class UIPageViewCustomScrollThreshold : public UIScene
-{
-public:
-    UIPageViewCustomScrollThreshold();
-    ~UIPageViewCustomScrollThreshold();
-    bool init();
-    
-    void sliderEvent(Ref* pSender, Slider::EventType type);
+#endif
 
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewCustomScrollThreshold)
-    Text* _displayValueLabel;
-};
-
-#endif /* defined(__TestCpp__UIPageViewTest__) */

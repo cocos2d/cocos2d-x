@@ -37,6 +37,7 @@ static int PALETTE_ROWS = 3;
 MeshSkin::MeshSkin()
 : _rootBone(nullptr)
 , _matrixPalette(nullptr)
+, _skeleton(nullptr)
 {
     
 }
@@ -83,6 +84,23 @@ MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::string& filename, co
     }
     
     return nullptr;
+}
+
+MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<Mat4>& invBindPose)
+{
+    auto skin = new MeshSkin();
+    skin->_skeleton = skeleton;
+    skeleton->retain();
+    
+    CCASSERT(boneNames.size() == invBindPose.size(), "bone names' num should equals to invBindPose's num");
+    for (const auto& it : boneNames) {
+        auto bone = skeleton->getBoneByName(it);
+        skin->addSkinBone(bone);
+    }
+    skin->_invBindPoses = invBindPose;
+    skin->autorelease();
+    
+    return skin;
 }
 
 bool MeshSkin::initFromSkinData(const SkinData& skindata)

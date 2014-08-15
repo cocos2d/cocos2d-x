@@ -920,6 +920,7 @@ Developers:
         
     Teivaz
         Custom uniform search optimization
+        Fixed compiling error on WP8.
         
     chareice
         Make `setup.py` work on zsh
@@ -974,6 +975,9 @@ Developers:
         
     DavidPartouche
         Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
+        
+    zaWasp
+        Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
     
 Retired Core Developers:
     WenSheng Yang

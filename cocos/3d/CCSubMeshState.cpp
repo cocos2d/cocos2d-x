@@ -68,6 +68,17 @@ SubMeshState* SubMeshState::create()
     return state;
 }
 
+SubMeshState* SubMeshState::create(const ModelNodeData& modelNodeData)
+{
+    auto state = new SubMeshState();
+    state->autorelease();
+    
+    state->_name = modelNodeData.id;
+    //not finished
+    
+    return state;
+}
+
 void SubMeshState::setTexture(Texture2D* tex)
 {
     if (tex != _texture)
