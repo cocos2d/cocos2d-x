@@ -223,7 +223,7 @@ namespace cocos2d
     *
     * @since v2.0.5
     */
-    class ZipFile
+    class CC_DLL ZipFile
     {
     public:
         /**
