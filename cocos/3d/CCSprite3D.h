@@ -124,6 +124,9 @@ protected:
     std::unordered_map<std::string, AttachNode*> _attachments;
 
     BlendFunc                    _blend;
+    
+    //since 3.3
+    std::vector<Mesh*>           _meshes;
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array

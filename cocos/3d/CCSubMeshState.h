@@ -39,6 +39,7 @@ NS_CC_BEGIN
 
 class Texture2D;
 class MeshSkin;
+class SubMesh;
 /** 
  * SubMeshState: visibility and apperence of submesh
  */
@@ -60,6 +61,14 @@ public:
     /**skin getter and setter*/
     void setSkin(MeshSkin* skin);
     MeshSkin* getSkin() const { return _skin; }
+    
+    /**sub mesh getter and setter*/
+    void setSubMesh(SubMesh* subMesh);
+    SubMesh* getSubMesh() const { return _subMesh; }
+    
+    /**name getter and setter*/
+    void setName(const std::string& name) { _name = name; }
+    const std::string& getName() const { return _name; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -70,6 +79,10 @@ protected:
     Texture2D* _texture;  //texture that submesh is using
     MeshSkin*  _skin;     //skin
     bool       _visible; // is the submesh visible
+    
+    //since 3.3
+    std::string  _name;
+    SubMesh*     _subMesh;
 };
 
 NS_CC_END

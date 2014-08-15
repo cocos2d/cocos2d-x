@@ -49,6 +49,7 @@ SubMeshState::SubMeshState()
 : _visible(true)
 , _texture(nullptr)
 , _skin(nullptr)
+, _subMesh(nullptr)
 {
     
 }
@@ -56,6 +57,7 @@ SubMeshState::~SubMeshState()
 {
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_skin);
+    CC_SAFE_RELEASE(_subMesh);
 }
 
 SubMeshState* SubMeshState::create()
@@ -83,6 +85,16 @@ void SubMeshState::setSkin(MeshSkin* skin)
         CC_SAFE_RETAIN(skin);
         CC_SAFE_RELEASE(_skin);
         _skin = skin;
+    }
+}
+
+void SubMeshState::setSubMesh(SubMesh* subMesh)
+{
+    if (_subMesh != subMesh)
+    {
+        CC_SAFE_RETAIN(subMesh);
+        CC_SAFE_RELEASE(_subMesh);
+        _subMesh = subMesh;
     }
 }
 

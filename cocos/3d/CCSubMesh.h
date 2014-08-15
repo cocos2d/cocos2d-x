@@ -54,6 +54,8 @@ enum class PrimitiveType
     POINTS = GL_POINTS
 };
 
+class Mesh;
+
 /**
  * SubMesh: Defines the way the mesh's vertices how to be connected together.
  */
@@ -65,6 +67,8 @@ public:
     /**create submesh from primitivetype indexformat and indices*/
     static SubMesh* create(PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
     
+    static SubMesh* create(Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
+    
     /** get primitive type*/
     PrimitiveType getPrimitiveType() const { return _primitiveType; }
     /**get index count*/
@@ -73,7 +77,9 @@ public:
     IndexFormat getIndexFormat() const { return _indexFormat; }
     /**get index buffer*/
     GLuint getIndexBuffer() const {return _indexBuffer; }
-
+    
+    /** get mesh */
+    Mesh*  getMesh() const { return _mesh; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -91,8 +97,10 @@ protected:
 
     GLuint _indexBuffer;
     ssize_t _indexCount;
+    
+    Mesh*   _mesh; //parent mesh, weak ref
 };
 
 NS_CC_END
 
-#endif // __CCMESH_H_
+#endif // __CCSUBMESH_H_

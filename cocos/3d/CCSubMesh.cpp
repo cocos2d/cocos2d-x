@@ -31,6 +31,7 @@
 
 #include "3d/CCObjLoader.h"
 #include "3d/CCSprite3DMaterial.h"
+#include "3d/CCMesh.h"
 
 #include "base/ccMacros.h"
 #include "base/CCEventCustom.h"
@@ -50,12 +51,14 @@ SubMesh::SubMesh()
 , _primitiveType(PrimitiveType::TRIANGLES)
 , _indexFormat(IndexFormat::INDEX16)
 , _indexCount(0)
+, _mesh(nullptr)
 {
 }
 
 SubMesh::~SubMesh()
 {
     cleanAndFreeBuffers();
+    CC_SAFE_RELEASE(_mesh);
 }
 
 SubMesh* SubMesh::create(PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
@@ -63,6 +66,17 @@ SubMesh* SubMesh::create(PrimitiveType primitivetype, IndexFormat indexformat, c
     auto submesh = new SubMesh();
     submesh->_primitiveType = primitivetype;
     submesh->_indexFormat = indexformat;
+    submesh->autorelease();
+    
+    return submesh;
+}
+
+SubMesh* SubMesh::create(Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
+{
+    auto submesh = new SubMesh();
+    submesh->_primitiveType = primitivetype;
+    submesh->_indexFormat = indexformat;
+    submesh->_mesh = mesh;
     submesh->autorelease();
     
     return submesh;
