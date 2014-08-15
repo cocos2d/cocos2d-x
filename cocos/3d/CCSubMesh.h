@@ -67,7 +67,7 @@ public:
     /**create submesh from primitivetype indexformat and indices*/
     static SubMesh* create(PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
     
-    static SubMesh* create(Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
+    static SubMesh* create(const std::string& submeshId, Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
     
     /** get primitive type*/
     PrimitiveType getPrimitiveType() const { return _primitiveType; }
@@ -80,6 +80,9 @@ public:
     
     /** get mesh */
     Mesh*  getMesh() const { return _mesh; }
+    
+    /** get submesh id */
+    const std::string& getSubMeshId() const { return _id; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -98,7 +101,8 @@ protected:
     GLuint _indexBuffer;
     ssize_t _indexCount;
     
-    Mesh*   _mesh; //parent mesh, weak ref
+    Mesh*       _mesh; //parent mesh, weak ref
+    std::string _id; //submeshid
 };
 
 NS_CC_END

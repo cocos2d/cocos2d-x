@@ -127,6 +127,9 @@ public:
     /** get origin aabb that calculate from vertices*/
     const AABB& getOriginAABB() const;
     
+    /** get submesh by id */
+    SubMesh* getSubMeshById(const std::string& subMeshId) const;
+    
     /**to be deprecated, those functions have been moved to SubMesh*/
     /** get primitive type*/
     CC_DEPRECATED_ATTRIBUTE PrimitiveType getPrimitiveType() const { return _subMeshes.at(0)->getPrimitiveType(); }

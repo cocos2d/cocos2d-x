@@ -295,6 +295,15 @@ const AABB& Mesh::getOriginAABB() const
     return _originAABB;
 }
 
+SubMesh* Mesh::getSubMeshById(const std::string& subMeshId) const
+{
+    for (auto it : _subMeshes) {
+        if (it->getSubMeshId() == subMeshId)
+            return it;
+    }
+    return nullptr;
+}
+
 /**
  * MeshCache
  */
