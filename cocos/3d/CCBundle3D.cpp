@@ -49,6 +49,8 @@ static const char* VERSION = "version";
 static const char* ID = "id";
 
 static const char* MESHDATA_MESH = "mesh";
+static const char* MESHDATA_MESHES = "meshes";
+static const char* MESHDATA_PARTS  ="parts";
 static const char* MESHDATA_DEFAULTPART = "body";
 static const char* MESHDATA_VERTEXSIZE = "vertexsize";
 static const char* MESHDATA_VERTEX = "vertex";
@@ -69,6 +71,7 @@ static const char* SKINDATA_CHILDREN = "children";
 static const char* SKINDATA_TRANSFORM = "tansform";
 
 static const char* MATERIALDATA_MATERIAL = "material";
+static const char* MATERIALDATA_MATERIALS = "materials";
 static const char* MATERIALDATA_BASE = "base";
 static const char* MATERIALDATA_FILENAME = "filename";
 static const char* MATERIALDATA_TEXTURES = "textures";
@@ -271,22 +274,125 @@ bool Bundle3D::loadSkeletonData(const std::string& id, Skeleton3DData* skeletond
 //since 3.3, to support reskin
 bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
 {
-    //TODO
+    if (_isBinary)
+    {
+        return loadMeshDatasBinary(meshdatas);
+    }
+    else
+    {
+        return loadMeshDatasJson(meshdatas);
+    }
     return true;
 }
+bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
+{
+    return true;
+}
+bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
+{
+    const rapidjson::Value& mesh_data_array = _jsonReader[MESHDATA_MESHES];
+    for (rapidjson::SizeType index = 0; index < mesh_data_array.Size(); index++)
+    {
+        MeshData*   meshData = new MeshData();
+        const rapidjson::Value& mesh_data = mesh_data_array[index];
+        // mesh_vertex_attribute
+        const rapidjson::Value& mesh_vertex_attribute = mesh_data[MESHDATA_ATTRIBUTES];
+        MeshVertexAttrib tempAttrib;
+        meshData->attribCount=mesh_vertex_attribute.Size();
+        meshData->attribs.resize(meshData->attribCount);
+        for (int i = 0; i < mesh_vertex_attribute.Size(); i++)
+        {
+            const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
+            int size = mesh_vertex_attribute_val[MESHDATA_SIZE].GetInt();
+            std::string type = mesh_vertex_attribute_val[MESHDATA_TYPE].GetString();
+            std::string attribute = mesh_vertex_attribute_val[MESHDATA_ATTRIBUTE].GetString();
+
+            tempAttrib.size = size;
+            tempAttrib.attribSizeBytes = sizeof(float) * size;
+            tempAttrib.type = parseGLType(type);
+            tempAttrib.vertexAttrib = parseGLProgramAttribute(attribute);
+            meshData->attribs[i]=tempAttrib;
+        }
+        // mesh vertices
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        const rapidjson::Value& mesh_data_vertex_array = mesh_data[MESHDATA_VERTICES];
+        meshData->vertexSizeInFloat=mesh_data_vertex_array.Size();
+        for (rapidjson::SizeType i = 0; i < mesh_data_vertex_array.Size(); i++)
+        {
+            meshData->vertex.push_back(mesh_data_vertex_array[i].GetDouble());
+        }
+        // mesh part
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        const rapidjson::Value& mesh_part_array = mesh_data[MESHDATA_PARTS];
+        for (rapidjson::SizeType i = 0; i < mesh_part_array.Size(); i++)
+        {
+            std::vector<unsigned short>      indexArray;
+            const rapidjson::Value& mesh_part = mesh_part_array[i];
+            meshData->subMeshIds.push_back(mesh_part[ID].GetString());
+            // index_number
+            const rapidjson::Value& indices_val_array = mesh_part[MESHDATA_INDICES];
+            for (rapidjson::SizeType j = 0; j < indices_val_array.Size(); j++)
+                indexArray.push_back((unsigned short)indices_val_array[j].GetUint());
+    
+            meshData->subMeshIndices.push_back(indexArray);
+            meshData->numIndex=meshData->subMeshIndices.size();
+        }
+        meshdatas.meshDatas.push_back(meshData);
+    }
+     return true;
+}
 bool Bundle3D::loadNodes(NodeDatas& nodedatas)
 {
-    //TODO
     return true;
 }
 
 bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
 {
-    //TODO
+   
+    if (_isBinary)
+    {
+        return loadMaterialsBinary(materialdatas);
+    }
+    else
+    {
+        return loadMaterialsJson(materialdatas);
+    }
     return true;
 }
+bool    Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
+{
+     return true;
+}
+bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
+{
+    if (!_jsonReader.HasMember(MATERIALDATA_MATERIALS))
+        return false;
+    const rapidjson::Value& material_array = _jsonReader[MATERIALDATA_MATERIALS];
+    for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
+    {
+        NMaterialData materialData;
+        const rapidjson::Value& material_val = material_array[i];
+        materialData.id = material_val[ID].GetString();
 
+        if (material_val.HasMember(MATERIALDATA_TEXTURES))
+        {
+            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
+            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
+            {
+                NTextureData  textureData;
+                const rapidjson::Value& texture_val = testure_array[j];
+                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
+                textureData.filename = _modelRelativePath + filename;
+                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
+                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
+                materialData.textures.push_back(textureData);
+            }
+        }
+        materialdatas.materials.push_back(materialData);
+    }
+    return true;
+}
 bool Bundle3D::loadJson(const std::string& path)
 {
     clear();
