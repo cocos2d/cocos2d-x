@@ -380,7 +380,7 @@ void ConsoleRemoteControl::sendTouchCommand(const std::vector<Touch*>& touches, 
         char cmd[512];
         
         strcpy(cmd, tmp.c_str());
-        //CCLOG(cmd);
+        //CCLOG("%s", cmd);
         int ret = send(_sfd,cmd,strlen(cmd),0);
         if (ret < 0)
         {

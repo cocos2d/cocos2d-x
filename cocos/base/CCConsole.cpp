@@ -642,7 +642,7 @@ void Console::commandResolution(int fd, const std::string& args)
         Size design = glview->getDesignResolutionSize();
         ResolutionPolicy res = glview->getResolutionPolicy();
         Rect visibleRect = glview->getVisibleRect();
-
+        Size frame = glview->getFrameSize();
         mydprintf(fd, "Window Size:\n"
                         "\t%d x %d (points)\n"
                         "\t%d x %d (pixels)\n"
@@ -650,13 +650,16 @@ void Console::commandResolution(int fd, const std::string& args)
                         "Resolution Policy: %d\n"
                         "Visible Rect:\n"
                         "\torigin: %d x %d\n"
-                        "\tsize: %d x %d\n",
+                        "\tsize: %d x %d\n"
+                        "Screen resolution:\n"
+                        "\t%d x %d\n",
                   (int)points.width, (int)points.height,
                   (int)pixels.width, (int)pixels.height,
                   (int)design.width, (int)design.height,
                   (int)res,
                   (int)visibleRect.origin.x, (int)visibleRect.origin.y,
-                  (int)visibleRect.size.width, (int)visibleRect.size.height
+                  (int)visibleRect.size.width, (int)visibleRect.size.height,
+                  (int)frame.width, (int)frame.height
                   );
 
     } else {
@@ -931,7 +934,7 @@ void Console::commandTouch(int fd, const std::string& args)
             {
                 //CCLOG("console touch begin");
                 auto director = Director::getInstance();
-                Size points = director->getWinSizeInPixels();
+                Size points = director->getOpenGLView()->getFrameSize();
                 _x = std::atof(argv[1].c_str()) * points.width;
                 _y = (1 - std::atof(argv[2].c_str())) * points.height;
                 srand ((unsigned)time(nullptr));
@@ -956,7 +959,7 @@ void Console::commandTouch(int fd, const std::string& args)
             {
                 //CCLOG("console touch move");
                 auto director = Director::getInstance();
-                Size points = director->getWinSizeInPixels();
+                Size points = director->getOpenGLView()->getFrameSize();
                 _x = std::atof(argv[1].c_str()) * points.width ;
                 _y = (1 - std::atof(argv[2].c_str())) * points.height;
                 Scheduler *sched = Director::getInstance()->getScheduler();
@@ -978,7 +981,7 @@ void Console::commandTouch(int fd, const std::string& args)
             if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
             {
                 auto director = Director::getInstance();
-                Size points = director->getWinSizeInPixels();
+                Size points = director->getOpenGLView()->getFrameSize();
                 _x = std::atof(argv[1].c_str()) * points.width;
                 _y = (1 - std::atof(argv[2].c_str())) * points.height;
                 Scheduler *sched = Director::getInstance()->getScheduler();
