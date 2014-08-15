@@ -30,6 +30,8 @@
 
 NS_CC_BEGIN
 
+class EventListenerCustom;
+
 class CC_DLL VertexBuffer : public Ref
 {
 public:
@@ -49,9 +51,9 @@ protected:
     
     bool init(int sizePerVertex, int vertexNumber);
 protected:
-    //event listener for foreground and background
-    void listenToBackground(EventCustom *event);
+    //event listener for foreground
     void recreateVBO() const;
+    EventListenerCustom* _recreateVBOEventListener;
 protected:
     mutable GLuint _vbo;
     int _sizePerVertex;
@@ -98,10 +100,9 @@ protected:
     int _indexNumber;
     
 protected:
-    //event listener for foreground and background
-    void listenToBackground(EventCustom *event);
+    //event listener for foreground
     void recreateVBO() const;
-    
+    EventListenerCustom* _recreateVBOEventListener;
     //buffer used for shadow copy
     std::vector<unsigned char> _shadowCopy;
 protected:
