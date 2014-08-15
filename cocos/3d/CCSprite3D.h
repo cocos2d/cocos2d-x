@@ -128,7 +128,7 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**generate materials, and add them to cache, keyprefix is used as key prefix when added to cache*/
     void genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths);
-    Node* createNode(NodeData* nodedata);
+    void createNode(NodeData* nodedata,Node* root);
 protected:
     Mesh*                        _mesh;//mesh
     MeshSkin*                    _skin;//skin
