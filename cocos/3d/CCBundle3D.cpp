@@ -349,7 +349,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
 
 bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
 {
-   
+    materialdatas.resetData();
     if (_isBinary)
     {
         return loadMaterialsBinary(materialdatas);
