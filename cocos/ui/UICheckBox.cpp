@@ -339,7 +339,7 @@ void CheckBox::onPressStateChangedToDisabled()
     }
 }
 
-void CheckBox::setSelectedState(bool selected)
+void CheckBox::setSelected(bool selected)
 {
     if (selected == _isSelected)
     {
@@ -348,8 +348,8 @@ void CheckBox::setSelectedState(bool selected)
     _isSelected = selected;
     _frontCrossRenderer->setVisible(_isSelected);
 }
-
-bool CheckBox::getSelectedState()const
+    
+bool CheckBox::isSelected()const
 {
     return _isSelected;
 }
