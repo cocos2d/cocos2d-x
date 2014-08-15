@@ -268,6 +268,25 @@ bool Bundle3D::loadSkeletonData(const std::string& id, Skeleton3DData* skeletond
     return true;
 }
 
+//since 3.3, to support reskin
+bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
+{
+    //TODO
+    return true;
+}
+
+bool Bundle3D::loadNodes(NodeDatas& nodedatas)
+{
+    //TODO
+    return true;
+}
+
+bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
+{
+    //TODO
+    return true;
+}
+
 bool Bundle3D::loadJson(const std::string& path)
 {
     clear();

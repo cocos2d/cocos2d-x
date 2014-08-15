@@ -47,6 +47,66 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+
+struct ModelNodeData;
+/** Node data, since 3.3 */
+struct NodeData
+{
+    std::string id;
+    Mat4        transform;
+    std::vector<NodeData*> children;
+    
+    virtual ~NodeData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        id.clear();
+        transform.setIdentity();
+        for (auto& it : children)
+        {
+            delete it;
+        }
+        children.clear();
+    }
+    virtual ModelNodeData* asModelNodeData()
+    {
+        return nullptr;
+    }
+};
+
+/** model node data, since 3.3 */
+struct ModelNodeData : public NodeData
+{
+    std::string subMeshId;
+    std::string matrialId;
+    std::vector<std::string> bones;
+    std::vector<Mat4>        invBindPose;
+    
+    virtual ~ModelNodeData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        bones.clear();
+        invBindPose.clear();
+        NodeData::resetData();
+    }
+    virtual ModelNodeData* asModelNodeData()
+    {
+        return this;
+    }
+};
+
+/** node datas, since 3.3 */
+struct NodeDatas
+{
+    std::vector<NodeData*> skeleton; //skeleton
+    std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
+};
+
 /**mesh data*/
 struct MeshData
 {
@@ -54,6 +114,7 @@ struct MeshData
     std::vector<float> vertex;
     int vertexSizeInFloat;
     std::vector<IndexArray> subMeshIndices;
+    std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
@@ -75,6 +136,25 @@ public:
     {
     }
     ~MeshData()
+    {
+        resetData();
+    }
+};
+
+/** mesh datas */
+struct MeshDatas
+{
+    std::vector<MeshData*> meshDatas;
+    
+    void resetData()
+    {
+        for(auto& it : meshDatas)
+        {
+            delete it;
+        }
+        meshDatas.clear();
+    }
+    ~MeshDatas()
     {
         resetData();
     }
@@ -189,13 +269,30 @@ struct Skeleton3DData
     }
 };
 
-/**material data*/
+/**material data, */
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
     void resetData()
     {
         texturePaths.clear();
+    }
+};
+
+/**new material, since 3.3 */
+struct NMaterialData
+{
+    std::string id;
+    // copy from lv
+};
+
+/** material datas, since 3.3 */
+struct MaterialDatas
+{
+    std::vector<MaterialData> materials;
+    void resetData()
+    {
+        materials.clear();
     }
 };
 
