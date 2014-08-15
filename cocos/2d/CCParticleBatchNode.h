@@ -91,13 +91,14 @@ public:
     inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void addChild(Node * child, int zOrder, const std::string &name) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
     /**
@@ -136,7 +137,8 @@ private:
     void increaseAtlasCapacityTo(ssize_t quantity);
     int searchNewPositionInChildrenForZ(int z);
     void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
-    int addChildHelper(ParticleSystem* child, int z, int aTag);
+    int addChildHelper(ParticleSystem* child, int z, int aTag, const std::string &name, bool setTag);
+    void addChildByTagOrName(ParticleSystem* child, int z, int tag, const std::string &name, bool setTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;

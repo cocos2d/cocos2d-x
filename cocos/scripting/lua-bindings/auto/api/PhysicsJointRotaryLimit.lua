@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsJointRotaryLimit
 -- @extend PhysicsJoint
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsJointRotaryLimit] getMax 
@@ -24,10 +25,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: construct(cc.PhysicsBody, cc.PhysicsBody)
---          
--- overload function: construct(cc.PhysicsBody, cc.PhysicsBody, float, float)
---          
+-- @overload self, cc.PhysicsBody, cc.PhysicsBody         
+-- @overload self, cc.PhysicsBody, cc.PhysicsBody, float, float         
 -- @function [parent=#PhysicsJointRotaryLimit] construct
 -- @param self
 -- @param #cc.PhysicsBody physicsbody

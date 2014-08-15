@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UICheckBox.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -61,6 +62,7 @@ _frontCrossRendererAdaptDirty(true),
 _backGroundBoxDisabledRendererAdaptDirty(true),
 _frontCrossDisabledRendererAdaptDirty(true)
 {
+    setTouchEnabled(true);
 }
 
 CheckBox::~CheckBox()
@@ -127,7 +129,6 @@ bool CheckBox::init()
     if (Widget::init())
     {
         setSelectedState(false);
-        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -183,7 +184,8 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_backGroundBoxRenderer);
+    this->updateChildrenDisplayedRGBA();
+
     updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
     _backGroundBoxRendererAdaptDirty = true;
 }
@@ -209,7 +211,8 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
+    this->updateChildrenDisplayedRGBA();
+
     _backGroundSelectedBoxRendererAdaptDirty = true;
 }
 
@@ -234,7 +237,8 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_frontCrossRenderer);
+    this->updateChildrenDisplayedRGBA();
+
     _frontCrossRendererAdaptDirty = true;
 }
 
@@ -259,7 +263,8 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
+    this->updateChildrenDisplayedRGBA();
+
     _backGroundBoxDisabledRendererAdaptDirty = true;
 }
 
@@ -284,33 +289,27 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
     }
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_frontCrossDisabledRenderer);
+    this->updateChildrenDisplayedRGBA();
+
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
-void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
+
+void CheckBox::releaseUpEvent()
 {
-    _touchEndPos = touch->getLocation();
-    if (_highlight)
-    {
-        releaseUpEvent();
-        if (_isSelected){
-            setSelectedState(false);
-            unSelectedEvent();
-        }
-        else
-        {
-            setSelectedState(true);
-            selectedEvent();
-        }
+    Widget::releaseUpEvent();
+    
+    if (_isSelected){
+        setSelectedState(false);
+        unSelectedEvent();
     }
-    setHighlighted(false);
-    Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+    else
     {
-        widgetParent->checkChildInfo(2,this,_touchEndPos);
+        setSelectedState(true);
+        selectedEvent();
     }
 }
+
 
 void CheckBox::onPressStateChangedToNormal()
 {
@@ -350,13 +349,14 @@ void CheckBox::setSelectedState(bool selected)
     _frontCrossRenderer->setVisible(_isSelected);
 }
 
-bool CheckBox::getSelectedState()
+bool CheckBox::getSelectedState()const
 {
     return _isSelected;
 }
 
 void CheckBox::selectedEvent()
 {
+    this->retain();
     if (_checkBoxEventCallback)
     {
         _checkBoxEventCallback(this, EventType::SELECTED);
@@ -366,10 +366,12 @@ void CheckBox::selectedEvent()
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
+    this->release();
 }
 
 void CheckBox::unSelectedEvent()
 {
+    this->retain();
     if (_checkBoxEventCallback) {
         _checkBoxEventCallback(this, EventType::UNSELECTED);
     }
@@ -377,6 +379,7 @@ void CheckBox::unSelectedEvent()
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
     }
+    this->release();
 }
 
 void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
@@ -471,8 +474,8 @@ void CheckBox::backGroundTextureScaleChangedWithSize()
             _backGroundBoxRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _backGroundBoxRenderer->setScaleX(scaleX);
         _backGroundBoxRenderer->setScaleY(scaleY);
     }
@@ -493,8 +496,8 @@ void CheckBox::backGroundSelectedTextureScaleChangedWithSize()
             _backGroundSelectedBoxRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _backGroundSelectedBoxRenderer->setScaleX(scaleX);
         _backGroundSelectedBoxRenderer->setScaleY(scaleY);
     }
@@ -515,8 +518,8 @@ void CheckBox::frontCrossTextureScaleChangedWithSize()
             _frontCrossRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _frontCrossRenderer->setScaleX(scaleX);
         _frontCrossRenderer->setScaleY(scaleY);
     }
@@ -537,8 +540,8 @@ void CheckBox::backGroundDisabledTextureScaleChangedWithSize()
             _backGroundBoxDisabledRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _backGroundBoxDisabledRenderer->setScaleX(scaleX);
         _backGroundBoxDisabledRenderer->setScaleY(scaleY);
     }
@@ -559,8 +562,8 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
             _frontCrossDisabledRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _frontCrossDisabledRenderer->setScaleX(scaleX);
         _frontCrossDisabledRenderer->setScaleY(scaleY);
     }
@@ -570,33 +573,6 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
 std::string CheckBox::getDescription() const
 {
     return "CheckBox";
-}
-    
-void CheckBox::updateTextureColor()
-{
-    updateColorToRenderer(_backGroundBoxRenderer);
-    updateColorToRenderer(_backGroundSelectedBoxRenderer);
-    updateColorToRenderer(_frontCrossRenderer);
-    updateColorToRenderer(_backGroundBoxDisabledRenderer);
-    updateColorToRenderer(_frontCrossDisabledRenderer);
-}
-
-void CheckBox::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_backGroundBoxRenderer);
-    updateOpacityToRenderer(_backGroundSelectedBoxRenderer);
-    updateOpacityToRenderer(_frontCrossRenderer);
-    updateOpacityToRenderer(_backGroundBoxDisabledRenderer);
-    updateOpacityToRenderer(_frontCrossDisabledRenderer);
-}
-
-void CheckBox::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_backGroundBoxRenderer);
-    updateRGBAToRenderer(_backGroundSelectedBoxRenderer);
-    updateRGBAToRenderer(_frontCrossRenderer);
-    updateRGBAToRenderer(_backGroundBoxDisabledRenderer);
-    updateRGBAToRenderer(_frontCrossDisabledRenderer);
 }
 
 Widget* CheckBox::createCloneInstance()
@@ -615,6 +591,9 @@ void CheckBox::copySpecialProperties(Widget *widget)
         loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName, checkBox->_backGroundDisabledTexType);
         loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName, checkBox->_frontCrossDisabledTexType);
         setSelectedState(checkBox->_isSelected);
+        _checkBoxEventListener = checkBox->_checkBoxEventListener;
+        _checkBoxEventSelector = checkBox->_checkBoxEventSelector;
+        _checkBoxEventCallback = checkBox->_checkBoxEventCallback;
     }
 }
 

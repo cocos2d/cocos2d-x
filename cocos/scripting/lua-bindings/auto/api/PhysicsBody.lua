@@ -2,6 +2,7 @@
 --------------------------------
 -- @module PhysicsBody
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#PhysicsBody] isGravityEnabled 
@@ -48,14 +49,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- overload function: applyImpulse(cc.Vec2, cc.Vec2)
---          
--- overload function: applyImpulse(cc.Vec2)
---          
+-- @overload self, vec2_table, vec2_table         
+-- @overload self, vec2_table         
 -- @function [parent=#PhysicsBody] applyImpulse
 -- @param self
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
 
 --------------------------------
 -- @function [parent=#PhysicsBody] setRotationOffset 
@@ -63,14 +62,12 @@
 -- @param #float float
         
 --------------------------------
--- overload function: applyForce(cc.Vec2, cc.Vec2)
---          
--- overload function: applyForce(cc.Vec2)
---          
+-- @overload self, vec2_table, vec2_table         
+-- @overload self, vec2_table         
 -- @function [parent=#PhysicsBody] applyForce
 -- @param self
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
 
 --------------------------------
 -- @function [parent=#PhysicsBody] addShape 
@@ -97,7 +94,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getVelocity 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] getLinearDamping 
@@ -126,7 +123,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getPositionOffset 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setCategoryBitmask 
@@ -146,7 +143,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getPosition 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setEnable 
@@ -176,8 +173,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] local2World 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] getCategoryBitmask 
@@ -212,8 +209,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] world2Local 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] isEnabled 
@@ -221,10 +218,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- overload function: removeShape(int, bool)
---          
--- overload function: removeShape(cc.PhysicsShape, bool)
---          
+-- @overload self, int, bool         
+-- @overload self, cc.PhysicsShape, bool         
 -- @function [parent=#PhysicsBody] removeShape
 -- @param self
 -- @param #cc.PhysicsShape physicsshape
@@ -243,7 +238,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] setVelocity 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setLinearDamping 
@@ -258,7 +253,7 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] setPositionOffset 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setRotationEnable 
@@ -278,8 +273,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getVelocityAtLocalPoint 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] isResting 
@@ -305,8 +300,8 @@
 --------------------------------
 -- @function [parent=#PhysicsBody] getVelocityAtWorldPoint 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] setContactTestBitmask 
@@ -332,25 +327,22 @@
 -- @param self
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
 -- @function [parent=#PhysicsBody] createEdgeSegment 
 -- @param self
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
+-- @param #vec2_table vec2
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
--- overload function: create(float)
---          
--- overload function: create()
---          
--- overload function: create(float, float)
---          
+-- @overload self, float         
+-- @overload self         
+-- @overload self, float, float         
 -- @function [parent=#PhysicsBody] create
 -- @param self
 -- @param #float float
@@ -363,7 +355,7 @@
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial physicsmaterial
 -- @param #float float
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
@@ -371,7 +363,7 @@
 -- @param self
 -- @param #float float
 -- @param #cc.PhysicsMaterial physicsmaterial
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 return nil

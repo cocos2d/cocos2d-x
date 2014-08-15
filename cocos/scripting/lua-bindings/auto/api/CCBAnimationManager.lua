@@ -2,6 +2,7 @@
 --------------------------------
 -- @module CCBAnimationManager
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#CCBAnimationManager] moveAnimationsFromNode 
@@ -100,7 +101,7 @@
 --------------------------------
 -- @function [parent=#CCBAnimationManager] addDocumentCallbackControlEvents 
 -- @param self
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#CCBAnimationManager] init 

@@ -30,7 +30,6 @@
 #import <OpenGLES/EAGL.h>
 #import "CCDirectorCaller.h"
 #import "CCDirector.h"
-#import "CCGLView.h"
 #import "CCEAGLView.h"
 
 static id s_sharedDirectorCaller;
@@ -58,6 +57,7 @@ static id s_sharedDirectorCaller;
 
 +(void) destroy
 {
+    [s_sharedDirectorCaller stopMainLoop];
     [s_sharedDirectorCaller release];
     s_sharedDirectorCaller = nil;
 }
@@ -76,25 +76,29 @@ static id s_sharedDirectorCaller;
 -(void) startMainLoop
 {
         // Director::setAnimationInterval() is called, we should invalidate it first
-        [displayLink invalidate];
-        displayLink = nil;
-        
-        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setFrameInterval: self.interval];
-        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self stopMainLoop];
+    
+    displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
+    [displayLink setFrameInterval: self.interval];
+    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+-(void) stopMainLoop
+{
+    [displayLink invalidate];
+    displayLink = nil;
 }
 
 -(void) setAnimationInterval:(double)intervalNew
 {
-        // Director::setAnimationInterval() is called, we should invalidate it first
-        [displayLink invalidate];
-        displayLink = nil;
+    // Director::setAnimationInterval() is called, we should invalidate it first
+    [self stopMainLoop];
         
-        self.interval = 60.0 * intervalNew;
+    self.interval = 60.0 * intervalNew;
         
-        displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setFrameInterval: self.interval];
-        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
+    [displayLink setFrameInterval: self.interval];
+    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
                       
 -(void) doCaller: (id) sender

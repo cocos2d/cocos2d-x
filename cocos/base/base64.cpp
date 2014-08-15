@@ -68,7 +68,7 @@ int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned c
         switch (char_count) {
             case 1:
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-                std::fprintf(stderr, "base64Decode: encoding incomplete: at least 2 bits missing");
+                fprintf(stderr, "base64Decode: encoding incomplete: at least 2 bits missing");
 #endif
                 errors++;
                 break;
@@ -83,7 +83,7 @@ int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned c
     } else if ( input_idx < input_len ) {
         if (char_count) {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-            std::fprintf(stderr, "base64 encoding incomplete: at least %d bits truncated",
+            fprintf(stderr, "base64 encoding incomplete: at least %d bits truncated",
                     ((4 - char_count) * 6));
 #endif
             errors++;

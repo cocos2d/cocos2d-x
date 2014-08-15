@@ -2,21 +2,18 @@
 --------------------------------
 -- @module Sprite
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
--- overload function: setSpriteFrame(cc.SpriteFrame)
---          
--- overload function: setSpriteFrame(string)
---          
+-- @overload self, cc.SpriteFrame         
+-- @overload self, string         
 -- @function [parent=#Sprite] setSpriteFrame
 -- @param self
 -- @param #string str
 
 --------------------------------
--- overload function: setTexture(cc.Texture2D)
---          
--- overload function: setTexture(string)
---          
+-- @overload self, cc.Texture2D         
+-- @overload self, string         
 -- @function [parent=#Sprite] setTexture
 -- @param self
 -- @param #string str
@@ -44,7 +41,7 @@
 --------------------------------
 -- @function [parent=#Sprite] getOffsetPosition 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Sprite] removeAllChildrenWithCleanup 
@@ -56,10 +53,8 @@
 -- @param self
         
 --------------------------------
--- overload function: setTextureRect(rect_table, bool, size_table)
---          
--- overload function: setTextureRect(rect_table)
---          
+-- @overload self, rect_table, bool, size_table         
+-- @overload self, rect_table         
 -- @function [parent=#Sprite] setTextureRect
 -- @param self
 -- @param #rect_table rect
@@ -144,12 +139,9 @@
 -- @param #rect_table rect
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
--- overload function: create(string, rect_table)
---          
+-- @overload self, string         
+-- @overload self         
+-- @overload self, string, rect_table         
 -- @function [parent=#Sprite] create
 -- @param self
 -- @param #string str
@@ -157,10 +149,8 @@
 -- @return Sprite#Sprite ret (retunr value: cc.Sprite)
 
 --------------------------------
--- overload function: createWithTexture(cc.Texture2D, rect_table, bool)
---          
--- overload function: createWithTexture(cc.Texture2D)
---          
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @overload self, cc.Texture2D         
 -- @function [parent=#Sprite] createWithTexture
 -- @param self
 -- @param #cc.Texture2D texture2d
@@ -184,16 +174,18 @@
 -- @function [parent=#Sprite] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
--- @function [parent=#Sprite] addChild 
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
+-- @function [parent=#Sprite] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#Sprite] setScaleY 
 -- @param self
@@ -217,7 +209,7 @@
 --------------------------------
 -- @function [parent=#Sprite] setAnchorPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Sprite] setRotationSkewX 
@@ -235,10 +227,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: setScale(float)
---          
--- overload function: setScale(float, float)
---          
+-- @overload self, float         
+-- @overload self, float, float         
 -- @function [parent=#Sprite] setScale
 -- @param self
 -- @param #float float

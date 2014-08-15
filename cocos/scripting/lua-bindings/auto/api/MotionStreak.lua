@@ -2,6 +2,7 @@
 --------------------------------
 -- @module MotionStreak
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#MotionStreak] reset 
@@ -43,10 +44,8 @@
 -- @param #bool bool
         
 --------------------------------
--- overload function: create(float, float, float, color3b_table, cc.Texture2D)
---          
--- overload function: create(float, float, float, color3b_table, string)
---          
+-- @overload self, float, float, float, color3b_table, cc.Texture2D         
+-- @overload self, float, float, float, color3b_table, string         
 -- @function [parent=#MotionStreak] create
 -- @param self
 -- @param #float float
@@ -97,20 +96,16 @@
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
--- overload function: setPosition(float, float)
---          
--- overload function: setPosition(cc.Vec2)
---          
+-- @overload self, float, float         
+-- @overload self, vec2_table         
 -- @function [parent=#MotionStreak] setPosition
 -- @param self
 -- @param #float float
 -- @param #float float
 
 --------------------------------
--- overload function: getPosition(float, float)
---          
--- overload function: getPosition()
---          
+-- @overload self, float, float         
+-- @overload self         
 -- @function [parent=#MotionStreak] getPosition
 -- @param self
 -- @param #float float

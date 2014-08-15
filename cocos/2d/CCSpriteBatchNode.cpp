@@ -85,6 +85,10 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    if(!tex->hasPremultipliedAlpha())
+    {
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    }
     _textureAtlas = new TextureAtlas();
 
     if (capacity == 0)
@@ -132,7 +136,7 @@ SpriteBatchNode::~SpriteBatchNode()
 
 // override visit
 // don't call visit on it's children
-void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 
@@ -143,30 +147,28 @@ void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, boo
     // The alternative is to have a void Sprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (! _visible)
+    if (! _visible || !isVisitableByVisitingCamera())
     {
         return;
     }
 
     sortAllChildren();
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
-    draw(renderer, _modelViewTransform, dirty);
+    draw(renderer, _modelViewTransform, flags);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    setOrderOfArrival(0);
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+//    setOrderOfArrival(0);
 
     CC_PROFILER_STOP_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
 }
@@ -181,6 +183,19 @@ void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
 
     Node::addChild(child, zOrder, tag);
 
+    appendChild(sprite);
+}
+
+void SpriteBatchNode::addChild(Node * child, int zOrder, const std::string &name)
+{
+    CCASSERT(child != nullptr, "child should not be null");
+    CCASSERT(dynamic_cast<Sprite*>(child) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
+    Sprite *sprite = static_cast<Sprite*>(child);
+    // check Sprite is using the same texture id
+    CCASSERT(sprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
+    
+    Node::addChild(child, zOrder, name);
+    
     appendChild(sprite);
 }
 
@@ -356,7 +371,7 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )

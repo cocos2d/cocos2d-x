@@ -1,8 +1,14 @@
 
 --------------------------------
 -- @module PageView
--- @extend Layout,UIScrollInterface
+-- @extend Layout
+-- @parent_module ccui
 
+--------------------------------
+-- @function [parent=#PageView] getCustomScrollThreshold 
+-- @param self
+-- @return float#float ret (return value: float)
+        
 --------------------------------
 -- @function [parent=#PageView] getCurPageIndex 
 -- @param self
@@ -14,6 +20,11 @@
 -- @param #ccui.Widget widget
 -- @param #long long
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#PageView] isUsingCustomScrollThreshold 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#PageView] getPage 
@@ -30,6 +41,16 @@
 -- @function [parent=#PageView] addEventListener 
 -- @param self
 -- @param #function func
+        
+--------------------------------
+-- @function [parent=#PageView] setUsingCustomScrollThreshold 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#PageView] setCustomScrollThreshold 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#PageView] insertPage 
@@ -74,7 +95,7 @@
 --------------------------------
 -- @function [parent=#PageView] getLayoutType 
 -- @param self
--- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#PageView] getDescription 
@@ -89,7 +110,7 @@
 --------------------------------
 -- @function [parent=#PageView] setLayoutType 
 -- @param self
--- @param #ccui.Layout::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#PageView] PageView 

@@ -14,7 +14,6 @@ else()
 endif()
 
 set(SAMPLE_SRC
-  Classes/AccelerometerTest/AccelerometerTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
@@ -36,6 +35,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
   Classes/BugsTest/Bug-Child.cpp
+  Classes/Camera3DTest/Camera3DTest.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
@@ -66,6 +66,7 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
   Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
+  Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp
@@ -80,7 +81,10 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
+  Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
@@ -125,9 +129,7 @@ set(SAMPLE_SRC
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
-  Classes/KeyboardTest/KeyboardTest.cpp
   Classes/InputTest/MouseTest.cpp
-  Classes/KeypadTest/KeypadTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
@@ -160,11 +162,13 @@ set(SAMPLE_SRC
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpriteTest/SpriteTest.cpp
   Classes/Sprite3DTest/Sprite3DTest.cpp
+  Classes/Sprite3DTest/DrawNode3D.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
   Classes/TextureCacheTest/TextureCacheTest.cpp
   Classes/TileMapTest/TileMapTest.cpp
+  Classes/TileMapTest/TileMapTest2.cpp
   Classes/TouchesTest/Ball.cpp
   Classes/TouchesTest/Paddle.cpp
   Classes/TouchesTest/TouchesTest.cpp
@@ -204,6 +208,9 @@ target_link_libraries(${APP_NAME}
   audio
   cocos2d
   box2d
+  ui
+  network
+  sqlite3
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

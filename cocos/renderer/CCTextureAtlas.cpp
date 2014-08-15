@@ -57,7 +57,7 @@ TextureAtlas::TextureAtlas()
     ,_texture(nullptr)
     ,_quads(nullptr)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    ,_backToForegroundlistener(nullptr)
+    ,_rendererRecreatedListener(nullptr)
 #endif
 {}
 
@@ -78,7 +78,7 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_RELEASE(_texture);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
@@ -192,9 +192,9 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    // listen the event when app go to background
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(TextureAtlas::listenBackToForeground, this));
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+    /** listen the event that renderer was recreated on Android/WP8 */
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(TextureAtlas::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
     
     this->setupIndices();
@@ -213,7 +213,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     return true;
 }
 
-void TextureAtlas::listenBackToForeground(EventCustom* event)
+void TextureAtlas::listenRendererRecreated(EventCustom* event)
 {  
     if (Configuration::getInstance()->supportsShareableVAO())
     {

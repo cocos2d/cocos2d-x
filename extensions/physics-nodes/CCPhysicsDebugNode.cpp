@@ -70,7 +70,7 @@ static Vec2 cpVert2Point(const cpVect &vert)
 
 static Vec2* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
 {
-    if (count == 0) return NULL;
+    if (count == 0) return nullptr;
     Vec2* pPoints = new Vec2[count];
     
     for (unsigned int i = 0; i < count; ++i)
@@ -182,7 +182,7 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 
 // implementation of PhysicsDebugNode
 
-void PhysicsDebugNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void PhysicsDebugNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (! _spacePtr)
     {
@@ -195,7 +195,7 @@ void PhysicsDebugNode::draw(Renderer *renderer, const Mat4 &transform, bool tran
     cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
 	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
-    DrawNode::draw(renderer, transform, transformUpdated);
+    DrawNode::draw(renderer, transform, flags);
 #endif
 }
 

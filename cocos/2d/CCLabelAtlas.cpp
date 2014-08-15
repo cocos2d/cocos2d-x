@@ -133,6 +133,11 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
+    if(_itemsPerRow == 0)
+    {
+        return;
+    }
+
     ssize_t n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
@@ -249,7 +254,7 @@ void LabelAtlas::updateColor()
 
 //CCLabelAtlas - draw
 #if CC_LABELATLAS_DEBUG_DRAW
-void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     AtlasNode::draw(renderer, transform, transformUpdated);
 

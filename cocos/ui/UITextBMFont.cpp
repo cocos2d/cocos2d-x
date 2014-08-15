@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UITextBMFont.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
@@ -86,7 +87,7 @@ void TextBMFont::setFntFile(const std::string& fileName)
     }
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
-    updateRGBAToRenderer(_labelBMFontRenderer);
+    
     _fntFileHasInit = true;
     setString(_stringValue);
 }
@@ -152,8 +153,8 @@ void TextBMFont::labelBMFontScaleChangedWithSize()
             _labelBMFontRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _labelBMFontRenderer->setScaleX(scaleX);
         _labelBMFontRenderer->setScaleY(scaleY);
     }
@@ -163,21 +164,6 @@ void TextBMFont::labelBMFontScaleChangedWithSize()
 std::string TextBMFont::getDescription() const
 {
     return "TextBMFont";
-}
-    
-void TextBMFont::updateTextureColor()
-{
-    updateColorToRenderer(_labelBMFontRenderer);
-}
-
-void TextBMFont::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_labelBMFontRenderer);
-}
-
-void TextBMFont::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_labelBMFontRenderer);
 }
 
 Widget* TextBMFont::createCloneInstance()

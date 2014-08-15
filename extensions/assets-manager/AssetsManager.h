@@ -31,6 +31,7 @@
 
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -41,7 +42,7 @@ class AssetsManagerDelegateProtocol;
  *  The updated package should be a zip file. And there should be a file named
  *  version in the server, which contains version code.
  */
-class AssetsManager : public Node
+class CC_EX_DLL AssetsManager : public Node
 {
 public:
     enum class ErrorCode

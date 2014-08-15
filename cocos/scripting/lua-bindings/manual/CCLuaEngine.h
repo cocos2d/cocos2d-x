@@ -34,7 +34,7 @@ extern "C" {
 #include "base/CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
-#include "LuaScriptHandlerMgr.h"
+#include "cocos2d/LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 
@@ -149,7 +149,6 @@ private:
     int handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data);
     int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data);
     int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data, int numResults, const std::function<void(lua_State*,int)>& func);
-    int handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data);
     int handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* data);
     int handleEventAcc(void* data);
     int handleEventKeyboard(ScriptHandlerMgr::HandlerType type,void* data);

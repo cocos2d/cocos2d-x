@@ -77,6 +77,7 @@ bool ControlColourPicker::init()
         
         // Add image
         _background=ControlUtils::addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, Vec2::ZERO, Vec2(0.5f, 0.5f));
+        if(!_background) return false;
         CC_SAFE_RETAIN(_background);
         
         Vec2 backgroundPointZero = _background->getPosition() - Vec2(_background->getContentSize().width / 2, _background->getContentSize().height / 2);
@@ -134,7 +135,7 @@ void ControlColourPicker::setColor(const Color3B& color)
 void ControlColourPicker::setEnabled(bool enabled)
 {
     Control::setEnabled(enabled);
-    if (_huePicker != NULL)
+    if (_huePicker != nullptr)
     {
         _huePicker->setEnabled(enabled);
     }

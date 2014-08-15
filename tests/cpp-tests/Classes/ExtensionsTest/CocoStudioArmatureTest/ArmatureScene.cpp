@@ -75,6 +75,9 @@ Layer *CreateLayer(int index)
     case TEST_CHANGE_ANIMATION_INTERNAL:
         pLayer = new TestChangeAnimationInternal();
         break;
+    case TEST_DIRECT_FROM_BINARY:
+        pLayer = new TestLoadFromBinary();
+        break;
     default:
         break;
     }
@@ -411,10 +414,10 @@ void TestPerformance::addArmature(int number)
 
         Armature *armature = nullptr;
         armature = new Armature();
-        armature->init("Knight_f/Knight");
+        armature->init("Cowboy");
         armature->getAnimation()->playWithIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
-        armature->setScale(0.6f);
+        armature->setScale(0.1f);
         addArmatureToParent(armature);
         armature->release();
     }
@@ -588,7 +591,7 @@ std::string TestFrameEvent::title() const
 {
     return "Test Frame Event";
 }
-void TestFrameEvent::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
+void TestFrameEvent::onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
@@ -630,7 +633,7 @@ void TestParticleDisplay::onEnter()
     ParticleSystem *p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
     ParticleSystem *p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
 
-    Bone *bone  = Bone::create("p1");
+    cocostudio::Bone *bone  = cocostudio::Bone::create("p1");
     bone->addDisplay(p1, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
@@ -638,7 +641,7 @@ void TestParticleDisplay::onEnter()
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a3");
 
-    bone  = Bone::create("p2");
+    bone  = cocostudio::Bone::create("p2");
     bone->addDisplay(p2, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
@@ -770,7 +773,7 @@ std::string TestColliderDetector::title() const
 {
     return "Test Collider Detector";
 }
-void TestColliderDetector::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
+void TestColliderDetector::onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
@@ -842,7 +845,7 @@ void TestColliderDetector::onExit()
 
     ArmatureTestLayer::onExit();
 }
-void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();
@@ -1022,10 +1025,10 @@ void TestColliderDetector::update(float delta)
 
     // This code is just telling how to get the vertex.
     // For a more accurate collider detection, you need to implemente yourself.
-    const Map<std::string, Bone*>& map = armature2->getBoneDic();
+    const Map<std::string, cocostudio::Bone*>& map = armature2->getBoneDic();
     for(const auto& element : map)
     {
-        Bone *bone = element.second;
+        cocostudio::Bone *bone = element.second;
         ColliderDetector *detector = bone->getColliderDetector();
 
         if (!detector)
@@ -1065,14 +1068,14 @@ void TestColliderDetector::update(float delta)
         }
     }
 }
-void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void TestColliderDetector::onDraw(const Mat4 &transform, bool transformUpdated)
+void TestColliderDetector::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1106,15 +1109,15 @@ std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
-void TestBoundingBox::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TestBoundingBox::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 
 }
 
-void TestBoundingBox::onDraw(const Mat4 &transform, bool transformUpdated)
+void TestBoundingBox::onDraw(const Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -1240,7 +1243,7 @@ void Hero::changeMount(Armature *armature)
         removeFromParentAndCleanup(false);
 
         //Get the hero bone
-        Bone *bone = armature->getBone("hero");
+        cocostudio::Bone *bone = armature->getBone("hero");
         //Add hero as a display to this bone
         bone->addDisplay(this, 0);
         //Change this bone's display
@@ -1384,7 +1387,7 @@ void TestPlaySeveralMovement::onEnter()
 //    int index[] = {0, 1, 2};
 //    std::vector<int> indexes(index, index+3);
 
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playWithNames(names);
 //    armature->getAnimation()->playWithIndexes(indexes);
@@ -1455,7 +1458,7 @@ void TestChangeAnimationInternal::onEnter()
     listener->onTouchesEnded = CC_CALLBACK_2(TestPlaySeveralMovement::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    Armature *armature = NULL;
+    Armature *armature = nullptr;
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
@@ -1486,4 +1489,106 @@ void TestChangeAnimationInternal::onTouchesEnded(const std::vector<Touch*>& touc
     {
         Director::getInstance()->setAnimationInterval(1/30.0f);
     }
+}
+
+
+
+//TestDirectFromBinay
+
+const  char* TestLoadFromBinary::m_binaryFilesNames[BINARYFILECOUNT] ={"armature/bear.csb","armature/horse.csb",
+	"armature/Cowboy.csb","armature/hero.csb",
+	"armature/HeroAnimation.csb","armature/testEasing.csb"};
+const  char* TestLoadFromBinary::m_armatureNames[BINARYFILECOUNT] ={"bear","horse",
+	"Cowboy","hero",
+	"HeroAnimation","testEasing"};
+
+
+void TestLoadFromBinary::onEnter()
+{
+	ArmatureTestLayer::onEnter();
+	
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestLoadFromBinary::onTouchesEnded, this);    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+	m_armatureIndex = -1; // none
+    
+	// remove json created
+	// remove sync resource
+	ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/bear.ExportJson");
+	ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+	// load from binary
+	ArmatureDataManager::getInstance()->addArmatureFileInfo(m_binaryFilesNames[0]);
+    
+	m_armature = Armature::create(m_armatureNames[0]);
+	m_armature->getAnimation()->playWithIndex(0);
+	m_armature->setScale(1.0f);
+    
+	m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+	addChild(m_armature);
+    
+}
+
+
+std::string TestLoadFromBinary::title() const
+{
+	return "Test load from binary file";
+}
+std::string TestLoadFromBinary::subtitle() const
+{
+	return "direct load.Touch to change to Asynchronous load.";
+}
+
+void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+	if(-1 == m_armatureIndex )
+	{
+		m_armatureIndex = -2;    // is loading
+        
+        // remove json created  and need remove their names: exprtjsone & csbs
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/hero.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/horse.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
+		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.ExportJson");
+        for( int i = 0; i < BINARYFILECOUNT; i++)
+		{
+			ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[i]);
+        }
+        
+		for( int i = 0; i < BINARYFILECOUNT; i++)
+		{
+			ArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
+		}
+        
+	}
+	else if(m_armatureIndex>=0 && m_armature != nullptr)
+	{
+		m_armature->removeFromParent();
+		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;
+		m_armature = Armature::create(m_armatureNames[m_armatureIndex]);
+		m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+		if(m_armatureIndex == 2 )  // cowboy is 0.2
+			m_armature->setScale(0.2f);
+		m_armature->getAnimation()->playWithIndex(0);
+		addChild(m_armature);
+	}
+}
+
+
+void TestLoadFromBinary::dataLoaded( float percent )
+{
+	Label *label = (Label *)getChildByTag(10001);
+	if (label)
+	{
+		char pszPercent[255];
+		sprintf(pszPercent, "%s %f", "Asynchronous loading: ", percent * 100);
+		label->setString(pszPercent);
+	}
+    
+	if (percent >= 1)
+	{
+		label->setString("Touch to change armature");
+		m_armatureIndex = 0;
+	}
 }

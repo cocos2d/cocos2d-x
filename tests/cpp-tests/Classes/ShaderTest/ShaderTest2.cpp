@@ -148,10 +148,10 @@ public:
         std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
     }
 
-    void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
         // Don't do calculate the culling if the transform was not updated
-        _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+        _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
         if(_insideBounds)
         {
@@ -207,11 +207,41 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     auto fragmentFullPath = fileUtiles->fullPathForFilename(fragmentFilename);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
-
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _fragSource = fragSource;
+#endif
+    
     _glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
     _glprogramstate->retain();
 
     return _glprogramstate != nullptr;
+}
+
+Effect::Effect()
+: _glprogramstate(nullptr)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                      [this](EventCustom*)
+                                                      {
+                                                          auto glProgram = _glprogramstate->getGLProgram();
+                                                          glProgram->reset();
+                                                          glProgram->initWithByteArrays(ccPositionTextureColor_noMVP_vert, _fragSource.c_str());
+                                                          glProgram->link();
+                                                          glProgram->updateUniforms();
+                                                      }
+                                                      );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backgroundListener, -1);
+#endif
+}
+
+Effect::~Effect()
+{
+    CC_SAFE_RELEASE_NULL(_glprogramstate);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
+#endif
 }
 
 // Blur
@@ -219,80 +249,42 @@ class EffectBlur : public Effect
 {
 public:
     CREATE_FUNC(EffectBlur);
-
     virtual void setTarget(EffectSprite *sprite) override;
-
-    void setGaussian(float value);
-    void setCustomUniforms();
-    void setBlurSize(float f);
+    void setBlurRadius(float radius);
+    void setBlurSampleNum(float num);
 
 protected:
-    bool init(float blurSize=3.0);
-
-    int       _blurRadius;
-    Vec2   _pixelSize;
-
-    int       _samplingRadius;
-    float     _scale;
-    float     _cons;
-    float     _weightSum;
+    bool init(float blurRadius = 10.0f, float sampleNum = 5.0f);
+    
+    float _blurRadius;
+    float _blurSampleNum;
 };
 
 void EffectBlur::setTarget(EffectSprite *sprite)
 {
-    Size s = sprite->getTexture()->getContentSizeInPixels();
-    _pixelSize = Vec2(1/s.width, 1/s.height);
-    _glprogramstate->setUniformVec2("onePixelSize", _pixelSize);
+    Size size = sprite->getTexture()->getContentSizeInPixels();
+    _glprogramstate->setUniformVec2("resolution", size);
+    _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
+    _glprogramstate->setUniformFloat("sampleNum", _blurSampleNum);
 }
 
-bool EffectBlur::init(float blurSize)
+bool EffectBlur::init(float blurRadius, float sampleNum)
 {
     initGLProgramState("Shaders/example_Blur.fsh");
-    auto s = Size(100,100);
-
-    _blurRadius = 0;
-    _pixelSize = Vec2(1/s.width, 1/s.height);
-    _samplingRadius = 0;
-
-    setBlurSize(blurSize);
-
-    _glprogramstate->setUniformVec2("onePixelSize", _pixelSize);
-    _glprogramstate->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
+    _blurRadius = blurRadius;
+    _blurSampleNum = sampleNum;
+    
     return true;
 }
 
-void EffectBlur::setBlurSize(float f)
+void EffectBlur::setBlurRadius(float radius)
 {
-    if(_blurRadius == (int)f)
-        return;
-    _blurRadius = (int)f;
+    _blurRadius = radius;
+}
 
-    _samplingRadius = _blurRadius;
-    if (_samplingRadius > 10)
-    {
-        _samplingRadius = 10;
-    }
-    if (_blurRadius > 0)
-    {
-        float sigma = _blurRadius / 2.0f;
-        _scale = -0.5f / (sigma * sigma);
-        _cons = -1.0f * _scale / 3.141592f;
-        _weightSum = -_cons;
-
-        float weight;
-        int squareX;
-        for(int dx = 0; dx <= _samplingRadius; ++dx)
-        {
-            squareX = dx * dx;
-            weight = _cons * exp(squareX * _scale);
-            _weightSum += 2.0 * weight;
-            for (int dy = 1; dy <= _samplingRadius; ++dy)
-            {
-                weight = _cons * exp((squareX + dy * dy) * _scale);
-                _weightSum += 4.0 * weight;
-            }
-        }
-    }
+void EffectBlur::setBlurSampleNum(float num)
+{
+    _blurSampleNum = num;
 }
 
 // Outline
@@ -305,8 +297,8 @@ public:
     {
         initGLProgramState("Shaders/example_outline.fsh");
 
-        Vec3 color(1.0, 0.2, 0.3);
-        GLfloat radius = 0.01;
+        Vec3 color(1.0f, 0.2f, 0.3f);
+        GLfloat radius = 0.01f;
         GLfloat threshold = 1.75;
 
         _glprogramstate->setUniformVec3("u_outlineColor", color);
@@ -464,7 +456,7 @@ EffectSpriteTest::EffectSpriteTest()
                                               _sprite->setEffect(_effects.at(_vectorIndex));
                                           });
 
-        auto menu = Menu::create(itemPrev, itemNext, NULL);
+        auto menu = Menu::create(itemPrev, itemNext, nullptr);
         menu->alignItemsHorizontally();
         menu->setScale(0.5);
         menu->setAnchorPoint(Vec2(0,0));
@@ -477,9 +469,9 @@ EffectSpriteTest::EffectSpriteTest()
 
         auto jump = JumpBy::create(4, Vec2(s.width,0), 100, 4);
         auto rot = RotateBy::create(4, 720);
-        auto spawn = Spawn::create(jump, rot, NULL);
+        auto spawn = Spawn::create(jump, rot, nullptr);
         auto rev = spawn->reverse();
-        auto seq = Sequence::create(spawn, rev, NULL);
+        auto seq = Sequence::create(spawn, rev, nullptr);
         auto repeat = RepeatForever::create(seq);
         _sprite->runAction(repeat);
 

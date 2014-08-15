@@ -27,14 +27,15 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
-#include "ObjectFactory.h"
+#include "base/ObjectFactory.h"
 #include "TriggerObj.h"
 #include "TriggerMng.h"
+#include "cocostudio/CocosStudioExport.h"
 
 
 #define DECLARE_CLASS_INFO \
     public: \
-        static cocostudio::ObjectFactory::TInfo Type; \
+        static cocos2d::ObjectFactory::TInfo Type; \
         static cocos2d::Ref* createInstance(void); \
         
 #define IMPLEMENT_CLASS_INFO(className) \
@@ -44,10 +45,10 @@ THE SOFTWARE.
             ret->autorelease(); \
             return ret; \
         } \
-        cocostudio::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
+        cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 
-void sendEvent(unsigned int event);
+void CC_STUDIO_DLL sendEvent(unsigned int event);
 
 
 #endif

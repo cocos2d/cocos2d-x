@@ -269,6 +269,46 @@ protected:
     Sprite *_sprite;
 };
 
+class NodeNormalizedPositionTest1 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeNormalizedPositionTest1);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    NodeNormalizedPositionTest1();
+};
+
+class NodeNormalizedPositionTest2 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeNormalizedPositionTest2);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    NodeNormalizedPositionTest2();
+
+    void update(float dt);
+    Size _copyContentSize;
+    float _accum;
+};
+
+class NodeNameTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeNameTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void onEnter() override;
+
+    void test(float dt);
+};
+
+
+// main
 class CocosNodeTestScene : public TestScene
 {
 public:

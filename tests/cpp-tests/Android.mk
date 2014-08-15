@@ -12,7 +12,6 @@ Classes/BaseTest.cpp \
 Classes/controller.cpp \
 Classes/testBasic.cpp \
 Classes/VisibleRect.cpp \
-Classes/AccelerometerTest/AccelerometerTest.cpp \
 Classes/ActionManagerTest/ActionManagerTest.cpp \
 Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 Classes/ActionsProgressTest/ActionsProgressTest.cpp \
@@ -34,6 +33,7 @@ Classes/BugsTest/BugsTest.cpp \
 Classes/BugsTest/Bug-Child.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
+Classes/Camera3DTest/Camera3DTest.cpp \
 Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
@@ -55,6 +55,7 @@ Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
 Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
 Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp \
+Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
@@ -63,9 +64,12 @@ Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
 Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp \
 Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp \
+Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp \
+Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp \
 Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp \
 Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp \
 Classes/UITest/CocoStudioGUITest/UIScene.cpp \
+Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp \
 Classes/UITest/CocoStudioGUITest/UISceneManager.cpp \
 Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
 Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp \
@@ -130,8 +134,6 @@ Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/InputTest/MouseTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
-Classes/KeyboardTest/KeyboardTest.cpp \
-Classes/KeypadTest/KeypadTest.cpp \
 Classes/LabelTest/LabelTest.cpp \
 Classes/LabelTest/LabelTestNew.cpp \
 Classes/LayerTest/LayerTest.cpp \
@@ -166,12 +168,14 @@ Classes/ShaderTest/ShaderTest.cpp \
 Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
+Classes/Sprite3DTest/DrawNode3D.cpp \
 Classes/Sprite3DTest/Sprite3DTest.cpp \
 Classes/TextInputTest/TextInputTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
 Classes/TextureCacheTest/TextureCacheTest.cpp \
 Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp \
 Classes/TileMapTest/TileMapTest.cpp \
+Classes/TileMapTest/TileMapTest2.cpp \
 Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
 Classes/TouchesTest/TouchesTest.cpp \
@@ -185,19 +189,21 @@ Classes/ZwoptexTest/ZwoptexTest.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocosbuilder_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
-
+LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Classes
-            
+
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,extensions)
+$(call import-module,audio/android)
 $(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/spine)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,network)
-$(call import-module,.)
+$(call import-module,Box2D)

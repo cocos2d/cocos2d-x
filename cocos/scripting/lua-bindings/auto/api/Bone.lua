@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Bone
 -- @extend Node
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#Bone] isTransformDirty 
@@ -52,11 +53,6 @@
 -- @param self
         
 --------------------------------
--- @function [parent=#Bone] getName 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
 -- @function [parent=#Bone] setTransformDirty 
 -- @param self
 -- @param #bool bool
@@ -64,7 +60,7 @@
 --------------------------------
 -- @function [parent=#Bone] getDisplayRenderNodeType 
 -- @param self
--- @return DisplayType#DisplayType ret (return value: ccs.DisplayType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Bone] removeDisplay 
@@ -77,10 +73,8 @@
 -- @param #ccs.BoneData bonedata
         
 --------------------------------
--- overload function: init(string)
---          
--- overload function: init()
---          
+-- @overload self, string         
+-- @overload self         
 -- @function [parent=#Bone] init
 -- @param self
 -- @param #string str
@@ -92,20 +86,13 @@
 -- @param #ccs.Bone bone
         
 --------------------------------
--- overload function: addDisplay(cc.Node, int)
---          
--- overload function: addDisplay(ccs.DisplayData, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, ccs.DisplayData, int         
 -- @function [parent=#Bone] addDisplay
 -- @param self
 -- @param #ccs.DisplayData displaydata
 -- @param #int int
 
---------------------------------
--- @function [parent=#Bone] setName 
--- @param self
--- @param #string str
-        
 --------------------------------
 -- @function [parent=#Bone] removeFromParent 
 -- @param self
@@ -162,7 +149,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToArmatureTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Bone] getDisplayManager 
@@ -180,10 +167,8 @@
 -- @return BoneData#BoneData ret (return value: ccs.BoneData)
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
+-- @overload self, string         
+-- @overload self         
 -- @function [parent=#Bone] create
 -- @param self
 -- @param #string str
@@ -202,7 +187,7 @@
 --------------------------------
 -- @function [parent=#Bone] getNodeToWorldTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Bone] update 

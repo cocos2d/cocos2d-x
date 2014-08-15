@@ -2,6 +2,7 @@
 --------------------------------
 -- @module Skin
 -- @extend Sprite
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#Skin] getBone 
@@ -11,7 +12,7 @@
 --------------------------------
 -- @function [parent=#Skin] getNodeToWorldTransformAR 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Skin] initWithFile 
@@ -40,10 +41,8 @@
 -- @param #ccs.Bone bone
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
+-- @overload self, string         
+-- @overload self         
 -- @function [parent=#Skin] create
 -- @param self
 -- @param #string str
@@ -62,14 +61,14 @@
 --------------------------------
 -- @function [parent=#Skin] getNodeToWorldTransform 
 -- @param self
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Skin] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#Skin] Skin 

@@ -81,11 +81,11 @@ public:
      */
     void setTextureWithRect(Texture2D *texture, const Rect& rect);
 
-    /** listen the event that coming to foreground on Android
+    /** listen the event that renderer was recreated on Android/WP8
      * @js NA
      * @lua NA
      */
-    void listenBackToForeground(EventCustom* event);
+    void listenRendererRecreated(EventCustom* event);
 
     /**
      * @js NA
@@ -106,7 +106,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     /**
      * @js NA

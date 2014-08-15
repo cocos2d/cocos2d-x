@@ -2,11 +2,12 @@
 --------------------------------
 -- @module RenderTexture
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @param #rect_table rect
 -- @param #rect_table rect
         
@@ -64,14 +65,14 @@
 -- @param self
         
 --------------------------------
--- overload function: saveToFile(string, cc.Image::Format)
---          
--- overload function: saveToFile(string)
---          
+-- @overload self, string, int, bool, function         
+-- @overload self, string, bool, function         
 -- @function [parent=#RenderTexture] saveToFile
 -- @param self
 -- @param #string str
--- @param #cc.Image::Format format
+-- @param #int format
+-- @param #bool bool
+-- @param #function func
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
@@ -89,12 +90,9 @@
 -- @param self
         
 --------------------------------
--- overload function: beginWithClear(float, float, float, float, float)
---          
--- overload function: beginWithClear(float, float, float, float)
---          
--- overload function: beginWithClear(float, float, float, float, float, int)
---          
+-- @overload self, float, float, float, float, float         
+-- @overload self, float, float, float, float         
+-- @overload self, float, float, float, float, float, int         
 -- @function [parent=#RenderTexture] beginWithClear
 -- @param self
 -- @param #float float
@@ -138,30 +136,25 @@
 -- @param #float float
         
 --------------------------------
--- overload function: initWithWidthAndHeight(int, int, cc.Texture2D::PixelFormat, unsigned int)
---          
--- overload function: initWithWidthAndHeight(int, int, cc.Texture2D::PixelFormat)
---          
+-- @overload self, int, int, int, unsigned int         
+-- @overload self, int, int, int         
 -- @function [parent=#RenderTexture] initWithWidthAndHeight
 -- @param self
 -- @param #int int
 -- @param #int int
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
 -- @param #unsigned int int
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
--- overload function: create(int, int, cc.Texture2D::PixelFormat)
---          
--- overload function: create(int, int, cc.Texture2D::PixelFormat, unsigned int)
---          
--- overload function: create(int, int)
---          
+-- @overload self, int, int, int         
+-- @overload self, int, int, int, unsigned int         
+-- @overload self, int, int         
 -- @function [parent=#RenderTexture] create
 -- @param self
 -- @param #int int
 -- @param #int int
--- @param #cc.Texture2D::PixelFormat pixelformat
+-- @param #int pixelformat
 -- @param #unsigned int int
 -- @return RenderTexture#RenderTexture ret (retunr value: cc.RenderTexture)
 
@@ -169,15 +162,15 @@
 -- @function [parent=#RenderTexture] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#RenderTexture] visit 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#RenderTexture] RenderTexture 

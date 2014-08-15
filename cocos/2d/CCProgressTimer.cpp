@@ -500,7 +500,7 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
     return Vec2::ZERO;
 }
 
-void ProgressTimer::onDraw(const Mat4 &transform, bool transformUpdated)
+void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 {
 
     getGLProgram()->use();
@@ -551,13 +551,13 @@ void ProgressTimer::onDraw(const Mat4 &transform, bool transformUpdated)
     }
 }
 
-void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if( ! _vertexData || ! _sprite)
         return;
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 

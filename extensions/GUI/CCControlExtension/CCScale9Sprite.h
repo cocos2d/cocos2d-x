@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteBatchNode.h"
-
+#include "extensions/ExtensionExport.h"
 #include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
@@ -53,7 +53,7 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class Scale9Sprite : public Node
+class CC_EX_DLL Scale9Sprite : public Node
 {
 public:
     /**
@@ -261,7 +261,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
     virtual void setOpacity(GLubyte opacity) override;

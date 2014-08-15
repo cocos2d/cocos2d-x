@@ -27,7 +27,7 @@
 
 #include <string>
 #include "base/CCRef.h"
-
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +37,7 @@ namespace ui {
  *   @js NA
  *   @lua NA
  */
-class Margin
+class CC_GUI_DLL Margin
 {
 public:
     float left;
@@ -52,9 +52,11 @@ public:
     Margin& operator= (const Margin& other);
     void setMargin(float l, float t, float r, float b);
     bool equals(const Margin& target) const;
+    
+    static const Margin ZERO;
+
 };
 
-const Margin MarginZero = Margin();
 
 /**
 *   @js NA
@@ -67,7 +69,7 @@ const Margin MarginZero = Margin();
 #endif
 #endif
 
-class LayoutParameter : public Ref
+class CC_GUI_DLL LayoutParameter : public Ref
 {
 public:
     enum class Type
@@ -129,13 +131,20 @@ protected:
     Margin _margin;
     Type _layoutParameterType;
 };
+    
+class CC_GUI_DLL LayoutParameterProtocol
+{
+public:
+    virtual ~LayoutParameterProtocol(){}
+    virtual LayoutParameter* getLayoutParameter() const= 0;
+};
 
     
 /**
 *   @js NA
 *   @lua NA
 */
-class LinearLayoutParameter : public LayoutParameter
+class CC_GUI_DLL LinearLayoutParameter : public LayoutParameter
 {
 public:
     enum class LinearGravity
@@ -198,7 +207,7 @@ protected:
 */
 
     
-class RelativeLayoutParameter : public LayoutParameter
+class CC_GUI_DLL RelativeLayoutParameter : public LayoutParameter
 {
 public:
     enum class RelativeAlign
@@ -305,7 +314,7 @@ protected:
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
     bool _put;
-    friend class RelativeLayoutExecutant;
+    friend class RelativeLayoutManager;
 };
 
 }

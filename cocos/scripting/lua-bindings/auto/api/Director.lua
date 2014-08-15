@@ -1,10 +1,16 @@
 
 --------------------------------
 -- @module Director
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Director] pause 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Director] setEventDispatcher 
+-- @param self
+-- @param #cc.EventDispatcher eventdispatcher
         
 --------------------------------
 -- @function [parent=#Director] pushScene 
@@ -34,7 +40,7 @@
 --------------------------------
 -- @function [parent=#Director] pushMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
         
 --------------------------------
 -- @function [parent=#Director] setGLDefaultValues 
@@ -57,8 +63,8 @@
 --------------------------------
 -- @function [parent=#Director] loadMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #cc.Mat4 mat4
+-- @param #int matrix_stack_type
+-- @param #mat4_table mat4
         
 --------------------------------
 -- @function [parent=#Director] getNotificationNode 
@@ -83,7 +89,7 @@
 --------------------------------
 -- @function [parent=#Director] getVisibleOrigin 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Director] mainLoop 
@@ -107,8 +113,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToUI 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Director] setDefaultValues 
@@ -177,8 +183,8 @@
 --------------------------------
 -- @function [parent=#Director] convertToGL 
 -- @param self
--- @param #cc.Vec2 vec2
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @param #vec2_table vec2
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Director] purgeCachedData 
@@ -211,8 +217,8 @@
 --------------------------------
 -- @function [parent=#Director] getMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @return Mat4#Mat4 ret (return value: cc.Mat4)
+-- @param #int matrix_stack_type
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- @function [parent=#Director] popScene 
@@ -226,12 +232,12 @@
 --------------------------------
 -- @function [parent=#Director] setProjection 
 -- @param self
--- @param #cc.Director::Projection projection
+-- @param #int projection
         
 --------------------------------
 -- @function [parent=#Director] loadIdentityMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
         
 --------------------------------
 -- @function [parent=#Director] setNextDeltaTimeZero 
@@ -245,7 +251,7 @@
 --------------------------------
 -- @function [parent=#Director] popMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
         
 --------------------------------
 -- @function [parent=#Director] getVisibleSize 
@@ -278,6 +284,11 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#Director] getEventDispatcher 
+-- @param self
+-- @return EventDispatcher#EventDispatcher ret (return value: cc.EventDispatcher)
+        
+--------------------------------
 -- @function [parent=#Director] replaceScene 
 -- @param self
 -- @param #cc.Scene scene
@@ -285,8 +296,8 @@
 --------------------------------
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
--- @param #cc.Mat4 mat4
+-- @param #int matrix_stack_type
+-- @param #mat4_table mat4
         
 --------------------------------
 -- @function [parent=#Director] getActionManager 

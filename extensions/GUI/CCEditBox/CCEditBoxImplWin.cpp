@@ -26,17 +26,8 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#ifndef GLFW_EXPOSE_NATIVE_WIN32
-#define GLFW_EXPOSE_NATIVE_WIN32
-#endif
-
-#ifndef GLFW_EXPOSE_NATIVE_WGL
-#define GLFW_EXPOSE_NATIVE_WGL
-#endif
-
 #include "CCEditBox.h"
 #include "proj.win32/Win32InputBox.h"
-#include "glfw3native.h"
 
 NS_CC_EXT_BEGIN
 
@@ -93,12 +84,12 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if(_label != NULL) {
+	if(_label != nullptr) {
 		_label->setSystemFontName(pFontName);
 		_label->setSystemFontSize(fontSize);
 	}
 	
-	if(_labelPlaceHolder != NULL) {
+	if(_labelPlaceHolder != nullptr) {
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
@@ -112,7 +103,7 @@ void EditBoxImplWin::setFontColor(const Color3B& color)
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(_labelPlaceHolder != NULL) {
+	if(_labelPlaceHolder != nullptr) {
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
@@ -156,7 +147,7 @@ bool EditBoxImplWin::isEditing()
 
 void EditBoxImplWin::setText(const char* pText)
 {
-    if (pText != NULL)
+    if (pText != nullptr)
     {
         _text = pText;
 
@@ -199,7 +190,7 @@ const char*  EditBoxImplWin::getText(void)
 
 void EditBoxImplWin::setPlaceHolder(const char* pText)
 {
-    if (pText != NULL)
+    if (pText != nullptr)
     {
         _placeHolder = pText;
         if (_placeHolder.length() > 0 && _text.length() == 0)
@@ -236,13 +227,13 @@ void EditBoxImplWin::visit(void)
 
 void EditBoxImplWin::openKeyboard()
 {
-    if (_delegate != NULL)
+    if (_delegate != nullptr)
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
     
     EditBox* pEditBox = this->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
@@ -257,15 +248,14 @@ void EditBoxImplWin::openKeyboard()
 	std::string text = getText();
 	if (text.length())
 		strncpy(pText, text.c_str(), 100);
-	GLView *glView = Director::getInstance()->getOpenGLView();
-	GLFWwindow *glfwWindow = glView->getWindow();
-	HWND hwnd = glfwGetWin32Window(glfwWindow);
+	auto glView = Director::getInstance()->getOpenGLView();
+	HWND hwnd = glView->getWin32Window();
 	bool didChange = CWin32InputBox::InputBox("Input", placeHolder.c_str(), pText, 100, false, hwnd) == IDOK;
 	
 	if (didChange) 	
 		setText(pText);
 
-	if (_delegate != NULL) {
+	if (_delegate != nullptr) {
 		if (didChange)
 			_delegate->editBoxTextChanged(_editBox, getText());
 		_delegate->editBoxEditingDidEnd(_editBox);

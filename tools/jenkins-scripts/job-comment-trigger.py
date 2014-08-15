@@ -8,6 +8,11 @@ import sys
 import traceback
 import urllib2
 
+http_proxy = ''
+if(os.environ.has_key('HTTP_PROXY')):
+    http_proxy = os.environ['HTTP_PROXY']
+proxyDict = {'http':http_proxy,'https':http_proxy}
+
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -74,7 +79,7 @@ def main():
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
     
-    data = {"state":"pending", "target_url":target_url}
+    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Wait available build machine..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
 
@@ -82,7 +87,7 @@ def main():
         if searchCI:
           ciOper = searchCI.group()
           if('rebuild' in ciOper):
-            requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+            requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
     except:
         traceback.print_exc()
 
@@ -112,7 +117,7 @@ def main():
     else:
       post_data = {'payload':""}
       post_data['payload']= json.dumps(payload_forword)
-    requests.post(job_trigger_url, data=post_data)
+    requests.post(job_trigger_url, data=post_data, proxies = proxyDict)
 
     return(0)
 

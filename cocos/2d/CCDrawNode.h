@@ -39,7 +39,7 @@ NS_CC_BEGIN
 
 /** DrawNode
  Node that draws dots, segments and polygons.
- Faster than the "drawing primitives" since they it draws everything in one single batch.
+ Faster than the "drawing primitives" since they draws everything in one single batch.
  
  @since v2.1
  */
@@ -89,10 +89,10 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();

@@ -2,11 +2,18 @@
 --------------------------------
 -- @module Scene
 -- @extend Node
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#Scene] getPhysicsWorld 
 -- @param self
 -- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
+        
+--------------------------------
+-- @function [parent=#Scene] createWithSize 
+-- @param self
+-- @param #size_table size
+-- @return Scene#Scene ret (return value: cc.Scene)
         
 --------------------------------
 -- @function [parent=#Scene] create 
@@ -34,10 +41,12 @@
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Scene] addChild 
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
+-- @function [parent=#Scene] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 return nil

@@ -616,6 +616,14 @@ void ParticleSystem::initParticle(tParticle* particle)
 
 void ParticleSystem::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     
     // update after action in run!
@@ -763,7 +771,12 @@ void ParticleSystem::update(float dt)
 
                 Vec2    newPos;
 
-                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
+                if (_positionType == PositionType::FREE)
+                {
+                    Vec2 diff = convertToNodeSpace(currentPosition) - convertToNodeSpace(p-> startPos);
+                    newPos = p->pos - diff;
+                }
+                else if(_positionType == PositionType::RELATIVE)
                 {
                     Vec2 diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;

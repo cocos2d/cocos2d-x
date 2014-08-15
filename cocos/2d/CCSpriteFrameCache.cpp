@@ -65,7 +65,7 @@ void SpriteFrameCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(_sharedSpriteFrameCache);
 }
 
-bool SpriteFrameCache::init(void)
+bool SpriteFrameCache::init()
 {
     _spriteFrames.reserve(20);
     _spriteFramesAliases.reserve(20);
@@ -73,7 +73,7 @@ bool SpriteFrameCache::init(void)
     return true;
 }
 
-SpriteFrameCache::~SpriteFrameCache(void)
+SpriteFrameCache::~SpriteFrameCache()
 {
     CC_SAFE_DELETE(_loadedFileNames);
 }
@@ -132,13 +132,12 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             ow = abs(ow);
             oh = abs(oh);
             // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(texture,
-                                        Rect(x, y, w, h), 
-                                        false,
-                                        Vec2(ox, oy),
-                                        Size((float)ow, (float)oh)
-                                        );
+            spriteFrame = SpriteFrame::createWithTexture(texture,
+                                                         Rect(x, y, w, h),
+                                                         false,
+                                                         Vec2(ox, oy),
+                                                         Size((float)ow, (float)oh)
+                                                         );
         } 
         else if(format == 1 || format == 2) 
         {
@@ -155,13 +154,12 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             Size sourceSize = SizeFromString(frameDict["sourceSize"].asString());
 
             // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(texture,
-                frame,
-                rotated,
-                offset,
-                sourceSize
-                );
+            spriteFrame = SpriteFrame::createWithTexture(texture,
+                                                         frame,
+                                                         rotated,
+                                                         offset,
+                                                         sourceSize
+                                                         );
         } 
         else if (format == 3)
         {
@@ -186,26 +184,36 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             }
             
             // create frame
-            spriteFrame = new SpriteFrame();
-            spriteFrame->initWithTexture(texture,
-                            Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
-                            textureRotated,
-                            spriteOffset,
-                            spriteSourceSize);
+            spriteFrame = SpriteFrame::createWithTexture(texture,
+                                                         Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
+                                                         textureRotated,
+                                                         spriteOffset,
+                                                         spriteSourceSize);
         }
 
         // add sprite frame
         _spriteFrames.insert(spriteFrameName, spriteFrame);
-        spriteFrame->release();
     }
 }
 
-void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist, Texture2D *pobTexture)
+void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
+    {
+        return; // We already added it
+    }
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
-    addSpriteFramesWithDictionary(dict, pobTexture);
+    addSpriteFramesWithDictionary(dict, texture);
+    _loadedFileNames->insert(plist);
+}
+
+void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture)
+{
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromData(plist_content.c_str(), plist_content.size());
+    addSpriteFramesWithDictionary(dict, texture);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
@@ -223,13 +231,13 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
     }
 }
 
-void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
+void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
-    CCASSERT(pszPlist.size()>0, "plist filename should not be nullptr");
+    CCASSERT(plist.size()>0, "plist filename should not be nullptr");
 
-    if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
+    if (_loadedFileNames->find(plist) == _loadedFileNames->end())
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -244,12 +252,12 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
         if (!texturePath.empty())
         {
             // build texture path relative to plist file
-            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), pszPlist);
+            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
         }
         else
         {
             // build texture path by replacing file extension
-            texturePath = pszPlist;
+            texturePath = plist;
 
             // remove .xxx
             size_t startPos = texturePath.find_last_of("."); 
@@ -266,7 +274,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
         if (texture)
         {
             addSpriteFramesWithDictionary(dict, texture);
-            _loadedFileNames->insert(pszPlist);
+            _loadedFileNames->insert(plist);
         }
         else
         {
@@ -353,6 +361,17 @@ void SpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
     {
         _loadedFileNames->erase(ret);
     }
+}
+
+void SpriteFrameCache::removeSpriteFramesFromFileContent(const std::string& plist_content)
+{
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromData(plist_content.data(), plist_content.size());
+    if (dict.empty())
+    {
+        CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFileContent: create dict by fail.");
+        return;
+    }
+    removeSpriteFramesFromDictionary(dict);
 }
 
 void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)

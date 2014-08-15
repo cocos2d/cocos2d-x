@@ -2,11 +2,12 @@
 --------------------------------
 -- @module TMXObjectGroup
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TMXObjectGroup] setPositionOffset 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#TMXObjectGroup] getProperty 
@@ -17,7 +18,7 @@
 --------------------------------
 -- @function [parent=#TMXObjectGroup] getPositionOffset 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#TMXObjectGroup] getObject 
@@ -26,10 +27,8 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- overload function: getObjects()
---          
--- overload function: getObjects()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXObjectGroup] getObjects
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)
@@ -40,10 +39,8 @@
 -- @param #string str
         
 --------------------------------
--- overload function: getProperties()
---          
--- overload function: getProperties()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXObjectGroup] getProperties
 -- @param self
 -- @return map_table#map_table ret (retunr value: map_table)

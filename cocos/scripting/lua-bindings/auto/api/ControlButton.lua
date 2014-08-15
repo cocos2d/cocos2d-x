@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ControlButton
 -- @extend Control
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ControlButton] isPushed 
@@ -17,7 +18,7 @@
 -- @function [parent=#ControlButton] setTitleLabelForState 
 -- @param self
 -- @param #cc.Node node
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setAdjustBackgroundImage 
@@ -38,35 +39,35 @@
 -- @function [parent=#ControlButton] setTitleForState 
 -- @param self
 -- @param #string str
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setLabelAnchorPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#ControlButton] getLabelAnchorPoint 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleTTFForState 
 -- @param self
 -- @param #string str
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleTTFSizeForState 
 -- @param self
 -- @param #float float
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleLabel 
@@ -91,7 +92,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getBackgroundSpriteForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return Scale9Sprite#Scale9Sprite ret (return value: cc.Scale9Sprite)
         
 --------------------------------
@@ -104,10 +105,8 @@
 -- @param self
         
 --------------------------------
--- overload function: getCurrentTitle()
---          
--- overload function: getCurrentTitle()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#ControlButton] getCurrentTitle
 -- @param self
 -- @return string#string ret (retunr value: string)
@@ -120,7 +119,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleTTFForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return string#string ret (return value: string)
         
 --------------------------------
@@ -131,14 +130,14 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleColorForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- @function [parent=#ControlButton] setTitleColorForState 
 -- @param self
 -- @param #color3b_table color3b
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] doesAdjustBackgroundImage 
@@ -149,13 +148,13 @@
 -- @function [parent=#ControlButton] setBackgroundSpriteFrameForState 
 -- @param self
 -- @param #cc.SpriteFrame spriteframe
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setBackgroundSpriteForState 
 -- @param self
 -- @param #cc.Scale9Sprite scale9sprite
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] setScaleRatio 
@@ -185,7 +184,7 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleLabelForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
@@ -198,12 +197,12 @@
 -- @function [parent=#ControlButton] setTitleBMFontForState 
 -- @param self
 -- @param #string str
--- @param #cc.Control::State state
+-- @param #int state
         
 --------------------------------
 -- @function [parent=#ControlButton] getTitleBMFontForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return string#string ret (return value: string)
         
 --------------------------------
@@ -214,18 +213,14 @@
 --------------------------------
 -- @function [parent=#ControlButton] getTitleForState 
 -- @param self
--- @param #cc.Control::State state
+-- @param #int state
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: create(cc.Scale9Sprite)
---          
--- overload function: create()
---          
--- overload function: create(cc.Node, cc.Scale9Sprite)
---          
--- overload function: create(string, string, float)
---          
+-- @overload self, cc.Scale9Sprite         
+-- @overload self         
+-- @overload self, cc.Node, cc.Scale9Sprite         
+-- @overload self, string, string, float         
 -- @function [parent=#ControlButton] create
 -- @param self
 -- @param #string str

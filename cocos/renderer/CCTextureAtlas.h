@@ -189,9 +189,9 @@ public:
     /** draws all the Atlas's Quads
     */
     void drawQuads();
-    /** listen the event that coming to foreground on Android
+    /** listen the event that renderer was recreated on Android
      */
-    void listenBackToForeground(EventCustom* event);
+    void listenRendererRecreated(EventCustom* event);
 
     /** whether or not the array buffer of the VBO needs to be updated*/
     inline bool isDirty(void) { return _dirty; }
@@ -244,7 +244,7 @@ protected:
     V3F_C4B_T2F_Quad* _quads;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _backToForegroundlistener;
+    EventListenerCustom* _rendererRecreatedListener;
 #endif
 };
 

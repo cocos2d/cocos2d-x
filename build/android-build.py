@@ -7,8 +7,8 @@ import os, os.path
 import shutil
 from optparse import OptionParser
 
-CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests']
-LUA_SAMPLES = ['lua-empty-test', 'lua-tests']
+CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests', 'game-controller-test']
+LUA_SAMPLES = ['lua-empty-test', 'lua-tests', 'lua-game-controller-test']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
 def get_num_of_cpu():
@@ -53,23 +53,7 @@ def check_environment_variables_sdk():
     return SDK_ROOT
 
 def select_toolchain_version():
-    '''Because ndk-r8e uses gcc4.6 as default. gcc4.6 doesn't support c++11. So we should select gcc4.7 when
-    using ndk-r8e. But gcc4.7 is removed in ndk-r9, so we should determine whether gcc4.7 exist.
-    Conclution:
-    ndk-r8e  -> use gcc4.7
-    ndk-r9   -> use gcc4.8
-    '''
-
-    ndk_root = check_environment_variables()
-    if os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.8")):
-        os.environ['NDK_TOOLCHAIN_VERSION'] = '4.8'
-        print "The Selected NDK toolchain version was 4.8 !"
-    elif os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.7")):
-        os.environ['NDK_TOOLCHAIN_VERSION'] = '4.7'
-        print "The Selected NDK toolchain version was 4.7 !"
-    else:
-        print "Couldn't find the gcc toolchain."
-        exit(1)
+    pass
 
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
@@ -108,9 +92,9 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,an
 
     num_of_cpu = get_num_of_cpu()
     if ndk_build_param == None:
-        command = '%s -j%d -C %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_module_path)
+        command = '%s -j%d -C %s NDK_DEBUG=%d %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ndk_module_path)
     else:
-        command = '%s -j%d -C %s %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_build_param, ndk_module_path)
+        command = '%s -j%d -C %s NDK_DEBUG=%d %s %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ndk_build_param, ndk_module_path)
     print command
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
@@ -138,6 +122,10 @@ def copy_files(src, dst):
             new_dst = os.path.join(dst, item)
             os.mkdir(new_dst)
             copy_files(path, new_dst)
+
+def copy_file(src_file, dst):
+    if not src_file.startswith('.') and not src_file.endswith('.gz') and os.path.isfile(src_file):
+        shutil.copy(src_file, dst)
 
 def copy_resources(target, app_android_root):
 
@@ -170,7 +158,21 @@ def copy_resources(target, app_android_root):
         copy_files(src_dir, assets_src_dir)
 
         common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
-        copy_files(common_script_dir, assets_dir)
+        if target == "lua-tests":
+            copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "cocosbuilder"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "cocosdenshion"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "cocostudio"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "extension"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "network"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "ui"), assets_dir)
+        elif target == "lua-empty-test":
+            copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "cocosdenshion"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "network"), assets_dir)
+        elif target == "lua-game-controller-test":
+            copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "controller"), assets_dir)
 
         luasocket_script_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
         for root, dirs, files in os.walk(luasocket_script_dir):
@@ -187,6 +189,10 @@ def copy_resources(target, app_android_root):
             copy_files(resources_cocosbuilder_res_dir, assets_cocosbuilder_res_dir)
 
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
+            copy_files(resources_dir, assets_res_dir)
+        if target == "lua-game-controller-test":
+            print("coming generator game controller")
+            resources_dir = os.path.join(app_android_root, "../../../game-controller-test/Resources")
             copy_files(resources_dir, assets_res_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
@@ -216,9 +222,11 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 
     target_proj_path_map = {
         "cpp-empty-test": "tests/cpp-empty-test/proj.android",
+        "game-controller-test": "tests/game-controller-test/proj.android",
         "cpp-tests": "tests/cpp-tests/proj.android",
         "lua-empty-test": "tests/lua-empty-test/project/proj.android",
-        "lua-tests": "tests/lua-tests/project/proj.android"
+        "lua-tests": "tests/lua-tests/project/proj.android",
+        "lua-game-controller-test": "tests/lua-game-controller-test/project/proj.android"
     }
 
     for target in build_targets:

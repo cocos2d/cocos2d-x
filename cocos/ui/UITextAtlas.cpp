@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UITextAtlas.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
@@ -158,8 +159,8 @@ void TextAtlas::labelAtlasScaleChangedWithSize()
             _labelAtlasRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _labelAtlasRenderer->setScaleX(scaleX);
         _labelAtlasRenderer->setScaleY(scaleY);
     }
@@ -169,21 +170,6 @@ void TextAtlas::labelAtlasScaleChangedWithSize()
 std::string TextAtlas::getDescription() const
 {
     return "TextAtlas";
-}
-    
-void TextAtlas::updateTextureColor()
-{
-    updateColorToRenderer(_labelAtlasRenderer);
-}
-
-void TextAtlas::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_labelAtlasRenderer);
-}
-
-void TextAtlas::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_labelAtlasRenderer);
 }
 
 Widget* TextAtlas::createCloneInstance()

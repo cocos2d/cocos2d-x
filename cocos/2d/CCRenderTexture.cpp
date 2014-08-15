@@ -67,6 +67,7 @@ RenderTexture::RenderTexture()
 , _rtTextureRect(Rect::ZERO)
 , _fullRect(Rect::ZERO)
 , _fullviewPort(Rect::ZERO)
+, _saveFileCallback(nullptr)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
@@ -94,6 +95,9 @@ RenderTexture::~RenderTexture()
 
 void RenderTexture::listenToBackground(EventCustom *event)
 {
+    // We have not found a way to dispatch the enter background message before the texture data are destroyed.
+    // So we disable this pair of message handler at present.
+#if 0
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CC_SAFE_DELETE(_UITextureImage);
     
@@ -118,10 +122,12 @@ void RenderTexture::listenToBackground(EventCustom *event)
     glDeleteFramebuffers(1, &_FBO);
     _FBO = 0;
 #endif
+#endif
 }
 
 void RenderTexture::listenToForeground(EventCustom *event)
 {
+#if 0
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -138,6 +144,7 @@ void RenderTexture::listenToForeground(EventCustom *event)
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+#endif
 #endif
 }
 
@@ -383,62 +390,81 @@ void RenderTexture::clearStencil(int stencilValue)
     glClearStencil(stencilClearValue);
 }
 
-void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // override visit.
 	// Don't call visit on its children
-    if (!_visible)
+    if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }
 	
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
-    
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
+    Director* director = Director::getInstance();
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
-    _sprite->visit(renderer, _modelViewTransform, dirty);
-    draw(renderer, _modelViewTransform, dirty);
+    _sprite->visit(renderer, _modelViewTransform, flags);
+    draw(renderer, _modelViewTransform, flags);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _orderOfArrival = 0;
 }
 
-bool RenderTexture::saveToFile(const std::string& filename)
+bool RenderTexture::saveToFile(const std::string& filename, bool isRGBA, std::function<void (RenderTexture*, const std::string&)> callback)
 {
-    return saveToFile(filename,Image::Format::JPG);
+    std::string basename(filename);
+    std::transform(basename.begin(), basename.end(), basename.begin(), ::tolower);
+    
+    if (basename.find(".png") != std::string::npos)
+    {
+        return saveToFile(filename, Image::Format::PNG, isRGBA, callback);
+    }
+    else if (basename.find(".jpg") != std::string::npos)
+    {
+        if (isRGBA) CCLOG("RGBA is not supported for JPG format.");
+        return saveToFile(filename, Image::Format::JPG, false, callback);
+    }
+    else
+    {
+        CCLOG("Only PNG and JPG format are supported now!");
+    }
+    
+    return saveToFile(filename, Image::Format::JPG, false, callback);
 }
-bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format)
+
+bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format, bool isRGBA, std::function<void (RenderTexture*, const std::string&)> callback)
 {
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
              "the image can only be saved as JPG or PNG format");
+    if (isRGBA && format == Image::Format::JPG) CCLOG("RGBA is not supported for JPG format");
+    
+    _saveFileCallback = callback;
     
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
-    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile,this,fullpath);
+    _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA);
     
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
 
-void RenderTexture::onSaveToFile(const std::string& filename)
+void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
     Image *image = newImage(true);
     if (image)
     {
-        image->saveToFile(filename.c_str(), true);
+        image->saveToFile(filename.c_str(), !isRGBA);
     }
-
+    if(_saveFileCallback)
+    {
+        _saveFileCallback(this, filename);
+    }
     CC_SAFE_DELETE(image);
 }
 
@@ -536,7 +562,7 @@ void RenderTexture::onBegin()
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
         Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        modifiedProjection = CCEGLView::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        modifiedProjection = GLViewImpl::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
 #endif
 
@@ -550,6 +576,14 @@ void RenderTexture::onBegin()
         Mat4 orthoMatrix;
         Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
         director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+    }
+    else
+    {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+        Mat4 modifiedProjection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        modifiedProjection = GLViewImpl::sharedOpenGLView()->getReverseOrientationMatrix() * modifiedProjection;
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, modifiedProjection);
+#endif
     }
     
     //calculate viewport
@@ -654,7 +688,7 @@ void RenderTexture::onClearDepth()
     glClearDepth(depthClearValue);
 }
 
-void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_autoDraw)
     {
@@ -672,7 +706,7 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, bool transfo
         for(const auto &child: _children)
         {
             if (child != _sprite)
-                child->visit(renderer, transform, transformUpdated);
+                child->visit(renderer, transform, flags);
         }
 
         //End will pop the current render group

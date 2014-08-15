@@ -160,6 +160,7 @@ void Skin::updateTransform()
         //
         // calculate the Quad based on the Affine Matrix
         //
+        Mat4 transform = getNodeToParentTransform();
 
         Size &size = _rect.size;
 
@@ -169,13 +170,13 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
-        float x = _transform.m[12];
-        float y = _transform.m[13];
+        float x = transform.m[12];
+        float y = transform.m[13];
 
-        float cr = _transform.m[0];
-        float sr = _transform.m[1];
-        float cr2 = _transform.m[5];
-        float sr2 = -_transform.m[4];
+        float cr = transform.m[0];
+        float sr = transform.m[1];
+        float cr2 = transform.m[5];
+        float sr2 = -transform.m[4];
         float ax = x1 * cr - y1 * sr2 + x;
         float ay = x1 * sr + y1 * cr2 + y;
 
@@ -219,7 +220,7 @@ Mat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     Mat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 

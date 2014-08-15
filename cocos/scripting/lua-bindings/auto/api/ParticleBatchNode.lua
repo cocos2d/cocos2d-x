@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ParticleBatchNode
 -- @extend Node,TextureProtocol
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#ParticleBatchNode] setTexture 
@@ -60,25 +61,27 @@
 -- @return ParticleBatchNode#ParticleBatchNode ret (return value: cc.ParticleBatchNode)
         
 --------------------------------
--- @function [parent=#ParticleBatchNode] addChild 
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
+-- @function [parent=#ParticleBatchNode] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
 -- @param #int int
-        
+
 --------------------------------
 -- @function [parent=#ParticleBatchNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#ParticleBatchNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 --------------------------------
 -- @function [parent=#ParticleBatchNode] reorderChild 

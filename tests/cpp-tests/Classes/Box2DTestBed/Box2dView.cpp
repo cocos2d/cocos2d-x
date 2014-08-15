@@ -67,7 +67,7 @@ bool MenuLayer::initWithEntryID(int entryId)
     auto item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
     auto item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(MenuLayer::nextCallback, this) );
 
-    auto menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -202,16 +202,16 @@ std::string Box2DView::title() const
     return std::string(m_entry->name);
 }
 
-void Box2DView::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void Box2DView::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Layer::draw(renderer, transform, transformUpdated);
+    Layer::draw(renderer, transform, flags);
 
     _customCmd.init(_globalZOrder);
-    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, transformUpdated);
+    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, flags);
     renderer->addCommand(&_customCmd);
 }
 
-void Box2DView::onDraw(const Mat4 &transform, bool transformUpdated)
+void Box2DView::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");

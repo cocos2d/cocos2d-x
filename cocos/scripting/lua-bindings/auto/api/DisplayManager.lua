@@ -2,6 +2,7 @@
 --------------------------------
 -- @module DisplayManager
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#DisplayManager] getDisplayRenderNode 
@@ -11,12 +12,12 @@
 --------------------------------
 -- @function [parent=#DisplayManager] getAnchorPointInPoints 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#DisplayManager] getDisplayRenderNodeType 
 -- @param self
--- @return DisplayType#DisplayType ret (return value: ccs.DisplayType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#DisplayManager] removeDisplay 
@@ -45,20 +46,16 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- overload function: addDisplay(cc.Node, int)
---          
--- overload function: addDisplay(ccs.DisplayData, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, ccs.DisplayData, int         
 -- @function [parent=#DisplayManager] addDisplay
 -- @param self
 -- @param #ccs.DisplayData displaydata
 -- @param #int int
 
 --------------------------------
--- overload function: containPoint(float, float)
---          
--- overload function: containPoint(cc.Vec2)
---          
+-- @overload self, float, float         
+-- @overload self, vec2_table         
 -- @function [parent=#DisplayManager] containPoint
 -- @param self
 -- @param #float float
@@ -90,7 +87,7 @@
 --------------------------------
 -- @function [parent=#DisplayManager] getAnchorPoint 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#DisplayManager] getDecorativeDisplayList 

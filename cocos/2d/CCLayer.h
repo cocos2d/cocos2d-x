@@ -173,9 +173,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
-    void _addTouchListener();
+    CC_DEPRECATED_ATTRIBUTE void _addTouchListener() {}
 
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
+    CC_DEPRECATED_ATTRIBUTE void addTouchListener() {}
     CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
     CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
 
@@ -270,7 +270,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
@@ -299,7 +299,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const Mat4& transform, bool transformUpdated);
+    void onDraw(const Mat4& transform, uint32_t flags);
 
     virtual void updateColor() override;
 

@@ -2,6 +2,7 @@
 --------------------------------
 -- @module BaseData
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
 -- @function [parent=#BaseData] getColor 

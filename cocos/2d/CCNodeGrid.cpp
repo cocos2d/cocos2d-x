@@ -82,7 +82,7 @@ void NodeGrid::onGridEndDraw()
     }
 }
 
-void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -94,7 +94,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, bool paren
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    bool dirty = parentTransformUpdated || _transformUpdated;
+    bool dirty = (parentFlags & FLAGS_TRANSFORM_DIRTY) || _transformUpdated;
     if(dirty)
         _modelViewTransform = this->transform(parentTransform);
     _transformUpdated = false;
@@ -126,6 +126,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, bool paren
     }
     
     int i = 0;
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     if(!_children.empty())
     {
@@ -141,13 +142,14 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, bool paren
                 break;
         }
         // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
-        this->draw(renderer, _modelViewTransform, dirty);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
             (*it)->visit(renderer, _modelViewTransform, dirty);
         }
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, dirty);
     }

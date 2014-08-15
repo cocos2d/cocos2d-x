@@ -2,6 +2,7 @@
 --------------------------------
 -- @module EventDispatcher
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#EventDispatcher] pauseEventListenersForTarget 
@@ -78,7 +79,7 @@
 --------------------------------
 -- @function [parent=#EventDispatcher] removeEventListenersForType 
 -- @param self
--- @param #cc.EventListener::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#EventDispatcher] EventDispatcher 

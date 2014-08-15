@@ -262,14 +262,14 @@ void LabelTTF::setFlippedY(bool flippedY)
     }
 }
 
-void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_contentDirty)
     {
         this->setContentSize(_renderLabel->getContentSize());
         _contentDirty = false;
     }
-    Node::visit(renderer,parentTransform,parentTransformUpdated);
+    Node::visit(renderer,parentTransform, parentFlags);
 }
 
 const Size& LabelTTF::getContentSize() const
@@ -280,7 +280,8 @@ const Size& LabelTTF::getContentSize() const
 
 Rect LabelTTF::getBoundingBox() const
 {
-    return _renderLabel->getBoundingBox();
+    const_cast<LabelTTF*>(this)->setContentSize(_renderLabel->getContentSize());
+    return Node::getBoundingBox();
 }
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

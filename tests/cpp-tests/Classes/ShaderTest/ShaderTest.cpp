@@ -22,7 +22,7 @@ static Layer* createShaderLayer(int nIndex)
         case 9: return new ShaderGlow();
         case 10: return new ShaderMultiTexture();
     }
-    return NULL;
+    return nullptr;
 }
 
 static Layer* nextAction(void)
@@ -132,7 +132,7 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std:
 bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
             this->setGLProgramState(nullptr);
             loadShaderVertex(_vertFileName, _fragFileName);
         });
@@ -193,14 +193,14 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
-void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void ShaderNode::onDraw(const Mat4 &transform, bool transformUpdated)
+void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
@@ -421,22 +421,16 @@ class SpriteBlur : public Sprite
 {
 public:
     ~SpriteBlur();
-    void setBlurSize(float f);
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
     void initGLProgram();
 
     static SpriteBlur* create(const char *pszFileName);
+    void setBlurRadius(float radius);
+    void setBlurSampleNum(float num);
 
 protected:
-
-    int         _blurRadius;
-    Vec2     _pixelSize;
-
-    int       _samplingRadius;
-    //gaussian = cons * exp( (dx*dx + dy*dy) * scale);
-    float     _scale;
-    float     _cons;
-    float     _weightSum;
+    float _blurRadius;
+    float _blurSampleNum;
 };
 
 SpriteBlur::~SpriteBlur()
@@ -464,7 +458,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     if( Sprite::initWithTexture(texture, rect) ) 
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+        auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
                 setGLProgram(nullptr);
                 initGLProgram();
             });
@@ -472,14 +466,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
         
-        auto s = getTexture()->getContentSizeInPixels();
-
-        _pixelSize = Vec2(1/s.width, 1/s.height);
-
-        _samplingRadius = 0;
-        this->initGLProgram();
-
-        getGLProgramState()->setUniformVec2("onePixelSize", _pixelSize);
+        initGLProgram();
 
         return true;
     }
@@ -495,43 +482,23 @@ void SpriteBlur::initGLProgram()
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     setGLProgramState(glProgramState);
+    
+    auto size = getTexture()->getContentSizeInPixels();
+    getGLProgramState()->setUniformVec2("resolution", size);
+    getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
+    getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
 }
 
-void SpriteBlur::setBlurSize(float f)
+void SpriteBlur::setBlurRadius(float radius)
 {
-    if(_blurRadius == (int)f)
-        return;
-    _blurRadius = (int)f;
+    _blurRadius = radius;
+    getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
+}
 
-    _samplingRadius = _blurRadius;
-    if (_samplingRadius > 10)
-    {
-        _samplingRadius = 10;
-    }
-    if (_blurRadius > 0)
-    {
-        float sigma = _blurRadius / 2.0f;
-        _scale = -0.5f / (sigma * sigma);
-        _cons = -1.0f * _scale / 3.141592f;
-        _weightSum = -_cons;
-
-        float weight;
-        int squareX;
-        for(int dx = 0; dx <= _samplingRadius; ++dx)
-        {
-            squareX = dx * dx;
-            weight = _cons * exp(squareX * _scale);
-            _weightSum += 2.0 * weight;
-            for (int dy = 1; dy <= _samplingRadius; ++dy)
-            {
-                weight = _cons * exp((squareX + dy * dy) * _scale);
-                _weightSum += 4.0 * weight;
-            }
-        }
-    }
-    log("_blurRadius:%d",_blurRadius);
-
-    getGLProgramState()->setUniformVec4("gaussianCoefficient", Vec4(_samplingRadius, _scale, _cons, _weightSum));
+void SpriteBlur::setBlurSampleNum(float num)
+{
+    _blurSampleNum = num;
+    getGLProgramState()->setUniformFloat("sampleNum", _blurSampleNum);
 }
 
 // ShaderBlur
@@ -551,22 +518,43 @@ std::string ShaderBlur::subtitle() const
      return "Gaussian blur";
 }
 
-ControlSlider* ShaderBlur::createSliderCtl()
+void ShaderBlur::createSliderCtls()
 {
     auto screenSize = Director::getInstance()->getWinSize();
     
-    ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
-    slider->setAnchorPoint(Vec2(0.5f, 1.0f));
-    slider->setMinimumValue(0.0f); // Sets the min value of range
-    slider->setMaximumValue(25.0f); // Sets the max value of range
+    {
+        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        slider->setAnchorPoint(Vec2(0.5f, 1.0f));
+        slider->setMinimumValue(0.0f);
+        slider->setMaximumValue(25.0f);
+        slider->setScale(0.6f);
+        slider->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f));
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::onRadiusChanged), Control::EventType::VALUE_CHANGED);
+        slider->setValue(2.0f);
+        addChild(slider);
+        _sliderRadiusCtl = slider;
+        
+        auto label = Label::createWithTTF("Blur Radius", "fonts/arial.ttf", 12.0f);
+        addChild(label);
+        label->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f - 24.0f));
+    }
     
-    slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
-
-    // When the value of the slider will change, the given selector will be call
-    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::sliderAction), Control::EventType::VALUE_CHANGED);
-    slider->setValue(2.0f);
-
-    return slider;
+    {
+        ControlSlider *slider = ControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        slider->setAnchorPoint(Vec2(0.5f, 1.0f));
+        slider->setMinimumValue(0.0f);
+        slider->setMaximumValue(11.0f);
+        slider->setScale(0.6f);
+        slider->setPosition(Vec2(screenSize.width * 3 / 4.0f, screenSize.height / 3.0f));
+        slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::onSampleNumChanged), Control::EventType::VALUE_CHANGED);
+        slider->setValue(7.0f);
+        addChild(slider);
+        _sliderNumCtrl = slider;
+        
+        auto label = Label::createWithTTF("Blur Sample Num", "fonts/arial.ttf", 12.0f);
+        addChild(label);
+        label->setPosition(Vec2(screenSize.width * 3 / 4.0f, screenSize.height / 3.0f - 24.0f));
+    }
  
 }
 
@@ -575,9 +563,7 @@ bool ShaderBlur::init()
     if( ShaderTestDemo::init() ) 
     {
         _blurSprite = SpriteBlur::create("Images/grossini.png");
-
         auto sprite = Sprite::create("Images/grossini.png");
-
         auto s = Director::getInstance()->getWinSize();
         _blurSprite->setPosition(Vec2(s.width/3, s.height/2));
         sprite->setPosition(Vec2(2*s.width/3, s.height/2));
@@ -585,19 +571,24 @@ bool ShaderBlur::init()
         addChild(_blurSprite);
         addChild(sprite);
 
-        _sliderCtl = createSliderCtl();
+        createSliderCtls();
 
-        addChild(_sliderCtl);
         return true;
     }
 
     return false;
 }
 
-void ShaderBlur::sliderAction(Ref* sender, Control::EventType controlEvent)
+void ShaderBlur::onRadiusChanged(Ref* sender, Control::EventType)
 {
     ControlSlider* slider = (ControlSlider*)sender;
-    _blurSprite->setBlurSize(slider->getValue());
+    _blurSprite->setBlurRadius(slider->getValue());
+}
+
+void ShaderBlur::onSampleNumChanged(Ref* sender, Control::EventType)
+{
+    ControlSlider* slider = (ControlSlider*)sender;
+    _blurSprite->setBlurSampleNum(slider->getValue());
 }
 
 // ShaderRetroEffect
@@ -732,7 +723,7 @@ bool ShaderGlow::init()
 //
 // ShaderMultiTexture
 //
-ShaderMultiTexture::ShaderMultiTexture()
+ShaderMultiTexture::ShaderMultiTexture():_changedTextureId(0)
 {
     init();
 }
@@ -785,32 +776,51 @@ bool ShaderMultiTexture::init()
 
         // Right: normal sprite
         auto right = Sprite::create("Images/grossinis_sister2.png");
-        addChild(right);
+        addChild(right, 0, rightSpriteTag);
         right->setPosition(s.width*3/4, s.height/2);
 
 
         // Center: MultiTexture
-        _sprite = Sprite::create("Images/grossinis_sister1.png");
-        Texture2D *texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
-
+        _sprite = Sprite::createWithTexture(left->getTexture());
         addChild(_sprite);
-
         _sprite->setPosition(Vec2(s.width/2, s.height/2));
 
         auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
         _sprite->setGLProgramState(glprogramstate);
 
-        glprogramstate->setUniformTexture("u_texture1", texture1);
+        glprogramstate->setUniformTexture("u_texture1", right->getTexture());
         glprogramstate->setUniformFloat("u_interpolate",0.5);
 
         // slider
         createSliderCtl();
+        
+        // menu
+        auto label = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "change");
+        auto mi = MenuItemLabel::create(label, CC_CALLBACK_1(ShaderMultiTexture::changeTexture, this));
+        auto menu = Menu::create(mi, nullptr);
+        addChild(menu);
+        menu->setPosition(s.width * 7 / 8, s.height / 2);
 
         return true;
     }
 
     return false;
+}
+
+void ShaderMultiTexture::changeTexture(Ref*)
+{
+    static const int textureFilesCount = 3;
+    static const std::string textureFiles[textureFilesCount] = {
+        "Images/grossini.png",
+        "Images/grossinis_sister1.png",
+        "Images/grossinis_sister2.png"
+    };
+    auto textrue = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
+    Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
+    right->setTexture(textrue);
+    auto programState = _sprite->getGLProgramState();
+    programState->setUniformTexture("u_texture1", right->getTexture());
 }
 
 

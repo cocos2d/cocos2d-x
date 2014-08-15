@@ -29,7 +29,7 @@
 #define __CCCONTROLSWITCH_H__
 
 #include "CCControl.h"
-
+#include "extensions/ExtensionExport.h"
 
 namespace cocos2d { class Sprite; }
 namespace cocos2d { class Label; }
@@ -46,7 +46,7 @@ class ControlSwitchSprite;
  */
 
 /** @class ControlSwitch Switch control for Cocos2D. */
-class ControlSwitch : public Control
+class CC_EX_DLL ControlSwitch : public Control
 {
 public:
     /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */

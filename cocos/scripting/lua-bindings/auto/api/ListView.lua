@@ -2,6 +2,7 @@
 --------------------------------
 -- @module ListView
 -- @extend ScrollView
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#ListView] getIndex 
@@ -16,7 +17,7 @@
 --------------------------------
 -- @function [parent=#ListView] setGravity 
 -- @param self
--- @param #ccui.ListView::Gravity gravity
+-- @param #int gravity
         
 --------------------------------
 -- @function [parent=#ListView] pushBackCustomItem 
@@ -42,6 +43,10 @@
 -- @function [parent=#ListView] insertDefaultItem 
 -- @param self
 -- @param #long long
+        
+--------------------------------
+-- @function [parent=#ListView] requestRefreshView 
+-- @param self
         
 --------------------------------
 -- @function [parent=#ListView] setItemsMargin 
@@ -78,7 +83,7 @@
 -- @param #ccui.Widget widget
         
 --------------------------------
--- @function [parent=#ListView] requestRefreshView 
+-- @function [parent=#ListView] doLayout 
 -- @param self
         
 --------------------------------
@@ -102,9 +107,20 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
+-- @function [parent=#ListView] addChild
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #string str
+
+--------------------------------
 -- @function [parent=#ListView] setDirection 
 -- @param self
--- @param #ccui.ScrollView::Direction direction
+-- @param #int direction
         
 --------------------------------
 -- @function [parent=#ListView] getDescription 
@@ -112,8 +128,19 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#ListView] sortAllChildren 
+-- @function [parent=#ListView] removeAllChildrenWithCleanup 
 -- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ListView] removeAllChildren 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#ListView] removeChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#ListView] ListView 

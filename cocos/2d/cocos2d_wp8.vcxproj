@@ -222,13 +222,23 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\3d\CCAnimate3D.cpp" />
+    <ClCompile Include="..\3d\CCAnimation3D.cpp" />
+    <ClCompile Include="..\3d\CCAttachNode.cpp" />
+    <ClCompile Include="..\3d\CCBundle3D.cpp" />
+    <ClCompile Include="..\3d\CCBundleReader.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
+    <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
-    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp" />
+    <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
+    <ClCompile Include="..\3d\CCSubMesh.cpp" />
+    <ClCompile Include="..\3d\CCSubMeshState.cpp" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\base\CCCamera.cpp" />
     <ClCompile Include="..\base\ccCArray.cpp" />
     <ClCompile Include="..\base\CCConfiguration.cpp" />
     <ClCompile Include="..\base\CCConsole.cpp" />
@@ -275,11 +285,12 @@
     <ClCompile Include="..\base\CCTouch.cpp" />
     <ClCompile Include="..\base\ccTypes.cpp" />
     <ClCompile Include="..\base\CCUserDefault.cpp" />
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp" />
     <ClCompile Include="..\base\ccUTF8.cpp" />
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\ObjectFactory.cpp" />
+    <ClCompile Include="..\base\pvr.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
     <ClCompile Include="..\base\TGAlib.cpp" />
     <ClCompile Include="..\base\ZipUtils.cpp" />
@@ -311,7 +322,7 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp" />
+    <ClCompile Include="..\platform\CCGLView.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
@@ -327,7 +338,7 @@
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
-    <ClCompile Include="..\platform\wp8\CCGLView.cpp" />
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\DirectXBase.cpp" />
     <ClCompile Include="..\platform\wp8\pch.cpp">
@@ -345,6 +356,8 @@
     <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\renderer\CCMeshCommand.cpp" />
+    <ClCompile Include="..\renderer\CCPrimitive.cpp" />
+    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp" />
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
@@ -352,6 +365,8 @@
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
+    <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
     <ClCompile Include="CCActionCatmullRom.cpp" />
@@ -373,6 +388,8 @@
     <ClCompile Include="CCComponentContainer.cpp" />
     <ClCompile Include="CCDrawingPrimitives.cpp" />
     <ClCompile Include="CCDrawNode.cpp" />
+    <ClCompile Include="CCFastTMXLayer.cpp" />
+    <ClCompile Include="CCFastTMXTiledMap.cpp" />
     <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
@@ -399,6 +416,7 @@
     <ClCompile Include="CCParticleSystem.cpp" />
     <ClCompile Include="CCParticleSystemQuad.cpp" />
     <ClCompile Include="CCProgressTimer.cpp" />
+    <ClCompile Include="CCProtectedNode.cpp" />
     <ClCompile Include="CCRenderTexture.cpp" />
     <ClCompile Include="CCScene.cpp" />
     <ClCompile Include="CCSprite.cpp" />
@@ -423,13 +441,25 @@
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h" />
+    <ClInclude Include="..\3d\CCAnimate3D.h" />
+    <ClInclude Include="..\3d\CCAnimation3D.h" />
+    <ClInclude Include="..\3d\CCAnimationCurve.h" />
+    <ClInclude Include="..\3d\CCAttachNode.h" />
+    <ClInclude Include="..\3d\CCBundle3D.h" />
+    <ClInclude Include="..\3d\CCBundle3DData.h" />
+    <ClInclude Include="..\3d\CCBundleReader.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
+    <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
+    <ClInclude Include="..\3d\CCSkeleton3D.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
-    <ClInclude Include="..\3d\CCSprite3DDataCache.h" />
+    <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\3d\CCSubMesh.h" />
+    <ClInclude Include="..\3d\CCSubMeshState.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
+    <ClInclude Include="..\base\CCCamera.h" />
     <ClInclude Include="..\base\ccCArray.h" />
     <ClInclude Include="..\base\ccConfig.h" />
     <ClInclude Include="..\base\CCConfiguration.h" />
@@ -476,6 +506,8 @@
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\firePngData.h" />
+    <ClInclude Include="..\base\ObjectFactory.h" />
+    <ClInclude Include="..\base\pvr.h" />
     <ClInclude Include="..\base\s3tc.h" />
     <ClInclude Include="..\base\TGAlib.h" />
     <ClInclude Include="..\base\uthash.h" />
@@ -518,7 +550,7 @@
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
-    <ClInclude Include="..\platform\CCGLViewProtocol.h" />
+    <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
@@ -537,7 +569,7 @@
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
-    <ClInclude Include="..\platform\wp8\CCGLView.h" />
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\DirectXBase.h" />
     <ClInclude Include="..\platform\wp8\pch.h" />
@@ -550,6 +582,8 @@
     <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\renderer\CCMeshCommand.h" />
+    <ClInclude Include="..\renderer\CCPrimitive.h" />
+    <ClInclude Include="..\renderer\CCPrimitiveCommand.h" />
     <ClInclude Include="..\renderer\CCQuadCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
@@ -558,6 +592,8 @@
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
+    <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />
     <ClInclude Include="CCActionCatmullRom.h" />
@@ -579,6 +615,8 @@
     <ClInclude Include="CCComponentContainer.h" />
     <ClInclude Include="CCDrawingPrimitives.h" />
     <ClInclude Include="CCDrawNode.h" />
+    <ClInclude Include="CCFastTMXLayer.h" />
+    <ClInclude Include="CCFastTMXTiledMap.h" />
     <ClInclude Include="CCFont.h" />
     <ClInclude Include="CCFontAtlas.h" />
     <ClInclude Include="CCFontAtlasCache.h" />
@@ -605,6 +643,7 @@
     <ClInclude Include="CCParticleSystem.h" />
     <ClInclude Include="CCParticleSystemQuad.h" />
     <ClInclude Include="CCProgressTimer.h" />
+    <ClInclude Include="CCProtectedNode.h" />
     <ClInclude Include="CCRenderTexture.h" />
     <ClInclude Include="CCScene.h" />
     <ClInclude Include="CCSprite.h" />

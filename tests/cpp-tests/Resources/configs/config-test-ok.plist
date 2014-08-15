@@ -4,6 +4,10 @@
 <dict>
 	<key>data</key>
 	<dict>
+		<key>Japanese</key>
+		<string>ご静聴ありがとうございました！！ご静聴ありがとうございました！！</string>
+		<key>Chinese</key>
+		<string>中国中国中国中国中国中国中国中国中国中国</string>
 		<key>test.1</key>
 		<string>test1</string>
 		<key>test.2</key>

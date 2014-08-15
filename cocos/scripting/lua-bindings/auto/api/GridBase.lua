@@ -2,6 +2,7 @@
 --------------------------------
 -- @module GridBase
 -- @extend Ref
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#GridBase] setGridSize 
@@ -34,7 +35,7 @@
 --------------------------------
 -- @function [parent=#GridBase] getStep 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#GridBase] set2DProjection 
@@ -43,7 +44,7 @@
 --------------------------------
 -- @function [parent=#GridBase] setStep 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#GridBase] setTextureFlipped 
@@ -65,10 +66,8 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- overload function: initWithSize(size_table)
---          
--- overload function: initWithSize(size_table, cc.Texture2D, bool)
---          
+-- @overload self, size_table         
+-- @overload self, size_table, cc.Texture2D, bool         
 -- @function [parent=#GridBase] initWithSize
 -- @param self
 -- @param #size_table size
@@ -91,10 +90,8 @@
 -- @param self
         
 --------------------------------
--- overload function: create(size_table)
---          
--- overload function: create(size_table, cc.Texture2D, bool)
---          
+-- @overload self, size_table         
+-- @overload self, size_table, cc.Texture2D, bool         
 -- @function [parent=#GridBase] create
 -- @param self
 -- @param #size_table size

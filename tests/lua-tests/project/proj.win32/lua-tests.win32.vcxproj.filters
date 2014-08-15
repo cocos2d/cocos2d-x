@@ -18,6 +18,9 @@
     <ClInclude Include="..\Classes\lua_assetsmanager_test_sample.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\lua_module_register.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">

@@ -2,12 +2,11 @@
 --------------------------------
 -- @module ActionManagerEx
 -- @extend Ref
+-- @parent_module ccs
 
 --------------------------------
--- overload function: playActionByName(char, char, cc.CallFunc)
---          
--- overload function: playActionByName(char, char)
---          
+-- @overload self, char, char, cc.CallFunc         
+-- @overload self, char, char         
 -- @function [parent=#ActionManagerEx] playActionByName
 -- @param self
 -- @param #char char

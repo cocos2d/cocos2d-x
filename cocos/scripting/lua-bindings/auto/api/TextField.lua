@@ -2,6 +2,7 @@
 --------------------------------
 -- @module TextField
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#TextField] setAttachWithIME 
@@ -17,6 +18,11 @@
 -- @function [parent=#TextField] getStringValue 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#TextField] setPasswordStyleText 
+-- @param self
+-- @param #char char
         
 --------------------------------
 -- @function [parent=#TextField] getDeleteBackward 
@@ -56,7 +62,7 @@
 --------------------------------
 -- @function [parent=#TextField] setTextVerticalAlignment 
 -- @param self
--- @param #cc.TextVAlignment textvalignment
+-- @param #int textvalignment
         
 --------------------------------
 -- @function [parent=#TextField] addEventListener 
@@ -82,9 +88,19 @@
 -- @param self
         
 --------------------------------
+-- @function [parent=#TextField] getStringLength 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @function [parent=#TextField] setPasswordEnabled 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#TextField] getPlaceHolderColor 
+-- @param self
+-- @return color4b_table#color4b_table ret (return value: color4b_table)
         
 --------------------------------
 -- @function [parent=#TextField] getPasswordStyleText 
@@ -97,9 +113,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#TextField] setPasswordStyleText 
+-- @function [parent=#TextField] isPasswordEnabled 
 -- @param self
--- @param #char char
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#TextField] setDeleteBackward 
@@ -117,14 +133,21 @@
 -- @param #string str
         
 --------------------------------
--- @function [parent=#TextField] isPasswordEnabled 
+-- @overload self, color4b_table         
+-- @overload self, color3b_table         
+-- @function [parent=#TextField] setPlaceHolderColor
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
+-- @param #color3b_table color3b
+
 --------------------------------
 -- @function [parent=#TextField] setTextHorizontalAlignment 
 -- @param self
--- @param #cc.TextHAlignment texthalignment
+-- @param #int texthalignment
+        
+--------------------------------
+-- @function [parent=#TextField] setTextColor 
+-- @param self
+-- @param #color4b_table color4b
         
 --------------------------------
 -- @function [parent=#TextField] getMaxLength 
@@ -154,7 +177,7 @@
 --------------------------------
 -- @function [parent=#TextField] hitTest 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -173,10 +196,8 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- overload function: create(string, string, int)
---          
--- overload function: create()
---          
+-- @overload self, string, string, int         
+-- @overload self         
 -- @function [parent=#TextField] create
 -- @param self
 -- @param #string str

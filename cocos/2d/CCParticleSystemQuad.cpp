@@ -135,7 +135,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
-        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(ParticleSystemQuad::listenBackToForeground, this));
+        auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(ParticleSystemQuad::listenRendererRecreated, this));
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
 
@@ -368,7 +368,7 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     CCASSERT( _particleIdx == 0 || _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command
@@ -449,6 +449,10 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         _totalParticles = tp;
     }
     
+    // fixed issue #5762
+    // reset the emission rate
+    setEmissionRate(_totalParticles / _life);
+    
     resetSystem();
 }
 
@@ -509,7 +513,7 @@ void ParticleSystemQuad::setupVBO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void ParticleSystemQuad::listenBackToForeground(EventCustom* event)
+void ParticleSystemQuad::listenRendererRecreated(EventCustom* event)
 {
     if (Configuration::getInstance()->supportsShareableVAO())
     {

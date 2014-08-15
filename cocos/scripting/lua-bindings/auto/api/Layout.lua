@@ -1,22 +1,23 @@
 
 --------------------------------
 -- @module Layout
--- @extend Widget
+-- @extend Widget,LayoutProtocol
+-- @parent_module ccui
 
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Layout] setClippingType 
 -- @param self
--- @param #ccui.Layout::ClippingType clippingtype
+-- @param #int clippingtype
         
 --------------------------------
 -- @function [parent=#Layout] setBackGroundColorType 
 -- @param self
--- @param #ccui.Layout::BackGroundColorType backgroundcolortype
+-- @param #int backgroundcolortype
         
 --------------------------------
 -- @function [parent=#Layout] setLoopFocus 
@@ -31,12 +32,12 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- @function [parent=#Layout] getClippingType 
 -- @param self
--- @return Layout::ClippingType#Layout::ClippingType ret (return value: ccui.Layout::ClippingType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Layout] isLoopFocus 
@@ -66,13 +67,11 @@
 -- @function [parent=#Layout] setBackGroundImage 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
--- overload function: setBackGroundColor(color3b_table, color3b_table)
---          
--- overload function: setBackGroundColor(color3b_table)
---          
+-- @overload self, color3b_table, color3b_table         
+-- @overload self, color3b_table         
 -- @function [parent=#Layout] setBackGroundColor
 -- @param self
 -- @param #color3b_table color3b
@@ -110,7 +109,7 @@
 --------------------------------
 -- @function [parent=#Layout] getBackGroundColorType 
 -- @param self
--- @return Layout::BackGroundColorType#Layout::BackGroundColorType ret (return value: ccui.Layout::BackGroundColorType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Layout] getBackGroundEndColor 
@@ -143,9 +142,13 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+-- @function [parent=#Layout] forceDoLayout 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
--- @return Layout::Type#Layout::Type ret (return value: ccui.Layout::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Layout] setPassFocusToChild 
@@ -165,7 +168,7 @@
 --------------------------------
 -- @function [parent=#Layout] setLayoutType 
 -- @param self
--- @param #ccui.Layout::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#Layout] create 
@@ -178,17 +181,15 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
 -- @function [parent=#Layout] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #int int
+-- @param #string str
 
 --------------------------------
 -- @function [parent=#Layout] getDescription 
@@ -205,13 +206,9 @@
 -- @param self
         
 --------------------------------
--- @function [parent=#Layout] sortAllChildren 
--- @param self
-        
---------------------------------
 -- @function [parent=#Layout] findNextFocusedWidget 
 -- @param self
--- @param #ccui.Widget::FocusDirection focusdirection
+-- @param #int focusdirection
 -- @param #ccui.Widget widget
 -- @return Widget#Widget ret (return value: ccui.Widget)
         

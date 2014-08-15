@@ -75,6 +75,7 @@ include_directories(
   ${COCOS2D_ROOT}/external/freetype2/include/linux
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/xxhash
+  ${COCOS2D_ROOT}/external/xxtea
 )
 
 link_directories(
@@ -108,8 +109,20 @@ add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 # cocos 2d library
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
+# network library
+add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+
+# ui library
+add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
+
+# sqlite3 library
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
+
 # extensions
 add_subdirectory(${COCOS2D_ROOT}/extensions)
+
+# xxtea library
+add_subdirectory(${COCOS2D_ROOT}/external/xxtea)
 
 ## Editor Support
 
@@ -144,13 +157,22 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  luabinding
-  spine
+  luacocos2d
+  luacocosdenshion
+  luanetwork
+  luacocosbuilder
+  luacocostudio
+  luaspine
+  luaextension
+  luaui
+  cocos2d
+  audio
   cocostudio
+  spine
   cocosbuilder
   extensions
-  audio
-  cocos2d
+  ui
+  network
   )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
@@ -162,6 +184,12 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosbuilder ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocostudio ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
   )
   

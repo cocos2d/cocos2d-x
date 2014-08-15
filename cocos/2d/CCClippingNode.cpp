@@ -142,6 +142,14 @@ bool ClippingNode::init(Node *stencil)
 
 void ClippingNode::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     
     if (_stencil != nullptr)
@@ -203,15 +211,12 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     
 }
 
-void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if(!_visible)
         return;
     
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -249,13 +254,14 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool p
 #endif
 
     }
-    _stencil->visit(renderer, _modelViewTransform, dirty);
+    _stencil->visit(renderer, _modelViewTransform, flags);
 
     _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
 
     int i = 0;
+    bool visibleByCamera = isVisitableByVisitingCamera();
     
     if(!_children.empty())
     {
@@ -266,19 +272,20 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool p
             auto node = _children.at(i);
             
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit(renderer, _modelViewTransform, dirty);
+                node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, dirty);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, dirty);
+            (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
-        this->draw(renderer, _modelViewTransform, dirty);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     _afterVisitCmd.init(_globalZOrder);

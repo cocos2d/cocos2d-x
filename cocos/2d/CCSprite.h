@@ -414,13 +414,14 @@ public:
     virtual void reorderChild(Node *child, int zOrder) override;
     using Node::addChild;
     virtual void addChild(Node *child, int zOrder, int tag) override;
+    virtual void addChild(Node *child, int zOrder, const std::string &name) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
     /// @}

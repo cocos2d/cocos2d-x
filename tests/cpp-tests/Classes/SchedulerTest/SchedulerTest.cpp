@@ -28,7 +28,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RescheduleSelector),
     CL(SchedulerDelayAndRepeat),
     CL(SchedulerIssue2268),
-    CL(ScheduleCallbackTest)
+    CL(ScheduleCallbackTest),
+    CL(ScheduleUpdatePriority)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -851,9 +852,9 @@ void SchedulerTimeScale::onEnter()
     auto rot1 = RotateBy::create(4, 360*2);
     auto rot2 = rot1->reverse();
 
-    auto seq3_1 = Sequence::create(jump2, jump1, NULL);
-    auto seq3_2 = Sequence::create(rot1, rot2, NULL);
-    auto spawn = Spawn::create(seq3_1, seq3_2, NULL);
+    auto seq3_1 = Sequence::create(jump2, jump1, nullptr);
+    auto seq3_2 = Sequence::create(rot1, rot2, nullptr);
+    auto spawn = Spawn::create(seq3_1, seq3_2, nullptr);
     auto action = Repeat::create(spawn, 50);
 
     auto action2 = action->clone();
@@ -945,7 +946,7 @@ void TwoSchedulers::onEnter()
     auto jump1 = JumpBy::create(4, Vec2(0,0), 100, 4);
     auto jump2 = jump1->reverse();
 
-    auto seq = Sequence::create(jump2, jump1, NULL);
+    auto seq = Sequence::create(jump2, jump1, nullptr);
     auto action = RepeatForever::create(seq);
 
         //
@@ -1146,6 +1147,48 @@ void ScheduleCallbackTest::onEnter()
 void ScheduleCallbackTest::callback(float dt)
 {
     log("In the callback of schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
+}
+
+
+// ScheduleUpdatePriority
+
+std::string ScheduleUpdatePriority::title() const
+{
+    return "ScheduleUpdatePriorityTest";
+}
+
+std::string ScheduleUpdatePriority::subtitle() const
+{
+    return "click to change update priority with random value";
+}
+
+bool ScheduleUpdatePriority::onTouchBegan(Touch* touch, Event* event)
+{
+    int priority = static_cast<int>(CCRANDOM_0_1() * 11) - 5;  // -5 ~ 5
+    CCLOG("change update priority to %d", priority);
+    scheduleUpdateWithPriority(priority);
+    return true;
+}
+
+void ScheduleUpdatePriority::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    scheduleUpdate();
+
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(ScheduleUpdatePriority::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void ScheduleUpdatePriority::onExit()
+{
+    Node::onExit();
+    unscheduleUpdate();
+}
+
+void ScheduleUpdatePriority::update(float dt)
+{
 }
 
 //------------------------------------------------------------------

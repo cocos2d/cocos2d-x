@@ -170,7 +170,7 @@ Action* BasicTest::actionRotate()
 Action* BasicTest::actionScale()
 {
     auto scale = ScaleBy::create(1.33f, 1.5f);
-    return RepeatForever::create(Sequence::create(scale, scale->reverse(), NULL));
+    return RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr));
 }
 
 DrawNode* BasicTest::shape()
@@ -195,7 +195,7 @@ Sprite* BasicTest::grossini()
 
 Node* BasicTest::stencil()
 {
-    return NULL;
+    return nullptr;
 }
 
 ClippingNode* BasicTest::clipper()
@@ -205,7 +205,7 @@ ClippingNode* BasicTest::clipper()
 
 Node* BasicTest::content()
 {
-    return NULL;
+    return nullptr;
 }
 
 
@@ -601,7 +601,7 @@ void RawStencilBufferTest::setup()
     Director::getInstance()->setAlphaBlending(true);
 }
 
-void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {    
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
     
@@ -641,7 +641,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, bool 
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         
         _modelViewTransform = this->transform(transform);
-        _spritesStencil.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
+        _spritesStencil.at(i)->visit(renderer, _modelViewTransform, flags);
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
                 
         iter->init(_globalZOrder);
@@ -651,7 +651,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, bool 
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         _modelViewTransform = this->transform(transform);
-        _sprites.at(i)->visit(renderer, _modelViewTransform, transformUpdated);
+        _sprites.at(i)->visit(renderer, _modelViewTransform, flags);
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     }
     

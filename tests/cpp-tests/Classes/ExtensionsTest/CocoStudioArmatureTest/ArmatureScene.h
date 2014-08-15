@@ -45,7 +45,8 @@ enum {
     TEST_PLAY_SEVERAL_MOVEMENT,
     TEST_EASING,
     TEST_CHANGE_ANIMATION_INTERNAL,
-
+	TEST_DIRECT_FROM_BINARY,
+    
 	TEST_LAYER_COUNT
 };
 
@@ -211,7 +212,7 @@ public:
 	virtual void onEnter() override;
 	virtual void onExit() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 	virtual void update(float delta);
 
 	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -270,8 +271,8 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual void update(float delta);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    void onDraw(const Mat4 &transform, uint32_t flags);
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -293,13 +294,13 @@ class TestBoundingBox : public ArmatureTestLayer
 public:
 	virtual void onEnter() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 	cocostudio::Armature *armature;
 	Rect rect;
 
 protected:
-    void onDraw(const Mat4 &transform, bool transformUpdated);
+    void onDraw(const Mat4 &transform, uint32_t flags);
 
     CustomCommand _customCommand;
 };
@@ -391,6 +392,27 @@ public:
     virtual std::string subtitle() const override;
 
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+
+#define BINARYFILECOUNT 6
+class TestLoadFromBinary : public ArmatureTestLayer
+{
+public:
+	virtual void onEnter();
+    virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+    
+	void dataLoaded(float percent);
+    
+private:
+    cocostudio::Armature *m_armature; // current armature
+	static const char*  m_binaryFilesNames[BINARYFILECOUNT];
+	static const char*  m_armatureNames[BINARYFILECOUNT];
+	int m_armatureIndex;   // index of sync loaded armature, default -1 is none
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

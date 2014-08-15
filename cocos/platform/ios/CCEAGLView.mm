@@ -65,7 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #import <QuartzCore/QuartzCore.h>
-#import "CCGLView.h"
+#import "CCGLViewImpl.h"
 #import "CCEAGLView.h"
 #import "CCES2Renderer.h"
 #import "CCDirector.h"
@@ -73,7 +73,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTouch.h"
 #import "CCIMEDispatcher.h"
 #import "OpenGL_Internal.h"
-#import "CCGLView.h"
 //CLASS IMPLEMENTATIONS:
 
 #define IOS_MAX_TOUCHES_COUNT     10
@@ -243,6 +242,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self]; // remove keyboard notification
     [renderer_ release];
     self.keyboardShowNotification = nullptr; // implicit release
     [super dealloc];
@@ -392,7 +392,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     if (isKeyboardShown_)
     {
         [self handleTouchesAfterKeyboardShow];
-        return;
     }
     
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
@@ -413,10 +412,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -435,11 +430,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
-    
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -458,11 +448,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
-    
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};

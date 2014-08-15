@@ -172,7 +172,7 @@ const Vec2& PhysicsSprite::getPosition() const
 
 void PhysicsSprite::getPosition(float* x, float* y) const
 {
-    if (x == NULL || y == NULL) {
+    if (x == nullptr || y == nullptr) {
         return;
     }
     const Vec2& pos = getPosFromPhysics();
@@ -397,14 +397,14 @@ const Mat4& PhysicsSprite::getNodeToParentTransform() const
 	return _transform;
 }
 
-void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (isDirty())
     {
         syncPhysicsTransform();
     }
     
-    Sprite::draw(renderer, _transform, transformUpdated);
+    Sprite::draw(renderer, _transform, flags);
 }
 
 NS_CC_EXT_END

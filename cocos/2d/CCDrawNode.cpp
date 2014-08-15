@@ -194,8 +194,8 @@ bool DrawNode::init()
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-    /** listen the event that coming to foreground on Android */
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+   /** listen the event that renderer was recreated on Android/WP8 */
         this->init();
     });
 
@@ -205,14 +205,14 @@ bool DrawNode::init()
     return true;
 }
 
-void DrawNode::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void DrawNode::onDraw(const Mat4 &transform, bool transformUpdated)
+void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     auto glProgram = getGLProgram();
     glProgram->use();
