@@ -62,17 +62,6 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
     CC_SAFE_DELETE(sprite);
     return nullptr;
 }
-Sprite3D* Sprite3D::create()
-{
-    auto sprite = new Sprite3D();
-    if (sprite)
-    {
-        sprite->autorelease();
-        return sprite;
-    }
-    CC_SAFE_DELETE(sprite);
-    return nullptr;
-}
 Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &texturePath)
 {
     auto sprite = create(modelPath);
