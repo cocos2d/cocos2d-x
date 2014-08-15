@@ -943,10 +943,6 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                 const Color3B &col = iter->getColor();
                 const Vec3 &pos = iter->getPosition3D();
                 const Vec3 &dir = iter->getDirection();
-                float range = iter->getRange();
-                float innerAngle = iter->getInnerAngle();
-                float outerAngle = iter->getOuterAngle();
-                float type = 
                 lightSources[0 + idx] = col.r / 255.0f;lightSources[1 + idx] = col.g / 255.0f;lightSources[2 + idx] = col.b / 255.0f;lightSources[3 + idx] = 1.0f;
                 lightSources[4 + idx] = pos.x;lightSources[5 + idx] = pos.y;lightSources[6 + idx] = pos.z;
                 lightSources[7 + idx] = dir.x;lightSources[8 + idx] = dir.y;lightSources[9 + idx] = dir.z;
