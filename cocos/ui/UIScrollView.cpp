@@ -1498,9 +1498,12 @@ void ScrollView::handleReleaseLogic(Touch *touch)
 bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
-    if (_hitted)
+    if (!_isInterceptTouch)
     {
-        handlePressLogic(touch);
+        if (_hitted)
+        {
+            handlePressLogic(touch);
+        }
     }
     return pass;
 }
@@ -1508,19 +1511,30 @@ bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
 void ScrollView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchMoved(touch, unusedEvent);
-    handleMoveLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleMoveLogic(touch);
+    }
 }
 
 void ScrollView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchEnded(touch, unusedEvent);
-    handleReleaseLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleReleaseLogic(touch);
+    }
+    _isInterceptTouch = false;
 }
 
 void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
-    handleReleaseLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleReleaseLogic(touch);
+    }
+    _isInterceptTouch = false;
 }
 
 void ScrollView::update(float dt)
@@ -1550,10 +1564,12 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
     switch (event)
     {
         case TouchEventType::BEGAN:
+        {
+            _isInterceptTouch = true;
             _touchBeganPosition = touch->getLocation();
             handlePressLogic(touch);
-            break;
-            
+        }
+        break;
         case TouchEventType::MOVED:
         {
             float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
@@ -1564,13 +1580,19 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
                 handleMoveLogic(touch);
             }
         }
-            break;
+        break;
             
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
+        {
             _touchEndPosition = touch->getLocation();
             handleReleaseLogic(touch);
-            break;
+            if (sender->isSwallowTouches())
+            {
+                _isInterceptTouch = false;
+            }
+        }
+        break;
     }
 }
 
