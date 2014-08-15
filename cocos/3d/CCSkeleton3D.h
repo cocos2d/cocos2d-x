@@ -200,6 +200,8 @@ public:
     /**get & set root bone*/
     Bone3D* getRootBone() const;
     void setRootBone(Bone3D* bone);
+    ssize_t getRootCount() const;
+    Bone3D* getRootBone(int index) const;
     
     /**get bone index*/
     int getBoneIndex(Bone3D* bone) const;
@@ -227,6 +229,7 @@ protected:
     Vector<Bone3D*> _bones; // bones
 
     Bone3D* _rootBone;
+    std::vector<Bone3D*> _rootBones;
 };
 
 /**

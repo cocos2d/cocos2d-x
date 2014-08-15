@@ -354,6 +354,16 @@ void Skeleton3D::setRootBone(Bone3D* joint)
     _rootBone = joint;
 }
 
+ssize_t Skeleton3D::getRootCount() const
+{
+    return _rootBones.size();
+}
+
+Bone3D* Skeleton3D::getRootBone(int index) const
+{
+    return _rootBones[index];
+}
+
 int Skeleton3D::getBoneIndex(Bone3D* bone) const
 {
     int i = 0;
