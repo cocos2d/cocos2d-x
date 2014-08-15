@@ -44,13 +44,14 @@ class MeshSkin;
 class AttachNode;
 class SubMeshState;
 class Skeleton3D;
-
+struct NodeData;
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
     static Sprite3D* create(const std::string &modelPath);
+    static Sprite3D* create();
 
     // creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
@@ -114,6 +115,7 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**load from .c3b or .c3t*/
     bool loadFromC3x(const std::string& path);
+    bool loadFromC3x_0_3(const std::string& path);
 
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -126,7 +128,7 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**generate materials, and add them to cache, keyprefix is used as key prefix when added to cache*/
     void genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths);
-
+    void createNode(NodeData* nodedata,Node* root);
 protected:
     Mesh*                        _mesh;//mesh
     MeshSkin*                    _skin;//skin

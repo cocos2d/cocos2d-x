@@ -274,6 +274,7 @@ bool Bundle3D::loadSkeletonData(const std::string& id, Skeleton3DData* skeletond
 //since 3.3, to support reskin
 bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
 {
+    meshdatas.resetData();
     if (_isBinary)
     {
         return loadMeshDatasBinary(meshdatas);
@@ -349,7 +350,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
 
 bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
 {
-   
+    materialdatas.resetData();
     if (_isBinary)
     {
         return loadMaterialsBinary(materialdatas);
