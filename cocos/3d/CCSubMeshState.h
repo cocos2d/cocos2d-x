@@ -49,6 +49,8 @@ public:
 
     /**create submesh from primitivetype indexformat and indices*/
     static SubMeshState* create();
+    
+    static SubMeshState* create(const ModelNodeData& modelNodeData);
 
     /**texture getter and setter*/
     void setTexture(Texture2D* tex);
