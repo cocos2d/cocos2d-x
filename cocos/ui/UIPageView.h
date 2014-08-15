@@ -168,6 +168,23 @@ public:
     virtual std::string getDescription() const override;
 
     virtual void onEnter() override;
+    /**
+     * @brief If you don't specify the value, the pageView will scroll when half pageview width reached
+     */
+    void setCustomScrollThreshold(float threshold);
+    /**
+     *@brief Return user defined scroll page threshold
+     */
+    float getCustomScrollThreshold()const;
+    /**
+     *@brief Set using user defined scroll page threshold or not
+     * If you set it to false, then the default scroll threshold is pageView.width / 2
+     */
+    void setUsingCustomScrollThreshold(bool flag);
+    /**
+     *@brief Query whether we are using user defined scroll page threshold or not
+     */
+    bool isUsingCustomScrollThreshold()const;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -219,7 +236,9 @@ protected:
     
     float _leftBoundary;
     float _rightBoundary;
-   
+    float _customScrollThreshold;
+    bool _usingCustomScrollThreshold;
+
     float _childFocusCancelOffset;
 
     Ref* _pageViewEventListener;

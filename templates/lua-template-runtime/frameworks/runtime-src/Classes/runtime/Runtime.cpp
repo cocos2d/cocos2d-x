@@ -72,11 +72,14 @@ const char* getRuntimeVersion()
 
 static string& replaceAll(string& str,const string& old_value,const string& new_value)
 {
+    int start = 0;
     while(true)
     {
         int pos=0;
-        if((pos=str.find(old_value,0))!=string::npos)
+        if((pos=str.find(old_value,start))!=string::npos) {
             str.replace(pos,old_value.length(),new_value);
+            start = pos + new_value.length();
+        }
         else break;
     }
     return str;

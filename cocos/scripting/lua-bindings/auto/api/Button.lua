@@ -20,6 +20,11 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#Button] getZoomScale 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- @function [parent=#Button] getCapInsetsDisabledRenderer 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
@@ -119,6 +124,11 @@
 -- @function [parent=#Button] setPressedActionEnabled 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Button] setZoomScale 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @overload self, string, string, string, int         
