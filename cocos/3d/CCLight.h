@@ -31,13 +31,104 @@ NS_CC_BEGIN
 
 class CC_DLL Light : public Node
 {
+public:
+
+	enum class LightType
+	{
+		DIRECTIONAL,
+		POINT,
+		SPOT
+	};
+
+	/**
+     * Create light according to type.
+     */
+	static Light* Create(LightType lightType);
+
+	//override
+	virtual void onEnter() override;
+	virtual void onExit() override;
+
+	/**
+     * Sets light type.
+     */
+	void setLightType(LightType lightType);
+
+    /**
+     * Gets light type.
+     */
+	LightType getLightType();
+
+	/**
+     * Sets the range of point or spot light.
+     *
+     * @param range The range of point or spot light.
+     */
+	void setRange(float range);
+
+    /**
+     * Returns the range of point or spot light.
+     *
+     * @return The range of the point or spot light.
+     */
+	float getRange();
+
+    /**
+     * Sets the Direction of Directional light.
+     *
+     * @param dir The Direction of the Directional light.
+     */
+	void setDirection(const Vec3 &dir);
+
+    /**
+     * Returns the Direction of Directional light.
+     *
+     * @return dir Direction of the Directional light.
+     */
+	const Vec3& getDirection() const;
+
+    /**
+     * Sets the inner angle of a spot light (in radians).
+     *
+     * @param angle The angle of spot light (in radians).
+     */
+	void setInnerAngle(float angle);
+
+    /**
+     * Returns the inner angle the spot light (in radians).
+     *
+     * @return The inner angle of the spot light (in radians).
+     */
+	float getInnerAngle();
+
+    /**
+     * Sets the outer angle of a spot light (in radians).
+     *
+     * @param outerAngle The angle of spot light (in radians).
+     */
+	void setOuterAngle(float angle);
+
+    /**
+     * Returns the outer angle of the spot light (in radians).
+     *
+     * @return The outer angle of the spot light (in radians).
+     */
+	float getOuterAngle();
 
 CC_CONSTRUCTOR_ACCESS:
+
 	Light();
 	virtual ~Light();
+
+protected:
+
+	LightType _lightType;
+	Vec3 _dir;
+	float _range;
+	float _innerAngle;
+	float _outerAngle;
 };
 
 NS_CC_END
 
 #endif
-
