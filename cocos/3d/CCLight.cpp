@@ -3,93 +3,111 @@
 
 NS_CC_BEGIN
 
-Light::Light()
-: _range(0.0f)
+Light3D::Light3D()
+: _isEnabled(false)
+, _range(0.0f)
 , _innerAngle(0.0f)
 , _outerAngle(0.0f)
 {
 }
 
 
-Light::~Light()
+Light3D::~Light3D()
 {
 }
 
-Light* Light::Create( LightType lightType )
+Light3D* Light3D::Create( LightType lightType )
 {
-	Light *light = new Light;
-	light->setLightType(lightType);
-	light->autorelease();
-	return light;
+    Light3D *light = new Light3D;
+    light->setLightType(lightType);
+    light->autorelease();
+    return light;
 }
 
-void Light::setLightType( LightType lightType )
+void Light3D::setLightType( LightType lightType )
 {
-	_lightType = lightType;
+    _lightType = lightType;
 }
 
-void Light::setRange( float range )
+
+Light3D::LightType Light3D::getLightType()
 {
-	_range = range;
+    return _lightType;
 }
 
-float Light::getRange()
+void Light3D::setEnabled( bool isEnabled )
 {
-	return _range;
+    _isEnabled = isEnabled;
 }
 
-void Light::setDirection( const Vec3 &dir )
+bool Light3D::getEnabled()
 {
-	_dir = dir;
+    return _isEnabled;
 }
 
-const Vec3& Light::getDirection() const
+
+void Light3D::setRange( float range )
 {
-	return _dir;
+    _range = range;
 }
 
-void Light::setInnerAngle( float angle )
+float Light3D::getRange()
 {
-	_innerAngle = angle;
+    return _range;
 }
 
-float Light::getInnerAngle()
+void Light3D::setDirection( const Vec3 &dir )
 {
-	return _innerAngle;
+    _dir = dir;
 }
 
-void Light::setOuterAngle( float angle )
+const Vec3& Light3D::getDirection() const
 {
-	_outerAngle = angle;
+    return _dir;
 }
 
-float Light::getOuterAngle()
+void Light3D::setInnerAngle( float angle )
 {
-	return _outerAngle;
+    _innerAngle = angle;
 }
 
-void Light::onEnter()
+float Light3D::getInnerAngle()
 {
-	auto scene = getScene();
-	if (scene)
-	{
-		auto lights = scene->_lights;
-		auto iter = std::find(lights.begin(), lights.end(), this);
-		if (iter == lights.end())
-			lights.push_back(this);
-	}
+    return _innerAngle;
 }
 
-void Light::onExit()
+void Light3D::setOuterAngle( float angle )
 {
-	auto scene = getScene();
-	if (scene)
-	{
-		auto lights = scene->_lights;
-		auto iter = std::find(lights.begin(), lights.end(), this);
-		if (iter != lights.end())
-			lights.erase(iter);
-	}
+    _outerAngle = angle;
+}
+
+float Light3D::getOuterAngle()
+{
+    return _outerAngle;
+}
+
+void Light3D::onEnter()
+{
+    auto scene = getScene();
+    if (scene)
+    {
+        auto lights = scene->_lights;
+        auto iter = std::find(lights.begin(), lights.end(), this);
+        if (iter == lights.end())
+            lights.push_back(this);
+    }
+}
+
+void Light3D::onExit()
+{
+    auto scene = getScene();
+    if (scene)
+    {
+        auto lights = scene->_lights;
+        auto iter = std::find(lights.begin(), lights.end(), this);
+        if (iter != lights.end())
+            lights.erase(iter);
+    }
 }
 
 NS_CC_END

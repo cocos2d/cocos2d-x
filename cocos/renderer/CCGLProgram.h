@@ -96,9 +96,11 @@ public:
     
     enum
     {
+        UNIFORM_LIGHT_SOURCE,
         UNIFORM_P_MATRIX,
         UNIFORM_MV_MATRIX,
         UNIFORM_MVP_MATRIX,
+        UNIFORM_NORMAL_MATRIX,
         UNIFORM_TIME,
         UNIFORM_SIN_TIME,
         UNIFORM_COS_TIME,
@@ -135,9 +137,11 @@ public:
     static const char* SHADER_3D_SKINPOSITION_TEXTURE;
     
     // uniform names
+    static const char* UNIFORM_NAME_LIGHT_SOURCE;
     static const char* UNIFORM_NAME_P_MATRIX;
     static const char* UNIFORM_NAME_MV_MATRIX;
     static const char* UNIFORM_NAME_MVP_MATRIX;
+    static const char* UNIFORM_NAME_NORMAL_MATRIX;
     static const char* UNIFORM_NAME_TIME;
     static const char* UNIFORM_NAME_SIN_TIME;
     static const char* UNIFORM_NAME_COS_TIME;
@@ -183,8 +187,8 @@ public:
     static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
 
-	//void bindUniform(std::string uniformName, int value);
-	Uniform* getUniform(const std::string& name);
+    //void bindUniform(std::string uniformName, int value);
+    Uniform* getUniform(const std::string& name);
     VertexAttrib* getVertexAttrib(const std::string& name);
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
@@ -263,6 +267,9 @@ public:
      */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
+    /** calls glUniformfv only if the values are different than the previous call for this same shader program. */
+    void setUniformLocationWith1fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
+
     /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
@@ -326,7 +333,7 @@ protected:
     GLuint            _fragShader;
     GLint             _builtInUniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
-	bool              _hasShaderCompiler;
+    bool              _hasShaderCompiler;
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       _shaderId;
@@ -334,10 +341,12 @@ protected:
 
     struct flag_struct {
         unsigned int usesTime:1;
+        unsigned int usesNormal:1;
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
         unsigned int usesP:1;
-		unsigned int usesRandom:1;
+        unsigned int usesRandom:1;
+        unsigned int usesLights:1;
 
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }

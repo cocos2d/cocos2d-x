@@ -8,13 +8,13 @@
 
 USING_NS_CC;
 
-class LightTexture : public Sprite
+class Light : public Sprite
 {
 public:
-    LightTexture();
-    ~LightTexture();
+    Light();
+    ~Light();
 
-    static LightTexture* lightWithFile(const char* name);
+    static Light* lightWithFile(const char* name);
 
     void setIsConnectToSwitch(bool bConnectToSwitch);
     void switchStateChanged(Ref* obj);
@@ -25,31 +25,31 @@ private:
     static bool s_bSwitchOn;
 };
 
-bool LightTexture::s_bSwitchOn = false;
+bool Light::s_bSwitchOn = false;
 
-LightTexture::LightTexture()
+Light::Light()
     : _connected(false)
 {}
 
-LightTexture::~LightTexture()
+Light::~Light()
 {
     NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
 }
 
-LightTexture* LightTexture::lightWithFile(const char* name)
+Light* Light::lightWithFile(const char* name)
 {
-    LightTexture* pLight = new LightTexture();
+    Light* pLight = new Light();
     pLight->initWithFile(name);
     pLight->autorelease();
     return pLight;
 }
 
-void LightTexture::setIsConnectToSwitch(bool bConnectToSwitch)
+void Light::setIsConnectToSwitch(bool bConnectToSwitch)
 {
     _connected = bConnectToSwitch;
     if (_connected)
     {
-        NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(LightTexture::switchStateChanged), MSG_SWITCH_STATE, nullptr);
+        NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, nullptr);
     }
     else
     {
@@ -58,13 +58,13 @@ void LightTexture::setIsConnectToSwitch(bool bConnectToSwitch)
     updateLightState();
 }
 
-void LightTexture::switchStateChanged(Ref* obj)
+void Light::switchStateChanged(Ref* obj)
 {
     s_bSwitchOn = obj == 0x00 ? false : true;
     updateLightState();
 }
 
-void LightTexture::updateLightState()
+void Light::updateLightState()
 {
     if (s_bSwitchOn && _connected)
     {
@@ -104,7 +104,7 @@ NotificationCenterTest::NotificationCenterTest()
 
     for (int i = 1; i <= 3; i++)
     {
-        LightTexture* light = LightTexture::lightWithFile("Images/Pea.png");
+        Light* light = Light::lightWithFile("Images/Pea.png");
         light->setTag(kTagLight+i);
         light->setPosition(Vec2(100, s.height/4*i));
         addChild(light);
@@ -155,7 +155,7 @@ void NotificationCenterTest::connectToSwitch(Ref *sender)
 {
     auto item = (MenuItemToggle*)sender;
     bool bConnected = item->getSelectedIndex() == 0 ? false : true;
-    LightTexture* pLight = (LightTexture*)this->getChildByTag(item->getTag()-kTagConnect+kTagLight);
+    Light* pLight = (Light*)this->getChildByTag(item->getTag()-kTagConnect+kTagLight);
     pLight->setIsConnectToSwitch(bConnected);
 }
 

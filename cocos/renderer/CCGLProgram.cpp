@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include <alloca.h>
 #endif
 
+#include "3d/CCLight.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
 #include "base/uthash.h"
@@ -44,6 +45,8 @@ THE SOFTWARE.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"
 #endif
+
+#define CC_MAX_LIGHT_NUM 6
 
 NS_CC_BEGIN
 
@@ -77,9 +80,11 @@ const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTex
 
 
 // uniform names
+const char* GLProgram::UNIFORM_NAME_LIGHT_SOURCE = "CC_LightSource";
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
 const char* GLProgram::UNIFORM_NAME_MVP_MATRIX  = "CC_MVPMatrix";
+const char* GLProgram::UNIFORM_NAME_NORMAL_MATRIX = "CC_NormalMatrix";
 const char* GLProgram::UNIFORM_NAME_TIME = "CC_Time";
 const char* GLProgram::UNIFORM_NAME_SIN_TIME = "CC_SinTime";
 const char* GLProgram::UNIFORM_NAME_COS_TIME = "CC_CosTime";
@@ -295,56 +300,56 @@ void GLProgram::parseVertexAttribs()
 {
     _vertexAttribs.clear();
 
-	// Query and store vertex attribute meta-data from the program.
-	GLint activeAttributes;
-	GLint length;
-	glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTES, &activeAttributes);
-	if(activeAttributes > 0)
-	{
+    // Query and store vertex attribute meta-data from the program.
+    GLint activeAttributes;
+    GLint length;
+    glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTES, &activeAttributes);
+    if(activeAttributes > 0)
+    {
         VertexAttrib attribute;
 
-		glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-		if(length > 0)
-		{
-			GLchar* attribName = (GLchar*) alloca(length + 1);
+        glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
+        if(length > 0)
+        {
+            GLchar* attribName = (GLchar*) alloca(length + 1);
 
-			for(int i = 0; i < activeAttributes; ++i)
-			{
-				// Query attribute info.
-				glGetActiveAttrib(_program, i, length, nullptr, &attribute.size, &attribute.type, attribName);
-				attribName[length] = '\0';
+            for(int i = 0; i < activeAttributes; ++i)
+            {
+                // Query attribute info.
+                glGetActiveAttrib(_program, i, length, nullptr, &attribute.size, &attribute.type, attribName);
+                attribName[length] = '\0';
                 attribute.name = std::string(attribName);
 
-				// Query the pre-assigned attribute location
-				attribute.index = glGetAttribLocation(_program, attribName);
+                // Query the pre-assigned attribute location
+                attribute.index = glGetAttribLocation(_program, attribName);
                 _vertexAttribs[attribute.name] = attribute;
-			}
-		}
-	}
+            }
+        }
+    }
 }
 
 void GLProgram::parseUniforms()
 {
     _userUniforms.clear();
 
-	// Query and store uniforms from the program.
-	GLint activeUniforms;
-	glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &activeUniforms);
-	if(activeUniforms > 0)
-	{
+    // Query and store uniforms from the program.
+    GLint activeUniforms;
+    glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &activeUniforms);
+    if(activeUniforms > 0)
+    {
         GLint length;
-		glGetProgramiv(_program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
-		if(length > 0)
-		{
+        glGetProgramiv(_program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
+        if(length > 0)
+        {
             Uniform uniform;
 
-			GLchar* uniformName = (GLchar*)alloca(length + 1);
+            GLchar* uniformName = (GLchar*)alloca(length + 1);
 
-			for(int i = 0; i < activeUniforms; ++i)
-			{
-				// Query uniform info.
-				glGetActiveUniform(_program, i, length, nullptr, &uniform.size, &uniform.type, uniformName);
-				uniformName[length] = '\0';
+            for(int i = 0; i < activeUniforms; ++i)
+            {
+                // Query uniform info.
+                glGetActiveUniform(_program, i, length, nullptr, &uniform.size, &uniform.type, uniformName);
+                uniformName[length] = '\0';
 
                 // Only add uniforms that are not built-in.
                 // The ones that start with 'CC_' are built-ins
@@ -370,9 +375,9 @@ void GLProgram::parseUniforms()
                     
                     _userUniforms[uniform.name] = uniform;
                 }
-			}
-		}
-	}
+            }
+        }
+    }
 }
 
 Uniform* GLProgram::getUniform(const std::string &name)
@@ -407,14 +412,33 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     {
         return false;
     }
+
+    GLchar lightStruct[] = {
+        "#define MAX_LIGHT 6  \n"
+        "struct LightSource   \n"
+        "{                    \n"
+        "	vec4 color;       \n"
+        "	vec3 position;    \n"
+        "	vec3 direction;   \n"
+        "	float range;      \n"
+        "	float innerAngle; \n"
+        "	float outerAngle; \n"
+        "	float type;       \n"
+        "	float use;        \n"
+        "	float none;       \n"
+        "};                   \n"
+        "uniform LightSource CC_LightSource[MAX_LIGHT];\n"
+    };
     
     const GLchar *sources[] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         (type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
 #endif
+        lightStruct,
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
+        "uniform mat3 CC_NormalMatrix;\n"
         "uniform vec4 CC_Time;\n"
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
@@ -474,9 +498,11 @@ void GLProgram::bindAttribLocation(const std::string &attributeName, GLuint inde
 
 void GLProgram::updateUniforms()
 {
+    _builtInUniforms[UNIFORM_LIGHT_SOURCE] = glGetUniformLocation(_program, UNIFORM_NAME_LIGHT_SOURCE);
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
+    _builtInUniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_NORMAL_MATRIX);
     
     _builtInUniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
     _builtInUniforms[UNIFORM_SIN_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_SIN_TIME);
@@ -489,9 +515,11 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER2] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER2);
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
+    _flags.usesLights = _builtInUniforms[UNIFORM_LIGHT_SOURCE] != -1;
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
+    _flags.usesNormal = _builtInUniforms[UNIFORM_NORMAL_MATRIX] != -1;
     _flags.usesTime = (
                        _builtInUniforms[UNIFORM_TIME] != -1 ||
                        _builtInUniforms[UNIFORM_SIN_TIME] != -1 ||
@@ -773,6 +801,17 @@ void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2,
     }
 }
 
+
+void GLProgram::setUniformLocationWith1fv( GLint location, const GLfloat* floats, unsigned int numberOfArrays )
+{
+    bool updated = updateUniformLocation(location, floats, sizeof(float)*numberOfArrays);
+
+    if( updated )
+    {
+        glUniform1fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+    }
+}
+
 void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
@@ -858,6 +897,19 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 
+    if (_flags.usesNormal)
+    {
+        Mat4 mvInverse = matrixMV;
+        mvInverse.m[12] = mvInverse.m[13] = mvInverse.m[14] = 0.0f;
+        mvInverse.inverse();
+        mvInverse.transpose();
+        GLfloat normalMat[9];
+        normalMat[0] = mvInverse.m[0];normalMat[1] = mvInverse.m[1];normalMat[2] = mvInverse.m[2];
+        normalMat[3] = mvInverse.m[3];normalMat[4] = mvInverse.m[4];normalMat[5] = mvInverse.m[5];
+        normalMat[6] = mvInverse.m[6];normalMat[7] = mvInverse.m[7];normalMat[8] = mvInverse.m[8];
+        setUniformLocationWithMatrix3fv(_builtInUniforms[UNIFORM_NORMAL_MATRIX], normalMat, 1);
+    }
+
     if(_flags.usesTime) {
         Director *director = Director::getInstance();
         // This doesn't give the most accurate global time value.
@@ -872,6 +924,44 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     
     if(_flags.usesRandom)
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+
+    if (_flags.usesLights)
+    {
+        Director *director = Director::getInstance();
+        auto scene = director->getRunningScene();
+        if (scene)
+        {
+            auto lights = scene->getLights();
+            CCASSERT(lights.size() < CC_MAX_LIGHT_NUM, "");
+
+            GLfloat lightSources[16 * CC_MAX_LIGHT_NUM];
+            unsigned int sz = sizeof(lightSources);
+            memset(lightSources, 0, sizeof(lightSources));
+            unsigned int idx = 0;
+            for (auto iter : lights)
+            {
+                const Color3B &col = iter->getColor();
+                const Vec3 &pos = iter->getPosition3D();
+                const Vec3 &dir = iter->getDirection();
+                float range = iter->getRange();
+                float innerAngle = iter->getInnerAngle();
+                float outerAngle = iter->getOuterAngle();
+                float type = 
+                lightSources[0 + idx] = col.r / 255.0f;lightSources[1 + idx] = col.g / 255.0f;lightSources[2 + idx] = col.b / 255.0f;lightSources[3 + idx] = 1.0f;
+                lightSources[4 + idx] = pos.x;lightSources[5 + idx] = pos.y;lightSources[6 + idx] = pos.z;
+                lightSources[7 + idx] = dir.x;lightSources[8 + idx] = dir.y;lightSources[9 + idx] = dir.z;
+                lightSources[10 + idx] = iter->getRange();
+                lightSources[11 + idx] = iter->getInnerAngle();
+                lightSources[12 + idx] = iter->getOuterAngle();
+                lightSources[13 + idx] = static_cast<float>(iter->getLightType());
+                lightSources[14 + idx] = static_cast<float>(iter->getEnabled());
+                lightSources[15 + idx] = -1;
+                idx += 16;
+            }
+
+            setUniformLocationWith1fv(_builtInUniforms[GLProgram::UNIFORM_LIGHT_SOURCE], lightSources, 16 * CC_MAX_LIGHT_NUM);
+        }
+    }
 }
 
 void GLProgram::reset()

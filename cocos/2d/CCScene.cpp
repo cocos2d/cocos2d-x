@@ -203,12 +203,12 @@ void Scene::onProjectionChanged(EventCustom* event)
 
 void Scene::setAmbientColor( const Color4F &color )
 {
-	_ambientColor = color;
+    _ambientColor = color;
 }
 
 const Color4F& Scene::getAmbientColor() const
 {
-	return _ambientColor;
+    return _ambientColor;
 }
 
 #endif

@@ -35,7 +35,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Camera;
-class Light;
+class Light3D;
 /**
  * @addtogroup scene
  * @{
@@ -69,21 +69,21 @@ public:
     /** get all cameras */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
-	const std::vector<Light*>& getLights() const { return _lights; }
+    const std::vector<Light3D*>& getLights() const { return _lights; }
 
     /**
      * Sets the ambient color of scene.
      *
      * @param color The ambient color of scene.
      */
-	void setAmbientColor(const Color4F &color);
+    void setAmbientColor(const Color4F &color);
 
     /**
      * Returns the ambient color of scene.
      *
      * @return The ambient color of scene.
      */
-	const Color4F& getAmbientColor() const;
+    const Color4F& getAmbientColor() const;
     
 CC_CONSTRUCTOR_ACCESS:
     Scene();
@@ -100,14 +100,14 @@ protected:
     friend class SpriteBatchNode;
     friend class Camera;
     friend class Director;
-	friend class Light;
+    friend class Light3D;
     
     std::vector<Camera*> _cameras; //weak ref to Camera
     Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
     EventListenerCustom*       _event;
 
-	std::vector<Light *> _lights;
-	Color4F _ambientColor;
+    std::vector<Light3D *> _lights;
+    Color4F _ambientColor;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
