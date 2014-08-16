@@ -220,8 +220,8 @@ ssize_t MeshSkin::getMatrixPaletteSize() const
 //refresh bone world matrix
 void MeshSkin::updateBoneMatrix()
 {
-    _rootBone->setWorldMatDirty(true);
-    _rootBone->updateWorldMat();
+//    _rootBone->setWorldMatDirty(true);
+//    _rootBone->updateWorldMat();
 }
 
 void MeshSkin::removeAllBones()

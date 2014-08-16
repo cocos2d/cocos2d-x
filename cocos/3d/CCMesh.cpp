@@ -206,7 +206,9 @@ Mesh* Mesh::create(const MeshData& meshdata)
     {
         for (int i = 0; i < (int)mesh->getSubMeshCount(); i++) {
             auto submesh = mesh->getSubMesh(i);
-            submesh->_id = meshdata.subMeshIds[i];
+            if (meshdata.subMeshIds.size())
+                submesh->_id = meshdata.subMeshIds[i];
+            submesh->_mesh = mesh;
         }
     }
     mesh->autorelease();

@@ -291,34 +291,46 @@ bool Sprite3D::initWithFile(const std::string &path)
 
 void Sprite3D::genGLProgramState()
 {
-    auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefaultGLProgram(_mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD)));
+    if (_meshes.size() == 0)
+        return;
+    
+    //all the mesh should have the same attributes, FIX ME
+    auto mesh = _meshes.at(0);
+    
+    auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefaultGLProgram(mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD)));
     long offset = 0;
-    auto attributeCount = _mesh->getMeshVertexAttribCount();
+    auto attributeCount = mesh->getMeshVertexAttribCount();
     for (auto k = 0; k < attributeCount; k++) {
-        auto meshattribute = _mesh->getMeshVertexAttribute(k);
+        auto meshattribute = mesh->getMeshVertexAttribute(k);
         programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
                                              meshattribute.size,
                                              meshattribute.type,
                                              GL_FALSE,
-                                             _mesh->getVertexSizeInBytes(),
+                                             mesh->getVertexSizeInBytes(),
                                              (GLvoid*)offset);
         offset += meshattribute.attribSizeBytes;
     }
     
     setGLProgramState(programstate);
-    auto count = _mesh->getSubMeshCount();
+    auto count = mesh->getSubMeshCount();
     _meshCommands.resize(count);
     for (int i = 0; i < count; i++) {
         auto tex = _subMeshStates.at(i)->getTexture();
         GLuint texID = tex ? tex->getName() : 0;
-        _meshCommands[i].genMaterialID(texID, programstate, _mesh, _blend);
+        _meshCommands[i].genMaterialID(texID, programstate, _meshes.at(i), _blend);
     }
 }
 
 GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
 {
-    bool hasSkin = _skin && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
-    && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    if (_meshes.size() == 0)
+        return nullptr;
+    
+    //all the mesh should have the same attributes, FIX ME
+    auto mesh = _meshes.at(0);
+    
+    bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+    && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
     
     if(textured)
     {
@@ -348,29 +360,31 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             
             if (modelNodeData->matrialId == "" && matrialdatas.materials.size())
             {
-                NTextureData::Usage type        = NTextureData::Usage::Diffuse;
-                const NTextureData* textureData = matrialdatas.materials[0].getTextureData(type);
+                const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
+                subMeshState->setTexture(textureData->filename);
             }
-            const NMaterialData*  materialData=matrialdatas.getMaterialData(modelNodeData->matrialId);
-            if(materialData)
+            else
             {
-                 NTextureData::Usage type        = NTextureData::Usage::Diffuse;
-                 const NTextureData* textureData = materialData->getTextureData(type);
-                 if(textureData)
-                 {
-                     auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
-                     if(tex)
-                     {
-                        Texture2D::TexParams    texParams;
-                        texParams.minFilter = GL_LINEAR;
-                        texParams.magFilter = GL_LINEAR;
-                        texParams.wrapS = textureData->wrapS;
-                        texParams.wrapT = textureData->wrapT;
-                        tex->setTexParameters(texParams);
-                        subMeshState->setTexture(tex);
-                     }
-                    
-                 }
+                const NMaterialData*  materialData=matrialdatas.getMaterialData(modelNodeData->matrialId);
+                if(materialData)
+                {
+                    const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
+                    if(textureData)
+                    {
+                        auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
+                        if(tex)
+                        {
+                            Texture2D::TexParams    texParams;
+                            texParams.minFilter = GL_LINEAR;
+                            texParams.magFilter = GL_LINEAR;
+                            texParams.wrapS = textureData->wrapS;
+                            texParams.wrapT = textureData->wrapT;
+                            tex->setTexParameters(texParams);
+                            subMeshState->setTexture(tex);
+                        }
+                        
+                    }
+                }
             }
         }
     }
