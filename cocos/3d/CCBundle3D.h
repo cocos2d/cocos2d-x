@@ -159,6 +159,12 @@ protected:
      */
     GLenum parseGLType(const std::string& str);
 
+     /**
+     * get define data type
+     * @param str The type in string
+     */
+    NTextureData::Usage parseGLTextureType(const std::string& str);
+
     /**
      * get vertex attribute type
      * @param str The type in string
