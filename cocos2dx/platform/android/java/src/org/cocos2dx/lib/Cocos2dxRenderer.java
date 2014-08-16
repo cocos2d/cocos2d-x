@@ -87,22 +87,18 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 			Cocos2dxRenderer.nativeRender();
 		} else {
 			final long now = System.nanoTime();
-			final long interval = now - this.mLastTickInNanoSeconds;
-		
-			if (interval < Cocos2dxRenderer.sAnimationInterval) {
+			final long remain = mLastTickInNanoSeconds + Cocos2dxRenderer.sAnimationInterval - now;
+			if (remain > 0) {
 				try {
-					Thread.sleep((Cocos2dxRenderer.sAnimationInterval - interval) / Cocos2dxRenderer.NANOSECONDSPERMICROSECOND);
+					Thread.sleep(remain / Cocos2dxRenderer.NANOSECONDSPERMICROSECOND);
 				} catch (final Exception e) {
 				}
 			}
 			/*
 			 * Render time MUST be counted in, or the FPS will slower than appointed.
 			*/
-			final long renderStart = System.nanoTime();
+			mLastTickInNanoSeconds = System.nanoTime();
 			Cocos2dxRenderer.nativeRender();
-			final long renderEnd = System.nanoTime();
-			final long renderInterval = renderEnd - renderStart;
-			this.mLastTickInNanoSeconds = renderEnd - renderInterval;
 		}
 	}
 
