@@ -180,7 +180,7 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
     ret = bundle->loadMaterials(materialdatas);
     if (ret)
     {
-       
+        return false;
     }
     NodeDatas   nodeDatas;
     bundle->loadNodes(nodeDatas);
@@ -283,7 +283,7 @@ bool Sprite3D::initWithFile(const std::string &path)
     }
     else if (ext == ".c3b" || ext == ".c3t")
     {
-        return loadFromC3x(path);
+        return loadFromC3x_0_3(path);
     }
     
     return false;
@@ -345,8 +345,27 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             subMeshState->setSubMesh(getSubMesh(modelNodeData->subMeshId));
             auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
             subMeshState->setSkin(skin);
-            auto texpath = matrialdatas.getMaterialData(modelNodeData->matrialId)->filename;
-            subMeshState->setTexture(texpath);
+            const NMaterialData*  materialData=matrialdatas.getMaterialData(modelNodeData->matrialId);
+            if(materialData)
+            {
+                 NTextureData::Usage type        = NTextureData::Usage::Diffuse;
+                 const NTextureData* textureData = materialData->getTextureData(type);
+                 if(textureData)
+                 {
+                     auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
+                     if(tex)
+                     {
+                        Texture2D::TexParams    texParams;
+                        texParams.minFilter=GL_LINEAR;
+                        texParams.magFilter=GL_LINEAR;
+                        texParams.wrapS=textureData->wrapS;
+                        texParams.wrapT=textureData->wrapT;
+                        tex->setTexParameters(texParams);
+                        subMeshState->setTexture(tex);
+                     }
+                    
+                 }
+            }
             //set wrap s, t
         }
     }

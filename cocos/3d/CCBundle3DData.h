@@ -283,28 +283,48 @@ struct MaterialData
 /**new material, since 3.3 */
 struct NTextureData
 {
+    enum class Usage {
+        Unknown = 0,
+        None = 1,
+        Diffuse = 2, 
+        Emissive = 3,
+        Ambient = 4,
+        Specular = 5,
+        Shininess = 6,
+        Normal = 7,
+        Bump = 8,
+        Transparency = 9,
+        Reflection = 10
+    };
      std::string id;
      std::string filename;
+     Usage type;
      GLenum wrapS;
      GLenum wrapT;
 } ;
 struct NMaterialData
 {
+    std::vector<NTextureData> textures;
     std::string id;
-    std::string fileName;
-    GLuint    wrapS;
-    GLuint    wrapT;
+    const NTextureData* getTextureData(NTextureData::Usage& type) const
+    {
+        for(const auto& it : textures)
+        {
+            if (it.type == type)
+                return &it;
+        }
+        return nullptr;
+    }
 };
-
 /** material datas, since 3.3 */
 struct MaterialDatas
 {
-    std::vector<NTextureData> materials;
+    std::vector<NMaterialData> materials;
     void resetData()
     {
         materials.clear();
     }
-    const NTextureData* getMaterialData(const std::string& materialid) const
+    const NMaterialData* getMaterialData(const std::string& materialid) const
     {
         for(const auto& it : materials)
         {
@@ -314,7 +334,6 @@ struct MaterialDatas
         return nullptr;
     }
 };
-
 /**animation data*/
 struct Animation3DData
 {

@@ -373,25 +373,25 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
     for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
     {
         //TODO, FIXME
-//        NMaterialData materialData;
-//        const rapidjson::Value& material_val = material_array[i];
-//        materialData.id = material_val[ID].GetString();
-//
-//        if (material_val.HasMember(MATERIALDATA_TEXTURES))
-//        {
-//            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
-//            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
-//            {
-//                NTextureData  textureData;
-//                const rapidjson::Value& texture_val = testure_array[j];
-//                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
-//                textureData.filename = _modelRelativePath + filename;
-//                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
-//                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
-//                materialData.textures.push_back(textureData);
-//            }
-//        }
-//        materialdatas.materials.push_back(materialData);
+        NMaterialData materialData;
+        const rapidjson::Value& material_val = material_array[i];
+        materialData.id = material_val[ID].GetString();
+        if (material_val.HasMember(MATERIALDATA_TEXTURES))
+        {
+            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
+            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
+            {
+                NTextureData  textureData;
+                const rapidjson::Value& texture_val = testure_array[j];
+                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
+                textureData.filename = _modelRelativePath + filename;
+                textureData.type  = parseGLTextureType(texture_val["type"].GetString());
+                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
+                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
+                materialData.textures.push_back(textureData);
+            }
+        }
+        materialdatas.materials.push_back(materialData);
     }
     return true;
 }
@@ -1144,7 +1144,54 @@ GLenum Bundle3D::parseGLType(const std::string& str)
         return 0;
     }
 }
-
+NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
+{
+    if (str == "AMBIENT")
+    {
+        return NTextureData::Usage::Ambient;
+    }
+    else if(str == "BUMP")
+    {
+        return NTextureData::Usage::Bump;
+    }
+    else if(str == "DIFFUSE")
+    {
+        return NTextureData::Usage::Diffuse;
+    }
+    else if(str == "EMISSIVE")
+    {
+        return NTextureData::Usage::Emissive;
+    }
+    else if(str == "NONE")
+    {
+        return NTextureData::Usage::None;
+    }
+    else if (str == "NORMAL")
+    {
+         return NTextureData::Usage::Normal;
+    }
+    else if (str == "REFLECTION")
+    {
+        return NTextureData::Usage::Reflection;
+    }
+    else if (str == "SHININESS")
+    {
+       return NTextureData::Usage::Shininess;
+    }
+    else if (str == "SPECULAR")
+    {
+        return NTextureData::Usage::Specular;
+    }
+    else if (str == "TRANSPARENCY")
+    {
+         return NTextureData::Usage::Transparency;
+    }
+    else
+    {
+        CCASSERT(false, "Wrong GL type");
+        return NTextureData::Usage::Unknown;
+    }
+}
 unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
 {
     if (str == "VERTEX_ATTRIB_POSITION")
