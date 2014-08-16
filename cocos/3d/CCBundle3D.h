@@ -162,14 +162,15 @@ protected:
     bool loadNodesJson(NodeDatas& nodedatas);
     void loadBoneNamesJson(const rapidjson::Value& jnodes);
     void parseBoneNameRecursivelyJson(const rapidjson::Value& jnode);
-    bool checkIsSkeletonJson(const rapidjson::Value& jnode);
-    bool checkIsSkeletonRecursivelyJson(const rapidjson::Value& jnode);
     NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
 
     /**
-     * load nodes of Binary
+     * load nodes of binary
      */
-
+    bool loadNodesBinary(NodeDatas& nodedatas);
+    void loadBoneNamesBinary();
+    void parseBoneNameRecursivelyBinary();
+    NodeData* parseNodesRecursivelyBinary();
 
     /**
      * get define data type
@@ -222,6 +223,7 @@ protected:
     bool  _isBinary;
 
     std::list<std::string> _bonenames;
+    bool _skeleton;
 };
 
 NS_CC_END

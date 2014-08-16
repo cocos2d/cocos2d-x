@@ -1130,16 +1130,18 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 
     loadBoneNamesJson(nodes);
 
+    // traverse the nodes again
     for (rapidjson::SizeType i = 0; i < nodes.Size(); i++)
     {
+        _skeleton = false;
         const rapidjson::Value& jnode = nodes[i];
         std::string id = jnode[ID].GetString();
         NodeData* nodedata = parseNodesRecursivelyJson(jnode);
 
-        bool isSkeleton;
-        isSkeleton = checkIsSkeletonJson(jnode);
+        //bool isSkeleton;
+        //isSkeleton = checkIsSkeletonJson(jnode);
 
-        if (isSkeleton)
+        if (_skeleton)
             nodedatas.skeleton.push_back(nodedata);
         else
             nodedatas.nodes.push_back(nodedata);
@@ -1203,45 +1205,6 @@ bool Bundle3D::checkIsBone(const std::string& name)
     return ret;
 }
 
-bool Bundle3D::checkIsSkeletonJson(const rapidjson::Value& jnode)
-{
-    bool ret = false;
-    if (jnode.HasMember(CHILDREN))
-    {
-        const rapidjson::Value& children = jnode[CHILDREN];
-        for (rapidjson::SizeType i = 0; i < children.Size(); i++)
-        {
-            ret = checkIsSkeletonRecursivelyJson(children[i]);
-            if (ret) break;
-        }
-    }
-    else
-    {
-        ret = checkIsSkeletonRecursivelyJson(jnode);
-    }
-
-    return ret;
-}
-
-bool Bundle3D::checkIsSkeletonRecursivelyJson(const rapidjson::Value& jnode)
-{
-    std::string id = jnode[ID].GetString();
-    if (checkIsBone(id))
-        return true;
-
-    if (jnode.HasMember(CHILDREN))
-    {
-        const rapidjson::Value& children = jnode[CHILDREN];
-
-        for (rapidjson::SizeType i = 0; i < children.Size(); i++)
-        {
-            checkIsSkeletonRecursivelyJson(children[i]);
-        }
-    }
-
-    return false;
-}
-
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 {
     NodeData* nodedata;
@@ -1252,6 +1215,10 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 
     // id
     nodedata->id = jvalue[ID].GetString();
+
+    // check is skeleton
+    if (checkIsBone(nodedata->id))
+        _skeleton = true;
 
     // transform
     Mat4 tranform;
@@ -1327,6 +1294,120 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
     }
 
     return nodedata;
+}
+
+bool Bundle3D::loadNodesBinary(NodeDatas& nodedatas)
+{
+    if (!seekToFirstType(BUNDLE_TYPE_NODE))
+        return false;
+    
+    loadBoneNamesBinary();
+
+    if (!seekToFirstType(BUNDLE_TYPE_NODE))
+        return false;
+
+    unsigned int nodeSize = 0;
+    if (_binaryReader.read(&nodeSize, 4, 1) != 1)
+    {
+        CCLOGINFO("Failed to read nodes: size '%s'.", _path.c_str());
+        return false;
+    }
+
+    // traverse the nodes again
+    for (rapidjson::SizeType i = 0; i < nodeSize; i++)
+    {
+        std::string id = _binaryReader.readString();
+        NodeData* nodedata = parseNodesRecursivelyBinary();
+
+        if (_skeleton)
+            nodedatas.skeleton.push_back(nodedata);
+        else
+            nodedatas.nodes.push_back(nodedata);
+    }
+    return true;
+}
+
+void Bundle3D::loadBoneNamesBinary()
+{
+    unsigned int nodeSize=0;
+    if (_binaryReader.read(&nodeSize, 4, 1) != 1)
+    {
+        CCLOGINFO("Failed to read nodes: size '%s'.", _path.c_str());
+        return;
+    }
+
+    for (unsigned int i = 0; i < nodeSize; i++)
+    {
+        parseBoneNameRecursivelyBinary();
+    }
+}
+
+void Bundle3D::parseBoneNameRecursivelyBinary()
+{
+    std::string id = _binaryReader.readString();
+
+    Mat4 nodeMat;
+    if (!_binaryReader.readMatrix(nodeMat.m))
+        return;
+
+    // read pass
+    unsigned int partsSize=0;
+    if (_binaryReader.read(&partsSize, 4, 1) != 1)
+    {
+        CCASSERT("Failed to read part size: '%s'.", _path.c_str());
+        return;
+    }
+
+    if (partsSize > 0)
+    {
+        for (unsigned i = 0; i < partsSize; i++)
+        {
+            unsigned int boneSize=0;
+            if (_binaryReader.read(&boneSize, 4, 1) != 1)
+            {
+                CCASSERT("Failed to read bone: size '%s'.", _path.c_str());
+                return;
+            }
+
+            if (boneSize > 0)
+            {
+                for (unsigned j = 0; j < boneSize; j++)
+                {
+                    std::string bonename = _binaryReader.readString();
+
+                    Mat4 boneMat;
+                    if (!_binaryReader.readMatrix(boneMat.m))
+                        return;
+
+                    if (!checkIsBone(bonename))
+                    {
+                        _bonenames.push_back(bonename);
+                    }
+                }
+            }
+        }
+    }
+
+    // read children
+    unsigned int childrenSize = 0;
+    if (_binaryReader.read(&childrenSize, 4, 1) != 1)
+    {
+        CCASSERT("Failed to read children size: '%s'.", _path.c_str());
+        return;
+    }
+
+    if (childrenSize > 0)
+    {
+        for (rapidjson::SizeType i = 0; i < childrenSize; i++)
+        {
+            parseBoneNameRecursivelyBinary();
+        }
+    }
+}
+
+NodeData* Bundle3D::parseNodesRecursivelyBinary()
+{
+    return nullptr;
 }
 
 GLenum Bundle3D::parseGLType(const std::string& str)
@@ -1434,7 +1515,8 @@ _version(""),
 _jsonBuffer(nullptr),
 _binaryBuffer(nullptr),
 _referenceCount(0),
-_references(nullptr)
+_references(nullptr),
+_skeleton(false)
 {
 
 }
