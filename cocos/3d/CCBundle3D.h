@@ -26,6 +26,7 @@
 #define __CCBUNDLE3D_H__
 
 #include <map>
+#include <list>
 
 #include "3d/CCBundle3DData.h"
 
@@ -153,6 +154,23 @@ protected:
      */
     bool loadAnimationDataBinary(Animation3DData* animationdata);
 
+    bool checkIsBone(const std::string& name);
+
+    /**
+     * load nodes of json
+     */
+    bool loadNodesJson(NodeDatas& nodedatas);
+    void loadBoneNamesJson(const rapidjson::Value& jnodes);
+    void parseBoneNameRecursivelyJson(const rapidjson::Value& jnode);
+    bool checkIsSkeletonJson(const rapidjson::Value& jnode);
+    bool checkIsSkeletonRecursivelyJson(const rapidjson::Value& jnode);
+    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
+
+    /**
+     * load nodes of Binary
+     */
+
+
     /**
      * get define data type
      * @param str The type in string
@@ -186,7 +204,7 @@ protected:
     
     static Bundle3D* _instance;
     
-    std::string _modelRelativePath;
+    std::string _modelPath;
     std::string         _path;
     
     std::string _version;// the c3b or c3t version
@@ -202,6 +220,8 @@ protected:
     Reference* _references;
 
     bool  _isBinary;
+
+    std::list<std::string> _bonenames;
 };
 
 NS_CC_END
