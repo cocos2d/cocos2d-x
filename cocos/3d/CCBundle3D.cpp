@@ -286,7 +286,18 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
     }
     else
     {
-        return loadMeshDatasJson(meshdatas);
+        if (_version == "1.2")
+        {
+            return loadMeshDataJson_0_1(meshdatas);
+        }
+        else if(_version == "0.2")
+        {
+            return loadMeshDataJson_0_2(meshdatas);
+        }
+        else if(_version == "0.3")
+        {
+            return loadMeshDatasJson(meshdatas);
+        }
     }
     return true;
 }
@@ -357,11 +368,46 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
     }
     else
     {
-        return loadNodesJson(nodedatas);
+        if (_version == "1.2" || _version == "0.2")
+        {
+            SkinData   skinData;
+            loadSkinDataJson(&skinData);
+            auto nodeDatas = new NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
+            int index = 0;
+            size_t i;
+            for (i = 0; i < skinData.skinBoneNames.size(); i++)
+            {
+                nodeDatas[index] = new NodeData();
+                nodeDatas[index]->id = skinData.skinBoneNames[i];
+                nodeDatas[index]->transform = skinData.skinBoneOriginMatrices[i];
+                index++;
+            }
+            for (i = 0; i < skinData.nodeBoneNames.size(); i++)
+            {
+                nodeDatas[index] = new NodeData();
+                nodeDatas[index]->id = skinData.nodeBoneNames[i];
+                nodeDatas[index]->transform = skinData.nodeBoneOriginMatrices[i];
+                index++;
+            }
+            for (const auto& it : skinData.boneChild)
+            {
+                const auto& children = it.second;
+                auto parent = nodeDatas[it.first];
+                for (const auto& child : children)
+                {
+                    parent->children.push_back(nodeDatas[child]);
+                }
+            }
+            nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
+        }
+        else
+        {
+           return loadNodesJson(nodedatas);
+        }
+        
     }
     return true;
 }
-
 bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
 {
     materialdatas.resetData();
@@ -371,7 +417,18 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
     }
     else
     {
-        return loadMaterialsJson(materialdatas);
+        if (_version == "1.2")
+        {
+             return loadMaterialDataJson_0_1(materialdatas);
+        }
+        else if (_version == "0.2")
+        {
+             return loadMaterialDataJson_0_2(materialdatas);
+        }
+        else if (_version == "0.3")
+        {
+            return loadMaterialsJson(materialdatas);
+        }  
     }
     return true;
 }
@@ -386,26 +443,25 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
     const rapidjson::Value& material_array = _jsonReader[MATERIALDATA_MATERIALS];
     for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
     {
-        //TODO, FIXME
-//        NMaterialData materialData;
-//        const rapidjson::Value& material_val = material_array[i];
-//        materialData.id = material_val[ID].GetString();
-//
-//        if (material_val.HasMember(MATERIALDATA_TEXTURES))
-//        {
-//            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
-//            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
-//            {
-//                NTextureData  textureData;
-//                const rapidjson::Value& texture_val = testure_array[j];
-//                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
-//                textureData.filename = _modelPath + filename;
-//                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
-//                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
-//                materialData.textures.push_back(textureData);
-//            }
-//        }
-//        materialdatas.materials.push_back(materialData);
+        NMaterialData materialData;
+        const rapidjson::Value& material_val = material_array[i];
+        materialData.id = material_val[ID].GetString();
+        if (material_val.HasMember(MATERIALDATA_TEXTURES))
+        {
+            const rapidjson::Value& testure_array = material_val[MATERIALDATA_TEXTURES];
+            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
+            {
+                NTextureData  textureData;
+                const rapidjson::Value& texture_val = testure_array[j];
+                std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
+                textureData.filename = _modelPath + filename;
+                textureData.type  = parseGLTextureType(texture_val["type"].GetString());
+                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
+                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
+                materialData.textures.push_back(textureData);
+            }
+        }
+        materialdatas.materials.push_back(materialData);
     }
     return true;
 }
@@ -432,28 +488,10 @@ bool Bundle3D::loadJson(const std::string& path)
     return true;
 }
 
-bool Bundle3D::loadMeshDataJson(MeshData* meshdata)
-{
-    //1.2 is a wrong version. Our first released fbx-conv write this version id, so we keep on using it.
-    if (_version == "1.2")
-    {
-        return loadMeshDataJson_0_1(meshdata);
-    }
-    else if(_version == "0.2")
-    {
-        return loadMeshDataJson_0_2(meshdata);
-    }
-    else
-    {
-        CCLOGINFO(false, "Unsupported version of loadMeshDataJson(): %s", _version);
-        return false;
-    }
-}
-
-bool Bundle3D::loadMeshDataJson_0_1(MeshData* meshdata)
+bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 {
     const rapidjson::Value& mesh_data_array = _jsonReader[MESH];
-    
+    MeshData* meshdata= new   MeshData();
     const rapidjson::Value& mesh_data_val = mesh_data_array[(rapidjson::SizeType)0];
     
     const rapidjson::Value& mesh_data_body_array = mesh_data_val[MESHDATA_DEFAULTPART];
@@ -494,14 +532,14 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshData* meshdata)
         indices[i] = (unsigned short)indices_val_array[i].GetUint();
     
     meshdata->subMeshIndices.push_back(indices);
-
+    meshdatas.meshDatas.push_back(meshdata);
     return true;
 }
 
-bool Bundle3D::loadMeshDataJson_0_2(MeshData* meshdata)
+bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
 {
+    MeshData* meshdata= new   MeshData();
     const rapidjson::Value& mesh_array = _jsonReader[MESH];
-    
     const rapidjson::Value& mesh_array_0 = mesh_array[(rapidjson::SizeType)0];
     
     // mesh_vertex_attribute
@@ -549,6 +587,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshData* meshdata)
         
         meshdata->subMeshIndices.push_back(indices);
     }
+    meshdatas.meshDatas.push_back(meshdata);
     return true;
 }
 
@@ -589,29 +628,11 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
     return true;
 }
 
-bool Bundle3D::loadMaterialDataJson(MaterialData* materialdata)
-{
-    //1.2 is a wrong version. Our first released fbx-conv write this version id, so we keep on using it.
-    if (_version == "1.2")
-    {
-        return loadMaterialDataJson_0_1(materialdata);
-    }
-    else if(_version == "0.2")
-    {
-        return loadMaterialDataJson_0_2(materialdata);
-    }
-    else
-    {
-        CCLOGINFO(false, "Unsupported version of loadMaterialDataJson() : %s", _version);
-        return false;
-    }
-}
-
-bool Bundle3D::loadMaterialDataJson_0_1(MaterialData* materialdata)
+bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
 {
     if (!_jsonReader.HasMember(MATERIALDATA_MATERIAL))
         return false;
-
+    NMaterialData materialData;
     const rapidjson::Value& material_data_array = _jsonReader[MATERIALDATA_MATERIAL];
 
     const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
@@ -619,29 +640,35 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialData* materialdata)
     const rapidjson::Value& material_data_base_array = material_data_array_0[MATERIALDATA_BASE];
 
     const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
-
+    NTextureData  textureData;
     // set texture
-    materialdata->texturePaths[0] = _modelPath + material_data_base_array_0[MATERIALDATA_FILENAME].GetString();
-
+    textureData.filename =_modelPath + material_data_base_array_0[MATERIALDATA_FILENAME].GetString();
+    textureData.type= NTextureData::Usage::Diffuse;
+    textureData.id="";
+    materialData.textures.push_back(textureData);
+    materialdatas.materials.push_back(materialData);
     return true;
 }
 
-bool Bundle3D::loadMaterialDataJson_0_2(MaterialData* materialdata)
+bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
 {
     if (!_jsonReader.HasMember(MATERIALDATA_MATERIAL))
         return false;
-    
+     NMaterialData materialData;
     const rapidjson::Value& material_array = _jsonReader[MATERIALDATA_MATERIAL];
     
     for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
     {
+        NTextureData  textureData;
         const rapidjson::Value& material_val = material_array[i];
-        //std::string id = material_val[ID].GetString();
-        
+
         // set texture
-        materialdata->texturePaths[i] = _modelPath + material_val[MATERIALDATA_TEXTURES].GetString();
+        textureData.filename = _modelPath + material_val[MATERIALDATA_TEXTURES].GetString();
+        textureData.type= NTextureData::Usage::Diffuse;
+        textureData.id="";
+        materialData.textures.push_back(textureData);
     }
-    
+    materialdatas.materials.push_back(materialData);
     return true;
 }
 
@@ -1446,7 +1473,54 @@ GLenum Bundle3D::parseGLType(const std::string& str)
         return 0;
     }
 }
-
+NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
+{
+    if (str == "AMBIENT")
+    {
+        return NTextureData::Usage::Ambient;
+    }
+    else if(str == "BUMP")
+    {
+        return NTextureData::Usage::Bump;
+    }
+    else if(str == "DIFFUSE")
+    {
+        return NTextureData::Usage::Diffuse;
+    }
+    else if(str == "EMISSIVE")
+    {
+        return NTextureData::Usage::Emissive;
+    }
+    else if(str == "NONE")
+    {
+        return NTextureData::Usage::None;
+    }
+    else if (str == "NORMAL")
+    {
+         return NTextureData::Usage::Normal;
+    }
+    else if (str == "REFLECTION")
+    {
+        return NTextureData::Usage::Reflection;
+    }
+    else if (str == "SHININESS")
+    {
+       return NTextureData::Usage::Shininess;
+    }
+    else if (str == "SPECULAR")
+    {
+        return NTextureData::Usage::Specular;
+    }
+    else if (str == "TRANSPARENCY")
+    {
+         return NTextureData::Usage::Transparency;
+    }
+    else
+    {
+        CCASSERT(false, "Wrong GL type");
+        return NTextureData::Usage::Unknown;
+    }
+}
 unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
 {
     if (str == "VERTEX_ATTRIB_POSITION")

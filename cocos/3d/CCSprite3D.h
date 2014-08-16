@@ -53,8 +53,7 @@ class CC_DLL Sprite3D : public Node, public BlendProtocol
 public:
     /** creates a Sprite3D*/
     static Sprite3D* create(const std::string &modelPath);
-    static Sprite3D* create();
-
+  
     // creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
     
