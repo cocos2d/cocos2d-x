@@ -298,12 +298,20 @@ Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
 {
     auto skeleton = new Skeleton3D();
     for (const auto& it : skeletondata) {
-        auto bone = createBone3D(*it);
+        auto bone = skeleton->createBone3D(*it);
         skeleton->_rootBones.pushBack(bone);
-        bone->release();
+        skeleton->printBone(bone);
     }
     skeleton->autorelease();
     return skeleton;
+}
+
+void Skeleton3D::printBone(Bone3D* bone)
+{
+    CCLOG("%s", bone->getName().c_str());
+    for (auto it : bone->_children) {
+        printBone(it);
+    }
 }
 
 bool Skeleton3D::initFromSkeletonData(const Skeleton3DData& skeletondata)
@@ -390,8 +398,12 @@ int Skeleton3D::getBoneIndex(Bone3D* bone) const
 //refresh bone world matrix
 void Skeleton3D::updateBoneMatrix()
 {
-    _rootBone->setWorldMatDirty(true);
-    _rootBone->updateWorldMat();
+    //_rootBone->setWorldMatDirty(true);
+    //_rootBone->updateWorldMat();
+    for (const auto& it : _rootBones) {
+        it->setWorldMatDirty(true);
+        it->updateWorldMat();
+    }
 }
 
 void Skeleton3D::removeAllBones()
@@ -412,8 +424,10 @@ Bone3D* Skeleton3D::createBone3D(const NodeData& nodedata)
     for (const auto& it : nodedata.children) {
         auto child = createBone3D(*it);
         bone->addChildBone(child);
+        child->_parent = bone;
         child->release();
     }
+    _bones.pushBack(bone);
     return bone;
 }
 

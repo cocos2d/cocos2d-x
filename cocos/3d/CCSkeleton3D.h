@@ -227,7 +227,9 @@ CC_CONSTRUCTOR_ACCESS:
     void addBone(Bone3D* bone);
     
     /** create Bone3D from NodeData */
-    static Bone3D* createBone3D(const NodeData& nodedata);
+    Bone3D* createBone3D(const NodeData& nodedata);
+    
+    void printBone(Bone3D* bone);
     
 protected:
     

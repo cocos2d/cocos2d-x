@@ -75,6 +75,7 @@ static const char* BONES = "bones";
 static const char* MATERIALS = "materials";
 static const char* ANIMATIONS = "animations";
 static const char* TRANSFORM = "transform";
+static const char* OLDTRANSFORM = "tansform";
 
 static const char* MATERIALDATA_MATERIAL = "material";
 static const char* MATERIALDATA_MATERIALS = "materials";
@@ -100,7 +101,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     
     // get transform matrix
     Mat4 transform;
-    const rapidjson::Value& parent_tranform = val[TRANSFORM];
+    const rapidjson::Value& parent_tranform = val[OLDTRANSFORM];
     for (rapidjson::SizeType j = 0; j < parent_tranform.Size(); j++)
     {
         transform.m[j] = parent_tranform[j].GetDouble();
@@ -371,7 +372,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
         if (_version == "1.2" || _version == "0.2")
         {
             SkinData   skinData;
-            loadSkinDataJson(&skinData);
+            loadSkinData("", &skinData);
             auto nodeDatas = new NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
             int index = 0;
             size_t i;
