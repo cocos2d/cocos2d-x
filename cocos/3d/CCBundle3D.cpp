@@ -281,7 +281,18 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
     }
     else
     {
-        return loadMeshDatasJson(meshdatas);
+        if (_version == "1.2")
+        {
+            return loadMeshDataJson_0_1(meshdatas);
+        }
+        else if(_version == "0.2")
+        {
+            return loadMeshDataJson_0_2(meshdatas);
+        }
+        else if(_version == "0.3")
+        {
+            return loadMeshDatasJson(meshdatas);
+        }
     }
     return true;
 }
@@ -345,9 +356,50 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 }
 bool Bundle3D::loadNodes(NodeDatas& nodedatas)
 {
+     if (_isBinary)
+     {
+     }
+     else
+     {
+         if (_version == "1.2" || _version == "0.2")
+         {
+             SkinData   skinData;
+             loadSkinDataJson(&skinData);
+             auto nodeDatas = new NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
+             int index = 0;
+             size_t i;
+             for (i = 0; i < skinData.skinBoneNames.size(); i++)
+             {
+                 nodeDatas[index] = new NodeData();
+                 nodeDatas[index]->id = skinData.skinBoneNames[i];
+                 nodeDatas[index]->transform = skinData.skinBoneOriginMatrices[i];
+                 index++;
+             }
+             for (i = 0; i < skinData.nodeBoneNames.size(); i++)
+             {
+                 nodeDatas[index] = new NodeData();
+                 nodeDatas[index]->id = skinData.nodeBoneNames[i];
+                 nodeDatas[index]->transform = skinData.nodeBoneOriginMatrices[i];
+                 index++;
+             }
+             for (const auto& it : skinData.boneChild)
+             {
+                 const auto& children = it.second;
+                 auto parent = nodeDatas[it.first];
+                 for (const auto& child : children)
+                 {
+                     parent->children.push_back(nodeDatas[child]);
+                 }
+             }
+             nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
+         }
+         else 
+         {
+
+         }
+     }
     return true;
 }
-
 bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
 {
     materialdatas.resetData();
@@ -357,7 +409,18 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
     }
     else
     {
-        return loadMaterialsJson(materialdatas);
+        if (_version == "1.2")
+        {
+             return loadMaterialDataJson_0_1(materialdatas);
+        }
+        else if (_version == "0.2")
+        {
+             return loadMaterialDataJson_0_2(materialdatas);
+        }
+        else if (_version == "0.3")
+        {
+            return loadMaterialsJson(materialdatas);
+        }  
     }
     return true;
 }
@@ -436,8 +499,9 @@ bool Bundle3D::loadMeshDataJson(MeshData* meshdata)
     }
 }
 
-bool Bundle3D::loadMeshDataJson_0_1(MeshData* meshdata)
+bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 {
+    MeshData* meshdata= new   MeshData();
     const rapidjson::Value& mesh_data_array = _jsonReader[MESHDATA_MESH];
     
     const rapidjson::Value& mesh_data_val = mesh_data_array[(rapidjson::SizeType)0];
@@ -480,12 +544,13 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshData* meshdata)
         indices[i] = (unsigned short)indices_val_array[i].GetUint();
     
     meshdata->subMeshIndices.push_back(indices);
-
+    meshdatas.meshDatas.push_back(meshdata);
     return true;
 }
 
-bool Bundle3D::loadMeshDataJson_0_2(MeshData* meshdata)
+bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
 {
+     MeshData* meshdata= new   MeshData();
     const rapidjson::Value& mesh_array = _jsonReader[MESHDATA_MESH];
     
     const rapidjson::Value& mesh_array_0 = mesh_array[(rapidjson::SizeType)0];
@@ -535,6 +600,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshData* meshdata)
         
         meshdata->subMeshIndices.push_back(indices);
     }
+    meshdatas.meshDatas.push_back(meshdata);
     return true;
 }
 
@@ -593,11 +659,11 @@ bool Bundle3D::loadMaterialDataJson(MaterialData* materialdata)
     }
 }
 
-bool Bundle3D::loadMaterialDataJson_0_1(MaterialData* materialdata)
+bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
 {
     if (!_jsonReader.HasMember(MATERIALDATA_MATERIAL))
         return false;
-
+    NMaterialData materialData;
     const rapidjson::Value& material_data_array = _jsonReader[MATERIALDATA_MATERIAL];
 
     const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
@@ -605,29 +671,36 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialData* materialdata)
     const rapidjson::Value& material_data_base_array = material_data_array_0[MATERIALDATA_BASE];
 
     const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
-
+    NTextureData  textureData;
     // set texture
-    materialdata->texturePaths[0] =_modelRelativePath + material_data_base_array_0[MATERIALDATA_FILENAME].GetString();
-
+    textureData.filename =_modelRelativePath + material_data_base_array_0[MATERIALDATA_FILENAME].GetString();
+    textureData.type= NTextureData::Usage::Diffuse;
+    textureData.id="";
+    materialData.textures.push_back(textureData);
+    materialdatas.materials.push_back(materialData);
     return true;
 }
 
-bool Bundle3D::loadMaterialDataJson_0_2(MaterialData* materialdata)
+bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
 {
     if (!_jsonReader.HasMember(MATERIALDATA_MATERIAL))
         return false;
-    
+     NMaterialData materialData;
     const rapidjson::Value& material_array = _jsonReader[MATERIALDATA_MATERIAL];
     
     for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
     {
+        NTextureData  textureData;
         const rapidjson::Value& material_val = material_array[i];
         //std::string id = material_val[ID].GetString();
         
         // set texture
-        materialdata->texturePaths[i] = _modelRelativePath + material_val[MATERIALDATA_TEXTURES].GetString();
+        textureData.filename = _modelRelativePath + material_val[MATERIALDATA_TEXTURES].GetString();
+        textureData.type= NTextureData::Usage::Diffuse;
+        textureData.id="";
+        materialData.textures.push_back(textureData);
     }
-    
+    materialdatas.materials.push_back(materialData);
     return true;
 }
 
