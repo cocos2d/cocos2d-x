@@ -299,6 +299,7 @@ Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
     auto skeleton = new Skeleton3D();
     for (const auto& it : skeletondata) {
         auto bone = skeleton->createBone3D(*it);
+        bone->resetPose();
         skeleton->_rootBones.pushBack(bone);
     }
     skeleton->autorelease();

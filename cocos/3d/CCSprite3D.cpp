@@ -318,7 +318,7 @@ void Sprite3D::genGLProgramState()
     for (int i = 0; i < count; i++) {
         auto tex = _subMeshStates.at(i)->getTexture();
         GLuint texID = tex ? tex->getName() : 0;
-        _meshCommands[i].genMaterialID(texID, programstate, _meshes.at(i), _blend);
+        _meshCommands[i].genMaterialID(texID, programstate, mesh->getSubMesh(i)/*_meshes.at(i)*/, _blend);
     }
 }
 
