@@ -229,8 +229,6 @@ CC_CONSTRUCTOR_ACCESS:
     /** create Bone3D from NodeData */
     Bone3D* createBone3D(const NodeData& nodedata);
     
-    void printBone(Bone3D* bone);
-    
 protected:
     
     Vector<Bone3D*> _bones; // bones

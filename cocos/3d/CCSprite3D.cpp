@@ -138,6 +138,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
             texname = dir + (*it).material.diffuse_texname;
         matnames.push_back(texname);
     }
+    
     _mesh = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, submeshIndices);
     _mesh->retain();
     if (_mesh == nullptr)

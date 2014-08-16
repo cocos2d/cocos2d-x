@@ -300,18 +300,9 @@ Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
     for (const auto& it : skeletondata) {
         auto bone = skeleton->createBone3D(*it);
         skeleton->_rootBones.pushBack(bone);
-        skeleton->printBone(bone);
     }
     skeleton->autorelease();
     return skeleton;
-}
-
-void Skeleton3D::printBone(Bone3D* bone)
-{
-    CCLOG("%s", bone->getName().c_str());
-    for (auto it : bone->_children) {
-        printBone(it);
-    }
 }
 
 bool Skeleton3D::initFromSkeletonData(const Skeleton3DData& skeletondata)
@@ -425,9 +416,9 @@ Bone3D* Skeleton3D::createBone3D(const NodeData& nodedata)
         auto child = createBone3D(*it);
         bone->addChildBone(child);
         child->_parent = bone;
-        child->release();
     }
     _bones.pushBack(bone);
+    bone->_oriPose = nodedata.transform;
     return bone;
 }
 
