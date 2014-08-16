@@ -179,7 +179,7 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
 
     MaterialDatas materialdatas;
     ret = bundle->loadMaterials(materialdatas);
-    if (ret)
+    if (!ret)
     {
         return false;
     }

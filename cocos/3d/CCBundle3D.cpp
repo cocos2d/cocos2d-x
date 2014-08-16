@@ -1467,6 +1467,14 @@ GLenum Bundle3D::parseGLType(const std::string& str)
     {
         return GL_FLOAT;
     }
+    else if (str == "REPEAT")
+    {
+        return GL_REPEAT;
+    }
+    else if (str == "CLAMP")
+    {
+        return GL_CLAMP_TO_EDGE;
+    }
     else
     {
         CCASSERT(false, "Wrong GL type");
