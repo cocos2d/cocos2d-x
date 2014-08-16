@@ -160,6 +160,7 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
     auto bundle = Bundle3D::getInstance();
     if (!bundle->load(fullPath))
         return false;
+    
     MeshDatas meshdatas;
     bool ret = bundle->loadMeshDatas(meshdatas);
     if (!ret)
@@ -238,8 +239,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         }
         genMaterials(key, texpaths);
     }
-    NodeDatas   nodeDatas;
-    bundle->loadNodes(nodeDatas);
+    
     genGLProgramState();
     
     return true;
@@ -356,17 +356,16 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                      if(tex)
                      {
                         Texture2D::TexParams    texParams;
-                        texParams.minFilter=GL_LINEAR;
-                        texParams.magFilter=GL_LINEAR;
-                        texParams.wrapS=textureData->wrapS;
-                        texParams.wrapT=textureData->wrapT;
+                        texParams.minFilter = GL_LINEAR;
+                        texParams.magFilter = GL_LINEAR;
+                        texParams.wrapS = textureData->wrapS;
+                        texParams.wrapT = textureData->wrapT;
                         tex->setTexParameters(texParams);
                         subMeshState->setTexture(tex);
                      }
                     
                  }
             }
-            //set wrap s, t
         }
     }
     else
@@ -470,30 +469,31 @@ void Sprite3D::removeAllAttachNode()
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-//    if (_skeleton)
-//        _skeleton->updateBoneMatrix();
+    if (_skeleton)
+        _skeleton->updateBoneMatrix();
     
     GLProgramState* programstate = getGLProgramState();
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
-    for (ssize_t i = 0; i < _mesh->getSubMeshCount(); i++) {
-        auto submeshstate = _subMeshStates.at(i);
+    int i = 0;
+    for (auto& submeshstate : _subMeshStates) {
         if (!submeshstate->isVisible())
             continue;
         
-        auto submesh = _mesh->getSubMesh((int)i);
-        auto& meshCommand = _meshCommands[i];
+        auto& meshCommand = _meshCommands[i++];
         
         GLuint textureID = submeshstate->getTexture() ? submeshstate->getTexture()->getName() : 0;
-        meshCommand.init(_globalZOrder, textureID, programstate, _blend, _mesh->getVertexBuffer(), submesh->getIndexBuffer(), (GLenum)submesh->getPrimitiveType(), (GLenum)submesh->getIndexFormat(), submesh->getIndexCount(), transform);
+        auto submesh = submeshstate->getSubMesh();
+        meshCommand.init(_globalZOrder, textureID, programstate, _blend, submesh->getMesh()->getVertexBuffer(), submesh->getIndexBuffer(), (GLenum)submesh->getPrimitiveType(), (GLenum)submesh->getIndexFormat(), submesh->getIndexCount(), transform);
         
         meshCommand.setCullFaceEnabled(true);
         meshCommand.setDepthTestEnabled(true);
-        if (_skin)
+        auto skin = submeshstate->getSkin();
+        if (skin)
         {
-            meshCommand.setMatrixPaletteSize((int)_skin->getMatrixPaletteSize());
-            meshCommand.setMatrixPalette(_skin->getMatrixPalette());
+            meshCommand.setMatrixPaletteSize((int)skin->getMatrixPaletteSize());
+            meshCommand.setMatrixPalette(skin->getMatrixPalette());
         }
         //support tint and fade
         meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
