@@ -26,6 +26,7 @@
 #define __CCBUNDLE3D_H__
 
 #include <map>
+#include <list>
 
 #include "3d/CCBundle3DData.h"
 
@@ -113,13 +114,13 @@ protected:
     bool loadMaterialDataJson_0_1(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_2(MaterialDatas& materialdatas);
     bool loadMaterialsBinary(MaterialDatas& materialdatas);
-    bool loadMeshDataJson(MeshData* meshdata);
-    bool loadMeshDataJson_0_1(MeshData* meshdata);
-    bool loadMeshDataJson_0_2(MeshData* meshdata);
+    bool loadMeshDataJson(MeshData* meshdata){return true;}
+    bool loadMeshDataJson_0_1(MeshData* meshdata){return true;}
+    bool loadMeshDataJson_0_2(MeshData* meshdata){return true;}
     bool loadSkinDataJson(SkinData* skindata);
-    bool loadMaterialDataJson(MaterialData* materialdata);
-    bool loadMaterialDataJson_0_1(MaterialData* materialdata);
-    bool loadMaterialDataJson_0_2(MaterialData* materialdata);
+    bool loadMaterialDataJson(MaterialData* materialdata){return true;}
+    bool loadMaterialDataJson_0_1(MaterialData* materialdata){return true;}
+    bool loadMaterialDataJson_0_2(MaterialData* materialdata){return true;}
     bool loadAnimationDataJson(Animation3DData* animationdata);
     /**
      * load data in binary
@@ -152,6 +153,24 @@ protected:
      * @param animationdata The animation data pointer
      */
     bool loadAnimationDataBinary(Animation3DData* animationdata);
+
+    bool checkIsBone(const std::string& name);
+
+    /**
+     * load nodes of json
+     */
+    bool loadNodesJson(NodeDatas& nodedatas);
+    void loadBoneNamesJson(const rapidjson::Value& jnodes);
+    void parseBoneNameRecursivelyJson(const rapidjson::Value& jnode);
+    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
+
+    /**
+     * load nodes of binary
+     */
+    bool loadNodesBinary(NodeDatas& nodedatas);
+    void loadBoneNamesBinary();
+    void parseBoneNameRecursivelyBinary();
+    NodeData* parseNodesRecursivelyBinary();
 
     /**
      * get define data type
@@ -192,7 +211,7 @@ protected:
     
     static Bundle3D* _instance;
     
-    std::string _modelRelativePath;
+    std::string _modelPath;
     std::string         _path;
     
     std::string _version;// the c3b or c3t version
@@ -208,6 +227,9 @@ protected:
     Reference* _references;
 
     bool  _isBinary;
+
+    std::list<std::string> _bonenames;
+    bool _skeleton;
 };
 
 NS_CC_END
