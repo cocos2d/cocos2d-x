@@ -76,6 +76,7 @@ static const char* MATERIALS = "materials";
 static const char* ANIMATIONS = "animations";
 static const char* TRANSFORM = "transform";
 static const char* OLDTRANSFORM = "tansform";
+static const char* ANIMATION = "animations";
 
 static const char* MATERIALDATA_MATERIAL = "material";
 static const char* MATERIALDATA_MATERIALS = "materials";
@@ -682,9 +683,9 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
 
 bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
 {
-    if (!_jsonReader.HasMember(ANIMATIONDATA_ANIMATION)) return false;
+    if (!_jsonReader.HasMember(ANIMATION)) return false;
 
-    const rapidjson::Value& animation_data_array =  _jsonReader[ANIMATIONDATA_ANIMATION];
+    const rapidjson::Value& animation_data_array =  _jsonReader[ANIMATION];
     if (animation_data_array.Size()==0) return false;
 
     const rapidjson::Value& animation_data_array_val_0 = animation_data_array[(rapidjson::SizeType)0];
@@ -1275,10 +1276,10 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
             const rapidjson::Value& part = parts[i];
-            std::string meshPartId = part[MESHPARTID].GetString();
-            std::string materialId = part[MATERIALID].GetString();
+            modelnodedata->subMeshId = part[MESHPARTID].GetString();
+            modelnodedata->matrialId = part[MATERIALID].GetString();
 
-            if (meshPartId == "" || materialId == "")
+            if (modelnodedata->subMeshId == "" || modelnodedata->matrialId == "")
             {
                 std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
                 CCASSERT(false, err.c_str()); 
@@ -1303,13 +1304,14 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
                     modelnodedata->bones.push_back(bone[NODE].GetString());
 
                     Mat4 invbindpos;
-                    const rapidjson::Value& jtransform = jvalue[TRANSFORM];
+                    const rapidjson::Value& jtransform = bone[TRANSFORM];
 
                     for (rapidjson::SizeType j = 0; j < jtransform.Size(); j++)
                     {
                         invbindpos.m[j] = jtransform[j].GetDouble();
                     }
 
+                    //invbindpos.inverse();
                     modelnodedata->invBindPose.push_back(invbindpos);
                 }
             }
