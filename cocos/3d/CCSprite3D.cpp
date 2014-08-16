@@ -345,6 +345,12 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             subMeshState->setSubMesh(getSubMesh(modelNodeData->subMeshId));
             auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
             subMeshState->setSkin(skin);
+            
+            if (modelNodeData->matrialId == "" && matrialdatas.materials.size())
+            {
+                NTextureData::Usage type        = NTextureData::Usage::Diffuse;
+                const NTextureData* textureData = matrialdatas.materials[0].getTextureData(type);
+            }
             const NMaterialData*  materialData=matrialdatas.getMaterialData(modelNodeData->matrialId);
             if(materialData)
             {

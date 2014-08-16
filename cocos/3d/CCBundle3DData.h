@@ -306,7 +306,7 @@ struct NMaterialData
 {
     std::vector<NTextureData> textures;
     std::string id;
-    const NTextureData* getTextureData(NTextureData::Usage& type) const
+    const NTextureData* getTextureData(const NTextureData::Usage& type) const
     {
         for(const auto& it : textures)
         {

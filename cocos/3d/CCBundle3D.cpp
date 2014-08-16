@@ -399,6 +399,13 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
                 }
             }
             nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
+            auto modelnode = new ModelNodeData();
+            modelnode->matrialId = "";
+            modelnode->subMeshId = "";
+            modelnode->id = "";
+            modelnode->bones = skinData.skinBoneNames;
+            modelnode->invBindPose = skinData.inverseBindPoseMatrices;
+            nodedatas.nodes.push_back(modelnode);
         }
         else
         {
