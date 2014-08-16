@@ -48,9 +48,6 @@
 static const char* VERSION = "version";
 static const char* ID = "id";
 
-static const char* MESHDATA_MESH = "mesh";
-static const char* MESHDATA_MESHES = "meshes";
-static const char* MESHDATA_PARTS  ="parts";
 static const char* MESHDATA_DEFAULTPART = "body";
 static const char* MESHDATA_VERTEXSIZE = "vertexsize";
 static const char* MESHDATA_VERTEX = "vertex";
@@ -64,11 +61,20 @@ static const char* MESHDATA_TYPE = "type";
 static const char* MESHDATA_ATTRIBUTE = "attribute";
 
 static const char* SKINDATA_SKIN = "skin";
-static const char* SKINDATA_BONES = "bones";
-static const char* SKINDATA_NODE = "node";
 static const char* SKINDATA_BINDSHAPE = "bindshape";
-static const char* SKINDATA_CHILDREN = "children";
-static const char* SKINDATA_TRANSFORM = "tansform";
+
+static const char* MESH = "mesh";
+static const char* MESHES = "meshes";
+static const char* MESHPARTID = "meshpartid";
+static const char* MATERIALID = "materialid";
+static const char* NODE = "node";
+static const char* NODES = "nodes";
+static const char* CHILDREN = "children";
+static const char* PARTS = "parts";
+static const char* BONES = "bones";
+static const char* MATERIALS = "materials";
+static const char* ANIMATIONS = "animations";
+static const char* TRANSFORM = "transform";
 
 static const char* MATERIALDATA_MATERIAL = "material";
 static const char* MATERIALDATA_MATERIALS = "materials";
@@ -78,7 +84,6 @@ static const char* MATERIALDATA_TEXTURES = "textures";
 
 static const char* ANIMATIONDATA_ANIMATION = "animation";
 static const char* ANIMATIONDATA_LENGTH =   "length";
-static const char* ANIMATIONDATA_BONES  = "bones";
 static const char* ANIMATIONDATA_BONEID  = "boneId";
 static const char* ANIMATIONDATA_KEYFRAMES  = "keyframes";
 static const char* ANIMATIONDATA_TRANSLATION =  "translation";
@@ -95,7 +100,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     
     // get transform matrix
     Mat4 transform;
-    const rapidjson::Value& parent_tranform = val[SKINDATA_TRANSFORM];
+    const rapidjson::Value& parent_tranform = val[TRANSFORM];
     for (rapidjson::SizeType j = 0; j < parent_tranform.Size(); j++)
     {
         transform.m[j] = parent_tranform[j].GetDouble();
@@ -119,10 +124,10 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     if(skinData->rootBoneIndex < 0)
         skinData->rootBoneIndex = parent_name_index;
     
-    if (!val.HasMember(SKINDATA_CHILDREN))
+    if (!val.HasMember(CHILDREN))
         return;
     
-    const rapidjson::Value& children = val[SKINDATA_CHILDREN];
+    const rapidjson::Value& children = val[CHILDREN];
     for (rapidjson::SizeType i = 0; i < children.Size(); i++)
     {
         // get child bone name
@@ -302,7 +307,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
 }
 bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 {
-    const rapidjson::Value& mesh_data_array = _jsonReader[MESHDATA_MESHES];
+    const rapidjson::Value& mesh_data_array = _jsonReader[MESHES];
     for (rapidjson::SizeType index = 0; index < mesh_data_array.Size(); index++)
     {
         MeshData*   meshData = new MeshData();
@@ -336,7 +341,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         }
         // mesh part
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        const rapidjson::Value& mesh_part_array = mesh_data[MESHDATA_PARTS];
+        const rapidjson::Value& mesh_part_array = mesh_data[PARTS];
         for (rapidjson::SizeType i = 0; i < mesh_part_array.Size(); i++)
         {
             std::vector<unsigned short>      indexArray;
@@ -352,52 +357,55 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         }
         meshdatas.meshDatas.push_back(meshData);
     }
-     return true;
+    return true;
 }
 bool Bundle3D::loadNodes(NodeDatas& nodedatas)
 {
-     if (_isBinary)
-     {
-     }
-     else
-     {
-         if (_version == "1.2" || _version == "0.2")
-         {
-             SkinData   skinData;
-             loadSkinDataJson(&skinData);
-             auto nodeDatas = new NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
-             int index = 0;
-             size_t i;
-             for (i = 0; i < skinData.skinBoneNames.size(); i++)
-             {
-                 nodeDatas[index] = new NodeData();
-                 nodeDatas[index]->id = skinData.skinBoneNames[i];
-                 nodeDatas[index]->transform = skinData.skinBoneOriginMatrices[i];
-                 index++;
-             }
-             for (i = 0; i < skinData.nodeBoneNames.size(); i++)
-             {
-                 nodeDatas[index] = new NodeData();
-                 nodeDatas[index]->id = skinData.nodeBoneNames[i];
-                 nodeDatas[index]->transform = skinData.nodeBoneOriginMatrices[i];
-                 index++;
-             }
-             for (const auto& it : skinData.boneChild)
-             {
-                 const auto& children = it.second;
-                 auto parent = nodeDatas[it.first];
-                 for (const auto& child : children)
-                 {
-                     parent->children.push_back(nodeDatas[child]);
-                 }
-             }
-             nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
-         }
-         else 
-         {
-
-         }
-     }
+    if (_isBinary)
+    {
+        // TODO
+        return false;
+    }
+    else
+    {
+        if (_version == "1.2" || _version == "0.2")
+        {
+            SkinData   skinData;
+            loadSkinDataJson(&skinData);
+            auto nodeDatas = new NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
+            int index = 0;
+            size_t i;
+            for (i = 0; i < skinData.skinBoneNames.size(); i++)
+            {
+                nodeDatas[index] = new NodeData();
+                nodeDatas[index]->id = skinData.skinBoneNames[i];
+                nodeDatas[index]->transform = skinData.skinBoneOriginMatrices[i];
+                index++;
+            }
+            for (i = 0; i < skinData.nodeBoneNames.size(); i++)
+            {
+                nodeDatas[index] = new NodeData();
+                nodeDatas[index]->id = skinData.nodeBoneNames[i];
+                nodeDatas[index]->transform = skinData.nodeBoneOriginMatrices[i];
+                index++;
+            }
+            for (const auto& it : skinData.boneChild)
+            {
+                const auto& children = it.second;
+                auto parent = nodeDatas[it.first];
+                for (const auto& child : children)
+                {
+                    parent->children.push_back(nodeDatas[child]);
+                }
+            }
+            nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
+        }
+        else
+        {
+           return loadNodesJson(nodedatas);
+        }
+        
+    }
     return true;
 }
 bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
@@ -424,7 +432,7 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
     }
     return true;
 }
-bool    Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
+bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
 {
      return true;
 }
@@ -435,7 +443,6 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
     const rapidjson::Value& material_array = _jsonReader[MATERIALDATA_MATERIALS];
     for (rapidjson::SizeType i = 0; i < material_array.Size(); i++)
     {
-        //TODO, FIXME
         NMaterialData materialData;
         const rapidjson::Value& material_val = material_array[i];
         materialData.id = material_val[ID].GetString();
@@ -447,7 +454,7 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 NTextureData  textureData;
                 const rapidjson::Value& texture_val = testure_array[j];
                 std::string filename = texture_val[MATERIALDATA_FILENAME].GetString();
-                textureData.filename = _modelRelativePath + filename;
+                textureData.filename = _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
                 textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
                 textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
@@ -481,29 +488,10 @@ bool Bundle3D::loadJson(const std::string& path)
     return true;
 }
 
-bool Bundle3D::loadMeshDataJson(MeshData* meshdata)
-{
-    //1.2 is a wrong version. Our first released fbx-conv write this version id, so we keep on using it.
-    if (_version == "1.2")
-    {
-        return loadMeshDataJson_0_1(meshdata);
-    }
-    else if(_version == "0.2")
-    {
-        return loadMeshDataJson_0_2(meshdata);
-    }
-    else
-    {
-        CCLOGINFO(false, "Unsupported version of loadMeshDataJson(): %s", _version);
-        return false;
-    }
-}
-
 bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 {
+    const rapidjson::Value& mesh_data_array = _jsonReader[MESH];
     MeshData* meshdata= new   MeshData();
-    const rapidjson::Value& mesh_data_array = _jsonReader[MESHDATA_MESH];
-    
     const rapidjson::Value& mesh_data_val = mesh_data_array[(rapidjson::SizeType)0];
     
     const rapidjson::Value& mesh_data_body_array = mesh_data_val[MESHDATA_DEFAULTPART];
@@ -550,9 +538,8 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 
 bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
 {
-     MeshData* meshdata= new   MeshData();
-    const rapidjson::Value& mesh_array = _jsonReader[MESHDATA_MESH];
-    
+    MeshData* meshdata= new   MeshData();
+    const rapidjson::Value& mesh_array = _jsonReader[MESH];
     const rapidjson::Value& mesh_array_0 = mesh_array[(rapidjson::SizeType)0];
     
     // mesh_vertex_attribute
@@ -613,14 +600,14 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
     assert(skin_data_array.IsArray());
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
     
-    if (!skin_data_array_val_0.HasMember(SKINDATA_BONES))
+    if (!skin_data_array_val_0.HasMember(BONES))
         return false;
     
-    const rapidjson::Value& skin_data_bones = skin_data_array_val_0[SKINDATA_BONES];
+    const rapidjson::Value& skin_data_bones = skin_data_array_val_0[BONES];
     for (rapidjson::SizeType i = 0; i < skin_data_bones.Size(); i++)
     {
         const rapidjson::Value& skin_data_bone = skin_data_bones[i];
-        std::string name = skin_data_bone[SKINDATA_NODE].GetString();
+        std::string name = skin_data_bone[NODE].GetString();
         skindata->addSkinBoneNames(name);
         
         Mat4 mat_bind_pos;
@@ -641,24 +628,6 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
     return true;
 }
 
-bool Bundle3D::loadMaterialDataJson(MaterialData* materialdata)
-{
-    //1.2 is a wrong version. Our first released fbx-conv write this version id, so we keep on using it.
-    if (_version == "1.2")
-    {
-        return loadMaterialDataJson_0_1(materialdata);
-    }
-    else if(_version == "0.2")
-    {
-        return loadMaterialDataJson_0_2(materialdata);
-    }
-    else
-    {
-        CCLOGINFO(false, "Unsupported version of loadMaterialDataJson() : %s", _version);
-        return false;
-    }
-}
-
 bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
 {
     if (!_jsonReader.HasMember(MATERIALDATA_MATERIAL))
@@ -673,7 +642,7 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
     const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
     NTextureData  textureData;
     // set texture
-    textureData.filename =_modelRelativePath + material_data_base_array_0[MATERIALDATA_FILENAME].GetString();
+    textureData.filename =_modelPath + material_data_base_array_0[MATERIALDATA_FILENAME].GetString();
     textureData.type= NTextureData::Usage::Diffuse;
     textureData.id="";
     materialData.textures.push_back(textureData);
@@ -692,10 +661,9 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
     {
         NTextureData  textureData;
         const rapidjson::Value& material_val = material_array[i];
-        //std::string id = material_val[ID].GetString();
-        
+
         // set texture
-        textureData.filename = _modelRelativePath + material_val[MATERIALDATA_TEXTURES].GetString();
+        textureData.filename = _modelPath + material_val[MATERIALDATA_TEXTURES].GetString();
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);
@@ -715,7 +683,7 @@ bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
 
     animationdata->_totalTime = animation_data_array_val_0[ANIMATIONDATA_LENGTH].GetDouble();
 
-    const rapidjson::Value&  bones =  animation_data_array_val_0[ANIMATIONDATA_BONES];
+    const rapidjson::Value&  bones =  animation_data_array_val_0[BONES];
     for (rapidjson::SizeType i = 0; i <  bones.Size(); i++)
     {
         const rapidjson::Value&  bone =  bones[i];
@@ -1107,7 +1075,7 @@ bool Bundle3D::loadMaterialDataBinary(MaterialData* materialdata)
             return false;
         }
         
-        std::string path = _modelRelativePath + texturePath;
+        std::string path = _modelPath + texturePath;
         materialdata->texturePaths[i] = path;
     }
     
@@ -1179,6 +1147,294 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
         }
     }
     return true;
+}
+
+bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
+{
+    if (!_jsonReader.HasMember(NODES)) return false;
+    const rapidjson::Value& nodes = _jsonReader[NODES];
+    if(!nodes.IsArray()) return false;
+
+    loadBoneNamesJson(nodes);
+
+    // traverse the nodes again
+    for (rapidjson::SizeType i = 0; i < nodes.Size(); i++)
+    {
+        _skeleton = false;
+        const rapidjson::Value& jnode = nodes[i];
+        std::string id = jnode[ID].GetString();
+        NodeData* nodedata = parseNodesRecursivelyJson(jnode);
+
+        //bool isSkeleton;
+        //isSkeleton = checkIsSkeletonJson(jnode);
+
+        if (_skeleton)
+            nodedatas.skeleton.push_back(nodedata);
+        else
+            nodedatas.nodes.push_back(nodedata);
+    }
+
+    return true;
+}
+
+void Bundle3D::loadBoneNamesJson(const rapidjson::Value& jnodes)
+{
+    for (rapidjson::SizeType i = 0; i < jnodes.Size(); i++)
+    {
+        parseBoneNameRecursivelyJson(jnodes[i]);
+    }
+}
+
+void Bundle3D::parseBoneNameRecursivelyJson(const rapidjson::Value& jnode)
+{
+    std::string id = jnode[ID].GetString();
+    if (jnode.HasMember(PARTS))
+    {
+        const rapidjson::Value& parts = jnode[PARTS];
+
+        for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
+        {
+            const rapidjson::Value& part = parts[i];
+
+            if (part.HasMember(BONES))
+            {
+                const rapidjson::Value& bones = part[BONES];
+
+                for (rapidjson::SizeType j = 0; j < bones.Size(); j++)
+                {
+                    const rapidjson::Value& bone = bones[j];
+                    std::string bonename = bone[NODE].GetString();
+
+                    if (!checkIsBone(bonename))
+                    {
+                        _bonenames.push_back(bonename);
+                    }
+                }
+            }
+        }
+    }
+
+    if (jnode.HasMember(CHILDREN))
+    {
+        const rapidjson::Value& children = jnode[CHILDREN];
+
+        for (rapidjson::SizeType i = 0; i < children.Size(); i++)
+        {
+            parseBoneNameRecursivelyJson(children[i]);
+        }
+    }
+}
+
+bool Bundle3D::checkIsBone(const std::string& name)
+{
+    std::list<std::string>::iterator iter = std::find(_bonenames.begin(), _bonenames.end(), name);
+    bool ret = (iter != _bonenames.end()) ? true : false;
+    return ret;
+}
+
+NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
+{
+    NodeData* nodedata;
+    if (jvalue.HasMember(PARTS))
+        nodedata = new ModelNodeData();
+    else
+        nodedata = new NodeData();
+
+    // id
+    nodedata->id = jvalue[ID].GetString();
+
+    // check is skeleton
+    if (checkIsBone(nodedata->id))
+        _skeleton = true;
+
+    // transform
+    Mat4 tranform;
+    const rapidjson::Value& jtransform = jvalue[TRANSFORM];
+
+    for (rapidjson::SizeType j = 0; j < jtransform.Size(); j++)
+    {
+        tranform.m[j] = jtransform[j].GetDouble();
+    }
+
+    nodedata->transform = tranform;
+
+    // parts
+    if (jvalue.HasMember(PARTS))
+    {
+        const rapidjson::Value& parts = jvalue[PARTS];
+        ModelNodeData* modelnodedata = dynamic_cast<ModelNodeData*>(nodedata);
+
+        for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
+        {
+            const rapidjson::Value& part = parts[i];
+            std::string meshPartId = part[MESHPARTID].GetString();
+            std::string materialId = part[MATERIALID].GetString();
+
+            if (meshPartId == "" || materialId == "")
+            {
+                std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
+                CCASSERT(false, err.c_str()); 
+                return nullptr;
+            }
+
+            if (part.HasMember(BONES))
+            {
+                const rapidjson::Value& bones = part[BONES];
+
+                for (rapidjson::SizeType j = 0; j < bones.Size(); j++) 
+                {
+                    const rapidjson::Value& bone = bones[i];
+
+                    // node
+                    if (!bone.HasMember(NODE))
+                    {
+                        CCASSERT(false, "Bone node ID missing");
+                        return nullptr;
+                    }
+
+                    modelnodedata->bones.push_back(bone[NODE].GetString());
+
+                    Mat4 invbindpos;
+                    const rapidjson::Value& jtransform = jvalue[TRANSFORM];
+
+                    for (rapidjson::SizeType j = 0; j < jtransform.Size(); j++)
+                    {
+                        invbindpos.m[j] = jtransform[j].GetDouble();
+                    }
+
+                    modelnodedata->invBindPose.push_back(invbindpos);
+                }
+            }
+        }
+    }
+
+    if (jvalue.HasMember(CHILDREN))
+    {
+        const rapidjson::Value& children = jvalue[CHILDREN];
+        for (rapidjson::SizeType i = 0; i <  children.Size(); i++)
+        {
+            const rapidjson::Value& child = children[i];
+
+            NodeData* tempdata = parseNodesRecursivelyJson(child);
+            nodedata->children.push_back(tempdata);
+        }
+    }
+
+    return nodedata;
+}
+
+bool Bundle3D::loadNodesBinary(NodeDatas& nodedatas)
+{
+    if (!seekToFirstType(BUNDLE_TYPE_NODE))
+        return false;
+    
+    loadBoneNamesBinary();
+
+    if (!seekToFirstType(BUNDLE_TYPE_NODE))
+        return false;
+
+    unsigned int nodeSize = 0;
+    if (_binaryReader.read(&nodeSize, 4, 1) != 1)
+    {
+        CCLOGINFO("Failed to read nodes: size '%s'.", _path.c_str());
+        return false;
+    }
+
+    // traverse the nodes again
+    for (rapidjson::SizeType i = 0; i < nodeSize; i++)
+    {
+        std::string id = _binaryReader.readString();
+        NodeData* nodedata = parseNodesRecursivelyBinary();
+
+        if (_skeleton)
+            nodedatas.skeleton.push_back(nodedata);
+        else
+            nodedatas.nodes.push_back(nodedata);
+    }
+    return true;
+}
+
+void Bundle3D::loadBoneNamesBinary()
+{
+    unsigned int nodeSize=0;
+    if (_binaryReader.read(&nodeSize, 4, 1) != 1)
+    {
+        CCLOGINFO("Failed to read nodes: size '%s'.", _path.c_str());
+        return;
+    }
+
+    for (unsigned int i = 0; i < nodeSize; i++)
+    {
+        parseBoneNameRecursivelyBinary();
+    }
+}
+
+void Bundle3D::parseBoneNameRecursivelyBinary()
+{
+    std::string id = _binaryReader.readString();
+
+    Mat4 nodeMat;
+    if (!_binaryReader.readMatrix(nodeMat.m))
+        return;
+
+    // read pass
+    unsigned int partsSize=0;
+    if (_binaryReader.read(&partsSize, 4, 1) != 1)
+    {
+        CCASSERT("Failed to read part size: '%s'.", _path.c_str());
+        return;
+    }
+
+    if (partsSize > 0)
+    {
+        for (unsigned i = 0; i < partsSize; i++)
+        {
+            unsigned int boneSize=0;
+            if (_binaryReader.read(&boneSize, 4, 1) != 1)
+            {
+                CCASSERT("Failed to read bone: size '%s'.", _path.c_str());
+                return;
+            }
+
+            if (boneSize > 0)
+            {
+                for (unsigned j = 0; j < boneSize; j++)
+                {
+                    std::string bonename = _binaryReader.readString();
+
+                    Mat4 boneMat;
+                    if (!_binaryReader.readMatrix(boneMat.m))
+                        return;
+
+                    if (!checkIsBone(bonename))
+                    {
+                        _bonenames.push_back(bonename);
+                    }
+                }
+            }
+        }
+    }
+
+    // read children
+    unsigned int childrenSize = 0;
+    if (_binaryReader.read(&childrenSize, 4, 1) != 1)
+    {
+        CCASSERT("Failed to read children size: '%s'.", _path.c_str());
+        return;
+    }
+
+    if (childrenSize > 0)
+    {
+        for (rapidjson::SizeType i = 0; i < childrenSize; i++)
+        {
+            parseBoneNameRecursivelyBinary();
+        }
+    }
+}
+
+NodeData* Bundle3D::parseNodesRecursivelyBinary()
+{
+    return nullptr;
 }
 
 GLenum Bundle3D::parseGLType(const std::string& str)
@@ -1302,17 +1558,7 @@ void Bundle3D::getModelRelativePath(const std::string& path)
 {
     ssize_t index = path.find_last_of('/');
     std::string fullModelPath;
-    fullModelPath = path.substr(0, index + 1);
-
-    auto list = FileUtils::getInstance()->getSearchPaths();
-    for( const auto &item : list )
-    {
-        if ( fullModelPath.find(item) != std::string::npos )
-        {
-            _modelRelativePath = fullModelPath.substr(item.length(), fullModelPath.length() + 1);
-            break;
-        }
-    } 
+    _modelPath = path.substr(0, index + 1);
 }
 
 Reference* Bundle3D::seekToFirstType(unsigned int type)
@@ -1337,13 +1583,14 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
 
 Bundle3D::Bundle3D()
 :_isBinary(false),
-_modelRelativePath(""),
+_modelPath(""),
 _path(""),
 _version(""),
 _jsonBuffer(nullptr),
 _binaryBuffer(nullptr),
 _referenceCount(0),
-_references(nullptr)
+_references(nullptr),
+_skeleton(false)
 {
 
 }
