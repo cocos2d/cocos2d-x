@@ -1292,7 +1292,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 
                 for (rapidjson::SizeType j = 0; j < bones.Size(); j++) 
                 {
-                    const rapidjson::Value& bone = bones[i];
+                    const rapidjson::Value& bone = bones[j];
 
                     // node
                     if (!bone.HasMember(NODE))
@@ -1306,9 +1306,9 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
                     Mat4 invbindpos;
                     const rapidjson::Value& jtransform = bone[TRANSFORM];
 
-                    for (rapidjson::SizeType j = 0; j < jtransform.Size(); j++)
+                    for (rapidjson::SizeType k = 0; k < jtransform.Size(); k++)
                     {
-                        invbindpos.m[j] = jtransform[j].GetDouble();
+                        invbindpos.m[k] = jtransform[k].GetDouble();
                     }
 
                     //invbindpos.inverse();
