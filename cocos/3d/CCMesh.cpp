@@ -32,6 +32,7 @@
 #include "3d/CCSubMesh.h"
 #include "3d/CCObjLoader.h"
 #include "3d/CCSprite3DMaterial.h"
+#include "3d/CCSubMesh.h"
 
 #include "base/ccMacros.h"
 #include "base/CCEventCustom.h"
@@ -198,6 +199,20 @@ Mesh* Mesh::create(const std::vector<float> &vertices, int vertexSizeInFloat, co
     return nullptr;
 }
 
+Mesh* Mesh::create(const MeshData& meshdata)
+{
+    auto mesh = new Mesh();
+    if (mesh && mesh->init(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.subMeshIndices, meshdata.attribs))
+    {
+        for (int i = 0; i < (int)mesh->getSubMeshCount(); i++) {
+            auto submesh = mesh->getSubMesh(i);
+            submesh->_id = meshdata.subMeshIds[i];
+        }
+    }
+    mesh->autorelease();
+    return mesh;
+}
+
 bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<IndexArray>& indices)
 {
     bool bRet = _renderdata.init(positions, normals, texs, indices);
@@ -293,6 +308,15 @@ void Mesh::restore()
 const AABB& Mesh::getOriginAABB() const
 {
     return _originAABB;
+}
+
+SubMesh* Mesh::getSubMeshById(const std::string& subMeshId) const
+{
+    for (auto it : _subMeshes) {
+        if (it->getSubMeshId() == subMeshId)
+            return it;
+    }
+    return nullptr;
 }
 
 /**

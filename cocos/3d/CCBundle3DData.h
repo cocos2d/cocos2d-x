@@ -283,6 +283,7 @@ struct MaterialData
 /**new material, since 3.3 */
 struct NTextureData
 {
+     std::string id;
      std::string filename;
      GLenum wrapS;
      GLenum wrapT;
@@ -290,17 +291,27 @@ struct NTextureData
 struct NMaterialData
 {
     std::string id;
-    std::vector<NTextureData> textures;
-    // copy from lv
+    std::string fileName;
+    GLuint    wrapS;
+    GLuint    wrapT;
 };
 
 /** material datas, since 3.3 */
 struct MaterialDatas
 {
-    std::vector<NMaterialData> materials;
+    std::vector<NTextureData> materials;
     void resetData()
     {
         materials.clear();
+    }
+    const NTextureData* getMaterialData(const std::string& materialid) const
+    {
+        for(const auto& it : materials)
+        {
+            if (it.id == materialid)
+                return &it;
+        }
+        return nullptr;
     }
 };
 

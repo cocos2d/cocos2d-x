@@ -33,7 +33,8 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
-#include "CCAABB.h"
+#include "3d/CCAABB.h"
+#include "3d/CCBundle3DData.h"
 
 NS_CC_BEGIN
 
@@ -45,6 +46,7 @@ class AttachNode;
 class SubMeshState;
 class Skeleton3D;
 struct NodeData;
+class SubMesh;
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
@@ -127,7 +129,10 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**generate materials, and add them to cache, keyprefix is used as key prefix when added to cache*/
     void genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths);
-    void createNode(NodeData* nodedata,Node* root);
+    void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas);
+    /**get SubMesh by Id*/
+    SubMesh* getSubMesh(const std::string& subMeshId) const;
+    
 protected:
     Mesh*                        _mesh;//mesh
     MeshSkin*                    _skin;//skin
@@ -142,7 +147,7 @@ protected:
     BlendFunc                    _blend;
     
     //since 3.3
-    std::vector<Mesh*>           _meshes;
+    Vector<Mesh*>           _meshes;
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix

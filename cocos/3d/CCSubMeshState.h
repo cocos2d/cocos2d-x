@@ -45,14 +45,16 @@ class SubMesh;
  */
 class CC_DLL SubMeshState : public Ref
 {
+    friend class Sprite3D;
 public:
 
     /**create submesh from primitivetype indexformat and indices*/
     static SubMeshState* create();
     
-    static SubMeshState* create(const ModelNodeData& modelNodeData);
+    static SubMeshState* create(const std::string& name);
 
     /**texture getter and setter*/
+    void setTexture(const std::string& texPath);
     void setTexture(Texture2D* tex);
     Texture2D* getTexture() const { return _texture; }
     
@@ -60,16 +62,13 @@ public:
     void setVisible(bool visible) { _visible = visible; }
     bool isVisible() const { return _visible; }
     
-    /**skin getter and setter*/
-    void setSkin(MeshSkin* skin);
+    /**skin getter */
     MeshSkin* getSkin() const { return _skin; }
     
-    /**sub mesh getter and setter*/
-    void setSubMesh(SubMesh* subMesh);
+    /**sub mesh getter */
     SubMesh* getSubMesh() const { return _subMesh; }
     
-    /**name getter and setter*/
-    void setName(const std::string& name) { _name = name; }
+    /**name getter */
     const std::string& getName() const { return _name; }
 
 CC_CONSTRUCTOR_ACCESS:
@@ -77,6 +76,13 @@ CC_CONSTRUCTOR_ACCESS:
     SubMeshState();
     virtual ~SubMeshState();
 
+    /**skin setter*/
+    void setSkin(MeshSkin* skin);
+    /**submesh setter*/
+    void setSubMesh(SubMesh* subMesh);
+    /**name setter*/
+    void setName(const std::string& name) { _name = name; }
+    
 protected:
     Texture2D* _texture;  //texture that submesh is using
     MeshSkin*  _skin;     //skin

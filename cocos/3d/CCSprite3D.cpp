@@ -171,17 +171,11 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
         MeshData*     meshData=  meshdatas.meshDatas[i];
         if(meshData)
         {
-            Mesh* mesh = Mesh::create(meshData->vertex,meshData->vertexSizeInFloat, meshData->subMeshIndices,meshData->attribs);
-            _meshes.push_back(mesh);
+            Mesh* mesh = Mesh::create(*meshData);
+            _meshes.pushBack(mesh);
         }
     }
-   // CC_SAFE_RETAIN(_mesh);
-    //add mesh to cache
-   // MeshCache::getInstance()->addMesh(key, _mesh);
-    _skeleton = Skeleton3D::create(fullPath, "");
-    CC_SAFE_RETAIN(_skeleton);
-    _skin = MeshSkin::create(_skeleton, fullPath, "");
-    CC_SAFE_RETAIN(_skin);
+
     MaterialDatas materialdatas;
     ret = bundle->loadMaterials(materialdatas);
     if (ret)
@@ -190,16 +184,18 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
     }
     NodeDatas   nodeDatas;
     bundle->loadNodes(nodeDatas);
+    _skeleton = Skeleton3D::create(nodeDatas.skeleton);
+    CC_SAFE_RETAIN(_skeleton);
+    
     for(int i = 0; i < nodeDatas.nodes.size(); i++ )
     {
         NodeData*   nodeData= nodeDatas.nodes[i];
         if(nodeData)
         {
-            createNode(nodeData,this);
+            createNode(nodeData, this, materialdatas);
         }
     }
-    _skeleton = Skeleton3D::create(nodeDatas.skeleton);
-    CC_SAFE_RETAIN(_skeleton);
+    
     genGLProgramState();
     return true;
 }
@@ -260,6 +256,7 @@ Sprite3D::Sprite3D()
 Sprite3D::~Sprite3D()
 {
     _subMeshStates.clear();
+    _meshes.clear();
     CC_SAFE_RELEASE_NULL(_mesh);
     CC_SAFE_RELEASE_NULL(_skin);
     CC_SAFE_RELEASE_NULL(_skeleton);
@@ -335,16 +332,22 @@ GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
         return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
     }
 }
-void Sprite3D::createNode(NodeData* nodedata,Node* root)
+void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas)
 {
     Node* node=nullptr;
     ModelNodeData*   modelNodeData=nodedata->asModelNodeData();
     if(modelNodeData)
     {
-        auto subMeshState = SubMeshState::create();
+        auto subMeshState = SubMeshState::create(modelNodeData->id);
         if(subMeshState)
         {
             _subMeshStates.pushBack(subMeshState);
+            subMeshState->setSubMesh(getSubMesh(modelNodeData->subMeshId));
+            auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
+            subMeshState->setSkin(skin);
+            auto texpath = matrialdatas.getMaterialData(modelNodeData->matrialId)->filename;
+            subMeshState->setTexture(texpath);
+            //set wrap s, t
         }
     }
     else
@@ -364,10 +367,21 @@ void Sprite3D::createNode(NodeData* nodedata,Node* root)
         NodeData* childData = nodedata->children[i];
         if(childData)
         {
-            createNode(childData,node);      
+            createNode(childData,node, matrialdatas);
         }
     }
 }
+
+SubMesh* Sprite3D::getSubMesh(const std::string& subMeshId) const
+{
+    for (auto it : _meshes) {
+        auto subMesh = it->getSubMeshById(subMeshId);
+        if (subMesh)
+            return subMesh;
+    }
+    return nullptr;
+}
+
 void Sprite3D::genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths)
 {
     _subMeshStates.clear();

@@ -58,7 +58,6 @@ SubMesh::SubMesh()
 SubMesh::~SubMesh()
 {
     cleanAndFreeBuffers();
-    CC_SAFE_RELEASE(_mesh);
 }
 
 SubMesh* SubMesh::create(PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
@@ -71,12 +70,13 @@ SubMesh* SubMesh::create(PrimitiveType primitivetype, IndexFormat indexformat, c
     return submesh;
 }
 
-SubMesh* SubMesh::create(Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
+SubMesh* SubMesh::create(const std::string& submeshId, Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
 {
     auto submesh = new SubMesh();
     submesh->_primitiveType = primitivetype;
     submesh->_indexFormat = indexformat;
     submesh->_mesh = mesh;
+    submesh->_id = submeshId;
     submesh->autorelease();
     
     return submesh;

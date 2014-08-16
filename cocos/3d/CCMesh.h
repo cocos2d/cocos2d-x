@@ -102,6 +102,8 @@ public:
      * @param attribs vertex attributes
      */
     static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<IndexArray>& subMeshIndices, const std::vector<MeshVertexAttrib>& attribs);
+    
+    static Mesh* create(const MeshData& meshdata);
 
     /**get vertex buffer*/
     inline GLuint getVertexBuffer() const { return _vertexBuffer; }
@@ -126,6 +128,9 @@ public:
     
     /** get origin aabb that calculate from vertices*/
     const AABB& getOriginAABB() const;
+    
+    /** get submesh by id */
+    SubMesh* getSubMeshById(const std::string& subMeshId) const;
     
     /**to be deprecated, those functions have been moved to SubMesh*/
     /** get primitive type*/
