@@ -286,7 +286,7 @@ bool Sprite3D::initWithFile(const std::string &path)
     }
     else if (ext == ".c3b" || ext == ".c3t")
     {
-        return loadFromC3x(path);
+        return loadFromC3x_0_3(path);
     }
     
     return false;
