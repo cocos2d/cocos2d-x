@@ -97,30 +97,30 @@ public:
     
     //since 3.3, to support reskin
     virtual bool loadMeshDatas(MeshDatas& meshdatas);
-    bool         loadMeshDatasJson(MeshDatas& meshdatas);
-    bool         loadMeshDatasBinary(MeshDatas& meshdatas);
     //since 3.3, to support reskin
     virtual bool loadNodes(NodeDatas& nodedatas);
     //since 3.3, to support reskin
     virtual bool loadMaterials(MaterialDatas& materialdatas);
-    bool         loadMaterialsJson(MaterialDatas& materialdatas);
-    bool         loadMaterialsBinary(MaterialDatas& materialdatas);
+  
 protected:
 
     bool loadJson(const std::string& path);
-    
+    bool loadMeshDatasJson(MeshDatas& meshdatas);
+    bool loadMeshDataJson_0_1(MeshDatas& meshdatas);
+    bool loadMeshDataJson_0_2(MeshDatas& meshdatas);
+    bool loadMeshDatasBinary(MeshDatas& meshdatas);
+    bool loadMaterialsJson(MaterialDatas& materialdatas);
+    bool loadMaterialDataJson_0_1(MaterialDatas& materialdatas);
+    bool loadMaterialDataJson_0_2(MaterialDatas& materialdatas);
+    bool loadMaterialsBinary(MaterialDatas& materialdatas);
     bool loadMeshDataJson(MeshData* meshdata);
     bool loadMeshDataJson_0_1(MeshData* meshdata);
     bool loadMeshDataJson_0_2(MeshData* meshdata);
-    
     bool loadSkinDataJson(SkinData* skindata);
-    
     bool loadMaterialDataJson(MaterialData* materialdata);
     bool loadMaterialDataJson_0_1(MaterialData* materialdata);
     bool loadMaterialDataJson_0_2(MaterialData* materialdata);
-    
     bool loadAnimationDataJson(Animation3DData* animationdata);
-
     /**
      * load data in binary
      * @param path The c3b file path
