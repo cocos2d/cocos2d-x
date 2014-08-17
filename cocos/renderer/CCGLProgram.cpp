@@ -414,20 +414,20 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     }
 
     GLchar lightStruct[] = {
-        "#define MAX_LIGHT 6  \n"
+        "#define CC_MAX_LIGHT 6  \n"
         "struct LightSource   \n"
         "{                    \n"
         "	vec4 color;       \n"
         "	vec3 position;    \n"
         "	vec3 direction;   \n"
         "	float range;      \n"
+        "	float range2;     \n"
         "	float innerAngle; \n"
         "	float outerAngle; \n"
         "	float type;       \n"
         "	float use;        \n"
-        "	float none;       \n"
         "};                   \n"
-        "uniform LightSource CC_LightSource[MAX_LIGHT];\n"
+        "uniform LightSource CC_LightSource[CC_MAX_LIGHT];\n"
     };
     
     const GLchar *sources[] = {
@@ -905,8 +905,8 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         mvInverse.transpose();
         GLfloat normalMat[9];
         normalMat[0] = mvInverse.m[0];normalMat[1] = mvInverse.m[1];normalMat[2] = mvInverse.m[2];
-        normalMat[3] = mvInverse.m[3];normalMat[4] = mvInverse.m[4];normalMat[5] = mvInverse.m[5];
-        normalMat[6] = mvInverse.m[6];normalMat[7] = mvInverse.m[7];normalMat[8] = mvInverse.m[8];
+        normalMat[3] = mvInverse.m[4];normalMat[4] = mvInverse.m[5];normalMat[5] = mvInverse.m[6];
+        normalMat[6] = mvInverse.m[8];normalMat[7] = mvInverse.m[9];normalMat[8] = mvInverse.m[10];
         setUniformLocationWithMatrix3fv(_builtInUniforms[UNIFORM_NORMAL_MATRIX], normalMat, 1);
     }
 
@@ -947,11 +947,11 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                 lightSources[4 + idx] = pos.x;lightSources[5 + idx] = pos.y;lightSources[6 + idx] = pos.z;
                 lightSources[7 + idx] = dir.x;lightSources[8 + idx] = dir.y;lightSources[9 + idx] = dir.z;
                 lightSources[10 + idx] = iter->getRange();
-                lightSources[11 + idx] = iter->getInnerAngle();
-                lightSources[12 + idx] = iter->getOuterAngle();
-                lightSources[13 + idx] = static_cast<float>(iter->getLightType());
-                lightSources[14 + idx] = static_cast<float>(iter->getEnabled());
-                lightSources[15 + idx] = -1;
+				lightSources[11 + idx] = iter->getRange() * iter->getRange();
+                lightSources[12 + idx] = iter->getInnerAngle();
+                lightSources[13 + idx] = iter->getOuterAngle();
+                lightSources[14 + idx] = static_cast<float>(iter->getLightType());
+                lightSources[15 + idx] = static_cast<float>(iter->getEnabled());
                 idx += 16;
             }
 
