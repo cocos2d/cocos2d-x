@@ -29,10 +29,11 @@
 #include "math/CCMath.h"
 #include "CCAABB.h"
 #include "CCOBB.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-class CC_DLL Ray
+class CC_3D_DLL Ray
 {
 public:
     /**

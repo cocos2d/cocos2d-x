@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,57 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCSUBMESHSTATE_H__
-#define __CCSUBMESHSTATE_H__
+#ifndef __COCOS_3D_COCOS3D_H__
+#define __COCOS_3D_COCOS3D_H__
 
-#include <string>
-#include <vector>
+//3d
+#include "3d/CCAABB.h"
+#include "3d/CCOBB.h"
+#include "3d/CCRay.h"
+#include "3d/CCSprite3D.h"
+#include "3d/CCMesh.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCAnimate3D.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCSprite3DMaterial.h"
+#include "3d/CCSubMeshState.h"
+#include "3d/CCAttachNode.h"
 
-#include "3d/CCBundle3DData.h"
-
-#include "base/CCRef.h"
-#include "base/ccTypes.h"
-#include "math/CCMath.h"
-#include "renderer/CCGLProgram.h"
-#include "3d/3dExport.h"
-
-NS_CC_BEGIN
-
-class Texture2D;
-class MeshSkin;
-/** 
- * SubMeshState: visibility and apperence of submesh
- */
-class CC_3D_DLL SubMeshState : public Ref
-{
-public:
-
-    /**create submesh from primitivetype indexformat and indices*/
-    static SubMeshState* create();
-
-    /**texture getter and setter*/
-    void setTexture(Texture2D* tex);
-    Texture2D* getTexture() const { return _texture; }
-    
-    /**visible getter and setter*/
-    void setVisible(bool visible) { _visible = visible; }
-    bool isVisible() const { return _visible; }
-    
-    /**skin getter and setter*/
-    void setSkin(MeshSkin* skin);
-    MeshSkin* getSkin() const { return _skin; }
-
-CC_CONSTRUCTOR_ACCESS:
-    
-    SubMeshState();
-    virtual ~SubMeshState();
-
-protected:
-    Texture2D* _texture;  //texture that submesh is using
-    MeshSkin*  _skin;     //skin
-    bool       _visible; // is the submesh visible
-};
-
-NS_CC_END
-
-#endif // __CCSUBMESHSTATE_H__
+#endif

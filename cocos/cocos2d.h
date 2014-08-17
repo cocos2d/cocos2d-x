@@ -261,19 +261,6 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 
-//3d
-#include "3d/CCAABB.h"
-#include "3d/CCOBB.h"
-#include "3d/CCRay.h"
-#include "3d/CCSprite3D.h"
-#include "3d/CCMesh.h"
-#include "3d/CCMeshSkin.h"
-#include "3d/CCAnimate3D.h"
-#include "3d/CCAnimation3D.h"
-#include "3d/CCSprite3DMaterial.h"
-#include "3d/CCSubMeshState.h"
-#include "3d/CCAttachNode.h"
-
 // Deprecated include
 #include "deprecated/CCDictionary.h"
 #include "deprecated/CCArray.h"

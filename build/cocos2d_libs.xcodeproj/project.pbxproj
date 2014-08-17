@@ -120,6 +120,8 @@
 		15162221199E7A32006099B8 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BE1926D61F003EEF37 /* CCSprite3D.h */; };
 		15162222199E7A32006099B8 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
 		15162223199E7A32006099B8 /* CCBundle3DData.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D3D3B81948613300BA4831 /* CCBundle3DData.h */; };
+		15162237199F9EEA006099B8 /* cocos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = 15162236199F9EEA006099B8 /* cocos3d.h */; };
+		15162238199F9EEA006099B8 /* cocos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = 15162236199F9EEA006099B8 /* cocos3d.h */; };
 		15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
@@ -2106,6 +2108,7 @@
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		1516200B199E7363006099B8 /* libcocos3d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos3d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15162201199E7810006099B8 /* libcocos3d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos3d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		15162236199F9EEA006099B8 /* cocos3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos3d.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
@@ -5289,6 +5292,7 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				15162236199F9EEA006099B8 /* cocos3d.h */,
 				B6105175199CB1A600DC41CE /* CCAABB.cpp */,
 				B6105176199CB1A600DC41CE /* CCAABB.h */,
 				B6105177199CB1A600DC41CE /* CCOBB.cpp */,
@@ -5346,6 +5350,7 @@
 				15162023199E75FF006099B8 /* CCBundleReader.h in Headers */,
 				15162024199E75FF006099B8 /* CCBundle3D.h in Headers */,
 				15162025199E75FF006099B8 /* CCAnimate3D.h in Headers */,
+				15162237199F9EEA006099B8 /* cocos3d.h in Headers */,
 				15162026199E75FF006099B8 /* CCMeshSkin.h in Headers */,
 				15162027199E75FF006099B8 /* CCAnimation3D.h in Headers */,
 				15162028199E75FF006099B8 /* CCAnimationCurve.h in Headers */,
@@ -5371,6 +5376,7 @@
 				15162219199E7A32006099B8 /* CCBundleReader.h in Headers */,
 				1516221A199E7A32006099B8 /* CCBundle3D.h in Headers */,
 				1516221B199E7A32006099B8 /* CCAnimate3D.h in Headers */,
+				15162238199F9EEA006099B8 /* cocos3d.h in Headers */,
 				1516221C199E7A32006099B8 /* CCMeshSkin.h in Headers */,
 				1516221D199E7A32006099B8 /* CCAnimation3D.h in Headers */,
 				1516221E199E7A32006099B8 /* CCAnimationCurve.h in Headers */,

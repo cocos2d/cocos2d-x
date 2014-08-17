@@ -34,6 +34,7 @@
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
 #include "CCAABB.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +47,7 @@ class SubMeshState;
 class Skeleton3D;
 
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
-class CC_DLL Sprite3D : public Node, public BlendProtocol
+class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
@@ -144,7 +145,7 @@ protected:
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
 };
 
-extern std::string CC_DLL s_attributeNames[];//attribute names array
+extern std::string CC_3D_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_
