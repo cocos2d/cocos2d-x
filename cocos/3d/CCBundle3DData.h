@@ -105,6 +105,20 @@ struct NodeDatas
 {
     std::vector<NodeData*> skeleton; //skeleton
     std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
+    
+    void resetData()
+    {
+        for(auto& it : skeleton)
+        {
+            delete it;
+        }
+        skeleton.clear();
+        for(auto& it : nodes)
+        {
+            delete it;
+        }
+        nodes.clear();
+    }
 };
 
 /**mesh data*/

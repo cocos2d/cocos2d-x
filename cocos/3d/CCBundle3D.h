@@ -102,6 +102,9 @@ public:
     virtual bool loadNodes(NodeDatas& nodedatas);
     //since 3.3, to support reskin
     virtual bool loadMaterials(MaterialDatas& materialdatas);
+    
+    //load .obj file
+    static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
   
 protected:
 

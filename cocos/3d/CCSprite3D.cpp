@@ -114,40 +114,33 @@ bool Sprite3D::loadFromObj(const std::string& path)
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     std::string key = fullPath + "#";
     
-    //.mtl file directory
-    std::string dir = "";
-    auto last = fullPath.rfind("/");
-    if (last != -1)
-        dir = fullPath.substr(0, last + 1);
-    
-    ObjLoader::shapes_t shapes;
-    std::string errstr = ObjLoader::LoadObj(shapes, fullPath.c_str(), dir.c_str());
-    if (!errstr.empty())
-        return false;
-    
-    //convert to mesh and material
-    std::vector<std::vector<unsigned short> > submeshIndices;
-    std::vector<std::string> matnames;
-    std::string texname;
-    for (auto it = shapes.shapes.begin(); it != shapes.shapes.end(); it++)
+    MeshDatas meshdatas;
+    MaterialDatas materialdatas;
+    NodeDatas   nodeDatas;
+    bool ret = Bundle3D::loadObj(meshdatas, materialdatas, nodeDatas, fullPath);
+    if (ret)
     {
-        submeshIndices.push_back((*it).mesh.indices);
-        
-        texname = (*it).material.diffuse_texname;
-        if (!texname.empty())
-            texname = dir + (*it).material.diffuse_texname;
-        matnames.push_back(texname);
+        for( int i = 0 ; i < meshdatas.meshDatas.size() ; i++ )
+        {
+            MeshData*     meshData=  meshdatas.meshDatas[i];
+            if(meshData)
+            {
+                Mesh* mesh = Mesh::create(*meshData);
+                _meshes.pushBack(mesh);
+            }
+        }
+        for(int i = 0; i < nodeDatas.nodes.size(); i++ )
+        {
+            NodeData*   nodeData= nodeDatas.nodes[i];
+            if(nodeData)
+            {
+                createNode(nodeData, this, materialdatas);
+            }
+        }
     }
-    
-    _mesh = Mesh::create(shapes.positions, shapes.normals, shapes.texcoords, submeshIndices);
-    _mesh->retain();
-    if (_mesh == nullptr)
-        return false;
-    //add mesh to cache
-    MeshCache::getInstance()->addMesh(key, _mesh);
+//    //add mesh to cache
+//    MeshCache::getInstance()->addMesh(key, _mesh);
 
-    genMaterials(key, matnames);
-    
     genGLProgramState();
 
     return true;
@@ -356,8 +349,11 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             _subMeshStates.pushBack(subMeshState);
             subMeshState->setSubMesh(getSubMesh(modelNodeData->subMeshId));
-            auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
-            subMeshState->setSkin(skin);
+            if (_skeleton && modelNodeData->bones.size())
+            {
+                auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
+                subMeshState->setSkin(skin);
+            }
             
             if (modelNodeData->matrialId == "" && matrialdatas.materials.size())
             {
@@ -434,10 +430,10 @@ void Sprite3D::genMaterials(const std::string& keyprefix, const std::vector<std:
         subMeshState->setTexture(tex);
         _subMeshStates.pushBack(subMeshState);
 
-        //add to cache
-        sprintf(str, "submesh%d", index);
-        std::string submeshkey = keyprefix + std::string(str);
-        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(submeshkey, tex);
+//        //add to cache
+//        sprintf(str, "submesh%d", index);
+//        std::string submeshkey = keyprefix + std::string(str);
+//        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(submeshkey, tex);
         index++;
     }
 }

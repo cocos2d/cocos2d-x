@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "3d/CCBundle3D.h"
+#include "3d/CCObjLoader.h"
 
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
@@ -212,6 +213,100 @@ bool Bundle3D::load(const std::string& path)
     ret?(_path = path):(_path = "");
         
     return ret;
+}
+
+bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath)
+{
+    meshdatas.resetData();
+    materialdatas.resetData();
+    nodedatas.resetData();
+    
+    ObjLoader::shapes_t shapes;
+    auto ret = ObjLoader::LoadObj(shapes, fullPath.c_str(), mtl_basepath);
+    if (ret.empty())
+    {
+        //fill data
+        MeshData* meshdata = new MeshData();
+        MeshVertexAttrib attrib;
+        attrib.size = 3;
+        attrib.type = GL_FLOAT;
+        if (shapes.positions.size())
+        {
+            attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
+            attrib.attribSizeBytes = attrib.size * sizeof(float);
+            meshdata->attribs.push_back(attrib);
+            
+        }
+        bool hasnormal = false, hastex = false;
+        if (shapes.normals.size())
+        {
+            hasnormal = true;
+            attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
+            attrib.attribSizeBytes = attrib.size * sizeof(float);;
+            meshdata->attribs.push_back(attrib);
+        }
+        if (shapes.texcoords.size())
+        {
+            hastex = true;
+            attrib.size = 2;
+            attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
+            attrib.attribSizeBytes = attrib.size * sizeof(float);
+            meshdata->attribs.push_back(attrib);
+        }
+        auto vertexNum = shapes.positions.size() / 3;
+        for(auto i = 0; i < vertexNum; i++)
+        {
+            meshdata->vertex.push_back(shapes.positions[i * 3]);
+            meshdata->vertex.push_back(shapes.positions[i * 3 + 1]);
+            meshdata->vertex.push_back(shapes.positions[i * 3 + 2]);
+            
+            if (hasnormal)
+            {
+                meshdata->vertex.push_back(shapes.normals[i * 3]);
+                meshdata->vertex.push_back(shapes.normals[i * 3 + 1]);
+                meshdata->vertex.push_back(shapes.normals[i * 3 + 2]);
+            }
+            
+            if (hastex)
+            {
+                meshdata->vertex.push_back(shapes.texcoords[i * 2]);
+                meshdata->vertex.push_back(shapes.texcoords[i * 2 + 1]);
+            }
+        }
+        meshdatas.meshDatas.push_back(meshdata);
+        
+        NMaterialData materialdata;
+        int i = 0;
+        char str[20];
+        std::string dir = "";
+        auto last = fullPath.rfind("/");
+        if (last != -1)
+            dir = fullPath.substr(0, last + 1);
+        
+        for (const auto& it : shapes.shapes)
+        {
+            NTextureData tex;
+            tex.filename = dir + it.material.diffuse_texname;
+            tex.type = NTextureData::Usage::Diffuse;
+            
+            sprintf(str, "%d", i++);
+            materialdata.textures.push_back(tex);
+            materialdata.id = str;
+            materialdatas.materials.push_back(materialdata);
+            
+            meshdata->subMeshIndices.push_back(it.mesh.indices);
+            meshdata->subMeshIds.push_back(str);
+            
+            auto modelnode = new ModelNodeData();
+            modelnode->matrialId = str;
+            modelnode->subMeshId = str;
+            modelnode->id = it.name;
+            nodedatas.nodes.push_back(modelnode);
+        }
+        return true;
+    }
+    CCLOG("load %s file error: %s", fullPath.c_str(), ret.c_str());
+    return false;
 }
     
 bool Bundle3D::loadMeshData(const std::string& id, MeshData* meshdata)
