@@ -113,10 +113,14 @@ protected:
     bool loadMeshDataJson_0_1(MeshDatas& meshdatas);
     bool loadMeshDataJson_0_2(MeshDatas& meshdatas);
     bool loadMeshDatasBinary(MeshDatas& meshdatas);
+    bool loadMeshDatasBinary_0_1(MeshDatas& meshdatas);
+    bool loadMeshDatasBinary_0_2(MeshDatas& meshdatas);
     bool loadMaterialsJson(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_1(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_2(MaterialDatas& materialdatas);
     bool loadMaterialsBinary(MaterialDatas& materialdatas);
+    bool loadMaterialsBinary_0_1(MaterialDatas& materialdatas);
+    bool loadMaterialsBinary_0_2(MaterialDatas& materialdatas);
     bool loadMeshDataJson(MeshData* meshdata){return true;}
     bool loadMeshDataJson_0_1(MeshData* meshdata){return true;}
     bool loadMeshDataJson_0_2(MeshData* meshdata){return true;}
@@ -163,17 +167,13 @@ protected:
      * load nodes of json
      */
     bool loadNodesJson(NodeDatas& nodedatas);
-    void loadBoneNamesJson(const rapidjson::Value& jnodes);
-    void parseBoneNameRecursivelyJson(const rapidjson::Value& jnode);
     NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
 
     /**
      * load nodes of binary
      */
     bool loadNodesBinary(NodeDatas& nodedatas);
-    void loadBoneNamesBinary();
-    void parseBoneNameRecursivelyBinary();
-    NodeData* parseNodesRecursivelyBinary();
+    NodeData* parseNodesRecursivelyBinary(bool& skeleton);
 
     /**
      * get define data type
@@ -228,11 +228,7 @@ protected:
     BundleReader _binaryReader;
     unsigned int _referenceCount;
     Reference* _references;
-
     bool  _isBinary;
-
-    std::list<std::string> _bonenames;
-    bool _skeleton;
 };
 
 NS_CC_END

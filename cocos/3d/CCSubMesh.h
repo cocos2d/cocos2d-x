@@ -29,6 +29,7 @@
 #include <vector>
 
 #include "3d/CCBundle3DData.h"
+#include "3d/CCAABB.h"
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
@@ -62,6 +63,7 @@ class Mesh;
 class CC_DLL SubMesh : public Ref
 {
     friend class Mesh;
+    friend class SubMeshState;
 public:
 
     /**create submesh from primitivetype indexformat and indices*/
@@ -94,6 +96,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**free buffer*/
     void cleanAndFreeBuffers();
 
+    const AABB& getAABB() const { return _aabb; }
 protected:
     PrimitiveType _primitiveType;
     IndexFormat _indexFormat;
@@ -103,6 +106,7 @@ protected:
     
     Mesh*       _mesh; //parent mesh, weak ref
     std::string _id; //submeshid
+    AABB        _aabb; //original aabb of the submesh
 };
 
 NS_CC_END

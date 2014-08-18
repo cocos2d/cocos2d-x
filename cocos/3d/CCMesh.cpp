@@ -225,8 +225,6 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
     
     buildBuffer();
     
-    calOriginAABB(positions, 3);
-    
     return true;
 }
 
@@ -241,9 +239,6 @@ bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const
     
     buildBuffer();
     
-    unsigned int perVertexSize = _renderdata.calVertexSizeBytes() / sizeof(float);
-    calOriginAABB(vertices, perVertexSize);
-    
     return true;
 }
 
@@ -253,6 +248,16 @@ void Mesh::buildSubMeshes()
     for (auto& it : _renderdata._subMeshIndices) {
         auto subMesh = SubMesh::create(PrimitiveType::TRIANGLES, IndexFormat::INDEX16, it);
         _subMeshes.pushBack(subMesh);
+        
+        //calculate aabb for sub mesh
+        AABB aabb;
+        int stride = _renderdata._vertexsizeBytes / sizeof(float);
+        for(size_t i = 0; i < it.size(); i++)
+        {
+            Vec3 point = Vec3(_renderdata._vertexs[it[i * stride] ], _renderdata._vertexs[ it[i * stride + 1] ], _renderdata._vertexs[it[i * stride + 2] ]);
+            aabb.updateMinMax(&point, 1);
+        }
+        subMesh->_aabb = aabb;
     }
 }
 
@@ -266,16 +271,6 @@ void Mesh::cleanAndFreeBuffers()
     
     for (auto& it : _subMeshes) {
         (*it).cleanAndFreeBuffers();
-    }
-}
-
-void Mesh::calOriginAABB(const std::vector<float>& vertices, unsigned int stride)
-{
-    ssize_t vertexNum = vertices.size() / stride;
-    for(unsigned int i = 0; i < vertexNum; i++)
-    {
-        Vec3 point = Vec3(vertices[i * stride], vertices[i * stride + 1], vertices[i * stride + 2]);
-        _originAABB.updateMinMax(&point, 1);
     }
 }
 
@@ -305,11 +300,6 @@ void Mesh::restore()
     }
     
     buildBuffer();
-}
-
-const AABB& Mesh::getOriginAABB() const
-{
-    return _originAABB;
 }
 
 SubMesh* Mesh::getSubMeshById(const std::string& subMeshId) const

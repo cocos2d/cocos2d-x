@@ -61,10 +61,6 @@ public:
     Bone3D* getBoneByIndex(unsigned int index) const;
     Bone3D* getBoneByName(const std::string& id) const;
     
-    /**get & set root bone*/
-    Bone3D* getRootBone() const;
-    void setRootBone(Bone3D* bone);
-    
     /**get bone index*/
     int getBoneIndex(Bone3D* bone) const;
     
@@ -74,8 +70,8 @@ public:
     /**getSkinBoneCount() * 3*/
     ssize_t getMatrixPaletteSize() const;
     
-    /**refresh bone world matrix*/
-    void updateBoneMatrix();
+    /**get root bone of the skin*/
+    Bone3D* getRootBone() const;
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -83,23 +79,16 @@ CC_CONSTRUCTOR_ACCESS:
     
     ~MeshSkin();
     
-    /**init from skin data*/
-    bool initFromSkinData(const SkinData& skindata);
-    
     /**remove all bones*/
     void removeAllBones();
     
     /**add skin bone*/
     void addSkinBone(Bone3D* bone);
     
-    /**add Node bone*/
-    void addNodeBone(Bone3D* bone);
-    
 protected:
     
     Vector<Bone3D*>    _skinBones; // bones with skin
     std::vector<Mat4>  _invBindPoses; //inverse bind pose of bone
-    Vector<Bone3D*> _nodeBones; //bones without skin, only used to compute transform of children
 
     Bone3D* _rootBone;
     Skeleton3D*     _skeleton; //skeleton the skin refered
