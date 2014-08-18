@@ -80,7 +80,8 @@ const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTex
 
 
 // uniform names
-const char* GLProgram::UNIFORM_NAME_LIGHT_SOURCE = "CC_LightSource";
+const char* GLProgram::UNIFORM_NAME_ENABLED_LIGHT_NUM = "CC_EnabledLightNum";
+const char* GLProgram::UNIFORM_NAME_AMBIENT_COLOR = "CC_AmbientColor";
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
 const char* GLProgram::UNIFORM_NAME_MVP_MATRIX  = "CC_MVPMatrix";
@@ -417,17 +418,18 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         "#define CC_MAX_LIGHT 6  \n"
         "struct LightSource   \n"
         "{                    \n"
-        "	vec4 color;       \n"
-        "	vec3 position;    \n"
-        "	vec3 direction;   \n"
+        "	float type;       \n"
         "	float range;      \n"
         "	float range2;     \n"
         "	float innerAngle; \n"
         "	float outerAngle; \n"
-        "	float type;       \n"
-        "	float use;        \n"
+        "	vec4 color;       \n"
+        "	vec3 position;    \n"
+        "	vec3 direction;   \n"
         "};                   \n"
         "uniform LightSource CC_LightSource[CC_MAX_LIGHT];\n"
+        "uniform int CC_EnabledLightNum; \n"
+        "uniform vec4 CC_AmbientColor; \n"
     };
     
     const GLchar *sources[] = {
@@ -498,7 +500,8 @@ void GLProgram::bindAttribLocation(const std::string &attributeName, GLuint inde
 
 void GLProgram::updateUniforms()
 {
-    _builtInUniforms[UNIFORM_LIGHT_SOURCE] = glGetUniformLocation(_program, UNIFORM_NAME_LIGHT_SOURCE);
+    _builtInUniforms[UNIFORM_ENABLED_LIGHT_NUM] = glGetUniformLocation(_program, UNIFORM_NAME_ENABLED_LIGHT_NUM);
+    _builtInUniforms[UNIFORM_AMBIENT_COLOR] = glGetUniformLocation(_program, UNIFORM_NAME_AMBIENT_COLOR);
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
@@ -515,7 +518,7 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER2] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER2);
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
-    _flags.usesLights = _builtInUniforms[UNIFORM_LIGHT_SOURCE] != -1;
+    _flags.usesLights = _builtInUniforms[UNIFORM_ENABLED_LIGHT_NUM] != -1;
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
@@ -931,31 +934,38 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         auto scene = director->getRunningScene();
         if (scene)
         {
-            auto lights = scene->getLights();
+            auto &lights = scene->getLights();
             CCASSERT(lights.size() < CC_MAX_LIGHT_NUM, "");
-
-            GLfloat lightSources[16 * CC_MAX_LIGHT_NUM];
-            unsigned int sz = sizeof(lightSources);
-            memset(lightSources, 0, sizeof(lightSources));
             unsigned int idx = 0;
-            for (auto iter : lights)
+            char str[32];
+            for (unsigned int i = 0; i < lights.size(); ++i)
             {
-                const Color3B &col = iter->getColor();
-                const Vec3 &pos = iter->getPosition3D();
-                const Vec3 &dir = iter->getDirection();
-                lightSources[0 + idx] = col.r / 255.0f;lightSources[1 + idx] = col.g / 255.0f;lightSources[2 + idx] = col.b / 255.0f;lightSources[3 + idx] = 1.0f;
-                lightSources[4 + idx] = pos.x;lightSources[5 + idx] = pos.y;lightSources[6 + idx] = pos.z;
-                lightSources[7 + idx] = dir.x;lightSources[8 + idx] = dir.y;lightSources[9 + idx] = dir.z;
-                lightSources[10 + idx] = iter->getRange();
-				lightSources[11 + idx] = iter->getRange() * iter->getRange();
-                lightSources[12 + idx] = iter->getInnerAngle();
-                lightSources[13 + idx] = iter->getOuterAngle();
-                lightSources[14 + idx] = static_cast<float>(iter->getLightType());
-                lightSources[15 + idx] = static_cast<float>(iter->getEnabled());
-                idx += 16;
+                Light3D *light = lights[i];
+                const Color3B &col = light->getColor();
+                const Vec3 &pos = light->getPosition3D();
+                const Vec3 &dir = light->getDirection();
+
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "type");
+                setUniformLocationWith1f(glGetUniformLocation(_program, str), static_cast<float>(light->getLightType()));
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "range");
+                setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getRange());
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "range2");
+                setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getRange() * light->getRange());
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "innerAngle");
+                setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getInnerAngle());
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "outerAngle");
+                setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getOuterAngle());
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "color");
+                setUniformLocationWith4f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f, 1.0f);
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "position");
+                setUniformLocationWith3f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z);
+                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "direction");
+                setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
+                idx += 8;
             }
 
-            setUniformLocationWith1fv(_builtInUniforms[GLProgram::UNIFORM_LIGHT_SOURCE], lightSources, 16 * CC_MAX_LIGHT_NUM);
+            setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_LIGHT_NUM], (GLint)lights.size());
+            setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_AMBIENT_COLOR], scene->getAmbientColor().r, scene->getAmbientColor().g, scene->getAmbientColor().b, scene->getAmbientColor().a);
         }
     }
 }

@@ -96,7 +96,8 @@ public:
     
     enum
     {
-        UNIFORM_LIGHT_SOURCE,
+        UNIFORM_ENABLED_LIGHT_NUM,
+        UNIFORM_AMBIENT_COLOR,
         UNIFORM_P_MATRIX,
         UNIFORM_MV_MATRIX,
         UNIFORM_MVP_MATRIX,
@@ -137,7 +138,8 @@ public:
     static const char* SHADER_3D_SKINPOSITION_TEXTURE;
     
     // uniform names
-    static const char* UNIFORM_NAME_LIGHT_SOURCE;
+    static const char* UNIFORM_NAME_ENABLED_LIGHT_NUM;
+    static const char* UNIFORM_NAME_AMBIENT_COLOR;
     static const char* UNIFORM_NAME_P_MATRIX;
     static const char* UNIFORM_NAME_MV_MATRIX;
     static const char* UNIFORM_NAME_MVP_MATRIX;

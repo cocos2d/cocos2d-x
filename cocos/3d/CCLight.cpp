@@ -4,8 +4,7 @@
 NS_CC_BEGIN
 
 Light3D::Light3D()
-: _isEnabled(false)
-, _range(0.0f)
+:  _range(0.0f)
 , _innerAngle(0.0f)
 , _outerAngle(0.0f)
 {
@@ -34,17 +33,6 @@ Light3D::LightType Light3D::getLightType()
 {
     return _lightType;
 }
-
-void Light3D::setEnabled( bool isEnabled )
-{
-    _isEnabled = isEnabled;
-}
-
-bool Light3D::getEnabled()
-{
-    return _isEnabled;
-}
-
 
 void Light3D::setRange( float range )
 {
@@ -91,7 +79,7 @@ void Light3D::onEnter()
     auto scene = getScene();
     if (scene)
     {
-        auto lights = scene->_lights;
+        auto &lights = scene->_lights;
         auto iter = std::find(lights.begin(), lights.end(), this);
         if (iter == lights.end())
             lights.push_back(this);
@@ -103,7 +91,7 @@ void Light3D::onExit()
     auto scene = getScene();
     if (scene)
     {
-        auto lights = scene->_lights;
+        auto &lights = scene->_lights;
         auto iter = std::find(lights.begin(), lights.end(), this);
         if (iter != lights.end())
             lights.erase(iter);

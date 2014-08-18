@@ -31,31 +31,86 @@
 class LightTestDemo : public BaseTest
 {
 public:
-	CREATE_FUNC(LightTestDemo);
-	LightTestDemo();
-	virtual ~LightTestDemo();
+    LightTestDemo();
+    virtual ~LightTestDemo();
 
-	virtual std::string title() const;
-	virtual std::string subtitle() const;
+    virtual std::string title() const;
+    virtual std::string subtitle() const;
 
-	virtual void restartCallback(Ref* sender);
-	virtual void nextCallback(Ref* sender);
-	virtual void backCallback(Ref* sender);
+    virtual void restartCallback(Ref* sender);
+    virtual void nextCallback(Ref* sender);
+    virtual void backCallback(Ref* sender);
 
-	virtual void onEnter() override;
-	virtual void onExit() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+};
+
+class PointLightTestDemo : public LightTestDemo
+{
+public:
+    CREATE_FUNC(PointLightTestDemo);
+    PointLightTestDemo();
+    virtual ~PointLightTestDemo();
+
+    virtual std::string title() const;
+
+    virtual void update(float delta);
 
 private:
 
-	void addSprite();
-	void addLights();
+    void addSprite();
+    void addLights();
+
+private:
+    Light3D *_pointLight;
+};
+
+class DirectionalLightTestDemo : public LightTestDemo
+{
+public:
+    CREATE_FUNC(DirectionalLightTestDemo);
+    DirectionalLightTestDemo();
+    virtual ~DirectionalLightTestDemo();
+
+    virtual std::string title() const;
+
+    virtual void update(float delta);
+
+private:
+
+    void addSprite();
+    void addLights();
+
+private:
+    Light3D *_directionalLight;
+};
+
+class SpotLightTestDemo : public LightTestDemo
+{
+public:
+    CREATE_FUNC(SpotLightTestDemo);
+    SpotLightTestDemo();
+    virtual ~SpotLightTestDemo();
+
+    virtual std::string title() const;
+
+    virtual void update(float delta);
+
+private:
+
+    void addSprite();
+    void addLights();
+
+private:
+    Light3D *_spotLight;
 };
 
 
 class LightTestScene : public TestScene
 {
 public:
-	virtual void runThisTest();
+    LightTestScene();
+    virtual void runThisTest();
 };
 
 #endif
