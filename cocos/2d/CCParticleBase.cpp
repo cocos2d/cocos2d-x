@@ -42,12 +42,11 @@ Particle::Particle()
 , rotationZ_X(0.0f)
 , rotationZ_Y(0.0f)
 , frame(0.0f)
-, color(Color4B::WHITE)
+, color(Color4F::WHITE)
 , psPositionZ(0.0f)
 , psRotationZ_X(0.0f)
 , psRotationZ_Y(0.0f)
 , shapeType(ParticleEffector::ShapeType::CIRCLE)
-, follow(false)
 , life(0.0f)
 , live(0.0f)
 , dead(false)
@@ -319,15 +318,15 @@ void ParticleEmitter::updateParticlesTransform()
         Mat4 particleTransform(mat);
         
         // tramsfrom for particle
-        Mat4& transform = particle->follow ? _emitterTransform : particle->psEmitTransform;
+        Mat4& transform = _follow ? _emitterTransform : particle->psEmitTransform;
         particleTransform.multiply(transform);
         
         Vec3 position;
         Quaternion rotation;
         Vec3 scale;
-        transform.getTranslation(&position);
-        transform.getRotation(&rotation);
-        transform.getScale(&scale);
+        particleTransform.getTranslation(&position);
+        particleTransform.getRotation(&rotation);
+        particleTransform.getScale(&scale);
         
         particle->psPosition = Vec2(position.x, position.y);
         particle->psRotationZ_X = rotation.getRoll();
@@ -349,7 +348,6 @@ int ParticleEmitter::spawnParticles(int need)
     {
         auto particle = _particles.at(i);
         particle->psEmitTransform = _emitterTransform;
-        particle->follow = _follow;
     }
     
     return end - start;
@@ -359,14 +357,9 @@ void ParticleEmitter::update(float delta)
 {
     CC_PROFILER_START_CATEGORY(kProfilerCategoryParticles , "ParticleEmitter - update");
     
-    if (_particleParent == nullptr && getParent() == nullptr)
-    {
-        return;
-    }
-    
     if (_particleParent == nullptr)
     {
-        this->setParticleParent(getParent());
+        return;
     }
     
     if (_running)
@@ -535,8 +528,6 @@ Rect ParticleTextureAtlasRenderer::getTextureRectForFrame(int frame)
 
 void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
 {
-    emitter->setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-    
     int total = emitter->getParticlesCount();
     int z = emitter->getGlobalZOrder();
     auto it = _render.find(z);
@@ -578,6 +569,8 @@ void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
         CC_ASSERT(particle != nullptr);
         
         // ignore z
+        // todo: need to create a particle trasform to multipy transform to calculate particle position, rotation and scale
+        // so particle can transformed both with particle parent and emitter.
         Vec3 pos = Vec3(particle->psPosition.x, particle->psPosition.y, 0);
         transform.transformPoint(&pos);
         
@@ -615,10 +608,10 @@ void ParticleTextureAtlasRenderer::updateQuads(ParticleEmitter* emitter)
         quad.tr.texCoords.u = right;
         quad.tr.texCoords.v = top;
         
-        quad.bl.colors = particle->color;
-        quad.br.colors = particle->color;
-        quad.tl.colors = particle->color;
-        quad.tr.colors = particle->color;
+        quad.bl.colors = Color4B(particle->color);
+        quad.br.colors = Color4B(particle->color);
+        quad.tl.colors = Color4B(particle->color);
+        quad.tr.colors = Color4B(particle->color);
     }
     
     render->nextAvalibleQuads =  render->nextAvalibleQuads + total;
@@ -688,7 +681,7 @@ void ParticleTextureAtlasRenderer::updateIndexBuffer(RenderStruct* render)
         glGenBuffers(1, &render->buffersVBO[1]);
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, render->buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * render->nextAvalibleQuads * 6, &render->indices[0], GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLshort) * render->nextAvalibleQuads * 6, &render->indices[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
@@ -718,6 +711,9 @@ void ParticleTextureAtlasRenderer::draw(Renderer *renderer, const Mat4& transfor
 
 void ParticleTextureAtlasRenderer::onDraw(RenderStruct* render, int num)
 {
+    auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+    program->use();
+    program->setUniformsForBuiltins();
     GL::bindTexture2D(_texture->getName());
     
     GL::bindVAO(0);
@@ -728,7 +724,7 @@ void ParticleTextureAtlasRenderer::onDraw(RenderStruct* render, int num)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offsetof(V2F_C4B_T2F, colors));
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offsetof(V2F_C4B_T2F, texCoords));
-    glDrawElements(GL_TRIANGLES, (GLsizei)num * 6, GL_UNSIGNED_INT, (GLvoid*)0);
+    glDrawElements(GL_TRIANGLES, (GLsizei)num * 6, GL_UNSIGNED_SHORT, (GLvoid*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, num * 4);

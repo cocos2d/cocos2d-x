@@ -1223,6 +1223,7 @@ ParticleSystemNew::ParticleSystemNew()
 , _opacityModifyRGB(false)
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
+, _prePositionType(PositionType::FREE)
 {
     modeA.gravity = Vec2::ZERO;
     modeA.speed = 0;
@@ -1545,7 +1546,9 @@ bool ParticleSystemNew::initWithTotalParticles(int numberOfParticles)
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
     // default movement type;
+    // mark _prePositionType to a different type to force updatePositionType running.
     _positionType = PositionType::FREE;
+    _prePositionType = PositionType::GROUPED;
     
     // by default be in mode A:
     _emitterMode = Mode::GRAVITY;
@@ -1599,8 +1602,8 @@ void ParticleSystemNew::initParticle(PDParticle* particle)
     deltaColor.b = (end.b - start.b) / particle->life;
     deltaColor.a = (end.a - start.a) / particle->life;
     
-    particle->color = Color4B(start);
-    particle->deltaColor = Color4B(deltaColor);
+    particle->color = start;
+    particle->deltaColor = deltaColor;
     
     // size
     float startS = _startSize + _startSizeVar * CCRANDOM_MINUS1_1();
@@ -1714,11 +1717,46 @@ void ParticleSystemNew::spawnParticlesHelper(int need)
     return;
 }
 
+void ParticleSystemNew::update(float delta)
+{
+    if (_prePositionType != _positionType)
+    {
+        updatePositionType();
+        _prePositionType = _positionType;
+    }
+    ParticleEmitter::update(delta);
+}
+
+void ParticleSystemNew::updatePositionType()
+{
+    switch (_positionType)
+    {
+        case PositionType::FREE:
+            setFollow(false);
+            setParticleParent(getScene());
+            break;
+        case PositionType::RELATIVE:
+            setFollow(false);
+            setParticleParent(getParent());
+            break;
+        case PositionType::GROUPED:
+            setFollow(true);
+            setParticleParent(getScene());
+            break;
+        default:
+            break;
+    }
+}
+
 void ParticleSystemNew::updateParticles(float dt)
 {
     float rate = 1.0f / _emissionRate;
     
-    _emitCounter += dt;
+    if (_particles.size() < _totalParticles)
+    {
+        _emitCounter += dt;
+    }
+    
     _need = (int)(_emitCounter / rate);
     _emitCounter -= _need * rate;
     if (_need + _particles.size() > _totalParticles)
@@ -2031,6 +2069,8 @@ int ParticleSystemNew::getTotalParticles() const
 void ParticleSystemNew::setTotalParticles(int var)
 {
     _totalParticles = var;
+    setEmissionRate(_totalParticles / _life);
+    resetSystem();
 }
 
 const BlendFunc& ParticleSystemNew::getBlendFunc() const

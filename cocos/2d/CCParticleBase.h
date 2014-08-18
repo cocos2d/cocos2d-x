@@ -125,7 +125,7 @@ public:
     float rotationZ_X;
     float rotationZ_Y;
     float frame;
-    Color4B color;
+    Color4F color;
     ParticleEffector::ShapeType shapeType;
     Vector<ParticleEmitter*> emitters;
     
@@ -136,7 +136,6 @@ public:
     float psRotationZ_Y;
     
     Mat4 psEmitTransform;
-    bool follow;
     
     //! the time particle can exist
     float life;

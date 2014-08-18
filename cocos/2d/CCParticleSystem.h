@@ -575,7 +575,7 @@ public:
     static PDParticle* create();
     
 public:
-    Color4B deltaColor;
+    Color4F deltaColor;
     float deltaSize;
     float deltaRotation;
     
@@ -873,9 +873,12 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles);
     
 protected:
+    virtual void update(float dleta);
     virtual void updateBlendFunc();
     
     virtual void spawnParticlesHelper(int need) override;
+    
+    void updatePositionType();
     
     //! Initializes a particle
     void initParticle(PDParticle* particle);
@@ -1009,6 +1012,7 @@ protected:
      @since v0.8
      */
     PositionType _positionType;
+    PositionType _prePositionType;
 };
 
 // end of particle_nodes group
