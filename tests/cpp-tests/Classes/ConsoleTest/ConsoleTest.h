@@ -45,6 +45,7 @@ public:
     virtual void backCallback(Ref* sender) override;
 };
 
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
 class ConsoleRemoteControl : public BaseTestConsole
 {
 public:
@@ -77,6 +78,7 @@ private:
     bool _endListen;
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleRemoteControl);
 };
+#endif
 
 class ConsoleCustomCommand : public BaseTestConsole
 {

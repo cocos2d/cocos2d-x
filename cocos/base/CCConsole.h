@@ -125,8 +125,11 @@ protected:
     void commandDirector(int fd, const std::string &args);
     void commandTouch(int fd, const std::string &args);
     void commandUpload(int fd);
+
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
     void queryLocalIP();
     int broadcastLocalIP();
+#endif
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;

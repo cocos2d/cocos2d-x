@@ -43,7 +43,7 @@
 #include <sstream>
 #endif
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #define SO_NOSIGPIPE MSG_NOSIGNAL
 #endif
 //------------------------------------------------------------------
@@ -56,7 +56,9 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
     CL(ConsoleRemoteControl),
+#endif
     CL(ConsoleCustomCommand),
     CL(ConsoleUploadFile),
 };
@@ -140,6 +142,8 @@ void ConsoleTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
+
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
 //------------------------------------------------------------------
 //
 // ConsoleRemoteControl
@@ -168,10 +172,10 @@ int ConsoleRemoteControl::startListenRemoteConsole()
     const int BUFLEN = 2048;
     unsigned char buf[BUFLEN];     /* receive buffer */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    WSADATA wsaData;
-    WSAStartup(MAKEWORD(2, 2),&wsaData);
-#endif
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+//     WSADATA wsaData;
+//     WSAStartup(MAKEWORD(2, 2),&wsaData);
+// #endif
     /* create a UDP socket */
     if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
             perror("cannot create socket\n");
@@ -231,11 +235,11 @@ int ConsoleRemoteControl::startListenRemoteConsole()
             }
     }
     CCLOG("ConsoleRemoteControl:close listen socket.");
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-        closesocket(fd);
-#else
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+//         closesocket(fd);
+// #else
         close(fd);
-#endif
+//#endif
     return 0;
 }
 
@@ -282,11 +286,11 @@ void ConsoleRemoteControl::connectRemoteConsole(std::string& ip)
         if (connect(_sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-        closesocket(_sfd);
-#else
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+//         closesocket(_sfd);
+// #else
         close(_sfd);
-#endif
+//#endif
     }
 
     if (rp == NULL) {               /* No address succeeded */
@@ -296,8 +300,10 @@ void ConsoleRemoteControl::connectRemoteConsole(std::string& ip)
     freeaddrinfo(result);           /* No longer needed */
     int one = 1;
     setsockopt(_sfd, IPPROTO_TCP,TCP_NODELAY, &one, sizeof(one));
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS))
     int set = 1;
     setsockopt(_sfd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
+#endif
     std::string tmp = "resolution\n";
      
     char cmd[512];
@@ -409,6 +415,8 @@ void ConsoleRemoteControl::onTouchesEnded(const std::vector<Touch*>& touches, Ev
     std::string cmd = "touch end";
     sendTouchCommand(touches,cmd);
  }
+
+ #endif
 //------------------------------------------------------------------
 //
 // ConsoleCustomCommand

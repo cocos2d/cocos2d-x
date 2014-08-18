@@ -328,6 +328,7 @@ Console::~Console()
     stop();
 }
 
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
 int Console::broadcastLocalIP()
 {
     
@@ -373,7 +374,7 @@ int Console::broadcastLocalIP()
 #endif
     return 0;
 }
-
+#endif
 
 bool Console::listenOnTCP(int port)
 {
@@ -445,12 +446,14 @@ bool Console::listenOnTCP(int port)
         else
             perror("inet_ntop");
     }
+    freeaddrinfo(ressave);
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
     queryLocalIP();
     _broadcast = std::thread( std::bind( &Console::broadcastLocalIP, this) );
-    freeaddrinfo(ressave);
+#endif
     return listenOnFileDescriptor(listenfd);
 }
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) ||(CC_TARGET_PLATFORM ==CC_PLATFORM_LINUX))
 void Console::queryLocalIP()
 {
     struct ifaddrs * ifAddrStruct=NULL;
@@ -506,35 +509,6 @@ void Console::queryLocalIP()
             _localIPList.push_back(addr);
         }
     }
-}
-#endif
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-void Console::queryLocalIP()
-{
-   char hostname[255];
-   char *szLocalIP;
-   struct addrinfo hints, *res;
-   struct in_addr addr;
-   memset(&hints, 0, sizeof(hints));
-   hints.ai_socktype = SOCK_STREAM;
-   hints.ai_family = AF_INET;
-   int err;
-   
-   gethostname(hostname, 255);
-   if ((err = getaddrinfo(hostname, NULL, &hints, &res)) != 0) {
-       printf("error %d\n", err);
-       return;
-   }
-
-   addr.s_addr = ((struct sockaddr_in *)(res->ai_addr))->sin_addr.s_addr;
-
-   szLocalIP = inet_ntoa(addr);
-   CCLOG("ip address : %s\n", szLocalIP);
-   std::string ip = std::string(szLocalIP);
-
-
-   freeaddrinfo(res);
 }
 #endif
 
