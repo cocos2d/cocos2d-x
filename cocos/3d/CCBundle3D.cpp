@@ -288,8 +288,8 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             NTextureData tex;
             tex.filename = dir + it.material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
-            tex.wrapS = GL_CLAMP;
-            tex.wrapT = GL_CLAMP;
+            tex.wrapS = GL_CLAMP_TO_EDGE;
+            tex.wrapT = GL_CLAMP_TO_EDGE;
             
             sprintf(str, "%d", i++);
             materialdata.textures.push_back(tex);
