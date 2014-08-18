@@ -3,12 +3,14 @@ const char* cc3D_Color_frag = STRINGIFY(
 
 \n#ifdef GL_ES\n
 varying lowp vec4 DestinationColor;
+varying mediump vec4 ePosition;
+varying mediump vec3 eNormal;
 \n#else\n
 varying vec4 DestinationColor;
-\n#endif\n
-uniform vec4 u_color;
 varying vec4 ePosition;
 varying vec3 eNormal;
+\n#endif\n
+uniform vec4 u_color;
 
 void PointLight(int n, vec4 ePosition, vec3 eNormal, out vec4 intensity)
 {

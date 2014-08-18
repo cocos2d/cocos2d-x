@@ -945,21 +945,21 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                 const Vec3 &pos = light->getPosition3D();
                 const Vec3 &dir = light->getDirection();
 
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "type");
+                sprintf(str, "CC_LightSource[%d].%s", i, "type");
                 setUniformLocationWith1f(glGetUniformLocation(_program, str), static_cast<float>(light->getLightType()));
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "range");
+                sprintf(str, "CC_LightSource[%d].%s", i, "range");
                 setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getRange());
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "range2");
+                sprintf(str, "CC_LightSource[%d].%s", i, "range2");
                 setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getRange() * light->getRange());
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "innerAngle");
+                sprintf(str, "CC_LightSource[%d].%s", i, "innerAngle");
                 setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getInnerAngle());
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "outerAngle");
+                sprintf(str, "CC_LightSource[%d].%s", i, "outerAngle");
                 setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getOuterAngle());
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "color");
+                sprintf(str, "CC_LightSource[%d].%s", i, "color");
                 setUniformLocationWith4f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f, 1.0f);
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "position");
+                sprintf(str, "CC_LightSource[%d].%s", i, "position");
                 setUniformLocationWith3f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z);
-                sprintf_s(str, 32, "CC_LightSource[%d].%s", i, "direction");
+                sprintf(str, "CC_LightSource[%d].%s", i, "direction");
                 setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
                 idx += 8;
             }

@@ -137,6 +137,7 @@ Classes/IntervalTest/IntervalTest.cpp \
 Classes/LabelTest/LabelTest.cpp \
 Classes/LabelTest/LabelTestNew.cpp \
 Classes/LayerTest/LayerTest.cpp \
+Classes/LightTest/LightTestDemo.cpp \
 Classes/MenuTest/MenuTest.cpp \
 Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
