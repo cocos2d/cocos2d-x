@@ -249,7 +249,6 @@ void Bone3D::updateLocalMat()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Skeleton3D::Skeleton3D()
-: _rootBone(nullptr)
 {
     
 }
@@ -257,41 +256,6 @@ Skeleton3D::Skeleton3D()
 Skeleton3D::~Skeleton3D()
 {
     removeAllBones();
-}
-
-//create a new meshskin if do not want to share meshskin
-Skeleton3D* Skeleton3D::create(const std::string& filename, const std::string& name)
-{
-    //load skin here;
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-    std::string key(fullPath + "#" + name);
-    const auto skeletondata = Skeleton3DDataCache::getInstance()->getSkeletonData(key);
-    if (skeletondata)
-    {
-        auto skeleton = new Skeleton3D();
-        skeleton->initFromSkeletonData(*skeletondata);
-        skeleton->autorelease();
-        return skeleton;
-    }
-    else
-    {
-        auto instance = Bundle3D::getInstance();
-        bool ret = instance->load(fullPath);
-        if (ret)
-        {
-            Skeleton3DData data;
-            if (instance->loadSkeletonData(name, &data))
-            {
-                auto skeleton = new Skeleton3D();
-                skeleton->initFromSkeletonData(data);
-                skeleton->autorelease();
-                Skeleton3DDataCache::getInstance()->addSkeletonData(key, data);
-                return skeleton;
-            }
-        }
-    }
-    
-    return nullptr;
 }
 
 Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
@@ -304,31 +268,6 @@ Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
     }
     skeleton->autorelease();
     return skeleton;
-}
-
-bool Skeleton3D::initFromSkeletonData(const Skeleton3DData& skeletondata)
-{
-    ssize_t i = 0;
-    for (; i < skeletondata.boneNames.size(); i++) {
-        auto bone = Bone3D::create(skeletondata.boneNames[i]);
-        bone->setOriPose(skeletondata.boneOriginMatrices[i]);
-        addBone(bone);
-    }
-
-    for (auto it : skeletondata.boneChild) {
-        auto parent = getBoneByIndex(it.first);
-        for (auto childIt : it.second) {
-            auto child = getBoneByIndex(childIt);
-            child->_parent = parent;
-            parent->_children.pushBack(child);
-        }
-    }
-    
-    setRootBone(getBoneByIndex(skeletondata.rootBoneIndex));
-    if (_rootBone)
-        _rootBone->resetPose();
-    
-    return true;
 }
 
 ssize_t Skeleton3D::getBoneCount() const
@@ -353,17 +292,6 @@ Bone3D* Skeleton3D::getBoneByName(const std::string& id) const
     }
     
     return nullptr;
-}
-
-Bone3D* Skeleton3D::getRootBone() const
-{
-    return _rootBone;
-}
-void Skeleton3D::setRootBone(Bone3D* joint)
-{
-    CC_SAFE_RETAIN(joint);
-    CC_SAFE_RELEASE(_rootBone);
-    _rootBone = joint;
 }
 
 ssize_t Skeleton3D::getRootCount() const
@@ -401,7 +329,6 @@ void Skeleton3D::updateBoneMatrix()
 void Skeleton3D::removeAllBones()
 {
     _bones.clear();
-    CC_SAFE_RELEASE(_rootBone);
     _rootBones.clear();
 }
 

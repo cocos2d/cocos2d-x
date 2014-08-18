@@ -63,12 +63,15 @@ public:
     
     /**get SubMeshState by index*/
     SubMeshState* getSubMeshState(int index) const;
+    
+    /**get SubMeshState by Name */
+    SubMeshState* getSubMeshStateByName(const std::string& name) const;
 
     /**get mesh*/
-    Mesh* getMesh() const { return _mesh; }
+    Mesh* getMesh() const { return _meshes.at(0); }
     
     /**get skin*/
-    MeshSkin* getSkin() const { return _skin; }
+    CC_DEPRECATED_ATTRIBUTE MeshSkin* getSkin() const;
     
     Skeleton3D* getSkeleton() const { return _skeleton; }
     
@@ -128,16 +131,13 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**generate default GLProgramState*/
     void genGLProgramState();
-    
-    /**generate materials, and add them to cache, keyprefix is used as key prefix when added to cache*/
-    void genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths);
+
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas);
     /**get SubMesh by Id*/
     SubMesh* getSubMesh(const std::string& subMeshId) const;
     
 protected:
-    Mesh*                        _mesh;//mesh
-    MeshSkin*                    _skin;//skin
+
     Skeleton3D*                  _skeleton; //skeleton
     
     std::vector<MeshCommand>     _meshCommands; //render command each for one submesh
@@ -152,6 +152,7 @@ protected:
     Vector<Mesh*>           _meshes;
 
     mutable AABB                 _aabb;                 // cache current aabb
+    AABB                         _originalAABB;         // original aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
 };
 

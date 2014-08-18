@@ -187,9 +187,6 @@ class CC_DLL Skeleton3D: public Ref
 {
 public:
     
-    /**create a new meshskin if do not want to share Skeleton3D*/
-    static Skeleton3D* create(const std::string& filename, const std::string& name);
-    
     static Skeleton3D* create(const std::vector<NodeData*>& skeletondata);
     
     /**get total bone count*/
@@ -200,8 +197,6 @@ public:
     Bone3D* getBoneByName(const std::string& id) const;
     
     /**get & set root bone*/
-    Bone3D* getRootBone() const;
-    void setRootBone(Bone3D* bone);
     ssize_t getRootCount() const;
     Bone3D* getRootBone(int index) const;
     
@@ -217,9 +212,6 @@ CC_CONSTRUCTOR_ACCESS:
     
     ~Skeleton3D();
     
-    /**init from skeleton data*/
-    bool initFromSkeletonData(const Skeleton3DData& skeletondata);
-    
     /**remove all bones*/
     void removeAllBones();
     
@@ -233,7 +225,6 @@ protected:
     
     Vector<Bone3D*> _bones; // bones
 
-    Bone3D* _rootBone;
     Vector<Bone3D*> _rootBones;
 };
 

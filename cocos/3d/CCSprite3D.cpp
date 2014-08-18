@@ -75,35 +75,7 @@ Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &text
 
 bool Sprite3D::loadFromCache(const std::string& path)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-    
-    //find from the cache
-    std::string key = fullPath + "#";
-    auto mesh = MeshCache::getInstance()->getMesh(key);
-    if (mesh)
-    {
-        _mesh = mesh;
-        _mesh->retain();
-        
-        char str[20];
-        for (int i = 0; i < (int)_mesh->getSubMeshCount(); i++) {
-            sprintf(str, "submesh%d", i);
-            std::string submeshkey = key + std::string(str);
-            auto tex = Sprite3DMaterialCache::getInstance()->getSprite3DMaterial(submeshkey);
-            auto submeshstate = SubMeshState::create();
-            submeshstate->setTexture(tex);
-            _subMeshStates.pushBack(submeshstate);
-        }
-        
-        _skeleton = Skeleton3D::create(fullPath, "");
-        CC_SAFE_RETAIN(_skeleton);
-        _skin = MeshSkin::create(_skeleton, fullPath, "");
-        CC_SAFE_RETAIN(_skin);
-        
-        genGLProgramState();
-        
-        return true;
-    }
+    //FIX ME, TODO
     
     return false;
 }
@@ -196,53 +168,12 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
 }
 bool Sprite3D::loadFromC3x(const std::string& path)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-    std::string key = fullPath + "#";
-    
-    //load from .c3b or .c3t
-    auto bundle = Bundle3D::getInstance();
-    if (!bundle->load(fullPath))
-        return false;
-    
-    MeshData meshdata;
-    bool ret = bundle->loadMeshData("", &meshdata);
-    if (!ret)
-    {
-        return false;
-    }
-    
-    _mesh = Mesh::create(meshdata.vertex, meshdata.vertexSizeInFloat, meshdata.subMeshIndices, meshdata.attribs);
-
-    CC_SAFE_RETAIN(_mesh);
-    //add mesh to cache
-    MeshCache::getInstance()->addMesh(key, _mesh);
-    _skeleton = Skeleton3D::create(fullPath, "");
-    CC_SAFE_RETAIN(_skeleton);
-    _skin = MeshSkin::create(_skeleton, fullPath, "");
-    CC_SAFE_RETAIN(_skin);
-    
-    MaterialData materialdata;
-    ret = bundle->loadMaterialData("", &materialdata);
-    if (ret)
-    {
-        std::vector<std::string> texpaths;
-        texpaths.resize(_mesh->getSubMeshCount(), "");
-        for (auto& it : materialdata.texturePaths)
-        {
-            texpaths[it.first] = it.second;
-        }
-        genMaterials(key, texpaths);
-    }
-    
-    genGLProgramState();
-    
+    //will move loadFromC3x_0_3 here
     return true;
 }
 
 Sprite3D::Sprite3D()
-: _mesh(nullptr)
-, _skin(nullptr)
-, _skeleton(nullptr)
+: _skeleton(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
@@ -251,8 +182,6 @@ Sprite3D::~Sprite3D()
 {
     _subMeshStates.clear();
     _meshes.clear();
-    CC_SAFE_RELEASE_NULL(_mesh);
-    CC_SAFE_RELEASE_NULL(_skin);
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
 }
@@ -260,8 +189,6 @@ Sprite3D::~Sprite3D()
 bool Sprite3D::initWithFile(const std::string &path)
 {
     _subMeshStates.clear();
-    CC_SAFE_RELEASE_NULL(_mesh);
-    CC_SAFE_RELEASE_NULL(_skin);
     CC_SAFE_RELEASE_NULL(_skeleton);
     
     if (loadFromCache(path))
@@ -417,27 +344,6 @@ SubMesh* Sprite3D::getSubMesh(const std::string& subMeshId) const
     return nullptr;
 }
 
-void Sprite3D::genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths)
-{
-    _subMeshStates.clear();
-    
-    char str[20];
-    auto cache = Director::getInstance()->getTextureCache();
-    int index = 0;
-    for (auto& it : texpaths) {
-        auto tex = cache->addImage(it);
-        auto subMeshState = SubMeshState::create();
-        subMeshState->setTexture(tex);
-        _subMeshStates.pushBack(subMeshState);
-
-//        //add to cache
-//        sprintf(str, "submesh%d", index);
-//        std::string submeshkey = keyprefix + std::string(str);
-//        Sprite3DMaterialCache::getInstance()->addSprite3DMaterial(submeshkey, tex);
-        index++;
-    }
-}
-
 void Sprite3D::setTexture(const std::string& texFile)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
@@ -454,9 +360,9 @@ AttachNode* Sprite3D::getAttachNode(const std::string& boneName)
     if (it != _attachments.end())
         return it->second;
     
-    if (_skin)
+    if (_skeleton)
     {
-        auto bone = _skin->getBoneByName(boneName);
+        auto bone = _skeleton->getBoneByName(boneName);
         auto attachNode = AttachNode::create(bone);
         addChild(attachNode);
         _attachments[boneName] = attachNode;
@@ -543,12 +449,12 @@ AABB Sprite3D::getAABB() const
     else
     {
         Mat4 transform(nodeToWorldTransform);
-        _aabb = _mesh->getOriginAABB();
+        _aabb = _originalAABB;
         
-        if (getSkin() && getSkin()->getRootBone())
-        {
-            transform = nodeToWorldTransform * getSkin()->getRootBone()->getWorldMat();
-        }
+//        if (getSkin() && getSkin()->getRootBone())
+//        {
+//            transform = nodeToWorldTransform * getSkin()->getRootBone()->getWorldMat();
+//        }
         
         _aabb.transform(transform);
         _nodeToWorldTransform = nodeToWorldTransform;
@@ -576,6 +482,31 @@ void Sprite3D::setCullFaceEnabled(bool enable)
     for (auto& it : _meshCommands) {
         it.setCullFaceEnabled(enable);
     }
+}
+
+SubMeshState* Sprite3D::getSubMeshState(int index) const
+{
+    CCASSERT(index < _subMeshStates.size(), "invald index");
+    return _subMeshStates.at(index);
+}
+
+/**get SubMeshState by Name */
+SubMeshState* Sprite3D::getSubMeshStateByName(const std::string& name) const
+{
+    for (const auto& it : _subMeshStates) {
+        if (it->getName() == name)
+            return it;
+    }
+    return nullptr;
+}
+
+MeshSkin* Sprite3D::getSkin() const
+{
+    for (const auto& it : _subMeshStates) {
+        if (it->getSkin())
+            return it->getSkin();
+    }
+    return nullptr;
 }
 
 NS_CC_END
