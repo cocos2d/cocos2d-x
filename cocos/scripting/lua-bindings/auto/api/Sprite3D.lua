@@ -60,4 +60,9 @@
 -- @param #string str
 -- @return Sprite3D#Sprite3D ret (retunr value: cc.Sprite3D)
 
+--------------------------------
+-- @function [parent=#Sprite3D] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
 return nil
