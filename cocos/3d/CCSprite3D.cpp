@@ -92,32 +92,14 @@ bool Sprite3D::loadFromObj(const std::string& path)
     bool ret = Bundle3D::loadObj(meshdatas, materialdatas, nodeDatas, fullPath);
     if (ret)
     {
-        for( int i = 0 ; i < meshdatas.meshDatas.size() ; i++ )
-        {
-            MeshData*     meshData=  meshdatas.meshDatas[i];
-            if(meshData)
-            {
-                Mesh* mesh = Mesh::create(*meshData);
-                _meshes.pushBack(mesh);
-            }
-        }
-        for(int i = 0; i < nodeDatas.nodes.size(); i++ )
-        {
-            NodeData*   nodeData= nodeDatas.nodes[i];
-            if(nodeData)
-            {
-                createNode(nodeData, this, materialdatas);
-            }
-        }
+        return initFrom(nodeDatas, meshdatas, materialdatas);
     }
 //    //add mesh to cache
 //    MeshCache::getInstance()->addMesh(key, _mesh);
 
-    genGLProgramState();
-
-    return true;
+    return false;
 }
-bool Sprite3D::loadFromC3x_0_3(const std::string& path)
+bool Sprite3D::loadFromC3x(const std::string& path)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     std::string key = fullPath + "#";
@@ -128,48 +110,16 @@ bool Sprite3D::loadFromC3x_0_3(const std::string& path)
         return false;
     
     MeshDatas meshdatas;
-    bool ret = bundle->loadMeshDatas(meshdatas);
-    if (!ret)
-    {
-        return false;
-    }
-    for( int i = 0 ; i < meshdatas.meshDatas.size() ; i++ )
-    {
-        MeshData*     meshData=  meshdatas.meshDatas[i];
-        if(meshData)
-        {
-            Mesh* mesh = Mesh::create(*meshData);
-            _meshes.pushBack(mesh);
-        }
-    }
-
     MaterialDatas materialdatas;
-    ret = bundle->loadMaterials(materialdatas);
-    if (!ret)
-    {
-        return false;
-    }
     NodeDatas   nodeDatas;
-    bundle->loadNodes(nodeDatas);
-    _skeleton = Skeleton3D::create(nodeDatas.skeleton);
-    CC_SAFE_RETAIN(_skeleton);
-    
-    for(int i = 0; i < nodeDatas.nodes.size(); i++ )
+    if (bundle->loadMeshDatas(meshdatas)
+        && bundle->loadMaterials(materialdatas)
+        && bundle->loadNodes(nodeDatas))
     {
-        NodeData*   nodeData= nodeDatas.nodes[i];
-        if(nodeData)
-        {
-            createNode(nodeData, this, materialdatas);
-        }
+        return initFrom(nodeDatas, meshdatas, materialdatas);
     }
     
-    genGLProgramState();
-    return true;
-}
-bool Sprite3D::loadFromC3x(const std::string& path)
-{
-    //will move loadFromC3x_0_3 here
-    return true;
+    return false;
 }
 
 Sprite3D::Sprite3D()
@@ -189,7 +139,9 @@ Sprite3D::~Sprite3D()
 bool Sprite3D::initWithFile(const std::string &path)
 {
     _subMeshStates.clear();
+    _meshes.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
+    removeAllAttachNode();
     
     if (loadFromCache(path))
         return true;
@@ -204,10 +156,36 @@ bool Sprite3D::initWithFile(const std::string &path)
     }
     else if (ext == ".c3b" || ext == ".c3t")
     {
-        return loadFromC3x_0_3(path);
+        return loadFromC3x(path);
     }
     
     return false;
+}
+
+bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas)
+{
+    for(const auto& it : meshdatas.meshDatas)
+    {
+        if(it)
+        {
+            Mesh* mesh = Mesh::create(*it);
+            _meshes.pushBack(mesh);
+        }
+    }
+    _skeleton = Skeleton3D::create(nodeDatas.skeleton);
+    CC_SAFE_RETAIN(_skeleton);
+    
+    for(const auto& it : nodeDatas.nodes)
+    {
+        if(it)
+        {
+            createNode(it, this, materialdatas, nodeDatas.nodes.size() == 1);
+        }
+    }
+    
+    genGLProgramState();
+    
+    return true;
 }
 
 void Sprite3D::genGLProgramState()
@@ -265,13 +243,13 @@ GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
         return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
     }
 }
-void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas)
+void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite)
 {
     Node* node=nullptr;
     ModelNodeData*   modelNodeData=nodedata->asModelNodeData();
     if(modelNodeData)
     {
-        if(modelNodeData->bones.size() > 0)
+        if(modelNodeData->bones.size() > 0 || singleSprite)
         {
             auto subMeshState = SubMeshState::create(modelNodeData->id);
             if(subMeshState)
@@ -378,7 +356,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         NodeData* childData = nodedata->children[i];
         if(childData)
         {
-            createNode(childData,node, matrialdatas);
+            createNode(childData,node, matrialdatas, singleSprite);
         }
     }
 }

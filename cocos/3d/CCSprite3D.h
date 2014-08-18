@@ -113,6 +113,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Sprite3D();
     bool initWithFile(const std::string &path);
     
+    bool initFrom(const NodeDatas& nodedatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas);
+    
     /**load sprite3d from cache, return true if succeed, false otherwise*/
     bool loadFromCache(const std::string& path);
     
@@ -121,7 +123,6 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**load from .c3b or .c3t*/
     bool loadFromC3x(const std::string& path);
-    bool loadFromC3x_0_3(const std::string& path);
 
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -132,10 +133,11 @@ CC_CONSTRUCTOR_ACCESS:
     /**generate default GLProgramState*/
     void genGLProgramState();
 
-    void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas);
+    void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     /**get SubMesh by Id*/
     SubMesh* getSubMesh(const std::string& subMeshId) const;
     void  addSubMeshState(SubMeshState* subMeshState);
+    
 protected:
 
     Skeleton3D*                  _skeleton; //skeleton
