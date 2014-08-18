@@ -134,7 +134,7 @@ CC_CONSTRUCTOR_ACCESS:
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas);
     /**get SubMesh by Id*/
     SubMesh* getSubMesh(const std::string& subMeshId) const;
-    
+    void  addSubMeshState(SubMeshState* subMeshState);
 protected:
     Mesh*                        _mesh;//mesh
     MeshSkin*                    _skin;//skin
