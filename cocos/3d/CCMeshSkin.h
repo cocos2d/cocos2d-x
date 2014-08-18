@@ -70,6 +70,9 @@ public:
     /**getSkinBoneCount() * 3*/
     ssize_t getMatrixPaletteSize() const;
     
+    /**get root bone of the skin*/
+    Bone3D* getRootBone() const;
+    
 CC_CONSTRUCTOR_ACCESS:
     
     MeshSkin();

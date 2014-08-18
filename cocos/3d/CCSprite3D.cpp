@@ -125,6 +125,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
 Sprite3D::Sprite3D()
 : _skeleton(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+, _aabbDirty(true)
 {
 }
 
@@ -261,6 +262,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                     auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
                     subMeshState->setSkin(skin);
                 }
+                subMeshState->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
 
                 if (modelNodeData->matrialId == "" && matrialdatas.materials.size())
                 {
@@ -470,24 +472,23 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
-AABB Sprite3D::getAABB() const
+const AABB& Sprite3D::getAABB() const
 {
     Mat4 nodeToWorldTransform(getNodeToWorldTransform());
     
     // If nodeToWorldTransform matrix isn't changed, we don't need to transform aabb.
-    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(Mat4)) == 0)
+    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(Mat4)) == 0 && !_aabbDirty)
     {
         return _aabb;
     }
     else
     {
+        _aabb.reset();
         Mat4 transform(nodeToWorldTransform);
-        _aabb = _originalAABB;
-        
-//        if (getSkin() && getSkin()->getRootBone())
-//        {
-//            transform = nodeToWorldTransform * getSkin()->getRootBone()->getWorldMat();
-//        }
+        for (const auto& it : _subMeshStates) {
+            if (it->isVisible())
+                _aabb.merge(it->getAABB());
+        }
         
         _aabb.transform(transform);
         _nodeToWorldTransform = nodeToWorldTransform;

@@ -94,7 +94,7 @@ public:
      * because bone can drive the vertices, we just use the origin vertices
      * to calculate the AABB.
      */
-    AABB getAABB() const;
+    const AABB& getAABB() const;
     
     /**
      * Returns 2d bounding-box
@@ -138,6 +138,8 @@ CC_CONSTRUCTOR_ACCESS:
     SubMesh* getSubMesh(const std::string& subMeshId) const;
     void  addSubMeshState(SubMeshState* subMeshState);
     
+    void onAABBDirty() { _aabbDirty = true; }
+    
 protected:
 
     Skeleton3D*                  _skeleton; //skeleton
@@ -154,8 +156,8 @@ protected:
     Vector<Mesh*>           _meshes;
 
     mutable AABB                 _aabb;                 // cache current aabb
-    AABB                         _originalAABB;         // original aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
+    bool                         _aabbDirty;
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
