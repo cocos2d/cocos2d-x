@@ -8104,14 +8104,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/tiff/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/webp/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "libcocos3d iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8136,14 +8129,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/tiff/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/webp/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
-					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "libcocos3d iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
