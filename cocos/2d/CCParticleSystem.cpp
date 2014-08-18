@@ -1177,6 +1177,971 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+PDParticle* PDParticle::create()
+{
+    auto ret = new PDParticle();
+    
+    if (ret != nullptr)
+    {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+ParticleSystemNew::ParticleSystemNew()
+: _isBlendAdditive(false)
+, _isAutoRemoveOnFinish(false)
+, _plistFile("")
+, _configName("")
+, _emitCounter(0)
+, _batchNode(nullptr)
+, _sourcePosition(Vec2::ZERO)
+, _posVar(Vec2::ZERO)
+, _life(0)
+, _lifeVar(0)
+, _angle(0)
+, _angleVar(0)
+, _emitterMode(Mode::GRAVITY)
+, _startSize(0)
+, _startSizeVar(0)
+, _endSize(0)
+, _endSizeVar(0)
+, _startSpin(0)
+, _startSpinVar(0)
+, _endSpin(0)
+, _endSpinVar(0)
+, _emissionRate(0)
+, _totalParticles(0)
+, _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+, _opacityModifyRGB(false)
+, _yCoordFlipped(1)
+, _positionType(PositionType::FREE)
+, _prePositionType(PositionType::FREE)
+{
+    modeA.gravity = Vec2::ZERO;
+    modeA.speed = 0;
+    modeA.speedVar = 0;
+    modeA.tangentialAccel = 0;
+    modeA.tangentialAccelVar = 0;
+    modeA.radialAccel = 0;
+    modeA.radialAccelVar = 0;
+    modeA.rotationIsDir = false;
+    modeB.startRadius = 0;
+    modeB.startRadiusVar = 0;
+    modeB.endRadius = 0;
+    modeB.endRadiusVar = 0;
+    modeB.rotatePerSecond = 0;
+    modeB.rotatePerSecondVar = 0;
+}
+
+ParticleSystemNew::~ParticleSystemNew()
+{
+}
+
+ParticleSystemNew * ParticleSystemNew::create(const std::string& plistFile)
+{
+    ParticleSystemNew *ret = new ParticleSystemNew();
+    if (ret && ret->initWithFile(plistFile))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+ParticleSystemNew* ParticleSystemNew::createWithTotalParticles(int numberOfParticles)
+{
+    ParticleSystemNew *ret = new ParticleSystemNew();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+bool ParticleSystemNew::init()
+{
+    return initWithTotalParticles(150);
+}
+
+bool ParticleSystemNew::initWithFile(const std::string& plistFile)
+{
+    bool ret = false;
+    _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile.c_str());
+    
+    CCASSERT( !dict.empty(), "Particles: file not found");
+    
+    // XXX compute path from a path, should define a function somewhere to do it
+    string listFilePath = plistFile;
+    if (listFilePath.find('/') != string::npos)
+    {
+        listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
+        ret = this->initWithDictionary(dict, listFilePath.c_str());
+    }
+    else
+    {
+        ret = this->initWithDictionary(dict, "");
+    }
+    
+    return ret;
+}
+
+bool ParticleSystemNew::initWithDictionary(ValueMap& dictionary)
+{
+    return initWithDictionary(dictionary, "");
+}
+
+bool ParticleSystemNew::initWithDictionary(ValueMap& dictionary, const std::string& dirname)
+{
+    bool ret = false;
+    unsigned char *buffer = nullptr;
+    unsigned char *deflated = nullptr;
+    Image *image = nullptr;
+    do
+    {
+        int maxParticles = dictionary["maxParticles"].asInt();
+        // self, not super
+        if(this->initWithTotalParticles(maxParticles))
+        {
+            // Emitter name in particle designer 2.0
+            _configName = dictionary["configName"].asString();
+            
+            // angle
+            _angle = dictionary["angle"].asFloat();
+            _angleVar = dictionary["angleVariance"].asFloat();
+            
+            // duration
+            _duration = dictionary["duration"].asFloat();
+            
+            // blend function
+            if (_configName.length()>0)
+            {
+                _blendFunc.src = dictionary["blendFuncSource"].asFloat();
+            }
+            else
+            {
+                _blendFunc.src = dictionary["blendFuncSource"].asInt();
+            }
+            _blendFunc.dst = dictionary["blendFuncDestination"].asInt();
+            
+            // color
+            _startColor.r = dictionary["startColorRed"].asFloat();
+            _startColor.g = dictionary["startColorGreen"].asFloat();
+            _startColor.b = dictionary["startColorBlue"].asFloat();
+            _startColor.a = dictionary["startColorAlpha"].asFloat();
+            
+            _startColorVar.r = dictionary["startColorVarianceRed"].asFloat();
+            _startColorVar.g = dictionary["startColorVarianceGreen"].asFloat();
+            _startColorVar.b = dictionary["startColorVarianceBlue"].asFloat();
+            _startColorVar.a = dictionary["startColorVarianceAlpha"].asFloat();
+            
+            _endColor.r = dictionary["finishColorRed"].asFloat();
+            _endColor.g = dictionary["finishColorGreen"].asFloat();
+            _endColor.b = dictionary["finishColorBlue"].asFloat();
+            _endColor.a = dictionary["finishColorAlpha"].asFloat();
+            
+            _endColorVar.r = dictionary["finishColorVarianceRed"].asFloat();
+            _endColorVar.g = dictionary["finishColorVarianceGreen"].asFloat();
+            _endColorVar.b = dictionary["finishColorVarianceBlue"].asFloat();
+            _endColorVar.a = dictionary["finishColorVarianceAlpha"].asFloat();
+            
+            // particle size
+            _startSize = dictionary["startParticleSize"].asFloat();
+            _startSizeVar = dictionary["startParticleSizeVariance"].asFloat();
+            _endSize = dictionary["finishParticleSize"].asFloat();
+            _endSizeVar = dictionary["finishParticleSizeVariance"].asFloat();
+            
+            // position
+            float x = dictionary["sourcePositionx"].asFloat();
+            float y = dictionary["sourcePositiony"].asFloat();
+            this->setPosition( Vec2(x,y) );
+            _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
+            _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
+            
+            // Spinning
+            _startSpin = dictionary["rotationStart"].asFloat();
+            _startSpinVar = dictionary["rotationStartVariance"].asFloat();
+            _endSpin= dictionary["rotationEnd"].asFloat();
+            _endSpinVar= dictionary["rotationEndVariance"].asFloat();
+            
+            _emitterMode = (Mode) dictionary["emitterType"].asInt();
+            
+            // Mode A: Gravity + tangential accel + radial accel
+            if (_emitterMode == Mode::GRAVITY)
+            {
+                // gravity
+                modeA.gravity.x = dictionary["gravityx"].asFloat();
+                modeA.gravity.y = dictionary["gravityy"].asFloat();
+                
+                // speed
+                modeA.speed = dictionary["speed"].asFloat();
+                modeA.speedVar = dictionary["speedVariance"].asFloat();
+                
+                // radial acceleration
+                modeA.radialAccel = dictionary["radialAcceleration"].asFloat();
+                modeA.radialAccelVar = dictionary["radialAccelVariance"].asFloat();
+                
+                // tangential acceleration
+                modeA.tangentialAccel = dictionary["tangentialAcceleration"].asFloat();
+                modeA.tangentialAccelVar = dictionary["tangentialAccelVariance"].asFloat();
+                
+                // rotation is dir
+                modeA.rotationIsDir = dictionary["rotationIsDir"].asBool();
+            }
+            
+            // or Mode B: radius movement
+            else if (_emitterMode == Mode::RADIUS)
+            {
+                if (_configName.length()>0)
+                {
+                    modeB.startRadius = dictionary["maxRadius"].asInt();
+                }
+                else
+                {
+                    modeB.startRadius = dictionary["maxRadius"].asFloat();
+                }
+                modeB.startRadiusVar = dictionary["maxRadiusVariance"].asFloat();
+                if (_configName.length()>0)
+                {
+                    modeB.endRadius = dictionary["minRadius"].asInt();
+                }
+                else
+                {
+                    modeB.endRadius = dictionary["minRadius"].asFloat();
+                }
+                
+                if (dictionary.find("minRadiusVariance") != dictionary.end())
+                {
+                    modeB.endRadiusVar = dictionary["minRadiusVariance"].asFloat();
+                }
+                else
+                {
+                    modeB.endRadiusVar = 0.0f;
+                }
+                
+                if (_configName.length()>0)
+                {
+                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
+                }
+                else
+                {
+                    modeB.rotatePerSecond = dictionary["rotatePerSecond"].asFloat();
+                }
+                modeB.rotatePerSecondVar = dictionary["rotatePerSecondVariance"].asFloat();
+                
+            } else {
+                CCASSERT( false, "Invalid emitterType in config file");
+                CC_BREAK_IF(true);
+            }
+            
+            // life span
+            _life = dictionary["particleLifespan"].asFloat();
+            _lifeVar = dictionary["particleLifespanVariance"].asFloat();
+            
+            // emission Rate
+            _emissionRate = _totalParticles / _life;
+            
+            //don't get the internal texture if a batchNode is used
+            if (!_batchNode)
+            {
+                // Set a compatible default for the alpha transfer
+                _opacityModifyRGB = false;
+                
+                // texture
+                // Try to get the texture from the cache
+                std::string textureName = dictionary["textureFileName"].asString();
+                
+                size_t rPos = textureName.rfind('/');
+                
+                if (rPos != string::npos)
+                {
+                    string textureDir = textureName.substr(0, rPos + 1);
+                    
+                    if (!dirname.empty() && textureDir != dirname)
+                    {
+                        textureName = textureName.substr(rPos+1);
+                        textureName = dirname + textureName;
+                    }
+                }
+                else if (!dirname.empty() && !textureName.empty())
+                {
+                	textureName = dirname + textureName;
+                }
+                
+                Texture2D *tex = nullptr;
+                
+                if (textureName.length() > 0)
+                {
+                    // set not pop-up message box when load image failed
+                    bool notify = FileUtils::getInstance()->isPopupNotify();
+                    FileUtils::getInstance()->setPopupNotify(false);
+                    tex = Director::getInstance()->getTextureCache()->addImage(textureName);
+                    // reset the value of UIImage notify
+                    FileUtils::getInstance()->setPopupNotify(notify);
+                }
+                
+                if (tex)
+                {
+                    setTexture(tex);
+                }
+                else if( dictionary.find("textureImageData") != dictionary.end() )
+                {
+                    std::string textureData = dictionary.at("textureImageData").asString();
+                    CCASSERT(!textureData.empty(), "");
+                    
+                    auto dataLen = textureData.size();
+                    if (dataLen != 0)
+                    {
+                        // if it fails, try to get it from the base64-gzipped data
+                        int decodeLen = base64Decode((unsigned char*)textureData.c_str(), (unsigned int)dataLen, &buffer);
+                        CCASSERT( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
+                        CC_BREAK_IF(!buffer);
+                        
+                        ssize_t deflatedLen = ZipUtils::inflateMemory(buffer, decodeLen, &deflated);
+                        CCASSERT( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
+                        CC_BREAK_IF(!deflated);
+                        
+                        // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
+                        image = new Image();
+                        bool isOK = image->initWithImageData(deflated, deflatedLen);
+                        CCASSERT(isOK, "CCParticleSystem: error init image with Data");
+                        CC_BREAK_IF(!isOK);
+                        
+                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
+                        
+                        image->release();
+                    }
+                }
+                
+                _yCoordFlipped = dictionary.find("yCoordFlipped") == dictionary.end() ? 1 : dictionary.at("yCoordFlipped").asInt();
+            }
+            ret = true;
+        }
+    } while (0);
+    free(buffer);
+    free(deflated);
+    return ret;
+}
+
+bool ParticleSystemNew::initWithTotalParticles(int numberOfParticles)
+{
+    _totalParticles = numberOfParticles;
+    
+    clearParticles();
+    
+    _particles.reserve(numberOfParticles);
+    
+    // default blend function
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    
+    // default movement type;
+    // mark _prePositionType to a different type to force updatePositionType running.
+    _positionType = PositionType::FREE;
+    _prePositionType = PositionType::GROUPED;
+    
+    // by default be in mode A:
+    _emitterMode = Mode::GRAVITY;
+    
+    // default: modulate
+    // XXX: not used
+    //    colorModulate = YES;
+    
+    _isAutoRemoveOnFinish = false;
+    
+    _renderer = ParticleTextureAtlasRenderer::create(nullptr);
+    CC_SAFE_RETAIN(_renderer);
+    
+    return true;
+}
+
+bool ParticleSystemNew::addParticle()
+{
+    return spawnParticles(1) == 1;
+}
+
+void ParticleSystemNew::initParticle(PDParticle* particle)
+{
+    // timeToLive
+    // no negative life. prevent division by 0
+    particle->life = _life + _lifeVar * CCRANDOM_MINUS1_1();
+    particle->life = MAX(0, particle->life);
+    
+    // position
+    particle->position.x = _sourcePosition.x + _posVar.x * CCRANDOM_MINUS1_1();
+    
+    particle->position.y = _sourcePosition.y + _posVar.y * CCRANDOM_MINUS1_1();
+    
+    
+    // Color
+    Color4F start;
+    start.r = clampf(_startColor.r + _startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+    start.g = clampf(_startColor.g + _startColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+    start.b = clampf(_startColor.b + _startColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+    start.a = clampf(_startColor.a + _startColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
+    
+    Color4F end;
+    end.r = clampf(_endColor.r + _endColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+    end.g = clampf(_endColor.g + _endColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+    end.b = clampf(_endColor.b + _endColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+    end.a = clampf(_endColor.a + _endColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
+    
+    Color4F deltaColor;
+    deltaColor.r = (end.r - start.r) / particle->life;
+    deltaColor.g = (end.g - start.g) / particle->life;
+    deltaColor.b = (end.b - start.b) / particle->life;
+    deltaColor.a = (end.a - start.a) / particle->life;
+    
+    particle->color = start;
+    particle->deltaColor = deltaColor;
+    
+    // size
+    float startS = _startSize + _startSizeVar * CCRANDOM_MINUS1_1();
+    startS = MAX(0, startS); // No negative value
+    
+    particle->size = Size(startS, startS);
+    
+    if (_endSize == START_SIZE_EQUAL_TO_END_SIZE)
+    {
+        particle->deltaSize = 0;
+    }
+    else
+    {
+        float endS = _endSize + _endSizeVar * CCRANDOM_MINUS1_1();
+        endS = MAX(0, endS); // No negative values
+        particle->deltaSize = (endS - startS) / particle->life;
+    }
+    
+    // rotation
+    float startA = _startSpin + _startSpinVar * CCRANDOM_MINUS1_1();
+    float endA = _endSpin + _endSpinVar * CCRANDOM_MINUS1_1();
+    particle->rotationZ_X = particle->rotationZ_Y = startA;
+    particle->deltaRotation = (endA - startA) / particle->life;
+    
+    // direction
+    float a = CC_DEGREES_TO_RADIANS( _angle + _angleVar * CCRANDOM_MINUS1_1() );
+    
+    // Mode Gravity: A
+    if (_emitterMode == Mode::GRAVITY)
+    {
+        Vec2 v(cosf( a ), sinf( a ));
+        float s = modeA.speed + modeA.speedVar * CCRANDOM_MINUS1_1();
+        
+        // direction
+        particle->modeA.dir = v * s ;
+        
+        // radial accel
+        particle->modeA.radialAccel = modeA.radialAccel + modeA.radialAccelVar * CCRANDOM_MINUS1_1();
+        
+        
+        // tangential accel
+        particle->modeA.tangentialAccel = modeA.tangentialAccel + modeA.tangentialAccelVar * CCRANDOM_MINUS1_1();
+        
+        // rotation is dir
+        if(modeA.rotationIsDir)
+        {
+            particle->rotationZ_X = particle->rotationZ_Y = -CC_RADIANS_TO_DEGREES(particle->modeA.dir.getAngle());
+        }
+    }
+    
+    // Mode Radius: B
+    else
+    {
+        // Set the default diameter of the particle from the source position
+        float startRadius = modeB.startRadius + modeB.startRadiusVar * CCRANDOM_MINUS1_1();
+        float endRadius = modeB.endRadius + modeB.endRadiusVar * CCRANDOM_MINUS1_1();
+        
+        particle->modeB.radius = startRadius;
+        
+        if (modeB.endRadius == START_RADIUS_EQUAL_TO_END_RADIUS)
+        {
+            particle->modeB.deltaRadius = 0;
+        }
+        else
+        {
+            particle->modeB.deltaRadius = (endRadius - startRadius) / particle->life;
+        }
+        
+        particle->modeB.angle = a;
+        particle->modeB.degreesPerSecond = CC_DEGREES_TO_RADIANS(modeB.rotatePerSecond + modeB.rotatePerSecondVar * CCRANDOM_MINUS1_1());
+    }    
+}
+
+void ParticleSystemNew::onEnter()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+        return;
+    }
+#endif
+    
+    ParticleEmitter::onEnter();
+}
+
+void ParticleSystemNew::stopSystem()
+{
+    stop();
+}
+
+void ParticleSystemNew::resetSystem()
+{
+    reset();
+}
+
+bool ParticleSystemNew::isFull()
+{
+    return (_particles.size() <= _totalParticles);
+}
+
+void ParticleSystemNew::spawnParticlesHelper(int need)
+{
+    for (int i = 0; i < need; ++i)
+    {
+        auto particle = PDParticle::create();
+        this->initParticle(particle);
+        _particles.pushBack(particle);
+    }
+    
+    return;
+}
+
+void ParticleSystemNew::update(float delta)
+{
+    if (_prePositionType != _positionType)
+    {
+        updatePositionType();
+        _prePositionType = _positionType;
+    }
+    ParticleEmitter::update(delta);
+}
+
+void ParticleSystemNew::updatePositionType()
+{
+    switch (_positionType)
+    {
+        case PositionType::FREE:
+            setFollow(false);
+            setParticleParent(getScene());
+            break;
+        case PositionType::RELATIVE:
+            setFollow(false);
+            setParticleParent(getParent());
+            break;
+        case PositionType::GROUPED:
+            setFollow(true);
+            setParticleParent(getScene());
+            break;
+        default:
+            break;
+    }
+}
+
+void ParticleSystemNew::updateParticles(float dt)
+{
+    float rate = 1.0f / _emissionRate;
+    
+    if (_particles.size() < _totalParticles)
+    {
+        _emitCounter += dt;
+    }
+    
+    _need = (int)(_emitCounter / rate);
+    _emitCounter -= _need * rate;
+    if (_need + _particles.size() > _totalParticles)
+    {
+        _need = _totalParticles - (int)_particles.size();
+    }
+    
+    for (int i = 0; i < _particles.size(); ++i)
+    {
+        
+        PDParticle* p = dynamic_cast<PDParticle*>(_particles.at(i));
+        
+        // Mode A: gravity, direction, tangential accel & radial accel
+        if (_emitterMode == Mode::GRAVITY)
+        {
+            Vec2 tmp, radial, tangential;
+            
+            radial = Vec2::ZERO;
+            // radial acceleration
+            if (p->position.x || p->position.y)
+            {
+                radial = p->position.getNormalized();
+            }
+            tangential = radial;
+            radial = radial * p->modeA.radialAccel;
+            
+            // tangential acceleration
+            float newy = tangential.x;
+            tangential.x = -tangential.y;
+            tangential.y = newy;
+            tangential = tangential * p->modeA.tangentialAccel;
+            
+            // (gravity + radial + tangential) * dt
+            tmp = radial + tangential + modeA.gravity;
+            tmp = tmp * dt;
+            p->modeA.dir = p->modeA.dir + tmp;
+            
+            // this is cocos2d-x v3.0
+            //                    if (_configName.length()>0 && _yCoordFlipped != -1)
+            
+            // this is cocos2d-x v3.0
+            tmp = p->modeA.dir * dt * _yCoordFlipped;
+            p->position = p->position + tmp;
+        }
+        
+        // Mode B: radius movement
+        else
+        {
+            // Update the angle and radius of the particle.
+            p->modeB.angle += p->modeB.degreesPerSecond * dt;
+            p->modeB.radius += p->modeB.deltaRadius * dt;
+            
+            p->position.x = - cosf(p->modeB.angle) * p->modeB.radius;
+            p->position.y = - sinf(p->modeB.angle) * p->modeB.radius;
+            p->position.y *= _yCoordFlipped;
+        }
+        
+        // color
+        p->color.r += (p->deltaColor.r * dt);
+        p->color.g += (p->deltaColor.g * dt);
+        p->color.b += (p->deltaColor.b * dt);
+        p->color.a += (p->deltaColor.a * dt);
+        
+        // size
+        p->size.x += (p->deltaSize * dt);
+        p->size.x = MAX( 0, p->size.x );
+        p->size.y = p->size.x;
+        
+        // angle
+        p->rotationZ_X += (p->deltaRotation * dt);
+        p->rotationZ_Y = p->rotationZ_X;
+    }
+}
+void ParticleSystemNew::updateWithNoTime(void)
+{
+    this->update(0.0f);
+}
+
+void ParticleSystemNew::updateQuadWithParticle(tParticle* particle, const Vec2& newPosition)
+{
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(newPosition);
+    // should be overridden
+}
+
+void ParticleSystemNew::postStep()
+{
+    // should be overridden
+}
+
+// ParticleSystem - Texture protocol
+void ParticleSystemNew::setTexture(Texture2D* var)
+{
+    auto render = dynamic_cast<ParticleTextureAtlasRenderer*>(_renderer);
+    CC_ASSERT(render);
+    
+    render->setTexture(var);
+    
+    if (var)
+    {
+        render->setTextureRectForFrame(0, Rect(0, 0, var->getPixelsWide(), var->getPixelsHigh()));
+    }
+}
+
+void ParticleSystemNew::updateBlendFunc()
+{
+    // todo
+}
+
+Texture2D * ParticleSystemNew::getTexture() const
+{
+    auto render = dynamic_cast<ParticleTextureAtlasRenderer*>(_renderer);
+    CC_ASSERT(render);
+    
+    return render->getTexture();
+}
+
+// ParticleSystem - Additive Blending
+void ParticleSystemNew::setBlendAdditive(bool additive)
+{
+    // todo
+}
+
+bool ParticleSystemNew::isBlendAdditive() const
+{
+    // todo
+    return true;
+}
+
+// ParticleSystem - Properties of Gravity Mode
+void ParticleSystemNew::setTangentialAccel(float t)
+{
+    CCASSERT( _emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.tangentialAccel = t;
+}
+
+float ParticleSystemNew::getTangentialAccel() const
+{
+    CCASSERT( _emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.tangentialAccel;
+}
+
+void ParticleSystemNew::setTangentialAccelVar(float t)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.tangentialAccelVar = t;
+}
+
+float ParticleSystemNew::getTangentialAccelVar() const
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.tangentialAccelVar;
+}
+
+void ParticleSystemNew::setRadialAccel(float t)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.radialAccel = t;
+}
+
+float ParticleSystemNew::getRadialAccel() const
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.radialAccel;
+}
+
+void ParticleSystemNew::setRadialAccelVar(float t)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.radialAccelVar = t;
+}
+
+float ParticleSystemNew::getRadialAccelVar() const
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.radialAccelVar;
+}
+
+void ParticleSystemNew::setRotationIsDir(bool t)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.rotationIsDir = t;
+}
+
+bool ParticleSystemNew::getRotationIsDir() const
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.rotationIsDir;
+}
+
+void ParticleSystemNew::setGravity(const Vec2& g)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.gravity = g;
+}
+
+const Vec2& ParticleSystemNew::getGravity()
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.gravity;
+}
+
+void ParticleSystemNew::setSpeed(float speed)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.speed = speed;
+}
+
+float ParticleSystemNew::getSpeed() const
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.speed;
+}
+
+void ParticleSystemNew::setSpeedVar(float speedVar)
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    modeA.speedVar = speedVar;
+}
+
+float ParticleSystemNew::getSpeedVar() const
+{
+    CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
+    return modeA.speedVar;
+}
+
+// ParticleSystem - Properties of Radius Mode
+void ParticleSystemNew::setStartRadius(float startRadius)
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    modeB.startRadius = startRadius;
+}
+
+float ParticleSystemNew::getStartRadius() const
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    return modeB.startRadius;
+}
+
+void ParticleSystemNew::setStartRadiusVar(float startRadiusVar)
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    modeB.startRadiusVar = startRadiusVar;
+}
+
+float ParticleSystemNew::getStartRadiusVar() const
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    return modeB.startRadiusVar;
+}
+
+void ParticleSystemNew::setEndRadius(float endRadius)
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    modeB.endRadius = endRadius;
+}
+
+float ParticleSystemNew::getEndRadius() const
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    return modeB.endRadius;
+}
+
+void ParticleSystemNew::setEndRadiusVar(float endRadiusVar)
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    modeB.endRadiusVar = endRadiusVar;
+}
+
+float ParticleSystemNew::getEndRadiusVar() const
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    return modeB.endRadiusVar;
+}
+
+void ParticleSystemNew::setRotatePerSecond(float degrees)
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    modeB.rotatePerSecond = degrees;
+}
+
+float ParticleSystemNew::getRotatePerSecond() const
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    return modeB.rotatePerSecond;
+}
+
+void ParticleSystemNew::setRotatePerSecondVar(float degrees)
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    modeB.rotatePerSecondVar = degrees;
+}
+
+float ParticleSystemNew::getRotatePerSecondVar() const
+{
+    CCASSERT(_emitterMode == Mode::RADIUS, "Particle Mode should be Radius");
+    return modeB.rotatePerSecondVar;
+}
+
+bool ParticleSystemNew::isActive() const
+{
+    return _active;
+}
+
+int ParticleSystemNew::getTotalParticles() const
+{
+    return _totalParticles;
+}
+
+void ParticleSystemNew::setTotalParticles(int var)
+{
+    _totalParticles = var;
+    setEmissionRate(_totalParticles / _life);
+    resetSystem();
+}
+
+const BlendFunc& ParticleSystemNew::getBlendFunc() const
+{
+    return _blendFunc;
+}
+
+void ParticleSystemNew::setBlendFunc(const BlendFunc &blendFunc)
+{
+    if( _blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst ) {
+        _blendFunc = blendFunc;
+        this->updateBlendFunc();
+    }
+}
+
+bool ParticleSystemNew::isAutoRemoveOnFinish() const
+{
+    return _isAutoRemoveOnFinish;
+}
+
+void ParticleSystemNew::setAutoRemoveOnFinish(bool var)
+{
+    _isAutoRemoveOnFinish = var;
+}
+
+
+// ParticleSystem - methods for batchNode rendering
+
+ParticleBatchNode* ParticleSystemNew::getBatchNode(void) const
+{
+    return _batchNode;
+}
+
+void ParticleSystemNew::setBatchNode(ParticleBatchNode* batchNode)
+{
+}
+
+//don't use a transform matrix, this is faster
+void ParticleSystemNew::setScale(float s)
+{
+    Node::setScale(s);
+}
+
+void ParticleSystemNew::setRotation(float newRotation)
+{
+    Node::setRotation(newRotation);
+}
+
+void ParticleSystemNew::setScaleX(float newScaleX)
+{
+    Node::setScaleX(newScaleX);
+}
+
+void ParticleSystemNew::setScaleY(float newScaleY)
+{
+    Node::setScaleY(newScaleY);
+}
+
+ParticleSystemNew* ParticleSystemNew::clone() const
+{
+    // todo
+    auto ret = new ParticleSystemNew();
+    
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_RELEASE(ret);
+    return nullptr;
+}
 
 NS_CC_END
-

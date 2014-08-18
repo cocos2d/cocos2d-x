@@ -196,6 +196,21 @@ Quaternion Quaternion::getNormalized() const
     return q;
 }
 
+float Quaternion::getRoll() const
+{
+    return atan(2 * (x * y + z * w) / (1 - 2 * (y * y + z * z)));
+}
+
+float Quaternion::getPitch() const
+{
+    return asin(2 * (x * z - w * y));
+}
+
+float Quaternion::getYaw() const
+{
+    return atan(2 * (x * w + y * z) / (1 - 2 * (z * z + w * w)));
+}
+
 void Quaternion::set(float xx, float yy, float zz, float ww)
 {
     this->x = xx;

@@ -90,6 +90,16 @@ bool Color3B::operator!=(const Color4F& right) const
     return !(*this == right);
 }
 
+Color3B Color3B::operator*(float right) const
+{
+    return Color3B(r * right, g * right, b * right);
+}
+
+Color3B Color3B::operator+(const Color3B& right) const
+{
+    return Color3B(r + right.r, g + right.g, b + right.b);
+}
+
 /**
  * Color4B
  */

@@ -62,6 +62,7 @@ THE SOFTWARE.
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
 #include "base/CCCamera.h"
+#include "base/CCGraph.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"

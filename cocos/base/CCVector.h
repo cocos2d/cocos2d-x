@@ -423,9 +423,12 @@ public:
         CCASSERT(index >= 0 && index < size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");
         
-        _data[index]->release();
-        _data[index] = object;
-        object->retain();
+        if (object != _data[index])
+        {
+            _data[index]->release();
+            _data[index] = object;
+            object->retain();
+        }
     }
 
     /** reverses the vector */
