@@ -641,6 +641,8 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
     }
 
     meshdatas.meshDatas.push_back(meshdata);
+    
+    return true;
 }
 bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 {

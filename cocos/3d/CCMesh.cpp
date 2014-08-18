@@ -252,9 +252,9 @@ void Mesh::buildSubMeshes()
         //calculate aabb for sub mesh
         AABB aabb;
         int stride = _renderdata._vertexsizeBytes / sizeof(float);
-        for(size_t i = 0; i < it.size(); i++)
+        for(const auto& index : it)
         {
-            Vec3 point = Vec3(_renderdata._vertexs[it[i * stride] ], _renderdata._vertexs[ it[i * stride + 1] ], _renderdata._vertexs[it[i * stride + 2] ]);
+            Vec3 point = Vec3(_renderdata._vertexs[index * stride ], _renderdata._vertexs[ index * stride + 1], _renderdata._vertexs[index * stride + 2 ]);
             aabb.updateMinMax(&point, 1);
         }
         subMesh->_aabb = aabb;
