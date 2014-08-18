@@ -189,6 +189,9 @@ add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 # cocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
+# cocos3d library
+add_subdirectory(${COCOS2D_ROOT}/cocos/3d)
+
 # network library
 add_subdirectory(${COCOS2D_ROOT}/cocos/network)
 
