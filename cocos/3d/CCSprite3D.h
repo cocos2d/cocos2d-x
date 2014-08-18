@@ -63,12 +63,15 @@ public:
     
     /**get SubMeshState by index*/
     SubMeshState* getSubMeshState(int index) const;
+    
+    /**get SubMeshState by Name */
+    SubMeshState* getSubMeshStateByName(const std::string& name) const;
 
     /**get mesh*/
-    Mesh* getMesh() const { return _mesh; }
+    Mesh* getMesh() const { return _meshes.at(0); }
     
     /**get skin*/
-    MeshSkin* getSkin() const { return _skin; }
+    CC_DEPRECATED_ATTRIBUTE MeshSkin* getSkin() const;
     
     Skeleton3D* getSkeleton() const { return _skeleton; }
     
@@ -91,7 +94,7 @@ public:
      * because bone can drive the vertices, we just use the origin vertices
      * to calculate the AABB.
      */
-    AABB getAABB() const;
+    const AABB& getAABB() const;
     
     /**
      * Returns 2d bounding-box
@@ -110,6 +113,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Sprite3D();
     bool initWithFile(const std::string &path);
     
+    bool initFrom(const NodeDatas& nodedatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas);
+    
     /**load sprite3d from cache, return true if succeed, false otherwise*/
     bool loadFromCache(const std::string& path);
     
@@ -118,7 +123,6 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**load from .c3b or .c3t*/
     bool loadFromC3x(const std::string& path);
-    bool loadFromC3x_0_3(const std::string& path);
 
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -128,16 +132,16 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**generate default GLProgramState*/
     void genGLProgramState();
-    
-    /**generate materials, and add them to cache, keyprefix is used as key prefix when added to cache*/
-    void genMaterials(const std::string& keyprefix, const std::vector<std::string>& texpaths);
-    void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas);
+
+    void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     /**get SubMesh by Id*/
     SubMesh* getSubMesh(const std::string& subMeshId) const;
     void  addSubMeshState(SubMeshState* subMeshState);
+    
+    void onAABBDirty() { _aabbDirty = true; }
+    
 protected:
-    Mesh*                        _mesh;//mesh
-    MeshSkin*                    _skin;//skin
+
     Skeleton3D*                  _skeleton; //skeleton
     
     std::vector<MeshCommand>     _meshCommands; //render command each for one submesh
@@ -153,6 +157,7 @@ protected:
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
+    bool                         _aabbDirty;
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array

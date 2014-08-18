@@ -29,6 +29,7 @@
 #include <vector>
 
 #include "3d/CCBundle3DData.h"
+#include "3d/CCAABB.h"
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
@@ -59,7 +60,7 @@ public:
     Texture2D* getTexture() const { return _texture; }
     
     /**visible getter and setter*/
-    void setVisible(bool visible) { _visible = visible; }
+    void setVisible(bool visible);
     bool isVisible() const { return _visible; }
     
     /**skin getter */
@@ -83,6 +84,9 @@ CC_CONSTRUCTOR_ACCESS:
     /**name setter*/
     void setName(const std::string& name) { _name = name; }
     
+    const AABB& getAABB() const { return _aabb; }
+    
+    void calcuateAABB();
 protected:
     Texture2D* _texture;  //texture that submesh is using
     MeshSkin*  _skin;     //skin
@@ -91,6 +95,8 @@ protected:
     //since 3.3
     std::string  _name;
     SubMesh*     _subMesh;
+    AABB         _aabb;
+    std::function<void()> _visibleChanged;
 };
 
 NS_CC_END

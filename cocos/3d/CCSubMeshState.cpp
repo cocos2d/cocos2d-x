@@ -51,6 +51,7 @@ SubMeshState::SubMeshState()
 , _texture(nullptr)
 , _skin(nullptr)
 , _subMesh(nullptr)
+, _visibleChanged(nullptr)
 {
     
 }
@@ -79,6 +80,16 @@ SubMeshState* SubMeshState::create(const std::string& name)
     return state;
 }
 
+void SubMeshState::setVisible(bool visible)
+{
+    if (_visible != visible)
+    {
+        _visible = visible;
+        if (_visibleChanged)
+            _visibleChanged();
+    }
+}
+
 void SubMeshState::setTexture(const std::string& texPath)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
@@ -102,6 +113,7 @@ void SubMeshState::setSkin(MeshSkin* skin)
         CC_SAFE_RETAIN(skin);
         CC_SAFE_RELEASE(_skin);
         _skin = skin;
+        calcuateAABB();
     }
 }
 
@@ -112,6 +124,23 @@ void SubMeshState::setSubMesh(SubMesh* subMesh)
         CC_SAFE_RETAIN(subMesh);
         CC_SAFE_RELEASE(_subMesh);
         _subMesh = subMesh;
+        calcuateAABB();
+    }
+}
+
+void SubMeshState::calcuateAABB()
+{
+    if (_subMesh)
+    {
+        _aabb = _subMesh->getAABB();
+        if (_skin)
+        {
+            Bone3D* root = _skin->getRootBone();
+            if (root)
+            {
+                _aabb.transform(root->getWorldMat());
+            }
+        }
     }
 }
 

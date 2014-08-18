@@ -1275,7 +1275,7 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
     std::string fileName = "Sprite3DTest/orc.c3t";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(6);
-    sprite->setRotation3D(Vec3(90,0,0));
+    sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
     sprite->setPosition( Vec2( p.x - 80, p.y) );
     
