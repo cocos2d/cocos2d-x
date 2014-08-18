@@ -848,6 +848,7 @@ bool Bundle3D::loadMaterialsBinary_0_1(MaterialDatas& materialdatas)
     textureData.id="";
     materialData.textures.push_back(textureData);
     materialdatas.materials.push_back(materialData);
+    return true;
 }
 
 bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
@@ -876,6 +877,7 @@ bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
         materialData.textures.push_back(textureData);
         materialdatas.materials.push_back(materialData);
     }
+    return true;
 }
 bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
 {
