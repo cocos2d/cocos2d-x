@@ -1714,7 +1714,7 @@ bool Bundle3D::loadNodesBinary(NodeDatas& nodedatas)
     unsigned int nodeSize = 0;
     if (_binaryReader.read(&nodeSize, 4, 1) != 1)
     {
-        CCASSERT(false, "Failed to read nodes: size '%s'.", _path.c_str());
+        CCASSERT(false, "Failed to read nodes");
         return false;
     }
 
@@ -1738,21 +1738,21 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     if (_binaryReader.read(&skeleton, 1, 1) != 1)
     {
         CCASSERT(false, "Failed to read is sleleton");
-        return false;
+        return nullptr;
     }
     // transform
     Mat4 transform;
     if (!_binaryReader.readMatrix(transform.m))
     {
         CCASSERT(false,"Failed to read transform matrix");
-        return false;
+        return nullptr;
     }
     // parts
     unsigned int partsSize = 0;
     if (_binaryReader.read(&partsSize, 4, 1) != 1)
     {
         CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
-        return false;
+        return nullptr;
     }
 
     NodeData* nodedata;
@@ -1780,7 +1780,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
             if (_binaryReader.read(&bonesSize, 4, 1) != 1)
             {
                 CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
-                return false;
+                return nullptr;
             }
 
             if (bonesSize > 0)
@@ -1793,7 +1793,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                     Mat4 invbindpos;
                     if (!_binaryReader.readMatrix(invbindpos.m))
                     {
-                        return false;
+                        return nullptr;
                     }
 
                     modelnodedata->invBindPose.push_back(invbindpos);
@@ -1803,7 +1803,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
             if (_binaryReader.read(&uvMapping, 4, 1) != 1)
             {
                 CCLOGINFO("Failed to read nodedata: uvMapping '%s'.", _path.c_str());
-                return false;
+                return nullptr;
             }
             for( int i = 0 ;i < uvMapping ; i++ ) 
             {
@@ -1811,14 +1811,14 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                 if (_binaryReader.read(&textureIndexSize, 4, 1) != 1)
                 {
                     CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
-                    return false;
+                    return nullptr;
                 }
                 for(int j =0; j < textureIndexSize ; j++ )
                 {
                     unsigned int index=0;
                     if (_binaryReader.read(&index, 4, 1) != 1)
                     {
-                        return false;
+                        return nullptr;
                     }
                 }
             }
@@ -1835,7 +1835,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     if (_binaryReader.read(&childrenSize, 4, 1) != 1)
     {
         CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
-        return false;
+        return nullptr;
     }
     if (childrenSize > 0)
     {
