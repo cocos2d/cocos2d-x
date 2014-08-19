@@ -59,6 +59,7 @@ static std::function<Layer*()> createFunctions[] =
 #endif
     CL(Animate3DTest),
     CL(AttachmentTest),
+    CL(ChangeClothTest),
     CL(Sprite3DWithOBBPerfromanceTest),
     CL(Sprite3DMirrorTest)
 };
@@ -998,7 +999,241 @@ void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
     }
     _hasWeapon = !_hasWeapon;
 }
+ChangeClothTest::ChangeClothTest()
+: _hasWeapon(false)
+, _sprite(nullptr)
+{
+    _girlPants[0]= "Girl_Xiashen_01";
+    _girlPants[1]= "Girl_Xiashen_02";
+    _girlUpBody[0] = "Girl_Shangshen_01";
+    _girlUpBody[1] = "Girl_Shangshen_02";
+    _girlShoes[0]  = "Girl_Xie_01";
+    _girlShoes[1]  = "Girl_Xie_02";
+    _girlHair[0]= "Girl_Toufa_01";
+    _girlHair[1]= "Girl_Toufa_02";
+    _usePantsId = 0;
+    _useUpBodyId = 0;
+    _useShoesId   =0;
+    _useHairId = 0;
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(ChangeClothTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+     TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"Hair");
+	auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(ChangeClothTest::menuCallback_changeHair,this) );
+    auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
+	auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(ChangeClothTest::menuCallback_changeGlasses,this) );
+    auto label3 = Label::createWithTTF(ttfConfig,"UpBody");
+	auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(ChangeClothTest::menuCallback_changeUpBody,this) );
+    auto label4 = Label::createWithTTF(ttfConfig,"Pants");
+	auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(ChangeClothTest::menuCallback_changeBottomBody,this) );
+    auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
+	auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(ChangeClothTest::menuCallback_changeShoot,this) );
+    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+	item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
+	item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
+	item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
+	item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+}
+void ChangeClothTest::menuCallback_changeHair(Ref* sender)
+{
+    _useHairId++;
+    if(_useHairId > 1 )
+    {
+        _useHairId = 0;
+    }
+    if(_useHairId >= 0  && _sprite)
+    {
+        for(int i = 0; i < 2; i++ )
+        {
+            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlHair[i]);
+            if(subMesh)
+            {
+                if(i == _useHairId )
+                {
+                    subMesh->setVisible(true);
+                }
+                else
+                {
+                    subMesh->setVisible(false);
+                }
+            }
+        }
+    }
+}
+void ChangeClothTest::menuCallback_changeGlasses(Ref* sender)
+{
+    SubMeshState* subMesh = _sprite->getSubMeshStateByName("Girl_Yanjing_01");
+    if(subMesh)
+    {
+        if(subMesh->isVisible())
+        {
+            subMesh->setVisible(false);
+        }
+        else
+        {
+            subMesh->setVisible(true);
+        }
+    }
+}
+void ChangeClothTest::menuCallback_changeUpBody(Ref* sender)
+{
+    _useUpBodyId++;
+    if(_useUpBodyId > 1 )
+    {
+        _useUpBodyId = 0;
+    }
+    if(_useUpBodyId >= 0  && _sprite)
+    {
+        for(int i = 0; i < 2; i++ )
+        {
+            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlUpBody[i]);
+            if(subMesh)
+            {
+                if(i == _useUpBodyId )
+                {
+                    subMesh->setVisible(true);
+                }
+                else
+                {
+                    subMesh->setVisible(false);
+                }
+            }
+        }
+    }
+}
+void ChangeClothTest::menuCallback_changeBottomBody(Ref* sender)
+{
+    _usePantsId++;
+    if(_usePantsId > 1 )
+    {
+        _usePantsId = 0;
+    }
+    if(_usePantsId >= 0  && _sprite)
+    {
+        for(int i = 0; i < 2; i++ )
+        {
+            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlPants[i]);
+            if(subMesh)
+            {
+                if(i == _usePantsId )
+                {
+                    subMesh->setVisible(true);
+                }
+                else
+                {
+                    subMesh->setVisible(false);
+                }
+            }
+        }
+    }
+}
+void ChangeClothTest::menuCallback_changeShoot(Ref* sender)
+{
+        _useShoesId++;
+        if(_useShoesId > 1 )
+        {
+            _useShoesId = 0;
+        }
+        if(_useShoesId >= 0  && _sprite)
+        {
+            for(int i = 0; i < 2; i++ )
+            {
+                SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlShoes[i]);
+                if(subMesh)
+                {
+                    if(i == _useShoesId )
+                    {
+                        subMesh->setVisible(true);
+                    }
+                    else
+                    {
+                        subMesh->setVisible(false);
+                    }
+                }
+            }
+        }
+       
+}
+std::string ChangeClothTest::title() const
+{
+    return "Testing Sprite3D ChangeCloth";
+}
+std::string ChangeClothTest::subtitle() const
+{
+    return "";
+}
 
+void ChangeClothTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/GirlTest.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(4);
+    sprite->setRotation3D(Vec3(0,0,0));
+    SubMeshState* girlPants = sprite->getSubMeshStateByName(_girlPants[1]);
+    if(girlPants)
+    {
+        girlPants->setVisible(false);
+    }
+    SubMeshState* girlShoes = sprite->getSubMeshStateByName(_girlShoes[1]);
+    if(girlShoes)
+    {
+        girlShoes->setVisible(false);
+    }
+    SubMeshState* girlHair = sprite->getSubMeshStateByName(_girlHair[1]);
+    if(girlHair)
+    {
+        girlHair->setVisible(false);
+    }
+    SubMeshState* girlUpBody = sprite->getSubMeshStateByName( _girlUpBody[1]);
+    if(girlUpBody)
+    {
+        girlUpBody->setVisible(false);
+    }
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y-60) );
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    //test attach
+    /*auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }*/
+    _sprite = sprite;
+    _hasWeapon = true;
+}
+
+void ChangeClothTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+   /* if (_hasWeapon)
+    {
+        _sprite->removeAllAttachNode();
+    }
+    else
+    {
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    }
+    _hasWeapon = !_hasWeapon;*/
+}
 Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
