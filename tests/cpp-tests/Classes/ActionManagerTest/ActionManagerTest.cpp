@@ -15,7 +15,7 @@ Layer* restartActionManagerAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    5
+#define MAX_LAYER    6
 
 Layer* createActionManagerLayer(int nIndex)
 {
@@ -25,7 +25,8 @@ Layer* createActionManagerLayer(int nIndex)
         case 1: return new LogicTest();
         case 2: return new PauseTest();
         case 3: return new StopActionTest();
-        case 4: return new ResumeTest();
+        case 4: return new StopAllActionsTest();
+        case 5: return new ResumeTest();
     }
 
     return nullptr;
@@ -266,6 +267,56 @@ std::string StopActionTest::subtitle() const
 {
     return "Stop Action Test";
 }
+
+//------------------------------------------------------------------
+//
+// RemoveTest
+//
+//------------------------------------------------------------------
+void StopAllActionsTest::onEnter()
+{
+    ActionManagerTest::onEnter();
+    
+    auto l = Label::createWithTTF("Should stop scale & move after 4 seconds but keep rotate", "fonts/Thonburi.ttf", 16.0f);
+    addChild(l);
+    l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
+    
+    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
+    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
+    auto pRepeatMove = RepeatForever::create(pSequenceMove);
+    pRepeatMove->setTag(kTagSequence);
+    
+    auto pScale1 = ScaleBy::create(2, 1.5);
+    auto pScale2 = ScaleBy::create(2, 1.0/1.5);
+    auto pSequenceScale = Sequence::createWithTwoActions(pScale1, pScale2);
+    auto pRepeatScale = RepeatForever::create(pSequenceScale);
+    pRepeatScale->setTag(kTagSequence);
+    
+    auto pRotate = RotateBy::create(2, 360);
+    auto pRepeatRotate = RepeatForever::create(pRotate);
+    
+    auto pChild = Sprite::create(s_pathGrossini);
+    pChild->setPosition( VisibleRect::center() );
+    
+    addChild(pChild, 1, kTagGrossini);
+    pChild->runAction(pRepeatMove);
+    pChild->runAction(pRepeatScale);
+    pChild->runAction(pRepeatRotate);
+    this->scheduleOnce((SEL_SCHEDULE)&StopAllActionsTest::stopAction, 4);
+}
+
+void StopAllActionsTest::stopAction(float time)
+{
+    auto sprite = getChildByTag(kTagGrossini);
+    sprite->stopAllActionsByTag(kTagSequence);
+}
+
+std::string StopAllActionsTest::subtitle() const
+{
+    return "Stop All Action Test";
+}
+
 
 //------------------------------------------------------------------
 //
