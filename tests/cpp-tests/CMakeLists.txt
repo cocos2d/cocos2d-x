@@ -82,6 +82,7 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
   Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
   Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
