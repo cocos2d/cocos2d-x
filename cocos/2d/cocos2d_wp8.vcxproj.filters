@@ -647,6 +647,9 @@
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCModuleManager.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1321,6 +1324,9 @@
     </ClInclude>
     <ClInclude Include="..\renderer\CCVertexIndexData.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCModuleManager.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
