@@ -23,6 +23,10 @@ set(COCOS_UI_SRC
   UIWidget.cpp
   UIDeprecated.cpp
   UIScale9Sprite.cpp
+  UIEditBox/UIEditBox.cpp
+  UIEditBox/UIEditBoxImplAndroid.cpp
+  UIEditBox/UIEditBoxImplNone.cpp
+  UIEditBox/UIEditBoxImplWin.cpp
 )
 
 include_directories(
