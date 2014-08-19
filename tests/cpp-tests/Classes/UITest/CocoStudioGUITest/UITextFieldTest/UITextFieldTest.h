@@ -91,4 +91,17 @@ protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest_TrueTypeFont)
     Text* _displayValueLabel;
 };
+
+class UITextFieldTest_PlaceHolderColor : public UIScene
+{
+public:
+    UITextFieldTest_PlaceHolderColor();
+    ~UITextFieldTest_PlaceHolderColor();
+    bool init();
+    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UITextFieldTest_PlaceHolderColor)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UITextFieldTest__) */

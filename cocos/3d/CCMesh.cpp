@@ -207,6 +207,9 @@ bool Mesh::init(const std::vector<float>& positions, const std::vector<float>& n
     buildSubMeshes();
     
     buildBuffer();
+    
+    calOriginAABB(positions, 3);
+    
     return true;
 }
 
@@ -220,6 +223,10 @@ bool Mesh::init(const std::vector<float>& vertices, int vertexSizeInFloat, const
     buildSubMeshes();
     
     buildBuffer();
+    
+    unsigned int perVertexSize = _renderdata.calVertexSizeBytes() / sizeof(float);
+    calOriginAABB(vertices, perVertexSize);
+    
     return true;
 }
 
@@ -242,6 +249,16 @@ void Mesh::cleanAndFreeBuffers()
     
     for (auto& it : _subMeshes) {
         (*it).cleanAndFreeBuffers();
+    }
+}
+
+void Mesh::calOriginAABB(const std::vector<float>& vertices, unsigned int stride)
+{
+    ssize_t vertexNum = vertices.size() / stride;
+    for(unsigned int i = 0; i < vertexNum; i++)
+    {
+        Vec3 point = Vec3(vertices[i * stride], vertices[i * stride + 1], vertices[i * stride + 2]);
+        _originAABB.updateMinMax(&point, 1);
     }
 }
 
@@ -271,6 +288,11 @@ void Mesh::restore()
     }
     
     buildBuffer();
+}
+
+const AABB& Mesh::getOriginAABB() const
+{
+    return _originAABB;
 }
 
 /**

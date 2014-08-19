@@ -31,12 +31,6 @@ THE SOFTWARE.
 
 #include "base/CCData.h"
 
-
-#ifdef EMSCRIPTEN
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#endif // EMSCRIPTEN
-
 extern "C"
 {
     // To resolve link error when building 32bits with Xcode 6.
@@ -57,21 +51,20 @@ extern "C"
     {
         return strerror(errnum);
     }
+    // int	 fputs(const char * __restrict, FILE * __restrict) __DARWIN_ALIAS(fputs);
+     int fputs$UNIX2003(const char *str, FILE *stream)
+    {
+        return fputs(str, stream);
+    }
 #endif
 #endif
 #include "png.h"
-#include "tiffio.h"
 #include "base/etc1.h"
-#include "jpeglib.h"
 }
 #include "base/s3tc.h"
 #include "base/atitc.h"
 #include "base/pvr.h"
 #include "base/TGAlib.h"
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-#include "decode.h"
-#endif
 
 #include "base/ccMacros.h"
 #include "CCCommon.h"
@@ -80,6 +73,7 @@ extern "C"
 #include "base/CCConfiguration.h"
 #include "base/ccUtils.h"
 #include "base/ZipUtils.h"
+#include "base/CCModuleManager.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtilsAndroid.h"
 #endif
@@ -96,7 +90,6 @@ NS_CC_BEGIN
 namespace
 {
     static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
-    
     static bool _PVRHaveAlphaPremultiplied = false;
     
     // Values taken from PVRTexture.h from http://www.imgtec.com
@@ -759,158 +752,28 @@ bool Image::isCompressed()
     return Texture2D::getPixelFormatInfoMap().at(_renderFormat).compressed;
 }
 
-namespace
-{
-/*
- * ERROR HANDLING:
- *
- * The JPEG library's standard error handler (jerror.c) is divided into
- * several "methods" which you can override individually.  This lets you
- * adjust the behavior without duplicating a lot of code, which you might
- * have to update with each future release.
- *
- * We override the "error_exit" method so that control is returned to the
- * library's caller when a fatal error occurs, rather than calling exit()
- * as the standard error_exit method does.
- *
- * We use C's setjmp/longjmp facility to return control.  This means that the
- * routine which calls the JPEG library must first execute a setjmp() call to
- * establish the return point.  We want the replacement error_exit to do a
- * longjmp().  But we need to make the setjmp buffer accessible to the
- * error_exit routine.  To do this, we make a private extension of the
- * standard JPEG error handler object.  (If we were using C++, we'd say we
- * were making a subclass of the regular error handler.)
- *
- * Here's the extended error handler struct:
- */
-    struct MyErrorMgr
-    {
-        struct jpeg_error_mgr pub;	/* "public" fields */
-        jmp_buf setjmp_buffer;	/* for return to caller */
-    };
-    
-    typedef struct MyErrorMgr * MyErrorPtr;
-    
-    /*
-     * Here's the routine that will replace the standard error_exit method:
-     */
-    
-    METHODDEF(void)
-    myErrorExit(j_common_ptr cinfo)
-    {
-        /* cinfo->err really points to a MyErrorMgr struct, so coerce pointer */
-        MyErrorPtr myerr = (MyErrorPtr) cinfo->err;
-        
-        /* Always display the message. */
-        /* We could postpone this until after returning, if we chose. */
-        /* internal message function cann't show error message in some platforms, so we rewrite it here.
-         * edit it if has version confilict.
-         */
-        //(*cinfo->err->output_message) (cinfo);
-        char buffer[JMSG_LENGTH_MAX];
-        (*cinfo->err->format_message) (cinfo, buffer);
-        CCLOG("jpeg error: %s", buffer);
-        
-        /* Return control to the setjmp point */
-        longjmp(myerr->setjmp_buffer, 1);
-    }
-}
-
 bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 {
-    /* these are standard libjpeg structures for reading(decompression) */
-    struct jpeg_decompress_struct cinfo;
-    /* We use our private extension JPEG error handler.
-	 * Note that this struct must live as long as the main JPEG parameter
-	 * struct, to avoid dangling-pointer problems.
-	 */
-	struct MyErrorMgr jerr;
-    /* libjpeg data structure for storing one row, that is, scanline of an image */
-    JSAMPROW row_pointer[1] = {0};
-    unsigned long location = 0;
-    unsigned int i = 0;
-
-    bool bRet = false;
-    do 
+    _hasPremultipliedAlpha = false;
+    
+    JPEGModule *jpegModule = static_cast<JPEGModule*>(ModuleManager::getModule("jpeg"));
+    if (jpegModule)
     {
-        /* We set up the normal JPEG error routines, then override error_exit. */
-		cinfo.err = jpeg_std_error(&jerr.pub);
-		jerr.pub.error_exit = myErrorExit;
-		/* Establish the setjmp return context for MyErrorExit to use. */
-		if (setjmp(jerr.setjmp_buffer)) {
-			/* If we get here, the JPEG code has signaled an error.
-			 * We need to clean up the JPEG object, close the input file, and return.
-			 */
-			jpeg_destroy_decompress(&cinfo);
-			break;
-		}
-
-        /* setup decompression process and source, then read JPEG header */
-        jpeg_create_decompress( &cinfo );
-
-#ifndef CC_TARGET_QT5
-        jpeg_mem_src( &cinfo, const_cast<unsigned char*>(data), dataLen );
-#endif /* CC_TARGET_QT5 */
-
-        /* reading the image header which contains image information */
-#if (JPEG_LIB_VERSION >= 90)
-        // libjpeg 0.9 adds stricter types.
-        jpeg_read_header( &cinfo, TRUE );
-#else
-        jpeg_read_header( &cinfo, true );
-#endif
-
-        // we only support RGB or grayscale
-        if (cinfo.jpeg_color_space == JCS_GRAYSCALE)
-        {
-            _renderFormat = Texture2D::PixelFormat::I8;
-        }else
-        {
-            cinfo.out_color_space = JCS_RGB;
-            _renderFormat = Texture2D::PixelFormat::RGB888;
-        }
-
-        /* Start decompression jpeg here */
-        jpeg_start_decompress( &cinfo );
-
-        /* init image info */
-        _width  = cinfo.output_width;
-        _height = cinfo.output_height;
-        _hasPremultipliedAlpha = false;
-        row_pointer[0] = static_cast<unsigned char*>(malloc(cinfo.output_width*cinfo.output_components * sizeof(unsigned char)));
-        CC_BREAK_IF(! row_pointer[0]);
-
-        _dataLen = cinfo.output_width*cinfo.output_height*cinfo.output_components;
-        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
-        CC_BREAK_IF(! _data);
-
-        /* now actually read the jpeg into the raw buffer */
-        /* read one scan line at a time */
-        while( cinfo.output_scanline < cinfo.output_height )
-        {
-            jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-            for( i=0; i<cinfo.output_width*cinfo.output_components;i++) 
-            {
-                _data[location++] = row_pointer[0][i];
-            }
-        }
-
-		/* When read image file with broken data, jpeg_finish_decompress() may cause error.
-		 * Besides, jpeg_destroy_decompress() shall deallocate and release all memory associated
-		 * with the decompression object.
-		 * So it doesn't need to call jpeg_finish_decompress().
-		 */
-		//jpeg_finish_decompress( &cinfo );
-        jpeg_destroy_decompress( &cinfo );
-        /* wrap up decompression, destroy objects, free pointers and close open files */        
-        bRet = true;
-    } while (0);
-
-    if (row_pointer[0] != nullptr)
+        DataFromModule dataFromJPEGInit;
+        bool result = jpegModule->initWithJPEGData(data, dataLen, dataFromJPEGInit);
+        _width = dataFromJPEGInit.width;
+        _height = dataFromJPEGInit.height;
+        _renderFormat = dataFromJPEGInit.renderFormat;
+        _dataLen = dataFromJPEGInit.dataLength;
+        _data = dataFromJPEGInit.data;
+        
+        return result;
+    }
+    else
     {
-        free(row_pointer[0]);
-    };
-    return bRet;
+        CCLOG("jpeg module is not enabled");
+        return false;
+    }
 }
 
 bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
@@ -1062,175 +925,28 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
     return bRet;
 }
 
-namespace
-{
-    static tmsize_t tiffReadProc(thandle_t fd, void* buf, tmsize_t size)
-    {
-        tImageSource* isource = (tImageSource*)fd;
-        uint8* ma;
-        uint64 mb;
-        unsigned long n;
-        unsigned long o;
-        tmsize_t p;
-        ma=(uint8*)buf;
-        mb=size;
-        p=0;
-        while (mb>0)
-        {
-            n=0x80000000UL;
-            if ((uint64)n>mb)
-            n=(unsigned long)mb;
-            
-            
-            if((int)(isource->offset + n) <= isource->size)
-            {
-                memcpy(ma, isource->data+isource->offset, n);
-                isource->offset += n;
-                o = n;
-            }
-            else
-            {
-                return 0;
-            }
-            
-            ma+=o;
-            mb-=o;
-            p+=o;
-            if (o!=n)
-            {
-                break;
-            }
-        }
-        return p;
-    }
-    
-    static tmsize_t tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
-    {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(buf);
-        CC_UNUSED_PARAM(size);
-        return 0;
-    }
-    
-    
-    static uint64 tiffSeekProc(thandle_t fd, uint64 off, int whence)
-    {
-        tImageSource* isource = (tImageSource*)fd;
-        uint64 ret = -1;
-        do
-        {
-            if (whence == SEEK_SET)
-            {
-                CC_BREAK_IF(off >= (uint64)isource->size);
-                ret = isource->offset = (uint32)off;
-            }
-            else if (whence == SEEK_CUR)
-            {
-                CC_BREAK_IF(isource->offset + off >= (uint64)isource->size);
-                ret = isource->offset += (uint32)off;
-            }
-            else if (whence == SEEK_END)
-            {
-                CC_BREAK_IF(off >= (uint64)isource->size);
-                ret = isource->offset = (uint32)(isource->size-1 - off);
-            }
-            else
-            {
-                CC_BREAK_IF(off >= (uint64)isource->size);
-                ret = isource->offset = (uint32)off;
-            }
-        } while (0);
-        
-        return ret;
-    }
-    
-    static uint64 tiffSizeProc(thandle_t fd)
-    {
-        tImageSource* pImageSrc = (tImageSource*)fd;
-        return pImageSrc->size;
-    }
-    
-    static int tiffCloseProc(thandle_t fd)
-    {
-        CC_UNUSED_PARAM(fd);
-        return 0;
-    }
-    
-    static int tiffMapProc(thandle_t fd, void** pbase, toff_t* psize)
-    {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(pbase);
-        CC_UNUSED_PARAM(psize);
-        return 0;
-    }
-    
-    static void tiffUnmapProc(thandle_t fd, void* base, toff_t size)
-    {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(base);
-        CC_UNUSED_PARAM(size);
-    }
-}
-
 bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 {
-    bool bRet = false;
-    do 
+    _hasPremultipliedAlpha = true;
+    
+    TIFFModule *tiffModule = static_cast<TIFFModule*>(ModuleManager::getModule("tiff"));
+    if (tiffModule)
     {
-        // set the read call back function
-        tImageSource imageSource;
-        imageSource.data    = data;
-        imageSource.size    = dataLen;
-        imageSource.offset  = 0;
-
-        TIFF* tif = TIFFClientOpen("file.tif", "r", (thandle_t)&imageSource, 
-            tiffReadProc, tiffWriteProc,
-            tiffSeekProc, tiffCloseProc, tiffSizeProc,
-            tiffMapProc,
-            tiffUnmapProc);
-
-        CC_BREAK_IF(nullptr == tif);
-
-        uint32 w = 0, h = 0;
-        uint16 bitsPerSample = 0, samplePerPixel = 0, planarConfig = 0;
-        size_t npixels = 0;
+        DataFromModule dataFromTIFFInit;
+        bool result = tiffModule->initWithTIFFData(data, dataLen, dataFromTIFFInit);
+        _width = dataFromTIFFInit.width;
+        _height = dataFromTIFFInit.height;
+        _renderFormat = dataFromTIFFInit.renderFormat;
+        _dataLen = dataFromTIFFInit.dataLength;
+        _data = dataFromTIFFInit.data;
         
-        TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &w);
-        TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &h);
-        TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitsPerSample);
-        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplePerPixel);
-        TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planarConfig);
-
-        npixels = w * h;
-        
-        _renderFormat = Texture2D::PixelFormat::RGBA8888;
-        _width = w;
-        _height = h;
-
-        _dataLen = npixels * sizeof (uint32);
-        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
-
-        uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
-        if (raster != nullptr) 
-        {
-           if (TIFFReadRGBAImageOriented(tif, w, h, raster, ORIENTATION_TOPLEFT, 0))
-           {
-                /* the raster data is pre-multiplied by the alpha component 
-                   after invoking TIFFReadRGBAImageOriented*/
-                _hasPremultipliedAlpha = true;
-
-               memcpy(_data, raster, npixels*sizeof (uint32));
-           }
-
-          _TIFFfree(raster);
-        }
-        
-
-        TIFFClose(tif);
-
-        bRet = true;
-    } while (0);
-    return bRet;
+        return result;
+    }
+    else
+    {
+        CCLOG("tiff module is not enabled");
+        return false;
+    }
 }
 
 namespace
@@ -2011,42 +1727,29 @@ bool Image::initWithPVRData(const unsigned char * data, ssize_t dataLen)
 
 bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 {
-	bool bRet = false;  
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CCLOG("WEBP image format not supported on WinRT or WP8");
+    return false;
 #else
-	do
-	{
-        WebPDecoderConfig config;
-        if (WebPInitDecoderConfig(&config) == 0) break;
-        if (WebPGetFeatures(static_cast<const uint8_t*>(data), dataLen, &config.input) != VP8_STATUS_OK) break;
-        if (config.input.width == 0 || config.input.height == 0) break;
+    WEBPModule *webpModule = static_cast<WEBPModule*>(ModuleManager::getModule("webp"));
+    if (webpModule)
+    {
+        DataFromModule dataFromWEBPInit;
+        bool result = webpModule->initWithWEBPData(data, dataLen, dataFromWEBPInit);
+        _width = dataFromWEBPInit.width;
+        _height = dataFromWEBPInit.height;
+        _renderFormat = dataFromWEBPInit.renderFormat;
+        _dataLen = dataFromWEBPInit.dataLength;
+        _data = dataFromWEBPInit.data;
         
-        config.output.colorspace = MODE_RGBA;
-        _renderFormat = Texture2D::PixelFormat::RGBA8888;
-        _width    = config.input.width;
-        _height   = config.input.height;
-        
-        _dataLen = _width * _height * 4;
-        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
-        
-        config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
-        config.output.u.RGBA.stride = _width * 4;
-        config.output.u.RGBA.size = _dataLen;
-        config.output.is_external_memory = 1;
-        
-        if (WebPDecode(static_cast<const uint8_t*>(data), dataLen, &config) != VP8_STATUS_OK)
-        {
-            free(_data);
-            _data = nullptr;
-            break;
-        }
-        
-        bRet = true;
-	} while (0);
+        return result;
+    }
+    else
+    {
+        CCLOG("webp module is not enabled");
+        return false;
+    }
 #endif
-	return bRet;
 }
 
 
@@ -2265,82 +1968,16 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 }
 bool Image::saveImageToJPG(const std::string& filePath)
 {
-    bool bRet = false;
-    do 
+    JPEGModule *jpegModule = static_cast<JPEGModule*>(ModuleManager::getModule("jpeg"));
+    if (jpegModule)
     {
-        struct jpeg_compress_struct cinfo;
-        struct jpeg_error_mgr jerr;
-        FILE * outfile;                 /* target file */
-        JSAMPROW row_pointer[1];        /* pointer to JSAMPLE row[s] */
-        int     row_stride;          /* physical row width in image buffer */
-
-        cinfo.err = jpeg_std_error(&jerr);
-        /* Now we can initialize the JPEG compression object. */
-        jpeg_create_compress(&cinfo);
-
-        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == nullptr);
-        
-        jpeg_stdio_dest(&cinfo, outfile);
-
-        cinfo.image_width = _width;    /* image width and height, in pixels */
-        cinfo.image_height = _height;
-        cinfo.input_components = 3;       /* # of color components per pixel */
-        cinfo.in_color_space = JCS_RGB;       /* colorspace of input image */
-
-        jpeg_set_defaults(&cinfo);
-        jpeg_set_quality(&cinfo, 90, TRUE);
-        
-        jpeg_start_compress(&cinfo, TRUE);
-
-        row_stride = _width * 3; /* JSAMPLEs per row in image_buffer */
-
-        if (hasAlpha())
-        {
-            unsigned char *pTempData = static_cast<unsigned char*>(malloc(_width * _height * 3 * sizeof(unsigned char)));
-            if (nullptr == pTempData)
-            {
-                jpeg_finish_compress(&cinfo);
-                jpeg_destroy_compress(&cinfo);
-                fclose(outfile);
-                break;
-            }
-
-            for (int i = 0; i < _height; ++i)
-            {
-                for (int j = 0; j < _width; ++j)
-
-                {
-                    pTempData[(i * _width + j) * 3] = _data[(i * _width + j) * 4];
-                    pTempData[(i * _width + j) * 3 + 1] = _data[(i * _width + j) * 4 + 1];
-                    pTempData[(i * _width + j) * 3 + 2] = _data[(i * _width + j) * 4 + 2];
-                }
-            }
-
-            while (cinfo.next_scanline < cinfo.image_height) {
-                row_pointer[0] = & pTempData[cinfo.next_scanline * row_stride];
-                (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
-            }
-
-            if (pTempData != nullptr)
-            {
-                free(pTempData);
-            }
-        } 
-        else
-        {
-            while (cinfo.next_scanline < cinfo.image_height) {
-                row_pointer[0] = & _data[cinfo.next_scanline * row_stride];
-                (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
-            }
-        }
-
-        jpeg_finish_compress(&cinfo);
-        fclose(outfile);
-        jpeg_destroy_compress(&cinfo);
-        
-        bRet = true;
-    } while (0);
-    return bRet;
+        return jpegModule->saveImage(filePath, this);
+    }
+    else
+    {
+        CCLOG("jpeg module is not enabled");
+        return false;
+    }
 }
 
 void Image::premultipliedAlpha()
@@ -2356,7 +1993,6 @@ void Image::premultipliedAlpha()
     
     _hasPremultipliedAlpha = true;
 }
-
 
 void Image::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {

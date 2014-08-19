@@ -34,7 +34,7 @@ void CustomParticleWidgetLayer::onEnter()
     
     CustomParticleWidget* custom = CustomParticleWidget::create();
     custom->setParticlePlist("Particles/BoilingFoam.plist");
-    
+    custom->setPosition(Vec2(VisibleRect::center()));
     addChild(custom, 10, -1);
 }
 

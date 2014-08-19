@@ -804,6 +804,7 @@ Developers:
         Android jni error clear & more readable log
         Add support of software PVRTC v1 decompression
         Fixed a bug that ttf font have not effect on Mac OS X
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -920,6 +921,7 @@ Developers:
         
     Teivaz
         Custom uniform search optimization
+        Fixed compiling error on WP8.
         
     chareice
         Make `setup.py` work on zsh
@@ -974,6 +976,9 @@ Developers:
         
     DavidPartouche
         Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
+        
+    zaWasp
+        Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
     
 Retired Core Developers:
     WenSheng Yang

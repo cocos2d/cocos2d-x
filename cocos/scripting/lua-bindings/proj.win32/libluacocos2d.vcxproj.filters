@@ -63,9 +63,6 @@
     <ClCompile Include="..\manual\Cocos2dxLuaLoader.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\lua_debugger.c">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\LuaBasicConversions.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -135,9 +132,6 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\Cocos2dxLuaLoader.h">
-      <Filter>manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\lua_debugger.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaBasicConversions.h">

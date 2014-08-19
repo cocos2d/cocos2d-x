@@ -89,7 +89,8 @@ _backGroundImageColor(Color3B::WHITE),
 _backGroundImageOpacity(255),
 _passFocusToChild(true),
 _loopFocus(false),
-_isFocusPassing(false)
+_isFocusPassing(false),
+_isInterceptTouch(false)
 {
     //no-op
 }
@@ -1025,6 +1026,7 @@ void Layout::copySpecialProperties(Widget *widget)
         setClippingType(layout->_clippingType);
         _loopFocus = layout->_loopFocus;
         _passFocusToChild = layout->_passFocusToChild;
+        _isInterceptTouch = layout->_isInterceptTouch;
     }
 }
     

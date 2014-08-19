@@ -130,6 +130,7 @@ protected:
     void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
     void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
     void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
+    void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified);
 
     bool _captured;
     bool _supportTouch;

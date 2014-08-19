@@ -34,13 +34,14 @@
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
 /**
  * Defines a basic hierachial structure of transformation spaces.
  */
-class CC_DLL Bone3D : public Ref
+class CC_3D_DLL Bone3D : public Ref
 {
     friend class Skeleton3D;
     friend class MeshSkin;
@@ -183,7 +184,7 @@ protected:
  * Skeleton
  *
  */
-class CC_DLL Skeleton3D: public Ref
+class CC_3D_DLL Skeleton3D: public Ref
 {
 public:
     

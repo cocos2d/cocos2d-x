@@ -30,13 +30,14 @@ THE SOFTWARE.
 // todo:
 // when in MAC or windows, it includes <OpenGL/gl.h>
 #include "CCGL.h"
+#include "base/ccMacros.h"
 
 namespace   cocos2d {
 
 struct AffineTransform;
 
-void CGAffineToGL(const AffineTransform &t, GLfloat *m);
-void GLToCGAffine(const GLfloat *m, AffineTransform *t);
+CC_DLL void CGAffineToGL(const AffineTransform &t, GLfloat *m);
+CC_DLL void GLToCGAffine(const GLfloat *m, AffineTransform *t);
 }//namespace   cocos2d 
 
 #endif // __SUPPORT_TRANSFORM_UTILS_H__
