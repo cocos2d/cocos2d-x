@@ -87,6 +87,15 @@
     <ClInclude Include="..\UIScale9Sprite.h">
       <Filter>BaseClasses</Filter>
     </ClInclude>
+    <ClInclude Include="..\UIEditBox\UIEditBox.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIEditBox\UIEditBoxImpl.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIEditBox\UIEditBoxImplWp8.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\UILayout.cpp">
@@ -160,6 +169,12 @@
     </ClCompile>
     <ClCompile Include="..\UIScale9Sprite.cpp">
       <Filter>BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIEditBox\UIEditBox.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIEditBox\UIEditBoxImplWp8.cpp">
+      <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

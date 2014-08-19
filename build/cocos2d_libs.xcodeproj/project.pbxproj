@@ -638,6 +638,24 @@
 		1AD71EF5180E27CF00808F54 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71EEE180E27CF00808F54 /* CCPhysicsSprite.cpp */; };
 		1AD71EF6180E27CF00808F54 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */; };
 		1AD71EF7180E27CF00808F54 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */; };
+		292CEFF619A18DF200E8E6A0 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292CEFE819A18DF200E8E6A0 /* UIEditBox.cpp */; };
+		292CEFF719A18DF200E8E6A0 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292CEFE819A18DF200E8E6A0 /* UIEditBox.cpp */; };
+		292CEFF819A18DF200E8E6A0 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFE919A18DF200E8E6A0 /* UIEditBox.h */; };
+		292CEFF919A18DF200E8E6A0 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFE919A18DF200E8E6A0 /* UIEditBox.h */; };
+		292CEFFA19A18DF200E8E6A0 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFEA19A18DF200E8E6A0 /* UIEditBoxImpl.h */; };
+		292CEFFB19A18DF200E8E6A0 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFEA19A18DF200E8E6A0 /* UIEditBoxImpl.h */; };
+		292CEFFE19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFEC19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h */; };
+		292CEFFF19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFEC19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h */; };
+		292CF00019A18DF200E8E6A0 /* UIEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFED19A18DF200E8E6A0 /* UIEditBoxImplIOS.h */; };
+		292CF00119A18DF200E8E6A0 /* UIEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFED19A18DF200E8E6A0 /* UIEditBoxImplIOS.h */; };
+		292CF00319A18DF200E8E6A0 /* UIEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292CEFEE19A18DF200E8E6A0 /* UIEditBoxImplIOS.mm */; };
+		292CF00419A18DF200E8E6A0 /* UIEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFEF19A18DF200E8E6A0 /* UIEditBoxImplMac.h */; };
+		292CF00519A18DF200E8E6A0 /* UIEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFEF19A18DF200E8E6A0 /* UIEditBoxImplMac.h */; };
+		292CF00619A18DF200E8E6A0 /* UIEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292CEFF019A18DF200E8E6A0 /* UIEditBoxImplMac.mm */; };
+		292CF00C19A18DF200E8E6A0 /* UIEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFF319A18DF200E8E6A0 /* UIEditBoxImplWin.h */; };
+		292CF00D19A18DF200E8E6A0 /* UIEditBoxImplWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFF319A18DF200E8E6A0 /* UIEditBoxImplWin.h */; };
+		292CF01019A18DF200E8E6A0 /* UIEditBoxImplWp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFF519A18DF200E8E6A0 /* UIEditBoxImplWp8.h */; };
+		292CF01119A18DF200E8E6A0 /* UIEditBoxImplWp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 292CEFF519A18DF200E8E6A0 /* UIEditBoxImplWp8.h */; };
 		2958244B19873D8E00F9746D /* UIScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2958244919873D8E00F9746D /* UIScale9Sprite.cpp */; };
 		2958244C19873D8E00F9746D /* UIScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2958244919873D8E00F9746D /* UIScale9Sprite.cpp */; };
 		2958244D19873D8E00F9746D /* UIScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2958244A19873D8E00F9746D /* UIScale9Sprite.h */; };
@@ -2488,6 +2506,20 @@
 		2905FA1318CF08D100240AA3 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
 		2905FA1418CF08D100240AA3 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
+		292CEFE819A18DF200E8E6A0 /* UIEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBox.cpp; sourceTree = "<group>"; };
+		292CEFE919A18DF200E8E6A0 /* UIEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBox.h; sourceTree = "<group>"; };
+		292CEFEA19A18DF200E8E6A0 /* UIEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImpl.h; sourceTree = "<group>"; };
+		292CEFEB19A18DF200E8E6A0 /* UIEditBoxImplAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBoxImplAndroid.cpp; sourceTree = "<group>"; };
+		292CEFEC19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImplAndroid.h; sourceTree = "<group>"; };
+		292CEFED19A18DF200E8E6A0 /* UIEditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImplIOS.h; sourceTree = "<group>"; };
+		292CEFEE19A18DF200E8E6A0 /* UIEditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIEditBoxImplIOS.mm; sourceTree = "<group>"; };
+		292CEFEF19A18DF200E8E6A0 /* UIEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImplMac.h; sourceTree = "<group>"; };
+		292CEFF019A18DF200E8E6A0 /* UIEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIEditBoxImplMac.mm; sourceTree = "<group>"; };
+		292CEFF119A18DF200E8E6A0 /* UIEditBoxImplNone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBoxImplNone.cpp; sourceTree = "<group>"; };
+		292CEFF219A18DF200E8E6A0 /* UIEditBoxImplWin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBoxImplWin.cpp; sourceTree = "<group>"; };
+		292CEFF319A18DF200E8E6A0 /* UIEditBoxImplWin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImplWin.h; sourceTree = "<group>"; };
+		292CEFF419A18DF200E8E6A0 /* UIEditBoxImplWp8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBoxImplWp8.cpp; sourceTree = "<group>"; };
+		292CEFF519A18DF200E8E6A0 /* UIEditBoxImplWp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImplWp8.h; sourceTree = "<group>"; };
 		2958244919873D8E00F9746D /* UIScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9Sprite.cpp; sourceTree = "<group>"; };
 		2958244A19873D8E00F9746D /* UIScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9Sprite.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
@@ -4371,6 +4403,7 @@
 		2905F9E618CF08D000240AA3 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				292CEFE719A18DF200E8E6A0 /* UIEditBox */,
 				29CB8F531929D67D00C841D6 /* widgets */,
 				29CB8F521929D65500C841D6 /* experimental */,
 				29CB8F511929D64500C841D6 /* base */,
@@ -4380,6 +4413,27 @@
 			);
 			name = ui;
 			path = ../cocos/ui;
+			sourceTree = "<group>";
+		};
+		292CEFE719A18DF200E8E6A0 /* UIEditBox */ = {
+			isa = PBXGroup;
+			children = (
+				292CEFE819A18DF200E8E6A0 /* UIEditBox.cpp */,
+				292CEFE919A18DF200E8E6A0 /* UIEditBox.h */,
+				292CEFEA19A18DF200E8E6A0 /* UIEditBoxImpl.h */,
+				292CEFEB19A18DF200E8E6A0 /* UIEditBoxImplAndroid.cpp */,
+				292CEFEC19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h */,
+				292CEFED19A18DF200E8E6A0 /* UIEditBoxImplIOS.h */,
+				292CEFEE19A18DF200E8E6A0 /* UIEditBoxImplIOS.mm */,
+				292CEFEF19A18DF200E8E6A0 /* UIEditBoxImplMac.h */,
+				292CEFF019A18DF200E8E6A0 /* UIEditBoxImplMac.mm */,
+				292CEFF119A18DF200E8E6A0 /* UIEditBoxImplNone.cpp */,
+				292CEFF219A18DF200E8E6A0 /* UIEditBoxImplWin.cpp */,
+				292CEFF319A18DF200E8E6A0 /* UIEditBoxImplWin.h */,
+				292CEFF419A18DF200E8E6A0 /* UIEditBoxImplWp8.cpp */,
+				292CEFF519A18DF200E8E6A0 /* UIEditBoxImplWp8.h */,
+			);
+			path = UIEditBox;
 			sourceTree = "<group>";
 		};
 		29CB8F501929D63600C841D6 /* layout */ = {
@@ -6120,18 +6174,24 @@
 			files = (
 				B2DB4778197665BF00411E16 /* UIHelper.h in Headers */,
 				B2DB478A1976664400411E16 /* UISlider.h in Headers */,
+				292CF00019A18DF200E8E6A0 /* UIEditBoxImplIOS.h in Headers */,
+				292CEFFA19A18DF200E8E6A0 /* UIEditBoxImpl.h in Headers */,
 				B2DB47841976661A00411E16 /* UIImageView.h in Headers */,
 				B2DB47881976663A00411E16 /* UIRichText.h in Headers */,
 				B2DB47801976660200411E16 /* UIButton.h in Headers */,
 				B2DB47821976660C00411E16 /* UICheckBox.h in Headers */,
 				B2DB47861976662D00411E16 /* UILoadingBar.h in Headers */,
+				292CEFF819A18DF200E8E6A0 /* UIEditBox.h in Headers */,
 				B2DB47681976650A00411E16 /* UIWidget.h in Headers */,
 				2958244D19873D8E00F9746D /* UIScale9Sprite.h in Headers */,
 				B2DB47691976651E00411E16 /* UIHBox.h in Headers */,
+				292CF01019A18DF200E8E6A0 /* UIEditBoxImplWp8.h in Headers */,
+				292CF00C19A18DF200E8E6A0 /* UIEditBoxImplWin.h in Headers */,
 				B2DB478F1976666100411E16 /* UIText.h in Headers */,
 				B2DB47901976666100411E16 /* UITextAtlas.h in Headers */,
 				B2DB47911976666100411E16 /* UITextBMFont.h in Headers */,
 				B2DB47921976666100411E16 /* UITextField.h in Headers */,
+				292CEFFE19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h in Headers */,
 				B2DB476A1976653000411E16 /* UILayout.h in Headers */,
 				B2DB477A197665D000411E16 /* UIListView.h in Headers */,
 				B2DB477C197665DB00411E16 /* UIPageView.h in Headers */,
@@ -6140,6 +6200,7 @@
 				B2DB476E1976655C00411E16 /* UILayoutParameter.h in Headers */,
 				B2DB47701976657000411E16 /* UIRelativeBox.h in Headers */,
 				B2DB47721976658000411E16 /* UIVBox.h in Headers */,
+				292CF00419A18DF200E8E6A0 /* UIEditBoxImplMac.h in Headers */,
 				B2DB47741976659800411E16 /* CocosGUI.h in Headers */,
 				B2DB4776197665AA00411E16 /* UIDeprecated.h in Headers */,
 			);
@@ -6152,14 +6213,18 @@
 				B2C59A3419777EB600B452DF /* UIListView.h in Headers */,
 				B2C59A3519777EB600B452DF /* UILoadingBar.h in Headers */,
 				B2C59A3619777EB600B452DF /* UIPageView.h in Headers */,
+				292CF00119A18DF200E8E6A0 /* UIEditBoxImplIOS.h in Headers */,
 				B2C59A3719777EB600B452DF /* UIRichText.h in Headers */,
 				B2C59A3819777EB600B452DF /* UIScrollView.h in Headers */,
 				B2C59A3919777EB600B452DF /* UISlider.h in Headers */,
 				B2C59A3A19777EB600B452DF /* UIText.h in Headers */,
+				292CF00519A18DF200E8E6A0 /* UIEditBoxImplMac.h in Headers */,
 				B2C59A3B19777EB600B452DF /* UITextAtlas.h in Headers */,
 				B2C59A3C19777EB600B452DF /* UITextBMFont.h in Headers */,
+				292CEFFB19A18DF200E8E6A0 /* UIEditBoxImpl.h in Headers */,
 				B2C59A3D19777EB600B452DF /* UITextField.h in Headers */,
 				B2C59A3E19777EB600B452DF /* UIButton.h in Headers */,
+				292CF01119A18DF200E8E6A0 /* UIEditBoxImplWp8.h in Headers */,
 				B2C59A3F19777EB600B452DF /* UICheckBox.h in Headers */,
 				B2C59A4019777EB600B452DF /* UIImageView.h in Headers */,
 				B2C59A4119777EBC00B452DF /* UIVideoPlayer.h in Headers */,
@@ -6167,10 +6232,13 @@
 				B2C59A4319777EC700B452DF /* UIWidget.h in Headers */,
 				B2C59A4519777EC700B452DF /* UIHelper.h in Headers */,
 				B2C59A4619777EC700B452DF /* GUIDefine.h in Headers */,
+				292CEFF919A18DF200E8E6A0 /* UIEditBox.h in Headers */,
 				B2C59A4719777ECF00B452DF /* UIHBox.h in Headers */,
 				B2C59A4819777ECF00B452DF /* UIRelativeBox.h in Headers */,
+				292CF00D19A18DF200E8E6A0 /* UIEditBoxImplWin.h in Headers */,
 				B2C59A4919777ECF00B452DF /* UIVBox.h in Headers */,
 				2958244E19873D8E00F9746D /* UIScale9Sprite.h in Headers */,
+				292CEFFF19A18DF200E8E6A0 /* UIEditBoxImplAndroid.h in Headers */,
 				B2C59A4A19777ECF00B452DF /* UILayout.h in Headers */,
 				B2C59A4B19777ECF00B452DF /* UILayoutParameter.h in Headers */,
 				B2C59A4C19777ECF00B452DF /* UILayoutManager.h in Headers */,
@@ -7598,10 +7666,12 @@
 				B2DB476F1976656D00411E16 /* UIRelativeBox.cpp in Sources */,
 				B2DB47711976657A00411E16 /* UIVBox.cpp in Sources */,
 				B2DB47731976658E00411E16 /* CocosGUI.cpp in Sources */,
+				292CF00619A18DF200E8E6A0 /* UIEditBoxImplMac.mm in Sources */,
 				B2DB4775197665A500411E16 /* UIDeprecated.cpp in Sources */,
 				2958244B19873D8E00F9746D /* UIScale9Sprite.cpp in Sources */,
 				B2DB47891976664200411E16 /* UISlider.cpp in Sources */,
 				B2DB4779197665CD00411E16 /* UIListView.cpp in Sources */,
+				292CEFF619A18DF200E8E6A0 /* UIEditBox.cpp in Sources */,
 				B2DB47851976662B00411E16 /* UILoadingBar.cpp in Sources */,
 				B2DB478B1976665700411E16 /* UIText.cpp in Sources */,
 				B2DB478C1976665700411E16 /* UITextAtlas.cpp in Sources */,
@@ -7631,6 +7701,7 @@
 				B2C59A2419777E7500B452DF /* UITextBMFont.cpp in Sources */,
 				B2C59A2519777E7500B452DF /* UITextField.cpp in Sources */,
 				B2C59A2619777E7500B452DF /* UIButton.cpp in Sources */,
+				292CF00319A18DF200E8E6A0 /* UIEditBoxImplIOS.mm in Sources */,
 				B2C59ACB197782FF00B452DF /* UIVideoPlayerIOS.mm in Sources */,
 				B2C59A2719777E7500B452DF /* UICheckBox.cpp in Sources */,
 				B2C59A2819777E7500B452DF /* UIImageView.cpp in Sources */,
@@ -7638,6 +7709,7 @@
 				B2C59A2B19777E8300B452DF /* UIWidget.cpp in Sources */,
 				B2C59A2D19777E8300B452DF /* UIHelper.cpp in Sources */,
 				B2C59A2E19777E8C00B452DF /* UIHBox.cpp in Sources */,
+				292CEFF719A18DF200E8E6A0 /* UIEditBox.cpp in Sources */,
 				B2C59A2F19777E8C00B452DF /* UIRelativeBox.cpp in Sources */,
 				B2C59A3019777E8C00B452DF /* UIVBox.cpp in Sources */,
 				B2C59A3119777E8C00B452DF /* UILayout.cpp in Sources */,

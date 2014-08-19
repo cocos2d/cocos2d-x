@@ -22,6 +22,7 @@
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
+#include "UIEditBoxTest.h"
 
 
 USING_NS_CC;
@@ -35,6 +36,7 @@ static const char* s_testArray[] =
     "UIButtonTest_RemoveSelf",
     "UIButtonTestSwitchScale9",
     "UIButtonTestZoomScale",
+    "UIEditBoxTest",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
@@ -369,6 +371,8 @@ Scene *UISceneManager::currentUIScene()
             return UIS9Flip::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9ChangeAnchorPoint:
             return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIEditBoxTest:
+            return UIEditBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
     }
     return nullptr;
 }

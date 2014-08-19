@@ -867,6 +867,9 @@
     <ClCompile Include="..\Classes\Sprite3DTest\DrawNode3D.cpp">
       <Filter>Classes\Sprite3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1600,6 +1603,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Sprite3DTest\DrawNode3D.h">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

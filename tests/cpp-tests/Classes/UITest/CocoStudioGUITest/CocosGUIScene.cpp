@@ -37,8 +37,19 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
-            //TODO: improve ListView focus
             sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+    {
+        "EditBox test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIEditBoxTest);
+            sceneManager->setMinUISceneId(kUIEditBoxTest);
+            sceneManager->setMaxUISceneId(kUIEditBoxTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

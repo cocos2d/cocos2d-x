@@ -38,6 +38,7 @@ enum
     kUIButtonTest_RemoveSelf,
     kUIButtonTestSwitchScale9,
     kUIButtonTestZoomScale,
+    kUIEditBoxTest,
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,
