@@ -132,10 +132,7 @@ void PointLightTestDemo::addSprite()
 void PointLightTestDemo::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
-    _pointLight = Light3D::Create(Light3D::POINT);
-    _pointLight->setPosition(Vec2(s.width/2, s.height/2));
-    _pointLight->setColor(Color3B(128, 128, 128));
-    _pointLight->setRange(10000.0f);
+    _pointLight = Light3D::CreatePointLight(Vec3(s.width/2, s.height/2, 0.0), Color3B(128, 128, 128), 10000.0f);
     _pointLight->retain();
 
     addChild(_pointLight);
@@ -189,23 +186,26 @@ void DirectionalLightTestDemo::update( float delta )
 void DirectionalLightTestDemo::addSprite()
 {
     auto s = Director::getInstance()->getWinSize();
-    std::string fileName = "Sprite3DTest/sphere.c3b";
-    auto sprite = Sprite3D::create(fileName);
-    sprite->setScale(5.0f);
-    sprite->setRotation3D(Vec3(0,180,0));
-    sprite->setPosition(Vec2(s.width/2, s.height/2));
-    addChild(sprite);
+
+	{
+		std::string fileName = "Sprite3DTest/sphere.c3b";
+		auto sprite = Sprite3D::create(fileName);
+		sprite->setScale(5.0f);
+		sprite->setRotation3D(Vec3(0,180,0));
+		sprite->setPosition(Vec2(s.width/2, s.height/2));
+		addChild(sprite);
+	}
+
 }
 
 void DirectionalLightTestDemo::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
-    _directionalLight = Light3D::Create(Light3D::DIRECTIONAL);
-    _directionalLight->setDirection(Vec3(-1.0f, 0.0f, 0.0f));
-    _directionalLight->setColor(Color3B(128, 128, 128));
+    _directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, 0.0f, 0.0f), Color3B(128, 128, 128));
     _directionalLight->retain();
 
     addChild(_directionalLight);
+
 }
 
 std::string SpotLightTestDemo::title() const
@@ -226,14 +226,7 @@ void SpotLightTestDemo::addSprite()
 void SpotLightTestDemo::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
-    _spotLight = Light3D::Create(Light3D::SPOT);
-    _spotLight->setDirection(Vec3(0.0f, 0.0f, -1.0f));
-    _spotLight->setColor(Color3B(128, 128, 128));
-    _spotLight->setPosition(Vec2(s.width/2, s.height/2));
-    _spotLight->setPositionZ(s.width/2);
-    _spotLight->setInnerAngle(0.0f);
-    _spotLight->setOuterAngle(0.4f);
-    _spotLight->setRange(10000.0f);
+    _spotLight = Light3D::CreateSpotLight(Vec3(0.0f, 0.0f, -1.0f), Vec3(s.width/2, s.height/2, 0.0), Color3B(128, 128, 128), 0.0f, 0.4f, 10000.0f);
     _spotLight->retain();
 
     addChild(_spotLight);

@@ -43,16 +43,13 @@ public:
     /**
      * Create light according to type.
      */
-    static Light3D* Create(LightType lightType);
+    static Light3D* CreateDirectionalLight(const Vec3 &direction, const Color3B &color);
+	static Light3D* CreatePointLight(const Vec3 &position, const Color3B &color, float range);
+	static Light3D* CreateSpotLight(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
 
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
-
-    /**
-     * Sets light type.
-     */
-    void setLightType(LightType lightType);
 
     /**
      * Gets light type.
@@ -119,6 +116,13 @@ CC_CONSTRUCTOR_ACCESS:
 
     Light3D();
     virtual ~Light3D();
+
+protected:
+
+	/**
+     * Sets light type.
+     */
+    void setLightType(LightType lightType);
 
 protected:
 

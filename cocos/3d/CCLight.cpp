@@ -15,23 +15,15 @@ Light3D::~Light3D()
 {
 }
 
-Light3D* Light3D::Create( LightType lightType )
-{
-    Light3D *light = new Light3D;
-    light->setLightType(lightType);
-    light->autorelease();
-    return light;
-}
-
 void Light3D::setLightType( LightType lightType )
 {
-    _lightType = lightType;
+	_lightType = lightType;
 }
 
 
 Light3D::LightType Light3D::getLightType()
 {
-    return _lightType;
+	return _lightType;
 }
 
 void Light3D::setRange( float range )
@@ -96,6 +88,41 @@ void Light3D::onExit()
         if (iter != lights.end())
             lights.erase(iter);
     }
+}
+
+Light3D* Light3D::CreateDirectionalLight( const Vec3 &direction, const Color3B &color )
+{
+	Light3D *light = new Light3D;
+	light->setLightType(DIRECTIONAL);
+	light->setDirection(direction);
+	light->setColor(color);
+	light->autorelease();
+	return light;
+}
+
+Light3D* Light3D::CreatePointLight( const Vec3 &position, const Color3B &color, float range )
+{
+	Light3D *light = new Light3D;
+	light->setLightType(POINT);
+	light->setPosition3D(position);
+	light->setColor(color);
+	light->setRange(range);
+	light->autorelease();
+	return light;
+}
+
+Light3D* Light3D::CreateSpotLight( const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range )
+{
+	Light3D *light = new Light3D;
+	light->setLightType(SPOT);
+	light->setDirection(direction);
+	light->setPosition3D(position);
+	light->setColor(color);
+	light->setInnerAngle(innerAngle);
+	light->setOuterAngle(outerAngle);
+	light->setRange(range);
+	light->autorelease();
+	return light;
 }
 
 NS_CC_END
