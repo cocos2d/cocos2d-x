@@ -367,14 +367,6 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
     }
 }
 
-bool Bundle3D::loadSkeletonData(const std::string& id, Skeleton3DData* skeletondata)
-{
-    skeletondata->resetData();
-
-    //TODO
-    return true;
-}
-
 //since 3.3, to support reskin
 bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
 {

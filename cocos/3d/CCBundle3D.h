@@ -91,12 +91,6 @@ public:
      */
     virtual bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
-    /**
-     * load skeleton data from bundle
-     *
-     */
-    virtual bool loadSkeletonData(const std::string& id, Skeleton3DData* skeletondata);
-    
     //since 3.3, to support reskin
     virtual bool loadMeshDatas(MeshDatas& meshdatas);
     //since 3.3, to support reskin

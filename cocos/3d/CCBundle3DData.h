@@ -243,46 +243,6 @@ struct SkinData
 
 };
 
-/**skin data*/
-struct Skeleton3DData
-{
-    std::vector<std::string> boneNames; //bone names
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone
-    std::vector<Mat4>        boneOriginMatrices; // original bone transform
-    
-    //bone child info, both skinbone and node bone
-    std::map<int, std::vector<int> > boneChild;//key parent, value child
-    int                              rootBoneIndex;
-    
-    void resetData()
-    {
-        boneNames.clear();
-        inverseBindPoseMatrices.clear();
-        boneOriginMatrices.clear();
-        boneChild.clear();
-        rootBoneIndex = -1;
-    }
-    
-    void addBoneNames(const std::string& name)
-    {
-        auto it = std::find(boneNames.begin(), boneNames.end(), name);
-        if (it == boneNames.end())
-            boneNames.push_back(name);
-    }
-    
-    int getBoneNameIndex(const std::string& name)const
-    {
-        int i = 0;
-        for (auto iter : boneNames)
-        {
-            if ((iter) == name)
-                return i;
-            i++;
-        }
-        return -1;
-    }
-};
-
 /**material data, */
 struct MaterialData
 {
