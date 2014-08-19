@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -51,9 +51,6 @@
     </Filter>
     <Filter Include="external\xxhash">
       <UniqueIdentifier>{b4e2b1e5-2d79-44a3-af45-728d47b7bdb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3d">
-      <UniqueIdentifier>{a20c4bdc-bd4c-40c1-a78a-fe31cd3ec76a}</UniqueIdentifier>
     </Filter>
     <Filter Include="storage">
       <UniqueIdentifier>{44bdf58f-4af2-433c-b4af-58dc05ef96b5}</UniqueIdentifier>
@@ -550,35 +547,8 @@
     <ClCompile Include="..\renderer\CCMeshCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCMesh.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCObjLoader.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSprite3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ObjectFactory.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCBundle3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCAnimate3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCMeshSkin.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCAnimation3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCBundleReader.cpp">
-      <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="CCFastTMXLayer.cpp">
       <Filter>2d</Filter>
@@ -588,18 +558,6 @@
     </ClCompile>
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp">
       <Filter>storage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCAttachNode.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSkeleton3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSubMesh.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSubMeshState.cpp">
-      <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp">
       <Filter>platform\desktop</Filter>
@@ -612,15 +570,6 @@
     </ClCompile>
     <ClCompile Include="..\base\CCCamera.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCAABB.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCOBB.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCRay.cpp">
-      <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCPrimitive.cpp">
       <Filter>renderer</Filter>
@@ -1201,41 +1150,8 @@
     <ClInclude Include="..\renderer\CCMeshCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCMesh.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCObjLoader.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSprite3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\ObjectFactory.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCBundle3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCAnimate3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCAnimationCurve.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCMeshSkin.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCAnimation3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCBundle3DData.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSprite3DMaterial.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCBundleReader.h">
-      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="CCFastTMXTiledMap.h">
       <Filter>2d</Filter>
@@ -1245,18 +1161,6 @@
     </ClInclude>
     <ClInclude Include="..\storage\local-storage\LocalStorage.h">
       <Filter>storage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCAttachNode.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSkeleton3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSubMesh.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSubMeshState.h">
-      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\desktop\CCGLViewImpl.h">
       <Filter>platform\desktop</Filter>
@@ -1269,15 +1173,6 @@
     </ClInclude>
     <ClInclude Include="..\base\CCCamera.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCAABB.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCOBB.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCRay.h">
-      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCPrimitive.h">
       <Filter>renderer</Filter>
@@ -1316,9 +1211,6 @@
     </None>
     <None Include="..\math\Vec4.inl">
       <Filter>math</Filter>
-    </None>
-    <None Include="..\3d\CCAnimationCurve.inl">
-      <Filter>3d</Filter>
     </None>
     <None Include="cocos2d.def" />
   </ItemGroup>

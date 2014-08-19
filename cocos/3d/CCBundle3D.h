@@ -36,6 +36,7 @@
 
 #include "json/document.h"
 #include "CCBundleReader.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 class Animation3D;
@@ -47,7 +48,7 @@ class Data;
  * c3t text file
  * c3b binary file
  */
-class CC_DLL Bundle3D
+class CC_3D_DLL Bundle3D
 {
 public:
     /**you can define yourself bundle and set it, use default bundle otherwise*/

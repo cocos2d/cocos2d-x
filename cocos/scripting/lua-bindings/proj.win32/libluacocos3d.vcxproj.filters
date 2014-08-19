@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="auto">
+      <UniqueIdentifier>{8d269c90-26ad-4ce8-b355-d8df01d59914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual">
+      <UniqueIdentifier>{25c7b94b-a9a1-4b93-b285-93c9b620e2ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script">
+      <UniqueIdentifier>{af4b7d5f-f563-4069-ade8-c1a954e6fe5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\3d\lua_cocos2dx_3d_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\3d\lua_cocos2dx_3d_manual.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

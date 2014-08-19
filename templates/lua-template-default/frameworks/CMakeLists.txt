@@ -109,6 +109,9 @@ add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 # cocos 2d library
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
+# cocos 3d library
+add_subdirectory(${COCOS2D_ROOT}/cocos/3d)
+
 # network library
 add_subdirectory(${COCOS2D_ROOT}/cocos/network)
 
@@ -158,6 +161,7 @@ endif()
 
 target_link_libraries(${APP_NAME}
   luacocos2d
+  luacocos3d
   luacocosdenshion
   luanetwork
   luacocosbuilder
@@ -166,6 +170,7 @@ target_link_libraries(${APP_NAME}
   luaextension
   luaui
   cocos2d
+  cocos3d
   audio
   cocostudio
   spine

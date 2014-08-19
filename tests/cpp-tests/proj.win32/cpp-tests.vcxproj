@@ -567,6 +567,9 @@
     <ProjectReference Include="..\..\..\cocos\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\cocos\3d\proj.win32\libcocos3d.vcxproj">
+      <Project>{e24950fa-5bc1-4aee-a900-4f0259354bf0}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\cocos\audio\proj.win32\libcocosdenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
     </ProjectReference>

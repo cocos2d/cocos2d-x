@@ -29,6 +29,7 @@
 #include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
+#include "3d/CCSprite3D.h"
 #include "DrawNode3D.h"
 
 #include <algorithm>
