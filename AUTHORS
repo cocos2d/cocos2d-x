@@ -804,6 +804,7 @@ Developers:
         Android jni error clear & more readable log
         Add support of software PVRTC v1 decompression
         Fixed a bug that ttf font have not effect on Mac OS X
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
