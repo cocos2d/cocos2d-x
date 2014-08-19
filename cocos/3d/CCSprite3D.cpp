@@ -470,7 +470,10 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     int i = 0;
     for (auto& submeshstate : _subMeshStates) {
         if (!submeshstate->isVisible())
+        {
+            i++;
             continue;
+        }
         
         auto& meshCommand = _meshCommands[i++];
         

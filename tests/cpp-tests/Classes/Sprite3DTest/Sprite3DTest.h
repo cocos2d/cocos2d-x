@@ -246,26 +246,24 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
-class ChangeClothTest : public Sprite3DTestDemo
+class Sprite3DReskinTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(ChangeClothTest);
-    ChangeClothTest();
+    CREATE_FUNC(Sprite3DReskinTest);
+    Sprite3DReskinTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Vec2 p);
-   // void menuCallback_changeCap(Ref* sender);
-    void menuCallback_changeHair(Ref* sender);
-    void menuCallback_changeGlasses(Ref* sender);
-    void menuCallback_changeUpBody(Ref* sender);
-    void menuCallback_changeBottomBody(Ref* sender);
-    void menuCallback_changeShoot(Ref* sender);
+    void menuCallback_switchHair(Ref* sender);
+    void menuCallback_switchGlasses(Ref* sender);
+    void menuCallback_switchCoat(Ref* sender);
+    void menuCallback_switchPants(Ref* sender);
+    void menuCallback_switchShoes(Ref* sender);
 protected:
-    bool _hasWeapon;
     std::string  _girlPants[2];
     int _usePantsId;
-    std::string  _girlUpBody[2];
+    std::string  _girlUpperBody[2];
     int _useUpBodyId;
     std::string  _girlShoes[2];
     int _useShoesId;
