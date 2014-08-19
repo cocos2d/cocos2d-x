@@ -263,14 +263,14 @@ public:
     void menuCallback_changeShoot(Ref* sender);
 protected:
     bool _hasWeapon;
-    std::string  _girl_Xiashen[2];
-    int _useXiashenId;
-    std::string  _girl_Shangshen[2];
-    int _useShangshenId;
-    std::string  _girl_Xie[2];
-    int _useXieId;
-    std::string  _girl_Toufa[2];
-    int _useToufaId;
+    std::string  _girlPants[2];
+    int _usePantsId;
+    std::string  _girlUpBody[2];
+    int _useUpBodyId;
+    std::string  _girlShoes[2];
+    int _useShoesId;
+    std::string  _girlHair[2];
+    int _useHairId;
     cocos2d::Sprite3D* _sprite;
 };
 class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo

@@ -1002,18 +1002,18 @@ ChangeClothTest::ChangeClothTest()
 : _hasWeapon(false)
 , _sprite(nullptr)
 {
-    _girl_Xiashen[0]= "Girl_Xiashen_01";
-    _girl_Xiashen[1]= "Girl_Xiashen_02";
-    _girl_Shangshen[0] = "Girl_Shangshen_01";
-    _girl_Shangshen[1] = "Girl_Shangshen_02";
-    _girl_Xie[0]  = "Girl_Xie_01";
-    _girl_Xie[1]  = "Girl_Xie_02";
-    _girl_Toufa[0]= "Girl_Toufa_01";
-    _girl_Toufa[1]= "Girl_Toufa_02";
-    _useShangshenId = 0;
-    _useXiashenId = 0;
-    _useXieId   =0;
-    _useToufaId = 0;
+    _girlPants[0]= "Girl_Xiashen_01";
+    _girlPants[1]= "Girl_Xiashen_02";
+    _girlUpBody[0] = "Girl_Shangshen_01";
+    _girlUpBody[1] = "Girl_Shangshen_02";
+    _girlShoes[0]  = "Girl_Xie_01";
+    _girlShoes[1]  = "Girl_Xie_02";
+    _girlHair[0]= "Girl_Toufa_01";
+    _girlHair[1]= "Girl_Toufa_02";
+    _usePantsId = 0;
+    _useUpBodyId = 0;
+    _useShoesId   =0;
+    _useHairId = 0;
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
     
@@ -1043,19 +1043,19 @@ ChangeClothTest::ChangeClothTest()
 }
 void ChangeClothTest::menuCallback_changeHair(Ref* sender)
 {
-    _useToufaId++;
-    if(_useToufaId > 1 )
+    _useHairId++;
+    if(_useHairId > 1 )
     {
-        _useToufaId = 0;
+        _useHairId = 0;
     }
-    if(_useToufaId >= 0  && _sprite)
+    if(_useHairId >= 0  && _sprite)
     {
         for(int i = 0; i < 2; i++ )
         {
-            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girl_Toufa[i]);
+            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlHair[i]);
             if(subMesh)
             {
-                if(i == _useToufaId )
+                if(i == _useHairId )
                 {
                     subMesh->setVisible(true);
                 }
@@ -1084,19 +1084,19 @@ void ChangeClothTest::menuCallback_changeGlasses(Ref* sender)
 }
 void ChangeClothTest::menuCallback_changeUpBody(Ref* sender)
 {
-    _useShangshenId++;
-    if(_useShangshenId > 1 )
+    _useUpBodyId++;
+    if(_useUpBodyId > 1 )
     {
-        _useShangshenId = 0;
+        _useUpBodyId = 0;
     }
-    if(_useShangshenId >= 0  && _sprite)
+    if(_useUpBodyId >= 0  && _sprite)
     {
         for(int i = 0; i < 2; i++ )
         {
-            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girl_Shangshen[i]);
+            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlUpBody[i]);
             if(subMesh)
             {
-                if(i == _useShangshenId )
+                if(i == _useUpBodyId )
                 {
                     subMesh->setVisible(true);
                 }
@@ -1110,19 +1110,19 @@ void ChangeClothTest::menuCallback_changeUpBody(Ref* sender)
 }
 void ChangeClothTest::menuCallback_changeBottomBody(Ref* sender)
 {
-    _useXiashenId++;
-    if(_useXiashenId > 1 )
+    _usePantsId++;
+    if(_usePantsId > 1 )
     {
-        _useXiashenId = 0;
+        _usePantsId = 0;
     }
-    if(_useXiashenId >= 0  && _sprite)
+    if(_usePantsId >= 0  && _sprite)
     {
         for(int i = 0; i < 2; i++ )
         {
-            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girl_Xiashen[i]);
+            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlPants[i]);
             if(subMesh)
             {
-                if(i == _useXiashenId )
+                if(i == _usePantsId )
                 {
                     subMesh->setVisible(true);
                 }
@@ -1136,19 +1136,19 @@ void ChangeClothTest::menuCallback_changeBottomBody(Ref* sender)
 }
 void ChangeClothTest::menuCallback_changeShoot(Ref* sender)
 {
-        _useXieId++;
-        if(_useXieId > 1 )
+        _useShoesId++;
+        if(_useShoesId > 1 )
         {
-            _useXieId = 0;
+            _useShoesId = 0;
         }
-        if(_useXieId >= 0  && _sprite)
+        if(_useShoesId >= 0  && _sprite)
         {
             for(int i = 0; i < 2; i++ )
             {
-                SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girl_Xie[i]);
+                SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlShoes[i]);
                 if(subMesh)
                 {
-                    if(i == _useXieId )
+                    if(i == _useShoesId )
                     {
                         subMesh->setVisible(true);
                     }
@@ -1176,25 +1176,25 @@ void ChangeClothTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(4);
     sprite->setRotation3D(Vec3(0,0,0));
-    SubMeshState* girl_Xiashen_01 = sprite->getSubMeshStateByName(_girl_Xiashen[1]);
-    if(girl_Xiashen_01)
+    SubMeshState* girlPants = sprite->getSubMeshStateByName(_girlPants[1]);
+    if(girlPants)
     {
-        girl_Xiashen_01->setVisible(false);
+        girlPants->setVisible(false);
     }
-    SubMeshState* girl_Xie_01 = sprite->getSubMeshStateByName(_girl_Xie[1]);
-    if(girl_Xie_01)
+    SubMeshState* girlShoes = sprite->getSubMeshStateByName(_girlShoes[1]);
+    if(girlShoes)
     {
-        girl_Xie_01->setVisible(false);
+        girlShoes->setVisible(false);
     }
-    SubMeshState* girl_Toufa_01 = sprite->getSubMeshStateByName(_girl_Toufa[1]);
-    if(girl_Toufa_01)
+    SubMeshState* girlHair = sprite->getSubMeshStateByName(_girlHair[1]);
+    if(girlHair)
     {
-        girl_Toufa_01->setVisible(false);
+        girlHair->setVisible(false);
     }
-    SubMeshState* girl_Shangshen_01 = sprite->getSubMeshStateByName( _girl_Shangshen[1]);
-    if(girl_Shangshen_01)
+    SubMeshState* girlUpBody = sprite->getSubMeshStateByName( _girlUpBody[1]);
+    if(girlUpBody)
     {
-        girl_Shangshen_01->setVisible(false);
+        girlUpBody->setVisible(false);
     }
     addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y-60) );
