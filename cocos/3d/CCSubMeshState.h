@@ -34,6 +34,7 @@
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +43,7 @@ class MeshSkin;
 /** 
  * SubMeshState: visibility and apperence of submesh
  */
-class CC_DLL SubMeshState : public Ref
+class CC_3D_DLL SubMeshState : public Ref
 {
 public:
 

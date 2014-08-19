@@ -38,6 +38,7 @@
 #include "renderer/CCGLProgram.h"
 
 #include "CCAABB.h"
+#include "3d/3dExport.h"
 
 
 NS_CC_BEGIN
@@ -45,7 +46,7 @@ NS_CC_BEGIN
 class EventListenerCustom;
 class EventCustom;
 
-class CC_DLL RenderMeshData
+class CC_3D_DLL RenderMeshData
 {
     typedef std::vector<unsigned short> IndexArray;
     friend class Mesh;
@@ -72,7 +73,7 @@ protected:
  * Mesh: Geometry with a collection of vertex. 
  * Supporting various vertex formats.
  */
-class CC_DLL Mesh : public Ref
+class CC_3D_DLL Mesh : public Ref
 {
     typedef std::vector<unsigned short> IndexArray;
 public:

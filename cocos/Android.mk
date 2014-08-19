@@ -74,22 +74,6 @@ cocos2d.cpp \
 2d/CCTransitionPageTurn.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
-3d/CCRay.cpp\
-3d/CCAABB.cpp \
-3d/CCOBB.cpp \
-3d/CCAnimate3D.cpp \
-3d/CCAnimation3D.cpp \
-3d/CCAttachNode.cpp \
-3d/CCBundle3D.cpp \
-3d/CCBundleReader.cpp \
-3d/CCMesh.cpp \
-3d/CCMeshSkin.cpp \
-3d/CCSprite3DMaterial.cpp \
-3d/CCObjLoader.cpp \
-3d/CCSkeleton3D.cpp \
-3d/CCSprite3D.cpp \
-3d/CCSubMesh.cpp \
-3d/CCSubMeshState.cpp \
 platform/CCGLView.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
@@ -226,10 +210,10 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz \
                        -landroid
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
-LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
+LOCAL_STATIC_LIBRARIES := cocos_freetype2_static
+LOCAL_STATIC_LIBRARIES += chipmunk_static
+LOCAL_STATIC_LIBRARIES += cocos_png_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
