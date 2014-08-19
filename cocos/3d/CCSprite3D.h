@@ -35,6 +35,7 @@
 #include "renderer/CCMeshCommand.h"
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
+#include "3d/CCMesh.h"
 
 NS_CC_BEGIN
 
@@ -158,6 +159,48 @@ protected:
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
     bool                         _aabbDirty;
+};
+
+///////////////////////////////////////////////////////
+class Sprite3DCache
+{
+public:
+    struct Sprite3DData
+    {
+        Vector<Mesh*>   meshes;
+        NodeDatas*      nodedatas;
+        MaterialDatas*  materialdatas;
+        ~Sprite3DData()
+        {
+            if (nodedatas)
+                delete nodedatas;
+            if (materialdatas)
+                delete materialdatas;
+            meshes.clear();
+        }
+    };
+    
+    /**get & destroy*/
+    static Sprite3DCache* getInstance();
+    static void destroyInstance();
+    
+    Sprite3DData* getSpriteData(const std::string& key) const;
+    
+    bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
+    
+    void removeSprite3DData(const std::string& key);
+    
+    void removeAllSprite3DData();
+    
+    CC_CONSTRUCTOR_ACCESS:
+    Sprite3DCache();
+    ~Sprite3DCache();
+    
+protected:
+    
+    
+    static Sprite3DCache*                        _cacheInstance;
+    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array

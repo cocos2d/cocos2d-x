@@ -318,8 +318,6 @@ int Skeleton3D::getBoneIndex(Bone3D* bone) const
 //refresh bone world matrix
 void Skeleton3D::updateBoneMatrix()
 {
-    //_rootBone->setWorldMatDirty(true);
-    //_rootBone->updateWorldMat();
     for (const auto& it : _rootBones) {
         it->setWorldMatDirty(true);
         it->updateWorldMat();
@@ -348,56 +346,6 @@ Bone3D* Skeleton3D::createBone3D(const NodeData& nodedata)
     _bones.pushBack(bone);
     bone->_oriPose = nodedata.transform;
     return bone;
-}
-
-////////////////////////////////////////////////////////////////////////
-Skeleton3DDataCache* Skeleton3DDataCache::_cacheInstance = nullptr;
-
-Skeleton3DDataCache* Skeleton3DDataCache::getInstance()
-{
-    if (_cacheInstance == nullptr)
-        _cacheInstance = new Skeleton3DDataCache();
-    return _cacheInstance;
-}
-void Skeleton3DDataCache::destroyInstance()
-{
-    if (_cacheInstance)
-    {
-        CC_SAFE_DELETE(_cacheInstance);
-    }
-}
-
-const Skeleton3DData* Skeleton3DDataCache::getSkeletonData(const std::string& key) const
-{
-    auto it = _skeletonDatas.find(key);
-    if (it != _skeletonDatas.end())
-        return &it->second;
-    
-    return nullptr;
-}
-
-bool Skeleton3DDataCache::addSkeletonData(const std::string& key, const Skeleton3DData& data)
-{
-    if (_skeletonDatas.find(key) != _skeletonDatas.end())
-        return false; // already have this key
-    
-    _skeletonDatas[key] = data;
-    
-    return true;
-}
-
-void Skeleton3DDataCache::removeAllSkeletonData()
-{
-    _skeletonDatas.clear();
-}
-
-Skeleton3DDataCache::Skeleton3DDataCache()
-{
-    
-}
-Skeleton3DDataCache::~Skeleton3DDataCache()
-{
-    
 }
 
 NS_CC_END

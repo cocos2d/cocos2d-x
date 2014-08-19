@@ -100,34 +100,6 @@ protected:
     Vec4* _matrixPalette;
 };
 
-/**
- * MeshSkinData Cache
- */
-class MeshSkinDataCache
-{
-public:
-    /**get & destroy*/
-    static MeshSkinDataCache* getInstance();
-    static void destroyInstance();
-    
-    /**get mesh skin data from cache*/
-    const SkinData* getMeshSkinData(const std::string& key) const;
-    
-    /**add mesh skin data to cache*/
-    bool addMeshSkinData(const std::string& key, const SkinData& skinData);
-    
-    /**remove all mesh skin data*/
-    void removeAllMeshSkinData();
-    
-protected:
-    MeshSkinDataCache();
-    ~MeshSkinDataCache();
-    
-    static MeshSkinDataCache* _cacheInstance; // instance
-    
-    std::unordered_map<std::string, SkinData> _skinDatas; //cached skindatas
-};
-
 NS_CC_END
 
 #endif // __CCSKIN_H__

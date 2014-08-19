@@ -75,7 +75,26 @@ Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &text
 
 bool Sprite3D::loadFromCache(const std::string& path)
 {
-    //FIX ME, TODO
+    auto spritedata = Sprite3DCache::getInstance()->getSpriteData(path);
+    if (spritedata)
+    {
+        for (auto it : spritedata->meshes) {
+            _meshes.pushBack(it);
+        }
+        _skeleton = Skeleton3D::create(spritedata->nodedatas->skeleton);
+        CC_SAFE_RETAIN(_skeleton);
+        
+        for(const auto& it : spritedata->nodedatas->nodes)
+        {
+            if(it)
+            {
+                createNode(it, this, *(spritedata->materialdatas), spritedata->nodedatas->nodes.size() == 1);
+            }
+        }
+        
+        genGLProgramState();
+        return true;
+    }
     
     return false;
 }
@@ -84,25 +103,29 @@ bool Sprite3D::loadFromCache(const std::string& path)
 bool Sprite3D::loadFromObj(const std::string& path)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-    std::string key = fullPath + "#";
     
     MeshDatas meshdatas;
-    MaterialDatas materialdatas;
-    NodeDatas   nodeDatas;
-    bool ret = Bundle3D::loadObj(meshdatas, materialdatas, nodeDatas, fullPath);
-    if (ret)
+    MaterialDatas* materialdatas = new MaterialDatas();
+    NodeDatas*   nodeDatas = new NodeDatas();
+    bool ret = Bundle3D::loadObj(meshdatas, *materialdatas, *nodeDatas, fullPath);
+    if (ret && initFrom(*nodeDatas, meshdatas, *materialdatas))
     {
-        return initFrom(nodeDatas, meshdatas, materialdatas);
+        //add to cache
+        auto data = new Sprite3DCache::Sprite3DData();
+        data->materialdatas = materialdatas;
+        data->nodedatas = nodeDatas;
+        data->meshes = _meshes;
+        Sprite3DCache::getInstance()->addSprite3DData(path, data);
+        return true;
     }
-//    //add mesh to cache
-//    MeshCache::getInstance()->addMesh(key, _mesh);
+    delete materialdatas;
+    delete nodeDatas;
 
     return false;
 }
 bool Sprite3D::loadFromC3x(const std::string& path)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-    std::string key = fullPath + "#";
 
     //load from .c3b or .c3t
     auto bundle = Bundle3D::getInstance();
@@ -110,14 +133,24 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         return false;
     
     MeshDatas meshdatas;
-    MaterialDatas materialdatas;
-    NodeDatas   nodeDatas;
+    MaterialDatas* materialdatas = new MaterialDatas();
+    NodeDatas*   nodeDatas = new NodeDatas();
     if (bundle->loadMeshDatas(meshdatas)
-        && bundle->loadMaterials(materialdatas)
-        && bundle->loadNodes(nodeDatas))
+        && bundle->loadMaterials(*materialdatas)
+        && bundle->loadNodes(*nodeDatas)
+        && initFrom(*nodeDatas, meshdatas, *materialdatas))
     {
-        return initFrom(nodeDatas, meshdatas, materialdatas);
+        //add to cache
+        auto data = new Sprite3DCache::Sprite3DData();
+        data->materialdatas = materialdatas;
+        data->nodedatas = nodeDatas;
+        data->meshes = _meshes;
+        Sprite3DCache::getInstance()->addSprite3DData(path, data);
+        return true;
     }
+    
+    delete materialdatas;
+    delete nodeDatas;
     
     return false;
 }
@@ -541,6 +574,69 @@ MeshSkin* Sprite3D::getSkin() const
             return it->getSkin();
     }
     return nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+Sprite3DCache* Sprite3DCache::_cacheInstance = nullptr;
+Sprite3DCache* Sprite3DCache::getInstance()
+{
+    if (_cacheInstance == nullptr)
+        _cacheInstance = new Sprite3DCache();
+    return _cacheInstance;
+}
+void Sprite3DCache::destroyInstance()
+{
+    if (_cacheInstance)
+    {
+        delete _cacheInstance;
+        _cacheInstance = nullptr;
+    }
+}
+
+Sprite3DCache::Sprite3DData* Sprite3DCache::getSpriteData(const std::string& key) const
+{
+    auto it = _spriteDatas.find(key);
+    if (it != _spriteDatas.end())
+        return it->second;
+    return nullptr;
+}
+
+bool Sprite3DCache::addSprite3DData(const std::string& key, Sprite3DCache::Sprite3DData* spritedata)
+{
+    auto it = _spriteDatas.find(key);
+    if (it == _spriteDatas.end())
+    {
+        _spriteDatas[key] = spritedata;
+        return true;
+    }
+    return false;
+}
+
+void Sprite3DCache::removeSprite3DData(const std::string& key)
+{
+    auto it = _spriteDatas.find(key);
+    if (it != _spriteDatas.end())
+    {
+        delete it->second;
+    }
+    _spriteDatas.erase(it);
+}
+
+void Sprite3DCache::removeAllSprite3DData()
+{
+    for (auto& it : _spriteDatas) {
+        delete it.second;
+    }
+    _spriteDatas.clear();
+}
+
+Sprite3DCache::Sprite3DCache()
+{
+    
+}
+Sprite3DCache::~Sprite3DCache()
+{
+    removeAllSprite3DData();
 }
 
 NS_CC_END

@@ -228,34 +228,6 @@ protected:
     Vector<Bone3D*> _rootBones;
 };
 
-/**
- * Skeleton3DData Cache
- */
-class Skeleton3DDataCache
-{
-public:
-    /**get & destroy*/
-    static Skeleton3DDataCache* getInstance();
-    static void destroyInstance();
-    
-    /**get mesh skin data from cache*/
-    const Skeleton3DData* getSkeletonData(const std::string& key) const;
-    
-    /**add skeleton data to cache*/
-    bool addSkeletonData(const std::string& key, const Skeleton3DData& skeletonData);
-    
-    /**remove all skeleton data*/
-    void removeAllSkeletonData();
-    
-CC_CONSTRUCTOR_ACCESS:
-    Skeleton3DDataCache();
-    ~Skeleton3DDataCache();
-    
-    static Skeleton3DDataCache* _cacheInstance; // instance
-    
-    std::unordered_map<std::string, Skeleton3DData> _skeletonDatas; //cached skeleton datas
-};
-
 NS_CC_END
 
 #endif // __CCSKELETON3D_H__
