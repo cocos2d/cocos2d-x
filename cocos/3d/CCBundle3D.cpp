@@ -77,7 +77,7 @@ static const char* MATERIALS = "materials";
 static const char* ANIMATIONS = "animations";
 static const char* TRANSFORM = "transform";
 static const char* OLDTRANSFORM = "tansform";
-static const char* ANIMATION = "animations";
+static const char* ANIMATION = "animation";
 
 static const char* MATERIALDATA_MATERIAL = "material";
 static const char* MATERIALDATA_MATERIALS = "materials";
@@ -1119,9 +1119,15 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
 
 bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
 {
-    if (!_jsonReader.HasMember(ANIMATION)) return false;
+    std::string anim = "";
+    if (_version == "1.2" || _version == "0.2")
+        anim = ANIMATION;
+    else
+        anim = ANIMATIONS;
 
-    const rapidjson::Value& animation_data_array =  _jsonReader[ANIMATION];
+    if (!_jsonReader.HasMember(anim.c_str())) return false;
+
+    const rapidjson::Value& animation_data_array =  _jsonReader[anim.c_str()];
     if (animation_data_array.Size()==0) return false;
 
     const rapidjson::Value& animation_data_array_val_0 = animation_data_array[(rapidjson::SizeType)0];
@@ -1957,6 +1963,10 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     else if (str == "VERTEX_ATTRIB_TEX_COORD")
     {
         return GLProgram::VERTEX_ATTRIB_TEX_COORD;
+    }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD1")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD1;
     }
     else if (str == "VERTEX_ATTRIB_NORMAL")
     {
