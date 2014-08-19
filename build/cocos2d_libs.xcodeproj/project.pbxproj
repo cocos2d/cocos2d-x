@@ -1027,7 +1027,18 @@
 		15415A4719A34D55004F1E71 /* UILayoutParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9FD18CF08D000240AA3 /* UILayoutParameter.h */; };
 		15415A4819A34D56004F1E71 /* UILayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 29CB8F4B1929D1BB00C841D6 /* UILayoutManager.h */; };
 		15415A4919A34D57004F1E71 /* CocosGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9EA18CF08D000240AA3 /* CocosGUI.h */; };
-		15415A4D19A35142004F1E71 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
+		15415A5819A390EE004F1E71 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A5719A390EE004F1E71 /* libwebsockets.a */; };
+		15415A5A19A393F7004F1E71 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A5919A393F7004F1E71 /* libpng.a */; };
+		15415A5C19A3940E004F1E71 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A5B19A3940E004F1E71 /* libjpeg.a */; };
+		15415A5E19A39420004F1E71 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A5D19A39420004F1E71 /* libtiff.a */; };
+		15415A6019A39430004F1E71 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A5F19A39430004F1E71 /* libwebp.a */; };
+		15415A6219A39441004F1E71 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6119A39441004F1E71 /* libfreetype.a */; };
+		15415A6419A39B18004F1E71 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6319A39B18004F1E71 /* libwebsockets.a */; };
+		15415A6619A39B3B004F1E71 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6519A39B3B004F1E71 /* libpng.a */; };
+		15415A6819A39B4C004F1E71 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6719A39B4C004F1E71 /* libjpeg.a */; };
+		15415A6A19A39B6F004F1E71 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6919A39B6E004F1E71 /* libtiff.a */; };
+		15415A6C19A39B81004F1E71 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6B19A39B81004F1E71 /* libwebp.a */; };
+		15415A6E19A39B93004F1E71 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15415A6D19A39B93004F1E71 /* libfreetype.a */; };
 		15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
@@ -1324,16 +1335,6 @@
 		1A570359180BD0B00088DEC7 /* unzip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570352180BD0B00088DEC7 /* unzip.cpp */; };
 		1A57035A180BD0B00088DEC7 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570353180BD0B00088DEC7 /* unzip.h */; };
 		1A57035B180BD0B00088DEC7 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570353180BD0B00088DEC7 /* unzip.h */; };
-		1A570361180BD1080088DEC7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570360180BD1080088DEC7 /* libpng.a */; };
-		1A570364180BD1120088DEC7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570363180BD1120088DEC7 /* libpng.a */; };
-		1A570378180BD1B40088DEC7 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570377180BD1B40088DEC7 /* libjpeg.a */; };
-		1A57037B180BD1C90088DEC7 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57037A180BD1C90088DEC7 /* libjpeg.a */; };
-		1A5703A1180BD22C0088DEC7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703A0180BD22C0088DEC7 /* libtiff.a */; };
-		1A5703A4180BD2350088DEC7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703A3180BD2350088DEC7 /* libtiff.a */; };
-		1A5703B8180BD2780088DEC7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703B7180BD2780088DEC7 /* libwebp.a */; };
-		1A5703BB180BD2800088DEC7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703BA180BD2800088DEC7 /* libwebp.a */; };
-		1A57052B180BD31F0088DEC7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052A180BD31F0088DEC7 /* libfreetype.a */; };
-		1A57052E180BD3280088DEC7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052D180BD3280088DEC7 /* libfreetype.a */; };
 		1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
 		1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
 		1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */; };
@@ -1883,6 +1884,18 @@
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		15162236199F9EEA006099B8 /* cocos3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos3d.h; sourceTree = "<group>"; };
+		15415A5719A390EE004F1E71 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/ios/libwebsockets.a; sourceTree = "<group>"; };
+		15415A5919A393F7004F1E71 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../external/png/prebuilt/ios/libpng.a; sourceTree = "<group>"; };
+		15415A5B19A3940E004F1E71 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../external/jpeg/prebuilt/ios/libjpeg.a; sourceTree = "<group>"; };
+		15415A5D19A39420004F1E71 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../external/tiff/prebuilt/ios/libtiff.a; sourceTree = "<group>"; };
+		15415A5F19A39430004F1E71 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../external/webp/prebuilt/ios/libwebp.a; sourceTree = "<group>"; };
+		15415A6119A39441004F1E71 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../external/freetype2/prebuilt/ios/libfreetype.a; sourceTree = "<group>"; };
+		15415A6319A39B18004F1E71 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
+		15415A6519A39B3B004F1E71 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../external/png/prebuilt/mac/libpng.a; sourceTree = "<group>"; };
+		15415A6719A39B4C004F1E71 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../external/jpeg/prebuilt/mac/libjpeg.a; sourceTree = "<group>"; };
+		15415A6919A39B6E004F1E71 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../external/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
+		15415A6B19A39B81004F1E71 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../external/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
+		15415A6D19A39B93004F1E71 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../external/freetype2/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
@@ -2885,7 +2898,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15415A4D19A35142004F1E71 /* libwebsockets.a in Frameworks */,
+				15415A6E19A39B93004F1E71 /* libfreetype.a in Frameworks */,
+				15415A6C19A39B81004F1E71 /* libwebp.a in Frameworks */,
+				15415A6A19A39B6F004F1E71 /* libtiff.a in Frameworks */,
+				15415A6819A39B4C004F1E71 /* libjpeg.a in Frameworks */,
+				15415A6619A39B3B004F1E71 /* libpng.a in Frameworks */,
+				15415A6419A39B18004F1E71 /* libwebsockets.a in Frameworks */,
 				B217704E1977ED9F009EE11B /* libsqlite3.dylib in Frameworks */,
 				B21770491977ED4C009EE11B /* libz.dylib in Frameworks */,
 				B21770471977ED34009EE11B /* QuartzCore.framework in Frameworks */,
@@ -2894,11 +2912,6 @@
 				B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */,
 				B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */,
 				1A570347180BD0850088DEC7 /* libglfw3.a in Frameworks */,
-				1A570361180BD1080088DEC7 /* libpng.a in Frameworks */,
-				1A57037B180BD1C90088DEC7 /* libjpeg.a in Frameworks */,
-				1A5703A1180BD22C0088DEC7 /* libtiff.a in Frameworks */,
-				1A5703B8180BD2780088DEC7 /* libwebp.a in Frameworks */,
-				1A57052B180BD31F0088DEC7 /* libfreetype.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2906,12 +2919,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15415A6219A39441004F1E71 /* libfreetype.a in Frameworks */,
+				15415A6019A39430004F1E71 /* libwebp.a in Frameworks */,
+				15415A5E19A39420004F1E71 /* libtiff.a in Frameworks */,
+				15415A5C19A3940E004F1E71 /* libjpeg.a in Frameworks */,
+				15415A5A19A393F7004F1E71 /* libpng.a in Frameworks */,
+				15415A5819A390EE004F1E71 /* libwebsockets.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
-				1A570364180BD1120088DEC7 /* libpng.a in Frameworks */,
-				1A570378180BD1B40088DEC7 /* libjpeg.a in Frameworks */,
-				1A5703A4180BD2350088DEC7 /* libtiff.a in Frameworks */,
-				1A5703BB180BD2800088DEC7 /* libwebp.a in Frameworks */,
-				1A57052E180BD3280088DEC7 /* libfreetype.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2977,6 +2991,18 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15415A6D19A39B93004F1E71 /* libfreetype.a */,
+				15415A6B19A39B81004F1E71 /* libwebp.a */,
+				15415A6919A39B6E004F1E71 /* libtiff.a */,
+				15415A6719A39B4C004F1E71 /* libjpeg.a */,
+				15415A6519A39B3B004F1E71 /* libpng.a */,
+				15415A6319A39B18004F1E71 /* libwebsockets.a */,
+				15415A6119A39441004F1E71 /* libfreetype.a */,
+				15415A5F19A39430004F1E71 /* libwebp.a */,
+				15415A5D19A39420004F1E71 /* libtiff.a */,
+				15415A5B19A3940E004F1E71 /* libjpeg.a */,
+				15415A5919A393F7004F1E71 /* libpng.a */,
+				15415A5719A390EE004F1E71 /* libwebsockets.a */,
 				B217704C1977ED8B009EE11B /* libsqlite3.dylib */,
 				B217704A1977ED55009EE11B /* libcurl.dylib */,
 				B21770481977ED4C009EE11B /* libz.dylib */,
@@ -6958,8 +6984,6 @@
 					"\"$(SRCROOT)/../external/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
-					"$(SRCROOT)/../external/websockets/prebuilt/mac",
-					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/websockets/prebuilt/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
@@ -6994,8 +7018,6 @@
 					"\"$(SRCROOT)/../external/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
-					"$(SRCROOT)/../external/websockets/prebuilt/mac",
-					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/websockets/prebuilt/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac";
