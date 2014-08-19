@@ -5,10 +5,10 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
-	//CL(DirectionalLightTestDemo),
-	//CL(PointLightTestDemo),
-	//CL(SpotLightTestDemo)
-	CL(LightTestDemo)
+    //CL(DirectionalLightTestDemo),
+    //CL(PointLightTestDemo),
+    //CL(SpotLightTestDemo)
+    CL(LightTestDemo)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -40,45 +40,45 @@ static Layer* restartSpriteTestAction()
 }
 
 LightTestDemo::LightTestDemo()
-	: _directionalLight(nullptr)
+    : _directionalLight(nullptr)
 {
-	addSprite();
-	addLights();
-	scheduleUpdate();
+    addSprite();
+    addLights();
+    scheduleUpdate();
 
-	auto s = Director::getInstance()->getWinSize();
-	auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1.0f, 1000.0f);
-	camera->setCameraFlag(CameraFlag::USER1);
-	camera->setPosition3D(Vec3(0.0, 100, 100));
-	camera->lookAt(Vec3(0.0, 0.0, 0.0), Vec3(0.0, 1.0, 0.0));
-	addChild(camera);
+    auto s = Director::getInstance()->getWinSize();
+    auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1.0f, 1000.0f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.0, 100, 100));
+    camera->lookAt(Vec3(0.0, 0.0, 0.0), Vec3(0.0, 1.0, 0.0));
+    addChild(camera);
 
-	TTFConfig ttfConfig("fonts/arial.ttf", 10);
-	auto label1 = Label::createWithTTF(ttfConfig,"Directional Light");
-	auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::DIRECTIONAL));
-	auto label2 = Label::createWithTTF(ttfConfig,"Point Light");
-	auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::POINT));
-	auto label3 = Label::createWithTTF(ttfConfig,"Spot Light");
-	auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::SPOT));
-	auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
-	menu->setPosition(Vec2::ZERO);
-	menuItem1->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y-50) );
-	menuItem2->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y -70));
-	menuItem3->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y -90));
-	addChild(menu);
+    TTFConfig ttfConfig("fonts/arial.ttf", 10);
+    auto label1 = Label::createWithTTF(ttfConfig,"Directional Light");
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::DIRECTIONAL));
+    auto label2 = Label::createWithTTF(ttfConfig,"Point Light");
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::POINT));
+    auto label3 = Label::createWithTTF(ttfConfig,"Spot Light");
+    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::SPOT));
+    auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y-50) );
+    menuItem2->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y -70));
+    menuItem3->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y -90));
+    addChild(menu);
 }
 
 
 LightTestDemo::~LightTestDemo()
 {
-	if (_directionalLight)
-		_directionalLight->release();
+    if (_directionalLight)
+        _directionalLight->release();
 
-	if (_pointLight)
-		_pointLight->release();
+    if (_pointLight)
+        _pointLight->release();
 
-	if (_spotLight)
-		_spotLight->release();
+    if (_spotLight)
+        _spotLight->release();
 }
 
 std::string LightTestDemo::title() const
@@ -127,121 +127,122 @@ void LightTestDemo::onExit()
 
 void LightTestDemo::addSprite()
 {
-	auto s = Director::getInstance()->getWinSize();
+    auto s = Director::getInstance()->getWinSize();
 
-	{
-		std::string fileName = "Sprite3DTest/plane.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setRotation3D(Vec3(-90.0, 0.0, 0.0));
-		sprite->setScale(5.0f);
-		sprite->setPosition(Vec2(0.0, -50.0));
-		addChild(sprite);
-		sprite->setCameraMask(2);
-	}
+    {
+        std::string fileName = "Sprite3DTest/plane.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setRotation3D(Vec3(-90.0, 0.0, 0.0));
+        sprite->setScale(5.0f);
+        sprite->setPosition(Vec2(0.0, -50.0));
+        addChild(sprite);
+        sprite->setCameraMask(2);
+    }
 
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		//sprite->setPosition(Vec2(s.width/2, s.height/2));
-		addChild(sprite);
-		sprite->setCameraMask(2);
-	}
+    {
+        std::string fileName = "Sprite3DTest/sphere.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        //sprite->setPosition(Vec2(s.width/2, s.height/2));
+        addChild(sprite);
+        sprite->setCameraMask(2);
+    }
 
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setScale(2.0f);
-		sprite->setPosition(Vec2(50.0, 0.0));
-		addChild(sprite);
-		sprite->setCameraMask(2);
-	}
+    {
+        std::string fileName = "Sprite3DTest/sphere.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setScale(2.0f);
+        sprite->setPosition(Vec2(50.0, 0.0));
+        addChild(sprite);
+        sprite->setCameraMask(2);
+    }
 
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setScale(0.5f);
-		sprite->setPosition(Vec2(-50.0, 0.0));
-		addChild(sprite);
-		sprite->setCameraMask(2);
-	}
+    {
+        std::string fileName = "Sprite3DTest/sphere.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setScale(0.5f);
+        sprite->setPosition(Vec2(-50.0, 0.0));
+        addChild(sprite);
+        sprite->setCameraMask(2);
+    }
 
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setScale(0.5f);
-		sprite->setPosition(Vec2(-30.0, 10.0));
-		addChild(sprite);
-		sprite->setCameraMask(2);
-	}
+    {
+        std::string fileName = "Sprite3DTest/sphere.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setScale(0.5f);
+        sprite->setPosition(Vec2(-30.0, 10.0));
+        addChild(sprite);
+        sprite->setCameraMask(2);
+    }
 }
 
 void LightTestDemo::addLights()
 {
-	auto s = Director::getInstance()->getWinSize();
-	_directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, 0.0f, 0.0f), Color3B(200, 200, 200));
-	_directionalLight->retain();
-	addChild(_directionalLight);
+    auto s = Director::getInstance()->getWinSize();
+    _directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, 0.0f, 0.0f), Color3B(200, 200, 200));
+    _directionalLight->retain();
+    addChild(_directionalLight);
 
-	_pointLight = Light3D::CreatePointLight(Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 10000.0f);
-	_pointLight->retain();
-	_pointLight->setEnabled(false);
-	addChild(_pointLight);
+    _pointLight = Light3D::CreatePointLight(Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 10000.0f);
+    _pointLight->retain();
+    _pointLight->setEnabled(false);
+    addChild(_pointLight);
 
-	_spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, 0.0f, 0.0f), Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
-	_spotLight->retain();
-	_spotLight->setEnabled(false);
-	addChild(_spotLight);
+    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, 0.0f, 0.0f), Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
+    _spotLight->retain();
+    _spotLight->setEnabled(false);
+    addChild(_spotLight);
 }
 
 void LightTestDemo::update( float delta )
 {
-	static float angleDelta = 0.0;
-	_directionalLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
+    static float angleDelta = 0.0;
+    _directionalLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
 
-	_pointLight->setPositionX(100.0f * cosf(angleDelta));
-	_pointLight->setPositionY(100.0f);
-	_pointLight->setPositionZ(100.0f * sinf(angleDelta));
+    _pointLight->setPositionX(100.0f * cosf(angleDelta));
+    _pointLight->setPositionY(100.0f);
+    _pointLight->setPositionZ(100.0f * sinf(angleDelta));
 
-	_spotLight->setPositionX(100.0f * cosf(angleDelta));
-	_spotLight->setPositionY(100.0f);
-	_spotLight->setPositionZ(100.0f * sinf(angleDelta));
-	_spotLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
+    _spotLight->setPositionX(100.0f * cosf(angleDelta));
+    _spotLight->setPositionY(100.0f);
+    _spotLight->setPositionZ(100.0f * sinf(angleDelta));
+    _spotLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
 
-	angleDelta += delta;
-	BaseTest::update(delta);
+    angleDelta += delta;
+
+    BaseTest::update(delta);
 }
 
 void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
 {
-	switch (lightType)
-	{
-	case Light3D::DIRECTIONAL:
-		{
-			_directionalLight->setEnabled(true);
-			_pointLight->setEnabled(false);
-			_spotLight->setEnabled(false);
-		}
-		break;
+    switch (lightType)
+    {
+    case Light3D::DIRECTIONAL:
+        {
+            _directionalLight->setEnabled(true);
+            _pointLight->setEnabled(false);
+            _spotLight->setEnabled(false);
+        }
+        break;
 
-	case Light3D::POINT:
-		{
-			_directionalLight->setEnabled(false);
-			_pointLight->setEnabled(true);
-			_spotLight->setEnabled(false);
-		}
-		break;
+    case Light3D::POINT:
+        {
+            _directionalLight->setEnabled(false);
+            _pointLight->setEnabled(true);
+            _spotLight->setEnabled(false);
+        }
+        break;
 
-	case Light3D::SPOT:
-		{
-			_directionalLight->setEnabled(false);
-			_pointLight->setEnabled(false);
-			_spotLight->setEnabled(true);
-		}
-		break;
+    case Light3D::SPOT:
+        {
+            _directionalLight->setEnabled(false);
+            _pointLight->setEnabled(false);
+            _spotLight->setEnabled(true);
+        }
+        break;
 
-	default:
-		break;
-	}
+    default:
+        break;
+    }
 }
 
 void LightTestScene::runThisTest()
@@ -255,172 +256,4 @@ void LightTestScene::runThisTest()
 LightTestScene::LightTestScene()
 {
     setAmbientColor(Color4F(0.2f, 0.2f, 0.2f, 1.0f));
-}
-
-PointLightTestDemo::PointLightTestDemo()
-    : _pointLight(nullptr)
-{
-    addSprite();
-    addLights();
-    scheduleUpdate();
-}
-
-PointLightTestDemo::~PointLightTestDemo()
-{
-    if (_pointLight)
-        _pointLight->release();
-}
-
-void PointLightTestDemo::addSprite()
-{
-    auto s = Director::getInstance()->getWinSize();
-    std::string fileName = "Sprite3DTest/sphere.c3b";
-    auto sprite = Sprite3D::create(fileName);
-    sprite->setScale(5.0f);
-    sprite->setPosition(Vec2(s.width/2, s.height/2));
-    addChild(sprite);
-}
-
-void PointLightTestDemo::addLights()
-{
-    auto s = Director::getInstance()->getWinSize();
-    _pointLight = Light3D::CreatePointLight(Vec3(s.width/2, s.height/2, 0.0), Color3B(128, 128, 128), 10000.0f);
-    _pointLight->retain();
-
-    addChild(_pointLight);
-}
-
-void PointLightTestDemo::update( float delta )
-{
-    auto s = Director::getInstance()->getWinSize();
-    static float angleDelta = 0.0;
-    _pointLight->setPositionX(s.width / 2 + s.width / 4 * cosf(angleDelta));
-    _pointLight->setPositionY(s.height / 2);
-    _pointLight->setPositionZ(s.width / 4 * sinf(angleDelta));
-
-    angleDelta += delta;
-    BaseTest::update(delta);
-}
-
-std::string PointLightTestDemo::title() const
-{
-    return "Point Light";
-}
-
-DirectionalLightTestDemo::DirectionalLightTestDemo()
-    : _directionalLight(nullptr)
-{
-    addSprite();
-    addLights();
-    scheduleUpdate();
-}
-
-DirectionalLightTestDemo::~DirectionalLightTestDemo()
-{
-    if (_directionalLight)
-        _directionalLight->release();
-}
-
-std::string DirectionalLightTestDemo::title() const
-{
-    return "Directional Light";
-}
-
-void DirectionalLightTestDemo::update( float delta )
-{
-    static float angleDelta = 0.0;
-    _directionalLight->setDirection(-Vec3(cosf(angleDelta), 0.0f, sinf(angleDelta)));
-
-    angleDelta += delta;
-    BaseTest::update(delta);
-}
-
-void DirectionalLightTestDemo::addSprite()
-{
-    auto s = Director::getInstance()->getWinSize();
-
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setScale(5.0f);
-		sprite->setPosition(Vec2(s.width/2, s.height/2));
-		addChild(sprite);
-	}
-
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setScale(2.0f);
-		sprite->setPosition(Vec2(s.width, s.height/2));
-		addChild(sprite);
-	}
-
-	{
-		std::string fileName = "Sprite3DTest/sphere.c3b";
-		auto sprite = Sprite3D::create(fileName);
-		sprite->setRotation3D(Vec3(0,180,0));
-		sprite->setPosition(Vec2(0.0, s.height/2));
-		addChild(sprite);
-	}
-}
-
-void DirectionalLightTestDemo::addLights()
-{
-    auto s = Director::getInstance()->getWinSize();
-    _directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, 0.0f, 0.0f), Color3B(128, 128, 128));
-    _directionalLight->retain();
-
-    addChild(_directionalLight);
-
-}
-
-std::string SpotLightTestDemo::title() const
-{
-    return "Spot Light";
-}
-
-void SpotLightTestDemo::addSprite()
-{
-    auto s = Director::getInstance()->getWinSize();
-    std::string fileName = "Sprite3DTest/sphere.c3b";
-    auto sprite = Sprite3D::create(fileName);
-    sprite->setScale(5.0f);
-    sprite->setPosition(Vec2(s.width/2, s.height/2));
-    addChild(sprite);
-}
-
-void SpotLightTestDemo::addLights()
-{
-    auto s = Director::getInstance()->getWinSize();
-    _spotLight = Light3D::CreateSpotLight(Vec3(0.0f, 0.0f, -1.0f), Vec3(s.width/2, s.height/2, 0.0), Color3B(128, 128, 128), 0.0f, 0.4f, 10000.0f);
-    _spotLight->retain();
-
-    addChild(_spotLight);
-}
-
-SpotLightTestDemo::SpotLightTestDemo()
-    : _spotLight(nullptr)
-{
-    addSprite();
-    addLights();
-    scheduleUpdate();
-}
-
-SpotLightTestDemo::~SpotLightTestDemo()
-{
-    if (_spotLight)
-        _spotLight->release();
-}
-
-void SpotLightTestDemo::update( float delta )
-{
-    auto s = Director::getInstance()->getWinSize();
-    static float angleDelta = 0.0;
-    _spotLight->setDirection(-Vec3(cosf(angleDelta), 0.0f, sinf(angleDelta)));
-    _spotLight->setPositionX(s.width / 2 + s.width / 4 * cosf(angleDelta));
-    _spotLight->setPositionY(s.height / 2);
-    _spotLight->setPositionZ(s.width / 4 * sinf(angleDelta));
-
-    angleDelta += delta;
-    BaseTest::update(delta);
 }

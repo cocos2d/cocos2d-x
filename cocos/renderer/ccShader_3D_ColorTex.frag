@@ -58,28 +58,28 @@ void main(void)
 
 \n#if CC_MAX_DIRECTIONAL_LIGHT_NUM\n
 
-	for (int i = 0; i < CC_EnabledDirLightNum; ++i)
-	{
-		DirectionalLight(i, normal, intensity);
-	}
+    for (int i = 0; i < CC_EnabledDirLightNum; ++i)
+    {
+        DirectionalLight(i, normal, intensity);
+    }
 
 \n#endif\n
 
 \n#if CC_MAX_POINT_LIGHT_NUM\n
 
-	for (int i = 0; i < CC_EnabledPointLightNum; ++i)
-	{
-		PointLight(i, ePosition, normal, intensity);
-	}
+    for (int i = 0; i < CC_EnabledPointLightNum; ++i)
+    {
+        PointLight(i, ePosition, normal, intensity);
+    }
 
 \n#endif\n
 
 \n#if CC_MAX_SPOT_LIGHT_NUM\n
 
-	for (int i = 0; i < CC_EnabledSpotLightNum; ++i)
-	{
-		SpotLight(i, ePosition, normal, intensity);
-	}
+    for (int i = 0; i < CC_EnabledSpotLightNum; ++i)
+    {
+        SpotLight(i, ePosition, normal, intensity);
+    }
 
 \n#endif\n
 

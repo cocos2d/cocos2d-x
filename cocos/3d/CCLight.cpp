@@ -3,11 +3,11 @@
 
 NS_CC_BEGIN
 
-Light3D::Light3D()
-: _isEnabled(true) 
-, _range(0.0f)
-, _innerAngle(0.0f)
-, _outerAngle(0.0f)
+    Light3D::Light3D()
+    : _isEnabled(true) 
+    , _range(0.0f)
+    , _innerAngle(0.0f)
+    , _outerAngle(0.0f)
 {
 }
 
@@ -18,13 +18,13 @@ Light3D::~Light3D()
 
 void Light3D::setLightType( LightType lightType )
 {
-	_lightType = lightType;
+    _lightType = lightType;
 }
 
 
 Light3D::LightType Light3D::getLightType()
 {
-	return _lightType;
+    return _lightType;
 }
 
 void Light3D::setRange( float range )
@@ -93,47 +93,47 @@ void Light3D::onExit()
 
 Light3D* Light3D::CreateDirectionalLight( const Vec3 &direction, const Color3B &color )
 {
-	Light3D *light = new Light3D;
-	light->setLightType(DIRECTIONAL);
-	light->setDirection(direction);
-	light->setColor(color);
-	light->autorelease();
-	return light;
+    Light3D *light = new Light3D;
+    light->setLightType(DIRECTIONAL);
+    light->setDirection(direction);
+    light->setColor(color);
+    light->autorelease();
+    return light;
 }
 
 Light3D* Light3D::CreatePointLight( const Vec3 &position, const Color3B &color, float range )
 {
-	Light3D *light = new Light3D;
-	light->setLightType(POINT);
-	light->setPosition3D(position);
-	light->setColor(color);
-	light->setRange(range);
-	light->autorelease();
-	return light;
+    Light3D *light = new Light3D;
+    light->setLightType(POINT);
+    light->setPosition3D(position);
+    light->setColor(color);
+    light->setRange(range);
+    light->autorelease();
+    return light;
 }
 
 Light3D* Light3D::CreateSpotLight( const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range )
 {
-	Light3D *light = new Light3D;
-	light->setLightType(SPOT);
-	light->setDirection(direction);
-	light->setPosition3D(position);
-	light->setColor(color);
-	light->setInnerAngle(innerAngle);
-	light->setOuterAngle(outerAngle);
-	light->setRange(range);
-	light->autorelease();
-	return light;
+    Light3D *light = new Light3D;
+    light->setLightType(SPOT);
+    light->setDirection(direction);
+    light->setPosition3D(position);
+    light->setColor(color);
+    light->setInnerAngle(innerAngle);
+    light->setOuterAngle(outerAngle);
+    light->setRange(range);
+    light->autorelease();
+    return light;
 }
 
-void Light3D::setEnabled( bool isEnabled )
+void Light3D::setEnabled( bool isON )
 {
-	_isEnabled = isEnabled;
+    _isEnabled = isON;
 }
 
 bool Light3D::getEnabled()
 {
-	return _isEnabled;
+    return _isEnabled;
 }
 
 NS_CC_END

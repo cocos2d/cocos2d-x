@@ -97,8 +97,8 @@ public:
     enum
     {
         UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM,
-		UNIFORM_ENABLED_POINT_LIGHT_NUM,
-		UNIFORM_ENABLED_SPOT_LIGHT_NUM,
+        UNIFORM_ENABLED_POINT_LIGHT_NUM,
+        UNIFORM_ENABLED_SPOT_LIGHT_NUM,
         UNIFORM_AMBIENT_COLOR,
         UNIFORM_P_MATRIX,
         UNIFORM_MV_MATRIX,
@@ -141,8 +141,8 @@ public:
     
     // uniform names
     static const char* UNIFORM_NAME_ENABLED_DIRECTIONAL_LIGHT_NUM;
-	static const char* UNIFORM_NAME_ENABLED_POINT_LIGHT_NUM;
-	static const char* UNIFORM_NAME_ENABLED_SPOT_LIGHT_NUM;
+    static const char* UNIFORM_NAME_ENABLED_POINT_LIGHT_NUM;
+    static const char* UNIFORM_NAME_ENABLED_SPOT_LIGHT_NUM;
     static const char* UNIFORM_NAME_AMBIENT_COLOR;
     static const char* UNIFORM_NAME_P_MATRIX;
     static const char* UNIFORM_NAME_MV_MATRIX;

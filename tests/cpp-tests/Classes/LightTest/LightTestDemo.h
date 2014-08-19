@@ -32,7 +32,7 @@
 class LightTestDemo : public BaseTest
 {
 public:
-	CREATE_FUNC(LightTestDemo);
+    CREATE_FUNC(LightTestDemo);
     LightTestDemo();
     virtual ~LightTestDemo();
 
@@ -48,30 +48,7 @@ public:
 
     virtual void update(float delta);
 
-	void SwitchLight(Ref* sender, Light3D::LightType lightType);
-
-private:
-
-	void addSprite();
-	void addLights();
-
-private:
-
-	Light3D *_directionalLight;
-	Light3D *_pointLight;
-	Light3D *_spotLight;
-};
-
-class PointLightTestDemo : public LightTestDemo
-{
-public:
-    CREATE_FUNC(PointLightTestDemo);
-    PointLightTestDemo();
-    virtual ~PointLightTestDemo();
-
-    virtual std::string title() const;
-
-    virtual void update(float delta);
+    void SwitchLight(Ref* sender, Light3D::LightType lightType);
 
 private:
 
@@ -79,49 +56,11 @@ private:
     void addLights();
 
 private:
-    Light3D *_pointLight;
-};
 
-class DirectionalLightTestDemo : public LightTestDemo
-{
-public:
-    CREATE_FUNC(DirectionalLightTestDemo);
-    DirectionalLightTestDemo();
-    virtual ~DirectionalLightTestDemo();
-
-    virtual std::string title() const;
-
-    virtual void update(float delta);
-
-private:
-
-    void addSprite();
-    void addLights();
-
-private:
     Light3D *_directionalLight;
-};
-
-class SpotLightTestDemo : public LightTestDemo
-{
-public:
-    CREATE_FUNC(SpotLightTestDemo);
-    SpotLightTestDemo();
-    virtual ~SpotLightTestDemo();
-
-    virtual std::string title() const;
-
-    virtual void update(float delta);
-
-private:
-
-    void addSprite();
-    void addLights();
-
-private:
+    Light3D *_pointLight;
     Light3D *_spotLight;
 };
-
 
 class LightTestScene : public TestScene
 {

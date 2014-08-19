@@ -44,8 +44,8 @@ public:
      * Create light according to type.
      */
     static Light3D* CreateDirectionalLight(const Vec3 &direction, const Color3B &color);
-	static Light3D* CreatePointLight(const Vec3 &position, const Color3B &color, float range);
-	static Light3D* CreateSpotLight(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
+    static Light3D* CreatePointLight(const Vec3 &position, const Color3B &color, float range);
+    static Light3D* CreateSpotLight(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
 
     //override
     virtual void onEnter() override;
@@ -56,10 +56,10 @@ public:
      */
     LightType getLightType();
 
-	/**
+    /**
      * Sets Light Enabled.
-	 */
-    void setEnabled(bool isEnabled);
+     */
+    void setEnabled(bool isON);
 
     /**
      * Gets Light Enabled.
@@ -130,7 +130,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-	/**
+    /**
      * Sets light type.
      */
     void setLightType(LightType lightType);
@@ -139,7 +139,7 @@ protected:
 
     LightType _lightType;
     Vec3 _dir;
-	bool _isEnabled;
+    bool _isEnabled;
     float _range;
     float _innerAngle;
     float _outerAngle;
