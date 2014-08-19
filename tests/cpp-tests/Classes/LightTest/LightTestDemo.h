@@ -27,10 +27,12 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "3d/CCLight.h"
 
 class LightTestDemo : public BaseTest
 {
 public:
+	CREATE_FUNC(LightTestDemo);
     LightTestDemo();
     virtual ~LightTestDemo();
 
@@ -43,6 +45,21 @@ public:
 
     virtual void onEnter() override;
     virtual void onExit() override;
+
+    virtual void update(float delta);
+
+	void SwitchLight(Ref* sender, Light3D::LightType lightType);
+
+private:
+
+	void addSprite();
+	void addLights();
+
+private:
+
+	Light3D *_directionalLight;
+	Light3D *_pointLight;
+	Light3D *_spotLight;
 };
 
 class PointLightTestDemo : public LightTestDemo

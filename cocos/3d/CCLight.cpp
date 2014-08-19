@@ -4,7 +4,8 @@
 NS_CC_BEGIN
 
 Light3D::Light3D()
-:  _range(0.0f)
+: _isEnabled(true) 
+, _range(0.0f)
 , _innerAngle(0.0f)
 , _outerAngle(0.0f)
 {
@@ -123,6 +124,16 @@ Light3D* Light3D::CreateSpotLight( const Vec3 &direction, const Vec3 &position, 
 	light->setRange(range);
 	light->autorelease();
 	return light;
+}
+
+void Light3D::setEnabled( bool isEnabled )
+{
+	_isEnabled = isEnabled;
+}
+
+bool Light3D::getEnabled()
+{
+	return _isEnabled;
 }
 
 NS_CC_END

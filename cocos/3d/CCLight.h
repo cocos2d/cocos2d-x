@@ -56,6 +56,17 @@ public:
      */
     LightType getLightType();
 
+	/**
+     * Sets Light Enabled.
+	 */
+    void setEnabled(bool isEnabled);
+
+    /**
+     * Gets Light Enabled.
+     */
+    bool getEnabled();
+
+
     /**
      * Sets the range of point or spot light.
      *
@@ -128,6 +139,7 @@ protected:
 
     LightType _lightType;
     Vec3 _dir;
+	bool _isEnabled;
     float _range;
     float _innerAngle;
     float _outerAngle;
