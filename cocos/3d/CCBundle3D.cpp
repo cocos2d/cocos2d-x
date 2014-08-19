@@ -111,7 +111,7 @@ NS_CC_BEGIN
 
     // set origin matrices
     std::string parent_name = val[ID].GetString();
-    int parent_name_index = skinData->getSkinBoneNameIndex(parent_name);
+    unsigned int parent_name_index = skinData->getSkinBoneNameIndex(parent_name);
     if (parent_name_index < 0)
     {
         skinData->addNodeBoneNames(parent_name);
@@ -424,26 +424,30 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
     for(int i = 0; i < meshSize ; i++ )
     {
         MeshData*   meshData = new MeshData();
+         unsigned int attribSize=0;
         // read mesh data
-        if (_binaryReader.read(&meshData->attribCount, 4, 1) != 1 || meshData->attribCount < 1)
+        if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
         {
             CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
             return false;
         }
+        meshData->attribCount = attribSize;
         meshData->attribs.resize(meshData->attribCount);
-        for (ssize_t i = 0; i < meshData->attribCount; i++)
+        for (ssize_t j = 0; j < meshData->attribCount; j++)
         {
-            unsigned int vUsage, vSize;
-            if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
+            std::string attribute="";
+            unsigned int vSize;
+            if (_binaryReader.read(&vSize, 4, 1) != 1)
             {
                 CCLOGINFO("Failed to read meshdata: usage or size '%s'.", _path.c_str());
                 return false;
             }
-
-            meshData->attribs[i].size = vSize;
-            meshData->attribs[i].attribSizeBytes = meshData->attribs[i].size * 4;
-            meshData->attribs[i].type = GL_FLOAT;
-            meshData->attribs[i].vertexAttrib = vUsage;
+            std::string type = _binaryReader.readString();
+            attribute=_binaryReader.readString();
+            meshData->attribs[j].size = vSize;
+            meshData->attribs[j].attribSizeBytes = meshData->attribs[j].size * 4;
+            meshData->attribs[j].type =  parseGLType(type);
+            meshData->attribs[j].vertexAttrib = parseGLProgramAttribute(attribute);
         }
         unsigned int vertexSizeInFloat = 0;
         // Read vertex data
@@ -464,7 +468,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
         unsigned int meshPartCount = 1;
         _binaryReader.read(&meshPartCount, 4, 1);
 
-        for (unsigned int i = 0; i < meshPartCount; ++i)
+        for (unsigned int k = 0; k < meshPartCount; ++k)
         {
             std::vector<unsigned short>      indexArray;
             std:: string meshPartid = _binaryReader.readString();
@@ -504,7 +508,20 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
+    enum
+    {
+        VERTEX_ATTRIB_POSITION,
+        VERTEX_ATTRIB_COLOR,
+        VERTEX_ATTRIB_TEX_COORD,
+        VERTEX_ATTRIB_NORMAL,
+        VERTEX_ATTRIB_BLEND_WEIGHT,
+        VERTEX_ATTRIB_BLEND_INDEX,
 
+        VERTEX_ATTRIB_MAX,
+
+        // backward compatibility
+        VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
+    };
     for (ssize_t i = 0; i < attribSize; i++)
     {
         unsigned int vUsage, vSize;
@@ -518,6 +535,26 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         meshVertexAttribute.size = vSize;
         meshVertexAttribute.attribSizeBytes = vSize * 4;
         meshVertexAttribute.type = GL_FLOAT;
+        if(vUsage == VERTEX_ATTRIB_NORMAL)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
+        }
+        else if(vUsage == VERTEX_ATTRIB_BLEND_WEIGHT)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+        }
+        else if(vUsage == VERTEX_ATTRIB_BLEND_INDEX)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+        }
+        else if(vUsage == VERTEX_ATTRIB_POSITION)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_POSITION;
+        }
+        else if(vUsage == VERTEX_ATTRIB_TEX_COORD)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_TEX_COORD;
+        }
         meshVertexAttribute.vertexAttrib = vUsage;
 
         meshdata->attribs.push_back(meshVertexAttribute);
@@ -579,7 +616,20 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
+    enum
+    {
+        VERTEX_ATTRIB_POSITION,
+        VERTEX_ATTRIB_COLOR,
+        VERTEX_ATTRIB_TEX_COORD,
+        VERTEX_ATTRIB_NORMAL,
+        VERTEX_ATTRIB_BLEND_WEIGHT,
+        VERTEX_ATTRIB_BLEND_INDEX,
 
+        VERTEX_ATTRIB_MAX,
+
+        // backward compatibility
+        VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
+    };
     for (ssize_t i = 0; i < attribSize; i++)
     {
         unsigned int vUsage, vSize;
@@ -593,6 +643,26 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         meshVertexAttribute.size = vSize;
         meshVertexAttribute.attribSizeBytes = vSize * 4;
         meshVertexAttribute.type = GL_FLOAT;
+        if(vUsage == VERTEX_ATTRIB_NORMAL)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
+        }
+        else if(vUsage == VERTEX_ATTRIB_BLEND_WEIGHT)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+        }
+        else if(vUsage == VERTEX_ATTRIB_BLEND_INDEX)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+        }
+        else if(vUsage == VERTEX_ATTRIB_POSITION)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_POSITION;
+        }
+        else if(vUsage == VERTEX_ATTRIB_TEX_COORD)
+        {
+            vUsage= GLProgram::VERTEX_ATTRIB_TEX_COORD;
+        }
         meshVertexAttribute.vertexAttrib = vUsage;
 
         meshdata->attribs.push_back(meshVertexAttribute);
@@ -802,7 +872,7 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
 
         unsigned int textruenum = 1;
         _binaryReader.read(&textruenum, 4, 1);
-        for(int i = 0; i < textruenum ; i++ )
+        for(int j = 0; j < textruenum ; j++ )
         {
             NTextureData  textureData;
             textureData.id = _binaryReader.readString();
