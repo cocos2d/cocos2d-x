@@ -41,6 +41,8 @@ static Layer* restartSpriteTestAction()
 
 LightTestDemo::LightTestDemo()
     : _directionalLight(nullptr)
+	, _pointLight(nullptr)
+	, _spotLight(nullptr)
 {
     addSprite();
     addLights();
@@ -177,17 +179,17 @@ void LightTestDemo::addSprite()
 
 void LightTestDemo::addLights()
 {
-    auto s = Director::getInstance()->getWinSize();
-    _directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, 0.0f, 0.0f), Color3B(200, 200, 200));
-    _directionalLight->retain();
-    addChild(_directionalLight);
+	auto s = Director::getInstance()->getWinSize();
+	_directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, 0.0f, 0.0f), Color3B(200, 200, 200));
+	_directionalLight->retain();
+	addChild(_directionalLight);
 
-    _pointLight = Light3D::CreatePointLight(Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 10000.0f);
-    _pointLight->retain();
-    _pointLight->setEnabled(false);
-    addChild(_pointLight);
+	_pointLight = Light3D::CreatePointLight(Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 1000.0f);
+	_pointLight->retain();
+	_pointLight->setEnabled(false);
+	addChild(_pointLight);
 
-    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, 0.0f, 0.0f), Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
+    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, 0.0f, 0.0f), Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 0.0, 0.5, 1000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);
@@ -196,16 +198,23 @@ void LightTestDemo::addLights()
 void LightTestDemo::update( float delta )
 {
     static float angleDelta = 0.0;
-    _directionalLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
+	if (_directionalLight)
+		_directionalLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
 
-    _pointLight->setPositionX(100.0f * cosf(angleDelta));
-    _pointLight->setPositionY(100.0f);
-    _pointLight->setPositionZ(100.0f * sinf(angleDelta));
+	if (_pointLight)
+	{
+		_pointLight->setPositionX(100.0f * cosf(angleDelta));
+		_pointLight->setPositionY(100.0f);
+		_pointLight->setPositionZ(100.0f * sinf(angleDelta));
+	}
 
-    _spotLight->setPositionX(100.0f * cosf(angleDelta));
-    _spotLight->setPositionY(100.0f);
-    _spotLight->setPositionZ(100.0f * sinf(angleDelta));
-    _spotLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
+	if (_spotLight)
+	{
+		_spotLight->setPositionX(100.0f * cosf(angleDelta));
+		_spotLight->setPositionY(100.0f);
+		_spotLight->setPositionZ(100.0f * sinf(angleDelta));
+		_spotLight->setDirection(-Vec3(cosf(angleDelta), 1.0f, sinf(angleDelta)));
+	}
 
     angleDelta += delta;
 
@@ -218,25 +227,34 @@ void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
     {
     case Light3D::DIRECTIONAL:
         {
-            _directionalLight->setEnabled(true);
-            _pointLight->setEnabled(false);
-            _spotLight->setEnabled(false);
+			if (_directionalLight)
+				_directionalLight->setEnabled(true);
+			if (_pointLight)
+				_pointLight->setEnabled(false);
+			if (_spotLight)
+				_spotLight->setEnabled(false);
         }
         break;
 
     case Light3D::POINT:
         {
-            _directionalLight->setEnabled(false);
-            _pointLight->setEnabled(true);
-            _spotLight->setEnabled(false);
+			if (_directionalLight)
+				_directionalLight->setEnabled(false);
+			if (_pointLight)
+				_pointLight->setEnabled(true);
+			if (_spotLight)
+				_spotLight->setEnabled(false);
         }
         break;
 
     case Light3D::SPOT:
         {
-            _directionalLight->setEnabled(false);
-            _pointLight->setEnabled(false);
-            _spotLight->setEnabled(true);
+			if (_directionalLight)
+				_directionalLight->setEnabled(false);
+			if (_pointLight)
+				_pointLight->setEnabled(false);
+			if (_spotLight)
+				_spotLight->setEnabled(true);
         }
         break;
 

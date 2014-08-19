@@ -1005,7 +1005,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                             sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "position");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z);
                             sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "range");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getRange());
+                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getRange());
                             ++enabledPointLightNum;
                         }
                         else
@@ -1021,11 +1021,11 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "direction");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "innerAngle");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getInnerAngle());
+                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getInnerAngle());
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "outerAngle");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getOuterAngle());
+                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getOuterAngle());
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "range");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), light->getRange());
+                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getRange());
                             ++enabledSpotLightNum;
                         }
                 }

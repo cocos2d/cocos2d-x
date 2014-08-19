@@ -17,9 +17,9 @@ void PointLight(int n, vec4 ePosition, vec3 eNormal, inout vec4 intensity)
 {
     if (distance(CC_PointLightSource[n].position, ePosition.xyz) < CC_PointLightSource[n].range)
     {
-        vec4 p = vec4(CC_PointLightSource[n].position, 1.0);
-        p -= ePosition;
-        intensity.xyz += CC_PointLightSource[n].color * max(0.0, dot(normalize(p.xyz), eNormal));	
+        vec3 lightDir = CC_PointLightSource[n].position - ePosition.xyz;
+        lightDir = normalize(lightDir);
+        intensity.xyz += CC_PointLightSource[n].color * max(0.0, dot(lightDir, eNormal));	
     }
     intensity.w = 1.0;
 }
