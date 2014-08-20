@@ -169,6 +169,8 @@ void SubMeshState::bindMeshCommand()
     {
         GLuint texID = _texture ? _texture->getName() : 0;
         _meshCommand.genMaterialID(texID, _glProgramState, _subMesh->getMesh()->getVertexBuffer(), _subMesh->getIndexBuffer(), _blend);
+        _meshCommand.setCullFaceEnabled(true);
+        _meshCommand.setDepthTestEnabled(true);
     }
 }
 

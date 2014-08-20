@@ -91,6 +91,12 @@ public:
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
     
+    // overrides
+    /** set GLProgramState, you should bind attributes by yourself */
+    virtual void setGLProgramState(GLProgramState *glProgramState) override;
+    /** just rember bind attributes */
+    virtual void setGLProgram(GLProgram *glprogram) override;
+    
     /*
      * Get AABB
      * If the sprite has animation, it can't be calculated accuratly,

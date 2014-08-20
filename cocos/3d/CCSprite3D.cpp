@@ -414,7 +414,9 @@ void Sprite3D::setTexture(const std::string& texFile)
 
 void Sprite3D::setTexture(Texture2D* texture)
 {
-    _subMeshStates.at(0)->setTexture(texture);
+    for (auto& state : _subMeshStates) {
+        state->setTexture(texture);
+    }
 }
 AttachNode* Sprite3D::getAttachNode(const std::string& boneName)
 {
@@ -474,8 +476,6 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         auto submesh = submeshstate->getSubMesh();
         meshCommand.init(_globalZOrder, textureID, programstate, _blend, submesh->getMesh()->getVertexBuffer(), submesh->getIndexBuffer(), (GLenum)submesh->getPrimitiveType(), (GLenum)submesh->getIndexFormat(), submesh->getIndexCount(), transform);
         
-        meshCommand.setCullFaceEnabled(true);
-        meshCommand.setDepthTestEnabled(true);
         auto skin = submeshstate->getSkin();
         if (skin)
         {
@@ -488,11 +488,28 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
+void Sprite3D::setGLProgramState(GLProgramState *glProgramState)
+{
+    Node::setGLProgramState(glProgramState);
+    for (auto& state : _subMeshStates) {
+        state->setGLProgramState(glProgramState);
+    }
+}
+void Sprite3D::setGLProgram(GLProgram *glprogram)
+{
+    Node::setGLProgram(glprogram);
+    setGLProgramState(getGLProgramState());
+}
+
 void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
 {
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
     {
         _blend = blendFunc;
+        for(auto& state : _subMeshStates)
+        {
+            state->setBlendFunc(blendFunc);
+        }
     }
 }
 
