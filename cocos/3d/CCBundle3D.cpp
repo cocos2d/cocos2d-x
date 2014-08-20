@@ -298,12 +298,13 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
             meshdata->subMeshIndices.push_back(it.mesh.indices);
             meshdata->subMeshIds.push_back(str);
-
+            auto node = new NodeData();
             auto modelnode = new ModelNodeData();
             modelnode->matrialId = str;
             modelnode->subMeshId = str;
             modelnode->id = it.name;
-            nodedatas.nodes.push_back(modelnode);
+            node->modelNodeDatas.push_back(modelnode);
+            nodedatas.nodes.push_back(node);
         }
         return true;
     }
@@ -736,22 +737,22 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         ////////////////////////////////////////////////////////////////////////////////////////////////
         const rapidjson::Value& mesh_data_vertex_array = mesh_data[MESHDATA_VERTICES];
         meshData->vertexSizeInFloat=mesh_data_vertex_array.Size();
-        for (rapidjson::SizeType i = 0; i < mesh_data_vertex_array.Size(); i++)
+        for (rapidjson::SizeType j = 0; j < mesh_data_vertex_array.Size(); j++)
         {
-            meshData->vertex.push_back(mesh_data_vertex_array[i].GetDouble());
+            meshData->vertex.push_back(mesh_data_vertex_array[j].GetDouble());
         }
         // mesh part
         ////////////////////////////////////////////////////////////////////////////////////////////////
         const rapidjson::Value& mesh_part_array = mesh_data[PARTS];
-        for (rapidjson::SizeType i = 0; i < mesh_part_array.Size(); i++)
+        for (rapidjson::SizeType k = 0; k < mesh_part_array.Size(); k++)
         {
             std::vector<unsigned short>      indexArray;
-            const rapidjson::Value& mesh_part = mesh_part_array[i];
+            const rapidjson::Value& mesh_part = mesh_part_array[k];
             meshData->subMeshIds.push_back(mesh_part[ID].GetString());
             // index_number
             const rapidjson::Value& indices_val_array = mesh_part[MESHDATA_INDICES];
-            for (rapidjson::SizeType j = 0; j < indices_val_array.Size(); j++)
-                indexArray.push_back((unsigned short)indices_val_array[j].GetUint());
+            for (rapidjson::SizeType h = 0; h < indices_val_array.Size(); h++)
+                indexArray.push_back((unsigned short)indices_val_array[h].GetUint());
 
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex=meshData->subMeshIndices.size();
@@ -793,13 +794,15 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
             }
         }
         nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
+        auto node= new NodeData();
         auto modelnode = new ModelNodeData();
         modelnode->matrialId = "";
         modelnode->subMeshId = "";
         modelnode->id = "";
         modelnode->bones = skinData.skinBoneNames;
         modelnode->invBindPose = skinData.inverseBindPoseMatrices;
-        nodedatas.nodes.push_back(modelnode);
+        node->modelNodeDatas.push_back(modelnode);
+        nodedatas.nodes.push_back(node);
     }
     else
     {
@@ -1692,11 +1695,11 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 }
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 {
-    NodeData* nodedata;
-    if (jvalue.HasMember(PARTS))
-        nodedata = new ModelNodeData();
-    else
-        nodedata = new NodeData();
+    NodeData* nodedata = new NodeData();;
+    //if (jvalue.HasMember(PARTS))
+       // nodedata = new ModelNodeData();
+    //else
+     //nodedata = new NodeData();
 
     // id
     nodedata->id = jvalue[ID].GetString();
@@ -1716,10 +1719,11 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
     if (jvalue.HasMember(PARTS))
     {
         const rapidjson::Value& parts = jvalue[PARTS];
-        ModelNodeData* modelnodedata = dynamic_cast<ModelNodeData*>(nodedata);
+       
 
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
+            ModelNodeData* modelnodedata = new ModelNodeData();;
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->matrialId = part[MATERIALID].GetString();
@@ -1760,6 +1764,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
                     modelnodedata->invBindPose.push_back(invbindpos);
                 }
             }
+             nodedata->modelNodeDatas.push_back(modelnodedata);
         }
     }
 
@@ -1774,7 +1779,6 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
             nodedata->children.push_back(tempdata);
         }
     }
-
     return nodedata;
 }
 
@@ -1827,16 +1831,14 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
         return nullptr;
     }
 
-    NodeData* nodedata;
+    NodeData* nodedata = new NodeData();
+    nodedata->id = id;
+    nodedata->transform = transform;
     if (partsSize > 0)
     {
-        nodedata = new ModelNodeData();
-        nodedata->id = id;
-        nodedata->transform = transform;
-        ModelNodeData* modelnodedata = dynamic_cast<ModelNodeData*>(nodedata);
-
         for (rapidjson::SizeType i = 0; i < partsSize; i++)
         {
+            ModelNodeData* modelnodedata  = new ModelNodeData();
             modelnodedata->subMeshId = _binaryReader.readString();
             modelnodedata->matrialId = _binaryReader.readString();
 
@@ -1894,14 +1896,15 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                     }
                 }
             }
+            nodedata->modelNodeDatas.push_back(modelnodedata);
         }
     }
-    else
-    {
-        nodedata = new NodeData();
-        nodedata->id = id;
-        nodedata->transform = transform;
-    }
+    //else
+    //{
+    //    nodedata = new NodeData();
+    //    nodedata->id = id;
+    //    nodedata->transform = transform;
+    //}
 
     unsigned int childrenSize = 0;
     if (_binaryReader.read(&childrenSize, 4, 1) != 1)
