@@ -154,6 +154,10 @@ THE SOFTWARE.
 #include "renderer/ccShaders.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexIndexData.h"
+#include "renderer/CCPrimitive.h"
+#include "renderer/CCPrimitiveCommand.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"

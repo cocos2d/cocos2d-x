@@ -393,6 +393,8 @@
         "cocos/base/ccFPSImages.c", 
         "cocos/base/ccFPSImages.h", 
         "cocos/base/ccMacros.h", 
+        "cocos/base/ccRandom.cpp", 
+        "cocos/base/ccRandom.h", 
         "cocos/base/ccTypes.cpp", 
         "cocos/base/ccTypes.h", 
         "cocos/base/ccUTF8.cpp", 

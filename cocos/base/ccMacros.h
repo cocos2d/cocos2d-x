@@ -69,16 +69,17 @@ simple macro that swaps 2 variables
     x = y; y = temp;        \
 }
 
+#include "base/ccRandom.h"
 
 /** @def CCRANDOM_MINUS1_1
  returns a random float between -1 and 1
  */
-#define CCRANDOM_MINUS1_1() ((2.0f*((float)rand()/RAND_MAX))-1.0f)
+#define CCRANDOM_MINUS1_1() cocos2d::rand_minus1_1()
 
 /** @def CCRANDOM_0_1
  returns a random float between 0 and 1
  */
-#define CCRANDOM_0_1() ((float)rand()/RAND_MAX)
+#define CCRANDOM_0_1() cocos2d::rand_0_1()
 
 /** @def CC_DEGREES_TO_RADIANS
  converts degrees to radians

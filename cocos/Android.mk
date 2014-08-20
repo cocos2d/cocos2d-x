@@ -117,6 +117,7 @@ base/CCIMEDispatcher.cpp \
 base/CCModuleManager.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
+base/ccRandom.cpp \
 base/CCRef.cpp \
 base/CCScheduler.cpp \
 base/CCScriptSupport.cpp \
