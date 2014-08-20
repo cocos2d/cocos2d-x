@@ -917,6 +917,7 @@ Developers:
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
         Fix video scale issue in iOS
         Fix iOS VideoPlayer memory leak
+        Added c++11 random library support
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
