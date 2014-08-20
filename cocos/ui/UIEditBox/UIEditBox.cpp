@@ -84,6 +84,49 @@ EditBox* EditBox::create(const Size& size,
     
     return pRet;
 }
+    
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *pNormal9SpriteBg)
+{
+    EditBox* pRet = new EditBox();
+    
+    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    
+    return pRet;
+}
+    
+bool EditBox::initWithSizeAndBackgroundSprite(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *pNormal9SpriteBg)
+{
+    if (Widget::init())
+    {
+        _editBoxImpl = __createSystemEditBox(this);
+        _editBoxImpl->initWithSize(size);
+        _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
+        
+        _backgroundSprite = pNormal9SpriteBg;
+        
+        this->setContentSize(size);
+        this->setPosition(Vec2(0, 0));
+        
+        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
+        _backgroundSprite->setContentSize(size);
+        this->addProtectedChild(_backgroundSprite);
+        
+        this->setTouchEnabled(true);
+        
+        this->addTouchEventListener(CC_CALLBACK_2(EditBox::touchDownAction, this));
+        
+        return true;
+    }
+    return false;
+}
+
 
 bool EditBox::initWithSizeAndBackgroundSprite(const Size& size,
                                                         const std::string& pNormal9SpriteBg,

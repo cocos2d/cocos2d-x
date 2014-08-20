@@ -56,7 +56,7 @@ bool UIEditBoxTest::init()
         
         // top
         std::string pNormalSprite = "extensions/green_edit.png";
-        _editName = ui::EditBox::create(editBoxSize, pNormalSprite);
+        _editName = ui::EditBox::create(editBoxSize, ui::Scale9Sprite::create(pNormalSprite));
         _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
         _editName->setFontName("Paint Boy");
         _editName->setFontSize(25);

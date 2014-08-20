@@ -190,6 +190,13 @@ namespace ui {
              * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
              */
             static EditBox* create(const Size& size,
+                                   Scale9Sprite* pNormal9SpriteBg);
+            
+            /**
+             * create a edit box with size.
+             * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
+             */
+            static EditBox* create(const Size& size,
                                    const std::string& pNormal9SpriteBg,
                                    TextureResType texType = TextureResType::LOCAL);
             
@@ -214,6 +221,8 @@ namespace ui {
                                                  const std::string& pNormal9SpriteBg,
                                                  TextureResType texType = TextureResType::LOCAL);
             
+            bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pNormal9SpriteBg);
+
             /**
              * Gets/Sets the delegate for edit box.
              * @lua NA
