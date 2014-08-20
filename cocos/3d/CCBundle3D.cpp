@@ -291,12 +291,13 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
             meshdata->subMeshIndices.push_back(it.mesh.indices);
             meshdata->subMeshIds.push_back(str);
-
+            auto node = new NodeData();
             auto modelnode = new ModelNodeData();
             modelnode->matrialId = str;
             modelnode->subMeshId = str;
             modelnode->id = it.name;
-            nodedatas.nodes.push_back(modelnode);
+            node->modelNodeDatas.push_back(modelnode);
+            nodedatas.nodes.push_back(node);
         }
         return true;
     }
@@ -786,13 +787,15 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
             }
         }
         nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
+        auto node= new NodeData();
         auto modelnode = new ModelNodeData();
         modelnode->matrialId = "";
         modelnode->subMeshId = "";
         modelnode->id = "";
         modelnode->bones = skinData.skinBoneNames;
         modelnode->invBindPose = skinData.inverseBindPoseMatrices;
-        nodedatas.nodes.push_back(modelnode);
+        node->modelNodeDatas.push_back(modelnode);
+        nodedatas.nodes.push_back(node);
     }
     else
     {
@@ -1685,11 +1688,11 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 }
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 {
-    NodeData* nodedata;
-    if (jvalue.HasMember(PARTS))
-        nodedata = new ModelNodeData();
-    else
-        nodedata = new NodeData();
+    NodeData* nodedata = new NodeData();;
+    //if (jvalue.HasMember(PARTS))
+       // nodedata = new ModelNodeData();
+    //else
+     //nodedata = new NodeData();
 
     // id
     nodedata->id = jvalue[ID].GetString();
@@ -1709,10 +1712,11 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
     if (jvalue.HasMember(PARTS))
     {
         const rapidjson::Value& parts = jvalue[PARTS];
-        ModelNodeData* modelnodedata = dynamic_cast<ModelNodeData*>(nodedata);
+       
 
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
+            ModelNodeData* modelnodedata = new ModelNodeData();;
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->matrialId = part[MATERIALID].GetString();
@@ -1753,6 +1757,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
                     modelnodedata->invBindPose.push_back(invbindpos);
                 }
             }
+             nodedata->modelNodeDatas.push_back(modelnodedata);
         }
     }
 
@@ -1767,7 +1772,6 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
             nodedata->children.push_back(tempdata);
         }
     }
-
     return nodedata;
 }
 
@@ -1820,16 +1824,14 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
         return nullptr;
     }
 
-    NodeData* nodedata;
+    NodeData* nodedata = new NodeData();
+    nodedata->id = id;
+    nodedata->transform = transform;
     if (partsSize > 0)
     {
-        nodedata = new ModelNodeData();
-        nodedata->id = id;
-        nodedata->transform = transform;
-        ModelNodeData* modelnodedata = dynamic_cast<ModelNodeData*>(nodedata);
-
         for (rapidjson::SizeType i = 0; i < partsSize; i++)
         {
+            ModelNodeData* modelnodedata  = new ModelNodeData();
             modelnodedata->subMeshId = _binaryReader.readString();
             modelnodedata->matrialId = _binaryReader.readString();
 
@@ -1887,14 +1889,15 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                     }
                 }
             }
+            nodedata->modelNodeDatas.push_back(modelnodedata);
         }
     }
-    else
-    {
-        nodedata = new NodeData();
-        nodedata->id = id;
-        nodedata->transform = transform;
-    }
+    //else
+    //{
+    //    nodedata = new NodeData();
+    //    nodedata->id = id;
+    //    nodedata->transform = transform;
+    //}
 
     unsigned int childrenSize = 0;
     if (_binaryReader.read(&childrenSize, 4, 1) != 1)

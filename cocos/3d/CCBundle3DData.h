@@ -54,8 +54,9 @@ struct NodeData
 {
     std::string id;
     Mat4        transform;
-    std::vector<NodeData*> children;
-    
+    std::vector<ModelNodeData*> modelNodeDatas;
+    std::vector<NodeData*>  children;
+
     virtual ~NodeData()
     {
         resetData();
