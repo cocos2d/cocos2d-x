@@ -1,15 +1,37 @@
 set(COCOS_3D_SRC
-  3d/CCSkeleton3D.cpp
-  3d/CCAttachNode.cpp
-  3d/CCSubMesh.cpp
-  3d/CCSubMeshState.cpp
-  3d/CCMesh.cpp
-  3d/CCObjLoader.cpp
-  3d/CCSprite3D.cpp
-  3d/CCSprite3DMaterial.cpp
-  3d/CCAnimate3D.cpp
-  3d/CCAnimation3D.cpp
-  3d/CCBundle3D.cpp
-  3d/CCMeshSkin.cpp
-  3d/CCBundleReader.cpp
+CCRay.cpp
+CCAABB.cpp
+CCOBB.cpp
+CCAnimate3D.cpp
+CCAnimation3D.cpp
+CCAttachNode.cpp
+CCBundle3D.cpp
+CCBundleReader.cpp
+CCMesh.cpp
+CCMeshSkin.cpp
+CCSprite3DMaterial.cpp
+CCObjLoader.cpp
+CCSkeleton3D.cpp
+CCSprite3D.cpp
+CCSubMesh.cpp
+CCSubMeshState.cpp
+)
+
+
+include_directories(
+  3d
+)
+
+add_library(cocos3d STATIC
+  ${COCOS_3D_SRC}
+)
+
+target_link_libraries(cocos3d
+  cocos2d
+)
+
+set_target_properties(cocos3d
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )

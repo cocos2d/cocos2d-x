@@ -4,9 +4,9 @@
 -- @parent_module cc
 
 --------------------------------
--- @function [parent=#PhysicsWorld] getGravity 
+-- @function [parent=#PhysicsWorld] setGravity 
 -- @param self
--- @return vec2_table#vec2_table ret (return value: vec2_table)
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getAllBodies 
@@ -14,14 +14,28 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- @function [parent=#PhysicsWorld] setGravity 
+-- @function [parent=#PhysicsWorld] getDebugDrawMask 
 -- @param self
--- @param #vec2_table vec2
+-- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#PhysicsWorld] getSpeed 
+-- @function [parent=#PhysicsWorld] setAutoStep 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] addJoint 
+-- @param self
+-- @param #cc.PhysicsJoint physicsjoint
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] removeAllJoints 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] isAutoStep 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, int         
@@ -37,24 +51,49 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#PhysicsWorld] getUpdateRate 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#PhysicsWorld] setSpeed 
--- @param self
--- @param #float float
-        
---------------------------------
 -- @function [parent=#PhysicsWorld] getShapes 
 -- @param self
 -- @param #vec2_table vec2
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- @function [parent=#PhysicsWorld] removeAllJoints 
+-- @function [parent=#PhysicsWorld] step 
 -- @param self
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] setDebugDrawMask 
+-- @param self
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] getGravity 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] setUpdateRate 
+-- @param self
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] getSpeed 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] getUpdateRate 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] removeAllBodies 
+-- @param self
+        
+--------------------------------
+-- @function [parent=#PhysicsWorld] setSpeed 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#PhysicsWorld] getShape 
@@ -63,33 +102,9 @@
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
         
 --------------------------------
--- @function [parent=#PhysicsWorld] removeAllBodies 
--- @param self
-        
---------------------------------
--- @function [parent=#PhysicsWorld] getDebugDrawMask 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#PhysicsWorld] setDebugDrawMask 
--- @param self
--- @param #int int
-        
---------------------------------
 -- @function [parent=#PhysicsWorld] getBody 
 -- @param self
 -- @param #int int
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
-        
---------------------------------
--- @function [parent=#PhysicsWorld] setUpdateRate 
--- @param self
--- @param #int int
-        
---------------------------------
--- @function [parent=#PhysicsWorld] addJoint 
--- @param self
--- @param #cc.PhysicsJoint physicsjoint
         
 return nil

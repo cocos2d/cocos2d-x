@@ -120,8 +120,8 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -175,8 +175,8 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -193,6 +193,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj">
       <Project>{9f2d6ce6-c893-4400-b50c-6db70cc2562f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\scripting\lua-bindings\proj.win32\libluacocos3d.vcxproj">
+      <Project>{06840490-14a4-43d6-88bc-aafa44d043eb}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos\scripting\lua-bindings\proj.win32\libluacocosbuilder.vcxproj">
       <Project>{f8198014-f4f3-49f0-88ab-c1969a5829af}</Project>

@@ -1225,6 +1225,13 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
     return flags;
 }
 
+bool Node::isVisitableByVisitingCamera() const
+{
+    auto camera = Camera::getVisitingCamera();
+    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
+    return visibleByCamera;
+}
+
 void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
@@ -1242,8 +1249,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    auto camera = Camera::getVisitingCamera();
-    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     int i = 0;
 
@@ -1267,10 +1273,9 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
-        if (visibleByCamera)
-            this->draw(renderer, _modelViewTransform, flags);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);

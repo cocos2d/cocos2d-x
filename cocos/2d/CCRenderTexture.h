@@ -103,12 +103,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, bool isRGBA = true);
+    bool saveToFile(const std::string& filename, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -213,7 +213,12 @@ protected:
     CustomCommand _clearCommand;
     CustomCommand _beginCommand;
     CustomCommand _endCommand;
+    /*this command is used to encapsulate saveToFile,
+     call saveToFile twice will overwrite this command and callback
+     and the command and callback will be executed twice.
+    */
     CustomCommand _saveToFileCommand;
+    std::function<void (RenderTexture*, const std::string&)> _saveFileCallback;
 protected:
     //renderer caches and callbacks
     void onBegin();

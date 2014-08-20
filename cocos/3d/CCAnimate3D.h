@@ -34,6 +34,7 @@
 #include "base/ccTypes.h"
 #include "base/CCPlatformMacros.h"
 #include "2d/CCActionInterval.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +43,7 @@ class Bone3D;
 /**
  * Animate3D, Animates a Sprite3D given with an Animation3D
  */
-class CC_DLL Animate3D: public ActionInterval
+class CC_3D_DLL Animate3D: public ActionInterval
 {
 public:
     

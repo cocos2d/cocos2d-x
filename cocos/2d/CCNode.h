@@ -1284,12 +1284,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    void resume(void);
+    virtual void resume(void);
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    void pause(void);
+    virtual void pause(void);
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1520,6 +1520,9 @@ protected:
     
     bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    
+    //check whether this camera mask is visible by the current visiting camera
+    bool isVisitableByVisitingCamera() const;
     
 #if CC_USE_PHYSICS
     void updatePhysicsBodyTransform(Scene* layer);

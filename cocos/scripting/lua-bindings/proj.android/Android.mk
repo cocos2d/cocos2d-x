@@ -8,7 +8,6 @@ LOCAL_MODULE_FILENAME := libluacocos2d
 LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/CCLuaEngine.cpp \
           ../manual/CCLuaStack.cpp \
-          ../manual/lua_debugger.c \
           ../manual/CCLuaValue.cpp \
           ../manual/Cocos2dxLuaLoader.cpp \
           ../manual/LuaBasicConversions.cpp \
@@ -56,11 +55,33 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/cocos2d 
 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := luajit_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
+LOCAL_STATIC_LIBRARIES := luajit_static
+LOCAL_STATIC_LIBRARIES += cocos2dx_static
 
 include $(BUILD_STATIC_LIBRARY)
 
+#libluacocos3d
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := cocos3d_lua_static
+
+LOCAL_MODULE_FILENAME := libluacocos3d
+
+LOCAL_SRC_FILES := ../manual/3d/lua_cocos2dx_3d_manual.cpp \
+                   ../auto/lua_cocos2dx_3d_auto.cpp
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../auto \
+                    $(LOCAL_PATH)/../manual/3d \
+                    $(LOCAL_PATH)/../../../3d \
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/3d 
+
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos3d_static
+
+include $(BUILD_STATIC_LIBRARY)
+
+#libluacocosdenshion
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := cocosdenshion_lua_static
@@ -76,8 +97,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../auto \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/cocosdenshion 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cocosdenshion_static
+LOCAL_STATIC_LIBRARIES += cocos2d_lua_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -113,8 +134,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/network \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/network
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos_network_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -135,8 +156,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/cocosbuilder \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/cocosbuilder
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocosbuilder_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -158,8 +179,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/cocostudio \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/cocostudio
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocostudio_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -180,8 +201,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/spine \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/spine
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += spine_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -202,8 +223,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/extension \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/extension
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos_extension_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -225,8 +246,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/ui \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/ui
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ui_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos_ui_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -239,5 +260,6 @@ $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
 $(call import-module,ui)
 $(call import-module,extensions)
+$(call import-module,3d)
 
 

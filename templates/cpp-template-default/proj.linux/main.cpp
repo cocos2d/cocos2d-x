@@ -1,4 +1,4 @@
-#include "../Classes/AppDelegate.h"
+#include "../src/AppDelegate.h"
 
 #include <stdlib.h>
 #include <stdio.h>

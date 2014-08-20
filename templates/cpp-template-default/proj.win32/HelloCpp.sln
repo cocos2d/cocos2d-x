@@ -5,14 +5,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp", "HelloCpp.vcxpro
 	ProjectSection(ProjectDependencies) = postProject
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
 		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25} = {207BC7A9-CCF1-4F2F-A04D-45F72242AE25}
-		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6} = {F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos2d\cocos\2d\libcocos2d.vcxproj", "{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "..\cocos2d\external\chipmunk\proj.win32\chipmunk.vcxproj", "{207BC7A9-CCF1-4F2F-A04D-45F72242AE25}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAudio", "..\cocos2d\cocos\audio\proj.win32\libcocosdenshion.vcxproj", "{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos3d", "..\cocos2d\cocos\3d\proj.win32\libcocos3d.vcxproj", "{E24950FA-5BC1-4AEE-A900-4F0259354BF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +31,10 @@ Global
 		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25}.Debug|Win32.Build.0 = Debug|Win32
 		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25}.Release|Win32.ActiveCfg = Release|Win32
 		{207BC7A9-CCF1-4F2F-A04D-45F72242AE25}.Release|Win32.Build.0 = Release|Win32
-		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}.Debug|Win32.Build.0 = Debug|Win32
-		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}.Release|Win32.ActiveCfg = Release|Win32
-		{F8EDD7FA-9A51-4E80-BAEB-860825D2EAC6}.Release|Win32.Build.0 = Release|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Debug|Win32.Build.0 = Debug|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Release|Win32.ActiveCfg = Release|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

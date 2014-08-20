@@ -34,6 +34,7 @@ static const char* s_testArray[] =
     "UIButtonTest_Title",
     "UIButtonTest_RemoveSelf",
     "UIButtonTestSwitchScale9",
+    "UIButtonTestZoomScale",
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
@@ -59,6 +60,7 @@ static const char* s_testArray[] =
     "UITextFieldTest_Password",
     "UITextFieldTest_LineWrap",
     "UITextFieldTest_TrueTypeFont",
+    "UITextFieldTest_PlaceHolderColor",
     "UILayoutTest",
     "UILayoutTest_Color",
     "UILayoutTest_Gradient",
@@ -73,9 +75,12 @@ static const char* s_testArray[] =
     "UIScrollViewTest_Horizontal",
     "UIScrollViewTest_Both",
     "UIScrollViewTest_ScrollToPercentBothDirection",
-    "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",    
+    "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",
+    "UIScrollViewNestTest",
     "UIPageViewTest",
     "UIPageViewButtonTest",
+    "UIPageViewCustomScrollThreshold",
+    "UIPageViewTouchPropagationTest",
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
    
@@ -180,6 +185,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTestRemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTestSwitchScale9:
             return UIButtonTestSwitchScale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTestZoomScale:
+            return UIButtonTestZoomScale::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -241,7 +248,8 @@ Scene *UISceneManager::currentUIScene()
             return UITextFieldTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUITextFieldTest_TrueTypeFont:
             return UITextFieldTest_TrueTypeFont::sceneWithTitle(s_testArray[_currentUISceneId]);
-        
+        case kUITextFieldTest_PlaceHolderColor:
+            return UITextFieldTest_PlaceHolderColor::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUILayoutTest:
             return UILayoutTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -283,11 +291,17 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIScrollViewTest_ScrollToPercentBothDirection_Bounce:
             return UIScrollViewTest_ScrollToPercentBothDirection_Bounce::sceneWithTitle(s_testArray[_currentUISceneId]);                    
-            
+        case kUIScrollViewNestTest:
+            return UIScrollViewNestTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewButtonTest:
             return UIPageViewButtonTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewCustomScrollThreshold:
+            return UIPageViewCustomScrollThreshold::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewTouchPropagationTest:
+            return UIPageViewTouchPropagationTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
