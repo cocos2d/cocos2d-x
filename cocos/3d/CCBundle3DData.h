@@ -48,13 +48,13 @@ struct MeshVertexAttrib
 };
 
 
-struct ModelNodeData;
+struct ModelData;
 /** Node data, since 3.3 */
 struct NodeData
 {
     std::string id;
     Mat4        transform;
-    std::vector<ModelNodeData*> modelNodeDatas;
+    std::vector<ModelData*> modelNodeDatas;
     std::vector<NodeData*>  children;
 
     virtual ~NodeData()
@@ -71,21 +71,18 @@ struct NodeData
         }
         children.clear();
     }
-    virtual ModelNodeData* asModelNodeData()
-    {
-        return nullptr;
-    }
+
 };
 
 /** model node data, since 3.3 */
-struct ModelNodeData : public NodeData
+struct ModelData
 {
     std::string subMeshId;
     std::string matrialId;
     std::vector<std::string> bones;
     std::vector<Mat4>        invBindPose;
     
-    virtual ~ModelNodeData()
+    virtual ~ModelData()
     {
         resetData();
     }
@@ -93,11 +90,6 @@ struct ModelNodeData : public NodeData
     {
         bones.clear();
         invBindPose.clear();
-        NodeData::resetData();
-    }
-    virtual ModelNodeData* asModelNodeData()
-    {
-        return this;
     }
 };
 

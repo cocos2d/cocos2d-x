@@ -292,10 +292,10 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             meshdata->subMeshIndices.push_back(it.mesh.indices);
             meshdata->subMeshIds.push_back(str);
             auto node = new NodeData();
-            auto modelnode = new ModelNodeData();
+            auto modelnode = new ModelData();
             modelnode->matrialId = str;
             modelnode->subMeshId = str;
-            modelnode->id = it.name;
+            node->id = it.name;
             node->modelNodeDatas.push_back(modelnode);
             nodedatas.nodes.push_back(node);
         }
@@ -788,10 +788,9 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
         }
         nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
         auto node= new NodeData();
-        auto modelnode = new ModelNodeData();
+        auto modelnode = new ModelData();
         modelnode->matrialId = "";
         modelnode->subMeshId = "";
-        modelnode->id = "";
         modelnode->bones = skinData.skinBoneNames;
         modelnode->invBindPose = skinData.inverseBindPoseMatrices;
         node->modelNodeDatas.push_back(modelnode);
@@ -1716,7 +1715,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
-            ModelNodeData* modelnodedata = new ModelNodeData();;
+            auto modelnodedata = new ModelData();;
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->matrialId = part[MATERIALID].GetString();
@@ -1831,7 +1830,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     {
         for (rapidjson::SizeType i = 0; i < partsSize; i++)
         {
-            ModelNodeData* modelnodedata  = new ModelNodeData();
+            auto modelnodedata  = new ModelData();
             modelnodedata->subMeshId = _binaryReader.readString();
             modelnodedata->matrialId = _binaryReader.readString();
 
