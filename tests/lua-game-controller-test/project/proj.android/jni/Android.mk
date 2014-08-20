@@ -17,8 +17,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../../../cocos/scripting/lua-bindings/manual\controller \
                     $(LOCAL_PATH)/../../../../../cocos/base
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocosdenshion_static
 
 
 include $(BUILD_SHARED_LIBRARY)
