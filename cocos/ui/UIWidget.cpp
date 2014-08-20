@@ -243,6 +243,11 @@ Widget* Widget::getWidgetParent()
 void Widget::setEnabled(bool enabled)
 {
     _enabled = enabled;
+    if (_enabled){
+        onPressStateChangedToNormal();
+    } else {
+        onPressStateChangedToDisabled();
+    }
 }
     
 void Widget::initRenderer()
