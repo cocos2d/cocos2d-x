@@ -1956,20 +1956,21 @@ void FadeTo::update(float time)
 // FadeBy
 //
 
-FadeBy* FadeBy::create(float duration, GLubyte opacity)
+FadeBy* FadeBy::create(float duration, GLubyte opacity, bool additive)
 {
     FadeBy *fadeBy = new FadeBy();
-    fadeBy->initWithDuration(duration, opacity);
+    fadeBy->initWithDuration(duration, opacity, additive);
     fadeBy->autorelease();
 	
     return fadeBy;
 }
 
-bool FadeBy::initWithDuration(float duration, GLubyte opacity)
+bool FadeBy::initWithDuration(float duration, GLubyte opacity, bool additive)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _byOpacity = opacity;
+		_additive = additive;
         return true;
     }
 	
@@ -1978,17 +1979,16 @@ bool FadeBy::initWithDuration(float duration, GLubyte opacity)
 
 FadeBy* FadeBy::clone() const
 {
-	// no copy constructor
 	auto a = new FadeBy();
-	a->initWithDuration(_duration, _byOpacity);
+	a->initWithDuration(_duration, _byOpacity, _additive);
 	a->autorelease();
 	return a;
 }
 
 FadeBy* FadeBy::reverse() const
 {
-	CCASSERT(false, "reverse() not supported in FadeBy");
-	return nullptr;
+    auto action = FadeBy::create(_duration, _byOpacity, (! _additive));
+    return action;
 }
 
 void FadeBy::startWithTarget(Node *target)
@@ -1997,19 +1997,31 @@ void FadeBy::startWithTarget(Node *target)
 	
     if (target)
     {
-        _fromOpacity = target->getOpacity();
-		_toOpacity = _fromOpacity + _byOpacity; // m_toOpacity is actually m_byOpacity
+		_lastTime = 0.0;
     }
-    /*_fromOpacity = target->getOpacity();*/
 }
 
 void FadeBy::update(float time)
 {
     if (_target)
     {
-        _target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        float dt = (time - _lastTime) / _duration; // normalize time change
+		_lastTime = time;
+		
+		GLubyte fromOpacity = _target->getOpacity();
+		GLubyte nextOpacity = fromOpacity;
+		if (_additive) {
+			nextOpacity += (_byOpacity * dt );
+			if (nextOpacity < fromOpacity)
+				nextOpacity = 255;
+		}
+		else {
+			nextOpacity -= (_byOpacity * dt);
+			if (nextOpacity > fromOpacity)
+				nextOpacity = 0;
+        }
+		_target->setOpacity( nextOpacity );
     }
-    /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
 }
 
 //
