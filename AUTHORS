@@ -980,6 +980,9 @@ Developers:
         
     zaWasp
         Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
+        
+    xiangxw
+        Fixed the bug that Console::sendPrompt() will send extra `\0`
     
 Retired Core Developers:
     WenSheng Yang
