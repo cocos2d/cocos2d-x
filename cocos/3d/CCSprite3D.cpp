@@ -247,101 +247,103 @@ GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
 void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite)
 {
     Node* node=nullptr;
-    ModelNodeData*   modelNodeData=nodedata->asModelNodeData();
-    if(modelNodeData)
+    for(const auto& it : nodedata->modelNodeDatas)
     {
-        if(modelNodeData->bones.size() > 0 || singleSprite)
+        if(it)
         {
-            auto subMeshState = SubMeshState::create(modelNodeData->id);
-            if(subMeshState)
+            if(it->bones.size() > 0 || singleSprite)
             {
-                _subMeshStates.pushBack(subMeshState);
-                subMeshState->setSubMesh(getSubMesh(modelNodeData->subMeshId));
-                if (_skeleton && modelNodeData->bones.size())
+                auto subMeshState = SubMeshState::create(it->id);
+                if(subMeshState)
                 {
-                    auto skin = MeshSkin::create(_skeleton, modelNodeData->bones, modelNodeData->invBindPose);
-                    subMeshState->setSkin(skin);
-                }
-                subMeshState->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
-
-                if (modelNodeData->matrialId == "" && matrialdatas.materials.size())
-                {
-                    const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
-                    subMeshState->setTexture(textureData->filename);
-                }
-                else
-                {
-                    const NMaterialData*  materialData=matrialdatas.getMaterialData(modelNodeData->matrialId);
-                    if(materialData)
+                    _subMeshStates.pushBack(subMeshState);
+                    subMeshState->setSubMesh(getSubMesh(it->subMeshId));
+                    if (_skeleton && it->bones.size())
                     {
-                        const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
-                        if(textureData)
-                        {
-                            auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
-                            if(tex)
-                            {
-                                Texture2D::TexParams    texParams;
-                                texParams.minFilter = GL_LINEAR;
-                                texParams.magFilter = GL_LINEAR;
-                                texParams.wrapS = textureData->wrapS;
-                                texParams.wrapT = textureData->wrapT;
-                                tex->setTexParameters(texParams);
-                                subMeshState->setTexture(tex);
-                            }
+                        auto skin = MeshSkin::create(_skeleton, it->bones, it->invBindPose);
+                        subMeshState->setSkin(skin);
+                    }
+                    subMeshState->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
 
+                    if (it->matrialId == "" && matrialdatas.materials.size())
+                    {
+                        const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
+                        subMeshState->setTexture(textureData->filename);
+                    }
+                    else
+                    {
+                        const NMaterialData*  materialData=matrialdatas.getMaterialData(it->matrialId);
+                        if(materialData)
+                        {
+                            const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
+                            if(textureData)
+                            {
+                                auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
+                                if(tex)
+                                {
+                                    Texture2D::TexParams    texParams;
+                                    texParams.minFilter = GL_LINEAR;
+                                    texParams.magFilter = GL_LINEAR;
+                                    texParams.wrapS = textureData->wrapS;
+                                    texParams.wrapT = textureData->wrapT;
+                                    tex->setTexParameters(texParams);
+                                    subMeshState->setTexture(tex);
+                                }
+
+                            }
                         }
                     }
                 }
             }
-        }
-        else
-        {
-            auto sprite = new Sprite3D();
-            if (sprite)
+            else
             {
-                auto subMeshState = SubMeshState::create(modelNodeData->id);
-                subMeshState->setSubMesh(getSubMesh(modelNodeData->subMeshId));
-                if (modelNodeData->matrialId == "" && matrialdatas.materials.size())
+                auto sprite = new Sprite3D();
+                if (sprite)
                 {
-                    const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
-                    subMeshState->setTexture(textureData->filename);
-                }
-                else
-                {
-                    const NMaterialData*  materialData=matrialdatas.getMaterialData(modelNodeData->matrialId);
-                    if(materialData)
+                    auto subMeshState = SubMeshState::create(it->id);
+                    subMeshState->setSubMesh(getSubMesh(it->subMeshId));
+                    if (it->matrialId == "" && matrialdatas.materials.size())
                     {
-                        const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
-                        if(textureData)
+                        const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
+                        subMeshState->setTexture(textureData->filename);
+                    }
+                    else
+                    {
+                        const NMaterialData*  materialData=matrialdatas.getMaterialData(it->matrialId);
+                        if(materialData)
                         {
-                            auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
-                            if(tex)
+                            const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
+                            if(textureData)
                             {
-                                Texture2D::TexParams    texParams;
-                                texParams.minFilter = GL_LINEAR;
-                                texParams.magFilter = GL_LINEAR;
-                                texParams.wrapS = textureData->wrapS;
-                                texParams.wrapT = textureData->wrapT;
-                                tex->setTexParameters(texParams);
-                                subMeshState->setTexture(tex);
-                            }
+                                auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
+                                if(tex)
+                                {
+                                    Texture2D::TexParams    texParams;
+                                    texParams.minFilter = GL_LINEAR;
+                                    texParams.magFilter = GL_LINEAR;
+                                    texParams.wrapS = textureData->wrapS;
+                                    texParams.wrapT = textureData->wrapT;
+                                    tex->setTexParameters(texParams);
+                                    subMeshState->setTexture(tex);
+                                }
 
+                            }
                         }
                     }
+                    sprite->setAdditionalTransform(&nodedata->transform);
+                    sprite->addSubMeshState(subMeshState);
+                    sprite->autorelease();
+                    sprite->genGLProgramState();
+                    if(root)
+                    {
+                        root->addChild(sprite);
+                    } 
                 }
-                sprite->setAdditionalTransform(&nodedata->transform);
-                sprite->addSubMeshState(subMeshState);
-                sprite->autorelease();
-                sprite->genGLProgramState();
-                if(root)
-                {
-                    root->addChild(sprite);
-                } 
-            }
-            node=sprite;
+                node=sprite;
+            } 
         }
     }
-    else
+    if(nodedata->modelNodeDatas.size() ==0 )
     {
         node= Node::create();
         if(node)
@@ -438,7 +440,6 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     for (auto& submeshstate : _subMeshStates) {
         if (!submeshstate->isVisible())
             continue;
-        
         auto& meshCommand = _meshCommands[i++];
         
         GLuint textureID = submeshstate->getTexture() ? submeshstate->getTexture()->getName() : 0;
