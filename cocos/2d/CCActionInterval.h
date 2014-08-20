@@ -834,36 +834,35 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeTo);
 };
 
-/** @brief Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value by a specified value.
- @warning This action doesn't support "reverse"
- */
+/** @brief Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value by a specified values.
+*/
 class CC_DLL FadeBy : public ActionInterval
 {
 public:
-    /** creates an action with duration and opacity */
-    static FadeBy* create(float duration, GLubyte opacity);
-	
-    //
-    // Overrides
-    //
-    virtual FadeBy* clone() const override;
+	/** creates an action with duration and opacity */
+	static FadeBy* create(float duration, GLubyte opacity, bool additive);
+
+	//
+	// Overrides
+	//
+	virtual FadeBy* clone() const override;
 	virtual FadeBy* reverse(void) const override;
-    virtual void startWithTarget(Node *target) override;
-    virtual void update(float time) override;
-    
+	virtual void startWithTarget(Node *target) override;
+	virtual void update(float time) override;
+
 CC_CONSTRUCTOR_ACCESS:
-    FadeBy() {}
-    virtual ~FadeBy() {}
-	
-    /** initializes the action with duration and opacity */
-    bool initWithDuration(float duration, GLubyte opacity);
-	
+	FadeBy() {}
+	virtual ~FadeBy() {}
+
+	/** initializes the action with duration and opacity */
+	bool initWithDuration(float duration, GLubyte opacity, bool additive);
+
 protected:
-    GLubyte _byOpacity;
-    GLubyte _toOpacity;
-    GLubyte _fromOpacity;
+	GLubyte _byOpacity;
+	float _lastTime;
+	bool _additive;
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
+	CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
 };
 
 /** @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
