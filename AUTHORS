@@ -924,6 +924,7 @@ Developers:
     Teivaz
         Custom uniform search optimization
         Fixed compiling error on WP8.
+        Added method for custom precompiled shader program loading on WP8
         
     chareice
         Make `setup.py` work on zsh
