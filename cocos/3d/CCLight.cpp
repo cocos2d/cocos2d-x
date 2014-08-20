@@ -128,10 +128,9 @@ bool Light3D::getEnabled()
 
 void Light3D::calculateRotation( const Vec3 &direction )
 {
-    Vec3 inverseDir = -direction;
-    float projLen = sqrt(inverseDir.x * inverseDir.x + inverseDir.z * inverseDir.z);
-    float rotY = CC_RADIANS_TO_DEGREES(atan2f(inverseDir.x, inverseDir.z));
-    float rotX = -CC_RADIANS_TO_DEGREES(atan2f(inverseDir.y, projLen));
+    float projLen = sqrt(direction.x * direction.x + direction.z * direction.z);
+    float rotY = CC_RADIANS_TO_DEGREES(atan2f(-direction.x, -direction.z));
+    float rotX = -CC_RADIANS_TO_DEGREES(atan2f(-direction.y, projLen));
     setRotation3D(Vec3(rotX, rotY, 0.0f));
 }
 

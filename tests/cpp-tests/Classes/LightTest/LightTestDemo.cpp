@@ -55,7 +55,7 @@ LightTestDemo::LightTestDemo()
     camera->lookAt(Vec3(0.0, 0.0, 0.0), Vec3(0.0, 1.0, 0.0));
     addChild(camera);
 
-    TTFConfig ttfConfig("fonts/arial.ttf", 10);
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
     auto label1 = Label::createWithTTF(ttfConfig,"Directional Light");
     auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::DIRECTIONAL));
     auto label2 = Label::createWithTTF(ttfConfig,"Point Light");
@@ -64,9 +64,12 @@ LightTestDemo::LightTestDemo()
     auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::SPOT));
     auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
     menu->setPosition(Vec2::ZERO);
-    menuItem1->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y-50) );
-    menuItem2->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y -70));
-    menuItem3->setPosition( Vec2(VisibleRect::left().x + 50, VisibleRect::top().y -90));
+	menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem1->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y-50) );
+	menuItem2->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem2->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y -100));
+	menuItem3->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem3->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y -150));
     addChild(menu);
 }
 
