@@ -286,7 +286,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
-                auto subMeshState = SubMeshState::create(it->id);
+                auto subMeshState = SubMeshState::create(nodedata->id);
                 if(subMeshState)
                 {
                     _subMeshStates.pushBack(subMeshState);
@@ -333,7 +333,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                 auto sprite = new Sprite3D();
                 if (sprite)
                 {
-                    auto subMeshState = SubMeshState::create(it->id);
+                    auto subMeshState = SubMeshState::create(nodedata->id);
                     subMeshState->setSubMesh(getSubMesh(it->subMeshId));
                     if (it->matrialId == "" && matrialdatas.materials.size())
                     {
