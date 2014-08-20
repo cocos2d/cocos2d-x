@@ -72,8 +72,6 @@ public:
     /**sub mesh getter */
     SubMesh* getSubMesh() const { return _subMesh; }
     
-    const MeshCommand* getMeshCommand() const { return &_meshCommand; }
-    
     /**get GLProgramState*/
     GLProgramState* getGLProgramState() const { return _glProgramState; }
     
@@ -88,11 +86,11 @@ CC_CONSTRUCTOR_ACCESS:
     SubMeshState();
     virtual ~SubMeshState();
     
-    void genGLProgramState();
-    
     GLProgram* getDefaultGLProgram(bool textured);
     
     void setGLProgramState(GLProgramState* glProgramState);
+    
+    MeshCommand& getMeshCommand() { return _meshCommand; }
 
     /**skin setter*/
     void setSkin(MeshSkin* skin);

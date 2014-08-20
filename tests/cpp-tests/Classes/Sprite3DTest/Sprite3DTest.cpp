@@ -1173,7 +1173,7 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
     _useShoesId   =0;
     _useHairId = 0;
     
-    std::string fileName = "Sprite3DTest/GirlTest.c3b";
+    std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(4);
     sprite->setRotation3D(Vec3(0,0,0));

@@ -165,6 +165,7 @@ Sprite3D::Sprite3D()
 Sprite3D::~Sprite3D()
 {
     _subMeshStates.clear();
+    _glProgramStates.clear();
     _meshes.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
@@ -174,6 +175,7 @@ bool Sprite3D::initWithFile(const std::string &path)
 {
     _subMeshStates.clear();
     _meshes.clear();
+    _glProgramStates.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
     
@@ -224,59 +226,49 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
 
 void Sprite3D::genGLProgramState()
 {
-    if (_meshes.size() == 0)
-        return;
-    
-    //all the mesh should have the same attributes, FIX ME
-    auto mesh = _meshes.at(0);
-    
-    auto programstate = GLProgramState::getOrCreateWithGLProgram(getDefaultGLProgram(mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD)));
-    long offset = 0;
-    auto attributeCount = mesh->getMeshVertexAttribCount();
-    for (auto k = 0; k < attributeCount; k++) {
-        auto meshattribute = mesh->getMeshVertexAttribute(k);
-        programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-                                             meshattribute.size,
-                                             meshattribute.type,
-                                             GL_FALSE,
-                                             mesh->getVertexSizeInBytes(),
-                                             (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
+    std::unordered_map<Mesh*, GLProgramState*> glProgramestates;
+    for(auto& mesh : _meshes)
+    {
+        bool textured = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+        bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+        && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+        
+        GLProgram* glProgram = nullptr;
+        if(textured)
+        {
+            if (hasSkin)
+                glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+            else
+                glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+        }
+        else
+        {
+            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+        }
+        
+        auto programstate = GLProgramState::create(glProgram);
+        long offset = 0;
+        auto attributeCount = mesh->getMeshVertexAttribCount();
+        for (auto k = 0; k < attributeCount; k++) {
+            auto meshattribute = mesh->getMeshVertexAttribute(k);
+            programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+                                                 meshattribute.size,
+                                                 meshattribute.type,
+                                                 GL_FALSE,
+                                                 mesh->getVertexSizeInBytes(),
+                                                 (GLvoid*)offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+        
+        _glProgramStates.pushBack(programstate);
+        glProgramestates[mesh] = programstate;
     }
     
-    setGLProgramState(programstate);
-    auto count = _subMeshStates.size();
-    _meshCommands.resize(count);
-    for (int i = 0; i < count; i++) {
-        auto tex = _subMeshStates.at(i)->getTexture();
-        GLuint texID = tex ? tex->getName() : 0;
-        _meshCommands[i].genMaterialID(texID, programstate, _subMeshStates.at(i)->getSubMesh()->getMesh(), _blend);
+    for (auto& it : _subMeshStates) {
+        it->setGLProgramState(glProgramestates[it->getSubMesh()->getMesh()]);
     }
 }
 
-GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
-{
-    if (_meshes.size() == 0)
-        return nullptr;
-    
-    //all the mesh should have the same attributes, FIX ME
-    auto mesh = _meshes.at(0);
-    
-    bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
-    && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
-    
-    if(textured)
-    {
-        if (hasSkin)
-            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
-        
-        return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
-    }
-    else
-    {
-        return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
-    }
-}
 void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite)
 {
     Node* node=nullptr;
@@ -465,7 +457,6 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if (_skeleton)
         _skeleton->updateBoneMatrix();
     
-    GLProgramState* programstate = getGLProgramState();
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
@@ -476,8 +467,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             i++;
             continue;
         }
-        
-        auto& meshCommand = _meshCommands[i++];
+        auto programstate = submeshstate->getGLProgramState();
+        auto& meshCommand = submeshstate->getMeshCommand();
         
         GLuint textureID = submeshstate->getTexture() ? submeshstate->getTexture()->getName() : 0;
         auto submesh = submeshstate->getSubMesh();
@@ -544,15 +535,15 @@ Rect Sprite3D::getBoundingBox() const
 
 void Sprite3D::setCullFace(GLenum cullFace)
 {
-    for (auto& it : _meshCommands) {
-        it.setCullFace(cullFace);
+    for (auto& it : _subMeshStates) {
+        it->getMeshCommand().setCullFace(cullFace);
     }
 }
 
 void Sprite3D::setCullFaceEnabled(bool enable)
 {
-    for (auto& it : _meshCommands) {
-        it.setCullFaceEnabled(enable);
+    for (auto& it : _subMeshStates) {
+        it->getMeshCommand().setCullFaceEnabled(enable);
     }
 }
 

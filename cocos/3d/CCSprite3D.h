@@ -130,9 +130,6 @@ CC_CONSTRUCTOR_ACCESS:
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
-    /**get default shader*/
-    virtual GLProgram* getDefaultGLProgram(bool textured = true);
-    
     /**generate default GLProgramState*/
     void genGLProgramState();
 
@@ -147,8 +144,6 @@ protected:
 
     Skeleton3D*                  _skeleton; //skeleton
     
-    std::vector<MeshCommand>     _meshCommands; //render command each for one submesh
-    
     Vector<SubMeshState*>        _subMeshStates; // SubMeshStates
     
     std::unordered_map<std::string, AttachNode*> _attachments;
@@ -156,7 +151,8 @@ protected:
     BlendFunc                    _blend;
     
     //since 3.3
-    Vector<Mesh*>           _meshes;
+    Vector<Mesh*>              _meshes;
+    Vector<GLProgramState*>    _glProgramStates;
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
