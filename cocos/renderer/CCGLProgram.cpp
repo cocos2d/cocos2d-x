@@ -440,8 +440,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "struct PointLightSource         \n"
          "{         \n"
          "	 vec3 color;         \n"
-         "	 vec3 position;         \n"
-         "	 float range;         \n"
+         "	 vec4 position;         \n"
          "};         \n"
          "uniform PointLightSource CC_PointLightSource[CC_MAX_POINT_LIGHT_NUM];         \n"
          "uniform int CC_EnabledPointLightNum;          \n"
@@ -452,9 +451,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "	 vec3 color;         \n"
          "	 vec3 position;         \n"
          "	 vec3 direction;         \n"
-         "	 float innerAngle;         \n"
-         "	 float outerAngle;         \n"
-         "	 float range;         \n"
+         "   vec3 params; \n"
          "};         \n"
          "uniform SpotLightSource CC_SpotLightSource[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "uniform int CC_EnabledSpotLightNum;          \n"
@@ -972,7 +969,6 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         if (scene)
         {
             auto &lights = scene->getLights();
-            CCASSERT(lights.size() <= (CC_MAX_DIRECTIONAL_LIGHT_NUM + CC_MAX_POINT_LIGHT_NUM + CC_MAX_SPOT_LIGHT_NUM), "");
 
             char str[64];
             GLint enabledDirLightNum = 0;
@@ -985,9 +981,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                 {
                     if (light->getLightType() == Light3D::DIRECTIONAL)
                     {
-                        const Color3B &col = light->getColor();
-                        const Vec3 &dir = light->getDirection();
-
+                        CCASSERT(enabledDirLightNum < CC_MAX_DIRECTIONAL_LIGHT_NUM, "");
+                        const Color3B &col = light->getDisplayedColor();
+                        const Vec3 &dir = light->getWorldDirection();
                         sprintf(str, "CC_DirLightSource[%d].%s", enabledDirLightNum, "color");
                         setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
                         sprintf(str, "CC_DirLightSource[%d].%s", enabledDirLightNum, "direction");
@@ -997,35 +993,29 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                     else
                         if (light->getLightType() == Light3D::POINT)
                         {
-                            const Color3B &col = light->getColor();
+                            CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
+                            const Color3B &col = light->getDisplayedColor();
                             const Vec3 &pos = light->getPosition3D();
-
                             sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "color");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
                             sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "position");
-                            setUniformLocationWith3f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z);
-                            sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "range");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getRange());
+                            setUniformLocationWith4f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z, light->getRange());
                             ++enabledPointLightNum;
                         }
                         else
                         {
-                            const Color3B &col = light->getColor();
-                            const Vec3 &dir = light->getDirection();
+                            CCASSERT(enabledSpotLightNum < CC_MAX_SPOT_LIGHT_NUM, "");
+                            const Color3B &col = light->getDisplayedColor();
+                            const Vec3 &dir = light->getWorldDirection();
                             const Vec3 &pos = light->getPosition3D();
-
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "color");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "position");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z);
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "direction");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
-                            sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "innerAngle");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getInnerAngle());
-                            sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "outerAngle");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getOuterAngle());
-                            sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "range");
-                            setUniformLocationWith1f(glGetUniformLocation(_program, str), (GLfloat)light->getRange());
+                            sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "params");
+                            setUniformLocationWith3f(glGetUniformLocation(_program, str), light->getInnerAngle(), light->getOuterAngle(), light->getRange());
                             ++enabledSpotLightNum;
                         }
                 }
@@ -1033,24 +1023,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
             }
 
             
-            if (_builtInUniforms[GLProgram::UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM])
-            {
-                CCASSERT(enabledDirLightNum <= CC_MAX_DIRECTIONAL_LIGHT_NUM, "");
-                setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM], enabledDirLightNum);
-            }
-
-            if (_builtInUniforms[GLProgram::UNIFORM_ENABLED_POINT_LIGHT_NUM])
-            {
-                CCASSERT(enabledPointLightNum <= CC_MAX_POINT_LIGHT_NUM, "");
-                setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_POINT_LIGHT_NUM], enabledPointLightNum);
-            }
-
-            if (_builtInUniforms[GLProgram::UNIFORM_ENABLED_SPOT_LIGHT_NUM])
-            {
-                CCASSERT(enabledSpotLightNum <= CC_MAX_SPOT_LIGHT_NUM, "");
-                setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_SPOT_LIGHT_NUM], enabledSpotLightNum);
-            }
-
+            setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM], enabledDirLightNum);
+            setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_POINT_LIGHT_NUM], enabledPointLightNum);
+            setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_SPOT_LIGHT_NUM], enabledSpotLightNum);
             setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_AMBIENT_COLOR], scene->getAmbientColor().r, scene->getAmbientColor().g, scene->getAmbientColor().b, scene->getAmbientColor().a);
         }
     }

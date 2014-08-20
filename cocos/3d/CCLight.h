@@ -82,18 +82,25 @@ public:
     float getRange();
 
     /**
-     * Sets the Direction of Directional light.
-     *
-     * @param dir The Direction of the Directional light.
-     */
+    * Sets the Direction of Directional light or Spot light.
+    *
+    * @param dir The Direction of the Directional light or Spot light.
+    */
     void setDirection(const Vec3 &dir);
 
     /**
-     * Returns the Direction of Directional light.
-     *
-     * @return dir Direction of the Directional light.
-     */
-    const Vec3& getDirection() const;
+    * Returns the Direction of Directional light or Spot light.
+    *
+    * @return dir Direction of the Directional light or Spot light.
+    */
+    Vec3 getDirection() const;
+
+   /**
+    * Returns the World coordinate Direction of Directional light or Spot light.
+    *
+    * @return dir the World coordinate Direction of the Directional light or Spot light.
+    */
+    Vec3 getWorldDirection() const;
 
     /**
      * Sets the inner angle of a spot light (in radians).
@@ -134,11 +141,11 @@ protected:
      * Sets light type.
      */
     void setLightType(LightType lightType);
+    void calculateRotation(const Vec3 &direction);
 
 protected:
 
     LightType _lightType;
-    Vec3 _dir;
     bool _isEnabled;
     float _range;
     float _innerAngle;
