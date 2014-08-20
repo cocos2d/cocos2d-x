@@ -11,6 +11,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace ui;
 
 
 EditBoxTest::EditBoxTest()
@@ -37,7 +38,7 @@ EditBoxTest::EditBoxTest()
     auto editBoxSize = Size(visibleSize.width - 100, 60);
 
     // top
-    _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
+    _editName = EditBox::create(editBoxSize, ui::Scale9Sprite::create("extensions/green_edit.png"));
     _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
     _editName->setFontName("Paint Boy");
     _editName->setFontSize(25);
@@ -50,7 +51,7 @@ EditBoxTest::EditBoxTest()
     addChild(_editName);
     
     // middle
-    _editPassword = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/orange_edit.png"));
+    _editPassword = EditBox::create(editBoxSize, ui::Scale9Sprite::create("extensions/orange_edit.png"));
     _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	_editPassword->setFont("American Typewriter", 30);
@@ -67,7 +68,7 @@ EditBoxTest::EditBoxTest()
     addChild(_editPassword);
     
     // bottom
-    _editEmail = EditBox::create(Size(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
+    _editEmail = EditBox::create(Size(editBoxSize.width, editBoxSize.height), ui::Scale9Sprite::create("extensions/yellow_edit.png"));
     _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     _editEmail->setAnchorPoint(Vec2(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");
@@ -90,17 +91,17 @@ void EditBoxTest::toExtensionsMainLayer(cocos2d::Ref *sender)
     scene->release();
 }
 
-void EditBoxTest::editBoxEditingDidBegin(cocos2d::extension::EditBox* editBox)
+void EditBoxTest::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
 {
     log("editBox %p DidBegin !", editBox);
 }
 
-void EditBoxTest::editBoxEditingDidEnd(cocos2d::extension::EditBox* editBox)
+void EditBoxTest::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
 {
     log("editBox %p DidEnd !", editBox);
 }
 
-void EditBoxTest::editBoxTextChanged(cocos2d::extension::EditBox* editBox, const std::string& text)
+void EditBoxTest::editBoxTextChanged(cocos2d::ui::EditBox* editBox, const std::string& text)
 {
     log("editBox %p TextChanged, text: %s ", editBox, text.c_str());
 }

@@ -7,7 +7,7 @@
 #include "GUI/CCControlExtension/CCControlExtensions.h"
 #include "GUI/CCScrollView/CCScrollView.h"
 #include "GUI/CCScrollView/CCTableView.h"
-#include "GUI/CCEditBox/CCEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 
 // Physics integration
 #include "physics-nodes/CCPhysicsDebugNode.h"
