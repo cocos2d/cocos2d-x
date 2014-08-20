@@ -35,6 +35,8 @@
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCMeshCommand.h"
 #include "3d/3dExport.h"
 
 NS_CC_BEGIN
@@ -70,13 +72,27 @@ public:
     /**sub mesh getter */
     SubMesh* getSubMesh() const { return _subMesh; }
     
+    const MeshCommand* getMeshCommand() const { return &_meshCommand; }
+    
+    /**get GLProgramState*/
+    GLProgramState* getGLProgramState() const { return _glProgramState; }
+    
     /**name getter */
     const std::string& getName() const { return _name; }
+    
+    void setBlendFunc(const BlendFunc &blendFunc);
+    const BlendFunc &getBlendFunc() const;
 
 CC_CONSTRUCTOR_ACCESS:
     
     SubMeshState();
     virtual ~SubMeshState();
+    
+    void genGLProgramState();
+    
+    GLProgram* getDefaultGLProgram(bool textured);
+    
+    void setGLProgramState(GLProgramState* glProgramState);
 
     /**skin setter*/
     void setSkin(MeshSkin* skin);
@@ -88,6 +104,8 @@ CC_CONSTRUCTOR_ACCESS:
     const AABB& getAABB() const { return _aabb; }
     
     void calcuateAABB();
+    
+    void bindMeshCommand();
 protected:
     Texture2D* _texture;  //texture that submesh is using
     MeshSkin*  _skin;     //skin
@@ -96,6 +114,9 @@ protected:
     //since 3.3
     std::string  _name;
     SubMesh*     _subMesh;
+    GLProgramState* _glProgramState;
+    MeshCommand     _meshCommand;
+    BlendFunc       _blend;
     AABB         _aabb;
     std::function<void()> _visibleChanged;
 };
