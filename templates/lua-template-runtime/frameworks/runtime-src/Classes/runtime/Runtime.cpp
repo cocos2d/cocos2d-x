@@ -986,7 +986,7 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
         if (!FileUtils::getInstance()->isAbsolutePath(arg0))
             arg0 = g_resourcePath+arg0;
         cobj->addSearchPath(arg0);
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
         cobj->addSearchPath(argtmp);
 #endif
