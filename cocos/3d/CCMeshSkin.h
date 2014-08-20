@@ -35,6 +35,7 @@
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +46,7 @@ class Skeleton3D;
  * MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
  * And it is responsible for computing matrix palletes that used by skin mesh rendering.
  */
-class CC_DLL MeshSkin: public Ref
+class CC_3D_DLL MeshSkin: public Ref
 {
 public:
     
@@ -98,34 +99,6 @@ protected:
     // Each 4x3 row-wise matrix is represented as 3 Vec4's.
     // The number of Vec4's is (_skinBones.size() * 3).
     Vec4* _matrixPalette;
-};
-
-/**
- * MeshSkinData Cache
- */
-class MeshSkinDataCache
-{
-public:
-    /**get & destroy*/
-    static MeshSkinDataCache* getInstance();
-    static void destroyInstance();
-    
-    /**get mesh skin data from cache*/
-    const SkinData* getMeshSkinData(const std::string& key) const;
-    
-    /**add mesh skin data to cache*/
-    bool addMeshSkinData(const std::string& key, const SkinData& skinData);
-    
-    /**remove all mesh skin data*/
-    void removeAllMeshSkinData();
-    
-protected:
-    MeshSkinDataCache();
-    ~MeshSkinDataCache();
-    
-    static MeshSkinDataCache* _cacheInstance; // instance
-    
-    std::unordered_map<std::string, SkinData> _skinDatas; //cached skindatas
 };
 
 NS_CC_END

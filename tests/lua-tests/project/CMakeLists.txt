@@ -27,7 +27,9 @@ target_link_libraries(${APP_NAME}
   luaspine
   luaextension
   luaui
+  luacocos3d
   cocos2d
+  cocos3d
   audio
   cocostudio
   spine

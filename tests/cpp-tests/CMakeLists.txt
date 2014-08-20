@@ -207,6 +207,7 @@ target_link_libraries(${APP_NAME}
   extensions
   audio
   cocos2d
+  cocos3d
   box2d
   ui
   network

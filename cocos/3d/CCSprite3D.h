@@ -35,6 +35,9 @@
 #include "renderer/CCMeshCommand.h"
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
+#include "3d/CCMesh.h"
+#include "3d/3dExport.h"
+
 
 NS_CC_BEGIN
 
@@ -48,7 +51,7 @@ class Skeleton3D;
 struct NodeData;
 class SubMesh;
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
-class CC_DLL Sprite3D : public Node, public BlendProtocol
+class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
@@ -160,7 +163,49 @@ protected:
     bool                         _aabbDirty;
 };
 
-extern std::string CC_DLL s_attributeNames[];//attribute names array
+///////////////////////////////////////////////////////
+class Sprite3DCache
+{
+public:
+    struct Sprite3DData
+    {
+        Vector<Mesh*>   meshes;
+        NodeDatas*      nodedatas;
+        MaterialDatas*  materialdatas;
+        ~Sprite3DData()
+        {
+            if (nodedatas)
+                delete nodedatas;
+            if (materialdatas)
+                delete materialdatas;
+            meshes.clear();
+        }
+    };
+    
+    /**get & destroy*/
+    static Sprite3DCache* getInstance();
+    static void destroyInstance();
+    
+    Sprite3DData* getSpriteData(const std::string& key) const;
+    
+    bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
+    
+    void removeSprite3DData(const std::string& key);
+    
+    void removeAllSprite3DData();
+    
+    CC_CONSTRUCTOR_ACCESS:
+    Sprite3DCache();
+    ~Sprite3DCache();
+    
+protected:
+    
+    
+    static Sprite3DCache*                        _cacheInstance;
+    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
+};
+
+extern std::string CC_3D_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_

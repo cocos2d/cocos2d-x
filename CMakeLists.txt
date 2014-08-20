@@ -204,6 +204,9 @@ add_subdirectory(cocos/audio)
 # cocos2d library
 add_subdirectory(cocos)
 
+# cocos3d library
+add_subdirectory(cocos/3d)
+
 # network library
 add_subdirectory(cocos/network)
 

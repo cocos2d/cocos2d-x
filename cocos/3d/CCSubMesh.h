@@ -35,6 +35,7 @@
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -60,7 +61,7 @@ class Mesh;
 /**
  * SubMesh: Defines the way the mesh's vertices how to be connected together.
  */
-class CC_DLL SubMesh : public Ref
+class CC_3D_DLL SubMesh : public Ref
 {
     friend class Mesh;
     friend class SubMeshState;

@@ -60,6 +60,28 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 
 include $(BUILD_STATIC_LIBRARY)
 
+#libluacocos3d
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := cocos3d_lua_static
+
+LOCAL_MODULE_FILENAME := libluacocos3d
+
+LOCAL_SRC_FILES := ../manual/3d/lua_cocos2dx_3d_manual.cpp \
+                   ../auto/lua_cocos2dx_3d_auto.cpp
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../auto \
+                    $(LOCAL_PATH)/../manual/3d \
+                    $(LOCAL_PATH)/../../../3d \
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/3d 
+
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos3d_static
+
+include $(BUILD_STATIC_LIBRARY)
+
+#libluacocosdenshion
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := cocosdenshion_lua_static
@@ -238,5 +260,6 @@ $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
 $(call import-module,ui)
 $(call import-module,extensions)
+$(call import-module,3d)
 
 

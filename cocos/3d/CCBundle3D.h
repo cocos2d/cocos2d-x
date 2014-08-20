@@ -36,6 +36,7 @@
 
 #include "json/document.h"
 #include "CCBundleReader.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 class Animation3D;
@@ -47,7 +48,7 @@ class Data;
  * c3t text file
  * c3b binary file
  */
-class CC_DLL Bundle3D
+class CC_3D_DLL Bundle3D
 {
 public:
     /**you can define yourself bundle and set it, use default bundle otherwise*/
@@ -89,12 +90,6 @@ public:
      * @param id The ID of the animation, load the first animation in the bundle if it is empty
      */
     virtual bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
-    
-    /**
-     * load skeleton data from bundle
-     *
-     */
-    virtual bool loadSkeletonData(const std::string& id, Skeleton3DData* skeletondata);
     
     //since 3.3, to support reskin
     virtual bool loadMeshDatas(MeshDatas& meshdatas);
