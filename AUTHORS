@@ -805,6 +805,7 @@ Developers:
         Add support of software PVRTC v1 decompression
         Fixed a bug that ttf font have not effect on Mac OS X
         Fixed a bug that before touchMove Touch::_prevPoint contains junk
+        Added Device::setKeepScreenOn()
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
