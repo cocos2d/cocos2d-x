@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class RandomHelper {
+class CC_DLL RandomHelper {
 public:
     template<typename T>
     static inline T random_real(T min, T max) {
