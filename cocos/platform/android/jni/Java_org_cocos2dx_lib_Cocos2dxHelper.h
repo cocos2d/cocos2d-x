@@ -39,7 +39,6 @@ extern std::string getFileDirectoryJNI();
 extern void enableAccelerometerJni();
 extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
-//extern void activityInitWithOGLCntattrsJni(int* OGLCntattrs);
 extern void setKeepScreenOnJni(bool value);
 // functions for UserDefault
 extern bool getBoolForKeyJNI(const char* key, bool defaultValue);

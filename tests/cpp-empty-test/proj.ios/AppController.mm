@@ -39,21 +39,21 @@ static AppDelegate s_sharedApplication;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     cocos2d::Application *app = cocos2d::Application::getInstance();
-    app->setOGLCntattrs();
+    app->initContextAttrs();
+    cocos2d::GLViewImpl::convertAttrs();
     
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    auto glview = cocos2d::GLViewImpl::createWithFullScreen("ios cpp-empty-test");
-    CCEAGLView *eaglView = (CCEAGLView*)glview->getEAGLView();
-    /*CCEAGLView eaglView = [CCEAGLView viewWithFrame: [window bounds]
-                                        pixelFormat: kEAGLColorFormatRGBA8
-                                        depthFormat: GL_DEPTH_COMPONENT16
+    
+    CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
+                                         pixelFormat: (NSString*)cocos2d::GLViewImpl::_pixelFormat
+                                         depthFormat: cocos2d::GLViewImpl::_depthFormat
                                  preserveBackbuffer: NO
                                          sharegroup: nil
                                       multiSampling: NO
-                                    numberOfSamples: 0];*/
+                                    numberOfSamples: 0];
     
     
     // Use RootViewController manage CCEAGLView
@@ -77,9 +77,9 @@ static AppDelegate s_sharedApplication;
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
     
-    glview->setSize();
+    //glview->setSize();
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    //cocos2d::GLViewImpl *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
+    cocos2d::GLViewImpl *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
     
     //cocos2d::Application *app = cocos2d::Application::getInstance();

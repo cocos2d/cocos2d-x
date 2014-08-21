@@ -43,15 +43,15 @@ AppDelegate::~AppDelegate()
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
-bool AppDelegate::setOGLCntattrs()
+//if you want a different context,just modify the value of contextAttrs
+//it will takes effect on all platforms
+void AppDelegate::initContextAttrs()
 {
     //set OpenGL context attributions
     //red,green,blue,alpha,depth,stencil
-    int OGLCntattrs[] = {8, 8, 8, 8, 24, 8};
+    ContextAttrs contextAttrs = {8, 8, 8, 8, 24, 8};
 
-    GLView::setOGLCntattrs(OGLCntattrs);
-    
-    return true;
+    GLView::setContextAttrs(contextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching()

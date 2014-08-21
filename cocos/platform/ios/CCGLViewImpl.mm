@@ -83,13 +83,13 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-void GLViewImpl::convert(int* OGLCntattrs)
+void GLViewImpl::convertAttrs()
 {
-    if(OGLCntattrs[0]==8 && OGLCntattrs[1]==8 && OGLCntattrs[2]==8 && OGLCntattrs[3]==8)
+    if(_contextAttrs.redBits==8 && _contextAttrs.greenBits==8 && _contextAttrs.blueBits==8 && _contextAttrs.alphaBits==8)
     {
         _pixelFormat = kEAGLColorFormatRGBA8;
     }
-    if(OGLCntattrs[4]==24 && OGLCntattrs[5]==8)
+    if(_contextAttrs.depthBits==24 && _contextAttrs.stencilBits==8)
     {
         _depthFormat = GL_DEPTH24_STENCIL8_OES;
     }
@@ -120,7 +120,7 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-    convert(_OGLCntattrs);
+    convertAttrs();
     CCEAGLView *eaglview = [CCEAGLView viewWithFrame: r
                                        pixelFormat: (NSString*)_pixelFormat
                                        depthFormat: _depthFormat

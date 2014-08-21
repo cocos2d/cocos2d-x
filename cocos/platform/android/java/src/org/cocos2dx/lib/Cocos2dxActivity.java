@@ -95,16 +95,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	
     	Cocos2dxHelper.init(this);
     	
-    	//preCreateOGLCtx();
-    	int[] OGLCntattrs = getContextAttrs();
-    	this.initWithOGLCntattrs(OGLCntattrs);
-    	//this.reinit();
+    	int[] OGLCtxattrs = getContextAttrs();
+    	this.initWithOGLCtxattrs(OGLCtxattrs);
+
     	if (mVideoHelper == null) {
     		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
 		}
 	}
 
-	//private static native void preCreateOGLCtx();
+	//native method,call GLView::getContextAttrs() to get the OpenGL ES context attributions
 	private static native int[] getContextAttrs();
 	
 	// ===========================================================
@@ -172,7 +171,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	public void initWithOGLCntattrs(int[] OGLCntattrs) {
+	public void initWithOGLCtxattrs(int[] OGLCtxattrs) {
 		
     	// FrameLayout
         ViewGroup.LayoutParams framelayout_params =
@@ -194,8 +193,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = new Cocos2dxGLSurfaceView(this);
 
-        //this.mGLSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
-        this.mGLSurfaceView.setEGLConfigChooser(OGLCntattrs[0], OGLCntattrs[1],OGLCntattrs[2],OGLCntattrs[3],OGLCntattrs[4],OGLCntattrs[5]);
+        this.mGLSurfaceView.setEGLConfigChooser(OGLCtxattrs[0], OGLCtxattrs[1],OGLCtxattrs[2],OGLCtxattrs[3],OGLCtxattrs[4],OGLCtxattrs[5]);
 
         // ...add to FrameLayout
         mFrameLayout.addView(this.mGLSurfaceView);

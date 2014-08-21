@@ -39,7 +39,7 @@ public:
     AppDelegate();
     virtual ~AppDelegate();
 
-    virtual bool setOGLCntattrs();
+    virtual void initContextAttrs();
 
     /**
     @brief    Implement Director and Scene init code here.

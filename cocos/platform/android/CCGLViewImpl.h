@@ -41,11 +41,10 @@ public:
 
     // static function
     static GLViewImpl* create(const std::string &viewname);
-    //static GLViewImpl* createWithOGLCntattrs(const std::string& viewName);
     static GLViewImpl* createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor = 1.0f);
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
 
-    static int* getContextAttrs();
+    static ContextAttrs getContextAttrs();
 
     bool isOpenGLReady() override;
     void end() override;

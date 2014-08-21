@@ -102,7 +102,8 @@ public:
     */
     virtual void setAnimationInterval(double interval) = 0;
 
-    virtual bool setOGLCntattrs() { return false; }
+    //initialize the OpenGL/OpenGL ES context attribution here for all platforms;
+    virtual void initContextAttrs() {}
 
     /**
     @brief Get current language config
