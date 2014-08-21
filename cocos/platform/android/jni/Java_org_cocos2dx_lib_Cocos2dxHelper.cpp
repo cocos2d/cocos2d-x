@@ -209,6 +209,16 @@ void disableAccelerometerJni() {
     }
 }
 
+void setKeepScreenOnJni(bool value) {
+    JniMethodInfo t;
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setKeepScreenOn", "(Z)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, value);
+        
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 // functions for UserDefault
 bool getBoolForKeyJNI(const char* key, bool defaultValue)
 {

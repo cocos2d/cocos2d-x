@@ -56,7 +56,7 @@ static const char* INDEXNUM = "indexnum";
 static const char* INDICES = "indices";
 static const char* SUBMESH = "submesh";
 static const char* ATTRIBUTES = "attributes";
-static const char* SIZE = "size";
+static const char* ATTRIBUTESIZE = "size";
 static const char* TYPE = "type";
 static const char* ATTRIBUTE = "attribute";
 static const char* SKIN = "skin";
@@ -717,7 +717,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         {
             const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-            int size = mesh_vertex_attribute_val[SIZE].GetInt();
+            int size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetInt();
             std::string type = mesh_vertex_attribute_val[TYPE].GetString();
             std::string attribute = mesh_vertex_attribute_val[ATTRIBUTE].GetString();
 
@@ -1009,7 +1009,7 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[SIZE].GetUint();
+        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
         meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
         meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
@@ -1053,7 +1053,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[SIZE].GetUint();
+        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
         meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
         meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());

@@ -12,7 +12,7 @@ LOCAL_SRC_FILES := main.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static
 
 include $(BUILD_SHARED_LIBRARY)
 

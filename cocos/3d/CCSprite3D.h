@@ -140,6 +140,8 @@ CC_CONSTRUCTOR_ACCESS:
     void genGLProgramState();
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
+    void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
+    Sprite3D* createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas);
     /**get SubMesh by Id*/
     SubMesh* getSubMesh(const std::string& subMeshId) const;
     void  addSubMeshState(SubMeshState* subMeshState);

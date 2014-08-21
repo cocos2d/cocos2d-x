@@ -55,8 +55,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/cocos2d 
 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := luajit_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
+LOCAL_STATIC_LIBRARIES := luajit_static
+LOCAL_STATIC_LIBRARIES += cocos2dx_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -76,8 +76,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../auto \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/3d 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos3d_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos3d_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -97,8 +97,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../auto \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/cocosdenshion 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cocosdenshion_static
+LOCAL_STATIC_LIBRARIES += cocos2d_lua_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -134,8 +134,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/network \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/network
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos_network_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -156,8 +156,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/cocosbuilder \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/cocosbuilder
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocosbuilder_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -179,8 +179,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/cocostudio \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/cocostudio
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocostudio_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -201,8 +201,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/spine \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/spine
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += spine_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -223,8 +223,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/extension \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/extension
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos_extension_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -246,8 +246,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual/ui \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual/ui
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ui_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += cocos_ui_static
 
 include $(BUILD_STATIC_LIBRARY)
 
