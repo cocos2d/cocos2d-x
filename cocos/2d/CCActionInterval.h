@@ -860,6 +860,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     GLubyte _byOpacity;
     float _lastTime;
+    float _lastFrac;
     bool _additive;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
