@@ -81,12 +81,24 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
     }
 }
 
-void Java_org_cocos2dx_lib_Cocos2dxActivity_preCreateOGLCtx(JNIEnv*  env, jobject thiz)
+jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getContextAttrs(JNIEnv*  env, jobject thiz)
+{
+    cocos_android_app_init(env, thiz);
+    cocos2d::Application::getInstance()->setOGLCntattrs(); 
+    int* contextAttrs = GLViewImpl::getContextAttrs();
+
+    jintArray OGLCntattrsJava = env->NewIntArray(6);
+        env->SetIntArrayRegion(OGLCntattrsJava, 0, 6, contextAttrs); 
+    
+    return OGLCntattrsJava;
+}
+
+/*void Java_org_cocos2dx_lib_Cocos2dxActivity_preCreateOGLCtx(JNIEnv*  env, jobject thiz)
 {
     cocos_android_app_init(env, thiz);
     cocos2d::Application::getInstance()->setOGLCntattrs();  
     GLViewImpl::createWithOGLCntattrs("Android app");
-}
+}*/
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged(JNIEnv*  env, jobject thiz, jint w, jint h)
 {

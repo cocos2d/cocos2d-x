@@ -70,10 +70,11 @@ namespace {
     
 }
 
-int* GLView::_OGLCntattrs = new int[6];
+int* GLView::_OGLCntattrs = nullptr;
 
 void GLView::setOGLCntattrs(int* OGLCntattrs)
 {
+    _OGLCntattrs = new int[6];
     for(int i = 0; i < 6; i++)
     {
         _OGLCntattrs[i] = OGLCntattrs[i];

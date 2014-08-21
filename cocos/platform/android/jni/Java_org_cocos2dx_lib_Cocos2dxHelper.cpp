@@ -209,7 +209,7 @@ void disableAccelerometerJni() {
     }
 }
 
-void activityInitWithOGLCntattrsJni(int* OGLCntattrs) {
+/*void activityInitWithOGLCntattrsJni(int* OGLCntattrs) {
     JniMethodInfo t;
 
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "activityInitWithOGLCntattrs", "([I)V")) {
@@ -220,7 +220,7 @@ void activityInitWithOGLCntattrsJni(int* OGLCntattrs) {
         t.env->DeleteLocalRef(t.classID);
         CCLOG("call Cocos2dxHelper activityInitWithOGLCntattrs");
     }
-}
+}*/
 
 void setKeepScreenOnJni(bool value) {
     JniMethodInfo t;

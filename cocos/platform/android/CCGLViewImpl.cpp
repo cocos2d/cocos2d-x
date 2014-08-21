@@ -73,11 +73,17 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithOGLCntattrs(const std::string& viewName)
+/*GLViewImpl* GLViewImpl::createWithOGLCntattrs(const std::string& viewName)
 { 
     activityInitWithOGLCntattrsJni(_OGLCntattrs);
 
     return nullptr;
+}*/
+
+
+int* GLViewImpl::getContextAttrs()
+{
+    return _OGLCntattrs;
 }
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)

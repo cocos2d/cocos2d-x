@@ -103,9 +103,9 @@ public class Cocos2dxHelper {
         return sActivity;
     }
 
-    public static void activityInitWithOGLCntattrs(int[] OGLCntattrs){
+    /*public static void activityInitWithOGLCntattrs(int[] OGLCntattrs){
     	((Cocos2dxActivity)sActivity).initWithOGLCntattrs(OGLCntattrs);
-    }
+    }*/
     
     public static void addOnActivityResultListener(OnActivityResultListener listener) {
         onActivityResultListeners.add(listener);
