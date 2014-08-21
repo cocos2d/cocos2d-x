@@ -1970,7 +1970,7 @@ bool FadeBy::initWithDuration(float duration, GLubyte opacity, bool additive)
     if (ActionInterval::initWithDuration(duration))
     {
         _byOpacity = opacity;
-	_additive = additive;
+        _additive = additive;
         return true;
     }
 
@@ -1994,10 +1994,11 @@ FadeBy* FadeBy::reverse() const
 void FadeBy::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-
+	
     if (target)
     {
-	_lastTime = 0.0;
+        _lastTime = 0.0;
+        _lastFrac = 0.0;
     }
 }
 
@@ -2006,21 +2007,29 @@ void FadeBy::update(float time)
     if (_target)
     {
         float dt = (time - _lastTime);
-	_lastTime = time;
+        _lastTime = time;
 
-	GLubyte fromOpacity = _target->getOpacity();
-	GLubyte nextOpacity = fromOpacity;
-	if (_additive) {
-	    nextOpacity += (_byOpacity * dt );
-	    if (nextOpacity < fromOpacity) nextOpacity = 255;
-	}
-	else {
-	    nextOpacity -= (_byOpacity * dt);
+        GLubyte fromOpacity = _target->getOpacity();
+        GLubyte nextOpacity = fromOpacity;
+        if (_additive) {
+            float val = _byOpacity * dt + _lastFrac;
+            float num = roundf( val );
+            _lastFrac = val - num;
+            nextOpacity += num;
+            if (nextOpacity < fromOpacity) nextOpacity = 255;
+        }
+        else {
+            float val = _byOpacity * dt + _lastFrac;
+            float num = roundf( val );
+            _lastFrac = val - num;
+            nextOpacity -= num;
             if (nextOpacity > fromOpacity) nextOpacity = 0;
         }
+
         _target->setOpacity( nextOpacity );
     }
 }
+
 
 //
 // TintTo
