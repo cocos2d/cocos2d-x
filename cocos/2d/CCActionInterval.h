@@ -839,30 +839,30 @@ private:
 class CC_DLL FadeBy : public ActionInterval
 {
 public:
-	/** creates an action with duration and opacity */
-	static FadeBy* create(float duration, GLubyte opacity, bool additive);
+    /** creates an action with duration and opacity */
+    static FadeBy* create(float duration, GLubyte opacity, bool additive);
 
-	//
-	// Overrides
-	//
-	virtual FadeBy* clone() const override;
-	virtual FadeBy* reverse(void) const override;
-	virtual void startWithTarget(Node *target) override;
-	virtual void update(float time) override;
+    //
+    // Overrides
+    //
+    virtual FadeBy* clone() const override;
+    virtual FadeBy* reverse(void) const override;
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
 
 CC_CONSTRUCTOR_ACCESS:
-	FadeBy() {}
-	virtual ~FadeBy() {}
+    FadeBy() {}
+    virtual ~FadeBy() {}
 
-	/** initializes the action with duration and opacity */
-	bool initWithDuration(float duration, GLubyte opacity, bool additive);
+    /** initializes the action with duration and opacity */
+    bool initWithDuration(float duration, GLubyte opacity, bool additive);
 
 protected:
-	GLubyte _byOpacity;
-	float _lastTime;
-	bool _additive;
+    GLubyte _byOpacity;
+    float _lastTime;
+    bool _additive;
 private:
-	CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
+    CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
 };
 
 /** @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
