@@ -70,6 +70,7 @@ static const char* NODES = "nodes";
 static const char* CHILDREN = "children";
 static const char* PARTS = "parts";
 static const char* BONES = "bones";
+static const char* SKELETON = "skeleton";
 static const char* MATERIALS = "materials";
 static const char* ANIMATIONS = "animations";
 static const char* TRANSFORM = "transform";
@@ -1677,7 +1678,7 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
         std::string id = jnode[ID].GetString();
         NodeData* nodedata = parseNodesRecursivelyJson(jnode);
 
-        bool isSkeleton=jnode["skeleton"].GetBool();
+        bool isSkeleton = jnode[SKELETON].GetBool();
         if (isSkeleton)
             nodedatas.skeleton.push_back(nodedata);
         else
@@ -1803,11 +1804,16 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
 {
     // id
     std::string id = _binaryReader.readString();
-    if (_binaryReader.read(&skeleton, 1, 1) != 1)
+    // is skeleton
+    bool skeleton_;
+    if (_binaryReader.read(&skeleton_, 1, 1) != 1)
     {
         CCASSERT(false, "Failed to read is sleleton");
         return nullptr;
     }
+    if (skeleton_)
+        skeleton = true;
+    
     // transform
     Mat4 transform;
     if (!_binaryReader.readMatrix(transform.m))
