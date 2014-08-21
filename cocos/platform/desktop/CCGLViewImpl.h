@@ -116,7 +116,6 @@ protected:
     bool initWithFullScreen(const std::string& viewName);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
-protected:
     bool initGlew();
 
     void updateFrameSize();
