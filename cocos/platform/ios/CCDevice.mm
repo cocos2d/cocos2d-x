@@ -477,6 +477,11 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     return ret;
 }
 
+void Device::setKeepScreenOn(bool value)
+{
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+
 NS_CC_END
 
 #endif // CC_PLATFORM_IOS

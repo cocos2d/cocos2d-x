@@ -16,9 +16,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/..
 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
-LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES += cocos_curl_static
+LOCAL_STATIC_LIBRARIES += libwebsockets_static
 
 include $(BUILD_STATIC_LIBRARY)
 
