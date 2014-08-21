@@ -781,7 +781,7 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(Widget*wi
     {
         checkBox->loadTextures(backGroundFileName_tp, backGroundSelectedFileName_tp, frontCrossFileName_tp,backGroundDisabledFileName_tp,frontCrossDisabledFileName_tp);
     }
-    checkBox->setSelectedState(DICTOOL->getBooleanValue_json(options, "selectedState"));
+    checkBox->setSelected(DICTOOL->getBooleanValue_json(options, "selectedState"));
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
