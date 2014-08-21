@@ -74,5 +74,8 @@ NS_CC_BEGIN
 #include "ccShader_3D_PositionTex.vert"
 #include "ccShader_3D_Color.frag"
 #include "ccShader_3D_ColorTex.frag"
+#include "ccShader_3D_PositionTexNoNormal.vert"
+#include "ccShader_3D_ColorNoNormal.frag"
+#include "ccShader_3D_ColorTexNoNormal.frag"
 
 NS_CC_END

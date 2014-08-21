@@ -40,11 +40,11 @@ void SpotLight(int n, vec4 ePosition, vec3 eNormal, inout vec4 intensity)
     {
         vec3 lightDir = CC_SpotLightSource[n].position - ePosition.xyz;
         lightDir = normalize(lightDir);
-        float spotDot = dot(lightDir, normalize(-CC_SpotLightSource[n].direction));
+        float spotDot = dot(normalize(lightDir), normalize(-CC_SpotLightSource[n].direction));
         float innerCos = cos(CC_SpotLightSource[n].params.x);
         float outerCos = cos(CC_SpotLightSource[n].params.y);
         float factor = smoothstep(outerCos, innerCos, spotDot);
-        intensity.xyz += CC_SpotLightSource[n].color * max(0.0, dot(lightDir, eNormal)) * factor;	
+		intensity.xyz += CC_SpotLightSource[n].color * max(0.0, dot(lightDir, eNormal)) * factor;	
     }
     intensity.w = 1.0;
 }

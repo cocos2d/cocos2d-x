@@ -192,7 +192,7 @@ void LightTestDemo::addLights()
     _pointLight->setEnabled(false);
     addChild(_pointLight);
 
-    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(100.0, 100.0, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 1000.0f);
+    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(100.0, 100.0, 0.0f), Color3B(200, 200, 200), 0.1, 0.3, 1000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);

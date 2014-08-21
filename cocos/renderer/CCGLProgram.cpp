@@ -79,6 +79,9 @@ const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
 const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
 const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTexture";
+const char* GLProgram::SHADER_3D_POSITION_NO_NORMAL = "Shader3DPosition_noNormal";
+const char* GLProgram::SHADER_3D_POSITION_TEXTURE_NO_NORMAL = "Shader3DPositionTexture_noNormal";
+const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE_NO_NORMAL = "Shader3DSkinPositionTexture_noNormal";
 
 
 // uniform names
@@ -430,8 +433,8 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "#if CC_MAX_DIRECTIONAL_LIGHT_NUM \n"
          "struct DirectionalLightSource         \n"
          "{                                   \n"
-         "	vec3 color;         \n"
-         "	vec3 direction;         \n"
+         "  vec3 color;         \n"
+         "  vec3 direction;         \n"
          "};         \n"
          "uniform DirectionalLightSource CC_DirLightSource[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
          "uniform int CC_EnabledDirLightNum;          \n"
@@ -439,8 +442,8 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "#if CC_MAX_POINT_LIGHT_NUM         \n"
          "struct PointLightSource         \n"
          "{         \n"
-         "	 vec3 color;         \n"
-         "	 vec4 position;         \n"
+         "   vec3 color;         \n"
+         "   vec4 position;         \n"
          "};         \n"
          "uniform PointLightSource CC_PointLightSource[CC_MAX_POINT_LIGHT_NUM];         \n"
          "uniform int CC_EnabledPointLightNum;          \n"
@@ -448,9 +451,9 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "#if CC_MAX_SPOT_LIGHT_NUM         \n"
          "struct SpotLightSource         \n"
          "{         \n"
-         "	 vec3 color;         \n"
-         "	 vec3 position;         \n"
-         "	 vec3 direction;         \n"
+         "   vec3 color;         \n"
+         "   vec3 position;         \n"
+         "   vec3 direction;         \n"
          "   vec3 params; \n"
          "};         \n"
          "uniform SpotLightSource CC_SpotLightSource[CC_MAX_SPOT_LIGHT_NUM];         \n"

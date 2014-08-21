@@ -138,6 +138,9 @@ public:
     static const char* SHADER_3D_POSITION;
     static const char* SHADER_3D_POSITION_TEXTURE;
     static const char* SHADER_3D_SKINPOSITION_TEXTURE;
+    static const char* SHADER_3D_POSITION_NO_NORMAL;
+    static const char* SHADER_3D_POSITION_TEXTURE_NO_NORMAL;
+    static const char* SHADER_3D_SKINPOSITION_TEXTURE_NO_NORMAL;
     
     // uniform names
     static const char* UNIFORM_NAME_ENABLED_DIRECTIONAL_LIGHT_NUM;

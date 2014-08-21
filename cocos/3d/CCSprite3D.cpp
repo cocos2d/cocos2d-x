@@ -271,17 +271,35 @@ GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
 {
     bool hasSkin = _skin && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
     && _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    bool hasNormal = _mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
     
-    if(textured)
+    if (hasNormal)
     {
-        if (hasSkin)
-            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
-        
-        return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+        if(textured)
+        {
+            if (hasSkin)
+                return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+        }
+        else
+        {
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+        }
     }
     else
     {
-        return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+        if(textured)
+        {
+            if (hasSkin)
+                return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE_NO_NORMAL);
+
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE_NO_NORMAL);
+        }
+        else
+        {
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_NO_NORMAL);
+        }
     }
 }
 
