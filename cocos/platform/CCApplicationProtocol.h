@@ -102,6 +102,8 @@ public:
     */
     virtual void setAnimationInterval(double interval) = 0;
 
+    virtual bool setOGLCntattrs() { return false; }
+
     /**
     @brief Get current language config
     @return Current language config

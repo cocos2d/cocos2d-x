@@ -43,6 +43,17 @@ AppDelegate::~AppDelegate()
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
+bool AppDelegate::setOGLCntattrs()
+{
+    //set OpenGL context attributions
+    //red,green,blue,alpha,depth,stencil
+    int OGLCntattrs[] = {8, 8, 8, 8, 24, 8};
+
+    GLView::setOGLCntattrs(OGLCntattrs);
+    
+    return true;
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // As an example, load config file

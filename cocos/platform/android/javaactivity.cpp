@@ -64,7 +64,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         glview->setFrameSize(w, h);
         director->setOpenGLView(glview);
 
-        cocos_android_app_init(env, thiz);
+        //cocos_android_app_init(env, thiz);
 
         cocos2d::Application::getInstance()->run();
     }
@@ -79,7 +79,13 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
     }
+}
 
+void Java_org_cocos2dx_lib_Cocos2dxActivity_preCreateOGLCtx(JNIEnv*  env, jobject thiz)
+{
+    cocos_android_app_init(env, thiz);
+    cocos2d::Application::getInstance()->setOGLCntattrs();  
+    GLViewImpl::createWithOGLCntattrs("Android app");
 }
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged(JNIEnv*  env, jobject thiz, jint w, jint h)

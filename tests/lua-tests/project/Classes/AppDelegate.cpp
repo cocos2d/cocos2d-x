@@ -18,6 +18,15 @@ AppDelegate::~AppDelegate()
     SimpleAudioEngine::end();
 }
 
+bool AppDelegate::setOGLCntattrs()
+{
+    int OGLCntattrs[] = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setOGLCntattrs(OGLCntattrs);
+    
+    return true;
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // register lua engine

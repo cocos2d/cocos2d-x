@@ -209,6 +209,19 @@ void disableAccelerometerJni() {
     }
 }
 
+void activityInitWithOGLCntattrsJni(int* OGLCntattrs) {
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "activityInitWithOGLCntattrs", "([I)V")) {
+        jintArray OGLCntattrsJava = t.env->NewIntArray(6);
+        t.env->SetIntArrayRegion(OGLCntattrsJava, 0, 6, OGLCntattrs);
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, OGLCntattrsJava);
+        t.env->DeleteLocalRef(t.classID);
+        CCLOG("call Cocos2dxHelper activityInitWithOGLCntattrs");
+    }
+}
+
 // functions for UserDefault
 bool getBoolForKeyJNI(const char* key, bool defaultValue)
 {

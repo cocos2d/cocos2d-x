@@ -84,11 +84,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	
     	Cocos2dxHelper.init(this);
     	
-    	this.init();
-    	if (mVideoHelper == null) {
-    		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
-		}
+    	preCreateOGLCtx();
+    	//this.init();
+    	//this.reinit();
+    	//if (mVideoHelper == null) {
+    		//mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
+		//}
 	}
+
+	private static native void preCreateOGLCtx();
 	
 	// ===========================================================
 	// Getter & Setter
@@ -189,6 +193,49 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         // Set framelayout as the content view
 		setContentView(mFrameLayout);
+	}
+
+	public void initWithOGLCntattrs(int[] OGLCntattrs) {
+		
+    	// FrameLayout
+        ViewGroup.LayoutParams framelayout_params =
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                       ViewGroup.LayoutParams.MATCH_PARENT);
+        mFrameLayout = new FrameLayout(this);
+        mFrameLayout.setLayoutParams(framelayout_params);
+
+        // Cocos2dxEditText layout
+        ViewGroup.LayoutParams edittext_layout_params =
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                       ViewGroup.LayoutParams.WRAP_CONTENT);
+        Cocos2dxEditText edittext = new Cocos2dxEditText(this);
+        edittext.setLayoutParams(edittext_layout_params);
+
+        // ...add to FrameLayout
+        mFrameLayout.addView(edittext);
+
+        // Cocos2dxGLSurfaceView
+        this.mGLSurfaceView = new Cocos2dxGLSurfaceView(this);
+
+        //this.mGLSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
+        this.mGLSurfaceView.setEGLConfigChooser(OGLCntattrs[0], OGLCntattrs[1],OGLCntattrs[2],OGLCntattrs[3],OGLCntattrs[4],OGLCntattrs[5]);
+
+        // ...add to FrameLayout
+        mFrameLayout.addView(this.mGLSurfaceView);
+
+        // Switch to supported OpenGL (ARGB888) mode on emulator
+        if (isAndroidEmulator())
+           this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+
+        this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
+        this.mGLSurfaceView.setCocos2dxEditText(edittext);
+
+        // Set framelayout as the content view
+		setContentView(mFrameLayout);
+
+		if (mVideoHelper == null) {
+    		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
+    	}
 	}
 	
     public Cocos2dxGLSurfaceView onCreateView() {

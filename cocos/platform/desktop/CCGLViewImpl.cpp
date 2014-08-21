@@ -328,6 +328,15 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const 
     return nullptr;
 }
 
+void GLViewImpl::convertattrs()
+{
+    glfwWindowHint(GLFW_RED_BITS,_OGLCntattrs[0]);
+    glfwWindowHint(GLFW_GREEN_BITS,_OGLCntattrs[1]);
+    glfwWindowHint(GLFW_BLUE_BITS,_OGLCntattrs[2]);
+    glfwWindowHint(GLFW_ALPHA_BITS,_OGLCntattrs[3]);
+    glfwWindowHint(GLFW_DEPTH_BITS,_OGLCntattrs[4]);
+    glfwWindowHint(GLFW_STENCIL_BITS,_OGLCntattrs[5]);
+}
 
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
@@ -336,6 +345,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     _frameZoomFactor = frameZoomFactor;
 
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    convertattrs();
 
     _mainWindow = glfwCreateWindow(rect.size.width * _frameZoomFactor,
                                    rect.size.height * _frameZoomFactor,

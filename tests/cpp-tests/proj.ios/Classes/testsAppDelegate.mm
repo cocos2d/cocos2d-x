@@ -42,20 +42,23 @@ static AppDelegate s_sharedApplication;
 {
 
     cocos2d::Application *app = cocos2d::Application::getInstance();
+    app->setOGLCntattrs();
 
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    
+
     // Init the CCEAGLView
-    CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
+    auto glview = cocos2d::GLViewImpl::createWithFullScreen("ios cpp-tests");
+    CCEAGLView *eaglView = (CCEAGLView*)glview->getEAGLView();
+    /*CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
                                          pixelFormat: kEAGLColorFormatRGBA8
                                          depthFormat: GL_DEPTH24_STENCIL8_OES
                                   preserveBackbuffer: NO
                                           sharegroup: nil
                                        multiSampling: NO
-                                     numberOfSamples: 0 ];
+                                     numberOfSamples: 0 ];*/
 
     [eaglView setMultipleTouchEnabled:YES];
 
@@ -79,9 +82,11 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
-
+    
+    glview->setSize();
+    
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
+    //cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     app->run();

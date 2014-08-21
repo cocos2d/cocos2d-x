@@ -70,6 +70,16 @@ namespace {
     
 }
 
+int* GLView::_OGLCntattrs = new int[6];
+
+void GLView::setOGLCntattrs(int* OGLCntattrs)
+{
+    for(int i = 0; i < 6; i++)
+    {
+        _OGLCntattrs[i] = OGLCntattrs[i];
+    }
+}
+
 GLView::GLView()
 : _scaleX(1.0f)
 , _scaleY(1.0f)

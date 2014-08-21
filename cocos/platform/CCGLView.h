@@ -98,6 +98,9 @@ public:
     
     virtual bool windowShouldClose() { return false; };
 
+    static void setOGLCntattrs(int* OGLCntattrs);
+    static int* _OGLCntattrs;
+
     /**
      * Polls input events. Subclass must implement methods if platform
      * does not provide event callbacks.

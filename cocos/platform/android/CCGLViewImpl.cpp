@@ -30,12 +30,12 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
 #include "jni/IMEJni.h"
+#include "jni/JniHelper.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCGL.h"
 
 #include <stdlib.h>
 #include <android/log.h>
-
 
 // <EGL/egl.h> exists since android 2.3
 #include <EGL/egl.h>
@@ -69,6 +69,13 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
+
+    return nullptr;
+}
+
+GLViewImpl* GLViewImpl::createWithOGLCntattrs(const std::string& viewName)
+{ 
+    activityInitWithOGLCntattrsJni(_OGLCntattrs);
 
     return nullptr;
 }

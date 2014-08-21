@@ -64,6 +64,7 @@ Application::~Application()
 
 int Application::run()
 {
+    setOGLCntattrs();
     if(!applicationDidFinishLaunching())
     {
         return 1;

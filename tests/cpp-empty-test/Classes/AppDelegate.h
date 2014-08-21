@@ -14,6 +14,8 @@ public:
     AppDelegate();
     virtual ~AppDelegate();
 
+    virtual bool setOGLCntattrs();
+    
     /**
     @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.
