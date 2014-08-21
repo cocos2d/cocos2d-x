@@ -591,9 +591,12 @@ void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
 
 bool TableView::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    if (!this->isVisible())
+    for (Node *c = this; c != nullptr; c = c->getParent())
     {
-        return false;
+        if (!c->isVisible())
+        {
+            return false;
+        }
     }
 
     bool touchResult = ScrollView::onTouchBegan(pTouch, pEvent);

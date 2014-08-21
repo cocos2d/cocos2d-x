@@ -57,16 +57,16 @@ endif()
 if( UNIX ) #assume linux
 set(GAME_SRC
   proj.linux/main.cpp
-  Classes/AppDelegate.cpp
-  Classes/HelloWorldScene.cpp
+  src/AppDelegate.cpp
+  src/HelloWorldScene.cpp
 )
 elseif ( WIN32 )
 set(GAME_SRC
   proj.win32/main.cpp
   proj.win32/main.h
   proj.win32/resource.h
-  Classes/AppDelegate.cpp
-  Classes/HelloWorldScene.cpp
+  src/AppDelegate.cpp
+  src/HelloWorldScene.cpp
 )
 endif()
 
@@ -189,6 +189,18 @@ add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
 # cocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
+# cocos3d library
+add_subdirectory(${COCOS2D_ROOT}/cocos/3d)
+
+# network library
+add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+
+# ui library
+add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
+
+# sqlite3 library
+add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
+
 # extensions
 add_subdirectory(${COCOS2D_ROOT}/extensions)
 
@@ -223,11 +235,6 @@ set(FMOD_LIB "fmodex")
 endif()
 
 target_link_libraries(${APP_NAME}
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
-  audio
   cocos2d
   )
 
@@ -240,14 +247,14 @@ if ( WIN32 )
   #also copying dlls to binary directory for the executable to run
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/gles/prebuilt/glew32.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/zlib/prebuilt/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	)
 else()
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources
     )
 
 endif()

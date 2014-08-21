@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class Event;
 
-class EventListenerKeyboard : public EventListener
+class CC_DLL EventListenerKeyboard : public EventListener
 {
 public:
     static const std::string LISTENER_ID;

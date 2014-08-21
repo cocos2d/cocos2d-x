@@ -71,7 +71,7 @@ enum {
     kNodeOnCleanup
 };
 
-bool nodeComparisonLess(Node* n1, Node* n2);
+bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -1284,12 +1284,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    void resume(void);
+    virtual void resume(void);
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    void pause(void);
+    virtual void pause(void);
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1433,6 +1433,10 @@ public:
      */
     virtual bool removeComponent(const std::string& name);
 
+    /** 
+     *   removes a component by its pointer      
+     */
+    virtual bool removeComponent(Component *component);
     /**
      *   removes all components
      */
@@ -1479,7 +1483,11 @@ public:
     void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
     const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
     void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
-    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
+    
+    /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
+    unsigned short getCameraMask() const { return _cameraMask; }
+    void setCameraMask(unsigned short mask, bool applyChildren = true);
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1512,6 +1520,9 @@ protected:
     
     bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    
+    //check whether this camera mask is visible by the current visiting camera
+    bool isVisitableByVisitingCamera() const;
     
 #if CC_USE_PHYSICS
     void updatePhysicsBodyTransform(Scene* layer);
@@ -1618,6 +1629,9 @@ protected:
     bool        _cascadeOpacityEnabled;
 
     static int s_globalOrderOfArrival;
+    
+    // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
+    unsigned short _cameraMask;
     
     std::function<void()> _onEnterCallback;
     std::function<void()> _onExitCallback;

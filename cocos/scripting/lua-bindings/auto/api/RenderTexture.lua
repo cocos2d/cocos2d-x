@@ -65,13 +65,14 @@
 -- @param self
         
 --------------------------------
--- @overload self, string, int, bool         
--- @overload self, string, bool         
+-- @overload self, string, int, bool, function         
+-- @overload self, string, bool, function         
 -- @function [parent=#RenderTexture] saveToFile
 -- @param self
 -- @param #string str
 -- @param #int format
 -- @param #bool bool
+-- @param #function func
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------

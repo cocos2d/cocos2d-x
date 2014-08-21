@@ -119,7 +119,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 		mViewHeight = maxHeight;
 		
 		if (mVideoWidth != 0 && mVideoHeight != 0) {
-			fixSize(mViewLeft, mViewTop, mViewWidth, mVideoHeight);
+			fixSize(mViewLeft, mViewTop, mViewWidth, mViewHeight);
 		}
 	}
     
@@ -324,7 +324,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     	if (mFullScreenEnabled) {
 			fixSize(0, 0, mFullScreenWidth, mFullScreenHeight);
 		} else {
-			fixSize(mViewLeft, mViewTop, mViewWidth, mVideoHeight);
+			fixSize(mViewLeft, mViewTop, mViewWidth, mViewHeight);
 		}
 	}
     

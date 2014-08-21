@@ -30,6 +30,11 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
+-- @function [parent=#Widget] setPropagateTouchEvents 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#Widget] getSizePercent 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -38,6 +43,11 @@
 -- @function [parent=#Widget] setPositionPercent 
 -- @param self
 -- @param #vec2_table vec2
+        
+--------------------------------
+-- @function [parent=#Widget] setSwallowTouches 
+-- @param self
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] getLayoutSize 
@@ -127,6 +137,11 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- @function [parent=#Widget] isFocusEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Widget] setFocused 
 -- @param self
 -- @param #bool bool
@@ -183,6 +198,11 @@
         
 --------------------------------
 -- @function [parent=#Widget] isBright 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Widget] isPropagateTouchEvents 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
@@ -260,7 +280,7 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] isFocusEnabled 
+-- @function [parent=#Widget] isSwallowTouches 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

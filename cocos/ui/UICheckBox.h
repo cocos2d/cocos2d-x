@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UICHECKBOX_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +47,7 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 *   @js NA
 *   @lua NA
 */
-class CheckBox : public Widget
+class CC_GUI_DLL CheckBox : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -165,14 +166,17 @@ public:
      *
      * @param selected    true that checkbox is selected, false otherwise.
      */
-    void setSelectedState(bool selected);
+    CC_DEPRECATED_ATTRIBUTE void setSelectedState(bool selected){this->setSelected(selected);}
 
     /**
      * Gets selcted state of checkbox.
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
-    bool getSelectedState()const;
+    CC_DEPRECATED_ATTRIBUTE bool getSelectedState()const{return this->isSelected();}
+    
+    bool isSelected()const;
+    void setSelected(bool selected);
 
     //add a call back function would called when checkbox is selected or unselected.
     CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);

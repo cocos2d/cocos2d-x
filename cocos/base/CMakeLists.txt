@@ -1,5 +1,6 @@
 set(COCOS_BASE_SRC
   base/CCAutoreleasePool.cpp
+  base/CCCamera.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
   base/CCData.cpp
@@ -21,8 +22,10 @@ set(COCOS_BASE_SRC
   base/CCEventMouse.cpp
   base/CCEventTouch.cpp
   base/CCIMEDispatcher.cpp
+  base/CCModuleManager.cpp
   base/CCNS.cpp
   base/CCProfiling.cpp
+  base/ccRandom.cpp
   base/CCRef.cpp
   base/CCScheduler.cpp
   base/CCScriptSupport.cpp
@@ -40,6 +43,7 @@ set(COCOS_BASE_SRC
   base/ccUTF8.cpp
   base/ccUtils.cpp
   base/etc1.cpp
+  base/pvr.cpp
   base/s3tc.cpp
   base/ObjectFactory.cpp
 )

@@ -26,16 +26,17 @@ THE SOFTWARE.
 #define __UILOADINGBAR_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-
+    class Scale9Sprite;
 /**
 *   @js NA
 *   @lua NA
 */
-class LoadingBar : public Widget
+class CC_GUI_DLL LoadingBar : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -153,7 +154,7 @@ protected:
     Direction _direction;
     float _percent;
     float _totalLength;
-    Node* _barRenderer;
+    Scale9Sprite* _barRenderer;
     TextureResType _renderBarTexType;
     Size _barRendererTextureSize;
     bool _scale9Enabled;

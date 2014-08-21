@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class Event;
 
-class EventListenerMouse : public EventListener
+class CC_DLL EventListenerMouse : public EventListener
 {
 public:
     static const std::string LISTENER_ID;

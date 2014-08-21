@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "base/CCEvent.h"
 #include "base/CCEventTouch.h"
 #include "base/ccCArray.h"
+#include "base/CCCamera.h"
 #include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
 #include "base/CCScriptSupport.h"
@@ -128,6 +129,7 @@ Node::Node(void)
 , _usingNormalizedPosition(false)
 , _name("")
 , _hashOfName(0)
+, _cameraMask(1)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -1223,6 +1225,13 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
     return flags;
 }
 
+bool Node::isVisitableByVisitingCamera() const
+{
+    auto camera = Camera::getVisitingCamera();
+    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
+    return visibleByCamera;
+}
+
 void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
@@ -1239,6 +1248,8 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     int i = 0;
 
@@ -1256,12 +1267,13 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
@@ -1850,6 +1862,14 @@ bool Node::removeComponent(const std::string& name)
     return false;
 }
 
+bool Node::removeComponent(Component *component)
+{
+    if (_componentContainer) {
+        return _componentContainer->remove(component);
+    }
+    return false;
+}
+
 void Node::removeAllComponents()
 {
     if( _componentContainer )
@@ -2156,6 +2176,17 @@ void Node::disableCascadeColor()
 {
     for(auto child : _children){
         child->updateDisplayedColor(Color3B::WHITE);
+    }
+}
+
+void Node::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    _cameraMask = mask;
+    if (applyChildren)
+    {
+        for (auto child : _children) {
+            child->setCameraMask(mask, applyChildren);
+        }
     }
 }
 

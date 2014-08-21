@@ -69,10 +69,6 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
-, _categoryBitmask(UINT_MAX)
-, _collisionBitmask(0)
-, _contactTestBitmask(UINT_MAX)
-, _group(0)
 , _positionResetTag(false)
 , _rotationResetTag(false)
 , _rotationOffset(0)
@@ -422,11 +418,6 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
         }
         
         _shapes.pushBack(shape);
-        
-        if (_group != CP_NO_GROUP && shape->getGroup() == CP_NO_GROUP)
-        {
-            shape->setGroup(_group);
-        }
     }
     
     return shape;
@@ -829,31 +820,61 @@ void PhysicsBody::update(float delta)
 
 void PhysicsBody::setCategoryBitmask(int bitmask)
 {
-    _categoryBitmask = bitmask;
-    
     for (auto& shape : _shapes)
     {
         shape->setCategoryBitmask(bitmask);
     }
 }
 
+int PhysicsBody::getCategoryBitmask() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getCategoryBitmask();
+    }
+    else
+    {
+        return UINT_MAX;
+    }
+}
+
 void PhysicsBody::setContactTestBitmask(int bitmask)
 {
-    _contactTestBitmask = bitmask;
-    
     for (auto& shape : _shapes)
     {
         shape->setContactTestBitmask(bitmask);
     }
 }
 
+int PhysicsBody::getContactTestBitmask() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getContactTestBitmask();
+    }
+    else
+    {
+        return 0x00000000;
+    }
+}
+
 void PhysicsBody::setCollisionBitmask(int bitmask)
 {
-    _collisionBitmask = bitmask;
-    
     for (auto& shape : _shapes)
     {
         shape->setCollisionBitmask(bitmask);
+    }
+}
+
+int PhysicsBody::getCollisionBitmask() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getCollisionBitmask();
+    }
+    else
+    {
+        return UINT_MAX;
     }
 }
 
@@ -862,6 +883,18 @@ void PhysicsBody::setGroup(int group)
     for (auto& shape : _shapes)
     {
         shape->setGroup(group);
+    }
+}
+
+int PhysicsBody::getGroup() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getGroup();
+    }
+    else
+    {
+        return 0;
     }
 }
 

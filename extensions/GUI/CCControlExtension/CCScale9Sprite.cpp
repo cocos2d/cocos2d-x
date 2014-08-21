@@ -131,8 +131,6 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
         return false;
     }
 
-    _scale9Image->removeAllChildrenWithCleanup(true);
-
     _capInsets = capInsets;
     _spriteFrameRotated = rotated;
     
@@ -238,48 +236,48 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
         // Centre
         _centre = Sprite::createWithTexture(_scale9Image->getTexture(), centerbounds);
         _centre->retain();
-        this->addChild(_centre, 0);
+        this->addChild(_centre);
 
         
         // Top
         _top = Sprite::createWithTexture(_scale9Image->getTexture(), centertopbounds);
         _top->retain();
-        this->addChild(_top, 1);
+        this->addChild(_top);
         
         // Bottom
         _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), centerbottombounds);
         _bottom->retain();
-        this->addChild(_bottom, 1);
+        this->addChild(_bottom);
         
         // Left
         _left = Sprite::createWithTexture(_scale9Image->getTexture(), leftcenterbounds);
         _left->retain();
-        this->addChild(_left, 1);
+        this->addChild(_left);
         
         // Right
         _right = Sprite::createWithTexture(_scale9Image->getTexture(), rightcenterbounds);
         _right->retain();
-        this->addChild(_right, 1);
+        this->addChild(_right);
         
         // Top left
         _topLeft = Sprite::createWithTexture(_scale9Image->getTexture(), lefttopbounds);
         _topLeft->retain();
-        this->addChild(_topLeft, 2);
+        this->addChild(_topLeft);
         
         // Top right
         _topRight = Sprite::createWithTexture(_scale9Image->getTexture(), righttopbounds);
         _topRight->retain();
-        this->addChild(_topRight, 2);
+        this->addChild(_topRight);
         
         // Bottom left
         _bottomLeft = Sprite::createWithTexture(_scale9Image->getTexture(), leftbottombounds);
         _bottomLeft->retain();
-        this->addChild(_bottomLeft, 2);
+        this->addChild(_bottomLeft);
         
         // Bottom right
         _bottomRight = Sprite::createWithTexture(_scale9Image->getTexture(), rightbottombounds);
         _bottomRight->retain();
-        this->addChild(_bottomRight, 2);
+        this->addChild(_bottomRight);
     } else {
         // set up transformation of coordinates
         // to handle the case where the sprite is stored rotated
@@ -329,46 +327,46 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& o
         // Top
         _top = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcentertopbounds, true);
         _top->retain();
-        this->addChild(_top, 1);
+        this->addChild(_top);
         
         // Bottom
         _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
         _bottom->retain();
-        this->addChild(_bottom, 1);
+        this->addChild(_bottom);
         
         // Left
         _left = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftcenterbounds, true);
         _left->retain();
-        this->addChild(_left, 1);
+        this->addChild(_left);
         
         // Right
         _right = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightcenterbounds, true);
         _right->retain();
-        this->addChild(_right, 1);
+        this->addChild(_right);
         
         // Top left
         _topLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedlefttopbounds, true);
         _topLeft->retain();
-        this->addChild(_topLeft, 2);
+        this->addChild(_topLeft);
         
         // Top right
         _topRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrighttopbounds, true);
         _topRight->retain();
-        this->addChild(_topRight, 2);
+        this->addChild(_topRight);
         
         // Bottom left
         _bottomLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftbottombounds, true);
         _bottomLeft->retain();
-        this->addChild(_bottomLeft, 2);
+        this->addChild(_bottomLeft);
         
         // Bottom right
         _bottomRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, true);
         _bottomRight->retain();
-        this->addChild(_bottomRight, 2);
+        this->addChild(_bottomRight);
     }
 
     this->setContentSize(rect.size);
-    this->addChild(_scale9Image);
+//    this->addChild(_scale9Image);
     
     if (_spritesGenerated)
     {

@@ -130,7 +130,7 @@ void CocostudioParserTestScene::onEnter()
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocostudioParserTestScene::BackCallback, this));
     
-    Menu* pMenu = Menu::create(pMenuItem, NULL);
+    Menu* pMenu = Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
     pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );

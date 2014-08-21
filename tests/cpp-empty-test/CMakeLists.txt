@@ -1,34 +1,38 @@
 set(APP_NAME cpp-empty-test)
 
-if(QT)
-  set(PLATFORM_SRC
-    proj.qt/main.cpp
-  )
-elseif(ANDROID)
+if(ANDROID)
+
   set(PLATFORM_SRC
     proj.android/jni/hellocpp/main.cpp
   )
-elseif(WIN32)
+
+elseif(WINDOWS)
+
   set(PLATFORM_SRC
     proj.win32/main.cpp
   )
-elseif(APPLE)
-  if(IOS)
-    set(PLATFORM_SRC
-      proj.ios/main.m
-	  proj.ios/AppController.mm
-	  proj.ios/RootViewController.mm
-    )
-  else()
-    set(PLATFORM_SRC
-      proj.mac/main.m
-    )
-  endif()
-else()
+
+elseif(IOS)
+
+  set(PLATFORM_SRC
+    proj.ios/main.m
+    proj.ios/AppController.mm
+    proj.ios/RootViewController.mm
+  )
+
+elseif(MACOSX)
+
+  set(PLATFORM_SRC
+    proj.mac/main.m
+  )
+
+elseif(LINUX)
+
   set(PLATFORM_SRC
     proj.linux/main.cpp
   )
-  endif()
+
+endif()
 
 set(SAMPLE_SRC
   ${PLATFORM_SRC}
@@ -41,7 +45,8 @@ add_executable(${APP_NAME}
   ${SAMPLE_SRC}
 )
 
-if(WIN32 AND MSVC)
+if(MSVC)
+
   #get our resources
   add_custom_command(TARGET ${APP_NAME} PRE_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -60,7 +65,9 @@ if(WIN32 AND MSVC)
   #Visual Studio Defaults to wrong type
   set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
   set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+
 else()
+
   set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
   set_target_properties(${APP_NAME} PROPERTIES

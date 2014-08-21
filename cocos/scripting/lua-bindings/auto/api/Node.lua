@@ -16,11 +16,13 @@
 -- @param #string str
 
 --------------------------------
--- @function [parent=#Node] removeComponent 
+-- @overload self, cc.Component         
+-- @overload self, string         
+-- @function [parent=#Node] removeComponent
 -- @param self
 -- @param #string str
--- @return bool#bool ret (return value: bool)
-        
+-- @return bool#bool ret (retunr value: bool)
+
 --------------------------------
 -- @function [parent=#Node] setPhysicsBody 
 -- @param self
@@ -85,6 +87,11 @@
 -- @param #unsigned char char
         
 --------------------------------
+-- @function [parent=#Node] getCameraMask 
+-- @param self
+-- @return unsigned short#unsigned short ret (return value: unsigned short)
+        
+--------------------------------
 -- @function [parent=#Node] setRotation 
 -- @param self
 -- @param #float float
@@ -122,6 +129,12 @@
 -- @function [parent=#Node] _setLocalZOrder 
 -- @param self
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#Node] setCameraMask 
+-- @param self
+-- @param #unsigned short short
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Node] getTag 

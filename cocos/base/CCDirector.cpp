@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "base/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
@@ -61,7 +62,7 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "math/CCMath.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 
 /**
  Position of the FPS
@@ -231,7 +232,7 @@ void Director::setDefaultValues(void)
 
     // PVR v2 has alpha premultiplied ?
     bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
-    Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
+    Image::setPVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void Director::setGLDefaultValues()
@@ -263,7 +264,7 @@ void Director::drawScene()
 
     if (_openGLView)
     {
-        _openGLView->pollInputEvents();
+        _openGLView->pollEvents();
     }
 
     //tick before glClear: issue #533
@@ -283,26 +284,60 @@ void Director::drawScene()
     }
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    // draw the scene
+    
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+        Camera* defaultCamera = nullptr;
+        const auto& cameras = _runningScene->_cameras;
+        //draw with camera
+        for (size_t i = 0; i < cameras.size(); i++)
+        {
+            Camera::_visitingCamera = cameras[i];
+            if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
+            {
+                defaultCamera = Camera::_visitingCamera;
+                continue;
+            }
+            
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        //draw with default camera
+        if (defaultCamera)
+        {
+            Camera::_visitingCamera = defaultCamera;
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        Camera::_visitingCamera = nullptr;
+        
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, false);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     if (_displayStats)
     {
         showStats();
     }
-
     _renderer->render();
+
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -825,8 +860,13 @@ void Director::runWithScene(Scene *scene)
 
 void Director::replaceScene(Scene *scene)
 {
-    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
+    
+    if (_runningScene == nullptr) {
+        runWithScene(scene);
+        return;
+    }
     
     if (scene == _nextScene)
         return;

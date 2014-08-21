@@ -236,8 +236,20 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
         {
             const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
             Node* child = loadNode(dic);
-            if (child) 
+            if (child)
             {
+                auto widgetChild = dynamic_cast<Widget*>(child);
+                if (widgetChild
+                    && dynamic_cast<Widget*>(node)
+                    && !dynamic_cast<Layout*>(node))
+                {
+                    if (widgetChild->getPositionType() == ui::Widget::PositionType::PERCENT)
+                    {
+                        widgetChild->setPositionPercent(Vec2(widgetChild->getPositionPercent().x + node->getAnchorPoint().x, widgetChild->getPositionPercent().y + node->getAnchorPoint().y));
+                    }
+                    widgetChild->setPosition(Vec2(widgetChild->getPositionX() + node->getAnchorPointInPoints().x, widgetChild->getPositionY() + node->getAnchorPointInPoints().y));
+                }
+
                 node->addChild(child);
                 child->release();
             }
@@ -450,8 +462,10 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     CC_SAFE_DELETE(guiReader);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(ActionTimelineData::create(actionTag));
-    
+    widget->setUserObject(ActionTimelineData::create(actionTag)); 
+
+    initNode(widget, json);
+
     return widget;
 }
 

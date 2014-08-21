@@ -405,7 +405,8 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         }
 
         // draw text
-        SIZE size = {textDefinition._dimensions.width, textDefinition._dimensions.height};
+        // does changing to SIZE here affects the font size by rounding from float?
+        SIZE size = {(LONG) textDefinition._dimensions.width,(LONG) textDefinition._dimensions.height};
         CC_BREAK_IF(! dc.drawText(text, size, align));
 
         int dataLen = size.cx * size.cy * 4;
@@ -448,6 +449,10 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     } while (0);
 
     return ret;
+}
+
+void Device::setKeepScreenOn(bool value)
+{
 }
 
 NS_CC_END

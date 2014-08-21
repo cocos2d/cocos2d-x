@@ -46,7 +46,9 @@ static std::function<Layer*()> createFunctions[] = {
     CL(S9_TexturePacker),
     CL(S9FrameNameSpriteSheetRotatedInsetsScaled),
     CL(S9FrameNameSpriteSheetRotatedSetCapInsetLater),
-    CL(S9CascadeOpacityAndColor)
+    CL(S9CascadeOpacityAndColor),
+    CL(S9ZOrder),
+    CL(S9Flip)
 };
 
 static int sceneIdx=-1;
@@ -678,4 +680,105 @@ std::string S9CascadeOpacityAndColor::title() const
 std::string S9CascadeOpacityAndColor::subtitle() const
 {
     return "when parent change color/opacity, Scale9Sprite should also change";
+}
+
+//
+//// S9ZOrder
+//
+
+void S9ZOrder::onEnter()
+{
+    S9SpriteTestDemo::onEnter();
+    auto winSize = Director::getInstance()->getWinSize();
+    float x = winSize.width / 2;
+    float y = 0 + (winSize.height / 2);
+  
+    auto blocks_scaled_with_insets = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    
+    blocks_scaled_with_insets->setPosition(Vec2(x, y));
+    this->addChild(blocks_scaled_with_insets);
+    
+    Sprite *normalSprite = Sprite::createWithSpriteFrameName("blocks9r.png");
+    normalSprite->setColor(Color3B::RED);
+    blocks_scaled_with_insets->addChild(normalSprite);
+    
+    auto topLabel = Label::createWithSystemFont("I Must be On the Top", "Arial", 15);
+    topLabel->setPosition(Vec2(20,20));
+    blocks_scaled_with_insets->addChild(topLabel);
+    
+    auto bottomLabel = Label::createWithSystemFont("I Must be On the Bottom", "Arial", 15);
+    bottomLabel->setPosition(Vec2(80,80));
+    bottomLabel->setColor(Color3B::BLUE);
+    blocks_scaled_with_insets->addChild(bottomLabel,-1);
+    
+}
+
+std::string S9ZOrder::title() const
+{
+    return "Scale9Sprite ZOrder issue";
+}
+
+std::string S9ZOrder::subtitle() const
+{
+    return "When adding nodes to Scale9Sprite, it should be added on top itself";
+}
+
+//
+//// S9Flip
+//
+
+void S9Flip::onEnter()
+{
+    S9SpriteTestDemo::onEnter();
+    auto winSize = Director::getInstance()->getWinSize();
+    float x = winSize.width / 2;
+    float y = 0 + (winSize.height / 2);
+    
+    
+    auto normalSprite = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    
+    normalSprite->setPosition(Vec2(x, y ));
+    this->addChild(normalSprite);
+    
+    
+    auto normalLabel = Label::createWithSystemFont("Normal Sprite","Airal",10);
+    normalLabel->setPosition(normalSprite->getPosition() + Vec2(0, normalSprite->getContentSize().height/2 + 10));
+    this->addChild(normalLabel);
+    
+    
+    
+    auto flipXSprite = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    
+    flipXSprite->setPosition(Vec2(x - 120, y ));
+    this->addChild(flipXSprite);
+    
+    flipXSprite->setScaleX(-1);
+    
+    auto flipXLabel = Label::createWithSystemFont("Sprite FlipX","Airal",10);
+    flipXLabel->setPosition(flipXSprite->getPosition() + Vec2(0, flipXSprite->getContentSize().height/2 + 10));
+    this->addChild(flipXLabel);
+    
+    
+    auto flipYSprite = Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+    
+    flipYSprite->setPosition(Vec2(x + 120, y));
+    this->addChild(flipYSprite);
+    
+    flipYSprite->setScaleY(-1);
+
+    auto flipYLabel = Label::createWithSystemFont("Sprite FlipY","Airal",10);
+    flipYLabel->setPosition(flipYSprite->getPosition() + Vec2(0, flipYSprite->getContentSize().height/2 + 10));
+    this->addChild(flipYLabel);
+
+    
+}
+
+std::string S9Flip::title() const
+{
+    return "Scale9Sprite Flip issue";
+}
+
+std::string S9Flip::subtitle() const
+{
+    return "When Flipped, the scale9Sprite should behavior like a normal node";
 }

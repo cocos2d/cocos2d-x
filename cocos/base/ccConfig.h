@@ -283,5 +283,5 @@ To enable set it to a value different than 0. Disabled by default.
 #ifndef CC_CONSTRUCTOR_ACCESS
 #define CC_CONSTRUCTOR_ACCESS public
 #endif
-
+ 
 #endif // __CCCONFIG_H__

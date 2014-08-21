@@ -59,7 +59,7 @@ typedef struct
     unsigned char*  data;
 } tImageInfo;
 
-static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, Color3B* strokeColor)
+static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, const Color3B* strokeColor)
 {
     bool ret = false;
     
@@ -68,10 +68,13 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 	
 	do {
 		NSString * string  = [NSString stringWithUTF8String:text];
+        NSString * fntName = [NSString stringWithUTF8String:fontName];
+        
+        fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
 		
 		// font
 		NSFont *font = [[NSFontManager sharedFontManager]
-                        fontWithFamily:[NSString stringWithUTF8String:fontName]
+                        fontWithFamily:fntName
 						traits:NSUnboldFontMask | NSUnitalicFontMask
                         weight:0
                         size:size];
@@ -118,7 +121,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 				NSMutableString *lineBreak = [[[NSMutableString alloc] init] autorelease];
 				NSUInteger length = [string length];
 				NSRange range = NSMakeRange(0, 1);
-                CGSize textSize;
+                NSSize textSize;
 				NSUInteger lastBreakLocation = 0;
                 NSUInteger insertCount = 0;
 				for (NSUInteger i = 0; i < length; i++) {
@@ -128,7 +131,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 					if ([@"!?.,-= " rangeOfString:character].location != NSNotFound) {
                         lastBreakLocation = i + insertCount;
                     }
-                    textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
+                    //textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
                     if(textSize.height > info->height)
                         break;
 					if (textSize.width > info->width) {
@@ -232,7 +235,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.width = textDefinition._dimensions.width;
         info.height = textDefinition._dimensions.height;
         
-        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, nullptr)) //pStrokeColor))
+        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, &textDefinition._fontFillColor)) //pStrokeColor))
         {
             break;
         }
@@ -244,6 +247,11 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     
     return ret;
 }
+
+void Device::setKeepScreenOn(bool value)
+{
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

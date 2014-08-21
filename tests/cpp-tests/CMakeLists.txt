@@ -35,6 +35,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
   Classes/BugsTest/Bug-Child.cpp
+  Classes/Camera3DTest/Camera3DTest.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
@@ -80,6 +81,7 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
+  Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
   Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
   Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
@@ -160,6 +162,7 @@ set(SAMPLE_SRC
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpriteTest/SpriteTest.cpp
   Classes/Sprite3DTest/Sprite3DTest.cpp
+  Classes/Sprite3DTest/DrawNode3D.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
@@ -204,7 +207,11 @@ target_link_libraries(${APP_NAME}
   extensions
   audio
   cocos2d
+  cocos3d
   box2d
+  ui
+  network
+  sqlite3
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

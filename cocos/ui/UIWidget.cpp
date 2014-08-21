@@ -152,14 +152,14 @@ _sizeType(SizeType::ABSOLUTE),
 _sizePercent(Vec2::ZERO),
 _positionType(PositionType::ABSOLUTE),
 _positionPercent(Vec2::ZERO),
-_reorderWidgetChildDirty(true),
 _hitted(false),
 _touchListener(nullptr),
 _flippedX(false),
 _flippedY(false),
 _focused(false),
 _focusEnabled(true),
-_layoutParameterType(LayoutParameter::Type::NONE)
+_layoutParameterType(LayoutParameter::Type::NONE),
+_propagateTouchEvents(true)
 {
   
 }
@@ -208,9 +208,6 @@ bool Widget::init()
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
 
         ignoreContentAdaptWithSize(true);
-
-        this->setCascadeColorEnabled(true);
-        this->setCascadeOpacityEnabled(true);
         
         return true;
     }
@@ -261,10 +258,7 @@ void Widget::setContentSize(const cocos2d::Size &contentSize)
     {
         _contentSize = getVirtualRendererSize();
     }
-    else
-    {
-        _contentSize = contentSize;
-    }
+    
     if (_running)
     {
         Widget* widgetParent = getWidgetParent();
@@ -322,7 +316,6 @@ void Widget::setSizePercent(const Vec2 &percent)
         this->setContentSize(cSize);
     }
     _customSize = cSize;
-    onSizeChanged();
 }
 
 void Widget::updateSizeAndPosition()
@@ -376,7 +369,8 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
         default:
             break;
     }
-    onSizeChanged();
+    
+    //update position & position percent
     Vec2 absPos = getPosition();
     switch (_positionType)
     {
@@ -429,7 +423,6 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
     {
         this->setContentSize(_customSize);
     }
-    onSizeChanged();
 }
 
 bool Widget::isIgnoreContentAdaptWithSize() const
@@ -489,7 +482,6 @@ void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
     {
         this->setContentSize(_customSize);
     }
-    onSizeChanged();
 }
 
 void Widget::setTouchEnabled(bool enable)
@@ -599,6 +591,12 @@ void Widget::onPressStateChangedToDisabled()
 {
 
 }
+    
+void Widget::updateChildrenDisplayedRGBA()
+{
+    this->setColor(this->getColor());
+    this->setOpacity(this->getOpacity());
+}
 
     
 Widget* Widget::getAncensterWidget(Node* node)
@@ -653,6 +651,33 @@ bool Widget::isAncestorsEnabled()
     
     return parentWidget->isAncestorsEnabled();
 }
+    
+void Widget::setPropagateTouchEvents(bool isPropagate)
+{
+    _propagateTouchEvents = isPropagate;
+}
+    
+bool Widget::isPropagateTouchEvents()const
+{
+    return _propagateTouchEvents;
+}
+    
+void Widget::setSwallowTouches(bool swallow)
+{
+    if (_touchListener)
+    {
+        _touchListener->setSwallowTouches(swallow);
+    }
+}
+    
+bool Widget::isSwallowTouches()const
+{
+    if (_touchListener)
+    {
+        return _touchListener->isSwallowTouches();
+    }
+    return false;
+}
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
@@ -670,24 +695,42 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
         return false;
     }
     setHighlighted(true);
+    
+    /*
+     * Propagate touch events to its parents
+     */
+    if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(TouchEventType::BEGAN, this, touch);
+    }
+  
+    pushDownEvent();
+    return true;
+}
+    
+void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, cocos2d::Touch *touch)
+{
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::BEGAN, this, touch);
+        widgetParent->interceptTouchEvent(event, sender, touch);
     }
-    pushDownEvent();
-    return true;
 }
 
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePosition = touch->getLocation();
+    
     setHighlighted(hitTest(_touchMovePosition));
-    Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+    
+    /*
+     * Propagate touch events to its parents
+     */
+    if (_propagateTouchEvents)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::MOVED, this, touch);
+        this->propagateTouchEvent(TouchEventType::MOVED, this, touch);
     }
+    
     moveEvent();
 }
 
@@ -695,10 +738,12 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     _touchEndPosition = touch->getLocation();
     
-    Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+    /*
+     * Propagate touch events to its parents
+     */
+    if (_propagateTouchEvents)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::ENDED, this, touch);
+        this->propagateTouchEvent(TouchEventType::ENDED, this, touch);
     }
     
     bool highlight = _highlight;
@@ -722,7 +767,9 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void Widget::pushDownEvent()
 {
-    if (_touchEventCallback) {
+    this->retain();
+    if (_touchEventCallback)
+    {
         _touchEventCallback(this, TouchEventType::BEGAN);
     }
     
@@ -730,11 +777,14 @@ void Widget::pushDownEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
     }
+    this->release();
 }
 
 void Widget::moveEvent()
 {
-    if (_touchEventCallback) {
+    this->retain();
+    if (_touchEventCallback)
+    {
         _touchEventCallback(this, TouchEventType::MOVED);
     }
     
@@ -742,12 +792,14 @@ void Widget::moveEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
     }
+    this->release();
 }
 
 void Widget::releaseUpEvent()
 {
-    
-    if (_touchEventCallback) {
+    this->retain();
+    if (_touchEventCallback)
+    {
         _touchEventCallback(this, TouchEventType::ENDED);
     }
     
@@ -755,10 +807,12 @@ void Widget::releaseUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
+    this->release();
 }
 
 void Widget::cancelUpEvent()
 {
+    this->retain();
     if (_touchEventCallback)
     {
         _touchEventCallback(this, TouchEventType::CANCELED);
@@ -768,7 +822,7 @@ void Widget::cancelUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
-   
+    this->release();
 }
 
 void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
@@ -1031,6 +1085,7 @@ void Widget::copyProperties(Widget *widget)
     _touchEventSelector = widget->_touchEventSelector;
     _focused = widget->_focused;
     _focusEnabled = widget->_focusEnabled;
+    _propagateTouchEvents = widget->_propagateTouchEvents;
     
     copySpecialProperties(widget);
 
@@ -1039,7 +1094,6 @@ void Widget::copyProperties(Widget *widget)
     {
         setLayoutParameter(iter->second->clone());
     }
-    onSizeChanged();
 }
     
 void Widget::setFlippedX(bool flippedX)

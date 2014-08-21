@@ -61,7 +61,6 @@
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
-#include "CCGLView.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
 NS_CC_BEGIN
@@ -132,7 +131,7 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    send(fd, prompt, sizeof(prompt),0);
+    send(fd, prompt, strlen(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)

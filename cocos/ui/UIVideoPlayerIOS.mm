@@ -29,9 +29,9 @@
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 #include "CCEAGLView.h"
-#include "CCGLView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #include "base/CCDirector.h"
+#include "CCFileUtils.h"
 
 @interface UIVideoViewWrapperIos : NSObject
 
@@ -133,11 +133,11 @@ using namespace cocos2d::experimental::ui;
     }
     
     if (videoSource == 1) {
-        self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:@(videoUrl.c_str())]];
+        self.moviePlayer = [[[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:@(videoUrl.c_str())]] autorelease];
         self.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
     } else {
         NSString *path = [UIVideoViewWrapperIos fullPathFromRelativePath:@(videoUrl.c_str())];
-        self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:path]];
+        self.moviePlayer = [[[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:path]] autorelease];
         self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
     self.moviePlayer.allowsAirPlay = false;
@@ -210,7 +210,7 @@ using namespace cocos2d::experimental::ui;
 -(void) setVisible:(bool)visible
 {
     if (self.moviePlayer != NULL) {
-        [self.moviePlayer.view setHidden:visible];
+        [self.moviePlayer.view setHidden:!visible];
     }
 }
 
@@ -260,23 +260,7 @@ using namespace cocos2d::experimental::ui;
 
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
-    // do not convert an absolute path (starting with '/')
-    if(([relPath length] > 0) && ([relPath characterAtIndex:0] == '/'))
-    {
-        return relPath;
-    }
-    
-    NSMutableArray *imagePathComponents = [NSMutableArray arrayWithArray:[relPath pathComponents]];
-    NSString *file = [imagePathComponents lastObject];
-    
-    [imagePathComponents removeLastObject];
-    NSString *imageDirectory = [NSString pathWithComponents:imagePathComponents];
-    
-    NSString *fullpath = [[NSBundle mainBundle] pathForResource:file ofType:nil inDirectory:imageDirectory];
-    if (fullpath == nil)
-        fullpath = relPath;
-    
-    return fullpath;
+    return [NSString stringWithCString: cocos2d::FileUtils::getInstance()->fullPathForFilename(std::string([relPath UTF8String])).c_str() encoding: [NSString defaultCStringEncoding]];
 }
 @end
 //------------------------------------------------------------------------------------------------------------
@@ -323,7 +307,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
         auto directorInstance = Director::getInstance();
         auto glView = directorInstance->getOpenGLView();
         auto frameSize = glView->getFrameSize();
-        auto scaleFactor = directorInstance->getContentScaleFactor();
+        auto scaleFactor = [static_cast<CCEAGLView *>(glView->getEAGLView()) contentScaleFactor];
         
         auto winSize = directorInstance->getWinSize();
         

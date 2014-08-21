@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class GridBase;
 
-class NodeGrid : public Node
+class CC_DLL NodeGrid : public Node
 {
 public:
     static NodeGrid* create();
