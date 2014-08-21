@@ -46,7 +46,7 @@ public:
     
     std::function<void(EventKeyboard::KeyCode, Event*)> onKeyPressed;
     std::function<void(EventKeyboard::KeyCode, Event*)> onKeyReleased;
-private:
+CC_CONSTRUCTOR_ACCESS:
     EventListenerKeyboard();
     bool init();
 };

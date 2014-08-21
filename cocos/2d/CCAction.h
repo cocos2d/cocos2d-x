@@ -99,10 +99,11 @@ public:
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Action();
     virtual ~Action();
 
+protected:
     Node    *_originalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
@@ -140,12 +141,13 @@ public:
     virtual FiniteTimeAction* reverse() const override = 0;
 	virtual FiniteTimeAction* clone() const override = 0;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FiniteTimeAction()
 	: _duration(0)
     {}
     virtual ~FiniteTimeAction(){}
 
+protected:
     //! duration in seconds
     float _duration;
 
