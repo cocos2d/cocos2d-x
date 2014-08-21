@@ -278,13 +278,13 @@ GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
         if(textured)
         {
             if (hasSkin)
-                return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+                return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
 
-            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE);
         }
         else
         {
-            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL);
         }
     }
     else
@@ -292,13 +292,13 @@ GLProgram* Sprite3D::getDefaultGLProgram(bool textured)
         if(textured)
         {
             if (hasSkin)
-                return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE_NO_NORMAL);
+                return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
 
-            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE_NO_NORMAL);
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
         }
         else
         {
-            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_NO_NORMAL);
+            return GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
         }
     }
 }

@@ -79,9 +79,9 @@ const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
 const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
 const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTexture";
-const char* GLProgram::SHADER_3D_POSITION_NO_NORMAL = "Shader3DPosition_noNormal";
-const char* GLProgram::SHADER_3D_POSITION_TEXTURE_NO_NORMAL = "Shader3DPositionTexture_noNormal";
-const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE_NO_NORMAL = "Shader3DSkinPositionTexture_noNormal";
+const char* GLProgram::SHADER_3D_POSITION_NORMAL = "Shader3DPositionNormal";
+const char* GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE = "Shader3DPositionNormalTexture";
+const char* GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE = "Shader3DSkinPositionNormalTexture";
 
 
 // uniform names
