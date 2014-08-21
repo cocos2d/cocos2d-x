@@ -586,6 +586,9 @@
     <ClCompile Include="..\base\CCModuleManager.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\ccRandom.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1187,6 +1190,9 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCModuleManager.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\ccRandom.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>

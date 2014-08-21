@@ -185,6 +185,7 @@
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp" />
+    <ClCompile Include="..\..\Classes\Camera3DTest\Camera3DTest.cpp" />
     <ClCompile Include="..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
@@ -228,6 +229,7 @@
     <ClCompile Include="..\..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="..\..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\..\Classes\SpineTest\SpineTest.cpp" />
+    <ClCompile Include="..\..\Classes\Sprite3DTest\DrawNode3D.cpp" />
     <ClCompile Include="..\..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
     <ClCompile Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\..\Classes\TileMapTest\TileMapTest2.cpp" />
@@ -383,6 +385,7 @@
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
     <ClInclude Include="..\..\Classes\BugsTest\Bug-Child.h" />
+    <ClInclude Include="..\..\Classes\Camera3DTest\Camera3DTest.h" />
     <ClInclude Include="..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\..\Classes\ConfigurationTest\ConfigurationTest.h" />
@@ -429,6 +432,7 @@
     <ClInclude Include="..\..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="..\..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\..\Classes\SpineTest\SpineTest.h" />
+    <ClInclude Include="..\..\Classes\Sprite3DTest\DrawNode3D.h" />
     <ClInclude Include="..\..\Classes\Sprite3DTest\Sprite3DTest.h" />
     <ClInclude Include="..\..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\..\Classes\TileMapTest\TileMapTest2.h" />
