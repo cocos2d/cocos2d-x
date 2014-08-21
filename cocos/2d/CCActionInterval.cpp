@@ -1961,7 +1961,7 @@ FadeBy* FadeBy::create(float duration, GLubyte opacity, bool additive)
     FadeBy *fadeBy = new FadeBy();
     fadeBy->initWithDuration(duration, opacity, additive);
     fadeBy->autorelease();
-	
+
     return fadeBy;
 }
 
@@ -1970,19 +1970,19 @@ bool FadeBy::initWithDuration(float duration, GLubyte opacity, bool additive)
     if (ActionInterval::initWithDuration(duration))
     {
         _byOpacity = opacity;
-		_additive = additive;
+	_additive = additive;
         return true;
     }
-	
+
     return false;
 }
 
 FadeBy* FadeBy::clone() const
 {
-	auto a = new FadeBy();
-	a->initWithDuration(_duration, _byOpacity, _additive);
-	a->autorelease();
-	return a;
+    auto a = new FadeBy();
+    a->initWithDuration(_duration, _byOpacity, _additive);
+    a->autorelease();
+    return a;
 }
 
 FadeBy* FadeBy::reverse() const
@@ -1994,10 +1994,10 @@ FadeBy* FadeBy::reverse() const
 void FadeBy::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-	
+
     if (target)
     {
-		_lastTime = 0.0;
+	_lastTime = 0.0;
     }
 }
 
@@ -2005,22 +2005,20 @@ void FadeBy::update(float time)
 {
     if (_target)
     {
-        float dt = (time - _lastTime) / _duration; // normalize time change
-		_lastTime = time;
-		
-		GLubyte fromOpacity = _target->getOpacity();
-		GLubyte nextOpacity = fromOpacity;
-		if (_additive) {
-			nextOpacity += (_byOpacity * dt );
-			if (nextOpacity < fromOpacity)
-				nextOpacity = 255;
-		}
-		else {
-			nextOpacity -= (_byOpacity * dt);
-			if (nextOpacity > fromOpacity)
-				nextOpacity = 0;
+        float dt = (time - _lastTime);
+	_lastTime = time;
+
+	GLubyte fromOpacity = _target->getOpacity();
+	GLubyte nextOpacity = fromOpacity;
+	if (_additive) {
+	    nextOpacity += (_byOpacity * dt );
+	    if (nextOpacity < fromOpacity) nextOpacity = 255;
+	}
+	else {
+	    nextOpacity -= (_byOpacity * dt);
+            if (nextOpacity > fromOpacity) nextOpacity = 0;
         }
-		_target->setOpacity( nextOpacity );
+        _target->setOpacity( nextOpacity );
     }
 }
 
