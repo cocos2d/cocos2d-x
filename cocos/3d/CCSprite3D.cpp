@@ -382,7 +382,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         //support tint and fade
         meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
-        Director::getInstance()->getRenderer()->addCommand(&meshCommand);
+        renderer->addCommand(&meshCommand);
     }
 }
 
@@ -397,6 +397,53 @@ void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
 const BlendFunc& Sprite3D::getBlendFunc() const
 {
     return _blend;
+}
+
+AABB Sprite3D::getAABB() const
+{
+    Mat4 nodeToWorldTransform(getNodeToWorldTransform());
+    
+    // If nodeToWorldTransform matrix isn't changed, we don't need to transform aabb.
+    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(Mat4)) == 0)
+    {
+        return _aabb;
+    }
+    else
+    {
+        Mat4 transform(nodeToWorldTransform);
+        _aabb = _mesh->getOriginAABB();
+        
+        if (getSkin() && getSkin()->getRootBone())
+        {
+            transform = nodeToWorldTransform * getSkin()->getRootBone()->getWorldMat();
+        }
+        
+        _aabb.transform(transform);
+        _nodeToWorldTransform = nodeToWorldTransform;
+    }
+    
+    return _aabb;
+}
+
+Rect Sprite3D::getBoundingBox() const
+{
+    AABB aabb = getAABB();
+    Rect ret(aabb._min.x, aabb._min.y, (aabb._max.x - aabb._min.x), (aabb._max.y - aabb._min.y));
+    return ret;
+}
+
+void Sprite3D::setCullFace(GLenum cullFace)
+{
+    for (auto& it : _meshCommands) {
+        it.setCullFace(cullFace);
+    }
+}
+
+void Sprite3D::setCullFaceEnabled(bool enable)
+{
+    for (auto& it : _meshCommands) {
+        it.setCullFaceEnabled(enable);
+    }
 }
 
 NS_CC_END

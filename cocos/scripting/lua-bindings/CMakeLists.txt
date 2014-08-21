@@ -205,3 +205,25 @@ set_target_properties(luaui
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+
+#luacocos3d
+set(LIBLUA3D_SRC
+  auto/lua_cocos2dx_3d_auto.cpp
+  manual/3d/lua_cocos2dx_3d_manual.cpp
+)
+
+include_directories(
+  auto
+  manual/3d
+  ../../../3d
+)
+
+add_library(luacocos3d STATIC
+  ${LIBLUA3D_SRC}
+)
+
+set_target_properties(luacocos3d
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+)

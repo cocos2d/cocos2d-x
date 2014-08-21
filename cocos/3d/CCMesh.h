@@ -37,12 +37,16 @@
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
 
+#include "CCAABB.h"
+#include "3d/3dExport.h"
+
+
 NS_CC_BEGIN
 
 class EventListenerCustom;
 class EventCustom;
 
-class CC_DLL RenderMeshData
+class CC_3D_DLL RenderMeshData
 {
     typedef std::vector<unsigned short> IndexArray;
     friend class Mesh;
@@ -69,7 +73,7 @@ protected:
  * Mesh: Geometry with a collection of vertex. 
  * Supporting various vertex formats.
  */
-class CC_DLL Mesh : public Ref
+class CC_3D_DLL Mesh : public Ref
 {
     typedef std::vector<unsigned short> IndexArray;
 public:
@@ -121,6 +125,9 @@ public:
     /**build vertex buffer from renderdata*/
     void restore();
     
+    /** get origin aabb that calculate from vertices*/
+    const AABB& getOriginAABB() const;
+    
     /**to be deprecated, those functions have been moved to SubMesh*/
     /** get primitive type*/
     CC_DEPRECATED_ATTRIBUTE PrimitiveType getPrimitiveType() const { return _subMeshes.at(0)->getPrimitiveType(); }
@@ -147,12 +154,21 @@ CC_CONSTRUCTOR_ACCESS:
     void buildBuffer();
     /**free buffer*/
     void cleanAndFreeBuffers();
+    
+    /*
+     * calculate AABB by origin vertices
+     * @param the vertices list
+     * @param stride the stride between two vertex's position data.
+     */
+    void calOriginAABB(const std::vector<float>& vertices, unsigned int stride);
 
 protected:
     GLuint _vertexBuffer;
     Vector<SubMesh*> _subMeshes;
 
     RenderMeshData _renderdata;
+    
+    AABB _originAABB;
 };
 
 /**

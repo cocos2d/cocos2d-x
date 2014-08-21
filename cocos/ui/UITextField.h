@@ -135,6 +135,10 @@ public:
     
     void setPlaceHolder(const std::string& value);
     const std::string& getPlaceHolder()const;
+    const Color4B& getPlaceHolderColor()const;
+    void setPlaceHolderColor(const Color3B& color);
+    void setPlaceHolderColor(const Color4B& color);
+    void setTextColor(const Color4B& textColor);
     
     void setFontSize(int size);
     int getFontSize()const;

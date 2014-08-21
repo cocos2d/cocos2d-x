@@ -1023,7 +1023,8 @@ void Label::updateFont()
 
 void Label::drawTextSprite(Renderer *renderer, uint32_t parentFlags)
 {
-    if (_fontDefinition._fontFillColor != _textColor)
+    if (_fontDefinition._fontFillColor.r != _textColor.r || _fontDefinition._fontFillColor.g != _textColor.g
+        || _fontDefinition._fontFillColor.b != _textColor.b)
     {
         updateContent();
     }
@@ -1053,7 +1054,7 @@ void Label::drawTextSprite(Renderer *renderer, uint32_t parentFlags)
 
 void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (! _visible || _originalUTF8String.empty())
+    if (! _visible || _originalUTF8String.empty() || !isVisitableByVisitingCamera())
     {
         return;
     }

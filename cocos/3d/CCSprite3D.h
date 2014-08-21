@@ -33,6 +33,8 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
+#include "CCAABB.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +47,7 @@ class SubMeshState;
 class Skeleton3D;
 
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
-class CC_DLL Sprite3D : public Node, public BlendProtocol
+class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
@@ -79,6 +81,25 @@ public:
     // overrides
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
+    
+    /*
+     * Get AABB
+     * If the sprite has animation, it can't be calculated accuratly,
+     * because bone can drive the vertices, we just use the origin vertices
+     * to calculate the AABB.
+     */
+    AABB getAABB() const;
+    
+    /**
+     * Returns 2d bounding-box
+     * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
+     */
+    virtual Rect getBoundingBox() const override;
+
+    // set which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK, default GL_BACK
+    void setCullFace(GLenum cullFace);
+    // set cull face enable or not
+    void setCullFaceEnabled(bool enable);
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -119,9 +140,12 @@ protected:
     std::unordered_map<std::string, AttachNode*> _attachments;
 
     BlendFunc                    _blend;
+    
+    mutable AABB                 _aabb;                 // cache current aabb
+    mutable Mat4                 _nodeToWorldTransform; // cache the matrix
 };
 
-extern std::string CC_DLL s_attributeNames[];//attribute names array
+extern std::string CC_3D_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_

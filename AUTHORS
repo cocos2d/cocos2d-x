@@ -804,6 +804,9 @@ Developers:
         Android jni error clear & more readable log
         Add support of software PVRTC v1 decompression
         Fixed a bug that ttf font have not effect on Mac OS X
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk
+        Added Device::setKeepScreenOn()
+        Fixed Label performance problem
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -914,12 +917,15 @@ Developers:
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
         Fix video scale issue in iOS
         Fix iOS VideoPlayer memory leak
+        Added c++11 random library support
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
         
     Teivaz
         Custom uniform search optimization
+        Fixed compiling error on WP8.
+        Added method for custom precompiled shader program loading on WP8
         
     chareice
         Make `setup.py` work on zsh
@@ -974,6 +980,12 @@ Developers:
         
     DavidPartouche
         Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
+        
+    zaWasp
+        Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
+        
+    xiangxw
+        Fixed the bug that Console::sendPrompt() will send extra `\0`
     
 Retired Core Developers:
     WenSheng Yang

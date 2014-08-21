@@ -5,11 +5,6 @@
 -- @parent_module ccui
 
 --------------------------------
--- @function [parent=#CheckBox] getSelectedState 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- @function [parent=#CheckBox] loadTextureBackGroundSelected 
 -- @param self
 -- @param #string str
@@ -22,6 +17,11 @@
 -- @param #int texturerestype
         
 --------------------------------
+-- @function [parent=#CheckBox] setSelected 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
 -- @function [parent=#CheckBox] addEventListener 
 -- @param self
 -- @param #function func
@@ -31,6 +31,11 @@
 -- @param self
 -- @param #string str
 -- @param #int texturerestype
+        
+--------------------------------
+-- @function [parent=#CheckBox] isSelected 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#CheckBox] loadTextures 
@@ -47,11 +52,6 @@
 -- @param self
 -- @param #string str
 -- @param #int texturerestype
-        
---------------------------------
--- @function [parent=#CheckBox] setSelectedState 
--- @param self
--- @param #bool bool
         
 --------------------------------
 -- @function [parent=#CheckBox] loadTextureFrontCrossDisabled 

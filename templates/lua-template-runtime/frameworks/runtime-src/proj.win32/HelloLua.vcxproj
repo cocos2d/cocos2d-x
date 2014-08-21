@@ -80,6 +80,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -108,14 +109,20 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
+      <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\network\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosbuilder\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extension\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocostudio\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
     <PostBuildEvent>
       <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
@@ -136,6 +143,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -162,14 +170,26 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\..\runtime\win32\" /e /Y</Command>
+      <Command>if exist "$(LocalDebuggerWorkingDirectory)" rd /s /q "$(LocalDebuggerWorkingDirectory)"
+mkdir "$(LocalDebuggerWorkingDirectory)"
+mkdir "$(LocalDebuggerWorkingDirectory)\src"
+mkdir "$(LocalDebuggerWorkingDirectory)\res"
+xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /e /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\config.json" /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\network\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosbuilder\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extension\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocostudio\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -196,6 +216,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\type_traits.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\Classes\runtime\lua_debugger.h" />
     <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
     <ClInclude Include="..\Classes\runtime\Runtime.h" />
@@ -220,6 +241,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc" />
     <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\lua_debugger.c" />
     <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
     <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp" />
     <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
@@ -238,20 +260,29 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <Image Include="res\game.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\2d\libcocos2d.vcxproj">
-      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\cocos\audio\proj.win32\libcocosdenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj">
       <Project>{9f2d6ce6-c893-4400-b50c-6db70cc2562f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocosbuilder.vcxproj">
+      <Project>{f8198014-f4f3-49f0-88ab-c1969a5829af}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocosdenshion.vcxproj">
       <Project>{46a7d57a-7f25-4f52-823b-ffac4ff3a624}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d-x\external\chipmunk\proj.win32\chipmunk.vcxproj">
-      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocostudio.vcxproj">
+      <Project>{9640951e-c5d0-47b5-9c42-0bcada261c50}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluaextension.vcxproj">
+      <Project>{7068296e-38a4-4bca-85db-3a09bd014847}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluanetwork.vcxproj">
+      <Project>{65e52f4b-703f-419e-ad67-926241a10042}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluaspine.vcxproj">
+      <Project>{31ef6ab1-0d9a-4bc6-99b8-2c482ea373c4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluaui.vcxproj">
+      <Project>{fe78eebb-3dbb-4713-8cbf-63d742c5bd82}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
