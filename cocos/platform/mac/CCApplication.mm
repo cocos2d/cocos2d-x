@@ -64,7 +64,7 @@ Application::~Application()
 
 int Application::run()
 {
-    initContextAttrs();
+    initGLContextAttrs();
     if(!applicationDidFinishLaunching())
     {
         return 1;

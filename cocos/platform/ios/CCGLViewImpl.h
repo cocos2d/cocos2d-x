@@ -56,8 +56,6 @@ public:
     static void convertAttrs();
     static void* _pixelFormat;
     static int _depthFormat;
-    
-    void setSize();
 
     /** sets the content scale factor */
     bool setContentScaleFactor(float contentScaleFactor);

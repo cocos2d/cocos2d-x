@@ -21,11 +21,11 @@ AppDelegate::~AppDelegate()
     //CCScriptEngineManager::destroyInstance();
 }
 
-void AppDelegate::initContextAttrs()
+void AppDelegate::initGLContextAttrs()
 {
-    ContextAttrs contextAttrs = {8, 8, 8, 8, 24, 8};
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
     
-    GLView::setContextAttrs(contextAttrs);
+    GLView::setGLContextAttrs(glContextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching()

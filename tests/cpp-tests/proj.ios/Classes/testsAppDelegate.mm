@@ -42,7 +42,7 @@ static AppDelegate s_sharedApplication;
 {
 
     cocos2d::Application *app = cocos2d::Application::getInstance();
-    app->initContextAttrs();
+    app->initGLContextAttrs();
     cocos2d::GLViewImpl::convertAttrs();
 
     // Override point for customization after application launch.

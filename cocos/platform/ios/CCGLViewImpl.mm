@@ -85,11 +85,11 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 
 void GLViewImpl::convertAttrs()
 {
-    if(_contextAttrs.redBits==8 && _contextAttrs.greenBits==8 && _contextAttrs.blueBits==8 && _contextAttrs.alphaBits==8)
+    if(_glContextAttrs.redBits==8 && _glContextAttrs.greenBits==8 && _glContextAttrs.blueBits==8 && _glContextAttrs.alphaBits==8)
     {
         _pixelFormat = kEAGLColorFormatRGBA8;
     }
-    if(_contextAttrs.depthBits==24 && _contextAttrs.stencilBits==8)
+    if(_glContextAttrs.depthBits==24 && _glContextAttrs.stencilBits==8)
     {
         _depthFormat = GL_DEPTH24_STENCIL8_OES;
     }
@@ -131,20 +131,13 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     
     [eaglview setMultipleTouchEnabled:YES];
 
-    //_screenSize.width = _designResolutionSize.width = [eaglview getWidth];
-    //_screenSize.height = _designResolutionSize.height = [eaglview getHeight];
+    _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
+    _screenSize.height = _designResolutionSize.height = [eaglview getHeight];
 //    _scaleX = _scaleY = [eaglview contentScaleFactor];
 
     _eaglview = eaglview;
 
     return true;
-}
-
-void GLViewImpl::setSize()
-{
-    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
-    _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
-    _screenSize.height = _designResolutionSize.height = [eaglview getHeight];
 }
 
 bool GLViewImpl::initWithFullScreen(const std::string& viewName)

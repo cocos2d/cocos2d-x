@@ -73,11 +73,6 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
-ContextAttrs GLViewImpl::getContextAttrs()
-{
-    return _contextAttrs;
-}
-
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
     auto ret = new GLViewImpl();

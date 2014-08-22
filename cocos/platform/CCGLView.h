@@ -64,7 +64,7 @@ enum class ResolutionPolicy
     UNKNOWN,
 };
 
-struct ContextAttrs
+struct GLContextAttrs
 {
     int redBits;
     int greenBits;
@@ -109,8 +109,9 @@ public:
     virtual bool windowShouldClose() { return false; };
 
     //static method and member so that we can modify it on all platforms before create OpenGL context
-    static void setContextAttrs(ContextAttrs& contextAttrs);
-    static ContextAttrs _contextAttrs;
+    static void setGLContextAttrs(GLContextAttrs& glContextAttrs);
+    static GLContextAttrs getGLContextAttrs();
+    static GLContextAttrs _glContextAttrs;
 
     /**
      * Polls input events. Subclass must implement methods if platform
