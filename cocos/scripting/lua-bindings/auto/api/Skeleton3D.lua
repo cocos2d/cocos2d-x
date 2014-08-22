@@ -13,6 +13,7 @@
 --------------------------------
 -- @function [parent=#Skeleton3D] getRootBone 
 -- @param self
+-- @param #int int
 -- @return Bone3D#Bone3D ret (return value: cc.Bone3D)
         
 --------------------------------
@@ -26,9 +27,9 @@
 -- @return Bone3D#Bone3D ret (return value: cc.Bone3D)
         
 --------------------------------
--- @function [parent=#Skeleton3D] setRootBone 
+-- @function [parent=#Skeleton3D] getRootCount 
 -- @param self
--- @param #cc.Bone3D bone3d
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- @function [parent=#Skeleton3D] getBoneIndex 
@@ -40,12 +41,5 @@
 -- @function [parent=#Skeleton3D] getBoneCount 
 -- @param self
 -- @return long#long ret (return value: long)
-        
---------------------------------
--- @function [parent=#Skeleton3D] create 
--- @param self
--- @param #string str
--- @param #string str
--- @return Skeleton3D#Skeleton3D ret (return value: cc.Skeleton3D)
         
 return nil
