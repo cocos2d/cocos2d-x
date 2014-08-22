@@ -1,4 +1,4 @@
-cocos2d-x-3.3  ??
+cocos2d-x-3.3alpha0  ??
     [NEW]           Added UIScale9Sprite
     [NEW]           Added Camera, AABB, OBB and Ray
     [NEW]           Added render primitive and render primitive command, support passing point, line and triangle data

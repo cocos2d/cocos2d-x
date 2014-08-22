@@ -125,7 +125,7 @@ void DrawLine3D::onDraw(const Mat4 &transform, uint32_t flags)
     
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), &(_buffer[0].colors));
-    glDrawArrays(GL_LINES, 0, _buffer.size());
+    glDrawArrays(GL_LINES, 0, static_cast<int>(_buffer.size()));
     glDisable(GL_DEPTH_TEST);
 }
 

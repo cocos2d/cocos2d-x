@@ -165,7 +165,30 @@ TBD
 
 ## ui::Scale9Sprite
 
-TBD
+Now we have implemented a new Scale9Sprite class under ui module. Its internal implementation is concise than the previous one plus more features.
+The main reason of reimplementing this class is that the Scale9Sprite is heavily used in ui module. Now the ui module is not dependent from extension module.
+By applying the new ui::Scale9Sprite, the code inside many widget classes are more cleaner and elegant.
+
+We could manually toggle "slice 9" feature by one function call:
+
+```c++
+//ui::Scale9Sprite is slice 9 enabled on default
+auto sprite = ui::Scale9Sprite::create("foo.png");
+sprite->setScale9Enabled(false);
+```
+
+It also supports Flipping now.
+
+```c++
+auto sprite = ui::Scale9Sprite::create("bar.png");
+sprite->setFlippedX(true);
+sprite->setFlippedY(false);
+```
+
+Since the ui::Scale9Sprite is a Node rather than a Sprite, so you can't add it to a batch node. If you do want to do some actions on the internal sprite, 
+you could call `sprite->getSprite()` to access it. 
+
+Full test case please refer to `tests/cpp-tests/Classes/UITests/CocostudioGUITest/UIScale9SpriteTest.cpp`.
 
 ## c++11 random support
 

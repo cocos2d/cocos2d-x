@@ -142,7 +142,7 @@ public:
     virtual void update(float time) override;
 	virtual FadeOutTRTiles* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutTRTiles() {}
     virtual ~FadeOutTRTiles() {}
 
@@ -163,7 +163,7 @@ public:
     virtual float testFunc(const Size& pos, float time) override;
 	virtual FadeOutBLTiles* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutBLTiles() {}
     virtual ~FadeOutBLTiles() {}
 
@@ -186,7 +186,7 @@ public:
 	virtual FadeOutUpTiles* clone() const override;
     virtual float testFunc(const Size& pos, float time) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutUpTiles() {}
     virtual ~FadeOutUpTiles() {}
 
@@ -207,7 +207,7 @@ public:
 	virtual FadeOutDownTiles* clone() const override;
     virtual float testFunc(const Size& pos, float time) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutDownTiles() {}
     virtual ~FadeOutDownTiles() {}
 
