@@ -78,8 +78,8 @@ bool Sprite3D::loadFromCache(const std::string& path)
     auto spritedata = Sprite3DCache::getInstance()->getSpriteData(path);
     if (spritedata)
     {
-        for (auto it : spritedata->meshes) {
-            _meshes.pushBack(it);
+        for (auto it : spritedata->meshVertexDatas) {
+            _meshVertexDatas.pushBack(it);
         }
         _skeleton = Skeleton3D::create(spritedata->nodedatas->skeleton);
         CC_SAFE_RETAIN(_skeleton);
@@ -114,7 +114,7 @@ bool Sprite3D::loadFromObj(const std::string& path)
         auto data = new Sprite3DCache::Sprite3DData();
         data->materialdatas = materialdatas;
         data->nodedatas = nodeDatas;
-        data->meshes = _meshes;
+        data->meshVertexDatas = _meshVertexDatas;
         Sprite3DCache::getInstance()->addSprite3DData(path, data);
         return true;
     }
@@ -144,7 +144,7 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         auto data = new Sprite3DCache::Sprite3DData();
         data->materialdatas = materialdatas;
         data->nodedatas = nodeDatas;
-        data->meshes = _meshes;
+        data->meshVertexDatas = _meshVertexDatas;
         Sprite3DCache::getInstance()->addSprite3DData(path, data);
         return true;
     }
@@ -164,18 +164,18 @@ Sprite3D::Sprite3D()
 
 Sprite3D::~Sprite3D()
 {
-    _subMeshStates.clear();
     _glProgramStates.clear();
     _meshes.clear();
+    _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
 {
-    _subMeshStates.clear();
     _meshes.clear();
     _glProgramStates.clear();
+    _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
     
@@ -204,8 +204,10 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
     {
         if(it)
         {
-            Mesh* mesh = Mesh::create(*it);
-            _meshes.pushBack(mesh);
+//            Mesh* mesh = Mesh::create(*it);
+//            _meshes.pushBack(mesh);
+            auto meshvertex = MeshVertexData::create(*it);
+            _meshVertexDatas.pushBack(meshvertex);
         }
     }
     _skeleton = Skeleton3D::create(nodeDatas.skeleton);
@@ -234,12 +236,11 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
     auto sprite = new Sprite3D();
     if (sprite)
     {
-        auto subMeshState = SubMeshState::create(nodedata->id);
-        subMeshState->setSubMesh(getSubMesh(modeldata->subMeshId));
+        auto mesh = Mesh::create(nodedata->id, getMeshIndexData(modeldata->subMeshId));
         if (modeldata->matrialId == "" && matrialdatas.materials.size())
         {
             const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
-            subMeshState->setTexture(textureData->filename);
+            mesh->setTexture(textureData->filename);
         }
         else
         {
@@ -258,14 +259,14 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                         texParams.wrapS = textureData->wrapS;
                         texParams.wrapT = textureData->wrapT;
                         tex->setTexParameters(texParams);
-                        subMeshState->setTexture(tex);
+                        mesh->setTexture(tex);
                     }
 
                 }
             }
         }
         sprite->setAdditionalTransform(&nodedata->transform);
-        sprite->addSubMeshState(subMeshState);
+        sprite->addMesh(mesh);
         sprite->autorelease();
         sprite->genGLProgramState(); 
     }
@@ -291,8 +292,8 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& 
 }
 void Sprite3D::genGLProgramState()
 {
-    std::unordered_map<Mesh*, GLProgramState*> glProgramestates;
-    for(auto& mesh : _meshes)
+    std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
+    for(auto& mesh : _meshVertexDatas)
     {
         bool textured = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
@@ -315,12 +316,12 @@ void Sprite3D::genGLProgramState()
         long offset = 0;
         auto attributeCount = mesh->getMeshVertexAttribCount();
         for (auto k = 0; k < attributeCount; k++) {
-            auto meshattribute = mesh->getMeshVertexAttribute(k);
+            auto meshattribute = mesh->getMeshVertexAttrib(k);
             programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
                                                  meshattribute.size,
                                                  meshattribute.type,
                                                  GL_FALSE,
-                                                 mesh->getVertexSizeInBytes(),
+                                                 mesh->getVertexBuffer()->getSizePerVertex(),
                                                  (GLvoid*)offset);
             offset += meshattribute.attribSizeBytes;
         }
@@ -329,8 +330,9 @@ void Sprite3D::genGLProgramState()
         glProgramestates[mesh] = programstate;
     }
     
-    for (auto& it : _subMeshStates) {
-        it->setGLProgramState(glProgramestates[it->getSubMesh()->getMesh()]);
+    for (auto& it : _meshes) {
+        auto glProgramState = glProgramestates[it->getMeshIndexData()->getMeshVertexData()];
+        it->setGLProgramState(glProgramState);
     }
 }
 
@@ -343,22 +345,21 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
-                auto subMeshState = SubMeshState::create(nodedata->id);
-                if(subMeshState)
+                auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
+                if(mesh)
                 {
-                    _subMeshStates.pushBack(subMeshState);
-                    subMeshState->setSubMesh(getSubMesh(it->subMeshId));
+                    _meshes.pushBack(mesh);
                     if (_skeleton && it->bones.size())
                     {
                         auto skin = MeshSkin::create(_skeleton, it->bones, it->invBindPose);
-                        subMeshState->setSkin(skin);
+                        mesh->setSkin(skin);
                     }
-                    subMeshState->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
+                    mesh->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
 
                     if (it->matrialId == "" && matrialdatas.materials.size())
                     {
                         const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
-                        subMeshState->setTexture(textureData->filename);
+                        mesh->setTexture(textureData->filename);
                     }
                     else
                     {
@@ -377,7 +378,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                     texParams.wrapS = textureData->wrapS;
                                     texParams.wrapT = textureData->wrapT;
                                     tex->setTexParameters(texParams);
-                                    subMeshState->setTexture(tex);
+                                    mesh->setTexture(tex);
                                 }
 
                             }
@@ -417,20 +418,21 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
     }
 }
 
-SubMesh* Sprite3D::getSubMesh(const std::string& subMeshId) const
+MeshIndexData* Sprite3D::getMeshIndexData(const std::string& indexId) const
 {
-    for (auto it : _meshes) {
-        auto subMesh = it->getSubMeshById(subMeshId);
-        if (subMesh)
-            return subMesh;
+    for (auto it : _meshVertexDatas) {
+        auto index = it->getMeshIndexDataById(indexId);
+        if (index)
+            return index;
     }
     return nullptr;
 }
 
-void  Sprite3D::addSubMeshState(SubMeshState* subMeshState)
+void  Sprite3D::addMesh(Mesh* mesh)
 {
-    _meshes.pushBack(subMeshState->getSubMesh()->getMesh());
-    _subMeshStates.pushBack(subMeshState);
+    auto meshVertex = mesh->getMeshIndexData()->_vertexData;
+    _meshVertexDatas.pushBack(meshVertex);
+    _meshes.pushBack(mesh);
 }
 
 void Sprite3D::setTexture(const std::string& texFile)
@@ -441,7 +443,7 @@ void Sprite3D::setTexture(const std::string& texFile)
 
 void Sprite3D::setTexture(Texture2D* texture)
 {
-    for (auto& state : _subMeshStates) {
+    for (auto& state : _meshes) {
         state->setTexture(texture);
     }
 }
@@ -490,20 +492,20 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     color.a = getDisplayedOpacity() / 255.0f;
     
     int i = 0;
-    for (auto& submeshstate : _subMeshStates) {
-        if (!submeshstate->isVisible())
+    for (auto& mesh : _meshes) {
+        if (!mesh->isVisible())
         {
             i++;
             continue;
         }
-        auto programstate = submeshstate->getGLProgramState();
-        auto& meshCommand = submeshstate->getMeshCommand();
+        auto programstate = mesh->getGLProgramState();
+        auto& meshCommand = mesh->getMeshCommand();
         
-        GLuint textureID = submeshstate->getTexture() ? submeshstate->getTexture()->getName() : 0;
-        auto submesh = submeshstate->getSubMesh();
-        meshCommand.init(_globalZOrder, textureID, programstate, _blend, submesh->getMesh()->getVertexBuffer(), submesh->getIndexBuffer(), (GLenum)submesh->getPrimitiveType(), (GLenum)submesh->getIndexFormat(), submesh->getIndexCount(), transform);
+        GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
         
-        auto skin = submeshstate->getSkin();
+        meshCommand.init(_globalZOrder, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
+        
+        auto skin = mesh->getSkin();
         if (skin)
         {
             meshCommand.setMatrixPaletteSize((int)skin->getMatrixPaletteSize());
@@ -518,7 +520,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 void Sprite3D::setGLProgramState(GLProgramState *glProgramState)
 {
     Node::setGLProgramState(glProgramState);
-    for (auto& state : _subMeshStates) {
+    for (auto& state : _meshes) {
         state->setGLProgramState(glProgramState);
     }
 }
@@ -533,7 +535,7 @@ void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
     {
         _blend = blendFunc;
-        for(auto& state : _subMeshStates)
+        for(auto& state : _meshes)
         {
             state->setBlendFunc(blendFunc);
         }
@@ -558,7 +560,7 @@ const AABB& Sprite3D::getAABB() const
     {
         _aabb.reset();
         Mat4 transform(nodeToWorldTransform);
-        for (const auto& it : _subMeshStates) {
+        for (const auto& it : _meshes) {
             if (it->isVisible())
                 _aabb.merge(it->getAABB());
         }
@@ -579,28 +581,28 @@ Rect Sprite3D::getBoundingBox() const
 
 void Sprite3D::setCullFace(GLenum cullFace)
 {
-    for (auto& it : _subMeshStates) {
+    for (auto& it : _meshes) {
         it->getMeshCommand().setCullFace(cullFace);
     }
 }
 
 void Sprite3D::setCullFaceEnabled(bool enable)
 {
-    for (auto& it : _subMeshStates) {
+    for (auto& it : _meshes) {
         it->getMeshCommand().setCullFaceEnabled(enable);
     }
 }
 
-SubMeshState* Sprite3D::getSubMeshState(int index) const
+Mesh* Sprite3D::getMeshByIndex(int index) const
 {
-    CCASSERT(index < _subMeshStates.size(), "invald index");
-    return _subMeshStates.at(index);
+    CCASSERT(index < _meshes.size(), "invald index");
+    return _meshes.at(index);
 }
 
 /**get SubMeshState by Name */
-SubMeshState* Sprite3D::getSubMeshStateByName(const std::string& name) const
+Mesh* Sprite3D::getMeshByName(const std::string& name) const
 {
-    for (const auto& it : _subMeshStates) {
+    for (const auto& it : _meshes) {
         if (it->getName() == name)
             return it;
     }
@@ -609,7 +611,7 @@ SubMeshState* Sprite3D::getSubMeshStateByName(const std::string& name) const
 
 MeshSkin* Sprite3D::getSkin() const
 {
-    for (const auto& it : _subMeshStates) {
+    for (const auto& it : _meshes) {
         if (it->getSkin())
             return it->getSkin();
     }

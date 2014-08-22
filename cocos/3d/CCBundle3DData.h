@@ -127,6 +127,15 @@ struct MeshData
     int attribCount;
 
 public:
+    int getPerVertexSize() const
+    {
+        int vertexsize = 0;
+        for(const auto& attrib : attribs)
+        {
+            vertexsize += attrib.attribSizeBytes;
+        }
+        return vertexsize;
+    }
     void resetData()
     {
         vertex.clear();

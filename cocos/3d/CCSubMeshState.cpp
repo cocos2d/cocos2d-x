@@ -48,45 +48,136 @@ using namespace std;
 
 NS_CC_BEGIN
 
-SubMeshState::SubMeshState()
+Mesh::Mesh()
 : _visible(true)
 , _texture(nullptr)
 , _skin(nullptr)
-, _subMesh(nullptr)
+, _meshIndexData(nullptr)
 , _visibleChanged(nullptr)
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
     
 }
-SubMeshState::~SubMeshState()
+Mesh::~Mesh()
 {
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_skin);
-    CC_SAFE_RELEASE(_subMesh);
+    CC_SAFE_RELEASE(_meshIndexData);
     CC_SAFE_RELEASE(_glProgramState);
 }
 
-SubMeshState* SubMeshState::create()
+GLuint Mesh::getVertexBuffer() const
 {
-    auto state = new SubMeshState();
-    state->autorelease();
-    state->bindMeshCommand();
-    
-    return state;
+    return _meshIndexData->getVertexBuffer()->getVBO();
 }
 
-SubMeshState* SubMeshState::create(const std::string& name)
+bool Mesh::hasVertexAttrib(int attrib) const
 {
-    auto state = new SubMeshState();
+    return _meshIndexData->getMeshVertexData()->hasVertexAttrib(attrib);
+}
+
+ssize_t Mesh::getMeshVertexAttribCount() const
+{
+    return _meshIndexData->getMeshVertexData()->getMeshVertexAttribCount();
+}
+
+const MeshVertexAttrib& Mesh::getMeshVertexAttribute(int idx)
+{
+    return _meshIndexData->getMeshVertexData()->getMeshVertexAttrib(idx);
+}
+
+int Mesh::getVertexSizeInBytes() const
+{
+    return _meshIndexData->getVertexBuffer()->getSizePerVertex();
+}
+
+Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices)
+{
+    int perVertexSizeInFloat = 0;
+    std::vector<float> vertices;
+    std::vector<MeshVertexAttrib> attribs;
+    MeshVertexAttrib att;
+    att.size = 3;
+    att.type = GL_FLOAT;
+    att.attribSizeBytes = att.size * sizeof(float);
+    
+    if (positions.size())
+    {
+        perVertexSizeInFloat += 3;
+        att.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
+        attribs.push_back(att);
+    }
+    if (normals.size())
+    {
+        perVertexSizeInFloat += 3;
+        att.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
+        attribs.push_back(att);
+    }
+    if (texs.size())
+    {
+        perVertexSizeInFloat += 2;
+        att.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
+        att.size = 2;
+        att.attribSizeBytes = att.size * sizeof(float);
+        attribs.push_back(att);
+    }
+    
+    bool hasNormal = (normals.size() != 0);
+    bool hasTexCoord = (texs.size() != 0);
+    //position, normal, texCoordinate into _vertexs
+    size_t vertexNum = positions.size() / 3;
+    for(size_t i = 0; i < vertexNum; i++)
+    {
+        vertices.push_back(positions[i * 3]);
+        vertices.push_back(positions[i * 3 + 1]);
+        vertices.push_back(positions[i * 3 + 2]);
+
+        if (hasNormal)
+        {
+            vertices.push_back(normals[i * 3]);
+            vertices.push_back(normals[i * 3 + 1]);
+            vertices.push_back(normals[i * 3 + 2]);
+        }
+    
+        if (hasTexCoord)
+        {
+            vertices.push_back(texs[i * 2]);
+            vertices.push_back(texs[i * 2 + 1]);
+        }
+    }
+    return create(vertices, perVertexSizeInFloat, indices, attribs);
+}
+
+Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs)
+{
+    MeshData meshdata;
+    meshdata.attribs = attribs;
+    meshdata.vertex = vertices;
+    meshdata.subMeshIndices.push_back(indices);
+    meshdata.subMeshIds.push_back("");
+    auto meshvertexdata = MeshVertexData::create(meshdata);
+    auto indexbuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)indices.size());
+    
+    AABB aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), indices);
+    auto indexData = MeshIndexData::create("", meshvertexdata, indexbuffer, aabb);
+    
+    return create("", indexData);
+}
+
+Mesh* Mesh::create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin)
+{
+    auto state = new Mesh();
     state->autorelease();
     state->bindMeshCommand();
     state->_name = name;
+    state->setMeshIndexData(indexData);
+    state->setSkin(skin);
     
     return state;
 }
 
-void SubMeshState::setVisible(bool visible)
+void Mesh::setVisible(bool visible)
 {
     if (_visible != visible)
     {
@@ -96,13 +187,13 @@ void SubMeshState::setVisible(bool visible)
     }
 }
 
-void SubMeshState::setTexture(const std::string& texPath)
+void Mesh::setTexture(const std::string& texPath)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
     setTexture(tex);
 }
 
-void SubMeshState::setTexture(Texture2D* tex)
+void Mesh::setTexture(Texture2D* tex)
 {
     if (tex != _texture)
     {
@@ -113,7 +204,7 @@ void SubMeshState::setTexture(Texture2D* tex)
     }
 }
 
-void SubMeshState::setSkin(MeshSkin* skin)
+void Mesh::setSkin(MeshSkin* skin)
 {
     if (_skin != skin)
     {
@@ -124,19 +215,19 @@ void SubMeshState::setSkin(MeshSkin* skin)
     }
 }
 
-void SubMeshState::setSubMesh(SubMesh* subMesh)
+void Mesh::setMeshIndexData(MeshIndexData* subMesh)
 {
-    if (_subMesh != subMesh)
+    if (_meshIndexData != subMesh)
     {
         CC_SAFE_RETAIN(subMesh);
-        CC_SAFE_RELEASE(_subMesh);
-        _subMesh = subMesh;
+        CC_SAFE_RELEASE(_meshIndexData);
+        _meshIndexData = subMesh;
         calcuateAABB();
         bindMeshCommand();
     }
 }
 
-void SubMeshState::setGLProgramState(GLProgramState* glProgramState)
+void Mesh::setGLProgramState(GLProgramState* glProgramState)
 {
     if (_glProgramState != glProgramState)
     {
@@ -147,11 +238,11 @@ void SubMeshState::setGLProgramState(GLProgramState* glProgramState)
     }
 }
 
-void SubMeshState::calcuateAABB()
+void Mesh::calcuateAABB()
 {
-    if (_subMesh)
+    if (_meshIndexData)
     {
-        _aabb = _subMesh->getAABB();
+        _aabb = _meshIndexData->getAABB();
         if (_skin)
         {
             Bone3D* root = _skin->getRootBone();
@@ -163,18 +254,18 @@ void SubMeshState::calcuateAABB()
     }
 }
 
-void SubMeshState::bindMeshCommand()
+void Mesh::bindMeshCommand()
 {
-    if (_glProgramState && _subMesh && _texture)
+    if (_glProgramState && _meshIndexData && _texture)
     {
         GLuint texID = _texture ? _texture->getName() : 0;
-        _meshCommand.genMaterialID(texID, _glProgramState, _subMesh->getMesh()->getVertexBuffer(), _subMesh->getIndexBuffer(), _blend);
+        _meshCommand.genMaterialID(texID, _glProgramState, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), _blend);
         _meshCommand.setCullFaceEnabled(true);
         _meshCommand.setDepthTestEnabled(true);
     }
 }
 
-void SubMeshState::setBlendFunc(const BlendFunc &blendFunc)
+void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 {
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
     {
@@ -182,9 +273,29 @@ void SubMeshState::setBlendFunc(const BlendFunc &blendFunc)
         bindMeshCommand();
     }
 }
-const BlendFunc &SubMeshState::getBlendFunc() const
+const BlendFunc &Mesh::getBlendFunc() const
 {
     return _blend;
+}
+
+GLenum Mesh::getPrimitiveType() const
+{
+    return _meshIndexData->getPrimitiveType();
+}
+
+ssize_t Mesh::getIndexCount() const
+{
+    return _meshIndexData->getIndexBuffer()->getIndexNumber();
+}
+
+GLenum Mesh::getIndexFormat() const
+{
+    return GL_UNSIGNED_SHORT;
+}
+
+GLuint Mesh::getIndexBuffer() const
+{
+    return _meshIndexData->getIndexBuffer()->getVBO();
 }
 
 NS_CC_END

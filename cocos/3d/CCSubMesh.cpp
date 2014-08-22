@@ -46,66 +46,124 @@ using namespace std;
 
 NS_CC_BEGIN
 
-SubMesh::SubMesh()
-: _indexBuffer(0)
-, _primitiveType(PrimitiveType::TRIANGLES)
-, _indexFormat(IndexFormat::INDEX16)
-, _indexCount(0)
-, _mesh(nullptr)
-{
-}
 
-SubMesh::~SubMesh()
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MeshIndexData* MeshIndexData::create(const std::string& id, MeshVertexData* vertexData, IndexBuffer* indexbuffer, const AABB& aabb)
 {
-    cleanAndFreeBuffers();
-}
-
-SubMesh* SubMesh::create(PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
-{
-    auto submesh = new SubMesh();
-    submesh->_primitiveType = primitivetype;
-    submesh->_indexFormat = indexformat;
-    submesh->autorelease();
+    auto meshindex = new MeshIndexData();
     
-    return submesh;
-}
-
-SubMesh* SubMesh::create(const std::string& submeshId, Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices)
-{
-    auto submesh = new SubMesh();
-    submesh->_primitiveType = primitivetype;
-    submesh->_indexFormat = indexformat;
-    submesh->_mesh = mesh;
-    submesh->_id = submeshId;
-    submesh->autorelease();
+    meshindex->_id = id;
+    meshindex->_indexBuffer = indexbuffer;
+    meshindex->_vertexData = vertexData;
+    indexbuffer->retain();
+    vertexData->retain();
+    meshindex->_aabb = aabb;
     
-    return submesh;
+    meshindex->autorelease();
+    return meshindex;
 }
 
-void SubMesh::cleanAndFreeBuffers()
+const VertexBuffer* MeshIndexData::getVertexBuffer() const
 {
-    if(glIsBuffer(_indexBuffer))
+    return _vertexData->getVertexBuffer();
+}
+
+MeshIndexData::MeshIndexData()
+: _indexBuffer(nullptr)
+, _vertexData(nullptr)
+, _primitiveType(GL_TRIANGLES)
+{
+    
+}
+MeshIndexData::~MeshIndexData()
+{
+    CC_SAFE_RELEASE(_indexBuffer);
+    CC_SAFE_RELEASE(_vertexData);
+}
+
+MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
+{
+    auto vertexdata = new MeshVertexData();
+    int pervertexsize = meshdata.getPerVertexSize();
+    vertexdata->_vertexBuffer = VertexBuffer::create(pervertexsize, (int)(meshdata.vertex.size() / (pervertexsize / 4)));
+    vertexdata->_vertexData = VertexData::create();
+    CC_SAFE_RETAIN(vertexdata->_vertexData);
+    CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
+    
+    int offset = 0;
+    for (const auto& it : meshdata.attribs) {
+        vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offset, it.vertexAttrib, it.type, it.size));
+        offset += it.attribSizeBytes;
+    }
+    vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    
+    vertexdata->_attribs = meshdata.attribs;
+    
+    if(vertexdata->_vertexBuffer)
     {
-        glDeleteBuffers(1, &_indexBuffer);
-        _indexBuffer = 0;
+        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4, 0);
     }
     
-    _indexCount = 0;
+    AABB aabb;
+    for (size_t i = 0; i < meshdata.subMeshIndices.size(); i++) {
+        
+        auto& index = meshdata.subMeshIndices[i];
+        auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
+        indexBuffer->updateIndices(&index[0], (int)index.size(), 0);
+        aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), index);
+        std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
+        MeshIndexData* indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, aabb);
+        vertexdata->_indexs.pushBack(indexdata);
+    }
+    
+    vertexdata->autorelease();
+    return vertexdata;
 }
 
-void SubMesh::buildBuffer(const std::vector<unsigned short>& indices)
+const AABB& MeshVertexData::calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index)
 {
-    glGenBuffers(1, &_indexBuffer);
+    static AABB aabb;
+    stride /= 4;
+    for(const auto& it : index)
+    {
+        Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
+        aabb.updateMinMax(&point, 1);
+    }
+    return aabb;
+}
+
+MeshIndexData* MeshVertexData::getMeshIndexDataById(const std::string& id) const
+{
+    for (auto it : _indexs) {
+        if (it->getId() == id)
+            return it;
+    }
+    return nullptr;
+}
+
+bool MeshVertexData::hasVertexAttrib(int attrib) const
+{
+    for (const auto& it : _attribs) {
+        if (it.vertexAttrib == attrib)
+            return true;
+    }
+    return false;
+}
+
+MeshVertexData::MeshVertexData()
+: _vertexData(nullptr)
+, _vertexBuffer(nullptr)
+, _vertexCount(0)
+{
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    unsigned int indexSize = 2;
-    
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * indices.size(), &indices[0], GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    _indexCount = indices.size();
+}
+MeshVertexData::~MeshVertexData()
+{
+    CC_SAFE_RELEASE(_vertexData);
+    CC_SAFE_RELEASE(_vertexBuffer);
+    _indexs.clear();
 }
 
 NS_CC_END

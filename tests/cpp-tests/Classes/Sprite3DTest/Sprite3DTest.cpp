@@ -30,6 +30,7 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
 #include <algorithm>
@@ -489,7 +490,7 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     if(sprite != _sprite)
     {
         GLProgram* glprogram;
-        if(!sprite->getSkin())
+        if(!sprite->getMesh()->getSkin())
             glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
         else
             glprogram = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
@@ -545,22 +546,21 @@ void Effect3DOutline::draw(const Mat4 &transform)
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         
-        if(_sprite && _sprite->getSkin())
+        auto skin = _sprite->getMesh()->getSkin();
+        if(_sprite && skin)
         {
             auto function = std::bind(MatrixPalleteCallBack, std::placeholders::_1, std::placeholders::_2,
-                                      _sprite->getSkin()->getMatrixPaletteSize(), (float*)_sprite->getSkin()->getMatrixPalette());
+                                      skin->getMatrixPaletteSize(), (float*)skin->getMatrixPalette());
             _glProgramState->setUniformCallback("u_matrixPalette", function);
         }
         
         if(_sprite)
             _glProgramState->apply(transform);
  
-        for (ssize_t i = 0; i < mesh->getSubMeshCount(); i++) {
-            auto submesh = mesh->getSubMesh((int)i);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, submesh->getIndexBuffer());
-            glDrawElements((GLenum)submesh->getPrimitiveType(), (GLsizei)submesh->getIndexCount(), (GLenum)submesh->getIndexFormat(), 0);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, submesh->getIndexCount());
-        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
+        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
@@ -1040,7 +1040,7 @@ void Sprite3DReskinTest::menuCallback_switchHair(Ref* sender)
     {
         for(int i = 0; i < 2; i++ )
         {
-            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlHair[i]);
+            auto subMesh = _sprite->getMeshByName(_girlHair[i]);
             if(subMesh)
             {
                 if(i == _useHairId )
@@ -1057,7 +1057,7 @@ void Sprite3DReskinTest::menuCallback_switchHair(Ref* sender)
 }
 void Sprite3DReskinTest::menuCallback_switchGlasses(Ref* sender)
 {
-    SubMeshState* subMesh = _sprite->getSubMeshStateByName("Girl_Yanjing_01");
+    auto subMesh = _sprite->getMeshByName("Girl_Yanjing_01");
     if(subMesh)
     {
         if(subMesh->isVisible())
@@ -1081,7 +1081,7 @@ void Sprite3DReskinTest::menuCallback_switchCoat(Ref* sender)
     {
         for(int i = 0; i < 2; i++ )
         {
-            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlUpperBody[i]);
+            auto subMesh = _sprite->getMeshByName(_girlUpperBody[i]);
             if(subMesh)
             {
                 if(i == _useUpBodyId )
@@ -1107,7 +1107,7 @@ void Sprite3DReskinTest::menuCallback_switchPants(Ref* sender)
     {
         for(int i = 0; i < 2; i++ )
         {
-            SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlPants[i]);
+            auto subMesh = _sprite->getMeshByName(_girlPants[i]);
             if(subMesh)
             {
                 if(i == _usePantsId )
@@ -1133,7 +1133,7 @@ void Sprite3DReskinTest::menuCallback_switchShoes(Ref* sender)
         {
             for(int i = 0; i < 2; i++ )
             {
-                SubMeshState* subMesh = _sprite->getSubMeshStateByName(_girlShoes[i]);
+                auto subMesh = _sprite->getMeshByName(_girlShoes[i]);
                 if(subMesh)
                 {
                     if(i == _useShoesId )
@@ -1177,22 +1177,22 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(4);
     sprite->setRotation3D(Vec3(0,0,0));
-    auto girlPants = sprite->getSubMeshStateByName(_girlPants[1]);
+    auto girlPants = sprite->getMeshByName(_girlPants[1]);
     if(girlPants)
     {
         girlPants->setVisible(false);
     }
-    auto girlShoes = sprite->getSubMeshStateByName(_girlShoes[1]);
+    auto girlShoes = sprite->getMeshByName(_girlShoes[1]);
     if(girlShoes)
     {
         girlShoes->setVisible(false);
     }
-    auto girlHair = sprite->getSubMeshStateByName(_girlHair[1]);
+    auto girlHair = sprite->getMeshByName(_girlHair[1]);
     if(girlHair)
     {
         girlHair->setVisible(false);
     }
-    auto girlUpBody = sprite->getSubMeshStateByName( _girlUpperBody[1]);
+    auto girlUpBody = sprite->getMeshByName( _girlUpperBody[1]);
     if(girlUpBody)
     {
         girlUpBody->setVisible(false);

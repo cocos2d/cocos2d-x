@@ -35,79 +35,93 @@
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCVertexIndexData.h"
+#include "renderer/CCVertexIndexBuffer.h"
 #include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-/** Defines supported index formats. */
-enum class IndexFormat
-{
-    INDEX8 = GL_UNSIGNED_BYTE,
-    INDEX16 = GL_UNSIGNED_SHORT,
-};
+class MeshVertexData;
 
-/** Defines supported primitive types. */
-enum class PrimitiveType
+class MeshIndexData : public Ref
 {
-    TRIANGLES = GL_TRIANGLES,
-    TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-    LINES = GL_LINES,
-    LINE_STRIP = GL_LINE_STRIP,
-    POINTS = GL_POINTS
-};
-
-class Mesh;
-
-/**
- * SubMesh: Defines the way the mesh's vertices how to be connected together.
- */
-class CC_3D_DLL SubMesh : public Ref
-{
-    friend class Mesh;
-    friend class SubMeshState;
 public:
-
-    /**create submesh from primitivetype indexformat and indices*/
-    static SubMesh* create(PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
+    /** create  */
+    static MeshIndexData* create(const std::string& id, MeshVertexData* vertexData, IndexBuffer* indexbuffer, const AABB& aabb);
     
-    static SubMesh* create(const std::string& submeshId, Mesh* mesh, PrimitiveType primitivetype, IndexFormat indexformat, const std::vector<unsigned short>& indices);
-    
-    /** get primitive type*/
-    PrimitiveType getPrimitiveType() const { return _primitiveType; }
-    /**get index count*/
-    ssize_t getIndexCount() const { return _indexCount; }
-    /**get index format*/
-    IndexFormat getIndexFormat() const { return _indexFormat; }
     /**get index buffer*/
-    GLuint getIndexBuffer() const {return _indexBuffer; }
+    const IndexBuffer* getIndexBuffer() const { return _indexBuffer; }
+    /**get vertex buffer*/
+    const VertexBuffer* getVertexBuffer() const;
     
-    /** get mesh */
-    Mesh*  getMesh() const { return _mesh; }
+    /**get vertex data*/
+    const MeshVertexData* getMeshVertexData() const { return _vertexData; }
     
-    /** get submesh id */
-    const std::string& getSubMeshId() const { return _id; }
-
-CC_CONSTRUCTOR_ACCESS:
-    
-    SubMesh();
-    virtual ~SubMesh();
-
-    /**build buffer*/
-    void buildBuffer(const std::vector<unsigned short>& indices);
-    /**free buffer*/
-    void cleanAndFreeBuffers();
-
+    /** aabb getter and setter */
+    void setAABB(const AABB& aabb) { _aabb = aabb; }
     const AABB& getAABB() const { return _aabb; }
-protected:
-    PrimitiveType _primitiveType;
-    IndexFormat _indexFormat;
-
-    GLuint _indexBuffer;
-    ssize_t _indexCount;
     
-    Mesh*       _mesh; //parent mesh, weak ref
-    std::string _id; //submeshid
-    AABB        _aabb; //original aabb of the submesh
+    /** id setter and getter */
+    void setId(const std::string& id) { _id = id; }
+    const std::string& getId() const { return _id; }
+    
+    GLenum getPrimitiveType() const { return _primitiveType; }
+    void   setPrimitiveType(GLenum primitive) { _primitiveType = primitive; }
+    
+CC_CONSTRUCTOR_ACCESS:
+    MeshIndexData();
+    virtual ~MeshIndexData();
+    
+protected:
+    IndexBuffer*    _indexBuffer; //index buffer
+    MeshVertexData* _vertexData; //vertex buffer
+    AABB           _aabb; // original aabb of the submesh
+    std::string    _id; //id
+    GLenum         _primitiveType;
+    
+    friend class MeshVertexData;
+    friend class Sprite3D;
+};
+
+class MeshVertexData : public Ref
+{
+    friend class Sprite3D;
+    friend class Mesh;
+public:
+    /**create*/
+    static MeshVertexData* create(const MeshData& meshdata);
+    
+    /** get vertexbuffer */
+    const VertexBuffer* getVertexBuffer() const { return _vertexBuffer; }
+    
+    /** get attributes count */
+    ssize_t getMeshVertexAttribCount() const { return _attribs.size(); }
+    
+    /** get attribute by index */
+    const MeshVertexAttrib& getMeshVertexAttrib(ssize_t index) const { return _attribs[index]; }
+    
+    /** get index data count */
+    ssize_t getMeshIndexDataCount() const { return _indexs.size(); }
+    /** get index data by index */
+    MeshIndexData* getMeshIndexDataByIndex(int index) const { return _indexs.at(index); }
+    /** get index data by id */
+    MeshIndexData* getMeshIndexDataById(const std::string& id) const;
+    
+    /**has vertex attribute?*/
+    bool hasVertexAttrib(int attrib) const;
+    
+CC_CONSTRUCTOR_ACCESS:
+    MeshVertexData();
+    virtual ~MeshVertexData();
+    
+    static const AABB& calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
+protected:
+    VertexData*          _vertexData; //mesh vertex data
+    VertexBuffer*        _vertexBuffer; // vertex buffer
+    Vector<MeshIndexData*> _indexs; //index data
+    std::vector<MeshVertexAttrib> _attribs;
+    
+    int                  _vertexCount; //vertex count
 };
 
 NS_CC_END

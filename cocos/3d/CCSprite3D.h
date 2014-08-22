@@ -36,6 +36,8 @@
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCMesh.h"
+#include "3d/CCSubMeshState.h"
+#include "3d/CCSubMesh.h"
 #include "3d/3dExport.h"
 
 
@@ -65,10 +67,10 @@ public:
     void setTexture(Texture2D* texture);
     
     /**get SubMeshState by index*/
-    SubMeshState* getSubMeshState(int index) const;
+    Mesh* getMeshByIndex(int index) const;
     
     /**get SubMeshState by Name */
-    SubMeshState* getSubMeshStateByName(const std::string& name) const;
+    Mesh* getMeshByName(const std::string& name) const;
 
     /**get mesh*/
     Mesh* getMesh() const { return _meshes.at(0); }
@@ -142,9 +144,11 @@ CC_CONSTRUCTOR_ACCESS:
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
     Sprite3D* createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas);
-    /**get SubMesh by Id*/
-    SubMesh* getSubMesh(const std::string& subMeshId) const;
-    void  addSubMeshState(SubMeshState* subMeshState);
+
+    /**get MeshIndexData by Id*/
+    MeshIndexData* getMeshIndexData(const std::string& indexId) const;
+    
+    void  addMesh(Mesh* mesh);
     
     void onAABBDirty() { _aabbDirty = true; }
     
@@ -152,7 +156,7 @@ protected:
 
     Skeleton3D*                  _skeleton; //skeleton
     
-    Vector<SubMeshState*>        _subMeshStates; // SubMeshStates
+    Vector<MeshVertexData*>      _meshVertexDatas;
     
     std::unordered_map<std::string, AttachNode*> _attachments;
 
@@ -173,7 +177,7 @@ class Sprite3DCache
 public:
     struct Sprite3DData
     {
-        Vector<Mesh*>   meshes;
+        Vector<MeshVertexData*>   meshVertexDatas;
         NodeDatas*      nodedatas;
         MaterialDatas*  materialdatas;
         ~Sprite3DData()
@@ -182,7 +186,7 @@ public:
                 delete nodedatas;
             if (materialdatas)
                 delete materialdatas;
-            meshes.clear();
+            meshVertexDatas.clear();
         }
     };
     
