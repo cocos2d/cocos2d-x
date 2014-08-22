@@ -34,6 +34,22 @@ include(build/BuildHelpers.CMakeLists.txt)
 
 message(${BUILDING_STRING})
 
+<<<<<<< HEAD
+=======
+option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
+option(USE_BOX2D "Use box2d for physics library" OFF)
+option(BUILD_STATIC "Build static libraries" ON)
+option(DEBUG_MODE "Debug or release?" ON)
+option(BUILD_EXTENSIONS "Build extension library" ON)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
+option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk, Tinyxml2 from source" ON)
+option(BUILD_CppTests "Build TestCpp samples" ON)
+option(BUILD_LIBS_LUA "Build lua libraries" ON)
+option(BUILD_LuaTests "Build TestLua samples" ON)
+
+>>>>>>> ae08081... added support for static and shared builds on windows
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
 else(DEBUG_MODE)
@@ -60,7 +76,14 @@ endif(MSVC)
 
 # Some macro definitions
 if(WINDOWS)
-  ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
+
+  if(BUILD_STATIC)
+    ADD_DEFINITIONS (-DCC_STATIC)
+  else()
+    ADD_DEFINITIONS (-D_USRDLL)
+  endif()
+
+  ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)
 elseif(MACOSX)
   ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
