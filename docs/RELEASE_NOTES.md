@@ -117,7 +117,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.3alpha0
 
-* 3d: `Camera`, `AABB`, `OBB` and `Ray`
+* 3d: `Camera`, 'Reskin', 'Attachment', 'Better support for FBX', 'New fbx-conv', `AABB`, `OBB` and `Ray`
 * ui: added `Scale9Sprite`
 * FileUitls: added `isDirectoryExist()`, `createDirectory()`, `removeDirectory()`, `removeFile()`, `renameFile()` and `getFileSize()`
 * Device: added `setKeepScreenOn()` on iOS and Android 
@@ -159,9 +159,77 @@ scene->addChild(camera);
 
 Full test case please  refer to `tests/cpp-tests/res/Camera3DTest/Camera3DTest.cpp`.
 
+## Reskin
+
+It is a powerful feature, all the user change the appearance of character.
+
+For example, there a model named girl.c3b, which has two coats, coat0 and coat1. 
+The character's coat can be changed like this,
+
+```c++
+//load the girl from file
+auto sprite3d = Sprite3D::create("girl.c3b");
+//get the mesh named coat0
+auto mesh0 = sprite3d->getMeshByName("coat0");
+//you can change texture of this mesh if you like
+mesh0->setTexture("cloth.png");
+//you can change visibility for this mesh, too
+mesh0->setVisible(true);
+//hide coat1
+auto mesh1 = sprite3d->getMeshByName("coat1");
+mesh1->setVisible(false);
+```
+
+Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+
+## Attachment
+
+Allows to attach a node to a bone
+
+Usage,
+
+```c++
+auto sprite = Sprite3D::create("girl.c3b");
+auto weapon = Sprite::create("weapon.c3b");
+auto attachNode = sprite->getAttachNode("left_hand");
+attachNode->addChild(weapon);
+```
+
+Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+
+## Better support for FBX
+
+support multiple mesh
+support multiple material
+bones bind to each mesh limited to 40. But the FBX model can contain more meshes. So the model can contain much more bones.
+
+## New fbx-conv
+
+It can export more complex model, which contains multiple meshes and multiple materials.
+
 ## AABB, OBB and Ray
 
-TBD
+AABB means Axis Aligned Bounding Box
+OBB means Oriented Bounding Box
+Ray has a origin position and direction
+
+Each Sprite3D or Mesh has its own AABB.
+AABB and OBB can be picked by Ray.
+
+Usage,
+
+```c++
+//get ray from camera
+Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f); 
+auto size = Director::getInstance()->getWinSize();
+camera->unproject(size, &nearP, &nearP);
+camera->unproject(size, &farP, &farP);
+ray._origin = nearP;
+ray._direction = farP - nearP;
+ray.intersects(sprite3d->getAABB( ) );
+```
+
+Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
 
 ## ui::Scale9Sprite
 
