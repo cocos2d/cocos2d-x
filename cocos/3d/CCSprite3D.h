@@ -161,9 +161,7 @@ protected:
 
     BlendFunc                    _blend;
     
-    //since 3.3
     Vector<Mesh*>              _meshes;
-    Vector<GLProgramState*>    _glProgramStates;
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix

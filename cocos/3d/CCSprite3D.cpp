@@ -161,7 +161,6 @@ Sprite3D::Sprite3D()
 
 Sprite3D::~Sprite3D()
 {
-    _glProgramStates.clear();
     _meshes.clear();
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
@@ -171,7 +170,6 @@ Sprite3D::~Sprite3D()
 bool Sprite3D::initWithFile(const std::string &path)
 {
     _meshes.clear();
-    _glProgramStates.clear();
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
@@ -323,7 +321,6 @@ void Sprite3D::genGLProgramState()
             offset += meshattribute.attribSizeBytes;
         }
         
-        _glProgramStates.pushBack(programstate);
         glProgramestates[mesh] = programstate;
     }
     
