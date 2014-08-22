@@ -3907,7 +3907,6 @@
         "cocos/scripting/lua-bindings/auto/api/SpriteFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/SpriteFrameCache.lua", 
         "cocos/scripting/lua-bindings/auto/api/StopGrid.lua", 
-        "cocos/scripting/lua-bindings/auto/api/SubMeshState.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXLayer.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXLayerInfo.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXMapInfo.lua", 
