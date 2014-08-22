@@ -64,7 +64,7 @@ Application::~Application()
 
 int Application::run()
 {
-    setOGLCntattrs();
+    initContextAttrs();
     if(!applicationDidFinishLaunching())
     {
         return 1;

@@ -70,14 +70,12 @@ namespace {
     
 }
 
-int* GLView::_OGLCntattrs = new int[6];
+//default context attributions are setted as follows
+ContextAttrs GLView::_contextAttrs = {5, 6, 5, 0, 16, 0};
 
-void GLView::setOGLCntattrs(int* OGLCntattrs)
+void GLView::setContextAttrs(ContextAttrs& contextAttrs)
 {
-    for(int i = 0; i < 6; i++)
-    {
-        _OGLCntattrs[i] = OGLCntattrs[i];
-    }
+    _contextAttrs = contextAttrs;
 }
 
 GLView::GLView()

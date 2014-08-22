@@ -64,6 +64,16 @@ enum class ResolutionPolicy
     UNKNOWN,
 };
 
+struct ContextAttrs
+{
+    int redBits;
+    int greenBits;
+    int blueBits;
+    int alphaBits;
+    int depthBits;
+    int stencilBits;
+};
+
 NS_CC_BEGIN
 
 /**
@@ -98,8 +108,9 @@ public:
     
     virtual bool windowShouldClose() { return false; };
 
-    static void setOGLCntattrs(int* OGLCntattrs);
-    static int* _OGLCntattrs;
+    //static method and member so that we can modify it on all platforms before create OpenGL context
+    static void setContextAttrs(ContextAttrs& contextAttrs);
+    static ContextAttrs _contextAttrs;
 
     /**
      * Polls input events. Subclass must implement methods if platform

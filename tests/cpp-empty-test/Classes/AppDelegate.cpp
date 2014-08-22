@@ -17,13 +17,11 @@ AppDelegate::~AppDelegate()
 {
 }
 
-bool AppDelegate::setOGLCntattrs()
+void AppDelegate::initContextAttrs()
 {
-    int OGLCntattrs[] = {8, 8, 8, 8, 24, 8};
+    ContextAttrs contextAttrs = {8, 8, 8, 8, 24, 8};
 
-    GLView::setOGLCntattrs(OGLCntattrs); 
-
-    return true;
+    GLView::setContextAttrs(contextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {

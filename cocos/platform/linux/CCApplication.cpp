@@ -63,7 +63,7 @@ Application::~Application()
 
 int Application::run()
 {
-    setOGLCntattrs();
+    initContextAttrs();
     // Initialize instance and cocos2d.
     if (! applicationDidFinishLaunching())
     {

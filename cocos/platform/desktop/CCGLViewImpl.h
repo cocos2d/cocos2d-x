@@ -149,7 +149,6 @@ protected:
     friend class GLFWEventHandler;
 
 private:
-    void convertattrs();
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
 };
 
