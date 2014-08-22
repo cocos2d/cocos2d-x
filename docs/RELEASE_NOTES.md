@@ -117,7 +117,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.3alpha0
 
-* 3d: `Camera`, `AABB`, `OBB` and `Ray`
+* 3d: `Camera`, 'Reskin', 'Attachment', 'Better support for FBX', 'New fbx-conv', `AABB`, `OBB` and `Ray`
 * ui: added `Scale9Sprite`
 * FileUitls: added `isDirectoryExist()`, `createDirectory()`, `removeDirectory()`, `removeFile()`, `renameFile()` and `getFileSize()`
 * Device: added `setKeepScreenOn()` on iOS and Android 
