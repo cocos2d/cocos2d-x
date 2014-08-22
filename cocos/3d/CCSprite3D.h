@@ -36,8 +36,7 @@
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCMesh.h"
-#include "3d/CCSubMeshState.h"
-#include "3d/CCSubMesh.h"
+#include "3d/CCMeshVertexIndexData.h"
 #include "3d/3dExport.h"
 
 

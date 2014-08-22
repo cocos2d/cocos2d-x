@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCSUBMESH_H__
-#define __CCSUBMESH_H__
+#ifndef __CCMESHVERTEXINDEXDATA_H__
+#define __CCMESHVERTEXINDEXDATA_H__
 
 #include <string>
 #include <vector>
@@ -126,4 +126,4 @@ protected:
 
 NS_CC_END
 
-#endif // __CCSUBMESH_H_
+#endif // __CCMESHVERTEXINDEXDATA_H__

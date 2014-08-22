@@ -22,13 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCSubMesh.h"
-
 #include <list>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
+#include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCObjLoader.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCMesh.h"

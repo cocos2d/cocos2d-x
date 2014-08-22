@@ -26,7 +26,6 @@
 #include "Sprite3DTest.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
-#include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"

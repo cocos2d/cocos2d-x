@@ -57,14 +57,13 @@
 		1516200E199E75C2006099B8 /* CCRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6105179199CB1A600DC41CE /* CCRay.cpp */; };
 		1516200F199E75C2006099B8 /* CCSkeleton3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2A83E1987A6810077B3D4 /* CCSkeleton3D.cpp */; };
 		15162010199E75C2006099B8 /* CCAttachNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E3198639EF00FA95D0 /* CCAttachNode.cpp */; };
-		15162011199E75C2006099B8 /* CCSubMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E5198639EF00FA95D0 /* CCSubMesh.cpp */; };
-		15162012199E75C2006099B8 /* CCSubMeshState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E7198639EF00FA95D0 /* CCSubMeshState.cpp */; };
+		15162011199E75C2006099B8 /* CCMeshVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E5198639EF00FA95D0 /* CCMeshVertexIndexData.cpp */; };
+		15162012199E75C2006099B8 /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E7198639EF00FA95D0 /* CCMesh.cpp */; };
 		15162013199E75C2006099B8 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */; };
 		15162014199E75C2006099B8 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */; };
 		15162015199E75C2006099B8 /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */; };
 		15162016199E75C2006099B8 /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */; };
 		15162017199E75C2006099B8 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
-		15162018199E75C2006099B8 /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B91926D61F003EEF37 /* CCMesh.cpp */; };
 		15162019199E75C2006099B8 /* CCObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BB1926D61F003EEF37 /* CCObjLoader.cpp */; };
 		1516201A199E75C2006099B8 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */; };
 		1516201B199E75C2006099B8 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */; };
@@ -73,15 +72,14 @@
 		1516201E199E75FE006099B8 /* CCRay.h in Headers */ = {isa = PBXBuildFile; fileRef = B610517A199CB1A600DC41CE /* CCRay.h */; };
 		1516201F199E75FE006099B8 /* CCSkeleton3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA2A83F1987A6810077B3D4 /* CCSkeleton3D.h */; };
 		15162020199E75FE006099B8 /* CCAttachNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E4198639EF00FA95D0 /* CCAttachNode.h */; };
-		15162021199E75FE006099B8 /* CCSubMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E6198639EF00FA95D0 /* CCSubMesh.h */; };
-		15162022199E75FF006099B8 /* CCSubMeshState.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E8198639EF00FA95D0 /* CCSubMeshState.h */; };
+		15162021199E75FE006099B8 /* CCMeshVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E6198639EF00FA95D0 /* CCMeshVertexIndexData.h */; };
+		15162022199E75FF006099B8 /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E8198639EF00FA95D0 /* CCMesh.h */; };
 		15162023199E75FF006099B8 /* CCBundleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA4786F195478E00068D9D1 /* CCBundleReader.h */; };
 		15162024199E75FF006099B8 /* CCBundle3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AAF84019404E0D0069DE01 /* CCBundle3D.h */; };
 		15162025199E75FF006099B8 /* CCAnimate3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */; };
 		15162026199E75FF006099B8 /* CCMeshSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD896193D6693005E0B8A /* CCMeshSkin.h */; };
 		15162027199E75FF006099B8 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
 		15162028199E75FF006099B8 /* CCAnimationCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */; };
-		15162029199E75FF006099B8 /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BA1926D61F003EEF37 /* CCMesh.h */; };
 		1516202A199E75FF006099B8 /* CCObjLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BC1926D61F003EEF37 /* CCObjLoader.h */; };
 		1516202B199E75FF006099B8 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BE1926D61F003EEF37 /* CCSprite3D.h */; };
 		1516202C199E75FF006099B8 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
@@ -91,14 +89,13 @@
 		15162204199E7874006099B8 /* CCRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6105179199CB1A600DC41CE /* CCRay.cpp */; };
 		15162205199E7874006099B8 /* CCSkeleton3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2A83E1987A6810077B3D4 /* CCSkeleton3D.cpp */; };
 		15162206199E7874006099B8 /* CCAttachNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E3198639EF00FA95D0 /* CCAttachNode.cpp */; };
-		15162207199E7874006099B8 /* CCSubMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E5198639EF00FA95D0 /* CCSubMesh.cpp */; };
-		15162208199E7874006099B8 /* CCSubMeshState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E7198639EF00FA95D0 /* CCSubMeshState.cpp */; };
+		15162207199E7874006099B8 /* CCMeshVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E5198639EF00FA95D0 /* CCMeshVertexIndexData.cpp */; };
+		15162208199E7874006099B8 /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E80E7198639EF00FA95D0 /* CCMesh.cpp */; };
 		15162209199E7874006099B8 /* CCBundleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */; };
 		1516220A199E7874006099B8 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */; };
 		1516220B199E7874006099B8 /* CCAnimate3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD89C193DC0CC005E0B8A /* CCAnimate3D.cpp */; };
 		1516220C199E7874006099B8 /* CCMeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */; };
 		1516220D199E7874006099B8 /* CCAnimation3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B26341193884D60088FE25 /* CCAnimation3D.cpp */; };
-		1516220E199E7874006099B8 /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B91926D61F003EEF37 /* CCMesh.cpp */; };
 		1516220F199E7874006099B8 /* CCObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BB1926D61F003EEF37 /* CCObjLoader.cpp */; };
 		15162210199E7874006099B8 /* CCSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */; };
 		15162211199E7874006099B8 /* CCSprite3DMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594BF1926D61F003EEF37 /* CCSprite3DMaterial.cpp */; };
@@ -107,15 +104,14 @@
 		15162214199E7A32006099B8 /* CCRay.h in Headers */ = {isa = PBXBuildFile; fileRef = B610517A199CB1A600DC41CE /* CCRay.h */; };
 		15162215199E7A32006099B8 /* CCSkeleton3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA2A83F1987A6810077B3D4 /* CCSkeleton3D.h */; };
 		15162216199E7A32006099B8 /* CCAttachNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E4198639EF00FA95D0 /* CCAttachNode.h */; };
-		15162217199E7A32006099B8 /* CCSubMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E6198639EF00FA95D0 /* CCSubMesh.h */; };
-		15162218199E7A32006099B8 /* CCSubMeshState.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E8198639EF00FA95D0 /* CCSubMeshState.h */; };
+		15162217199E7A32006099B8 /* CCMeshVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E6198639EF00FA95D0 /* CCMeshVertexIndexData.h */; };
+		15162218199E7A32006099B8 /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E9E80E8198639EF00FA95D0 /* CCMesh.h */; };
 		15162219199E7A32006099B8 /* CCBundleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA4786F195478E00068D9D1 /* CCBundleReader.h */; };
 		1516221A199E7A32006099B8 /* CCBundle3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AAF84019404E0D0069DE01 /* CCBundle3D.h */; };
 		1516221B199E7A32006099B8 /* CCAnimate3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD89D193DC0CC005E0B8A /* CCAnimate3D.h */; };
 		1516221C199E7A32006099B8 /* CCMeshSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = B6ACD896193D6693005E0B8A /* CCMeshSkin.h */; };
 		1516221D199E7A32006099B8 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B26342193884D60088FE25 /* CCAnimation3D.h */; };
 		1516221E199E7A32006099B8 /* CCAnimationCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */; };
-		1516221F199E7A32006099B8 /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BA1926D61F003EEF37 /* CCMesh.h */; };
 		15162220199E7A32006099B8 /* CCObjLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BC1926D61F003EEF37 /* CCObjLoader.h */; };
 		15162221199E7A32006099B8 /* CCSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594BE1926D61F003EEF37 /* CCSprite3D.h */; };
 		15162222199E7A32006099B8 /* CCSprite3DMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594C01926D61F003EEF37 /* CCSprite3DMaterial.h */; };
@@ -2534,10 +2530,10 @@
 		3E61781C1966A5A300DE83F5 /* CCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCController.cpp; path = ../base/CCController.cpp; sourceTree = "<group>"; };
 		3E9E80E3198639EF00FA95D0 /* CCAttachNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAttachNode.cpp; sourceTree = "<group>"; };
 		3E9E80E4198639EF00FA95D0 /* CCAttachNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAttachNode.h; sourceTree = "<group>"; };
-		3E9E80E5198639EF00FA95D0 /* CCSubMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSubMesh.cpp; sourceTree = "<group>"; };
-		3E9E80E6198639EF00FA95D0 /* CCSubMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSubMesh.h; sourceTree = "<group>"; };
-		3E9E80E7198639EF00FA95D0 /* CCSubMeshState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSubMeshState.cpp; sourceTree = "<group>"; };
-		3E9E80E8198639EF00FA95D0 /* CCSubMeshState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSubMeshState.h; sourceTree = "<group>"; };
+		3E9E80E5198639EF00FA95D0 /* CCMeshVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshVertexIndexData.cpp; sourceTree = "<group>"; };
+		3E9E80E6198639EF00FA95D0 /* CCMeshVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshVertexIndexData.h; sourceTree = "<group>"; };
+		3E9E80E7198639EF00FA95D0 /* CCMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMesh.cpp; sourceTree = "<group>"; };
+		3E9E80E8198639EF00FA95D0 /* CCMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMesh.h; sourceTree = "<group>"; };
 		3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayer.h; sourceTree = "<group>"; };
 		3EA0FB6A191C841D00B170C8 /* UIVideoPlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIVideoPlayerIOS.mm; sourceTree = "<group>"; };
 		3EA2A83E1987A6810077B3D4 /* CCSkeleton3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeleton3D.cpp; sourceTree = "<group>"; };
@@ -3084,8 +3080,6 @@
 		B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
 		B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshCommand.cpp; sourceTree = "<group>"; };
 		B29594B31926D5EC003EEF37 /* CCMeshCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshCommand.h; sourceTree = "<group>"; };
-		B29594B91926D61F003EEF37 /* CCMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMesh.cpp; sourceTree = "<group>"; };
-		B29594BA1926D61F003EEF37 /* CCMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMesh.h; sourceTree = "<group>"; };
 		B29594BB1926D61F003EEF37 /* CCObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCObjLoader.cpp; sourceTree = "<group>"; };
 		B29594BC1926D61F003EEF37 /* CCObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCObjLoader.h; sourceTree = "<group>"; };
 		B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3D.cpp; sourceTree = "<group>"; };
@@ -5311,10 +5305,10 @@
 				3EA2A83F1987A6810077B3D4 /* CCSkeleton3D.h */,
 				3E9E80E3198639EF00FA95D0 /* CCAttachNode.cpp */,
 				3E9E80E4198639EF00FA95D0 /* CCAttachNode.h */,
-				3E9E80E5198639EF00FA95D0 /* CCSubMesh.cpp */,
-				3E9E80E6198639EF00FA95D0 /* CCSubMesh.h */,
-				3E9E80E7198639EF00FA95D0 /* CCSubMeshState.cpp */,
-				3E9E80E8198639EF00FA95D0 /* CCSubMeshState.h */,
+				3E9E80E5198639EF00FA95D0 /* CCMeshVertexIndexData.cpp */,
+				3E9E80E6198639EF00FA95D0 /* CCMeshVertexIndexData.h */,
+				3E9E80E7198639EF00FA95D0 /* CCMesh.cpp */,
+				3E9E80E8198639EF00FA95D0 /* CCMesh.h */,
 				3EA4786E195478E00068D9D1 /* CCBundleReader.cpp */,
 				3EA4786F195478E00068D9D1 /* CCBundleReader.h */,
 				B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */,
@@ -5327,8 +5321,6 @@
 				B6B26342193884D60088FE25 /* CCAnimation3D.h */,
 				B6B2633B19381FBF0088FE25 /* CCAnimationCurve.inl */,
 				B6B2633C19381FBF0088FE25 /* CCAnimationCurve.h */,
-				B29594B91926D61F003EEF37 /* CCMesh.cpp */,
-				B29594BA1926D61F003EEF37 /* CCMesh.h */,
 				B29594BB1926D61F003EEF37 /* CCObjLoader.cpp */,
 				B29594BC1926D61F003EEF37 /* CCObjLoader.h */,
 				B29594BD1926D61F003EEF37 /* CCSprite3D.cpp */,
@@ -5353,8 +5345,8 @@
 				1516201E199E75FE006099B8 /* CCRay.h in Headers */,
 				1516201F199E75FE006099B8 /* CCSkeleton3D.h in Headers */,
 				15162020199E75FE006099B8 /* CCAttachNode.h in Headers */,
-				15162021199E75FE006099B8 /* CCSubMesh.h in Headers */,
-				15162022199E75FF006099B8 /* CCSubMeshState.h in Headers */,
+				15162021199E75FE006099B8 /* CCMeshVertexIndexData.h in Headers */,
+				15162022199E75FF006099B8 /* CCMesh.h in Headers */,
 				15162023199E75FF006099B8 /* CCBundleReader.h in Headers */,
 				15162024199E75FF006099B8 /* CCBundle3D.h in Headers */,
 				15162025199E75FF006099B8 /* CCAnimate3D.h in Headers */,
@@ -5362,7 +5354,6 @@
 				15162026199E75FF006099B8 /* CCMeshSkin.h in Headers */,
 				15162027199E75FF006099B8 /* CCAnimation3D.h in Headers */,
 				15162028199E75FF006099B8 /* CCAnimationCurve.h in Headers */,
-				15162029199E75FF006099B8 /* CCMesh.h in Headers */,
 				1516202A199E75FF006099B8 /* CCObjLoader.h in Headers */,
 				1516202B199E75FF006099B8 /* CCSprite3D.h in Headers */,
 				1516202C199E75FF006099B8 /* CCSprite3DMaterial.h in Headers */,
@@ -5379,8 +5370,8 @@
 				15162214199E7A32006099B8 /* CCRay.h in Headers */,
 				15162215199E7A32006099B8 /* CCSkeleton3D.h in Headers */,
 				15162216199E7A32006099B8 /* CCAttachNode.h in Headers */,
-				15162217199E7A32006099B8 /* CCSubMesh.h in Headers */,
-				15162218199E7A32006099B8 /* CCSubMeshState.h in Headers */,
+				15162217199E7A32006099B8 /* CCMeshVertexIndexData.h in Headers */,
+				15162218199E7A32006099B8 /* CCMesh.h in Headers */,
 				15162219199E7A32006099B8 /* CCBundleReader.h in Headers */,
 				1516221A199E7A32006099B8 /* CCBundle3D.h in Headers */,
 				1516221B199E7A32006099B8 /* CCAnimate3D.h in Headers */,
@@ -5388,7 +5379,6 @@
 				1516221C199E7A32006099B8 /* CCMeshSkin.h in Headers */,
 				1516221D199E7A32006099B8 /* CCAnimation3D.h in Headers */,
 				1516221E199E7A32006099B8 /* CCAnimationCurve.h in Headers */,
-				1516221F199E7A32006099B8 /* CCMesh.h in Headers */,
 				15162220199E7A32006099B8 /* CCObjLoader.h in Headers */,
 				15162221199E7A32006099B8 /* CCSprite3D.h in Headers */,
 				15162222199E7A32006099B8 /* CCSprite3DMaterial.h in Headers */,
@@ -6913,14 +6903,13 @@
 				1516200E199E75C2006099B8 /* CCRay.cpp in Sources */,
 				1516200F199E75C2006099B8 /* CCSkeleton3D.cpp in Sources */,
 				15162010199E75C2006099B8 /* CCAttachNode.cpp in Sources */,
-				15162011199E75C2006099B8 /* CCSubMesh.cpp in Sources */,
-				15162012199E75C2006099B8 /* CCSubMeshState.cpp in Sources */,
+				15162011199E75C2006099B8 /* CCMeshVertexIndexData.cpp in Sources */,
+				15162012199E75C2006099B8 /* CCMesh.cpp in Sources */,
 				15162013199E75C2006099B8 /* CCBundleReader.cpp in Sources */,
 				15162014199E75C2006099B8 /* CCBundle3D.cpp in Sources */,
 				15162015199E75C2006099B8 /* CCAnimate3D.cpp in Sources */,
 				15162016199E75C2006099B8 /* CCMeshSkin.cpp in Sources */,
 				15162017199E75C2006099B8 /* CCAnimation3D.cpp in Sources */,
-				15162018199E75C2006099B8 /* CCMesh.cpp in Sources */,
 				15162019199E75C2006099B8 /* CCObjLoader.cpp in Sources */,
 				1516201A199E75C2006099B8 /* CCSprite3D.cpp in Sources */,
 				1516201B199E75C2006099B8 /* CCSprite3DMaterial.cpp in Sources */,
@@ -6936,14 +6925,13 @@
 				15162204199E7874006099B8 /* CCRay.cpp in Sources */,
 				15162205199E7874006099B8 /* CCSkeleton3D.cpp in Sources */,
 				15162206199E7874006099B8 /* CCAttachNode.cpp in Sources */,
-				15162207199E7874006099B8 /* CCSubMesh.cpp in Sources */,
-				15162208199E7874006099B8 /* CCSubMeshState.cpp in Sources */,
+				15162207199E7874006099B8 /* CCMeshVertexIndexData.cpp in Sources */,
+				15162208199E7874006099B8 /* CCMesh.cpp in Sources */,
 				15162209199E7874006099B8 /* CCBundleReader.cpp in Sources */,
 				1516220A199E7874006099B8 /* CCBundle3D.cpp in Sources */,
 				1516220B199E7874006099B8 /* CCAnimate3D.cpp in Sources */,
 				1516220C199E7874006099B8 /* CCMeshSkin.cpp in Sources */,
 				1516220D199E7874006099B8 /* CCAnimation3D.cpp in Sources */,
-				1516220E199E7874006099B8 /* CCMesh.cpp in Sources */,
 				1516220F199E7874006099B8 /* CCObjLoader.cpp in Sources */,
 				15162210199E7874006099B8 /* CCSprite3D.cpp in Sources */,
 				15162211199E7874006099B8 /* CCSprite3DMaterial.cpp in Sources */,

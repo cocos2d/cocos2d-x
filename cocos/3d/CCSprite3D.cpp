@@ -23,14 +23,11 @@
  ****************************************************************************/
 
 #include "3d/CCSprite3D.h"
-#include "3d/CCMesh.h"
 #include "3d/CCObjLoader.h"
 #include "3d/CCMeshSkin.h"
 #include "3d/CCBundle3D.h"
 #include "3d/CCSprite3DMaterial.h"
-#include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
-#include "3d/CCSubMeshState.h"
 #include "3d/CCSkeleton3D.h"
 
 #include "base/CCDirector.h"
