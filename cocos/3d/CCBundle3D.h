@@ -200,10 +200,9 @@ protected:
     */
     Reference* seekToFirstType(unsigned int type);
 
-protected:
 CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
-    ~Bundle3D();
+    virtual ~Bundle3D();
     
 protected:
     
