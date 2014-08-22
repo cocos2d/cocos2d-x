@@ -36,6 +36,10 @@
 -- @param #bool bool
         
 --------------------------------
+-- @function [parent=#ProtectedNode] disableCascadeOpacity 
+-- @param self
+        
+--------------------------------
 -- @function [parent=#ProtectedNode] sortAllProtectedChildren 
 -- @param self
         
