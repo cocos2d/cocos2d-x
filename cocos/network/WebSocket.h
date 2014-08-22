@@ -47,7 +47,7 @@ namespace network {
 class WsThreadHelper;
 class WsMessage;
 
-class WebSocket
+class CC_DLL WebSocket
 {
 public:
     /**
