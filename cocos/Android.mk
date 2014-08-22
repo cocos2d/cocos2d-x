@@ -114,7 +114,6 @@ base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
 base/CCEventTouch.cpp \
 base/CCIMEDispatcher.cpp \
-base/CCModuleManager.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
 base/ccRandom.cpp \
