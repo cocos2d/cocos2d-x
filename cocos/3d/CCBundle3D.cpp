@@ -981,7 +981,7 @@ bool Bundle3D::loadJson(const std::string& path)
     _jsonBuffer[size] = '\0';
     if (_jsonReader.ParseInsitu<0>(_jsonBuffer).HasParseError())
     {
-        assert(0);
+        CCASSERT(false, "Parse json failed");
         clear();
         return false;
     }
@@ -1100,7 +1100,7 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
 
     const rapidjson::Value& skin_data_array = _jsonReader[SKIN ];
 
-    assert(skin_data_array.IsArray());
+    CCASSERT(skin_data_array.IsArray(), "skin data is not an array");
     const rapidjson::Value& skin_data_array_val_0 = skin_data_array[(rapidjson::SizeType)0];
 
     if (!skin_data_array_val_0.HasMember(BONES))
@@ -2009,7 +2009,7 @@ NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
     }
     else
     {
-        CCASSERT(false, "Wrong GL type");
+        CCASSERT(false, "Wrong Texture type");
         return NTextureData::Usage::Unknown;
     }
 }
@@ -2031,6 +2031,30 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     {
         return GLProgram::VERTEX_ATTRIB_TEX_COORD1;
     }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD2")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD2;
+    }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD3")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD3;
+    }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD4")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD4;
+    }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD5")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD5;
+    }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD6")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD6;
+    }
+    else if (str == "VERTEX_ATTRIB_TEX_COORD7")
+    {
+        return GLProgram::VERTEX_ATTRIB_TEX_COORD7;
+    }
     else if (str == "VERTEX_ATTRIB_NORMAL")
     {
         return GLProgram::VERTEX_ATTRIB_NORMAL;
@@ -2045,7 +2069,7 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     }
     else
     {
-        assert(0);
+        CCASSERT(false, "Wrong Attribute type");
         return -1;
     }
 }
