@@ -353,7 +353,6 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
 {
 
     auto sprite = Sprite3D::create(fileName);
-    sprite->setScale(1);
     _layer3D->addChild(sprite);
     float globalZOrder=sprite->getGlobalZOrder();
     sprite->setPosition3D( Vec3( p.x, p.y,p.z) );

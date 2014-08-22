@@ -246,6 +246,31 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
+class Sprite3DReskinTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DReskinTest);
+    Sprite3DReskinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void addNewSpriteWithCoords(Vec2 p);
+    void menuCallback_switchHair(Ref* sender);
+    void menuCallback_switchGlasses(Ref* sender);
+    void menuCallback_switchCoat(Ref* sender);
+    void menuCallback_switchPants(Ref* sender);
+    void menuCallback_switchShoes(Ref* sender);
+protected:
+    std::string  _girlPants[2];
+    int _usePantsId;
+    std::string  _girlUpperBody[2];
+    int _useUpBodyId;
+    std::string  _girlShoes[2];
+    int _useShoesId;
+    std::string  _girlHair[2];
+    int _useHairId;
+    cocos2d::Sprite3D* _sprite;
+};
 class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo
 {
 public:
