@@ -30,6 +30,7 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
+#include "3d/3dExport.h"
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
@@ -37,7 +38,6 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCMeshCommand.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +45,7 @@ class Texture2D;
 class MeshSkin;
 class MeshIndexData;
 /** 
- * SubMeshState: visibility and apperence of submesh
+ * Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
 class CC_3D_DLL Mesh : public Ref
 {
@@ -105,6 +105,9 @@ public:
     GLenum getIndexFormat() const;
     /**get index buffer*/
     GLuint getIndexBuffer() const;
+    
+    /**get AABB*/
+    const AABB& getAABB() const { return _aabb; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -123,9 +126,7 @@ CC_CONSTRUCTOR_ACCESS:
     void setMeshIndexData(MeshIndexData* indexdata);
     /**name setter*/
     void setName(const std::string& name) { _name = name; }
-    
-    const AABB& getAABB() const { return _aabb; }
-    
+ 
     void calcuateAABB();
     
     void bindMeshCommand();

@@ -65,6 +65,7 @@ public:
     void setId(const std::string& id) { _id = id; }
     const std::string& getId() const { return _id; }
     
+    /**primitive type setter & getter*/
     GLenum getPrimitiveType() const { return _primitiveType; }
     void   setPrimitiveType(GLenum primitive) { _primitiveType = primitive; }
     
@@ -119,7 +120,7 @@ protected:
     VertexData*          _vertexData; //mesh vertex data
     VertexBuffer*        _vertexBuffer; // vertex buffer
     Vector<MeshIndexData*> _indexs; //index data
-    std::vector<MeshVertexAttrib> _attribs;
+    std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     
     int                  _vertexCount; //vertex count
 };
