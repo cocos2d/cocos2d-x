@@ -15,9 +15,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- @function [parent=#Widget] setFlippedY 
+-- @function [parent=#Widget] getLeftBoundary 
 -- @param self
--- @param #bool bool
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Widget] setFlippedX 
@@ -85,11 +85,10 @@
 -- @return LayoutParameter#LayoutParameter ret (return value: ccui.LayoutParameter)
         
 --------------------------------
--- @function [parent=#Widget] findNextFocusedWidget 
+-- @function [parent=#Widget] hitTest 
 -- @param self
--- @param #int focusdirection
--- @param #ccui.Widget widget
--- @return Widget#Widget ret (return value: ccui.Widget)
+-- @param #vec2_table vec2
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Widget] getPositionType 
@@ -105,6 +104,13 @@
 -- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Widget] findNextFocusedWidget 
+-- @param self
+-- @param #int focusdirection
+-- @param #ccui.Widget widget
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- @function [parent=#Widget] isEnabled 
@@ -157,9 +163,9 @@
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#Widget] getLeftBoundary 
+-- @function [parent=#Widget] setFlippedY 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #bool bool
         
 --------------------------------
 -- @function [parent=#Widget] setEnabled 
@@ -248,10 +254,9 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- @function [parent=#Widget] hitTest 
+-- @function [parent=#Widget] addClickEventListener 
 -- @param self
--- @param #vec2_table vec2
--- @return bool#bool ret (return value: bool)
+-- @param #function func
         
 --------------------------------
 -- @function [parent=#Widget] isFlippedX 
