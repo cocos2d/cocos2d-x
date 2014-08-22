@@ -64189,6 +64189,49 @@ int lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup(lua_State* 
 
     return 0;
 }
+int lua_cocos2dx_ProtectedNode_disableCascadeOpacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ProtectedNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ProtectedNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProtectedNode_disableCascadeOpacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->disableCascadeOpacity();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.ProtectedNode:disableCascadeOpacity",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ProtectedNode_disableCascadeOpacity'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ProtectedNode_sortAllProtectedChildren(lua_State* tolua_S)
 {
     int argc = 0;
@@ -64429,6 +64472,7 @@ int lua_register_cocos2dx_ProtectedNode(lua_State* tolua_S)
         tolua_function(tolua_S,"removeProtectedChildByTag",lua_cocos2dx_ProtectedNode_removeProtectedChildByTag);
         tolua_function(tolua_S,"reorderProtectedChild",lua_cocos2dx_ProtectedNode_reorderProtectedChild);
         tolua_function(tolua_S,"removeAllProtectedChildrenWithCleanup",lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup);
+        tolua_function(tolua_S,"disableCascadeOpacity",lua_cocos2dx_ProtectedNode_disableCascadeOpacity);
         tolua_function(tolua_S,"sortAllProtectedChildren",lua_cocos2dx_ProtectedNode_sortAllProtectedChildren);
         tolua_function(tolua_S,"getProtectedChildByTag",lua_cocos2dx_ProtectedNode_getProtectedChildByTag);
         tolua_function(tolua_S,"removeProtectedChild",lua_cocos2dx_ProtectedNode_removeProtectedChild);
