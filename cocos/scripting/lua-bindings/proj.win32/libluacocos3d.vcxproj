@@ -18,11 +18,6 @@
     <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp" />
     <ClInclude Include="..\manual\3d\lua_cocos2dx_3d_manual.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\3d\proj.win32\libcocos3d.vcxproj">
-      <Project>{e24950fa-5bc1-4aee-a900-4f0259354bf0}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{06840490-14A4-43D6-88BC-AAFA44D043EB}</ProjectGuid>
     <RootNamespace>libluacocos3d</RootNamespace>

@@ -24,11 +24,6 @@
     <None Include="..\script\DeprecatedExtensionFunc.lua" />
     <None Include="..\script\ExtensionConstants.lua" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\extensions\proj.win32\libextension.vcxproj">
-      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7068296E-38A4-4BCA-85DB-3A09BD014847}</ProjectGuid>
     <RootNamespace>libluaextension</RootNamespace>

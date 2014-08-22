@@ -27,11 +27,6 @@
     <None Include="..\script\DeprecatedUIFunc.lua" />
     <None Include="..\script\GuiConstants.lua" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\ui\proj.win32\libui.vcxproj">
-      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FE78EEBB-3DBB-4713-8CBF-63D742C5BD82}</ProjectGuid>
     <RootNamespace>libluaui</RootNamespace>

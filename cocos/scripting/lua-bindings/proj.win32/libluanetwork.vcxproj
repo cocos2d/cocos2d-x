@@ -49,11 +49,6 @@
     <ClInclude Include="..\manual\network\Lua_web_socket.h" />
     <ClInclude Include="..\manual\network\lua_xml_http_request.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\network\proj.win32\libNetwork.vcxproj">
-      <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{65E52F4B-703F-419E-AD67-926241A10042}</ProjectGuid>
     <RootNamespace>libluacocosdenshion</RootNamespace>

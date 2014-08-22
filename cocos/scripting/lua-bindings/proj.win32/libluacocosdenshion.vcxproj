@@ -16,11 +16,6 @@
     <None Include="..\script\DeprecatedCocosDenshionFunc.lua" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\audio\proj.win32\libcocosdenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp" />
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp" />
   </ItemGroup>

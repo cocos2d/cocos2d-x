@@ -23,11 +23,6 @@
     <None Include="..\script\DeprecatedCocoStudioFunc.lua" />
     <None Include="..\script\StudioConstants.lua" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\editor-support\cocostudio\proj.win32\libcocostudio.vcxproj">
-      <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9640951E-C5D0-47B5-9C42-0BCADA261C50}</ProjectGuid>
     <RootNamespace>libluacocostudio</RootNamespace>
