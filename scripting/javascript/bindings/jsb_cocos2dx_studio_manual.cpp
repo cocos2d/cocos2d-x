@@ -8,6 +8,7 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
+using namespace cocostudio::timeline;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
@@ -643,6 +644,64 @@ JSBool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, ui
 }
 
 
+
+class JSActionTimelineWrapper: public JSStudioEventListenerWrapper {
+public:
+    void frameCallbackFunc(cocostudio::timeline::Frame *pFrame);
+    
+};
+
+void JSActionTimelineWrapper::frameCallbackFunc(cocostudio::timeline::Frame *pFrame)
+{
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JSObject *thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
+    js_proxy_t *proxy = js_get_or_create_proxy(cx, pFrame);
+    jsval retval;
+    if (jsCallback != JSVAL_VOID)
+    {
+        jsval valArr[1];
+        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+        
+        JS_AddValueRoot(cx, valArr);
+        JS_CallFunctionValue(cx, thisObj, jsCallback, 1, valArr, &retval);
+        JS_RemoveValueRoot(cx, valArr);
+    }
+}
+
+static JSBool js_cocos2dx_ActionTimeline_setFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::ActionTimeline* cobj = (cocostudio::timeline::ActionTimeline *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    
+    if (argc == 2) {
+		jsval *argv = JS_ARGV(cx, vp);
+        
+        JSActionTimelineWrapper *tmpObj = new JSActionTimelineWrapper();
+        tmpObj->autorelease();
+        
+        CCDictionary* dict = static_cast<CCDictionary*>(cobj->getScriptObjectDict());
+        if (NULL == cobj->getScriptObjectDict())
+        {
+            dict = CCDictionary::create();
+            cobj->setScriptObjectDict(dict);
+        }
+        dict->setObject(tmpObj, "frameEvent");
+        
+        tmpObj->setJSCallbackFunc(argv[0]);
+        tmpObj->setJSCallbackThis(argv[1]);
+        
+        cobj->setFrameEventCallFunc(tmpObj, timelineFrameEvent_selector(JSActionTimelineWrapper::frameCallbackFunc));
+        
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "Invalid number of arguments");
+    return JS_FALSE;
+}
+
+
+
 extern JSObject* jsb_Widget_prototype;
 extern JSObject* jsb_CheckBox_prototype;
 extern JSObject* jsb_Slider_prototype;
@@ -655,6 +714,7 @@ extern JSObject* jsb_CCArmatureAnimation_prototype;
 extern JSObject* jsb_CCArmatureDataManager_prototype;
 extern JSObject* jsb_CCArmature_prototype;
 extern JSObject* jsb_ColliderBody_prototype;
+extern JSObject* jsb_ActionTimeline_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 {
@@ -689,4 +749,6 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
     
     JS_DefineFunction(cx, jsb_CCArmature_prototype, "getShapeList", jsb_CCArmature_getShapeList, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 #endif
+    
+    JS_DefineFunction(cx, jsb_ActionTimeline_prototype, "setFrameEventCallFunc", js_cocos2dx_ActionTimeline_setFrameEventCallFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }
