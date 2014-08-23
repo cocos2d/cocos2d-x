@@ -123,6 +123,7 @@ Please refer to this document: [ReadMe](../README.md)
 * Device: added `setKeepScreenOn()` on iOS and Android 
 * Added c++11 random support
 * RenderTexture: added a call back function for `saveToFile()`
+* Primitive: Support Points, Lines and Triagles for rendering
 * SpriteFrameCache: support loading from plist file content data
 * Many other small features added and many bugs fixed
 
@@ -280,3 +281,49 @@ renderTexture->saveToFile("myFile.png", true, callback);
 
 ```
 
+## Primitive
+
+`Primitive` is added to support `Points`,`Lines`,`Triangles` rendering. Previously, if we want to draw a custom geometry(sphere, line), we can only do this by using `CustomCommand`. Now, what is need is to create a Primitive, set datas, and use the corresponding `PrimitiveCommand` to draw the Primitive. 
+
+Here is a simple example of rendering a quad in `Sprite`.
+
+1. create verexBuffer
+
+	```c++
+	auto vertexBuffer = VerexBuffer::create(sizeof(V3F_C4B_T2F), 4);
+	vertexBuffer->updateVertices(&_quad, 4, 0);
+	```
+
+2. create vertexData
+
+	```c++
+	auto vertexData = VertexData::create();
+	vertexData->addStream(vertexBuffer, VertexStreamAttribute(0, VERTEX_ATTRIB_POSITION, GL_FLOAT, 3, fasle));
+	vertexData->addStream(vertexBuffer, VertexStreamAttribute(12, VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BTYE, 4, true));
+	vertexData->addStream(vertexBuffer, VertexStreamAttribute(16, VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2, fasle));
+	```
+3. create IndexBuffer
+	
+	```c++
+	auto indexBuffer = IndexBuffer::create(IndexType::INDEX_TYPE_SHORT_16, 6);
+	short indices[6] = {0,1,2,3,2,1};
+	indexBuffer->updateIndices(indices,6, 0);
+	```
+4. create primitive
+	
+	```c++
+	auto primitve = Primitive::create(vertexData, indexBuffer, GL_TRIANGLES);
+	primitive->setStart(0);
+	primitive->setCount(6);
+	```
+5. add command to renderer
+	
+	```c++
+	_command->init(globalZorder,textureID, glprogramState, blend, primitve, modelViewMatrix);
+	renderer->addCommand(&_command);
+	```
+
+Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex and index sharing, multiple streams. It has some constrains:
+
+1. The size of vertex and index Buffer is fixed, which means data must be pre allocated.
+2. Batching is not supported.
