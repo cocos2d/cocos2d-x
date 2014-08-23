@@ -312,7 +312,6 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
                 }
             }
         }
-        CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
     }
     else
     {
