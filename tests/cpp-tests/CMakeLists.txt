@@ -201,17 +201,7 @@ add_executable(${APP_NAME}
 )
 
 target_link_libraries(${APP_NAME}
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
-  audio
   cocos2d
-  cocos3d
-  box2d
-  ui
-  network
-  sqlite3
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
