@@ -228,7 +228,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override { return Layer::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __LayerRGBA();
     virtual ~__LayerRGBA() {}
 

@@ -568,8 +568,11 @@ bool UIS9CascadeOpacityAndColor::init()
         rgba->addChild(blocks_scaled_with_insets);
         auto actions = Sequence::create(FadeIn::create(1),
                                         TintTo::create(1, 0, 255, 0),
-                                        TintTo::create(1, 255, 255, 255),
-                                        FadeOut::create(1),
+                                        TintTo::create(1, 255, 0, 255),
+                                        CallFunc::create([=](){
+                                            rgba->setCascadeColorEnabled(false);
+                                            rgba->setCascadeOpacityEnabled(false);
+                                        }),
                                         nullptr);
         auto repeat = RepeatForever::create(actions);
         rgba->runAction(repeat);

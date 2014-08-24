@@ -1,10 +1,11 @@
-cocos2d-x-3.3  ??
+cocos2d-x-3.3alpha0  ??
     [NEW]           Added UIScale9Sprite
     [NEW]           Added Camera, AABB, OBB and Ray
     [NEW]           Added render primitive and render primitive command, support passing point, line and triangle data
     [NEW]           Added support for applicationDidEnterBackground / applicationWillEnterForeground on desktop
     [NEW]           Added method for custom precompiled shader program loading on WP8
     [NEW]           Added c++11 random support
+    [NEW]           Added better reskin model support 
     [NEW]           Device: added setKeepScreenOn() for iOS and Android
     [NEW]           EventMouse: support getDelta, getDeltaX, getDeltaY functions
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
@@ -55,6 +56,8 @@ cocos2d-x-3.3  ??
     [FIX]           Others: optimize FPS contorl algorithm on Android
     
     [FIX]           Lua-binding: replace dynamic_cast to std::is_base_of in object_to_luaval
+    
+    [3rd]           fbx-conv: complex FBX model support which is sseful for reskin, multiple meshes and multiple materials support
 
 cocos2d-x-3.2  Jul.17 2014
     [NEW]           Node: added getChildByName method for get a node that can be cast to Type T

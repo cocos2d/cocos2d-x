@@ -90,12 +90,12 @@ Animate3D* Animate3D::reverse() const
 void Animate3D::startWithTarget(Node *target)
 {
     Sprite3D* sprite = dynamic_cast<Sprite3D*>(target);
-    CCASSERT(sprite && sprite->getSkin() && _animation, "Animate3D apply to Sprite3D only");
+    CCASSERT(sprite && sprite->getSkeleton() && _animation, "Animate3D apply to Sprite3D only");
     
     ActionInterval::startWithTarget(target);
     
     _boneCurves.clear();
-    auto skin = sprite->getSkin();
+    auto skin = sprite->getSkeleton();
     for (unsigned int  i = 0; i < skin->getBoneCount(); i++) {
         auto bone = skin->getBoneByIndex(i);
         auto curve = _animation->getBoneCurveByName(bone->getName());

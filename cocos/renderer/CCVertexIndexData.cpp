@@ -124,8 +124,9 @@ void VertexData::use()
     {
         //glEnableVertexAttribArray((GLint)element.second._stream._semantic);
         glBindBuffer(GL_ARRAY_BUFFER, element.second._buffer->getVBO());
+        size_t offet = element.second._stream._offset;
         glVertexAttribPointer(GLint(element.second._stream._semantic),element.second._stream._size,
-                              element.second._stream._type,element.second._stream._normalize, element.second._buffer->getSizePerVertex(), (GLvoid*)element.second._stream._offset);
+                              element.second._stream._type,element.second._stream._normalize, element.second._buffer->getSizePerVertex(), (GLvoid*)offet);
     }
 }
 

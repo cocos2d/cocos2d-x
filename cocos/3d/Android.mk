@@ -16,12 +16,11 @@ CCBundle3D.cpp \
 CCBundleReader.cpp \
 CCMesh.cpp \
 CCMeshSkin.cpp \
+CCMeshVertexIndexData.cpp \
 CCSprite3DMaterial.cpp \
 CCObjLoader.cpp \
 CCSkeleton3D.cpp \
 CCSprite3D.cpp \
-CCSubMesh.cpp \
-CCSubMeshState.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
