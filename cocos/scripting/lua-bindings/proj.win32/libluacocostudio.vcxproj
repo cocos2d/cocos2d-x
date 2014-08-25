@@ -18,11 +18,6 @@
     <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\script\DeprecatedCocoStudioClass.lua" />
-    <None Include="..\script\DeprecatedCocoStudioFunc.lua" />
-    <None Include="..\script\StudioConstants.lua" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9640951E-C5D0-47B5-9C42-0BCADA261C50}</ProjectGuid>
     <RootNamespace>libluacocostudio</RootNamespace>

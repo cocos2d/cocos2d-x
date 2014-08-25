@@ -30,18 +30,4 @@
       <Filter>manual\extension</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\script\DeprecatedExtensionClass.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\DeprecatedExtensionEnum.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\DeprecatedExtensionFunc.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\ExtensionConstants.lua">
-      <Filter>script</Filter>
-    </None>
-  </ItemGroup>
 </Project>

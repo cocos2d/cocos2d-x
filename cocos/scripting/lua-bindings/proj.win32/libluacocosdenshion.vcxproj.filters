@@ -15,17 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\script\AudioEngine.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\DeprecatedCocosDenshionClass.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\DeprecatedCocosDenshionFunc.lua">
-      <Filter>script</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp">
       <Filter>manual\cocosdenshion</Filter>
     </ClCompile>

@@ -10,8 +10,26 @@
     <Filter Include="manual\network">
       <UniqueIdentifier>{633582d6-6f80-4dd1-b719-951e1c1dc6ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="luasocket">
-      <UniqueIdentifier>{0c791425-97c1-4eaa-869d-2454d9670a72}</UniqueIdentifier>
+    <Filter Include="script\cocos2d">
+      <UniqueIdentifier>{986e9e77-94ad-4cf8-a4ca-09edbd2585f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocosbuilder">
+      <UniqueIdentifier>{d528485c-355e-4594-90ce-d107c47a34ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocosdenshion">
+      <UniqueIdentifier>{fb8a7407-aa6a-4f9b-acf7-e88edbb48e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocostudio">
+      <UniqueIdentifier>{036ce4f5-d0ac-41c6-96c2-5a3d7b5e504f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\extension">
+      <UniqueIdentifier>{cc535232-333c-44e2-b1a8-c2a132c83526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\network">
+      <UniqueIdentifier>{c2273719-4fee-4aa7-a216-8c3720901a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\ui">
+      <UniqueIdentifier>{4d665e5a-2eb1-48fc-b909-cc13fc999e66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,45 +45,6 @@
     <ClCompile Include="..\manual\network\lua_xml_http_request.cpp">
       <Filter>manual\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\auxiliar.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\buffer.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\except.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\inet.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\io.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\mime.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\options.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\select.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\tcp.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c">
-      <Filter>luasocket</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\manual\network\lua_cocos2dx_network_manual.h">
@@ -79,48 +58,6 @@
     </ClInclude>
     <ClInclude Include="..\manual\network\lua_xml_http_request.h">
       <Filter>manual\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\auxiliar.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\buffer.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\except.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\inet.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\io.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\mime.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\options.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\select.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\socket.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\tcp.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h">
-      <Filter>luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h">
-      <Filter>luasocket</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

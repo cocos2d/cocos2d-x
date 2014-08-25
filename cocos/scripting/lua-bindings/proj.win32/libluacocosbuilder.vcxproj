@@ -21,10 +21,6 @@
     <ClInclude Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\script\CCBReaderLoad.lua" />
-    <None Include="..\script\DeprecatedCocosBuilderClass.lua" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\editor-support\cocosbuilder\proj.win32\libcocosbuilder.vcxproj">
       <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
     </ProjectReference>

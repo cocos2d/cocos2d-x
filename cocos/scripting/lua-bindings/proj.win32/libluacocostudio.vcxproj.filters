@@ -30,15 +30,4 @@
       <Filter>manual\cocostudio</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\script\DeprecatedCocoStudioClass.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\DeprecatedCocoStudioFunc.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\StudioConstants.lua">
-      <Filter>script</Filter>
-    </None>
-  </ItemGroup>
 </Project>

@@ -11,11 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\script\AudioEngine.lua" />
-    <None Include="..\script\DeprecatedCocosDenshionClass.lua" />
-    <None Include="..\script\DeprecatedCocosDenshionFunc.lua" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp" />
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp" />
   </ItemGroup>

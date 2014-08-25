@@ -36,12 +36,4 @@
       <Filter>manual\cocosbuilder</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\script\CCBReaderLoad.lua">
-      <Filter>script</Filter>
-    </None>
-    <None Include="..\script\DeprecatedCocosBuilderClass.lua">
-      <Filter>script</Filter>
-    </None>
-  </ItemGroup>
 </Project>
