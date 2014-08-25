@@ -2,7 +2,7 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.2 Release Notes](#user-content-cocos2d-x-v32-release-notes)
+- [cocos2d-x v3.3alpha0 Release Notes](#user-content-cocos2d-x-v33alpha0-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
@@ -13,18 +13,19 @@
 		- [Windows](#user-content-windows)
 		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Highlights of v3.2](#user-content-highlights-of-v32)
-- [Documents](#user-content-documents)
-- [Toolchain requirement changed](#user-content-toolchain-requirement-changed)
-- [atof issue on Android](#user-content-atof-issue-on-android)
+- [Highlights of v3.3alpha0](#user-content-highlights-of-v33alpha0)
 - [Features in detail](#user-content-features-in-detail)
-	- [Sprite3D & Animation3D](#user-content-sprite3d--animation3d)
-		- [fbx-conv usage](#user-content-fbx-conv-usage)
-	- [Game controller](#user-content-game-controller)
-	- [Fast tilemap](#user-content-fast-tilemap)
-	- [Node::enumerateChildren](#user-content-nodeenumeratechildren)
-	- [utils::findChildren](#user-content-utilsfindchildren)
-	- [Node::setNormalizedPosition](#user-content-nodesetnormalizedposition)
+	- [Camera](#user-content-camera)
+	- [Reskin](#user-content-reskin)
+	- [Attachment](#user-content-attachment)
+	- [Better support for FBX](#user-content-better-support-for-fbx)
+	- [New fbx-conv](#user-content-new-fbx-conv)
+	- [AABB, OBB and Ray](#user-content-aabb-obb-and-ray)
+	- [ui::Scale9Sprite](#user-content-uiscale9sprite)
+	- [c++11 random support](#user-content-c11-random-support)
+	- [RenderTexture save function](#user-content-rendertexture-save-function)
+	- [Primitive](#user-content-primitive)
+	- [Consistent way to set GL context attributes](#user-content-consistent-way-to-set-gl-context-attributes)
 
 # Misc Information
 
