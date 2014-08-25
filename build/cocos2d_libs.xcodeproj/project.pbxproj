@@ -1871,6 +1871,10 @@
 		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		B624399319AAD0D700DE3588 /* CCLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B624399119AAD0D700DE3588 /* CCLight.cpp */; };
+		B624399419AAD0D700DE3588 /* CCLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B624399119AAD0D700DE3588 /* CCLight.cpp */; };
+		B624399519AAD0D700DE3588 /* CCLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B624399219AAD0D700DE3588 /* CCLight.h */; };
+		B624399619AAD0D700DE3588 /* CCLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B624399219AAD0D700DE3588 /* CCLight.h */; };
 		B6AAF84119404E0D0069DE01 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */; };
 		B6AAF84219404E0D0069DE01 /* CCBundle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */; };
 		B6AAF84319404E0D0069DE01 /* CCBundle3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AAF84019404E0D0069DE01 /* CCBundle3D.h */; };
@@ -3065,6 +3069,8 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		B624399119AAD0D700DE3588 /* CCLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLight.cpp; sourceTree = "<group>"; };
+		B624399219AAD0D700DE3588 /* CCLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLight.h; sourceTree = "<group>"; };
 		B6AAF83F19404E0D0069DE01 /* CCBundle3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBundle3D.cpp; sourceTree = "<group>"; };
 		B6AAF84019404E0D0069DE01 /* CCBundle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBundle3D.h; sourceTree = "<group>"; };
 		B6ACD895193D6693005E0B8A /* CCMeshSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshSkin.cpp; sourceTree = "<group>"; };
@@ -5229,6 +5235,8 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				B624399119AAD0D700DE3588 /* CCLight.cpp */,
+				B624399219AAD0D700DE3588 /* CCLight.h */,
 				3EA2A83E1987A6810077B3D4 /* CCSkeleton3D.cpp */,
 				3EA2A83F1987A6810077B3D4 /* CCSkeleton3D.h */,
 				3E9E80E3198639EF00FA95D0 /* CCAttachNode.cpp */,
@@ -5435,6 +5443,7 @@
 				B257B461198A353E00D9A687 /* CCPrimitiveCommand.h in Headers */,
 				5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */,
 				50ABBE7B1925AB6F00A911A9 /* CCEventMouse.h in Headers */,
+				B624399519AAD0D700DE3588 /* CCLight.h in Headers */,
 				503DD8F91926B0DB00CD74DD /* CCIMEDispatcher.h in Headers */,
 				3EA3EDBE1991CDFA00645534 /* CCCamera.h in Headers */,
 				50ABBE8F1925AB6F00A911A9 /* CCPlatformConfig.h in Headers */,
@@ -5843,6 +5852,7 @@
 				B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				50ABBD5F1925AB0000A911A9 /* Vec3.h in Headers */,
 				50ABBE921925AB6F00A911A9 /* CCPlatformMacros.h in Headers */,
+				B624399619AAD0D700DE3588 /* CCLight.h in Headers */,
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
 				50ABBD471925AB0000A911A9 /* CCVertex.h in Headers */,
@@ -6790,6 +6800,7 @@
 				15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
 				3E9E80F1198639EF00FA95D0 /* CCSubMeshState.cpp in Sources */,
+				B624399319AAD0D700DE3588 /* CCLight.cpp in Sources */,
 				50ABBE271925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
 				50ABBE8B1925AB6F00A911A9 /* CCNS.cpp in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
@@ -7175,6 +7186,7 @@
 				1A5701B2180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				50ABBEAC1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
+				B624399419AAD0D700DE3588 /* CCLight.cpp in Sources */,
 				1A5701BA180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
