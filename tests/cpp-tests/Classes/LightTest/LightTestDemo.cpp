@@ -56,12 +56,15 @@ LightTestDemo::LightTestDemo()
     addChild(camera);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
-    auto label1 = Label::createWithTTF(ttfConfig,"Directional Light");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::DIRECTIONAL));
-    auto label2 = Label::createWithTTF(ttfConfig,"Point Light");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::POINT));
-    auto label3 = Label::createWithTTF(ttfConfig,"Spot Light");
-    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::SPOT));
+    _directionalLightLabel = Label::createWithTTF(ttfConfig,"Directional Light ON");
+	_directionalLightLabel->retain();
+    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::DIRECTIONAL));
+    _pointLightLabel = Label::createWithTTF(ttfConfig,"Point Light OFF");
+	_pointLightLabel->retain();
+    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::POINT));
+    _spotLightLabel = Label::createWithTTF(ttfConfig,"Spot Light OFF");
+	_spotLightLabel->retain();
+    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::SPOT));
     auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
@@ -76,6 +79,15 @@ LightTestDemo::LightTestDemo()
 
 LightTestDemo::~LightTestDemo()
 {
+	if (_spotLightLabel)
+		_spotLightLabel->release();
+
+	if (_pointLightLabel)
+		_pointLightLabel->release();
+
+	if (_directionalLightLabel)
+		_directionalLightLabel->release();
+
     if (_directionalLight)
         _directionalLight->release();
 
@@ -144,19 +156,29 @@ void LightTestDemo::addSprite()
         sprite->setCameraMask(2);
     }
 
-    {
-        std::string fileName = "Sprite3DTest/sphere.c3b";
-        auto sprite = Sprite3D::create(fileName);
-        //sprite->setPosition(Vec2(s.width/2, s.height/2));
-        addChild(sprite);
-        sprite->setCameraMask(2);
-    }
+	{
+		std::string fileName = "Sprite3DTest/orc.c3b";
+		auto sprite = Sprite3D::create(fileName);
+		sprite->setRotation3D(Vec3(0.0, 180.0, 0.0));
+		sprite->setPosition(Vec2(0.0, 0.0));
+		sprite->setScale(2.0);
+		auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+		sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+		auto animation = Animation3D::create(fileName);
+		if (animation)
+		{
+			auto animate = Animate3D::create(animation);
+			sprite->runAction(RepeatForever::create(animate));
+		}
+
+		addChild(sprite);
+		sprite->setCameraMask(2);
+	}
 
     {
         std::string fileName = "Sprite3DTest/sphere.c3b";
         auto sprite = Sprite3D::create(fileName);
-        sprite->setScale(2.0f);
-        sprite->setPosition(Vec2(50.0, 0.0));
+        sprite->setPosition(Vec2(30.0, 0.0));
         addChild(sprite);
         sprite->setCameraMask(2);
     }
@@ -214,7 +236,7 @@ void LightTestDemo::addLights()
         auto tintto2 = TintTo::create(4, 0, 255, 0);
         auto tintto3 = TintTo::create(4, 0, 0, 255);
         auto tintto4 = TintTo::create(4, 255, 255, 255);
-        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        auto seq = Sequence::create(tintto2, tintto1, tintto3, tintto4, NULL);
         _pointLight->runAction(RepeatForever::create(seq));
     }
 
@@ -223,7 +245,7 @@ void LightTestDemo::addLights()
         auto tintto2 = TintTo::create(4, 0, 255, 0);
         auto tintto3 = TintTo::create(4, 0, 0, 255);
         auto tintto4 = TintTo::create(4, 255, 255, 255);
-        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        auto seq = Sequence::create(tintto3, tintto2, tintto1, tintto4, NULL);
         _spotLight->runAction(RepeatForever::create(seq));
     }
 }
@@ -236,17 +258,17 @@ void LightTestDemo::update( float delta )
 
     if (_pointLight)
     {
-        _pointLight->setPositionX(100.0f * cosf(angleDelta));
+        _pointLight->setPositionX(100.0f * cosf(angleDelta + 2.0 * delta));
         _pointLight->setPositionY(100.0f);
-        _pointLight->setPositionZ(100.0f * sinf(angleDelta));
+        _pointLight->setPositionZ(100.0f * sinf(angleDelta + 2.0 * delta));
     }
 
     if (_spotLight)
     {
-        _spotLight->setPositionX(100.0f * cosf(angleDelta));
+        _spotLight->setPositionX(100.0f * cosf(angleDelta + 4.0 * delta));
         _spotLight->setPositionY(100.0f);
-        _spotLight->setPositionZ(100.0f * sinf(angleDelta));
-        _spotLight->setDirection(-Vec3(cosf(angleDelta), 1.0, sinf(angleDelta)));
+        _spotLight->setPositionZ(100.0f * sinf(angleDelta + 4.0 * delta));
+        _spotLight->setDirection(-Vec3(cosf(angleDelta + 4.0 * delta), 1.0, sinf(angleDelta + 4.0 * delta)));
     }
 
     angleDelta += delta;
@@ -260,34 +282,31 @@ void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
     {
     case Light3D::DIRECTIONAL:
         {
-            if (_directionalLight)
-                _directionalLight->setEnabled(true);
-            if (_pointLight)
-                _pointLight->setEnabled(false);
-            if (_spotLight)
-                _spotLight->setEnabled(false);
+			char str[32];
+			bool isON = !_directionalLight->getEnabled();
+			sprintf(str, "Directional Light %s", isON == true? "ON":"OFF");
+            _directionalLight->setEnabled(isON);
+			_directionalLightLabel->setString(str);
         }
         break;
 
     case Light3D::POINT:
         {
-            if (_directionalLight)
-                _directionalLight->setEnabled(false);
-            if (_pointLight)
-                _pointLight->setEnabled(true);
-            if (_spotLight)
-                _spotLight->setEnabled(false);
+			char str[32];
+			bool isON = !_pointLight->getEnabled();
+			sprintf(str, "Point Light %s", isON == true? "ON":"OFF");
+			_pointLight->setEnabled(isON);
+			_pointLightLabel->setString(str);
         }
         break;
 
     case Light3D::SPOT:
         {
-            if (_directionalLight)
-                _directionalLight->setEnabled(false);
-            if (_pointLight)
-                _pointLight->setEnabled(false);
-            if (_spotLight)
-                _spotLight->setEnabled(true);
+			char str[32];
+			bool isON = !_spotLight->getEnabled();
+			sprintf(str, "Spot Light %s", isON == true? "ON":"OFF");
+			_spotLight->setEnabled(isON);
+			_spotLightLabel->setString(str);
         }
         break;
 
