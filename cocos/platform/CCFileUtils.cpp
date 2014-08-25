@@ -631,7 +631,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)
+unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size, const std::string& password)
 {
     unsigned char * buffer = nullptr;
     unzFile file = nullptr;
@@ -652,7 +652,10 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         ret = unzGetCurrentFileInfo(file, &fileInfo, filePathA, sizeof(filePathA), nullptr, 0, nullptr, 0);
         CC_BREAK_IF(UNZ_OK != ret);
 
-        ret = unzOpenCurrentFile(file);
+	if (password.empty())
+		ret = unzOpenCurrentFile(file);
+	else
+		ret = unzOpenCurrentFilePassword(file, password.c_str());
         CC_BREAK_IF(UNZ_OK != ret);
 
         buffer = (unsigned char*)malloc(fileInfo.uncompressed_size);
