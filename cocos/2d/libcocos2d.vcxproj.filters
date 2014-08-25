@@ -775,12 +775,6 @@
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCSubMesh.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSubMeshState.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
@@ -1092,6 +1086,9 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CCActionObject.cpp">
       <Filter>cocostudio\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp">
+      <Filter>3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1747,12 +1744,6 @@
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCSubMesh.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSubMeshState.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\3d\cocos3d.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -2140,6 +2131,9 @@
     <ClInclude Include="..\editor-support\cocostudio\CCActionObject.h">
       <Filter>cocostudio\action</Filter>
     </ClInclude>
+    <ClInclude Include="..\3d\CCMeshVertexIndexData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -2164,5 +2158,8 @@
       <Filter>math</Filter>
     </None>
     <None Include="cocos2d.def" />
+    <None Include="..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
+    </None>
   </ItemGroup>
 </Project>

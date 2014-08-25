@@ -195,12 +195,12 @@ LOCAL_SRC_FILES += 3d/CCRay.cpp \
                    3d/CCBundleReader.cpp \
                    3d/CCMesh.cpp \
                    3d/CCMeshSkin.cpp \
+                   3d/CCMeshVertexIndexData.cpp \
                    3d/CCSprite3DMaterial.cpp \
                    3d/CCObjLoader.cpp \
                    3d/CCSkeleton3D.cpp \
                    3d/CCSprite3D.cpp \
-                   3d/CCSubMesh.cpp \
-                   3d/CCSubMeshState.cpp
+                   3d/CCSprite3DMaterial.cpp 
 
 
 #audio
