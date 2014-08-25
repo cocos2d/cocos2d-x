@@ -13,9 +13,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../../../external/lua/tolua \
 
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_STATIC_LIBRARIES += cocosdenshion_lua_static
-LOCAL_STATIC_LIBRARIES += network_lua_static
-
 
 include $(BUILD_SHARED_LIBRARY)
 
