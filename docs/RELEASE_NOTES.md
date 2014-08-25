@@ -125,6 +125,7 @@ Please refer to this document: [ReadMe](../README.md)
 * RenderTexture: added a call back function for `saveToFile()`
 * Primitive: Support Points, Lines and Triagles for rendering
 * SpriteFrameCache: support loading from plist file content data
+* Added a consistent way to set GL context attributes for all platforms
 * Many other small features added and many bugs fixed
 
 # Features in detail
@@ -327,3 +328,18 @@ Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex a
 
 1. The size of vertex and index Buffer is fixed, which means data must be pre allocated.
 2. Batching is not supported.
+
+## Consistent way to set GL context attributes
+
+Now you can set GL context attributes by override `Application::initGLContextAttrs()`, then set GL context attributes there.
+
+```c++
+void AppDelegate::initGLContextAttrs()
+{
+    // r:8 g:8 a:8 depth:24 stencil:8
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+```
+
+Now can only support setting bits of `r`, `g`, `b`, `a`, `depth buffer` and `stencil buffer`. We will support other attributes if needed.
