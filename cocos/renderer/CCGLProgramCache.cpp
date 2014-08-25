@@ -52,6 +52,9 @@ enum {
     kShaderType_3DPosition,
     kShaderType_3DPositionTex,
     kShaderType_3DSkinPositionTex,
+    kShaderType_3DPositionNormal,
+    kShaderType_3DPositionNormalTex,
+    kShaderType_3DSkinPositionNormalTex,
     kShaderType_MAX,
 };
 
@@ -204,6 +207,18 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
+
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
+    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL, p) );
+
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
+    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE, p) );
+
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -271,8 +286,8 @@ void GLProgramCache::reloadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_Position_uColor);
     
     //
-	// Position, Legth(TexCoords, Color (used by Draw Node basically )
-	//
+    // Position, Legth(TexCoords, Color (used by Draw Node basically )
+    //
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
@@ -304,6 +319,18 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
+
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -365,6 +392,15 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_3DSkinPositionTex:
             p->initWithByteArrays(cc3D_SkinPositionTex_vert, cc3D_ColorTex_frag);
+            break;
+        case kShaderType_3DPositionNormal:
+            p->initWithByteArrays(cc3D_PositionNormalTex_vert, cc3D_ColorNormal_frag);
+            break;
+        case kShaderType_3DPositionNormalTex:
+            p->initWithByteArrays(cc3D_PositionNormalTex_vert, cc3D_ColorNormalTex_frag);
+            break;
+        case kShaderType_3DSkinPositionNormalTex:
+            p->initWithByteArrays(cc3D_SkinPositionNormalTex_vert, cc3D_ColorNormalTex_frag);
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
