@@ -29,7 +29,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/platform/desktop
   ${CMAKE_CURRENT_SOURCE_DIR}/audio/include
   ${CMAKE_CURRENT_SOURCE_DIR}/editor-support
-  ${CMAKE_CURRENT_SOURCE_DIR}/../external
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/tinyxml2
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/unzip
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/edtaa3func

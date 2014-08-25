@@ -91,6 +91,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
+  ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
 link_directories(

@@ -193,6 +193,8 @@ set(SAMPLE_SRC
 
 include_directories(
   Classes
+  ${CMAKE_SOURCE_DIR}/external/chipmunk/include/chipmunk
+  ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
 # add the executable
