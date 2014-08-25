@@ -634,6 +634,13 @@
 		1AD71EF5180E27CF00808F54 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71EEE180E27CF00808F54 /* CCPhysicsSprite.cpp */; };
 		1AD71EF6180E27CF00808F54 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */; };
 		1AD71EF7180E27CF00808F54 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */; };
+		1F36C41832F21B0EB4B6E581 /* WebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F36C97CCD87CFB096B921D5 /* WebView.h */; };
+		1F36C5DC6B9AD57C010B5FAA /* UIWebViewWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F36C89CE6DA969A8AF515AD /* UIWebViewWrapper.h */; };
+		1F36C63198F935DE23451317 /* WebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F36C92BF6113FEFC19554AA /* WebView.mm */; };
+		1F36C6456029931BAEC90A06 /* WebViewImpl_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F36CF6F04510B2F6F74EC8A /* WebViewImpl_iOS.mm */; };
+		1F36C7010C074699AF6C9371 /* WebViewImpl_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F36C64BC5CD5BA16A6AB1E9 /* WebViewImpl_iOS.h */; };
+		1F36C8D2A011ABC37E2A5673 /* UIWebViewWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F36CDAC69B487B7531C782F /* UIWebViewWrapper.mm */; };
+		1F36CFD339EDB3FD6F3C6755 /* WebView-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F36C3CA177A0FBE289B6BD5 /* WebView-inl.h */; };
 		2958244B19873D8E00F9746D /* UIScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2958244919873D8E00F9746D /* UIScale9Sprite.cpp */; };
 		2958244C19873D8E00F9746D /* UIScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2958244919873D8E00F9746D /* UIScale9Sprite.cpp */; };
 		2958244D19873D8E00F9746D /* UIScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2958244A19873D8E00F9746D /* UIScale9Sprite.h */; };
@@ -2450,6 +2457,13 @@
 		1AD71EED180E27CF00808F54 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		1AD71EEE180E27CF00808F54 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
+		1F36C3CA177A0FBE289B6BD5 /* WebView-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView-inl.h"; sourceTree = "<group>"; };
+		1F36C64BC5CD5BA16A6AB1E9 /* WebViewImpl_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewImpl_iOS.h; sourceTree = "<group>"; };
+		1F36C89CE6DA969A8AF515AD /* UIWebViewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWebViewWrapper.h; sourceTree = "<group>"; };
+		1F36C92BF6113FEFC19554AA /* WebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WebView.mm; sourceTree = "<group>"; };
+		1F36C97CCD87CFB096B921D5 /* WebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebView.h; sourceTree = "<group>"; };
+		1F36CDAC69B487B7531C782F /* UIWebViewWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIWebViewWrapper.mm; sourceTree = "<group>"; };
+		1F36CF6F04510B2F6F74EC8A /* WebViewImpl_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WebViewImpl_iOS.mm; sourceTree = "<group>"; };
 		2905F9E918CF08D000240AA3 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
 		2905F9EA18CF08D000240AA3 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
 		2905F9EB18CF08D000240AA3 /* GUIDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIDefine.h; sourceTree = "<group>"; };
@@ -4457,6 +4471,13 @@
 				2905F9F318CF08D000240AA3 /* UICheckBox.h */,
 				2905F9F618CF08D000240AA3 /* UIImageView.cpp */,
 				2905F9F718CF08D000240AA3 /* UIImageView.h */,
+				1F36C97CCD87CFB096B921D5 /* WebView.h */,
+				1F36C3CA177A0FBE289B6BD5 /* WebView-inl.h */,
+				1F36C64BC5CD5BA16A6AB1E9 /* WebViewImpl_iOS.h */,
+				1F36C92BF6113FEFC19554AA /* WebView.mm */,
+				1F36CF6F04510B2F6F74EC8A /* WebViewImpl_iOS.mm */,
+				1F36CDAC69B487B7531C782F /* UIWebViewWrapper.mm */,
+				1F36C89CE6DA969A8AF515AD /* UIWebViewWrapper.h */,
 			);
 			name = widgets;
 			sourceTree = "<group>";
@@ -6174,6 +6195,10 @@
 				B2C59A4A19777ECF00B452DF /* UILayout.h in Headers */,
 				B2C59A4B19777ECF00B452DF /* UILayoutParameter.h in Headers */,
 				B2C59A4C19777ECF00B452DF /* UILayoutManager.h in Headers */,
+				1F36C41832F21B0EB4B6E581 /* WebView.h in Headers */,
+				1F36CFD339EDB3FD6F3C6755 /* WebView-inl.h in Headers */,
+				1F36C7010C074699AF6C9371 /* WebViewImpl_iOS.h in Headers */,
+				1F36C5DC6B9AD57C010B5FAA /* UIWebViewWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7644,6 +7669,9 @@
 				B2C59A3219777E8C00B452DF /* UILayoutParameter.cpp in Sources */,
 				B2C59A3319777E8C00B452DF /* UILayoutManager.cpp in Sources */,
 				B2C59A2919777E7A00B452DF /* CocosGUI.cpp in Sources */,
+				1F36C63198F935DE23451317 /* WebView.mm in Sources */,
+				1F36C6456029931BAEC90A06 /* WebViewImpl_iOS.mm in Sources */,
+				1F36C8D2A011ABC37E2A5673 /* UIWebViewWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
