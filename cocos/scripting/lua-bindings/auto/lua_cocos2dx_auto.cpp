@@ -13154,6 +13154,69 @@ int lua_cocos2dx_GLView_pollEvents(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_GLView_setGLContextAttrs(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        GLContextAttrs arg0;
+        #pragma warning NO CONVERSION TO NATIVE FOR GLContextAttrs;
+        if(!ok)
+            return 0;
+        cocos2d::GLView::setGLContextAttrs(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.GLView:setGLContextAttrs",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_setGLContextAttrs'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_GLView_getGLContextAttrs(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        GLContextAttrs ret = cocos2d::GLView::getGLContextAttrs();
+        #pragma warning NO CONVERSION FROM NATIVE FOR GLContextAttrs;
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.GLView:getGLContextAttrs",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_getGLContextAttrs'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_GLView_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (GLView)");
@@ -13195,6 +13258,8 @@ int lua_register_cocos2dx_GLView(lua_State* tolua_S)
         tolua_function(tolua_S,"getVisibleSize",lua_cocos2dx_GLView_getVisibleSize);
         tolua_function(tolua_S,"isScissorEnabled",lua_cocos2dx_GLView_isScissorEnabled);
         tolua_function(tolua_S,"pollEvents",lua_cocos2dx_GLView_pollEvents);
+        tolua_function(tolua_S,"setGLContextAttrs", lua_cocos2dx_GLView_setGLContextAttrs);
+        tolua_function(tolua_S,"getGLContextAttrs", lua_cocos2dx_GLView_getGLContextAttrs);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::GLView).name();
     g_luaType[typeName] = "cc.GLView";
