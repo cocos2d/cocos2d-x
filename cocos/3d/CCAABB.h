@@ -94,6 +94,8 @@ public:
      * reset min and max value.
      */
     void reset();
+    
+    bool isEmpty() const;
 
     /**
      * update the _min and _max from the given point.

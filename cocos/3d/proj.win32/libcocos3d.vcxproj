@@ -24,14 +24,13 @@
     <ClCompile Include="..\CCBundleReader.cpp" />
     <ClCompile Include="..\CCMesh.cpp" />
     <ClCompile Include="..\CCMeshSkin.cpp" />
+    <ClCompile Include="..\CCMeshVertexIndexData.cpp" />
     <ClCompile Include="..\CCOBB.cpp" />
     <ClCompile Include="..\CCObjLoader.cpp" />
     <ClCompile Include="..\CCRay.cpp" />
     <ClCompile Include="..\CCSkeleton3D.cpp" />
     <ClCompile Include="..\CCSprite3D.cpp" />
     <ClCompile Include="..\CCSprite3DMaterial.cpp" />
-    <ClCompile Include="..\CCSubMesh.cpp" />
-    <ClCompile Include="..\CCSubMeshState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3dExport.h" />
@@ -45,14 +44,13 @@
     <ClInclude Include="..\CCBundleReader.h" />
     <ClInclude Include="..\CCMesh.h" />
     <ClInclude Include="..\CCMeshSkin.h" />
+    <ClInclude Include="..\CCMeshVertexIndexData.h" />
     <ClInclude Include="..\CCOBB.h" />
     <ClInclude Include="..\CCObjLoader.h" />
     <ClInclude Include="..\CCRay.h" />
     <ClInclude Include="..\CCSkeleton3D.h" />
     <ClInclude Include="..\CCSprite3D.h" />
     <ClInclude Include="..\CCSprite3DMaterial.h" />
-    <ClInclude Include="..\CCSubMesh.h" />
-    <ClInclude Include="..\CCSubMeshState.h" />
     <ClInclude Include="..\cocos3d.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

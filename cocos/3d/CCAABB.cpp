@@ -119,6 +119,11 @@ void AABB::reset()
 	_max.set(-99999.0f, -99999.0f, -99999.0f);
 }
 
+bool AABB::isEmpty() const
+{
+    return _min.x > _max.x || _min.y > _max.y || _min.z > _max.z;
+}
+
 void AABB::updateMinMax(const Vec3* point, ssize_t num)
 {
     for (ssize_t i = 0; i < num; i++)

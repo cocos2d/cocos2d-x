@@ -807,6 +807,10 @@ void Widget::releaseUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
+    
+    if (_clickEventListener) {
+        _clickEventListener(this);
+    }
     this->release();
 }
 
@@ -831,9 +835,14 @@ void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
     _touchEventSelector = selector;
 }
     
-void Widget::addTouchEventListener(Widget::ccWidgetTouchCallback callback)
+void Widget::addTouchEventListener(const ccWidgetTouchCallback& callback)
 {
     this->_touchEventCallback = callback;
+}
+    
+void Widget::addClickEventListener(const ccWidgetClickCallback &callback)
+{
+    this->_clickEventListener = callback;
 }
 
 bool Widget::hitTest(const Vec2 &pt)
@@ -1083,6 +1092,7 @@ void Widget::copyProperties(Widget *widget)
     _touchEventCallback = widget->_touchEventCallback;
     _touchEventListener = widget->_touchEventListener;
     _touchEventSelector = widget->_touchEventSelector;
+    _clickEventListener = widget->_clickEventListener;
     _focused = widget->_focused;
     _focusEnabled = widget->_focusEnabled;
     _propagateTouchEvents = widget->_propagateTouchEvents;

@@ -47,6 +47,73 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+
+struct ModelData;
+/** Node data, since 3.3 */
+struct NodeData
+{
+    std::string id;
+    Mat4        transform;
+    std::vector<ModelData*> modelNodeDatas;
+    std::vector<NodeData*>  children;
+
+    virtual ~NodeData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        id.clear();
+        transform.setIdentity();
+        for (auto& it : children)
+        {
+            delete it;
+        }
+        children.clear();
+    }
+
+};
+
+/** model node data, since 3.3 */
+struct ModelData
+{
+    std::string subMeshId;
+    std::string matrialId;
+    std::vector<std::string> bones;
+    std::vector<Mat4>        invBindPose;
+    
+    virtual ~ModelData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        bones.clear();
+        invBindPose.clear();
+    }
+};
+
+/** node datas, since 3.3 */
+struct NodeDatas
+{
+    std::vector<NodeData*> skeleton; //skeleton
+    std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
+    
+    void resetData()
+    {
+        for(auto& it : skeleton)
+        {
+            delete it;
+        }
+        skeleton.clear();
+        for(auto& it : nodes)
+        {
+            delete it;
+        }
+        nodes.clear();
+    }
+};
+
 /**mesh data*/
 struct MeshData
 {
@@ -54,11 +121,21 @@ struct MeshData
     std::vector<float> vertex;
     int vertexSizeInFloat;
     std::vector<IndexArray> subMeshIndices;
+    std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
 
 public:
+    int getPerVertexSize() const
+    {
+        int vertexsize = 0;
+        for(const auto& attrib : attribs)
+        {
+            vertexsize += attrib.attribSizeBytes;
+        }
+        return vertexsize;
+    }
     void resetData()
     {
         vertex.clear();
@@ -75,6 +152,25 @@ public:
     {
     }
     ~MeshData()
+    {
+        resetData();
+    }
+};
+
+/** mesh datas */
+struct MeshDatas
+{
+    std::vector<MeshData*> meshDatas;
+    
+    void resetData()
+    {
+        for(auto& it : meshDatas)
+        {
+            delete it;
+        }
+        meshDatas.clear();
+    }
+    ~MeshDatas()
     {
         resetData();
     }
@@ -149,47 +245,7 @@ struct SkinData
 
 };
 
-/**skin data*/
-struct Skeleton3DData
-{
-    std::vector<std::string> boneNames; //bone names
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone
-    std::vector<Mat4>        boneOriginMatrices; // original bone transform
-    
-    //bone child info, both skinbone and node bone
-    std::map<int, std::vector<int> > boneChild;//key parent, value child
-    int                              rootBoneIndex;
-    
-    void resetData()
-    {
-        boneNames.clear();
-        inverseBindPoseMatrices.clear();
-        boneOriginMatrices.clear();
-        boneChild.clear();
-        rootBoneIndex = -1;
-    }
-    
-    void addBoneNames(const std::string& name)
-    {
-        auto it = std::find(boneNames.begin(), boneNames.end(), name);
-        if (it == boneNames.end())
-            boneNames.push_back(name);
-    }
-    
-    int getBoneNameIndex(const std::string& name)const
-    {
-        int i = 0;
-        for (auto iter : boneNames)
-        {
-            if ((iter) == name)
-                return i;
-            i++;
-        }
-        return -1;
-    }
-};
-
-/**material data*/
+/**material data, */
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
@@ -199,6 +255,61 @@ struct MaterialData
     }
 };
 
+
+/**new material, since 3.3 */
+struct NTextureData
+{
+    enum class Usage {
+        Unknown = 0,
+        None = 1,
+        Diffuse = 2, 
+        Emissive = 3,
+        Ambient = 4,
+        Specular = 5,
+        Shininess = 6,
+        Normal = 7,
+        Bump = 8,
+        Transparency = 9,
+        Reflection = 10
+    };
+     std::string id;
+     std::string filename;
+     Usage type;
+     GLenum wrapS;
+     GLenum wrapT;
+} ;
+struct NMaterialData
+{
+    std::vector<NTextureData> textures;
+    std::string id;
+    const NTextureData* getTextureData(const NTextureData::Usage& type) const
+    {
+        for(const auto& it : textures)
+        {
+            if (it.type == type)
+                return &it;
+        }
+        return nullptr;
+    }
+};
+/** material datas, since 3.3 */
+struct MaterialDatas
+{
+    std::vector<NMaterialData> materials;
+    void resetData()
+    {
+        materials.clear();
+    }
+    const NMaterialData* getMaterialData(const std::string& materialid) const
+    {
+        for(const auto& it : materials)
+        {
+            if (it.id == materialid)
+                return &it;
+        }
+        return nullptr;
+    }
+};
 /**animation data*/
 struct Animation3DData
 {

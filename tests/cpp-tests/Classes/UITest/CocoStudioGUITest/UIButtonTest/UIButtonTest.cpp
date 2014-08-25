@@ -301,7 +301,6 @@ bool UIButtonTest_Title::init()
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setTitleColor(Color3B::YELLOW);
         CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
-//        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);
         
@@ -481,7 +480,7 @@ bool UIButtonTestSwitchScale9::init()
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestSwitchScale9::touchEvent, this));
         button->ignoreContentAdaptWithSize(false);
-
+        
         _uiLayer->addChild(button);
         
         
@@ -559,6 +558,11 @@ bool UIButtonTestZoomScale::init()
                                         "cocosui/animationbuttonpressed.png");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
         button->setPressedActionEnabled(true);
+        button->addClickEventListener([=](Ref* sender){
+            CCLOG("Button clicked, position = (%f, %f)", button->getPosition().x,
+                  button->getPosition().y);
+            
+        });
         button->setName("button");
         _uiLayer->addChild(button);
         button->setZoomScale(-0.5);
