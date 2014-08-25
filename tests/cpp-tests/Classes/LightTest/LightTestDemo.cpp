@@ -186,16 +186,46 @@ void LightTestDemo::addLights()
     _directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
     _directionalLight->retain();
     addChild(_directionalLight);
+    _directionalLight->setCameraMask(2);
 
-    _pointLight = Light3D::CreatePointLight(Vec3(100.0, 100.0, 100.0), Color3B(200, 200, 200), 1000.0f);
+    _pointLight = Light3D::CreatePointLight(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 1000.0f);
     _pointLight->retain();
     _pointLight->setEnabled(false);
     addChild(_pointLight);
+    _pointLight->setCameraMask(2);
 
-    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(100.0, 100.0, 0.0f), Color3B(200, 200, 200), 0.1, 0.3, 1000.0f);
+    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.1, 0.3, 1000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);
+    _spotLight->setCameraMask(2);
+
+    {
+        auto tintto1 = TintTo::create(4, 255, 0, 0);
+        auto tintto2 = TintTo::create(4, 0, 255, 0);
+        auto tintto3 = TintTo::create(4, 0, 0, 255);
+        auto tintto4 = TintTo::create(4, 255, 255, 255);
+        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        _directionalLight->runAction(RepeatForever::create(seq));
+    }
+
+    {
+        auto tintto1 = TintTo::create(4, 255, 0, 0);
+        auto tintto2 = TintTo::create(4, 0, 255, 0);
+        auto tintto3 = TintTo::create(4, 0, 0, 255);
+        auto tintto4 = TintTo::create(4, 255, 255, 255);
+        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        _pointLight->runAction(RepeatForever::create(seq));
+    }
+
+    {
+        auto tintto1 = TintTo::create(4, 255, 0, 0);
+        auto tintto2 = TintTo::create(4, 0, 255, 0);
+        auto tintto3 = TintTo::create(4, 0, 0, 255);
+        auto tintto4 = TintTo::create(4, 255, 255, 255);
+        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        _spotLight->runAction(RepeatForever::create(seq));
+    }
 }
 
 void LightTestDemo::update( float delta )

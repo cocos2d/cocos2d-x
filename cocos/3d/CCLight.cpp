@@ -102,6 +102,7 @@ void Light3D::onEnter()
         if (iter == lights.end())
             lights.push_back(this);
     }
+    Node::onEnter();
 }
 
 void Light3D::onExit()
@@ -114,6 +115,7 @@ void Light3D::onExit()
         if (iter != lights.end())
             lights.erase(iter);
     }
+    Node::onExit();
 }
 
 void Light3D::setEnabled( bool isON )
