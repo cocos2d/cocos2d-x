@@ -36,6 +36,9 @@
 
 NS_CC_BEGIN
 
+void* GLViewImpl::_pixelFormat = kEAGLColorFormatRGB565;
+int GLViewImpl::_depthFormat = GL_DEPTH_COMPONENT16;
+
 GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 {
     auto ret = new GLViewImpl;
@@ -80,6 +83,18 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
+void GLViewImpl::convertAttrs()
+{
+    if(_glContextAttrs.redBits==8 && _glContextAttrs.greenBits==8 && _glContextAttrs.blueBits==8 && _glContextAttrs.alphaBits==8)
+    {
+        _pixelFormat = kEAGLColorFormatRGBA8;
+    }
+    if(_glContextAttrs.depthBits==24 && _glContextAttrs.stencilBits==8)
+    {
+        _depthFormat = GL_DEPTH24_STENCIL8_OES;
+    }
+}
+
 GLViewImpl::GLViewImpl()
 {
 }
@@ -105,13 +120,15 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    convertAttrs();
     CCEAGLView *eaglview = [CCEAGLView viewWithFrame: r
-                                       pixelFormat: kEAGLColorFormatRGB565
-                                       depthFormat: GL_DEPTH24_STENCIL8_OES
+                                       pixelFormat: (NSString*)_pixelFormat
+                                       depthFormat: _depthFormat
                                 preserveBackbuffer: NO
                                         sharegroup: nil
                                      multiSampling: NO
                                    numberOfSamples: 0];
+    
     [eaglview setMultipleTouchEnabled:YES];
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
