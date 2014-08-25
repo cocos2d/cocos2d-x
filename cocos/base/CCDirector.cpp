@@ -1166,9 +1166,15 @@ void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-
+    std::string fpsString = "00.0";
+    std::string drawBatchString = "000";
+    std::string drawVerticesString = "00000";
     if (_FPSLabel)
     {
+        fpsString = _FPSLabel->getString();
+        drawBatchString = _drawnBatchesLabel->getString();
+        drawVerticesString = _drawnVerticesLabel->getString();
+        
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
         CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
@@ -1205,19 +1211,19 @@ void Director::createStatsLabel()
     _FPSLabel = LabelAtlas::create();
     _FPSLabel->retain();
     _FPSLabel->setIgnoreContentScaleFactor(true);
-    _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
+    _FPSLabel->initWithString(fpsString, texture, 12, 32 , '.');
     _FPSLabel->setScale(scaleFactor);
 
     _drawnBatchesLabel = LabelAtlas::create();
     _drawnBatchesLabel->retain();
     _drawnBatchesLabel->setIgnoreContentScaleFactor(true);
-    _drawnBatchesLabel->initWithString("000", texture, 12, 32, '.');
+    _drawnBatchesLabel->initWithString(drawBatchString, texture, 12, 32, '.');
     _drawnBatchesLabel->setScale(scaleFactor);
 
     _drawnVerticesLabel = LabelAtlas::create();
     _drawnVerticesLabel->retain();
     _drawnVerticesLabel->setIgnoreContentScaleFactor(true);
-    _drawnVerticesLabel->initWithString("00000", texture, 12, 32, '.');
+    _drawnVerticesLabel->initWithString(drawVerticesString, texture, 12, 32, '.');
     _drawnVerticesLabel->setScale(scaleFactor);
 
 
