@@ -1202,6 +1202,10 @@ bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
         {
             const rapidjson::Value& bone_keyframes =  bone[KEYFRAMES];
             rapidjson::SizeType keyframe_size = bone_keyframes.Size();
+            animationdata->_rotationKeys[bone_name].reserve(keyframe_size);
+            animationdata->_scaleKeys[bone_name].reserve(keyframe_size);
+            animationdata->_translationKeys[bone_name].reserve(keyframe_size);
+            
             for (rapidjson::SizeType j = 0; j < keyframe_size; j++)
             {
                 const rapidjson::Value&  bone_keyframe =  bone_keyframes[j];
@@ -1627,6 +1631,10 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
             CCLOGINFO("Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
             return false;
         }
+        
+        animationdata->_rotationKeys[boneName].reserve(keyframeNum);
+        animationdata->_scaleKeys[boneName].reserve(keyframeNum);
+        animationdata->_translationKeys[boneName].reserve(keyframeNum);
 
         for (unsigned int j = 0; j < keyframeNum; ++j)
         {
