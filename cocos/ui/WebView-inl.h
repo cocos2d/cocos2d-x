@@ -2,7 +2,7 @@
 #define __CC_WebView_INL_H_
 
 #include "WebView.h"
-#include "CCGLView.h"
+#include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
