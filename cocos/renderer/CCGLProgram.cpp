@@ -133,7 +133,7 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
         ret->updateUniforms();
         ret->autorelease();
         return ret;
-	}
+    }
 
     CC_SAFE_DELETE(ret);
     return nullptr;
@@ -464,7 +464,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     
     const GLchar *sources[] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
-        (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision highp int;\n"),
+        (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #endif
         def,
         lightStruct,
