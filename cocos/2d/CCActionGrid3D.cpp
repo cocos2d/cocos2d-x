@@ -25,7 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionGrid3D.h"
 #include "base/CCDirector.h"
-#include <stdlib.h>
 
 NS_CC_BEGIN
 // implementation of Waves3D

@@ -29,6 +29,7 @@
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
 #include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
 
 #include <algorithm>

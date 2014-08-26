@@ -31,6 +31,7 @@
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 

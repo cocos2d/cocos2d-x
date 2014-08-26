@@ -2,6 +2,7 @@
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCEventCustom.h"
+#include "base/CCEventDispatcher.h"
 #include "../CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "JniHelper.h"

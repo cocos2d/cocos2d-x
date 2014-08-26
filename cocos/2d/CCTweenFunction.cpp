@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTweenFunction.h"
+#include <math.h> // M_PI
 
 NS_CC_BEGIN
 

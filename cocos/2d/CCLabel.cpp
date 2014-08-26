@@ -33,6 +33,7 @@
 #include "2d/CCFont.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
