@@ -135,7 +135,7 @@ namespace experimental{
             Node::setVisible(visible);
             _impl->setVisible(visible);
         }
-    } // namespace cocos2d
-} // namespace ui
-} //namespace experimental
+    } // namespace ui
+} // namespace experimental
+} //namespace cocos2d
 

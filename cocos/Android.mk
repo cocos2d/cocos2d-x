@@ -349,7 +349,9 @@ LOCAL_SRC_FILES += ui/UIWidget.cpp \
                    ui/UIRelativeBox.cpp \
                    ui/UIVideoPlayerAndroid.cpp \
                    ui/UIDeprecated.cpp \
-                   ui/UIScale9Sprite.cpp
+		   ui/UIScale9Sprite.cpp \
+		   ui/WebView.cpp \
+		   ui/WebViewImpl_android.cpp \
 
 #extension
 LOCAL_SRC_FILES += ../extensions/assets-manager/AssetsManager.cpp \

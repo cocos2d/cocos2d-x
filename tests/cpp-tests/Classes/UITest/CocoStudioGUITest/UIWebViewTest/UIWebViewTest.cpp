@@ -24,10 +24,20 @@
 
 #include "UIWebViewTest.h"
 
+WebViewTest::WebViewTest()
+{
+    
+}
+
+WebViewTest::~WebViewTest()
+{
+
+}
+
 bool WebViewTest::init()
 {
     if (UIScene::init()) {
-        _webView = experimental::ui::WebView::create();
+        _webView = cocos2d::experimental::ui::WebView::create();
         _webView->setPosition(Director::getInstance()->getVisibleSize()/2);
         _webView->setContentSize(Director::getInstance()->getVisibleSize() * 0.5);
         _webView->loadUrl("http://www.baidu.com");

@@ -33,11 +33,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.util.Log;
-import android.widget.FrameLayout;
 import android.preference.PreferenceManager.OnActivityResultListener;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -55,6 +54,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	private Cocos2dxHandler mHandler;	
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
+	private Cocos2dxWebViewHelper mWebViewHelper = null;
 	
 	public static Context getContext() {
 		return sContext;
@@ -102,6 +102,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	if (mVideoHelper == null) {
     		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
 		}
+    	
+    	if(mWebViewHelper == null){
+    		mWebViewHelper = new Cocos2dxWebViewHelper(mFrameLayout);
+    	}
 	}
 
 	//native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions

@@ -32,6 +32,8 @@ USING_NS_CC;
 class WebViewTest : public UIScene
 {
 public:
+    WebViewTest();
+    virtual ~WebViewTest();
     UI_SCENE_CREATE_FUNC(WebViewTest);
     
     virtual bool init();
