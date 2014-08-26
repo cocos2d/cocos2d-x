@@ -97,59 +97,6 @@
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\CCBAnimationManager.h" />
-    <ClInclude Include="..\CCBFileLoader.h" />
-    <ClInclude Include="..\CCBKeyframe.h" />
-    <ClInclude Include="..\CCBMemberVariableAssigner.h" />
-    <ClInclude Include="..\CCBReader.h" />
-    <ClInclude Include="..\CCBSelectorResolver.h" />
-    <ClInclude Include="..\CCBSequence.h" />
-    <ClInclude Include="..\CCBSequenceProperty.h" />
-    <ClInclude Include="..\CCControlButtonLoader.h" />
-    <ClInclude Include="..\CCControlLoader.h" />
-    <ClInclude Include="..\CCLabelBMFontLoader.h" />
-    <ClInclude Include="..\CCLabelTTFLoader.h" />
-    <ClInclude Include="..\CCLayerColorLoader.h" />
-    <ClInclude Include="..\CCLayerGradientLoader.h" />
-    <ClInclude Include="..\CCLayerLoader.h" />
-    <ClInclude Include="..\CCMenuItemImageLoader.h" />
-    <ClInclude Include="..\CCMenuItemLoader.h" />
-    <ClInclude Include="..\CCMenuLoader.h" />
-    <ClInclude Include="..\CCNode+CCBRelativePositioning.h" />
-    <ClInclude Include="..\CCNodeLoader.h" />
-    <ClInclude Include="..\CCNodeLoaderLibrary.h" />
-    <ClInclude Include="..\CCNodeLoaderListener.h" />
-    <ClInclude Include="..\CCParticleSystemQuadLoader.h" />
-    <ClInclude Include="..\CCScale9SpriteLoader.h" />
-    <ClInclude Include="..\CCScrollViewLoader.h" />
-    <ClInclude Include="..\CCSpriteLoader.h" />
-    <ClInclude Include="..\CocosBuilder.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\CCBAnimationManager.cpp" />
-    <ClCompile Include="..\CCBFileLoader.cpp" />
-    <ClCompile Include="..\CCBKeyframe.cpp" />
-    <ClCompile Include="..\CCBReader.cpp" />
-    <ClCompile Include="..\CCBSequence.cpp" />
-    <ClCompile Include="..\CCBSequenceProperty.cpp" />
-    <ClCompile Include="..\CCControlButtonLoader.cpp" />
-    <ClCompile Include="..\CCControlLoader.cpp" />
-    <ClCompile Include="..\CCLabelBMFontLoader.cpp" />
-    <ClCompile Include="..\CCLabelTTFLoader.cpp" />
-    <ClCompile Include="..\CCLayerColorLoader.cpp" />
-    <ClCompile Include="..\CCLayerGradientLoader.cpp" />
-    <ClCompile Include="..\CCLayerLoader.cpp" />
-    <ClCompile Include="..\CCMenuItemImageLoader.cpp" />
-    <ClCompile Include="..\CCMenuItemLoader.cpp" />
-    <ClCompile Include="..\CCNode+CCBRelativePositioning.cpp" />
-    <ClCompile Include="..\CCNodeLoader.cpp" />
-    <ClCompile Include="..\CCNodeLoaderLibrary.cpp" />
-    <ClCompile Include="..\CCParticleSystemQuadLoader.cpp" />
-    <ClCompile Include="..\CCScale9SpriteLoader.cpp" />
-    <ClCompile Include="..\CCScrollViewLoader.cpp" />
-    <ClCompile Include="..\CCSpriteLoader.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
