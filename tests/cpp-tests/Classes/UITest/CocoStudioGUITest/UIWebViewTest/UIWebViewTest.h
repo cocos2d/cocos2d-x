@@ -37,8 +37,10 @@ public:
     UI_SCENE_CREATE_FUNC(WebViewTest);
     
     virtual bool init();
+    bool onWebViewShouldStartLoading(experimental::ui::WebView *sender, std::string url);
+    void onWebViewDidFinishLoading(experimental::ui::WebView *sender, std::string url);
+    void onWebViewDidFailLoading(experimental::ui::WebView *sender, std::string url);
     
-   
     
 private:
     cocos2d::experimental::ui::WebView *_webView;

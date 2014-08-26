@@ -84,8 +84,8 @@ private:
     WebView *_webView;
 };
 
-    } // namespace cocos2d
+    } // namespace ui
   } // namespace experimental
-}//namespace ui
+}//namespace cocos2d
 
 #endif //__cocos2d_plugin_WebViewImpl_IOS_H_

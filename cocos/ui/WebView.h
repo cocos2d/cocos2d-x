@@ -167,9 +167,9 @@ private:
     WebViewImpl *_impl;
 };
         
-      } // namespace cocos2d
+      } // namespace ui
    } // namespace experimental
-}//namespace ui
+}//namespace cocos2d
 
 #endif
 

@@ -96,6 +96,7 @@
 }
 
 - (void)dealloc {
+    self.uiWebView.delegate = nil;
     [self.uiWebView removeFromSuperview];
     self.jsScheme = nil;
     [super dealloc];
@@ -343,8 +344,8 @@ void WebViewImpl::setVisible(bool visible){
     [_uiWebViewWrapper setVisible:visible];
 }
         
-    } // namespace cocos2d
+    } // namespace ui
 } // namespace experimental
-} //namespace ui
+} //namespace cocos2d
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
