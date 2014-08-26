@@ -28,7 +28,7 @@ void PointLight(int n, vec4 ePosition, vec3 eNormal, inout vec4 intensity)
 \n#if CC_MAX_DIRECTIONAL_LIGHT_NUM\n
 void DirectionalLight(int n, vec3 eNormal, inout vec4 intensity)
 {
-    intensity.xyz += CC_DirLightSource[n].color * max(0.0, dot(normalize(-CC_DirLightSource[n].direction), eNormal));
+    intensity.xyz += CC_DirLightSource[n].color * max(0.0, dot(-CC_DirLightSource[n].direction, eNormal));
     intensity.w = 1.0;
 }
 \n#endif\n
@@ -40,21 +40,22 @@ void SpotLight(int n, vec4 ePosition, vec3 eNormal, inout vec4 intensity)
     {
         vec3 lightDir = CC_SpotLightSource[n].position - ePosition.xyz;
         lightDir = normalize(lightDir);
-        float spotDot = dot(normalize(lightDir), normalize(-CC_SpotLightSource[n].direction));
-        float innerCos = cos(CC_SpotLightSource[n].params.x);
-        float outerCos = cos(CC_SpotLightSource[n].params.y);
+        float spotDot = dot(normalize(lightDir), -CC_SpotLightSource[n].direction);
+        float innerCos = CC_SpotLightSource[n].params.x;
+        float outerCos = CC_SpotLightSource[n].params.y;
         float factor = smoothstep(outerCos, innerCos, spotDot);
-		intensity.xyz += CC_SpotLightSource[n].color * max(0.0, dot(lightDir, eNormal)) * factor;	
+        intensity.xyz += CC_SpotLightSource[n].color * max(0.0, dot(lightDir, eNormal)) * factor;	
     }
     intensity.w = 1.0;
 }
 \n#endif\n
 
-
 void main(void)
-{	
-    vec3 normal = normalize(eNormal);
+{
     vec4 intensity = vec4(0.0);
+\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
+    vec3 normal  = normalize(eNormal);
+\n#endif\n
 
 \n#if CC_MAX_DIRECTIONAL_LIGHT_NUM\n
 
