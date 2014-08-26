@@ -1351,8 +1351,6 @@
 		1AC0269C1914068200FA920D /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
 		1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
-		298D7F6419AC2EFD00FF096D /* UIWebViewWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 298D7F5C19AC2EFD00FF096D /* UIWebViewWrapper.h */; };
-		298D7F6519AC2EFD00FF096D /* UIWebViewWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 298D7F5D19AC2EFD00FF096D /* UIWebViewWrapper.mm */; };
 		298D7F6819AC2EFD00FF096D /* WebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 298D7F6019AC2EFD00FF096D /* WebView.h */; };
 		298D7F6919AC2EFD00FF096D /* WebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 298D7F6119AC2EFD00FF096D /* WebView.mm */; };
 		298D7F6A19AC2EFD00FF096D /* WebViewImpl_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 298D7F6219AC2EFD00FF096D /* WebViewImpl_iOS.h */; };
@@ -2306,8 +2304,6 @@
 		2958244A19873D8E00F9746D /* UIScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9Sprite.h; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
-		298D7F5C19AC2EFD00FF096D /* UIWebViewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWebViewWrapper.h; sourceTree = "<group>"; };
-		298D7F5D19AC2EFD00FF096D /* UIWebViewWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIWebViewWrapper.mm; sourceTree = "<group>"; };
 		298D7F6019AC2EFD00FF096D /* WebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebView.h; sourceTree = "<group>"; };
 		298D7F6119AC2EFD00FF096D /* WebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WebView.mm; sourceTree = "<group>"; };
 		298D7F6219AC2EFD00FF096D /* WebViewImpl_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewImpl_iOS.h; sourceTree = "<group>"; };
@@ -2354,8 +2350,6 @@
 		3EA3EDBB1991CDFA00645534 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCCamera.h; path = ../base/CCCamera.h; sourceTree = "<group>"; };
 		464AD6E3197EBB1400E502D8 /* pvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pvr.cpp; path = ../base/pvr.cpp; sourceTree = "<group>"; };
 		464AD6E4197EBB1400E502D8 /* pvr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvr.h; path = ../base/pvr.h; sourceTree = "<group>"; };
-		46633BC2199DDB2F00F6E838 /* CCModuleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCModuleManager.cpp; path = ../base/CCModuleManager.cpp; sourceTree = "<group>"; };
-		46633BC3199DDB2F00F6E838 /* CCModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCModuleManager.h; path = ../base/CCModuleManager.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -3078,8 +3072,6 @@
 		1A570095180BC5B00088DEC7 /* base-nodes */ = {
 			isa = PBXGroup;
 			children = (
-				46633BC2199DDB2F00F6E838 /* CCModuleManager.cpp */,
-				46633BC3199DDB2F00F6E838 /* CCModuleManager.h */,
 				15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */,
 				15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */,
 				1A57009C180BC5D20088DEC7 /* CCNode.cpp */,
@@ -4028,8 +4020,6 @@
 		29CB8F521929D65500C841D6 /* experimental */ = {
 			isa = PBXGroup;
 			children = (
-				298D7F5C19AC2EFD00FF096D /* UIWebViewWrapper.h */,
-				298D7F5D19AC2EFD00FF096D /* UIWebViewWrapper.mm */,
 				298D7F6019AC2EFD00FF096D /* WebView.h */,
 				298D7F6119AC2EFD00FF096D /* WebView.mm */,
 				298D7F6219AC2EFD00FF096D /* WebViewImpl_iOS.h */,
@@ -5472,7 +5462,6 @@
 				46A171061807CECB005B8026 /* CCPhysicsWorld.h in Headers */,
 				50ABBDB41925AB4100A911A9 /* ccShaders.h in Headers */,
 				15AE19B319AAD39700C27E9E /* SliderReader.h in Headers */,
-				298D7F6419AC2EFD00FF096D /* UIWebViewWrapper.h in Headers */,
 				15AE1B7919AADA9A00C27E9E /* UIRichText.h in Headers */,
 				15AE1A4A19AAD3D500C27E9E /* b2CircleShape.h in Headers */,
 				50ABBE861925AB6F00A911A9 /* ccFPSImages.h in Headers */,
@@ -6693,7 +6682,6 @@
 				15AE1A4319AAD3D500C27E9E /* b2DynamicTree.cpp in Sources */,
 				15AE1BFF19AAE01E00C27E9E /* CCScale9Sprite.cpp in Sources */,
 				15AE1A3A19AAD3D500C27E9E /* b2BroadPhase.cpp in Sources */,
-				298D7F6519AC2EFD00FF096D /* UIWebViewWrapper.mm in Sources */,
 				15AE19B619AAD39700C27E9E /* TextBMFontReader.cpp in Sources */,
 				15AE1BFD19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
 				B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,

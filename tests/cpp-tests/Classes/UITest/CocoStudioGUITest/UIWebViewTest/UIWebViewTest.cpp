@@ -31,6 +31,7 @@ bool WebViewTest::init()
         _webView->setPosition(Director::getInstance()->getVisibleSize()/2);
         _webView->setContentSize(Director::getInstance()->getVisibleSize() * 0.5);
         _webView->loadUrl("http://www.baidu.com");
+        _webView->setScalesPageToFit(true);
         this->addChild(_webView);
         
         return true;
