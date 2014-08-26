@@ -9,6 +9,8 @@
 #import "CCEAGLView.h"
 #import "CCDirector.h"
 
+using namespace cocos2d::experimental::ui;
+
 
 @interface UIWebViewWrapper () <UIWebViewDelegate>
 @property(nonatomic, retain) UIWebView *uiWebView;

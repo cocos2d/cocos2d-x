@@ -10,15 +10,19 @@
 @class UIWebViewWrapper;
 
 namespace cocos2d {
+    
 class Data;
 class Renderer;
 class Mat4;
-namespace plugin {
+    
+namespace experimental {
+    namespace ui{
+    
 class WebView;
 
 class WebViewImpl {
 public:
-    WebViewImpl(cocos2d::plugin::WebView *webView);
+    WebViewImpl(WebView *webView);
 
     virtual ~WebViewImpl();
 
@@ -58,6 +62,7 @@ private:
 };
 
 } // namespace cocos2d
-} // namespace plugin
+} // namespace experimental
+}//namespace ui
 
 #endif //__cocos2d_plugin_WebViewImpl_IOS_H_

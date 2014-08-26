@@ -5,11 +5,16 @@
 #ifndef __Cocos2d_Plugin_WebView_H_
 #define __Cocos2d_Plugin_WebView_H_
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+
 #include "ui/UIWidget.h"
 #include "base/CCData.h"
 
-namespace cocos2d {
-namespace plugin {
+NS_CC_BEGIN
+namespace experimental{
+    namespace ui{
+        
 class WebViewImpl;
 
 class WebView : public cocos2d::ui::Widget {
@@ -135,9 +140,13 @@ public:
     virtual void setVisible(bool visible) override;
 
 private:
-    cocos2d::plugin::WebViewImpl *_impl;
+    WebViewImpl *_impl;
 };
+        
 } // namespace cocos2d
-} // namespace plugin
+} // namespace experimental
+}//namespace ui
+
+#endif
 
 #endif //__Cocos2d_Plugin_WebView_H_

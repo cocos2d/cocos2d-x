@@ -5,16 +5,19 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "WebViewImpl_iOS.h"
-#import "UIWebViewWrapper.h"
 #include "renderer/CCRenderer.h"
-#include "WebView.h"
 #include "CCDirector.h"
 #include "CCGLView.h"
 #include "CCEAGLView.h"
 #include "platform/CCFileUtils.h"
 
+#import "UIWebViewWrapper.h"
+#include "ui/WebView.h"
+
+
 namespace cocos2d {
-namespace plugin {
+namespace experimental {
+    namespace ui{
 
 WebViewImpl::WebViewImpl(WebView *webView)
         : _uiWebViewWrapper([UIWebViewWrapper webViewWrapper]), _webView(webView) {
@@ -128,7 +131,9 @@ void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transfo
 void WebViewImpl::setVisible(bool visible) {
     [_uiWebViewWrapper setVisible:visible];
 }
+        
 } // namespace cocos2d
-} // namespace plugin
+} // namespace experimental
+} //namespace ui
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS

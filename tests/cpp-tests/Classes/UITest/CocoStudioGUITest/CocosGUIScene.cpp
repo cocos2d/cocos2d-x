@@ -30,6 +30,20 @@ g_guisTests[] =
         }
     },
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "WebViewTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(KWebViewTest);
+            sceneManager->setMinUISceneId(KWebViewTest);
+            sceneManager->setMaxUISceneId(KWebViewTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+#endif
     {
         "focus test",
         [](Ref* sender)
