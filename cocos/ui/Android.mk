@@ -31,6 +31,9 @@ UIRelativeBox.cpp \
 UIVideoPlayerAndroid.cpp \
 UIDeprecated.cpp \
 UIScale9Sprite.cpp \
+WebView.cpp \
+WebViewImpl_android.cpp \
+org_cocos2dx_lib_Cocos2dxWebViewHelper.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support
