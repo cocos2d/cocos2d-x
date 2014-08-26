@@ -75,9 +75,12 @@ static const char* s_testArray[] =
     "UIScrollViewTest_Horizontal",
     "UIScrollViewTest_Both",
     "UIScrollViewTest_ScrollToPercentBothDirection",
-    "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",    
+    "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",
+    "UIScrollViewNestTest",
     "UIPageViewTest",
     "UIPageViewButtonTest",
+    "UIPageViewCustomScrollThreshold",
+    "UIPageViewTouchPropagationTest",
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
    
@@ -288,13 +291,17 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIScrollViewTest_ScrollToPercentBothDirection_Bounce:
             return UIScrollViewTest_ScrollToPercentBothDirection_Bounce::sceneWithTitle(s_testArray[_currentUISceneId]);                    
-            
+        case kUIScrollViewNestTest:
+            return UIScrollViewNestTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewButtonTest:
             return UIPageViewButtonTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewCustomScrollThreshold:
             return UIPageViewCustomScrollThreshold::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewTouchPropagationTest:
+            return UIPageViewTouchPropagationTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             

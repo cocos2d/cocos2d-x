@@ -27,10 +27,11 @@
 
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-class CC_DLL AABB
+class CC_3D_DLL AABB
 {
 
 public:
@@ -93,6 +94,8 @@ public:
      * reset min and max value.
      */
     void reset();
+    
+    bool isEmpty() const;
 
     /**
      * update the _min and _max from the given point.

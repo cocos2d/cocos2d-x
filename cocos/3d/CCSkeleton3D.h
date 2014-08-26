@@ -34,13 +34,14 @@
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
 /**
  * Defines a basic hierachial structure of transformation spaces.
  */
-class CC_DLL Bone3D : public Ref
+class CC_3D_DLL Bone3D : public Ref
 {
     friend class Skeleton3D;
     friend class MeshSkin;
@@ -183,12 +184,11 @@ protected:
  * Skeleton
  *
  */
-class CC_DLL Skeleton3D: public Ref
+class CC_3D_DLL Skeleton3D: public Ref
 {
 public:
     
-    /**create a new meshskin if do not want to share Skeleton3D*/
-    static Skeleton3D* create(const std::string& filename, const std::string& name);
+    static Skeleton3D* create(const std::vector<NodeData*>& skeletondata);
     
     /**get total bone count*/
     ssize_t getBoneCount() const;
@@ -198,8 +198,8 @@ public:
     Bone3D* getBoneByName(const std::string& id) const;
     
     /**get & set root bone*/
-    Bone3D* getRootBone() const;
-    void setRootBone(Bone3D* bone);
+    ssize_t getRootCount() const;
+    Bone3D* getRootBone(int index) const;
     
     /**get bone index*/
     int getBoneIndex(Bone3D* bone) const;
@@ -213,48 +213,20 @@ CC_CONSTRUCTOR_ACCESS:
     
     ~Skeleton3D();
     
-    /**init from skeleton data*/
-    bool initFromSkeletonData(const Skeleton3DData& skeletondata);
-    
     /**remove all bones*/
     void removeAllBones();
     
     /**add bone*/
     void addBone(Bone3D* bone);
     
+    /** create Bone3D from NodeData */
+    Bone3D* createBone3D(const NodeData& nodedata);
+    
 protected:
     
     Vector<Bone3D*> _bones; // bones
 
-    Bone3D* _rootBone;
-};
-
-/**
- * Skeleton3DData Cache
- */
-class Skeleton3DDataCache
-{
-public:
-    /**get & destroy*/
-    static Skeleton3DDataCache* getInstance();
-    static void destroyInstance();
-    
-    /**get mesh skin data from cache*/
-    const Skeleton3DData* getSkeletonData(const std::string& key) const;
-    
-    /**add skeleton data to cache*/
-    bool addSkeletonData(const std::string& key, const Skeleton3DData& skeletonData);
-    
-    /**remove all skeleton data*/
-    void removeAllSkeletonData();
-    
-CC_CONSTRUCTOR_ACCESS:
-    Skeleton3DDataCache();
-    ~Skeleton3DDataCache();
-    
-    static Skeleton3DDataCache* _cacheInstance; // instance
-    
-    std::unordered_map<std::string, Skeleton3DData> _skeletonDatas; //cached skeleton datas
+    Vector<Bone3D*> _rootBones;
 };
 
 NS_CC_END

@@ -52,6 +52,10 @@ public:
 
     /** creates a GLViewImpl with a name in fullscreen mode */
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
+    
+    static void convertAttrs();
+    static void* _pixelFormat;
+    static int _depthFormat;
 
     /** sets the content scale factor */
     bool setContentScaleFactor(float contentScaleFactor);
