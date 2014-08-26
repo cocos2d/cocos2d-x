@@ -998,11 +998,11 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                         {
                             CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
                             const Color3B &col = light->getDisplayedColor();
-                            const Vec3 &pos = light->getPosition3D();
+                            Mat4 mat= light->getNodeToWorldTransform();
                             sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "color");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
                             sprintf(str, "CC_PointLightSource[%d].%s", enabledPointLightNum, "position");
-                            setUniformLocationWith4f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z, light->getRange());
+                            setUniformLocationWith4f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14], light->getRange());
                             ++enabledPointLightNum;
                         }
                         else
@@ -1010,11 +1010,11 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                             CCASSERT(enabledSpotLightNum < CC_MAX_SPOT_LIGHT_NUM, "");
                             const Color3B &col = light->getDisplayedColor();
                             const Vec3 &dir = light->getWorldDirection();
-                            const Vec3 &pos = light->getPosition3D();
+                            Mat4 mat= light->getNodeToWorldTransform();
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "color");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "position");
-                            setUniformLocationWith3f(glGetUniformLocation(_program, str), pos.x, pos.y, pos.z);
+                            setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "direction");
                             setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
                             sprintf(str, "CC_SpotLightSource[%d].%s", enabledSpotLightNum, "params");

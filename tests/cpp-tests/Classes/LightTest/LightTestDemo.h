@@ -60,6 +60,10 @@ private:
     Light3D *_directionalLight;
     Light3D *_pointLight;
     Light3D *_spotLight;
+
+    Label *_directionalLightLabel;
+    Label *_pointLightLabel;
+    Label *_spotLightLabel;
 };
 
 class LightTestScene : public TestScene
