@@ -10,8 +10,10 @@ varying vec3 eNormal;
 
 void main(void)
 {
-    ePosition = CC_MVMatrix * a_position;
+\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
     eNormal = CC_NormalMatrix * a_normal;
+\n#endif\n
+    ePosition = CC_MVMatrix * a_position;
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
     gl_Position = CC_PMatrix * ePosition;
@@ -83,10 +85,12 @@ void getPositionAndNormal(out vec4 position, out vec3 normal)
     position.z = dot(p, matrixPalette3);
     position.w = p.w;
 
+\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
     vec4 n = vec4(a_normal, 0.0);
     normal.x = dot(n, matrixPalette1);
     normal.y = dot(n, matrixPalette2);
     normal.z = dot(n, matrixPalette3);
+\n#endif\n
 }
 
 void main()
@@ -95,8 +99,10 @@ void main()
     vec3 normal;
     getPositionAndNormal(position, normal);
 
-    ePosition = CC_MVMatrix * position;
+\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
     eNormal = CC_NormalMatrix * normal;
+\n#endif\n
+    ePosition = CC_MVMatrix * position;
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
     gl_Position = CC_PMatrix * ePosition;
