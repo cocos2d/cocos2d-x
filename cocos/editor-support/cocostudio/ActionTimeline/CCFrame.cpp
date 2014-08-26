@@ -516,9 +516,6 @@ void ColorFrame::onEnter(Frame *nextFrame)
         _betweenGreen = color.g - _color.g;
         _betweenBlue  = color.b - _color.b;
     }
-
-    _node->setCascadeColorEnabled(true);
-    _node->setCascadeOpacityEnabled(true);
 }
 
 void ColorFrame::apply(float percent)

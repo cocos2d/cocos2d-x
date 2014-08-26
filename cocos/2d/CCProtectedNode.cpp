@@ -417,4 +417,17 @@ void ProtectedNode::disableCascadeColor()
     }
 }
 
+void ProtectedNode::disableCascadeOpacity()
+{
+    _displayedOpacity = _realOpacity;
+    
+    for(auto child : _children){
+        child->updateDisplayedOpacity(255);
+    }
+    
+    for(auto child : _protectedChildren){
+        child->updateDisplayedOpacity(255);
+    }
+}
+
 NS_CC_END

@@ -60,6 +60,7 @@ Controller g_aTestNames[] = {
 	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
+    { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
@@ -76,8 +77,6 @@ Controller g_aTestNames[] = {
 	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
-    { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
-    { "Node: Light Test", [](){  return new LightTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },

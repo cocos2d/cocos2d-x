@@ -118,7 +118,7 @@ bool CheckBox::init(const std::string& backGround,
             break;
         }
         
-        setSelectedState(false);
+        setSelected(false);
         loadTextures(backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled,texType);
     } while (0);
     return ret;
@@ -128,7 +128,7 @@ bool CheckBox::init()
 {
     if (Widget::init())
     {
-        setSelectedState(false);
+        setSelected(false);
         return true;
     }
     return false;
@@ -300,12 +300,12 @@ void CheckBox::releaseUpEvent()
     Widget::releaseUpEvent();
     
     if (_isSelected){
-        setSelectedState(false);
+        setSelected(false);
         unSelectedEvent();
     }
     else
     {
-        setSelectedState(true);
+        setSelected(true);
         selectedEvent();
     }
 }
@@ -339,7 +339,7 @@ void CheckBox::onPressStateChangedToDisabled()
     }
 }
 
-void CheckBox::setSelectedState(bool selected)
+void CheckBox::setSelected(bool selected)
 {
     if (selected == _isSelected)
     {
@@ -348,8 +348,8 @@ void CheckBox::setSelectedState(bool selected)
     _isSelected = selected;
     _frontCrossRenderer->setVisible(_isSelected);
 }
-
-bool CheckBox::getSelectedState()const
+    
+bool CheckBox::isSelected()const
 {
     return _isSelected;
 }
@@ -590,7 +590,7 @@ void CheckBox::copySpecialProperties(Widget *widget)
         loadTextureFrontCross(checkBox->_frontCrossFileName, checkBox->_frontCrossTexType);
         loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName, checkBox->_backGroundDisabledTexType);
         loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName, checkBox->_frontCrossDisabledTexType);
-        setSelectedState(checkBox->_isSelected);
+        setSelected(checkBox->_isSelected);
         _checkBoxEventListener = checkBox->_checkBoxEventListener;
         _checkBoxEventSelector = checkBox->_checkBoxEventSelector;
         _checkBoxEventCallback = checkBox->_checkBoxEventCallback;

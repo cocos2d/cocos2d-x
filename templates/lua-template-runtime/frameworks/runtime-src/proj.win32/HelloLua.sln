@@ -44,6 +44,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluaspine", "..\..\cocos2
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluaui", "..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluaui.vcxproj", "{FE78EEBB-3DBB-4713-8CBF-63D742C5BD82}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos3d", "..\..\cocos2d-x\cocos\3d\proj.win32\libcocos3d.vcxproj", "{E24950FA-5BC1-4AEE-A900-4F0259354BF0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluacocos3d", "..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocos3d.vcxproj", "{06840490-14A4-43D6-88BC-AAFA44D043EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -126,6 +130,14 @@ Global
 		{FE78EEBB-3DBB-4713-8CBF-63D742C5BD82}.Debug|Win32.Build.0 = Debug|Win32
 		{FE78EEBB-3DBB-4713-8CBF-63D742C5BD82}.Release|Win32.ActiveCfg = Release|Win32
 		{FE78EEBB-3DBB-4713-8CBF-63D742C5BD82}.Release|Win32.Build.0 = Release|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Debug|Win32.Build.0 = Debug|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Release|Win32.ActiveCfg = Release|Win32
+		{E24950FA-5BC1-4AEE-A900-4F0259354BF0}.Release|Win32.Build.0 = Release|Win32
+		{06840490-14A4-43D6-88BC-AAFA44D043EB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{06840490-14A4-43D6-88BC-AAFA44D043EB}.Debug|Win32.Build.0 = Debug|Win32
+		{06840490-14A4-43D6-88BC-AAFA44D043EB}.Release|Win32.ActiveCfg = Release|Win32
+		{06840490-14A4-43D6-88BC-AAFA44D043EB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

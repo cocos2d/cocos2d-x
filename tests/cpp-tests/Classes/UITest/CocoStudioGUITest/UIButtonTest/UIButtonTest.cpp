@@ -301,7 +301,6 @@ bool UIButtonTest_Title::init()
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setTitleColor(Color3B::YELLOW);
         CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
-//        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Title::touchEvent));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);
         
@@ -481,7 +480,7 @@ bool UIButtonTestSwitchScale9::init()
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestSwitchScale9::touchEvent, this));
         button->ignoreContentAdaptWithSize(false);
-
+        
         _uiLayer->addChild(button);
         
         
@@ -518,5 +517,78 @@ void UIButtonTestSwitchScale9::touchEvent(Ref *pSender, Widget::TouchEventType t
             
         default:
             break;
+    }
+}
+
+
+// UIButtonTestZoomScale
+UIButtonTestZoomScale::UIButtonTestZoomScale()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIButtonTestZoomScale::~UIButtonTestZoomScale()
+{
+}
+
+bool UIButtonTestZoomScale::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("Zoom Scale: 0.1", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
+        button->setPressedActionEnabled(true);
+        button->addClickEventListener([=](Ref* sender){
+            CCLOG("Button clicked, position = (%f, %f)", button->getPosition().x,
+                  button->getPosition().y);
+            
+        });
+        button->setName("button");
+        _uiLayer->addChild(button);
+        button->setZoomScale(-0.5);
+        
+        Slider* slider = Slider::create();
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setPosition(Vec2(widgetSize.width / 2.0f , widgetSize.height / 2.0f - 20));
+        slider->addEventListener(CC_CALLBACK_2(UIButtonTestZoomScale::sliderEvent, this));
+        slider->setPercent(button->getZoomScale()*100);
+        _uiLayer->addChild(slider);
+        return true;
+    }
+    return false;
+}
+
+void UIButtonTestZoomScale::sliderEvent(Ref *pSender, Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider* slider = dynamic_cast<Slider*>(pSender);
+        int percent = slider->getPercent();
+        Button* btn = (Button*)_uiLayer->getChildByName("button");
+        float zoomScale = percent * 0.01;
+        btn->setZoomScale(zoomScale);
+        _displayValueLabel->setString(String::createWithFormat("Zoom Scale: %f", zoomScale)->getCString());
     }
 }

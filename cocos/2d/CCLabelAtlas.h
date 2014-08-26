@@ -96,6 +96,8 @@ CC_CONSTRUCTOR_ACCESS:
     {
         _string.clear();
     }
+    
+protected:
     virtual void updateColor() override;
 
 #if CC_LABELATLAS_DEBUG_DRAW

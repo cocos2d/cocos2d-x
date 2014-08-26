@@ -122,15 +122,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Export.h" />
-    <ClInclude Include="..\win32\MciPlayer.h" />
-    <ClInclude Include="..\include\SimpleAudioEngine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\win32\MciPlayer.cpp" />
-    <ClCompile Include="..\win32\SimpleAudioEngine.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>

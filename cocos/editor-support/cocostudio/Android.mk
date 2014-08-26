@@ -66,13 +66,14 @@ $(LOCAL_PATH)/../../../external
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/../../../external \
 $(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../..
+$(LOCAL_PATH)/../.. \
+$(LOCAL_PATH)/WidgetReader
 
 LOCAL_CFLAGS += -fexceptions
 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_ui_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
+LOCAL_STATIC_LIBRARIES := cocos_ui_static
+LOCAL_STATIC_LIBRARIES += cocosdenshion_static
 
 include $(BUILD_STATIC_LIBRARY)
 

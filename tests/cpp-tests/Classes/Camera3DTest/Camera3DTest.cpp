@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "../testResource.h"
 
 #include "3d/CCAttachNode.h"
+#include "3d/cocos3d.h"
 
 ////////////DrawLine/////////////////////
 
@@ -124,7 +125,7 @@ void DrawLine3D::onDraw(const Mat4 &transform, uint32_t flags)
     
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), &(_buffer[0].colors));
-    glDrawArrays(GL_LINES, 0, _buffer.size());
+    glDrawArrays(GL_LINES, 0, static_cast<int>(_buffer.size()));
     glDisable(GL_DEPTH_TEST);
 }
 
@@ -352,7 +353,6 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
 {
 
     auto sprite = Sprite3D::create(fileName);
-    sprite->setScale(1);
     _layer3D->addChild(sprite);
     float globalZOrder=sprite->getGlobalZOrder();
     sprite->setPosition3D( Vec3( p.x, p.y,p.z) );

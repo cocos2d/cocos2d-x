@@ -2,18 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="include">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <UniqueIdentifier>{ffa91ca5-f4b1-424f-9342-bd250042f423}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\constraints">
-      <UniqueIdentifier>{4dabab00-1a6f-41ee-be09-a30737358f86}</UniqueIdentifier>
+      <UniqueIdentifier>{70e7e6e1-042e-42b6-a19d-547b8de61bbc}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <UniqueIdentifier>{78b690a1-6061-49d6-a8b7-ad6a231ddca2}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\constraints">
-      <UniqueIdentifier>{e573d383-f016-40f6-999a-d804311ffc62}</UniqueIdentifier>
+      <UniqueIdentifier>{179bc1e1-ed4a-4412-92b1-f74fddef2877}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

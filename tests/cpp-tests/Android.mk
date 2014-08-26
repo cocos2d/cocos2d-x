@@ -169,6 +169,7 @@ Classes/ShaderTest/ShaderTest.cpp \
 Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
+Classes/Sprite3DTest/DrawNode3D.cpp \
 Classes/Sprite3DTest/Sprite3DTest.cpp \
 Classes/TextInputTest/TextInputTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
@@ -186,24 +187,13 @@ Classes/UITest/UITest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes \
+                    $(LOCAL_PATH)/../.. 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocosbuilder_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
-LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Classes
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,extensions)
-$(call import-module,audio/android)
-$(call import-module,editor-support/cocosbuilder)
-$(call import-module,editor-support/spine)
-$(call import-module,editor-support/cocostudio)
-$(call import-module,network)
-$(call import-module,Box2D)
+$(call import-module,cocos)

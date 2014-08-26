@@ -181,10 +181,12 @@ public:
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */
+    using Layer::pause;  // fix warning
     void pause(Ref* sender);
     /**
      * Provided to make scroll view compatible with SWLayer's resume method
      */
+    using Layer::resume; // fix warning
     void resume(Ref* sender);
 
     void setTouchEnabled(bool enabled);

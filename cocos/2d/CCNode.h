@@ -961,7 +961,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
     GLProgramState *getGLProgramState() const;
-    void setGLProgramState(GLProgramState *glProgramState);
+    virtual void setGLProgramState(GLProgramState *glProgramState);
 
     /**
      * Sets the shader program for this node
@@ -974,7 +974,7 @@ public:
      *
      * @param shaderProgram The shader program
      */
-    void setGLProgram(GLProgram *glprogram);
+    virtual void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     /// @} end of Shader Program
 

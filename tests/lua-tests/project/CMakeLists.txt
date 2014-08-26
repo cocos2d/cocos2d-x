@@ -20,21 +20,7 @@ add_executable(${APP_NAME}
 
 target_link_libraries(${APP_NAME}
   luacocos2d
-  luacocosdenshion
-  luanetwork
-  luacocosbuilder
-  luacocostudio
-  luaspine
-  luaextension
-  luaui
   cocos2d
-  audio
-  cocostudio
-  spine
-  cocosbuilder
-  extensions
-  ui
-  network
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

@@ -37,7 +37,7 @@ namespace network {
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  @since v2.0.2
  */
-class HttpResponse : public cocos2d::Ref
+class CC_DLL HttpResponse : public cocos2d::Ref
 {
 public:
     /** Constructor, it's used by HttpClient internal, users don't need to create HttpResponse manually

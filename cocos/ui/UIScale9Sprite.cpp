@@ -1021,6 +1021,19 @@ y+=ytranslate;                       \
         }
     }
     
+    void Scale9Sprite::disableCascadeOpacity()
+    {
+        _displayedOpacity = _realOpacity;
+        
+        for(auto child : _children){
+            child->updateDisplayedOpacity(255);
+        }
+        
+        for(auto child : _protectedChildren){
+            child->updateDisplayedOpacity(255);
+        }
+    }
+    
     Sprite* Scale9Sprite::getSprite()const
     {
         return _scale9Image;
