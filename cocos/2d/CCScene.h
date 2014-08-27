@@ -30,11 +30,15 @@ THE SOFTWARE.
 
 #include <string>
 #include "2d/CCNode.h"
-#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
 class Camera;
+class EventListenerCustom;
+class EventCustom;
+#if CC_USE_PHYSICS
+class PhysicsWorld;
+#endif
 /**
  * @addtogroup scene
  * @{

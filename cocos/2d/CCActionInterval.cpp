@@ -28,10 +28,12 @@ THE SOFTWARE.
 #include "2d/CCActionInterval.h"
 #include "2d/CCSprite.h"
 #include "2d/CCNode.h"
+#include "2d/CCSpriteFrame.h"
 #include "CCStdC.h"
 #include "2d/CCActionInstant.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
+#include "base/CCEventDispatcher.h"
 
 #include <stdarg.h>
 
