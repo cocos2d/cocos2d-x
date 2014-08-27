@@ -1045,7 +1045,8 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
             setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM], enabledDirLightNum);
             setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_POINT_LIGHT_NUM], enabledPointLightNum);
             setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_SPOT_LIGHT_NUM], enabledSpotLightNum);
-            setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_AMBIENT_COLOR], scene->getAmbientColor().r, scene->getAmbientColor().g, scene->getAmbientColor().b, scene->getAmbientColor().a);
+            const auto& ambientColor = scene->getAmbientColor();
+            setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_AMBIENT_COLOR], ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a);
         }
     }
 }

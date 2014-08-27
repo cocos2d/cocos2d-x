@@ -1858,6 +1858,10 @@
 		B37510841823ACA100B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104D1823AC7B00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h */; };
 		B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B375104E1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp */; };
 		B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */; };
+		B60C5BDA19AC6A610056FBDE /* CCLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60C5BD819AC6A610056FBDE /* CCLight.cpp */; };
+		B60C5BDB19AC6A610056FBDE /* CCLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60C5BD819AC6A610056FBDE /* CCLight.cpp */; };
+		B60C5BDC19AC6A610056FBDE /* CCLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD919AC6A610056FBDE /* CCLight.h */; };
+		B60C5BDD19AC6A610056FBDE /* CCLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD919AC6A610056FBDE /* CCLight.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2877,6 +2881,11 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		B60C5BD819AC6A610056FBDE /* CCLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLight.cpp; sourceTree = "<group>"; };
+		B60C5BD919AC6A610056FBDE /* CCLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLight.h; sourceTree = "<group>"; };
+		B60C5BE319AC75410056FBDE /* ccShader_3D_ColorNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormal.frag; sourceTree = "<group>"; };
+		B60C5BE419AC75410056FBDE /* ccShader_3D_ColorNormalTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormalTex.frag; sourceTree = "<group>"; };
+		B60C5BE519AC75410056FBDE /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4631,6 +4640,9 @@
 		5034CA5D191D591900CE6051 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B60C5BE319AC75410056FBDE /* ccShader_3D_ColorNormal.frag */,
+				B60C5BE419AC75410056FBDE /* ccShader_3D_ColorNormalTex.frag */,
+				B60C5BE519AC75410056FBDE /* ccShader_3D_PositionNormalTex.vert */,
 				B29594AF1926D5D9003EEF37 /* ccShader_3D_Color.frag */,
 				B29594B01926D5D9003EEF37 /* ccShader_3D_ColorTex.frag */,
 				B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */,
@@ -4888,6 +4900,8 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				B60C5BD819AC6A610056FBDE /* CCLight.cpp */,
+				B60C5BD919AC6A610056FBDE /* CCLight.h */,
 				15AE17E319AAD2F700C27E9E /* 3dExport.h */,
 				15AE17E419AAD2F700C27E9E /* CCAABB.cpp */,
 				15AE17E519AAD2F700C27E9E /* CCAABB.h */,
@@ -5122,6 +5136,7 @@
 				1A5701F9180BCBAD0088DEC7 /* CCMenu.h in Headers */,
 				50ABBD401925AB0000A911A9 /* CCMath.h in Headers */,
 				15AE1AE419AAD42500C27E9E /* cpGearJoint.h in Headers */,
+				B60C5BDC19AC6A610056FBDE /* CCLight.h in Headers */,
 				15AE1A9319AAD40300C27E9E /* b2WheelJoint.h in Headers */,
 				15AE1A3119AAD3D500C27E9E /* b2ChainShape.h in Headers */,
 				1A5701FD180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
@@ -5435,6 +5450,7 @@
 				15AE1A1C19AAD3A700C27E9E /* Slot.h in Headers */,
 				15AE18C219AAD33D00C27E9E /* CCLayerColorLoader.h in Headers */,
 				15AE181519AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
+				B60C5BDD19AC6A610056FBDE /* CCLight.h in Headers */,
 				503DD8EF1926736A00CD74DD /* CCPlatformDefine.h in Headers */,
 				15AE19F219AAD3A700C27E9E /* Event.h in Headers */,
 				15AE196919AAD35100C27E9E /* CocoStudio.h in Headers */,
@@ -6233,6 +6249,7 @@
 				1A5702C8180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				15AE19C619AAD3A700C27E9E /* AnimationState.cpp in Sources */,
 				15AE1B5519AADA9900C27E9E /* UIScrollView.cpp in Sources */,
+				B60C5BDA19AC6A610056FBDE /* CCLight.cpp in Sources */,
 				15AE191919AAD35000C27E9E /* CCSSceneReader.cpp in Sources */,
 				15AE19EC19AAD3A700C27E9E /* spine-cocos2dx.cpp in Sources */,
 				50ABBE7D1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
@@ -6825,6 +6842,7 @@
 				15AE194519AAD35100C27E9E /* CCComAttribute.cpp in Sources */,
 				15AE18CC19AAD33D00C27E9E /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				50ABBD5D1925AB0000A911A9 /* Vec3.cpp in Sources */,
+				B60C5BDB19AC6A610056FBDE /* CCLight.cpp in Sources */,
 				50ABC0121926664800A911A9 /* CCGLView.cpp in Sources */,
 				50ABC0021926664800A911A9 /* CCLock.cpp in Sources */,
 				50ABBEBC1925AB6F00A911A9 /* ccUtils.cpp in Sources */,
