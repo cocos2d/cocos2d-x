@@ -25,13 +25,11 @@
 #include "CCGL.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
-#include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
-#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 

@@ -27,7 +27,6 @@
 
 #include "base/CCPlatformMacros.h"
 #include "base/CCRef.h"
-#include "CCStdC.h"
 #include <string>
 #include <unordered_map>
 
