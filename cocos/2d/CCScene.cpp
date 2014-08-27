@@ -193,6 +193,8 @@ void Scene::addChildToPhysicsWorld(Node* child)
     }
 }
 
+#endif
+
 void Scene::onProjectionChanged(EventCustom* event)
 {
     if (_defaultCamera)
@@ -200,7 +202,5 @@ void Scene::onProjectionChanged(EventCustom* event)
         _defaultCamera->initDefault();
     }
 }
-
-#endif
 
 NS_CC_END
