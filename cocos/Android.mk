@@ -6,6 +6,8 @@ LOCAL_MODULE := cocos2dx_static
 
 LOCAL_MODULE_FILENAME := libcocos2d
 
+LOCAL_SHORT_COMMANDS := true
+
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
 2d/CCAction.cpp \
@@ -196,7 +198,6 @@ LOCAL_SRC_FILES += 3d/CCRay.cpp \
                    3d/CCMesh.cpp \
                    3d/CCMeshSkin.cpp \
                    3d/CCMeshVertexIndexData.cpp \
-                   3d/CCSprite3DMaterial.cpp \
                    3d/CCObjLoader.cpp \
                    3d/CCSkeleton3D.cpp \
                    3d/CCSprite3D.cpp \
