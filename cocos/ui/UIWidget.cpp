@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCDirector.h"
 #include "base/CCEventFocus.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

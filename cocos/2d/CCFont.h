@@ -27,10 +27,11 @@
 #define _CCFont_h_
 
 #include <string>
-
 #include "2d/CCLabel.h"
 
 NS_CC_BEGIN
+
+class FontAtlas;
 
 // fwd
 class FontAtlas;
