@@ -449,8 +449,8 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "uniform vec3 CC_DirLightSourceDirection[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
          "#endif         \n"
          "#if CC_MAX_POINT_LIGHT_NUM         \n"
-         "uniform vec3 CC_PointLightSourceColor[CC_MAX_POINT_LIGHT_NUM];         \n"
-         "uniform vec4 CC_PointLightSourcePosition[CC_MAX_POINT_LIGHT_NUM];         \n"
+         "uniform vec4 CC_PointLightSourceColor[CC_MAX_POINT_LIGHT_NUM];         \n"
+         "uniform vec3 CC_PointLightSourcePosition[CC_MAX_POINT_LIGHT_NUM];         \n"
          "#endif         \n"
          "#if CC_MAX_SPOT_LIGHT_NUM         \n"
          "uniform vec3 CC_SpotLightSourceColor[CC_MAX_SPOT_LIGHT_NUM];         \n"
@@ -1005,9 +1005,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                         CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
                         Mat4 mat= light->getNodeToWorldTransform();
                         sprintf(str, "CC_PointLightSourceColor[%d]", enabledPointLightNum);
-                        setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                        setUniformLocationWith4f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f, 1.0f / light->getRange());
                         sprintf(str, "CC_PointLightSourcePosition[%d]", enabledPointLightNum);
-                        setUniformLocationWith4f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14], 1.0f / light->getRange());
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
                         ++enabledPointLightNum;
                     }
                     else
