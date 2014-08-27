@@ -44,17 +44,17 @@ public:
     /**
      * The x-coordinate.
      */
-    float x;
+    ccScalar x;
 
     /**
      * The y-coordinate.
      */
-    float y;
+    ccScalar y;
 
     /**
      * The z-coordinate.
      */
-    float z;
+    ccScalar z;
 
     /**
      * Constructs a new vector initialized to all zeros.

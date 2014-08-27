@@ -24,6 +24,10 @@
 #include "base/CCPlatformMacros.h"
 #include "math/CCMathBase.h"
 
+#ifdef __SSE2__
+#include <emmintrin.h>
+#endif
+
 NS_CC_MATH_BEGIN
 
 class Mat4;
@@ -34,27 +38,40 @@ class Mat4;
 class CC_DLL Vec4
 {
 public:
-
+#ifdef __SSE2__
+    union {
+        struct {
+            __m128d xy; // compiler aligns _m128d to 16 bytes
+            __m128d zw;
+        };
+        struct {
+            double x;
+            double y;
+            double z;
+            double w;
+        };
+    };
+#else
     /**
      * The x-coordinate.
      */
-    float x;
+    ccScalar x;
 
     /**
      * The y-coordinate.
      */
-    float y;
+    ccScalar y;
 
     /**
      * The z-coordinate.
      */
-    float z;
+    ccScalar z;
 
     /**
      * The w-coordinate.
      */
-    float w;
-
+    ccScalar w;
+#endif
     /**
      * Constructs a new vector initialized to all zeros.
      */
@@ -434,7 +451,7 @@ public:
     static const Vec4 UNIT_Z;
     /** equals to Vec4(0,0,0,1) */
     static const Vec4 UNIT_W;
-} CC_ALIGNED_16;
+};
 
 /**
  * Calculates the scalar product of the given vector with the given value.

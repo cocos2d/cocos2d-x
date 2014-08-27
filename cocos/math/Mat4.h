@@ -25,6 +25,10 @@
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 
+#ifdef __SSE2__
+#include <emmintrin.h>
+#endif
+
 NS_CC_MATH_BEGIN
 
 //class Plane;
@@ -78,7 +82,20 @@ public:
     /**
      * Stores the columns of this 4x4 matrix.
      * */
-    float m[16] CC_ALIGNED_16;
+#ifdef __SSE2__
+    union {
+        __m128d md[4][2]; // compiler aligns __m128d to 16 bytes
+        struct {
+            __m128d m11, m12;
+            __m128d m21, m22;
+            __m128d m31, m32;
+            __m128d m41, m42;
+        };
+        double m[16];
+    };
+#else
+	ccScalar m[16];
+#endif
 
     /**
      * Constructs a matrix initialized to the identity matrix:
@@ -126,6 +143,7 @@ public:
      * @param mat An array containing 16 elements in column-major order.
      */
     Mat4(const float* mat);
+    Mat4(const double* mat);
 
     /**
      * Constructs a new matrix by copying the values from the specified matrix.
@@ -710,6 +728,7 @@ public:
      * @param mat An array containing 16 elements in column-major format.
      */
     void set(const float* mat);
+    void set(const double* mat);
 
     /**
      * Sets the values of this matrix to those of the specified matrix.
@@ -981,6 +1000,12 @@ inline const Vec4 operator*(const Mat4& m, const Vec4& v);
 
 NS_CC_MATH_END
 
+#include "math/MathHelpers.h"
+
+#ifdef __SSE2__
+#include "math/Mat4SSE2.inl"
+#else
 #include "math/Mat4.inl"
+#endif
 
 #endif // MATH_MAT4_H

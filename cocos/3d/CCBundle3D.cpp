@@ -1823,8 +1823,8 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
         skeleton = true;
     
     // transform
-    Mat4 transform;
-    if (!_binaryReader.readMatrix(transform.m))
+    float transform[16];
+    if (!_binaryReader.readMatrix(transform))
     {
         CCASSERT(false,"Failed to read transform matrix");
         return nullptr;
@@ -1839,7 +1839,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
 
     NodeData* nodedata = new NodeData();
     nodedata->id = id;
-    nodedata->transform = transform;
+    nodedata->transform.set(transform);
     if (partsSize > 0)
     {
         for (rapidjson::SizeType i = 0; i < partsSize; i++)
@@ -1870,13 +1870,13 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                     std::string name = _binaryReader.readString();
                     modelnodedata->bones.push_back(name);
 
-                    Mat4 invbindpos;
-                    if (!_binaryReader.readMatrix(invbindpos.m))
+                    float invbindpos[16];
+                    if (!_binaryReader.readMatrix(invbindpos))
                     {
                         return nullptr;
                     }
 
-                    modelnodedata->invBindPose.push_back(invbindpos);
+                    modelnodedata->invBindPose.push_back(Mat4(invbindpos));
                 }
             }
             unsigned int uvMapping = 0;

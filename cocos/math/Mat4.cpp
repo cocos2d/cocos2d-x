@@ -27,7 +27,21 @@ NS_CC_MATH_BEGIN
 
 Mat4::Mat4()
 {
+#ifdef __SSE2__
+    m11 = _mm_setr_pd(1.0, 0.0);
+    m12 = _mm_setr_pd(0.0, 0.0);
+    
+    m21 = _mm_setr_pd(0.0, 1.0);
+    m22 = _mm_setr_pd(0.0, 0.0);
+    
+    m31 = _mm_setr_pd(0.0, 0.0);
+    m32 = _mm_setr_pd(1.0, 0.0);
+    
+    m41 = _mm_setr_pd(0.0, 0.0);
+    m42 = _mm_setr_pd(0.0, 1.0);
+#else
     *this = IDENTITY;
+#endif
 }
 
 Mat4::Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
@@ -41,9 +55,28 @@ Mat4::Mat4(const float* mat)
     set(mat);
 }
 
+Mat4::Mat4(const double* mat)
+{
+    set(mat);
+}
+
 Mat4::Mat4(const Mat4& copy)
 {
+#ifdef __SSE2__
+    m11 = copy.m11;
+    m12 = copy.m12;
+    
+    m21 = copy.m21;
+    m22 = copy.m22;
+    
+    m31 = copy.m31;
+    m32 = copy.m32;
+    
+    m41 = copy.m41;
+    m42 = copy.m42;
+#else
     memcpy(m, copy.m, MATRIX_SIZE);
+#endif
 }
 
 Mat4::~Mat4()
@@ -245,19 +278,19 @@ void Mat4::createRotation(const Quaternion& q, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    float x2 = q.x + q.x;
-    float y2 = q.y + q.y;
-    float z2 = q.z + q.z;
+    ccScalar x2 = q.x + q.x;
+    ccScalar y2 = q.y + q.y;
+    ccScalar z2 = q.z + q.z;
 
-    float xx2 = q.x * x2;
-    float yy2 = q.y * y2;
-    float zz2 = q.z * z2;
-    float xy2 = q.x * y2;
-    float xz2 = q.x * z2;
-    float yz2 = q.y * z2;
-    float wx2 = q.w * x2;
-    float wy2 = q.w * y2;
-    float wz2 = q.w * z2;
+    ccScalar xx2 = q.x * x2;
+    ccScalar yy2 = q.y * y2;
+    ccScalar zz2 = q.z * z2;
+    ccScalar xy2 = q.x * y2;
+    ccScalar xz2 = q.x * z2;
+    ccScalar yz2 = q.y * z2;
+    ccScalar wx2 = q.w * x2;
+    ccScalar wy2 = q.w * y2;
+    ccScalar wz2 = q.w * z2;
 
     dst->m[0] = 1.0f - yy2 - zz2;
     dst->m[1] = xy2 + wz2;
@@ -284,16 +317,16 @@ void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
 {
     GP_ASSERT(dst);
 
-    float x = axis.x;
-    float y = axis.y;
-    float z = axis.z;
+    ccScalar x = axis.x;
+    ccScalar y = axis.y;
+    ccScalar z = axis.z;
 
     // Make sure the input axis is normalized.
-    float n = x*x + y*y + z*z;
+    ccScalar n = x*x + y*y + z*z;
     if (n != 1.0f)
     {
         // Not normalized.
-        n = sqrt(n);
+        n = ccsqrt(n);
         // Prevent divide too close to zero.
         if (n > 0.000001f)
         {
@@ -307,16 +340,16 @@ void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
     float c = cos(angle);
     float s = sin(angle);
 
-    float t = 1.0f - c;
-    float tx = t * x;
-    float ty = t * y;
-    float tz = t * z;
-    float txy = tx * y;
-    float txz = tx * z;
-    float tyz = ty * z;
-    float sx = s * x;
-    float sy = s * y;
-    float sz = s * z;
+    ccScalar t = 1.0f - c;
+    ccScalar tx = t * x;
+    ccScalar ty = t * y;
+    ccScalar tz = t * z;
+    ccScalar txy = tx * y;
+    ccScalar txz = tx * z;
+    ccScalar tyz = ty * z;
+    ccScalar sx = s * x;
+    ccScalar sy = s * y;
+    ccScalar sz = s * z;
 
     dst->m[0] = c + tx*x;
     dst->m[1] = txy + sz;
@@ -689,7 +722,22 @@ bool Mat4::isIdentity() const
 
 void Mat4::multiply(float scalar)
 {
+#ifdef __SSE2__
+    __m128d ss = _mm_set1_pd(scalar);
+    m11 = _mm_mul_pd(m11, ss);
+    m12 = _mm_mul_pd(m12, ss);
+    
+    m21 = _mm_mul_pd(m21, ss);
+    m22 = _mm_mul_pd(m22, ss);
+    
+    m31 = _mm_mul_pd(m31, ss);
+    m32 = _mm_mul_pd(m32, ss);
+    
+    m41 = _mm_mul_pd(m41, ss);
+    m42 = _mm_mul_pd(m42, ss);
+#else
     multiply(scalar, this);
+#endif
 }
 
 void Mat4::multiply(float scalar, Mat4* dst) const
@@ -718,7 +766,21 @@ void Mat4::multiply(const Mat4& m1, const Mat4& m2, Mat4* dst)
 
 void Mat4::negate()
 {
+#ifdef __SSE2__
+    m11 = _mm_sub_pd(ZERO.m11, m11);
+    m12 = _mm_sub_pd(ZERO.m12, m12);
+    
+    m21 = _mm_sub_pd(ZERO.m21, m21);
+    m22 = _mm_sub_pd(ZERO.m22, m22);
+    
+    m31 = _mm_sub_pd(ZERO.m31, m31);
+    m32 = _mm_sub_pd(ZERO.m32, m32);
+    
+    m41 = _mm_sub_pd(ZERO.m41, m41);
+    m42 = _mm_sub_pd(ZERO.m42, m42);    
+#else
     MathUtil::negateMatrix(m, m);
+#endif
 }
 
 Mat4 Mat4::getNegated() const
@@ -844,7 +906,19 @@ void Mat4::set(float m11, float m12, float m13, float m14, float m21, float m22,
 void Mat4::set(const float* mat)
 {
     GP_ASSERT(mat);
-    memcpy(this->m, mat, MATRIX_SIZE);
+    for (int i=0; i<16; ++i) 
+    {
+        this->m[i] = mat[i];
+    }
+}
+
+void Mat4::set(const double* mat)
+{
+    GP_ASSERT(mat);
+    for (int i=0; i<16; ++i) 
+    {
+        this->m[i] = mat[i];
+    }
 }
 
 void Mat4::set(const Mat4& mat)
@@ -900,7 +974,7 @@ void Mat4::transformVector(float x, float y, float z, float w, Vec3* dst) const
 {
     GP_ASSERT(dst);
 
-    MathUtil::transformVec4(m, x, y, z, w, (float*)dst);
+    MathUtil::transformVec4(m, x, y, z, w, (ccScalar*)dst);
 }
 
 void Mat4::transformVector(Vec4* vector) const
@@ -913,7 +987,7 @@ void Mat4::transformVector(const Vec4& vector, Vec4* dst) const
 {
     GP_ASSERT(dst);
 
-    MathUtil::transformVec4(m, (const float*) &vector, (float*)dst);
+    MathUtil::transformVec4(m, (const ccScalar*) &vector, (ccScalar*)dst);
 }
 
 void Mat4::translate(float x, float y, float z)
