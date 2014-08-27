@@ -12,7 +12,7 @@ LOCAL_SRC_FILES := hellolua/main.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 					
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 

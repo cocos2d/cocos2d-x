@@ -6,6 +6,8 @@ LOCAL_MODULE := cocos2dx_static
 
 LOCAL_MODULE_FILENAME := libcocos2d
 
+LOCAL_SHORT_COMMANDS := true
+
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
 2d/CCAction.cpp \
