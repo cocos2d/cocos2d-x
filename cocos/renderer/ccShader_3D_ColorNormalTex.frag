@@ -49,8 +49,8 @@ void DirectionalLight(int n, vec3 normal, inout vec4 intensity)
 \n#if CC_MAX_SPOT_LIGHT_NUM\n
 void SpotLight(int n, vec3 normal, inout vec4 intensity)
 {
-    vec3 dir = v_vertexToPointLightDirection[n];
-    vec3 ldir = dir * CC_SpotLightSource[n].position.z;
+    vec3 dir = v_vertexToSpotLightDirection[n];
+    vec3 ldir = dir * CC_SpotLightSource[n].params.z;
     float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
     float spotDot = dot(normalize(dir), -CC_SpotLightSource[n].direction);
     float innerCos = CC_SpotLightSource[n].params.x;
