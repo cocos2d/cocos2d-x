@@ -293,19 +293,32 @@ void Sprite3D::genGLProgramState()
         bool textured = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
         && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+        bool hasNormal = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
         
         GLProgram* glProgram = nullptr;
+        const char* shader = nullptr;
         if(textured)
         {
             if (hasSkin)
-                glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+            {
+                if (hasNormal)
+                    shader = GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
+                else
+                    shader = GLProgram::SHADER_3D_SKINPOSITION_TEXTURE;
+            }
             else
+            {
+                if (hasNormal)
+                    shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
                 glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+            }
         }
         else
         {
             glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
         }
+        if (shader)
+            glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
         
         auto programstate = GLProgramState::create(glProgram);
         long offset = 0;
