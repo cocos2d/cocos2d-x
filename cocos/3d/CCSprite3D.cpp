@@ -310,12 +310,13 @@ void Sprite3D::genGLProgramState()
             {
                 if (hasNormal)
                     shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
-                glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+                else
+                    shader = GLProgram::SHADER_3D_POSITION_TEXTURE;
             }
         }
         else
         {
-            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+            shader = GLProgram::SHADER_3D_POSITION;
         }
         if (shader)
             glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
