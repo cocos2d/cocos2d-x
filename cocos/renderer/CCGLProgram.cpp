@@ -571,9 +571,9 @@ void GLProgram::updateUniforms()
     //                     _builtInUniforms[UNIFORM_ENABLED_SPOT_LIGHT_NUM] != -1
     //                    );
 
-	_flags.usesLights = CC_MAX_DIRECTIONAL_LIGHT_NUM || 
-		                          CC_MAX_POINT_LIGHT_NUM || 
-								  CC_MAX_SPOT_LIGHT_NUM;
+    _flags.usesLights = CC_MAX_DIRECTIONAL_LIGHT_NUM || 
+                                  CC_MAX_POINT_LIGHT_NUM || 
+                                  CC_MAX_SPOT_LIGHT_NUM;
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
