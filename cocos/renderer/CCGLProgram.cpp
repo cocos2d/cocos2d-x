@@ -449,14 +449,17 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "uniform vec3 CC_DirLightSourceDirection[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
          "#endif         \n"
          "#if CC_MAX_POINT_LIGHT_NUM         \n"
-         "uniform vec4 CC_PointLightSourceColor[CC_MAX_POINT_LIGHT_NUM];         \n"
+         "uniform vec3 CC_PointLightSourceColor[CC_MAX_POINT_LIGHT_NUM];         \n"
          "uniform vec3 CC_PointLightSourcePosition[CC_MAX_POINT_LIGHT_NUM];         \n"
+         "uniform float CC_PointLightSourceRangeInverse[CC_MAX_POINT_LIGHT_NUM];         \n"
          "#endif         \n"
          "#if CC_MAX_SPOT_LIGHT_NUM         \n"
          "uniform vec3 CC_SpotLightSourceColor[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "uniform vec3 CC_SpotLightSourcePosition[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "uniform vec3 CC_SpotLightSourceDirection[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform vec3 CC_SpotLightSourceParams[CC_MAX_SPOT_LIGHT_NUM];         \n"
+         "uniform float CC_SpotLightSourceInnerAngleCos[CC_MAX_SPOT_LIGHT_NUM];         \n"
+         "uniform float CC_SpotLightSourceOuterAngleCos[CC_MAX_SPOT_LIGHT_NUM];         \n"
+         "uniform float CC_SpotLightSourceRangeInverse[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "#endif         \n"
          "uniform vec4 CC_AmbientColor; \n"
     };
@@ -556,9 +559,9 @@ void GLProgram::updateUniforms()
     //                     _builtInUniforms[UNIFORM_ENABLED_SPOT_LIGHT_NUM] != -1
     //                    );
 
-    _flags.usesLights = CC_MAX_DIRECTIONAL_LIGHT_NUM || 
-                                  CC_MAX_POINT_LIGHT_NUM || 
-                                  CC_MAX_SPOT_LIGHT_NUM;
+    _flags.usesLights = (0 < CC_MAX_DIRECTIONAL_LIGHT_NUM) || 
+                        (0 < CC_MAX_POINT_LIGHT_NUM)       || 
+                        (0 < CC_MAX_SPOT_LIGHT_NUM);
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
@@ -1005,9 +1008,11 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                         CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
                         Mat4 mat= light->getNodeToWorldTransform();
                         sprintf(str, "CC_PointLightSourceColor[%d]", enabledPointLightNum);
-                        setUniformLocationWith4f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f, 1.0f / light->getRange());
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
                         sprintf(str, "CC_PointLightSourcePosition[%d]", enabledPointLightNum);
                         setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
+                        sprintf(str, "CC_PointLightSourceRangeInverse[%d]", enabledPointLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), 1.0f / light->getRange());
                         ++enabledPointLightNum;
                     }
                     else
@@ -1022,8 +1027,12 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
                         setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
                         sprintf(str, "CC_SpotLightSourceDirection[%d]", enabledSpotLightNum);
                         setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
-                        sprintf(str, "CC_SpotLightSourceParams[%d]", enabledSpotLightNum);
-                        setUniformLocationWith3f(glGetUniformLocation(_program, str), cosf(light->getInnerAngle()), cosf(light->getOuterAngle()), 1.0f / light->getRange());
+                        sprintf(str, "CC_SpotLightSourceInnerAngleCos[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), cosf(light->getInnerAngle()));
+                        sprintf(str, "CC_SpotLightSourceOuterAngleCos[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), cosf(light->getOuterAngle()));
+                        sprintf(str, "CC_SpotLightSourceRangeInverse[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), 1.0f / light->getRange());
                         ++enabledSpotLightNum;
                     }
             }
