@@ -28,7 +28,7 @@ namespace cocostudio
     {
         if (!instancePageViewReader)
         {
-            instancePageViewReader = new PageViewReader();
+            instancePageViewReader = new (std::nothrow) PageViewReader();
         }
         return instancePageViewReader;
     }

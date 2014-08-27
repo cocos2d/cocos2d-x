@@ -56,7 +56,7 @@ LoadingBar::~LoadingBar()
 
 LoadingBar* LoadingBar::create()
 {
-    LoadingBar* widget = new LoadingBar();
+    LoadingBar* widget = new (std::nothrow) LoadingBar();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -68,7 +68,7 @@ LoadingBar* LoadingBar::create()
     
 LoadingBar* LoadingBar::create(const std::string &textureName, float percentage)
 {
-    LoadingBar* widget = new LoadingBar;
+    LoadingBar* widget = new (std::nothrow) LoadingBar;
     if (widget && widget->init()) {
         widget->autorelease();
         widget->loadTexture(textureName);

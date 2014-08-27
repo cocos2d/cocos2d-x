@@ -50,7 +50,7 @@ Sprite3DMaterialCache* Sprite3DMaterialCache::getInstance()
 {
     if (! _cacheInstance)
     {
-        _cacheInstance = new Sprite3DMaterialCache();
+        _cacheInstance = new (std::nothrow) Sprite3DMaterialCache();
     }
     
     return _cacheInstance;

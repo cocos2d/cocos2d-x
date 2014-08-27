@@ -86,7 +86,7 @@ void CocostudioParserJsonScene::onEnter()
 
 void CocostudioParserJsonScene::runThisTest()
 {
-    Layer* pLayer = new CocostudioParserJsonLayer(_jsonFile);
+    Layer* pLayer = new (std::nothrow) CocostudioParserJsonLayer(_jsonFile);
     addChild(pLayer);
     pLayer->release();
     
@@ -95,7 +95,7 @@ void CocostudioParserJsonScene::runThisTest()
 
 void CocostudioParserJsonScene::BackCallback(Ref* pSender)
 {
-    CocostudioParserTestScene* pScene = new CocostudioParserTestScene();
+    CocostudioParserTestScene* pScene = new (std::nothrow) CocostudioParserTestScene();
     pScene->runThisTest();
     pScene->release();
 }

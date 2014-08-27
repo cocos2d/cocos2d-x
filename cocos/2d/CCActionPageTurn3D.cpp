@@ -29,7 +29,7 @@ NS_CC_BEGIN
 
 PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 {
-    PageTurn3D *action = new PageTurn3D();
+    PageTurn3D *action = new (std::nothrow) PageTurn3D();
 
     if (action)
     {
@@ -49,7 +49,7 @@ PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 PageTurn3D *PageTurn3D::clone() const
 {
 	// no copy constructor	
-	auto a = new PageTurn3D();
+	auto a = new (std::nothrow) PageTurn3D();
 	a->initWithDuration(_duration, _gridSize);
 	a->autorelease();
 	return a;

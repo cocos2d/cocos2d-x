@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 Waves3D* Waves3D::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    Waves3D *pAction = new Waves3D();
+    Waves3D *pAction = new (std::nothrow) Waves3D();
 
     if (pAction)
     {
@@ -65,7 +65,7 @@ bool Waves3D::initWithDuration(float duration, const Size& gridSize, unsigned in
 Waves3D* Waves3D::clone() const
 {
 	// no copy constructor
-	auto a = new Waves3D();
+	auto a = new (std::nothrow) Waves3D();
     a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
 	a->autorelease();
 	return a;
@@ -90,7 +90,7 @@ void Waves3D::update(float time)
 
 FlipX3D* FlipX3D::create(float duration)
 {
-    FlipX3D *action = new FlipX3D();
+    FlipX3D *action = new (std::nothrow) FlipX3D();
 
     if (action)
     {
@@ -128,7 +128,7 @@ bool FlipX3D::initWithSize(const Size& gridSize, float duration)
 FlipX3D* FlipX3D::clone() const
 {
 	// no copy constructor	
-	auto a = new FlipX3D();
+	auto a = new (std::nothrow) FlipX3D();
     a->initWithSize(_gridSize, _duration);
 	a->autorelease();
 	return a;
@@ -203,7 +203,7 @@ void FlipX3D::update(float time)
 FlipY3D* FlipY3D::clone() const
 {
     // no copy constructor
-	auto a = new FlipY3D();
+	auto a = new (std::nothrow) FlipY3D();
     a->initWithSize(_gridSize, _duration);
 	a->autorelease();
 	return a;
@@ -211,7 +211,7 @@ FlipY3D* FlipY3D::clone() const
 
 FlipY3D* FlipY3D::create(float duration)
 {
-    FlipY3D *action = new FlipY3D();
+    FlipY3D *action = new (std::nothrow) FlipY3D();
 
     if (action)
     {
@@ -297,7 +297,7 @@ void FlipY3D::update(float time)
 
 Lens3D* Lens3D::create(float duration, const Size& gridSize, const Vec2& position, float radius)
 {
-    Lens3D *action = new Lens3D();
+    Lens3D *action = new (std::nothrow) Lens3D();
 
     if (action)
     {
@@ -334,7 +334,7 @@ bool Lens3D::initWithDuration(float duration, const Size& gridSize, const Vec2& 
 Lens3D* Lens3D::clone() const
 {
 	// no copy constructor
-	auto a = new Lens3D();
+	auto a = new (std::nothrow) Lens3D();
 	a->initWithDuration(_duration, _gridSize, _position, _radius);
 	a->autorelease();
 	return a;
@@ -396,7 +396,7 @@ void Lens3D::update(float time)
 
 Ripple3D* Ripple3D::create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude)
 {
-    Ripple3D *action = new Ripple3D();
+    Ripple3D *action = new (std::nothrow) Ripple3D();
 
     if (action)
     {
@@ -438,7 +438,7 @@ void Ripple3D::setPosition(const Vec2& position)
 Ripple3D* Ripple3D::clone() const
 {
 	// no copy constructor
-	auto a = new Ripple3D();
+	auto a = new (std::nothrow) Ripple3D();
 	a->initWithDuration(_duration, _gridSize, _position, _radius, _waves, _amplitude);
 	a->autorelease();
 	return a;
@@ -472,7 +472,7 @@ void Ripple3D::update(float time)
 
 Shaky3D* Shaky3D::create(float duration, const Size& gridSize, int range, bool shakeZ)
 {
-    Shaky3D *action = new Shaky3D();
+    Shaky3D *action = new (std::nothrow) Shaky3D();
 
     if (action)
     {
@@ -505,7 +505,7 @@ bool Shaky3D::initWithDuration(float duration, const Size& gridSize, int range, 
 Shaky3D* Shaky3D::clone() const
 {
 	// no copy constructor
-	auto a = new Shaky3D();
+	auto a = new (std::nothrow) Shaky3D();
     a->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
 	a->autorelease();
 	return a;
@@ -537,7 +537,7 @@ void Shaky3D::update(float time)
 
 Liquid* Liquid::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    Liquid *action = new Liquid();
+    Liquid *action = new (std::nothrow) Liquid();
 
     if (action)
     {
@@ -571,7 +571,7 @@ bool Liquid::initWithDuration(float duration, const Size& gridSize, unsigned int
 Liquid* Liquid::clone() const
 {
 	// no copy constructor
-	auto a = new Liquid();
+	auto a = new (std::nothrow) Liquid();
 	a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
 	a->autorelease();
 	return a;
@@ -597,7 +597,7 @@ void Liquid::update(float time)
 
 Waves* Waves::create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical)
 {
-    Waves *action = new Waves();
+    Waves *action = new (std::nothrow) Waves();
 
     if (action)
     {
@@ -633,7 +633,7 @@ bool Waves::initWithDuration(float duration, const Size& gridSize, unsigned int 
 Waves* Waves::clone() const
 {
 	// no copy constructor
-	auto a = new Waves();
+	auto a = new (std::nothrow) Waves();
 	a->initWithDuration(_duration, _gridSize, _waves, _amplitude, _horizontal, _vertical);
 	a->autorelease();
 	return a;
@@ -668,7 +668,7 @@ void Waves::update(float time)
 
 Twirl* Twirl::create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude)
 {
-    Twirl *action = new Twirl();
+    Twirl *action = new (std::nothrow) Twirl();
 
     if (action)
     {
@@ -708,7 +708,7 @@ void Twirl::setPosition(const Vec2& position)
 Twirl *Twirl::clone() const
 {
 	// no copy constructor	
-	auto a = new Twirl();
+	auto a = new (std::nothrow) Twirl();
 	a->initWithDuration(_duration, _gridSize, _position, _twirls, _amplitude);
 	a->autorelease();
 	return a;

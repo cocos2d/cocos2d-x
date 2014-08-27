@@ -65,7 +65,7 @@ bool PhysicsJoint::init(cocos2d::PhysicsBody *a, cocos2d::PhysicsBody *b)
         CCASSERT(a != nullptr && b != nullptr, "the body passed in is nil");
         CCASSERT(a != b, "the two bodies are equal");
         
-        CC_BREAK_IF(!(_info = new PhysicsJointInfo(this)));
+        CC_BREAK_IF(!(_info = new (std::nothrow) PhysicsJointInfo(this)));
         
         _bodyA = a;
         _bodyA->_joints.push_back(this);
@@ -164,7 +164,7 @@ float PhysicsJoint::getMaxForce() const
 
 PhysicsJointFixed* PhysicsJointFixed::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr)
 {
-    PhysicsJointFixed* joint = new PhysicsJointFixed();
+    PhysicsJointFixed* joint = new (std::nothrow) PhysicsJointFixed();
     
     if (joint && joint->init(a, b, anchr))
     {
@@ -205,7 +205,7 @@ bool PhysicsJointFixed::init(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr)
 
 PhysicsJointPin* PhysicsJointPin::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr)
 {
-    PhysicsJointPin* joint = new PhysicsJointPin();
+    PhysicsJointPin* joint = new (std::nothrow) PhysicsJointPin();
     
     if (joint && joint->init(a, b, anchr))
     {
@@ -236,7 +236,7 @@ bool PhysicsJointPin::init(PhysicsBody *a, PhysicsBody *b, const Vec2& anchr)
 
 PhysicsJointLimit* PhysicsJointLimit::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float min, float max)
 {
-    PhysicsJointLimit* joint = new PhysicsJointLimit();
+    PhysicsJointLimit* joint = new (std::nothrow) PhysicsJointLimit();
     
     if (joint && joint->init(a, b, anchr1, anchr2, min, max))
     {
@@ -316,7 +316,7 @@ void PhysicsJointLimit::setAnchr2(const Vec2& anchr)
 
 PhysicsJointDistance* PhysicsJointDistance::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2)
 {
-    PhysicsJointDistance* joint = new PhysicsJointDistance();
+    PhysicsJointDistance* joint = new (std::nothrow) PhysicsJointDistance();
     
     if (joint && joint->init(a, b, anchr1, anchr2))
     {
@@ -360,7 +360,7 @@ void PhysicsJointDistance::setDistance(float distance)
 
 PhysicsJointSpring* PhysicsJointSpring::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float stiffness, float damping)
 {
-    PhysicsJointSpring* joint = new PhysicsJointSpring();
+    PhysicsJointSpring* joint = new (std::nothrow) PhysicsJointSpring();
     
     if (joint && joint->init(a, b, anchr1, anchr2, stiffness, damping))
     {
@@ -446,7 +446,7 @@ void PhysicsJointSpring::setDamping(float damping)
 
 PhysicsJointGroove* PhysicsJointGroove::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& grooveA, const Vec2& grooveB, const Vec2& anchr2)
 {
-    PhysicsJointGroove* joint = new PhysicsJointGroove();
+    PhysicsJointGroove* joint = new (std::nothrow) PhysicsJointGroove();
     
     if (joint && joint->init(a, b, grooveA, grooveB, anchr2))
     {
@@ -510,7 +510,7 @@ void PhysicsJointGroove::setAnchr2(const Vec2& anchr2)
 
 PhysicsJointRotarySpring* PhysicsJointRotarySpring::construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping)
 {
-    PhysicsJointRotarySpring* joint = new PhysicsJointRotarySpring();
+    PhysicsJointRotarySpring* joint = new (std::nothrow) PhysicsJointRotarySpring();
     
     if (joint && joint->init(a, b, stiffness, damping))
     {
@@ -574,7 +574,7 @@ void PhysicsJointRotarySpring::setDamping(float damping)
 
 PhysicsJointRotaryLimit* PhysicsJointRotaryLimit::construct(PhysicsBody* a, PhysicsBody* b, float min, float max)
 {
-    PhysicsJointRotaryLimit* joint = new PhysicsJointRotaryLimit();
+    PhysicsJointRotaryLimit* joint = new (std::nothrow) PhysicsJointRotaryLimit();
     
     if (joint && joint->init(a, b, min, max))
     {
@@ -633,7 +633,7 @@ void PhysicsJointRotaryLimit::setMax(float max)
 
 PhysicsJointRatchet* PhysicsJointRatchet::construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet)
 {
-    PhysicsJointRatchet* joint = new PhysicsJointRatchet();
+    PhysicsJointRatchet* joint = new (std::nothrow) PhysicsJointRatchet();
     
     if (joint && joint->init(a, b, phase, ratchet))
     {
@@ -697,7 +697,7 @@ void PhysicsJointRatchet::setRatchet(float ratchet)
 
 PhysicsJointGear* PhysicsJointGear::construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet)
 {
-    PhysicsJointGear* joint = new PhysicsJointGear();
+    PhysicsJointGear* joint = new (std::nothrow) PhysicsJointGear();
     
     if (joint && joint->init(a, b, phase, ratchet))
     {
@@ -751,7 +751,7 @@ void PhysicsJointGear::setRatio(float ratio)
 
 PhysicsJointMotor* PhysicsJointMotor::construct(PhysicsBody* a, PhysicsBody* b, float rate)
 {
-    PhysicsJointMotor* joint = new PhysicsJointMotor();
+    PhysicsJointMotor* joint = new (std::nothrow) PhysicsJointMotor();
     
     if (joint && joint->init(a, b, rate))
     {

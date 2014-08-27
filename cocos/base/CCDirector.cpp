@@ -137,19 +137,19 @@ bool Director::init(void)
     _contentScaleFactor = 1.0f;
 
     // scheduler
-    _scheduler = new Scheduler();
+    _scheduler = new (std::nothrow) Scheduler();
     // action manager
-    _actionManager = new ActionManager();
+    _actionManager = new (std::nothrow) ActionManager();
     _scheduler->scheduleUpdate(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
-    _eventDispatcher = new EventDispatcher();
-    _eventAfterDraw = new EventCustom(EVENT_AFTER_DRAW);
+    _eventDispatcher = new (std::nothrow) EventDispatcher();
+    _eventAfterDraw = new (std::nothrow) EventCustom(EVENT_AFTER_DRAW);
     _eventAfterDraw->setUserData(this);
-    _eventAfterVisit = new EventCustom(EVENT_AFTER_VISIT);
+    _eventAfterVisit = new (std::nothrow) EventCustom(EVENT_AFTER_VISIT);
     _eventAfterVisit->setUserData(this);
-    _eventAfterUpdate = new EventCustom(EVENT_AFTER_UPDATE);
+    _eventAfterUpdate = new (std::nothrow) EventCustom(EVENT_AFTER_UPDATE);
     _eventAfterUpdate->setUserData(this);
-    _eventProjectionChanged = new EventCustom(EVENT_PROJECTION_CHANGED);
+    _eventProjectionChanged = new (std::nothrow) EventCustom(EVENT_PROJECTION_CHANGED);
     _eventProjectionChanged->setUserData(this);
 
 
@@ -157,10 +157,10 @@ bool Director::init(void)
     initTextureCache();
     initMatrixStack();
 
-    _renderer = new Renderer;
+    _renderer = new (std::nothrow) Renderer;
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    _console = new Console;
+    _console = new (std::nothrow) Console;
 #endif
     return true;
 }
@@ -438,9 +438,9 @@ TextureCache* Director::getTextureCache() const
 void Director::initTextureCache()
 {
 #ifdef EMSCRIPTEN
-    _textureCache = new TextureCacheEmscripten();
+    _textureCache = new (std::nothrow) TextureCacheEmscripten();
 #else
-    _textureCache = new TextureCache();
+    _textureCache = new (std::nothrow) TextureCache();
 #endif // EMSCRIPTEN
 }
 
@@ -1188,7 +1188,7 @@ void Director::createStatsLabel()
     ssize_t dataLength = 0;
     getFPSImageData(&data, &dataLength);
 
-    Image* image = new Image();
+    Image* image = new (std::nothrow) Image();
     bool isOK = image->initWithImageData(data, dataLength);
     if (! isOK) {
         CCLOGERROR("%s", "Fails: init fps_images");

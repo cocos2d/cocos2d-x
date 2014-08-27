@@ -78,7 +78,7 @@ bool Layer::init()
 
 Layer *Layer::create()
 {
-    Layer *ret = new Layer();
+    Layer *ret = new (std::nothrow) Layer();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -459,7 +459,7 @@ void LayerColor::setBlendFunc(const BlendFunc &var)
 
 LayerColor* LayerColor::create()
 {
-    LayerColor* ret = new LayerColor();
+    LayerColor* ret = new (std::nothrow) LayerColor();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -473,7 +473,7 @@ LayerColor* LayerColor::create()
 
 LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
 {
-    LayerColor * layer = new LayerColor();
+    LayerColor * layer = new (std::nothrow) LayerColor();
     if( layer && layer->initWithColor(color,width,height))
     {
         layer->autorelease();
@@ -485,7 +485,7 @@ LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat hei
 
 LayerColor * LayerColor::create(const Color4B& color)
 {
-    LayerColor * layer = new LayerColor();
+    LayerColor * layer = new (std::nothrow) LayerColor();
     if(layer && layer->initWithColor(color))
     {
         layer->autorelease();
@@ -641,7 +641,7 @@ LayerGradient::~LayerGradient()
 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
-    LayerGradient * layer = new LayerGradient();
+    LayerGradient * layer = new (std::nothrow) LayerGradient();
     if( layer && layer->initWithColor(start, end))
     {
         layer->autorelease();
@@ -653,7 +653,7 @@ LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Vec2& v)
 {
-    LayerGradient * layer = new LayerGradient();
+    LayerGradient * layer = new (std::nothrow) LayerGradient();
     if( layer && layer->initWithColor(start, end, v))
     {
         layer->autorelease();
@@ -665,7 +665,7 @@ LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, c
 
 LayerGradient* LayerGradient::create()
 {
-    LayerGradient* ret = new LayerGradient();
+    LayerGradient* ret = new (std::nothrow) LayerGradient();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -848,7 +848,7 @@ LayerMultiplex * LayerMultiplex::createVariadic(Layer * layer, ...)
     va_list args;
     va_start(args,layer);
 
-    LayerMultiplex * multiplexLayer = new LayerMultiplex();
+    LayerMultiplex * multiplexLayer = new (std::nothrow) LayerMultiplex();
     if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
     {
         multiplexLayer->autorelease();
@@ -865,7 +865,7 @@ LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
     va_list args;
     va_start(args,layer);
 
-    LayerMultiplex * multiplexLayer = new LayerMultiplex();
+    LayerMultiplex * multiplexLayer = new (std::nothrow) LayerMultiplex();
     if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
     {
         multiplexLayer->autorelease();
@@ -885,7 +885,7 @@ LayerMultiplex * LayerMultiplex::createWithLayer(Layer* layer)
 
 LayerMultiplex* LayerMultiplex::create()
 {
-    LayerMultiplex* ret = new LayerMultiplex();
+    LayerMultiplex* ret = new (std::nothrow) LayerMultiplex();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -899,7 +899,7 @@ LayerMultiplex* LayerMultiplex::create()
 
 LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLayers)
 {
-    LayerMultiplex* ret = new LayerMultiplex();
+    LayerMultiplex* ret = new (std::nothrow) LayerMultiplex();
     if (ret && ret->initWithArray(arrayOfLayers))
     {
         ret->autorelease();

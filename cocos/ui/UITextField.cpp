@@ -49,7 +49,7 @@ UICCTextField::~UICCTextField()
 
 UICCTextField * UICCTextField::create(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    UICCTextField *pRet = new UICCTextField();
+    UICCTextField *pRet = new (std::nothrow) UICCTextField();
     
     if(pRet && pRet->initWithPlaceHolder("", fontName, fontSize))
     {
@@ -314,7 +314,7 @@ TextField::~TextField()
 
 TextField* TextField::create()
 {
-    TextField* widget = new TextField();
+    TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -326,7 +326,7 @@ TextField* TextField::create()
     
 TextField* TextField::create(const std::string &placeholder, const std::string &fontName, int fontSize)
 {
-    TextField* widget = new TextField();
+    TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
         widget->setPlaceHolder(placeholder);

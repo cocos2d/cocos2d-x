@@ -362,7 +362,7 @@ void TestController::addConsoleAutoTest()
                 sched->performFunctionInCocosThread( [&]()
                 {
                     auto scene = Scene::create();
-                    auto layer = new TestController();
+                    auto layer = new (std::nothrow) TestController();
                     scene->addChild(layer);
                     layer->release();
                     Director::getInstance()->replaceScene(scene);

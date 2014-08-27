@@ -78,7 +78,7 @@ void Box2DTestLayer::initPhysics()
 
     world->SetContinuousPhysics(true);
 
-//     _debugDraw = new GLESDebugDraw( PTM_RATIO );
+//     _debugDraw = new (std::nothrow) GLESDebugDraw( PTM_RATIO );
 //     world->SetDebugDraw(_debugDraw);
 
     uint32 flags = 0;
@@ -122,8 +122,8 @@ void Box2DTestLayer::initPhysics()
 void Box2DTestLayer::createResetButton()
 {
     auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Ref *sender) {
-		auto s = new Box2DTestScene();
-		auto child = new Box2DTestLayer();
+		auto s = new (std::nothrow) Box2DTestScene();
+		auto child = new (std::nothrow) Box2DTestLayer();
 		s->addChild(child);
 		child->release();
 		Director::getInstance()->replaceScene(s);
@@ -269,7 +269,7 @@ void Box2DTestLayer::accelerometer(UIAccelerometer* accelerometer, Acceleration*
 
 void Box2DTestScene::runThisTest()
 {
-    auto layer = new Box2DTestLayer();
+    auto layer = new (std::nothrow) Box2DTestLayer();
     addChild(layer);
     layer->release();
 

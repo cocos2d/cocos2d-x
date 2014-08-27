@@ -23,7 +23,7 @@ g_guisTests[] =
         "custom gui image Test",
         [](Ref* sender)
         {
-            CustomImageScene* pScene = new CustomImageScene();
+            CustomImageScene* pScene = new (std::nothrow) CustomImageScene();
             pScene->runThisTest();
             pScene->release();
         }
@@ -32,7 +32,7 @@ g_guisTests[] =
         "custom gui particle widget Test",
         [](Ref* sender)
         {
-            CustomParticleWidgetScene* pScene = new CustomParticleWidgetScene();
+            CustomParticleWidgetScene* pScene = new (std::nothrow) CustomParticleWidgetScene();
             pScene->runThisTest();
             pScene->release();
         }
@@ -132,7 +132,7 @@ void CustomGUITestScene::onEnter()
 
 void CustomGUITestScene::runThisTest()
 {
-    Layer* pLayer = new CustomGUITestMainLayer();
+    Layer* pLayer = new (std::nothrow) CustomGUITestMainLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -141,7 +141,7 @@ void CustomGUITestScene::runThisTest()
 
 void CustomGUITestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

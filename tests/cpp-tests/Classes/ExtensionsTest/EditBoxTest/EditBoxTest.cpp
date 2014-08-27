@@ -85,7 +85,7 @@ EditBoxTest::~EditBoxTest()
 
 void EditBoxTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -126,7 +126,7 @@ void EditBoxTest::editBoxReturn(EditBox* editBox)
 void runEditBoxTest()
 {
     auto scene = Scene::create();
-    EditBoxTest *layer = new EditBoxTest();
+    EditBoxTest *layer = new (std::nothrow) EditBoxTest();
     scene->addChild(layer);
     
     Director::getInstance()->replaceScene(scene);

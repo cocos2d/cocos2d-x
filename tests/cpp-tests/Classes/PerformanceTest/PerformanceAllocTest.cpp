@@ -147,7 +147,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    auto menuLayer = new AllocBasicLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) AllocBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
 
@@ -239,7 +239,7 @@ void NodeCreateTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Node **nodes = new Node*[quantityOfNodes];
+    Node **nodes = new (std::nothrow) Node*[quantityOfNodes];
 
     CC_PROFILER_START(this->profilerName());
     for( int i=0; i<quantityOfNodes; ++i)
@@ -287,7 +287,7 @@ void NodeDeallocTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Node **nodes = new Node*[quantityOfNodes];
+    Node **nodes = new (std::nothrow) Node*[quantityOfNodes];
 
     for( int i=0; i<quantityOfNodes; ++i) {
         nodes[i] = Node::create();
@@ -340,7 +340,7 @@ void SpriteCreateEmptyTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Sprite **sprites = new Sprite*[quantityOfNodes];
+    Sprite **sprites = new (std::nothrow) Sprite*[quantityOfNodes];
 
     Sprite::create("Images/grossini.png");
 
@@ -390,7 +390,7 @@ void SpriteCreateTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Sprite **sprites = new Sprite*[quantityOfNodes];
+    Sprite **sprites = new (std::nothrow) Sprite*[quantityOfNodes];
 
     Sprite::create("Images/grossini.png");
     
@@ -440,7 +440,7 @@ void SpriteDeallocTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Sprite **sprites = new Sprite*[quantityOfNodes];
+    Sprite **sprites = new (std::nothrow) Sprite*[quantityOfNodes];
 
     for( int i=0; i<quantityOfNodes; ++i) {
         sprites[i] = Sprite::create();

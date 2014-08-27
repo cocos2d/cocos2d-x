@@ -129,7 +129,7 @@ ControlSwitchSprite* ControlSwitchSprite::create(Sprite *maskSprite,
                                             Label* onLabel,
                                             Label* offLabel)
 {
-    auto ret = new ControlSwitchSprite();
+    auto ret = new (std::nothrow) ControlSwitchSprite();
     ret->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
     ret->autorelease();
     return ret;
@@ -296,7 +296,7 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
 
 ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite)
 {
-    ControlSwitch* pRet = new ControlSwitch();
+    ControlSwitch* pRet = new (std::nothrow) ControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, nullptr, nullptr))
     {
         pRet->autorelease();
@@ -339,7 +339,7 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
 
 ControlSwitch* ControlSwitch::create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel)
 {
-    ControlSwitch* pRet = new ControlSwitch();
+    ControlSwitch* pRet = new (std::nothrow) ControlSwitch();
     if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel))
     {
         pRet->autorelease();

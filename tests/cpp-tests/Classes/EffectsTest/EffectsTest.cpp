@@ -394,7 +394,7 @@ TextLayer::~TextLayer(void)
 
 TextLayer* TextLayer::create()
 {
-    auto layer = new TextLayer();
+    auto layer = new (std::nothrow) TextLayer();
     layer->autorelease();
     
     return layer;
@@ -407,7 +407,7 @@ void TextLayer::onEnter()
 
 void TextLayer::newScene()
 {
-    auto s = new EffectTestScene();
+    auto s = new (std::nothrow) EffectTestScene();
     auto child = TextLayer::create();
     s->addChild(child);
     Director::getInstance()->replaceScene(s);

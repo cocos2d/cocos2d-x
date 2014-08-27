@@ -36,7 +36,7 @@ namespace cocostudio {
 
 ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
 {
-    ArmatureAnimation *pArmatureAnimation = new ArmatureAnimation();
+    ArmatureAnimation *pArmatureAnimation = new (std::nothrow) ArmatureAnimation();
     if (pArmatureAnimation && pArmatureAnimation->init(armature))
     {
         pArmatureAnimation->autorelease();
@@ -491,7 +491,7 @@ void ArmatureAnimation::frameEvent(Bone *bone, const std::string& frameEventName
 {
     if ((_frameEventTarget && _frameEventCallFunc) || _frameEventListener)
     {
-        FrameEvent *frameEvent = new FrameEvent();
+        FrameEvent *frameEvent = new (std::nothrow) FrameEvent();
         frameEvent->bone = bone;
         frameEvent->frameEventName = frameEventName;
         frameEvent->originFrameIndex = originFrameIndex;
@@ -506,7 +506,7 @@ void ArmatureAnimation::movementEvent(Armature *armature, MovementEventType move
 {
     if ((_movementEventTarget && _movementEventCallFunc) || _movementEventListener)
     {
-        MovementEvent *movementEvent = new MovementEvent();
+        MovementEvent *movementEvent = new (std::nothrow) MovementEvent();
         movementEvent->armature = armature;
         movementEvent->movementType = movementType;
         movementEvent->movementID = movementID;

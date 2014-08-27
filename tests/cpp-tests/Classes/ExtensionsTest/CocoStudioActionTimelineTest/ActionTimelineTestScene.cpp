@@ -20,16 +20,16 @@ Layer *CreateAnimationLayer(int index)
     switch(index)
     {
     case TEST_ANIMATIONELEMENT:
-        pLayer = new TestActionTimeline();
+        pLayer = new (std::nothrow) TestActionTimeline();
         break;
     case TEST_CHANGE_PLAY_SECTION:
-        pLayer = new TestChangePlaySection();
+        pLayer = new (std::nothrow) TestChangePlaySection();
         break;
     case TEST_TIMELINE_FRAME_EVENT:
-        pLayer = new TestTimelineFrameEvent();
+        pLayer = new (std::nothrow) TestTimelineFrameEvent();
         break;
     case TEST_TIMELINE_PERFORMACE:
-        pLayer = new TestTimelinePerformance();
+        pLayer = new (std::nothrow) TestTimelinePerformance();
         break;
     default:
         break;
@@ -166,7 +166,7 @@ std::string ActionTimelineTestLayer::subtitle() const
 
 void ActionTimelineTestLayer::restartCallback(Ref *pSender)
 {
-    Scene *s = new ActionTimelineTestScene();
+    Scene *s = new (std::nothrow) ActionTimelineTestScene();
     s->addChild( RestartAnimationTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -174,14 +174,14 @@ void ActionTimelineTestLayer::restartCallback(Ref *pSender)
 
 void ActionTimelineTestLayer::nextCallback(Ref *pSender)
 {
-    Scene *s = new ActionTimelineTestScene();
+    Scene *s = new (std::nothrow) ActionTimelineTestScene();
     s->addChild( NextAnimationTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 void ActionTimelineTestLayer::backCallback(Ref *pSender)
 {
-    Scene *s = new ActionTimelineTestScene();
+    Scene *s = new (std::nothrow) ActionTimelineTestScene();
     s->addChild( BackAnimationTest() );
     Director::getInstance()->replaceScene(s);
     s->release();

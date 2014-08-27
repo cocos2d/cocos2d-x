@@ -88,7 +88,7 @@ void LayerTest::onEnter()
 
 void LayerTest::restartCallback(Ref* sender)
 {
-    auto s = new LayerTestScene();
+    auto s = new (std::nothrow) LayerTestScene();
     s->addChild(restartAction());
 
     Director::getInstance()->replaceScene(s);
@@ -97,7 +97,7 @@ void LayerTest::restartCallback(Ref* sender)
 
 void LayerTest::nextCallback(Ref* sender)
 {
-    auto s = new LayerTestScene();
+    auto s = new (std::nothrow) LayerTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -105,7 +105,7 @@ void LayerTest::nextCallback(Ref* sender)
 
 void LayerTest::backCallback(Ref* sender)
 {
-    auto s = new LayerTestScene();
+    auto s = new (std::nothrow) LayerTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

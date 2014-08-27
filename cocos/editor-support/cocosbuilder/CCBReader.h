@@ -11,7 +11,7 @@
 #include "cocosbuilder/CCBAnimationManager.h"
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
-    T * ptr = new T(); \
+    T * ptr = new (std::nothrow) T(); \
     if(ptr != NULL) { \
         ptr->autorelease(); \
         return ptr; \
@@ -21,7 +21,7 @@
 }
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(T, METHOD) static T * METHOD() { \
-    T * ptr = new T(); \
+    T * ptr = new (std::nothrow) T(); \
     if(ptr != NULL && ptr->init()) { \
         ptr->autorelease(); \
         return ptr; \
