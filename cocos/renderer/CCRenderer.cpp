@@ -99,6 +99,37 @@ void RenderQueue::clear()
     _queuePosZ.clear();
 }
 
+// helper
+static bool compareTransparentRenderCommand(RenderCommand* a, RenderCommand* b)
+{
+    return a->getGlobalOrder() > b->getGlobalOrder();
+}
+
+void TransparentRenderQueue::push_back(RenderCommand* command)
+{
+    _queueCmd.push_back(command);
+}
+
+ssize_t TransparentRenderQueue::size() const
+{
+    return _queueCmd.size();
+}
+
+void TransparentRenderQueue::sort()
+{
+    std::sort(std::begin(_queueCmd), std::end(_queueCmd), compareTransparentRenderCommand);
+}
+
+RenderCommand* TransparentRenderQueue::operator[](ssize_t index) const
+{
+    return _queueCmd[index];
+}
+
+void TransparentRenderQueue::clear()
+{
+    _queueCmd.clear();
+}
+
 //
 //
 //
@@ -254,6 +285,11 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
     _renderGroups[renderQueue].push_back(command);
+}
+
+void Renderer::addTransparentCommand(RenderCommand* command)
+{
+    _transparentRenderGroups.push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)
