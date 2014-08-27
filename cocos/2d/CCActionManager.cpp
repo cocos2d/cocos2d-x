@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "2d/CCActionManager.h"
 #include "2d/CCNode.h"
+#include "2d/CCAction.h"
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
 #include "base/ccCArray.h"

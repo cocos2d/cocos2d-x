@@ -23,10 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFontCharMap.h"
+#include "2d/CCFontCharMap.h"
 #include "2d/CCFontAtlas.h"
 #include "platform/CCFileUtils.h"
-#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 

@@ -23,18 +23,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "2d/CCGrid.h"
 
 #include "base/ccMacros.h"
-#include "base/CCDirector.h"
-#include "2d/CCGrabber.h"
 #include "base/ccUtils.h"
-#include "2d/CCGrid.h"
+#include "2d/CCNode.h"
+#include "2d/CCGrabber.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTexture2D.h"
 #include "CCGL.h"
-#include "math/TransformUtils.h"
 
 NS_CC_BEGIN
 // implementation of GridBase
@@ -321,21 +321,7 @@ void Grid3D::blit(void)
     //
     // Attributes
     //
-#ifdef EMSCRIPTEN
-    // Size calculations from calculateVertexPoints().
-    unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
-    // position
-    setGLBufferData(_vertices, numOfPoints * sizeof(Vec3), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    // texCoords
-    setGLBufferData(_texCoordinates, numOfPoints * sizeof(Vec2), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLIndexData(_indices, n * 12, 0);
-    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, 0);
-#else
     // position
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
 
@@ -343,8 +329,6 @@ void Grid3D::blit(void)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, _indices);
-#endif // EMSCRIPTEN
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
 }
 
 void Grid3D::calculateVertexPoints(void)
@@ -537,20 +521,7 @@ void TiledGrid3D::blit(void)
     // Attributes
     //
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
-#ifdef EMSCRIPTEN
-    int numQuads = _gridSize.width * _gridSize.height;
 
-    // position
-    setGLBufferData(_vertices, (numQuads*4*sizeof(Vec3)), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    // texCoords
-    setGLBufferData(_texCoordinates, (numQuads*4*sizeof(Vec2)), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLIndexData(_indices, n * 12, 0);
-    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, 0);
-#else
     // position
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
 
@@ -558,8 +529,6 @@ void TiledGrid3D::blit(void)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
 
     glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, _indices);
-#endif // EMSCRIPTEN
-
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
 }

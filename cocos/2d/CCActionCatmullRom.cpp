@@ -31,6 +31,7 @@
  */
 #include "base/ccMacros.h"
 #include "2d/CCActionCatmullRom.h"
+#include "2d/CCNode.h"
 
 using namespace std;
 
