@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2dx_static
+LOCAL_MODULE := cocos2dx_internal_static
 
-LOCAL_MODULE_FILENAME := libcocos2d
+LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
@@ -216,18 +216,7 @@ LOCAL_STATIC_LIBRARIES += cocos_png_static
 LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
 LOCAL_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_STATIC_LIBRARIES += cocos_webp_static
-LOCAL_STATIC_LIBRARIES += cocos3d_static
-LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_STATIC_LIBRARIES += cocosbuilder_static
-LOCAL_STATIC_LIBRARIES += cocostudio_static
-LOCAL_STATIC_LIBRARIES += spine_static
-LOCAL_STATIC_LIBRARIES += cocos_network_static
-LOCAL_STATIC_LIBRARIES += cocos_ui_static
-LOCAL_STATIC_LIBRARIES += cocos_extension_static
-LOCAL_STATIC_LIBRARIES += box2d_static
 LOCAL_STATIC_LIBRARIES += chipmunk_static
-LOCAL_STATIC_LIBRARIES += cocos_curl_static
-LOCAL_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
@@ -238,6 +227,25 @@ LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 
 include $(BUILD_STATIC_LIBRARY)
+
+#==============================================================
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := cocos2dx_static
+
+LOCAL_MODULE_FILENAME := libcocos2d
+
+LOCAL_STATIC_LIBRARIES := cocostudio_static
+LOCAL_STATIC_LIBRARIES += cocos3d_static
+LOCAL_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_STATIC_LIBRARIES += spine_static
+LOCAL_STATIC_LIBRARIES += cocos_network_static
+LOCAL_STATIC_LIBRARIES += box2d_static
+LOCAL_STATIC_LIBRARIES += chipmunk_static
+
+include $(BUILD_STATIC_LIBRARY)
+#==============================================================
 
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
