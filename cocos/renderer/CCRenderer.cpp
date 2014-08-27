@@ -154,25 +154,10 @@ void Renderer::initGLView()
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
 #endif
-
-    setupIndices();
     
     setupBuffer();
     
     _glViewAssigned = true;
-}
-
-void Renderer::setupIndices()
-{
-    for( int i=0; i < INDEX_VBO_SIZE / 6; i++)
-    {
-        _indices[i*6+0] = (GLushort) (i*4+0);
-        _indices[i*6+1] = (GLushort) (i*4+1);
-        _indices[i*6+2] = (GLushort) (i*4+2);
-        _indices[i*6+3] = (GLushort) (i*4+3);
-        _indices[i*6+4] = (GLushort) (i*4+2);
-        _indices[i*6+5] = (GLushort) (i*4+1);
-    }
 }
 
 void Renderer::setupBuffer()
@@ -299,11 +284,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             
             _batchedQuadCommands.push_back(cmd);
             
-            memcpy(_verts + _filledVertex, cmd->getQuads(), sizeof(V3F_C4B_T2F) * cmd->getQuadCount() * 4);
-            fillQuadVertices(_verts + _filledVertex, cmd->getQuadCount() * 4, cmd->getModelView());
-            
-            _filledVertex += cmd->getQuadCount() * 4;
-            _filledIndex += cmd->getQuadCount() * 6;
+            fillQuadVertices(cmd);
 
         }
         else if(RenderCommand::Type::GROUP_COMMAND == commandType)
@@ -400,25 +381,41 @@ void Renderer::clean()
     _lastBatchedMeshCommand = nullptr;
 }
 
-void Renderer::fillQuadVertices(V3F_C4B_T2F* verts, ssize_t quantity, const Mat4& modelView)
+void Renderer::fillQuadVertices(const QuadCommand* cmd)
 {
-//    kmMat4 matrixP, mvp;
-//    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
-//    kmMat4Multiply(&mvp, &matrixP, &modelView);
-    for(ssize_t i=0; i<quantity; ++i)
+    memcpy(_verts + _filledVertex, cmd->getQuads(), sizeof(V3F_C4B_T2F) * cmd->getQuadCount() * 4);
+    const Mat4& modelView = cmd->getModelView();
+    
+    for(ssize_t i=0; i< cmd->getQuadCount() * 4; ++i)
     {
-        V3F_C4B_T2F *q = &verts[i];
+        V3F_C4B_T2F *q = &_verts[i + _filledVertex];
         Vec3 *vec1 = (Vec3*)&q->vertices;
         modelView.transformPoint(vec1);
     }
+    
+    //fill index
+    for(ssize_t i=0; i< cmd->getQuadCount(); ++i)
+    {
+        _indices[_filledIndex + i * 6 + 0] = _filledVertex + i * 4 + 0;
+        _indices[_filledIndex + i * 6 + 1] = _filledVertex + i * 4 + 1;
+        _indices[_filledIndex + i * 6 + 2] = _filledVertex + i * 4 + 2;
+        _indices[_filledIndex + i * 6 + 3] = _filledVertex + i * 4 + 3;
+        _indices[_filledIndex + i * 6 + 4] = _filledVertex + i * 4 + 2;
+        _indices[_filledIndex + i * 6 + 5] = _filledVertex + i * 4 + 1;
+    }
+    
+    _filledVertex += cmd->getQuadCount() * 4;
+    _filledIndex += cmd->getQuadCount() * 6;
 }
 
 void Renderer::drawBatchedQuads()
 {
     //TODO we can improve the draw performance by insert material switching command before hand.
 
-    int quadsToDraw = 0;
-    int startQuad = 0;
+//    int quadsToDraw = 0;
+//    int startQuad = 0;
+    int indexToDraw = 0;
+    int startIndex = 0;
 
     //Upload buffer to VBO
     if(_filledVertex <= 0 || _filledIndex <= 0 || _batchedQuadCommands.empty())
@@ -479,14 +476,14 @@ void Renderer::drawBatchedQuads()
         if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
-            if(quadsToDraw > 0)
+            if(indexToDraw > 0)
             {
-                glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
                 _drawnBatches++;
-                _drawnVertices += quadsToDraw*6;
+                _drawnVertices += indexToDraw;
 
-                startQuad += quadsToDraw;
-                quadsToDraw = 0;
+                startIndex += indexToDraw;
+                indexToDraw = 0;
             }
 
             //Use new material
@@ -494,15 +491,15 @@ void Renderer::drawBatchedQuads()
             _lastMaterialID = newMaterialID;
         }
 
-        quadsToDraw += cmd->getQuadCount();
+        indexToDraw += cmd->getQuadCount() * 6;
     }
 
     //Draw any remaining quad
-    if(quadsToDraw > 0)
+    if(indexToDraw > 0)
     {
-        glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+        glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
         _drawnBatches++;
-        _drawnVertices += quadsToDraw*6;
+        _drawnVertices += indexToDraw;
     }
 
     if (Configuration::getInstance()->supportsShareableVAO())

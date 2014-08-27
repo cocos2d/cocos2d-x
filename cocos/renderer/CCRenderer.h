@@ -123,7 +123,6 @@ public:
 
 protected:
 
-    void setupIndices();
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
     void setupVBOAndVAO();
@@ -141,7 +140,7 @@ protected:
     
     void visitRenderQueue(const RenderQueue& queue);
 
-    void fillQuadVertices(V3F_C4B_T2F* verts, ssize_t quantity, const Mat4& modelView);
+    void fillQuadVertices(const QuadCommand* cmd);
 
     std::stack<int> _commandGroupStack;
     
