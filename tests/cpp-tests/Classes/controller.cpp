@@ -78,6 +78,7 @@ Controller g_aTestNames[] = {
 	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
+    { "Node: LightTest", [](){  return new LightTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },

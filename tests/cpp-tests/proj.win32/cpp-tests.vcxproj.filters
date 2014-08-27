@@ -331,6 +331,9 @@
     <Filter Include="Classes\Camera3DTest">
       <UniqueIdentifier>{7f85be1c-98c5-4412-afc5-6f39ae1452a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\LightTest">
+      <UniqueIdentifier>{9befe67d-c725-4807-885f-edee45f95951}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -866,6 +869,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Sprite3DTest\DrawNode3D.cpp">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LightTest\LightTestDemo.cpp">
+      <Filter>Classes\LightTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1600,6 +1606,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Sprite3DTest\DrawNode3D.h">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LightTest\LightTestDemo.h">
+      <Filter>Classes\LightTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -210,13 +210,13 @@ void LightTestDemo::addLights()
     addChild(_directionalLight);
     _directionalLight->setCameraMask(2);
 
-    _pointLight = Light3D::CreatePointLight(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 1000.0f);
+    _pointLight = Light3D::CreatePointLight(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
     _pointLight->retain();
     _pointLight->setEnabled(false);
     addChild(_pointLight);
     _pointLight->setCameraMask(2);
 
-    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.1, 0.3, 1000.0f);
+    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);
