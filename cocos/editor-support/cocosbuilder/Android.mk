@@ -38,7 +38,7 @@ $(LOCAL_PATH)/../../ \
 $(LOCAL_PATH)/../../platform/android \
 $(LOCAL_PATH)/../../editor-support
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES := cocos_extension_static
 
 include $(BUILD_STATIC_LIBRARY)
