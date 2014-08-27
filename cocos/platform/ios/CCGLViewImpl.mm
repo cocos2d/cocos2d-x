@@ -102,7 +102,6 @@ GLViewImpl::GLViewImpl()
 GLViewImpl::~GLViewImpl()
 {
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
-    // per: http://discuss.cocos2d-x.org/t/ios-glview-cceaglview-incorrect-memory-management/16554/3
     //[glview release];
 }
 
@@ -188,8 +187,6 @@ void GLViewImpl::end()
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
-    
-    // per: http://discuss.cocos2d-x.org/t/ios-glview-cceaglview-incorrect-memory-management/16554/3
     //[eaglview release];
 }
 
