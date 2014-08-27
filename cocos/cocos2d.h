@@ -278,6 +278,9 @@ THE SOFTWARE.
 // CCDeprecated.h must be included at the end
 #include "deprecated/CCDeprecated.h"
 
+//3d
+#include "3d/cocos3d.h"
+
 
 NS_CC_BEGIN
 
