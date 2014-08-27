@@ -20,14 +20,14 @@ void main(void)
 \n#if (CC_MAX_POINT_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_POINT_LIGHT_NUM; ++i)
     {
-        v_vertexToPointLightDirection[i] = CC_PointLightSource[i].position.xyz - ePosition.xyz;
+        v_vertexToPointLightDirection[i] = CC_PointLightSourcePosition[i].xyz - ePosition.xyz;
     }
 \n#endif\n
 
 \n#if (CC_MAX_SPOT_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_SPOT_LIGHT_NUM; ++i)
     {
-        v_vertexToSpotLightDirection[i] = CC_SpotLightSource[i].position.xyz - ePosition.xyz;
+        v_vertexToSpotLightDirection[i] = CC_SpotLightSourcePosition[i] - ePosition.xyz;
     }
 \n#endif\n
         
@@ -113,7 +113,7 @@ void getPositionAndNormal(out vec4 position, out vec3 normal)
     position.w = p.w;
 
 \n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
-    vec3 n = vec4(a_normal, 0.0);
+    vec4 n = vec4(a_normal, 0.0);
     normal.x = dot(n, matrixPalette1);
     normal.y = dot(n, matrixPalette2);
     normal.z = dot(n, matrixPalette3);
@@ -130,14 +130,14 @@ void main()
 \n#if (CC_MAX_POINT_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_POINT_LIGHT_NUM; ++i)
     {
-        v_vertexToPointLightDirection[i] = CC_PointLightSource[i].position.xyz- ePosition.xyz;
+        v_vertexToPointLightDirection[i] = CC_PointLightSourcePosition[i].xyz- ePosition.xyz;
     }
 \n#endif\n
 
 \n#if (CC_MAX_SPOT_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_SPOT_LIGHT_NUM; ++i)
     {
-        v_vertexToSpotLightDirection[i] = CC_SpotLightSource[i].position.xyz - ePosition.xyz;
+        v_vertexToSpotLightDirection[i] = CC_SpotLightSourcePosition[i] - ePosition.xyz;
     }
 \n#endif\n
 
