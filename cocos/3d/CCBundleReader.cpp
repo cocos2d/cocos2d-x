@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "CCBundleReader.h"
 #include "platform/CCFileUtils.h"
 
@@ -5,7 +29,7 @@ NS_CC_BEGIN
 
 BundleReader::BundleReader()
 {
-    m_buffer = NULL;
+    m_buffer = nullptr;
     m_position = 0;
     m_length = 0;
 };
@@ -65,7 +89,7 @@ char* BundleReader::readLine(int num,char* line)
     char* p = line;
     char c;
     ssize_t readNum = 0;
-    while((c=*buffer) != 10 && readNum < (ssize_t)num && m_position<(long int)m_length)
+    while((c=*buffer) != 10 && readNum < (ssize_t)num && m_position < m_length)
     {
         *p = c;
         p++;
@@ -91,7 +115,7 @@ ssize_t BundleReader::length()
     return m_length;
 }
 
-long int BundleReader::tell()
+ssize_t BundleReader::tell()
 {
     if (!m_buffer)
         return -1;
@@ -123,7 +147,7 @@ bool BundleReader::seek(long int offset, int origin)
 
 bool BundleReader::rewind()
 {
-    if (m_buffer != NULL)
+    if (m_buffer != nullptr)
     {
         m_position = 0;
         return true;

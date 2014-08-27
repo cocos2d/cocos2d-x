@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "base/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
@@ -61,7 +62,7 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "math/CCMath.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 
 /**
  Position of the FPS
@@ -177,7 +178,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     
-
     delete _eventAfterUpdate;
     delete _eventAfterDraw;
     delete _eventAfterVisit;
@@ -191,11 +191,10 @@ Director::~Director(void)
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
-    // clean auto release pool
-    PoolManager::destroyInstance();
-
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
+
+    Configuration::destroyInstance();
 
     s_SharedDirector = nullptr;
 }
@@ -233,7 +232,7 @@ void Director::setDefaultValues(void)
 
     // PVR v2 has alpha premultiplied ?
     bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
-    Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
+    Image::setPVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void Director::setGLDefaultValues()
@@ -265,7 +264,7 @@ void Director::drawScene()
 
     if (_openGLView)
     {
-        _openGLView->pollInputEvents();
+        _openGLView->pollEvents();
     }
 
     //tick before glClear: issue #533
@@ -285,26 +284,60 @@ void Director::drawScene()
     }
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    // draw the scene
+    
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+        Camera* defaultCamera = nullptr;
+        const auto& cameras = _runningScene->_cameras;
+        //draw with camera
+        for (size_t i = 0; i < cameras.size(); i++)
+        {
+            Camera::_visitingCamera = cameras[i];
+            if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
+            {
+                defaultCamera = Camera::_visitingCamera;
+                continue;
+            }
+            
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        //draw with default camera
+        if (defaultCamera)
+        {
+            Camera::_visitingCamera = defaultCamera;
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        Camera::_visitingCamera = nullptr;
+        
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, false);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     if (_displayStats)
     {
         showStats();
     }
-
     _renderer->render();
+
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -827,8 +860,13 @@ void Director::runWithScene(Scene *scene)
 
 void Director::replaceScene(Scene *scene)
 {
-    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
+    
+    if (_runningScene == nullptr) {
+        runWithScene(scene);
+        return;
+    }
     
     if (scene == _nextScene)
         return;
@@ -976,7 +1014,6 @@ void Director::purgeDirector()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
-    Configuration::destroyInstance();
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
@@ -1129,9 +1166,15 @@ void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-
+    std::string fpsString = "00.0";
+    std::string drawBatchString = "000";
+    std::string drawVerticesString = "00000";
     if (_FPSLabel)
     {
+        fpsString = _FPSLabel->getString();
+        drawBatchString = _drawnBatchesLabel->getString();
+        drawVerticesString = _drawnVerticesLabel->getString();
+        
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
         CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
@@ -1168,19 +1211,19 @@ void Director::createStatsLabel()
     _FPSLabel = LabelAtlas::create();
     _FPSLabel->retain();
     _FPSLabel->setIgnoreContentScaleFactor(true);
-    _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
+    _FPSLabel->initWithString(fpsString, texture, 12, 32 , '.');
     _FPSLabel->setScale(scaleFactor);
 
     _drawnBatchesLabel = LabelAtlas::create();
     _drawnBatchesLabel->retain();
     _drawnBatchesLabel->setIgnoreContentScaleFactor(true);
-    _drawnBatchesLabel->initWithString("000", texture, 12, 32, '.');
+    _drawnBatchesLabel->initWithString(drawBatchString, texture, 12, 32, '.');
     _drawnBatchesLabel->setScale(scaleFactor);
 
     _drawnVerticesLabel = LabelAtlas::create();
     _drawnVerticesLabel->retain();
     _drawnVerticesLabel->setIgnoreContentScaleFactor(true);
-    _drawnVerticesLabel->initWithString("00000", texture, 12, 32, '.');
+    _drawnVerticesLabel->initWithString(drawVerticesString, texture, 12, 32, '.');
     _drawnVerticesLabel->setScale(scaleFactor);
 
 

@@ -202,6 +202,12 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     return ret;
 }
 
+
+void Device::setKeepScreenOn(bool value)
+{
+    setKeepScreenOnJni(value);
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

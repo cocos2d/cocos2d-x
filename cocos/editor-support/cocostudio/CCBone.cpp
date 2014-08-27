@@ -74,7 +74,7 @@ Bone::Bone()
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _worldTransform = Mat4::IDENTITY;
     _boneTransformDirty = true;
-    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     _blendDirty = false;
     _worldInfo = nullptr;
 
@@ -201,8 +201,8 @@ void Bone::update(float delta)
         _worldInfo->y = _tweenData->y + _position.y;
         _worldInfo->scaleX = _tweenData->scaleX * _scaleX;
         _worldInfo->scaleY = _tweenData->scaleY * _scaleY;
-        _worldInfo->skewX = _tweenData->skewX + _skewX + _rotationX;
-        _worldInfo->skewY = _tweenData->skewY + _skewY - _rotationY;
+        _worldInfo->skewX = _tweenData->skewX + _skewX + CC_DEGREES_TO_RADIANS(_rotationZ_X);
+        _worldInfo->skewY = _tweenData->skewY + _skewY - CC_DEGREES_TO_RADIANS(_rotationZ_Y);
 
         if(_parentBone)
         {

@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ui/UIWidget.h"
 #include "2d/CCTextFieldTTF.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -36,7 +37,7 @@ namespace ui {
  *  @js NA
  *  @lua NA
  */
-class UICCTextField: public TextFieldTTF, public TextFieldDelegate
+class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     UICCTextField();
@@ -91,7 +92,7 @@ protected:
     bool _deleteBackward;
 };
 
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
@@ -99,14 +100,14 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
+typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public Widget
 *   @js NA
 *   @lua NA
 */
-class TextField : public Widget
+class CC_GUI_DLL TextField : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -134,6 +135,10 @@ public:
     
     void setPlaceHolder(const std::string& value);
     const std::string& getPlaceHolder()const;
+    const Color4B& getPlaceHolderColor()const;
+    void setPlaceHolderColor(const Color3B& color);
+    void setPlaceHolderColor(const Color4B& color);
+    void setTextColor(const Color4B& textColor);
     
     void setFontSize(int size);
     int getFontSize()const;
@@ -228,6 +233,16 @@ protected:
     
     std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
+private:
+    enum class FontType
+    {
+        SYSTEM,
+        TTF
+    };
+
+    std::string _fontName;
+    int _fontSize;
+    FontType _fontType;
 };
 
 }

@@ -15,10 +15,7 @@ namespace cocostudio
     static const char* P_ItemHeight = "itemHeight";
     static const char* P_StartCharMap = "startCharMap";
     
-    
-    static const char* P_CharMapFile = "charMapFile";
-    
-    static TextAtlasReader* instanceTextAtalsReader = NULL;
+    static TextAtlasReader* instanceTextAtalsReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(TextAtlasReader)
     

@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include <string>
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -64,6 +63,7 @@ Application::~Application()
 
 int Application::run()
 {
+    initGLContextAttrs();
     // Initialize instance and cocos2d.
     if (! applicationDidFinishLaunching())
     {

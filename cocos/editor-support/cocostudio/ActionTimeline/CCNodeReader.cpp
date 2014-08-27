@@ -236,8 +236,20 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
         {
             const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
             Node* child = loadNode(dic);
-            if (child) 
+            if (child)
             {
+                auto widgetChild = dynamic_cast<Widget*>(child);
+                if (widgetChild
+                    && dynamic_cast<Widget*>(node)
+                    && !dynamic_cast<Layout*>(node))
+                {
+                    if (widgetChild->getPositionType() == ui::Widget::PositionType::PERCENT)
+                    {
+                        widgetChild->setPositionPercent(Vec2(widgetChild->getPositionPercent().x + node->getAnchorPoint().x, widgetChild->getPositionPercent().y + node->getAnchorPoint().y));
+                    }
+                    widgetChild->setPosition(Vec2(widgetChild->getPositionX() + node->getAnchorPointInPoints().x, widgetChild->getPositionY() + node->getAnchorPointInPoints().y));
+                }
+
                 node->addChild(child);
                 child->release();
             }
@@ -284,9 +296,9 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if (rotation != 0)
         node->setRotation(rotation);
     if(rotationSkewX != 0)
-        node->setRotationX(rotationSkewX);
+        node->setRotationSkewX(rotationSkewX);
     if(rotationSkewY != 0)
-        node->setRotationY(rotationSkewY);
+        node->setRotationSkewY(rotationSkewY);
     if(skewx != 0)
         node->setSkewX(skewx);
     if(skewy != 0)
@@ -296,19 +308,17 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if(width != 0 || height != 0)
         node->setContentSize(Size(width, height));
     if(zorder != 0)
-        node->setZOrder(zorder);
+        node->setLocalZOrder(zorder);
     if(visible != true)
         node->setVisible(visible);
 
     if(alpha != 255)
     {
         node->setOpacity(alpha);
-        node->setCascadeOpacityEnabled(true);
     }
     if(red != 255 || green != 255 || blue != 255)
     {
         node->setColor(Color3B(red, green, blue));
-        node->setCascadeColorEnabled(true);
     }
 
 
@@ -452,8 +462,10 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
     CC_SAFE_DELETE(guiReader);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(ActionTimelineData::create(actionTag));
-    
+    widget->setUserObject(ActionTimelineData::create(actionTag)); 
+
+    initNode(widget, json);
+
     return widget;
 }
 

@@ -40,7 +40,7 @@ class EventListenerCustom;
 class EventCustom;
 
 //it is a common mesh
-class MeshCommand : public RenderCommand
+class CC_DLL MeshCommand : public RenderCommand
 {
 public:
 
@@ -70,12 +70,12 @@ public:
     void batchDraw();
     void postBatchDraw();
     
-    void genMaterialID(GLuint texID, void* glProgramState, void* mesh, const BlendFunc& blend);
+    void genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend);
     
     uint32_t getMaterialID() const { return _materialID; }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    void listenBackToForeground(EventCustom* event);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    void listenRendererRecreated(EventCustom* event);
 #endif
 
 protected:
@@ -122,8 +122,8 @@ protected:
     // ModelView transform
     Mat4 _mv;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    EventListenerCustom* _backToForegroundlistener;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    EventListenerCustom* _rendererRecreatedListener;
 #endif
 };
 

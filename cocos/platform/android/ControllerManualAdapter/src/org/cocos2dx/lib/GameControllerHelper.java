@@ -1,6 +1,8 @@
 package org.cocos2dx.lib;
 
-import android.util.Log;
+import java.util.ArrayList;
+
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -53,7 +55,6 @@ public class GameControllerHelper {
 		
 		ControllerKeyMap.put(KeyEvent.KEYCODE_BUTTON_START, GameControllerDelegate.BUTTON_START);
 		ControllerKeyMap.put(KeyEvent.KEYCODE_BUTTON_SELECT, GameControllerDelegate.BUTTON_SELECT);
-		//KEYCODE_BUTTON_MODE
 	}
 	
 	private float mOldLeftThumbstickX = 0.0f;
@@ -76,68 +77,72 @@ public class GameControllerHelper {
         		|| ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )
         {       	
         	if (event.getAction() == MotionEvent.ACTION_MOVE) {
-        		int devicedId = event.getDeviceId();
+        		int deviceId = event.getDeviceId();
         		String deviceName = event.getDevice().getName();
+        		if(mGameController.get(deviceId) == null){
+        			gatherControllers(mGameController);
+        			mGameController.append(deviceId, deviceName);
+        		}
         		
         		float newAXIS_LX = event.getAxisValue(AXIS_X);
         		if (Float.compare(newAXIS_LX , mOldLeftThumbstickX) != 0) {
-					GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.THUMBSTICK_LEFT_X, newAXIS_LX, true);
+					GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, newAXIS_LX, true);
 					mOldLeftThumbstickX = newAXIS_LX;
 					handled = true;
 				}
         		
         		float newAXIS_LY = event.getAxisValue(AXIS_Y);
         		if (Float.compare(newAXIS_LY , mOldLeftThumbstickY) != 0) {
-					GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.THUMBSTICK_LEFT_Y, newAXIS_LY, true);
+					GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, newAXIS_LY, true);
 					mOldLeftThumbstickY = newAXIS_LY;
 					handled = true;
 				}
         		
         		float newAXIS_RX = event.getAxisValue(AXIS_Z);
         		if (Float.compare(newAXIS_RX , mOldRightThumbstickX) != 0) {
-					GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.THUMBSTICK_RIGHT_X, newAXIS_RX, true);
+					GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, newAXIS_RX, true);
 					mOldRightThumbstickX = newAXIS_RX;
 					handled = true;
 				}
         		
         		float newAXIS_RY = event.getAxisValue(AXIS_RZ);
         		if (Float.compare(newAXIS_RY , mOldRightThumbstickY) != 0) {
-					GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newAXIS_RY, true);
+					GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newAXIS_RY, true);
 					mOldRightThumbstickY = newAXIS_RY;
 					handled = true;
 				}
         		
         		float newAXIS_LTRIGGER = event.getAxisValue(AXIS_LTRIGGER);
         		if (Float.compare(newAXIS_LTRIGGER , mOldLeftTrigger) != 0) {					
-        			GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newAXIS_LTRIGGER, true);
+        			GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newAXIS_LTRIGGER, true);
 					mOldLeftTrigger = newAXIS_LTRIGGER;
 					handled = true;
 				}
         		
         		float newAXIS_RTRIGGER = event.getAxisValue(AXIS_RTRIGGER);
         		if (Float.compare(newAXIS_RTRIGGER , mOldRightTrigger) != 0) {
-        			GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newAXIS_RTRIGGER, true);
+        			GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newAXIS_RTRIGGER, true);
 					mOldRightTrigger = newAXIS_RTRIGGER;
 					handled = true;
 				}
         		
         		float newAXIS_BRAKE = event.getAxisValue(AXIS_BRAKE);
         		if (Float.compare(newAXIS_BRAKE , mOldBrake) != 0) {
-        			GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newAXIS_BRAKE, true);
+        			GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newAXIS_BRAKE, true);
 					mOldBrake = newAXIS_BRAKE;
 					handled = true;
 				}
         		
         		float newAXIS_THROTTLE = event.getAxisValue(AXIS_THROTTLE);
         		if (Float.compare(newAXIS_THROTTLE , mOldThrottle) != 0) {
-        			GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newAXIS_THROTTLE, true);
+        			GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newAXIS_THROTTLE, true);
 					mOldThrottle = newAXIS_THROTTLE;
 					handled = true;
 				}
         		
         		float newAXIS_GAS = event.getAxisValue(AXIS_GAS);
         		if (Float.compare(newAXIS_GAS , mOldGas) != 0) {
-        			GameControllerAdapter.onAxisEvent(deviceName, devicedId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newAXIS_GAS, true);
+        			GameControllerAdapter.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newAXIS_GAS, true);
         			mOldGas = newAXIS_GAS;
 					handled = true;
 				}
@@ -147,6 +152,8 @@ public class GameControllerHelper {
 		return handled;
 	}
 	
+	private static SparseArray<ArrayList<Integer>>  mControllerExtendKey = new SparseArray<ArrayList<Integer>>();
+	
 	public boolean dispatchKeyEvent(KeyEvent event) {
     	boolean handled = false;
     	
@@ -154,19 +161,97 @@ public class GameControllerHelper {
     	int keyCode = event.getKeyCode();
 		int controllerKey = ControllerKeyMap.get(keyCode);
 		
-		if (controllerKey != 0 && (((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
-				|| ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )) 
+		if (((eventSource & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
+				|| ((eventSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) ) 
 		{
+			int deviceId = event.getDeviceId();
+			String deviceName = event.getDevice().getName();
+			
+			if(mGameController.get(deviceId) == null){
+				gatherControllers(mGameController);
+    			mGameController.append(deviceId, deviceName);
+    		}
+			
+			if (controllerKey == 0) {
+				if (mControllerExtendKey.get(deviceId) != null && mControllerExtendKey.get(deviceId).contains(keyCode)) {
+					controllerKey = keyCode;
+				}else {
+					return false;
+				}
+			}
+			
 			int action = event.getAction();
 			if (action == KeyEvent.ACTION_DOWN) {
 				handled = true;
-				GameControllerAdapter.onButtonEvent(event.getDevice().getName(),event.getDeviceId(), controllerKey,true, 1.0f, false);
+				GameControllerAdapter.onButtonEvent(deviceName, deviceId, controllerKey,true, 1.0f, false);
 			}else if (action == KeyEvent.ACTION_UP) {
 				handled = true;
-				GameControllerAdapter.onButtonEvent(event.getDevice().getName(),event.getDeviceId(), controllerKey,false, 0.0f, false);
+				GameControllerAdapter.onButtonEvent(deviceName, deviceId, controllerKey,false, 0.0f, false);
 			}
 		}
 		
     	return handled;
     }
+	
+	public static void receiveExternalKeyEvent(int deviceId,int externalKeyCode,boolean receive) {
+		if (receive) {
+			if (mControllerExtendKey.get(deviceId) == null) {
+				mControllerExtendKey.put(deviceId, new ArrayList<Integer>());
+			}
+			mControllerExtendKey.get(deviceId).add(externalKeyCode);
+		} else {
+			if (mControllerExtendKey.get(deviceId) != null) {
+				mControllerExtendKey.get(deviceId).remove(Integer.valueOf(externalKeyCode));
+			}
+		}
+	}
+	
+	SparseArray<String> mGameController = new SparseArray<String>();
+	
+	void onInputDeviceAdded(int deviceId){
+		try {
+			InputDevice device = InputDevice.getDevice(deviceId);
+			int deviceSource = device.getSources();
+			
+			if ( ((deviceSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) 
+	        		|| ((deviceSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )
+			{
+				String deviceName = device.getName();
+				mGameController.append(deviceId, deviceName);
+				GameControllerAdapter.onConnected(deviceName, deviceId);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	void onInputDeviceChanged(int deviceId){
+		gatherControllers(mGameController);
+	}
+	
+	void onInputDeviceRemoved(int deviceId) {
+		if (mGameController.get(deviceId) != null) {
+			GameControllerAdapter.onDisconnected(mGameController.get(deviceId), deviceId);
+			mGameController.delete(deviceId);
+		}
+	}
+	
+	static void gatherControllers(SparseArray<String> controllers){
+		int controllerCount = controllers.size();
+		for (int i = 0; i < controllerCount; i++) {
+			try {
+				int controllerDeveceId = controllers.keyAt(i);
+				InputDevice device = InputDevice.getDevice(controllerDeveceId);
+				if (device == null) {						
+					GameControllerAdapter.onDisconnected(controllers.get(controllerDeveceId), controllerDeveceId);
+					controllers.delete(controllerDeveceId);
+				}
+			} catch (Exception e) {
+				int controllerDeveceId = controllers.keyAt(i);
+				GameControllerAdapter.onDisconnected(controllers.get(controllerDeveceId), controllerDeveceId);
+				controllers.delete(controllerDeveceId);
+				e.printStackTrace();
+			}
+		}
+	}
 }

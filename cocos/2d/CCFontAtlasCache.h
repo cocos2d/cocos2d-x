@@ -26,7 +26,6 @@
 #ifndef _CCFontAtlasCache_h_
 #define _CCFontAtlasCache_h_
 
-#include <iostream>
 #include <unordered_map>
 
 #include "2d/CCFontAtlas.h"

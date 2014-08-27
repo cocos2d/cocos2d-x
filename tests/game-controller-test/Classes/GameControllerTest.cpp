@@ -32,21 +32,28 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
     {
         return;
     }
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    //receive back key
+    controller->receiveExternalKeyEvent(4,true);
+    //receive menu key
+    controller->receiveExternalKeyEvent(82,true);
+#endif
+
+    char deviceInfo[50];
+    sprintf(deviceInfo,"%s id:%d",controller->getDeviceName().c_str(), controller->getDeviceId());
 
     if (_firstHolder.controller == nullptr && _secondHolder.controller == nullptr)
-    {   
-        char deviceId[20];
-        sprintf(deviceId,"device id:%d",controller->getDeviceId());
-
+    {
         if (_firstHolder._holderNode)
         {
             _firstHolder.controller = controller;
-            _firstHolder._deviceIdLabel->setString(deviceId);
+            _firstHolder._deviceLabel->setString(deviceInfo);
         }
         else
         {
             _secondHolder.controller = controller;
-            _secondHolder._deviceIdLabel->setString(deviceId);
+            _secondHolder._deviceLabel->setString(deviceInfo);
         }
     }
     else if(_secondHolder.controller == nullptr)
@@ -66,9 +73,7 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
             this->addChild(_secondHolder._holderNode);
         }
 
-        char deviceId[20];
-        sprintf(deviceId,"device id:%d",controller->getDeviceId());
-        _secondHolder._deviceIdLabel->setString(deviceId);
+        _secondHolder._deviceLabel->setString(deviceInfo);
     }
     else
     {
@@ -86,9 +91,8 @@ void GameControllerTest::onConnectController(Controller* controller, Event* even
             _firstHolder._holderNode->setPosition(Vec2(_visibleThreeQuarterX, _visibleCentreY));
             this->addChild(_firstHolder._holderNode);
         }
-        char deviceId[20];
-        sprintf(deviceId,"device id:%d",controller->getDeviceId());
-        _firstHolder._deviceIdLabel->setString(deviceId);
+
+        _firstHolder._deviceLabel->setString(deviceInfo);
     }
 }
 
@@ -144,7 +148,7 @@ void GameControllerTest::resetControllerHolderState(ControllerHolder& holder)
 
     holder._leftJoystick->setPosition(Vec2(238,460));
     holder._rightJoystick->setPosition(Vec2(606,293));
-    holder._deviceIdLabel->setString("Disconnected");
+    holder._deviceLabel->setString("Disconnected");
 }
 
 void GameControllerTest::showButtonState(cocos2d::Controller *controller, int keyCode, bool isPressed)
@@ -192,8 +196,19 @@ void GameControllerTest::showButtonState(cocos2d::Controller *controller, int ke
         case Controller::Key::BUTTON_RIGHT_SHOULDER:
             holder->_buttonR1->setColor(Color3B(19,231,238));
             break;
-        default:
+        case Controller::Key::BUTTON_LEFT_THUMBSTICK:
+            holder->_leftJoystick->setColor(Color3B(19,231,238));
             break;
+        case Controller::Key::BUTTON_RIGHT_THUMBSTICK:
+            holder->_rightJoystick->setColor(Color3B(19,231,238));
+            break;
+        default:
+            {
+                char ketStatus[30];
+                sprintf(ketStatus,"Key Down:%d",keyCode);
+                holder->_externalKeyLabel->setString(ketStatus);
+                break;
+            }
         }
     } 
     else
@@ -230,8 +245,19 @@ void GameControllerTest::showButtonState(cocos2d::Controller *controller, int ke
         case Controller::Key::BUTTON_RIGHT_SHOULDER:
             holder->_buttonR1->setColor(Color3B::WHITE);
             break;
-        default:
+        case Controller::Key::BUTTON_LEFT_THUMBSTICK:
+            holder->_leftJoystick->setColor(Color3B::WHITE);
             break;
+        case Controller::Key::BUTTON_RIGHT_THUMBSTICK:
+            holder->_rightJoystick->setColor(Color3B::WHITE);
+            break;
+        default:
+            {
+                char ketStatus[30];
+                sprintf(ketStatus,"Key Up:%d",keyCode);
+                holder->_externalKeyLabel->setString(ketStatus);
+                break;
+            }
         }
     }
 }
@@ -248,7 +274,6 @@ void GameControllerTest::onKeyUp(cocos2d::Controller *controller, int keyCode, c
 
 void GameControllerTest::onAxisEvent(cocos2d::Controller* controller, int keyCode, cocos2d::Event* event)
 {
-    //onConnectController(controller,nullptr);
     ControllerHolder* holder = nullptr;
     if (controller == _firstHolder.controller)
         holder = &_firstHolder;
@@ -344,12 +369,16 @@ void GameControllerTest::createControllerSprite(ControllerHolder& holder)
     holder._rightJoystick->setPosition(Vec2(606,293));
     holder._holderNode->addChild(holder._rightJoystick);
 
-    holder._deviceIdLabel = Label::createWithTTF("Disconnected","fonts/Marker Felt.ttf",36);
-    holder._deviceIdLabel->setPosition(Vec2(499,460));
-    holder._deviceIdLabel->setTextColor(Color4B::RED);
-    holder._holderNode->addChild(holder._deviceIdLabel);
+    holder._deviceLabel = Label::createWithTTF("Disconnected","fonts/Marker Felt.ttf",36);
+    holder._deviceLabel->setPosition(Vec2(499,650));
+    holder._deviceLabel->setTextColor(Color4B::RED);
+    holder._holderNode->addChild(holder._deviceLabel);
+
+    holder._externalKeyLabel = Label::createWithTTF("Key event","fonts/Marker Felt.ttf",36);
+    holder._externalKeyLabel->setPosition(Vec2(499,500));
+    holder._externalKeyLabel->setTextColor(Color4B::RED);
+    holder._holderNode->addChild(holder._externalKeyLabel);
     //-----------------------------------------------------------------
-    //371,294  64
     auto dPadTexture = Director::getInstance()->getTextureCache()->addImage("dPad.png");
 
     auto dPadCenter = Sprite::createWithTexture(dPadTexture,Rect(60,60,68,68));
@@ -400,7 +429,6 @@ void GameControllerTest::createControllerSprite(ControllerHolder& holder)
     holder._buttonR2->setPosition(Vec2(998-220,910));
     holder._holderNode->addChild(holder._buttonR2);
     //-----------------------------------------------------------------
-    //750 460,70
     holder._buttonX = Sprite::create("X.png");
     holder._buttonX->setPosition(Vec2(750 - 70,460));
     holder._holderNode->addChild(holder._buttonX);

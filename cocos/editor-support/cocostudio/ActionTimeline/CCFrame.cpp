@@ -68,7 +68,7 @@ VisibleFrame* VisibleFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 VisibleFrame::VisibleFrame()
@@ -104,7 +104,7 @@ TextureFrame* TextureFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 TextureFrame::TextureFrame()
@@ -155,7 +155,7 @@ RotationFrame* RotationFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 RotationFrame::RotationFrame()
@@ -175,7 +175,7 @@ void RotationFrame::onEnter(Frame *nextFrame)
 
 void RotationFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && _betwennRotation != 0)
+    if (_tween && _betwennRotation != 0)
     {
         float rotation = _rotation + percent * _betwennRotation;
         _node->setRotation(rotation);
@@ -204,7 +204,7 @@ SkewFrame* SkewFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 SkewFrame::SkewFrame()
@@ -227,7 +227,7 @@ void SkewFrame::onEnter(Frame *nextFrame)
 
 void SkewFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -261,7 +261,7 @@ RotationSkewFrame* RotationSkewFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 RotationSkewFrame::RotationSkewFrame()
@@ -282,7 +282,7 @@ void RotationSkewFrame::onEnter(Frame *nextFrame)
 
 void RotationSkewFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -314,7 +314,7 @@ PositionFrame* PositionFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 PositionFrame::PositionFrame()
@@ -335,7 +335,7 @@ void PositionFrame::onEnter(Frame *nextFrame)
 
 void PositionFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenX != 0 || _betweenY != 0))
+    if (_tween && (_betweenX != 0 || _betweenY != 0))
     {
         Point p;
         p.x = _position.x + _betweenX * percent;
@@ -366,7 +366,7 @@ ScaleFrame* ScaleFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ScaleFrame::ScaleFrame()
@@ -389,7 +389,7 @@ void ScaleFrame::onEnter(Frame *nextFrame)
 
 void ScaleFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenScaleX != 0 || _betweenScaleY != 0))
+    if (_tween && (_betweenScaleX != 0 || _betweenScaleY != 0))
     {
         float scaleX = _scaleX + _betweenScaleX * percent;
         float scaleY = _scaleY + _betweenScaleY * percent;
@@ -421,7 +421,7 @@ AnchorPointFrame* AnchorPointFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 AnchorPointFrame::AnchorPointFrame()
@@ -457,7 +457,7 @@ InnerActionFrame* InnerActionFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 InnerActionFrame::InnerActionFrame()
@@ -493,7 +493,7 @@ ColorFrame* ColorFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ColorFrame::ColorFrame()
@@ -516,14 +516,11 @@ void ColorFrame::onEnter(Frame *nextFrame)
         _betweenGreen = color.g - _color.g;
         _betweenBlue  = color.b - _color.b;
     }
-
-    _node->setCascadeColorEnabled(true);
-    _node->setCascadeOpacityEnabled(true);
 }
 
 void ColorFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
+    if (_tween && (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
     {
         GLubyte alpha = _alpha + _betweenAlpha * percent;
 
@@ -559,7 +556,7 @@ EventFrame* EventFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 EventFrame::EventFrame()
@@ -594,7 +591,7 @@ ZOrderFrame* ZOrderFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ZOrderFrame::ZOrderFrame()
@@ -605,7 +602,7 @@ ZOrderFrame::ZOrderFrame()
 void ZOrderFrame::onEnter(Frame *nextFrame)
 {
     if(_node)
-        _node->setZOrder(_zorder);
+        _node->setLocalZOrder(_zorder);
 }
 
 

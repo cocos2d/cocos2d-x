@@ -5,10 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: getForcedTarget()
---          
--- overload function: getForcedTarget()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TargetedAction] getForcedTarget
 -- @param self
 -- @return Node#Node ret (retunr value: cc.Node)

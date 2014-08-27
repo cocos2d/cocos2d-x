@@ -71,7 +71,7 @@ enum {
     kNodeOnCleanup
 };
 
-bool nodeComparisonLess(Node* n1, Node* n2);
+bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -712,25 +712,30 @@ public:
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
+    /**
+     * Gets a child from the container with its name that can be cast to Type T
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node with the given name that can be cast to Type T
+    */
+    template <typename T>
+    inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
-     * @param name The name to search for, supports c++11 regular expression
+     * @param name The name to search for, supports c++11 regular expression.
      * Search syntax options:
-     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
-     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
-     *       and be performed recursively across the entire node tree.
+     * `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
      * `..`: The search should move up to the node's parent. Can only be placed at the end of string
-     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
      *
      * @code
-     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
-     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the children recursively and matches any node with the name `MyName`.
      * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
-     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
      * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
      * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
      * and whose parent is named `Abby`.
-     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * enumerateChildren("//Abby/Normal", ...): This searches recursively and returns any node whose name is `Normal` and whose
      * parent is named `Abby`.
      * @endcode
      *
@@ -956,7 +961,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
     GLProgramState *getGLProgramState() const;
-    void setGLProgramState(GLProgramState *glProgramState);
+    virtual void setGLProgramState(GLProgramState *glProgramState);
 
     /**
      * Sets the shader program for this node
@@ -969,7 +974,7 @@ public:
      *
      * @param shaderProgram The shader program
      */
-    void setGLProgram(GLProgram *glprogram);
+    virtual void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     /// @} end of Shader Program
 
@@ -1279,12 +1284,12 @@ public:
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    void resume(void);
+    virtual void resume(void);
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    void pause(void);
+    virtual void pause(void);
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1428,6 +1433,10 @@ public:
      */
     virtual bool removeComponent(const std::string& name);
 
+    /** 
+     *   removes a component by its pointer      
+     */
+    virtual bool removeComponent(Component *component);
     /**
      *   removes all components
      */
@@ -1474,7 +1483,11 @@ public:
     void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
     const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
     void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
-    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }   
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
+    
+    /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
+    unsigned short getCameraMask() const { return _cameraMask; }
+    void setCameraMask(unsigned short mask, bool applyChildren = true);
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1507,6 +1520,9 @@ protected:
     
     bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
+    
+    //check whether this camera mask is visible by the current visiting camera
+    bool isVisitableByVisitingCamera() const;
     
 #if CC_USE_PHYSICS
     void updatePhysicsBodyTransform(Scene* layer);
@@ -1613,6 +1629,9 @@ protected:
     bool        _cascadeOpacityEnabled;
 
     static int s_globalOrderOfArrival;
+    
+    // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
+    unsigned short _cameraMask;
     
     std::function<void()> _onEnterCallback;
     std::function<void()> _onExitCallback;

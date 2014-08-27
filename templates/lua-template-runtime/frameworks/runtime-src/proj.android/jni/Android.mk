@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := \
 ../../Classes/protobuf-lite/google/protobuf/generated_message_util.cc \
 ../../Classes/protobuf-lite/google/protobuf/message_lite.cc \
 ../../Classes/protobuf-lite/google/protobuf/stubs/once.cc \
+../../Classes/protobuf-lite/google/protobuf/stubs/atomicops_internals_x86_gcc.cc \
 ../../Classes/protobuf-lite/google/protobuf/repeated_field.cc \
 ../../Classes/protobuf-lite/google/protobuf/wire_format_lite.cc \
 ../../Classes/protobuf-lite/google/protobuf/io/zero_copy_stream.cc \
@@ -25,6 +26,7 @@ LOCAL_SRC_FILES := \
 ../../Classes/runtime/Shine_png.cpp \
 ../../Classes/runtime/Runtime.cpp \
 ../../Classes/runtime/Protos.pb.cc \
+../../Classes/runtime/lua_debugger.c \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
@@ -35,13 +37,20 @@ lua/main.cpp
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \
 $(LOCAL_PATH)/../../Classes/runtime \
-$(LOCAL_PATH)/../../Classes
+$(LOCAL_PATH)/../../Classes \
+$(LOCAL_PATH)/../../../cocos2d-x/external
 
-LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
-
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += network_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += extension_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += ui_lua_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos3d_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,scripting/lua-bindings)
+$(call import-module,scripting/lua-bindings/proj.android)
 

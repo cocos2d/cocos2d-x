@@ -15,7 +15,7 @@ static int s_nScenarioCurCase = 0;
 ////////////////////////////////////////////////////////
 void ScenarioMenuLayer::showCurrentTest()
 {
-    Scene* scene = NULL;
+    Scene* scene = nullptr;
 
     switch (_curCase)
     {
@@ -105,7 +105,7 @@ void ScenarioTest::performTests()
                                                     MenuItemFont::create( "Add/Remove Sprite" ),
                                                     MenuItemFont::create( "Add/Remove Particle"),
                                                     MenuItemFont::create( "Add/Remove Particle System"),
-                                                    NULL);
+                                                    nullptr);
     _itemToggle->setAnchorPoint(Vec2(0.0f, 0.5f));
     _itemToggle->setPosition(Vec2(origin.x, origin.y + s.height / 2));
 
@@ -148,7 +148,7 @@ void ScenarioTest::performTests()
     increase->setColor(Color3B(0,200,20));
     increase->setPosition(Vec2(origin.x + s.width / 2 + 80, origin.y + 80));
     
-    auto menu = Menu::create(_itemToggle, decrease, increase, NULL);
+    auto menu = Menu::create(_itemToggle, decrease, increase, nullptr);
     menu->setPosition(Vec2(0.0f, 0.0f));
     addChild(menu, 10);
 
@@ -252,7 +252,7 @@ void ScenarioTest::addNewSprites(int num)
         else
             action = FadeOut::create(2);
         auto action_back = action->reverse();
-        auto seq = Sequence::create( action, action_back, NULL );
+        auto seq = Sequence::create( action, action_back, nullptr );
         
         sprite->runAction( RepeatForever::create(seq) );
 

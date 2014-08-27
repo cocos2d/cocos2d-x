@@ -39,7 +39,7 @@ class Node;
 /**
  *   Base class of all kinds of events.
  */
-class Event : public Ref
+class CC_DLL Event : public Ref
 {
 public:
     enum class Type
@@ -55,7 +55,7 @@ public:
         CUSTOM
     };
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
     Event(Type type);
 public:

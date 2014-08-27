@@ -34,6 +34,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Camera;
 /**
  * @addtogroup scene
  * @{
@@ -64,17 +65,28 @@ public:
     using Node::addChild;
     virtual std::string getDescription() const override;
     
+    /** get all cameras */
+    const std::vector<Camera*>& getCameras() const { return _cameras; }
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
     
     bool init();
     bool initWithSize(const Size& size);
+    
+    void onProjectionChanged(EventCustom* event);
 
 protected:
     friend class Node;
     friend class ProtectedNode;
     friend class SpriteBatchNode;
+    friend class Camera;
+    friend class Director;
+    
+    std::vector<Camera*> _cameras; //weak ref to Camera
+    Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
+    EventListenerCustom*       _event;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);

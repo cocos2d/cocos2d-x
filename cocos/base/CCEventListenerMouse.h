@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class Event;
 
-class EventListenerMouse : public EventListener
+class CC_DLL EventListenerMouse : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
@@ -49,7 +49,7 @@ public:
     std::function<void(Event* event)> onMouseMove;
     std::function<void(Event* event)> onMouseScroll;
 
-private:
+CC_CONSTRUCTOR_ACCESS:
     EventListenerMouse();
     bool init();
 };

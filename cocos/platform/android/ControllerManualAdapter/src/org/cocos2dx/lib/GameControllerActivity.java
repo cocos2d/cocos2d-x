@@ -31,11 +31,9 @@ import org.cocos2dx.lib.inputmanagercompat.InputManagerCompat.InputDeviceListene
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.os.Bundle;
-import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.util.Log;
-import android.util.SparseArray;
 
 public abstract class GameControllerActivity extends Cocos2dxActivity implements InputDeviceListener {
 	// ===========================================================
@@ -224,30 +222,11 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 		return handled || super.dispatchGenericMotionEvent(event);
 	}
 	
-	protected SparseArray<String> mGameController = null;
-	
 	@Override
 	public void onInputDeviceAdded(int deviceId) {	
 		Log.d(TAG,"onInputDeviceAdded:" + deviceId);
 		
-		try {
-			InputDevice device = InputDevice.getDevice(deviceId);
-			int deviceSource = device.getSources();
-			
-			if ( ((deviceSource & InputDevice.SOURCE_GAMEPAD)  == InputDevice.SOURCE_GAMEPAD) 
-	        		|| ((deviceSource & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) )
-			{
-				if (mGameController == null) {
-					mGameController = new SparseArray<String>();
-				}
-				String deviceName = device.getName();
-				mGameController.append(deviceId, deviceName);
-				GameControllerAdapter.onConnected(deviceName, deviceId);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		mControllerHelper.onInputDeviceAdded(deviceId);
 	}
 	/*
 	 * This is an unusual case. Input devices don't typically change, but they
@@ -274,10 +253,7 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 	public void onInputDeviceRemoved(int deviceId) {
 		Log.d(TAG,"onInputDeviceRemoved:" + deviceId);
 		
-		if (mGameController != null && mGameController.get(deviceId) != null) {
-			GameControllerAdapter.onDisconnected(mGameController.get(deviceId), deviceId);
-			mGameController.delete(deviceId);
-		}
+		mControllerHelper.onInputDeviceRemoved(deviceId);
 	}
 
 	@Override
@@ -293,8 +269,10 @@ public abstract class GameControllerActivity extends Cocos2dxActivity implements
 		if (mControllerOuya != null) {
 			mControllerOuya.onResume();
 		}
+		
+		GameControllerHelper.gatherControllers(mControllerHelper.mGameController);
 	}
-
+	
 	@Override
 	protected void onPause() {
 		if (mControllerNibiru != null) {

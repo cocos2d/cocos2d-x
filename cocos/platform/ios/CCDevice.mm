@@ -456,13 +456,13 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.shadowBlur             = textDefinition._shadow._shadowBlur;
         info.shadowOpacity          = textDefinition._shadow._shadowOpacity;
         info.hasStroke              = textDefinition._stroke._strokeEnabled;
-        info.strokeColorR           = textDefinition._stroke._strokeColor.r;
-        info.strokeColorG           = textDefinition._stroke._strokeColor.g;
-        info.strokeColorB           = textDefinition._stroke._strokeColor.b;
+        info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
+        info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
+        info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
         info.strokeSize             = textDefinition._stroke._strokeSize;
-        info.tintColorR             = textDefinition._fontFillColor.r;
-        info.tintColorG             = textDefinition._fontFillColor.g;
-        info.tintColorB             = textDefinition._fontFillColor.b;
+        info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
+        info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
+        info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
         
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info))
         {
@@ -475,6 +475,11 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     } while (0);
     
     return ret;
+}
+
+void Device::setKeepScreenOn(bool value)
+{
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 NS_CC_END

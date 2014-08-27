@@ -26,18 +26,20 @@ THE SOFTWARE.
 #define __UIBUTTON_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 class Label;
 
 namespace ui{
-
+    
+    class Scale9Sprite;
 /**
 *   @js NA
 *   @lua NA
 */
-class Button : public Widget
+class CC_GUI_DLL Button : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -80,7 +82,7 @@ public:
      *
      * @param disabled    disabled state texture name.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextures(const std::string& normal,
                       const std::string& selected,
@@ -92,7 +94,7 @@ public:
      *
      * @param normal    normal state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureNormal(const std::string& normal, TextureResType texType = TextureResType::LOCAL);
 
@@ -101,7 +103,7 @@ public:
      *
      * @param selected    selected state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTexturePressed(const std::string& selected, TextureResType texType = TextureResType::LOCAL);
 
@@ -110,7 +112,7 @@ public:
      *
      * @param disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
 
@@ -186,6 +188,14 @@ public:
     float getTitleFontSize() const;
     void setTitleFontName(const std::string& fontName);
     const std::string& getTitleFontName() const;
+    /** When user pressed the button, the button will zoom to a scale.
+     * The final scale of the button  equals (button original scale + _zoomScale)
+     */
+    void setZoomScale(float scale);
+    /**
+     * @brief Return a zoom scale 
+     */
+    float getZoomScale()const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -204,9 +214,7 @@ protected:
   
     virtual void updateFlippedX() override;
     virtual void updateFlippedY() override;
-    
-    void updateTexturesRGBA();
-    
+        
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
@@ -218,10 +226,12 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
    
 protected:
-    Node* _buttonNormalRenderer;
-    Node* _buttonClickedRenderer;
-    Node* _buttonDisableRenderer;
+    Scale9Sprite* _buttonNormalRenderer;
+    Scale9Sprite* _buttonClickedRenderer;
+    Scale9Sprite* _buttonDisableRenderer;
     Label* _titleRenderer;
+   
+    float _zoomScale;
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;

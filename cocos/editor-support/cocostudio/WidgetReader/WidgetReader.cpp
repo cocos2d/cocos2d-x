@@ -59,7 +59,7 @@ namespace cocostudio
     const char* P_Path = "path";
 
     
-    static WidgetReader* instanceWidgetReader = NULL;
+    static WidgetReader* instanceWidgetReader = nullptr;
     
     IMPLEMENT_CLASS_WIDGET_READER_INFO(WidgetReader)
     
@@ -87,7 +87,7 @@ namespace cocostudio
         };
         
         valueToFloat = [=](const std::string& str) -> float{
-            return atof(str.c_str());
+            return utils::atof(str.c_str());
         };
     }
     
@@ -114,8 +114,10 @@ namespace cocostudio
     void WidgetReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {        
    
-        widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, P_IgnoreSize,false));
-        
+        bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, P_IgnoreSize);
+        if (ignoreSizeExsit) {
+            widget->ignoreContentAdaptWithSize(DICTOOL->getBooleanValue_json(options, P_IgnoreSize));
+        }
         
         widget->setSizeType((Widget::SizeType)DICTOOL->getIntValue_json(options, P_SizeType));
         widget->setPositionType((Widget::PositionType)DICTOOL->getIntValue_json(options, P_PositionType));
@@ -137,7 +139,7 @@ namespace cocostudio
             w = DICTOOL->getFloatValue_json(options, P_Width);
             h = DICTOOL->getFloatValue_json(options, P_Height);
         }
-        widget->setSize(Size(w, h));
+        widget->setContentSize(Size(w, h));
         
         widget->setTag(DICTOOL->getIntValue_json(options, P_Tag));
         widget->setActionTag(DICTOOL->getIntValue_json(options, P_ActionTag));
@@ -257,7 +259,7 @@ namespace cocostudio
         widget->setOpacity(_opacity);
         //the setSize method will be conflict with scale9Width & scale9Height
         if (!widget->isIgnoreContentAdaptWithSize()) {
-            widget->setSize(Size(_width, _height));
+            widget->setContentSize(Size(_width, _height));
         }
         widget->setPosition(_position);
         widget->setAnchorPoint(_originalAnchorPoint);

@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "base/CCEvent.h"
 #include "base/CCEventTouch.h"
 #include "base/ccCArray.h"
+#include "base/CCCamera.h"
 #include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
 #include "base/CCScriptSupport.h"
@@ -128,6 +129,7 @@ Node::Node(void)
 , _usingNormalizedPosition(false)
 , _name("")
 , _hashOfName(0)
+, _cameraMask(1)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -842,23 +844,13 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
     size_t subStrStartPos = 0;  // sub string start index
     size_t subStrlength = length; // sub string length
     
-    // Starts with '/' or '//'?
-    bool searchFromRoot = false;
-    bool searchFromRootRecursive = false;
-    if (name[0] == '/')
+    // Starts with '//'?
+    bool searchRecursively = false;
+    if (length > 2 && name[0] == '/' && name[1] == '/')
     {
-        if (length > 2 && name[1] == '/')
-        {
-            searchFromRootRecursive = true;
-            subStrStartPos = 2;
-            subStrlength -= 2;
-        }
-        else
-        {
-            searchFromRoot = true;
-            subStrStartPos = 1;
-            subStrlength -= 1;
-        }
+        searchRecursively = true;
+        subStrStartPos = 2;
+        subStrlength -= 2;
     }
     
     // End with '/..'?
@@ -872,7 +864,7 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         subStrlength -= 3;
     }
     
-    // Remove '/', '//', '/..' if exist
+    // Remove '//', '/..' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
 
     if (searchFromParent)
@@ -880,23 +872,11 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         newName.insert(0, "[[:alnum:]]+/");
     }
     
-    if (searchFromRoot)
-    {
-        // name is '/xxx'
-        auto root = getScene();
-        if (root)
-        {
-            root->doEnumerate(newName, callback);
-        }
-    }
-    else if (searchFromRootRecursive)
+    
+    if (searchRecursively)
     {
         // name is '//xxx'
-        auto root = getScene();
-        if (root)
-        {
-            doEnumerateRecursive(root, newName, callback);
-        }
+        doEnumerateRecursive(this, newName, callback);
     }
     else
     {
@@ -1245,6 +1225,13 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
     return flags;
 }
 
+bool Node::isVisitableByVisitingCamera() const
+{
+    auto camera = Camera::getVisitingCamera();
+    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
+    return visibleByCamera;
+}
+
 void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
@@ -1261,6 +1248,8 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     int i = 0;
 
@@ -1278,12 +1267,13 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
@@ -1635,16 +1625,18 @@ const Mat4& Node::getNodeToParentTransform() const
 
         bool needsSkewMatrix = ( _skewX || _skewY );
 
+        Vec2 anchorPoint;
+        anchorPoint.x = _anchorPointInPoints.x * _scaleX;
+        anchorPoint.y = _anchorPointInPoints.y * _scaleY;
 
         // optimization:
         // inline anchor point calculation if skew is not needed
         // Adjusted transform calculation for rotational skew
         if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
         {
-            x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-            y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+            x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
+            y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
         }
-
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
@@ -1656,6 +1648,11 @@ const Mat4& Node::getNodeToParentTransform() const
         
         _transform.set(mat);
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+        }
+        
         // XXX
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
@@ -1670,6 +1667,11 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform = _transform * rotX;
         }
 
+        if(!_ignoreAnchorPointForPosition)
+        {
+            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+        }
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
@@ -1857,6 +1859,14 @@ bool Node::removeComponent(const std::string& name)
 {
     if( _componentContainer )
         return _componentContainer->remove(name);
+    return false;
+}
+
+bool Node::removeComponent(Component *component)
+{
+    if (_componentContainer) {
+        return _componentContainer->remove(component);
+    }
     return false;
 }
 
@@ -2166,6 +2176,17 @@ void Node::disableCascadeColor()
 {
     for(auto child : _children){
         child->updateDisplayedColor(Color3B::WHITE);
+    }
+}
+
+void Node::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    _cameraMask = mask;
+    if (applyChildren)
+    {
+        for (auto child : _children) {
+            child->setCameraMask(mask, applyChildren);
+        }
     }
 }
 

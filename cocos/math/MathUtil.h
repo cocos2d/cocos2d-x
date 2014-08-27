@@ -30,7 +30,7 @@ NS_CC_MATH_BEGIN
  *
  * This is primarily used for optimized internal math operations.
  */
-class MathUtil
+class CC_DLL MathUtil
 {
     friend class Mat4;
     friend class Vec3;

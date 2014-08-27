@@ -50,6 +50,7 @@ public:
     virtual Component* get(const std::string& name) const;
     virtual bool add(Component *com);
     virtual bool remove(const std::string& name);
+    virtual bool remove(Component *com);
     virtual void removeAll();
     virtual void visit(float delta);
 public:

@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCUserDefault.h"
 #include "base/CCPlatformConfig.h"
+#include "base/ccUtils.h"
 #include "platform/CCCommon.h"
 #include "base/base64.h"
 
@@ -243,7 +244,7 @@ float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
     {
         if (node->FirstChild())
         {
-            float ret = atof((const char*)node->FirstChild()->Value());
+            float ret = utils::atof((const char*)node->FirstChild()->Value());
             
             // set value in NSUserDefaults
             setFloatForKey(pKey, ret);
@@ -279,7 +280,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
     {
         if (node->FirstChild())
         {
-            double ret = atof((const char*)node->FirstChild()->Value());
+            double ret = utils::atof((const char*)node->FirstChild()->Value());
             
             // set value in NSUserDefaults
             setDoubleForKey(pKey, ret);
@@ -455,7 +456,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
     deleteNodeByKey(pKey);
 #endif
     
-    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), value.getSize());
+    CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), (int)(value.getSize()));
     char * encodedData = nullptr;
     unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
 
