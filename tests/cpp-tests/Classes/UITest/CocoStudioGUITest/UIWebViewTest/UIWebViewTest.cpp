@@ -125,7 +125,7 @@ bool WebViewTest::init()
         loadHTMLBtn->setPosition(Vec2(winSize/2) - Vec2( _webView->getContentSize().width/2 +
                                                        loadHTMLBtn->getContentSize().width/2 + 10,0 ));
         loadHTMLBtn->addClickEventListener([=](Ref*){
-            _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World</body>","");
+            _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World</body>","text/html");
         });
         this->addChild(loadHTMLBtn);
         

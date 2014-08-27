@@ -195,7 +195,7 @@
         self.onJsCallback([url UTF8String]);
         return NO;
     }
-    if (self.shouldStartLoading) {
+    if (self.shouldStartLoading && url) {
         return self.shouldStartLoading([url UTF8String]);
     }
     return YES;
@@ -211,7 +211,9 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if (self.didFailLoading) {
         NSString *url = error.userInfo[NSURLErrorFailingURLStringErrorKey];
-        self.didFailLoading([url UTF8String]);
+        if (url) {
+            self.didFailLoading([url UTF8String]);
+        }
     }
 }
 
