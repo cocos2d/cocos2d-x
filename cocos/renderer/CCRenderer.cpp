@@ -110,7 +110,8 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 Renderer::Renderer()
 :_lastMaterialID(0)
 ,_lastBatchedMeshCommand(nullptr)
-,_numQuads(0)
+,_filledVertex(0)
+,_filledIndex(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -163,7 +164,7 @@ void Renderer::initGLView()
 
 void Renderer::setupIndices()
 {
-    for( int i=0; i < VBO_SIZE; i++)
+    for( int i=0; i < INDEX_VBO_SIZE / 6; i++)
     {
         _indices[i*6+0] = (GLushort) (i*4+0);
         _indices[i*6+1] = (GLushort) (i*4+1);
@@ -194,7 +195,7 @@ void Renderer::setupVBOAndVAO()
     glGenBuffers(2, &_buffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
 
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -209,7 +210,7 @@ void Renderer::setupVBOAndVAO()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
     GL::bindVAO(0);
@@ -232,11 +233,11 @@ void Renderer::mapBuffers()
     GL::bindVAO(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
@@ -288,7 +289,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             flush3D();
             auto cmd = static_cast<QuadCommand*>(command);
             //Batch quads
-            if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
+            if( _filledVertex + cmd->getQuadCount() * 4 > VBO_SIZE || _filledIndex + cmd->getQuadCount() * 6 > INDEX_VBO_SIZE)
             {
                 CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
                 
@@ -298,10 +299,11 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             
             _batchedQuadCommands.push_back(cmd);
             
-            memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-            convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
+            memcpy(_verts + _filledVertex, cmd->getQuads(), sizeof(V3F_C4B_T2F) * cmd->getQuadCount() * 4);
+            fillQuadVertices(_verts + _filledVertex, cmd->getQuadCount() * 4, cmd->getModelView());
             
-            _numQuads += cmd->getQuadCount();
+            _filledVertex += cmd->getQuadCount() * 4;
+            _filledIndex += cmd->getQuadCount() * 6;
 
         }
         else if(RenderCommand::Type::GROUP_COMMAND == commandType)
@@ -392,31 +394,22 @@ void Renderer::clean()
 
     // Clear batch quad commands
     _batchedQuadCommands.clear();
-    _numQuads = 0;
-
+    _filledVertex = 0;
+    _filledIndex = 0;
     _lastMaterialID = 0;
     _lastBatchedMeshCommand = nullptr;
 }
 
-void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
+void Renderer::fillQuadVertices(V3F_C4B_T2F* verts, ssize_t quantity, const Mat4& modelView)
 {
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
 //    kmMat4Multiply(&mvp, &matrixP, &modelView);
     for(ssize_t i=0; i<quantity; ++i)
     {
-        V3F_C4B_T2F_Quad *q = &quads[i];
-        Vec3 *vec1 = (Vec3*)&q->bl.vertices;
+        V3F_C4B_T2F *q = &verts[i];
+        Vec3 *vec1 = (Vec3*)&q->vertices;
         modelView.transformPoint(vec1);
-
-        Vec3 *vec2 = (Vec3*)&q->br.vertices;
-        modelView.transformPoint(vec2);
-
-        Vec3 *vec3 = (Vec3*)&q->tr.vertices;
-        modelView.transformPoint(vec3);
-
-        Vec3 *vec4 = (Vec3*)&q->tl.vertices;
-        modelView.transformPoint(vec4);
     }
 }
 
@@ -428,13 +421,15 @@ void Renderer::drawBatchedQuads()
     int startQuad = 0;
 
     //Upload buffer to VBO
-    if(_numQuads <= 0 || _batchedQuadCommands.empty())
+    if(_filledVertex <= 0 || _filledIndex <= 0 || _batchedQuadCommands.empty())
     {
         return;
     }
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        //Bind VAO
+        GL::bindVAO(_quadVAO);
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
@@ -445,22 +440,22 @@ void Renderer::drawBatchedQuads()
 //        glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
 
         // option 3: orphaning + glMapBuffer
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_DYNAMIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
+        memcpy(buf, _verts, sizeof(_verts[0])* _filledVertex);
         glUnmapBuffer(GL_ARRAY_BUFFER);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        //Bind VAO
-        GL::bindVAO(_quadVAO);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
     }
     else
     {
-#define kQuadSize sizeof(_quads[0].bl)
+#define kQuadSize sizeof(_verts[0])
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _numQuads , _quads, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex , _verts, GL_DYNAMIC_DRAW);
 
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
@@ -474,6 +469,7 @@ void Renderer::drawBatchedQuads()
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
     }
 
     //Start drawing verties in batch
@@ -521,7 +517,8 @@ void Renderer::drawBatchedQuads()
     }
 
     _batchedQuadCommands.clear();
-    _numQuads = 0;
+    _filledVertex = 0;
+    _filledIndex = 0;
 }
 
 void Renderer::flush()
