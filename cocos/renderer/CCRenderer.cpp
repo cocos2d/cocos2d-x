@@ -274,10 +274,10 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             flush3D();
             auto cmd = static_cast<QuadCommand*>(command);
             //Batch quads
-            if( _filledVertex + cmd->getQuadCount() * 4 > VBO_SIZE || _filledIndex + cmd->getQuadCount() * 6 > INDEX_VBO_SIZE)
+            if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
             {
-                CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-                
+                CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+                CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
                 //Draw batched quads if VBO is full
                 drawBatchedQuads();
             }
@@ -383,29 +383,25 @@ void Renderer::clean()
 
 void Renderer::fillQuadVertices(const QuadCommand* cmd)
 {
-    memcpy(_verts + _filledVertex, cmd->getQuads(), sizeof(V3F_C4B_T2F) * cmd->getQuadCount() * 4);
+    memcpy(_verts + _filledVertex, cmd->getQuads(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
     const Mat4& modelView = cmd->getModelView();
     
-    for(ssize_t i=0; i< cmd->getQuadCount() * 4; ++i)
+    for(ssize_t i=0; i< cmd->getVertexCount(); ++i)
     {
         V3F_C4B_T2F *q = &_verts[i + _filledVertex];
         Vec3 *vec1 = (Vec3*)&q->vertices;
         modelView.transformPoint(vec1);
     }
     
+    const unsigned short* indices = cmd->getIndices();
     //fill index
-    for(ssize_t i=0; i< cmd->getQuadCount(); ++i)
+    for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
     {
-        _indices[_filledIndex + i * 6 + 0] = _filledVertex + i * 4 + 0;
-        _indices[_filledIndex + i * 6 + 1] = _filledVertex + i * 4 + 1;
-        _indices[_filledIndex + i * 6 + 2] = _filledVertex + i * 4 + 2;
-        _indices[_filledIndex + i * 6 + 3] = _filledVertex + i * 4 + 3;
-        _indices[_filledIndex + i * 6 + 4] = _filledVertex + i * 4 + 2;
-        _indices[_filledIndex + i * 6 + 5] = _filledVertex + i * 4 + 1;
+        _indices[_filledIndex + i] = _filledVertex + indices[i];
     }
     
-    _filledVertex += cmd->getQuadCount() * 4;
-    _filledIndex += cmd->getQuadCount() * 6;
+    _filledVertex += cmd->getVertexCount();
+    _filledIndex += cmd->getIndexCount();
 }
 
 void Renderer::drawBatchedQuads()
@@ -491,7 +487,7 @@ void Renderer::drawBatchedQuads()
             _lastMaterialID = newMaterialID;
         }
 
-        indexToDraw += cmd->getQuadCount() * 6;
+        indexToDraw += cmd->getIndexCount();
     }
 
     //Draw any remaining quad
