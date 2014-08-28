@@ -26,9 +26,11 @@
 #define __CCBILLBOARD_H__
 
 #include "2d/CCSprite.h"
+#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
 
+class MeshIndexData;
 /**
  * Inherit from Sprite, achieve BillBorad.
  */
@@ -83,11 +85,6 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     BillBorad();
     virtual ~BillBorad();
-
-protected:
-    Mat4      _BillBoradMat;
-
-    void calculateBillBoradMatrix(Mat4 &dst);
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);

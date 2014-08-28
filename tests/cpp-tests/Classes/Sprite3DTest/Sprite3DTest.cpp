@@ -1010,20 +1010,20 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
      TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"Hair");
-	auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchHair,this) );
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchHair,this) );
     auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
-	auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchGlasses,this) );
+    auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchGlasses,this) );
     auto label3 = Label::createWithTTF(ttfConfig,"Coat");
-	auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchCoat,this) );
+    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchCoat,this) );
     auto label4 = Label::createWithTTF(ttfConfig,"Pants");
-	auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchPants,this) );
+    auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchPants,this) );
     auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
-	auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchShoes,this) );
+    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchShoes,this) );
     item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
-	item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
-	item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
-	item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
-	item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
+    item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
+    item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
+    item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
     auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
@@ -1549,9 +1549,9 @@ BillBoardTest::BillBoardTest()
         _layerBillBorad->addChild(_camera);
     }
     
-    addNewBillBoradWithCoords(Vec3(20,0,0));
+    addNewBillBoradWithCoords(Vec3(20,5,0));
     addNewAniBillBoradWithCoords(Vec3(-20,0,0));
-    _camera->setPosition3D(Vec3(0, 130, 130));
+    _camera->setPosition3D(Vec3(0, 0, 130));
     _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
 
     for( int j =-20; j<=20 ;j++)
@@ -1566,7 +1566,7 @@ BillBoardTest::BillBoardTest()
     //draw y
     //line->drawLine(Vec3(0, -50, 0),Vec3(0,0,0),Color4F(0,0.5,0,1));
     //line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
-    _layerBillBorad->addChild(line,1);
+    _layerBillBorad->addChild(line);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"rotate+");
@@ -1601,26 +1601,36 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
     _billborad->setScale(0.5f);
     _layerBillBorad->addChild(_billborad,10);
     _billborad->setPosition(Vec2( p.x,p.y ));
+    _billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    _billborad->setOpacity(200);
 
     auto billborad1 = BillBorad::create("Images/Icon.png");
     billborad1->setScale(0.5f);
     _layerBillBorad->addChild(billborad1,10);
     billborad1->setPosition3D(Vec3(p.x,p.y,p.z - 130));
+    billborad1->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    billborad1->setOpacity(200);
 
     auto billborad2 = BillBorad::create("Images/Icon.png");
     billborad2->setScale(0.5f);
     _layerBillBorad->addChild(billborad2,10);
     billborad2->setPosition3D(Vec3(p.x,p.y,p.z + 50));
+    billborad2->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    billborad2->setOpacity(200);
 
     auto billborad3 = BillBorad::create("Images/Icon.png");
     billborad3->setScale(0.5f);
     _layerBillBorad->addChild(billborad3,10);
     billborad3->setPosition3D(Vec3(p.x,p.y,p.z + 90));
+    billborad3->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    billborad3->setOpacity(200);
 
     auto billborad4 = BillBorad::create("Images/Icon.png");
     billborad4->setScale(0.5f);
     _layerBillBorad->addChild(billborad4,10);
     billborad4->setPosition3D(Vec3(p.x,p.y,p.z - 60));
+    billborad4->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    billborad4->setOpacity(200);
 
 
 }
