@@ -26,6 +26,7 @@
 #define __CCANIMATE3D_H__
 
 #include <map>
+#include <unordered_map>
 
 #include "3d/CCAnimation3D.h"
 
@@ -40,6 +41,7 @@ NS_CC_BEGIN
 
 class Animation3D;
 class Bone3D;
+class Sprite3D;
 /**
  * Animate3D, Animates a Sprite3D given with an Animation3D
  */
@@ -61,6 +63,7 @@ public:
     //
     // Overrides
     //
+    virtual void stop() override;
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
     virtual Animate3D* reverse() const override;
@@ -86,6 +89,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Animate3D();
     
 protected:
+    enum class Animate3DState
+    {
+        FadeIn,
+        FadeOut,
+        Running,
+    };
+    Animate3DState _state; //animation state
     Animation3D* _animation; //animation data
 
     float      _absSpeed; //playing speed
@@ -93,7 +103,15 @@ protected:
     float      _start; //start time 0 - 1, used to generate sub Animate3D
     float      _last; //last time 0 - 1, used to generate sub Animate3D
     bool       _playReverse; // is playing reverse
-    std::map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
+    float      _transTime; //transition time from one animate3d to another
+    float      _accTransTime; // acculate transition time
+    float      _lastTime;     // last t (0 - 1)
+    std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
+
+    //sprite animates
+    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeInAnimates;
+    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeOutAnimates;
+    static std::unordered_map<Sprite3D*, Animate3D*> s_runningAnimates;
 };
 
 NS_CC_END
