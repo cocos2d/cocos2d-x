@@ -26,9 +26,6 @@ THE SOFTWARE.
 
 #include "2d/CCTransitionPageTurn.h"
 #include "base/CCDirector.h"
-#include "2d/CCActionInterval.h"
-#include "2d/CCActionInstant.h"
-#include "2d/CCActionGrid.h"
 #include "2d/CCActionPageTurn3D.h"
 #include "2d/CCNodeGrid.h"
 #include "renderer/CCRenderer.h"

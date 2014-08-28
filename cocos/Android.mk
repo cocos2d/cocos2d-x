@@ -246,7 +246,6 @@ LOCAL_STATIC_LIBRARIES += chipmunk_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
-
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,platform/android)

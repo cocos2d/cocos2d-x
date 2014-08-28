@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
