@@ -485,6 +485,8 @@ void Renderer::clean()
 
     _lastMaterialID = 0;
     _lastBatchedMeshCommand = nullptr;
+    
+    _transparentRenderGroups.clear();
 }
 
 void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
