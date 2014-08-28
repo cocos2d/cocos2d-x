@@ -10,7 +10,9 @@ varying mediump vec3 v_vertexToPointLightDirection[CC_MAX_POINT_LIGHT_NUM];
 \n#if CC_MAX_SPOT_LIGHT_NUM\n
 varying mediump vec3 v_vertexToSpotLightDirection[CC_MAX_SPOT_LIGHT_NUM];
 \n#endif\n
+\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
 varying mediump vec3 v_normal;
+\n#endif\n
 
 \n#else\n
 
@@ -21,7 +23,9 @@ varying vec3 v_vertexToPointLightDirection[CC_MAX_POINT_LIGHT_NUM];
 \n#if CC_MAX_SPOT_LIGHT_NUM\n
 varying vec3 v_vertexToSpotLightDirection[CC_MAX_SPOT_LIGHT_NUM];
 \n#endif\n
+\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
 varying vec3 v_normal;
+\n#endif\n
 
 \n#endif\n
 
