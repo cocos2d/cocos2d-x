@@ -64,7 +64,7 @@ void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
 
 EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg/* = nullptr*/, Scale9Sprite* pDisabled9SpriteBg/* = nullptr*/)
 {
-    EditBox* pRet = new EditBox();
+    EditBox* pRet = new (std::nothrow) EditBox();
     
     if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
     {

@@ -36,7 +36,7 @@ NS_CC_BEGIN
 //create Animate3D using Animation.
 Animate3D* Animate3D::create(Animation3D* animation)
 {
-    auto animate = new Animate3D();
+    auto animate = new (std::nothrow) Animate3D();
     animate->_animation = animation;
     animation->retain();
     

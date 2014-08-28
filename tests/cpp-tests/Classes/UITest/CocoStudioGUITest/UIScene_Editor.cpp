@@ -91,7 +91,7 @@ void UIScene_Editor::toGUIEditorTestScene(Ref* sender, Widget::TouchEventType ev
         {
             UISceneManager_Editor::sharedUISceneManager_Editor()->purge();
             
-            GUIEditorTestScene* pScene = new GUIEditorTestScene();
+            GUIEditorTestScene* pScene = new (std::nothrow) GUIEditorTestScene();
             pScene->runThisTest();
             pScene->release();
         }

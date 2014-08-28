@@ -47,7 +47,7 @@ void ActionCamera::startWithTarget(Node *target)
 ActionCamera* ActionCamera::clone() const
 {
 	// no copy constructor
-	auto a = new ActionCamera();
+	auto a = new (std::nothrow) ActionCamera();
 	a->autorelease();
 	return a;
 }
@@ -148,7 +148,7 @@ OrbitCamera::~OrbitCamera()
 
 OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
-    OrbitCamera * obitCamera = new OrbitCamera();
+    OrbitCamera * obitCamera = new (std::nothrow) OrbitCamera();
     if(obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
     {
         obitCamera->autorelease();
@@ -161,7 +161,7 @@ OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, floa
 OrbitCamera* OrbitCamera::clone() const
 {
 	// no copy constructor	
-	auto a = new OrbitCamera();
+	auto a = new (std::nothrow) OrbitCamera();
 	a->initWithDuration(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
 	a->autorelease();
 	return a;

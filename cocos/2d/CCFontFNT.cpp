@@ -167,7 +167,7 @@ BMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 
     if( s_configurations == nullptr )
     {
-        s_configurations = new Map<std::string, BMFontConfiguration*>();
+        s_configurations = new (std::nothrow) Map<std::string, BMFontConfiguration*>();
     }
 
     ret = s_configurations->at(fntFile);
@@ -189,7 +189,7 @@ BMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 
 BMFontConfiguration * BMFontConfiguration::create(const std::string& FNTfile)
 {
-    BMFontConfiguration * ret = new BMFontConfiguration();
+    BMFontConfiguration * ret = new (std::nothrow) BMFontConfiguration();
     if (ret->initWithFNTfile(FNTfile))
     {
         ret->autorelease();
@@ -752,7 +752,7 @@ int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned sh
 
 FontAtlas * FontFNT::createFontAtlas()
 {
-    FontAtlas *tempAtlas = new FontAtlas(*this);
+    FontAtlas *tempAtlas = new (std::nothrow) FontAtlas(*this);
     if (!tempAtlas)
         return nullptr;
     

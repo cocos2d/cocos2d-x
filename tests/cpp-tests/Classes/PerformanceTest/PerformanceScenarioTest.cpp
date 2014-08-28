@@ -355,7 +355,7 @@ std::string ScenarioTest::title() const
 Scene* ScenarioTest::scene()
 {
     auto scene = Scene::create();
-    ScenarioTest *layer = new ScenarioTest(false, TEST_COUNT, s_nScenarioCurCase);
+    ScenarioTest *layer = new (std::nothrow) ScenarioTest(false, TEST_COUNT, s_nScenarioCurCase);
     scene->addChild(layer);
     layer->release();
 

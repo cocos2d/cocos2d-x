@@ -78,7 +78,7 @@ void PrettyPrinterDemo::onEnter()
 
 void DataVisitorTestScene::runThisTest()
 {
-    auto layer = new PrettyPrinterDemo();
+    auto layer = new (std::nothrow) PrettyPrinterDemo();
     layer->autorelease();
     addChild(layer);
 

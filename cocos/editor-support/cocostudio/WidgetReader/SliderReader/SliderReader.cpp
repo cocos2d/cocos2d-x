@@ -36,7 +36,7 @@ namespace cocostudio
     {
         if (!instanceSliderReader)
         {
-            instanceSliderReader = new SliderReader();
+            instanceSliderReader = new (std::nothrow) SliderReader();
         }
         return instanceSliderReader;
     }

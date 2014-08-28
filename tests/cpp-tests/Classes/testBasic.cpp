@@ -23,7 +23,7 @@ void testScene_callback(Ref *sender )
 {
     auto scene = Scene::create();
 
-    auto layer = new TestController();
+    auto layer = new (std::nothrow) TestController();
     scene->addChild(layer);
     layer->release();
 

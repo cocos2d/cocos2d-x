@@ -13,7 +13,7 @@
 #define TEST_BUG(__bug__)									\
 {															\
 	Scene* scene = Scene::create();					\
-	Bug##__bug__##Layer* layer = new Bug##__bug__##Layer();	\
+	Bug##__bug__##Layer* layer = new (std::nothrow) Bug##__bug__##Layer();	\
 	layer->init();                                         \
 	scene->addChild(layer);                               \
 	Director::getInstance()->replaceScene(scene);     \
@@ -128,7 +128,7 @@ void BugsTestBaseLayer::onEnter()
 void BugsTestBaseLayer::backCallback(Ref* sender)
 {
 //    Director::getInstance()->enableRetinaDisplay(false);
-    auto scene = new BugsTestScene();
+    auto scene = new (std::nothrow) BugsTestScene();
     scene->runThisTest();
     scene->autorelease();
 }
@@ -140,7 +140,7 @@ void BugsTestBaseLayer::backCallback(Ref* sender)
 ////////////////////////////////////////////////////////
 void BugsTestScene::runThisTest()
 {
-    auto layer = new BugsTestMainLayer();
+    auto layer = new (std::nothrow) BugsTestMainLayer();
     addChild(layer);
     layer->release();
 

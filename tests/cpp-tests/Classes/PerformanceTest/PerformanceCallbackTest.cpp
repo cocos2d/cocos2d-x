@@ -82,7 +82,7 @@ void PerformanceCallbackScene::onEnter()
     
     auto s = Director::getInstance()->getWinSize();
     
-    auto menuLayer = new CallbackBasicLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) CallbackBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
     

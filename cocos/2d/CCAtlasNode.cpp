@@ -59,7 +59,7 @@ AtlasNode::~AtlasNode()
 
 AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-	AtlasNode * ret = new AtlasNode();
+	AtlasNode * ret = new (std::nothrow) AtlasNode();
 	if (ret->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
 	{
 		ret->autorelease();
@@ -86,7 +86,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
 
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    _textureAtlas = new TextureAtlas();
+    _textureAtlas = new (std::nothrow) TextureAtlas();
     _textureAtlas->initWithTexture(texture, itemsToRender);
 
     if (! _textureAtlas)

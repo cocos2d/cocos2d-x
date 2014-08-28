@@ -67,7 +67,7 @@ CurrentLanguageTest::CurrentLanguageTest()
 
 void CurrentLanguageTestScene::runThisTest()
 {
-    auto layer = new CurrentLanguageTest();
+    auto layer = new (std::nothrow) CurrentLanguageTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

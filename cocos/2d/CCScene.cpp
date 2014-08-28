@@ -77,7 +77,7 @@ bool Scene::initWithSize(const Size& size)
 
 Scene* Scene::create()
 {
-    Scene *ret = new Scene();
+    Scene *ret = new (std::nothrow) Scene();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -92,7 +92,7 @@ Scene* Scene::create()
 
 Scene* Scene::createWithSize(const Size& size)
 {
-    Scene *ret = new Scene();
+    Scene *ret = new (std::nothrow) Scene();
     if (ret && ret->initWithSize(size))
     {
         ret->autorelease();
@@ -148,7 +148,7 @@ void Scene::update(float delta)
 
 Scene* Scene::createWithPhysics()
 {
-    Scene *ret = new Scene();
+    Scene *ret = new (std::nothrow) Scene();
     if (ret && ret->initWithPhysics())
     {
         ret->autorelease();

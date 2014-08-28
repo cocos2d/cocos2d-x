@@ -56,7 +56,7 @@ void FileUtilsDemo::onEnter()
 
 void FileUtilsDemo::backCallback(Ref* sender)
 {
-    auto scene = new FileUtilsTestScene();
+    auto scene = new (std::nothrow) FileUtilsTestScene();
     auto layer = backAction();
     
     scene->addChild(layer);
@@ -66,7 +66,7 @@ void FileUtilsDemo::backCallback(Ref* sender)
 
 void FileUtilsDemo::nextCallback(Ref* sender)
 {
-    auto scene = new FileUtilsTestScene();
+    auto scene = new (std::nothrow) FileUtilsTestScene();
     auto layer = nextAction();
     
     scene->addChild(layer);
@@ -76,7 +76,7 @@ void FileUtilsDemo::nextCallback(Ref* sender)
 
 void FileUtilsDemo::restartCallback(Ref* sender)
 {
-    auto scene = new FileUtilsTestScene();
+    auto scene = new (std::nothrow) FileUtilsTestScene();
     auto layer = restartAction();
     
     scene->addChild(layer);

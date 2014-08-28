@@ -130,7 +130,7 @@ void Layout::onExit()
 
 Layout* Layout::create()
 {
-    Layout* layout = new Layout();
+    Layout* layout = new (std::nothrow) Layout();
     if (layout && layout->init())
     {
         layout->autorelease();

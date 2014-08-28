@@ -123,7 +123,7 @@ void IntervalLayer::step4(float dt)
 
 void IntervalTestScene::runThisTest()
 {
-    auto layer = new IntervalLayer();
+    auto layer = new (std::nothrow) IntervalLayer();
     addChild(layer);
     layer->release();
 

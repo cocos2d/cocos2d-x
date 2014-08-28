@@ -64,7 +64,7 @@ UISceneManager_Editor* UISceneManager_Editor::sharedUISceneManager_Editor()
 {
     if (sharedInstance == nullptr)
     {
-        sharedInstance = new UISceneManager_Editor();
+        sharedInstance = new (std::nothrow) UISceneManager_Editor();
     }
     return sharedInstance;
 }
