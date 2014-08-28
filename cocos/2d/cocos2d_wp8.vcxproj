@@ -222,6 +222,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\3d\CCAABB.cpp" />
     <ClCompile Include="..\3d\CCAnimate3D.cpp" />
     <ClCompile Include="..\3d\CCAnimation3D.cpp" />
     <ClCompile Include="..\3d\CCAttachNode.cpp" />
@@ -229,7 +230,9 @@
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
+    <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\3d\CCRay.cpp" />
     <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
@@ -280,6 +283,7 @@
     <ClCompile Include="..\base\CCModuleManager.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
+    <ClCompile Include="..\base\ccRandom.cpp" />
     <ClCompile Include="..\base\CCRef.cpp" />
     <ClCompile Include="..\base\CCScheduler.cpp" />
     <ClCompile Include="..\base\CCScriptSupport.cpp" />
@@ -442,6 +446,7 @@
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h" />
+    <ClInclude Include="..\3d\CCAABB.h" />
     <ClInclude Include="..\3d\CCAnimate3D.h" />
     <ClInclude Include="..\3d\CCAnimation3D.h" />
     <ClInclude Include="..\3d\CCAnimationCurve.h" />
@@ -451,7 +456,9 @@
     <ClInclude Include="..\3d\CCBundleReader.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
+    <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
+    <ClInclude Include="..\3d\CCRay.h" />
     <ClInclude Include="..\3d\CCSkeleton3D.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
@@ -495,6 +502,7 @@
     <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProtocols.h" />
+    <ClInclude Include="..\base\ccRandom.h" />
     <ClInclude Include="..\base\CCRef.h" />
     <ClInclude Include="..\base\CCRefPtr.h" />
     <ClInclude Include="..\base\CCScheduler.h" />

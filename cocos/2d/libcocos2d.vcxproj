@@ -213,6 +213,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCModuleManager.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
+    <ClCompile Include="..\base\ccRandom.cpp" />
     <ClCompile Include="..\base\CCRef.cpp" />
     <ClCompile Include="..\base\CCScheduler.cpp" />
     <ClCompile Include="..\base\CCScriptSupport.cpp" />
@@ -399,6 +400,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProtocols.h" />
+    <ClInclude Include="..\base\ccRandom.h" />
     <ClInclude Include="..\base\CCRef.h" />
     <ClInclude Include="..\base\CCRefPtr.h" />
     <ClInclude Include="..\base\CCScheduler.h" />

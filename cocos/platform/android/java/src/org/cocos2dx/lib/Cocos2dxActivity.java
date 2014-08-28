@@ -34,6 +34,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.preference.PreferenceManager.OnActivityResultListener;
@@ -56,6 +57,16 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
 	public static Context getContext() {
 		return sContext;
+	}
+	
+	public void setKeepScreenOn(boolean value) {
+		final boolean newValue = value;
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mGLSurfaceView.setKeepScreenOn(newValue);
+			}
+		});
 	}
 	
 	protected void onLoadNativeLibraries() {

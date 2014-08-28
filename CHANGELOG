@@ -4,6 +4,9 @@ cocos2d-x-3.3  ??
     [NEW]           Added Camera, AABB, OBB and Ray
     [NEW]           Added render primitive and render primitive command, support passing point, line and triangle data
     [NEW]           Added support for applicationDidEnterBackground / applicationWillEnterForeground on desktop
+    [NEW]           Added method for custom precompiled shader program loading on WP8
+    [NEW]           Added c++11 random support
+    [NEW]           Device: added setKeepScreenOn() for iOS and Android
     [NEW]           EventMouse: support getDelta, getDeltaX, getDeltaY functions
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()
     getFileSize()

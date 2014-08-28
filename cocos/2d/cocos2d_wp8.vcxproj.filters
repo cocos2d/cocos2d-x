@@ -650,6 +650,18 @@
     <ClCompile Include="..\base\CCModuleManager.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\ccRandom.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAABB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCOBB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCRay.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1327,6 +1339,18 @@
     </ClInclude>
     <ClInclude Include="..\base\CCModuleManager.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\ccRandom.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAABB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCOBB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCRay.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
