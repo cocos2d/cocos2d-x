@@ -6,6 +6,7 @@ cocos2d-x-3.3alpha0  ??
     [NEW]           Added method for custom precompiled shader program loading on WP8
     [NEW]           Added c++11 random support
     [NEW]           Added better reskin model support 
+    [NEW]           Added consistent way to set GL context attributes
     [NEW]           Device: added setKeepScreenOn() for iOS and Android
     [NEW]           EventMouse: support getDelta, getDeltaX, getDeltaY functions
     [NEW]           FileUtils: add isDirectoryExist(), createDirectory(), removeDirectory(), removeFile(), renameFile()

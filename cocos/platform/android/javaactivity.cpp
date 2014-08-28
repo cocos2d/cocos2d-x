@@ -29,8 +29,10 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventType.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "CCGLViewImpl.h"
 #include "platform/android/jni/JniHelper.h"
@@ -64,7 +66,7 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         glview->setFrameSize(w, h);
         director->setOpenGLView(glview);
 
-        cocos_android_app_init(env, thiz);
+        //cocos_android_app_init(env, thiz);
 
         cocos2d::Application::getInstance()->run();
     }
@@ -79,7 +81,22 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
     }
+}
 
+jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNIEnv*  env, jobject thiz)
+{
+    cocos_android_app_init(env, thiz);
+    cocos2d::Application::getInstance()->initGLContextAttrs(); 
+    GLContextAttrs _glContextAttrs = GLView::getGLContextAttrs();
+    
+    int tmp[6] = {_glContextAttrs.redBits, _glContextAttrs.greenBits, _glContextAttrs.blueBits,
+                           _glContextAttrs.alphaBits, _glContextAttrs.depthBits, _glContextAttrs.stencilBits};
+
+
+    jintArray glContextAttrsJava = env->NewIntArray(6);
+        env->SetIntArrayRegion(glContextAttrsJava, 0, 6, tmp); 
+    
+    return glContextAttrsJava;
 }
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged(JNIEnv*  env, jobject thiz, jint w, jint h)

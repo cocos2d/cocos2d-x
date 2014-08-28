@@ -29,10 +29,6 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "base/CCScriptSupport.h"
 #include "platform/CCDevice.h"
-#include "2d/CCScene.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
@@ -43,7 +39,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
-#include "math/TransformUtils.h"
+
 
 #include "deprecated/CCString.h"
 

@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "2d/CCActionManager.h"
 #include "2d/CCNode.h"
+#include "2d/CCAction.h"
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
 #include "base/ccCArray.h"
@@ -312,7 +313,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
                 }
             }
         }
-        CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
+        //CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
     }
     else
     {

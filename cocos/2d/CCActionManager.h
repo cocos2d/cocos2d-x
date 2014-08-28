@@ -35,6 +35,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Action;
+
 struct _hashElement;
 
 /**

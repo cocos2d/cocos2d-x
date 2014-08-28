@@ -30,14 +30,11 @@
 #define __CCNODE_H__
 
 #include "base/ccMacros.h"
-#include "base/CCEventDispatcher.h"
 #include "base/CCVector.h"
-#include "base/CCScriptSupport.h"
 #include "base/CCProtocols.h"
+#include "base/CCScriptSupport.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
-#include "renderer/ccGLStateCache.h"
-#include "CCGL.h"
 
 NS_CC_BEGIN
 

@@ -46,6 +46,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	private long mLastTickInNanoSeconds;
 	private int mScreenWidth;
 	private int mScreenHeight;
+	private boolean mNativeInitCompleted = false;
 
 	// ===========================================================
 	// Constructors
@@ -72,6 +73,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(final GL10 pGL10, final EGLConfig pEGLConfig) {
 		Cocos2dxRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
 		this.mLastTickInNanoSeconds = System.nanoTime();
+		mNativeInitCompleted = true;
 	}
 
 	@Override
@@ -141,6 +143,13 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void handleOnPause() {
+		// onPause may be invoked before onSurfaceCreated
+		// and engine will be initialized correctly after
+		// onSurfaceCreated is invoked, can not invoke any
+		// native methed before onSurfaceCreated is invoked
+		if (! mNativeInitCompleted)
+			return;
+
 		Cocos2dxHelper.onEnterBackground();
 		Cocos2dxRenderer.nativeOnPause();
 	}
