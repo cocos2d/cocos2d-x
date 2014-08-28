@@ -27,28 +27,14 @@ THE SOFTWARE.
 
 #include "2d/CCSprite.h"
 
-#include <string.h>
-#include <algorithm>
-
 #include "2d/CCSpriteBatchNode.h"
-#include "2d/CCAnimation.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
-#include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTexture2D.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
 #include "renderer/CCRenderer.h"
-#include "base/CCProfiling.h"
 #include "base/CCDirector.h"
-#include "base/CCDirector.h"
-#include "base/ccConfig.h"
-#include "math/CCGeometry.h"
-#include "math/CCAffineTransform.h"
-#include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 

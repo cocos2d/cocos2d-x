@@ -26,16 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTMXLayer.h"
-
-#include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
-#include "base/ccCArray.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgram.h"
-
 #include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN

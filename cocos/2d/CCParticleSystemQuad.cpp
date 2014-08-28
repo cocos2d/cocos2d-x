@@ -26,25 +26,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGL.h"
+
 #include "2d/CCParticleSystemQuad.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
-#include "math/TransformUtils.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCCustomCommand.h"
-
-// extern
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

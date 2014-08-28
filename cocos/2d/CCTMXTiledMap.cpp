@@ -24,13 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTMXTiledMap.h"
-#include "CCTMXXMLParser.h"
-#include "CCTMXLayer.h"
+#include "2d/CCTMXTiledMap.h"
+#include "2d/CCTMXXMLParser.h"
+#include "2d/CCTMXLayer.h"
 #include "2d/CCSprite.h"
 #include "deprecated/CCString.h" // For StringUtils::format
-
-#include <algorithm>
 
 NS_CC_BEGIN
 

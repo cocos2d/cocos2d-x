@@ -28,12 +28,10 @@ THE SOFTWARE.
 #include "2d/CCMenuItem.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCSprite.h"
-#include "CCLabelAtlas.h"
+#include "2d/CCLabelAtlas.h"
 #include "2d/CCLabel.h"
-#include "base/CCScriptSupport.h"
 #include "deprecated/CCString.h"
 #include <stdarg.h>
-#include <cstring>
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

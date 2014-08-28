@@ -30,22 +30,13 @@
 
 #include "2d/CCParticleBatchNode.h"
 
-#include "renderer/CCTextureAtlas.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
-#include "platform/CCFileUtils.h"
-#include "base/CCProfiling.h"
-#include "base/ccConfig.h"
-#include "base/ccMacros.h"
-#include "base/base64.h"
-#include "base/ZipUtils.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"
-
+#include "renderer/CCTextureAtlas.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

@@ -31,14 +31,15 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "2d/CCSpriteFrame.h"
+
 #include "2d/CCSprite.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
+#include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-#include "math/TransformUtils.h"
+
 
 #include "deprecated/CCString.h"
 

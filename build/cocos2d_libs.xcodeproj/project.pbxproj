@@ -3345,13 +3345,6 @@
 			name = "text-input-node";
 			sourceTree = "<group>";
 		};
-		1A5702CC180BCE410088DEC7 /* textures */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = textures;
-			sourceTree = "<group>";
-		};
 		1A5702DF180BCE610088DEC7 /* tilemap-parallax-nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -4483,7 +4476,6 @@
 				1A570275180BCC840088DEC7 /* sprite-nodes */,
 				1A57029A180BCD4F0088DEC7 /* support */,
 				1A5702BC180BCE0A0088DEC7 /* text-input-node */,
-				1A5702CC180BCE410088DEC7 /* textures */,
 				1A5702DF180BCE610088DEC7 /* tilemap-parallax-nodes */,
 			);
 			name = 2d;

@@ -26,14 +26,11 @@
  */
 
 #include "2d/CCClippingNode.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 
-#include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
