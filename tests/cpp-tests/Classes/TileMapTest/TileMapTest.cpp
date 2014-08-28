@@ -123,7 +123,7 @@ void TileDemo::onExit()
 }
 void TileDemo::restartCallback(Ref* sender)
 {
-    auto s = new TileMapTestScene();
+    auto s = new (std::nothrow) TileMapTestScene();
     s->addChild(restartTileMapAction());
 
     Director::getInstance()->replaceScene(s);
@@ -132,7 +132,7 @@ void TileDemo::restartCallback(Ref* sender)
 
 void TileDemo::nextCallback(Ref* sender)
 {
-    auto s = new TileMapTestScene();
+    auto s = new (std::nothrow) TileMapTestScene();
     s->addChild( nextTileMapAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -140,7 +140,7 @@ void TileDemo::nextCallback(Ref* sender)
 
 void TileDemo::backCallback(Ref* sender)
 {
-    auto s = new TileMapTestScene();
+    auto s = new (std::nothrow) TileMapTestScene();
     s->addChild( backTileMapAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

@@ -46,6 +46,23 @@
 -- @param #string str
         
 --------------------------------
+-- @function [parent=#Sprite3D] getMeshByIndex 
+-- @param self
+-- @param #int int
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+-- @function [parent=#Sprite3D] getMeshByName 
+-- @param self
+-- @param #string str
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+-- @function [parent=#Sprite3D] getSkeleton 
+-- @param self
+-- @return Skeleton3D#Skeleton3D ret (return value: cc.Skeleton3D)
+        
+--------------------------------
 -- @function [parent=#Sprite3D] getAttachNode 
 -- @param self
 -- @param #string str
@@ -64,5 +81,15 @@
 -- @function [parent=#Sprite3D] getBoundingBox 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- @function [parent=#Sprite3D] setGLProgramState 
+-- @param self
+-- @param #cc.GLProgramState glprogramstate
+        
+--------------------------------
+-- @function [parent=#Sprite3D] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
         
 return nil

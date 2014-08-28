@@ -2,13 +2,13 @@
 -- @module cc
 
 --------------------------------------------------------
--- the cc Sprite3D
--- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
+-- the cc Mesh
+-- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
 
 
 --------------------------------------------------------
--- the cc Mesh
--- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
+-- the cc Sprite3D
+-- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
 
 
 --------------------------------------------------------
@@ -24,11 +24,6 @@
 --------------------------------------------------------
 -- the cc Animate3D
 -- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
-
-
---------------------------------------------------------
--- the cc SubMeshState
--- @field [parent=#cc] SubMeshState#SubMeshState SubMeshState preloaded module
 
 
 --------------------------------------------------------

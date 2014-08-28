@@ -120,7 +120,7 @@ void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 
 TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 {
-    TextureAtlas * textureAtlas = new TextureAtlas();
+    TextureAtlas * textureAtlas = new (std::nothrow) TextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))
     {
         textureAtlas->autorelease();
@@ -132,7 +132,7 @@ TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 
 TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capacity)
 {
-    TextureAtlas * textureAtlas = new TextureAtlas();
+    TextureAtlas * textureAtlas = new (std::nothrow) TextureAtlas();
     if (textureAtlas && textureAtlas->initWithTexture(texture, capacity))
     {
         textureAtlas->autorelease();

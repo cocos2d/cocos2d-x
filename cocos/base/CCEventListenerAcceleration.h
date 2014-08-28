@@ -41,10 +41,13 @@ public:
     /// Overrides
     virtual EventListenerAcceleration* clone() override;
     virtual bool checkAvailable() override;
-private:
+    
+CC_CONSTRUCTOR_ACCESS:
     EventListenerAcceleration();
     
     bool init(const std::function<void(Acceleration*, Event* event)>& callback);
+    
+private:
     std::function<void(Acceleration*, Event*)> onAccelerationEvent;
     
     friend class LuaEventListenerAcceleration;

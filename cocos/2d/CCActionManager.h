@@ -35,6 +35,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Action;
+
 struct _hashElement;
 
 /**
@@ -90,6 +92,9 @@ public:
 
     /** Removes an action given its tag and the target */
     void removeActionByTag(int tag, Node *target);
+    
+    /** Removes all actions given its tag and the target */
+    void removeAllActionsByTag(int tag, Node *target);
 
     /** Gets an action given its tag an a target
      @return the Action the with the given tag

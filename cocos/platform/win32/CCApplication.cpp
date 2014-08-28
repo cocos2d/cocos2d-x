@@ -69,6 +69,8 @@ int Application::run()
     QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
+    initGLContextAttrs();
+
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())
     {

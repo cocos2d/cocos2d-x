@@ -29,7 +29,8 @@
 
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontFreeType.h"
-#include "CCFontCharMap.h"
+#include "2d/CCFontAtlas.h"
+#include "2d/CCFontCharMap.h"
 #include "base/CCDirector.h"
 
 NS_CC_BEGIN

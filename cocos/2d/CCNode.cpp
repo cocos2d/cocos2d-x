@@ -1,3 +1,5 @@
+
+
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
@@ -34,26 +36,20 @@ THE SOFTWARE.
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/CCTouch.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCEvent.h"
-#include "base/CCEventTouch.h"
-#include "base/ccCArray.h"
 #include "base/CCCamera.h"
-#include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
-#include "base/CCScriptSupport.h"
 #include "2d/CCScene.h"
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
 #endif
 
 
@@ -476,19 +472,7 @@ const Vec2& Node::getPosition() const
 /// position setter
 void Node::setPosition(const Vec2& position)
 {
-    if (_position.equals(position))
-        return;
-    
-    _position = position;
-    _transformUpdated = _transformDirty = _inverseDirty = true;
-    _usingNormalizedPosition = false;
-
-#if CC_USE_PHYSICS
-    if (!_physicsBody || !_physicsBody->_positionResetTag)
-    {
-        updatePhysicsBodyPosition(getScene());
-    }
-#endif
+    setPosition(position.x, position.y);
 }
 
 void Node::getPosition(float* x, float* y) const
@@ -499,13 +483,27 @@ void Node::getPosition(float* x, float* y) const
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(Vec2(x, y));
+    if (_position.x == x && _position.y == y)
+        return;
+    
+    _position.x = x;
+    _position.y = y;
+    
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+    _usingNormalizedPosition = false;
+    
+#if CC_USE_PHYSICS
+    if (!_physicsBody || !_physicsBody->_positionResetTag)
+    {
+        updatePhysicsBodyPosition(getScene());
+    }
+#endif
 }
 
 void Node::setPosition3D(const Vec3& position)
 {
-    _positionZ = position.z;
-    setPosition(Vec2(position.x, position.y));
+    setPositionZ(position.z);
+    setPosition(position.x, position.y);
 }
 
 Vec3 Node::getPosition3D() const
@@ -524,7 +522,7 @@ float Node::getPositionX() const
 
 void Node::setPositionX(float x)
 {
-    setPosition(Vec2(x, _position.y));
+    setPosition(x, _position.y);
 }
 
 float Node::getPositionY() const
@@ -534,7 +532,7 @@ float Node::getPositionY() const
 
 void Node::setPositionY(float y)
 {
-    setPosition(Vec2(_position.x, y));
+    setPosition(_position.x, y);
 }
 
 float Node::getPositionZ() const
@@ -761,7 +759,7 @@ Rect Node::getBoundingBox() const
 
 Node * Node::create()
 {
-	Node * ret = new Node();
+	Node * ret = new (std::nothrow) Node();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -1444,6 +1442,12 @@ void Node::stopActionByTag(int tag)
     _actionManager->removeActionByTag(tag, this);
 }
 
+void Node::stopAllActionsByTag(int tag)
+{
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
+    _actionManager->removeAllActionsByTag(tag, this);
+}
+
 Action * Node::getActionByTag(int tag)
 {
     CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
@@ -1851,7 +1855,7 @@ bool Node::addComponent(Component *component)
 {
     // lazy alloc
     if( !_componentContainer )
-        _componentContainer = new ComponentContainer(this);
+        _componentContainer = new (std::nothrow) ComponentContainer(this);
     return _componentContainer->add(component);
 }
 

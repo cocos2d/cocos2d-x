@@ -63,7 +63,7 @@ public:
 
     typedef std::string ListenerID;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
     EventListener();
 

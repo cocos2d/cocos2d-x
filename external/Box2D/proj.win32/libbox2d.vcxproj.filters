@@ -2,25 +2,25 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Collision">
-      <UniqueIdentifier>{bdf099c5-cc32-468b-b53f-ec010d7f823f}</UniqueIdentifier>
+      <UniqueIdentifier>{96e593a1-0dd7-4dae-b88d-ee4fc8a03ad3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Shapes">
-      <UniqueIdentifier>{92792f88-4e5c-46ee-8d87-002f3b2297ae}</UniqueIdentifier>
+      <UniqueIdentifier>{65359ee0-026c-4116-9235-72fbc83ad4cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{f41a6fa6-5ac1-4514-9ac0-6f3a38f35b4d}</UniqueIdentifier>
+      <UniqueIdentifier>{4682feab-6913-410c-af1a-a6063c5a5c70}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamics">
-      <UniqueIdentifier>{0b56913a-34b7-410a-b386-869d6f7a20be}</UniqueIdentifier>
+      <UniqueIdentifier>{82f2dcc2-92b3-41db-8482-9de0b1012103}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamics\Contacts">
-      <UniqueIdentifier>{f0e7b230-79cc-49b8-9ed7-9dbfa062f2a4}</UniqueIdentifier>
+      <UniqueIdentifier>{85580c9a-58ff-4035-b17f-a539b89be2bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamics\Joints">
-      <UniqueIdentifier>{932f2008-afbe-42f5-993d-a1df0ec67756}</UniqueIdentifier>
+      <UniqueIdentifier>{4857faee-e51c-4875-a34d-bde79c74b51a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Rope">
-      <UniqueIdentifier>{f8937e09-93a4-49fa-8f3e-dfc36da764df}</UniqueIdentifier>
+      <UniqueIdentifier>{ac5c2bb8-243b-4c0e-bc5b-09299960f055}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +135,9 @@
     <ClCompile Include="..\Dynamics\Joints\b2Joint.cpp">
       <Filter>Dynamics\Joints</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dynamics\Joints\b2MotorJoint.cpp">
+      <Filter>Dynamics\Joints</Filter>
+    </ClCompile>
     <ClCompile Include="..\Dynamics\Joints\b2MouseJoint.cpp">
       <Filter>Dynamics\Joints</Filter>
     </ClCompile>
@@ -158,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="..\Rope\b2Rope.cpp">
       <Filter>Rope</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Dynamics\Joints\b2MotorJoint.cpp">
-      <Filter>Dynamics\Joints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +275,9 @@
     <ClInclude Include="..\Dynamics\Joints\b2Joint.h">
       <Filter>Dynamics\Joints</Filter>
     </ClInclude>
+    <ClInclude Include="..\Dynamics\Joints\b2MotorJoint.h">
+      <Filter>Dynamics\Joints</Filter>
+    </ClInclude>
     <ClInclude Include="..\Dynamics\Joints\b2MouseJoint.h">
       <Filter>Dynamics\Joints</Filter>
     </ClInclude>
@@ -300,8 +303,5 @@
       <Filter>Rope</Filter>
     </ClInclude>
     <ClInclude Include="..\Box2D.h" />
-    <ClInclude Include="..\Dynamics\Joints\b2MotorJoint.h">
-      <Filter>Dynamics\Joints</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

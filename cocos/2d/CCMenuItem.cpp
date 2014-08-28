@@ -66,7 +66,7 @@ MenuItem* MenuItem::create()
 // XXX deprecated
 MenuItem* MenuItem::create(Ref *target, SEL_MenuHandler selector)
 {
-    MenuItem *ret = new MenuItem();
+    MenuItem *ret = new (std::nothrow) MenuItem();
     ret->initWithTarget(target, selector);
     ret->autorelease();
     return ret;
@@ -74,7 +74,7 @@ MenuItem* MenuItem::create(Ref *target, SEL_MenuHandler selector)
 
 MenuItem* MenuItem::create( const ccMenuCallback& callback)
 {
-    MenuItem *ret = new MenuItem();
+    MenuItem *ret = new (std::nothrow) MenuItem();
     ret->initWithCallback(callback);
     ret->autorelease();
     return ret;
@@ -195,7 +195,7 @@ void MenuItemLabel::setLabel(Node* var)
 // XXX: deprecated
 MenuItemLabel * MenuItemLabel::create(Node*label, Ref* target, SEL_MenuHandler selector)
 {
-    MenuItemLabel *ret = new MenuItemLabel();
+    MenuItemLabel *ret = new (std::nothrow) MenuItemLabel();
     ret->initWithLabel(label, target, selector);
     ret->autorelease();
     return ret;
@@ -203,7 +203,7 @@ MenuItemLabel * MenuItemLabel::create(Node*label, Ref* target, SEL_MenuHandler s
 
 MenuItemLabel * MenuItemLabel::create(Node*label, const ccMenuCallback& callback)
 {
-    MenuItemLabel *ret = new MenuItemLabel();
+    MenuItemLabel *ret = new (std::nothrow) MenuItemLabel();
     ret->initWithLabel(label, callback);
     ret->autorelease();
     return ret;
@@ -211,7 +211,7 @@ MenuItemLabel * MenuItemLabel::create(Node*label, const ccMenuCallback& callback
 
 MenuItemLabel* MenuItemLabel::create(Node *label)
 {
-    MenuItemLabel *ret = new MenuItemLabel();
+    MenuItemLabel *ret = new (std::nothrow) MenuItemLabel();
     ret->initWithLabel(label, (const ccMenuCallback&) nullptr);
     ret->autorelease();
     return ret;
@@ -325,7 +325,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const st
 // XXX: deprecated
 MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector)
 {
-    MenuItemAtlasFont *ret = new MenuItemAtlasFont();
+    MenuItemAtlasFont *ret = new (std::nothrow) MenuItemAtlasFont();
     ret->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, target, selector);
     ret->autorelease();
     return ret;
@@ -333,7 +333,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const st
 
 MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    MenuItemAtlasFont *ret = new MenuItemAtlasFont();
+    MenuItemAtlasFont *ret = new (std::nothrow) MenuItemAtlasFont();
     ret->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback);
     ret->autorelease();
     return ret;
@@ -391,7 +391,7 @@ const std::string& MenuItemFont::getFontName()
 // XXX: deprecated
 MenuItemFont * MenuItemFont::create(const std::string& value, Ref* target, SEL_MenuHandler selector)
 {
-    MenuItemFont *ret = new MenuItemFont();
+    MenuItemFont *ret = new (std::nothrow) MenuItemFont();
     ret->initWithString(value, target, selector);
     ret->autorelease();
     return ret;
@@ -399,7 +399,7 @@ MenuItemFont * MenuItemFont::create(const std::string& value, Ref* target, SEL_M
 
 MenuItemFont * MenuItemFont::create(const std::string& value, const ccMenuCallback& callback)
 {
-    MenuItemFont *ret = new MenuItemFont();
+    MenuItemFont *ret = new (std::nothrow) MenuItemFont();
     ret->initWithString(value, callback);
     ret->autorelease();
     return ret;
@@ -408,7 +408,7 @@ MenuItemFont * MenuItemFont::create(const std::string& value, const ccMenuCallba
 
 MenuItemFont * MenuItemFont::create(const std::string& value)
 {
-    MenuItemFont *ret = new MenuItemFont();
+    MenuItemFont *ret = new (std::nothrow) MenuItemFont();
     ret->initWithString(value, (const ccMenuCallback&)nullptr);
     ret->autorelease();
     return ret;
@@ -560,7 +560,7 @@ MenuItemSprite * MenuItemSprite::create(Node* normalSprite, Node* selectedSprite
 // XXX deprecated
 MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite, Node *disabledSprite, Ref *target, SEL_MenuHandler selector)
 {
-    MenuItemSprite *ret = new MenuItemSprite();
+    MenuItemSprite *ret = new (std::nothrow) MenuItemSprite();
     ret->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
     ret->autorelease();
     return ret;
@@ -568,7 +568,7 @@ MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite
 
 MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite, Node *disabledSprite, const ccMenuCallback& callback)
 {
-    MenuItemSprite *ret = new MenuItemSprite();
+    MenuItemSprite *ret = new (std::nothrow) MenuItemSprite();
     ret->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
     ret->autorelease();
     return ret;
@@ -686,7 +686,7 @@ void MenuItemSprite::updateImagesVisibility()
 
 MenuItemImage* MenuItemImage::create()
 {
-    MenuItemImage *ret = new MenuItemImage();
+    MenuItemImage *ret = new (std::nothrow) MenuItemImage();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -720,7 +720,7 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
 // XXX deprecated
 MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector)
 {
-    MenuItemImage *ret = new MenuItemImage();
+    MenuItemImage *ret = new (std::nothrow) MenuItemImage();
     if (ret && ret->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector))
     {
         ret->autorelease();
@@ -732,7 +732,7 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
 
 MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback)
 {
-    MenuItemImage *ret = new MenuItemImage();
+    MenuItemImage *ret = new (std::nothrow) MenuItemImage();
     if (ret && ret->initWithNormalImage(normalImage, selectedImage, disabledImage, callback))
     {
         ret->autorelease();
@@ -744,7 +744,7 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
 
 MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage)
 {
-    MenuItemImage *ret = new MenuItemImage();
+    MenuItemImage *ret = new (std::nothrow) MenuItemImage();
     if (ret && ret->initWithNormalImage(normalImage, selectedImage, disabledImage, (const ccMenuCallback&)nullptr))
     {
         ret->autorelease();
@@ -809,7 +809,7 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 // XXX: deprecated
 MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems)
 {
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->MenuItem::initWithTarget(target, selector);
     ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
@@ -819,7 +819,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
 
 MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callback, const Vector<MenuItem*>& menuItems)
 {
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->MenuItem::initWithCallback(callback);
     ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
@@ -832,7 +832,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
 {
     va_list args;
     va_start(args, item);
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->initWithTarget(target, selector, item, args);
     ret->autorelease();
     va_end(args);
@@ -844,7 +844,7 @@ MenuItemToggle * MenuItemToggle::createWithCallbackVA(const ccMenuCallback &call
 {
     va_list args;
     va_start(args, item);
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->initWithCallback(callback, item, args);
     ret->autorelease();
     va_end(args);
@@ -855,7 +855,7 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
 {
     va_list args;
     va_start(args, item);
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->initWithCallback(callback, item, args);
     ret->autorelease();
     va_end(args);
@@ -865,7 +865,7 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
 
 MenuItemToggle * MenuItemToggle::create()
 {
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->initWithItem(nullptr);
     ret->autorelease();
     return ret;
@@ -898,7 +898,7 @@ bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *
 
 MenuItemToggle* MenuItemToggle::create(MenuItem *item)
 {
-    MenuItemToggle *ret = new MenuItemToggle();
+    MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->initWithItem(item);
     ret->autorelease();
     return ret;
@@ -948,7 +948,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
-        item->setPosition( Vec2( s.width/2, s.height/2 ) );
+        item->setPosition(s.width/2, s.height/2);
     }
 }
 

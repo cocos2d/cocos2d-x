@@ -36,9 +36,12 @@
 
 NS_CC_BEGIN
 
+void* GLViewImpl::_pixelFormat = kEAGLColorFormatRGB565;
+int GLViewImpl::_depthFormat = GL_DEPTH_COMPONENT16;
+
 GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithEAGLView(eaglview)) {
         ret->autorelease();
         return ret;
@@ -49,7 +52,7 @@ GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -60,7 +63,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
 
 GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -71,13 +74,25 @@ GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, f
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new GLViewImpl();
+    auto ret = new (std::nothrow) GLViewImpl();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
     }
 
     return nullptr;
+}
+
+void GLViewImpl::convertAttrs()
+{
+    if(_glContextAttrs.redBits==8 && _glContextAttrs.greenBits==8 && _glContextAttrs.blueBits==8 && _glContextAttrs.alphaBits==8)
+    {
+        _pixelFormat = kEAGLColorFormatRGBA8;
+    }
+    if(_glContextAttrs.depthBits==24 && _glContextAttrs.stencilBits==8)
+    {
+        _depthFormat = GL_DEPTH24_STENCIL8_OES;
+    }
 }
 
 GLViewImpl::GLViewImpl()
@@ -87,7 +102,7 @@ GLViewImpl::GLViewImpl()
 GLViewImpl::~GLViewImpl()
 {
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
-    [glview release];
+    //[glview release];
 }
 
 bool GLViewImpl::initWithEAGLView(void *eaglview)
@@ -105,13 +120,15 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    convertAttrs();
     CCEAGLView *eaglview = [CCEAGLView viewWithFrame: r
-                                       pixelFormat: kEAGLColorFormatRGB565
-                                       depthFormat: GL_DEPTH24_STENCIL8_OES
+                                       pixelFormat: (NSString*)_pixelFormat
+                                       depthFormat: _depthFormat
                                 preserveBackbuffer: NO
                                         sharegroup: nil
                                      multiSampling: NO
                                    numberOfSamples: 0];
+    
     [eaglview setMultipleTouchEnabled:YES];
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
@@ -170,7 +187,7 @@ void GLViewImpl::end()
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
-    [eaglview release];
+    //[eaglview release];
 }
 
 

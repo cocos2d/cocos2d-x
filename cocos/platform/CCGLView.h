@@ -64,6 +64,16 @@ enum class ResolutionPolicy
     UNKNOWN,
 };
 
+struct GLContextAttrs
+{
+    int redBits;
+    int greenBits;
+    int blueBits;
+    int alphaBits;
+    int depthBits;
+    int stencilBits;
+};
+
 NS_CC_BEGIN
 
 /**
@@ -97,6 +107,11 @@ public:
     virtual void setIMEKeyboardState(bool open) = 0;
     
     virtual bool windowShouldClose() { return false; };
+
+    //static method and member so that we can modify it on all platforms before create OpenGL context
+    static void setGLContextAttrs(GLContextAttrs& glContextAttrs);
+    static GLContextAttrs getGLContextAttrs();
+    static GLContextAttrs _glContextAttrs;
 
     /**
      * Polls input events. Subclass must implement methods if platform

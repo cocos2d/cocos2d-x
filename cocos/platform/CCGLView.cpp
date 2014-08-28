@@ -70,6 +70,19 @@ namespace {
     
 }
 
+//default context attributions are setted as follows
+GLContextAttrs GLView::_glContextAttrs = {5, 6, 5, 0, 16, 0};
+
+void GLView::setGLContextAttrs(GLContextAttrs& glContextAttrs)
+{
+    _glContextAttrs = glContextAttrs;
+}
+
+GLContextAttrs GLView::getGLContextAttrs()
+{
+    return _glContextAttrs;
+}
+
 GLView::GLView()
 : _scaleX(1.0f)
 , _scaleY(1.0f)
@@ -265,7 +278,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
                 continue;
             }
 
-            Touch* touch = g_touches[unusedIndex] = new Touch();
+            Touch* touch = g_touches[unusedIndex] = new (std::nothrow) Touch();
 			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             

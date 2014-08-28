@@ -24,7 +24,7 @@ Ref* CustomImageView::createInstance()
 
 CustomImageView* CustomImageView::create()
 {
-    CustomImageView* custom = new CustomImageView();
+    CustomImageView* custom = new (std::nothrow) CustomImageView();
     
     if (custom && custom->init())
     {

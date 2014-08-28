@@ -57,7 +57,7 @@ NS_CC_BEGIN
 
 SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
-    SpriteBatchNode *batchNode = new SpriteBatchNode();
+    SpriteBatchNode *batchNode = new (std::nothrow) SpriteBatchNode();
     batchNode->initWithTexture(tex, capacity);
     batchNode->autorelease();
 
@@ -70,7 +70,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capa
 
 SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
-    SpriteBatchNode *batchNode = new SpriteBatchNode();
+    SpriteBatchNode *batchNode = new (std::nothrow) SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
     batchNode->autorelease();
 
@@ -89,7 +89,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     }
-    _textureAtlas = new TextureAtlas();
+    _textureAtlas = new (std::nothrow) TextureAtlas();
 
     if (capacity == 0)
     {
@@ -110,7 +110,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 
 bool SpriteBatchNode::init()
 {
-    Texture2D * texture = new Texture2D();
+    Texture2D * texture = new (std::nothrow) Texture2D();
     texture->autorelease();
     return this->initWithTexture(texture, 0);
 }

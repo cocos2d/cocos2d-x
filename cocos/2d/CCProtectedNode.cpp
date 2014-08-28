@@ -49,7 +49,7 @@ ProtectedNode::~ProtectedNode()
 
 ProtectedNode * ProtectedNode::create(void)
 {
-	ProtectedNode * ret = new ProtectedNode();
+	ProtectedNode * ret = new (std::nothrow) ProtectedNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -414,6 +414,19 @@ void ProtectedNode::disableCascadeColor()
     }
     for(auto child : _protectedChildren){
         child->updateDisplayedColor(Color3B::WHITE);
+    }
+}
+
+void ProtectedNode::disableCascadeOpacity()
+{
+    _displayedOpacity = _realOpacity;
+    
+    for(auto child : _children){
+        child->updateDisplayedOpacity(255);
+    }
+    
+    for(auto child : _protectedChildren){
+        child->updateDisplayedOpacity(255);
     }
 }
 

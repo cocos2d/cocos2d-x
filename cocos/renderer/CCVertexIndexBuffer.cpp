@@ -25,6 +25,7 @@
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

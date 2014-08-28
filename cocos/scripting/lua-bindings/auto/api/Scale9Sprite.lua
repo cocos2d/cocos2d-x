@@ -2,13 +2,44 @@
 --------------------------------
 -- @module Scale9Sprite
 -- @extend Node
--- @parent_module cc
+-- @parent_module ccui
 
 --------------------------------
--- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 
+-- @function [parent=#Scale9Sprite] disableCascadeColor 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] updateWithSprite 
+-- @param self
+-- @param #cc.Sprite sprite
 -- @param #rect_table rect
--- @return Scale9Sprite#Scale9Sprite ret (return value: cc.Scale9Sprite)
+-- @param #bool bool
+-- @param #rect_table rect
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] isFlippedX 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setFlippedY 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setFlippedX 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] setScale9Enabled 
+-- @param self
+-- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] disableCascadeOpacity 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Scale9Sprite] setInsetBottom 
@@ -25,19 +56,36 @@
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
+-- @function [parent=#Scale9Sprite] getSprite 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
 -- @function [parent=#Scale9Sprite] setInsetTop 
 -- @param self
 -- @param #float float
         
 --------------------------------
--- @function [parent=#Scale9Sprite] init 
+-- @overload self, cc.Sprite, rect_table, bool, rect_table         
+-- @overload self         
+-- @overload self, cc.Sprite, rect_table, rect_table         
+-- @function [parent=#Scale9Sprite] init
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
+-- @param #cc.Sprite sprite
+-- @param #rect_table rect
+-- @param #bool bool
+-- @param #rect_table rect
+-- @return bool#bool ret (retunr value: bool)
+
 --------------------------------
 -- @function [parent=#Scale9Sprite] setPreferredSize 
 -- @param self
 -- @param #size_table size
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] getInsetRight 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- @function [parent=#Scale9Sprite] setSpriteFrame 
@@ -45,39 +93,25 @@
 -- @param #cc.SpriteFrame spriteframe
         
 --------------------------------
--- @overload self, cc.SpriteBatchNode, rect_table, rect_table         
--- @overload self, cc.SpriteBatchNode, rect_table, bool, rect_table         
--- @function [parent=#Scale9Sprite] initWithBatchNode
--- @param self
--- @param #cc.SpriteBatchNode spritebatchnode
--- @param #rect_table rect
--- @param #bool bool
--- @param #rect_table rect
--- @return bool#bool ret (retunr value: bool)
-
---------------------------------
 -- @function [parent=#Scale9Sprite] getInsetBottom 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#Scale9Sprite] getCapInsets 
+-- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 
 -- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @param #rect_table rect
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- @function [parent=#Scale9Sprite] updateWithBatchNode 
+-- @function [parent=#Scale9Sprite] isScale9Enabled 
 -- @param self
--- @param #cc.SpriteBatchNode spritebatchnode
--- @param #rect_table rect
--- @param #bool bool
--- @param #rect_table rect
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#Scale9Sprite] getInsetRight 
+-- @function [parent=#Scale9Sprite] getCapInsets 
 -- @param self
--- @return float#float ret (return value: float)
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- @function [parent=#Scale9Sprite] getOriginalSize 
@@ -126,6 +160,11 @@
 -- @param #rect_table rect
         
 --------------------------------
+-- @function [parent=#Scale9Sprite] isFlippedY 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @function [parent=#Scale9Sprite] getInsetLeft 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -146,7 +185,7 @@
 -- @param #string str
 -- @param #rect_table rect
 -- @param #rect_table rect
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: cc.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
 
 --------------------------------
 -- @overload self, string, rect_table         
@@ -155,7 +194,7 @@
 -- @param self
 -- @param #string str
 -- @param #rect_table rect
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: cc.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
 
 --------------------------------
 -- @overload self, cc.SpriteFrame, rect_table         
@@ -164,32 +203,21 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteframe
 -- @param #rect_table rect
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: cc.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
 
 --------------------------------
--- @function [parent=#Scale9Sprite] isOpacityModifyRGB 
+-- @function [parent=#Scale9Sprite] setAnchorPoint 
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#Scale9Sprite] setColor 
--- @param self
--- @param #color3b_table color3b
-        
---------------------------------
--- @function [parent=#Scale9Sprite] setOpacityModifyRGB 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#Scale9Sprite] setOpacity 
--- @param self
--- @param #unsigned char char
+-- @param #vec2_table vec2
         
 --------------------------------
 -- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char char
+        
+--------------------------------
+-- @function [parent=#Scale9Sprite] cleanup 
+-- @param self
         
 --------------------------------
 -- @function [parent=#Scale9Sprite] updateDisplayedColor 

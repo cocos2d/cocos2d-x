@@ -47,7 +47,7 @@ namespace cocostudio
     {
         if (!instanceButtonReader)
         {
-            instanceButtonReader = new ButtonReader();
+            instanceButtonReader = new (std::nothrow) ButtonReader();
         }
         return instanceButtonReader;
     }
