@@ -39,7 +39,7 @@ bool ControlColourPickerTest::init()
         auto screenSize = Director::getInstance()->getWinSize();
 
         auto layer  = Node::create();
-        layer->setPosition(screenSize.width / 2, screenSize.height / );
+        layer->setPosition(screenSize.width / 2, screenSize.height / 2);
         addChild(layer, 1);
 
         double layer_width = 0;

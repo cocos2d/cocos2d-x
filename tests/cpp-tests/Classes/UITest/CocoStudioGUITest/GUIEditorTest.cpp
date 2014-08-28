@@ -313,7 +313,7 @@ void GUIEditorMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Even
     }
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
-    
+    {
         _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }

@@ -281,7 +281,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
     auto left = ProgressTimer::create(Sprite::create(s_pathBlock));
     left->setType(ProgressTimer::Type::RADIAL);
     addChild(left);
-    left->setMidpoint(0.25f, 0.75f);
+    left->setMidpoint(Vec2(0.25f, 0.75f));
     left->setPosition(100, s.height/2);
     left->runAction(RepeatForever::create(action->clone()));
 
@@ -290,7 +290,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
    */
     auto right = ProgressTimer::create(Sprite::create(s_pathBlock));
     right->setType(ProgressTimer::Type::RADIAL);
-    right->setMidpoint(0.75f, 0.25f);
+    right->setMidpoint(Vec2(0.75f, 0.25f));
 
     /**
    *  Note the reverse property (default=NO) is only added to the right image. That's how

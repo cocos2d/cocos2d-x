@@ -38,7 +38,7 @@ EditBoxTest::EditBoxTest()
 
     // top
     _editName = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/green_edit.png"));
-    _editName->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4);
+    _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
     _editName->setFontName("Paint Boy");
     _editName->setFontSize(25);
     _editName->setFontColor(Color3B::RED);
@@ -51,7 +51,7 @@ EditBoxTest::EditBoxTest()
     
     // middle
     _editPassword = EditBox::create(editBoxSize, Scale9Sprite::create("extensions/orange_edit.png"));
-    _editPassword->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2);
+    _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	_editPassword->setFont("American Typewriter", 30);
 #else
@@ -68,7 +68,7 @@ EditBoxTest::EditBoxTest()
     
     // bottom
     _editEmail = EditBox::create(Size(editBoxSize.width, editBoxSize.height), Scale9Sprite::create("extensions/yellow_edit.png"));
-    _editEmail->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4);
+    _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
     _editEmail->setAnchorPoint(Vec2(0.5, 1.0f));
     _editEmail->setPlaceHolder("Email:");
     _editEmail->setInputMode(EditBox::InputMode::EMAIL_ADDRESS);

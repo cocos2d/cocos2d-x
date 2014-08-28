@@ -550,7 +550,7 @@ void SpriteEaseBezier::onEnter()
     
     
     // sprite 2
-    _tamara->setPosition(80,160));
+    _tamara->setPosition(80,160);
 	ccBezierConfig bezier2;
     bezier2.controlPoint_1 = Vec2(100, s.height/2);
     bezier2.controlPoint_2 = Vec2(200, -s.height/2);
