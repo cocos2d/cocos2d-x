@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "CCTextFieldTTF.h"
 
 #include "base/CCDirector.h"
-#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -73,7 +72,7 @@ TextFieldTTF::~TextFieldTTF()
 
 TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize)
 {
-    TextFieldTTF *ret = new TextFieldTTF();
+    TextFieldTTF *ret = new (std::nothrow) TextFieldTTF();
     if(ret && ret->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
     {
         ret->autorelease();
@@ -89,7 +88,7 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
 
 TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    TextFieldTTF *ret = new TextFieldTTF();
+    TextFieldTTF *ret = new (std::nothrow) TextFieldTTF();
     if(ret && ret->initWithPlaceHolder("", fontName, fontSize))
     {
         ret->autorelease();
@@ -140,7 +139,7 @@ bool TextFieldTTF::attachWithIME()
     if (ret)
     {
         // open keyboard
-        GLView * pGlView = Director::getInstance()->getOpenGLView();
+        auto pGlView = Director::getInstance()->getOpenGLView();
         if (pGlView)
         {
             pGlView->setIMEKeyboardState(true);
@@ -155,7 +154,7 @@ bool TextFieldTTF::detachWithIME()
     if (ret)
     {
         // close keyboard
-        GLView * glView = Director::getInstance()->getOpenGLView();
+        auto glView = Director::getInstance()->getOpenGLView();
         if (glView)
         {
             glView->setIMEKeyboardState(false);
@@ -260,7 +259,9 @@ const std::string& TextFieldTTF::getContentText()
 void TextFieldTTF::setTextColor(const Color4B &color)
 {
     _colorText = color;
-    Label::setTextColor(_colorText);
+    if (_inputText.length() > 0) {
+        Label::setTextColor(_colorText);
+    }
 }
 
 void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
@@ -283,11 +284,18 @@ void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
     _colorSpaceHolder.g = color.g;
     _colorSpaceHolder.b = color.b;
     _colorSpaceHolder.a = 255;
+    if (0 == _inputText.length())
+    {
+        Label::setTextColor(_colorSpaceHolder);
+    }
 }
 
 void TextFieldTTF::setColorSpaceHolder(const Color4B& color)
 {
     _colorSpaceHolder = color;
+    if (0 == _inputText.length()) {
+        Label::setTextColor(_colorSpaceHolder);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -322,7 +330,7 @@ void TextFieldTTF::setString(const std::string &text)
     }
 
     // if there is no input text, display placeholder instead
-    if (! _inputText.length())
+    if (0 == _inputText.length())
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
@@ -344,7 +352,7 @@ const std::string& TextFieldTTF::getString() const
 void TextFieldTTF::setPlaceHolder(const std::string& text)
 {
     _placeHolder = text;
-    if (! _inputText.length())
+    if (0 == _inputText.length())
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);

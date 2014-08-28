@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "2d/CCActionInstant.h"
+#include "base/ccUtils.h"
 
 using namespace cocos2d;
 
@@ -114,7 +115,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
     int maxLength = 0;
     for (int i=0; i<actionNodeCount; i++) {
-        ActionNode* actionNode = new ActionNode();
+        ActionNode* actionNode = new (std::nothrow) ActionNode();
         actionNode->autorelease();
         const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
@@ -155,7 +156,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
         stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(cocoLoader);
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
-            ActionNode* actionNode = new ActionNode();
+            ActionNode* actionNode = new (std::nothrow) ActionNode();
             actionNode->autorelease();
             
             actionNode->initWithBinary(cocoLoader, &actionNodeArray[i] , root);
@@ -189,7 +190,7 @@ bool ActionObject::valueToBool(const std::string& value)
 }
 float ActionObject::valueToFloat(const std::string& value)
 {
-    return atof(value.c_str());
+    return utils::atof(value.c_str());
 }
 
 void ActionObject::addActionNode(ActionNode* node)

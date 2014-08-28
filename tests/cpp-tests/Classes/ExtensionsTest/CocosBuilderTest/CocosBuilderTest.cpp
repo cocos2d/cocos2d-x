@@ -59,7 +59,7 @@ void CocosBuilderTestScene::runThisTest() {
 //    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 //    
 //    /* Create an autorelease CCBReader. */
-//    CCBReader * ccbReader = new CCBReader(ccNodeLoaderLibrary, ccbiReaderLayer, ccbiReaderLayer);
+//    CCBReader * ccbReader = new (std::nothrow) CCBReader(ccNodeLoaderLibrary, ccbiReaderLayer, ccbiReaderLayer);
 //    ccbReader->autorelease();
 //    
 //    /* Read a ccbi file. */

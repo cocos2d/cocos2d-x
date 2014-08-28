@@ -47,19 +47,19 @@ static void callback (spAnimationState* state, int trackIndex, spEventType type,
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonData) {
-	SkeletonAnimation* node = new SkeletonAnimation(skeletonData);
+	SkeletonAnimation* node = new (std::nothrow) SkeletonAnimation(skeletonData);
 	node->autorelease();
 	return node;
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale) {
-	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlas, scale);
+	SkeletonAnimation* node = new (std::nothrow) SkeletonAnimation(skeletonDataFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
-	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlasFile, scale);
+	SkeletonAnimation* node = new (std::nothrow) SkeletonAnimation(skeletonDataFile, atlasFile, scale);
 	node->autorelease();
 	return node;
 }

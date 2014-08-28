@@ -25,7 +25,7 @@ enum
 //------------------------------------------------------------------
 PongScene::PongScene()
 {
-    auto pongLayer = new PongLayer();//PongLayer::create();
+    auto pongLayer = new (std::nothrow) PongLayer();//PongLayer::create();
     addChild(pongLayer);
     pongLayer->release();
 }

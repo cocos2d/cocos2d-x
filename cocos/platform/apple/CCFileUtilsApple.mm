@@ -49,7 +49,7 @@ static void addItemToArray(id item, ValueVector& array)
         array.push_back(Value([item UTF8String]));
         return;
     }
-    
+
     // add number value into array(such as int, float, bool and so on)
     // the value is a number
     if ([item isKindOfClass:[NSNumber class]])
@@ -74,7 +74,7 @@ static void addItemToArray(id item, ValueVector& array)
         return;
     }
 
-    
+
     // add dictionary value into array
     if ([item isKindOfClass:[NSDictionary class]])
     {
@@ -84,11 +84,11 @@ static void addItemToArray(id item, ValueVector& array)
             id subValue = [item objectForKey:subKey];
             addValueToDict(subKey, subValue, dict);
         }
-        
+
         array.push_back(Value(dict));
         return;
     }
-    
+
     // add array value into array
     if ([item isKindOfClass:[NSArray class]])
     {
@@ -111,48 +111,48 @@ static void addObjectToNSArray(const Value& value, NSMutableArray *array)
         [array addObject:element];
         return;
     }
-    
+
     //add float  into array
     if (value.getType() == Value::Type::FLOAT) {
         NSNumber *number = [NSNumber numberWithFloat:value.asFloat()];
         [array addObject:number];
     }
-    
+
     //add double into array
     if (value.getType() == Value::Type::DOUBLE) {
         NSNumber *number = [NSNumber numberWithDouble:value.asDouble()];
         [array addObject:number];
     }
-    
+
     //add boolean into array
     if (value.getType() == Value::Type::BOOLEAN) {
         NSNumber *element = [NSNumber numberWithBool:value.asBool()];
         [array addObject:element];
     }
-    
+
     if (value.getType() == Value::Type::INTEGER) {
         NSNumber *element = [NSNumber numberWithInt:value.asInt()];
         [array addObject:element];
     }
-    
+
     //todo: add date and data support
-    
+
     // add array into array
     if (value.getType() == Value::Type::VECTOR)
     {
         NSMutableArray *element = [NSMutableArray array];
-        
+
         ValueVector valueArray = value.asValueVector();
-        
+
         for (const auto &e : valueArray)
         {
             addObjectToNSArray(e, element);
         }
-        
+
         [array addObject:element];
         return;
     }
-    
+
     // add dictionary value into array
     if (value.getType() == Value::Type::MAP)
     {
@@ -163,7 +163,7 @@ static void addObjectToNSArray(const Value& value, NSMutableArray *array)
         {
             addObjectToNSDict(iter->first, iter->second, element);
         }
-        
+
         [array addObject:element];
     }
 }
@@ -173,14 +173,14 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
     // the key must be a string
     CCASSERT([nsKey isKindOfClass:[NSString class]], "The key should be a string!");
     std::string key = [nsKey UTF8String];
-    
+
     // the value is a string
     if ([nsValue isKindOfClass:[NSString class]])
     {
         dict[key] = Value([nsValue UTF8String]);
         return;
     }
-    
+
     // the value is a number
     if ([nsValue isKindOfClass:[NSNumber class]])
     {
@@ -204,12 +204,12 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
         return;
     }
 
-    
+
     // the value is a new dictionary
     if ([nsValue isKindOfClass:[NSDictionary class]])
     {
         ValueMap subDict;
-        
+
         for (id subKey in [nsValue allKeys])
         {
             id subValue = [nsValue objectForKey:subKey];
@@ -218,7 +218,7 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
         dict[key] = Value(subDict);
         return;
     }
-    
+
     // the value is a array
     if ([nsValue isKindOfClass:[NSArray class]])
     {
@@ -231,13 +231,13 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
         dict[key] = Value(valueArray);
         return;
     }
-    
+
 }
 
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict)
 {
     NSString *NSkey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
-    
+
     // the object is a Dictionary
     if (value.getType() == Value::Type::MAP)
     {
@@ -247,35 +247,35 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
         {
             addObjectToNSDict(iter->first, iter->second, dictElement);
         }
-        
+
         [dict setObject:dictElement forKey:NSkey];
         return;
     }
-    
+
     //add float  into dict
     if (value.getType() == Value::Type::FLOAT) {
         NSNumber *number = [NSNumber numberWithFloat:value.asFloat()];
         [dict setObject:number forKey:NSkey];
     }
-    
+
     //add double into dict
     if (value.getType() == Value::Type::DOUBLE) {
         NSNumber *number = [NSNumber numberWithDouble:value.asDouble()];
         [dict setObject:number forKey:NSkey];
     }
-    
+
     //add boolean into dict
     if (value.getType() == Value::Type::BOOLEAN) {
         NSNumber *element = [NSNumber numberWithBool:value.asBool()];
         [dict setObject:element forKey:NSkey];
     }
-    
+
     //add integer into dict
     if (value.getType() == Value::Type::INTEGER) {
         NSNumber *element = [NSNumber numberWithInt:value.asInt()];
         [dict setObject:element forKey:NSkey];
     }
-    
+
     // the object is a String
     if (value.getType() == Value::Type::STRING)
     {
@@ -283,14 +283,14 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
         [dict setObject:strElement forKey:NSkey];
         return;
     }
-    
+
     // the object is a Array
     if (value.getType() == Value::Type::VECTOR)
     {
         NSMutableArray *arrElement = [NSMutableArray array];
-        
+
         ValueVector array = value.asValueVector();
-        
+
         for(const auto& v : array)
         {
             addObjectToNSArray(v, arrElement);
@@ -299,6 +299,19 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
         [dict setObject:arrElement forKey:NSkey];
         return;
     }
+}
+
+FileUtilsApple::FileUtilsApple() {
+    _bundle = [NSBundle mainBundle];
+}
+
+
+void FileUtilsApple::setBundle(NSBundle* bundle) {
+    _bundle = bundle;
+}
+
+NSBundle* FileUtilsApple::getBundle() const {
+    return _bundle;
 }
 
 
@@ -310,7 +323,7 @@ FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == nullptr)
     {
-        s_sharedFileUtils = new FileUtilsApple();
+        s_sharedFileUtils = new (std::nothrow) FileUtilsApple();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
@@ -340,7 +353,7 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
     }
 
     bool ret = false;
-    
+
     if (filePath[0] != '/')
     {
         std::string path;
@@ -355,8 +368,8 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
         {
             file = filePath;
         }
-        
-        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
+
+        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
         if (fullpath != nil) {
@@ -370,7 +383,7 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
             ret = true;
         }
     }
-    
+
     return ret;
 }
 
@@ -378,7 +391,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 {
     if (directory[0] != '/')
     {
-        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:filename.c_str()]
+        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:directory.c_str()]];
         if (fullpath != nil) {
@@ -401,6 +414,26 @@ ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
     std::string fullPath = fullPathForFilename(filename);
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:path];
+
+    ValueMap ret;
+
+    if (dict != nil)
+    {
+        for (id key in [dict allKeys])
+        {
+            id value = [dict objectForKey:key];
+            addValueToDict(key, value, ret);
+        }
+    }
+    return ret;
+}
+
+ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
+{
+    NSData* file = [NSData dataWithBytes:filedata length:filesize];
+    NSPropertyListFormat format;
+    NSError* error;
+    NSDictionary* dict = [NSPropertyListSerialization propertyListWithData:file options:NSPropertyListImmutable format:&format error:&error];
     
     ValueMap ret;
     
@@ -419,16 +452,16 @@ bool FileUtilsApple::writeToFile(ValueMap& dict, const std::string &fullPath)
 {
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-    
+
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
         addObjectToNSDict(iter->first, iter->second, nsDict);
     }
-    
+
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
     // do it atomically
     [nsDict writeToFile:file atomically:YES];
-    
+
     return true;
 }
 
@@ -442,14 +475,14 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
     std::string fullPath = fullPathForFilename(filename);
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSArray* array = [NSArray arrayWithContentsOfFile:path];
-    
+
     ValueVector ret;
-    
+
     for (id value in array)
     {
         addItemToArray(value, ret);
     }
-    
+
     return ret;
 }
 

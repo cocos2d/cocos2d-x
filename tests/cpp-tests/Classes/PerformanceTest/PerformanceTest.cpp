@@ -176,7 +176,7 @@ void PerformBasicLayer::onEnter()
 
 void PerformBasicLayer::toMainLayer(Ref* sender)
 {
-    auto scene = new PerformanceTestScene();
+    auto scene = new (std::nothrow) PerformanceTestScene();
     scene->runThisTest();
 
     scene->release();
@@ -212,7 +212,7 @@ void PerformBasicLayer::backCallback(Ref* sender)
 
 void PerformanceTestScene::runThisTest()
 {
-    auto layer = new PerformanceMainLayer();
+    auto layer = new (std::nothrow) PerformanceMainLayer();
     addChild(layer);
     layer->release();
 

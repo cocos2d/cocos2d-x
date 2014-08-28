@@ -44,7 +44,7 @@ namespace network {
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class HttpClient
+class CC_DLL HttpClient
 {
 public:
     /** Return the shared instance **/

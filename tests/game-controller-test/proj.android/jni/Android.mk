@@ -13,9 +13,8 @@ LOCAL_SRC_FILES := main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../../external
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,.)
-$(call import-module,audio/android)

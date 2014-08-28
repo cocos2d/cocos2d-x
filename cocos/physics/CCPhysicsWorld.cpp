@@ -197,7 +197,7 @@ void PhysicsWorld::debugDraw()
 {
     if (_debugDraw == nullptr)
     {
-        _debugDraw = new PhysicsDebugDraw(*this);
+        _debugDraw = new (std::nothrow) PhysicsDebugDraw(*this);
     }
     
     if (_debugDraw && !_bodies.empty())
@@ -418,7 +418,7 @@ PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
 
 PhysicsWorld* PhysicsWorld::construct(Scene& scene)
 {
-    PhysicsWorld * world = new PhysicsWorld();
+    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
     if(world && world->init(scene))
     {
         return world;
@@ -432,7 +432,7 @@ bool PhysicsWorld::init(Scene& scene)
 {
     do
     {
-        _info = new PhysicsWorldInfo();
+        _info = new (std::nothrow) PhysicsWorldInfo();
         CC_BREAK_IF(_info == nullptr);
         
         _scene = &scene;
@@ -879,7 +879,19 @@ void PhysicsWorld::setGravity(const Vect& gravity)
     _info->setGravity(gravity);
 }
 
-void PhysicsWorld::update(float delta)
+void PhysicsWorld::step(float delta)
+{
+    if (_autoStep)
+    {
+        CCLOG("Physics Warning: You need to close auto step( setAutoStep(false) ) first");
+    }
+    else
+    {
+        update(delta, true);
+    }
+}
+
+void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
     while (_delayDirty)
     {
@@ -889,16 +901,27 @@ void PhysicsWorld::update(float delta)
         _delayDirty = !(_delayAddBodies.size() == 0 && _delayRemoveBodies.size() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
     }
     
-    _updateTime += delta;
-    if (++_updateRateCount >= _updateRate)
+    if (userCall)
     {
-        _info->step(_updateTime * _speed);
+        _info->step(delta);
         for (auto& body : _bodies)
         {
-            body->update(_updateTime * _speed);
+            body->update(delta);
         }
-        _updateRateCount = 0;
-        _updateTime = 0.0f;
+    }
+    else
+    {
+        _updateTime += delta;
+        if (++_updateRateCount >= _updateRate)
+        {
+            _info->step(_updateTime * _speed);
+            for (auto& body : _bodies)
+            {
+                body->update(_updateTime * _speed);
+            }
+            _updateRateCount = 0;
+            _updateTime = 0.0f;
+        }
     }
     
     if (_debugDrawMask != DEBUGDRAW_NONE)
@@ -916,6 +939,7 @@ PhysicsWorld::PhysicsWorld()
 , _info(nullptr)
 , _scene(nullptr)
 , _delayDirty(false)
+, _autoStep(true)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
 {
@@ -995,7 +1019,7 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
             {
                 cpPolyShape* poly = (cpPolyShape*)subShape;
                 int num = poly->numVerts;
-                Vec2* seg = new Vec2[num];
+                Vec2* seg = new (std::nothrow) Vec2[num];
                 
                 PhysicsHelper::cpvs2points(poly->tVerts, seg, num);
                 

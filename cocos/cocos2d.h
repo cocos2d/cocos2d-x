@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 02 00
-#define COCOS2D_VERSION 0x00030200
+// 00   03 03 00
+#define COCOS2D_VERSION 0x00030300
 
 //
 // all cocos2d include files
@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCIMEDelegate.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
+#include "base/CCCamera.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"
@@ -153,6 +154,10 @@ THE SOFTWARE.
 #include "renderer/ccShaders.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexIndexData.h"
+#include "renderer/CCPrimitive.h"
+#include "renderer/CCPrimitiveCommand.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"
@@ -173,49 +178,49 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication.h"
-    #include "platform/ios/CCGLView.h"
+    #include "platform/ios/CCGLViewImpl.h"
     #include "platform/ios/CCGL.h"
     #include "platform/ios/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "platform/android/CCApplication.h"
-    #include "platform/android/CCGLView.h"
+    #include "platform/android/CCGLViewImpl.h"
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
     #include "platform/blackberry/CCApplication.h"
-    #include "platform/blackberry/CCGLView.h"
+    #include "platform/blackberry/CCGLViewImpl.h"
     #include "platform/blackberry/CCGL.h"
     #include "platform/blackberry/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "platform/win32/CCApplication.h"
-    #include "platform/desktop/CCGLView.h"
+    #include "platform/desktop/CCGLViewImpl.h"
     #include "platform/win32/CCGL.h"
     #include "platform/win32/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     #include "platform/mac/CCApplication.h"
-    #include "platform/desktop/CCGLView.h"
+    #include "platform/desktop/CCGLViewImpl.h"
     #include "platform/mac/CCGL.h"
     #include "platform/mac/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     #include "platform/linux/CCApplication.h"
-    #include "platform/desktop/CCGLView.h"
+    #include "platform/desktop/CCGLViewImpl.h"
     #include "platform/linux/CCGL.h"
     #include "platform/linux/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	#include "platform/winrt/CCApplication.h"
-	#include "platform/winrt/CCGLView.h"
+	#include "platform/winrt/CCGLViewImpl.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"
@@ -223,7 +228,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCGLView.h"
+	#include "platform/wp8/CCGLViewImpl.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"
@@ -260,17 +265,6 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 
-//3d
-#include "3d/CCSprite3D.h"
-#include "3d/CCMesh.h"
-#include "3d/CCMeshSkin.h"
-#include "3d/CCAnimate3D.h"
-#include "3d/CCAnimation3D.h"
-#include "3d/CCSprite3DMaterial.h"
-
-// Audio
-#include "audio/include/SimpleAudioEngine.h"
-
 // Deprecated include
 #include "deprecated/CCDictionary.h"
 #include "deprecated/CCArray.h"
@@ -283,6 +277,9 @@ THE SOFTWARE.
 #include "deprecated/CCNotificationCenter.h"
 // CCDeprecated.h must be included at the end
 #include "deprecated/CCDeprecated.h"
+
+//3d
+#include "3d/cocos3d.h"
 
 
 NS_CC_BEGIN

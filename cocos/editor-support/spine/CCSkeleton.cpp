@@ -41,19 +41,19 @@ using std::max;
 namespace spine {
 
 Skeleton* Skeleton::createWithData (spSkeletonData* skeletonData, bool isOwnsSkeletonData) {
-	Skeleton* node = new Skeleton(skeletonData, isOwnsSkeletonData);
+	Skeleton* node = new (std::nothrow) Skeleton(skeletonData, isOwnsSkeletonData);
 	node->autorelease();
 	return node;
 }
 
 Skeleton* Skeleton::createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale) {
-	Skeleton* node = new Skeleton(skeletonDataFile, atlas, scale);
+	Skeleton* node = new (std::nothrow) Skeleton(skeletonDataFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
 Skeleton* Skeleton::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
-	Skeleton* node = new Skeleton(skeletonDataFile, atlasFile, scale);
+	Skeleton* node = new (std::nothrow) Skeleton(skeletonDataFile, atlasFile, scale);
 	node->autorelease();
 	return node;
 }

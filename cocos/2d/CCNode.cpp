@@ -1,3 +1,5 @@
+
+
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
@@ -34,25 +36,20 @@ THE SOFTWARE.
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/CCTouch.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCEvent.h"
-#include "base/CCEventTouch.h"
-#include "base/ccCArray.h"
-#include "2d/CCGrid.h"
+#include "base/CCCamera.h"
 #include "2d/CCActionManager.h"
-#include "base/CCScriptSupport.h"
 #include "2d/CCScene.h"
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
 #endif
 
 
@@ -128,6 +125,7 @@ Node::Node(void)
 , _usingNormalizedPosition(false)
 , _name("")
 , _hashOfName(0)
+, _cameraMask(1)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -759,7 +757,7 @@ Rect Node::getBoundingBox() const
 
 Node * Node::create()
 {
-	Node * ret = new Node();
+	Node * ret = new (std::nothrow) Node();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -1223,6 +1221,13 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
     return flags;
 }
 
+bool Node::isVisitableByVisitingCamera() const
+{
+    auto camera = Camera::getVisitingCamera();
+    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
+    return visibleByCamera;
+}
+
 void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
@@ -1239,6 +1244,8 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     int i = 0;
 
@@ -1256,12 +1263,13 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
@@ -1839,7 +1847,7 @@ bool Node::addComponent(Component *component)
 {
     // lazy alloc
     if( !_componentContainer )
-        _componentContainer = new ComponentContainer(this);
+        _componentContainer = new (std::nothrow) ComponentContainer(this);
     return _componentContainer->add(component);
 }
 
@@ -1847,6 +1855,14 @@ bool Node::removeComponent(const std::string& name)
 {
     if( _componentContainer )
         return _componentContainer->remove(name);
+    return false;
+}
+
+bool Node::removeComponent(Component *component)
+{
+    if (_componentContainer) {
+        return _componentContainer->remove(component);
+    }
     return false;
 }
 
@@ -2156,6 +2172,17 @@ void Node::disableCascadeColor()
 {
     for(auto child : _children){
         child->updateDisplayedColor(Color3B::WHITE);
+    }
+}
+
+void Node::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    _cameraMask = mask;
+    if (applyChildren)
+    {
+        for (auto child : _children) {
+            child->setCameraMask(mask, applyChildren);
+        }
     }
 }
 

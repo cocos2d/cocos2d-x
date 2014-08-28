@@ -456,6 +456,7 @@ function UICheckBoxTest:initExtend()
         
     local checkBox = ccui.CheckBox:create()
     checkBox:setTouchEnabled(true)
+    checkBox:setSelectedState(true)
     checkBox:loadTextures("cocosui/check_box_normal.png",
                                "cocosui/check_box_normal_press.png",
                                "cocosui/check_box_active.png",
@@ -2425,7 +2426,7 @@ function UIListViewVerticalTest:initExtend()
     end
 
     local function listViewEvent(sender, eventType)
-        if eventType == ccui.ListViewEventType.onsSelectedItem then
+        if eventType == ccui.ListViewEventType.ONSELECTEDITEM_START then
             print("select child index = ",sender:getCurSelectedIndex())
         end
     end

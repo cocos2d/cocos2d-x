@@ -103,7 +103,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
 						nCount = tpChildArray[15].GetChildNum();
 					}
 					stExpCocoNode *pComponents = tpChildArray[15].GetChildArray(&tCocoLoader);
-					SerData *data = new SerData();
+					SerData *data = new (std::nothrow) SerData();
 					for (int i = 0; i < nCount; i++)
 					{
 						stExpCocoNode *subDict = pComponents[i].GetChildArray(&tCocoLoader);
@@ -279,7 +279,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
             Component *com = this->createComponent(comName);
             CCLOG("classname = %s", comName);
-            SerData *data = new SerData();
+            SerData *data = new (std::nothrow) SerData();
             if (com != nullptr)
             {
                 data->_rData = &subDict;
@@ -369,7 +369,7 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
             count = pNodeArray[13].GetChildNum();
         }
         stExpCocoNode *pComponents = pNodeArray[13].GetChildArray(cocoLoader);
-        SerData *data = new SerData();
+        SerData *data = new (std::nothrow) SerData();
         for (int i = 0; i < count; ++i)
         {
             stExpCocoNode *subDict = pComponents[i].GetChildArray(cocoLoader);
@@ -510,12 +510,12 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         
         if (key == "x")
         {
-            x = atof(value.c_str());
+            x = utils::atof(value.c_str());
             node->setPositionX(x);
         }
         else if (key == "y")
         {
-            y = atof(value.c_str());
+            y = utils::atof(value.c_str());
             node->setPositionY(y);
         }
         else if (key == "visible")
@@ -535,7 +535,7 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         }
         else if(key == "scalex")
         {
-            fScaleX = atof(value.c_str());
+            fScaleX = utils::atof(value.c_str());
             node->setScaleX(fScaleX);
         }
         else if(key == "scaley")
@@ -545,7 +545,7 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         }
         else if(key == "rotation")
         {
-            fRotationZ = atof(value.c_str());
+            fRotationZ = utils::atof(value.c_str());
             node->setRotation(fRotationZ);
         }
     }
@@ -555,7 +555,7 @@ SceneReader* SceneReader::getInstance()
 {
     if (s_sharedReader == nullptr)
     {
-        s_sharedReader = new SceneReader();
+        s_sharedReader = new (std::nothrow) SceneReader();
     }
     return s_sharedReader;
 }

@@ -186,7 +186,7 @@ bool LabelTextFormatter::alignText(Label *theLabel)
     int i = 0;
     
     int lineNumber = 0;
-    int strLen = static_cast<int>(theLabel->_currentUTF16String.length());
+    int strLen = theLabel->_limitShowCount;
     std::vector<char16_t> lastLine;
     auto strWhole = theLabel->_currentUTF16String;
 

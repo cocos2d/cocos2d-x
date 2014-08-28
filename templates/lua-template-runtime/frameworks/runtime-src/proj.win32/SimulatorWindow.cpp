@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "SimulatorWindow.h"
 
 #include "cocos2d.h"
-#include "glfw3native.h"
 #include "resource.h"
 #include "runtime/Runtime.h"
 #include "ConfigParser.h"
@@ -46,7 +45,7 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
 
 void createViewMenu()
 {
-    HMENU hSysMenu = GetSystemMenu(glfwGetWin32Window(g_eglView->getWindow()), FALSE);
+    HMENU hSysMenu = GetSystemMenu(g_eglView->getWin32Window(), FALSE);
     HMENU viewMenu = GetSubMenu(hSysMenu, 8);
     for (int i = ConfigParser::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
     {
@@ -69,7 +68,7 @@ void createViewMenu()
 
 void updateMenu()
 {
-    HMENU hSysMenu = GetSystemMenu(glfwGetWin32Window(g_eglView->getWindow()), FALSE);
+    HMENU hSysMenu = GetSystemMenu(g_eglView->getWin32Window(), FALSE);
     HMENU viewMenu = GetSubMenu(hSysMenu, 8);
     HMENU viewControl = GetSubMenu(hSysMenu, 9);
 
@@ -86,12 +85,12 @@ void updateMenu()
 
     if (g_windTop)
     {
-        ::SetWindowPos(glfwGetWin32Window(g_eglView->getWindow()),HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+        ::SetWindowPos(g_eglView->getWin32Window(),HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
         CheckMenuItem(viewControl, ID_CONTROL_TOP, MF_BYCOMMAND | MF_CHECKED);
 
     }else
     {
-        ::SetWindowPos(glfwGetWin32Window(g_eglView->getWindow()),HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+        ::SetWindowPos(g_eglView->getWin32Window(),HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
         CheckMenuItem(viewControl, ID_CONTROL_TOP, MF_BYCOMMAND | MF_UNCHECKED);
     }
     int width = g_screenSize.width;
@@ -195,7 +194,7 @@ void onViewZoomOut(int viewMenuID)
     default:
         break;
     }
-    g_eglView->setFrameZoomFactor(scale);
+	dynamic_cast<GLViewImpl*>(g_eglView)->setFrameZoomFactor(scale);
     updateView();
 }
 
@@ -213,12 +212,12 @@ void onViewChangeFrameSize(int viewMenuID)
 
 void onHelpAbout()
 {
-    DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG_ABOUT), glfwGetWin32Window(g_eglView->getWindow()), AboutDialogCallback);
+    DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG_ABOUT), g_eglView->getWin32Window(), AboutDialogCallback);
 }
 
 void shutDownApp()
 {
-    HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
+    HWND hWnd=g_eglView->getWin32Window();
     ::SendMessage(hWnd,WM_CLOSE,NULL,NULL);
 }
 
@@ -342,11 +341,11 @@ void createSimulator(const char* viewName, float width, float height, bool isLan
     }
     g_windTop = true;
 
-    g_eglView = GLView::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
+    g_eglView = GLViewImpl::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
 
-    HWND hWnd=glfwGetWin32Window(g_eglView->getWindow());
+    HWND hWnd=g_eglView->getWin32Window();
     HMENU hMenu = LoadMenu(GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_MENU_COCOS));
     HMENU hSysMenu = GetSystemMenu(hWnd, FALSE);
     HMENU hviewMenu = GetSubMenu(hMenu,1);

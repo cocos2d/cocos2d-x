@@ -19,64 +19,64 @@ Layer *CreateLayer(int index)
     switch(index)
     {
     case TEST_ASYNCHRONOUS_LOADING:
-        pLayer = new TestAsynchronousLoading();
+        pLayer = new (std::nothrow) TestAsynchronousLoading();
         break;
     case TEST_DIRECT_LOADING:
-        pLayer = new TestDirectLoading();
+        pLayer = new (std::nothrow) TestDirectLoading();
         break;
     case TEST_DRAGON_BONES_2_0:
-        pLayer = new TestDragonBones20();
+        pLayer = new (std::nothrow) TestDragonBones20();
         break;
     case TEST_COCOSTUDIO_WITH_SKELETON:
-        pLayer = new TestCSWithSkeleton();
+        pLayer = new (std::nothrow) TestCSWithSkeleton();
         break;
     case TEST_PERFORMANCE:
-        pLayer = new TestPerformance();
+        pLayer = new (std::nothrow) TestPerformance();
         break;
 //    case TEST_PERFORMANCE_BATCHNODE:
-//        pLayer = new TestPerformanceBatchNode();
+//        pLayer = new (std::nothrow) TestPerformanceBatchNode();
 //        break;
     case TEST_CHANGE_ZORDER:
-        pLayer = new TestChangeZorder();
+        pLayer = new (std::nothrow) TestChangeZorder();
         break;
     case TEST_ANIMATION_EVENT:
-        pLayer = new TestAnimationEvent();
+        pLayer = new (std::nothrow) TestAnimationEvent();
         break;
     case TEST_FRAME_EVENT:
-        pLayer = new TestFrameEvent();
+        pLayer = new (std::nothrow) TestFrameEvent();
         break;
     case  TEST_PARTICLE_DISPLAY:
-        pLayer = new TestParticleDisplay();
+        pLayer = new (std::nothrow) TestParticleDisplay();
         break;
     case TEST_USE_DIFFERENT_PICTURE:
-        pLayer = new TestUseMutiplePicture();
+        pLayer = new (std::nothrow) TestUseMutiplePicture();
         break;
     case TEST_COLLIDER_DETECTOR:
-        pLayer = new TestColliderDetector();
+        pLayer = new (std::nothrow) TestColliderDetector();
         break;
     case TEST_BOUDINGBOX:
-        pLayer = new TestBoundingBox();
+        pLayer = new (std::nothrow) TestBoundingBox();
         break;
     case TEST_ANCHORPOINT:
-        pLayer = new TestAnchorPoint();
+        pLayer = new (std::nothrow) TestAnchorPoint();
         break;
     case TEST_ARMATURE_NESTING:
-        pLayer = new TestArmatureNesting();
+        pLayer = new (std::nothrow) TestArmatureNesting();
         break;
     case TEST_ARMATURE_NESTING_2:
-        pLayer = new TestArmatureNesting2();
+        pLayer = new (std::nothrow) TestArmatureNesting2();
         break;
     case TEST_PLAY_SEVERAL_MOVEMENT:
-        pLayer = new TestPlaySeveralMovement();
+        pLayer = new (std::nothrow) TestPlaySeveralMovement();
         break;
     case TEST_EASING:
-        pLayer = new TestEasing();
+        pLayer = new (std::nothrow) TestEasing();
         break;
     case TEST_CHANGE_ANIMATION_INTERNAL:
-        pLayer = new TestChangeAnimationInternal();
+        pLayer = new (std::nothrow) TestChangeAnimationInternal();
         break;
     case TEST_DIRECT_FROM_BINARY:
-        pLayer = new TestLoadFromBinary();
+        pLayer = new (std::nothrow) TestLoadFromBinary();
         break;
     default:
         break;
@@ -211,21 +211,21 @@ std::string ArmatureTestLayer::subtitle() const
 
 void ArmatureTestLayer::restartCallback(Ref *pSender)
 {
-    Scene *s = new ArmatureTestScene();
+    Scene *s = new (std::nothrow) ArmatureTestScene();
     s->addChild( RestartTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 void ArmatureTestLayer::nextCallback(Ref *pSender)
 {
-    Scene *s = new ArmatureTestScene();
+    Scene *s = new (std::nothrow) ArmatureTestScene();
     s->addChild( NextTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 void ArmatureTestLayer::backCallback(Ref *pSender)
 {
-    Scene *s = new ArmatureTestScene();
+    Scene *s = new (std::nothrow) ArmatureTestScene();
     s->addChild( BackTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -413,7 +413,7 @@ void TestPerformance::addArmature(int number)
         armatureCount++;
 
         Armature *armature = nullptr;
-        armature = new Armature();
+        armature = new (std::nothrow) Armature();
         armature->init("Cowboy");
         armature->getAnimation()->playWithIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
@@ -877,10 +877,10 @@ void TestColliderDetector::initWorld()
     world = new b2World(noGravity);
     world->SetAllowSleeping(true);
 
-    listener = new ContactListener();
+    listener = new (std::nothrow) ContactListener();
     world->SetContactListener(listener);
 
-    debugDraw = new GLESDebugDraw( PT_RATIO );
+    debugDraw = new (std::nothrow) GLESDebugDraw( PT_RATIO );
     world->SetDebugDraw(debugDraw);
 
     uint32 flags = 0;
@@ -1198,7 +1198,7 @@ void TestArmatureNesting::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 
 Hero *Hero::create(const char *name)
 {
-    Hero *hero = new Hero();
+    Hero *hero = new (std::nothrow) Hero();
     if (hero && hero->init(name))
     {
         hero->autorelease();
@@ -1540,27 +1540,31 @@ std::string TestLoadFromBinary::subtitle() const
 
 void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-	// remove json created
-	// remove sync resource
 	if(-1 == m_armatureIndex )
 	{
+		m_armatureIndex = -2;    // is loading
+        
+        // remove json created  and need remove their names: exprtjsone & csbs
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/hero.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/horse.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
 		ArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.ExportJson");
+        for( int i = 0; i < BINARYFILECOUNT; i++)
+		{
+			ArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[i]);
+        }
         
 		for( int i = 0; i < BINARYFILECOUNT; i++)
 		{
 			ArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
 		}
         
-		m_armatureIndex = -2;    // is loading
 	}
 	else if(m_armatureIndex>=0 && m_armature != nullptr)
 	{
-		this->removeChild(m_armature);
+		m_armature->removeFromParent();
 		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;
 		m_armature = Armature::create(m_armatureNames[m_armatureIndex]);
 		m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));

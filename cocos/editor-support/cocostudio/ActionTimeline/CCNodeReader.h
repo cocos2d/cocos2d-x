@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CC_NODE_CACHE_H__
 
 #include "cocostudio/DictionaryHelper.h"
+#include "cocostudio/CocosStudioExport.h"
 #include "cocos2d.h"
 
 namespace cocostudio {
@@ -33,7 +34,7 @@ namespace cocostudio {
 
 namespace timeline{
 
-class NodeReader
+class CC_STUDIO_DLL NodeReader
 {
 public:
     static NodeReader* getInstance();

@@ -35,7 +35,7 @@ class EventListenerCustom;
 
 namespace cocostudio {
 
-class BaseTriggerCondition : public cocos2d::Ref
+class CC_STUDIO_DLL BaseTriggerCondition : public cocos2d::Ref
 {
 protected:
     BaseTriggerCondition(void);
@@ -48,7 +48,7 @@ public:
     virtual void removeAll();
 };
 
-class BaseTriggerAction : public cocos2d::Ref
+class CC_STUDIO_DLL BaseTriggerAction : public cocos2d::Ref
 {
 protected:
     BaseTriggerAction(void);
@@ -62,7 +62,7 @@ public:
 };
 
 
-class TriggerObj : public cocos2d::Ref
+class CC_STUDIO_DLL TriggerObj : public cocos2d::Ref
 {
 public:
     TriggerObj(void);

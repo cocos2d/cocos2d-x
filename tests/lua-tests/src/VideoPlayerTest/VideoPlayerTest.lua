@@ -1,4 +1,4 @@
-require("experimentalConstants")
+require("experimentalUIConstants")
 
 
 local visibleRect = cc.Director:getInstance():getOpenGLView():getVisibleRect()
@@ -21,18 +21,18 @@ local function VideoPlayerTest()
     layer:addChild(videoStateLabel)
 
     local function onVideoEventCallback(sener, eventType)
-        if eventType == ccexprimental.VideoPlayerEvent.PLAYING then
+        if eventType == ccexp.VideoPlayerEvent.PLAYING then
             videoStateLabel:setString("PLAYING")
-        elseif eventType == ccexprimental.VideoPlayerEvent.PAUSED then
+        elseif eventType == ccexp.VideoPlayerEvent.PAUSED then
             videoStateLabel:setString("PAUSED")
-        elseif eventType == ccexprimental.VideoPlayerEvent.STOPPED then
+        elseif eventType == ccexp.VideoPlayerEvent.STOPPED then
             videoStateLabel:setString("STOPPED")
-        elseif eventType == ccexprimental.VideoPlayerEvent.COMPLETED then
+        elseif eventType == ccexp.VideoPlayerEvent.COMPLETED then
             videoStateLabel:setString("COMPLETED")
         end
     end
     local widgetSize = widget:getContentSize()
-    local videoPlayer = ccexprimental.VideoPlayer:create()
+    local videoPlayer = ccexp.VideoPlayer:create()
     videoPlayer:setPosition(centerPos)
     videoPlayer:setAnchorPoint(cc.p(0.5, 0.5))
     videoPlayer:setContentSize(cc.size(widgetSize.width * 0.4,widgetSize.height * 0.4))

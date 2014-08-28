@@ -35,7 +35,7 @@ namespace ui {
     class Widget;
 }
 
-class EventListenerFocus : public EventListener
+class CC_DLL EventListenerFocus : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
@@ -51,7 +51,7 @@ public:
 public:
     std::function<void(ui::Widget*, ui::Widget*)> onFocusChanged;
     
-private:
+CC_CONSTRUCTOR_ACCESS:
     EventListenerFocus();
     bool init();
     

@@ -43,6 +43,18 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(scene);
         }
     },
+    {
+        "Scale9 Sprite Test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIScale9SpriteTest);
+            sceneManager->setMinUISceneId(kUIScale9SpriteTest);
+            sceneManager->setMaxUISceneId(kUIS9ChangeAnchorPoint);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
 	{
         
         "ButtonTest",
@@ -51,7 +63,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIButtonTest);
             sceneManager->setMinUISceneId(kUIButtonTest);
-            sceneManager->setMaxUISceneId(kUIButtonTest_Title);
+            sceneManager->setMaxUISceneId(kUIButtonTestZoomScale);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -87,7 +99,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIImageViewTest);
             sceneManager->setMinUISceneId(kUIImageViewTest);
-            sceneManager->setMaxUISceneId(kUIImageViewTest_Scale9);
+            sceneManager->setMaxUISceneId(kUIImageViewTest_ContentSize);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -147,7 +159,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextFieldTest);
             sceneManager->setMinUISceneId(kUITextFieldTest);
-            sceneManager->setMaxUISceneId(kUITextFieldTest_TrueTypeFont);
+            sceneManager->setMaxUISceneId(kUITextFieldTest_PlaceHolderColor);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -171,7 +183,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
             sceneManager->setMinUISceneId(kUIScrollViewTest_Vertical);
-            sceneManager->setMaxUISceneId(kUIScrollViewTest_ScrollToPercentBothDirection_Bounce);
+            sceneManager->setMaxUISceneId(kUIScrollViewNestTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -183,7 +195,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIPageViewTest);
             sceneManager->setMinUISceneId(kUIPageViewTest);
-            sceneManager->setMaxUISceneId(kUIPageViewButtonTest);
+            sceneManager->setMaxUISceneId(kUIPageViewTouchPropagationTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -320,7 +332,7 @@ void CocosGUITestScene::onEnter()
 
 void CocosGUITestScene::runThisTest()
 {
-    auto layer = new CocosGUITestMainLayer();
+    auto layer = new (std::nothrow) CocosGUITestMainLayer();
     addChild(layer);
     layer->release();
     
@@ -329,7 +341,7 @@ void CocosGUITestScene::runThisTest()
 
 void CocosGUITestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

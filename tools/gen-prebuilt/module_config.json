@@ -1,0 +1,708 @@
+{
+    "cocos2d" : {
+        "is_compiled" : true,
+        "target_dir" : "cocos",
+        "win32_lib_file_name" : "libcocos2d",
+        "ios_lib_file_name" : "libcocos2d iOS.a",
+        "mac_lib_file_name" : "libcocos2d Mac.a",
+        "android_lib_name" : "cocos2dx_static",
+        "android_lib_file_name" : "libcocos2d",
+        "include" : [
+            {
+                "from": "cocos",
+                "to": "cocos/include",
+                "include" : [
+                    "2d/*.h", "3d/*.h", "3d/*.inl", "base/*.h",
+                    "deprecated/*.h", "math/*.h", "math/*.inl",
+                    "physics/*.h", "platform/*.h", "renderer/*.h",
+                    "storage/*.h", "cocos2d.h", "2d/cocos2d_headers.props",
+                    "2d/cocos2dx.props"
+                ]
+            },
+            {
+                "from": "cocos/platform/android/java",
+                "to": "cocos/include/platform/android/java",
+                "exclude": [
+                    "bin/*", "gen/*", "libs/*"
+                ]
+            },
+            {
+                "from": "external",
+                "to": "external",
+                "include": [
+                    "tinyxml2/*.h",
+                    "unzip/*.h",
+                    "xxhash/*.h",
+                    "json/*.h",
+                    "win32-specific/*"
+                ]
+            },
+            {
+                "from": "external/lua/tolua",
+                "to": "cocos/lua-bindings/include",
+                "include": [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocos2d",
+                "to": "cocos/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "cocos/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_auto.hpp",
+                    "lua_cocos2dx_experimental_auto.hpp",
+                    "lua_cocos2dx_physics_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual",
+                "to": "cocos/lua-bindings/include",
+                "include": [
+                    "CCLuaBridge.h",
+                    "CCLuaStack.h",
+                    "Cocos2dxLuaLoader.h",
+                    "lua_debugger.h",
+                    "CCLuaEngine.h",
+                    "CCLuaValue.h",
+                    "LuaBasicConversions.h",
+                    "tolua_fix.h",
+                    "cocos2d/*.h",
+                    "cocos2d/*.hpp"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include",
+            "../../../modules",
+            "../../../external/tinyxml2",
+            "../../../external/unzip",
+            "../../../external/chipmunk/include/chipmunk",
+            "../../../external/edtaa3func",
+            "../../../external/xxhash",
+            "../../../external/ConvertUTF",
+            "../../../external"
+        ],
+        "depend_modules" : [
+            "chipmunk", "freetype", "jpeg",
+            "png", "webp", "tiff",
+            "cocos_android", "curl", "websockets"
+        ],
+        "export_ldlibs" : [
+            "GLESv2", "log", "z", "android"
+        ],
+        "export_cflags" : [
+            "-Wno-psabi", "-DUSE_FILE32API"
+        ],
+        "export_cppflags" : [
+            "-Wno-literal-suffix", "-Wno-deprecated-declarations"
+        ],
+        "is_optional" : false,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocos2d",
+            "android_lib_name" : "cocos2d_lua_static",
+            "depend_modules" : [
+                "luajit"
+            ]
+        }
+    },
+    "freetype" : {
+        "is_compiled" : false,
+        "from_dir" : "external/freetype2",
+        "target_dir" : "external/freetype2",
+        "android_lib_name" : "cocos_freetype2_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
+    },
+    "jpeg" : {
+        "is_compiled" : false,
+        "from_dir" : "external/jpeg",
+        "target_dir" : "external/jpeg",
+        "android_lib_name" : "cocos_jpeg_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
+    },
+    "png" : {
+        "is_compiled" : false,
+        "from_dir" : "external/png",
+        "target_dir" : "external/png",
+        "android_lib_name" : "cocos_png_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
+    },
+    "webp" : {
+        "is_compiled" : false,
+        "from_dir" : "external/webp",
+        "target_dir" : "external/webp",
+        "android_lib_name" : "cocos_webp_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/mac/*"
+        ]
+    },
+    "tiff" : {
+        "is_compiled" : false,
+        "from_dir" : "external/tiff",
+        "target_dir" : "external/tiff",
+        "android_lib_name" : "cocos_tiff_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/winrt/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/winrt/*",
+            "prebuilt/mac/*"
+        ]
+    },
+    "curl" : {
+        "is_compiled" : false,
+        "from_dir" : "external/curl",
+        "target_dir" : "external/curl",
+        "win32_lib_file_name" : "libcurl_imp",
+        "android_lib_name" : "cocos_curl_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/wp8/*",
+            "prebuilt/ios/*",
+            "prebuilt/wp8/*"
+        ],
+        "additional_link" : {
+            "mac": {
+                "libcurl.dylib": "usr/lib"
+            }
+        }
+    },
+    "websockets" : {
+        "is_compiled" : false,
+        "from_dir" : "external/websockets",
+        "target_dir" : "external/websockets",
+        "win32_lib_file_name" : "websockets",
+        "android_lib_name" : "websockets_static",
+        "is_optional" : false,
+        "exclude" : [
+            "include/ios/*",
+            "include/linux/*",
+            "include/wp8/*",
+            "include/mac/*",
+            "prebuilt/ios/*",
+            "prebuilt/linux/*",
+            "prebuilt/wp8/*",
+            "prebuilt/mac/*"
+        ]
+    },
+    "glfw3": {
+        "is_compiled" : false,
+        "from_dir" : "external/glfw3",
+        "target_dir" : "external/glfw3",
+        "is_optional" : false
+    },
+    "luajit": {
+        "is_compiled" : false,
+        "from_dir" : "external/lua/luajit",
+        "target_dir" : "external/lua/luajit",
+        "android_lib_name" : "luajit_static",
+        "is_optional" : false,
+        "include" : [
+            "include/*",
+            "prebuilt/android/*",
+            "prebuilt/win32/*"
+        ]
+    },
+    "lua": {
+        "is_compiled" : false,
+        "from_dir" : "external/lua/lua",
+        "target_dir" : "external/lua/lua",
+        "is_optional" : false,
+        "include" : [
+            "*.h",
+            "prebuilt/ios/*"
+        ]
+    },
+    "cocos_android" : {
+        "is_compiled" : true,
+        "target_dir" : "cocos/include/platform/android",
+        "android_lib_name" : "cocos2dxandroid_static",
+        "android_lib_file_name" : "libcocos2dandroid",
+        "export_include" : [
+            "../../"
+        ],
+        "export_ldlibs" : [
+            "GLESv1_CM", "GLESv2", "EGL", "log", "z", "android"
+        ],
+        "is_optional" : false
+    },
+    "chipmunk" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/chipmunk",
+        "win32_lib_file_name" : "libchipmunk",
+        "ios_lib_file_name" : "libchipmunk iOS.a",
+        "mac_lib_file_name" : "libchipmunk Mac.a",
+        "android_lib_name" : "chipmunk_static",
+        "android_lib_file_name" : "libchipmunk",
+        "include" : [
+            {
+                "from": "external/chipmunk",
+                "to": "modules/chipmunk",
+                "include" : [
+                    "include/*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include/chipmunk"
+        ],
+        "is_optional" : true
+    },
+    "box2d" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/Box2D",
+        "win32_lib_file_name" : "libbox2d",
+        "ios_lib_file_name" : "libbox2d iOS.a",
+        "mac_lib_file_name" : "libbox2d Mac.a",
+        "android_lib_name" : "box2d_static",
+        "android_lib_file_name" : "libbox2d",
+        "include" : [
+            {
+                "from": "external/Box2D",
+                "to": "modules/Box2D/include/Box2D",
+                "include" : [
+                    "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "is_optional" : true
+    },
+    "audio" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/audio",
+        "win32_lib_file_name" : "libcocosdenshion",
+        "ios_lib_file_name" : "libcocosdenshion iOS.a",
+        "mac_lib_file_name" : "libcocosdenshion Mac.a",
+        "android_lib_name" : "cocosdenshion_static",
+        "android_lib_file_name" : "libcocosdenshion",
+        "include" : [
+            {
+                "from": "cocos/audio",
+                "to": "modules/audio",
+                "include" : [
+                    "include/*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosdenshion",
+                "to": "modules/audio/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/audio/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_cocosdenshion_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocosdenshion",
+                "to": "modules/audio/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocosdenshion",
+            "android_lib_name" : "cocosdenshion_lua_static",
+            "headers" : [
+                "lua_cocos2dx_cocosdenshion_manual.h"
+            ],
+            "registers" : [
+                "register_cocosdenshion_module"
+            ]
+        }
+    },
+    "network" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/network",
+        "win32_lib_file_name" : "libnetwork",
+        "ios_lib_file_name" : "libnetwork iOS.a",
+        "mac_lib_file_name" : "libnetwork Mac.a",
+        "android_lib_name" : "cocos_network_static",
+        "android_lib_file_name" : "libnetwork",
+        "include" : [
+            {
+                "from": "cocos/network",
+                "to": "modules/network/include/network",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "external/lua/luasocket",
+                "to": "modules/network/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
+                "to": "modules/network/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/network",
+                "to": "modules/network/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d", "curl", "websockets"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluanetwork",
+            "android_lib_name" : "network_lua_static",
+            "headers" : [
+                "lua_cocos2dx_network_manual.h"
+            ],
+            "registers" : [
+                "register_network_module"
+            ]
+        }
+    },
+    "ui" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/ui",
+        "win32_lib_file_name" : "libui",
+        "ios_lib_file_name" : "libui iOS.a",
+        "mac_lib_file_name" : "libui Mac.a",
+        "android_lib_name" : "cocos_ui_static",
+        "android_lib_file_name" : "libui",
+        "include" : [
+            {
+                "from": "cocos/ui",
+                "to": "modules/ui/include/ui",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/ui",
+                "to": "modules/ui/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/ui/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_ui_auto.hpp",
+                    "lua_cocos2dx_experimental_video_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/ui",
+                "to": "modules/ui/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d", "extensions"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaui",
+            "android_lib_name" : "ui_lua_static",
+            "headers" : [
+                "lua_cocos2dx_ui_manual.hpp"
+            ],
+            "registers" : [
+                "register_ui_moudle"
+            ]
+        }
+    },
+    "extensions" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/extensions",
+        "win32_lib_file_name" : "libextension",
+        "ios_lib_file_name" : "libextension iOS.a",
+        "mac_lib_file_name" : "libextension Mac.a",
+        "android_lib_name" : "cocos_extension_static",
+        "android_lib_file_name" : "libextension",
+        "include" : [
+            {
+                "from": "extensions",
+                "to": "modules/extensions/include/extensions",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/extension",
+                "to": "modules/extensions/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/extensions/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_extension_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/extension",
+                "to": "modules/extensions/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d", "curl", "box2d"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaextension",
+            "android_lib_name" : "extension_lua_static",
+            "headers" : [
+                "lua_cocos2dx_extension_manual.h"
+            ],
+            "registers" : [
+                "register_extension_module"
+            ]
+        }
+    },
+    "cocostudio" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/cocostudio",
+        "win32_lib_file_name" : "libcocostudio",
+        "ios_lib_file_name" : "libcocostudio iOS.a",
+        "mac_lib_file_name" : "libcocostudio Mac.a",
+        "android_lib_name" : "cocostudio_static",
+        "android_lib_file_name" : "libcocostudio",
+        "include" : [
+            {
+                "from": "cocos/editor-support/cocostudio",
+                "to": "modules/cocostudio/include/cocostudio",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocostudio",
+                "to": "modules/cocostudio/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/cocostudio/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_studio_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocostudio",
+                "to": "modules/cocostudio/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "ui", "audio"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocostudio",
+            "android_lib_name" : "cocostudio_lua_static",
+            "headers" : [
+                "lua_cocos2dx_coco_studio_manual.hpp"
+            ],
+            "registers" : [
+                "register_cocostudio_module"
+            ]
+        }
+    },
+    "spine" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/spine",
+        "win32_lib_file_name" : "libspine",
+        "ios_lib_file_name" : "libspine iOS.a",
+        "mac_lib_file_name" : "libspine Mac.a",
+        "android_lib_name" : "spine_static",
+        "android_lib_file_name" : "libspine",
+        "include" : [
+            {
+                "from": "cocos/editor-support/spine",
+                "to": "modules/spine/include/spine",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/spine/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_spine_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/spine",
+                "to": "modules/spine/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "cocos2d"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaspine",
+            "android_lib_name" : "spine_lua_static",
+            "headers" : [
+                "lua_cocos2dx_spine_manual.hpp"
+            ],
+            "registers" : [
+                "register_spine_module"
+            ]
+        }
+    },
+    "cocosbuilder" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/cocosbuilder",
+        "win32_lib_file_name" : "libcocosbuilder",
+        "ios_lib_file_name" : "libcocosbuilder iOS.a",
+        "mac_lib_file_name" : "libcocosbuilder Mac.a",
+        "android_lib_name" : "cocosbuilder_static",
+        "android_lib_file_name" : "libcocosbuilder",
+        "include" : [
+            {
+                "from": "cocos/editor-support/cocosbuilder",
+                "to": "modules/cocosbuilder/include/cocosbuilder",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosbuilder",
+                "to": "modules/cocosbuilder/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/cocosbuilder/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_cocosbuilder_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/cocosbuilder",
+                "to": "modules/cocosbuilder/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "extensions"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluacocosbuilder",
+            "android_lib_name" : "cocosbuilder_lua_static",
+            "headers" : [
+                "lua_cocos2dx_cocosbuilder_manual.h"
+            ],
+            "registers" : [
+                "register_cocosbuilder_module"
+            ]
+        }
+    }
+}

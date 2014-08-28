@@ -27,7 +27,6 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "CCApplication.h"
-#include "CCGLView.h"
 #include "base/CCDirector.h"
 #include <algorithm>
 #include "platform/CCFileUtils.h"
@@ -69,6 +68,8 @@ int Application::run()
 
     QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
+
+    initGLContextAttrs();
 
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())

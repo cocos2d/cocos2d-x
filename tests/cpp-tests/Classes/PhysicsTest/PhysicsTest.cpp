@@ -21,6 +21,7 @@ namespace
         CL(PhysicsPositionRotationTest),
         CL(PhysicsSetGravityEnableTest),
         CL(Bug5482),
+        CL(PhysicsFixedUpdate),
         CL(PhysicsTransformTest),
 #else
         CL(PhysicsDemoDisabled),
@@ -122,7 +123,7 @@ std::string PhysicsDemo::subtitle() const
 
 void PhysicsDemo::restartCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -130,7 +131,7 @@ void PhysicsDemo::restartCallback(Ref* sender)
 
 void PhysicsDemo::nextCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -138,7 +139,7 @@ void PhysicsDemo::nextCallback(Ref* sender)
 
 void PhysicsDemo::backCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -941,7 +942,6 @@ void PhysicsDemoActions::onEnter()
     sp3->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     sp4->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     
-    
     auto actionTo = JumpTo::create(2, Vec2(100,100), 50, 4);
     auto actionBy = JumpBy::create(2, Vec2(300,0), 50, 4);
     auto actionUp = JumpBy::create(2, Vec2(0,50), 80, 4);
@@ -1215,7 +1215,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     PhysicsBody* body = shape->getBody();
     int count = shape->getPointsCount();
     int pointsCount = 0;
-    Vec2* points = new Vec2[count + 1];
+    Vec2* points = new (std::nothrow) Vec2[count + 1];
     
     for (int i=0, j=count-1; i<count; j=i, ++i)
     {
@@ -1733,6 +1733,62 @@ std::string Bug5482::title() const
 std::string Bug5482::subtitle() const
 {
     return "change physics body to the other.";
+}
+
+void PhysicsFixedUpdate::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    this->addChild(wall);
+    
+    addBall();
+    
+    scheduleOnce(schedule_selector(PhysicsFixedUpdate::updateStart), 2);
+}
+
+void PhysicsFixedUpdate::addBall()
+{
+    auto ball = Sprite::create("Images/ball.png");
+    ball->setPosition(100, 100);
+    ball->setPhysicsBody(PhysicsBody::createCircle(ball->getContentSize().width/2, PhysicsMaterial(0.1f, 1, 0.0f)));
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    ball->getPhysicsBody()->setVelocity(Point(1000, 20));
+    this->addChild(ball);
+}
+
+void PhysicsFixedUpdate::updateStart(float delta)
+{
+    addBall();
+    
+    _scene->getPhysicsWorld()->setAutoStep(false);
+    scheduleUpdate();
+}
+
+void PhysicsFixedUpdate::update(float delta)
+{
+    
+    // use fixed time and calculate 3 times per frame makes physics simulate more precisely.
+    for (int i = 0; i < 3; ++i)
+    {
+        _scene->getPhysicsWorld()->step(1/180.0f);
+    }
+}
+
+std::string PhysicsFixedUpdate::title() const
+{
+    return "Fixed Update Test";
+}
+
+std::string PhysicsFixedUpdate::subtitle() const
+{
+    return "The secend ball should not run across the wall";
 }
 
 bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event *event)

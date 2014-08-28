@@ -8,7 +8,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class LayerColorLoader : public LayerLoader {
+class CC_DLL LayerColorLoader : public LayerLoader {
 public:
     /**
      * @js NA

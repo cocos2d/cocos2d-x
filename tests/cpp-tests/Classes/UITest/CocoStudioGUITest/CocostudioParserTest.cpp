@@ -44,7 +44,7 @@ g_guisTests[] =
         "cocostudio 1.3",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson");
+            CocostudioParserJsonScene* pScene = new (std::nothrow) CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -53,7 +53,7 @@ g_guisTests[] =
         "cocostudio 1.4",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson");
+            CocostudioParserJsonScene* pScene = new (std::nothrow) CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -62,7 +62,7 @@ g_guisTests[] =
         "cocostudio 1.5",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson");
+            CocostudioParserJsonScene* pScene = new (std::nothrow) CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -130,7 +130,7 @@ void CocostudioParserTestScene::onEnter()
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocostudioParserTestScene::BackCallback, this));
     
-    Menu* pMenu = Menu::create(pMenuItem, NULL);
+    Menu* pMenu = Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
     pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
@@ -140,7 +140,7 @@ void CocostudioParserTestScene::onEnter()
 
 void CocostudioParserTestScene::runThisTest()
 {
-    Layer* pLayer = new CocostudioParserTestMainLayer();
+    Layer* pLayer = new (std::nothrow) CocostudioParserTestMainLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -149,7 +149,7 @@ void CocostudioParserTestScene::runThisTest()
 
 void CocostudioParserTestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

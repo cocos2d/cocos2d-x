@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "CCStdC.h"
 #include "base/CCEventListenerTouch.h"
+#include "base/CCEventDispatcher.h"
 #include "deprecated/CCString.h"
 
 #include <vector>
@@ -88,7 +89,7 @@ Menu * Menu::create(MenuItem* item, ...)
 
 Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
 {
-    auto ret = new Menu();
+    auto ret = new (std::nothrow) Menu();
     if (ret && ret->initWithArray(arrayOfItems))
     {
         ret->autorelease();

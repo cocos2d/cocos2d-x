@@ -31,7 +31,7 @@ NS_TIMELINE_BEGIN
 // ActionTimelineData
 ActionTimelineData* ActionTimelineData::create(int actionTag)
 {
-    ActionTimelineData * ret = new ActionTimelineData();
+    ActionTimelineData * ret = new (std::nothrow) ActionTimelineData();
     if (ret && ret->init(actionTag))
     {
         ret->autorelease();
@@ -58,7 +58,7 @@ bool ActionTimelineData::init(int actionTag)
 // ActionTimeline
 ActionTimeline* ActionTimeline::create()
 {
-    ActionTimeline* object = new ActionTimeline();
+    ActionTimeline* object = new (std::nothrow) ActionTimeline();
     if (object && object->init())
     {
         object->autorelease();
@@ -215,13 +215,17 @@ void ActionTimeline::startWithTarget(Node *target)
         [this, target](Node* child)
     {
         ActionTimelineData* data = dynamic_cast<ActionTimelineData*>(child->getUserObject());
-        int actionTag = data->getActionTag();
-        if(_timelineMap.find(actionTag) != _timelineMap.end())
+
+        if(data)
         {
-            auto timelines = this->_timelineMap[actionTag];
-            for (auto timeline : timelines)
+            int actionTag = data->getActionTag();
+            if(_timelineMap.find(actionTag) != _timelineMap.end())
             {
-                timeline->setNode(child);
+                auto timelines = this->_timelineMap[actionTag];
+                for (auto timeline : timelines)
+                {
+                    timeline->setNode(child);
+                }
             }
         }
     });

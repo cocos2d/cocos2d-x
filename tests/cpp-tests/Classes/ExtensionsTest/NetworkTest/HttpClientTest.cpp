@@ -107,7 +107,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
 {    
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -125,7 +125,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
     
     // test 2
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         // required fields
         request->setUrl("http://httpbin.org/ip");
         request->setRequestType(HttpRequest::Type::GET);
@@ -145,7 +145,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
     
     // test 3   
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("https://httpbin.org/get");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -170,7 +170,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
 {
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -192,7 +192,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
     
     // test 2: set Content-Type
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         std::vector<std::string> headers;
@@ -221,7 +221,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
 
 void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::Ref *sender, bool isImmediate)
 {
-    HttpRequest* request = new HttpRequest();
+    HttpRequest* request = new (std::nothrow) HttpRequest();
     request->setUrl("http://httpbin.org/post");
     request->setRequestType(HttpRequest::Type::POST);
     request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -250,7 +250,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
 {
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -272,7 +272,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
 
     // test 2: set Content-Type
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         std::vector<std::string> headers;
@@ -303,7 +303,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
 {
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
         request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -321,7 +321,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
 
     // test 2
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/delete");
         request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -369,12 +369,12 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     
     // dump data
     std::vector<char> *buffer = response->getResponseData();
-    printf("Http Test, dump data: ");
+    log("Http Test, dump data: ");
     for (unsigned int i = 0; i < buffer->size(); i++)
     {
-        printf("%c", (*buffer)[i]);
+        log("%c", (*buffer)[i]);
     }
-    printf("\n");
+    log("\n");
     if (response->getHttpRequest()->getReferenceCount() != 2)
     {
         log("request ref count not 2, is %d", response->getHttpRequest()->getReferenceCount());
@@ -383,7 +383,7 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
 
 void HttpClientTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -391,7 +391,7 @@ void HttpClientTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 void runHttpClientTest()
 {
     auto scene = Scene::create();
-    HttpClientTest *layer = new HttpClientTest();
+    HttpClientTest *layer = new (std::nothrow) HttpClientTest();
     scene->addChild(layer);
     
     Director::getInstance()->replaceScene(scene);

@@ -323,7 +323,7 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
         ccArrayEnsureExtraCapacity(element->timers, 1);
     }
 
-    TimerTargetCallback *timer = new TimerTargetCallback();
+    TimerTargetCallback *timer = new (std::nothrow) TimerTargetCallback();
     timer->initWithCallback(this, callback, target, key, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
@@ -1023,7 +1023,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
         ccArrayEnsureExtraCapacity(element->timers, 1);
     }
     
-    TimerTargetSelector *timer = new TimerTargetSelector();
+    TimerTargetSelector *timer = new (std::nothrow) TimerTargetSelector();
     timer->initWithSelector(this, selector, target, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();

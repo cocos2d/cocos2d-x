@@ -32,7 +32,7 @@ Ref* CustomParticleWidget::createInstance()
 
 CustomParticleWidget* CustomParticleWidget::create()
 {
-    CustomParticleWidget* custom = new CustomParticleWidget();
+    CustomParticleWidget* custom = new (std::nothrow) CustomParticleWidget();
     
     if (custom && custom->init())
     {
@@ -75,7 +75,7 @@ void CustomParticleWidget::setParticlePlist(const char *plist)
         _emitter = ParticleSystemQuad::create(plist);
     }
     //Warning!!! don't forget to set the position
-    addProtectedChild(_emitter , getLocalZOrder() + 1, -1);
+    addChild(_emitter , getLocalZOrder() + 1, -1);
     this->setParticlePosition(Vec2::ZERO);
 
     _emitterPlist = plist;

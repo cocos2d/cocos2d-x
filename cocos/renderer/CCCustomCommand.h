@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class CustomCommand : public RenderCommand
+class CC_DLL CustomCommand : public RenderCommand
 {
 public:
     CustomCommand();

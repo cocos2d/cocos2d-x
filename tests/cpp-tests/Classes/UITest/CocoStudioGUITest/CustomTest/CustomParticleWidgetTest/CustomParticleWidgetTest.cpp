@@ -34,7 +34,7 @@ void CustomParticleWidgetLayer::onEnter()
     
     CustomParticleWidget* custom = CustomParticleWidget::create();
     custom->setParticlePlist("Particles/BoilingFoam.plist");
-    
+    custom->setPosition(Vec2(VisibleRect::center()));
     addChild(custom, 10, -1);
 }
 
@@ -46,7 +46,7 @@ void CustomParticleWidgetScene::onEnter()
 {
     CCScene::onEnter();
     
-    Layer* pLayer = new CustomParticleWidgetLayer();
+    Layer* pLayer = new (std::nothrow) CustomParticleWidgetLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -64,7 +64,7 @@ void CustomParticleWidgetScene::onEnter()
 
 void CustomParticleWidgetScene::runThisTest()
 {
-    Layer* pLayer = new CustomParticleWidgetLayer();
+    Layer* pLayer = new (std::nothrow) CustomParticleWidgetLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -73,7 +73,7 @@ void CustomParticleWidgetScene::runThisTest()
 
 void CustomParticleWidgetScene::BackCallback(Ref* pSender)
 {
-    CustomGUITestScene* pScene = new CustomGUITestScene();
+    CustomGUITestScene* pScene = new (std::nothrow) CustomGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

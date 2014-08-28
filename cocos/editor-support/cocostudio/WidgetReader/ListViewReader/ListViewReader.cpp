@@ -30,7 +30,7 @@ namespace cocostudio
     {
         if (!instanceListViewReader)
         {
-            instanceListViewReader = new ListViewReader();
+            instanceListViewReader = new (std::nothrow) ListViewReader();
         }
         return instanceListViewReader;
     }

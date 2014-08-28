@@ -50,7 +50,7 @@ void CustomImageScene::onEnter()
 
 void CustomImageScene::runThisTest()
 {
-    Layer* pLayer = new CustomImageLayer();
+    Layer* pLayer = new (std::nothrow) CustomImageLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -59,7 +59,7 @@ void CustomImageScene::runThisTest()
 
 void CustomImageScene::BackCallback(Ref* pSender)
 {
-    CustomGUITestScene* pScene = new CustomGUITestScene();
+    CustomGUITestScene* pScene = new (std::nothrow) CustomGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

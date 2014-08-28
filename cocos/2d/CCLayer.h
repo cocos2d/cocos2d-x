@@ -30,15 +30,8 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
-#include "base/CCEventTouch.h"
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
-
-#include "base/CCEventKeyboard.h"
 #include "renderer/CCCustomCommand.h"
 
-#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
@@ -53,6 +46,8 @@ class TouchScriptHandlerEntry;
 class EventListenerTouch;
 class EventListenerKeyboard;
 class EventListenerAcceleration;
+
+class Touch;
 
 //
 // Layer
@@ -173,9 +168,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
-    void _addTouchListener();
+    CC_DEPRECATED_ATTRIBUTE void _addTouchListener() {}
 
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
+    CC_DEPRECATED_ATTRIBUTE void addTouchListener() {}
     CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
     CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
 
@@ -228,7 +223,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override { return Layer::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __LayerRGBA();
     virtual ~__LayerRGBA() {}
 
@@ -246,9 +241,6 @@ All features from Layer are valid, plus the following new features:
 - RGB colors
 */
 class CC_DLL LayerColor : public Layer, public BlendProtocol
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** creates a fullscreen black layer */

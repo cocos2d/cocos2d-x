@@ -75,7 +75,7 @@ ControlSceneManager * ControlSceneManager::sharedControlSceneManager()
 {
     if (sharedInstance == nullptr)
     {
-        sharedInstance = new ControlSceneManager();
+        sharedInstance = new (std::nothrow) ControlSceneManager();
     }
     return sharedInstance;
 }

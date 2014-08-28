@@ -61,8 +61,8 @@
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
-#include "CCGLView.h"
 #include "base/base64.h"
+#include "base/ccUtils.h"
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion(void);
@@ -131,7 +131,7 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    send(fd, prompt, sizeof(prompt),0);
+    send(fd, prompt, strlen(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
@@ -660,8 +660,8 @@ void Console::commandTouch(int fd, const std::string& args)
             if((argv.size() == 3) && (isFloat(argv[1]) && isFloat(argv[2])))
             {
                 
-                float x = std::atof(argv[1].c_str());
-                float y = std::atof(argv[2].c_str());
+                float x = utils::atof(argv[1].c_str());
+                float y = utils::atof(argv[2].c_str());
 
                 srand ((unsigned)time(nullptr));
                 _touchId = rand();
@@ -686,10 +686,10 @@ void Console::commandTouch(int fd, const std::string& args)
                 && (isFloat(argv[3])) && (isFloat(argv[4])))
             {
                 
-                float x1 = std::atof(argv[1].c_str());
-                float y1 = std::atof(argv[2].c_str());
-                float x2 = std::atof(argv[3].c_str());
-                float y2 = std::atof(argv[4].c_str());
+                float x1 = utils::atof(argv[1].c_str());
+                float y1 = utils::atof(argv[2].c_str());
+                float x2 = utils::atof(argv[3].c_str());
+                float y2 = utils::atof(argv[4].c_str());
 
                 srand ((unsigned)time(nullptr));
                 _touchId = rand();

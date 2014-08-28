@@ -61,9 +61,9 @@ void Controller::init()
     }
 
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
-    _connectEvent = new EventController(EventController::ControllerEventType::CONNECTION, this, false);
-    _keyEvent = new EventController(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, this, 0);
-    _axisEvent = new EventController(EventController::ControllerEventType::AXIS_STATUS_CHANGED, this, 0);
+    _connectEvent = new (std::nothrow) EventController(EventController::ControllerEventType::CONNECTION, this, false);
+    _keyEvent = new (std::nothrow) EventController(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, this, 0);
+    _axisEvent = new (std::nothrow) EventController(EventController::ControllerEventType::AXIS_STATUS_CHANGED, this, 0);
 }
 
 const Controller::KeyStatus& Controller::getKeyStatus(int keyCode)

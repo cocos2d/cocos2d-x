@@ -87,7 +87,7 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 #endif
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     LabelAtlas()
     :_string("")
     {}
@@ -96,6 +96,8 @@ protected:
     {
         _string.clear();
     }
+    
+protected:
     virtual void updateColor() override;
 
 #if CC_LABELATLAS_DEBUG_DRAW

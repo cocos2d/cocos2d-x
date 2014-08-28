@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "math/CCGeometry.h"
 #include "base/CCDirector.h"
-#include "CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -65,6 +64,7 @@ Application::~Application()
 
 int Application::run()
 {
+    initGLContextAttrs();
     if(!applicationDidFinishLaunching())
     {
         return 1;

@@ -8,6 +8,9 @@ import sys
 import traceback
 from jenkinsapi.jenkins import Jenkins
 
+access_token = os.environ['GITHUB_ACCESS_TOKEN']
+Headers = {"Authorization":"token " + access_token} 
+
 http_proxy = ''
 if(os.environ.has_key('HTTP_PROXY')):
     http_proxy = os.environ['HTTP_PROXY']
@@ -28,8 +31,6 @@ def check_queue_build(action, pr_num, statuses_url):
           queues.delete_item(queue)
           target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
           data = {"state":"error", "target_url":target_url}
-          access_token = os.environ['GITHUB_ACCESS_TOKEN']
-          Headers = {"Authorization":"token " + access_token} 
           try:
               requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
           except:
@@ -76,7 +77,7 @@ def main():
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
   
-    r = requests.get(pr['url']+"/commits", proxies = proxyDict)
+    r = requests.get(pr['url']+"/commits", headers=Headers, proxies = proxyDict)
     commits = r.json()
     last_commit = commits[len(commits)-1]
     message = last_commit['commit']['message']
@@ -91,8 +92,7 @@ def main():
         return(0)
     
     data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Waiting available build machine..."}
-    access_token = os.environ['GITHUB_ACCESS_TOKEN']
-    Headers = {"Authorization":"token " + access_token} 
+  
 
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
