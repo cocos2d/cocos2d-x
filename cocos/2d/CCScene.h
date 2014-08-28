@@ -30,12 +30,16 @@ THE SOFTWARE.
 
 #include <string>
 #include "2d/CCNode.h"
-#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
 class Camera;
 class Light3D;
+class EventListenerCustom;
+class EventCustom;
+#if CC_USE_PHYSICS
+class PhysicsWorld;
+#endif
 /**
  * @addtogroup scene
  * @{
@@ -101,6 +105,7 @@ protected:
     friend class Camera;
     friend class Director;
     friend class Light3D;
+    friend class Renderer;
     
     std::vector<Camera*> _cameras; //weak ref to Camera
     Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called

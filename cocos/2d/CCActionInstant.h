@@ -28,10 +28,7 @@ THE SOFTWARE.
 #ifndef __CCINSTANT_ACTION_H__
 #define __CCINSTANT_ACTION_H__
 
-#include <string>
 #include <functional>
-
-#include "CCStdC.h"
 #include "2d/CCAction.h"
 
 NS_CC_BEGIN

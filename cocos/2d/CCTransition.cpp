@@ -26,7 +26,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTransition.h"
-#include "base/CCDirector.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionEase.h"
@@ -36,6 +35,8 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "2d/CCRenderTexture.h"
 #include "2d/CCNodeGrid.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 

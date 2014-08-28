@@ -27,7 +27,7 @@
 
 #include "base/CCPlatformMacros.h"
 #include "base/CCRef.h"
-#include "CCStdC.h"
+#include "CCStdC.h" // ssize_t on windows
 #include <string>
 #include <unordered_map>
 
