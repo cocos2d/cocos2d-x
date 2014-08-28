@@ -82,7 +82,7 @@ private:
 
 DrawLine3D* DrawLine3D::create()
 {
-    auto ret = new DrawLine3D();
+    auto ret = new (std::nothrow) DrawLine3D();
     if (ret && ret->init())
         return ret;
     CC_SAFE_DELETE(ret);
@@ -328,7 +328,7 @@ void Camera3DTestDemo::onExit()
 
 void Camera3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild(restartSpriteTestAction());
 
     Director::getInstance()->replaceScene(s);
@@ -337,14 +337,14 @@ void Camera3DTestDemo::restartCallback(Ref* sender)
 
 void Camera3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 void Camera3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -363,34 +363,12 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
         if (animation)
         {
             auto animate = Animate3D::create(animation);
-            bool inverse = (std::rand() % 3 == 0);
-
-            int rand2 = std::rand();
-            float speed = 1.0f;
-            if(rand2 % 3 == 1)
-            {
-                speed = animate->getSpeed() + CCRANDOM_0_1();
-            }
-            else if(rand2 % 3 == 2)
-            {
-                speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
-            }
-            animate->setSpeed(inverse ? -speed : speed);
             sprite->runAction(RepeatForever::create(animate));
-            //auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
-            // sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
         }
     }
     if(bindCamera)
     {
         _sprite3D=sprite;
-       // auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
-      //  sp->setScale(3);
-        //sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
-        //ParticleSystem3D* particleSystem3D = ParticleSystem3D::create("CameraTest/particle3Dtest1.particle");
-        //particleSystem3D->start();
-        //sprite->getAttachNode("Bip001 R Hand")->addChild(particleSystem3D);
-
     }
     sprite->setScale(scale);
 

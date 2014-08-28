@@ -68,7 +68,7 @@ PhysicsShape::~PhysicsShape()
 
 bool PhysicsShape::init(Type type)
 {
-    _info = new PhysicsShapeInfo(this);
+    _info = new (std::nothrow) PhysicsShapeInfo(this);
     if (_info == nullptr) return false;
     
     _type = type;
@@ -333,7 +333,7 @@ void PhysicsShape::setBody(PhysicsBody *body)
 // PhysicsShapeCircle
 PhysicsShapeCircle* PhysicsShapeCircle::create(float radius, const PhysicsMaterial& material/* = MaterialDefault*/, const Vec2& offset/* = Vec2(0, 0)*/)
 {
-    PhysicsShapeCircle* shape = new PhysicsShapeCircle();
+    PhysicsShapeCircle* shape = new (std::nothrow) PhysicsShapeCircle();
     if (shape && shape->init(radius, material, offset))
     {
         shape->autorelease();
@@ -470,7 +470,7 @@ void PhysicsShapeCircle::update(float delta)
 // PhysicsShapeEdgeSegment
 PhysicsShapeEdgeSegment* PhysicsShapeEdgeSegment::create(const Vec2& a, const Vec2& b, const PhysicsMaterial& material/* = MaterialDefault*/, float border/* = 1*/)
 {
-    PhysicsShapeEdgeSegment* shape = new PhysicsShapeEdgeSegment();
+    PhysicsShapeEdgeSegment* shape = new (std::nothrow) PhysicsShapeEdgeSegment();
     if (shape && shape->init(a, b, material, border))
     {
         shape->autorelease();
@@ -548,7 +548,7 @@ void PhysicsShapeEdgeSegment::update(float delta)
 // PhysicsShapeBox
 PhysicsShapeBox* PhysicsShapeBox::create(const Size& size, const PhysicsMaterial& material/* = MaterialDefault*/, const Vec2& offset/* = Vec2(0, 0)*/)
 {
-    PhysicsShapeBox* shape = new PhysicsShapeBox();
+    PhysicsShapeBox* shape = new (std::nothrow) PhysicsShapeBox();
     if (shape && shape->init(size, material, offset))
     {
         shape->autorelease();
@@ -599,7 +599,7 @@ Size PhysicsShapeBox::getSize() const
 // PhysicsShapePolygon
 PhysicsShapePolygon* PhysicsShapePolygon::create(const Vec2* points, int count, const PhysicsMaterial& material/* = MaterialDefault*/, const Vec2& offset/* = Vec2(0, 0)*/)
 {
-    PhysicsShapePolygon* shape = new PhysicsShapePolygon();
+    PhysicsShapePolygon* shape = new (std::nothrow) PhysicsShapePolygon();
     if (shape && shape->init(points, count, material, offset))
     {
         shape->autorelease();
@@ -736,7 +736,7 @@ void PhysicsShapePolygon::update(float delta)
 // PhysicsShapeEdgeBox
 PhysicsShapeEdgeBox* PhysicsShapeEdgeBox::create(const Size& size, const PhysicsMaterial& material/* = MaterialDefault*/, float border/* = 1*/, const Vec2& offset/* = Vec2(0, 0)*/)
 {
-    PhysicsShapeEdgeBox* shape = new PhysicsShapeEdgeBox();
+    PhysicsShapeEdgeBox* shape = new (std::nothrow) PhysicsShapeEdgeBox();
     if (shape && shape->init(size, material, border, offset))
     {
         shape->autorelease();
@@ -783,7 +783,7 @@ bool PhysicsShapeEdgeBox::init(const Size& size, const PhysicsMaterial& material
 // PhysicsShapeEdgeBox
 PhysicsShapeEdgePolygon* PhysicsShapeEdgePolygon::create(const Vec2* points, int count, const PhysicsMaterial& material/* = MaterialDefault*/, float border/* = 1*/)
 {
-    PhysicsShapeEdgePolygon* shape = new PhysicsShapeEdgePolygon();
+    PhysicsShapeEdgePolygon* shape = new (std::nothrow) PhysicsShapeEdgePolygon();
     if (shape && shape->init(points, count, material, border))
     {
         shape->autorelease();
@@ -864,7 +864,7 @@ int PhysicsShapeEdgePolygon::getPointsCount() const
 // PhysicsShapeEdgeChain
 PhysicsShapeEdgeChain* PhysicsShapeEdgeChain::create(const Vec2* points, int count, const PhysicsMaterial& material/* = MaterialDefault*/, float border/* = 1*/)
 {
-    PhysicsShapeEdgeChain* shape = new PhysicsShapeEdgeChain();
+    PhysicsShapeEdgeChain* shape = new (std::nothrow) PhysicsShapeEdgeChain();
     if (shape && shape->init(points, count, material, border))
     {
         shape->autorelease();

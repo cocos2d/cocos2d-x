@@ -459,7 +459,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
         {
             pReturn->autorelease();
@@ -477,7 +477,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(file, rect) )
         {
             pReturn->autorelease();
@@ -496,7 +496,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& file)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(capInsets, file) )
         {
             pReturn->autorelease();
@@ -515,7 +515,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(file) )
         {
             pReturn->autorelease();
@@ -539,7 +539,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
         {
             pReturn->autorelease();
@@ -557,7 +557,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
         {
             pReturn->autorelease();
@@ -582,7 +582,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
         {
             pReturn->autorelease();
@@ -600,7 +600,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
         {
             pReturn->autorelease();
@@ -615,7 +615,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->init(_scale9Image, _spriteRect, capInsets) )
         {
             pReturn->autorelease();
@@ -627,7 +627,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create()
     {
-        Scale9Sprite *pReturn = new Scale9Sprite();
+        Scale9Sprite *pReturn = new (std::nothrow) Scale9Sprite();
         if (pReturn && pReturn->init())
         {
             pReturn->autorelease();

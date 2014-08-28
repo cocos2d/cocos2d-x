@@ -41,7 +41,7 @@ int GLViewImpl::_depthFormat = GL_DEPTH_COMPONENT16;
 
 GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithEAGLView(eaglview)) {
         ret->autorelease();
         return ret;
@@ -52,7 +52,7 @@ GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -63,7 +63,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
 
 GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -74,7 +74,7 @@ GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, f
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new GLViewImpl();
+    auto ret = new (std::nothrow) GLViewImpl();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -102,7 +102,7 @@ GLViewImpl::GLViewImpl()
 GLViewImpl::~GLViewImpl()
 {
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
-    [glview release];
+    //[glview release];
 }
 
 bool GLViewImpl::initWithEAGLView(void *eaglview)
@@ -187,7 +187,7 @@ void GLViewImpl::end()
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
-    [eaglview release];
+    //[eaglview release];
 }
 
 

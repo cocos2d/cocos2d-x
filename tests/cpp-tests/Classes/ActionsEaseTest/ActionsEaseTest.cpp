@@ -1097,7 +1097,7 @@ void EaseSpriteDemo::onEnter()
 
 void EaseSpriteDemo::restartCallback(Ref* sender)
 {
-    auto s = new ActionsEaseTestScene();//CCScene::create();
+    auto s = new (std::nothrow) ActionsEaseTestScene();//CCScene::create();
     s->addChild(restartEaseAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -1106,7 +1106,7 @@ void EaseSpriteDemo::restartCallback(Ref* sender)
 
 void EaseSpriteDemo::nextCallback(Ref* sender)
 {
-    auto s = new ActionsEaseTestScene();//CCScene::create();
+    auto s = new (std::nothrow) ActionsEaseTestScene();//CCScene::create();
     s->addChild( nextEaseAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1114,7 +1114,7 @@ void EaseSpriteDemo::nextCallback(Ref* sender)
 
 void EaseSpriteDemo::backCallback(Ref* sender)
 {
-    auto s = new ActionsEaseTestScene();//CCScene::create();
+    auto s = new (std::nothrow) ActionsEaseTestScene();//CCScene::create();
     s->addChild( backEaseAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

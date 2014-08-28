@@ -30,7 +30,7 @@ KeyboardNotificationLayer* createTextInputTest(int nIndex)
 
 Layer* restartTextInputTest()
 {
-    TextInputTest* pContainerLayer = new TextInputTest;
+    TextInputTest* pContainerLayer = new (std::nothrow) TextInputTest;
     pContainerLayer->autorelease();
 
     auto pTestLayer = createTextInputTest(testIdx);
@@ -80,7 +80,7 @@ TextInputTest::TextInputTest()
 
 void TextInputTest::restartCallback(Ref* sender)
 {
-    auto s = new TextInputTestScene();
+    auto s = new (std::nothrow) TextInputTestScene();
     s->addChild(restartTextInputTest()); 
 
     Director::getInstance()->replaceScene(s);
@@ -89,7 +89,7 @@ void TextInputTest::restartCallback(Ref* sender)
 
 void TextInputTest::nextCallback(Ref* sender)
 {
-    auto s = new TextInputTestScene();
+    auto s = new (std::nothrow) TextInputTestScene();
     s->addChild( nextTextInputTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -97,7 +97,7 @@ void TextInputTest::nextCallback(Ref* sender)
 
 void TextInputTest::backCallback(Ref* sender)
 {
-    auto s = new TextInputTestScene();
+    auto s = new (std::nothrow) TextInputTestScene();
     s->addChild( backTextInputTest() );
     Director::getInstance()->replaceScene(s);
     s->release();

@@ -42,7 +42,7 @@ AnimationCache* AnimationCache::getInstance()
 {
     if (! s_sharedAnimationCache)
     {
-        s_sharedAnimationCache = new AnimationCache();
+        s_sharedAnimationCache = new (std::nothrow) AnimationCache();
         s_sharedAnimationCache->init();
     }
 

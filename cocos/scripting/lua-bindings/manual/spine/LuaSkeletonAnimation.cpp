@@ -109,7 +109,7 @@ LuaSkeletonAnimation::~LuaSkeletonAnimation()
 
 LuaSkeletonAnimation* LuaSkeletonAnimation::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale)
 {
-	LuaSkeletonAnimation* node = new LuaSkeletonAnimation(skeletonDataFile, atlasFile, scale);
+	LuaSkeletonAnimation* node = new (std::nothrow) LuaSkeletonAnimation(skeletonDataFile, atlasFile, scale);
 	node->autorelease();
 	return node;
 }

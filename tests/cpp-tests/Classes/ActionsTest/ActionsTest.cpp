@@ -167,7 +167,7 @@ void ActionsDemo::onExit()
 
 void ActionsDemo::restartCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -175,7 +175,7 @@ void ActionsDemo::restartCallback(Ref* sender)
 
 void ActionsDemo::nextCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -183,7 +183,7 @@ void ActionsDemo::nextCallback(Ref* sender)
 
 void ActionsDemo::backCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

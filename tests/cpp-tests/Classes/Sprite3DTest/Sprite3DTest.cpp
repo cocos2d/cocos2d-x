@@ -124,7 +124,7 @@ void Sprite3DTestDemo::onEnter()
 
 void Sprite3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild(restartSpriteTestAction());
     
     Director::getInstance()->replaceScene(s);
@@ -133,7 +133,7 @@ void Sprite3DTestDemo::restartCallback(Ref* sender)
 
 void Sprite3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -141,7 +141,7 @@ void Sprite3DTestDemo::nextCallback(Ref* sender)
 
 void Sprite3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -321,7 +321,7 @@ static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1
 
 EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
 {
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
@@ -338,7 +338,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
     if (path.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(path))
     {
         sprite->autorelease();
@@ -416,7 +416,7 @@ GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
 
 Effect3DOutline* Effect3DOutline::create()
 {
-    Effect3DOutline* effect = new Effect3DOutline();
+    Effect3DOutline* effect = new (std::nothrow) Effect3DOutline();
     if(effect && effect->init())
     {
         effect->autorelease();
@@ -1056,7 +1056,7 @@ void Sprite3DReskinTest::menuCallback_switchHair(Ref* sender)
 }
 void Sprite3DReskinTest::menuCallback_switchGlasses(Ref* sender)
 {
-    auto subMesh = _sprite->getMeshByName("Girl_Yanjing_01");
+    auto subMesh = _sprite->getMeshByName("Girl_Glasses01");
     if(subMesh)
     {
         if(subMesh->isVisible())
@@ -1159,14 +1159,14 @@ std::string Sprite3DReskinTest::subtitle() const
 
 void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    _girlPants[0]= "Girl_Xiashen_01";
-    _girlPants[1]= "Girl_Xiashen_02";
-    _girlUpperBody[0] = "Girl_Shangshen_01";
-    _girlUpperBody[1] = "Girl_Shangshen_02";
-    _girlShoes[0]  = "Girl_Xie_01";
-    _girlShoes[1]  = "Girl_Xie_02";
-    _girlHair[0]= "Girl_Toufa_01";
-    _girlHair[1]= "Girl_Toufa_02";
+    _girlPants[0]= "Girl_LowerBody01";
+    _girlPants[1]= "Girl_LowerBody02";
+    _girlUpperBody[0] = "Girl_UpperBody01";
+    _girlUpperBody[1] = "Girl_UpperBody02";
+    _girlShoes[0]  = "Girl_Shoes01";
+    _girlShoes[1]  = "Girl_Shoes02";
+    _girlHair[0]= "Girl_Hair01";
+    _girlHair[1]= "Girl_Hair02";
     _usePantsId = 0;
     _useUpBodyId = 0;
     _useShoesId   =0;

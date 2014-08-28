@@ -55,7 +55,7 @@ void PlayerController::onTouchesEnded(const std::vector<Touch*>& touches, Event 
 
 PlayerController* PlayerController::create(void)
 {
-    PlayerController * pRet = new PlayerController();
+    PlayerController * pRet = new (std::nothrow) PlayerController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

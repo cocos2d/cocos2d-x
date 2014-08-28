@@ -1180,7 +1180,7 @@ void ParticleDemo::restartCallback(Ref* sender)
 
 void ParticleDemo::nextCallback(Ref* sender)
 {
-    auto s = new ParticleTestScene();
+    auto s = new (std::nothrow) ParticleTestScene();
     s->addChild( nextParticleAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1188,7 +1188,7 @@ void ParticleDemo::nextCallback(Ref* sender)
 
 void ParticleDemo::backCallback(Ref* sender)
 {
-    auto s = new ParticleTestScene();
+    auto s = new (std::nothrow) ParticleTestScene();
     s->addChild( backParticleAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1474,7 +1474,7 @@ void Issue1201::onEnter()
     removeChild(_background, true);
     _background = nullptr;
 
-    RainbowEffect *particle = new RainbowEffect();
+    RainbowEffect *particle = new (std::nothrow) RainbowEffect();
     particle->initWithTotalParticles(50);
 
     addChild(particle);

@@ -123,7 +123,7 @@ void SpriteDemo::onEnter()
 
 void SpriteDemo::restartCallback(Ref* sender)
 {
-    auto s = new ProgressActionsTestScene();
+    auto s = new (std::nothrow) ProgressActionsTestScene();
     s->addChild(restartAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -132,7 +132,7 @@ void SpriteDemo::restartCallback(Ref* sender)
 
 void SpriteDemo::nextCallback(Ref* sender)
 {
-    auto s = new ProgressActionsTestScene();
+    auto s = new (std::nothrow) ProgressActionsTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -140,7 +140,7 @@ void SpriteDemo::nextCallback(Ref* sender)
 
 void SpriteDemo::backCallback(Ref* sender)
 {
-    auto s = new ProgressActionsTestScene();
+    auto s = new (std::nothrow) ProgressActionsTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

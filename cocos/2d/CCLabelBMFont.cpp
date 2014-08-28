@@ -31,8 +31,7 @@ http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
 http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
-#include "CCLabelBMFont.h"
-#include "2d/CCDrawingPrimitives.h"
+#include "2d/CCLabelBMFont.h"
 #include "deprecated/CCString.h"
 #include "2d/CCSprite.h"
 
@@ -54,7 +53,7 @@ NS_CC_BEGIN
 
 LabelBMFont * LabelBMFont::create()
 {
-    LabelBMFont * pRet = new LabelBMFont();
+    LabelBMFont * pRet = new (std::nothrow) LabelBMFont();
     if (pRet)
     {
         pRet->autorelease();
@@ -67,7 +66,7 @@ LabelBMFont * LabelBMFont::create()
 //LabelBMFont - Creation & Init
 LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
 {
-    LabelBMFont *ret = new LabelBMFont();
+    LabelBMFont *ret = new (std::nothrow) LabelBMFont();
     if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
     {
         ret->autorelease();

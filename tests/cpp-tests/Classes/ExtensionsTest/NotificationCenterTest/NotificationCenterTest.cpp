@@ -38,7 +38,7 @@ Light::~Light()
 
 Light* Light::lightWithFile(const char* name)
 {
-    Light* pLight = new Light();
+    Light* pLight = new (std::nothrow) Light();
     pLight->initWithFile(name);
     pLight->autorelease();
     return pLight;
@@ -139,7 +139,7 @@ void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Ref* sender)
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
     CCASSERT(numObserversRemoved >= 3, "All observers were not removed!");
 
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -167,7 +167,7 @@ void NotificationCenterTest::doNothing(cocos2d::Ref *sender)
 void runNotificationCenterTest()
 {
     auto scene = Scene::create();
-    NotificationCenterTest* layer = new NotificationCenterTest();
+    NotificationCenterTest* layer = new (std::nothrow) NotificationCenterTest();
     scene->addChild(layer);
     Director::getInstance()->replaceScene(scene);
     layer->release();

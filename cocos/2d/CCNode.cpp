@@ -1,3 +1,5 @@
+
+
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
@@ -34,26 +36,20 @@ THE SOFTWARE.
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/CCTouch.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCEvent.h"
-#include "base/CCEventTouch.h"
-#include "base/ccCArray.h"
 #include "base/CCCamera.h"
-#include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
-#include "base/CCScriptSupport.h"
 #include "2d/CCScene.h"
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
 #endif
 
 
@@ -761,7 +757,7 @@ Rect Node::getBoundingBox() const
 
 Node * Node::create()
 {
-	Node * ret = new Node();
+	Node * ret = new (std::nothrow) Node();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -1851,7 +1847,7 @@ bool Node::addComponent(Component *component)
 {
     // lazy alloc
     if( !_componentContainer )
-        _componentContainer = new ComponentContainer(this);
+        _componentContainer = new (std::nothrow) ComponentContainer(this);
     return _componentContainer->add(component);
 }
 

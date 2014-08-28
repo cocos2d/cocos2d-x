@@ -150,7 +150,7 @@ void RenderTexture::listenToForeground(EventCustom *event)
 
 RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
 {
-    RenderTexture *ret = new RenderTexture();
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
 
     if(ret && ret->initWithWidthAndHeight(w, h, eFormat))
     {
@@ -163,7 +163,7 @@ RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eForm
 
 RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    RenderTexture *ret = new RenderTexture();
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
 
     if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
     {
@@ -176,7 +176,7 @@ RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eForm
 
 RenderTexture * RenderTexture::create(int w, int h)
 {
-    RenderTexture *ret = new RenderTexture();
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
 
     if(ret && ret->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, 0))
     {
@@ -231,7 +231,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         memset(data, 0, dataLen);
         _pixelFormat = format;
 
-        _texture = new Texture2D();
+        _texture = new (std::nothrow) Texture2D();
         if (_texture)
         {
             _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
@@ -245,7 +245,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         
         if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
         {
-            _textureCopy = new Texture2D();
+            _textureCopy = new (std::nothrow) Texture2D();
             if (_textureCopy)
             {
                 _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
@@ -488,13 +488,13 @@ Image* RenderTexture::newImage(bool fliimage)
 
     GLubyte *buffer = nullptr;
     GLubyte *tempData = nullptr;
-    Image *image = new Image();
+    Image *image = new (std::nothrow) Image();
 
     do
     {
-        CC_BREAK_IF(! (buffer = new GLubyte[savedBufferWidth * savedBufferHeight * 4]));
+        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]));
 
-        if(! (tempData = new GLubyte[savedBufferWidth * savedBufferHeight * 4]))
+        if(! (tempData = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]))
         {
             delete[] buffer;
             buffer = nullptr;

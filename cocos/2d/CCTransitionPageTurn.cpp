@@ -26,9 +26,6 @@ THE SOFTWARE.
 
 #include "2d/CCTransitionPageTurn.h"
 #include "base/CCDirector.h"
-#include "2d/CCActionInterval.h"
-#include "2d/CCActionInstant.h"
-#include "2d/CCActionGrid.h"
 #include "2d/CCActionPageTurn3D.h"
 #include "2d/CCNodeGrid.h"
 #include "renderer/CCRenderer.h"
@@ -56,7 +53,7 @@ TransitionPageTurn::~TransitionPageTurn()
 /** creates a base transition with duration and incoming scene */
 TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool backwards)
 {
-    TransitionPageTurn * transition = new TransitionPageTurn();
+    TransitionPageTurn * transition = new (std::nothrow) TransitionPageTurn();
     transition->initWithDuration(t,scene,backwards);
     transition->autorelease();
     return transition;

@@ -75,7 +75,7 @@ ParticleSystemQuad::~ParticleSystemQuad()
 
 ParticleSystemQuad * ParticleSystemQuad::create(const std::string& filename)
 {
-    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    ParticleSystemQuad *ret = new (std::nothrow) ParticleSystemQuad();
     if (ret && ret->initWithFile(filename))
     {
         ret->autorelease();
@@ -86,7 +86,7 @@ ParticleSystemQuad * ParticleSystemQuad::create(const std::string& filename)
 }
 
 ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfParticles) {
-    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    ParticleSystemQuad *ret = new (std::nothrow) ParticleSystemQuad();
     if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
         ret->autorelease();
@@ -597,7 +597,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 }
 
 ParticleSystemQuad * ParticleSystemQuad::create() {
-    ParticleSystemQuad *particleSystemQuad = new ParticleSystemQuad();
+    ParticleSystemQuad *particleSystemQuad = new (std::nothrow) ParticleSystemQuad();
     if (particleSystemQuad && particleSystemQuad->init())
     {
         particleSystemQuad->autorelease();

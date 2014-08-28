@@ -36,7 +36,7 @@ NS_CC_BEGIN
 //create Animate3D using Animation.
 Animate3D* Animate3D::create(Animation3D* animation)
 {
-    auto animate = new Animate3D();
+    auto animate = new (std::nothrow) Animate3D();
     animate->_animation = animation;
     animation->retain();
     
@@ -96,17 +96,19 @@ void Animate3D::startWithTarget(Node *target)
     
     _boneCurves.clear();
     auto skin = sprite->getSkeleton();
+    bool hasCurve = false;
     for (unsigned int  i = 0; i < skin->getBoneCount(); i++) {
         auto bone = skin->getBoneByIndex(i);
         auto curve = _animation->getBoneCurveByName(bone->getName());
         if (curve)
         {
             _boneCurves[bone] = curve;
+            hasCurve = true;
         }
-        else
-        {
-            CCLOG("warning: bone %s not find in animation", bone->getName().c_str());
-        }
+    }
+    if (!hasCurve)
+    {
+        CCLOG("warning: no animation finde for the skeleton");
     }
 }
 

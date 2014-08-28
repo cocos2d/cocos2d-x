@@ -26,7 +26,7 @@ g_guisTests[] =
         "GUI Dynamic Create Test",
         [](Ref* sender)
         {
-            CocosGUITestScene *scene = new CocosGUITestScene();
+            CocosGUITestScene *scene = new (std::nothrow) CocosGUITestScene();
 			scene->runThisTest();
 			scene->release();
         }
@@ -35,7 +35,7 @@ g_guisTests[] =
         "GUI Editor Test",
         [](Ref* sender)
         {
-            GUIEditorTestScene* scene = new GUIEditorTestScene();
+            GUIEditorTestScene* scene = new (std::nothrow) GUIEditorTestScene();
             scene->runThisTest();
             scene->release();
         }
@@ -44,7 +44,7 @@ g_guisTests[] =
         "Custom GUI Test",
         [](Ref* sender)
         {
-            CustomGUITestScene* scene = new CustomGUITestScene();
+            CustomGUITestScene* scene = new (std::nothrow) CustomGUITestScene();
             scene->runThisTest();
             scene->release();
         }
@@ -53,7 +53,7 @@ g_guisTests[] =
         "Cocostudio Parser Test",
         [](Ref* sender)
         {
-            CocostudioParserTestScene* scene = new CocostudioParserTestScene();
+            CocostudioParserTestScene* scene = new (std::nothrow) CocostudioParserTestScene();
             scene->runThisTest();
             scene->release();
         }
@@ -129,7 +129,7 @@ void CocoStudioGUITestScene::onEnter()
 
 void CocoStudioGUITestScene::runThisTest()
 {
-    Layer* pLayer = new CocoStudioGUIMainLayer();
+    Layer* pLayer = new (std::nothrow) CocoStudioGUIMainLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -140,7 +140,7 @@ void CocoStudioGUITestScene::BackCallback(Ref* pSender)
 {
     auto scene = Scene::create();
     
-    auto layer = new TestController();
+    auto layer = new (std::nothrow) TestController();
     scene->addChild(layer);
     layer->release();
     

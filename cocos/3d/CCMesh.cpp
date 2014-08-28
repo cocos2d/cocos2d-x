@@ -166,7 +166,7 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat,
 
 Mesh* Mesh::create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin)
 {
-    auto state = new Mesh();
+    auto state = new (std::nothrow) Mesh();
     state->autorelease();
     state->bindMeshCommand();
     state->_name = name;

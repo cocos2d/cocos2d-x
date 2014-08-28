@@ -39,7 +39,7 @@ Animation3D* Animation3D::create(const std::string& fileName, const std::string&
         return animation;
     
     //load animation here
-    animation = new Animation3D();
+    animation = new (std::nothrow) Animation3D();
     auto bundle = Bundle3D::getInstance();
     Animation3DData animationdata;
     if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && animation->init(animationdata))
@@ -101,7 +101,7 @@ bool Animation3D::init(const Animation3DData &data)
         Curve* curve = _boneCurves[iter.first];
         if( curve == nullptr)
         {
-            curve = new Curve();
+            curve = new (std::nothrow) Curve();
             _boneCurves[iter.first] = curve;
         }
         
@@ -125,7 +125,7 @@ bool Animation3D::init(const Animation3DData &data)
         Curve* curve = _boneCurves[iter.first];
         if( curve == nullptr)
         {
-            curve = new Curve();
+            curve = new (std::nothrow) Curve();
             _boneCurves[iter.first] = curve;
         }
         
@@ -150,7 +150,7 @@ bool Animation3D::init(const Animation3DData &data)
         Curve* curve = _boneCurves[iter.first];
         if( curve == nullptr)
         {
-            curve = new Curve();
+            curve = new (std::nothrow) Curve();
             _boneCurves[iter.first] = curve;
         }
         
@@ -178,7 +178,7 @@ Animation3DCache* Animation3DCache::_cacheInstance = nullptr;
 Animation3DCache* Animation3DCache::getInstance()
 {
     if (_cacheInstance == nullptr)
-        _cacheInstance = new Animation3DCache();
+        _cacheInstance = new (std::nothrow) Animation3DCache();
     
     return _cacheInstance;
 }

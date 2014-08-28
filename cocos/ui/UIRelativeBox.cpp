@@ -38,7 +38,7 @@ RelativeBox::~RelativeBox()
 
 RelativeBox* RelativeBox::create()
 {
-    RelativeBox* widget = new RelativeBox();
+    RelativeBox* widget = new (std::nothrow) RelativeBox();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -50,7 +50,7 @@ RelativeBox* RelativeBox::create()
 
 RelativeBox* RelativeBox::create(const cocos2d::Size &size)
 {
-    RelativeBox* widget = new RelativeBox();
+    RelativeBox* widget = new (std::nothrow) RelativeBox();
     if (widget && widget->initWithSize(size))
     {
         widget->autorelease();
