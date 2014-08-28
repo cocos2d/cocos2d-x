@@ -1440,6 +1440,12 @@ void Node::stopActionByTag(int tag)
     _actionManager->removeActionByTag(tag, this);
 }
 
+void Node::stopAllActionsByTag(int tag)
+{
+    CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
+    _actionManager->removeAllActionsByTag(tag, this);
+}
+
 Action * Node::getActionByTag(int tag)
 {
     CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");

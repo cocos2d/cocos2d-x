@@ -287,6 +287,34 @@ void ActionManager::removeActionByTag(int tag, Node *target)
     }
 }
 
+void ActionManager::removeAllActionsByTag(int tag, Node *target)
+{
+    CCASSERT(tag != Action::INVALID_TAG, "");
+    CCASSERT(target != nullptr, "");
+    
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+    
+    if (element)
+    {
+        auto limit = element->actions->num;
+        for (int i = 0; i < limit;)
+        {
+            Action *action = (Action*)element->actions->arr[i];
+            
+            if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
+            {
+                removeActionAtIndex(i, element);
+                --limit;
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
+}
+
 // get
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
