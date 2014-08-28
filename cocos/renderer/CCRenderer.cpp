@@ -110,11 +110,6 @@ void TransparentRenderQueue::push_back(RenderCommand* command)
     _queueCmd.push_back(command);
 }
 
-ssize_t TransparentRenderQueue::size() const
-{
-    return _queueCmd.size();
-}
-
 void TransparentRenderQueue::sort()
 {
     std::sort(std::begin(_queueCmd), std::end(_queueCmd), compareTransparentRenderCommand);
@@ -387,6 +382,56 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     }
 }
 
+void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
+{
+    // do not batch for transparent objects
+    ssize_t size = queue.size();
+    
+    for (ssize_t index = 0; index < size; ++index)
+    {
+        auto command = queue[index];
+        auto commandType = command->getType();
+        if(RenderCommand::Type::QUAD_COMMAND == commandType)
+        {
+            auto cmd = static_cast<QuadCommand*>(command);
+            
+            _batchedQuadCommands.push_back(cmd);
+            memcpy(_quads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+            convertToWorldCoordinates(_quads, cmd->getQuadCount(), cmd->getModelView());
+            drawBatchedQuads();
+        }
+        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
+        {
+            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+            visitRenderQueue(_renderGroups[renderQueueID]);
+        }
+        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
+        {
+            auto cmd = static_cast<CustomCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
+        {
+            auto cmd = static_cast<BatchCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
+        {
+            auto cmd = static_cast<PrimitiveCommand*>(command);
+            cmd->execute();
+        }
+        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        {
+            auto cmd = static_cast<MeshCommand*>(command);
+            cmd->execute();
+        }
+        else
+        {
+            CCLOGERROR("Unknown commands in renderQueue");
+        }
+    }
+}
+
 void Renderer::render()
 {
     //Uncomment this once everything is rendered by new renderer
@@ -408,6 +453,14 @@ void Renderer::render()
         }
         visitRenderQueue(_renderGroups[0]);
         flush();
+        
+        //Process render commands
+        //draw transparent objects here, do not batch for transparent objects
+        if (_transparentRenderGroups.size())
+        {
+            _transparentRenderGroups.sort();
+            visitTransparentRenderQueue(_transparentRenderGroups);
+        }
     }
     clean();
     _isRendering = false;

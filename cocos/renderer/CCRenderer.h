@@ -64,7 +64,10 @@ protected:
 class TransparentRenderQueue {
 public:
     void push_back(RenderCommand* command);
-    ssize_t size() const;
+    ssize_t size() const
+    {
+        return _queueCmd.size();
+    }
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
@@ -154,6 +157,8 @@ protected:
     void flush3D();
     
     void visitRenderQueue(const RenderQueue& queue);
+    
+    void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
 
