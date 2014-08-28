@@ -27,78 +27,66 @@ varying vec3 v_normal;
 
 uniform vec4 u_color;
 
-\n#if CC_MAX_POINT_LIGHT_NUM\n
-void PointLight(int n, vec3 normal, inout vec4 intensity)
+vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, float attenuation)
 {
-    vec3 dir = v_vertexToPointLightDirection[n];
-    vec3 ldir = dir * CC_PointLightSource[n].position.w;
-    float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
-    intensity.xyz += CC_PointLightSource[n].color * max(0.0, dot(normalize(dir), normal)) * attenuation;	
-    intensity.w = 1.0;
+    float diffuse = max(dot(normalVector, lightDirection), 0.0);
+    vec3 diffuseColor = lightColor  * diffuse * attenuation;
+    
+    return diffuseColor;
 }
-\n#endif\n
-
-\n#if CC_MAX_DIRECTIONAL_LIGHT_NUM\n
-void DirectionalLight(int n, vec3 normal, inout vec4 intensity)
-{
-    intensity.xyz += CC_DirLightSource[n].color * max(0.0, dot(-CC_DirLightSource[n].direction, normal));
-    intensity.w = 1.0;
-}
-\n#endif\n
-
-\n#if CC_MAX_SPOT_LIGHT_NUM\n
-void SpotLight(int n, vec3 normal, inout vec4 intensity)
-{
-    vec3 dir = v_vertexToSpotLightDirection[n];
-    vec3 ldir = dir * CC_SpotLightSource[n].params.z;
-    float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
-    float spotDot = dot(normalize(dir), -CC_SpotLightSource[n].direction);
-    float innerCos = CC_SpotLightSource[n].params.x;
-    float outerCos = CC_SpotLightSource[n].params.y;
-    float factor = smoothstep(outerCos, innerCos, spotDot);
-    intensity.xyz += CC_SpotLightSource[n].color * max(0.0, dot(normalize(dir), normal)) * factor * attenuation;	
-    intensity.w = 1.0;
-}
-\n#endif\n
 
 void main(void)
 {
-    vec4 intensity = vec4(0.0);
-\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
+\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
     vec3 normal  = normalize(v_normal);
 \n#endif\n
 
-\n#if CC_MAX_DIRECTIONAL_LIGHT_NUM\n
-    
+    vec4 combinedColor = CC_AmbientColor;
+
+    // Directional light contribution
+\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_DIRECTIONAL_LIGHT_NUM; ++i)
     {
-        DirectionalLight(i, normal, intensity);
+        vec3 lightDirection = normalize(CC_DirLightSourceDirection[i] * 2.0);
+        combinedColor.xyz += computeLighting(normal, -lightDirection, CC_DirLightSourceColor[i], 1.0);
     }
-
 \n#endif\n
 
-\n#if CC_MAX_POINT_LIGHT_NUM\n
-
+    // Point light contribution
+\n#if (CC_MAX_POINT_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_POINT_LIGHT_NUM; ++i)
     {
-        PointLight(i, normal, intensity);
+        vec3 ldir = v_vertexToPointLightDirection[i] * CC_PointLightSourceRangeInverse[i];
+        float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
+        combinedColor.xyz += computeLighting(normal, normalize(v_vertexToPointLightDirection[i]), CC_PointLightSourceColor[i], attenuation);
     }
-
 \n#endif\n
 
-\n#if CC_MAX_SPOT_LIGHT_NUM\n
-
+    // Spot light contribution
+\n#if (CC_MAX_SPOT_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_SPOT_LIGHT_NUM; ++i)
     {
-        SpotLight(i, normal, intensity);
-    }
+        // Compute range attenuation
+        vec3 ldir = v_vertexToSpotLightDirection[i] * CC_SpotLightSourceRangeInverse[i];
+        float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
+        vec3 vertexToSpotLightDirection = normalize(v_vertexToSpotLightDirection[i]);
 
+        vec3 spotLightDirection = normalize(CC_SpotLightSourceDirection[i] * 2.0);
+
+        // "-lightDirection" is used because light direction points in opposite direction to spot direction.
+        float spotCurrentAngleCos = dot(spotLightDirection, -vertexToSpotLightDirection);
+
+        // Apply spot attenuation
+        attenuation *= smoothstep(CC_SpotLightSourceOuterAngleCos[i], CC_SpotLightSourceInnerAngleCos[i], spotCurrentAngleCos);
+        combinedColor.xyz += computeLighting(normal, vertexToSpotLightDirection, CC_SpotLightSourceColor[i], attenuation);
+    }
 \n#endif\n
 
-\n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM || CC_MAX_POINT_LIGHT_NUM || CC_MAX_SPOT_LIGHT_NUM)\n
-    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color * (CC_AmbientColor + intensity);
+
+\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
+    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color * combinedColor;
 \n#else\n
-     gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color;
+    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color;
 \n#endif\n
 
 }
