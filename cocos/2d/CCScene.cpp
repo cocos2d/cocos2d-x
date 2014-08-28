@@ -30,11 +30,11 @@ THE SOFTWARE.
 #include "base/CCCamera.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
-#include "2d/CCLayer.h"
-#include "2d/CCSprite.h"
-#include "2d/CCSpriteBatchNode.h"
-#include "physics/CCPhysicsWorld.h"
 #include "deprecated/CCString.h"
+
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsWorld.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -116,6 +116,24 @@ Scene* Scene::getScene() const
     return const_cast<Scene*>(this);
 }
 
+void Scene::onProjectionChanged(EventCustom* event)
+{
+    if (_defaultCamera)
+    {
+        _defaultCamera->initDefault();
+    }
+}
+
+void Scene::setAmbientColor( const Color4F &color )
+{
+    _ambientColor = color;
+}
+
+const Color4F& Scene::getAmbientColor() const
+{
+    return _ambientColor;
+}
+
 #if CC_USE_PHYSICS
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
@@ -191,24 +209,6 @@ void Scene::addChildToPhysicsWorld(Node* child)
         
         addToPhysicsWorldFunc(child);
     }
-}
-
-void Scene::onProjectionChanged(EventCustom* event)
-{
-    if (_defaultCamera)
-    {
-        _defaultCamera->initDefault();
-    }
-}
-
-void Scene::setAmbientColor( const Color4F &color )
-{
-    _ambientColor = color;
-}
-
-const Color4F& Scene::getAmbientColor() const
-{
-    return _ambientColor;
 }
 
 #endif

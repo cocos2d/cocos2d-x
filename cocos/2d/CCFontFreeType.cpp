@@ -25,8 +25,6 @@ THE SOFTWARE.
 
 #include "2d/CCFontFreeType.h"
 
-#include <stdio.h>
-#include <algorithm>
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
