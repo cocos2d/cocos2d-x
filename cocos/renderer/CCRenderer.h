@@ -60,6 +60,22 @@ protected:
     std::vector<RenderCommand*> _queuePosZ;
 };
 
+//render queue for transparency object
+class TransparentRenderQueue {
+public:
+    void push_back(RenderCommand* command);
+    ssize_t size() const
+    {
+        return _queueCmd.size();
+    }
+    void sort();
+    RenderCommand* operator[](ssize_t index) const;
+    void clear();
+    
+protected:
+    std::vector<RenderCommand*> _queueCmd;
+};
+
 struct RenderStackElement
 {
     int renderQueueID;
@@ -89,6 +105,9 @@ public:
 
     /** Adds a `RenderComamnd` into the renderer specifying a particular render queue ID */
     void addCommand(RenderCommand* command, int renderQueue);
+    
+    /** add transprent command */
+    void addTransparentCommand(RenderCommand* command);
 
     /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);
@@ -138,12 +157,15 @@ protected:
     void flush3D();
     
     void visitRenderQueue(const RenderQueue& queue);
+    
+    void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
     std::vector<RenderQueue> _renderGroups;
+    TransparentRenderQueue   _transparentRenderGroups; //transparency objects
 
     uint32_t _lastMaterialID;
 
