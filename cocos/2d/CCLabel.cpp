@@ -1157,8 +1157,8 @@ Sprite * Label::getLetter(int letterIndex)
 
             sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
             sp->setBatchNode(_batchNodes[letter.def.textureID]);
-            sp->setPosition(Vec2(letter.position.x + uvRect.size.width / 2, 
-                letter.position.y - uvRect.size.height / 2));
+            sp->setPosition(letter.position.x + uvRect.size.width / 2,
+                letter.position.y - uvRect.size.height / 2);
             sp->setOpacity(_realOpacity);
 
             _batchNodes[letter.def.textureID]->addSpriteWithoutQuad(sp, letter.atlasIndex, letterIndex);

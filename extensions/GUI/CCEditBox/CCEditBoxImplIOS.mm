@@ -340,8 +340,8 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 
 void EditBoxImplIOS::placeInactiveLabels()
 {
-    _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
-    _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _label->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
+    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
 }
 
 void EditBoxImplIOS::setInactiveText(const char* pText)

@@ -284,13 +284,13 @@ void Camera3DTestDemo::onEnter()
     auto menu = Menu::create(menuItem1,menuItem2,menuItem3,menuItem4,menuItem5,menuItem6,menuItem7,NULL);
 
     menu->setPosition(Vec2::ZERO);
-    menuItem1->setPosition( Vec2( s.width-50, VisibleRect::top().y-50 ) );
-    menuItem2->setPosition( Vec2( s.width-50, VisibleRect::top().y-100) );
-    menuItem3->setPosition( Vec2( s.width-50, VisibleRect::top().y-150) );
-    menuItem4->setPosition( Vec2( s.width-50, VisibleRect::top().y-200) );
-    menuItem5->setPosition( Vec2(VisibleRect::left().x+100, VisibleRect::top().y-50) );
-    menuItem6->setPosition( Vec2(VisibleRect::left().x+100, VisibleRect::top().y -100));
-    menuItem7->setPosition( Vec2(VisibleRect::left().x+100, VisibleRect::top().y -150));
+    menuItem1->setPosition(s.width-50, VisibleRect::top().y-50 );
+    menuItem2->setPosition(s.width-50, VisibleRect::top().y-100);
+    menuItem3->setPosition(s.width-50, VisibleRect::top().y-150);
+    menuItem4->setPosition(s.width-50, VisibleRect::top().y-200);
+    menuItem5->setPosition(VisibleRect::left().x+100, VisibleRect::top().y-50);
+    menuItem6->setPosition(VisibleRect::left().x+100, VisibleRect::top().y -100);
+    menuItem7->setPosition(VisibleRect::left().x+100, VisibleRect::top().y -150);
     addChild(menu, 0);
     schedule(schedule_selector(Camera3DTestDemo::updateCamera), 0.0f);
     if (_camera == nullptr)

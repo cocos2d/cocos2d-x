@@ -439,7 +439,7 @@ void Button::updateFlippedY()
     
 void Button::updateTitleLocation()
 {
-    _titleRenderer->setPosition(Vec2(_contentSize.width * 0.5f, _contentSize.height * 0.5f));
+    _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
 }
 
 void Button::onSizeChanged()

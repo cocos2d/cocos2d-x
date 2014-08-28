@@ -21,7 +21,7 @@ bool Bug886Layer::init()
         auto sprite2 = Sprite::create("Images/bugs/bug886.png");
         sprite2->setAnchorPoint(Vec2::ZERO);
         sprite2->setScaleX(0.6f);
-        sprite2->setPosition(Vec2(sprite->getContentSize().width * 0.6f + 10, 0));
+        sprite2->setPosition(sprite->getContentSize().width * 0.6f + 10, 0);
         addChild(sprite2);
 
         return true;

@@ -472,19 +472,7 @@ const Vec2& Node::getPosition() const
 /// position setter
 void Node::setPosition(const Vec2& position)
 {
-    if (_position.equals(position))
-        return;
-    
-    _position = position;
-    _transformUpdated = _transformDirty = _inverseDirty = true;
-    _usingNormalizedPosition = false;
-
-#if CC_USE_PHYSICS
-    if (!_physicsBody || !_physicsBody->_positionResetTag)
-    {
-        updatePhysicsBodyPosition(getScene());
-    }
-#endif
+    setPosition(position.x, position.y);
 }
 
 void Node::getPosition(float* x, float* y) const
@@ -495,13 +483,27 @@ void Node::getPosition(float* x, float* y) const
 
 void Node::setPosition(float x, float y)
 {
-    setPosition(Vec2(x, y));
+    if (_position.x == x && _position.y == y)
+        return;
+    
+    _position.x = x;
+    _position.y = y;
+    
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+    _usingNormalizedPosition = false;
+    
+#if CC_USE_PHYSICS
+    if (!_physicsBody || !_physicsBody->_positionResetTag)
+    {
+        updatePhysicsBodyPosition(getScene());
+    }
+#endif
 }
 
 void Node::setPosition3D(const Vec3& position)
 {
-    _positionZ = position.z;
-    setPosition(Vec2(position.x, position.y));
+    setPositionZ(position.z);
+    setPosition(position.x, position.y);
 }
 
 Vec3 Node::getPosition3D() const
@@ -520,7 +522,7 @@ float Node::getPositionX() const
 
 void Node::setPositionX(float x)
 {
-    setPosition(Vec2(x, _position.y));
+    setPosition(x, _position.y);
 }
 
 float Node::getPositionY() const
@@ -530,7 +532,7 @@ float Node::getPositionY() const
 
 void Node::setPositionY(float y)
 {
-    setPosition(Vec2(_position.x, y));
+    setPosition(_position.x, y);
 }
 
 float Node::getPositionZ() const

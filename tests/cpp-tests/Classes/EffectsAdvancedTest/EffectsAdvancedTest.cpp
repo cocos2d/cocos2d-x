@@ -238,7 +238,7 @@ void Issue631::onEnter()
     auto layer = LayerColor::create( Color4B(255,0,0,255) );
     addChild(layer, -10);
     auto sprite = Sprite::create("Images/grossini.png");
-    sprite->setPosition( Vec2(50,80) );
+    sprite->setPosition(50,80);
     layer->addChild(sprite, 10);
     
     // foreground
@@ -353,7 +353,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     auto grossini = Sprite::create("Images/grossinis_sister2.png");
     _target1->addChild(grossini);
     _bgNode->addChild(_target1);
-    _target1->setPosition( Vec2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
+    _target1->setPosition(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200);
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
     _target1->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
@@ -364,7 +364,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     _target2->addChild(tamara);
     _bgNode->addChild(_target2);
-    _target2->setPosition( Vec2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
+    _target2->setPosition(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200);
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
     _target2->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr) ) );    

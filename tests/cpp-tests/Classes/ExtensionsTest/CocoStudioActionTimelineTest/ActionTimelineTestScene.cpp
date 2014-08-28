@@ -123,7 +123,7 @@ void ActionTimelineTestLayer::onEnter()
         auto l = Label::createWithSystemFont(strSubtitle.c_str(), "Arial", 18);
         l->setColor(Color3B(0, 0, 0));
         addChild(l, 1, 10001);
-        l->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 60) );
+        l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
     }
 
     // add menu
@@ -134,9 +134,9 @@ void ActionTimelineTestLayer::onEnter()
     Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
 
     menu->setPosition(Point::ZERO);
-    backItem->setPosition(Point(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    restartItem->setPosition(Point(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    nextItem->setPosition(Point(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    backItem->setPosition(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
+    restartItem->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
+    nextItem->setPosition(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
 
     addChild(menu, 100);
 

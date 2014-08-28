@@ -73,7 +73,7 @@ void TransitionProgress::onEnter()
     // create the second render texture for outScene
     RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height);
     texture->getSprite()->setAnchorPoint(Vec2(0.5f,0.5f));
-    texture->setPosition(Vec2(size.width/2, size.height/2));
+    texture->setPosition(size.width/2, size.height/2);
     texture->setAnchorPoint(Vec2(0.5f,0.5f));
 
     // render outScene to its texturebuffer
@@ -144,7 +144,7 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
     //    Return the radial type that we want to use
     node->setReverseDirection(false);
     node->setPercentage(100);
-    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setPosition(size.width/2, size.height/2);
     node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
@@ -188,7 +188,7 @@ ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(Re
     //    Return the radial type that we want to use
     node->setReverseDirection(true);
     node->setPercentage(100);
-    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setPosition(size.width/2, size.height/2);
     node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
@@ -221,7 +221,7 @@ ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(
     node->setBarChangeRate(Vec2(1,0));
     
     node->setPercentage(100);
-    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setPosition(size.width/2, size.height/2);
     node->setAnchorPoint(Vec2(0.5f,0.5f));
 
     return node;
@@ -254,7 +254,7 @@ ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(Re
     node->setBarChangeRate(Vec2(0,1));
     
     node->setPercentage(100);
-    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setPosition(size.width/2, size.height/2);
     node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
@@ -300,7 +300,7 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
     node->setBarChangeRate(Vec2(1, 1));
     
     node->setPercentage(0);
-    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setPosition(size.width/2, size.height/2);
     node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;
@@ -334,7 +334,7 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
     node->setBarChangeRate(Vec2(1, 1));
     
     node->setPercentage(100);
-    node->setPosition(Vec2(size.width/2, size.height/2));
+    node->setPosition(size.width/2, size.height/2);
     node->setAnchorPoint(Vec2(0.5f,0.5f));
     
     return node;

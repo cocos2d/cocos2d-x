@@ -63,7 +63,7 @@ void BugsTestMainLayer::onEnter()
     for (int i = 0; i < g_maxitems; ++i)
     {
         auto pItem = MenuItemFont::create(g_bugs[i].test_name, g_bugs[i].callback);
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itmeMenu->addChild(pItem, kItemTagBasic + i);
     }
 
@@ -98,7 +98,7 @@ void BugsTestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event
 
     if (nextPos.y > ((g_maxitems + 1)* LINE_SPACE - winSize.height))
     {
-        _itmeMenu->setPosition(Vec2(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height)));
+        _itmeMenu->setPosition(0, ((g_maxitems + 1)* LINE_SPACE - winSize.height));
         return;
     }
 
@@ -119,7 +119,7 @@ void BugsTestBaseLayer::onEnter()
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     auto pMainItem = MenuItemFont::create("Back", CC_CALLBACK_1(BugsTestBaseLayer::backCallback, this));
-    pMainItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    pMainItem->setPosition(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25);
     auto menu = Menu::create(pMainItem, nullptr);
     menu->setPosition( Vec2::ZERO );
     addChild(menu);

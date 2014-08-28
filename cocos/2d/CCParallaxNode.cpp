@@ -165,7 +165,7 @@ void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(Vec2(x,y));
+            point->getChild()->setPosition(x,y);
         }
         _lastPosition = pos;
     }

@@ -28,7 +28,7 @@ MainLayer::MainLayer()
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);
-    sprite->setPosition( Vec2(20,150) );
+    sprite->setPosition(20,150);
     
     sprite->runAction( JumpTo::create(4, Vec2(300,48), 100, 4) );
     

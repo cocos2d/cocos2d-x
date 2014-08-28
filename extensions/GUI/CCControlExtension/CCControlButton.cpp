@@ -509,14 +509,14 @@ void ControlButton::needsLayout()
     }
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Vec2 (getContentSize().width / 2, getContentSize().height / 2));
+        _titleLabel->setPosition(getContentSize().width / 2, getContentSize().height / 2);
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(_state));
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Vec2 (getContentSize().width / 2, getContentSize().height / 2));
+        _backgroundSprite->setPosition(getContentSize().width / 2, getContentSize().height / 2);
     }
    
     // Get the title label size
@@ -571,14 +571,14 @@ void ControlButton::needsLayout()
     
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Vec2(getContentSize().width/2, getContentSize().height/2));
+        _titleLabel->setPosition(getContentSize().width/2, getContentSize().height/2);
         // Make visible the background and the label
         _titleLabel->setVisible(true);
     }
   
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Vec2(getContentSize().width/2, getContentSize().height/2));
+        _backgroundSprite->setPosition(getContentSize().width/2, getContentSize().height/2);
         _backgroundSprite->setVisible(true);   
     }   
 }

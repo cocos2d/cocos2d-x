@@ -86,25 +86,25 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
     
         // Add the minus components
         this->setMinusSprite(minusSprite);
-		_minusSprite->setPosition( Vec2(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
+		_minusSprite->setPosition(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2);
 		this->addChild(_minusSprite);
         
         this->setMinusLabel( Label::createWithSystemFont("-", ControlStepperLabelFont, 40));
         _minusLabel->setColor(ControlStepperLabelColorDisabled);
         _minusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        _minusLabel->setPosition(Vec2(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
+        _minusLabel->setPosition(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2);
         _minusSprite->addChild(_minusLabel);
         
         // Add the plus components 
         this->setPlusSprite( plusSprite );
-		_plusSprite->setPosition( Vec2(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2, 
-                                                  minusSprite->getContentSize().height / 2) );
+		_plusSprite->setPosition(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2,
+                                                  minusSprite->getContentSize().height / 2);
 		this->addChild(_plusSprite);
         
         this->setPlusLabel( Label::createWithSystemFont("+", ControlStepperLabelFont, 40 ));
         _plusLabel->setColor( ControlStepperLabelColorEnabled );
         _plusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        _plusLabel->setPosition( Vec2(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
+        _plusLabel->setPosition(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2);
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
