@@ -290,7 +290,7 @@ public:
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Vec2(size.width/2, size.height/2) )
+     node->setPosition(size.width/2, size.height/2)
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates

@@ -201,7 +201,7 @@ void PauseTest::onEnter()
 
     auto l = Label::createWithTTF("After 5 seconds grossini should move", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
-    l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y-75) );
+    l->setPosition(VisibleRect::center().x, VisibleRect::top().y-75);
     
     
     //
@@ -243,7 +243,7 @@ void StopActionTest::onEnter()
 
     auto l = Label::createWithTTF("Should not crash", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
-    l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
+    l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 75);
 
     auto pMove = MoveBy::create(2, Vec2(200, 0));
     auto pCallback = CallFunc::create(CC_CALLBACK_0(StopActionTest::stopAction,this));
@@ -334,7 +334,7 @@ void ResumeTest::onEnter()
 
     auto l = Label::createWithTTF("Grossini only rotate/scale in 3 seconds", "fonts/Thonburi.ttf", 16.0f);
     addChild(l);
-    l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75));
+    l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 75);
 
     auto pGrossini = Sprite::create(s_pathGrossini);
     addChild(pGrossini, 0, kTagGrossini);

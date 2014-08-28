@@ -431,23 +431,23 @@ y+=ytranslate;                       \
         _centre->setAnchorPoint(Vec2(0,0));
         
         // Position corners
-        _bottomLeft->setPosition(Vec2(0,0));
-        _bottomRight->setPosition(Vec2(leftWidth+rescaledWidth,0));
-        _topLeft->setPosition(Vec2(0, bottomHeight+rescaledHeight));
-        _topRight->setPosition(Vec2(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+        _bottomLeft->setPosition(0,0);
+        _bottomRight->setPosition(leftWidth+rescaledWidth,0);
+        _topLeft->setPosition(0, bottomHeight+rescaledHeight);
+        _topRight->setPosition(leftWidth+rescaledWidth, bottomHeight+rescaledHeight);
         
         // Scale and position borders
-        _left->setPosition(Vec2(0, bottomHeight));
+        _left->setPosition(0, bottomHeight);
         _left->setScaleY(verticalScale);
-        _right->setPosition(Vec2(leftWidth+rescaledWidth,bottomHeight));
+        _right->setPosition(leftWidth+rescaledWidth,bottomHeight);
         _right->setScaleY(verticalScale);
-        _bottom->setPosition(Vec2(leftWidth,0));
+        _bottom->setPosition(leftWidth,0);
         _bottom->setScaleX(horizontalScale);
-        _top->setPosition(Vec2(leftWidth,bottomHeight+rescaledHeight));
+        _top->setPosition(leftWidth,bottomHeight+rescaledHeight);
         _top->setScaleX(horizontalScale);
         
         // Position centre
-        _centre->setPosition(Vec2(leftWidth, bottomHeight));
+        _centre->setPosition(leftWidth, bottomHeight);
     }
     
     bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
@@ -894,8 +894,8 @@ y+=ytranslate;                       \
     {
         if (_scale9Image)
         {
-            _scale9Image->setPosition(Vec2(_contentSize.width * _scale9Image->getAnchorPoint().x,
-                                           _contentSize.height * _scale9Image->getAnchorPoint().y));
+            _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
+                                           _contentSize.height * _scale9Image->getAnchorPoint().y);
         }
     }
     

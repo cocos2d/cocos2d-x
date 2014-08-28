@@ -115,7 +115,7 @@ bool ParticleFire::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, 60));
+        this->setPosition(winSize.width/2, 60);
         this->_posVar = Vec2(40, 20);
 
         // life of particles
@@ -216,7 +216,7 @@ bool ParticleFireworks::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
 
         // angle
         this->_angle= 90;
@@ -325,7 +325,7 @@ bool ParticleSun::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
         setPosVar(Vec2::ZERO);
 
         // life of particles
@@ -432,7 +432,7 @@ bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
         setPosVar(Vec2::ZERO);
 
         // life of particles
@@ -541,7 +541,7 @@ bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
         setPosVar(Vec2::ZERO);
 
         // life of particles
@@ -649,7 +649,7 @@ bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
         setPosVar(Vec2::ZERO);
 
         // life of particles
@@ -758,7 +758,7 @@ bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
         setPosVar(Vec2::ZERO);
 
         // life of particles
@@ -866,7 +866,7 @@ bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height/2));
+        this->setPosition(winSize.width/2, winSize.height/2);
         setPosVar(Vec2::ZERO);
 
         // life of particles
@@ -971,7 +971,7 @@ bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, 0));
+        this->setPosition(winSize.width/2, 0);
         setPosVar(Vec2(20, 0));
 
         // life of particles
@@ -1076,7 +1076,7 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height + 10));
+        this->setPosition(winSize.width/2, winSize.height + 10);
         setPosVar(Vec2(winSize.width/2, 0));
 
         // angle
@@ -1188,7 +1188,7 @@ bool ParticleRain::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(Vec2(winSize.width/2, winSize.height));
+        this->setPosition(winSize.width/2, winSize.height);
         setPosVar(Vec2(winSize.width/2, 0));
 
         // life of particles
