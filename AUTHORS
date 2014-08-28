@@ -808,6 +808,7 @@ Developers:
         Fixed a bug that before touchMove Touch::_prevPoint contains junk
         Added Device::setKeepScreenOn()
         Fixed Label performance problem
+        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
