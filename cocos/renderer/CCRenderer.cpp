@@ -124,7 +124,7 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _batchedQuadCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
+    _batchedCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
 }
 
 Renderer::~Renderer()
@@ -269,10 +269,10 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     {
         auto command = queue[index];
         auto commandType = command->getType();
-        if(RenderCommand::Type::QUAD_COMMAND == commandType)
+        if(RenderCommand::Type::QUAD_COMMAND == commandType || RenderCommand::Type::TRIANGLES_COMMAND == commandType)
         {
             flush3D();
-            auto cmd = static_cast<QuadCommand*>(command);
+            auto cmd = static_cast<TrianglesCommand*>(command);
             //Batch quads
             if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
             {
@@ -282,9 +282,9 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
                 drawBatchedQuads();
             }
             
-            _batchedQuadCommands.push_back(cmd);
+            _batchedCommands.push_back(cmd);
             
-            fillQuadVertices(cmd);
+            fillVerticesAndIndices(cmd);
 
         }
         else if(RenderCommand::Type::GROUP_COMMAND == commandType)
@@ -374,16 +374,16 @@ void Renderer::clean()
     }
 
     // Clear batch quad commands
-    _batchedQuadCommands.clear();
+    _batchedCommands.clear();
     _filledVertex = 0;
     _filledIndex = 0;
     _lastMaterialID = 0;
     _lastBatchedMeshCommand = nullptr;
 }
 
-void Renderer::fillQuadVertices(const QuadCommand* cmd)
+void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
-    memcpy(_verts + _filledVertex, cmd->getQuads(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
+    memcpy(_verts + _filledVertex, cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
     const Mat4& modelView = cmd->getModelView();
     
     for(ssize_t i=0; i< cmd->getVertexCount(); ++i)
@@ -414,7 +414,7 @@ void Renderer::drawBatchedQuads()
     int startIndex = 0;
 
     //Upload buffer to VBO
-    if(_filledVertex <= 0 || _filledIndex <= 0 || _batchedQuadCommands.empty())
+    if(_filledVertex <= 0 || _filledIndex <= 0 || _batchedCommands.empty())
     {
         return;
     }
@@ -466,10 +466,10 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(const auto& cmd : _batchedQuadCommands)
+    for(const auto& cmd : _batchedCommands)
     {
         auto newMaterialID = cmd->getMaterialID();
-        if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_DO_NOT_BATCH)
+        if(_lastMaterialID != newMaterialID || newMaterialID == TrianglesCommand::MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
             if(indexToDraw > 0)
@@ -509,7 +509,7 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    _batchedQuadCommands.clear();
+    _batchedCommands.clear();
     _filledVertex = 0;
     _filledIndex = 0;
 }
