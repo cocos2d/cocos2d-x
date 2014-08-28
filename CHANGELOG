@@ -1,8 +1,8 @@
-cocos2d-x-3.3alpha0  ??
+cocos2d-x-3.3alpha0  Aug.28 2014
     [NEW]           3D: Added Camera, AABB, OBB and Ray
     [NEW]           3D: Added better reskin model support 
     [NEW]           Core: c++11 random support
-    [NEW]	    Core: Using `(std::notrow)` for all the `new` statements
+    [NEW]	        Core: Using `(std::notrow)` for all the `new` statements
     [NEW]           Desktop: Added support for applicationDidEnterBackground / applicationWillEnterForeground on desktop
     [NEW]           Device: added setKeepScreenOn() for iOS and Android
     [NEW]           EventMouse: support getDelta, getDeltaX, getDeltaY functions
