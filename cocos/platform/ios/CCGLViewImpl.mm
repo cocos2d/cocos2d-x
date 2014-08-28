@@ -102,7 +102,7 @@ GLViewImpl::GLViewImpl()
 GLViewImpl::~GLViewImpl()
 {
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
-    [glview release];
+    //[glview release];
 }
 
 bool GLViewImpl::initWithEAGLView(void *eaglview)
@@ -187,7 +187,7 @@ void GLViewImpl::end()
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
-    [eaglview release];
+    //[eaglview release];
 }
 
 
