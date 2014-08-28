@@ -12,23 +12,18 @@
 
 
 --------------------------------------------------------
--- the cc EventListener
--- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
-
-
---------------------------------------------------------
--- the cc Event
--- @field [parent=#cc] Event#Event Event preloaded module
-
-
---------------------------------------------------------
--- the cc EventDispatcher
--- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
+-- the cc Texture2D
+-- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
 
 
 --------------------------------------------------------
 -- the cc Touch
 -- @field [parent=#cc] Touch#Touch Touch preloaded module
+
+
+--------------------------------------------------------
+-- the cc Event
+-- @field [parent=#cc] Event#Event Event preloaded module
 
 
 --------------------------------------------------------
@@ -39,11 +34,6 @@
 --------------------------------------------------------
 -- the cc EventKeyboard
 -- @field [parent=#cc] EventKeyboard#EventKeyboard EventKeyboard preloaded module
-
-
---------------------------------------------------------
--- the cc Texture2D
--- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
 
 
 --------------------------------------------------------
@@ -104,6 +94,16 @@
 --------------------------------------------------------
 -- the cc Camera
 -- @field [parent=#cc] Camera#Camera Camera preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListener
+-- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventDispatcher
+-- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
 
 
 --------------------------------------------------------
