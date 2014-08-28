@@ -60,7 +60,7 @@ CurlTest::~CurlTest()
 
 void CurlTestScene::runThisTest()
 {
-    auto layer = new CurlTest();
+    auto layer = new (std::nothrow) CurlTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

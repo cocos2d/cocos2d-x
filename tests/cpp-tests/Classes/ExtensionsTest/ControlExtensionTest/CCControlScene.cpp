@@ -84,7 +84,7 @@ bool ControlScene::init()
 
 void ControlScene::toExtensionsMainLayer(Ref* sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }

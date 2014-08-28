@@ -48,7 +48,7 @@ namespace cocostudio {
 
 Armature *Armature::create()
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init())
     {
         armature->autorelease();
@@ -61,7 +61,7 @@ Armature *Armature::create()
 
 Armature *Armature::create(const std::string& name)
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init(name))
     {
         armature->autorelease();
@@ -73,7 +73,7 @@ Armature *Armature::create(const std::string& name)
 
 Armature *Armature::create(const std::string& name, Bone *parentBone)
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init(name, parentBone))
     {
         armature->autorelease();
@@ -116,7 +116,7 @@ bool Armature::init(const std::string& name)
         removeAllChildren();
 
         CC_SAFE_DELETE(_animation);
-        _animation = new ArmatureAnimation();
+        _animation = new (std::nothrow) ArmatureAnimation();
         _animation->init(this);
 
         _boneDic.clear();
@@ -594,7 +594,7 @@ void CCArmature::drawContour()
             const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
-            Vec2 *points = new Vec2[length];
+            Vec2 *points = new (std::nothrow) Vec2[length];
             for (unsigned long i = 0; i<length; i++)
             {
                 Vec2 p = vertexList.at(i);

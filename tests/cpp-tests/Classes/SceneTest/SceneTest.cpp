@@ -62,8 +62,8 @@ SceneTestLayer1::~SceneTestLayer1()
 
 void SceneTestLayer1::onPushScene(Ref* sender)
 {
-    auto scene = new SceneTestScene();
-    auto layer = new SceneTestLayer2();
+    auto scene = new (std::nothrow) SceneTestScene();
+    auto layer = new (std::nothrow) SceneTestLayer2();
     scene->addChild( layer, 0 );
     Director::getInstance()->pushScene( scene );
     scene->release();
@@ -72,8 +72,8 @@ void SceneTestLayer1::onPushScene(Ref* sender)
 
 void SceneTestLayer1::onPushSceneTran(Ref* sender)
 {
-    auto scene = new SceneTestScene();
-    auto layer = new SceneTestLayer2();
+    auto scene = new (std::nothrow) SceneTestScene();
+    auto layer = new (std::nothrow) SceneTestLayer2();
     scene->addChild( layer, 0 );
 
     Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
@@ -137,7 +137,7 @@ void SceneTestLayer2::onGoBack(Ref* sender)
 
 void SceneTestLayer2::onReplaceScene(Ref* sender)
 {
-    auto scene = new SceneTestScene();
+    auto scene = new (std::nothrow) SceneTestScene();
     auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( scene );
@@ -147,7 +147,7 @@ void SceneTestLayer2::onReplaceScene(Ref* sender)
 
 void SceneTestLayer2::onReplaceSceneTran(Ref* sender)
 {
-    auto scene = new SceneTestScene();
+    auto scene = new (std::nothrow) SceneTestScene();
     auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
@@ -223,7 +223,7 @@ void SceneTestLayer3::item3Clicked(Ref* sender)
 
 void SceneTestScene::runThisTest()
 {
-    auto layer = new SceneTestLayer1();
+    auto layer = new (std::nothrow) SceneTestLayer1();
     addChild(layer);
     layer->release();
 

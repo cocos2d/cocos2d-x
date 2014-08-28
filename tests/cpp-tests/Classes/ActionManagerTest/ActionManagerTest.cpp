@@ -87,7 +87,7 @@ std::string ActionManagerTest::subtitle() const
 }
 void ActionManagerTest::restartCallback(Ref* sender)
 {
-    auto s = new ActionManagerTestScene();
+    auto s = new (std::nothrow) ActionManagerTestScene();
     s->addChild(restartActionManagerAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -96,7 +96,7 @@ void ActionManagerTest::restartCallback(Ref* sender)
 
 void ActionManagerTest::nextCallback(Ref* sender)
 {
-    auto s = new ActionManagerTestScene();
+    auto s = new (std::nothrow) ActionManagerTestScene();
     s->addChild( nextActionManagerAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -104,7 +104,7 @@ void ActionManagerTest::nextCallback(Ref* sender)
 
 void ActionManagerTest::backCallback(Ref* sender)
 {
-    auto s = new ActionManagerTestScene();
+    auto s = new (std::nothrow) ActionManagerTestScene();
     s->addChild( backActionManagerAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

@@ -19,7 +19,7 @@ CustomReader* CustomReader::getInstance()
 {
     if (!_instanceCustomReader)
     {
-        _instanceCustomReader = new CustomReader();
+        _instanceCustomReader = new (std::nothrow) CustomReader();
     }
     return _instanceCustomReader;
 }

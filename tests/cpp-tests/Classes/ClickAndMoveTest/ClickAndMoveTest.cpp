@@ -8,7 +8,7 @@ enum
 
 void ClickAndMoveTestScene::runThisTest()
 {
-    auto layer = new MainLayer();
+    auto layer = new (std::nothrow) MainLayer();
     layer->autorelease();
 
     addChild(layer);

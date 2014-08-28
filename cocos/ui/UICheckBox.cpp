@@ -72,7 +72,7 @@ CheckBox::~CheckBox()
 
 CheckBox* CheckBox::create()
 {
-    CheckBox* widget = new CheckBox();
+    CheckBox* widget = new (std::nothrow) CheckBox();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -89,7 +89,7 @@ CheckBox* CheckBox::create(const std::string& backGround,
                            const std::string& frontCrossDisabled,
                            TextureResType texType)
 {
-    CheckBox *pWidget = new CheckBox;
+    CheckBox *pWidget = new (std::nothrow) CheckBox;
     if (pWidget && pWidget->init(backGround,
                                  backGroundSeleted,
                                  cross,

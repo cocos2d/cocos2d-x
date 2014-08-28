@@ -347,7 +347,7 @@ void GUIEditorTestScene::onEnter()
 
 void GUIEditorTestScene::runThisTest()
 {
-    auto layer = new GUIEditorMainLayer();
+    auto layer = new (std::nothrow) GUIEditorMainLayer();
     addChild(layer);
     layer->release();
     
@@ -356,7 +356,7 @@ void GUIEditorTestScene::runThisTest()
 
 void GUIEditorTestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

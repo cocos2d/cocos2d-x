@@ -103,7 +103,7 @@ void S9SpriteTestDemo::onEnter()
 
 void S9SpriteTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new S9SpriteTestScene();
+    auto s = new (std::nothrow) S9SpriteTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -111,7 +111,7 @@ void S9SpriteTestDemo::restartCallback(Ref* sender)
 
 void S9SpriteTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new S9SpriteTestScene();
+    auto s = new (std::nothrow) S9SpriteTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -119,7 +119,7 @@ void S9SpriteTestDemo::nextCallback(Ref* sender)
 
 void S9SpriteTestDemo::backCallback(Ref* sender)
 {
-    auto s = new S9SpriteTestScene();
+    auto s = new (std::nothrow) S9SpriteTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

@@ -74,7 +74,7 @@ ActionTimelineCache* ActionTimelineCache::getInstance()
 {
     if (! _sharedActionCache)
     {
-        _sharedActionCache = new ActionTimelineCache();
+        _sharedActionCache = new (std::nothrow) ActionTimelineCache();
         _sharedActionCache->init();
     }
 

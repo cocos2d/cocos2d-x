@@ -345,7 +345,7 @@ bool ComRender::serialize(void* r)
 
 ComRender* ComRender::create(void)
 {
-    ComRender * ret = new ComRender();
+    ComRender * ret = new (std::nothrow) ComRender();
     if (ret != nullptr && ret->init())
     {
         ret->autorelease();
@@ -359,7 +359,7 @@ ComRender* ComRender::create(void)
 
 ComRender* ComRender::create(cocos2d::Node *node, const char *comName)
 {
-    ComRender * ret = new ComRender(node, comName);
+    ComRender * ret = new (std::nothrow) ComRender(node, comName);
     if (ret != nullptr && ret->init())
     {
         ret->autorelease();

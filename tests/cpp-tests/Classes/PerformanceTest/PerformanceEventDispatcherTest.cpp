@@ -150,7 +150,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
     
-    auto menuLayer = new EventDispatcherBasicLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) EventDispatcherBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
     
@@ -344,7 +344,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
 
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -385,7 +385,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -426,7 +426,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -464,7 +464,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -523,7 +523,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -578,7 +578,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);

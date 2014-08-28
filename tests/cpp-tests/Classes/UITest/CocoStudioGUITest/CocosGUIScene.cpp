@@ -332,7 +332,7 @@ void CocosGUITestScene::onEnter()
 
 void CocosGUITestScene::runThisTest()
 {
-    auto layer = new CocosGUITestMainLayer();
+    auto layer = new (std::nothrow) CocosGUITestMainLayer();
     addChild(layer);
     layer->release();
     
@@ -341,7 +341,7 @@ void CocosGUITestScene::runThisTest()
 
 void CocosGUITestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

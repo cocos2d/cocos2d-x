@@ -124,7 +124,7 @@ void Sprite3DTestDemo::onEnter()
 
 void Sprite3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild(restartSpriteTestAction());
     
     Director::getInstance()->replaceScene(s);
@@ -133,7 +133,7 @@ void Sprite3DTestDemo::restartCallback(Ref* sender)
 
 void Sprite3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -141,7 +141,7 @@ void Sprite3DTestDemo::nextCallback(Ref* sender)
 
 void Sprite3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -321,7 +321,7 @@ static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1
 
 EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
 {
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
@@ -338,7 +338,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
     if (path.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(path))
     {
         sprite->autorelease();
@@ -416,7 +416,7 @@ GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
 
 Effect3DOutline* Effect3DOutline::create()
 {
-    Effect3DOutline* effect = new Effect3DOutline();
+    Effect3DOutline* effect = new (std::nothrow) Effect3DOutline();
     if(effect && effect->init())
     {
         effect->autorelease();

@@ -1818,7 +1818,7 @@ static int tolua_cocos2d_CallFunc_create(lua_State* tolua_S)
             ref = luaL_ref(tolua_S, LUA_REGISTRYINDEX);
             hasExtraData = true;
         }
-        LuaCallFunc* tolua_ret = new LuaCallFunc();
+        LuaCallFunc* tolua_ret = new (std::nothrow) LuaCallFunc();
         tolua_ret->initWithFunction([=](void* self,Node* target){
             int callbackHandler =  ScriptHandlerMgr::getInstance()->getObjectHandler((void*)tolua_ret, ScriptHandlerMgr::HandlerType::CALLFUNC);
             
@@ -2978,7 +2978,7 @@ static int tolua_cocos2dx_GLProgram_create(lua_State* tolua_S)
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.GLProgram:create"); arg0 = arg0_tmp.c_str();
         std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "cc.GLProgram:create"); arg1 = arg1_tmp.c_str();
         
-        GLProgram* tolua_ret = new GLProgram();
+        GLProgram* tolua_ret = new (std::nothrow) GLProgram();
         if (nullptr == tolua_ret)
             return 0;        
 
@@ -3249,7 +3249,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLfloat[sizeof(GLfloat) * 4 * arg2];
+        arg1 = new (std::nothrow) GLfloat[sizeof(GLfloat) * 4 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate matrixArry in the lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv failed!");
@@ -3322,7 +3322,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLfloat[sizeof(GLfloat) * 9 * arg2];
+        arg1 = new (std::nothrow) GLfloat[sizeof(GLfloat) * 9 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate matrixArry in the lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv failed!");
@@ -3396,7 +3396,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLfloat[sizeof(GLfloat) * 16 * arg2];
+        arg1 = new (std::nothrow) GLfloat[sizeof(GLfloat) * 16 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate matrixArry in the lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv failed!");
@@ -3468,7 +3468,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLint[sizeof(GLint) * 3 * arg2];
+        arg1 = new (std::nothrow) GLint[sizeof(GLint) * 3 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate intArray in the lua_cocos2dx_GLProgram_setUniformLocationWith3iv failed!");
@@ -3542,7 +3542,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLint[sizeof(GLint) * 4 * arg2];
+        arg1 = new (std::nothrow) GLint[sizeof(GLint) * 4 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate intArray in the lua_cocos2dx_GLProgram_setUniformLocationWith4iv failed!");
@@ -3614,7 +3614,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLint[sizeof(GLint) * 2 * arg2];
+        arg1 = new (std::nothrow) GLint[sizeof(GLint) * 2 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate intArray in the lua_cocos2dx_GLProgram_setUniformLocationWith2iv failed!");
@@ -4301,7 +4301,7 @@ static void extendParticleBatchNode(lua_State* tolua_S)
 NS_CC_BEGIN
 EventListenerAcceleration* LuaEventListenerAcceleration::create()
 {
-    EventListenerAcceleration* eventAcceleration = new EventListenerAcceleration();
+    EventListenerAcceleration* eventAcceleration = new (std::nothrow) EventListenerAcceleration();
     if (nullptr == eventAcceleration)
         return nullptr;
     
@@ -4322,7 +4322,7 @@ EventListenerAcceleration* LuaEventListenerAcceleration::create()
 
 EventListenerCustom* LuaEventListenerCustom::create(const std::string& eventName)
 {
-    EventListenerCustom* eventCustom = new EventListenerCustom();
+    EventListenerCustom* eventCustom = new (std::nothrow) EventListenerCustom();
     if (nullptr == eventCustom)
         return nullptr;
     
@@ -5934,7 +5934,7 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
             return 0;
         }
         
-        arg5 = new GLfloat[len];
+        arg5 = new (std::nothrow) GLfloat[len];
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S,i + 1);

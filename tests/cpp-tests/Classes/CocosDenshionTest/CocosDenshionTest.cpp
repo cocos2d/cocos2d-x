@@ -33,7 +33,7 @@ class Button : public Node//, public TargetedTouchDelegate
 public:
     static Button *createWithSprite(const char *filePath)
     {
-        auto b = new Button();
+        auto b = new (std::nothrow) Button();
         if (b && !b->initSpriteButton(filePath)) {
             delete b;
             b = nullptr;
@@ -44,7 +44,7 @@ public:
 
     static Button *createWithText(const char *text)
     {
-        auto b = new Button();
+        auto b = new (std::nothrow) Button();
         if (b && !b->initTextButton(text)) {
             delete b;
             b = nullptr;
@@ -147,7 +147,7 @@ public:
 
     static AudioSlider *create(Direction direction)
     {
-        auto ret = new AudioSlider(direction);
+        auto ret = new (std::nothrow) AudioSlider(direction);
         if (ret && !ret->init()) {
             delete ret;
             ret = nullptr;
@@ -418,7 +418,7 @@ void CocosDenshionTest::updateVolumes(float)
 
 void CocosDenshionTestScene::runThisTest()
 {
-    auto layer = new CocosDenshionTest();
+    auto layer = new (std::nothrow) CocosDenshionTest();
     addChild(layer);
     layer->autorelease();
 

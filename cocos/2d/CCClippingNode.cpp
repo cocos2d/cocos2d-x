@@ -84,7 +84,7 @@ ClippingNode::~ClippingNode()
 
 ClippingNode* ClippingNode::create()
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -99,7 +99,7 @@ ClippingNode* ClippingNode::create()
 
 ClippingNode* ClippingNode::create(Node *pStencil)
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init(pStencil))
     {
         ret->autorelease();

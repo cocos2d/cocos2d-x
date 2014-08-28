@@ -327,25 +327,25 @@ void SpriteMenuLayer::showCurrentTest()
     switch (_curCase)
     {
     case 0:
-        scene = new SpritePerformTest1;
+        scene = new (std::nothrow) SpritePerformTest1;
         break;
     case 1:
-        scene = new SpritePerformTest2;
+        scene = new (std::nothrow) SpritePerformTest2;
         break;
     case 2:
-        scene = new SpritePerformTest3;
+        scene = new (std::nothrow) SpritePerformTest3;
         break;
     case 3:
-        scene = new SpritePerformTest4;
+        scene = new (std::nothrow) SpritePerformTest4;
         break;
     case 4:
-        scene = new SpritePerformTest5;
+        scene = new (std::nothrow) SpritePerformTest5;
         break;
     case 5:
-        scene = new SpritePerformTest6;
+        scene = new (std::nothrow) SpritePerformTest6;
         break;
     case 6:
-        scene = new SpritePerformTest7;
+        scene = new (std::nothrow) SpritePerformTest7;
         break;
     }
     
@@ -372,7 +372,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     //srandom(0);
 
     subtestNumber = asubtest;
-    _subTest = new SubTest;
+    _subTest = new (std::nothrow) SubTest;
     _subTest->initWithSubTest(asubtest, this);
 
     auto s = Director::getInstance()->getWinSize();
@@ -397,7 +397,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    auto menuLayer = new SpriteMenuLayer(true, TEST_COUNT, SpriteMainScene::_s_nSpriteCurCase);
+    auto menuLayer = new (std::nothrow) SpriteMenuLayer(true, TEST_COUNT, SpriteMainScene::_s_nSpriteCurCase);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
     
@@ -622,25 +622,25 @@ void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest,int nodes)
     switch (curCase)
     {
         case 0:
-            scene = new SpritePerformTest1;
+            scene = new (std::nothrow) SpritePerformTest1;
             break;
         case 1:
-            scene = new SpritePerformTest2;
+            scene = new (std::nothrow) SpritePerformTest2;
             break;
         case 2:
-            scene = new SpritePerformTest3;
+            scene = new (std::nothrow) SpritePerformTest3;
             break;
         case 3:
-            scene = new SpritePerformTest4;
+            scene = new (std::nothrow) SpritePerformTest4;
             break;
         case 4:
-            scene = new SpritePerformTest5;
+            scene = new (std::nothrow) SpritePerformTest5;
             break;
         case 5:
-            scene = new SpritePerformTest6;
+            scene = new (std::nothrow) SpritePerformTest6;
             break;
         case 6:
-            scene = new SpritePerformTest7;
+            scene = new (std::nothrow) SpritePerformTest7;
             break;
     }
     
@@ -661,7 +661,7 @@ void SpriteMainScene::beginAutoTest()
         SpriteMainScene::_s_nSpriteCurCase = 0;
     }
     
-    auto scene = new SpritePerformTest1;
+    auto scene = new (std::nothrow) SpritePerformTest1;
     scene->initWithSubTest(1, 500);
     Director::getInstance()->replaceScene(scene);
     scene->release();
@@ -989,7 +989,7 @@ void SpritePerformTest7::doTest(Sprite* sprite)
 void runSpriteTest()
 {
     SpriteMainScene::_s_autoTest = false;
-    auto scene = new SpritePerformTest1;
+    auto scene = new (std::nothrow) SpritePerformTest1;
     scene->initWithSubTest(1, 50);
     Director::getInstance()->replaceScene(scene);
     scene->release();

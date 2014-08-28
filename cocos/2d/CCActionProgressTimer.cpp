@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 ProgressTo* ProgressTo::create(float duration, float percent)
 {
-    ProgressTo *progressTo = new ProgressTo();
+    ProgressTo *progressTo = new (std::nothrow) ProgressTo();
     progressTo->initWithDuration(duration, percent);
     progressTo->autorelease();
 
@@ -56,7 +56,7 @@ bool ProgressTo::initWithDuration(float duration, float percent)
 ProgressTo* ProgressTo::clone() const
 {
 	// no copy constructor	
-	auto a = new ProgressTo();
+	auto a = new (std::nothrow) ProgressTo();
     a->initWithDuration(_duration, _to);
 	a->autorelease();
 	return a;
@@ -83,7 +83,7 @@ void ProgressTo::update(float time)
 
 ProgressFromTo* ProgressFromTo::create(float duration, float fromPercentage, float toPercentage)
 {
-    ProgressFromTo *progressFromTo = new ProgressFromTo();
+    ProgressFromTo *progressFromTo = new (std::nothrow) ProgressFromTo();
     progressFromTo->initWithDuration(duration, fromPercentage, toPercentage);
     progressFromTo->autorelease();
 
@@ -106,7 +106,7 @@ bool ProgressFromTo::initWithDuration(float duration, float fromPercentage, floa
 ProgressFromTo* ProgressFromTo::clone() const
 {
 	// no copy constructor	
-	auto a = new ProgressFromTo();
+	auto a = new (std::nothrow) ProgressFromTo();
 	a->initWithDuration(_duration, _from, _to);
 	a->autorelease();
 	return a;

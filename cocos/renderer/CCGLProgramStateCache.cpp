@@ -44,7 +44,7 @@ GLProgramStateCache::~GLProgramStateCache()
 GLProgramStateCache* GLProgramStateCache::getInstance()
 {
     if (s_instance == nullptr)
-        s_instance = new GLProgramStateCache();
+        s_instance = new (std::nothrow) GLProgramStateCache();
     
     return s_instance;
 }

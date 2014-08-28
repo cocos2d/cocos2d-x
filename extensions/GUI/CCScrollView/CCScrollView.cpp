@@ -75,7 +75,7 @@ ScrollView::~ScrollView()
 
 ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
     {
         pRet->autorelease();
@@ -89,7 +89,7 @@ ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 
 ScrollView* ScrollView::create()
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

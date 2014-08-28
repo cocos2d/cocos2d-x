@@ -479,7 +479,7 @@ UserDefault* UserDefault::getInstance()
     
     if (! _userDefault)
     {
-        _userDefault = new UserDefault();
+        _userDefault = new (std::nothrow) UserDefault();
     }
     
     return _userDefault;

@@ -166,8 +166,8 @@ void ChipmunkTestLayer::createResetButton()
 
 void ChipmunkTestLayer::reset(Ref* sender)
 {
-    auto s = new ChipmunkAccelTouchTestScene();
-    auto child = new ChipmunkTestLayer();
+    auto s = new (std::nothrow) ChipmunkAccelTouchTestScene();
+    auto child = new (std::nothrow) ChipmunkTestLayer();
     s->addChild(child);
     child->release();
     Director::getInstance()->replaceScene(s);
@@ -249,7 +249,7 @@ void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
 
 void ChipmunkAccelTouchTestScene::runThisTest()
 {
-    auto layer = new ChipmunkTestLayer();
+    auto layer = new (std::nothrow) ChipmunkTestLayer();
     addChild(layer);
     layer->release();
 

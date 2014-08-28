@@ -51,7 +51,7 @@ TextAtlas::~TextAtlas()
 
 TextAtlas* TextAtlas::create()
 {
-    TextAtlas* widget = new TextAtlas();
+    TextAtlas* widget = new (std::nothrow) TextAtlas();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -74,7 +74,7 @@ TextAtlas* TextAtlas::create(const std::string &stringValue,
                              int itemHeight,
                              const std::string &startCharMap)
 {
-    TextAtlas* widget = new TextAtlas();
+    TextAtlas* widget = new (std::nothrow) TextAtlas();
     if (widget && widget->init())
     {
         widget->autorelease();

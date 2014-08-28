@@ -45,7 +45,7 @@ NS_CC_BEGIN
 
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *ret = new TMXLayer();
+    TMXLayer *ret = new (std::nothrow) TMXLayer();
     if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
         ret->autorelease();

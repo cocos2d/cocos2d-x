@@ -82,7 +82,7 @@ private:
 
 DrawLine3D* DrawLine3D::create()
 {
-    auto ret = new DrawLine3D();
+    auto ret = new (std::nothrow) DrawLine3D();
     if (ret && ret->init())
         return ret;
     CC_SAFE_DELETE(ret);
@@ -328,7 +328,7 @@ void Camera3DTestDemo::onExit()
 
 void Camera3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild(restartSpriteTestAction());
 
     Director::getInstance()->replaceScene(s);
@@ -337,14 +337,14 @@ void Camera3DTestDemo::restartCallback(Ref* sender)
 
 void Camera3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 void Camera3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

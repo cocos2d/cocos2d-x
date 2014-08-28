@@ -137,7 +137,7 @@ public:
     
     static Lens3DTarget* create(Lens3D* pAction)
     {
-        Lens3DTarget* pRet = new Lens3DTarget();
+        Lens3DTarget* pRet = new (std::nothrow) Lens3DTarget();
         pRet->_lens3D = pAction;
         pRet->autorelease();
         return pRet;
@@ -387,7 +387,7 @@ std::string EffectAdvanceTextLayer::subtitle() const
 
 void EffectAdvanceTextLayer::restartCallback(Ref* sender)
 {
-    auto s = new EffectAdvanceScene();
+    auto s = new (std::nothrow) EffectAdvanceScene();
     s->addChild(restartEffectAdvanceAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -396,7 +396,7 @@ void EffectAdvanceTextLayer::restartCallback(Ref* sender)
 
 void EffectAdvanceTextLayer::nextCallback(Ref* sender)
 {
-    auto s = new EffectAdvanceScene();
+    auto s = new (std::nothrow) EffectAdvanceScene();
     s->addChild( nextEffectAdvanceAction() );
     Director::getInstance()->replaceScene(s);
 
@@ -405,7 +405,7 @@ void EffectAdvanceTextLayer::nextCallback(Ref* sender)
 
 void EffectAdvanceTextLayer::backCallback(Ref* sender)
 {
-    auto s = new EffectAdvanceScene();
+    auto s = new (std::nothrow) EffectAdvanceScene();
     s->addChild( backEffectAdvanceAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

@@ -757,7 +757,7 @@ Rect Node::getBoundingBox() const
 
 Node * Node::create()
 {
-	Node * ret = new Node();
+	Node * ret = new (std::nothrow) Node();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -1847,7 +1847,7 @@ bool Node::addComponent(Component *component)
 {
     // lazy alloc
     if( !_componentContainer )
-        _componentContainer = new ComponentContainer(this);
+        _componentContainer = new (std::nothrow) ComponentContainer(this);
     return _componentContainer->add(component);
 }
 
