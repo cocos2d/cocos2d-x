@@ -233,7 +233,7 @@ void LuaMinXmlHttpRequest::_sendRequest()
         free((void*) concatHeader);
         free((void*) concatenated);
         
-        // call back lua function --TODO
+        // TODO: call back lua function
         int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
         
         if (0 != handler)

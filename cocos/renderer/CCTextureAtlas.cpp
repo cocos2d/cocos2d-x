@@ -614,7 +614,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         // Using VBO and VAO
         //
 
-        // XXX: update is done in draw... perhaps it should be done in a timer
+        // FIXME:: update is done in draw... perhaps it should be done in a timer
         if (_dirty) 
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
@@ -658,7 +658,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 #define kQuadSize sizeof(_quads[0].bl)
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        // XXX: update is done in draw... perhaps it should be done in a timer
+        // FIXME:: update is done in draw... perhaps it should be done in a timer
         if (_dirty) 
         {
             glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * numberOfQuads , &_quads[start] );

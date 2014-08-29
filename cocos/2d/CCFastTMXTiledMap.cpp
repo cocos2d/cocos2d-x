@@ -138,7 +138,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                     //    gid = CFSwapInt32( gid );
                     /* We support little endian.*/
                     
-                    // XXX: gid == 0 --> empty tile
+                    // FIXME: gid == 0 --> empty tile
                     if( gid != 0 )
                     {
                         // Optimization: quick return

@@ -37,7 +37,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
-            //TODO: improve ListView focus
+            // TODO: improve ListView focus
             sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);

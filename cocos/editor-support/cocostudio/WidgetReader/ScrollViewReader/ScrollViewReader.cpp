@@ -39,7 +39,7 @@ namespace cocostudio
     
     void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
-        //TODO::need to refactor...
+        //TODO: need to refactor...
         LayoutReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);

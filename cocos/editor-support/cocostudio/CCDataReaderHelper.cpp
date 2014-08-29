@@ -420,7 +420,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
         filereadmode += "b";
     }
     ssize_t size;
-    // XXX fileContent is being leaked
+    // FIXME: fileContent is being leaked
     
     _dataReaderHelper->_getFileMutex.lock();
     unsigned char *pBytes = FileUtils::getInstance()->getFileData(fullPath.c_str() , filereadmode.c_str(), &size);

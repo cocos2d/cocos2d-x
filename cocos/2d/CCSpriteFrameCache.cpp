@@ -313,7 +313,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
 
     _spriteFrames.erase(toRemoveFrames);
     
-    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+    // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {
         _loadedFileNames->clear();
@@ -340,7 +340,7 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
         _spriteFrames.erase(name);
     }
 
-    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+    // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     _loadedFileNames->clear();
 }
 

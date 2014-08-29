@@ -481,7 +481,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
         {
             // [node setValue:value forKey:name];
 
-            // TODO only handle rotation, opacity, displayFrame, color
+            // TODO: only handle rotation, opacity, displayFrame, color
             if (propName == "rotation")
             {
                 float rotate = value.asFloat();

@@ -61,6 +61,7 @@ NS_CC_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+// MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
     Sprite *sprite = new (std::nothrow) Sprite();
@@ -307,6 +308,7 @@ static unsigned char cc_2x2_white_image[] = {
 
 #define CC_2x2_WHITE_IMAGE_KEY  "/cc_2x2_white_image"
 
+// MARK: texture
 void Sprite::setTexture(const std::string &filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
@@ -497,6 +499,8 @@ void Sprite::setTextureCoords(Rect rect)
     }
 }
 
+// MARK: visit, draw, transform
+
 void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
@@ -622,7 +626,8 @@ void Sprite::drawDebugData()
 }
 #endif //CC_SPRITE_DEBUG_DRAW
 
-// Node overrides
+// MARK: visit, draw, transform
+
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
@@ -755,7 +760,7 @@ void Sprite::setDirtyRecursively(bool bValue)
     }
 }
 
-// XXX HACK: optimization
+// FIXME: HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {                       \
                     if (! _recursiveDirty) {            \
                         _recursiveDirty = true;         \
@@ -885,7 +890,7 @@ bool Sprite::isFlippedY(void) const
 }
 
 //
-// RGBA protocol
+// MARK: RGBA protocol
 //
 
 void Sprite::updateColor(void)
@@ -938,7 +943,7 @@ bool Sprite::isOpacityModifyRGB(void) const
     return _opacityModifyRGB;
 }
 
-// Frames
+// MARK: Frames
 
 void Sprite::setSpriteFrame(const std::string &spriteFrameName)
 {
@@ -1032,7 +1037,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     }
 }
 
-// Texture protocol
+// MARK: Texture protocol
 
 void Sprite::updateBlendFunc(void)
 {

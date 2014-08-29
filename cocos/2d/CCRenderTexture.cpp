@@ -356,7 +356,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     Director::getInstance()->getRenderer()->addCommand(&_beginWithClearCommand);
 }
 
-//TODO find a better way to clear the screen, there is no need to rebind render buffer there.
+//TODO: find a better way to clear the screen, there is no need to rebind render buffer there.
 void RenderTexture::clear(float r, float g, float b, float a)
 {
     this->beginWithClear(r, g, b, a);
@@ -504,7 +504,7 @@ Image* RenderTexture::newImage(bool fliimage)
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
-        //TODO move this to configration, so we don't check it every time
+        // TODO: move this to configration, so we don't check it every time
         /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
          */
         if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
@@ -604,7 +604,7 @@ void RenderTexture::onBegin()
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
-    //TODO move this to configration, so we don't check it every time
+    // TODO: move this to configration, so we don't check it every time
     /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
     if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))

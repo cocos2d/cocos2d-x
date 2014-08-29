@@ -142,8 +142,8 @@ void TileMapAtlas::setTile(const Color3B& tile, const Vec2& position)
     {
         ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)] = tile;
 
-        // XXX: this method consumes a lot of memory
-        // XXX: a tree of something like that shall be implemented
+        // FIXME:: this method consumes a lot of memory
+        // FIXME:: a tree of something like that shall be implemented
         std::string key = StringUtils::toString(position.x) + "," + StringUtils::toString(position.y);
         int num = _posToAtlasIndex[key].asInt();
 

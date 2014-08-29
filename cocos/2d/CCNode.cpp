@@ -68,7 +68,7 @@ bool nodeComparisonLess(Node* n1, Node* n2)
            );
 }
 
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
+// FIXME:: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 int Node::s_globalOrderOfArrival = 1;
 
 // MARK: Constructor, Destructor, Init
@@ -593,7 +593,7 @@ void Node::setPositionZ(float positionZ)
 
     _positionZ = positionZ;
 
-    // XXX BUG
+    // FIXME: BUG
     // Global Z Order should based on the modelViewTransform
     setGlobalZOrder(positionZ);
 }
@@ -1670,7 +1670,7 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform.translate(anchorPoint.x, anchorPoint.y, 0);
         }
         
-        // XXX
+        // FIXME:
         // FIX ME: Expensive operation.
         // FIX ME: It should be done together with the rotationZ
         if(_rotationY) {
@@ -1689,7 +1689,7 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
         }
         
-        // XXX: Try to inline skew
+        // FIXME:: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
@@ -1703,8 +1703,8 @@ const Mat4& Node::getNodeToParentTransform() const
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Vec2::ZERO))
             {
-                // XXX: Argh, Mat4 needs a "translate" method.
-                // XXX: Although this is faster than multiplying a vec4 * mat4
+                // FIXME:: Argh, Mat4 needs a "translate" method.
+                // FIXME:: Although this is faster than multiplying a vec4 * mat4
                 _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
                 _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
             }
