@@ -344,8 +344,6 @@ public:
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
 
 protected:
-    BillBorad*        _billborad;
-    BillBorad*        _billboradAni;
     Camera*           _camera;
     Layer*            _layerBillBorad;
 

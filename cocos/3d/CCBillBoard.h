@@ -30,8 +30,8 @@
 
 NS_CC_BEGIN
 
-class VertexBuffer;
-class IndexBuffer;
+//class VertexBuffer;
+//class IndexBuffer;
 
 /**
  * Inherit from Sprite, achieve BillBorad.
@@ -90,13 +90,16 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-	void genRenderInformation();
+    //void genRenderInformation();
 
 protected:
 
-	MeshCommand _meshCommand;
-	VertexBuffer *_vertexBuffer;
-	IndexBuffer *_indexBuffer;
+//    MeshCommand _meshCommand;
+//    VertexBuffer *_vertexBuffer;
+//    IndexBuffer *_indexBuffer;
+      Mat4 _preViewMat;
+      Mat4 _mv;
+      float _zDepthInView;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);
