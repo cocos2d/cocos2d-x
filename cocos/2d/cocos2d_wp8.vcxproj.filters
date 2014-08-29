@@ -623,12 +623,6 @@
     <ClCompile Include="..\3d\CCSkeleton3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCSubMeshState.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCSubMesh.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\3d\CCAttachNode.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -646,9 +640,6 @@
     </ClCompile>
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
       <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\CCModuleManager.cpp">
-      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\base\ccRandom.cpp">
       <Filter>base</Filter>
@@ -1313,12 +1304,6 @@
     <ClInclude Include="..\3d\CCSkeleton3D.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCSubMeshState.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCSubMesh.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\3d\CCAttachNode.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -1336,9 +1321,6 @@
     </ClInclude>
     <ClInclude Include="..\renderer\CCVertexIndexData.h">
       <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCModuleManager.h">
-      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\ccRandom.h">
       <Filter>base</Filter>
