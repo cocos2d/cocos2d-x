@@ -36,7 +36,7 @@ namespace cocos2d {
     class Delay;
     class Ray;
     class DrawNode3D;
-	class BillBorad;
+    class BillBorad;
 }
 
 class Sprite3DTestDemo : public BaseTest
