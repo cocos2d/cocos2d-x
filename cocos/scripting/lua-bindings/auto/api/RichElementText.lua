@@ -5,31 +5,28 @@
 -- @parent_module ccui
 
 --------------------------------
--- 
 -- @function [parent=#RichElementText] init 
 -- @param self
--- @param #int tag
--- @param #color3b_table color
--- @param #unsigned char opacity
--- @param #string text
--- @param #string fontName
--- @param #float fontSize
+-- @param #int int
+-- @param #color3b_table color3b
+-- @param #unsigned char char
+-- @param #string str
+-- @param #string str
+-- @param #float float
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#RichElementText] create 
 -- @param self
--- @param #int tag
--- @param #color3b_table color
--- @param #unsigned char opacity
--- @param #string text
--- @param #string fontName
--- @param #float fontSize
+-- @param #int int
+-- @param #color3b_table color3b
+-- @param #unsigned char char
+-- @param #string str
+-- @param #string str
+-- @param #float float
 -- @return RichElementText#RichElementText ret (return value: ccui.RichElementText)
         
 --------------------------------
--- 
 -- @function [parent=#RichElementText] RichElementText 
 -- @param self
         

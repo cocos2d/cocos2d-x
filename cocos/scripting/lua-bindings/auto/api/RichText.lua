@@ -5,38 +5,32 @@
 -- @parent_module ccui
 
 --------------------------------
--- 
 -- @function [parent=#RichText] insertElement 
 -- @param self
--- @param #ccui.RichElement element
--- @param #int index
+-- @param #ccui.RichElement richelement
+-- @param #int int
         
 --------------------------------
--- 
 -- @function [parent=#RichText] setAnchorPoint 
 -- @param self
--- @param #vec2_table pt
+-- @param #vec2_table vec2
         
 --------------------------------
--- 
 -- @function [parent=#RichText] pushBackElement 
 -- @param self
--- @param #ccui.RichElement element
+-- @param #ccui.RichElement richelement
         
 --------------------------------
--- 
 -- @function [parent=#RichText] ignoreContentAdaptWithSize 
 -- @param self
--- @param #bool ignore
+-- @param #bool bool
         
 --------------------------------
--- 
 -- @function [parent=#RichText] setVerticalSpace 
 -- @param self
--- @param #float space
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#RichText] formatText 
 -- @param self
         
@@ -45,28 +39,24 @@
 -- @overload self, int         
 -- @function [parent=#RichText] removeElement
 -- @param self
--- @param #int index
+-- @param #int int
 
 --------------------------------
--- 
 -- @function [parent=#RichText] create 
 -- @param self
 -- @return RichText#RichText ret (return value: ccui.RichText)
         
 --------------------------------
--- 
 -- @function [parent=#RichText] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
 -- @function [parent=#RichText] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- 
 -- @function [parent=#RichText] RichText 
 -- @param self
         

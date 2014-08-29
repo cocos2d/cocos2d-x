@@ -5,38 +5,30 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#Menu] setEnabled 
 -- @param self
--- @param #bool value
+-- @param #bool bool
         
 --------------------------------
---  align items vertically 
 -- @function [parent=#Menu] alignItemsVertically 
 -- @param self
         
 --------------------------------
--- 
 -- @function [parent=#Menu] isEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  align items horizontally with padding<br>
--- since v0.7.2
 -- @function [parent=#Menu] alignItemsHorizontallyWithPadding 
 -- @param self
--- @param #float padding
+-- @param #float float
         
 --------------------------------
---  align items vertically with padding<br>
--- since v0.7.2
 -- @function [parent=#Menu] alignItemsVerticallyWithPadding 
 -- @param self
--- @param #float padding
+-- @param #float float
         
 --------------------------------
---  align items horizontally 
 -- @function [parent=#Menu] alignItemsHorizontally 
 -- @param self
         
@@ -47,33 +39,29 @@
 -- @overload self, cc.Node, int, string         
 -- @function [parent=#Menu] addChild
 -- @param self
--- @param #cc.Node child
--- @param #int zOrder
--- @param #string name
+-- @param #cc.Node node
+-- @param #int int
+-- @param #string str
 
 --------------------------------
--- 
 -- @function [parent=#Menu] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#Menu] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
 -- @function [parent=#Menu] setOpacityModifyRGB 
 -- @param self
--- @param #bool bValue
+-- @param #bool bool
         
 --------------------------------
--- 
 -- @function [parent=#Menu] removeChild 
 -- @param self
--- @param #cc.Node child
--- @param #bool cleanup
+-- @param #cc.Node node
+-- @param #bool bool
         
 return nil

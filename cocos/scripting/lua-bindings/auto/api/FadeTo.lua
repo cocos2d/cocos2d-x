@@ -5,35 +5,30 @@
 -- @parent_module cc
 
 --------------------------------
---  creates an action with duration and opacity 
 -- @function [parent=#FadeTo] create 
 -- @param self
--- @param #float duration
--- @param #unsigned char opacity
+-- @param #float float
+-- @param #unsigned char char
 -- @return FadeTo#FadeTo ret (return value: cc.FadeTo)
         
 --------------------------------
--- 
 -- @function [parent=#FadeTo] startWithTarget 
 -- @param self
--- @param #cc.Node target
+-- @param #cc.Node node
         
 --------------------------------
--- 
 -- @function [parent=#FadeTo] clone 
 -- @param self
 -- @return FadeTo#FadeTo ret (return value: cc.FadeTo)
         
 --------------------------------
--- 
 -- @function [parent=#FadeTo] reverse 
 -- @param self
 -- @return FadeTo#FadeTo ret (return value: cc.FadeTo)
         
 --------------------------------
--- 
 -- @function [parent=#FadeTo] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 return nil

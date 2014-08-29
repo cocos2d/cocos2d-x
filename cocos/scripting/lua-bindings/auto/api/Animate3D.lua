@@ -5,25 +5,21 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#Animate3D] setSpeed 
 -- @param self
--- @param #float speed
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#Animate3D] setWeight 
 -- @param self
--- @param #float weight
+-- @param #float float
         
 --------------------------------
--- get & set speed, negative speed means playing reverse 
 -- @function [parent=#Animate3D] getSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- get & set blend weight, weight must positive
 -- @function [parent=#Animate3D] getWeight 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -33,39 +29,34 @@
 -- @overload self, cc.Animation3D         
 -- @function [parent=#Animate3D] create
 -- @param self
--- @param #cc.Animation3D animation
--- @param #float fromTime
--- @param #float duration
+-- @param #cc.Animation3D animation3d
+-- @param #float float
+-- @param #float float
 -- @return Animate3D#Animate3D ret (retunr value: cc.Animate3D)
 
 --------------------------------
--- 
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self
--- @param #cc.Node target
+-- @param #cc.Node node
         
 --------------------------------
--- 
 -- @function [parent=#Animate3D] step 
 -- @param self
--- @param #float dt
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#Animate3D] clone 
 -- @param self
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
         
 --------------------------------
--- 
 -- @function [parent=#Animate3D] reverse 
 -- @param self
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
         
 --------------------------------
--- 
 -- @function [parent=#Animate3D] update 
 -- @param self
--- @param #float t
+-- @param #float float
         
 return nil

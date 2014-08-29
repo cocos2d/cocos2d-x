@@ -5,10 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#TransitionProgressRadialCCW] create 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
 -- @return TransitionProgressRadialCCW#TransitionProgressRadialCCW ret (return value: cc.TransitionProgressRadialCCW)
         

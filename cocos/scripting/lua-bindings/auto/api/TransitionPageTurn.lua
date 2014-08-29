@@ -5,40 +5,32 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#TransitionPageTurn] actionWithSize 
 -- @param self
--- @param #size_table vector
+-- @param #size_table size
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
--- Creates a base transition with duration and incoming scene.<br>
--- If back is true then the effect is reversed to appear as if the incoming <br>
--- scene is being turned from left over the outgoing scene.
 -- @function [parent=#TransitionPageTurn] initWithDuration 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
--- @param #bool backwards
+-- @param #bool bool
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Creates a base transition with duration and incoming scene.<br>
--- If back is true then the effect is reversed to appear as if the incoming<br>
--- scene is being turned from left over the outgoing scene.
 -- @function [parent=#TransitionPageTurn] create 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
--- @param #bool backwards
+-- @param #bool bool
 -- @return TransitionPageTurn#TransitionPageTurn ret (return value: cc.TransitionPageTurn)
         
 --------------------------------
--- 
 -- @function [parent=#TransitionPageTurn] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #mat4_table transform
--- @param #unsigned int flags
+-- @param #mat4_table mat4
+-- @param #unsigned int int
         
 return nil
