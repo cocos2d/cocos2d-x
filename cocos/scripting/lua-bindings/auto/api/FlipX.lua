@@ -5,26 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  create the action 
 -- @function [parent=#FlipX] create 
 -- @param self
--- @param #bool x
+-- @param #bool bool
 -- @return FlipX#FlipX ret (return value: cc.FlipX)
         
 --------------------------------
--- 
 -- @function [parent=#FlipX] clone 
 -- @param self
 -- @return FlipX#FlipX ret (return value: cc.FlipX)
         
 --------------------------------
--- 
 -- @function [parent=#FlipX] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#FlipX] reverse 
 -- @param self
 -- @return FlipX#FlipX ret (return value: cc.FlipX)

@@ -5,30 +5,25 @@
 -- @parent_module cc
 
 --------------------------------
---  Sets the offset position of child objects 
 -- @function [parent=#TMXObjectGroup] setPositionOffset 
 -- @param self
--- @param #vec2_table offset
+-- @param #vec2_table vec2
         
 --------------------------------
---  return the value for the specific property name 
 -- @function [parent=#TMXObjectGroup] getProperty 
 -- @param self
--- @param #string propertyName
+-- @param #string str
 -- @return Value#Value ret (return value: cc.Value)
         
 --------------------------------
---  Gets the offset position of child objects 
 -- @function [parent=#TMXObjectGroup] getPositionOffset 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
---  return the dictionary for the specific object name.<br>
--- It will return the 1st object found on the array for the given name.
 -- @function [parent=#TMXObjectGroup] getObject 
 -- @param self
--- @param #string objectName
+-- @param #string str
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
@@ -39,10 +34,9 @@
 -- @return array_table#array_table ret (retunr value: array_table)
 
 --------------------------------
--- 
 -- @function [parent=#TMXObjectGroup] setGroupName 
 -- @param self
--- @param #string groupName
+-- @param #string str
         
 --------------------------------
 -- @overload self         
@@ -52,25 +46,21 @@
 -- @return map_table#map_table ret (retunr value: map_table)
 
 --------------------------------
--- 
 -- @function [parent=#TMXObjectGroup] getGroupName 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
---  Sets the list of properties 
 -- @function [parent=#TMXObjectGroup] setProperties 
 -- @param self
--- @param #map_table properties
+-- @param #map_table map
         
 --------------------------------
---  Sets the array of the objects 
 -- @function [parent=#TMXObjectGroup] setObjects 
 -- @param self
--- @param #array_table objects
+-- @param #array_table array
         
 --------------------------------
--- js ctor
 -- @function [parent=#TMXObjectGroup] TMXObjectGroup 
 -- @param self
         

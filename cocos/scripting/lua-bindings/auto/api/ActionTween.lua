@@ -5,35 +5,30 @@
 -- @parent_module cc
 
 --------------------------------
---  creates an initializes the action with the property name (key), and the from and to parameters. 
 -- @function [parent=#ActionTween] create 
 -- @param self
--- @param #float duration
--- @param #string key
--- @param #float from
--- @param #float to
+-- @param #float float
+-- @param #string str
+-- @param #float float
+-- @param #float float
 -- @return ActionTween#ActionTween ret (return value: cc.ActionTween)
         
 --------------------------------
--- 
 -- @function [parent=#ActionTween] startWithTarget 
 -- @param self
--- @param #cc.Node target
+-- @param #cc.Node node
         
 --------------------------------
--- 
 -- @function [parent=#ActionTween] clone 
 -- @param self
 -- @return ActionTween#ActionTween ret (return value: cc.ActionTween)
         
 --------------------------------
--- 
 -- @function [parent=#ActionTween] update 
 -- @param self
--- @param #float dt
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#ActionTween] reverse 
 -- @param self
 -- @return ActionTween#ActionTween ret (return value: cc.ActionTween)

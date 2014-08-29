@@ -5,108 +5,92 @@
 -- @parent_module cc
 
 --------------------------------
---  Remove all living segments of the ribbon 
 -- @function [parent=#MotionStreak] reset 
 -- @param self
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setTexture 
 -- @param self
--- @param #cc.Texture2D texture
+-- @param #cc.Texture2D texture2d
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] getTexture 
 -- @param self
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
---  color used for the tint 
 -- @function [parent=#MotionStreak] tintWithColor 
 -- @param self
--- @param #color3b_table colors
+-- @param #color3b_table color3b
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setStartingPositionInitialized 
 -- @param self
--- @param #bool bStartingPositionInitialized
+-- @param #bool bool
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] isStartingPositionInitialized 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  When fast mode is enabled, new points are added faster but with lower precision 
 -- @function [parent=#MotionStreak] isFastMode 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setFastMode 
 -- @param self
--- @param #bool bFastMode
+-- @param #bool bool
         
 --------------------------------
 -- @overload self, float, float, float, color3b_table, cc.Texture2D         
 -- @overload self, float, float, float, color3b_table, string         
 -- @function [parent=#MotionStreak] create
 -- @param self
--- @param #float fade
--- @param #float minSeg
--- @param #float stroke
--- @param #color3b_table color
--- @param #string path
+-- @param #float float
+-- @param #float float
+-- @param #float float
+-- @param #color3b_table color3b
+-- @param #string str
 -- @return MotionStreak#MotionStreak ret (retunr value: cc.MotionStreak)
 
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setPositionY 
 -- @param self
--- @param #float y
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setPositionX 
 -- @param self
--- @param #float x
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] getPositionY 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] getPositionX 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setOpacity 
 -- @param self
--- @param #unsigned char opacity
+-- @param #unsigned char char
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] setOpacityModifyRGB 
 -- @param self
--- @param #bool value
+-- @param #bool bool
         
 --------------------------------
--- 
 -- @function [parent=#MotionStreak] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -116,15 +100,15 @@
 -- @overload self, vec2_table         
 -- @function [parent=#MotionStreak] setPosition
 -- @param self
--- @param #float x
--- @param #float y
+-- @param #float float
+-- @param #float float
 
 --------------------------------
 -- @overload self, float, float         
 -- @overload self         
 -- @function [parent=#MotionStreak] getPosition
 -- @param self
--- @param #float x
--- @param #float y
+-- @param #float float
+-- @param #float float
 
 return nil

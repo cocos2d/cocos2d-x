@@ -5,26 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
 -- @function [parent=#DelayTime] create 
 -- @param self
--- @param #float d
+-- @param #float float
 -- @return DelayTime#DelayTime ret (return value: cc.DelayTime)
         
 --------------------------------
--- 
 -- @function [parent=#DelayTime] clone 
 -- @param self
 -- @return DelayTime#DelayTime ret (return value: cc.DelayTime)
         
 --------------------------------
--- 
 -- @function [parent=#DelayTime] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#DelayTime] reverse 
 -- @param self
 -- @return DelayTime#DelayTime ret (return value: cc.DelayTime)

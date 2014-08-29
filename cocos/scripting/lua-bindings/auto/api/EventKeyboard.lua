@@ -5,10 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#EventKeyboard] EventKeyboard 
 -- @param self
--- @param #int keyCode
--- @param #bool isPressed
+-- @param #int keycode
+-- @param #bool bool
         
 return nil

@@ -5,53 +5,44 @@
 -- @parent_module cc
 
 --------------------------------
---  Sets the array that contains the subitems. 
 -- @function [parent=#MenuItemToggle] setSubItems 
 -- @param self
--- @param #array_table items
+-- @param #array_table array
         
 --------------------------------
---  Gets the index of the selected item 
 -- @function [parent=#MenuItemToggle] getSelectedIndex 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
---  add more menu item 
 -- @function [parent=#MenuItemToggle] addSubItem 
 -- @param self
--- @param #cc.MenuItem item
+-- @param #cc.MenuItem menuitem
         
 --------------------------------
---  return the selected item 
 -- @function [parent=#MenuItemToggle] getSelectedItem 
 -- @param self
 -- @return MenuItem#MenuItem ret (return value: cc.MenuItem)
         
 --------------------------------
---  Sets the index of the selected item 
 -- @function [parent=#MenuItemToggle] setSelectedIndex 
 -- @param self
--- @param #unsigned int index
+-- @param #unsigned int int
         
 --------------------------------
--- 
 -- @function [parent=#MenuItemToggle] setEnabled 
 -- @param self
--- @param #bool var
+-- @param #bool bool
         
 --------------------------------
--- 
 -- @function [parent=#MenuItemToggle] activate 
 -- @param self
         
 --------------------------------
--- 
 -- @function [parent=#MenuItemToggle] unselected 
 -- @param self
         
 --------------------------------
--- 
 -- @function [parent=#MenuItemToggle] selected 
 -- @param self
         

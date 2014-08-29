@@ -5,25 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with a range, whether of not to shatter Z vertices, a grid size and duration 
 -- @function [parent=#ShatteredTiles3D] create 
 -- @param self
--- @param #float duration
--- @param #size_table gridSize
--- @param #int range
--- @param #bool shatterZ
+-- @param #float float
+-- @param #size_table size
+-- @param #int int
+-- @param #bool bool
 -- @return ShatteredTiles3D#ShatteredTiles3D ret (return value: cc.ShatteredTiles3D)
         
 --------------------------------
--- 
 -- @function [parent=#ShatteredTiles3D] clone 
 -- @param self
 -- @return ShatteredTiles3D#ShatteredTiles3D ret (return value: cc.ShatteredTiles3D)
         
 --------------------------------
--- 
 -- @function [parent=#ShatteredTiles3D] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 return nil
