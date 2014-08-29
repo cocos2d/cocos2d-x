@@ -1551,7 +1551,7 @@ BillBoardTest::BillBoardTest()
     
     addNewBillBoradWithCoords(Vec3(20,5,0));
     addNewAniBillBoradWithCoords(Vec3(-20,0,0));
-    _camera->setPosition3D(Vec3(0, 0, 130));
+    _camera->setPosition3D(Vec3(0, 130, 130));
     _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
 
     for( int j =-20; j<=20 ;j++)
@@ -1636,7 +1636,7 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
 }
 void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 {
-
+	GLubyte alpha = 200;
     auto billboradAni1 = BillBorad::create("Images/grossini.png");
     billboradAni1->setScale(0.5f);
     billboradAni1->setPosition3D(Vec3(p.x, p.y, p.z - 130));
@@ -1655,6 +1655,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 
     auto action1 = Animate::create(animation1);
     billboradAni1->runAction(RepeatForever::create(action1));
+	billboradAni1->setOpacity(alpha);
 
     auto billboradAni2 = BillBorad::create("Images/grossini.png");
     billboradAni2->setScale(0.5f);
@@ -1674,6 +1675,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 
     auto action2 = Animate::create(animation2);
     billboradAni2->runAction(RepeatForever::create(action2));
+	billboradAni2->setOpacity(alpha);
 
     _billboradAni = BillBorad::create("Images/grossini.png");
     _billboradAni->setScale(0.5f);
@@ -1693,6 +1695,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 
     auto action = Animate::create(animation);
     _billboradAni->runAction(RepeatForever::create(action));
+	_billboradAni->setOpacity(alpha);
 
     auto billboradAni3 = BillBorad::create("Images/grossini.png");
     billboradAni3->setScale(0.5f);
@@ -1712,6 +1715,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 
     auto action3 = Animate::create(animation3);
     billboradAni3->runAction(RepeatForever::create(action3));
+	billboradAni3->setOpacity(alpha);
 
     auto billboradAni4 = BillBorad::create("Images/grossini.png");
     billboradAni4->setScale(0.5f);
@@ -1731,6 +1735,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 
     auto action4 = Animate::create(animation4);
     billboradAni4->runAction(RepeatForever::create(action4));
+	billboradAni4->setOpacity(alpha);
 }
 void BillBoardTest::update(float dt)
 {
