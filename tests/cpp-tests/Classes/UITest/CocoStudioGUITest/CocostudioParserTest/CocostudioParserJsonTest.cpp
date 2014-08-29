@@ -76,17 +76,17 @@ void CocostudioParserJsonScene::onEnter()
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocostudioParserJsonScene::BackCallback, this));
     
-    Menu* pMenu = Menu::create(pMenuItem, NULL);
+    Menu* pMenu = Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void CocostudioParserJsonScene::runThisTest()
 {
-    Layer* pLayer = new CocostudioParserJsonLayer(_jsonFile);
+    Layer* pLayer = new (std::nothrow) CocostudioParserJsonLayer(_jsonFile);
     addChild(pLayer);
     pLayer->release();
     
@@ -95,7 +95,7 @@ void CocostudioParserJsonScene::runThisTest()
 
 void CocostudioParserJsonScene::BackCallback(Ref* pSender)
 {
-    CocostudioParserTestScene* pScene = new CocostudioParserTestScene();
+    CocostudioParserTestScene* pScene = new (std::nothrow) CocostudioParserTestScene();
     pScene->runThisTest();
     pScene->release();
 }

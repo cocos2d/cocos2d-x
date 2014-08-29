@@ -71,7 +71,7 @@ void ConfigurationBase::onExit()
 
 void ConfigurationBase::restartCallback(Ref* sender)
 {
-    auto s = new ConfigurationTestScene();
+    auto s = new (std::nothrow) ConfigurationTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -79,7 +79,7 @@ void ConfigurationBase::restartCallback(Ref* sender)
 
 void ConfigurationBase::nextCallback(Ref* sender)
 {
-    auto s = new ConfigurationTestScene();
+    auto s = new (std::nothrow) ConfigurationTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -87,7 +87,7 @@ void ConfigurationBase::nextCallback(Ref* sender)
 
 void ConfigurationBase::backCallback(Ref* sender)
 {
-    auto s = new ConfigurationTestScene();
+    auto s = new (std::nothrow) ConfigurationTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

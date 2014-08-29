@@ -33,6 +33,7 @@ Classes/BugsTest/BugsTest.cpp \
 Classes/BugsTest/Bug-Child.cpp \
 Classes/BugsTest/Bug-458/Bug-458.cpp \
 Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp \
+Classes/Camera3DTest/Camera3DTest.cpp \
 Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
@@ -68,6 +69,7 @@ Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp \
 Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp \
 Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp \
 Classes/UITest/CocoStudioGUITest/UIScene.cpp \
+Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp \
 Classes/UITest/CocoStudioGUITest/UISceneManager.cpp \
 Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
 Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp \
@@ -166,6 +168,7 @@ Classes/ShaderTest/ShaderTest.cpp \
 Classes/ShaderTest/ShaderTest2.cpp \
 Classes/SpineTest/SpineTest.cpp \
 Classes/SpriteTest/SpriteTest.cpp \
+Classes/Sprite3DTest/DrawNode3D.cpp \
 Classes/Sprite3DTest/Sprite3DTest.cpp \
 Classes/TextInputTest/TextInputTest.cpp \
 Classes/Texture2dTest/Texture2dTest.cpp \
@@ -183,22 +186,13 @@ Classes/UITest/UITest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes \
+                    $(LOCAL_PATH)/../.. 
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocosbuilder_static
-LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
-
+LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Classes
-            
+
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,extensions)
-$(call import-module,editor-support/cocosbuilder)
-$(call import-module,editor-support/spine)
-$(call import-module,editor-support/cocostudio)
-$(call import-module,network)
-$(call import-module,.)
+$(call import-module,cocos)

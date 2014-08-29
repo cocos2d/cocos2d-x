@@ -66,10 +66,8 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- overload function: initWithSize(size_table)
---          
--- overload function: initWithSize(size_table, cc.Texture2D, bool)
---          
+-- @overload self, size_table         
+-- @overload self, size_table, cc.Texture2D, bool         
 -- @function [parent=#GridBase] initWithSize
 -- @param self
 -- @param #size_table size
@@ -92,10 +90,8 @@
 -- @param self
         
 --------------------------------
--- overload function: create(size_table)
---          
--- overload function: create(size_table, cc.Texture2D, bool)
---          
+-- @overload self, size_table         
+-- @overload self, size_table, cc.Texture2D, bool         
 -- @function [parent=#GridBase] create
 -- @param self
 -- @param #size_table size

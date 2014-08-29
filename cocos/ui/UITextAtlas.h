@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UILABELATLAS_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +38,7 @@ namespace ui {
  *   @js NA
  *   @lua NA
  */
-class TextAtlas : public Widget
+class CC_GUI_DLL TextAtlas : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO

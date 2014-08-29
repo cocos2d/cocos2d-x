@@ -109,10 +109,8 @@
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
--- overload function: addChild(cc.Node, int, string)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#SpriteBatchNode] addChild
 -- @param self
 -- @param #cc.Node node

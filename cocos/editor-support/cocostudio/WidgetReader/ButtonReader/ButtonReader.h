@@ -26,10 +26,11 @@
 #define __TestCpp__ButtonReader__
 
 #include "../WidgetReader.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
-    class ButtonReader : public WidgetReader
+    class CC_STUDIO_DLL ButtonReader : public WidgetReader
     {
     public:
         DECLARE_CLASS_WIDGET_READER_INFO

@@ -14,17 +14,47 @@
         },
         "append_dir": [
             {
-                "from": "cocos/scripting/lua-bindings/script",
+                "from": "cocos/scripting/lua-bindings/script/cocos2d",
                 "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
                 "exclude": []
             },
             {
-                "from": "cocos/scripting/lua-bindings/script",
+                "from": "cocos/scripting/lua-bindings/script/cocos2d",
                 "to": "runtime/ios/PrebuiltRuntimeLua.app",
                 "exclude": []
             },
             {
-                "from": "cocos/scripting/lua-bindings/script",
+                "from": "cocos/scripting/lua-bindings/script/cocos2d",
+                "to": "runtime/win32",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosdenshion",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosdenshion",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosdenshion",
+                "to": "runtime/win32",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
                 "to": "runtime/win32",
                 "exclude": []
             },
@@ -48,6 +78,81 @@
                 "include": [
                     "*.lua"
                 ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosbuilder",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosbuilder",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocosbuilder",
+                "to": "runtime/win32",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocostudio",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocostudio",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/cocostudio",
+                "to": "runtime/win32",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/extension",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/extension",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/extension",
+                "to": "runtime/win32",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/network",
+                "to": "runtime/win32",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/ui",
+                "to": "runtime/mac/PrebuiltRuntimeLua.app/Contents/Resources",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/ui",
+                "to": "runtime/ios/PrebuiltRuntimeLua.app",
+                "exclude": []
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/ui",
+                "to": "runtime/win32",
+                "exclude": []
             },
             {
                 "from": "external/win32-specific/gles/prebuilt",

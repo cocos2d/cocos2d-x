@@ -25,7 +25,7 @@ local function main()
     local director = cc.Director:getInstance()
     local glview = director:getOpenGLView()
     if nil == glview then
-        glview = cc.GLView:createWithRect("HelloLua", cc.rect(0,0,900,640))
+        glview = cc.GLViewImpl:createWithRect("HelloLua", cc.rect(0,0,900,640))
         director:setOpenGLView(glview)
     end
 
@@ -58,7 +58,7 @@ local function main()
     local origin = cc.Director:getInstance():getVisibleOrigin()
 
     -- add the moving dog
-    local function creatDog()
+    local function createDog()
         local frameWidth = 105
         local frameHeight = 95
 
@@ -130,7 +130,7 @@ local function main()
         end
 
         -- add moving dog
-        local spriteDog = creatDog()
+        local spriteDog = createDog()
         layerFarm:addChild(spriteDog)
 
         -- handing touch events

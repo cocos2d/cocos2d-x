@@ -29,7 +29,7 @@
 
 NS_CC_BEGIN
 
-class EventCustom : public Event
+class CC_DLL EventCustom : public Event
 {
 public:
     /** Constructor */

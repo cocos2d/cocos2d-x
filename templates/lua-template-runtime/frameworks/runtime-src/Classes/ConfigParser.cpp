@@ -24,7 +24,9 @@ bool ConfigParser::isInit()
 void ConfigParser::readConfig()
 {
     _isInit = true;
+    _isWindowTop = false;
     _consolePort = 6010;
+    _uploadPort = 6020;
     string filecfg = "config.json";
     
     string fileContent;
@@ -72,6 +74,16 @@ void ConfigParser::readConfig()
                 }
                 if (objectInitView.HasMember("consolePort")){
                     _consolePort = objectInitView["consolePort"].GetUint();
+                    if(_consolePort<=0)
+                        _consolePort = 6010;
+                }
+                if (objectInitView.HasMember("uploadPort")){
+                    _uploadPort = objectInitView["uploadPort"].GetUint();
+                    if(_uploadPort<=0)
+                        _uploadPort = 6020;
+                }
+                if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool()){
+                    _isWindowTop= objectInitView["isWindowTop"].GetBool();
                 }
             }
         }
@@ -127,9 +139,17 @@ bool ConfigParser::isLanscape()
     return _isLandscape;
 }
 
+bool ConfigParser::isWindowTop()
+{
+    return _isWindowTop;
+}
 int ConfigParser::getConsolePort()
 {
     return _consolePort;
+}
+int ConfigParser::getUploadPort()
+{
+    return _uploadPort;
 }
 int ConfigParser::getScreenSizeCount(void)
 {

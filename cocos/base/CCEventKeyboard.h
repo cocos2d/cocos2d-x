@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class EventKeyboard : public Event
+class CC_DLL EventKeyboard : public Event
 {
 public:
     /**

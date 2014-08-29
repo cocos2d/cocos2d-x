@@ -69,10 +69,6 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
-, _categoryBitmask(UINT_MAX)
-, _collisionBitmask(0)
-, _contactTestBitmask(UINT_MAX)
-, _group(0)
 , _positionResetTag(false)
 , _rotationResetTag(false)
 , _rotationOffset(0)
@@ -95,7 +91,7 @@ PhysicsBody::~PhysicsBody()
 
 PhysicsBody* PhysicsBody::create()
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->autorelease();
@@ -108,7 +104,7 @@ PhysicsBody* PhysicsBody::create()
 
 PhysicsBody* PhysicsBody::create(float mass)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body)
     {
         body->_mass = mass;
@@ -126,7 +122,7 @@ PhysicsBody* PhysicsBody::create(float mass)
 
 PhysicsBody* PhysicsBody::create(float mass, float moment)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body)
     {
         body->_mass = mass;
@@ -147,7 +143,7 @@ PhysicsBody* PhysicsBody::create(float mass, float moment)
 
 PhysicsBody* PhysicsBody::createCircle(float radius, const PhysicsMaterial& material, const Vec2& offset)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapeCircle::create(radius, material, offset));
@@ -161,7 +157,7 @@ PhysicsBody* PhysicsBody::createCircle(float radius, const PhysicsMaterial& mate
 
 PhysicsBody* PhysicsBody::createBox(const Size& size, const PhysicsMaterial& material, const Vec2& offset)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapeBox::create(size, material, offset));
@@ -175,7 +171,7 @@ PhysicsBody* PhysicsBody::createBox(const Size& size, const PhysicsMaterial& mat
 
 PhysicsBody* PhysicsBody::createPolygon(const Vec2* points, int count, const PhysicsMaterial& material, const Vec2& offset)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapePolygon::create(points, count, material, offset));
@@ -189,7 +185,7 @@ PhysicsBody* PhysicsBody::createPolygon(const Vec2* points, int count, const Phy
 
 PhysicsBody* PhysicsBody::createEdgeSegment(const Vec2& a, const Vec2& b, const PhysicsMaterial& material, float border/* = 1*/)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgeSegment::create(a, b, material, border));
@@ -204,7 +200,7 @@ PhysicsBody* PhysicsBody::createEdgeSegment(const Vec2& a, const Vec2& b, const 
 
 PhysicsBody* PhysicsBody::createEdgeBox(const Size& size, const PhysicsMaterial& material, float border/* = 1*/, const Vec2& offset)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgeBox::create(size, material, border, offset));
@@ -220,7 +216,7 @@ PhysicsBody* PhysicsBody::createEdgeBox(const Size& size, const PhysicsMaterial&
 
 PhysicsBody* PhysicsBody::createEdgePolygon(const Vec2* points, int count, const PhysicsMaterial& material, float border/* = 1*/)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgePolygon::create(points, count, material, border));
@@ -236,7 +232,7 @@ PhysicsBody* PhysicsBody::createEdgePolygon(const Vec2* points, int count, const
 
 PhysicsBody* PhysicsBody::createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material, float border/* = 1*/)
 {
-    PhysicsBody* body = new PhysicsBody();
+    PhysicsBody* body = new (std::nothrow) PhysicsBody();
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgeChain::create(points, count, material, border));
@@ -254,7 +250,7 @@ bool PhysicsBody::init()
 {
     do
     {
-        _info = new PhysicsBodyInfo();
+        _info = new (std::nothrow) PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
         
         _info->setBody(cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment)));
@@ -345,7 +341,7 @@ void PhysicsBody::setGravityEnable(bool enable)
     }
 }
 
-void PhysicsBody::setPosition(Vec2 position)
+void PhysicsBody::setPosition(const Vec2& position)
 {
     cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position + _positionOffset));
 }
@@ -422,11 +418,6 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
         }
         
         _shapes.pushBack(shape);
-        
-        if (_group != CP_NO_GROUP && shape->getGroup() == CP_NO_GROUP)
-        {
-            shape->setGroup(_group);
-        }
     }
     
     return shape;
@@ -829,31 +820,61 @@ void PhysicsBody::update(float delta)
 
 void PhysicsBody::setCategoryBitmask(int bitmask)
 {
-    _categoryBitmask = bitmask;
-    
     for (auto& shape : _shapes)
     {
         shape->setCategoryBitmask(bitmask);
     }
 }
 
+int PhysicsBody::getCategoryBitmask() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getCategoryBitmask();
+    }
+    else
+    {
+        return UINT_MAX;
+    }
+}
+
 void PhysicsBody::setContactTestBitmask(int bitmask)
 {
-    _contactTestBitmask = bitmask;
-    
     for (auto& shape : _shapes)
     {
         shape->setContactTestBitmask(bitmask);
     }
 }
 
+int PhysicsBody::getContactTestBitmask() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getContactTestBitmask();
+    }
+    else
+    {
+        return 0x00000000;
+    }
+}
+
 void PhysicsBody::setCollisionBitmask(int bitmask)
 {
-    _collisionBitmask = bitmask;
-    
     for (auto& shape : _shapes)
     {
         shape->setCollisionBitmask(bitmask);
+    }
+}
+
+int PhysicsBody::getCollisionBitmask() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getCollisionBitmask();
+    }
+    else
+    {
+        return UINT_MAX;
     }
 }
 
@@ -862,6 +883,18 @@ void PhysicsBody::setGroup(int group)
     for (auto& shape : _shapes)
     {
         shape->setGroup(group);
+    }
+}
+
+int PhysicsBody::getGroup() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getGroup();
+    }
+    else
+    {
+        return 0;
     }
 }
 

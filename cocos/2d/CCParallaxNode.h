@@ -70,7 +70,7 @@ public:
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
      It returns self, so you can chain several addChilds.
      @since v0.8
@@ -83,6 +83,7 @@ protected:
      */
     virtual ~ParallaxNode();
 
+protected:
     Vec2 absolutePosition();
 
     Vec2    _lastPosition;

@@ -90,10 +90,8 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- overload function: create(string, rect_table, bool, vec2_table, size_table)
---          
--- overload function: create(string, rect_table)
---          
+-- @overload self, string, rect_table, bool, vec2_table, size_table         
+-- @overload self, string, rect_table         
 -- @function [parent=#SpriteFrame] create
 -- @param self
 -- @param #string str
@@ -104,10 +102,8 @@
 -- @return SpriteFrame#SpriteFrame ret (retunr value: cc.SpriteFrame)
 
 --------------------------------
--- overload function: createWithTexture(cc.Texture2D, rect_table, bool, vec2_table, size_table)
---          
--- overload function: createWithTexture(cc.Texture2D, rect_table)
---          
+-- @overload self, cc.Texture2D, rect_table, bool, vec2_table, size_table         
+-- @overload self, cc.Texture2D, rect_table         
 -- @function [parent=#SpriteFrame] createWithTexture
 -- @param self
 -- @param #cc.Texture2D texture2d

@@ -29,9 +29,6 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #include "CCEditBox.h"
-#define GLFW_EXPOSE_NATIVE_NSGL
-#define GLFW_EXPOSE_NATIVE_COCOA
-#include "glfw3native.h"
 
 
 #define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
@@ -49,7 +46,7 @@
 - (id) getNSWindow
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    return glfwGetCocoaWindow(glview->getWindow());
+    return glview->getCocoaWindow();
 }
 
 - (void)dealloc
@@ -162,7 +159,7 @@
 {
 }
 
-- (BOOL)textFieldShouldBeginEditing:(NSTextField *)sender        // return NO to disallow editing.
+- (void)controlTextDidBeginEditing:(NSNotification *)notification
 {
     editState_ = YES;
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
@@ -180,10 +177,9 @@
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    return YES;
 }
 
-- (BOOL)textFieldShouldEndEditing:(NSTextField *)sender
+- (void)controlTextDidEndEditing:(NSNotification *)notification
 {
     editState_ = NO;
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
@@ -206,7 +202,6 @@
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    return YES;
 }
 
 /**
@@ -287,7 +282,7 @@ void EditBoxImplMac::doAnimationWhenKeyboardMove(float duration, float distance)
 
 bool EditBoxImplMac::initWithSize(const Size& size)
 {
-    GLViewProtocol* eglView = Director::getInstance()->getOpenGLView();
+    GLView* eglView = Director::getInstance()->getOpenGLView();
 
     NSRect rect = NSMakeRect(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
 
@@ -307,7 +302,10 @@ bool EditBoxImplMac::initWithSize(const Size& size)
 void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 {
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-	NSFont *textFont = [NSFont fontWithName:fntName size:fontSize];
+    float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+	NSFont *textFont = [NSFont fontWithName:fntName size:fontSize  * scaleFactor / retinaFactor];
 	if (textFont != nil) {
 		[_sysEdit.textField setFont:textFont];
         [_sysEdit.secureTextField setFont:textFont];
@@ -317,14 +315,17 @@ void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
 {
     NSString *fontName = [NSString stringWithUTF8String:pFontName];
-    NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+    float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+    NSFont *font = [NSFont fontWithName:fontName size:fontSize  * scaleFactor / retinaFactor];
     
     if (!font) {
         CCLOGWARN("Font not found: %s", pFontName);
         return;
     }
     
-    _sysEdit.placeholderAttributes[NSFontAttributeName] = font;
+    [_sysEdit.placeholderAttributes setObject:font forKey:NSFontAttributeName];
     
     /* reload placeholder */
     const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
@@ -343,7 +344,7 @@ void EditBoxImplMac::setFontColor(const Color3B& color)
 void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
 {
     NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:1.0f];
-    _sysEdit.placeholderAttributes[NSForegroundColorAttributeName] = nsColor;
+    [_sysEdit.placeholderAttributes setObject:nsColor forKey:NSForegroundColorAttributeName];
     
     /* reload placeholder */
     const char *placeholder = [_sysEdit.textField.cell placeholderAttributedString].string.UTF8String;
@@ -431,7 +432,7 @@ NSPoint EditBoxImplMac::convertDesignCoordToScreenCoord(const Vec2& designCoord,
     NSRect frame = [_sysEdit.textField frame];
     CGFloat height = frame.size.height;
     
-    GLViewProtocol* eglView = Director::getInstance()->getOpenGLView();
+    GLView* eglView = Director::getInstance()->getOpenGLView();
 
     Vec2 visiblePos = Vec2(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
     Vec2 screenGLPos = visiblePos + eglView->getViewPortRect().origin;

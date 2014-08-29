@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureAnimation.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
+#include "cocostudio/CocosStudioExport.h"
 #include "math/CCMath.h"
 
 class b2Body;
@@ -67,7 +68,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
 CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
 CC_DEPRECATED_ATTRIBUTE typedef cocos2d::tweenfunc::TweenType CCTweenType;
 
-class  Armature : public cocos2d::Node, public cocos2d::BlendProtocol
+class CC_STUDIO_DLL Armature : public cocos2d::Node, public cocos2d::BlendProtocol
 {
 
 public:

@@ -5,12 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: addProtectedChild(cc.Node, int)
---          
--- overload function: addProtectedChild(cc.Node)
---          
--- overload function: addProtectedChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#ProtectedNode] addProtectedChild
 -- @param self
 -- @param #cc.Node node
@@ -37,6 +34,10 @@
 -- @function [parent=#ProtectedNode] removeAllProtectedChildrenWithCleanup 
 -- @param self
 -- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ProtectedNode] disableCascadeOpacity 
+-- @param self
         
 --------------------------------
 -- @function [parent=#ProtectedNode] sortAllProtectedChildren 

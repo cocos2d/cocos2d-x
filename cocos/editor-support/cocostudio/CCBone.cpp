@@ -36,7 +36,7 @@ namespace cocostudio {
 Bone *Bone::create()
 {
 
-    Bone *pBone = new Bone();
+    Bone *pBone = new (std::nothrow) Bone();
     if (pBone && pBone->init())
     {
         pBone->autorelease();
@@ -50,7 +50,7 @@ Bone *Bone::create()
 Bone *Bone::create(const std::string& name)
 {
 
-    Bone *pBone = new Bone();
+    Bone *pBone = new (std::nothrow) Bone();
     if (pBone && pBone->init(name))
     {
         pBone->autorelease();
@@ -74,7 +74,7 @@ Bone::Bone()
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _worldTransform = Mat4::IDENTITY;
     _boneTransformDirty = true;
-    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     _blendDirty = false;
     _worldInfo = nullptr;
 
@@ -110,21 +110,21 @@ bool Bone::init(const std::string& name)
         _name = name;
 
         CC_SAFE_DELETE(_tweenData);
-        _tweenData = new FrameData();
+        _tweenData = new (std::nothrow) FrameData();
 
         CC_SAFE_DELETE(_tween);
-        _tween = new Tween();
+        _tween = new (std::nothrow) Tween();
         _tween->init(this);
 
         CC_SAFE_DELETE(_displayManager);
-        _displayManager = new DisplayManager();
+        _displayManager = new (std::nothrow) DisplayManager();
         _displayManager->init(this);
 
         CC_SAFE_DELETE(_worldInfo);
-        _worldInfo = new BaseData();
+        _worldInfo = new (std::nothrow) BaseData();
 
         CC_SAFE_DELETE(_boneData);
-        _boneData  = new BoneData();
+        _boneData  = new (std::nothrow) BoneData();
 
         bRet = true;
     }
@@ -201,8 +201,8 @@ void Bone::update(float delta)
         _worldInfo->y = _tweenData->y + _position.y;
         _worldInfo->scaleX = _tweenData->scaleX * _scaleX;
         _worldInfo->scaleY = _tweenData->scaleY * _scaleY;
-        _worldInfo->skewX = _tweenData->skewX + _skewX + _rotationZ_X;
-        _worldInfo->skewY = _tweenData->skewY + _skewY - _rotationZ_Y;
+        _worldInfo->skewX = _tweenData->skewX + _skewX + CC_DEGREES_TO_RADIANS(_rotationZ_X);
+        _worldInfo->skewY = _tweenData->skewY + _skewY - CC_DEGREES_TO_RADIANS(_rotationZ_Y);
 
         if(_parentBone)
         {

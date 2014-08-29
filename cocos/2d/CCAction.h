@@ -53,11 +53,19 @@ public:
      */
     virtual std::string description() const;
 
-	/** returns a clone of action */
-	virtual Action* clone() const = 0;
+    /** returns a clone of action */
+    virtual Action* clone() const
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
     /** returns a new action that performs the exactly the reverse action */
-	virtual Action* reverse() const = 0;
+    virtual Action* reverse() const
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
     //! return true if the action has finished
     virtual bool isDone() const;
@@ -99,10 +107,11 @@ public:
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Action();
     virtual ~Action();
 
+protected:
     Node    *_originalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
@@ -137,15 +146,24 @@ public:
     //
     // Overrides
     //
-    virtual FiniteTimeAction* reverse() const override = 0;
-	virtual FiniteTimeAction* clone() const override = 0;
+    virtual FiniteTimeAction* reverse() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
+    virtual FiniteTimeAction* clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FiniteTimeAction()
-	: _duration(0)
+    : _duration(0)
     {}
     virtual ~FiniteTimeAction(){}
 
+protected:
     //! duration in seconds
     float _duration;
 
@@ -180,7 +198,7 @@ public:
     //
     // Override
     //
-	virtual Speed* clone() const override;
+    virtual Speed* clone() const override;
     virtual Speed* reverse() const override;
     virtual void startWithTarget(Node* target) override;
     virtual void stop() override;
@@ -231,8 +249,8 @@ public:
     //
     // Override
     //
-	virtual Follow* clone() const override;
-	virtual Follow* reverse() const override;
+    virtual Follow* clone() const override;
+    virtual Follow* reverse() const override;
     virtual void step(float dt) override;
     virtual bool isDone() const override;
     virtual void stop() override;
@@ -285,7 +303,7 @@ protected:
     float _rightBoundary;
     float _topBoundary;
     float _bottomBoundary;
-	Rect _worldRect;
+    Rect _worldRect;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Follow);

@@ -34,6 +34,7 @@
 #include "CCInvocation.h"
 #include "CCScale9Sprite.h"
 #include "base/CCMap.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -51,7 +52,7 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class ControlButton Button control for Cocos2D. */
-class ControlButton : public Control
+class CC_EX_DLL ControlButton : public Control
 {        
 public:
     static ControlButton* create();

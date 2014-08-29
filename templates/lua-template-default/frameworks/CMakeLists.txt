@@ -1,12 +1,10 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 set(APP_NAME HelloLua)
 project (${APP_NAME})
 
 include(cocos2d-x/build/BuildHelpers.CMakeLists.txt)
 
-option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
-option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 
 if(DEBUG_MODE)
@@ -19,17 +17,8 @@ set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
 set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-std=c99")
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
-
-if(USE_CHIPMUNK)
-  message("Using chipmunk ...")
-  add_definitions(-DLINUX -DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
-elseif(USE_BOX2D)
-  message("Using box2d ...")
-  add_definitions(-DLINUX -DCC_ENABLE_BOX2D_INTEGRATION=1)
-else(USE_CHIPMUNK)
-  message(FATAL_ERROR "Must choose a physics library.")
-endif(USE_CHIPMUNK)
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+ADD_DEFINITIONS(-DLINUX)
 
 # architecture
 if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
@@ -88,58 +77,14 @@ link_directories(
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
 
-# chipmunk library
-add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
-
-# box2d library
-add_subdirectory(${COCOS2D_ROOT}/external/Box2D)
-
-# unzip library
-add_subdirectory(${COCOS2D_ROOT}/external/unzip)
-
-# tinyxml2 library
-add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
-
-# audio
-add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
-
-# xxhash library
-add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
-
-# cocos 2d library
+# libcocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
-# extensions
-add_subdirectory(${COCOS2D_ROOT}/extensions)
-
-# xxtea library
-add_subdirectory(${COCOS2D_ROOT}/external/xxtea)
-
-## Editor Support
-
-# spine
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/spine)
-
-# cocosbuilder
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocosbuilder)
-
-# cocostudio
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocostudio)
-
-## Scripting
-# lua
-add_subdirectory(${COCOS2D_ROOT}/external/lua/lua)
-
-# tolua
-add_subdirectory(${COCOS2D_ROOT}/external/lua/tolua)
-
-# luabinding
+# libluacocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos/scripting/lua-bindings)
 
 # add the executable
-add_executable(${APP_NAME}
-  ${GAME_SRC}
-)
+add_executable(${APP_NAME} ${GAME_SRC})
 
 if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 set(FMOD_LIB "fmodex64")
@@ -147,16 +92,7 @@ else()
 set(FMOD_LIB "fmodex")
 endif()
 
-target_link_libraries(${APP_NAME}
-  luabinding
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
-  audio
-  cocos2d
-  xxtea
-  )
+target_link_libraries(${APP_NAME} cocos2d luacocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
@@ -167,6 +103,12 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosbuilder ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocostudio ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
   )
   

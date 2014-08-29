@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteBatchNode.h"
-
+#include "extensions/ExtensionExport.h"
 #include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
@@ -53,7 +53,7 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class Scale9Sprite : public Node
+class CC_EX_DLL Scale9Sprite : public Node
 {
 public:
     /**

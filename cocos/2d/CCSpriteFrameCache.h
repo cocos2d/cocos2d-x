@@ -106,6 +106,12 @@ public:
      */
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
+    /** Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. 
+     * @js addSpriteFrames
+     * @lua addSpriteFrames
+     */
+    void addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture);
+
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
      */
@@ -134,6 +140,12 @@ public:
     * @since v0.99.5
     */
     void removeSpriteFramesFromFile(const std::string& plist);
+
+    /** Removes multiple Sprite Frames from a plist file content.
+    * Sprite Frames stored in this file will be removed.
+    * It is convenient to call this method when a specific texture needs to be removed.
+    */
+    void removeSpriteFramesFromFileContent(const std::string& plist_content);
 
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.

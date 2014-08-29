@@ -229,7 +229,7 @@ public:
       * @see setSearchResolutionsOrder(), fullPathForFilename().
       * @since v2.1
       */
-    virtual void addSearchResolutionsOrder(const std::string &order);
+    virtual void addSearchResolutionsOrder(const std::string &order,const bool front=false);
     
     /**
      *  Gets the array that contains the search order of the resources.
@@ -266,7 +266,7 @@ public:
       *
       * @since v2.1
       */
-    void addSearchPath(const std::string & path);
+    void addSearchPath(const std::string & path, const bool front=false);
     
     /**
      *  Gets the array of search paths.
@@ -282,6 +282,36 @@ public:
      *  @return  The path that can be write/read a file in
      */
     virtual std::string getWritablePath() const = 0;
+    
+    /**
+     *  Sets/Gets whether to pop-up a message box when failed to load an image.
+     */
+    virtual void setPopupNotify(bool notify);
+    virtual bool isPopupNotify();
+
+    /**
+     *  Converts the contents of a file to a ValueMap.
+     *  @note This method is used internally.
+     */
+    virtual ValueMap getValueMapFromFile(const std::string& filename);
+
+    /**
+     *  Converts the contents of a file to a ValueMap.
+     *  @note This method is used internally.
+     */
+    virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
+    
+    /**
+     *  Write a ValueMap to a plist file.
+     *  @note This method is used internally.
+     */
+    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    
+    /**
+     *  Converts the contents of a file to a ValueVector.
+     *  @note This method is used internally.
+     */
+    virtual ValueVector getValueVectorFromFile(const std::string& filename);
     
     /**
      *  Checks whether a file exists.
@@ -303,30 +333,56 @@ public:
      */
     virtual bool isAbsolutePath(const std::string& path) const;
     
+    /**
+     *  Checks whether the path is a directory
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return true if the directory exists, otherwise it will return false.
+     */
+    virtual bool isDirectoryExist(const std::string& dirPath);
     
     /**
-     *  Sets/Gets whether to pop-up a message box when failed to load an image.
+     *  Creates a directory
+     *
+     *  @param dirPath The path of the directory, it must be an absolute path.
+     *  @return true if the directory have been created successfully, otherwise it will return false.
      */
-    virtual void setPopupNotify(bool notify);
-    virtual bool isPopupNotify();
-
-    /**
-     *  Converts the contents of a file to a ValueMap.
-     *  @note This method is used internally.
-     */
-    virtual ValueMap getValueMapFromFile(const std::string& filename);
+    virtual bool createDirectory(const std::string& dirPath);
     
     /**
-     *  Write a ValueMap to a plist file.
-     *  @note This method is used internally.
+     *  Remove a directory
+     *
+     *  @param dirPath  The full path of the directory, it must be an absolute path.
+     *  @return true if the directory have been removed successfully, otherwise it will return false.
      */
-    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    virtual bool removeDirectory(const std::string& dirPath);
     
     /**
-     *  Converts the contents of a file to a ValueVector.
-     *  @note This method is used internally.
+     *  Remove a file
+     *
+     *  @param filepath The full path of the file, it must be an absolute path.
+     *  @return true if the file have been removed successfully, otherwise it will return false.
      */
-    virtual ValueVector getValueVectorFromFile(const std::string& filename);
+    virtual bool removeFile(const std::string &filepath);
+    
+    /**
+     *  Rename a file under the given directory
+     *
+     *  @param path     The parent directory path of the file, it must be an absolute path.
+     *  @param oldname  The current name of the file.
+     *  @param name     The new name of the file.
+     *  @return true if the file have been renamed successfully, otherwise it will return false.
+     */
+    virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
+    
+    /**
+     *  Retrieve the file size
+     *
+     *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.
+     *  @param filepath The path of the file, it could be a relative or absolute path.
+     *  @return The file size.
+     */
+    virtual long getFileSize(const std::string &filepath);
 
     /** Returns the full path cache */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
@@ -357,9 +413,18 @@ protected:
     virtual std::string getNewFilename(const std::string &filename) const;
     
     /**
-     *  Checks whether file exists without considering search paths and resolution orders.
+     *  Checks whether a file exists without considering search paths and resolution orders.
+     *  @param The file (with absolute path) to look up for
+     *  @return Returns true if the file found at the given absolute path, otherwise returns false
      */
     virtual bool isFileExistInternal(const std::string& filename) const = 0;
+    
+    /**
+     *  Checks whether a directory exists without considering search paths and resolution orders.
+     *  @param The directory (with absolute path) to look up for
+     *  @return Returns true if the directory found at the given absolute path, otherwise returns false
+     */
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const;
     
     /**
      *  Gets full path for filename, resolution directory and search path.
@@ -382,6 +447,16 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
+    
+    /** 
+     *  Returns the fullpath for a given filename.
+     *  This is an alternative for fullPathForFilename, there are two main differences:
+     *  First, it returns empty string instead of the original filename when no file found for the given name.
+     *  Secondly, it's a const function.
+     *  @param filename The file name to look up for
+     *  @return The full path for the file, if not found, the return value will be an empty string
+     */
+    virtual std::string searchFullPathForFilename(const std::string& filename) const;
     
     
     /** Dictionary used to lookup filenames based on a key.

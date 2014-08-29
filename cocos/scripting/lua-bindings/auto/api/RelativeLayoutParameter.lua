@@ -7,7 +7,7 @@
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setAlign 
 -- @param self
--- @param #ccui.RelativeLayoutParameter::RelativeAlign relativealign
+-- @param #int relativealign
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] setRelativeToWidgetName 
@@ -32,7 +32,7 @@
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] getAlign 
 -- @param self
--- @return RelativeLayoutParameter::RelativeAlign#RelativeLayoutParameter::RelativeAlign ret (return value: ccui.RelativeLayoutParameter::RelativeAlign)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#RelativeLayoutParameter] create 

@@ -104,7 +104,7 @@ NodeReader* NodeReader::getInstance()
 {
     if (! _sharedNodeReader)
     {
-        _sharedNodeReader = new NodeReader();
+        _sharedNodeReader = new (std::nothrow) NodeReader();
         _sharedNodeReader->init();
     }
 
@@ -236,8 +236,20 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
         {
             const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
             Node* child = loadNode(dic);
-            if (child) 
+            if (child)
             {
+                auto widgetChild = dynamic_cast<Widget*>(child);
+                if (widgetChild
+                    && dynamic_cast<Widget*>(node)
+                    && !dynamic_cast<Layout*>(node))
+                {
+                    if (widgetChild->getPositionType() == ui::Widget::PositionType::PERCENT)
+                    {
+                        widgetChild->setPositionPercent(Vec2(widgetChild->getPositionPercent().x + node->getAnchorPoint().x, widgetChild->getPositionPercent().y + node->getAnchorPoint().y));
+                    }
+                    widgetChild->setPosition(Vec2(widgetChild->getPositionX() + node->getAnchorPointInPoints().x, widgetChild->getPositionY() + node->getAnchorPointInPoints().y));
+                }
+
                 node->addChild(child);
                 child->release();
             }
@@ -276,7 +288,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
 
     if(x != 0 || y != 0)
-        node->setPosition(Point(x, y));
+        node->setPosition(x, y);
     if(scalex != 1)
         node->setScaleX(scalex);
     if(scaley != 1)
@@ -445,13 +457,15 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
 
     WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
 
-    WidgetPropertiesReader0300* guiReader = new WidgetPropertiesReader0300();
+    WidgetPropertiesReader0300* guiReader = new (std::nothrow) WidgetPropertiesReader0300();
     guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
     CC_SAFE_DELETE(guiReader);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(ActionTimelineData::create(actionTag));
-    
+    widget->setUserObject(ActionTimelineData::create(actionTag)); 
+
+    initNode(widget, json);
+
     return widget;
 }
 

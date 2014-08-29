@@ -23,10 +23,8 @@
 -- @return ParallaxNode#ParallaxNode ret (return value: cc.ParallaxNode)
         
 --------------------------------
--- overload function: addChild(cc.Node, int, string)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#ParallaxNode] addChild
 -- @param self
 -- @param #cc.Node node

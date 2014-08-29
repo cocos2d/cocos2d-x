@@ -7,7 +7,7 @@
 --------------------------------
 -- @function [parent=#InnerActionFrame] getInnerActionType 
 -- @param self
--- @return InnerActionType#InnerActionType ret (return value: ccs.InnerActionType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#InnerActionFrame] setStartFrameIndex 
@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#InnerActionFrame] setInnerActionType 
 -- @param self
--- @param #ccs.InnerActionType inneractiontype
+-- @param #int inneractiontype
         
 --------------------------------
 -- @function [parent=#InnerActionFrame] getStartFrameIndex 

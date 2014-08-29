@@ -18,7 +18,7 @@ HttpClientTest::HttpClientTest()
     const int RIGHT = winSize.width / 4 * 3;
     
     auto label = Label::createWithTTF("Http Request Test", "fonts/arial.ttf", 28);
-    label->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN));
+    label->setPosition(winSize.width / 2, winSize.height - MARGIN);
     addChild(label, 0);
     
     auto menuRequest = Menu::create();
@@ -28,71 +28,71 @@ HttpClientTest::HttpClientTest()
     // Get 
     auto labelGet = Label::createWithTTF("Test Get", "fonts/arial.ttf", 22);
     auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this, false));
-    itemGet->setPosition(Vec2(LEFT, winSize.height - MARGIN - SPACE));
+    itemGet->setPosition(LEFT, winSize.height - MARGIN - SPACE);
     menuRequest->addChild(itemGet);
     
     // Post
     auto labelPost = Label::createWithTTF("Test Post", "fonts/arial.ttf", 22);
     auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this, false));
-    itemPost->setPosition(Vec2(LEFT, winSize.height - MARGIN - 2 * SPACE));
+    itemPost->setPosition(LEFT, winSize.height - MARGIN - 2 * SPACE);
     menuRequest->addChild(itemPost);
     
     // Post Binary
     auto labelPostBinary = Label::createWithTTF("Test Post Binary", "fonts/arial.ttf", 22);
     auto itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this, false));
-    itemPostBinary->setPosition(Vec2(LEFT, winSize.height - MARGIN - 3 * SPACE));
+    itemPostBinary->setPosition(LEFT, winSize.height - MARGIN - 3 * SPACE);
     menuRequest->addChild(itemPostBinary);
 
     // Put
     auto labelPut = Label::createWithTTF("Test Put", "fonts/arial.ttf", 22);
     auto itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this, false));
-    itemPut->setPosition(Vec2(LEFT, winSize.height - MARGIN - 4 * SPACE));
+    itemPut->setPosition(LEFT, winSize.height - MARGIN - 4 * SPACE);
     menuRequest->addChild(itemPut);
 
     // Delete
     auto labelDelete = Label::createWithTTF("Test Delete", "fonts/arial.ttf", 22);
     auto itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this, false));
-    itemDelete->setPosition(Vec2(LEFT, winSize.height - MARGIN - 5 * SPACE));
+    itemDelete->setPosition(LEFT, winSize.height - MARGIN - 5 * SPACE);
     menuRequest->addChild(itemDelete);
 
     // Get for sendImmediate
     labelGet = Label::createWithTTF("Test Immediate Get", "fonts/arial.ttf", 22);
     itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientTest::onMenuGetTestClicked, this, true));
-    itemGet->setPosition(Vec2(RIGHT, winSize.height - MARGIN - SPACE));
+    itemGet->setPosition(RIGHT, winSize.height - MARGIN - SPACE);
     menuRequest->addChild(itemGet);
 
     // Post for sendImmediate
     labelPost = Label::createWithTTF("Test Immediate Post", "fonts/arial.ttf", 22);
     itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientTest::onMenuPostTestClicked, this, true));
-    itemPost->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 2 * SPACE));
+    itemPost->setPosition(RIGHT, winSize.height - MARGIN - 2 * SPACE);
     menuRequest->addChild(itemPost);
 
     // Post Binary for sendImmediate
     labelPostBinary = Label::createWithTTF("Test Immediate Post Binary", "fonts/arial.ttf", 22);
     itemPostBinary = MenuItemLabel::create(labelPostBinary, CC_CALLBACK_1(HttpClientTest::onMenuPostBinaryTestClicked, this, true));
-    itemPostBinary->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 3 * SPACE));
+    itemPostBinary->setPosition(RIGHT, winSize.height - MARGIN - 3 * SPACE);
     menuRequest->addChild(itemPostBinary);
 
     // Put for sendImmediate
     labelPut = Label::createWithTTF("Test Immediate Put", "fonts/arial.ttf", 22);
     itemPut = MenuItemLabel::create(labelPut, CC_CALLBACK_1(HttpClientTest::onMenuPutTestClicked, this, true));
-    itemPut->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 4 * SPACE));
+    itemPut->setPosition(RIGHT, winSize.height - MARGIN - 4 * SPACE);
     menuRequest->addChild(itemPut);
 
     // Delete for sendImmediate
     labelDelete = Label::createWithTTF("Test Immediate Delete", "fonts/arial.ttf", 22);
     itemDelete = MenuItemLabel::create(labelDelete, CC_CALLBACK_1(HttpClientTest::onMenuDeleteTestClicked, this, true));
-    itemDelete->setPosition(Vec2(RIGHT, winSize.height - MARGIN - 5 * SPACE));
+    itemDelete->setPosition(RIGHT, winSize.height - MARGIN - 5 * SPACE);
     menuRequest->addChild(itemDelete);
     
     // Response Code Label
     _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 18);
-    _labelStatusCode->setPosition(Vec2(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE));
+    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE);
     addChild(_labelStatusCode);
     
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
-    itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+    itemBack->setPosition(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25);
     auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
@@ -107,7 +107,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
 {    
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -125,7 +125,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
     
     // test 2
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         // required fields
         request->setUrl("http://httpbin.org/ip");
         request->setRequestType(HttpRequest::Type::GET);
@@ -145,7 +145,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
     
     // test 3   
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("https://httpbin.org/get");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -170,7 +170,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
 {
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -192,7 +192,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
     
     // test 2: set Content-Type
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         std::vector<std::string> headers;
@@ -221,7 +221,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
 
 void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::Ref *sender, bool isImmediate)
 {
-    HttpRequest* request = new HttpRequest();
+    HttpRequest* request = new (std::nothrow) HttpRequest();
     request->setUrl("http://httpbin.org/post");
     request->setRequestType(HttpRequest::Type::POST);
     request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -250,7 +250,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
 {
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -272,7 +272,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
 
     // test 2: set Content-Type
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         std::vector<std::string> headers;
@@ -303,7 +303,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
 {
     // test 1
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://just-make-this-request-failed.com");
         request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -321,7 +321,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
 
     // test 2
     {
-        HttpRequest* request = new HttpRequest();
+        HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl("http://httpbin.org/delete");
         request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
@@ -369,12 +369,12 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     
     // dump data
     std::vector<char> *buffer = response->getResponseData();
-    printf("Http Test, dump data: ");
+    log("Http Test, dump data: ");
     for (unsigned int i = 0; i < buffer->size(); i++)
     {
-        printf("%c", (*buffer)[i]);
+        log("%c", (*buffer)[i]);
     }
-    printf("\n");
+    log("\n");
     if (response->getHttpRequest()->getReferenceCount() != 2)
     {
         log("request ref count not 2, is %d", response->getHttpRequest()->getReferenceCount());
@@ -383,7 +383,7 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
 
 void HttpClientTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -391,7 +391,7 @@ void HttpClientTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 void runHttpClientTest()
 {
     auto scene = Scene::create();
-    HttpClientTest *layer = new HttpClientTest();
+    HttpClientTest *layer = new (std::nothrow) HttpClientTest();
     scene->addChild(layer);
     
     Director::getInstance()->replaceScene(scene);

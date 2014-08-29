@@ -227,3 +227,29 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
+
+// Scale9Sprite ZOrder
+
+class S9ZOrder : public S9SpriteTestDemo
+{
+public:
+    CREATE_FUNC(S9ZOrder);
+    
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+// Scale9Sprite Flip
+
+class S9Flip : public S9SpriteTestDemo
+{
+public:
+    CREATE_FUNC(S9Flip);
+    
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};

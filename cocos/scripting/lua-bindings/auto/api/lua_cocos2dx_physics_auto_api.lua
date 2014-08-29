@@ -2,16 +2,6 @@
 -- @module cc
 
 --------------------------------------------------------
--- the cc PhysicsWorld
--- @field [parent=#cc] PhysicsWorld#PhysicsWorld PhysicsWorld preloaded module
-
-
---------------------------------------------------------
--- the cc PhysicsDebugDraw
--- @field [parent=#cc] PhysicsDebugDraw#PhysicsDebugDraw PhysicsDebugDraw preloaded module
-
-
---------------------------------------------------------
 -- the cc PhysicsShape
 -- @field [parent=#cc] PhysicsShape#PhysicsShape PhysicsShape preloaded module
 
@@ -149,6 +139,16 @@
 --------------------------------------------------------
 -- the cc PhysicsJointMotor
 -- @field [parent=#cc] PhysicsJointMotor#PhysicsJointMotor PhysicsJointMotor preloaded module
+
+
+--------------------------------------------------------
+-- the cc PhysicsWorld
+-- @field [parent=#cc] PhysicsWorld#PhysicsWorld PhysicsWorld preloaded module
+
+
+--------------------------------------------------------
+-- the cc PhysicsDebugDraw
+-- @field [parent=#cc] PhysicsDebugDraw#PhysicsDebugDraw PhysicsDebugDraw preloaded module
 
 
 return nil

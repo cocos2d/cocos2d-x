@@ -12,13 +12,13 @@
 -- @function [parent=#SceneReader] createNodeWithSceneFile 
 -- @param self
 -- @param #string str
--- @param #ccs.SceneReader::AttachComponentType attachcomponenttype
+-- @param #int attachcomponenttype
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- @function [parent=#SceneReader] getAttachComponentType 
 -- @param self
--- @return SceneReader::AttachComponentType#SceneReader::AttachComponentType ret (return value: ccs.SceneReader::AttachComponentType)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#SceneReader] getNodeByTag 

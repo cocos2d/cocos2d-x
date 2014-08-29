@@ -38,7 +38,7 @@ class PhysicsBody;
 class PhysicsBodyInfo;
 
 
-typedef struct PhysicsMaterial
+typedef struct CC_DLL PhysicsMaterial
 {
     float density;          ///< The density of the object.
     float restitution;      ///< The bounciness of the physics body.
@@ -62,7 +62,7 @@ const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT(0.0f, 0.5f, 0.5f);
 /**
  * @brief A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
  */
-class PhysicsShape : public Ref
+class CC_DLL PhysicsShape : public Ref
 {
 public:
     enum class Type
@@ -140,6 +140,11 @@ public:
     inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
+    /**
+     * set the group of body
+     * Collision groups let you specify an integral group index. You can have all fixtures with the same group index always collide (positive index) or never collide (negative index)
+     * it have high priority than bit masks
+     */
     void setGroup(int group);
     inline int getGroup() { return _group; }
     
@@ -192,7 +197,7 @@ protected:
 };
 
 /** A circle shape */
-class PhysicsShapeCircle : public PhysicsShape
+class CC_DLL PhysicsShapeCircle : public PhysicsShape
 {
 public:
     static PhysicsShapeCircle* create(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2(0, 0));
@@ -219,7 +224,7 @@ protected:
 };
 
 /** A polygon shape */
-class PhysicsShapePolygon : public PhysicsShape
+class CC_DLL PhysicsShapePolygon : public PhysicsShape
 {
 public:
     static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -243,7 +248,7 @@ protected:
 };
 
 /** A box shape */
-class PhysicsShapeBox : public PhysicsShapePolygon
+class CC_DLL PhysicsShapeBox : public PhysicsShapePolygon
 {
 public:
     static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -260,7 +265,7 @@ protected:
 };
 
 /** A segment shape */
-class PhysicsShapeEdgeSegment : public PhysicsShape
+class CC_DLL PhysicsShapeEdgeSegment : public PhysicsShape
 {
 public:
     static PhysicsShapeEdgeSegment* create(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
@@ -281,7 +286,7 @@ protected:
 };
 
 /** An edge polygon shape */
-class PhysicsShapeEdgePolygon : public PhysicsShape
+class CC_DLL PhysicsShapeEdgePolygon : public PhysicsShape
 {
 public:
     static PhysicsShapeEdgePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
@@ -301,7 +306,7 @@ protected:
 };
 
 /** An edge box shape */
-class PhysicsShapeEdgeBox : public PhysicsShapeEdgePolygon
+class CC_DLL PhysicsShapeEdgeBox : public PhysicsShapeEdgePolygon
 {
 public:
     static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Vec2& offset = Vec2::ZERO);
@@ -318,7 +323,7 @@ protected:
 };
 
 /** a chain shape */
-class PhysicsShapeEdgeChain : public PhysicsShape
+class CC_DLL PhysicsShapeEdgeChain : public PhysicsShape
 {
 public:
     static PhysicsShapeEdgeChain* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);

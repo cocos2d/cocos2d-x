@@ -30,6 +30,7 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
@@ -38,6 +39,8 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
+#include "base/CCCamera.h"
+#include "2d/CCScene.h"
 
 NS_CC_BEGIN
 
@@ -116,7 +119,7 @@ Renderer::Renderer()
 ,_cacheTextureListener(nullptr)
 #endif
 {
-    _groupCommandManager = new GroupCommandManager();
+    _groupCommandManager = new (std::nothrow) GroupCommandManager();
     
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     
@@ -319,6 +322,12 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         {
             flush();
             auto cmd = static_cast<BatchCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
+        {
+            flush();
+            auto cmd = static_cast<PrimitiveCommand*>(command);
             cmd->execute();
         }
         else if (RenderCommand::Type::MESH_COMMAND == commandType)
@@ -542,6 +551,11 @@ void Renderer::flush3D()
 
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
+    auto scene = Director::getInstance()->getRunningScene();
+    // only cull the default camera. The culling algorithm is valid for default camera.
+    if (scene->_defaultCamera != Camera::getVisitingCamera())
+        return true;
+    
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
     screen_half.width /= 2;

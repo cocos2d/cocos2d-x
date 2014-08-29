@@ -60,6 +60,7 @@ Controller g_aTestNames[] = {
 	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
+    { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
@@ -77,7 +78,9 @@ Controller g_aTestNames[] = {
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
+#endif
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
@@ -87,8 +90,10 @@ Controller g_aTestNames[] = {
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
 	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
 	{ "Scheduler", [](){return new SchedulerTestScene(); } },
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
     { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
+#endif
 	{ "Texture2D", [](){return new TextureTestScene(); } },
 	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
 	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
@@ -121,7 +126,7 @@ TestController::TestController()
     auto menu =Menu::create(closeItem, nullptr);
 
     menu->setPosition( Vec2::ZERO );
-    closeItem->setPosition(Vec2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
 
     // add menu items for tests
     TTFConfig ttfConfig("fonts/arial.ttf", 24);
@@ -132,7 +137,7 @@ TestController::TestController()
         auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);
-        menuItem->setPosition( Vec2( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        menuItem->setPosition(VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE));
     }
 
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -212,7 +217,7 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
 
@@ -237,7 +242,7 @@ void TestController::onMouseScroll(Event *event)
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
 
@@ -357,7 +362,7 @@ void TestController::addConsoleAutoTest()
                 sched->performFunctionInCocosThread( [&]()
                 {
                     auto scene = Scene::create();
-                    auto layer = new TestController();
+                    auto layer = new (std::nothrow) TestController();
                     scene->addChild(layer);
                     layer->release();
                     Director::getInstance()->replaceScene(scene);

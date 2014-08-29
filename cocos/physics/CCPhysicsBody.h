@@ -53,7 +53,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
-class PhysicsBody : public Ref
+class CC_DLL PhysicsBody : public Ref
 {
 public:
     /** create a body with defult mass and moment. */
@@ -171,12 +171,12 @@ public:
      * The default value is 0xFFFFFFFF (all bits set).
      */
     void setCollisionBitmask(int bitmask);
-    /** get the category bit mask */
-    inline int getCategoryBitmask() const { return _categoryBitmask; }
-    /** get the contact test bit mask */
-    inline int getContactTestBitmask() const { return _contactTestBitmask; }
-    /** get the collision bit mask */
-    inline int getCollisionBitmask() const { return _collisionBitmask; }
+    /** Return bitmask of first shape, if there is no shape in body, return default value.(0xFFFFFFFF) */
+    int getCategoryBitmask() const;
+    /** Return bitmask of first shape, if there is no shape in body, return default value.(0x00000000) */
+    int getContactTestBitmask() const;
+    /** Return bitmask of first shape, if there is no shape in body, return default value.(0xFFFFFFFF) */
+    int getCollisionBitmask() const;
     
     /** 
      * set the group of body
@@ -184,8 +184,8 @@ public:
      * it have high priority than bit masks
      */
     void setGroup(int group);
-    /** get the group of body */
-    inline int getGroup() const { return _group; }
+    /** Return group of first shape, if there is no shape in body, return default value.(0) */
+    int getGroup() const;
     
     /** get the body position. */
     Vec2 getPosition() const;
@@ -301,7 +301,7 @@ protected:
     
     bool init();
     
-    virtual void setPosition(Vec2 position);
+    virtual void setPosition(const Vec2& position);
     virtual void setRotation(float rotation);
     virtual void setScale(float scale);
     virtual void setScale(float scaleX, float scaleY);
@@ -338,11 +338,6 @@ protected:
     float _linearDamping;
     float _angularDamping;
     int _tag;
-    
-    int _categoryBitmask;
-    int _collisionBitmask;
-    int _contactTestBitmask;
-    int _group;
     
     bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
     bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().

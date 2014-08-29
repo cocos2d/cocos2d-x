@@ -43,7 +43,7 @@ struct Color4F;
 /** RGB color composed of bytes 3 bytes
 @since v3.0
  */
-struct Color3B
+struct CC_DLL Color3B
 {
     Color3B();
     Color3B(GLubyte _r, GLubyte _g, GLubyte _b);
@@ -80,7 +80,7 @@ struct Color3B
 /** RGBA color composed of 4 bytes
 @since v3.0
 */
-struct Color4B
+struct CC_DLL Color4B
 {
     Color4B();
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
@@ -114,7 +114,7 @@ struct Color4B
 /** RGBA color composed of 4 floats
 @since v3.0
 */
-struct Color4F
+struct CC_DLL Color4F
 {
     Color4F();
     Color4F(float _r, float _g, float _b, float _a);
@@ -184,7 +184,7 @@ struct Color4F
 /** A texcoord composed of 2 floats: u, y
  @since v3.0
  */
-struct Tex2F {
+struct CC_DLL Tex2F {
     Tex2F(float _u, float _v): u(_u), v(_v) {}
     
     Tex2F(): u(0.f), v(0.f) {}
@@ -195,7 +195,7 @@ struct Tex2F {
 
  
 //! Vec2 Sprite component
-struct PointSprite
+struct CC_DLL PointSprite
 {
     Vec2   pos;        // 8 bytes
     Color4B    color;      // 4 bytes
@@ -203,7 +203,7 @@ struct PointSprite
 };
 
 //!    A 2D Quad. 4 * 2 floats
-struct Quad2
+struct CC_DLL Quad2
 {
     Vec2        tl;
     Vec2        tr;
@@ -213,7 +213,7 @@ struct Quad2
 
 
 //!    A 3D Quad. 4 * 3 floats
-struct Quad3 {
+struct CC_DLL Quad3 {
     Vec3        bl;
     Vec3        br;
     Vec3        tl;
@@ -232,7 +232,7 @@ struct V2F_C4B_T2F
 };
 
 //! a Vec2 with a vertex point, a tex coord point and a color 4F
-struct V2F_C4F_T2F
+struct CC_DLL V2F_C4F_T2F
 {
     //! vertices (2F)
     Vec2       vertices;
@@ -243,7 +243,7 @@ struct V2F_C4F_T2F
 };
 
 //! a Vec2 with a vertex point, a tex coord point and a color 4B
-struct V3F_C4B_T2F
+struct CC_DLL V3F_C4B_T2F
 {
     //! vertices (3F)
     Vec3     vertices;            // 12 bytes
@@ -256,7 +256,7 @@ struct V3F_C4B_T2F
 };
 
 //! a Vec2 with a vertex point, a tex coord point
-struct V3F_T2F
+struct CC_DLL V3F_T2F
 {
     //! vertices (2F)
     Vec3       vertices;
@@ -265,7 +265,7 @@ struct V3F_T2F
 };
 
 //! A Triangle of V2F_C4B_T2F
-struct V2F_C4B_T2F_Triangle
+struct CC_DLL V2F_C4B_T2F_Triangle
 {
 	//! Vec2 A
 	V2F_C4B_T2F a;
@@ -276,7 +276,7 @@ struct V2F_C4B_T2F_Triangle
 };
 
 //! A Quad of V2F_C4B_T2F
-struct V2F_C4B_T2F_Quad
+struct CC_DLL V2F_C4B_T2F_Quad
 {
     //! bottom left
     V2F_C4B_T2F    bl;
@@ -289,7 +289,7 @@ struct V2F_C4B_T2F_Quad
 };
 
 //! 4 Vertex3FTex2FColor4B
-struct V3F_C4B_T2F_Quad
+struct CC_DLL V3F_C4B_T2F_Quad
 {
     //! top left
     V3F_C4B_T2F    tl;
@@ -302,7 +302,7 @@ struct V3F_C4B_T2F_Quad
 };
 
 //! 4 Vertex2FTex2FColor4F Quad
-struct V2F_C4F_T2F_Quad
+struct CC_DLL V2F_C4F_T2F_Quad
 {
     //! bottom left
     V2F_C4F_T2F    bl;
@@ -314,7 +314,7 @@ struct V2F_C4F_T2F_Quad
     V2F_C4F_T2F    tr;
 };
 
-struct V3F_T2F_Quad
+struct CC_DLL V3F_T2F_Quad
 {
     //! bottom left
     V3F_T2F    bl;
@@ -327,7 +327,7 @@ struct V3F_T2F_Quad
 };
 
 //! Blend Function used for textures
-struct BlendFunc
+struct CC_DLL BlendFunc
 {
     //! source blend function
     GLenum src;
@@ -348,6 +348,11 @@ struct BlendFunc
         return src == a.src && dst == a.dst;
     }
 
+    bool operator!=(const BlendFunc &a) const
+    {
+        return src != a.src || dst != a.dst;
+    }
+
     bool operator<(const BlendFunc &a) const
     {
         return src < a.src || (src == a.src && dst < a.dst);
@@ -359,7 +364,7 @@ struct BlendFunc
 
 // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
-enum class TextVAlignment
+enum class CC_DLL TextVAlignment
 {
     TOP,
     CENTER,
@@ -368,7 +373,7 @@ enum class TextVAlignment
 
 // XXX: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
-enum class TextHAlignment
+enum class CC_DLL TextHAlignment
 {
     LEFT,
     CENTER,
@@ -378,7 +383,7 @@ enum class TextHAlignment
 // types for animation in particle systems
 
 // texture coordinates for a quad
-struct T2F_Quad
+struct CC_DLL T2F_Quad
 {
     //! bottom left
     Tex2F    bl;
@@ -391,7 +396,7 @@ struct T2F_Quad
 };
 
 // struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad
-struct AnimationFrameData
+struct CC_DLL AnimationFrameData
 {
     T2F_Quad texCoords;
     float delay;
@@ -404,7 +409,7 @@ struct AnimationFrameData
 
 
 // shadow attributes
-struct FontShadow
+struct CC_DLL FontShadow
 {
 public:
     
@@ -426,7 +431,7 @@ public:
 };
 
 // stroke attributes
-struct FontStroke
+struct CC_DLL FontStroke
 {
 public:
     
@@ -447,7 +452,7 @@ public:
 };
 
 // font attributes
-struct FontDefinition
+struct CC_DLL FontDefinition
 {
 public:
     /**
@@ -484,7 +489,7 @@ public:
 /**
  @brief The device accelerometer reports values for each axis in units of g-force
  */
-class Acceleration
+class CC_DLL Acceleration
     : public Ref
 {
 public:
@@ -497,8 +502,8 @@ public:
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
-extern const std::string STD_STRING_EMPTY;
-extern const ssize_t CC_INVALID_INDEX;
+extern const std::string CC_DLL STD_STRING_EMPTY;
+extern const ssize_t CC_DLL CC_INVALID_INDEX;
 
 NS_CC_END
 

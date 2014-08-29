@@ -44,7 +44,7 @@ g_guisTests[] =
         "cocostudio 1.3",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson");
+            CocostudioParserJsonScene* pScene = new (std::nothrow) CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -53,7 +53,7 @@ g_guisTests[] =
         "cocostudio 1.4",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson");
+            CocostudioParserJsonScene* pScene = new (std::nothrow) CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -62,7 +62,7 @@ g_guisTests[] =
         "cocostudio 1.5",
         [](Ref* sender)
         {
-            CocostudioParserJsonScene* pScene = new CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson");
+            CocostudioParserJsonScene* pScene = new (std::nothrow) CocostudioParserJsonScene("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson");
             pScene->runThisTest();
             pScene->release();
         }
@@ -94,8 +94,8 @@ void CocostudioParserTestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        //        pItem->setPosition(Vec2(s.width / 2, s.height / 2));
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        //        pItem->setPosition(s.width / 2, s.height / 2);
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -130,17 +130,17 @@ void CocostudioParserTestScene::onEnter()
     //#endif
     MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CocostudioParserTestScene::BackCallback, this));
     
-    Menu* pMenu = Menu::create(pMenuItem, NULL);
+    Menu* pMenu = Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void CocostudioParserTestScene::runThisTest()
 {
-    Layer* pLayer = new CocostudioParserTestMainLayer();
+    Layer* pLayer = new (std::nothrow) CocostudioParserTestMainLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -149,7 +149,7 @@ void CocostudioParserTestScene::runThisTest()
 
 void CocostudioParserTestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

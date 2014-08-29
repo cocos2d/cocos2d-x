@@ -25,10 +25,8 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: create(string, string)
---          
--- overload function: create()
---          
+-- @overload self, string, string         
+-- @overload self         
 -- @function [parent=#TextBMFont] create
 -- @param self
 -- @param #string str

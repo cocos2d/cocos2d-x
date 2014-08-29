@@ -41,10 +41,8 @@
 -- @param #ccs.Bone bone
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
+-- @overload self, string         
+-- @overload self         
 -- @function [parent=#Skin] create
 -- @param self
 -- @param #string str

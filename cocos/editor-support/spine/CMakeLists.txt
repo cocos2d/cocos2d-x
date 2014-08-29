@@ -32,13 +32,9 @@ set(SPINE_SRC
   SkeletonBounds.cpp
 )
 
-include_directories(
-  ..
-)
+include_directories( .. )
 
-add_library(spine STATIC
-  ${SPINE_SRC}
-)
+add_library(spine STATIC ${SPINE_SRC})
 
 set_target_properties(spine
     PROPERTIES

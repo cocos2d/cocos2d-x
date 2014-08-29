@@ -42,7 +42,7 @@ struct BlockControlData {
 /* Forward declaration. */
 class CCBReader;
 
-class NodeLoader : public cocos2d::Ref {
+class CC_DLL NodeLoader : public cocos2d::Ref {
     public:
         /**
          * @js NA

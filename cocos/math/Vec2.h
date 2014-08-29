@@ -44,7 +44,7 @@ class Mat4;
 /**
  * Defines a 2-element floating point vector.
  */
-class Vec2
+class CC_DLL Vec2
 {
 public:
 

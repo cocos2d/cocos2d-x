@@ -30,7 +30,6 @@
 #import <OpenGLES/EAGL.h>
 #import "CCDirectorCaller.h"
 #import "CCDirector.h"
-#import "CCGLView.h"
 #import "CCEAGLView.h"
 
 static id s_sharedDirectorCaller;

@@ -29,6 +29,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include <stdlib.h>
 #include <stdio.h>
 #include "CCArray.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -118,7 +119,7 @@ float __String::floatValue() const
     {
         return 0.0f;
     }
-    return (float)atof(_string.c_str());
+    return (float)utils::atof(_string.c_str());
 }
 
 double __String::doubleValue() const
@@ -127,7 +128,7 @@ double __String::doubleValue() const
     {
         return 0.0;
     }
-    return atof(_string.c_str());
+    return utils::atof(_string.c_str());
 }
 
 bool __String::boolValue() const

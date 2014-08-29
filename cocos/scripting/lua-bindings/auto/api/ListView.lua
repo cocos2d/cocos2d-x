@@ -17,7 +17,7 @@
 --------------------------------
 -- @function [parent=#ListView] setGravity 
 -- @param self
--- @param #ccui.ListView::Gravity gravity
+-- @param #int gravity
         
 --------------------------------
 -- @function [parent=#ListView] pushBackCustomItem 
@@ -107,14 +107,10 @@
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
--- overload function: addChild(cc.Node, int, string)
---          
+-- @overload self, cc.Node, int         
+-- @overload self, cc.Node         
+-- @overload self, cc.Node, int, int         
+-- @overload self, cc.Node, int, string         
 -- @function [parent=#ListView] addChild
 -- @param self
 -- @param #cc.Node node
@@ -124,7 +120,7 @@
 --------------------------------
 -- @function [parent=#ListView] setDirection 
 -- @param self
--- @param #ccui.ScrollView::Direction direction
+-- @param #int direction
         
 --------------------------------
 -- @function [parent=#ListView] getDescription 

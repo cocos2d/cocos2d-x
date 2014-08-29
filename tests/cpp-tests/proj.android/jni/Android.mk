@@ -10,7 +10,7 @@ LOCAL_SRC_FILES := main.cpp
 
 LOCAL_C_INCLUDES := ../../Classes
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_cpp_tests_common
+LOCAL_STATIC_LIBRARIES := cocos_cpp_tests_common
 
 include $(BUILD_SHARED_LIBRARY)
 

@@ -13,8 +13,8 @@ bool Bug458Layer::init()
         // ask director the the window size
         auto size = Director::getInstance()->getWinSize();
 
-        auto question = new QuestionContainerSprite();
-        auto question2 = new QuestionContainerSprite();
+        auto question = new (std::nothrow) QuestionContainerSprite();
+        auto question2 = new (std::nothrow) QuestionContainerSprite();
         question->init();
         question2->init();
 
@@ -30,7 +30,7 @@ bool Bug458Layer::init()
         auto sprite2 = MenuItemSprite::create(layer, layer2, CC_CALLBACK_1(Bug458Layer::selectAnswer, this) );
         auto menu = Menu::create(sprite, sprite2, nullptr);
         menu->alignItemsVerticallyWithPadding(100);
-        menu->setPosition(Vec2(size.width / 2, size.height / 2));
+        menu->setPosition(size.width / 2, size.height / 2);
 
         // add the label as a child to this Layer
         addChild(menu);

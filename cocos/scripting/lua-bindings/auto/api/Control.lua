@@ -18,7 +18,7 @@
 --------------------------------
 -- @function [parent=#Control] getState 
 -- @param self
--- @return Control::State#Control::State ret (return value: cc.Control::State)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Control] onTouchEnded 
@@ -29,7 +29,7 @@
 --------------------------------
 -- @function [parent=#Control] sendActionsForControlEvents 
 -- @param self
--- @param #cc.Control::EventType eventtype
+-- @param #int eventtype
         
 --------------------------------
 -- @function [parent=#Control] setSelected 

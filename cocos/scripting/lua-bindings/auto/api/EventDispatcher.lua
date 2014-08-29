@@ -79,7 +79,7 @@
 --------------------------------
 -- @function [parent=#EventDispatcher] removeEventListenersForType 
 -- @param self
--- @param #cc.EventListener::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#EventDispatcher] EventDispatcher 

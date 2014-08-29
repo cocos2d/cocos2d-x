@@ -75,7 +75,7 @@ class SIOClient;
 /**
  *  @brief Singleton and wrapper class to provide static creation method as well as registry of all sockets
  */
-class SocketIO
+class CC_DLL SocketIO
 {
 public:
     static SocketIO* getInstance();
@@ -131,7 +131,7 @@ typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
 /**
      *  @brief A single connection to a socket.io endpoint
      */
-class SIOClient
+class CC_DLL SIOClient
     : public cocos2d::Ref
 {
 private:

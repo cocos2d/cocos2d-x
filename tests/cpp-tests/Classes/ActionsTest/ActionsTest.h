@@ -630,7 +630,9 @@ public:
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
     
+    using Layer::pause;
     void pause(float dt);
+    using Layer::resume;
     void resume(float dt);
 private:
     Vector<Node*> _pausedTargets;

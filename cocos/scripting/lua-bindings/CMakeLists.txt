@@ -1,60 +1,51 @@
-set(LUABINDING_SRC
-  auto/lua_cocos2dx_auto.cpp
-  auto/lua_cocos2dx_extension_auto.cpp
-  auto/lua_cocos2dx_studio_auto.cpp
-  auto/lua_cocos2dx_ui_auto.cpp
-  auto/lua_cocos2dx_spine_auto.cpp
-  auto/lua_cocos2dx_physics_auto.cpp
-  manual/tolua_fix.cpp
-  manual/CCLuaBridge.cpp
-  manual/CCLuaEngine.cpp
-  manual/CCLuaStack.cpp
-  manual/CCLuaValue.cpp
-  manual/Cocos2dxLuaLoader.cpp
-  manual/CCBProxy.cpp
-  manual/LuaOpengl.cpp
-  manual/LuaScriptHandlerMgr.cpp
-  manual/LuaBasicConversions.cpp
-  manual/lua_cocos2dx_manual.cpp
-  manual/lua_cocos2dx_extension_manual.cpp
-  manual/lua_cocos2dx_coco_studio_manual.cpp
-  manual/lua_cocos2dx_ui_manual.cpp
-  manual/lua_cocos2dx_spine_manual.cpp
-  manual/lua_cocos2dx_physics_manual.cpp
-  manual/lua_cocos2dx_deprecated.cpp
-  manual/lua_xml_http_request.cpp
-  manual/LuaSkeletonAnimation.cpp
-)
+set(cocos_root ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 
 include_directories(
-  auto
-  manual
-  ../../editor-support/cocosbuilder
-  ../../editor-support/cocostudio
-  ../../editor-support/spine
-  ../../ui
-  ../../2d
-  ../../3d
-  ../../../external/lua/lua
-  ../../../external/lua/tolua
-  ../../../external/xxtea
+  ${cocos_root}/external/lua/tolua/
+  ${cocos_root}/external/lua/lua
+  ${cocos_root}/external/xxtea
+  ${cocos_root}/external 
+  ${cocos_root}/cocos 
+  ${cocos_root}/cocos/base
+  ${cocos_root}/cocos/physics
+  ${cocos_root}/cocos/audio/include
+  ${cocos_root}/cocos/2d
+  ${cocos_root}/cocos/3d
+  ${cocos_root}/cocos/editor-support/spine 
+  ${cocos_root}/cocos/editor-support/cocostudio 
+  ${cocos_root}/cocos/editor-support/cocosbuilder
+  ${cocos_root}/cocos/ui
+  ${cocos_root}/cocos/network
+  ${cocos_root}/cocos/storage
+  ${cocos_root}/cocos/editor-support 
+  ${cocos_root}/cocos/platform   
+  ${CMAKE_CURRENT_SOURCE_DIR}/manual
+  ${CMAKE_CURRENT_SOURCE_DIR}/manual/extension
+  ${CMAKE_CURRENT_SOURCE_DIR}/manual/cocostudio
+  ${CMAKE_CURRENT_SOURCE_DIR}/manual/ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/ui
+  ${CMAKE_CURRENT_SOURCE_DIR}/manual/cocos2d 
+  ${CMAKE_CURRENT_SOURCE_DIR}/auto          
 )
 
-
-add_library(luabinding STATIC
-  ${LUABINDING_SRC}
+file(GLOB lua_cocos2d_source_files 
+    "${cocos_root}/external/lua/lua/*.c"
+    "${cocos_root}/external/lua/tolua/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/auto/*.cpp"
+    "${cocos_root}/external/xxtea/xxtea.cpp"
+    )
+file(GLOB_RECURSE lua_binding_manual_files "${CMAKE_CURRENT_SOURCE_DIR}/manual/*.cpp")
+set(lua_cocos2d_source_files ${lua_cocos2d_source_files} ${lua_binding_manual_files})
+# exclude files for other platforms
+list(REMOVE_ITEM lua_cocos2d_source_files
+     "${CMAKE_CURRENT_SOURCE_DIR}/manual/platform/android/CCLuaJavaBridge.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp"
 )
 
-target_link_libraries(luabinding
-  tolua
-  lua
-  spine
-  xxtea
-)
-
-set_target_properties(luabinding
+add_library(luacocos2d STATIC ${lua_cocos2d_source_files})
+target_link_libraries(luacocos2d cocos2d)
+set_target_properties(luacocos2d
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
-

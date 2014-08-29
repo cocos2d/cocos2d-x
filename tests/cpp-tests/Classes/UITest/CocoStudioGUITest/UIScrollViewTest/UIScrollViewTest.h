@@ -87,4 +87,16 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIScrollViewNestTest : public UIScene
+{
+public:
+    UIScrollViewNestTest();
+    ~UIScrollViewNestTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIScrollViewNestTest)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

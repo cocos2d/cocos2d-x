@@ -40,7 +40,7 @@
 --------------------------------
 -- @function [parent=#Director] pushMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
         
 --------------------------------
 -- @function [parent=#Director] setGLDefaultValues 
@@ -63,7 +63,7 @@
 --------------------------------
 -- @function [parent=#Director] loadMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
 -- @param #mat4_table mat4
         
 --------------------------------
@@ -217,7 +217,7 @@
 --------------------------------
 -- @function [parent=#Director] getMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
@@ -232,12 +232,12 @@
 --------------------------------
 -- @function [parent=#Director] setProjection 
 -- @param self
--- @param #cc.Director::Projection projection
+-- @param #int projection
         
 --------------------------------
 -- @function [parent=#Director] loadIdentityMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
         
 --------------------------------
 -- @function [parent=#Director] setNextDeltaTimeZero 
@@ -251,7 +251,7 @@
 --------------------------------
 -- @function [parent=#Director] popMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
         
 --------------------------------
 -- @function [parent=#Director] getVisibleSize 
@@ -296,7 +296,7 @@
 --------------------------------
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
--- @param #cc.MATRIX_STACK_TYPE matrix_stack_type
+-- @param #int matrix_stack_type
 -- @param #mat4_table mat4
         
 --------------------------------

@@ -35,7 +35,21 @@ bool UILoadingBarTest_Left::init()
         loadingBar->setTag(0);
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
-        
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 50));
+        button->setTitleText("Click to change direction!");
+        //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
+        button->addTouchEventListener([=](Ref*, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::ENDED) {
+                if (loadingBar->getDirection() == LoadingBar::Direction::LEFT) {
+                    loadingBar->setDirection(LoadingBar::Direction::RIGHT);
+                }else{
+                    loadingBar->setDirection(LoadingBar::Direction::LEFT);
+                }
+            }
+        });
+        _uiLayer->addChild(button);
         _uiLayer->addChild(loadingBar);
         
         return true;

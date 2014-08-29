@@ -37,7 +37,7 @@ class Quaternion;
  * the magnitude of the vector intact. When used as a point,
  * the elements of the vector represent a position in 3D space.
  */
-class Vec3
+class CC_DLL Vec3
 {
 public:
 

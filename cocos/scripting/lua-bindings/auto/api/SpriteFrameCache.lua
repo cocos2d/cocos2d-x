@@ -5,12 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: addSpriteFramesWithFile(string, string)
---          
--- overload function: addSpriteFramesWithFile(string)
---          
--- overload function: addSpriteFramesWithFile(string, cc.Texture2D)
---          
+-- @function [parent=#SpriteFrameCache] addSpriteFramesWithFileContent 
+-- @param self
+-- @param #string str
+-- @param #cc.Texture2D texture2d
+        
+--------------------------------
+-- @overload self, string, string         
+-- @overload self, string         
+-- @overload self, string, cc.Texture2D         
 -- @function [parent=#SpriteFrameCache] addSpriteFramesWithFile
 -- @param self
 -- @param #string str
@@ -50,6 +53,11 @@
 -- @function [parent=#SpriteFrameCache] removeSpriteFramesFromTexture 
 -- @param self
 -- @param #cc.Texture2D texture2d
+        
+--------------------------------
+-- @function [parent=#SpriteFrameCache] removeSpriteFramesFromFileContent 
+-- @param self
+-- @param #string str
         
 --------------------------------
 -- @function [parent=#SpriteFrameCache] removeSpriteFrameByName 

@@ -65,12 +65,9 @@
 -- @param #color3b_table color3b
         
 --------------------------------
--- overload function: create(color4b_table, color4b_table)
---          
--- overload function: create()
---          
--- overload function: create(color4b_table, color4b_table, vec2_table)
---          
+-- @overload self, color4b_table, color4b_table         
+-- @overload self         
+-- @overload self, color4b_table, color4b_table, vec2_table         
 -- @function [parent=#LayerGradient] create
 -- @param self
 -- @param #color4b_table color4b

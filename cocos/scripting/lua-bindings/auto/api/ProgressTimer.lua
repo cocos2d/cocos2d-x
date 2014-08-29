@@ -27,7 +27,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] getType 
 -- @param self
--- @return ProgressTimer::Type#ProgressTimer::Type ret (return value: cc.ProgressTimer::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#ProgressTimer] getSprite 
@@ -45,10 +45,8 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- overload function: setReverseDirection(bool)
---          
--- overload function: setReverseDirection(bool)
---          
+-- @overload self, bool         
+-- @overload self, bool         
 -- @function [parent=#ProgressTimer] setReverseDirection
 -- @param self
 -- @param #bool bool
@@ -66,7 +64,7 @@
 --------------------------------
 -- @function [parent=#ProgressTimer] setType 
 -- @param self
--- @param #cc.ProgressTimer::Type type
+-- @param #int type
         
 --------------------------------
 -- @function [parent=#ProgressTimer] create 

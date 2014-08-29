@@ -5,10 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: create(size_table)
---          
--- overload function: create(size_table, cc.Texture2D, bool)
---          
+-- @overload self, size_table         
+-- @overload self, size_table, cc.Texture2D, bool         
 -- @function [parent=#Grid3D] create
 -- @param self
 -- @param #size_table size

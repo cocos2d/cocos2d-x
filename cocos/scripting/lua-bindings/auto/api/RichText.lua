@@ -35,10 +35,8 @@
 -- @param self
         
 --------------------------------
--- overload function: removeElement(ccui.RichElement)
---          
--- overload function: removeElement(int)
---          
+-- @overload self, ccui.RichElement         
+-- @overload self, int         
 -- @function [parent=#RichText] removeElement
 -- @param self
 -- @param #int int

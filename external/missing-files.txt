@@ -1,0 +1,8 @@
+Git user attention
+
+Please execute “download-deps.py” to download and install dependencies.
+
+ $ cd cocos2d-x
+ $ python download-deps.py
+
+Please execute download-deps.py once you synchronize with this repo. If there aren't any updates, it will not download dependencies again.

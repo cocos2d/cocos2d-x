@@ -31,7 +31,11 @@ THE SOFTWARE.
 
 #include <assert.h>
 
-#define CC_DLL 
+#ifdef _USRDLL
+#define CC_DLL __attribute__ ((visibility("default"))) 
+#else
+#define CC_DLL
+#endif
 
 #if CC_DISABLE_ASSERT > 0
 #define CC_ASSERT(cond)

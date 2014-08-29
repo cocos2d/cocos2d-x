@@ -173,7 +173,7 @@ function SceneEditorTestLayer:createMenu()
         end
 
         if sceneEditorTestIdx == #SceneEditorTestLayer.title then
-            self:unscheduleUpdate()
+            ccs.TriggerMng.getInstance():removeAll()
         end
 
         SceneEditorTestLayer.fileName = self:loadFileChangeHelper(SceneEditorTestLayer.fileName)
@@ -846,13 +846,11 @@ function TriggerTest:onEnter()
             ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_UPDATESCENE)
         end
         self:scheduleUpdateWithPriorityLua(update,0)
-
-        ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_ENTERSCENE)
     end    
 end
 
 function TriggerTest:defaultPlay()
-
+    ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_ENTERSCENE)
 end
 
 function TriggerTest:onExit()

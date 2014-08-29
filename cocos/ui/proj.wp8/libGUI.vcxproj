@@ -165,7 +165,6 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ui\CCProtectedNode.h" />
     <ClInclude Include="..\..\ui\CocosGUI.h" />
     <ClInclude Include="..\..\ui\UIButton.h" />
     <ClInclude Include="..\..\ui\UIHelper.h" />
@@ -188,9 +187,9 @@
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
+    <ClInclude Include="..\UIScale9Sprite.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ui\CCProtectedNode.cpp" />
     <ClCompile Include="..\..\ui\CocosGUI.cpp" />
     <ClCompile Include="..\..\ui\UIButton.cpp" />
     <ClCompile Include="..\..\ui\UICheckBox.cpp" />
@@ -214,5 +213,6 @@
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
+    <ClCompile Include="..\UIScale9Sprite.cpp" />
   </ItemGroup>
 </Project>

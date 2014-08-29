@@ -72,7 +72,7 @@ class GroupCommandManager;
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
  */
-class Renderer
+class CC_DLL Renderer
 {
 public:
     static const int VBO_SIZE = 65536 / 6;

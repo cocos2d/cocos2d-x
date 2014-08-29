@@ -25,7 +25,7 @@ Developers:
     longlene
         Improve android project creation script
         
-    simpliplant
+    reneklacan
         Hardware keyboard support
     
     liuyq
@@ -108,6 +108,7 @@ Developers:
         Added support for x64 target of windows.
         Added Dutch Language support.
         Added clang support for Windows.
+        Cmake update and remove old scripts from build folder
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -367,6 +368,7 @@ Developers:
 
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
+        Added a feature that CCSSceneReader can load name properties as node names.
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
@@ -530,6 +532,7 @@ Developers:
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
         fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
         Fixed a bug that Websocket doesn't support send/receive data which larger than 4096 bytes.
+        Show detail class & function name in error message of lua-binding
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
@@ -658,6 +661,7 @@ Developers:
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
         Added HttpClient::sendImmediate()
         Added operator == != for Value
+        Replace dynamic_cast to std::is_base_of in object_to_luaval
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -692,6 +696,7 @@ Developers:
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
         Fixed that ScrollView should implement ActionTweenDelegate.
+        Fixed LabelBMFont::getBoundingBox() position error
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -741,6 +746,7 @@ Developers:
         Corrected a few mistakes in the README file of project-creator.
         Corrected a mistake in README.
         Fixed a bug that a string which only contains CJK characters can't make a line-break when it's needed.
+        Fixed a bug that if the UISlider is faded, the slide ball won't fade together
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
@@ -797,6 +803,12 @@ Developers:
         Adds support for get response when Activity's onActivityResult is triggered
         Improve Android projects
         Android jni error clear & more readable log
+        Add support of software PVRTC v1 decompression
+        Fixed a bug that ttf font have not effect on Mac OS X
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk
+        Added Device::setKeepScreenOn()
+        Fixed Label performance problem
+        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -829,6 +841,7 @@ Developers:
         HttpRequest uses std::function as callback
         EditBox: mac secure input
         Fix a bug that can not get/set text in password mode on Mac OS X
+        Make sure TableView parents are visible before handling touch
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -888,6 +901,7 @@ Developers:
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
         Fix UITextField IME can't auto detach
+        Add getChildByName method for get a node that can be cast to Type T
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
@@ -903,15 +917,77 @@ Developers:
     gin0606
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        Fix video scale issue in iOS
+        Fix iOS VideoPlayer memory leak
+        Added c++11 random library support
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
         
     Teivaz
         Custom uniform search optimization
+        Fixed compiling error on WP8.
+        Added method for custom precompiled shader program loading on WP8
         
     chareice
         Make `setup.py` work on zsh
+        
+    taug
+        Could add seach path and resolution order path in front.
+        
+    CaiCQ
+        Fix a but that LabelTTF may lost chinese characters on linux
+        
+    chenguangqi
+        Fixed a compiling error on Android
+        Fixed an error when importing project using Eclipse on Android
+        
+    uorbe001
+        Allow setting bundle to use in file utils on iOS and Mac OS X
+        
+    yongkangchen
+        Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
+        Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
+        
+    wagulu
+        Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
+        
+    dzl-ian
+        Added getter and setter for TextColor for UIText
+    
+    zii
+        Added utils::gettime()
+        
+    takaken1994
+        Added function for setting min/max scale for ScrollView
+        
+    maltium 
+        Added 3D rotation support to RotateTo action
+        
+    Hamken100per
+        Added a function getAssetManager() on CCFileUtilsAndroid
+        
+    rny
+        Fixed LabelTTF::getBoundingBox() position error
+        SpriteFrameCache load from plist file content data
+        
+    AppleJDay
+        Add Feature:EventMouse should support getDelta, getDeltaX, getDeltaY functions
+        
+    GavinThornton
+        Fixed a bug that when a sprite added into SpriteBatchNod it will turn black if setting opacity
+        
+    DavidPartouche
+        Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
+        
+    zaWasp
+        Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
+        
+    xiangxw
+        Fixed the bug that Console::sendPrompt() will send extra `\0`
     
 Retired Core Developers:
     WenSheng Yang

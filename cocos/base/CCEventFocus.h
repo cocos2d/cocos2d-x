@@ -35,7 +35,7 @@ namespace ui {
     class Widget;
 }
 
-class EventFocus : public Event
+class CC_DLL EventFocus : public Event
 {
 public:
     EventFocus(ui::Widget* widgetLoseFocus, ui::Widget* widgetGetFocus);

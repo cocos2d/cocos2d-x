@@ -29,6 +29,7 @@
 #include "base/CCIMEDelegate.h"
 #include "extensions/ExtensionMacros.h"
 #include "../CCControlExtension/CCControlExtensions.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -36,7 +37,7 @@ class EditBox;
 class EditBoxImpl;
 
 
-class EditBoxDelegate 
+class CC_EX_DLL EditBoxDelegate 
 {
 public:
     /**
@@ -88,7 +89,7 @@ public:
  * 
  */
  
-class EditBox
+class CC_EX_DLL EditBox
 : public ControlButton
 , public IMEDelegate
 {

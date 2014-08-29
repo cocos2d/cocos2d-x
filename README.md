@@ -21,12 +21,12 @@ cocos2d-x is:
 Git user attention
 -----------------------
 
-1. After cloning the repo, please execute `download-deps.py` to download and install some dependences.
+1. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
 
          $ cd cocos2d-x
          $ python download-deps.py
 
-2. Please execute `download-deps.py` once you synchronize with this repo. If there aren't any updates, it will not download dependences again.
+2. Please execute `download-deps.py` once you synchronize with this repo. If there aren't any updates, it will not download dependencies again.
 
 How to start a new game
 -----------------------
@@ -43,21 +43,21 @@ Example:
     $ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
     $ cd NEW_PROJECTS_DIR/MyGame
 
-### Build and run new project for android ###
+### Build and run a new project for Android ###
 
     $ cocos run -p android -j 4
 
-### Build and run new project for iOS ###
+### Build and run a new project for iOS ###
 
     $ cocos run -p ios
     
-### Build and run new project for OSX ###
+### Build and run a new project for OSX ###
 
     $ cocos run -p mac
 
-### Build and run new project for linux ###
+### Build and run a new project for Linux ###
 
-if you never run cocos2d-x on linux, you need to install all dependences by the
+if you never run cocos2d-x on Linux, you need to install all dependencies by the
 script in **cocos2d/build/install-deps-linux.sh**
 
     $ cd cocos2d-x/build
@@ -104,9 +104,9 @@ Main features
    * Sound Engine support (CocosDenshion library) based on OpenAL
    * Integrated Slow motion/Fast forward
    * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
-   * Resolution Independence
+   * Resolution Independent
    * Language: C++, with Lua and JavaScript bindings
-   * Open Source Commercial Friendly: Compatible with open and closed source projects
+   * Open Source Commercial Friendly(MIT): Compatible with open and closed source projects
    * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
 
 Build Requirements

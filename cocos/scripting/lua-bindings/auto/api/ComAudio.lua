@@ -38,10 +38,8 @@
 -- @param self
         
 --------------------------------
--- overload function: stopBackgroundMusic()
---          
--- overload function: stopBackgroundMusic(bool)
---          
+-- @overload self         
+-- @overload self, bool         
 -- @function [parent=#ComAudio] stopBackgroundMusic
 -- @param self
 -- @param #bool bool
@@ -74,24 +72,18 @@
 -- @param #char char
         
 --------------------------------
--- overload function: playBackgroundMusic(char)
---          
--- overload function: playBackgroundMusic(char, bool)
---          
--- overload function: playBackgroundMusic()
---          
+-- @overload self, char         
+-- @overload self, char, bool         
+-- @overload self         
 -- @function [parent=#ComAudio] playBackgroundMusic
 -- @param self
 -- @param #char char
 -- @param #bool bool
 
 --------------------------------
--- overload function: playEffect(char)
---          
--- overload function: playEffect(char, bool)
---          
--- overload function: playEffect()
---          
+-- @overload self, char         
+-- @overload self, char, bool         
+-- @overload self         
 -- @function [parent=#ComAudio] playEffect
 -- @param self
 -- @param #char char

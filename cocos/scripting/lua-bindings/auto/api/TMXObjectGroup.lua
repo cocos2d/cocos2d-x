@@ -27,10 +27,8 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- overload function: getObjects()
---          
--- overload function: getObjects()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXObjectGroup] getObjects
 -- @param self
 -- @return array_table#array_table ret (retunr value: array_table)
@@ -41,10 +39,8 @@
 -- @param #string str
         
 --------------------------------
--- overload function: getProperties()
---          
--- overload function: getProperties()
---          
+-- @overload self         
+-- @overload self         
 -- @function [parent=#TMXObjectGroup] getProperties
 -- @param self
 -- @return map_table#map_table ret (retunr value: map_table)

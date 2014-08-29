@@ -1,9 +1,9 @@
 --------------------------------
--- @module ccexprimental
+-- @module ccexp
 
 --------------------------------------------------------
--- the ccexprimental VideoPlayer
--- @field [parent=#ccexprimental] VideoPlayer#VideoPlayer VideoPlayer preloaded module
+-- the ccexp VideoPlayer
+-- @field [parent=#ccexp] VideoPlayer#VideoPlayer VideoPlayer preloaded module
 
 
 return nil

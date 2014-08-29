@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCEditBoxImplWp8.h"
 #include "CCEditBox.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "base/CCScriptSupport.h"
 #include "base/ccUTF8.h"
 
@@ -89,7 +89,7 @@ void CCEditBoxImplWp8::openKeyboard()
 		}
 	});
 
-    GLView::sharedOpenGLView()->OpenXamlEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, (int)m_eEditBoxInputMode, (int)m_eEditBoxInputFlag, receiveHandler);
+    GLViewImpl::sharedOpenGLView()->OpenXamlEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, (int)m_eEditBoxInputMode, (int)m_eEditBoxInputFlag, receiveHandler);
 }
 
 bool CCEditBoxImplWp8::initWithSize( const Size& size )

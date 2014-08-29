@@ -13,25 +13,25 @@
 -- @function [parent=#Slider] loadSlidBallTextureDisabled 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadSlidBallTextureNormal 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadBarTexture 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadProgressBarTexture 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadSlidBallTextures 
@@ -39,7 +39,7 @@
 -- @param #string str
 -- @param #string str
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] setCapInsetProgressBarRebderer 
@@ -75,7 +75,7 @@
 -- @function [parent=#Slider] loadSlidBallTexturePressed 
 -- @param self
 -- @param #string str
--- @param #ccui.Widget::TextureResType texturerestype
+-- @param #int texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] isScale9Enabled 

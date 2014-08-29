@@ -60,7 +60,7 @@ TriggerMng* TriggerMng::getInstance()
 {
     if (nullptr == _sharedTriggerMng)
     {
-        _sharedTriggerMng = new TriggerMng();
+        _sharedTriggerMng = new (std::nothrow) TriggerMng();
     }
     return _sharedTriggerMng;
 }
@@ -191,7 +191,7 @@ bool TriggerMng::isEmpty(void) const
 }
 
     
-    void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
 {
     int count = pCocoNode[13].GetChildNum();
     int length = 0;
@@ -262,15 +262,15 @@ bool TriggerMng::isEmpty(void) const
                                     }
                                     else
                                     {
-                                        rapidjson::Type type = pDataItemArray[i4].GetType(pCocoLoader);
+                                        rapidjson::Type type = pDataItemArray[i5].GetType(pCocoLoader);
                                         if (type == rapidjson::kStringType)
                                         {
                                             dataitem.AddMember("value", str3, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str3);
-                                            float fV = atof(str3);
+                                            float fV = utils::atof(str3);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -343,10 +343,10 @@ bool TriggerMng::isEmpty(void) const
                                         {
                                             dataitem.AddMember("value", str5, allocator);
                                         }
-                                        else if(type == rapidjson::kNumberType)
+                                        else
                                         {
                                             int nV = atoi(str5);
-                                            float fV = atof(str5);
+                                            float fV = utils::atof(str5);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
                                                 dataitem.AddMember("value", nV, allocator);
@@ -411,7 +411,7 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Ref *pTarget, SEL_Mo
 	ArmatureMovementDispatcher *amd = nullptr;
 	if (iter == _movementDispatches->end())
 	{
-		amd = new ArmatureMovementDispatcher();
+		amd = new (std::nothrow) ArmatureMovementDispatcher();
         pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(ArmatureMovementDispatcher::animationEvent, amd, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
         amd->addAnimationEventCallBack(pTarget, mecf);
 		_movementDispatches->insert(std::make_pair(pAr, amd));

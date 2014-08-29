@@ -35,14 +35,19 @@ static ActionManagerEx* sharedActionManager = nullptr;
 ActionManagerEx* ActionManagerEx::getInstance()
 {
 	if (!sharedActionManager) {
-		sharedActionManager = new ActionManagerEx();
+		sharedActionManager = new (std::nothrow) ActionManagerEx();
 	}
 	return sharedActionManager;
 }
 
 void ActionManagerEx::destroyInstance()
 {
-	CC_SAFE_DELETE(sharedActionManager);
+    if(sharedActionManager != nullptr)
+    {
+        sharedActionManager->releaseActions();
+        CC_SAFE_DELETE(sharedActionManager);
+    }
+
 }
 
 ActionManagerEx::ActionManagerEx()
@@ -63,7 +68,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 	cocos2d::Vector<ActionObject*> actionList;
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
 	for (int i=0; i<actionCount; i++) {
-		ActionObject* action = new ActionObject();
+		ActionObject* action = new (std::nothrow) ActionObject();
 		action->autorelease();
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
 		action->initWithDictionary(actionDic,root);
@@ -96,7 +101,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
         {
             int actionCount = actionNode->GetChildNum();
             for (int i = 0; i < actionCount; ++i) {
-                ActionObject* action = new ActionObject();
+                ActionObject* action = new (std::nothrow) ActionObject();
                 action->autorelease();
                 
                 action->initWithBinary(cocoLoader, actionNode->GetChildArray(cocoLoader), root);
@@ -154,6 +159,13 @@ void ActionManagerEx::releaseActions()
     for (iter = _actionDic.begin(); iter != _actionDic.end(); iter++)
     {
         cocos2d::Vector<ActionObject*> objList = iter->second;
+        ssize_t listCount = objList.size();
+        for (ssize_t i = 0; i < listCount; i++) {
+            ActionObject* action = objList.at(i);
+            if (action != nullptr) {
+                action->stop();
+            }
+        }
         objList.clear();
     }
     

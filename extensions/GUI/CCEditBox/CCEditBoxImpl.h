@@ -28,11 +28,12 @@
 
 #include "extensions/ExtensionMacros.h"
 #include "CCEditBox.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
 
-class EditBoxImpl
+class CC_EX_DLL EditBoxImpl
 {
 public:
     /**
@@ -62,7 +63,7 @@ public:
     virtual void setPlaceHolder(const char* pText) = 0;
     virtual void doAnimationWhenKeyboardMove(float duration, float distance) = 0;
     
-    virtual void openKeyboard() = 0;
+    virtual void openKeyboard() = 0; 
     virtual void closeKeyboard() = 0;
     
     virtual void setPosition(const Vec2& pos) = 0;

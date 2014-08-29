@@ -124,12 +124,14 @@ inline int vsnprintf_s(char *buffer, size_t sizeOfBuffer, size_t count,
                  const char *format, va_list argptr) {
   return vsnprintf(buffer, sizeOfBuffer, format, argptr);
 }
+
+#ifndef __clang__
 inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
         const char *strSource) {
     strcpy(strDestination, strSource);
     return 0;
 }
-
+#endif
 #endif // __MINGW32__
 
 // Conflicted with cocos2d::MessageBox, so we need to undef it.

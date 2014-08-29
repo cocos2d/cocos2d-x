@@ -33,10 +33,8 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- overload function: setUniformsForBuiltins(mat4_table)
---          
--- overload function: setUniformsForBuiltins()
---          
+-- @overload self, mat4_table         
+-- @overload self         
 -- @function [parent=#GLProgram] setUniformsForBuiltins
 -- @param self
 -- @param #mat4_table mat4

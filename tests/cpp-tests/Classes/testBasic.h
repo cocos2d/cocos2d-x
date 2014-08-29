@@ -2,6 +2,8 @@
 #define _TEST_BASIC_H_
 
 #include "cocos2d.h"
+#include "3d/cocos3d.h"
+#include "audio/include/SimpleAudioEngine.h"
 #include "VisibleRect.h"
 
 USING_NS_CC;

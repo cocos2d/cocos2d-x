@@ -189,7 +189,7 @@ void TMoveTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -197,7 +197,7 @@ void TMoveTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_pos.x = atof(str);
+				_pos.x = utils::atof(str);
 			}
 		}
 		else if (key == "y")
@@ -311,7 +311,7 @@ void TMoveBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -319,14 +319,14 @@ void TMoveBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_pos.x = atof(str);
+				_pos.x = utils::atof(str);
 			}
 		}
 		else if (key == "y")
 		{
 			if (str != nullptr)
 			{
-				_pos.y = atof(str);
+				_pos.y = utils::atof(str);
 			}
 		}
 		else if (key == "IsReverse")
@@ -424,7 +424,7 @@ void TRotateTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -432,7 +432,7 @@ void TRotateTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 		{
 			if (str != nullptr)
 			{
-				_deltaAngle = atof(str);
+				_deltaAngle = utils::atof(str);
 			}
 		}
 	}
@@ -537,7 +537,7 @@ void TRotateBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -545,7 +545,7 @@ void TRotateBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExp
 		{
 			if (str != nullptr)
 			{
-				_deltaAngle = atof(str);
+				_deltaAngle = utils::atof(str);
 			}
 		}
 		else if (key == "IsReverse")
@@ -647,7 +647,7 @@ void TScaleTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpC
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -655,14 +655,14 @@ void TScaleTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpC
 		{
 			if (str != nullptr)
 			{
-				_scale.x = atof(str);
+				_scale.x = utils::atof(str);
 			}
 		}
 		else if (key == "ScaleY")
 		{
 			if (str != nullptr)
 			{
-				_scale.y = atof(str);
+				_scale.y = utils::atof(str);
 			}
 		}
 	}
@@ -771,7 +771,7 @@ void TScaleBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpC
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -779,14 +779,14 @@ void TScaleBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpC
 		{
 			if (str != nullptr)
 			{
-				_scale.x = atof(str);
+				_scale.x = utils::atof(str);
 			}
 		}
 		else if (key == "ScaleY")
 		{
 			if (str != nullptr)
 			{
-				_scale.y = atof(str);
+				_scale.y = utils::atof(str);
 			}
 		}
 		else if (key == "IsReverse")
@@ -889,7 +889,7 @@ void TSkewTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -897,14 +897,14 @@ void TSkewTo::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_skew.x = atof(str);
+				_skew.x = utils::atof(str);
 			}
 		}
 		else if (key == "SkewY")
 		{
 			if (str != nullptr)
 			{
-				_skew.y = atof(str);
+				_skew.y = utils::atof(str);
 			}
 		}
 	}
@@ -1012,7 +1012,7 @@ void TSkewBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_duration = atof(str); 
+				_duration = utils::atof(str);
 			}
 
 		}
@@ -1020,14 +1020,14 @@ void TSkewBy::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCo
 		{
 			if (str != nullptr)
 			{
-				_skew.x = atof(str);
+				_skew.x = utils::atof(str);
 			}
 		}
 		else if (key == "SkewY")
 		{
 			if (str != nullptr)
 			{
-				_skew.y = atof(str);
+				_skew.y = utils::atof(str);
 			}
 		}
 		else if (key == "IsReverse")

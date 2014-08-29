@@ -34,7 +34,7 @@ extern "C" {
 #include "base/CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
-#include "LuaScriptHandlerMgr.h"
+#include "cocos2d/LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 

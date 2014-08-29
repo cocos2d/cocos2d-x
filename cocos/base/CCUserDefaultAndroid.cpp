@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCUserDefault.h"
 #include "base/CCPlatformConfig.h"
+#include "base/ccUtils.h"
 #include "platform/CCCommon.h"
 #include "base/base64.h"
 
@@ -243,7 +244,7 @@ float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
     {
         if (node->FirstChild())
         {
-            float ret = atof((const char*)node->FirstChild()->Value());
+            float ret = utils::atof((const char*)node->FirstChild()->Value());
             
             // set value in NSUserDefaults
             setFloatForKey(pKey, ret);
@@ -279,7 +280,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
     {
         if (node->FirstChild())
         {
-            double ret = atof((const char*)node->FirstChild()->Value());
+            double ret = utils::atof((const char*)node->FirstChild()->Value());
             
             // set value in NSUserDefaults
             setDoubleForKey(pKey, ret);
@@ -481,7 +482,7 @@ UserDefault* UserDefault::getInstance()
     
     if (! _userDefault)
     {
-        _userDefault = new UserDefault();
+        _userDefault = new (std::nothrow) UserDefault();
     }
 
     return _userDefault;

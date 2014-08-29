@@ -100,7 +100,7 @@ ssize_t Data::getSize() const
     return _size;
 }
 
-void Data::copy(unsigned char* bytes, const ssize_t size)
+void Data::copy(const unsigned char* bytes, const ssize_t size)
 {
     clear();
     

@@ -292,7 +292,7 @@ Sprite::~Sprite(void)
  * It's used for creating a default texture when sprite's texture is set to nullptr.
  * Supposing codes as follows:
  *
- *   auto sp = new Sprite();
+ *   auto sp = new (std::nothrow) Sprite();
  *   sp->init();  // Texture was set to nullptr, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
  *
  * The test is in "TestCpp/SpriteTest/Sprite without texture".
@@ -332,7 +332,7 @@ void Sprite::setTexture(Texture2D *texture)
         // If texture wasn't in cache, create it from RAW data.
         if (texture == nullptr)
         {
-            Image* image = new Image();
+            Image* image = new (std::nothrow) Image();
             bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
             CC_UNUSED_PARAM(isOK);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");

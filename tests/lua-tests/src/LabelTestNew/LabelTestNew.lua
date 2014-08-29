@@ -1085,7 +1085,7 @@ function LabelTTFFontsTestNew.create()
         "fonts/Abduction.ttf",
         "fonts/American Typewriter.ttf",
         "fonts/Paint Boy.ttf",
-        "fonts/Schwarzwald Regular.ttf",
+        "fonts/Schwarzwald.ttf",
         "fonts/Scissor Cuts.ttf",
     }
     local ttfConfig = {}

@@ -5,19 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: setSpriteFrame(cc.SpriteFrame)
---          
--- overload function: setSpriteFrame(string)
---          
+-- @overload self, cc.SpriteFrame         
+-- @overload self, string         
 -- @function [parent=#Sprite] setSpriteFrame
 -- @param self
 -- @param #string str
 
 --------------------------------
--- overload function: setTexture(cc.Texture2D)
---          
--- overload function: setTexture(string)
---          
+-- @overload self, cc.Texture2D         
+-- @overload self, string         
 -- @function [parent=#Sprite] setTexture
 -- @param self
 -- @param #string str
@@ -57,10 +53,8 @@
 -- @param self
         
 --------------------------------
--- overload function: setTextureRect(rect_table, bool, size_table)
---          
--- overload function: setTextureRect(rect_table)
---          
+-- @overload self, rect_table, bool, size_table         
+-- @overload self, rect_table         
 -- @function [parent=#Sprite] setTextureRect
 -- @param self
 -- @param #rect_table rect
@@ -145,12 +139,9 @@
 -- @param #rect_table rect
         
 --------------------------------
--- overload function: create(string)
---          
--- overload function: create()
---          
--- overload function: create(string, rect_table)
---          
+-- @overload self, string         
+-- @overload self         
+-- @overload self, string, rect_table         
 -- @function [parent=#Sprite] create
 -- @param self
 -- @param #string str
@@ -158,10 +149,8 @@
 -- @return Sprite#Sprite ret (retunr value: cc.Sprite)
 
 --------------------------------
--- overload function: createWithTexture(cc.Texture2D, rect_table, bool)
---          
--- overload function: createWithTexture(cc.Texture2D)
---          
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @overload self, cc.Texture2D         
 -- @function [parent=#Sprite] createWithTexture
 -- @param self
 -- @param #cc.Texture2D texture2d
@@ -189,10 +178,8 @@
 -- @param #unsigned int int
         
 --------------------------------
--- overload function: addChild(cc.Node, int, string)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#Sprite] addChild
 -- @param self
 -- @param #cc.Node node
@@ -240,10 +227,8 @@
 -- @param #float float
         
 --------------------------------
--- overload function: setScale(float)
---          
--- overload function: setScale(float, float)
---          
+-- @overload self, float         
+-- @overload self, float, float         
 -- @function [parent=#Sprite] setScale
 -- @param self
 -- @param #float float

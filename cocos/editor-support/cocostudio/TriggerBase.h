@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/ObjectFactory.h"
 #include "TriggerObj.h"
 #include "TriggerMng.h"
+#include "cocostudio/CocosStudioExport.h"
 
 
 #define DECLARE_CLASS_INFO \
@@ -47,7 +48,7 @@ THE SOFTWARE.
         cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 
-void sendEvent(unsigned int event);
+void CC_STUDIO_DLL sendEvent(unsigned int event);
 
 
 #endif

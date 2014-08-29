@@ -5,10 +5,8 @@
 -- @parent_module ccs
 
 --------------------------------
--- overload function: playActionByName(char, char, cc.CallFunc)
---          
--- overload function: playActionByName(char, char)
---          
+-- @overload self, char, char, cc.CallFunc         
+-- @overload self, char, char         
 -- @function [parent=#ActionManagerEx] playActionByName
 -- @param self
 -- @param #char char
@@ -22,14 +20,6 @@
 -- @param #char char
 -- @param #char char
 -- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
-        
---------------------------------
--- @function [parent=#ActionManagerEx] initWithBinary 
--- @param self
--- @param #char char
--- @param #cc.Ref ref
--- @param #ccs.CocoLoader cocoloader
--- @param #ccs.stExpCocoNode stexpcoconode
         
 --------------------------------
 -- @function [parent=#ActionManagerEx] releaseActions 

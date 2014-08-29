@@ -48,7 +48,7 @@ namespace cocostudio {
 
 Armature *Armature::create()
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init())
     {
         armature->autorelease();
@@ -61,7 +61,7 @@ Armature *Armature::create()
 
 Armature *Armature::create(const std::string& name)
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init(name))
     {
         armature->autorelease();
@@ -73,7 +73,7 @@ Armature *Armature::create(const std::string& name)
 
 Armature *Armature::create(const std::string& name, Bone *parentBone)
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init(name, parentBone))
     {
         armature->autorelease();
@@ -116,13 +116,13 @@ bool Armature::init(const std::string& name)
         removeAllChildren();
 
         CC_SAFE_DELETE(_animation);
-        _animation = new ArmatureAnimation();
+        _animation = new (std::nothrow) ArmatureAnimation();
         _animation->init(this);
 
         _boneDic.clear();
         _topBoneList.clear();
 
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
         _name = name;
 
@@ -404,13 +404,20 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 
                 BlendFunc func = bone->getBlendFunc();
                 
-                if (func.src != _blendFunc.src || func.dst != _blendFunc.dst)
+                if (func.src != BlendFunc::ALPHA_PREMULTIPLIED.src || func.dst != BlendFunc::ALPHA_PREMULTIPLIED.dst)
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
                 }
                 else
                 {
-                    skin->setBlendFunc(_blendFunc);
+                    if (_blendFunc == BlendFunc::ALPHA_PREMULTIPLIED && !skin->getTexture()->hasPremultipliedAlpha())
+                    {
+                        skin->setBlendFunc(_blendFunc.ALPHA_NON_PREMULTIPLIED);
+                    }
+                    else
+                    {
+                        skin->setBlendFunc(_blendFunc);
+                    }
                 }
                 skin->draw(renderer, transform, flags);
             }
@@ -460,7 +467,7 @@ void Armature::onExit()
 void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible)
+    if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }
@@ -587,7 +594,7 @@ void CCArmature::drawContour()
             const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
-            Vec2 *points = new Vec2[length];
+            Vec2 *points = new (std::nothrow) Vec2[length];
             for (unsigned long i = 0; i<length; i++)
             {
                 Vec2 p = vertexList.at(i);

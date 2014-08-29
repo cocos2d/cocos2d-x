@@ -65,7 +65,7 @@ ParticleBatchNode::~ParticleBatchNode()
 
 ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, int capacity/* = kParticleDefaultCapacity*/)
 {
-    ParticleBatchNode * p = new ParticleBatchNode();
+    ParticleBatchNode * p = new (std::nothrow) ParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
     {
         p->autorelease();
@@ -81,7 +81,7 @@ ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, int capa
 
 ParticleBatchNode* ParticleBatchNode::create(const std::string& imageFile, int capacity/* = kParticleDefaultCapacity*/)
 {
-    ParticleBatchNode * p = new ParticleBatchNode();
+    ParticleBatchNode * p = new (std::nothrow) ParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
     {
         p->autorelease();
@@ -96,7 +96,7 @@ ParticleBatchNode* ParticleBatchNode::create(const std::string& imageFile, int c
  */
 bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
-    _textureAtlas = new TextureAtlas();
+    _textureAtlas = new (std::nothrow) TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
 
     _children.reserve(capacity);
@@ -130,7 +130,7 @@ void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, u
     // The alternative is to have a void Sprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (!_visible)
+    if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }

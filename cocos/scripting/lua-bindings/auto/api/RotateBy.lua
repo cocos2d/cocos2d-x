@@ -5,12 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: create(float, float, float)
---          
--- overload function: create(float, float)
---          
--- overload function: create(float, vec3_table)
---          
+-- @overload self, float, float, float         
+-- @overload self, float, float         
+-- @overload self, float, vec3_table         
 -- @function [parent=#RotateBy] create
 -- @param self
 -- @param #float float

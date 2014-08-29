@@ -64,7 +64,7 @@ void TimeElapsed::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stE
 		{
 			if (str != nullptr)
 			{
-				_totalTime = atof(str); //DICTOOL->getFloatValue_json(subDict, "value");
+				_totalTime = utils::atof(str); //DICTOOL->getFloatValue_json(subDict, "value");
 			}
 		}
 	}

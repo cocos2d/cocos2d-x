@@ -1,3 +1,4 @@
+require "ExtensionConstants"
 require "src/ExtensionTest/CocosBuilderTest"
 require "src/ExtensionTest/WebProxyTest"
 

@@ -215,7 +215,7 @@ public:
 				return false;
 			}
 
-			if (isspace(unicode)) {
+			if (iswspace(unicode)) {
 				currentPaintPosition += face->glyph->metrics.horiAdvance >> 6;
 				prevGlyphIndex = glyphIndex;
 				prevCharacter = unicode;
@@ -497,6 +497,10 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     } while (0);
 
     return ret;
+}
+
+void Device::setKeepScreenOn(bool value)
+{
 }
 
 NS_CC_END

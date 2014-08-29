@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 
 NS_CC_BEGIN
-extern const std::string STD_STRING_EMPTY;
+extern const std::string CC_DLL STD_STRING_EMPTY;
 
 /**
  * @addtogroup input

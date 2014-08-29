@@ -36,8 +36,10 @@ THE SOFTWARE.
 #include "base/CCVector.h"
 #include "CCGL.h"
 #include "2d/CCLabelAtlas.h"
+#include "2d/CCScene.h"
 #include <stack>
 #include "math/CCMath.h"
+#include "platform/CCGLView.h"
 
 NS_CC_BEGIN
 
@@ -49,7 +51,7 @@ NS_CC_BEGIN
 /* Forward declarations. */
 class LabelAtlas;
 class Scene;
-class GLView;
+//class GLView;
 class DirectorDelegate;
 class Node;
 class Scheduler;
@@ -59,6 +61,7 @@ class EventCustom;
 class EventListenerCustom;
 class TextureCache;
 class Renderer;
+class Camera;
 
 #if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class Console;
@@ -441,7 +444,8 @@ protected:
     /* delta time since last tick to main loop */
 	float _deltaTime;
     
-    /* The GLView, where everything is rendered */
+    /* The _openGLView, where everything is rendered, GLView is a abstract class,cocos2d-x provide GLViewImpl
+     which inherit from it as default renderer context,you can have your own by inherit from it*/
     GLView *_openGLView;
 
     //texture cache belongs to this director
@@ -508,8 +512,8 @@ protected:
     Console *_console;
 #endif
 
-    // GLViewProtocol will recreate stats labels to fit visible rect
-    friend class GLViewProtocol;
+    // GLView will recreate stats labels to fit visible rect
+    friend class GLView;
 };
 
 /** 

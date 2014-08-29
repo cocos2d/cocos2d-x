@@ -109,6 +109,7 @@ static std::function<Layer*()> createFunctions[] =
 	CL(SpriteAnimationSplit),
 	CL(SpriteFrameTest),
 	CL(SpriteFrameAliasNameTest),
+	CL(SpriteFramesFromFileContent),
 	CL(SpriteBatchNodeReorder),
 	CL(SpriteBatchNodeReorderIssue744),
 	CL(SpriteBatchNodeReorderIssue766),
@@ -194,7 +195,7 @@ void SpriteTestDemo::onEnter()
 
 void SpriteTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild(restartSpriteTestAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -203,7 +204,7 @@ void SpriteTestDemo::restartCallback(Ref* sender)
 
 void SpriteTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -211,7 +212,7 @@ void SpriteTestDemo::nextCallback(Ref* sender)
 
 void SpriteTestDemo::backCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1882,6 +1883,87 @@ std::string SpriteFrameAliasNameTest::subtitle() const
 
 //------------------------------------------------------------------
 //
+// SpriteFramesFromFileContent
+//
+//------------------------------------------------------------------
+void SpriteFramesFromFileContent::onEnter()
+{
+	SpriteTestDemo::onEnter();
+	auto s = Director::getInstance()->getWinSize();
+
+	std::string plist_content;
+	{
+		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.plist");
+		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
+		if (!data.isNull())
+			plist_content.assign((const char*)data.getBytes(), data.getSize());
+	}
+
+	std::string image_content;
+	{
+		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.png");
+		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
+		if (!data.isNull())
+			image_content.assign((const char*)data.getBytes(), data.getSize());
+	}
+
+	Image image;
+	image.initWithImageData((const uint8_t*)image_content.c_str(), image_content.size());
+	Texture2D* texture = new (std::nothrow) Texture2D();
+	texture->initWithImage(&image);
+	texture->autorelease();
+
+	auto cache = SpriteFrameCache::getInstance();
+	cache->addSpriteFramesWithFileContent(plist_content, texture);
+
+	//
+	// Animation using Sprite BatchNode
+	//
+	Sprite * sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
+	sprite->setPosition( Vec2( s.width/2-80, s.height/2) );
+	addChild(sprite);
+
+	Vector<SpriteFrame*> animFrames(15);
+
+	char str[100] = {0};
+	for(int i = 1; i < 15; i++) 
+	{
+		sprintf(str, "grossini_dance_%02d.png", i);
+		auto frame = cache->getSpriteFrameByName( str );
+		animFrames.pushBack(frame);
+	}
+
+	auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+	sprite->runAction( RepeatForever::create( Animate::create(animation) ) );
+}
+
+void SpriteFramesFromFileContent::onExit()
+{
+	SpriteTestDemo::onExit();
+
+	std::string plist_content;
+	{
+		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.plist");
+		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
+		if (!data.isNull())
+			plist_content.assign((const char*)data.getBytes(), data.getSize());
+	}
+
+	SpriteFrameCache::getInstance()->removeSpriteFramesFromFileContent(plist_content);
+}
+
+std::string SpriteFramesFromFileContent::title() const
+{
+	return "SpriteFrameCache load form file content";
+}
+
+std::string SpriteFramesFromFileContent::subtitle() const
+{
+	return "SpriteFrameCache load from plist file content";
+}
+
+//------------------------------------------------------------------
+//
 // SpriteOffsetAnchorRotation
 //
 //------------------------------------------------------------------
@@ -3427,7 +3509,7 @@ public:
 
 DoubleSprite* DoubleSprite::create(const std::string& filename)
 {
-    auto sprite = new DoubleSprite;
+    auto sprite = new (std::nothrow) DoubleSprite;
     sprite->initWithFile(filename);
     sprite->autorelease();
     return sprite;

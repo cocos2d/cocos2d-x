@@ -12,7 +12,7 @@
 --------------------------------
 -- @function [parent=#Event] getType 
 -- @param self
--- @return Event::Type#Event::Type ret (return value: cc.Event::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#Event] getCurrentTarget 

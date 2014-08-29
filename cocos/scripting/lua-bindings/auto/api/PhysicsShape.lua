@@ -68,7 +68,7 @@
 --------------------------------
 -- @function [parent=#PhysicsShape] getType 
 -- @param self
--- @return PhysicsShape::Type#PhysicsShape::Type ret (return value: cc.PhysicsShape::Type)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @function [parent=#PhysicsShape] getContactTestBitmask 

@@ -2,61 +2,61 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="..\..\Classes\AppDelegate.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cocos2dRenderer.cpp">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3DContentProvider.cpp">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3DInterop.cpp">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClCompile>
     <ClCompile Include="src\DirectXBase.cpp">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClCompile>
     <ClCompile Include="src\EditBoxEvent.cpp">
+      <Filter>platform_src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\HelloWorldScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="..\..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Classes\HelloWorldScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cocos2dRenderer.h">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3DContentProvider.h">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3DInterop.h">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectXBase.h">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectXHelper.h">
-      <Filter>src</Filter>
+      <Filter>platform_src</Filter>
     </ClInclude>
     <ClInclude Include="src\EditBoxEvent.h">
+      <Filter>platform_src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Classes">
-      <UniqueIdentifier>{facbd0ff-d271-46ef-8324-beff0cbcb424}</UniqueIdentifier>
+    <Filter Include="platform_src">
+      <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
-      <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
+      <UniqueIdentifier>{6e41adf9-1cf5-4085-ae27-accb4c9eab3d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

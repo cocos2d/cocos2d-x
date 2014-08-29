@@ -1,3 +1,5 @@
+require("extern")
+require("ControllerConstants")
 
 local ControllerHolder = class("ControllerHolder")
 
@@ -276,6 +278,10 @@ function GameControllerTest:registerControllerListener()
                 holder._buttonL1:setColor(cc.c3b(19,231,238))
             elseif keyCode == cc.ControllerKey.BUTTON_RIGHT_SHOULDER then
                 holder._buttonR1:setColor(cc.c3b(19,231,238))
+            elseif keyCode == cc.ControllerKey.BUTTON_LEFT_THUMBSTICK then
+                holder._leftJoystick:setColor(cc.c3b(19,231,238))
+            elseif keyCode == cc.ControllerKey.BUTTON_RIGHT_THUMBSTICK then
+                holder._rightJoystick:setColor(cc.c3b(19,231,238))
             else
                 local ketStatus = string.format("Key Down:%d",keyCode)
                 holder._externalKeyLabel:setString(ketStatus)
@@ -301,6 +307,10 @@ function GameControllerTest:registerControllerListener()
                 holder._buttonL1:setColor(cc.c3b(250,255,255))
             elseif keyCode == cc.ControllerKey.BUTTON_RIGHT_SHOULDER then
                 holder._buttonR1:setColor(cc.c3b(250,255,255))
+            elseif keyCode == cc.ControllerKey.BUTTON_LEFT_THUMBSTICK then
+                holder._leftJoystick:setColor(cc.c3b(250,255,255))
+            elseif keyCode == cc.ControllerKey.BUTTON_RIGHT_THUMBSTICK then
+                holder._rightJoystick:setColor(cc.c3b(250,255,255))
             else
                 local ketStatus = string.format("Key Up:%d",keyCode)
                 holder._externalKeyLabel:setString(ketStatus)

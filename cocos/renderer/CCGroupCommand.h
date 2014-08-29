@@ -48,7 +48,7 @@ protected:
     std::unordered_map<int, bool> _groupMapping;
 };
 
-class GroupCommand : public RenderCommand
+class CC_DLL GroupCommand : public RenderCommand
 {
 public:
     GroupCommand();

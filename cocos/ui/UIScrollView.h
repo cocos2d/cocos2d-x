@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UISCROLLVIEW_H__
 
 #include "ui/UILayout.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +51,7 @@ typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class ScrollView : public Layout
+class CC_GUI_DLL ScrollView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
