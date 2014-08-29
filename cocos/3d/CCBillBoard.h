@@ -30,7 +30,9 @@
 
 NS_CC_BEGIN
 
-class MeshIndexData;
+class VertexBuffer;
+class IndexBuffer;
+
 /**
  * Inherit from Sprite, achieve BillBorad.
  */
@@ -85,6 +87,16 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     BillBorad();
     virtual ~BillBorad();
+
+protected:
+
+	void genRenderInformation();
+
+protected:
+
+	MeshCommand _meshCommand;
+	VertexBuffer *_vertexBuffer;
+	IndexBuffer *_indexBuffer;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);

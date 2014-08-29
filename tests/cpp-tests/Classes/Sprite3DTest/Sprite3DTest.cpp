@@ -1597,145 +1597,177 @@ std::string BillBoardTest::subtitle() const
 }
 void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
 {
-    _billborad = BillBorad::create("Images/Icon.png");
-    _billborad->setScale(0.5f);
-    _layerBillBorad->addChild(_billborad,10);
-    _billborad->setPosition(Vec2( p.x,p.y ));
-    _billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
-    _billborad->setOpacity(200);
 
-    auto billborad1 = BillBorad::create("Images/Icon.png");
-    billborad1->setScale(0.5f);
-    _layerBillBorad->addChild(billborad1,10);
-    billborad1->setPosition3D(Vec3(p.x,p.y,p.z - 130));
-    billborad1->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
-    billborad1->setOpacity(200);
+	for (unsigned int i = 0; i < 100; ++i)
+	{
+		auto billborad = BillBorad::create("Images/Icon.png");
+		billborad->setScale(CCRANDOM_0_1() * 5.0f);
+		_layerBillBorad->addChild(billborad);
+		billborad->setPosition3D(Vec3(p.x + CCRANDOM_MINUS1_1() * 200, p.y + CCRANDOM_MINUS1_1() * 200, p.z + CCRANDOM_MINUS1_1() * 200));
+		billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+		billborad->setOpacity(CCRANDOM_0_1() * 255);
+	}
+    //_billborad = BillBorad::create("Images/Icon.png");
+    //_billborad->setScale(0.5f);
+    //_layerBillBorad->addChild(_billborad,10);
+    //_billborad->setPosition(Vec2( p.x,p.y ));
+    //_billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    //_billborad->setOpacity(200);
 
-    auto billborad2 = BillBorad::create("Images/Icon.png");
-    billborad2->setScale(0.5f);
-    _layerBillBorad->addChild(billborad2,10);
-    billborad2->setPosition3D(Vec3(p.x,p.y,p.z + 50));
-    billborad2->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
-    billborad2->setOpacity(200);
+    //auto billborad1 = BillBorad::create("Images/Icon.png");
+    //billborad1->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad1,10);
+    //billborad1->setPosition3D(Vec3(p.x,p.y,p.z - 130));
+    //billborad1->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    //billborad1->setOpacity(200);
 
-    auto billborad3 = BillBorad::create("Images/Icon.png");
-    billborad3->setScale(0.5f);
-    _layerBillBorad->addChild(billborad3,10);
-    billborad3->setPosition3D(Vec3(p.x,p.y,p.z + 90));
-    billborad3->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
-    billborad3->setOpacity(200);
+    //auto billborad2 = BillBorad::create("Images/Icon.png");
+    //billborad2->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad2,10);
+    //billborad2->setPosition3D(Vec3(p.x,p.y,p.z + 50));
+    //billborad2->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    //billborad2->setOpacity(200);
 
-    auto billborad4 = BillBorad::create("Images/Icon.png");
-    billborad4->setScale(0.5f);
-    _layerBillBorad->addChild(billborad4,10);
-    billborad4->setPosition3D(Vec3(p.x,p.y,p.z - 60));
-    billborad4->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
-    billborad4->setOpacity(200);
+    //auto billborad3 = BillBorad::create("Images/Icon.png");
+    //billborad3->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad3,10);
+    //billborad3->setPosition3D(Vec3(p.x,p.y,p.z + 90));
+    //billborad3->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    //billborad3->setOpacity(200);
+
+    //auto billborad4 = BillBorad::create("Images/Icon.png");
+    //billborad4->setScale(0.5f);
+    //_layerBillBorad->addChild(billborad4,10);
+    //billborad4->setPosition3D(Vec3(p.x,p.y,p.z - 60));
+    //billborad4->setBlendFunc(cocos2d::BlendFunc::ALPHA_PREMULTIPLIED);
+    //billborad4->setOpacity(200);
 
 
 }
 void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 {
-    GLubyte alpha = 255;
-    auto billboradAni1 = BillBorad::create("Images/grossini.png");
-    billboradAni1->setScale(0.5f);
-    billboradAni1->setPosition3D(Vec3(p.x, p.y, p.z - 130));
-    _layerBillBorad->addChild(billboradAni1,10);
-    
-    auto animation1 = Animation::create();
-    for( int i=1;i<15;i++)
-    {
-        char szName1[100] = {0};
-        sprintf(szName1, "Images/grossini_dance_%02d.png", i);
-        animation1->addSpriteFrameWithFile(szName1);
-    }
-    // should last 2.8 seconds. And there are 14 frames.
-    animation1->setDelayPerUnit(2.8f / 14.0f);
-    animation1->setRestoreOriginalFrame(true);
+	for (unsigned int i = 0; i < 100; ++i)
+	{
+		auto billboradAni = BillBorad::create("Images/grossini.png");
+		billboradAni->setScale(CCRANDOM_0_1() * 5.0f);
+		billboradAni->setPosition3D(Vec3(p.x + CCRANDOM_MINUS1_1() * 200, p.y + CCRANDOM_MINUS1_1() * 200, p.z + CCRANDOM_MINUS1_1() * 200));
+		_layerBillBorad->addChild(billboradAni);
 
-    auto action1 = Animate::create(animation1);
-    billboradAni1->runAction(RepeatForever::create(action1));
-    billboradAni1->setOpacity(alpha);
+		auto animation = Animation::create();
+		for( int i=1;i<15;i++)
+		{
+			char szName1[100] = {0};
+			sprintf(szName1, "Images/grossini_dance_%02d.png", i);
+			animation->addSpriteFrameWithFile(szName1);
+		}
+		// should last 2.8 seconds. And there are 14 frames.
+		animation->setDelayPerUnit(2.8f / 14.0f);
+		animation->setRestoreOriginalFrame(true);
 
-    auto billboradAni2 = BillBorad::create("Images/grossini.png");
-    billboradAni2->setScale(0.5f);
-    billboradAni2->setPosition3D(Vec3(p.x, p.y, p.z - 60));
-    _layerBillBorad->addChild(billboradAni2,10);
-    
-    auto animation2 = Animation::create();
-    for( int i=1;i<15;i++)
-    {
-        char szName2[100] = {0};
-        sprintf(szName2, "Images/grossini_dance_%02d.png", i);
-        animation2->addSpriteFrameWithFile(szName2);
-    }
-    // should last 2.8 seconds. And there are 14 frames.
-    animation2->setDelayPerUnit(2.8f / 14.0f);
-    animation2->setRestoreOriginalFrame(true);
+		auto action = Animate::create(animation);
+		billboradAni->runAction(RepeatForever::create(action));
+		billboradAni->setOpacity(CCRANDOM_0_1() * 255);
+	}
 
-    auto action2 = Animate::create(animation2);
-    billboradAni2->runAction(RepeatForever::create(action2));
-    billboradAni2->setOpacity(alpha);
+    //auto billboradAni1 = BillBorad::create("Images/grossini.png");
+    //billboradAni1->setScale(0.5f);
+    //billboradAni1->setPosition3D(Vec3(p.x, p.y, p.z - 130));
+    //_layerBillBorad->addChild(billboradAni1,10);
+    //
+    //auto animation1 = Animation::create();
+    //for( int i=1;i<15;i++)
+    //{
+    //    char szName1[100] = {0};
+    //    sprintf(szName1, "Images/grossini_dance_%02d.png", i);
+    //    animation1->addSpriteFrameWithFile(szName1);
+    //}
+    //// should last 2.8 seconds. And there are 14 frames.
+    //animation1->setDelayPerUnit(2.8f / 14.0f);
+    //animation1->setRestoreOriginalFrame(true);
 
-    _billboradAni = BillBorad::create("Images/grossini.png");
-    _billboradAni->setScale(0.5f);
-    _billboradAni->setPosition3D( p );
-    _layerBillBorad->addChild(_billboradAni,10);
-    
-    auto animation = Animation::create();
-    for( int i=1;i<15;i++)
-    {
-        char szName[100] = {0};
-        sprintf(szName, "Images/grossini_dance_%02d.png", i);
-        animation->addSpriteFrameWithFile(szName);
-    }
-    // should last 2.8 seconds. And there are 14 frames.
-    animation->setDelayPerUnit(2.8f / 14.0f);
-    animation->setRestoreOriginalFrame(true);
+    //auto action1 = Animate::create(animation1);
+    //billboradAni1->runAction(RepeatForever::create(action1));
+    //billboradAni1->setOpacity(alpha);
 
-    auto action = Animate::create(animation);
-    _billboradAni->runAction(RepeatForever::create(action));
-    _billboradAni->setOpacity(alpha);
+    //auto billboradAni2 = BillBorad::create("Images/grossini.png");
+    //billboradAni2->setScale(0.5f);
+    //billboradAni2->setPosition3D(Vec3(p.x, p.y, p.z - 60));
+    //_layerBillBorad->addChild(billboradAni2,10);
+    //
+    //auto animation2 = Animation::create();
+    //for( int i=1;i<15;i++)
+    //{
+    //    char szName2[100] = {0};
+    //    sprintf(szName2, "Images/grossini_dance_%02d.png", i);
+    //    animation2->addSpriteFrameWithFile(szName2);
+    //}
+    //// should last 2.8 seconds. And there are 14 frames.
+    //animation2->setDelayPerUnit(2.8f / 14.0f);
+    //animation2->setRestoreOriginalFrame(true);
 
-    auto billboradAni3 = BillBorad::create("Images/grossini.png");
-    billboradAni3->setScale(0.5f);
-    billboradAni3->setPosition3D(Vec3(p.x, p.y, p.z + 50));
-    _layerBillBorad->addChild(billboradAni3,10);
-    
-    auto animation3 = Animation::create();
-    for( int i=1;i<15;i++)
-    {
-        char szName3[100] = {0};
-        sprintf(szName3, "Images/grossini_dance_%02d.png", i);
-        animation3->addSpriteFrameWithFile(szName3);
-    }
-    // should last 2.8 seconds. And there are 14 frames.
-    animation3->setDelayPerUnit(2.8f / 14.0f);
-    animation3->setRestoreOriginalFrame(true);
+    //auto action2 = Animate::create(animation2);
+    //billboradAni2->runAction(RepeatForever::create(action2));
+    //billboradAni2->setOpacity(alpha);
 
-    auto action3 = Animate::create(animation3);
-    billboradAni3->runAction(RepeatForever::create(action3));
-    billboradAni3->setOpacity(alpha);
+    //_billboradAni = BillBorad::create("Images/grossini.png");
+    //_billboradAni->setScale(0.5f);
+    //_billboradAni->setPosition3D( p );
+    //_layerBillBorad->addChild(_billboradAni,10);
+    //
+    //auto animation = Animation::create();
+    //for( int i=1;i<15;i++)
+    //{
+    //    char szName[100] = {0};
+    //    sprintf(szName, "Images/grossini_dance_%02d.png", i);
+    //    animation->addSpriteFrameWithFile(szName);
+    //}
+    //// should last 2.8 seconds. And there are 14 frames.
+    //animation->setDelayPerUnit(2.8f / 14.0f);
+    //animation->setRestoreOriginalFrame(true);
 
-    auto billboradAni4 = BillBorad::create("Images/grossini.png");
-    billboradAni4->setScale(0.5f);
-    billboradAni4->setPosition3D(Vec3(p.x, p.y, p.z + 90));
-    _layerBillBorad->addChild(billboradAni4,10);
-    
-    auto animation4 = Animation::create();
-    for( int i=1;i<15;i++)
-    {
-        char szName4[100] = {0};
-        sprintf(szName4, "Images/grossini_dance_%02d.png", i);
-        animation4->addSpriteFrameWithFile(szName4);
-    }
-    // should last 2.8 seconds. And there are 14 frames.
-    animation4->setDelayPerUnit(2.8f / 14.0f);
-    animation4->setRestoreOriginalFrame(true);
+    //auto action = Animate::create(animation);
+    //_billboradAni->runAction(RepeatForever::create(action));
+    //_billboradAni->setOpacity(alpha);
 
-    auto action4 = Animate::create(animation4);
-    billboradAni4->runAction(RepeatForever::create(action4));
-    billboradAni4->setOpacity(alpha);
+    //auto billboradAni3 = BillBorad::create("Images/grossini.png");
+    //billboradAni3->setScale(0.5f);
+    //billboradAni3->setPosition3D(Vec3(p.x, p.y, p.z + 50));
+    //_layerBillBorad->addChild(billboradAni3,10);
+    //
+    //auto animation3 = Animation::create();
+    //for( int i=1;i<15;i++)
+    //{
+    //    char szName3[100] = {0};
+    //    sprintf(szName3, "Images/grossini_dance_%02d.png", i);
+    //    animation3->addSpriteFrameWithFile(szName3);
+    //}
+    //// should last 2.8 seconds. And there are 14 frames.
+    //animation3->setDelayPerUnit(2.8f / 14.0f);
+    //animation3->setRestoreOriginalFrame(true);
+
+    //auto action3 = Animate::create(animation3);
+    //billboradAni3->runAction(RepeatForever::create(action3));
+    //billboradAni3->setOpacity(alpha);
+
+    //auto billboradAni4 = BillBorad::create("Images/grossini.png");
+    //billboradAni4->setScale(0.5f);
+    //billboradAni4->setPosition3D(Vec3(p.x, p.y, p.z + 90));
+    //_layerBillBorad->addChild(billboradAni4,10);
+    //
+    //auto animation4 = Animation::create();
+    //for( int i=1;i<15;i++)
+    //{
+    //    char szName4[100] = {0};
+    //    sprintf(szName4, "Images/grossini_dance_%02d.png", i);
+    //    animation4->addSpriteFrameWithFile(szName4);
+    //}
+    //// should last 2.8 seconds. And there are 14 frames.
+    //animation4->setDelayPerUnit(2.8f / 14.0f);
+    //animation4->setRestoreOriginalFrame(true);
+
+    //auto action4 = Animate::create(animation4);
+    //billboradAni4->runAction(RepeatForever::create(action4));
+    //billboradAni4->setOpacity(alpha);
 }
 void BillBoardTest::update(float dt)
 {
