@@ -5,11 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#PhysicsJointFixed] construct 
 -- @param self
--- @param #cc.PhysicsBody physicsbody
--- @param #cc.PhysicsBody physicsbody
--- @param #vec2_table vec2
+-- @param #cc.PhysicsBody a
+-- @param #cc.PhysicsBody b
+-- @param #vec2_table anchr
 -- @return PhysicsJointFixed#PhysicsJointFixed ret (return value: cc.PhysicsJointFixed)
         
 return nil

@@ -13,6 +13,7 @@
 -- @return HBox#HBox ret (retunr value: ccui.HBox)
 
 --------------------------------
+-- Default constructor
 -- @function [parent=#HBox] HBox 
 -- @param self
         
