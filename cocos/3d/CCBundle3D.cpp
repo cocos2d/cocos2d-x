@@ -376,7 +376,7 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
         {
             return loadMeshDatasBinary_0_2(meshdatas);
         }
-        else// if(_version == "0.3")
+        else
         {
             return loadMeshDatasBinary(meshdatas);
         }
@@ -391,7 +391,7 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
         {
             return loadMeshDataJson_0_2(meshdatas);
         }
-        else// if(_version == "0.3")
+        else
         {
             return loadMeshDatasJson(meshdatas);
         }
@@ -823,7 +823,7 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
         {
             return loadMaterialsBinary_0_2(materialdatas);
         }
-        else// if (_version == "0.3")
+        else
         {
             return loadMaterialsBinary(materialdatas);
         } 
@@ -838,7 +838,7 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
         {
             return loadMaterialDataJson_0_2(materialdatas);
         }
-        else// if (_version == "0.3")
+        else
         {
             return loadMaterialsJson(materialdatas);
         }  
