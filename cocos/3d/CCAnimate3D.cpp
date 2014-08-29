@@ -36,6 +36,7 @@ NS_CC_BEGIN
 std::unordered_map<Sprite3D*, Animate3D*> Animate3D::s_fadeInAnimates;
 std::unordered_map<Sprite3D*, Animate3D*> Animate3D::s_fadeOutAnimates;
 std::unordered_map<Sprite3D*, Animate3D*> Animate3D::s_runningAnimates;
+float      Animate3D::_transTime = 0.1f;
 
 //create Animate3D using Animation.
 Animate3D* Animate3D::create(Animation3D* animation)
@@ -120,14 +121,20 @@ void Animate3D::startWithTarget(Node *target)
     {
         //make the running action fade out
         auto action = (*runningAction).second;
-        s_fadeOutAnimates[sprite] = action;
-        action->_state = Animate3D::Animate3DState::FadeOut;
-        action->_accTransTime = 0.0f;
-        
-        s_fadeInAnimates[sprite] = this;
-        _accTransTime = 0.0f;
-        _state = Animate3D::Animate3DState::FadeIn;
-        _weight = 0.f;
+        if (action != this)
+        {
+            s_fadeOutAnimates[sprite] = action;
+            action->_state = Animate3D::Animate3DState::FadeOut;
+            action->_accTransTime = 0.0f;
+            action->_weight = 1.0f;
+            action->_lastTime = 0.f;
+            
+            s_fadeInAnimates[sprite] = this;
+            _accTransTime = 0.0f;
+            _state = Animate3D::Animate3DState::FadeIn;
+            _weight = 0.f;
+            _lastTime = 0.f;
+        }
     }
     else
     {
@@ -161,7 +168,7 @@ void Animate3D::update(float t)
 {
     if (_target)
     {
-        if (_state == Animate3D::Animate3DState::FadeIn && _accTransTime > 0.f)
+        if (_state == Animate3D::Animate3DState::FadeIn && _lastTime > 0.f)
         {
             _accTransTime += (t - _lastTime) * getDuration();
             
@@ -170,13 +177,13 @@ void Animate3D::update(float t)
             {
                 _accTransTime = _transTime;
                 _weight = 1.0f;
-                
+                _state = Animate3D::Animate3DState::Running;
                 Sprite3D* sprite = static_cast<Sprite3D*>(_target);
                 s_fadeInAnimates.erase(sprite);
                 s_runningAnimates[sprite] = this;
             }
         }
-        else if (_state == Animate3D::Animate3DState::FadeOut && _accTransTime > 0.f)
+        else if (_state == Animate3D::Animate3DState::FadeOut && _lastTime > 0.f)
         {
             _accTransTime += (t - _lastTime) * getDuration();
             
@@ -248,7 +255,6 @@ Animate3D::Animate3D()
 , _animation(nullptr)
 , _playReverse(false)
 , _state(Animate3D::Animate3DState::Running)
-, _transTime(0.1f)
 , _accTransTime(0.0f)
 , _lastTime(0.0f)
 {
