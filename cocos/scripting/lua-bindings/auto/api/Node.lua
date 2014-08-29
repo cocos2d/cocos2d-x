@@ -615,11 +615,6 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- @function [parent=#Node] stopAllActionsByTag 
--- @param self
--- @param #int int
-        
---------------------------------
 -- @function [parent=#Node] getColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
