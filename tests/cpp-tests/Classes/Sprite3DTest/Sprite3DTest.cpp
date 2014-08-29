@@ -1636,7 +1636,7 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
 }
 void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 {
-    GLubyte alpha = 200;
+    GLubyte alpha = 255;
     auto billboradAni1 = BillBorad::create("Images/grossini.png");
     billboradAni1->setScale(0.5f);
     billboradAni1->setPosition3D(Vec3(p.x, p.y, p.z - 130));

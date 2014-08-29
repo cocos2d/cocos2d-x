@@ -111,8 +111,8 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         else
         {
-            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
-            renderer->addCommand(&_quadCommand);
+            _quadCommand.init(-_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
+            renderer->addTransparentCommand(&_quadCommand);
         }
 
     }
