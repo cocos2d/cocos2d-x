@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 AttachNode* AttachNode::create(Bone3D* attachBone)
 {
-    auto attachnode = new AttachNode();
+    auto attachnode = new (std::nothrow) AttachNode();
     attachnode->_attachBone = attachBone;
     attachnode->autorelease();
     

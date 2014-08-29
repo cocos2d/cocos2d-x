@@ -301,7 +301,7 @@ protected:
     
     bool init();
     
-    virtual void setPosition(Vec2 position);
+    virtual void setPosition(const Vec2& position);
     virtual void setRotation(float rotation);
     virtual void setScale(float scale);
     virtual void setScale(float scaleX, float scaleY);

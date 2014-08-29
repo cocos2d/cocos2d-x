@@ -157,7 +157,7 @@ void Bundle3D::setBundleInstance(Bundle3D* bundleInstance)
 Bundle3D* Bundle3D::getInstance()
 {
     if (_instance == nullptr)
-        _instance = new Bundle3D();
+        _instance = new (std::nothrow) Bundle3D();
     return _instance;
 }
 
@@ -220,7 +220,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     if (ret.empty())
     {
         //fill data
-        MeshData* meshdata = new MeshData();
+        MeshData* meshdata = new (std::nothrow) MeshData();
         MeshVertexAttrib attrib;
         attrib.size = 3;
         attrib.type = GL_FLOAT;
@@ -292,8 +292,8 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
             meshdata->subMeshIndices.push_back(it.mesh.indices);
             meshdata->subMeshIds.push_back(str);
-            auto node = new NodeData();
-            auto modelnode = new ModelData();
+            auto node = new (std::nothrow) NodeData();
+            auto modelnode = new (std::nothrow) ModelData();
             modelnode->matrialId = str;
             modelnode->subMeshId = str;
             node->id = it.name;
@@ -410,7 +410,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
     }
     for(int i = 0; i < meshSize ; i++ )
     {
-        MeshData*   meshData = new MeshData();
+        MeshData*   meshData = new (std::nothrow) MeshData();
          unsigned int attribSize=0;
         // read mesh data
         if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
@@ -486,7 +486,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
 
     meshdatas.resetData();
 
-    MeshData* meshdata = new MeshData();
+    MeshData* meshdata = new (std::nothrow) MeshData();
 
     // read mesh data
     unsigned int attribSize=0;
@@ -594,7 +594,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
 
     meshdatas.resetData();
 
-    MeshData* meshdata = new MeshData();
+    MeshData* meshdata = new (std::nothrow) MeshData();
 
     // read mesh data
     unsigned int attribSize=0;
@@ -706,7 +706,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
     const rapidjson::Value& mesh_data_array = _jsonReader[MESHES];
     for (rapidjson::SizeType index = 0; index < mesh_data_array.Size(); index++)
     {
-        MeshData*   meshData = new MeshData();
+        MeshData*   meshData = new (std::nothrow) MeshData();
         const rapidjson::Value& mesh_data = mesh_data_array[index];
         // mesh_vertex_attribute
         const rapidjson::Value& mesh_vertex_attribute = mesh_data[ATTRIBUTES];
@@ -761,19 +761,19 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
     {
         SkinData   skinData;
         loadSkinData("", &skinData);
-        auto nodeDatas = new NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
+        auto nodeDatas = new (std::nothrow) NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
         int index = 0;
         size_t i;
         for (i = 0; i < skinData.skinBoneNames.size(); i++)
         {
-            nodeDatas[index] = new NodeData();
+            nodeDatas[index] = new (std::nothrow) NodeData();
             nodeDatas[index]->id = skinData.skinBoneNames[i];
             nodeDatas[index]->transform = skinData.skinBoneOriginMatrices[i];
             index++;
         }
         for (i = 0; i < skinData.nodeBoneNames.size(); i++)
         {
-            nodeDatas[index] = new NodeData();
+            nodeDatas[index] = new (std::nothrow) NodeData();
             nodeDatas[index]->id = skinData.nodeBoneNames[i];
             nodeDatas[index]->transform = skinData.nodeBoneOriginMatrices[i];
             index++;
@@ -788,8 +788,8 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
             }
         }
         nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
-        auto node= new NodeData();
-        auto modelnode = new ModelData();
+        auto node= new (std::nothrow) NodeData();
+        auto modelnode = new (std::nothrow) ModelData();
         modelnode->matrialId = "";
         modelnode->subMeshId = "";
         modelnode->bones = skinData.skinBoneNames;
@@ -1250,7 +1250,7 @@ bool Bundle3D::loadBinary(const std::string& path)
 
     // get file data
     CC_SAFE_DELETE(_binaryBuffer);
-    _binaryBuffer = new Data();
+    _binaryBuffer = new (std::nothrow) Data();
     *_binaryBuffer = FileUtils::getInstance()->getDataFromFile(path);
     if (_binaryBuffer->isNull()) 
     {
@@ -1293,7 +1293,7 @@ bool Bundle3D::loadBinary(const std::string& path)
 
     // Read all refs
     CC_SAFE_DELETE_ARRAY(_references);
-    _references = new Reference[_referenceCount];
+    _references = new (std::nothrow) Reference[_referenceCount];
     for (ssize_t i = 0; i < _referenceCount; ++i)
     {
         if ((_references[i].id = _binaryReader.readString()).empty() ||
@@ -1735,8 +1735,7 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 }
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 {
-    NodeData* nodedata = new NodeData();;
-
+    NodeData* nodedata = new (std::nothrow) NodeData();;
     // id
     nodedata->id = jvalue[ID].GetString();
 
@@ -1759,7 +1758,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
-            auto modelnodedata = new ModelData();;
+            auto modelnodedata = new (std::nothrow) ModelData();;
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->matrialId = part[MATERIALID].GetString();
@@ -1872,14 +1871,14 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
         return nullptr;
     }
 
-    NodeData* nodedata = new NodeData();
+    NodeData* nodedata = new (std::nothrow) NodeData();
     nodedata->id = id;
     nodedata->transform = transform;
     if (partsSize > 0)
     {
         for (unsigned int i = 0; i < partsSize; i++)
         {
-            auto modelnodedata  = new ModelData();
+            auto modelnodedata  = new (std::nothrow) ModelData();
             modelnodedata->subMeshId = _binaryReader.readString();
             modelnodedata->matrialId = _binaryReader.readString();
 

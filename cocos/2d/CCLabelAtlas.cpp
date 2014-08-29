@@ -43,7 +43,7 @@ NS_CC_BEGIN
 
 LabelAtlas* LabelAtlas::create()
 {
-    LabelAtlas* ret = new LabelAtlas();
+    LabelAtlas* ret = new (std::nothrow) LabelAtlas();
     if (ret)
     {
         ret->autorelease();
@@ -58,7 +58,7 @@ LabelAtlas* LabelAtlas::create()
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    LabelAtlas* ret = new LabelAtlas();
+    LabelAtlas* ret = new (std::nothrow) LabelAtlas();
     if(ret && ret->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
         ret->autorelease();
@@ -87,7 +87,7 @@ bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, i
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& fntFile)
 {    
-    LabelAtlas *ret = new LabelAtlas();
+    LabelAtlas *ret = new (std::nothrow) LabelAtlas();
     if (ret)
     {
         if (ret->initWithString(string, fntFile))

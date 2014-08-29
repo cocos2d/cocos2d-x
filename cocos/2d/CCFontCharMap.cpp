@@ -119,7 +119,7 @@ int * FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, 
 
 FontAtlas * FontCharMap::createFontAtlas()
 {
-    FontAtlas *tempAtlas = new FontAtlas(*this);
+    FontAtlas *tempAtlas = new (std::nothrow) FontAtlas(*this);
     if (!tempAtlas)
         return nullptr;
     

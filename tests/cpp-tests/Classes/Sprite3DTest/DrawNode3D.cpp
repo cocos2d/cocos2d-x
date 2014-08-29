@@ -66,7 +66,7 @@ DrawNode3D::~DrawNode3D()
 
 DrawNode3D* DrawNode3D::create()
 {
-    DrawNode3D* ret = new DrawNode3D();
+    DrawNode3D* ret = new (std::nothrow) DrawNode3D();
     if (ret && ret->init())
     {
         ret->autorelease();

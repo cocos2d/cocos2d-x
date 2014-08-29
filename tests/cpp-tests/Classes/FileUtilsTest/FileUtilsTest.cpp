@@ -56,7 +56,7 @@ void FileUtilsDemo::onEnter()
 
 void FileUtilsDemo::backCallback(Ref* sender)
 {
-    auto scene = new FileUtilsTestScene();
+    auto scene = new (std::nothrow) FileUtilsTestScene();
     auto layer = backAction();
     
     scene->addChild(layer);
@@ -66,7 +66,7 @@ void FileUtilsDemo::backCallback(Ref* sender)
 
 void FileUtilsDemo::nextCallback(Ref* sender)
 {
-    auto scene = new FileUtilsTestScene();
+    auto scene = new (std::nothrow) FileUtilsTestScene();
     auto layer = nextAction();
     
     scene->addChild(layer);
@@ -76,7 +76,7 @@ void FileUtilsDemo::nextCallback(Ref* sender)
 
 void FileUtilsDemo::restartCallback(Ref* sender)
 {
-    auto scene = new FileUtilsTestScene();
+    auto scene = new (std::nothrow) FileUtilsTestScene();
     auto layer = restartAction();
     
     scene->addChild(layer);
@@ -246,7 +246,7 @@ void TestFilenameLookup::onEnter()
     this->addChild(sprite);
     
     auto s = Director::getInstance()->getWinSize();
-    sprite->setPosition(Vec2(s.width/2, s.height/2));
+    sprite->setPosition(s.width/2, s.height/2);
 }
 
 void TestFilenameLookup::onExit()
@@ -279,12 +279,12 @@ void TestIsFileExist::onEnter()
     isExist = sharedFileUtils->isFileExist("Images/grossini.png");
     
     label = Label::createWithSystemFont(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
-    label->setPosition(Vec2(s.width/2, s.height/3));
+    label->setPosition(s.width/2, s.height/3);
     this->addChild(label);
     
     isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
     label = Label::createWithSystemFont(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
-    label->setPosition(Vec2(s.width/2, s.height/3*2));
+    label->setPosition(s.width/2, s.height/3*2);
     this->addChild(label);
 }
 
@@ -335,21 +335,21 @@ void TestFileFuncs::onEnter()
     if (sharedFileUtils->isFileExist(filepath))
     {
         label = Label::createWithSystemFont("Test file '__test.test' created", "", 20);
-        label->setPosition(Vec2(x, y * 4));
+        label->setPosition(x, y * 4);
         this->addChild(label);
         
         // getFileSize Test
         long size = sharedFileUtils->getFileSize(filepath);
         msg = StringUtils::format("getFileSize: Test file size equals %ld", size);
         label = Label::createWithSystemFont(msg, "", 20);
-        label->setPosition(Vec2(x, y * 3));
+        label->setPosition(x, y * 3);
         this->addChild(label);
         
         // renameFile Test
         if (sharedFileUtils->renameFile(sharedFileUtils->getWritablePath(), filename, filename2))
         {
             label = Label::createWithSystemFont("renameFile: Test file renamed to  '__newtest.test'", "", 20);
-            label->setPosition(Vec2(x, y * 2));
+            label->setPosition(x, y * 2);
             this->addChild(label);
             
             // removeFile Test
@@ -357,27 +357,27 @@ void TestFileFuncs::onEnter()
             if (sharedFileUtils->removeFile(filepath))
             {
                 label = Label::createWithSystemFont("removeFile: Test file removed", "", 20);
-                label->setPosition(Vec2(x, y * 1));
+                label->setPosition(x, y * 1);
                 this->addChild(label);
             }
             else
             {
                 label = Label::createWithSystemFont("removeFile: Failed to remove test file", "", 20);
-                label->setPosition(Vec2(x, y * 1));
+                label->setPosition(x, y * 1);
                 this->addChild(label);
             }
         }
         else
         {
             label = Label::createWithSystemFont("renameFile: Failed to rename test file to  '__newtest.test', further test skipped", "", 20);
-            label->setPosition(Vec2(x, y * 2));
+            label->setPosition(x, y * 2);
             this->addChild(label);
         }
     }
     else
     {
         label = Label::createWithSystemFont("Test file can not be created, test skipped", "", 20);
-        label->setPosition(Vec2(x, y * 4));
+        label->setPosition(x, y * 4);
         this->addChild(label);
     }
 }
@@ -415,7 +415,7 @@ void TestDirectoryFuncs::onEnter()
     {
         msg = StringUtils::format("createDirectory: Directory '__test' created");
         label = Label::createWithSystemFont(msg, "", 20);
-        label->setPosition(Vec2(x, y * 3));
+        label->setPosition(x, y * 3);
         this->addChild(label);
         
         // Create sub directories recursively
@@ -424,14 +424,14 @@ void TestDirectoryFuncs::onEnter()
         {
             msg = StringUtils::format("createDirectory: Sub directories '%s' created", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
-            label->setPosition(Vec2(x, y * 2));
+            label->setPosition(x, y * 2);
             this->addChild(label);
         }
         else
         {
             msg = StringUtils::format("createDirectory: Failed to create sub directories '%s'", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
-            label->setPosition(Vec2(x, y * 2));
+            label->setPosition(x, y * 2);
             this->addChild(label);
         }
         
@@ -441,14 +441,14 @@ void TestDirectoryFuncs::onEnter()
         {
             msg = StringUtils::format("removeDirectory: Directory '__test' removed");
             label = Label::createWithSystemFont(msg, "", 20);
-            label->setPosition(Vec2(x, y));
+            label->setPosition(x, y);
             this->addChild(label);
         }
         else
         {
             msg = StringUtils::format("removeDirectory: Failed to remove directory '__test'");
             label = Label::createWithSystemFont(msg, "", 20);
-            label->setPosition(Vec2(x, y));
+            label->setPosition(x, y);
             this->addChild(label);
         }
     }
@@ -456,7 +456,7 @@ void TestDirectoryFuncs::onEnter()
     {
         msg = StringUtils::format("createDirectory: Directory '__test' can not be created");
         label = Label::createWithSystemFont(msg, "", 20);
-        label->setPosition(Vec2(x, y * 2));
+        label->setPosition(x, y * 2);
         this->addChild(label);
     }
 }
@@ -530,7 +530,7 @@ void TextWritePlist::onEnter()
     auto label = Label::createWithTTF(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
     this->addChild(label);
     auto winSize = Director::getInstance()->getWinSize();
-    label->setPosition(Vec2(winSize.width/2, winSize.height/3));
+    label->setPosition(winSize.width/2, winSize.height/3);
     
     auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
     auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");

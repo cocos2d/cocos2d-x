@@ -149,7 +149,7 @@ Configuration* Configuration::getInstance()
 {
     if (! s_sharedConfiguration)
     {
-        s_sharedConfiguration = new Configuration();
+        s_sharedConfiguration = new (std::nothrow) Configuration();
         s_sharedConfiguration->init();
     }
     

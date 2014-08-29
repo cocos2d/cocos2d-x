@@ -123,7 +123,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
 
 ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite)
 {
-    ControlButton *pRet = new ControlButton();
+    ControlButton *pRet = new (std::nothrow) ControlButton();
     pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
     pRet->autorelease();
     return pRet;
@@ -136,7 +136,7 @@ bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title
 
 ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
 {
-    ControlButton *pRet = new ControlButton();
+    ControlButton *pRet = new (std::nothrow) ControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
     pRet->autorelease();
     return pRet;
@@ -150,7 +150,7 @@ bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
 
 ControlButton* ControlButton::create(Scale9Sprite* sprite)
 {
-    ControlButton *pRet = new ControlButton();
+    ControlButton *pRet = new (std::nothrow) ControlButton();
     pRet->initWithBackgroundSprite(sprite);
     pRet->autorelease();
     return pRet;
@@ -509,14 +509,14 @@ void ControlButton::needsLayout()
     }
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Vec2 (getContentSize().width / 2, getContentSize().height / 2));
+        _titleLabel->setPosition(getContentSize().width / 2, getContentSize().height / 2);
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(_state));
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Vec2 (getContentSize().width / 2, getContentSize().height / 2));
+        _backgroundSprite->setPosition(getContentSize().width / 2, getContentSize().height / 2);
     }
    
     // Get the title label size
@@ -571,14 +571,14 @@ void ControlButton::needsLayout()
     
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Vec2(getContentSize().width/2, getContentSize().height/2));
+        _titleLabel->setPosition(getContentSize().width/2, getContentSize().height/2);
         // Make visible the background and the label
         _titleLabel->setVisible(true);
     }
   
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Vec2(getContentSize().width/2, getContentSize().height/2));
+        _backgroundSprite->setPosition(getContentSize().width/2, getContentSize().height/2);
         _backgroundSprite->setVisible(true);   
     }   
 }
@@ -723,7 +723,7 @@ void ControlButton::onTouchCancelled(Touch *pTouch, Event *pEvent)
 
 ControlButton* ControlButton::create()
 {
-    ControlButton *pControlButton = new ControlButton();
+    ControlButton *pControlButton = new (std::nothrow) ControlButton();
     if (pControlButton && pControlButton->init())
     {
         pControlButton->autorelease();

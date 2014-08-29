@@ -100,7 +100,7 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         Vector<LuaArmatureWrapper*> vec;
@@ -169,7 +169,7 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         Vector<LuaArmatureWrapper*> vec;
@@ -253,7 +253,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         const char* configFilePath = tolua_tostring(L, 2, "");
         LUA_FUNCTION handler = (  toluafix_ref_function(L, 3, 0));
     
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
@@ -279,7 +279,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,5,0));
         
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);

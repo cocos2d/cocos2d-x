@@ -41,7 +41,7 @@ NS_CC_BEGIN
 
 GridBase* GridBase::create(const Size& gridSize)
 {
-    GridBase *pGridBase = new GridBase();
+    GridBase *pGridBase = new (std::nothrow) GridBase();
 
     if (pGridBase)
     {
@@ -60,7 +60,7 @@ GridBase* GridBase::create(const Size& gridSize)
 
 GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    GridBase *pGridBase = new GridBase();
+    GridBase *pGridBase = new (std::nothrow) GridBase();
 
     if (pGridBase)
     {
@@ -93,7 +93,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     _step.x = texSize.width / _gridSize.width;
     _step.y = texSize.height / _gridSize.height;
 
-    _grabber = new Grabber();
+    _grabber = new (std::nothrow) Grabber();
     if (_grabber)
     {
         _grabber->grab(_texture);
@@ -129,7 +129,7 @@ bool GridBase::initWithSize(const Size& gridSize)
         return false;
     }
 
-    Texture2D *texture = new Texture2D();
+    Texture2D *texture = new (std::nothrow) Texture2D();
     texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
 
     free(data);
@@ -254,7 +254,7 @@ void GridBase::calculateVertexPoints(void)
 
 Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    Grid3D *ret= new Grid3D();
+    Grid3D *ret= new (std::nothrow) Grid3D();
 
     if (ret)
     {
@@ -274,7 +274,7 @@ Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
 
 Grid3D* Grid3D::create(const Size& gridSize)
 {
-    Grid3D *ret= new Grid3D();
+    Grid3D *ret= new (std::nothrow) Grid3D();
 
     if (ret)
     {
@@ -471,7 +471,7 @@ TiledGrid3D::~TiledGrid3D(void)
 
 TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    TiledGrid3D *ret= new TiledGrid3D();
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
 
     if (ret)
     {
@@ -491,7 +491,7 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool 
 
 TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
 {
-    TiledGrid3D *ret= new TiledGrid3D();
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
 
     if (ret)
     {

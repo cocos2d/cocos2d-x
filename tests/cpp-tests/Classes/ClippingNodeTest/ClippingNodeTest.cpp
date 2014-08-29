@@ -103,7 +103,7 @@ std::string BaseClippingNodeTest::subtitle() const
 
 void BaseClippingNodeTest::restartCallback(Ref* sender)
 {
-	Scene *s = new ClippingNodeTestScene();
+	Scene *s = new (std::nothrow) ClippingNodeTestScene();
 	s->addChild(restartAction());
 	Director::getInstance()->replaceScene(s);
     s->release();
@@ -111,7 +111,7 @@ void BaseClippingNodeTest::restartCallback(Ref* sender)
 
 void BaseClippingNodeTest::nextCallback(Ref* sender)
 {
-	Scene *s = new ClippingNodeTestScene();
+	Scene *s = new (std::nothrow) ClippingNodeTestScene();
 	s->addChild(nextAction());
 	Director::getInstance()->replaceScene(s);
     s->release();
@@ -119,7 +119,7 @@ void BaseClippingNodeTest::nextCallback(Ref* sender)
 
 void BaseClippingNodeTest::backCallback(Ref* sender)
 {
-	Scene *s = new ClippingNodeTestScene();
+	Scene *s = new (std::nothrow) ClippingNodeTestScene();
 	s->addChild(backAction());
 	Director::getInstance()->replaceScene(s);
     s->release();
@@ -149,17 +149,17 @@ void BasicTest::setup()
     
     auto stencil = this->stencil();
     stencil->setTag( kTagStencilNode );
-    stencil->setPosition( Vec2(50, 50) );
+    stencil->setPosition(50, 50);
     
     auto clipper = this->clipper();
     clipper->setTag( kTagClipperNode );
     clipper->setAnchorPoint(Vec2(0.5, 0.5));
-    clipper->setPosition( Vec2(s.width / 2 - 50, s.height / 2 - 50) );
+    clipper->setPosition(s.width / 2 - 50, s.height / 2 - 50);
     clipper->setStencil(stencil);
     this->addChild(clipper);
     
     auto content = this->content();
-    content->setPosition( Vec2(50, 50) );
+    content->setPosition(50, 50);
     clipper->addChild(content);
 }
 
@@ -353,7 +353,7 @@ void NestedTest::setup()
         auto clipper = ClippingNode::create();
         clipper->setContentSize(Size(size, size));
         clipper->setAnchorPoint(Vec2(0.5, 0.5));
-        clipper->setPosition( Vec2(parent->getContentSize().width / 2, parent->getContentSize().height / 2) );
+        clipper->setPosition(parent->getContentSize().width / 2, parent->getContentSize().height / 2);
         clipper->setAlphaThreshold(0.05f);
         clipper->runAction(RepeatForever::create(RotateBy::create(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90)));
         parent->addChild(clipper);
@@ -361,7 +361,7 @@ void NestedTest::setup()
         auto stencil = Sprite::create(s_pathGrossini);
         stencil->setScale( 2.5 - (i * (2.5 / depth)) );
         stencil->setAnchorPoint( Vec2(0.5, 0.5) );
-        stencil->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+        stencil->setPosition(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2);
         stencil->setVisible(false);
         stencil->runAction(Sequence::createWithTwoActions(DelayTime::create(i), Show::create()));
         clipper->setStencil(stencil);
@@ -486,7 +486,7 @@ void ScrollViewDemo::setup()
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Vec2(0.5, 0.5) );
-    clipper->setPosition( Vec2(this->getContentSize().width / 2, this->getContentSize().height / 2) );
+    clipper->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
@@ -504,7 +504,7 @@ void ScrollViewDemo::setup()
     auto content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
     content->setAnchorPoint(  Vec2(0.5, 0.5) );
-    content->setPosition( Vec2(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
+    content->setPosition(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2);
     clipper->addChild(content);
     
     _scrolling = false;
@@ -841,7 +841,7 @@ void RawStencilBufferTest6::setup()
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
     auto clearToZeroLabel = Label::createWithTTF(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
-    clearToZeroLabel->setPosition( Vec2((winPoint.x / 3) * 1, winPoint.y - 10) );
+    clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
     glClearStencil(0xAA);
@@ -849,7 +849,7 @@ void RawStencilBufferTest6::setup()
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
     auto clearToMaskLabel = Label::createWithTTF(String::createWithFormat("0a=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
-    clearToMaskLabel->setPosition( Vec2((winPoint.x / 3) * 2, winPoint.y - 10) );
+    clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
     this->addChild(clearToMaskLabel);
 #endif
     glStencilMask(~0);

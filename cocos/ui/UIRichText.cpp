@@ -45,7 +45,7 @@ bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
     
 RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
 {
-    RichElementText* element = new RichElementText();
+    RichElementText* element = new (std::nothrow) RichElementText();
     if (element && element->init(tag, color, opacity, text, fontName, fontSize))
     {
         element->autorelease();
@@ -69,7 +69,7 @@ bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const
 
 RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
 {
-    RichElementImage* element = new RichElementImage();
+    RichElementImage* element = new (std::nothrow) RichElementImage();
     if (element && element->init(tag, color, opacity, filePath))
     {
         element->autorelease();
@@ -91,7 +91,7 @@ bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, cons
 
 RichElementCustomNode* RichElementCustomNode::create(int tag, const Color3B &color, GLubyte opacity, cocos2d::Node *customNode)
 {
-    RichElementCustomNode* element = new RichElementCustomNode();
+    RichElementCustomNode* element = new (std::nothrow) RichElementCustomNode();
     if (element && element->init(tag, color, opacity, customNode))
     {
         element->autorelease();
@@ -128,7 +128,7 @@ RichText::~RichText()
     
 RichText* RichText::create()
 {
-    RichText* widget = new RichText();
+    RichText* widget = new (std::nothrow) RichText();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -356,7 +356,7 @@ void RichText::formarRenderers()
         {
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
-            l->setPosition(Vec2(nextPosX, 0.0f));
+            l->setPosition(nextPosX, 0.0f);
             _elementRenderersContainer->addChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
@@ -395,7 +395,7 @@ void RichText::formarRenderers()
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(Vec2(nextPosX, nextPosY));
+                l->setPosition(nextPosX, nextPosY);
                 _elementRenderersContainer->addChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }

@@ -50,7 +50,7 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
     if (modelPath.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new Sprite3D();
+    auto sprite = new (std::nothrow) Sprite3D();
     if (sprite && sprite->initWithFile(modelPath))
     {
         sprite->autorelease();
@@ -102,13 +102,13 @@ bool Sprite3D::loadFromObj(const std::string& path)
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
     MeshDatas meshdatas;
-    MaterialDatas* materialdatas = new MaterialDatas();
-    NodeDatas*   nodeDatas = new NodeDatas();
+    MaterialDatas* materialdatas = new (std::nothrow) MaterialDatas();
+    NodeDatas*   nodeDatas = new (std::nothrow) NodeDatas();
     bool ret = Bundle3D::loadObj(meshdatas, *materialdatas, *nodeDatas, fullPath);
     if (ret && initFrom(*nodeDatas, meshdatas, *materialdatas))
     {
         //add to cache
-        auto data = new Sprite3DCache::Sprite3DData();
+        auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
         data->materialdatas = materialdatas;
         data->nodedatas = nodeDatas;
         data->meshVertexDatas = _meshVertexDatas;
@@ -130,15 +130,15 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         return false;
     
     MeshDatas meshdatas;
-    MaterialDatas* materialdatas = new MaterialDatas();
-    NodeDatas*   nodeDatas = new NodeDatas();
+    MaterialDatas* materialdatas = new (std::nothrow) MaterialDatas();
+    NodeDatas*   nodeDatas = new (std::nothrow) NodeDatas();
     if (bundle->loadMeshDatas(meshdatas)
         && bundle->loadMaterials(*materialdatas)
         && bundle->loadNodes(*nodeDatas)
         && initFrom(*nodeDatas, meshdatas, *materialdatas))
     {
         //add to cache
-        auto data = new Sprite3DCache::Sprite3DData();
+        auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
         data->materialdatas = materialdatas;
         data->nodedatas = nodeDatas;
         data->meshVertexDatas = _meshVertexDatas;
@@ -228,7 +228,7 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
 }
 Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas)
 {
-    auto sprite = new Sprite3D();
+    auto sprite = new (std::nothrow) Sprite3D();
     if (sprite)
     {
         auto mesh = Mesh::create(nodedata->id, getMeshIndexData(modeldata->subMeshId));
@@ -617,7 +617,7 @@ Sprite3DCache* Sprite3DCache::_cacheInstance = nullptr;
 Sprite3DCache* Sprite3DCache::getInstance()
 {
     if (_cacheInstance == nullptr)
-        _cacheInstance = new Sprite3DCache();
+        _cacheInstance = new (std::nothrow) Sprite3DCache();
     return _cacheInstance;
 }
 void Sprite3DCache::destroyInstance()

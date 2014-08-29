@@ -129,7 +129,7 @@ void TestCocosNodeDemo::onEnter()
 
 void TestCocosNodeDemo::restartCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -138,7 +138,7 @@ void TestCocosNodeDemo::restartCallback(Ref* sender)
 
 void TestCocosNodeDemo::nextCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -146,7 +146,7 @@ void TestCocosNodeDemo::nextCallback(Ref* sender)
 
 void TestCocosNodeDemo::backCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -989,7 +989,7 @@ class MySprite : public Sprite
 public:
     static MySprite* create(const std::string &spritefilename)
     {
-        auto sprite = new MySprite;
+        auto sprite = new (std::nothrow) MySprite;
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 

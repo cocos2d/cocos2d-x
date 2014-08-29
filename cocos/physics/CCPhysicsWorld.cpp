@@ -197,7 +197,7 @@ void PhysicsWorld::debugDraw()
 {
     if (_debugDraw == nullptr)
     {
-        _debugDraw = new PhysicsDebugDraw(*this);
+        _debugDraw = new (std::nothrow) PhysicsDebugDraw(*this);
     }
     
     if (_debugDraw && !_bodies.empty())
@@ -418,7 +418,7 @@ PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
 
 PhysicsWorld* PhysicsWorld::construct(Scene& scene)
 {
-    PhysicsWorld * world = new PhysicsWorld();
+    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
     if(world && world->init(scene))
     {
         return world;
@@ -432,7 +432,7 @@ bool PhysicsWorld::init(Scene& scene)
 {
     do
     {
-        _info = new PhysicsWorldInfo();
+        _info = new (std::nothrow) PhysicsWorldInfo();
         CC_BREAK_IF(_info == nullptr);
         
         _scene = &scene;
@@ -1019,7 +1019,7 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
             {
                 cpPolyShape* poly = (cpPolyShape*)subShape;
                 int num = poly->numVerts;
-                Vec2* seg = new Vec2[num];
+                Vec2* seg = new (std::nothrow) Vec2[num];
                 
                 PhysicsHelper::cpvs2points(poly->tVerts, seg, num);
                 

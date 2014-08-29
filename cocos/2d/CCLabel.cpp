@@ -45,7 +45,7 @@ const int Label::DistanceFieldFontSize = 50;
 
 Label* Label::create()
 {
-    auto ret = new Label();
+    auto ret = new (std::nothrow) Label();
 
     if (ret)
     {
@@ -69,7 +69,7 @@ Label* Label::create(const std::string& text, const std::string& font, float fon
 
 Label* Label::createWithSystemFont(const std::string& text, const std::string& font, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
-    auto ret = new Label(nullptr,hAlignment,vAlignment);
+    auto ret = new (std::nothrow) Label(nullptr,hAlignment,vAlignment);
 
     if (ret)
     {
@@ -89,7 +89,7 @@ Label* Label::createWithSystemFont(const std::string& text, const std::string& f
 
 Label* Label::createWithTTF(const std::string& text, const std::string& fontFile, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
-    auto ret = new Label(nullptr,hAlignment,vAlignment);
+    auto ret = new (std::nothrow) Label(nullptr,hAlignment,vAlignment);
 
     if (ret && FileUtils::getInstance()->isFileExist(fontFile))
     {
@@ -111,7 +111,7 @@ Label* Label::createWithTTF(const std::string& text, const std::string& fontFile
 
 Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment /* = TextHAlignment::CENTER */, int maxLineWidth /* = 0 */)
 {
-    auto ret = new Label(nullptr,alignment);
+    auto ret = new (std::nothrow) Label(nullptr,alignment);
 
     if (ret && FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && ret->setTTFConfig(ttfConfig))
     {
@@ -128,7 +128,7 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
 
 Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
-    auto ret = new Label(nullptr,alignment);
+    auto ret = new (std::nothrow) Label(nullptr,alignment);
 
     if (ret && ret->setBMFontFilePath(bmfontFilePath,imageOffset))
     {
@@ -145,7 +145,7 @@ Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::str
 
 Label* Label::createWithCharMap(const std::string& plistFile)
 {
-    auto ret = new Label();
+    auto ret = new (std::nothrow) Label();
 
     if (ret && ret->setCharMap(plistFile))
     {
@@ -159,7 +159,7 @@ Label* Label::createWithCharMap(const std::string& plistFile)
 
 Label* Label::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    auto ret = new Label();
+    auto ret = new (std::nothrow) Label();
 
     if (ret && ret->setCharMap(texture,itemWidth,itemHeight,startCharMap))
     {
@@ -173,7 +173,7 @@ Label* Label::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeigh
 
 Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    auto ret = new Label();
+    auto ret = new (std::nothrow) Label();
 
     if (ret && ret->setCharMap(charMapFile,itemWidth,itemHeight,startCharMap))
     {
@@ -892,7 +892,7 @@ void Label::createSpriteWithFontDefinition()
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
 
-    auto texture = new Texture2D;
+    auto texture = new (std::nothrow) Texture2D;
     texture->initWithString(_originalUTF8String.c_str(),_fontDefinition);
 
     _textSprite = Sprite::createWithTexture(texture);
@@ -1157,8 +1157,8 @@ Sprite * Label::getLetter(int letterIndex)
 
             sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
             sp->setBatchNode(_batchNodes[letter.def.textureID]);
-            sp->setPosition(Vec2(letter.position.x + uvRect.size.width / 2, 
-                letter.position.y - uvRect.size.height / 2));
+            sp->setPosition(letter.position.x + uvRect.size.width / 2,
+                letter.position.y - uvRect.size.height / 2);
             sp->setOpacity(_realOpacity);
 
             _batchNodes[letter.def.textureID]->addSpriteWithoutQuad(sp, letter.atlasIndex, letterIndex);

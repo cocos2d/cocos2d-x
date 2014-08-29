@@ -129,7 +129,7 @@ DrawNode::~DrawNode()
 
 DrawNode* DrawNode::create()
 {
-    DrawNode* ret = new DrawNode();
+    DrawNode* ret = new (std::nothrow) DrawNode();
     if (ret && ret->init())
     {
         ret->autorelease();

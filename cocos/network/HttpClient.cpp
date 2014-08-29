@@ -142,7 +142,7 @@ void HttpClient::networkThread()
         // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
-        HttpResponse *response = new HttpResponse(request);
+        HttpResponse *response = new (std::nothrow) HttpResponse(request);
         
         processResponse(response, s_errorBuffer);
         
@@ -176,7 +176,7 @@ void HttpClient::networkThread()
 void HttpClient::networkThreadAlone(HttpRequest* request)
 {
     // Create a HttpResponse object, the default setting is http access failed
-    HttpResponse *response = new HttpResponse(request);
+    HttpResponse *response = new (std::nothrow) HttpResponse(request);
     char errorBuffer[CURL_ERROR_SIZE] = { 0 };
     processResponse(response, errorBuffer);
 
@@ -434,7 +434,7 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
 HttpClient* HttpClient::getInstance()
 {
     if (s_pHttpClient == nullptr) {
-        s_pHttpClient = new HttpClient();
+        s_pHttpClient = new (std::nothrow) HttpClient();
     }
     
     return s_pHttpClient;
@@ -478,8 +478,8 @@ bool HttpClient::lazyInitThreadSemphore()
         return true;
     } else {
         
-        s_requestQueue = new Vector<HttpRequest*>();
-        s_responseQueue = new Vector<HttpResponse*>();
+        s_requestQueue = new (std::nothrow) Vector<HttpRequest*>();
+        s_responseQueue = new (std::nothrow) Vector<HttpResponse*>();
         
 		s_need_quit = false;
 		
