@@ -158,13 +158,13 @@ void Configuration::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_sharedConfiguration);
 }
 
-// XXX: deprecated
+// FIXME: deprecated
 Configuration* Configuration::sharedConfiguration()
 {
     return Configuration::getInstance();
 }
 
-// XXX: deprecated
+// FIXME: deprecated
 void Configuration::purgeConfiguration()
 {
     Configuration::destroyInstance();

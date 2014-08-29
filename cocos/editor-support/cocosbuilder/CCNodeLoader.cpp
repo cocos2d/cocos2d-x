@@ -619,7 +619,7 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     // know what to do with them, since its pulling from bundle.
     // Eventually this should be handled by a client side asset manager
     // interface which figured out what resources to load.
-    // TODO Does this problem exist in C++?
+    // TODO: Does this problem exist in C++?
     animation = CCBReader::lastPathComponent(animation.c_str());
     animationFile = CCBReader::lastPathComponent(animationFile.c_str());
     
@@ -742,7 +742,7 @@ std::string NodeLoader::parsePropTypeFontTTF(Node * pNode, Node * pParent, CCBRe
 
     // String * ttfEnding = String::create(".ttf");
 
-    // TODO Fix me if it is wrong
+    // TODO: Fix me if it is wrong
     /* If the fontTTF comes with the ".ttf" extension, prepend the absolute path. 
      * System fonts come without the ".ttf" extension and do not need the path prepended. */
     /*

@@ -114,7 +114,7 @@ void UniformValue::apply()
 void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &callback)
 {
 	// delete previously set callback
-	// XXX TODO: memory will leak if the user does:
+	// TODO: memory will leak if the user does:
 	//    value->setCallback();
 	//    value->setFloat();
 	if (_useCallback)

@@ -49,7 +49,7 @@ Profiler* Profiler::getInstance()
     return g_sSharedProfiler;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 Profiler* Profiler::sharedProfiler(void)
 {
     return Profiler::getInstance();

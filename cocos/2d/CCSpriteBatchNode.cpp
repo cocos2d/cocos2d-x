@@ -625,8 +625,8 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, ssize_t index)
     V3F_C4B_T2F_Quad quad = sprite->getQuad();
     _textureAtlas->insertQuad(&quad, index);
 
-    // XXX: updateTransform will update the textureAtlas too, using updateQuad.
-    // XXX: so, it should be AFTER the insertQuad
+    // FIXME:: updateTransform will update the textureAtlas too, using updateQuad.
+    // FIXME:: so, it should be AFTER the insertQuad
     sprite->setDirty(true);
     sprite->updateTransform();
 }
@@ -662,7 +662,7 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     // quad index is Z
     child->setAtlasIndex(z);
 
-    // XXX: optimize with a binary search
+    // FIXME:: optimize with a binary search
     auto it = _descendants.begin();
     for (; it != _descendants.end(); ++it)
     {

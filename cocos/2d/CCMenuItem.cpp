@@ -61,7 +61,7 @@ MenuItem* MenuItem::create()
     return MenuItem::create((const ccMenuCallback&)nullptr);
 }
 
-// XXX deprecated
+// FIXME: deprecated
 MenuItem* MenuItem::create(Ref *target, SEL_MenuHandler selector)
 {
     MenuItem *ret = new (std::nothrow) MenuItem();
@@ -78,7 +78,7 @@ MenuItem* MenuItem::create( const ccMenuCallback& callback)
     return ret;
 }
 
-// XXX deprecated
+// FIXME: deprecated
 bool MenuItem::initWithTarget(cocos2d::Ref *target, SEL_MenuHandler selector )
 {
 	_target = target;
@@ -151,7 +151,7 @@ bool MenuItem::isSelected() const
     return _selected;
 }
 
-// XXX deprecated
+// FIXME: deprecated
 void MenuItem::setTarget(Ref *target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -190,7 +190,7 @@ void MenuItemLabel::setLabel(Node* var)
     _label = var;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 MenuItemLabel * MenuItemLabel::create(Node*label, Ref* target, SEL_MenuHandler selector)
 {
     MenuItemLabel *ret = new (std::nothrow) MenuItemLabel();
@@ -215,7 +215,7 @@ MenuItemLabel* MenuItemLabel::create(Node *label)
     return ret;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 bool MenuItemLabel::initWithLabel(Node* label, Ref* target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -320,7 +320,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const st
     return MenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, (const ccMenuCallback&)nullptr);
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector)
 {
     MenuItemAtlasFont *ret = new (std::nothrow) MenuItemAtlasFont();
@@ -337,7 +337,7 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const st
     return ret;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -386,7 +386,7 @@ const std::string& MenuItemFont::getFontName()
     return _globalFontName;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 MenuItemFont * MenuItemFont::create(const std::string& value, Ref* target, SEL_MenuHandler selector)
 {
     MenuItemFont *ret = new (std::nothrow) MenuItemFont();
@@ -421,7 +421,7 @@ MenuItemFont::~MenuItemFont()
     CCLOGINFO("In the destructor of MenuItemFont (%p).", this);
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 bool MenuItemFont::initWithString(const std::string& value, Ref* target, SEL_MenuHandler selector)
 {
     CCASSERT( !value.empty(), "Value length must be greater than 0");
@@ -544,7 +544,7 @@ MenuItemSprite * MenuItemSprite::create(Node* normalSprite, Node* selectedSprite
     return MenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, (const ccMenuCallback&)nullptr);
 }
 
-// XXX deprecated
+// FIXME: deprecated
 MenuItemSprite * MenuItemSprite::create(Node* normalSprite, Node* selectedSprite, Ref* target, SEL_MenuHandler selector)
 {
     return MenuItemSprite::create(normalSprite, selectedSprite, nullptr, target, selector);
@@ -555,7 +555,7 @@ MenuItemSprite * MenuItemSprite::create(Node* normalSprite, Node* selectedSprite
     return MenuItemSprite::create(normalSprite, selectedSprite, nullptr, callback);
 }
 
-// XXX deprecated
+// FIXME: deprecated
 MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite, Node *disabledSprite, Ref *target, SEL_MenuHandler selector)
 {
     MenuItemSprite *ret = new (std::nothrow) MenuItemSprite();
@@ -572,7 +572,7 @@ MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite
     return ret;
 }
 
-// XXX deprecated
+// FIXME: deprecated
 bool MenuItemSprite::initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -704,7 +704,7 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
     return MenuItemImage::create(normalImage, selectedImage, "", (const ccMenuCallback&)nullptr);
 }
 
-// XXX deprecated
+// FIXME: deprecated
 MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, Ref* target, SEL_MenuHandler selector)
 {
     return MenuItemImage::create(normalImage, selectedImage, "", target, selector);
@@ -715,7 +715,7 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
     return MenuItemImage::create(normalImage, selectedImage, "", callback);
 }
 
-// XXX deprecated
+// FIXME: deprecated
 MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector)
 {
     MenuItemImage *ret = new (std::nothrow) MenuItemImage();
@@ -752,7 +752,7 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
     return nullptr;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 bool MenuItemImage::initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector)
 {
 	_target = target;
@@ -804,7 +804,7 @@ void MenuItemImage::setDisabledSpriteFrame(SpriteFrame * frame)
 // MenuItemToggle
 //
 
-// XXX: deprecated
+// FIXME:: deprecated
 MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems)
 {
     MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
@@ -825,7 +825,7 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
     return ret;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler selector, MenuItem* item, ...)
 {
     va_list args;
@@ -869,7 +869,7 @@ MenuItemToggle * MenuItemToggle::create()
     return ret;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 bool MenuItemToggle::initWithTarget(Ref* target, SEL_MenuHandler selector, MenuItem* item, va_list args)
 {
 	_target = target;

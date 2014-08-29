@@ -198,8 +198,8 @@ void ParticleBatchNode::addChildByTagOrName(ParticleSystem* child, int zOrder, i
 }
 
 // don't use lazy sorting, reordering the particle systems quads afterwards would be too complex
-// XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
-// XXX or possibly using vertexZ for reordering, that would be fastest
+// FIXME: research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
+// FIXME: or possibly using vertexZ for reordering, that would be fastest
 // this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting
 int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag, const std::string &name, bool setTag)
 {

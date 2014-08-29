@@ -170,7 +170,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 
     CCASSERT( !dict.empty(), "Particles: file not found");
     
-    // XXX compute path from a path, should define a function somewhere to do it
+    // FIXME: compute path from a path, should define a function somewhere to do it
     string listFilePath = plistFile;
     if (listFilePath.find('/') != string::npos)
     {
@@ -461,7 +461,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     _emitterMode = Mode::GRAVITY;
 
     // default: modulate
-    // XXX: not used
+    // FIXME:: not used
     //    colorModulate = YES;
 
     _isAutoRemoveOnFinish = false;

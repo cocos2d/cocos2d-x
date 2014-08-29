@@ -242,7 +242,7 @@ public:
      */
     Vec2 convertToUI(const Vec2& point);
 
-    /// XXX: missing description 
+    /// FIXME: missing description 
     float getZEye() const;
 
     // Scene Management

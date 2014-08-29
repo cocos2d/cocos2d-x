@@ -38,7 +38,7 @@ cpContactInit(cpContact *con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash
 	return con;
 }
 
-// TODO make this generic so I can reuse it for constraints also.
+// TODO: make this generic so I can reuse it for constraints also.
 static inline void
 unthreadHelper(cpArbiter *arb, cpBody *body)
 {
@@ -309,7 +309,7 @@ cpArbiterApplyCachedImpulse(cpArbiter *arb, cpFloat dt_coef)
 	}
 }
 
-// TODO is it worth splitting velocity/position correction?
+// TODO: is it worth splitting velocity/position correction?
 
 void
 cpArbiterApplyImpulse(cpArbiter *arb)

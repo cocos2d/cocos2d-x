@@ -487,7 +487,7 @@ void TMXLayer::updateTotalQuads()
                 
                 if(tileGID & kTMXTileDiagonalFlag)
                 {
-                    // XXX: not working correcly
+                    // FIXME: not working correcly
                     quad.bl.vertices.x = left;
                     quad.bl.vertices.y = bottom;
                     quad.bl.vertices.z = z;
