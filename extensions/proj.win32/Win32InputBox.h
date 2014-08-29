@@ -31,6 +31,15 @@ and to alter it and redistribute it freely, subject to the following restriction
 
 class CWin32InputBox;
 
+enum Win32EditBoxInputFlag
+{
+  kWin32InputBoxNormal = 0,
+  kWin32InputBoxPassword,
+  kWin32InputBoxCaps
+};
+
+typedef void (*EditTextCallback)(const char* pText, void* ctx);
+
 // Structure used to orient the inputbox behavior
 struct WIN32INPUTBOX_PARAM
 {
@@ -61,6 +70,11 @@ struct WIN32INPUTBOX_PARAM
   OUT LPSTR szResult;
   IN DWORD nResultSize;
 
+  IN OPTIONAL Win32EditBoxInputFlag eInputFlag;
+  IN OPTIONAL int nMaxLength;
+  IN OPTIONAL EditTextCallback lpfnCallBack;
+  IN OPTIONAL void* lpCtx;
+
   // Owner window
   HWND hwndOwner;
   HINSTANCE hInstance;
@@ -78,6 +92,7 @@ private:
   WIN32INPUTBOX_PARAM *_param;
   static LRESULT CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
   HWND _hwndEditCtrl;
+  int _depth;
 
   void InitDialog();
   void SetParam(WIN32INPUTBOX_PARAM *);
@@ -88,17 +103,11 @@ public:
   CWin32InputBox(WIN32INPUTBOX_PARAM *);
   ~CWin32InputBox();
 
-  static INT_PTR InputBoxEx(WIN32INPUTBOX_PARAM *);
-  static INT_PTR InputBox(
-    LPCSTR szTitle, 
-    LPCSTR szPrompt, 
-    LPSTR szResult, 
-    DWORD nResultSize,
-    bool bMultiLine = false,
-    HWND hwndParent = 0);
+  INT_PTR Run();
+  void SetText(const char* pText);
 
-  static std::string AnsiToUtf8(std::string strAnsi);
-  static std::string Utf8ToAnsi(std::string strUTF8);
+  static char* AnsiToUtf8(const char* strAnsi);
+  static char* Utf8ToAnsi(const char* strUTF8);
 };
 
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */

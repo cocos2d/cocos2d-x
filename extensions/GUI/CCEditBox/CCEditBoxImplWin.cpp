@@ -46,6 +46,8 @@ EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
+, _isEditing(false)
+, _inputBox(NULL)
 {
     
 }
@@ -149,30 +151,39 @@ void EditBoxImplWin::setText(const char* pText)
 {
     if (pText != nullptr)
     {
+        if (_text.compare(pText))
+        {
+            return;
+        }
+
         _text = pText;
+        if (_isEditing && _inputBox != NULL)
+        {
+            _inputBox->SetText(pText);
+        }
 
         if (_text.length() > 0)
         {
             _labelPlaceHolder->setVisible(false);
 
-            std::string strToShow;
-
 			if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
             {
-                long length = cc_utf8_strlen(_text.c_str(), -1);
+                std::string strToShow;
+
+                long length = StringUtils::getCharacterCountInUTF8String(_text);
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("*");
                 }
+                _label->setString(strToShow);
             }
             else
             {
-                strToShow = _text;
+                _label->setString(_text);
             }
 
             //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), _editSize.width, _editSize.height-12);
             //! _label->setString(strWithEllipsis.c_str());
-			_label->setString(strToShow.c_str());
         }
         else
         {
@@ -225,13 +236,37 @@ void EditBoxImplWin::visit(void)
 {   
 }
 
+void EditBoxImplWin::editBoxCallbackFunc(const char* pText, void* ctx)
+{
+    EditBoxImplWin* thiz = (EditBoxImplWin*)ctx;
+    thiz->_isEditing = false;
+    thiz->setText(pText);
+    thiz->_isEditing = true;
+
+    if (thiz->getDelegate() != NULL)
+    {
+        thiz->getDelegate()->editBoxTextChanged(thiz->_editBox, thiz->_text);
+    }
+
+    EditBox* editBox = thiz->_editBox;
+#if CC_ENABLE_SCRIPT_BINDING
+    if (nullptr != editBox && 0 != editBox->getScriptEditBoxHandler())
+    {
+        CommonScriptData data(editBox->getScriptEditBoxHandler(), "changed", editBox);
+        ScriptEvent event(kCommonEvent, (void*)&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+}
+
 void EditBoxImplWin::openKeyboard()
 {
     if (_delegate != nullptr)
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
-    
+
+    _isEditing = true;
     EditBox* pEditBox = this->getEditBox();
     if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
@@ -240,17 +275,39 @@ void EditBoxImplWin::openKeyboard()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     
-	std::string placeHolder = _labelPlaceHolder->getString();
-	if (placeHolder.length() == 0)
+	const char* placeHolder = _labelPlaceHolder->getString().c_str();
+	if (strcmp(placeHolder, "") == 0)
 		placeHolder = "Enter value";
 
 	char pText[100]= {0};
 	std::string text = getText();
 	if (text.length())
 		strncpy(pText, text.c_str(), 100);
-	auto glView = Director::getInstance()->getOpenGLView();
-	HWND hwnd = glView->getWin32Window();
-	bool didChange = CWin32InputBox::InputBox("Input", placeHolder.c_str(), pText, 100, false, hwnd) == IDOK;
+
+    WIN32INPUTBOX_PARAM param;
+    param.szTitle = "Input";
+    param.szPrompt = placeHolder;
+    param.szResult = pText;
+    param.nResultSize = 100;
+    param.bMultiline = false;
+    param.hwndOwner = Director::getInstance()->getOpenGLView()->getWin32Window();
+    param.eInputFlag = kWin32InputBoxNormal;
+    param.nMaxLength = _maxLength;
+    param.lpfnCallBack = &editBoxCallbackFunc;
+    param.lpCtx = this;
+
+    switch (_editBoxInputFlag)
+    {
+    //case EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS: param.eInputFlag = kWin32InputBoxCaps; break;
+    case EditBox::InputFlag::PASSWORD: param.eInputFlag = kWin32InputBoxPassword; break;
+    default: break;
+    }
+
+    _inputBox = new CWin32InputBox(&param);
+    bool didChange = _inputBox->Run() == IDOK;
+    delete _inputBox;
+    _inputBox = NULL;
+    _isEditing = false;
 	
 	if (didChange) 	
 		setText(pText);
