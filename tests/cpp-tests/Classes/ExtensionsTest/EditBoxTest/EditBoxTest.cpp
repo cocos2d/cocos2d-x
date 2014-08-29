@@ -20,16 +20,16 @@ EditBoxTest::EditBoxTest()
     auto visibleSize = glview->getVisibleSize();
     
     auto pBg = Sprite::create("Images/HelloWorld.png");
-    pBg->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    pBg->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2);
     addChild(pBg);
     
     _TTFShowEditReturn = Label::createWithSystemFont("No edit control return!", "", 30);
-    _TTFShowEditReturn->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50));
+    _TTFShowEditReturn->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y + visibleSize.height - 50);
     addChild(_TTFShowEditReturn);
     
     // Back Menu
     auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(EditBoxTest::toExtensionsMainLayer, this));
-    itemBack->setPosition(Vec2(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25));
+    itemBack->setPosition(visibleOrigin.x+visibleSize.width - 50, visibleOrigin.y+25);
     auto menuBack = Menu::create(itemBack, nullptr);
     menuBack->setPosition(Vec2::ZERO);
     addChild(menuBack);
@@ -75,7 +75,7 @@ EditBoxTest::EditBoxTest()
     _editEmail->setDelegate(this);
     addChild(_editEmail);
     
-    this->setPosition(Vec2(10, 20));
+    this->setPosition(10, 20);
 }
 
 EditBoxTest::~EditBoxTest()
@@ -85,7 +85,7 @@ EditBoxTest::~EditBoxTest()
 
 void EditBoxTest::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -126,7 +126,7 @@ void EditBoxTest::editBoxReturn(EditBox* editBox)
 void runEditBoxTest()
 {
     auto scene = Scene::create();
-    EditBoxTest *layer = new EditBoxTest();
+    EditBoxTest *layer = new (std::nothrow) EditBoxTest();
     scene->addChild(layer);
     
     Director::getInstance()->replaceScene(scene);

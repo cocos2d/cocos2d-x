@@ -54,7 +54,7 @@ ListView::~ListView()
 
 ListView* ListView::create()
 {
-    ListView* widget = new ListView();
+    ListView* widget = new (std::nothrow) ListView();
     if (widget && widget->init())
     {
         widget->autorelease();

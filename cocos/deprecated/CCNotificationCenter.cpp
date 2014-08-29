@@ -104,7 +104,7 @@ void __NotificationCenter::addObserver(Ref *target,
     if (this->observerExisted(target, name, sender))
         return;
     
-    NotificationObserver *observer = new NotificationObserver(target, selector, name, sender);
+    NotificationObserver *observer = new (std::nothrow) NotificationObserver(target, selector, name, sender);
     if (!observer)
         return;
     
@@ -156,7 +156,7 @@ void __NotificationCenter::registerScriptObserver(Ref *target, int handler,const
     if (this->observerExisted(target, name, nullptr))
         return;
     
-    NotificationObserver *observer = new NotificationObserver(target, nullptr, name, nullptr);
+    NotificationObserver *observer = new (std::nothrow) NotificationObserver(target, nullptr, name, nullptr);
     if (!observer)
         return;
     

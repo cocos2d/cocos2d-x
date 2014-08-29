@@ -323,7 +323,7 @@ FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == nullptr)
     {
-        s_sharedFileUtils = new FileUtilsApple();
+        s_sharedFileUtils = new (std::nothrow) FileUtilsApple();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;

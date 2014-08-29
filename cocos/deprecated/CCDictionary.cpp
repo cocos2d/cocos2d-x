@@ -298,14 +298,14 @@ void __Dictionary::removeObjectForKey(intptr_t key)
 void __Dictionary::setObjectUnSafe(Ref* pObject, const std::string& key)
 {
     pObject->retain();
-    DictElement* pElement = new DictElement(key.c_str(), pObject);
+    DictElement* pElement = new (std::nothrow) DictElement(key.c_str(), pObject);
     HASH_ADD_STR(_elements, _strKey, pElement);
 }
 
 void __Dictionary::setObjectUnSafe(Ref* pObject, const intptr_t key)
 {
     pObject->retain();
-    DictElement* pElement = new DictElement(key, pObject);
+    DictElement* pElement = new (std::nothrow) DictElement(key, pObject);
     HASH_ADD_PTR(_elements, _intKey, pElement);
 }
 

@@ -31,7 +31,7 @@ NS_TIMELINE_BEGIN
 
 Timeline* Timeline::create()
 {
-    Timeline* object = new Timeline();
+    Timeline* object = new (std::nothrow) Timeline();
     if (object)
     {
         object->autorelease();

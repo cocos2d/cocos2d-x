@@ -137,7 +137,7 @@ void Bone3D::clearBoneBlendState()
  */
 Bone3D* Bone3D::create(const std::string& id)
 {
-    auto bone = new Bone3D(id);
+    auto bone = new (std::nothrow) Bone3D(id);
     bone->autorelease();
     return bone;
 }
@@ -260,7 +260,7 @@ Skeleton3D::~Skeleton3D()
 
 Skeleton3D* Skeleton3D::create(const std::vector<NodeData*>& skeletondata)
 {
-    auto skeleton = new Skeleton3D();
+    auto skeleton = new (std::nothrow) Skeleton3D();
     for (const auto& it : skeletondata) {
         auto bone = skeleton->createBone3D(*it);
         bone->resetPose();

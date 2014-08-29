@@ -193,7 +193,7 @@ void WebSocketTestLayer::onError(network::WebSocket* ws, const network::WebSocke
 
 void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -242,7 +242,7 @@ void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
 void runWebSocketTest()
 {
     auto scene = Scene::create();
-    auto layer = new WebSocketTestLayer();
+    auto layer = new (std::nothrow) WebSocketTestLayer();
     scene->addChild(layer);
     
     Director::getInstance()->replaceScene(scene);

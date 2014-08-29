@@ -96,7 +96,7 @@ Speed::~Speed()
 
 Speed* Speed::create(ActionInterval* action, float speed)
 {
-    Speed *ret = new Speed();
+    Speed *ret = new (std::nothrow) Speed();
     if (ret && ret->initWithAction(action, speed))
     {
         ret->autorelease();
@@ -118,7 +118,7 @@ bool Speed::initWithAction(ActionInterval *action, float speed)
 Speed *Speed::clone() const
 {
 	// no copy constructor
-	auto a = new Speed();
+	auto a = new (std::nothrow) Speed();
 	a->initWithAction(_innerAction->clone(), _speed);
 	a->autorelease();
 	return  a;
@@ -172,7 +172,7 @@ Follow::~Follow()
 
 Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 {
-    Follow *follow = new Follow();
+    Follow *follow = new (std::nothrow) Follow();
     if (follow && follow->initWithTarget(followedNode, rect))
     {
         follow->autorelease();
@@ -185,7 +185,7 @@ Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 Follow* Follow::clone() const
 {
 	// no copy constructor
-	auto a = new Follow();
+	auto a = new (std::nothrow) Follow();
 	a->initWithTarget(_followedNode, _worldRect);
 	a->autorelease();
 	return a;
@@ -259,8 +259,8 @@ void Follow::step(float dt)
 
         Vec2 tempPos = _halfScreenSize - _followedNode->getPosition();
 
-        _target->setPosition(Vec2(clampf(tempPos.x, _leftBoundary, _rightBoundary),
-                                   clampf(tempPos.y, _bottomBoundary, _topBoundary)));
+        _target->setPosition(clampf(tempPos.x, _leftBoundary, _rightBoundary),
+                                   clampf(tempPos.y, _bottomBoundary, _topBoundary));
     }
     else
     {

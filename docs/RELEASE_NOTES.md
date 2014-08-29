@@ -26,6 +26,7 @@
 	- [RenderTexture save function](#user-content-rendertexture-save-function)
 	- [Primitive](#user-content-primitive)
 	- [Consistent way to set GL context attributes](#user-content-consistent-way-to-set-gl-context-attributes)
+	- [Only two libraries left](#user-content-only-two-libraries-left)
 
 # Misc Information
 
@@ -127,6 +128,7 @@ Please refer to this document: [ReadMe](../README.md)
 * Primitive: Support Points, Lines and Triagles for rendering
 * SpriteFrameCache: support loading from plist file content data
 * Added a consistent way to set GL context attributes for all platforms
+* Only two libraries in cocos2d-x, one for c++ codes, another one for lua-binding codes
 * Many other small features added and many bugs fixed
 
 # Features in detail
@@ -344,3 +346,38 @@ void AppDelegate::initGLContextAttrs()
 ```
 
 Now can only support setting bits of `r`, `g`, `b`, `a`, `depth buffer` and `stencil buffer`. We will support other attributes if needed.
+
+## Only two libraries left
+
+Now there are two libraries left: one for all c++ codes and another one for lua-bindings codes. 
+
+If you are developing with c++, you only have to link to `libcocos2d`. `libcocos2d` includes all c++ codes:
+
+* cocos2d(including 2d and 3d)
+* network
+* cocosstudio
+* ui
+* cocosbuilder
+* spine
+* chipmunk
+* box2d
+* ...
+
+Not used codes will be stripped by linker.
+
+If you are developing with lua, you should link to `libcocos2d` and `libluacocos2d`. You can comment codes in `lua_module_register.h` if you don't want to some module.
+
+```c++
+int lua_module_register(lua_State* L)
+{
+    register_cocosdenshion_module(L); // comment this line to remove cocosdenshion
+    register_network_module(L);       // comment this line to remove network
+    register_cocosbuilder_module(L);  // comment this line to remove cocosbuilder
+    register_cocostudio_module(L);    // comment this line to remove cocostudio
+    register_extension_module(L);     // comment this line to remove extension
+    register_ui_moudle(L);            // comment this line to remove ui
+    register_spine_module(L);         // comment this line to remove spine
+    register_cocos3d_module(L);       // comment this line to remove 3d
+    return 1;
+}
+```
