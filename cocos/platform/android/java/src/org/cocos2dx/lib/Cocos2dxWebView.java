@@ -6,6 +6,7 @@ import java.net.URI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -42,6 +43,7 @@ public class Cocos2dxWebView extends WebView {
         }
 
         this.setWebViewClient(new Cocos2dxWebViewClient());
+        this.setWebChromeClient(new WebChromeClient());
     }
 
     public void setJavascriptInterfaceScheme(String scheme) {
