@@ -12,6 +12,7 @@ CCOBB.cpp \
 CCAnimate3D.cpp \
 CCAnimation3D.cpp \
 CCAttachNode.cpp \
+CCBillBoard.cpp \
 CCBundle3D.cpp \
 CCBundleReader.cpp \
 CCMesh.cpp \

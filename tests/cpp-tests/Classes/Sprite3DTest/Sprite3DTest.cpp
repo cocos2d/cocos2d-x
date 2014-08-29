@@ -1663,8 +1663,8 @@ void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* ev
         cameraRightDir.normalize();
         cameraRightDir.y=0;
         Vec3 cameraPos=  _camera->getPosition3D();
-        cameraPos+=cameraDir*newPos.y*0.1;
-        cameraPos+=cameraRightDir*newPos.x*0.1;
+        cameraPos+=cameraDir*newPos.y*0.5;
+        cameraPos+=cameraRightDir*newPos.x*0.5;
         _camera->setPosition3D(cameraPos);      
     }
 }
