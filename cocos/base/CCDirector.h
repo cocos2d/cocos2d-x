@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
+#include "2d/CCScene.h"
 #include "CCGL.h"
 #include <stack>
 #include "math/CCMath.h"
@@ -46,7 +47,6 @@ NS_CC_BEGIN
 
 /* Forward declarations. */
 class LabelAtlas;
-class Scene;
 //class GLView;
 class DirectorDelegate;
 class Node;

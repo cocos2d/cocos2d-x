@@ -53,6 +53,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "deprecated/CCString.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 

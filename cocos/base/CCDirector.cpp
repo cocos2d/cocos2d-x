@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include <string>
 
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCScene.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
 

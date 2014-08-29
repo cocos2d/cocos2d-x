@@ -25,6 +25,7 @@
 #ifndef _COCOLOADER_H
 #define _COCOLOADER_H
 
+#include <stdint.h>
 #include "json/document.h"
 #include "cocostudio/CocosStudioExport.h"
 
