@@ -72,6 +72,8 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 int Node::s_globalOrderOfArrival = 1;
 
+// MARK: Constructor, Destructor, Init
+
 Node::Node(void)
 : _rotationX(0.0f)
 , _rotationY(0.0f)
@@ -144,6 +146,20 @@ Node::Node(void)
     _transform = _inverse = _additionalTransform = Mat4::IDENTITY;
 }
 
+Node * Node::create()
+{
+    Node * ret = new (std::nothrow) Node();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
 Node::~Node()
 {
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
@@ -193,6 +209,34 @@ bool Node::init()
 {
     return true;
 }
+
+void Node::cleanup()
+{
+    // actions
+    this->stopAllActions();
+    this->unscheduleAllSelectors();
+
+#if CC_ENABLE_SCRIPT_BINDING
+    if ( _scriptType != kScriptTypeNone)
+    {
+        int action = kNodeOnCleanup;
+        BasicScriptData data(this,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+
+    // timers
+    for( const auto &child: _children)
+        child->cleanup();
+}
+
+std::string Node::getDescription() const
+{
+    return StringUtils::format("<Node | Tag = %d", _tag);
+}
+
+// MARK: getters / setters
 
 float Node::getSkewX() const
 {
@@ -758,46 +802,7 @@ Rect Node::getBoundingBox() const
     return RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 }
 
-Node * Node::create()
-{
-	Node * ret = new (std::nothrow) Node();
-    if (ret && ret->init())
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-	return ret;
-}
-
-void Node::cleanup()
-{
-    // actions
-    this->stopAllActions();
-    this->unscheduleAllSelectors();
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
-    {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-#endif // #if CC_ENABLE_SCRIPT_BINDING
-    
-    // timers
-    for( const auto &child: _children)
-        child->cleanup();
-}
-
-
-std::string Node::getDescription() const
-{
-    return StringUtils::format("<Node | Tag = %d", _tag);
-}
+// MARK: Children logic
 
 // lazy allocs
 void Node::childrenAlloc()
@@ -1184,6 +1189,8 @@ void Node::sortAllChildren()
     }
 }
 
+// MARK: draw / visit
+
 void Node::draw()
 {
     auto renderer = Director::getInstance()->getRenderer();
@@ -1291,6 +1298,8 @@ Mat4 Node::transform(const Mat4& parentTransform)
     ret  = parentTransform * ret;
     return ret;
 }
+
+// MARK: events
 
 void Node::onEnter()
 {
@@ -1420,6 +1429,8 @@ void Node::setActionManager(ActionManager* actionManager)
     }
 }
 
+// MARK: actions
+
 Action * Node::runAction(Action* action)
 {
     CCASSERT( action != nullptr, "Argument must be non-nil");
@@ -1460,7 +1471,7 @@ ssize_t Node::getNumberOfRunningActions() const
     return _actionManager->getNumberOfRunningActionsInTarget(this);
 }
 
-// Node - Callbacks
+// MARK: Callbacks
 
 void Node::setScheduler(Scheduler* scheduler)
 {
@@ -1590,6 +1601,8 @@ void Node::update(float fDelta)
         _componentContainer->visit(fDelta);
     }
 }
+
+// MARK: coordinates
 
 AffineTransform Node::getNodeToParentAffineTransform() const
 {
@@ -1845,6 +1858,8 @@ void Node::updateTransform()
         child->updateTransform();
 }
 
+// MARK: components
+
 Component* Node::getComponent(const std::string& name)
 {
     if( _componentContainer )
@@ -1882,6 +1897,9 @@ void Node::removeAllComponents()
 }
 
 #if CC_USE_PHYSICS
+
+// MARK: Physics
+
 void Node::updatePhysicsBodyTransform(Scene* scene)
 {
     updatePhysicsBodyScale(scene);
@@ -2035,6 +2053,8 @@ PhysicsBody* Node::getPhysicsBody() const
 }
 #endif //CC_USE_PHYSICS
 
+// MARK: Opacity and Color
+
 GLubyte Node::getOpacity(void) const
 {
 	return _realOpacity;
@@ -2184,6 +2204,7 @@ void Node::disableCascadeColor()
     }
 }
 
+// MARK: Camera
 void Node::setCameraMask(unsigned short mask, bool applyChildren)
 {
     _cameraMask = mask;
@@ -2194,6 +2215,8 @@ void Node::setCameraMask(unsigned short mask, bool applyChildren)
         }
     }
 }
+
+// MARK: Deprecated
 
 __NodeRGBA::__NodeRGBA()
 {
