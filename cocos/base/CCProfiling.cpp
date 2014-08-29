@@ -25,8 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCProfiling.h"
 
-#include <chrono>
-
 using namespace std;
 
 NS_CC_BEGIN

@@ -27,6 +27,7 @@
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "base/CCEventDispatcher.h"
+#include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramState.h"
 

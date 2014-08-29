@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgramState.h"
 
 NS_CC_BEGIN
 

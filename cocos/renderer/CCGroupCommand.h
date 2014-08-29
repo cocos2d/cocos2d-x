@@ -30,7 +30,6 @@
 
 #include "base/CCRef.h"
 #include "CCRenderCommand.h"
-#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 

@@ -8,6 +8,7 @@
 
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
+#include "CCBKeyframe.h"
 #include "CCBSequenceProperty.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 

@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
 #include "deprecated/CCString.h"
 

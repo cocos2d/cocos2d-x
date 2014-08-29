@@ -31,12 +31,8 @@ THE SOFTWARE.
 #include "base/CCPlatformMacros.h"
 
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
-#include "math/CCGeometry.h"
 #include "base/CCVector.h"
 #include "CCGL.h"
-#include "2d/CCLabelAtlas.h"
-#include "2d/CCScene.h"
 #include <stack>
 #include "math/CCMath.h"
 #include "platform/CCGLView.h"

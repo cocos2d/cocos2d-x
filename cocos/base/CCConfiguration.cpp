@@ -25,9 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/CCConfiguration.h"
-#include <string.h>
-#include "base/ccMacros.h"
-#include "base/ccConfig.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN

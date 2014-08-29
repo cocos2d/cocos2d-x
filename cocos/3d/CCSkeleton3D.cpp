@@ -23,11 +23,7 @@
  ****************************************************************************/
 
 #include "3d/CCSkeleton3D.h"
-#include "3d/CCBundle3D.h"
 
-#include "base/ccMacros.h"
-#include "base/CCPlatformMacros.h"
-#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

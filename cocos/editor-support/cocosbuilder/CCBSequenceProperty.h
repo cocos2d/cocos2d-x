@@ -3,9 +3,10 @@
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
-#include "CCBKeyframe.h"
 
 namespace cocosbuilder {
+
+class CCBKeyframe;
 
 class CC_DLL CCBSequenceProperty : public cocos2d::Ref
 {

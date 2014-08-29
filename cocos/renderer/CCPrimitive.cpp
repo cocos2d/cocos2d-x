@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "renderer/CCPrimitive.h"
+#include "renderer/CCVertexIndexBuffer.h"
 
 NS_CC_BEGIN
 

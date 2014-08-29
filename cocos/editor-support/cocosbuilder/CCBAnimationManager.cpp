@@ -1,8 +1,6 @@
 #include "CCBAnimationManager.h"
-#include "CCBSequence.h"
-#include "CCBSequenceProperty.h"
+
 #include "CCBReader.h"
-#include "CCBKeyframe.h"
 #include "CCNode+CCBRelativePositioning.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "CCBSelectorResolver.h"
