@@ -24,13 +24,13 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "WebViewImpl_iOS.h"
+#include "UIWebViewImpl_iOS.h"
 #include "renderer/CCRenderer.h"
 #include "CCDirector.h"
 #include "CCGLView.h"
 #include "CCEAGLView.h"
 #include "platform/CCFileUtils.h"
-#include "ui/WebView.h"
+#include "ui/UIWebView.h"
 
 @interface UIWebViewWrapper : NSObject
 @property (nonatomic) std::function<bool(std::string url)> shouldStartLoading;

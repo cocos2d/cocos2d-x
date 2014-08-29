@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "WebViewImpl_android.h"
+#include "UIWebViewImpl_android.h"
 
 #include <unordered_map>
 #include <stdlib.h>
@@ -30,7 +30,7 @@
 #include "jni/JniHelper.h"
 #include <jni.h>
 
-#include "WebView.h"
+#include "UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"

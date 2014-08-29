@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 
-#include "WebView.h"
+#include "UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
