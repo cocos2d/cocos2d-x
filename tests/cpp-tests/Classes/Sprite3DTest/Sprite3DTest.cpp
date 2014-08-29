@@ -1558,8 +1558,8 @@ BillBoardTest::BillBoardTest()
     addNewAniBillBoradWithCoords(Vec3(-100,0,0));
     addNewAniBillBoradWithCoords(Vec3(-140,0,0));
     addNewAniBillBoradWithCoords(Vec3(-180,0,0));
-    _camera->setPosition3D(Vec3(0, 130, 330));
-    _camera->lookAt(Vec3(0,0,200), Vec3(0,1,0));
+    _camera->setPosition3D(Vec3(0, 130, 230));
+    _camera->lookAt(Vec3(0,0,100), Vec3(0,1,0));
 
     //for( int j =-20; j<=20 ;j++)
     //{
@@ -1610,7 +1610,7 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
         auto billborad = BillBorad::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billborad->setScale(0.5f);
         _layerBillBorad->addChild(billborad);
-        billborad->setPosition3D(Vec3(p.x, p.y,  30 * i));
+        billborad->setPosition3D(Vec3(p.x, p.y,  -50.0f + 30 * i));
         billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
     }
@@ -1621,7 +1621,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
     {
         auto billboradAni = BillBorad::create("Images/grossini.png");
         billboradAni->setScale(0.5f);
-        billboradAni->setPosition3D(Vec3(p.x, p.y,  30 * i));
+        billboradAni->setPosition3D(Vec3(p.x, p.y,  -50.0f + 30 * i));
         _layerBillBorad->addChild(billboradAni);
 
         auto animation = Animation::create();
