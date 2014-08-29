@@ -1,10 +1,14 @@
 
 /* debugger.c */
-
+#if __cplusplus
+extern "C"{
+#endif
 #include "lua.h"
 #include "lauxlib.h"
 #include "lua_debugger.h"
-
+#if __cplusplus
+}
+#endif
 /* ldt_debugger */
 static const char lua_m_ldt_debugger[] = {
     0x1b,0x4c,0x4a,0x01,0x02,0x87,0x01,0x00,0x01,0x0c,0x00,0x06,0x02,0x18,0x32,0x01,

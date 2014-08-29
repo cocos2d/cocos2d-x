@@ -50,7 +50,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-
+static std::string g_projectPath;
 
 //1M size 
 #define MAXPROTOLENGTH 1048576
@@ -64,7 +64,7 @@ std::string g_resourcePath;
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
-    return "1.3";
+    return "1.4";
 }
 
 static string& replaceAll(string& str,const string& old_value,const string& new_value)
@@ -801,11 +801,13 @@ public:
         _console->listenOnTCP(6010);
 #endif
         _fileserver = nullptr;
-#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        _fileserver->listenOnTCP(ConfigParser::getInstance()->getUploadPort());
+#else
         _fileserver->listenOnTCP(6020);
-        _fileserver->readResFileFinfo();
 #endif
+        _fileserver->readResFileFinfo();
     }
 
     ~ConsoleCustomCommand()
@@ -998,13 +1000,17 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        std::string argtmp = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
-            arg0 = g_resourcePath+arg0;
+        std::string originPath = arg0;
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+            arg0 = g_resourcePath+originPath;
         cobj->addSearchPath(arg0);
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+                cobj->addSearchPath(g_projectPath + originPath);        
+#endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
-        cobj->addSearchPath(argtmp);
+    if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+        cobj->addSearchPath(originPath);
 #endif
         return 0;
     }
@@ -1052,17 +1058,22 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
         ok &= luaval_to_std_vector_string(tolua_S, 2,&vecPaths);
         if(!ok)
             return 0;
-        std::vector<std::string> argtmp;
+        std::vector<std::string> originPath; // for IOS platform.
+        std::vector<std::string> projPath; // for Desktop platform.
         for (int i = 0; i < vecPaths.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
             {
-                argtmp.push_back(vecPaths[i]);
+                originPath.push_back(vecPaths[i]); // for IOS platform.
+                projPath.push_back(g_projectPath+vecPaths[i]); //for Desktop platform.
                 vecPaths[i] = g_resourcePath + vecPaths[i];
             }
         }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        vecPaths.insert(vecPaths.end(),projPath.begin(),projPath.end());
+#endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        vecPaths.insert(vecPaths.end(),argtmp.begin(),argtmp.end());
+        vecPaths.insert(vecPaths.end(),originPath.begin(),originPath.end());
 #endif
         cobj->setSearchPaths(vecPaths);
         return 0;
@@ -1109,18 +1120,23 @@ bool initRuntime()
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    if (g_resourcePath.empty())
+    if (g_projectPath.empty())
     {
         extern std::string getCurAppPath();
-        string resourcePath = getCurAppPath();
+        string appPath = getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        resourcePath.append("/../../");
+        appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        resourcePath.append("/../../../");
+        appPath.append("/../../../");
 #endif
-        resourcePath =replaceAll(resourcePath,"\\","/");
-        g_resourcePath = resourcePath;
+        appPath =replaceAll(appPath,"\\","/");
+        g_projectPath = appPath;
     }    
+    searchPathArray.insert(searchPathArray.begin(),g_projectPath);
+    g_resourcePath = FileUtils::getInstance()->getWritablePath();
+    g_resourcePath += "debugruntime/";
+    g_resourcePath += ConfigParser::getInstance()->getInitViewName();
+    g_resourcePath +="/";
 #else
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
     g_resourcePath += "debugruntime/";
