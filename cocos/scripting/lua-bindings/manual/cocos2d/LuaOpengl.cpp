@@ -93,7 +93,7 @@ static int tolua_Cocos2d_GLNode_create00(lua_State* tolua_S)
     else
 #endif
     {
-        GLNode *glNode = new GLNode();
+        GLNode *glNode = new (std::nothrow) GLNode();
         if (NULL != glNode)
         {
             glNode->autorelease();
@@ -161,7 +161,7 @@ static int tolua_Cocos2d_glGetSupportedExtensions00(lua_State* tolua_S)
     {
         const GLubyte* extensions = glGetString(GL_EXTENSIONS);
         size_t len  = strlen((const char*)extensions);
-        GLubyte* copy = new GLubyte[len+1];
+        GLubyte* copy = new (std::nothrow) GLubyte[len+1];
         strncpy((char*)copy, (const char*)extensions, len );
         
         int start_extension=0;
@@ -1879,7 +1879,7 @@ static int tolua_Cocos2d_glGetActiveAttrib00(lua_State* tolua_S)
         unsigned int arg1 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
         GLsizei length;
         glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-        GLchar* buffer = new GLchar[length];
+        GLchar* buffer = new (std::nothrow) GLchar[length];
         GLint size = -1;
         GLenum type = -1;
         glGetActiveAttrib(arg0, arg1, length, NULL, &size, &type, buffer);
@@ -1918,7 +1918,7 @@ static int tolua_Cocos2d_glGetActiveUniform00(lua_State* tolua_S)
         unsigned int arg1 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
         GLsizei length;
         glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-        GLchar* buffer = new GLchar[length];
+        GLchar* buffer = new (std::nothrow) GLchar[length];
         GLint size = -1;
         GLenum type = -1;
         glGetActiveUniform(arg0, arg1, length, NULL, &size, &type, buffer);
@@ -1955,7 +1955,7 @@ static int tolua_Cocos2d_glGetAttachedShaders00(lua_State* tolua_S)
         unsigned int arg0 = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
         GLsizei length;
         glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
-        GLuint* buffer = new GLuint[length];
+        GLuint* buffer = new (std::nothrow) GLuint[length];
         memset(buffer, 0, length * sizeof(GLuint));
         //Fix bug 2448, it seems that glGetAttachedShaders will crash if we send NULL to the third parameter (eg Windows), same as in JS binding
         GLsizei realShaderCount = 0;
@@ -2051,7 +2051,7 @@ static int tolua_Cocos2d_glGetProgramInfoLog00(lua_State* tolua_S)
         unsigned int arg0  = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
         GLsizei length;
         glGetProgramiv(arg0, GL_INFO_LOG_LENGTH, &length);
-        GLchar* src = new GLchar[length];
+        GLchar* src = new (std::nothrow) GLchar[length];
         glGetProgramInfoLog(arg0, length, NULL, src);
         lua_pushstring(tolua_S, src);
         CC_SAFE_DELETE_ARRAY(src);
@@ -2112,7 +2112,7 @@ static int tolua_Cocos2d_glGetShaderInfoLog00(lua_State* tolua_S)
         unsigned int arg0  = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
         GLsizei length;
         glGetShaderiv(arg0, GL_INFO_LOG_LENGTH, &length);
-        GLchar* src = new GLchar[length];
+        GLchar* src = new (std::nothrow) GLchar[length];
         glGetShaderInfoLog(arg0, length, NULL, src);
         lua_pushstring(tolua_S, src);
         CC_SAFE_DELETE_ARRAY(src);
@@ -2143,7 +2143,7 @@ static int tolua_Cocos2d_glGetShaderSource00(lua_State* tolua_S)
         unsigned int arg0  = (unsigned int)tolua_tonumber(tolua_S, 1, 0);
         GLsizei length;
         glGetShaderiv(arg0, GL_SHADER_SOURCE_LENGTH, &length);
-        GLchar* src = new GLchar[length];
+        GLchar* src = new (std::nothrow) GLchar[length];
         glGetShaderSource(arg0, length, NULL, src);
         lua_pushstring(tolua_S, src);
         CC_SAFE_DELETE_ARRAY(src);
@@ -2268,7 +2268,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
         
         GLsizei length;
         glGetProgramiv(arg0, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
-        GLchar* namebuffer = new GLchar[length];
+        GLchar* namebuffer = new (std::nothrow) GLchar[length];
         GLint size = -1;
         GLenum type = -1;
         
@@ -2334,7 +2334,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
                 break;
         }
         if( utype == GL_FLOAT) {
-            GLfloat* param = new GLfloat[usize];
+            GLfloat* param = new (std::nothrow) GLfloat[usize];
             glGetUniformfv(arg0, arg1, param);
             
             lua_newtable(tolua_S);                                        /* L: table */
@@ -2348,7 +2348,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(param);
             
         } else if( utype == GL_INT ) {
-            GLint* param = new GLint[usize];
+            GLint* param = new (std::nothrow) GLint[usize];
             glGetUniformiv(arg0, arg1, param);
             
             lua_newtable(tolua_S);                                        /* L: table */

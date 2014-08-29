@@ -174,7 +174,7 @@ static int tolua_Cocos2d_WebSocket_create00(lua_State* tolua_S)
 #endif
     {
             const char* urlName = ((const char*)  tolua_tostring(tolua_S,2,0));
-            LuaWebSocket *wSocket = new LuaWebSocket();
+            LuaWebSocket *wSocket = new (std::nothrow) LuaWebSocket();
             wSocket->init(*wSocket, urlName);
             tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
             tolua_register_gc(tolua_S,lua_gettop(tolua_S));
@@ -208,7 +208,7 @@ static int tolua_Cocos2d_WebSocket_createByAProtocol00(lua_State* tolua_S)
         const char *protocol = ((const char*)  tolua_tostring(tolua_S,3,0));
         std::vector<std::string> protocols;
         protocols.push_back(protocol);
-        LuaWebSocket *wSocket = new LuaWebSocket();
+        LuaWebSocket *wSocket = new (std::nothrow) LuaWebSocket();
         wSocket->init(*wSocket, urlName,&protocols);
         tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
@@ -251,7 +251,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
                 }
             }
         }
-        LuaWebSocket *wSocket = new LuaWebSocket();
+        LuaWebSocket *wSocket = new (std::nothrow) LuaWebSocket();
         wSocket->init(*wSocket, urlName,&protocols);
         tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));

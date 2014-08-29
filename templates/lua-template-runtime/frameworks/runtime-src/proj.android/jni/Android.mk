@@ -40,15 +40,7 @@ $(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../../cocos2d-x/external
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += network_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += spine_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += extension_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += ui_lua_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos3d_lua_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 

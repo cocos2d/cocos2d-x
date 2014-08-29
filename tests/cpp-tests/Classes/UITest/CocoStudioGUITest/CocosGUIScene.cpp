@@ -261,7 +261,7 @@ void CocosGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -299,7 +299,7 @@ void CocosGUITestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, E
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -325,14 +325,14 @@ void CocosGUITestScene::onEnter()
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void CocosGUITestScene::runThisTest()
 {
-    auto layer = new CocosGUITestMainLayer();
+    auto layer = new (std::nothrow) CocosGUITestMainLayer();
     addChild(layer);
     layer->release();
     
@@ -341,7 +341,7 @@ void CocosGUITestScene::runThisTest()
 
 void CocosGUITestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

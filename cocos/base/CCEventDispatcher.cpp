@@ -461,7 +461,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     if (itr == _listenerMap.end())
     {
         
-        listeners = new EventListenerVector();
+        listeners = new (std::nothrow) EventListenerVector();
         _listenerMap.insert(std::make_pair(listenerID, listeners));
     }
     else

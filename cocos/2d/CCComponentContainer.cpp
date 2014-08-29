@@ -60,7 +60,7 @@ bool ComponentContainer::add(Component *com)
     {
         if (_components == nullptr)
         {
-            _components = new Map<std::string, Component*>();
+            _components = new (std::nothrow) Map<std::string, Component*>();
         }
         Component *component = _components->at(com->getName());
         
@@ -135,7 +135,7 @@ void ComponentContainer::removeAll()
 
 void ComponentContainer::alloc(void)
 {
-    _components = new Map<std::string, Component*>();
+    _components = new (std::nothrow) Map<std::string, Component*>();
 }
 
 void ComponentContainer::visit(float delta)

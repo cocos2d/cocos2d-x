@@ -2346,8 +2346,6 @@
 		3EA3EDBB1991CDFA00645534 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCCamera.h; path = ../base/CCCamera.h; sourceTree = "<group>"; };
 		464AD6E3197EBB1400E502D8 /* pvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pvr.cpp; path = ../base/pvr.cpp; sourceTree = "<group>"; };
 		464AD6E4197EBB1400E502D8 /* pvr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvr.h; path = ../base/pvr.h; sourceTree = "<group>"; };
-		46633BC2199DDB2F00F6E838 /* CCModuleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCModuleManager.cpp; path = ../base/CCModuleManager.cpp; sourceTree = "<group>"; };
-		46633BC3199DDB2F00F6E838 /* CCModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCModuleManager.h; path = ../base/CCModuleManager.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -3072,8 +3070,6 @@
 		1A570095180BC5B00088DEC7 /* base-nodes */ = {
 			isa = PBXGroup;
 			children = (
-				46633BC2199DDB2F00F6E838 /* CCModuleManager.cpp */,
-				46633BC3199DDB2F00F6E838 /* CCModuleManager.h */,
 				15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */,
 				15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */,
 				1A57009C180BC5D20088DEC7 /* CCNode.cpp */,

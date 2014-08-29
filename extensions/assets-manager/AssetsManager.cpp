@@ -624,8 +624,8 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
         SuccessCallback successCallback;
     };
 
-    auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
-    auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
+    auto* manager = new (std::nothrow) AssetsManager(packageUrl,versionFileUrl,storagePath);
+    auto* delegate = new (std::nothrow) DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
     manager->setDelegate(delegate);
     manager->_shouldDeleteDelegateWhenExit = true;
     manager->autorelease();

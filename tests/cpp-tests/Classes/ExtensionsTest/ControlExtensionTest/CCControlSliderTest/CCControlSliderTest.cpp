@@ -46,7 +46,7 @@ bool ControlSliderTest::init()
         _displayValueLabel = Label::createWithTTF("Move the slider thumb!\nThe lower slider is restricted." ,"fonts/Marker Felt.ttf", 32);
         _displayValueLabel->retain();
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Vec2(screenSize.width / 1.7f, screenSize.height / 2.0f));
+        _displayValueLabel->setPosition(screenSize.width / 1.7f, screenSize.height / 2.0f);
         addChild(_displayValueLabel);
 
         // Add the slider
@@ -54,7 +54,7 @@ bool ControlSliderTest::init()
         slider->setAnchorPoint(Vec2(0.5f, 1.0f));
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
-        slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + 16));
+        slider->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f + 16);
 		slider->setTag(1);
 
         // When the value of the slider will change, the given selector will be call
@@ -67,7 +67,7 @@ bool ControlSliderTest::init()
 		restrictSlider->setMaximumAllowedValue(4.0f);
 		restrictSlider->setMinimumAllowedValue(1.5f);
 		restrictSlider->setValue(3.0f);
-        restrictSlider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f - 24));
+        restrictSlider->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f - 24);
 		restrictSlider->setTag(2);
 
 	//same with restricted
