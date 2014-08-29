@@ -126,7 +126,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
         _direction  = Direction::BOTH;
-        _container->setPosition(Vec2(0.0f, 0.0f));
+        _container->setPosition(0.0f, 0.0f);
         _touchLength = 0.0f;
         
         this->addChild(_container);

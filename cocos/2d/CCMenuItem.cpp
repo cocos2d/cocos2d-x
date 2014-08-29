@@ -948,7 +948,7 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
         this->addChild(item, 0, kCurrentItem);
         Size s = item->getContentSize();
         this->setContentSize(s);
-        item->setPosition( Vec2( s.width/2, s.height/2 ) );
+        item->setPosition(s.width/2, s.height/2);
     }
 }
 

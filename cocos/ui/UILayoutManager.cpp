@@ -135,7 +135,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                subWidget->setPosition(Vec2(finalPosX, finalPosY));
+                subWidget->setPosition(finalPosX, finalPosY);
                 topBoundary = subWidget->getPosition().y - subWidget->getAnchorPoint().y * subWidget->getContentSize().height - mg.bottom;
             }
         }

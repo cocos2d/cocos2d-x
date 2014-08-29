@@ -290,7 +290,7 @@ public:
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Vec2(size.width/2, size.height/2) )
+     node->setPosition(size.width/2, size.height/2)
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
@@ -1127,6 +1127,13 @@ public:
      * @param tag   A tag that indicates the action to be removed.
      */
     void stopActionByTag(int tag);
+    
+    /**
+     * Removes all actions from the running action list by its tag.
+     *
+     * @param tag   A tag that indicates the action to be removed.
+     */
+    void stopAllActionsByTag(int tag);
 
     /**
      * Gets an action from the running action list by its tag.
