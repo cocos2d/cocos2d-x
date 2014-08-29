@@ -87,7 +87,7 @@ bool Primitive::init(VertexData* verts, IndexBuffer* indices, int type)
 
 void Primitive::draw()
 {
-    if(_verts && _indices)
+    if(_verts)
     {
         _verts->use();
         if(_indices!= nullptr)
@@ -99,7 +99,7 @@ void Primitive::draw()
         }
         else
         {
-            glDrawArrays((GLenum)_type, _count, _start);
+            glDrawArrays((GLenum)_type, _start, _count);
         }
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
