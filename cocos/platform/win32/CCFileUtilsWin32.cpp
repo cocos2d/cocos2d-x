@@ -278,7 +278,7 @@ string FileUtilsWin32::getWritablePath() const
     ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);
 
     // Debug app uses executable directory; Non-debug app uses local app data directory
-#ifndef _DEBUG
+//#ifndef _DEBUG
         // Get filename of executable only, e.g. MyGame.exe
         char *base_name = strrchr(full_path, '\\');
 
@@ -306,7 +306,7 @@ string FileUtilsWin32::getWritablePath() const
                 }
             }
         }
-#endif // not defined _DEBUG
+//#endif // not defined _DEBUG
 
     // If fetching of local app data directory fails, use the executable one
     string ret((char*)full_path);
