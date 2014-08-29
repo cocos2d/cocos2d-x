@@ -93,28 +93,19 @@ BillBorad* BillBorad::create()
 void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     auto camera = Camera::getVisitingCamera();
-    Mat4 viewInverseMat =  camera->getViewMatrix().getInversed();
+    Mat4 viewInverseMat =  camera->getInverseViewMatrix();
     viewInverseMat.m[12] = viewInverseMat.m[13] = viewInverseMat.m[14] = 0;
 
     Mat4 transMat = transform;
     transMat *= viewInverseMat;
-    // Don't do calculate the culling if the transform was not updated
-    _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transMat, _contentSize) : _insideBounds;
+    //// Don't do calculate the culling if the transform was not updated
+    //_insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transMat, _contentSize) : _insideBounds;
 
-    if(_insideBounds)
+    //if(_insideBounds)
     {
-        if (_displayedOpacity < 255)
-        {
             Mat4 modelViewMat = camera->getViewMatrix() * transMat;
             _quadCommand.init(-modelViewMat.m[14], _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
             renderer->addTransparentCommand(&_quadCommand);
-        }
-        else
-        {
-            _quadCommand.init(-_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
-            renderer->addTransparentCommand(&_quadCommand);
-        }
-
     }
 }
 
