@@ -80,4 +80,3 @@ LOCAL_STATIC_LIBRARIES += cocos2dx_internal_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-
