@@ -28,7 +28,7 @@ THE SOFTWARE.
 #ifndef __CC_PARTICLE_SYSTEM_QUAD_H__
 #define __CC_PARTICLE_SYSTEM_QUAD_H__
 
-#include  "CCParticleSystem.h"
+#include "2d/CCParticleSystem.h"
 #include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN

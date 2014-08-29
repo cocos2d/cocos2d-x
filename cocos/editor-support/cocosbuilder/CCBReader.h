@@ -1,6 +1,7 @@
 #ifndef _CCB_CCBREADER_H_
 #define _CCB_CCBREADER_H_
 
+#include <set>
 #include <string>
 #include <vector>
 #include "2d/CCNode.h"

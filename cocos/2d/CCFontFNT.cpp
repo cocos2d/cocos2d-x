@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "2d/CCFontFNT.h"
+#include <set>
 #include "base/uthash.h"
 #include "2d/CCFontAtlas.h"
 #include "platform/CCFileUtils.h"

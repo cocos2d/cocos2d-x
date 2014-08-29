@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCActionManagerEx.h"
-#include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocoLoader.h"
 
 using namespace cocos2d;

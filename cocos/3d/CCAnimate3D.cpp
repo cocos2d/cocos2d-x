@@ -23,12 +23,9 @@
  ****************************************************************************/
 
 #include "3d/CCAnimate3D.h"
-#include "3d/CCAnimation3D.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCMeshSkin.h"
-
-#include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN

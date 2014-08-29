@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
