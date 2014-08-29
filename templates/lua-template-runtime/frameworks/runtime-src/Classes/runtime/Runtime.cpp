@@ -1133,15 +1133,11 @@ bool initRuntime()
         g_projectPath = appPath;
     }    
     searchPathArray.insert(searchPathArray.begin(),g_projectPath);
-    g_resourcePath = FileUtils::getInstance()->getWritablePath();
-    g_resourcePath += "debugruntime/";
-    g_resourcePath += ConfigParser::getInstance()->getInitViewName();
-    g_resourcePath +="/";
-#else
-    g_resourcePath = FileUtils::getInstance()->getWritablePath();
-    g_resourcePath += "debugruntime/";
 #endif
-    
+
+    g_resourcePath = FileUtils::getInstance()->getWritablePath();
+    g_resourcePath += "debugruntime/";
+   
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
     if (g_resourcePath.at(g_resourcePath.length()-1) != '/'){
         g_resourcePath.append("/");
