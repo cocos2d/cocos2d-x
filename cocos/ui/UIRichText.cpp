@@ -356,7 +356,7 @@ void RichText::formarRenderers()
         {
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
-            l->setPosition(Vec2(nextPosX, 0.0f));
+            l->setPosition(nextPosX, 0.0f);
             _elementRenderersContainer->addChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
@@ -395,7 +395,7 @@ void RichText::formarRenderers()
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(Vec2(nextPosX, nextPosY));
+                l->setPosition(nextPosX, nextPosY);
                 _elementRenderersContainer->addChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }

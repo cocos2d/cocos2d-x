@@ -475,7 +475,7 @@ void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d:
 {
     float x = DICTOOL->getFloatValue_json(root, "x");
     float y = DICTOOL->getFloatValue_json(root, "y");
-    node->setPosition(Vec2(x, y));
+    node->setPosition(x, y);
     
     const bool bVisible = (DICTOOL->getIntValue_json(root, "visible", 1) != 0);
     node->setVisible(bVisible);
@@ -493,6 +493,9 @@ void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d:
     
     float fRotationZ = DICTOOL->getFloatValue_json(root, "rotation"); 
     node->setRotation(fRotationZ);
+    
+    const char *sName = DICTOOL->getStringValue_json(root, "name", "");
+    node->setName(sName);
 }
     
     
@@ -501,6 +504,7 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
     stExpCocoNode *stChildArray = cocoNode->GetChildArray(cocoLoader);
     float x = 0.0f, y = 0.0f, fScaleX = 1.0f, fScaleY = 1.0f, fRotationZ = 1.0f;
     bool bVisible = false;
+    const char *sName = "";
     int nTag = 0, nZorder = -1;
     
     for (int i = 0; i < cocoNode->GetChildNum(); ++i)
@@ -547,6 +551,11 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode 
         {
             fRotationZ = utils::atof(value.c_str());
             node->setRotation(fRotationZ);
+        }
+        else if(key == "name")
+        {
+            sName = value.c_str();
+            node->setName(sName);
         }
     }
 }

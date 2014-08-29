@@ -288,7 +288,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
 
     if(x != 0 || y != 0)
-        node->setPosition(Point(x, y));
+        node->setPosition(x, y);
     if(scalex != 1)
         node->setScaleX(scalex);
     if(scaley != 1)

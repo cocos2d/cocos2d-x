@@ -341,7 +341,7 @@ void PhysicsBody::setGravityEnable(bool enable)
     }
 }
 
-void PhysicsBody::setPosition(Vec2 position)
+void PhysicsBody::setPosition(const Vec2& position)
 {
     cpBodySetPos(_info->getBody(), PhysicsHelper::point2cpv(position + _positionOffset));
 }

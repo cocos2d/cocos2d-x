@@ -163,7 +163,7 @@ void ArmatureTestLayer::onEnter()
     auto label = Label::createWithTTF(pTitle, "fonts/arial.ttf", 18);
     label->setColor(Color3B::BLACK);
     addChild(label, 1, 10000);
-    label->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 30) );
+    label->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
@@ -171,7 +171,7 @@ void ArmatureTestLayer::onEnter()
         auto l = Label::createWithTTF(strSubtitle.c_str(), "fonts/arial.ttf", 18);
         l->setColor(Color3B::BLACK);
         addChild(l, 1, 10001);
-        l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 60) );
+        l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
     }
 
     // add menu
@@ -182,9 +182,9 @@ void ArmatureTestLayer::onEnter()
     Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
 
     menu->setPosition(Vec2::ZERO);
-    backItem->setPosition(Vec2(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    restartItem->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    nextItem->setPosition(Vec2(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
+    backItem->setPosition(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
+    restartItem->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
+    nextItem->setPosition(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
 
     addChild(menu, 100);
 
@@ -306,7 +306,7 @@ void TestDirectLoading::onEnter()
 
     Armature *armature = Armature::create("bear");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y);
     addChild(armature);
 }
 std::string TestDirectLoading::title() const
@@ -323,7 +323,7 @@ void TestCSWithSkeleton::onEnter()
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
 
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y/*-100*/);
     addChild(armature);
 }
 
@@ -373,7 +373,7 @@ void TestPerformance::onEnter()
 
     Menu *menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
-    menu->setPosition(Vec2(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100));
+    menu->setPosition(VisibleRect::getVisibleRect().size.width/2, VisibleRect::getVisibleRect().size.height-100);
     addChild(menu, 10000);
 
     armatureCount = frames = times = lastTimes = 0;
@@ -471,7 +471,7 @@ void TestChangeZorder::onEnter()
 
     armature = Armature::create("Knight_f/Knight");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y - 100));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y - 100);
     ++currentTag;
     armature->setScale(0.6f);
     addChild(armature, currentTag, currentTag);
@@ -479,13 +479,13 @@ void TestChangeZorder::onEnter()
     armature = Armature::create("Cowboy");
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.24f);
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y - 100));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y - 100);
     ++currentTag;
     addChild(armature, currentTag, currentTag);
 
     armature = Armature::create("Dragon");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vec2(VisibleRect::center().x , VisibleRect::center().y - 100));
+    armature->setPosition(VisibleRect::center().x , VisibleRect::center().y - 100);
     ++currentTag;
     armature->setScale(0.6f);
     addChild(armature, currentTag, currentTag);
@@ -519,7 +519,7 @@ void TestAnimationEvent::onEnter()
     armature->getAnimation()->play("Fire");
     armature->setScaleX(-0.24f);
     armature->setScaleY(0.24f);
-    armature->setPosition(Vec2(VisibleRect::left().x + 50, VisibleRect::left().y));
+    armature->setPosition(VisibleRect::left().x + 50, VisibleRect::left().y);
 
     /*
     * Set armature's movement event callback function
@@ -574,7 +574,7 @@ void TestFrameEvent::onEnter()
     Armature *armature = Armature::create("HeroAnimation");
     armature->getAnimation()->play("attack");
     armature->getAnimation()->setSpeedScale(0.5);
-    armature->setPosition(Vec2(VisibleRect::center().x - 50, VisibleRect::center().y -100));
+    armature->setPosition(VisibleRect::center().x - 50, VisibleRect::center().y -100);
 
     /*
      * Set armature's frame event callback function
@@ -684,7 +684,7 @@ void TestUseMutiplePicture::onEnter()
 
     armature = Armature::create("Knight_f/Knight");
     armature->getAnimation()->playWithIndex(0);
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::left().y));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::left().y);
     armature->setScale(1.2f);
     addChild(armature);
 
@@ -744,7 +744,7 @@ void TestColliderDetector::onEnter()
     armature->getAnimation()->setSpeedScale(0.2f);
     armature->setScaleX(-0.2f);
     armature->setScaleY(0.2f);
-    armature->setPosition(Vec2(VisibleRect::left().x + 70, VisibleRect::left().y));
+    armature->setPosition(VisibleRect::left().x + 70, VisibleRect::left().y);
 
     /*
     * Set armature's frame event callback function
@@ -757,7 +757,7 @@ void TestColliderDetector::onEnter()
     armature2->getAnimation()->play("Walk");
     armature2->setScaleX(-0.2f);
     armature2->setScaleY(0.2f);
-    armature2->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::left().y));
+    armature2->setPosition(VisibleRect::right().x - 60, VisibleRect::left().y);
     addChild(armature2);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -784,7 +784,7 @@ void TestColliderDetector::onFrameEvent(cocostudio::Bone *bone, const std::strin
     */
 
     Vec2 p = armature->getBone("Layer126")->getDisplayRenderNode()->convertToWorldSpaceAR(Vec2(0, 0));
-    bullet->setPosition(Vec2(p.x + 60, p.y));
+    bullet->setPosition(p.x + 60, p.y);
 
     bullet->stopAllActions();
     bullet->runAction(CCMoveBy::create(1.5f, Vec2(350, 0)));
@@ -912,7 +912,7 @@ void TestColliderDetector::initWorld()
 
     bullet->setB2Body(body);
     bullet->setPTMRatio(PT_RATIO);
-    bullet->setPosition( Vec2( -100, -100) );
+    bullet->setPosition(-100, -100);
 
     body = world->CreateBody(&bodyDef);
     armature2->setBody(body);
@@ -1250,7 +1250,7 @@ void Hero::changeMount(Armature *armature)
         bone->changeDisplayWithIndex(0, true);
         bone->setIgnoreMovementBoneData(true);
 
-        setPosition(Vec2(0,0));
+        setPosition(0,0);
         //Change animation
         playWithIndex(1);
 
@@ -1286,7 +1286,7 @@ void TestArmatureNesting2::onEnter()
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
 
     pMenu->setPosition( Vec2() );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 67, VisibleRect::bottom().y + 50) );
+    pMenuItem->setPosition(VisibleRect::right().x - 67, VisibleRect::bottom().y + 50);
 
     addChild(pMenu, 2);
 
@@ -1294,7 +1294,7 @@ void TestArmatureNesting2::onEnter()
     hero = Hero::create("hero");
     hero->setLayer(this);
     hero->playWithIndex(0);
-    hero->setPosition(Vec2(VisibleRect::left().x + 20, VisibleRect::left().y));
+    hero->setPosition(VisibleRect::left().x + 20, VisibleRect::left().y);
     addChild(hero);
 
     //Create 3 mount
@@ -1393,7 +1393,7 @@ void TestPlaySeveralMovement::onEnter()
 //    armature->getAnimation()->playWithIndexes(indexes);
     armature->setScale(0.2f);
 
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y/*-100*/);
     addChild(armature);
 }
 std::string TestPlaySeveralMovement::title() const
@@ -1421,7 +1421,7 @@ void TestEasing::onEnter()
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.8f);
 
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y);
     addChild(armature);
 
     updateSubTitle();
@@ -1463,7 +1463,7 @@ void TestChangeAnimationInternal::onEnter()
     armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
 
-    armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+    armature->setPosition(VisibleRect::center().x, VisibleRect::center().y);
     addChild(armature);
 }
 void TestChangeAnimationInternal::onExit()
@@ -1523,7 +1523,7 @@ void TestLoadFromBinary::onEnter()
 	m_armature->getAnimation()->playWithIndex(0);
 	m_armature->setScale(1.0f);
     
-	m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+	m_armature->setPosition(VisibleRect::center().x, VisibleRect::center().y);
 	addChild(m_armature);
     
 }
@@ -1567,7 +1567,7 @@ void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Even
 		m_armature->removeFromParent();
 		m_armatureIndex = m_armatureIndex==BINARYFILECOUNT-1 ? 0 : m_armatureIndex+1;
 		m_armature = Armature::create(m_armatureNames[m_armatureIndex]);
-		m_armature->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y));
+		m_armature->setPosition(VisibleRect::center().x, VisibleRect::center().y);
 		if(m_armatureIndex == 2 )  // cowboy is 0.2
 			m_armature->setScale(0.2f);
 		m_armature->getAnimation()->playWithIndex(0);
