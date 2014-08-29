@@ -39,7 +39,7 @@ NS_CC_BEGIN
 
 TileMapAtlas * TileMapAtlas::create(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight)
 {
-    TileMapAtlas *ret = new TileMapAtlas();
+    TileMapAtlas *ret = new (std::nothrow) TileMapAtlas();
     if (ret->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
     {
         ret->autorelease();

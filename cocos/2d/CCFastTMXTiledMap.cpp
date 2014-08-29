@@ -40,7 +40,7 @@ namespace experimental {
 
 TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 {
-    TMXTiledMap *ret = new TMXTiledMap();
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
     if (ret->initWithTMXFile(tmxFile))
     {
         ret->autorelease();
@@ -52,7 +52,7 @@ TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 
 TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    TMXTiledMap *ret = new TMXTiledMap();
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
     if (ret->initWithXML(tmxString, resourcePath))
     {
         ret->autorelease();

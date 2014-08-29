@@ -119,7 +119,7 @@ Renderer::Renderer()
 ,_cacheTextureListener(nullptr)
 #endif
 {
-    _groupCommandManager = new GroupCommandManager();
+    _groupCommandManager = new (std::nothrow) GroupCommandManager();
     
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     

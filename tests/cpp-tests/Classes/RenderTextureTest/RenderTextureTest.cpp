@@ -51,7 +51,7 @@ void RenderTextureTest::onEnter()
 
 void RenderTextureTest::restartCallback(Ref* sender)
 {
-    auto s = new RenderTextureScene();
+    auto s = new (std::nothrow) RenderTextureScene();
     s->addChild(restartTestCase()); 
 
     Director::getInstance()->replaceScene(s);
@@ -60,7 +60,7 @@ void RenderTextureTest::restartCallback(Ref* sender)
 
 void RenderTextureTest::nextCallback(Ref* sender)
 {
-    auto s = new RenderTextureScene();
+    auto s = new (std::nothrow) RenderTextureScene();
     s->addChild( nextTestCase() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -68,7 +68,7 @@ void RenderTextureTest::nextCallback(Ref* sender)
 
 void RenderTextureTest::backCallback(Ref* sender)
 {
-    auto s = new RenderTextureScene();
+    auto s = new (std::nothrow) RenderTextureScene();
     s->addChild( backTestCase() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -666,7 +666,7 @@ SpriteRenderTextureBug::SimpleSprite::~SimpleSprite()
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
-    auto sprite = new SimpleSprite();
+    auto sprite = new (std::nothrow) SimpleSprite();
     if (sprite && sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();

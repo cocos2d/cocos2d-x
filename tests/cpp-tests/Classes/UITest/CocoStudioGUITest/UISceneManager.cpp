@@ -136,7 +136,7 @@ UISceneManager * UISceneManager::sharedUISceneManager()
 {
     if (sharedInstance == nullptr)
     {
-        sharedInstance = new UISceneManager();
+        sharedInstance = new (std::nothrow) UISceneManager();
     }
     return sharedInstance;
 }

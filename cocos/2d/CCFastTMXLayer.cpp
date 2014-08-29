@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
@@ -58,7 +59,7 @@ const int TMXLayer::FAST_TMX_ORIENTATION_ISO = 2;
 // FastTMXLayer - init & alloc & dealloc
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *ret = new TMXLayer();
+    TMXLayer *ret = new (std::nothrow) TMXLayer();
     if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
         ret->autorelease();
@@ -835,8 +836,8 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     {
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(Vec2(0.5f,0.5f));
-        sprite->setPosition(Vec2(getPositionAt(pos).x + sprite->getContentSize().height/2,
-                                  getPositionAt(pos).y + sprite->getContentSize().width/2 ) );
+        sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
+                                  getPositionAt(pos).y + sprite->getContentSize().width/2 );
         
         int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
         

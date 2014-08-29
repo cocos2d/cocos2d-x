@@ -30,11 +30,11 @@ THE SOFTWARE.
 #include "base/CCCamera.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
-#include "2d/CCLayer.h"
-#include "2d/CCSprite.h"
-#include "2d/CCSpriteBatchNode.h"
-#include "physics/CCPhysicsWorld.h"
 #include "deprecated/CCString.h"
+
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsWorld.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -77,7 +77,7 @@ bool Scene::initWithSize(const Size& size)
 
 Scene* Scene::create()
 {
-    Scene *ret = new Scene();
+    Scene *ret = new (std::nothrow) Scene();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -92,7 +92,7 @@ Scene* Scene::create()
 
 Scene* Scene::createWithSize(const Size& size)
 {
-    Scene *ret = new Scene();
+    Scene *ret = new (std::nothrow) Scene();
     if (ret && ret->initWithSize(size))
     {
         ret->autorelease();
@@ -114,6 +114,14 @@ Scene* Scene::getScene() const
 {
     // FIX ME: should use const_case<> to fix compiling error
     return const_cast<Scene*>(this);
+}
+
+void Scene::onProjectionChanged(EventCustom* event)
+{
+    if (_defaultCamera)
+    {
+        _defaultCamera->initDefault();
+    }
 }
 
 #if CC_USE_PHYSICS
@@ -140,7 +148,7 @@ void Scene::update(float delta)
 
 Scene* Scene::createWithPhysics()
 {
-    Scene *ret = new Scene();
+    Scene *ret = new (std::nothrow) Scene();
     if (ret && ret->initWithPhysics())
     {
         ret->autorelease();
@@ -194,13 +202,5 @@ void Scene::addChildToPhysicsWorld(Node* child)
 }
 
 #endif
-
-void Scene::onProjectionChanged(EventCustom* event)
-{
-    if (_defaultCamera)
-    {
-        _defaultCamera->initDefault();
-    }
-}
 
 NS_CC_END
