@@ -1548,6 +1548,22 @@ BillBoardTest::BillBoardTest()
     }
     
 
+    {
+        std::string fileName = "Sprite3DTest/orc.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setScale(3);
+        sprite->setRotation3D(Vec3(0,180,0));
+        _layerBillBorad->addChild(sprite);
+        //test attach
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+        auto animation = Animation3D::create(fileName);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            sprite->runAction(RepeatForever::create(animate));
+        }
+    }
     addNewBillBoradWithCoords(Vec3(20,5,0));
     addNewBillBoradWithCoords(Vec3(60,5,0));
     addNewBillBoradWithCoords(Vec3(100,5,0));
@@ -1610,7 +1626,7 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
         auto billborad = BillBorad::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billborad->setScale(0.5f);
         _layerBillBorad->addChild(billborad);
-        billborad->setPosition3D(Vec3(p.x, p.y,  -50.0f + 30 * i));
+        billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
         billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
     }
@@ -1621,7 +1637,7 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
     {
         auto billboradAni = BillBorad::create("Images/grossini.png");
         billboradAni->setScale(0.5f);
-        billboradAni->setPosition3D(Vec3(p.x, p.y,  -50.0f + 30 * i));
+        billboradAni->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
         _layerBillBorad->addChild(billboradAni);
 
         auto animation = Animation::create();
