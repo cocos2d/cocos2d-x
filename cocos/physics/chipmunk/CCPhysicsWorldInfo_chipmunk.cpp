@@ -28,6 +28,8 @@
 #include "CCPhysicsBodyInfo_chipmunk.h"
 #include "CCPhysicsShapeInfo_chipmunk.h"
 #include "CCPhysicsJointInfo_chipmunk.h"
+#include "chipmunk.h"
+
 NS_CC_BEGIN
 
 PhysicsWorldInfo::PhysicsWorldInfo()
@@ -94,6 +96,16 @@ void PhysicsWorldInfo::removeJoint(PhysicsJointInfo& joint)
     {
         cpSpaceRemoveConstraint(_space, subjoint);
     }
+}
+
+bool PhysicsWorldInfo::isLocked()
+{
+    return 0 == _space->locked_private ? false : true;
+}
+
+void PhysicsWorldInfo::step(float delta)
+{
+    cpSpaceStep(_space, delta);
 }
 
 NS_CC_END
