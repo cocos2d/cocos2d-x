@@ -61,7 +61,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
-    CL(Sprite3DMirrorTest)
+    CL(Sprite3DMirrorTest),
+    CL(BillBoardTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1009,20 +1010,20 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
      TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"Hair");
-	auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchHair,this) );
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchHair,this) );
     auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
-	auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchGlasses,this) );
+    auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchGlasses,this) );
     auto label3 = Label::createWithTTF(ttfConfig,"Coat");
-	auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchCoat,this) );
+    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchCoat,this) );
     auto label4 = Label::createWithTTF(ttfConfig,"Pants");
-	auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchPants,this) );
+    auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchPants,this) );
     auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
-	auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchShoes,this) );
+    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchShoes,this) );
     item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
-	item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
-	item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
-	item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
-	item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
+    item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
+    item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
+    item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
     auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
@@ -1526,4 +1527,166 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
         sprite->runAction(RepeatForever::create(animate));
     }
     _mirrorSprite = sprite;
+}
+
+BillBoardTest::BillBoardTest()
+:  _camera(nullptr)
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(BillBoardTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto layer3D=Layer::create();
+    addChild(layer3D,0);
+    _layerBillBorad=layer3D;
+    DrawNode3D* line =DrawNode3D::create();
+    auto s = Director::getInstance()->getWinSize();
+    if (_camera == nullptr)
+    {
+        _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 500);
+        _camera->setCameraFlag(CameraFlag::USER1);
+        _layerBillBorad->addChild(_camera);
+    }
+    
+
+    {
+        std::string fileName = "Sprite3DTest/orc.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setScale(3);
+        sprite->setRotation3D(Vec3(0,180,0));
+        _layerBillBorad->addChild(sprite);
+        //test attach
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+        auto animation = Animation3D::create(fileName);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            sprite->runAction(RepeatForever::create(animate));
+        }
+    }
+    addNewBillBoradWithCoords(Vec3(20,5,0));
+    addNewBillBoradWithCoords(Vec3(60,5,0));
+    addNewBillBoradWithCoords(Vec3(100,5,0));
+    addNewBillBoradWithCoords(Vec3(140,5,0));
+    addNewBillBoradWithCoords(Vec3(180,5,0));
+    addNewAniBillBoradWithCoords(Vec3(-20,0,0));
+    addNewAniBillBoradWithCoords(Vec3(-60,0,0));
+    addNewAniBillBoradWithCoords(Vec3(-100,0,0));
+    addNewAniBillBoradWithCoords(Vec3(-140,0,0));
+    addNewAniBillBoradWithCoords(Vec3(-180,0,0));
+    _camera->setPosition3D(Vec3(0, 130, 230));
+    _camera->lookAt(Vec3(0,0,100), Vec3(0,1,0));
+
+    //for( int j =-20; j<=20 ;j++)
+    //{
+    //    line->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(0,1,0,1));
+    //}
+    ////draw z
+    //for( int j =-20; j<=20 ;j++)
+    //{
+    //    line->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,1,0,1));
+    //}
+    ////draw y
+    ////line->drawLine(Vec3(0, -50, 0),Vec3(0,0,0),Color4F(0,0.5,0,1));
+    ////line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
+    //_layerBillBorad->addChild(line);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"rotate+");
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10));
+    auto label2 = Label::createWithTTF(ttfConfig,"rotate-");
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10));
+    auto menu = Menu::create(menuItem1,menuItem2,NULL);
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition( Vec2( s.width-50, VisibleRect::top().y-150) );
+    menuItem2->setPosition( Vec2( s.width-50, VisibleRect::top().y-200) );
+    addChild(menu, 0);
+    _layerBillBorad->setCameraMask(2);
+}
+BillBoardTest::~BillBoardTest()
+{
+    if (_camera)
+    {
+        _camera = nullptr;
+    }
+}
+std::string BillBoardTest::title() const
+{
+    return "Testing BillBoard";
+}
+std::string BillBoardTest::subtitle() const
+{
+    return "";
+}
+void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
+{
+    std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
+    for (unsigned int i = 0; i < 10; ++i)
+    {
+        auto billborad = BillBorad::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
+        billborad->setScale(0.5f);
+        _layerBillBorad->addChild(billborad);
+        billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
+        billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+        billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
+    }
+}
+void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
+{
+    for (unsigned int i = 0; i < 10; ++i)
+    {
+        auto billboradAni = BillBorad::create("Images/grossini.png");
+        billboradAni->setScale(0.5f);
+        billboradAni->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
+        _layerBillBorad->addChild(billboradAni);
+
+        auto animation = Animation::create();
+        for( int i=1;i<15;i++)
+        {
+            char szName1[100] = {0};
+            sprintf(szName1, "Images/grossini_dance_%02d.png", i);
+            animation->addSpriteFrameWithFile(szName1);
+        }
+        // should last 2.8 seconds. And there are 14 frames.
+        animation->setDelayPerUnit(2.8f / 14.0f);
+        animation->setRestoreOriginalFrame(true);
+
+        auto action = Animate::create(animation);
+        billboradAni->runAction(RepeatForever::create(action));
+        billboradAni->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+        billboradAni->setOpacity(CCRANDOM_0_1() * 128 + 128);
+    }
+}
+void BillBoardTest::update(float dt)
+{
+
+}
+void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+{
+    if(touches.size()==1)
+    {
+        auto touch = touches[0];
+        auto location = touch->getLocation();
+        auto PreviousLocation = touch->getPreviousLocation();
+        Point newPos = PreviousLocation - location;
+
+        Vec3 cameraDir;
+        Vec3 cameraRightDir;
+        _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+        cameraDir.normalize();
+        cameraDir.y=0;
+        _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+        cameraRightDir.normalize();
+        cameraRightDir.y=0;
+        Vec3 cameraPos=  _camera->getPosition3D();
+        cameraPos+=cameraDir*newPos.y*0.5;
+        cameraPos+=cameraRightDir*newPos.x*0.5;
+        _camera->setPosition3D(cameraPos);      
+    }
+}
+void BillBoardTest::rotateCameraCallback(Ref* sender,float value)
+{
+    Vec3  rotation3D= _camera->getRotation3D();
+    rotation3D.y+= value;
+    _camera->setRotation3D(rotation3D);
 }

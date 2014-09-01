@@ -85,9 +85,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~BillBorad();
 
 protected:
-    Mat4      _BillBoradMat;
 
-    void calculateBillBoradMatrix(Mat4 &dst);
+    Mat4 _preViewMat;
+    Mat4 _mv;
+    float _zDepthInView;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);

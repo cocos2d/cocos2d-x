@@ -27,6 +27,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "3d/CCBillBoard.h"
 #include <string>
 
 namespace cocos2d {
@@ -35,6 +36,7 @@ namespace cocos2d {
     class Delay;
     class Ray;
     class DrawNode3D;
+    class BillBorad;
 }
 
 class Sprite3DTestDemo : public BaseTest
@@ -325,6 +327,26 @@ class Sprite3DTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
+};
+
+class BillBoardTest : public Sprite3DTestDemo
+{
+public:
+    virtual ~BillBoardTest(void);
+    CREATE_FUNC(BillBoardTest);
+    BillBoardTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
+    void addNewBillBoradWithCoords(Vec3 p);
+    void addNewAniBillBoradWithCoords(Vec3 p);
+    void rotateCameraCallback(Ref* sender,float value);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+
+protected:
+    Camera*           _camera;
+    Layer*            _layerBillBorad;
+
 };
 
 #endif
