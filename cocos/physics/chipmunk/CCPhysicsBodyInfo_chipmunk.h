@@ -28,9 +28,10 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "chipmunk.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCRef.h"
+
+struct cpBody;
 
 NS_CC_BEGIN
 
