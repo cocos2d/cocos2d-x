@@ -82,7 +82,7 @@ bool EditBoxImplAndroid::initWithSize(const Size& size)
     _labelPlaceHolder->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
-    _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, size.height / 2.0f);
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);

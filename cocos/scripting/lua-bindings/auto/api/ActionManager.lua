@@ -39,6 +39,11 @@
 -- @param #float float
         
 --------------------------------
+-- @function [parent=#ActionManager] pauseTarget 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
 -- @function [parent=#ActionManager] getNumberOfRunningActionsInTarget 
 -- @param self
 -- @param #cc.Node node
@@ -60,8 +65,9 @@
 -- @param #cc.Action action
         
 --------------------------------
--- @function [parent=#ActionManager] pauseTarget 
+-- @function [parent=#ActionManager] removeAllActionsByTag 
 -- @param self
+-- @param #int int
 -- @param #cc.Node node
         
 --------------------------------

@@ -166,7 +166,7 @@ public:
     void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
-    // XXX should be procted.
+    // FIXME: should be procted.
     // but due to a bug in PowerVR + Android,
     // the constructor is public again
     RenderTexture();

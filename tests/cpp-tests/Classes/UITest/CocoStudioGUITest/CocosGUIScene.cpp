@@ -30,6 +30,20 @@ g_guisTests[] =
         }
     },
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "WebViewTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(KWebViewTest);
+            sceneManager->setMinUISceneId(KWebViewTest);
+            sceneManager->setMaxUISceneId(KWebViewTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+#endif
     {
         "focus test",
         [](Ref* sender)
@@ -37,25 +51,12 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
+            // TODO: improve ListView focus
             sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
     },
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    {
-        "EditBox test",
-        [](Ref* sender)
-        {
-            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
-            sceneManager->setCurrentUISceneId(kUIEditBoxTest);
-            sceneManager->setMinUISceneId(kUIEditBoxTest);
-            sceneManager->setMaxUISceneId(kUIEditBoxTest);
-            Scene* scene = sceneManager->currentUIScene();
-            Director::getInstance()->replaceScene(scene);
-        }
-    },
-#endif
     {
         "Scale9 Sprite Test",
         [](Ref* sender)
@@ -274,7 +275,7 @@ void CocosGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -312,7 +313,7 @@ void CocosGUITestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, E
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -338,14 +339,14 @@ void CocosGUITestScene::onEnter()
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void CocosGUITestScene::runThisTest()
 {
-    auto layer = new CocosGUITestMainLayer();
+    auto layer = new (std::nothrow) CocosGUITestMainLayer();
     addChild(layer);
     layer->release();
     
@@ -354,7 +355,7 @@ void CocosGUITestScene::runThisTest()
 
 void CocosGUITestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

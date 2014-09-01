@@ -25,13 +25,12 @@
 #ifndef __CCEVENTLISTENER_H__
 #define __CCEVENTLISTENER_H__
 
-#include "base/CCPlatformMacros.h"
-#include "base/CCRef.h"
-
 #include <functional>
 #include <string>
 #include <memory>
-#include <set>
+
+#include "base/CCPlatformMacros.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 
@@ -63,7 +62,7 @@ public:
 
     typedef std::string ListenerID;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
     EventListener();
 

@@ -26,10 +26,10 @@
 #include "Sprite3DTest.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
-#include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
 #include <algorithm>
@@ -59,6 +59,7 @@ static std::function<Layer*()> createFunctions[] =
 #endif
     CL(Animate3DTest),
     CL(AttachmentTest),
+    CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
     CL(Sprite3DMirrorTest)
 };
@@ -123,7 +124,7 @@ void Sprite3DTestDemo::onEnter()
 
 void Sprite3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild(restartSpriteTestAction());
     
     Director::getInstance()->replaceScene(s);
@@ -132,7 +133,7 @@ void Sprite3DTestDemo::restartCallback(Ref* sender)
 
 void Sprite3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -140,7 +141,7 @@ void Sprite3DTestDemo::nextCallback(Ref* sender)
 
 void Sprite3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -320,7 +321,7 @@ static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1
 
 EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
 {
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
@@ -337,7 +338,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
     if (path.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(path))
     {
         sprite->autorelease();
@@ -415,7 +416,7 @@ GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
 
 Effect3DOutline* Effect3DOutline::create()
 {
-    Effect3DOutline* effect = new Effect3DOutline();
+    Effect3DOutline* effect = new (std::nothrow) Effect3DOutline();
     if(effect && effect->init())
     {
         effect->autorelease();
@@ -488,7 +489,7 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     if(sprite != _sprite)
     {
         GLProgram* glprogram;
-        if(!sprite->getSkin())
+        if(!sprite->getMesh()->getSkin())
             glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
         else
             glprogram = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
@@ -544,22 +545,21 @@ void Effect3DOutline::draw(const Mat4 &transform)
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         
-        if(_sprite && _sprite->getSkin())
+        auto skin = _sprite->getMesh()->getSkin();
+        if(_sprite && skin)
         {
             auto function = std::bind(MatrixPalleteCallBack, std::placeholders::_1, std::placeholders::_2,
-                                      _sprite->getSkin()->getMatrixPaletteSize(), (float*)_sprite->getSkin()->getMatrixPalette());
+                                      skin->getMatrixPaletteSize(), (float*)skin->getMatrixPalette());
             _glProgramState->setUniformCallback("u_matrixPalette", function);
         }
         
         if(_sprite)
             _glProgramState->apply(transform);
  
-        for (ssize_t i = 0; i < mesh->getSubMeshCount(); i++) {
-            auto submesh = mesh->getSubMesh((int)i);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, submesh->getIndexBuffer());
-            glDrawElements((GLenum)submesh->getPrimitiveType(), (GLsizei)submesh->getIndexCount(), (GLenum)submesh->getIndexFormat(), 0);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, submesh->getIndexCount());
-        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
+        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
@@ -998,7 +998,219 @@ void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
     }
     _hasWeapon = !_hasWeapon;
 }
+Sprite3DReskinTest::Sprite3DReskinTest()
+: _sprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+     TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"Hair");
+	auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchHair,this) );
+    auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
+	auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchGlasses,this) );
+    auto label3 = Label::createWithTTF(ttfConfig,"Coat");
+	auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchCoat,this) );
+    auto label4 = Label::createWithTTF(ttfConfig,"Pants");
+	auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchPants,this) );
+    auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
+	auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchShoes,this) );
+    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+	item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
+	item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
+	item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
+	item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+}
+void Sprite3DReskinTest::menuCallback_switchHair(Ref* sender)
+{
+    _useHairId++;
+    if(_useHairId > 1 )
+    {
+        _useHairId = 0;
+    }
+    if(_useHairId >= 0  && _sprite)
+    {
+        for(int i = 0; i < 2; i++ )
+        {
+            auto subMesh = _sprite->getMeshByName(_girlHair[i]);
+            if(subMesh)
+            {
+                if(i == _useHairId )
+                {
+                    subMesh->setVisible(true);
+                }
+                else
+                {
+                    subMesh->setVisible(false);
+                }
+            }
+        }
+    }
+}
+void Sprite3DReskinTest::menuCallback_switchGlasses(Ref* sender)
+{
+    auto subMesh = _sprite->getMeshByName("Girl_Glasses01");
+    if(subMesh)
+    {
+        if(subMesh->isVisible())
+        {
+            subMesh->setVisible(false);
+        }
+        else
+        {
+            subMesh->setVisible(true);
+        }
+    }
+}
+void Sprite3DReskinTest::menuCallback_switchCoat(Ref* sender)
+{
+    _useUpBodyId++;
+    if(_useUpBodyId > 1 )
+    {
+        _useUpBodyId = 0;
+    }
+    if(_useUpBodyId >= 0  && _sprite)
+    {
+        for(int i = 0; i < 2; i++ )
+        {
+            auto subMesh = _sprite->getMeshByName(_girlUpperBody[i]);
+            if(subMesh)
+            {
+                if(i == _useUpBodyId )
+                {
+                    subMesh->setVisible(true);
+                }
+                else
+                {
+                    subMesh->setVisible(false);
+                }
+            }
+        }
+    }
+}
+void Sprite3DReskinTest::menuCallback_switchPants(Ref* sender)
+{
+    _usePantsId++;
+    if(_usePantsId > 1 )
+    {
+        _usePantsId = 0;
+    }
+    if(_usePantsId >= 0  && _sprite)
+    {
+        for(int i = 0; i < 2; i++ )
+        {
+            auto subMesh = _sprite->getMeshByName(_girlPants[i]);
+            if(subMesh)
+            {
+                if(i == _usePantsId )
+                {
+                    subMesh->setVisible(true);
+                }
+                else
+                {
+                    subMesh->setVisible(false);
+                }
+            }
+        }
+    }
+}
+void Sprite3DReskinTest::menuCallback_switchShoes(Ref* sender)
+{
+        _useShoesId++;
+        if(_useShoesId > 1 )
+        {
+            _useShoesId = 0;
+        }
+        if(_useShoesId >= 0  && _sprite)
+        {
+            for(int i = 0; i < 2; i++ )
+            {
+                auto subMesh = _sprite->getMeshByName(_girlShoes[i]);
+                if(subMesh)
+                {
+                    if(i == _useShoesId )
+                    {
+                        subMesh->setVisible(true);
+                    }
+                    else
+                    {
+                        subMesh->setVisible(false);
+                    }
+                }
+            }
+        }
+       
+}
+std::string Sprite3DReskinTest::title() const
+{
+    return "Testing Sprite3D Reskin";
+}
+std::string Sprite3DReskinTest::subtitle() const
+{
+    return "";
+}
 
+void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    _girlPants[0]= "Girl_LowerBody01";
+    _girlPants[1]= "Girl_LowerBody02";
+    _girlUpperBody[0] = "Girl_UpperBody01";
+    _girlUpperBody[1] = "Girl_UpperBody02";
+    _girlShoes[0]  = "Girl_Shoes01";
+    _girlShoes[1]  = "Girl_Shoes02";
+    _girlHair[0]= "Girl_Hair01";
+    _girlHair[1]= "Girl_Hair02";
+    _usePantsId = 0;
+    _useUpBodyId = 0;
+    _useShoesId   =0;
+    _useHairId = 0;
+    
+    std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(4);
+    sprite->setRotation3D(Vec3(0,0,0));
+    auto girlPants = sprite->getMeshByName(_girlPants[1]);
+    if(girlPants)
+    {
+        girlPants->setVisible(false);
+    }
+    auto girlShoes = sprite->getMeshByName(_girlShoes[1]);
+    if(girlShoes)
+    {
+        girlShoes->setVisible(false);
+    }
+    auto girlHair = sprite->getMeshByName(_girlHair[1]);
+    if(girlHair)
+    {
+        girlHair->setVisible(false);
+    }
+    auto girlUpBody = sprite->getMeshByName( _girlUpperBody[1]);
+    if(girlUpBody)
+    {
+        girlUpBody->setVisible(false);
+    }
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y-60) );
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+}
+
+void Sprite3DReskinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+}
 Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
 {
     auto listener = EventListenerTouchAllAtOnce::create();

@@ -54,7 +54,7 @@ typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse*
 #endif
 #endif
 
-class HttpRequest : public Ref
+class CC_DLL HttpRequest : public Ref
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */

@@ -156,4 +156,14 @@
 -- @function [parent=#GLView] pollEvents 
 -- @param self
         
+--------------------------------
+-- @function [parent=#GLView] setGLContextAttrs 
+-- @param self
+-- @param #GLContextAttrs glcontextattrs
+        
+--------------------------------
+-- @function [parent=#GLView] getGLContextAttrs 
+-- @param self
+-- @return GLContextAttrs#GLContextAttrs ret (return value: GLContextAttrs)
+        
 return nil

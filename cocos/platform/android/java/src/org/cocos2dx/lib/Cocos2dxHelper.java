@@ -167,6 +167,10 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sAccelerometerEnabled = false;
 		Cocos2dxHelper.sCocos2dxAccelerometer.disable();
 	}
+	
+	public static void setKeepScreenOn(boolean value) {
+		((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
+	}
 
 	public static void preloadBackgroundMusic(final String pPath) {
 		Cocos2dxHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);

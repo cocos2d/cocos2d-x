@@ -348,6 +348,11 @@ struct CC_DLL BlendFunc
         return src == a.src && dst == a.dst;
     }
 
+    bool operator!=(const BlendFunc &a) const
+    {
+        return src != a.src || dst != a.dst;
+    }
+
     bool operator<(const BlendFunc &a) const
     {
         return src < a.src || (src == a.src && dst < a.dst);
@@ -357,7 +362,7 @@ struct CC_DLL BlendFunc
 // Label::VAlignment
 // Label::HAlignment
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
 enum class CC_DLL TextVAlignment
 {
@@ -366,7 +371,7 @@ enum class CC_DLL TextVAlignment
     BOTTOM,
 };
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
 enum class CC_DLL TextHAlignment
 {

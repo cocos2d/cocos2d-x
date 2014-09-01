@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventFocus.h"
+#include "base/CCEventFocus.h"
 
 NS_CC_BEGIN
 

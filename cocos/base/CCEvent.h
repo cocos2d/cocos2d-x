@@ -26,9 +26,6 @@
 #ifndef __CCEVENT_H__
 #define __CCEVENT_H__
 
-#include <string>
-#include <stdint.h>
-
 #include "base/CCRef.h"
 #include "base/CCPlatformMacros.h"
 
@@ -55,7 +52,7 @@ public:
         CUSTOM
     };
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
     Event(Type type);
 public:

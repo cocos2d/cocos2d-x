@@ -38,10 +38,11 @@
 #include <vector>
 
 #include "2d/CCActionInterval.h"
-#include "2d/CCNode.h"
 #include "math/CCGeometry.h"
 
 NS_CC_BEGIN;
+
+class Node;
 
 /**
  * @addtogroup actions

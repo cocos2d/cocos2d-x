@@ -295,7 +295,7 @@ GLViewImpl::~GLViewImpl()
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1)) {
         ret->autorelease();
         return ret;
@@ -306,7 +306,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
 
 GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -317,7 +317,7 @@ GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, f
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new GLViewImpl();
+    auto ret = new (std::nothrow) GLViewImpl();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -328,7 +328,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
 {
-    auto ret = new GLViewImpl();
+    auto ret = new (std::nothrow) GLViewImpl();
     if(ret && ret->initWithFullscreen(viewName, videoMode, monitor)) {
         ret->autorelease();
         return ret;
@@ -337,7 +337,6 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const 
     return nullptr;
 }
 
-
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     setViewName(viewName);
@@ -345,6 +344,12 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     _frameZoomFactor = frameZoomFactor;
 
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
+    glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
+    glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
+    glfwWindowHint(GLFW_ALPHA_BITS,_glContextAttrs.alphaBits);
+    glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
+    glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
 
     _mainWindow = glfwCreateWindow(rect.size.width * _frameZoomFactor,
                                    rect.size.height * _frameZoomFactor,

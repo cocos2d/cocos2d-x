@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCDirector.h"
 #include "base/CCEventFocus.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -187,7 +188,7 @@ void Widget::cleanupWidget()
 
 Widget* Widget::create()
 {
-    Widget* widget = new Widget();
+    Widget* widget = new (std::nothrow) Widget();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -807,6 +808,10 @@ void Widget::releaseUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
     }
+    
+    if (_clickEventListener) {
+        _clickEventListener(this);
+    }
     this->release();
 }
 
@@ -831,9 +836,14 @@ void Widget::addTouchEventListener(Ref *target, SEL_TouchEvent selector)
     _touchEventSelector = selector;
 }
     
-void Widget::addTouchEventListener(Widget::ccWidgetTouchCallback callback)
+void Widget::addTouchEventListener(const ccWidgetTouchCallback& callback)
 {
     this->_touchEventCallback = callback;
+}
+    
+void Widget::addClickEventListener(const ccWidgetClickCallback &callback)
+{
+    this->_clickEventListener = callback;
 }
 
 bool Widget::hitTest(const Vec2 &pt)
@@ -1083,6 +1093,7 @@ void Widget::copyProperties(Widget *widget)
     _touchEventCallback = widget->_touchEventCallback;
     _touchEventListener = widget->_touchEventListener;
     _touchEventSelector = widget->_touchEventSelector;
+    _clickEventListener = widget->_clickEventListener;
     _focused = widget->_focused;
     _focusEnabled = widget->_focusEnabled;
     _propagateTouchEvents = widget->_propagateTouchEvents;
@@ -1248,7 +1259,7 @@ void Widget::enableDpadNavigation(bool enable)
     {
         if (nullptr == _focusNavigationController)
         {
-            _focusNavigationController = new FocusNavigationController;
+            _focusNavigationController = new (std::nothrow) FocusNavigationController;
             if (_focusedWidget) {
                 _focusNavigationController->setFirstFocsuedWidget(_focusedWidget);
             }

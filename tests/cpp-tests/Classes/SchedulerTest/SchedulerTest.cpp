@@ -72,7 +72,7 @@ void SchedulerTestLayer::onEnter()
 
 void SchedulerTestLayer::backCallback(Ref* sender)
 {
-    auto scene = new SchedulerTestScene();
+    auto scene = new (std::nothrow) SchedulerTestScene();
     auto layer = backSchedulerTest();
 
     scene->addChild(layer);
@@ -82,7 +82,7 @@ void SchedulerTestLayer::backCallback(Ref* sender)
 
 void SchedulerTestLayer::nextCallback(Ref* sender)
 {
-    auto scene = new SchedulerTestScene();
+    auto scene = new (std::nothrow) SchedulerTestScene();
     auto layer = nextSchedulerTest();
 
     scene->addChild(layer);
@@ -92,7 +92,7 @@ void SchedulerTestLayer::nextCallback(Ref* sender)
 
 void SchedulerTestLayer::restartCallback(Ref* sender)
 {
-    auto scene = new SchedulerTestScene();
+    auto scene = new (std::nothrow) SchedulerTestScene();
     auto layer = restartSchedulerTest();
 
     scene->addChild(layer);
@@ -616,32 +616,32 @@ void SchedulerUpdate::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    auto d = new TestNode();
+    auto d = new (std::nothrow) TestNode();
     d->initWithString("---", 50);
     addChild(d);
     d->release();
 
-    auto b = new TestNode();
+    auto b = new (std::nothrow) TestNode();
     b->initWithString("3rd", 0);
     addChild(b);
     b->release();
 
-    auto a = new TestNode();
+    auto a = new (std::nothrow) TestNode();
     a->initWithString("1st", -10);
     addChild(a);
     a->release();
 
-    auto c = new TestNode();
+    auto c = new (std::nothrow) TestNode();
     c->initWithString("4th", 10);
     addChild(c);
     c->release();
 
-    auto e = new TestNode();
+    auto e = new (std::nothrow) TestNode();
     e->initWithString("5th", 20);
     addChild(e);
     e->release();
 
-    auto f = new TestNode();
+    auto f = new (std::nothrow) TestNode();
     f->initWithString("2nd", -5);
     addChild(f);
     f->release();
@@ -964,12 +964,12 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched1 = new Scheduler();
+    sched1 = new (std::nothrow) Scheduler();
 
     defaultScheduler->scheduleUpdate(sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
-    actionManager1 = new ActionManager();
+    actionManager1 = new (std::nothrow) ActionManager();
     sched1->scheduleUpdate(actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
@@ -991,11 +991,11 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched2 = new Scheduler();;
+    sched2 = new (std::nothrow) Scheduler();;
     defaultScheduler->scheduleUpdate(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
-    actionManager2 = new ActionManager();
+    actionManager2 = new (std::nothrow) ActionManager();
     sched2->scheduleUpdate(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {

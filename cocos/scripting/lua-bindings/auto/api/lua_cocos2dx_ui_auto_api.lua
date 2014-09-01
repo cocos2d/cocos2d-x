@@ -131,4 +131,9 @@
 -- @field [parent=#ccui] RelativeBox#RelativeBox RelativeBox preloaded module
 
 
+--------------------------------------------------------
+-- the ccui Scale9Sprite
+-- @field [parent=#ccui] Scale9Sprite#Scale9Sprite Scale9Sprite preloaded module
+
+
 return nil

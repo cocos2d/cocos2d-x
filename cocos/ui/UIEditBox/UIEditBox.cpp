@@ -87,7 +87,7 @@ EditBox* EditBox::create(const Size& size,
     
 EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *pNormal9SpriteBg)
 {
-    EditBox* pRet = new EditBox();
+    EditBox* pRet = new (std::nothrow) EditBox();
     
     if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
     {

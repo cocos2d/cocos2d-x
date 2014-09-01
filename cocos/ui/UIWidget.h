@@ -108,6 +108,7 @@ public:
 
     
     typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
+    typedef std::function<void(Ref*)> ccWidgetClickCallback;
     /**
      * Default constructor
      */
@@ -232,11 +233,14 @@ public:
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**
-     * Sets the touch event target/selector of the menu item
+     * Sets the touch event target/selector to the widget
      */
     CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
-    void addTouchEventListener(ccWidgetTouchCallback callback);
-
+    void addTouchEventListener(const ccWidgetTouchCallback& callback);
+    /**
+     * Set a click event handler to the widget
+     */
+    void addClickEventListener(const ccWidgetClickCallback& callback);
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -709,6 +713,7 @@ protected:
     #pragma warning (pop)
     #endif
     ccWidgetTouchCallback _touchEventCallback;
+    ccWidgetClickCallback _clickEventListener;
 private:
     class FocusNavigationController;
     static FocusNavigationController* _focusNavigationController;

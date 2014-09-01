@@ -581,6 +581,24 @@
     <ClCompile Include="..\base\pvr.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCCamera.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCModuleManager.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPrimitive.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d.h" />
@@ -1187,6 +1205,24 @@
     </ClInclude>
     <ClInclude Include="..\base\pvr.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCCamera.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCModuleManager.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPrimitiveCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPrimitive.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCVertexIndexBuffer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCVertexIndexData.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

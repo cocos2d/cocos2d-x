@@ -36,7 +36,7 @@ NS_CC_BEGIN
 
 int Device::getDPI()
 {
-//TODO: 
+    //TODO: return correct DPI
     return 160;
 }
 
@@ -247,6 +247,11 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     
     return ret;
 }
+
+void Device::setKeepScreenOn(bool value)
+{
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

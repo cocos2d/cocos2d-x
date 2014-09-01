@@ -26,8 +26,6 @@ THE SOFTWARE.
 #define __CCTWEENFUNCTION_H__
 
 #include "base/CCPlatformMacros.h"
-#include "base/ccMacros.h"
-#include <math.h>
 
 NS_CC_BEGIN
 

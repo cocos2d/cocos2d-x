@@ -106,6 +106,19 @@ function UICheckBoxDeprecated.addEventListenerCheckBox(self,handler)
     return self:addEventListener(handler)
 end
 rawset(ccui.CheckBox,"addEventListenerCheckBox", UICheckBoxDeprecated.addEventListenerCheckBox)
+
+function UICheckBoxDeprecated.setSelectedState(self,flag)
+   deprecatedTip("ccui.CheckBox:setSelectedState", "ccui.CheckBox:setSelected")
+   return self:setSelected(flag)
+end
+rawset(ccui.CheckBox, "setSelectedState", UICheckBoxDeprecated.setSelectedState)
+
+function UICheckBoxDeprecated.getSelectedState(self)
+   deprecatedTip("ccui.CheckBox:getSelectedState", "ccui.CheckBox:getSelected")
+   return self:getSelected()
+end
+rawset(ccui.CheckBox, "getSelectedState", UICheckBoxDeprecated.setSelectedState)
+
 --functions of ccui.CheckBox will be deprecated end
 
 --functions of ccui.Slider will be deprecated begin

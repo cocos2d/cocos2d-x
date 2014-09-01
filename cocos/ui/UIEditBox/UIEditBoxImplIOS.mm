@@ -74,7 +74,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         self.textField = [[[UICustomUITextField alloc] initWithFrame: frameRect] autorelease];
 
         [textField_ setTextColor:[UIColor whiteColor]];
-        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+         //TODO: need to delete hard code here.
+        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3];
 		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField_.backgroundColor = [UIColor clearColor];
         textField_.borderStyle = UITextBorderStyleNone;
@@ -342,8 +343,8 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
 
 void EditBoxImplIOS::placeInactiveLabels()
 {
-    _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
-    _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
+    _label->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
+    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
 }
 
 void EditBoxImplIOS::setInactiveText(const char* pText)
@@ -406,7 +407,7 @@ void EditBoxImplIOS::setFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	// TODO need to be implemented.
+	// TODO: need to be implemented.
 }
 
 void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)

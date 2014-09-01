@@ -20,6 +20,7 @@
 #include "UIFocusTest/UIFocusTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
+#include "UIWebViewTest/UIWebViewTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
@@ -100,6 +101,7 @@ static const char* s_testArray[] =
     "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest",
+    "UIWebViewTest",
 #endif
     "UIScale9SpriteTest",
     "UIScale9SpriteHierarchialTest",
@@ -140,7 +142,7 @@ UISceneManager * UISceneManager::sharedUISceneManager()
 {
     if (sharedInstance == nullptr)
     {
-        sharedInstance = new UISceneManager();
+        sharedInstance = new (std::nothrow) UISceneManager();
     }
     return sharedInstance;
 }
@@ -334,6 +336,8 @@ Scene *UISceneManager::currentUIScene()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KWebViewTest:
+            return WebViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
         case kUIScale9SpriteTest:
             return UIScale9SpriteTest::sceneWithTitle(s_testArray[_currentUISceneId]);

@@ -59,7 +59,7 @@ PageView::~PageView()
 
 PageView* PageView::create()
 {
-    PageView* widget = new PageView();
+    PageView* widget = new (std::nothrow) PageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -533,6 +533,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
     {
         case TouchEventType::BEGAN:
         {
+            _touchBeganPosition = touch->getLocation();
             _isInterceptTouch = true;
         }
             break;
@@ -540,6 +541,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
         {
             float offset = 0;
             offset = fabs(sender->getTouchBeganPosition().x - touchPoint.x);
+            _touchMovePosition = touch->getLocation();
             if (offset > _childFocusCancelOffset)
             {
                 sender->setHighlighted(false);
@@ -550,6 +552,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
         {
+            _touchEndPosition = touch->getLocation();
             handleReleaseLogic(touch);
             if (sender->isSwallowTouches())
             {

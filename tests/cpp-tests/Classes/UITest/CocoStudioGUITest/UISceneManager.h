@@ -93,6 +93,7 @@ enum
     kUIFocusTest_ListView,
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
+    KWebViewTest,
 #endif
     kUIScale9SpriteTest,
     kUIScale9SpriteHierarchialTest,

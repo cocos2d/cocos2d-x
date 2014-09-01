@@ -37,7 +37,7 @@ static struct {
 	{ "NotificationCenterTest", [](Ref* sender) { runNotificationCenterTest(); }
 	},
     { "Scale9SpriteTest", [](Ref* sender) {
-            auto scene = new S9SpriteTestScene();
+            auto scene = new (std::nothrow) S9SpriteTestScene();
             if (scene)
             {
                 scene->runThisTest();
@@ -51,7 +51,7 @@ static struct {
 		Director::getInstance()->replaceScene(scene);
 	}},
 	{ "CocosBuilderTest", [](Ref *sender) {
-		auto scene = new CocosBuilderTestScene();
+		auto scene = new (std::nothrow) CocosBuilderTestScene();
 		if (scene)
 		{
 			scene->runThisTest();
@@ -74,19 +74,19 @@ static struct {
 #endif
 	{ "TableViewTest", [](Ref *sender){ runTableViewTest();}
 	},
-	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
+	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new (std::nothrow) ArmatureTestScene();
 	                                       scene->runThisTest();
 	                                       scene->release();
 	}
 	},
-    { "CocoStudioActionTimelineTest", [](Ref *sender) { ActionTimelineTestScene *scene = new ActionTimelineTestScene();
+    { "CocoStudioActionTimelineTest", [](Ref *sender) { ActionTimelineTestScene *scene = new (std::nothrow) ActionTimelineTestScene();
     scene->runThisTest();
     scene->release();
     }
     },
     { "CocoStudioComponentsTest", [](Ref *sender) { runComponentsTestLayerTest(); }
     },
-	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new SceneEditorTestScene();
+	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new (std::nothrow) SceneEditorTestScene();
 	                                       scene->runThisTest();
 	                                       scene->release();
  }
@@ -159,7 +159,7 @@ void ExtensionsMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Eve
 
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
 
@@ -184,7 +184,7 @@ void ExtensionsMainLayer::onMouseScroll(Event* event)
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -200,7 +200,7 @@ void ExtensionsMainLayer::onMouseScroll(Event* event)
 
 void ExtensionsTestScene::runThisTest()
 {
-    auto layer = new ExtensionsMainLayer();
+    auto layer = new (std::nothrow) ExtensionsMainLayer();
     addChild(layer);
     layer->release();
     
