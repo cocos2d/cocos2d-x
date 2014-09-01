@@ -39,7 +39,7 @@ MenuLayer::~MenuLayer(void)
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
 {
-    auto layer = new MenuLayer();
+    auto layer = new (std::nothrow) MenuLayer();
     layer->initWithEntryID(entryId);
     layer->autorelease();
 
@@ -58,10 +58,10 @@ bool MenuLayer::initWithEntryID(int entryId)
     addChild(view, 0, kTagBox2DNode);
     view->setScale(15);
     view->setAnchorPoint( Vec2(0,0) );
-    view->setPosition( Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3) );  
+    view->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/3);
     auto label = Label::createWithTTF(view->title().c_str(), "fonts/arial.ttf", 28);
     addChild(label, 1);
-    label->setPosition( Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50) );
+    label->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50);
 
     auto item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(MenuLayer::backCallback, this) );
     auto item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
@@ -70,9 +70,9 @@ bool MenuLayer::initWithEntryID(int entryId)
     auto menu = Menu::create(item1, item2, item3, nullptr);
 
     menu->setPosition( Vec2::ZERO );
-    item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Vec2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+    item1->setPosition(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
+    item2->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2);
+    item3->setPosition(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
     
     addChild(menu, 1);
     
@@ -92,7 +92,7 @@ bool MenuLayer::initWithEntryID(int entryId)
 
 void MenuLayer::restartCallback(Ref* sender)
 {
-    auto s = new Box2dTestBedScene();
+    auto s = new (std::nothrow) Box2dTestBedScene();
     auto box = MenuLayer::menuWithEntryID(m_entryID);
     s->addChild( box );
     Director::getInstance()->replaceScene( s );
@@ -101,7 +101,7 @@ void MenuLayer::restartCallback(Ref* sender)
 
 void MenuLayer::nextCallback(Ref* sender)
 {
-    auto s = new Box2dTestBedScene();
+    auto s = new (std::nothrow) Box2dTestBedScene();
     int next = m_entryID + 1;
     if( next >= g_totalEntries)
         next = 0;
@@ -113,7 +113,7 @@ void MenuLayer::nextCallback(Ref* sender)
 
 void MenuLayer::backCallback(Ref* sender)
 {
-    auto s = new Box2dTestBedScene();
+    auto s = new (std::nothrow) Box2dTestBedScene();
     int next = m_entryID - 1;
     if( next < 0 ) {
         next = g_totalEntries - 1;
@@ -164,7 +164,7 @@ Box2DView::Box2DView(void)
 
 Box2DView* Box2DView::viewWithEntryID(int entryId)
 {
-    Box2DView* pView = new Box2DView();
+    Box2DView* pView = new (std::nothrow) Box2DView();
     pView->initWithEntryID(entryId);
     pView->autorelease();
 

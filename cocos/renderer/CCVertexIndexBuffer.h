@@ -25,8 +25,9 @@
 #ifndef __CC_VERTEX_INDEX_BUFFER_H__
 #define __CC_VERTEX_INDEX_BUFFER_H__
 
+#include <vector>
 #include "base/CCRef.h"
-#include "base/CCDirector.h"
+#include "CCGL.h"
 
 NS_CC_BEGIN
 

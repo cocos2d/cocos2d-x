@@ -29,6 +29,7 @@
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
 #include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
 
 #include <algorithm>
@@ -74,7 +75,7 @@ ScrollView::~ScrollView()
 
 ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
     {
         pRet->autorelease();
@@ -88,7 +89,7 @@ ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 
 ScrollView* ScrollView::create()
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -125,7 +126,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
         _direction  = Direction::BOTH;
-        _container->setPosition(Vec2(0.0f, 0.0f));
+        _container->setPosition(0.0f, 0.0f);
         _touchLength = 0.0f;
         
         this->addChild(_container);

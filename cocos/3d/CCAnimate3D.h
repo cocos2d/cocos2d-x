@@ -29,17 +29,13 @@
 #include <unordered_map>
 
 #include "3d/CCAnimation3D.h"
-
+#include "3d/3dExport.h"
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
-#include "base/CCPlatformMacros.h"
 #include "2d/CCActionInterval.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-class Animation3D;
 class Bone3D;
 class Sprite3D;
 /**

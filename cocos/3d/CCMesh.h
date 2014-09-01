@@ -26,17 +26,13 @@
 #define __CCMESH_H__
 
 #include <string>
-#include <vector>
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
 #include "3d/3dExport.h"
 
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
 #include "math/CCMath.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
@@ -44,6 +40,8 @@ NS_CC_BEGIN
 class Texture2D;
 class MeshSkin;
 class MeshIndexData;
+class GLProgramState;
+class GLProgram;
 /** 
  * Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */

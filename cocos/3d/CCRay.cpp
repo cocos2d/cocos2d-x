@@ -20,9 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCRay.h"
-#include "CCAABB.h"
-#include "CCOBB.h"
+#include "3d/CCRay.h"
 
 NS_CC_BEGIN
 
