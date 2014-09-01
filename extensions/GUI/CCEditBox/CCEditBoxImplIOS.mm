@@ -74,7 +74,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         self.textField = [[[CCCustomUITextField alloc] initWithFrame: frameRect] autorelease];
 
         [textField_ setTextColor:[UIColor whiteColor]];
-        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+         //TODO: need to delete hard code here.
+        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3];
 		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField_.backgroundColor = [UIColor clearColor];
         textField_.borderStyle = UITextBorderStyleNone;
@@ -404,7 +405,7 @@ void EditBoxImplIOS::setFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	// TODO need to be implemented.
+	// TODO: need to be implemented.
 }
 
 void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)

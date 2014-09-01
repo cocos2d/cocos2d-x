@@ -20,6 +20,7 @@
 #include "UIFocusTest/UIFocusTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
+#include "UIWebViewTest/UIWebViewTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
 
@@ -94,6 +95,7 @@ static const char* s_testArray[] =
     "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest",
+    "UIWebViewTest",
 #endif
     "UIScale9SpriteTest",
     "UIScale9SpriteHierarchialTest",
@@ -328,6 +330,8 @@ Scene *UISceneManager::currentUIScene()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case KWebViewTest:
+            return WebViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
         case kUIScale9SpriteTest:
             return UIScale9SpriteTest::sceneWithTitle(s_testArray[_currentUISceneId]);

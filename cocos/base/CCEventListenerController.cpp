@@ -23,9 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerController.h"
-#include "CCEventController.h"
-#include "ccMacros.h"
+#include "base/CCEventListenerController.h"
+#include "base/CCEventController.h"
+#include "base/ccMacros.h"
 #include "base/CCController.h"
 
 NS_CC_BEGIN

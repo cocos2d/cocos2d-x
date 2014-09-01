@@ -25,16 +25,16 @@
 #ifndef __CC_EVENT_DISPATCHER_H__
 #define __CC_EVENT_DISPATCHER_H__
 
+#include <functional>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <set>
+
 #include "base/CCPlatformMacros.h"
 #include "base/CCEventListener.h"
 #include "base/CCEvent.h"
 #include "CCStdC.h"
-
-#include <functional>
-#include <string>
-#include <unordered_map>
-#include <list>
-#include <vector>
 
 NS_CC_BEGIN
 

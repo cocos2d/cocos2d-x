@@ -151,7 +151,7 @@ GridBase::~GridBase(void)
 {
     CCLOGINFO("deallocing GridBase: %p", this);
 
-//TODO: ? why 2.0 comments this line        setActive(false);
+    //TODO: ? why 2.0 comments this line:        setActive(false);
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_grabber);
 }
@@ -220,7 +220,7 @@ void GridBase::afterDraw(cocos2d::Node *target)
 //        Vec2 offset = target->getAnchorPointInPoints();
 //
 //        //
-//        // XXX: Camera should be applied in the AnchorPoint
+//        // FIXME: Camera should be applied in the AnchorPoint
 //        //
 //        kmGLTranslatef(offset.x, offset.y, 0);
 //        target->getCamera()->locate();
@@ -230,8 +230,8 @@ void GridBase::afterDraw(cocos2d::Node *target)
     GL::bindTexture2D(_texture->getName());
 
     // restore projection for default FBO .fixed bug #543 #544
-//TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
-//TODO:         Director::getInstance()->applyOrientation();
+    //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
+    //TODO:         Director::getInstance()->applyOrientation();
     blit();
 }
 

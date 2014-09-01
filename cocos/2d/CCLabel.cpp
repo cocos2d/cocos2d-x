@@ -772,7 +772,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     _shadowOffset.width = offset.width * contentScaleFactor;
     _shadowOffset.height = offset.height * contentScaleFactor;
-    //todo:support blur for shadow
+    //TODO: support blur for shadow
     _shadowBlurRadius = 0;
 
     if (_textSprite && _shadowNode)

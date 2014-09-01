@@ -25,10 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCAnimation.h"
-#include "2d/CCSpriteFrame.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTexture2D.h"
-#include "base/ccMacros.h"
 #include "base/CCDirector.h"
 
 NS_CC_BEGIN

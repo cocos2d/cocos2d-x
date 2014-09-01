@@ -26,8 +26,6 @@
 #define __CC_VERTEX_INDEX_DATA_H__
 
 #include "base/CCRef.h"
-#include "renderer/CCVertexIndexBuffer.h"
-#include "base/CCMap.h"
 #include <map>
 
 NS_CC_BEGIN

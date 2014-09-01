@@ -920,6 +920,7 @@ Developers:
         Fix video scale issue in iOS
         Fix iOS VideoPlayer memory leak
         Added c++11 random library support
+        Added WebView widget which supports iOS and Android
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly

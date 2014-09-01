@@ -26,13 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_PLATFORM_THREAD_H__
 #define __CC_PLATFORM_THREAD_H__
 
-#include <functional>
-#include <list>
-#include <mutex>
-
-#include "platform/CCCommon.h"
 #include "base/CCPlatformMacros.h"
-#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -48,7 +42,6 @@ NS_CC_BEGIN
 class CC_DLL ThreadHelper
 {
 public:
-    friend DisplayLinkDirector;
 
     /** Create an autorelease pool for objective-c codes.
      * @js NA

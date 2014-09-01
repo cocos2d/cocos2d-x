@@ -424,7 +424,7 @@ CallFuncN * CallFuncN::create(const std::function<void(Node*)> &func)
     return nullptr;
 }
 
-// XXX deprecated
+// FIXME: deprecated
 CallFuncN * CallFuncN::create(Ref* selectorTarget, SEL_CallFuncN selector)
 {
     CallFuncN *ret = new (std::nothrow) CallFuncN();

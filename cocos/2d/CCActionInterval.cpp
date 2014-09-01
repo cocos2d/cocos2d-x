@@ -335,7 +335,7 @@ void Sequence::update(float t)
 	else if(found==0 && _last==1 )
 	{
 		// Reverse mode ?
-		// XXX: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
+		// FIXME: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
 		// since it will require a hack to know if an action is on reverse mode or not.
 		// "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
 		_actions[1]->update(0);
@@ -981,7 +981,7 @@ void RotateBy::startWithTarget(Node *target)
 
 void RotateBy::update(float time)
 {
-    // XXX: shall I add % 360
+    // FIXME: shall I add % 360
     if (_target)
     {
         if(_is3D)
@@ -2183,7 +2183,7 @@ void ReverseTime::update(float time)
 
 ReverseTime* ReverseTime::reverse() const
 {
-    // XXX: This looks like a bug
+    // FIXME: This looks like a bug
     return (ReverseTime*)_other->clone();
 }
 

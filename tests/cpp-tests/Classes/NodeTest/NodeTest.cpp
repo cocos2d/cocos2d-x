@@ -52,8 +52,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(CameraTest1),
-    //Camera has been removed from CCNode
-    //todo add new feature to support it
+    // TODO: Camera has been removed from CCNode, add new feature to support it
     // CL(CameraTest2),
     CL(CameraCenterTest),
     CL(Test2),
@@ -66,8 +65,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeToWorld3D),
     CL(SchedulerTest1),
     CL(CameraOrbitTest),
-    //Camera has been removed from CCNode
-    //todo add new feature to support it
+    // TODO: Camera has been removed from CCNode, add new feature to support it
     //CL(CameraZoomTest),
     CL(ConvertToNode),
     CL(NodeOpaqueTest),

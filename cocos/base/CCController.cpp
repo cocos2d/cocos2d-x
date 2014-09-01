@@ -23,15 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCController.h"
+#include "base/CCController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "ccMacros.h"
-#include "CCEventDispatcher.h"
-#include "CCEventController.h"
-#include "CCEventListenerController.h"
-#include "CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventController.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
