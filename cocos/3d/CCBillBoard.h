@@ -26,12 +26,8 @@
 #define __CCBILLBOARD_H__
 
 #include "2d/CCSprite.h"
-#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
-
-//class VertexBuffer;
-//class IndexBuffer;
 
 /**
  * Inherit from Sprite, achieve BillBorad.
@@ -90,13 +86,6 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    //void genRenderInformation();
-
-protected:
-
-//    MeshCommand _meshCommand;
-//    VertexBuffer *_vertexBuffer;
-//    IndexBuffer *_indexBuffer;
       Mat4 _preViewMat;
       Mat4 _mv;
       float _zDepthInView;
