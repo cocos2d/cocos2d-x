@@ -30,7 +30,11 @@
 
 NS_CC_BEGIN
 
-
+/**
+ * It is similar to Sequence in 2D action
+ * But it is only used to sequence Animate3D
+ * The difference between Sequence and Sequence3D is that Sequence3D play animation one by one and with some overlap time. We use the overlap time to make the transition between one action to another. The comming action fades in and the previous one fades out.
+ */
 class CC_3D_DLL Sequence3D : public ActionInterval
 {
 public:
@@ -65,8 +69,6 @@ public:
     static Sequence3D* create(const Vector<Animate3D*>& arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
     static Sequence3D* createWithVariableList(Animate3D *action1, va_list args);
-    /** creates the action */
-    static Sequence3D* createWithTwoActions(Animate3D *actionOne, Animate3D *actionTwo);
 
     //
     // Overrides
@@ -76,29 +78,22 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float t) override;
-
-    void addAnimate3D(Animate3D* animate);
     
 CC_CONSTRUCTOR_ACCESS:
     Sequence3D();
     virtual ~Sequence3D(void);
 
-    /** initializes the action */
-    bool initWithTwoActions(Animate3D *pActionOne, Animate3D *pActionTwo);
+    /** initializes the action */    
+    bool initWithActions(const Vector<Animate3D*>& arrayOfActions);
 
 protected:
-    Animate3D*   _actions[2];
-    float        _split;
-    int          _last;
-    float        _blendTime;
-    float        _blendRemain;
-    bool         _cutAnim;
-    float cut_t;
+    Vector<Animate3D*> _actions;
+    int                _curActionIdx;
+    std::vector<float> _startTime;
+    std::vector<float> _endTime;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sequence3D);
-
-    void Blend(float timeElapse);
 
 };
 
