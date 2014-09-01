@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCActionNode.h"
 #include "cocostudio/CCActionFrameEasing.h"
-#include "cocostudio/DictionaryHelper.h"
 #include "ui/UIWidget.h"
 #include "ui/UIHelper.h"
 #include "cocostudio/CocoLoader.h"

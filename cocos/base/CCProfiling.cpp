@@ -25,8 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCProfiling.h"
 
-#include <chrono>
-
 using namespace std;
 
 NS_CC_BEGIN
@@ -51,7 +49,7 @@ Profiler* Profiler::getInstance()
     return g_sSharedProfiler;
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 Profiler* Profiler::sharedProfiler(void)
 {
     return Profiler::getInstance();

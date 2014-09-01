@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "platform/CCDevice.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerTouch.h"

@@ -63,13 +63,13 @@ void __NotificationCenter::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 __NotificationCenter *__NotificationCenter::sharedNotificationCenter(void)
 {
     return __NotificationCenter::getInstance();
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 void __NotificationCenter::purgeNotificationCenter(void)
 {
     __NotificationCenter::destroyInstance();

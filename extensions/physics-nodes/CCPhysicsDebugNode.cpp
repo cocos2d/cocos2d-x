@@ -171,7 +171,7 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 	}
     else if (klass == cpDampedSpringGetClass())
     {
-		// TODO
+		// TODO: uninplemented
 	}
     else
     {

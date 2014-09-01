@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "base/CCEventDispatcher.h"
-#include "base/CCEvent.h"
-#include "base/CCEventTouch.h"
+#include <algorithm>
+
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventListenerAcceleration.h"
@@ -37,8 +37,6 @@
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
-
-#include <algorithm>
 
 
 #define DUMP_LISTENER_ITEM_PRIORITY_INFO 0

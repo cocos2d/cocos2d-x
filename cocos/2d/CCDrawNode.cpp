@@ -27,6 +27,7 @@
 #include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"

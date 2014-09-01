@@ -34,6 +34,7 @@
 #include <thread>
 #include <mutex>
 #include <queue>
+#include <list>
 #include <signal.h>
 #include <errno.h>
 

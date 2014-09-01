@@ -48,16 +48,12 @@ THE SOFTWARE.
 
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
-#include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
-#include "base/ccTypes.h"
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
-#include "base/CCProfiling.h"
 #include "renderer/CCTextureCache.h"
-
-#include "CCGL.h"
+#include "deprecated/CCString.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
@@ -174,7 +170,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 
     CCASSERT( !dict.empty(), "Particles: file not found");
     
-    // XXX compute path from a path, should define a function somewhere to do it
+    // FIXME: compute path from a path, should define a function somewhere to do it
     string listFilePath = plistFile;
     if (listFilePath.find('/') != string::npos)
     {
@@ -465,7 +461,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     _emitterMode = Mode::GRAVITY;
 
     // default: modulate
-    // XXX: not used
+    // FIXME:: not used
     //    colorModulate = YES;
 
     _isAutoRemoveOnFinish = false;

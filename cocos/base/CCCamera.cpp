@@ -25,7 +25,6 @@
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
-#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
