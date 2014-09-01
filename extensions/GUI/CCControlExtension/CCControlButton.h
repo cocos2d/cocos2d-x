@@ -32,7 +32,7 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "ExtensionDeprecated.h"
+#include "extensions/ExtensionDeprecated.h"
 #include "base/CCMap.h"
 
 NS_CC_EXT_BEGIN

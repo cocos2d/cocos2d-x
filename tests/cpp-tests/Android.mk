@@ -124,12 +124,10 @@ Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControl
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
-Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
 Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
-Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
