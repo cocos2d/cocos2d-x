@@ -86,9 +86,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-      Mat4 _preViewMat;
-      Mat4 _mv;
-      float _zDepthInView;
+    Mat4 _preViewMat;
+    Mat4 _mv;
+    float _zDepthInView;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);
