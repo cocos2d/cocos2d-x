@@ -58,6 +58,16 @@ std::string getCurAppPath(void)
     return [[[NSBundle mainBundle] bundlePath] UTF8String];
 }
 
+std::string getCurAppName(void)
+{
+    string appName = [[[NSProcessInfo processInfo] processName] UTF8String];
+    int found = appName.find(" ");
+    if (found!=std::string::npos)
+        appName = appName.substr(0,found);
+    
+    return appName;
+}
+
 -(void) dealloc
 {
     Director::getInstance()->end();

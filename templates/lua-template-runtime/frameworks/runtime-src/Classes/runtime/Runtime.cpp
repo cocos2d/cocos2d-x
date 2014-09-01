@@ -1136,6 +1136,11 @@ bool initRuntime()
 #endif
 
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    std::string getCurAppName(void);
+    g_resourcePath += getCurAppName();
+    g_resourcePath +="/";
+#endif
     g_resourcePath += "debugruntime/";
    
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
