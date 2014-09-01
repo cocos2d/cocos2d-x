@@ -37,5 +37,7 @@
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCMeshVertexIndexData.h"
+#include "3d/CCSequence3D.h"
+#include "3d/CCSkeleton3D.h"
 
 #endif
