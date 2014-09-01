@@ -553,7 +553,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     auto scene = Director::getInstance()->getRunningScene();
     // only cull the default camera. The culling algorithm is valid for default camera.
-    if (scene->_defaultCamera != Camera::getVisitingCamera())
+    if (scene && scene->_defaultCamera != Camera::getVisitingCamera())
         return true;
     
     // half size of the screen
