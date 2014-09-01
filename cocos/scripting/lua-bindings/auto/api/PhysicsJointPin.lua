@@ -5,12 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#PhysicsJointPin] construct 
 -- @param self
--- @param #cc.PhysicsBody a
--- @param #cc.PhysicsBody b
--- @param #vec2_table anchr
+-- @param #cc.PhysicsBody physicsbody
+-- @param #cc.PhysicsBody physicsbody
+-- @param #vec2_table vec2
 -- @return PhysicsJointPin#PhysicsJointPin ret (return value: cc.PhysicsJointPin)
         
 return nil

@@ -5,36 +5,31 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#GLViewImpl] createWithRect 
 -- @param self
--- @param #string viewName
+-- @param #string str
 -- @param #rect_table rect
--- @param #float frameZoomFactor
+-- @param #float float
 -- @return GLViewImpl#GLViewImpl ret (return value: cc.GLViewImpl)
         
 --------------------------------
--- 
 -- @function [parent=#GLViewImpl] create 
 -- @param self
--- @param #string viewname
+-- @param #string str
 -- @return GLViewImpl#GLViewImpl ret (return value: cc.GLViewImpl)
         
 --------------------------------
--- 
 -- @function [parent=#GLViewImpl] createWithFullScreen 
 -- @param self
--- @param #string viewName
+-- @param #string str
 -- @return GLViewImpl#GLViewImpl ret (return value: cc.GLViewImpl)
         
 --------------------------------
--- 
 -- @function [parent=#GLViewImpl] setIMEKeyboardState 
 -- @param self
--- @param #bool bOpen
+-- @param #bool bool
         
 --------------------------------
--- 
 -- @function [parent=#GLViewImpl] isOpenGLReady 
 -- @param self
 -- @return bool#bool ret (return value: bool)

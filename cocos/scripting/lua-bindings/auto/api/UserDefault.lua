@@ -4,20 +4,18 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Set integer value by key.<br>
--- js NA
 -- @function [parent=#UserDefault] setIntegerForKey 
 -- @param self
--- @param #char pKey
--- @param #int value
+-- @param #char char
+-- @param #int int
         
 --------------------------------
 -- @overload self, char, float         
 -- @overload self, char         
 -- @function [parent=#UserDefault] getFloatForKey
 -- @param self
--- @param #char pKey
--- @param #float defaultValue
+-- @param #char char
+-- @param #float float
 -- @return float#float ret (retunr value: float)
 
 --------------------------------
@@ -25,46 +23,38 @@
 -- @overload self, char         
 -- @function [parent=#UserDefault] getBoolForKey
 -- @param self
--- @param #char pKey
--- @param #bool defaultValue
+-- @param #char char
+-- @param #bool bool
 -- @return bool#bool ret (retunr value: bool)
 
 --------------------------------
--- brief Set double value by key.<br>
--- js NA
 -- @function [parent=#UserDefault] setDoubleForKey 
 -- @param self
--- @param #char pKey
--- @param #double value
+-- @param #char char
+-- @param #double double
         
 --------------------------------
--- brief Set float value by key.<br>
--- js NA
 -- @function [parent=#UserDefault] setFloatForKey 
 -- @param self
--- @param #char pKey
--- @param #float value
+-- @param #char char
+-- @param #float float
         
 --------------------------------
 -- @overload self, char, string         
 -- @overload self, char         
 -- @function [parent=#UserDefault] getStringForKey
 -- @param self
--- @param #char pKey
--- @param #string defaultValue
+-- @param #char char
+-- @param #string str
 -- @return string#string ret (retunr value: string)
 
 --------------------------------
--- brief Set string value by key.<br>
--- js NA
 -- @function [parent=#UserDefault] setStringForKey 
 -- @param self
--- @param #char pKey
--- @param #string value
+-- @param #char char
+-- @param #string str
         
 --------------------------------
--- brief Save content to xml file<br>
--- js NA
 -- @function [parent=#UserDefault] flush 
 -- @param self
         
@@ -73,8 +63,8 @@
 -- @overload self, char         
 -- @function [parent=#UserDefault] getIntegerForKey
 -- @param self
--- @param #char pKey
--- @param #int defaultValue
+-- @param #char char
+-- @param #int int
 -- @return int#int ret (retunr value: int)
 
 --------------------------------
@@ -82,31 +72,26 @@
 -- @overload self, char         
 -- @function [parent=#UserDefault] getDoubleForKey
 -- @param self
--- @param #char pKey
--- @param #double defaultValue
+-- @param #char char
+-- @param #double double
 -- @return double#double ret (retunr value: double)
 
 --------------------------------
--- brief Set bool value by key.<br>
--- js NA
 -- @function [parent=#UserDefault] setBoolForKey 
 -- @param self
--- @param #char pKey
--- @param #bool value
+-- @param #char char
+-- @param #bool bool
         
 --------------------------------
--- js NA
 -- @function [parent=#UserDefault] destroyInstance 
 -- @param self
         
 --------------------------------
--- js NA
 -- @function [parent=#UserDefault] getXMLFilePath 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- js NA
 -- @function [parent=#UserDefault] isXMLFileExist 
 -- @param self
 -- @return bool#bool ret (return value: bool)

@@ -78,8 +78,7 @@ int lua_cocos2dx_spine_Skeleton_setBlendFunc(lua_State* tolua_S)
     {
         cocos2d::BlendFunc arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc
-		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc;
         if(!ok)
             return 0;
         cobj->setBlendFunc(arg0);

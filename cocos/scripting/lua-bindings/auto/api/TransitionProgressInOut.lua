@@ -5,10 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#TransitionProgressInOut] create 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
 -- @return TransitionProgressInOut#TransitionProgressInOut ret (return value: cc.TransitionProgressInOut)
         

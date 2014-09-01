@@ -5,122 +5,101 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#CCBReader] addOwnerOutletName 
 -- @param self
--- @param #string name
+-- @param #string str
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getOwnerCallbackNames 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] addDocumentCallbackControlEvents 
 -- @param self
--- @param #int eventType
+-- @param #int eventtype
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] setCCBRootPath 
 -- @param self
--- @param #char ccbRootPath
+-- @param #char char
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] addOwnerOutletNode 
 -- @param self
 -- @param #cc.Node node
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getOwnerCallbackNodes 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] readSoundKeyframesForSeq 
 -- @param self
--- @param #cc.CCBSequence seq
+-- @param #cc.CCBSequence ccbsequence
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getCCBRootPath 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getOwnerCallbackControlEvents 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getOwnerOutletNodes 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] readUTF8 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] addOwnerCallbackControlEvents 
 -- @param self
--- @param #int type
+-- @param #int eventtype
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getOwnerOutletNames 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- js setActionManager<br>
--- lua setActionManager
 -- @function [parent=#CCBReader] setAnimationManager 
 -- @param self
--- @param #cc.CCBAnimationManager pAnimationManager
+-- @param #cc.CCBAnimationManager ccbanimationmanager
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] readCallbackKeyframesForSeq 
 -- @param self
--- @param #cc.CCBSequence seq
+-- @param #cc.CCBSequence ccbsequence
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getAnimationManagersForNodes 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] getNodesWithAnimationManagers 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- js getActionManager<br>
--- lua getActionManager
 -- @function [parent=#CCBReader] getAnimationManager 
 -- @param self
 -- @return CCBAnimationManager#CCBAnimationManager ret (return value: cc.CCBAnimationManager)
         
 --------------------------------
--- 
 -- @function [parent=#CCBReader] setResolutionScale 
 -- @param self
--- @param #float scale
+-- @param #float float
         
 --------------------------------
 -- @overload self, cc.CCBReader         
@@ -128,9 +107,9 @@
 -- @overload self         
 -- @function [parent=#CCBReader] CCBReader
 -- @param self
--- @param #cc.NodeLoaderLibrary pNodeLoaderLibrary
--- @param #cc.CCBMemberVariableAssigner pCCBMemberVariableAssigner
--- @param #cc.CCBSelectorResolver pCCBSelectorResolver
--- @param #cc.NodeLoaderListener pNodeLoaderListener
+-- @param #cc.NodeLoaderLibrary nodeloaderlibrary
+-- @param #cc.CCBMemberVariableAssigner ccbmembervariableassigner
+-- @param #cc.CCBSelectorResolver ccbselectorresolver
+-- @param #cc.NodeLoaderListener nodeloaderlistener
 
 return nil

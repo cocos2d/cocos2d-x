@@ -357,7 +357,7 @@ NewClippingNodeTest::NewClippingNodeTest()
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
-    //TODO Fix draw node as clip node
+    // TODO: Fix draw node as clip node
 //    auto stencil = NewDrawNode::create();
 //    Vec2 rectangle[4];
 //    rectangle[0] = Vec2(0, 0);

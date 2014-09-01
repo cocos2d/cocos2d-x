@@ -5,23 +5,20 @@
 -- @parent_module cc
 
 --------------------------------
---  create the action 
 -- @function [parent=#PageTurn3D] create 
 -- @param self
--- @param #float duration
--- @param #size_table gridSize
+-- @param #float float
+-- @param #size_table size
 -- @return PageTurn3D#PageTurn3D ret (return value: cc.PageTurn3D)
         
 --------------------------------
--- 
 -- @function [parent=#PageTurn3D] clone 
 -- @param self
 -- @return PageTurn3D#PageTurn3D ret (return value: cc.PageTurn3D)
         
 --------------------------------
--- 
 -- @function [parent=#PageTurn3D] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 return nil

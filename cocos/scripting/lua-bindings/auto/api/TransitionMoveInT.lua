@@ -5,10 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#TransitionMoveInT] create 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
 -- @return TransitionMoveInT#TransitionMoveInT ret (return value: cc.TransitionMoveInT)
         

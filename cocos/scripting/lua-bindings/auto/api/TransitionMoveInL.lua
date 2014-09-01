@@ -5,23 +5,20 @@
 -- @parent_module cc
 
 --------------------------------
---  returns the action that will be performed 
 -- @function [parent=#TransitionMoveInL] action 
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
--- 
 -- @function [parent=#TransitionMoveInL] easeActionWithAction 
 -- @param self
--- @param #cc.ActionInterval action
+-- @param #cc.ActionInterval actioninterval
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
--- 
 -- @function [parent=#TransitionMoveInL] create 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
 -- @return TransitionMoveInL#TransitionMoveInL ret (return value: cc.TransitionMoveInL)
         

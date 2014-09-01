@@ -12,46 +12,39 @@
 -- @return Node#Node ret (retunr value: cc.Node)
 
 --------------------------------
---  Sets the target that the action will be forced to run with 
 -- @function [parent=#TargetedAction] setForcedTarget 
 -- @param self
--- @param #cc.Node forcedTarget
+-- @param #cc.Node node
         
 --------------------------------
---  Create an action with the specified action and forced target 
 -- @function [parent=#TargetedAction] create 
 -- @param self
--- @param #cc.Node target
--- @param #cc.FiniteTimeAction action
+-- @param #cc.Node node
+-- @param #cc.FiniteTimeAction finitetimeaction
 -- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
         
 --------------------------------
--- 
 -- @function [parent=#TargetedAction] startWithTarget 
 -- @param self
--- @param #cc.Node target
+-- @param #cc.Node node
         
 --------------------------------
--- 
 -- @function [parent=#TargetedAction] clone 
 -- @param self
 -- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
         
 --------------------------------
--- 
 -- @function [parent=#TargetedAction] stop 
 -- @param self
         
 --------------------------------
--- 
 -- @function [parent=#TargetedAction] reverse 
 -- @param self
 -- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
         
 --------------------------------
--- 
 -- @function [parent=#TargetedAction] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 return nil

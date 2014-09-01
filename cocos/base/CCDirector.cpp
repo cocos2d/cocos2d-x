@@ -32,16 +32,16 @@ THE SOFTWARE.
 #include <string>
 
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCScene.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
+
 #include "2d/CCActionManager.h"
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCTransition.h"
 #include "2d/CCFontFreeType.h"
+#include "2d/CCLabelAtlas.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
@@ -55,12 +55,9 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
 #include "base/CCConsole.h"
-#include "base/CCTouch.h"
 #include "base/CCAutoreleasePool.h"
-#include "base/CCProfiling.h"
 #include "base/CCConfiguration.h"
-#include "base/CCNS.h"
-#include "math/CCMath.h"
+
 #include "CCApplication.h"
 #include "CCGLViewImpl.h"
 
@@ -76,7 +73,7 @@ THE SOFTWARE.
 using namespace std;
 
 NS_CC_BEGIN
-// XXX it should be a Director ivar. Move it there once support for multiple directors is added
+// FIXME: it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
 static DisplayLinkDirector *s_SharedDirector = nullptr;
@@ -241,7 +238,7 @@ void Director::setGLDefaultValues()
     CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
+    // FIXME: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
     // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
@@ -277,7 +274,8 @@ void Director::drawScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
-     XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
+     * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
+     */
     if (_nextScene)
     {
         setNextScene();
@@ -1158,7 +1156,7 @@ void Director::calculateMPF()
 // returns the FPS image data pointer and len
 void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 {
-    // XXX fixed me if it should be used 
+    // FIXME: fixed me if it should be used 
     *datapointer = cc_fps_images_png;
     *length = cc_fps_images_len();
 }

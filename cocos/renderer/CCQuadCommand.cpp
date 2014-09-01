@@ -27,7 +27,6 @@
 
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN

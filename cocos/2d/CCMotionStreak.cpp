@@ -26,14 +26,12 @@ THE SOFTWARE.
 
 #include "2d/CCMotionStreak.h"
 #include "math/CCVertex.h"
-#include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgramState.h"
 
 NS_CC_BEGIN
 

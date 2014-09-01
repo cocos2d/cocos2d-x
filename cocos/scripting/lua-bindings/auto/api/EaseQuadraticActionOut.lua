@@ -5,26 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
 -- @function [parent=#EaseQuadraticActionOut] create 
 -- @param self
--- @param #cc.ActionInterval action
+-- @param #cc.ActionInterval actioninterval
 -- @return EaseQuadraticActionOut#EaseQuadraticActionOut ret (return value: cc.EaseQuadraticActionOut)
         
 --------------------------------
--- 
 -- @function [parent=#EaseQuadraticActionOut] clone 
 -- @param self
 -- @return EaseQuadraticActionOut#EaseQuadraticActionOut ret (return value: cc.EaseQuadraticActionOut)
         
 --------------------------------
--- 
 -- @function [parent=#EaseQuadraticActionOut] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#EaseQuadraticActionOut] reverse 
 -- @param self
 -- @return EaseQuadraticActionOut#EaseQuadraticActionOut ret (return value: cc.EaseQuadraticActionOut)

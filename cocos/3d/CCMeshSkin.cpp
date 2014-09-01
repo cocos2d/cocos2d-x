@@ -25,10 +25,7 @@
 #include "3d/CCMeshSkin.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCBundle3D.h"
-
-#include "base/ccMacros.h"
-#include "base/CCPlatformMacros.h"
-#include "platform/CCFileUtils.h"
+#include "3d/CCSkeleton3D.h"
 
 NS_CC_BEGIN
 

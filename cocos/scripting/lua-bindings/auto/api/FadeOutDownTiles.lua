@@ -5,25 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with the grid size and the duration 
 -- @function [parent=#FadeOutDownTiles] create 
 -- @param self
--- @param #float duration
--- @param #size_table gridSize
+-- @param #float float
+-- @param #size_table size
 -- @return FadeOutDownTiles#FadeOutDownTiles ret (return value: cc.FadeOutDownTiles)
         
 --------------------------------
--- 
 -- @function [parent=#FadeOutDownTiles] clone 
 -- @param self
 -- @return FadeOutDownTiles#FadeOutDownTiles ret (return value: cc.FadeOutDownTiles)
         
 --------------------------------
--- 
 -- @function [parent=#FadeOutDownTiles] testFunc 
 -- @param self
--- @param #size_table pos
--- @param #float time
+-- @param #size_table size
+-- @param #float float
 -- @return float#float ret (return value: float)
         
 return nil

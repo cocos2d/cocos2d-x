@@ -5,10 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#TransitionJumpZoom] create 
 -- @param self
--- @param #float t
+-- @param #float float
 -- @param #cc.Scene scene
 -- @return TransitionJumpZoom#TransitionJumpZoom ret (return value: cc.TransitionJumpZoom)
         

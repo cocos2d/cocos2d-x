@@ -62,7 +62,7 @@ TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool back
 /** initializes a transition with duration and incoming scene */
 bool TransitionPageTurn::initWithDuration(float t, Scene *scene, bool backwards)
 {
-    // XXX: needed before [super init]
+    // FIXME:: needed before [super init]
     _back = backwards;
 
     if (TransitionScene::initWithDuration(t, scene))

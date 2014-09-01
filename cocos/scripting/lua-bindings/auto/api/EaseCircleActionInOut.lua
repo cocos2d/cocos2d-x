@@ -5,26 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
 -- @function [parent=#EaseCircleActionInOut] create 
 -- @param self
--- @param #cc.ActionInterval action
+-- @param #cc.ActionInterval actioninterval
 -- @return EaseCircleActionInOut#EaseCircleActionInOut ret (return value: cc.EaseCircleActionInOut)
         
 --------------------------------
--- 
 -- @function [parent=#EaseCircleActionInOut] clone 
 -- @param self
 -- @return EaseCircleActionInOut#EaseCircleActionInOut ret (return value: cc.EaseCircleActionInOut)
         
 --------------------------------
--- 
 -- @function [parent=#EaseCircleActionInOut] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 --------------------------------
--- 
 -- @function [parent=#EaseCircleActionInOut] reverse 
 -- @param self
 -- @return EaseCircleActionInOut#EaseCircleActionInOut ret (return value: cc.EaseCircleActionInOut)

@@ -5,53 +5,44 @@
 -- @parent_module cc
 
 --------------------------------
--- 
 -- @function [parent=#CardinalSplineTo] getPoints 
 -- @param self
 -- @return point_table#point_table ret (return value: point_table)
         
 --------------------------------
--- 
 -- @function [parent=#CardinalSplineTo] updatePosition 
 -- @param self
--- @param #vec2_table newPos
+-- @param #vec2_table vec2
         
 --------------------------------
---  initializes the action with a duration and an array of points 
 -- @function [parent=#CardinalSplineTo] initWithDuration 
 -- @param self
--- @param #float duration
--- @param #point_table points
--- @param #float tension
+-- @param #float float
+-- @param #point_table pointarray
+-- @param #float float
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
 -- @function [parent=#CardinalSplineTo] startWithTarget 
 -- @param self
--- @param #cc.Node target
+-- @param #cc.Node node
         
 --------------------------------
--- 
 -- @function [parent=#CardinalSplineTo] clone 
 -- @param self
 -- @return CardinalSplineTo#CardinalSplineTo ret (return value: cc.CardinalSplineTo)
         
 --------------------------------
--- 
 -- @function [parent=#CardinalSplineTo] reverse 
 -- @param self
 -- @return CardinalSplineTo#CardinalSplineTo ret (return value: cc.CardinalSplineTo)
         
 --------------------------------
--- 
 -- @function [parent=#CardinalSplineTo] update 
 -- @param self
--- @param #float time
+-- @param #float float
         
 --------------------------------
--- js NA<br>
--- lua NA
 -- @function [parent=#CardinalSplineTo] CardinalSplineTo 
 -- @param self
         
