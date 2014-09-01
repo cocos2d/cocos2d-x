@@ -411,8 +411,6 @@ void Renderer::drawBatchedQuads()
 {
     //TODO: we can improve the draw performance by insert material switching command before hand.
 
-//    int quadsToDraw = 0;
-//    int startQuad = 0;
     int indexToDraw = 0;
     int startIndex = 0;
 
