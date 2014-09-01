@@ -55,19 +55,19 @@ void EaseSpriteDemo::centerSprites(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vec2(s.width/2, s.height/2));
+        _grossini->setPosition(s.width/2, s.height/2);
     }
     else if( numberOfSprites == 2 )
     {
-        _kathia->setPosition( Vec2(s.width/3, s.height/2));
-        _tamara->setPosition( Vec2(2*s.width/3, s.height/2));
+        _kathia->setPosition(s.width/3, s.height/2);
+        _tamara->setPosition(2*s.width/3, s.height/2);
         _grossini->setVisible(false);
     }
     else if( numberOfSprites == 3 )
     {
-        _grossini->setPosition( Vec2(s.width/2, s.height/2));
-        _tamara->setPosition( Vec2(s.width/4, s.height/2));
-        _kathia->setPosition( Vec2(3 * s.width/4, s.height/2));
+        _grossini->setPosition(s.width/2, s.height/2);
+        _tamara->setPosition(s.width/4, s.height/2);
+        _kathia->setPosition(3 * s.width/4, s.height/2);
     }
 }
 
@@ -550,7 +550,7 @@ void SpriteEaseBezier::onEnter()
     
     
     // sprite 2
-    _tamara->setPosition(Vec2(80,160));
+    _tamara->setPosition(80,160);
 	ccBezierConfig bezier2;
     bezier2.controlPoint_1 = Vec2(100, s.height/2);
     bezier2.controlPoint_2 = Vec2(200, -s.height/2);
@@ -561,7 +561,7 @@ void SpriteEaseBezier::onEnter()
     bezierEaseTo1->setBezierParamer(0.5, 0.5, 1.0, 1.0);
     
     // sprite 3
-    _kathia->setPosition(Vec2(400,160));
+    _kathia->setPosition(400,160);
     auto bezierTo2 = BezierTo::create(2, bezier2);
     auto bezierEaseTo2 = EaseBezierAction::create(bezierTo2);
     bezierEaseTo2->setBezierParamer(0.0, 0.5, -5.0, 1.0);
@@ -1066,8 +1066,8 @@ EaseSpriteDemo::~EaseSpriteDemo(void)
 
 void EaseSpriteDemo::positionForTwo()
 {    
-    _grossini->setPosition(Vec2(VisibleRect::left().x+60, VisibleRect::bottom().y + VisibleRect::getVisibleRect().size.height*1/5));
-    _tamara->setPosition(Vec2( VisibleRect::left().x+60, VisibleRect::bottom().y + VisibleRect::getVisibleRect().size.height*4/5));
+    _grossini->setPosition(VisibleRect::left().x+60, VisibleRect::bottom().y + VisibleRect::getVisibleRect().size.height*1/5);
+    _tamara->setPosition(VisibleRect::left().x+60, VisibleRect::bottom().y + VisibleRect::getVisibleRect().size.height*4/5);
     _kathia->setVisible(false);
 }
 
@@ -1090,9 +1090,9 @@ void EaseSpriteDemo::onEnter()
     addChild( _kathia, 2);
     addChild( _tamara, 1);
 
-    _grossini->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*1/5));
-    _kathia->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2.5f/5));
-    _tamara->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*4/5));
+    _grossini->setPosition(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*1/5);
+    _kathia->setPosition(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2.5f/5);
+    _tamara->setPosition(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*4/5);
 }
 
 void EaseSpriteDemo::restartCallback(Ref* sender)

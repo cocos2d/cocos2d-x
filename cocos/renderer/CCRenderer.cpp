@@ -342,7 +342,7 @@ void Renderer::render()
     //Uncomment this once everything is rendered by new renderer
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //TODO setup camera or MVP
+    //TODO: setup camera or MVP
     _isRendering = true;
     
     if (_glViewAssigned)
@@ -409,7 +409,7 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 
 void Renderer::drawBatchedQuads()
 {
-    //TODO we can improve the draw performance by insert material switching command before hand.
+    //TODO: we can improve the draw performance by insert material switching command before hand.
 
 //    int quadsToDraw = 0;
 //    int startQuad = 0;

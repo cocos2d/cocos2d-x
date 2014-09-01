@@ -27,6 +27,9 @@ THE SOFTWARE.
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
 
 using namespace cocos2d;
 
@@ -130,7 +133,7 @@ ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
 ActionTimeline* ActionTimelineCache::loadAnimationActionWithFile(const std::string& fileName)
 {
     // Read content from file
-    std::string fullPath    = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+    std::string fullPath    = FileUtils::getInstance()->fullPathForFilename(fileName);
     std::string contentStr  = FileUtils::getInstance()->getStringFromFile(fullPath);
 
     return loadAnimationActionWithContent(fileName, contentStr);

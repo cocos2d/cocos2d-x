@@ -146,7 +146,7 @@ UserDefault::UserDefault()
 {
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 void UserDefault::purgeSharedUserDefault()
 {
     UserDefault::destroyInstance();
@@ -468,7 +468,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
         free(encodedData);
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 UserDefault* UserDefault::sharedUserDefault()
 {
     return UserDefault::getInstance();

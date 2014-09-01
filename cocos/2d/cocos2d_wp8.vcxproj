@@ -236,8 +236,6 @@
     <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
-    <ClCompile Include="..\3d\CCSubMesh.cpp" />
-    <ClCompile Include="..\3d\CCSubMeshState.cpp" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
@@ -280,7 +278,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\base\CCIMEDispatcher.cpp" />
-    <ClCompile Include="..\base\CCModuleManager.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
     <ClCompile Include="..\base\ccRandom.cpp" />
@@ -462,8 +459,6 @@
     <ClInclude Include="..\3d\CCSkeleton3D.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
-    <ClInclude Include="..\3d\CCSubMesh.h" />
-    <ClInclude Include="..\3d\CCSubMeshState.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
@@ -496,7 +491,6 @@
     <ClInclude Include="..\base\CCIMEDispatcher.h" />
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
-    <ClInclude Include="..\base\CCModuleManager.h" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCPlatformConfig.h" />
     <ClInclude Include="..\base\CCPlatformMacros.h" />

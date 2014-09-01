@@ -26,10 +26,11 @@
 #define __cocos2d_libs__TouchEvent__
 
 #include "base/CCEvent.h"
-#include "base/CCTouch.h"
 #include <vector>
 
 NS_CC_BEGIN
+
+class Touch;
 
 #define TOUCH_PERF_DEBUG 1
 

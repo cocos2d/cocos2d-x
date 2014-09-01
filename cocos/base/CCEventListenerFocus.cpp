@@ -23,9 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerFocus.h"
-#include "CCEventFocus.h"
-#include "ccMacros.h"
+#include "base/CCEventListenerFocus.h"
+#include "base/CCEventFocus.h"
+#include "base/ccMacros.h"
 
 NS_CC_BEGIN
 

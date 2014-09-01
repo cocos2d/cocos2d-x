@@ -128,7 +128,7 @@ void Skin::setSkinData(const BaseData &var)
     setScaleY(_skinData.scaleY);
     setRotationSkewX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
     setRotationSkewY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
-    setPosition(Vec2(_skinData.x, _skinData.y));
+    setPosition(_skinData.x, _skinData.y);
 
     _skinTransform = getNodeToParentTransform();
     updateArmatureTransform();
@@ -224,7 +224,7 @@ void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     Mat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    //TODO implement z order
+    //TODO: implement z order
     _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv);
     renderer->addCommand(&_quadCommand);
 }

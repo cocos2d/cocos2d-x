@@ -30,8 +30,11 @@
 
 #include <vector>
 #include <unordered_map>
-#include "chipmunk.h"
 #include "base/CCPlatformMacros.h"
+
+typedef uintptr_t cpGroup;
+struct cpShape;
+struct cpBody;
 
 NS_CC_BEGIN
 

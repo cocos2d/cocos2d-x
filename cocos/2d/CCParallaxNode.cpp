@@ -24,7 +24,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCParallaxNode.h"
+#include "2d/CCParallaxNode.h"
 #include "base/ccCArray.h"
 
 NS_CC_BEGIN
@@ -165,7 +165,7 @@ void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
             PointObject *point = (PointObject*)_parallaxArray->arr[i];
             float x = -pos.x + pos.x * point->getRatio().x + point->getOffset().x;
             float y = -pos.y + pos.y * point->getRatio().y + point->getOffset().y;            
-            point->getChild()->setPosition(Vec2(x,y));
+            point->getChild()->setPosition(x,y);
         }
         _lastPosition = pos;
     }

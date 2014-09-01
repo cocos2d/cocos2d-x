@@ -25,18 +25,10 @@
 #ifndef __CCBUNDLE3D_H__
 #define __CCBUNDLE3D_H__
 
-#include <map>
-#include <list>
-
 #include "3d/CCBundle3DData.h"
-
-#include "base/ccMacros.h"
-#include "base/CCRef.h"
-#include "base/ccTypes.h"
-
-#include "json/document.h"
-#include "CCBundleReader.h"
 #include "3d/3dExport.h"
+#include "3d/CCBundleReader.h"
+#include "json/document.h"
 
 NS_CC_BEGIN
 class Animation3D;

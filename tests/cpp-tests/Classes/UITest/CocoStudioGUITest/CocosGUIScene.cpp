@@ -30,6 +30,20 @@ g_guisTests[] =
         }
     },
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "WebViewTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(KWebViewTest);
+            sceneManager->setMinUISceneId(KWebViewTest);
+            sceneManager->setMaxUISceneId(KWebViewTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+#endif
     {
         "focus test",
         [](Ref* sender)
@@ -37,7 +51,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
-            //TODO: improve ListView focus
+            // TODO: improve ListView focus
             sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
@@ -261,7 +275,7 @@ void CocosGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -299,7 +313,7 @@ void CocosGUITestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, E
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -325,7 +339,7 @@ void CocosGUITestScene::onEnter()
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }

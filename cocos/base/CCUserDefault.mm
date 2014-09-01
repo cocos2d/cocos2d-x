@@ -490,13 +490,13 @@ void UserDefault::destroyInstance()
     CC_SAFE_DELETE(_userDefault);
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 UserDefault* UserDefault::sharedUserDefault()
 {
     return UserDefault::getInstance();
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 void UserDefault::purgeSharedUserDefault()
 {
     UserDefault::destroyInstance();

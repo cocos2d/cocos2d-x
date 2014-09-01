@@ -26,7 +26,7 @@
 #ifndef __cocos2d_libs__CCEventFocus__
 #define __cocos2d_libs__CCEventFocus__
 
-#include "CCEvent.h"
+#include "base/CCEvent.h"
 
 
 NS_CC_BEGIN

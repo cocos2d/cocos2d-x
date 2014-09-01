@@ -28,7 +28,7 @@
 #include "3d/CCBundle3D.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCAttachNode.h"
-#include "3d/CCSkeleton3D.h"
+#include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
