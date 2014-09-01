@@ -14,6 +14,7 @@ CCSprite3DMaterial.cpp
 CCObjLoader.cpp
 CCSkeleton3D.cpp
 CCSprite3D.cpp
+CCSequence3D.cpp
 )
 
 
