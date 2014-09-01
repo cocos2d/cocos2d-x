@@ -26,6 +26,7 @@
 
 #include <algorithm>
 
+#include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
