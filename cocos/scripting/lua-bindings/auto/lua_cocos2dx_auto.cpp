@@ -10539,7 +10539,8 @@ int lua_cocos2dx_GLView_setGLContextAttrs(lua_State* tolua_S)
     if (argc == 1)
     {
         GLContextAttrs arg0;
-        #pragma warning NO CONVERSION TO NATIVE FOR GLContextAttrs;
+        #pragma warning NO CONVERSION TO NATIVE FOR GLContextAttrs
+		ok = false;
         if(!ok)
             return 0;
         cocos2d::GLView::setGLContextAttrs(arg0);

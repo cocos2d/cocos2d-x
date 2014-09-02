@@ -5,23 +5,26 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#TransitionTurnOffTiles] easeActionWithAction 
 -- @param self
--- @param #cc.ActionInterval actioninterval
+-- @param #cc.ActionInterval action
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
+-- 
 -- @function [parent=#TransitionTurnOffTiles] create 
 -- @param self
--- @param #float float
+-- @param #float t
 -- @param #cc.Scene scene
 -- @return TransitionTurnOffTiles#TransitionTurnOffTiles ret (return value: cc.TransitionTurnOffTiles)
         
 --------------------------------
+-- 
 -- @function [parent=#TransitionTurnOffTiles] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #mat4_table mat4
--- @param #unsigned int int
+-- @param #mat4_table transform
+-- @param #unsigned int flags
         
 return nil
