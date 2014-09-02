@@ -5,24 +5,27 @@
 -- @parent_module ccui
 
 --------------------------------
+-- 
 -- @function [parent=#RichElementImage] init 
 -- @param self
--- @param #int int
--- @param #color3b_table color3b
--- @param #unsigned char char
--- @param #string str
+-- @param #int tag
+-- @param #color3b_table color
+-- @param #unsigned char opacity
+-- @param #string filePath
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
 -- @function [parent=#RichElementImage] create 
 -- @param self
--- @param #int int
--- @param #color3b_table color3b
--- @param #unsigned char char
--- @param #string str
+-- @param #int tag
+-- @param #color3b_table color
+-- @param #unsigned char opacity
+-- @param #string filePath
 -- @return RichElementImage#RichElementImage ret (return value: ccui.RichElementImage)
         
 --------------------------------
+-- 
 -- @function [parent=#RichElementImage] RichElementImage 
 -- @param self
         
