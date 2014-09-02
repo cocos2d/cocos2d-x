@@ -142,14 +142,7 @@ void Animate3D::startWithTarget(Node *target)
 
 void Animate3D::stop()
 {
-    //remove this action from map
-    Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-    if (_state == Animate3D::Animate3DState::FadeIn)
-        s_fadeInAnimates.erase(sprite);
-    else if (_state == Animate3D::Animate3DState::FadeOut)
-        s_fadeOutAnimates.erase(sprite);
-    else
-        s_runningAnimates.erase(sprite);
+    removeFromMap();
     
     ActionInterval::stop();
 }
@@ -258,7 +251,24 @@ Animate3D::Animate3D()
 }
 Animate3D::~Animate3D()
 {
+    removeFromMap();
+    
     CC_SAFE_RELEASE(_animation);
+}
+
+void Animate3D::removeFromMap()
+{
+    //remove this action from map
+    if (_target)
+    {
+        Sprite3D* sprite = static_cast<Sprite3D*>(_target);
+        if (_state == Animate3D::Animate3DState::FadeIn)
+            s_fadeInAnimates.erase(sprite);
+        else if (_state == Animate3D::Animate3DState::FadeOut)
+            s_fadeOutAnimates.erase(sprite);
+        else
+            s_runningAnimates.erase(sprite);
+    }
 }
 
 NS_CC_END

@@ -87,6 +87,8 @@ CC_CONSTRUCTOR_ACCESS:
     Animate3D();
     virtual ~Animate3D();
     
+    void removeFromMap();
+    
 protected:
     enum class Animate3DState
     {
