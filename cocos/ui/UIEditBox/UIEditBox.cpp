@@ -68,12 +68,12 @@ void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
 }
 
 EditBox* EditBox::create(const Size& size,
-                         const std::string& pNormal9SpriteBg,
+                         const std::string& normalSprite,
                         TextureResType texType /*= TextureResType::LOCAL*/)
 {
     EditBox* pRet = new EditBox();
     
-    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg, texType))
+    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, texType))
     {
         pRet->autorelease();
     }
@@ -85,11 +85,12 @@ EditBox* EditBox::create(const Size& size,
     return pRet;
 }
     
-EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *pNormal9SpriteBg)
+    
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite *pressedSprite, Scale9Sprite* disabledSprite)
 {
     EditBox* pRet = new (std::nothrow) EditBox();
     
-    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
+    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite))
     {
         pRet->autorelease();
     }

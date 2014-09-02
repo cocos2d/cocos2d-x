@@ -190,7 +190,10 @@ namespace ui {
              * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
              */
             static EditBox* create(const Size& size,
-                                   Scale9Sprite* pNormal9SpriteBg);
+                                   Scale9Sprite* normalSprite,
+                                   Scale9Sprite* pressedSprite = nullptr,
+                                   Scale9Sprite* disabledSprite = nullptr);
+
             
             /**
              * create a edit box with size.
