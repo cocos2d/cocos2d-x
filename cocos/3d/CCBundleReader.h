@@ -55,7 +55,7 @@ public:
      * @param lpbuffer The data buffer pointer
      * @param length The data buffer size
      */
-    void init(char* lpbuffer, ssize_t length);
+    void init(char* buffer, ssize_t length);
 
     /**
      * Reads an array of elements.
@@ -112,9 +112,9 @@ public:
     bool readMatrix(float* m);
 
 private:
-    ssize_t m_position;
-    ssize_t  m_length;
-    char* m_buffer;
+    ssize_t _position;
+    ssize_t  _length;
+    char* _buffer;
 };
 
 /**
