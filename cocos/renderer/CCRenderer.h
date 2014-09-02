@@ -132,6 +132,8 @@ public:
     ssize_t getDrawnVertices() const { return _drawnVertices; }
     /* RenderCommands (except) QuadCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
+    /* clear draw stats */
+    void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 

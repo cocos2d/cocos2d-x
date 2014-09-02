@@ -444,9 +444,6 @@ void Renderer::render()
     
     if (_glViewAssigned)
     {
-        // cleanup
-        _drawnBatches = _drawnVertices = 0;
-
         //Process render commands
         //1. Sort render commands based on ID
         for (auto &renderqueue : _renderGroups)
