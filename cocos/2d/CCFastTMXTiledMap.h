@@ -32,7 +32,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class TMXObjectGroup;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;

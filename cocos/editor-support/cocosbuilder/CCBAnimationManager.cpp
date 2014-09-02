@@ -1,8 +1,6 @@
 #include "CCBAnimationManager.h"
-#include "CCBSequence.h"
-#include "CCBSequenceProperty.h"
+
 #include "CCBReader.h"
-#include "CCBKeyframe.h"
 #include "CCNode+CCBRelativePositioning.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "CCBSelectorResolver.h"
@@ -481,7 +479,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
         {
             // [node setValue:value forKey:name];
 
-            // TODO only handle rotation, opacity, displayFrame, color
+            // TODO: only handle rotation, opacity, displayFrame, color
             if (propName == "rotation")
             {
                 float rotate = value.asFloat();

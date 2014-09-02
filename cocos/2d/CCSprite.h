@@ -28,15 +28,10 @@ THE SOFTWARE.
 #ifndef __SPRITE_NODE_CCSPRITE_H__
 #define __SPRITE_NODE_CCSPRITE_H__
 
+#include <string>
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCTextureAtlas.h"
-#include "base/ccTypes.h"
-#include <string>
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
-#include "physics/CCPhysicsBody.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
 

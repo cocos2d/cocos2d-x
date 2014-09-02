@@ -31,12 +31,9 @@ THE SOFTWARE.
 #include "base/CCPlatformMacros.h"
 
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
-#include "math/CCGeometry.h"
 #include "base/CCVector.h"
-#include "CCGL.h"
-#include "2d/CCLabelAtlas.h"
 #include "2d/CCScene.h"
+#include "CCGL.h"
 #include <stack>
 #include "math/CCMath.h"
 #include "platform/CCGLView.h"
@@ -50,7 +47,6 @@ NS_CC_BEGIN
 
 /* Forward declarations. */
 class LabelAtlas;
-class Scene;
 //class GLView;
 class DirectorDelegate;
 class Node;
@@ -246,7 +242,7 @@ public:
      */
     Vec2 convertToUI(const Vec2& point);
 
-    /// XXX: missing description 
+    /// FIXME: missing description 
     float getZEye() const;
 
     // Scene Management

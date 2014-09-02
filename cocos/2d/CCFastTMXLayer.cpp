@@ -34,20 +34,16 @@ THE SOFTWARE.
  It was rewritten again, and only a small part of the original HK ideas/code remains in this implementation
 
  */
-#include "CCFastTMXLayer.h"
-#include "CCTMXXMLParser.h"
-#include "CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
+#include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
-#include "base/CCDirector.h"
-#include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "base/CCDirector.h"
 #include "deprecated/CCString.h"
-#include "renderer/CCGLProgramStateCache.h"
-#include <algorithm>
 
 NS_CC_BEGIN
 namespace experimental {
@@ -491,7 +487,7 @@ void TMXLayer::updateTotalQuads()
                 
                 if(tileGID & kTMXTileDiagonalFlag)
                 {
-                    // XXX: not working correcly
+                    // FIXME: not working correcly
                     quad.bl.vertices.x = left;
                     quad.bl.vertices.y = bottom;
                     quad.bl.vertices.z = z;

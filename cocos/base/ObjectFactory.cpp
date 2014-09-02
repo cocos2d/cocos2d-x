@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <functional>
-#include "ObjectFactory.h"
+#include "base/ObjectFactory.h"
 
 
 NS_CC_BEGIN

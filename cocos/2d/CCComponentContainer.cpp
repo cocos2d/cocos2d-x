@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
-#include "base/CCDirector.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 

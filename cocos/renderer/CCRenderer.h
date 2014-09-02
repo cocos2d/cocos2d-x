@@ -81,7 +81,7 @@ public:
     Renderer();
     ~Renderer();
 
-    //TODO manage GLView inside Render itself
+    //TODO: manage GLView inside Render itself
     void initGLView();
 
     /** Adds a `RenderComamnd` into the renderer */

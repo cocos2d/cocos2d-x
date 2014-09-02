@@ -36,7 +36,7 @@ NS_CC_BEGIN
 
 int Device::getDPI()
 {
-//TODO: 
+    //TODO: return correct DPI
     return 160;
 }
 

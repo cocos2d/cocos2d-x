@@ -25,9 +25,14 @@ THE SOFTWARE.
 #ifndef __CCFRAME_H__
 #define __CCFRAME_H__
 
-#include "cocos2d.h"
+#include <string>
+#include "base/CCRef.h"
+#include "base/CCVector.h"
+#include "2d/CCNode.h"
+#include "2d/CCSprite.h"
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
+
 
 NS_TIMELINE_BEGIN
 

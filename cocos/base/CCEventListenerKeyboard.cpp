@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "base/CCEventListenerKeyboard.h"
-#include "base/CCEventKeyboard.h"
 #include "base/ccMacros.h"
 
 NS_CC_BEGIN

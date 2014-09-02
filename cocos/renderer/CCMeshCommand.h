@@ -26,10 +26,9 @@
 #define _CC_MESHCOMMAND_H_
 
 #include <unordered_map>
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "math/CCMath.h"
-#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
