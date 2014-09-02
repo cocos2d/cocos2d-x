@@ -9,21 +9,24 @@
 -- @overload self, cc.ActionInterval, float         
 -- @function [parent=#EaseElasticInOut] create
 -- @param self
--- @param #cc.ActionInterval actioninterval
--- @param #float float
+-- @param #cc.ActionInterval action
+-- @param #float period
 -- @return EaseElasticInOut#EaseElasticInOut ret (retunr value: cc.EaseElasticInOut)
 
 --------------------------------
+-- 
 -- @function [parent=#EaseElasticInOut] clone 
 -- @param self
 -- @return EaseElasticInOut#EaseElasticInOut ret (return value: cc.EaseElasticInOut)
         
 --------------------------------
+-- 
 -- @function [parent=#EaseElasticInOut] update 
 -- @param self
--- @param #float float
+-- @param #float time
         
 --------------------------------
+-- 
 -- @function [parent=#EaseElasticInOut] reverse 
 -- @param self
 -- @return EaseElasticInOut#EaseElasticInOut ret (return value: cc.EaseElasticInOut)
