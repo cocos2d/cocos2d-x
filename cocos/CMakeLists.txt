@@ -70,8 +70,6 @@ file(GLOB core_source_files
      "${CMAKE_CURRENT_SOURCE_DIR}/../external/tinyxml2/*.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/../external/xxhash/*.c"
      "${CMAKE_CURRENT_SOURCE_DIR}/../external/unzip/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}/../external/chipmunk/src/*.c"
-     "${CMAKE_CURRENT_SOURCE_DIR}/../external/chipmunk/src/constraints/*.c"
      "${CMAKE_CURRENT_SOURCE_DIR}/../external/edtaa3func/*.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/../external/ConvertUTF/*.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/../external/ConvertUTF/*.c"
@@ -79,7 +77,7 @@ file(GLOB core_source_files
 file(GLOB_RECURSE cocostudio_source_files "${CMAKE_CURRENT_SOURCE_DIR}/editor-support/cocostudio/*.cpp")
 file(GLOB_RECURSE extensions_source_files "${CMAKE_CURRENT_SOURCE_DIR}/../extensions/*.cpp")
 file(GLOB_RECURSE box2d_source_files "${CMAKE_CURRENT_SOURCE_DIR}/../external/Box2D/*.cpp")
-set(cocos2d_source_files ${chipmunk_source_files} ${box2d_source_files} ${core_source_files} ${cocostudio_source_files}  ${extensions_source_files})
+set(cocos2d_source_files ${box2d_source_files} ${core_source_files} ${cocostudio_source_files}  ${extensions_source_files})
 # exclude files specific for other platforms
 list(REMOVE_ITEM cocos2d_source_files 
      "${CMAKE_CURRENT_SOURCE_DIR}/base/CCController-android.cpp"
@@ -100,7 +98,8 @@ if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 else()
     set(FMOD_LIB "fmodex")
 endif()
-target_link_libraries(cocos2d jpeg webp tiff freetype fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB} curl)
+target_link_libraries(cocos2d jpeg webp tiff freetype fontconfig png pthread
+glfw GLEW GL X11 rt z chipmunk ${FMOD_LIB} curl)
 
 set_target_properties(cocos2d
     PROPERTIES
