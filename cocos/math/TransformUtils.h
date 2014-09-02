@@ -27,8 +27,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_TRANSFORM_UTILS_H__
 #define __SUPPORT_TRANSFORM_UTILS_H__
 
-// todo:
-// when in MAC or windows, it includes <OpenGL/gl.h>
+// TODO: when in MAC or windows, it includes <OpenGL/gl.h>
 #include "CCGL.h"
 #include "base/ccMacros.h"
 

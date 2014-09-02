@@ -26,7 +26,6 @@
 #ifndef __CC_RENDERCOMMANDPOOL_H__
 #define __CC_RENDERCOMMANDPOOL_H__
 
-#include <set>
 #include <list>
 
 #include "base/CCPlatformMacros.h"

@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCActionObject.h"
-#include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocoLoader.h"
 
 #include "base/CCDirector.h"

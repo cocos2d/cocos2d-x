@@ -25,7 +25,9 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_ACTION_CACHE_H__
 #define __CCTIMELINE_ACTION_CACHE_H__
 
-#include "cocos2d.h"
+#include <unordered_map>
+#include "base/CCMap.h"
+
 #include "cocostudio/DictionaryHelper.h"
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"

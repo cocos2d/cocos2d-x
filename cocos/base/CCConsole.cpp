@@ -237,7 +237,7 @@ static void _log(const char *format, va_list args)
 
 }
 
-// XXX: Deprecated
+// FIXME: Deprecated
 void CCLog(const char * format, ...)
 {
     va_list args;

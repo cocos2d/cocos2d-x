@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCTextFieldTTF.h"
+#include "2d/CCTextFieldTTF.h"
 
 #include "base/CCDirector.h"
 

@@ -25,13 +25,12 @@
 #ifndef __CCEVENTLISTENER_H__
 #define __CCEVENTLISTENER_H__
 
-#include "base/CCPlatformMacros.h"
-#include "base/CCRef.h"
-
 #include <functional>
 #include <string>
 #include <memory>
-#include <set>
+
+#include "base/CCPlatformMacros.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 

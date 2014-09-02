@@ -24,13 +24,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCFastTMXTiledMap.h"
-
-#include <algorithm>
-
-#include "CCTMXXMLParser.h"
-#include "CCFastTMXLayer.h"
-#include "CCSprite.h"
+#include "2d/CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN
@@ -138,7 +133,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                     //    gid = CFSwapInt32( gid );
                     /* We support little endian.*/
                     
-                    // XXX: gid == 0 --> empty tile
+                    // FIXME: gid == 0 --> empty tile
                     if( gid != 0 )
                     {
                         // Optimization: quick return

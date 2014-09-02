@@ -42,21 +42,6 @@
 
 
 --------------------------------------------------------
--- the cc GLProgramState
--- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
-
-
---------------------------------------------------------
--- the cc AtlasNode
--- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
-
-
---------------------------------------------------------
--- the cc LabelAtlas
--- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
-
-
---------------------------------------------------------
 -- the cc Scene
 -- @field [parent=#cc] Scene#Scene Scene preloaded module
 
@@ -747,13 +732,23 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
+
+
+--------------------------------------------------------
+-- the cc AtlasNode
+-- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc DrawNode
 -- @field [parent=#cc] DrawNode#DrawNode DrawNode preloaded module
 
 
 --------------------------------------------------------
--- the cc GLProgram
--- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
+-- the cc LabelAtlas
+-- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
 
 
 --------------------------------------------------------
@@ -1022,13 +1017,13 @@
 
 
 --------------------------------------------------------
--- the cc Sprite
--- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
+-- the cc ProgressTimer
+-- @field [parent=#cc] ProgressTimer#ProgressTimer ProgressTimer preloaded module
 
 
 --------------------------------------------------------
--- the cc ProgressTimer
--- @field [parent=#cc] ProgressTimer#ProgressTimer ProgressTimer preloaded module
+-- the cc Sprite
+-- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
 
 
 --------------------------------------------------------
@@ -1129,6 +1124,11 @@
 --------------------------------------------------------
 -- the cc TiledGrid3D
 -- @field [parent=#cc] TiledGrid3D#TiledGrid3D TiledGrid3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLProgram
+-- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
 
 --------------------------------------------------------
