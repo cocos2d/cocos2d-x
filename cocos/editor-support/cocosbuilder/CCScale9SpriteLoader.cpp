@@ -8,7 +8,8 @@ using namespace cocos2d::extension;
 #define PROPERTY_COLOR "color"
 #define PROPERTY_OPACITY "opacity"
 #define PROPERTY_BLENDFUNC "blendFunc"
-#define PROPERTY_PREFEREDSIZE "preferedSize" // TODO Should be "preferredSize". This is a typo in cocos2d-iphone, cocos2d-x and CocosBuilder!
+// TODO: Should be "preferredSize". This is a typo in cocos2d-iphone, cocos2d-x and CocosBuilder!
+#define PROPERTY_PREFEREDSIZE "preferedSize"
 #define PROPERTY_INSETLEFT "insetLeft"
 #define PROPERTY_INSETTOP "insetTop"
 #define PROPERTY_INSETRIGHT "insetRight"

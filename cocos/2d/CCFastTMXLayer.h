@@ -27,15 +27,12 @@ THE SOFTWARE.
 #ifndef __CC_FAST_TMX_LAYER_H__
 #define __CC_FAST_TMX_LAYER_H__
 
-#include "CCTMXObjectGroup.h"
-#include "CCTMXXMLParser.h"
-#include "CCNode.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCPrimitiveCommand.h"
-
 #include <map>
 #include <unordered_map>
+#include "2d/CCNode.h"
+#include "2d/CCTMXXMLParser.h"
+#include "renderer/CCPrimitiveCommand.h"
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
 

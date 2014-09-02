@@ -126,7 +126,7 @@ TestController::TestController()
     auto menu =Menu::create(closeItem, nullptr);
 
     menu->setPosition( Vec2::ZERO );
-    closeItem->setPosition(Vec2( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
 
     // add menu items for tests
     TTFConfig ttfConfig("fonts/arial.ttf", 24);
@@ -137,7 +137,7 @@ TestController::TestController()
         auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);
-        menuItem->setPosition( Vec2( VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE) ));
+        menuItem->setPosition(VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE));
     }
 
     _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
@@ -217,7 +217,7 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
 
@@ -242,7 +242,7 @@ void TestController::onMouseScroll(Event *event)
 
     if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
 
@@ -362,7 +362,7 @@ void TestController::addConsoleAutoTest()
                 sched->performFunctionInCocosThread( [&]()
                 {
                     auto scene = Scene::create();
-                    auto layer = new TestController();
+                    auto layer = new (std::nothrow) TestController();
                     scene->addChild(layer);
                     layer->release();
                     Director::getInstance()->replaceScene(scene);

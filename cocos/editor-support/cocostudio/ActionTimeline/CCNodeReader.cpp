@@ -104,7 +104,7 @@ NodeReader* NodeReader::getInstance()
 {
     if (! _sharedNodeReader)
     {
-        _sharedNodeReader = new NodeReader();
+        _sharedNodeReader = new (std::nothrow) NodeReader();
         _sharedNodeReader->init();
     }
 
@@ -288,7 +288,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
 
     if(x != 0 || y != 0)
-        node->setPosition(Point(x, y));
+        node->setPosition(x, y);
     if(scalex != 1)
         node->setScaleX(scalex);
     if(scaley != 1)
@@ -457,7 +457,7 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
 
     WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
 
-    WidgetPropertiesReader0300* guiReader = new WidgetPropertiesReader0300();
+    WidgetPropertiesReader0300* guiReader = new (std::nothrow) WidgetPropertiesReader0300();
     guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
     CC_SAFE_DELETE(guiReader);
     

@@ -151,9 +151,9 @@ void ActionsDemo::onEnter()
     addChild(_tamara, 2);
     addChild(_kathia, 3);
 
-    _grossini->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
-    _tamara->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
-    _kathia->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
+    _grossini->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3);
+    _tamara->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3);
+    _kathia->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2);
 }
 
 void ActionsDemo::onExit()
@@ -167,7 +167,7 @@ void ActionsDemo::onExit()
 
 void ActionsDemo::restartCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -175,7 +175,7 @@ void ActionsDemo::restartCallback(Ref* sender)
 
 void ActionsDemo::nextCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -183,7 +183,7 @@ void ActionsDemo::nextCallback(Ref* sender)
 
 void ActionsDemo::backCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -203,19 +203,19 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vec2(s.width/2, s.height/2));
+        _grossini->setPosition(s.width/2, s.height/2);
     }
     else if( numberOfSprites == 2 ) 
     {        
-        _kathia->setPosition( Vec2(s.width/3, s.height/2));
-        _tamara->setPosition( Vec2(2*s.width/3, s.height/2));
+        _kathia->setPosition(s.width/3, s.height/2);
+        _tamara->setPosition(2*s.width/3, s.height/2);
         _grossini->setVisible(false);
     } 
     else if( numberOfSprites == 3 ) 
     {
-        _grossini->setPosition( Vec2(s.width/2, s.height/2));
-        _tamara->setPosition( Vec2(s.width/4, s.height/2));
-        _kathia->setPosition( Vec2(3 * s.width/4, s.height/2));
+        _grossini->setPosition(s.width/2, s.height/2);
+        _tamara->setPosition(s.width/4, s.height/2);
+        _kathia->setPosition(3 * s.width/4, s.height/2);
     }
 }
 
@@ -227,19 +227,19 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vec2(60, s.height/2));
+        _grossini->setPosition(60, s.height/2);
     } 
     else if( numberOfSprites == 2 ) 
     {        
-        _kathia->setPosition( Vec2(60, s.height/3));
-        _tamara->setPosition( Vec2(60, 2*s.height/3));
+        _kathia->setPosition(60, s.height/3);
+        _tamara->setPosition(60, 2*s.height/3);
         _grossini->setVisible( false );
     } 
     else if( numberOfSprites == 3 ) 
     {
-        _grossini->setPosition( Vec2(60, s.height/2));
-        _tamara->setPosition( Vec2(60, 2*s.height/3));
-        _kathia->setPosition( Vec2(60, s.height/3));
+        _grossini->setPosition(60, s.height/2);
+        _tamara->setPosition(60, 2*s.height/3);
+        _kathia->setPosition(60, s.height/3);
     }
 }
 
@@ -256,14 +256,14 @@ void ActionManual::onEnter()
 
     _tamara->setScaleX( 2.5f);
     _tamara->setScaleY( -1.0f);
-    _tamara->setPosition( Vec2(100,70) );
+    _tamara->setPosition(100,70);
     _tamara->setOpacity( 128);
 
     _grossini->setRotation( 120);
-    _grossini->setPosition( Vec2(s.width/2, s.height/2));
+    _grossini->setPosition(s.width/2, s.height/2);
     _grossini->setColor( Color3B( 255,0,0));
 
-    _kathia->setPosition( Vec2(s.width-100, s.height/2));
+    _kathia->setPosition(s.width-100, s.height/2);
     _kathia->setColor( Color3B::BLUE);
 }
 
@@ -396,11 +396,11 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize( boxSize );
     box->ignoreAnchorPointForPosition(false);
-    box->setPosition(Vec2(s.width/2, s.height - 100 - box->getContentSize().height/2));
+    box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
     this->addChild(box);
 
     auto label = Label::createWithTTF("Standard cocos2d Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2(s.width/2, s.height - 100 + label->getContentSize().height));
+    label->setPosition(s.width/2, s.height - 100 + label->getContentSize().height);
     this->addChild(label);
 
     auto actionTo = SkewBy::create(2, 360, 0);
@@ -412,11 +412,11 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize(boxSize);
     box->ignoreAnchorPointForPosition(false);
-    box->setPosition(Vec2(s.width/2, s.height - 250 - box->getContentSize().height/2));
+    box->setPosition(s.width/2, s.height - 250 - box->getContentSize().height/2);
     this->addChild(box);
 
     label = Label::createWithTTF("Rotational Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2(s.width/2, s.height - 250 + label->getContentSize().height/2));
+    label->setPosition(s.width/2, s.height - 250 + label->getContentSize().height/2);
     this->addChild(label);
     auto actionTo2 = RotateBy::create(2, 360, 0);
     auto actionToBack2 = RotateBy::create(2, -360, 0);
@@ -440,20 +440,20 @@ void ActionSkewRotateScale::onEnter()
 
     auto box = LayerColor::create(Color4B(255, 255, 0, 255));
     box->setAnchorPoint(Vec2(0, 0));
-    box->setPosition(Vec2(190, 110));
+    box->setPosition(190, 110);
     box->setContentSize(boxSize);
 
     static float markrside = 10.0f;
     auto uL = LayerColor::create(Color4B(255, 0, 0, 255));
     box->addChild(uL);
     uL->setContentSize(Size(markrside, markrside));
-    uL->setPosition(Vec2(0.f, boxSize.height - markrside));
+    uL->setPosition(0.f, boxSize.height - markrside);
     uL->setAnchorPoint(Vec2(0, 0));
 
     auto uR = LayerColor::create(Color4B(0, 0, 255, 255));
     box->addChild(uR);
     uR->setContentSize(Size(markrside, markrside));
-    uR->setPosition(Vec2(boxSize.width - markrside, boxSize.height - markrside));
+    uR->setPosition(boxSize.width - markrside, boxSize.height - markrside);
     uR->setAnchorPoint(Vec2(0, 0));
     addChild(box);
 
@@ -583,7 +583,7 @@ void ActionBezier::onEnter()
 
 
     // sprite 2
-    _tamara->setPosition(Vec2(80,160));
+    _tamara->setPosition(80,160);
 	ccBezierConfig bezier2;
     bezier2.controlPoint_1 = Vec2(100, s.height/2);
     bezier2.controlPoint_2 = Vec2(200, -s.height/2);
@@ -592,7 +592,7 @@ void ActionBezier::onEnter()
     auto bezierTo1 = BezierTo::create(2, bezier2);    
 
     // sprite 3
-    _kathia->setPosition(Vec2(400,160));
+    _kathia->setPosition(400,160);
     auto bezierTo2 = BezierTo::create(2, bezier2);
 
     _grossini->runAction( rep);
@@ -813,7 +813,7 @@ void ActionSequence2::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*1,s.height/2));
+    label->setPosition(s.width/4*1,s.height/2);
 
     addChild(label);
 }
@@ -822,7 +822,7 @@ void ActionSequence2::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*2,s.height/2));
+    label->setPosition(s.width/4*2,s.height/2);
 
     addChild(label);
 }
@@ -831,7 +831,7 @@ void ActionSequence2::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*3,s.height/2));
+    label->setPosition(s.width/4*3,s.height/2);
 
     addChild(label);
 }
@@ -964,7 +964,7 @@ void ActionCallFunction::onEnter()
                              [&](){
                                  auto s = Director::getInstance()->getWinSize();
                                  auto label = Label::createWithTTF("called:lambda callback", "fonts/Marker Felt.ttf", 16.0f);
-                                 label->setPosition(Vec2( s.width/4*1,s.height/2-40));
+                                 label->setPosition(s.width/4*1,s.height/2-40);
                                  this->addChild(label);
                              }  ),
                         nullptr);
@@ -991,7 +991,7 @@ void ActionCallFunction::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*1,s.height/2));
+    label->setPosition(s.width/4*1,s.height/2);
 
     addChild(label);
 }
@@ -1000,7 +1000,7 @@ void ActionCallFunction::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*2,s.height/2));
+    label->setPosition(s.width/4*2,s.height/2);
 
     addChild(label);
 
@@ -1011,7 +1011,7 @@ void ActionCallFunction::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*3,s.height/2));
+    label->setPosition(s.width/4*3,s.height/2);
     addChild(label);
 
 	CCLOG("target is: %p, data is: %ld", sender, data);
@@ -1339,7 +1339,7 @@ void ActionFollow::onEnter()
     centerSprites(1);
     auto s = Director::getInstance()->getWinSize();
 
-    _grossini->setPosition(Vec2(-200, s.height / 2));
+    _grossini->setPosition(-200, s.height / 2);
     auto move = MoveBy::create(2, Vec2(s.width * 3, 0));
     auto move_back = move->reverse();
     auto seq = Sequence::create(move, move_back, nullptr);
@@ -1597,7 +1597,7 @@ void ActionCatmullRomStacked::onEnter()
     // is relative to the Catmull Rom curve, it is better to start with (0,0).
     //
     
-    _tamara->setPosition(Vec2(50,50));
+    _tamara->setPosition(50,50);
     
     auto array = PointArray::create(20);
     
@@ -1743,7 +1743,7 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto seq = Sequence::create(action, reverse, nullptr);
     
-    _tamara->setPosition(Vec2(50,50));
+    _tamara->setPosition(50,50);
     _tamara->runAction(seq);
     
     _tamara->runAction(
@@ -1764,7 +1764,7 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto seq2 = Sequence::create(action2, reverse2, nullptr);
     
-    _kathia->setPosition(Vec2(s.width/2,50));
+    _kathia->setPosition(s.width/2,50);
     
     _kathia->runAction(seq2);
     
@@ -1875,7 +1875,7 @@ void Issue1305::onExit()
 
 void Issue1305::addSprite(float dt)
 {
-    _spriteTmp->setPosition(Vec2(250,250));
+    _spriteTmp->setPosition(250,250);
     addChild(_spriteTmp);
 }
 
@@ -1895,7 +1895,7 @@ void Issue1305_2::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(200,200));
+    spr->setPosition(200,200);
     addChild(spr);
 
     auto act1 = MoveBy::create(2 ,Vec2(0, 100));
@@ -1968,7 +1968,7 @@ void Issue1288::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(100, 100));
+    spr->setPosition(100, 100);
     addChild(spr);
 
     auto act1 = MoveBy::create(0.5, Vec2(100, 0));
@@ -1995,7 +1995,7 @@ void Issue1288_2::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(100, 100));
+    spr->setPosition(100, 100);
     addChild(spr);
 
     auto act1 = MoveBy::create(0.5, Vec2(100, 0));
@@ -2019,7 +2019,7 @@ void Issue1327::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(100, 100));
+    spr->setPosition(100, 100);
     addChild(spr);
 
     auto act1 = CallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
@@ -2144,7 +2144,7 @@ void ActionCatmullRom::onEnter()
     // is relative to the Catmull Rom curve, it is better to start with (0,0).
     //
     
-    _tamara->setPosition(Vec2(50, 50));
+    _tamara->setPosition(50, 50);
     
     auto array = PointArray::create(20);
     
@@ -2277,7 +2277,7 @@ void ActionCardinalSpline::onEnter()
     
     auto seq = Sequence::create(action, reverse, nullptr);
     
-    _tamara->setPosition(Vec2(50, 50));
+    _tamara->setPosition(50, 50);
     _tamara->runAction(seq);
     
     //
@@ -2291,7 +2291,7 @@ void ActionCardinalSpline::onEnter()
     
     auto seq2 = Sequence::create(action2, reverse2, nullptr);
     
-    _kathia->setPosition(Vec2(s.width/2, 50));
+    _kathia->setPosition(s.width/2, 50);
     _kathia->runAction(seq2);
     
     _array = array;

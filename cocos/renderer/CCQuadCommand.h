@@ -27,7 +27,6 @@
 
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
-#include "renderer/CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 

@@ -22,26 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include <list>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-
 #include "3d/CCMesh.h"
 #include "3d/CCMeshSkin.h"
+#include "3d/CCSkeleton3D.h"
 #include "3d/CCMeshVertexIndexData.h"
-
-#include "base/ccMacros.h"
-#include "base/CCEventCustom.h"
-#include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCEventType.h"
 #include "base/CCDirector.h"
-#include "renderer/ccGLStateCache.h"
-#include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramCache.h"
-
+#include "renderer/CCGLProgramState.h"
 
 using namespace std;
 
@@ -166,7 +154,7 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat,
 
 Mesh* Mesh::create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin)
 {
-    auto state = new Mesh();
+    auto state = new (std::nothrow) Mesh();
     state->autorelease();
     state->bindMeshCommand();
     state->_name = name;

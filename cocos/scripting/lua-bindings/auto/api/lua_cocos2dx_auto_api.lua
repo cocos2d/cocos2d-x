@@ -12,23 +12,18 @@
 
 
 --------------------------------------------------------
--- the cc EventListener
--- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
-
-
---------------------------------------------------------
--- the cc Event
--- @field [parent=#cc] Event#Event Event preloaded module
-
-
---------------------------------------------------------
--- the cc EventDispatcher
--- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
+-- the cc Texture2D
+-- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
 
 
 --------------------------------------------------------
 -- the cc Touch
 -- @field [parent=#cc] Touch#Touch Touch preloaded module
+
+
+--------------------------------------------------------
+-- the cc Event
+-- @field [parent=#cc] Event#Event Event preloaded module
 
 
 --------------------------------------------------------
@@ -42,28 +37,8 @@
 
 
 --------------------------------------------------------
--- the cc Texture2D
--- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
-
-
---------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
-
-
---------------------------------------------------------
--- the cc GLProgramState
--- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
-
-
---------------------------------------------------------
--- the cc AtlasNode
--- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
-
-
---------------------------------------------------------
--- the cc LabelAtlas
--- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
 
 
 --------------------------------------------------------
@@ -104,6 +79,16 @@
 --------------------------------------------------------
 -- the cc Camera
 -- @field [parent=#cc] Camera#Camera Camera preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListener
+-- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventDispatcher
+-- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
 
 
 --------------------------------------------------------
@@ -747,13 +732,23 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
+
+
+--------------------------------------------------------
+-- the cc AtlasNode
+-- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc DrawNode
 -- @field [parent=#cc] DrawNode#DrawNode DrawNode preloaded module
 
 
 --------------------------------------------------------
--- the cc GLProgram
--- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
+-- the cc LabelAtlas
+-- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
 
 
 --------------------------------------------------------
@@ -1022,13 +1017,13 @@
 
 
 --------------------------------------------------------
--- the cc Sprite
--- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
+-- the cc ProgressTimer
+-- @field [parent=#cc] ProgressTimer#ProgressTimer ProgressTimer preloaded module
 
 
 --------------------------------------------------------
--- the cc ProgressTimer
--- @field [parent=#cc] ProgressTimer#ProgressTimer ProgressTimer preloaded module
+-- the cc Sprite
+-- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
 
 
 --------------------------------------------------------
@@ -1129,6 +1124,11 @@
 --------------------------------------------------------
 -- the cc TiledGrid3D
 -- @field [parent=#cc] TiledGrid3D#TiledGrid3D TiledGrid3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLProgram
+-- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
 
 --------------------------------------------------------

@@ -73,7 +73,8 @@
         self.textField = [[[NSTextField alloc] initWithFrame:frameRect] autorelease];
         self.secureTextField = [[[NSSecureTextField alloc] initWithFrame:frameRect] autorelease];
 
-        NSFont *font = [NSFont systemFontOfSize:frameRect.size.height*2/3]; //TODO need to delete hard code here.
+        //TODO: need to delete hard code here.
+        NSFont *font = [NSFont systemFontOfSize:frameRect.size.height*2/3];
         textField_.font = font;
         secureTextField_.font = font;
         

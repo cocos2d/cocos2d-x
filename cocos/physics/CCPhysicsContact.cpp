@@ -62,7 +62,7 @@ PhysicsContact::~PhysicsContact()
 
 PhysicsContact* PhysicsContact::construct(PhysicsShape* a, PhysicsShape* b)
 {
-    PhysicsContact * contact = new PhysicsContact();
+    PhysicsContact * contact = new (std::nothrow) PhysicsContact();
     if(contact && contact->init(a, b))
     {
         return contact;
@@ -78,7 +78,7 @@ bool PhysicsContact::init(PhysicsShape* a, PhysicsShape* b)
     {
         CC_BREAK_IF(a == nullptr || b == nullptr);
         
-        CC_BREAK_IF(!(_info = new PhysicsContactInfo(this)));
+        CC_BREAK_IF(!(_info = new (std::nothrow) PhysicsContactInfo(this)));
         
         _shapeA = a;
         _shapeB = b;
@@ -99,7 +99,7 @@ void PhysicsContact::generateContactData()
     cpArbiter* arb = static_cast<cpArbiter*>(_contactInfo);
     CC_SAFE_DELETE(_preContactData);
     _preContactData = _contactData;
-    _contactData = new PhysicsContactData();
+    _contactData = new (std::nothrow) PhysicsContactData();
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
     {
@@ -271,7 +271,7 @@ EventListenerPhysicsContact::~EventListenerPhysicsContact()
 
 EventListenerPhysicsContact* EventListenerPhysicsContact::create()
 {
-    EventListenerPhysicsContact* obj = new EventListenerPhysicsContact();
+    EventListenerPhysicsContact* obj = new (std::nothrow) EventListenerPhysicsContact();
     
     if (obj != nullptr && obj->init())
     {
@@ -322,7 +322,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::clone()
 
 EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::create(PhysicsBody* bodyA, PhysicsBody* bodyB)
 {
-    EventListenerPhysicsContactWithBodies* obj = new EventListenerPhysicsContactWithBodies();
+    EventListenerPhysicsContactWithBodies* obj = new (std::nothrow) EventListenerPhysicsContactWithBodies();
     
     if (obj != nullptr && obj->init())
     {
@@ -390,7 +390,7 @@ EventListenerPhysicsContactWithShapes::~EventListenerPhysicsContactWithShapes()
 
 EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::create(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
-    EventListenerPhysicsContactWithShapes* obj = new EventListenerPhysicsContactWithShapes();
+    EventListenerPhysicsContactWithShapes* obj = new (std::nothrow) EventListenerPhysicsContactWithShapes();
     
     if (obj != nullptr && obj->init())
     {
@@ -444,7 +444,7 @@ EventListenerPhysicsContactWithGroup::~EventListenerPhysicsContactWithGroup()
 
 EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::create(int group)
 {
-    EventListenerPhysicsContactWithGroup* obj = new EventListenerPhysicsContactWithGroup();
+    EventListenerPhysicsContactWithGroup* obj = new (std::nothrow) EventListenerPhysicsContactWithGroup();
     
     if (obj != nullptr && obj->init())
     {

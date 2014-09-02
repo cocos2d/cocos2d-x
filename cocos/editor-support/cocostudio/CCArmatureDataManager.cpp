@@ -39,7 +39,7 @@ ArmatureDataManager *ArmatureDataManager::getInstance()
 {
     if (s_sharedArmatureDataManager == nullptr)
     {
-        s_sharedArmatureDataManager = new ArmatureDataManager();
+        s_sharedArmatureDataManager = new (std::nothrow) ArmatureDataManager();
         if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
         {
             CC_SAFE_DELETE(s_sharedArmatureDataManager);

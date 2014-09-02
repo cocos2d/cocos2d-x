@@ -34,19 +34,16 @@ THE SOFTWARE.
  It was rewritten again, and only a small part of the original HK ideas/code remains in this implementation
 
  */
-#include "CCFastTMXLayer.h"
-#include "CCTMXXMLParser.h"
-#include "CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
+#include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgram.h"
-#include "base/CCDirector.h"
-#include "base/CCConfiguration.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "base/CCDirector.h"
 #include "deprecated/CCString.h"
-#include "renderer/CCGLProgramStateCache.h"
-#include <algorithm>
 
 NS_CC_BEGIN
 namespace experimental {
@@ -58,7 +55,7 @@ const int TMXLayer::FAST_TMX_ORIENTATION_ISO = 2;
 // FastTMXLayer - init & alloc & dealloc
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *ret = new TMXLayer();
+    TMXLayer *ret = new (std::nothrow) TMXLayer();
     if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
         ret->autorelease();
@@ -490,7 +487,7 @@ void TMXLayer::updateTotalQuads()
                 
                 if(tileGID & kTMXTileDiagonalFlag)
                 {
-                    // XXX: not working correcly
+                    // FIXME: not working correcly
                     quad.bl.vertices.x = left;
                     quad.bl.vertices.y = bottom;
                     quad.bl.vertices.z = z;
@@ -835,8 +832,8 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     {
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(Vec2(0.5f,0.5f));
-        sprite->setPosition(Vec2(getPositionAt(pos).x + sprite->getContentSize().height/2,
-                                  getPositionAt(pos).y + sprite->getContentSize().width/2 ) );
+        sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
+                                  getPositionAt(pos).y + sprite->getContentSize().width/2 );
         
         int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
         

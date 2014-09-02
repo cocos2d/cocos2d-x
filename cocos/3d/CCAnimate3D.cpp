@@ -23,12 +23,9 @@
  ****************************************************************************/
 
 #include "3d/CCAnimate3D.h"
-#include "3d/CCAnimation3D.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCMeshSkin.h"
-
-#include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -36,7 +33,7 @@ NS_CC_BEGIN
 //create Animate3D using Animation.
 Animate3D* Animate3D::create(Animation3D* animation)
 {
-    auto animate = new Animate3D();
+    auto animate = new (std::nothrow) Animate3D();
     animate->_animation = animation;
     animation->retain();
     

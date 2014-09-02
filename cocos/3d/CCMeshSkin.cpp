@@ -25,10 +25,7 @@
 #include "3d/CCMeshSkin.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCBundle3D.h"
-
-#include "base/ccMacros.h"
-#include "base/CCPlatformMacros.h"
-#include "platform/CCFileUtils.h"
+#include "3d/CCSkeleton3D.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +47,7 @@ MeshSkin::~MeshSkin()
 
 MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<Mat4>& invBindPose)
 {
-    auto skin = new MeshSkin();
+    auto skin = new (std::nothrow) MeshSkin();
     skin->_skeleton = skeleton;
     skeleton->retain();
     
@@ -104,7 +101,7 @@ Vec4* MeshSkin::getMatrixPalette()
 {
     if (_matrixPalette == nullptr)
     {
-        _matrixPalette = new Vec4[_skinBones.size() * PALETTE_ROWS];
+        _matrixPalette = new (std::nothrow) Vec4[_skinBones.size() * PALETTE_ROWS];
     }
     int i = 0, paletteIndex = 0;
     static Mat4 t;

@@ -29,9 +29,9 @@ NS_CC_BEGIN
 
 BundleReader::BundleReader()
 {
-    m_buffer = nullptr;
-    m_position = 0;
-    m_length = 0;
+    _buffer = nullptr;
+    _position = 0;
+    _length = 0;
 };
 
 BundleReader::~BundleReader()
@@ -39,41 +39,42 @@ BundleReader::~BundleReader()
     
 };
 
-void BundleReader::init(char* lpbuffer, ssize_t length)
+void BundleReader::init(char* buffer, ssize_t length)
 {
-    m_position = 0;
-    m_buffer  = lpbuffer;
-    m_length = length;
+    _position = 0;
+    _buffer  = buffer;
+    _length = length;
 }
 
 ssize_t BundleReader::read(void* ptr, ssize_t size, ssize_t count)
 {
-    if (!m_buffer || eof())
+    if (!_buffer || eof())
         return 0;
 
     ssize_t validCount;
-    ssize_t validLength = m_length - m_position;
+    ssize_t validLength = _length - _position;
     ssize_t needLength = size*count;
     char* ptr1 = (char*)ptr;
     if(validLength <= needLength)
     {
         validCount = validLength/size;
         ssize_t readLength = size*validCount;
-        memcpy(ptr1,(char*)m_buffer+m_position,readLength);
+        memcpy(ptr1,(char*)_buffer+_position,readLength);
         ptr1 += readLength;
-        m_position += readLength;
+        _position += readLength;
         readLength = validLength - readLength;
         if(readLength>0)
         {
-            memcpy(ptr1,(char*)m_buffer+m_position,readLength);
-            m_position += readLength;
+            memcpy(ptr1,(char*)_buffer+_position,readLength);
+            _position += readLength;
             validCount+=1;
         }
+        CCLOG("warning: bundle reader out of range");
     }
     else
     {
-        memcpy(ptr1,(char*)m_buffer+m_position,needLength);
-        m_position += needLength;
+        memcpy(ptr1,(char*)_buffer+_position,needLength);
+        _position += needLength;
         validCount = count;
     }
 
@@ -82,19 +83,19 @@ ssize_t BundleReader::read(void* ptr, ssize_t size, ssize_t count)
 
 char* BundleReader::readLine(int num,char* line)
 {
-    if (!m_buffer)
+    if (!_buffer)
         return 0;
 
-    char* buffer = (char*)m_buffer+m_position;
+    char* buffer = (char*)_buffer+_position;
     char* p = line;
     char c;
     ssize_t readNum = 0;
-    while((c=*buffer) != 10 && readNum < (ssize_t)num && m_position < m_length)
+    while((c=*buffer) != 10 && readNum < (ssize_t)num && _position < _length)
     {
         *p = c;
         p++;
         buffer++;
-        m_position++;
+        _position++;
         readNum++;
     }
     *p = '\0';
@@ -104,7 +105,7 @@ char* BundleReader::readLine(int num,char* line)
 
 bool BundleReader::eof()
 {
-    if (!m_buffer)
+    if (!_buffer)
         return true;
     
     return ((ssize_t)tell()) >= length();
@@ -112,32 +113,32 @@ bool BundleReader::eof()
 
 ssize_t BundleReader::length()
 {
-    return m_length;
+    return _length;
 }
 
 ssize_t BundleReader::tell()
 {
-    if (!m_buffer)
+    if (!_buffer)
         return -1;
-    return m_position;
+    return _position;
 }
 
 bool BundleReader::seek(long int offset, int origin)
 {
-    if (!m_buffer)
+    if (!_buffer)
         return false;
 
     if(origin == SEEK_CUR)
     {
-        m_position += offset;
+        _position += offset;
     }
     else if(origin == SEEK_SET)
     {
-        m_position = offset;
+        _position = offset;
     }
     else if(origin == SEEK_END)
     {
-        m_position = m_length+offset;
+        _position = _length+offset;
     }
     else
         return false;
@@ -147,9 +148,9 @@ bool BundleReader::seek(long int offset, int origin)
 
 bool BundleReader::rewind()
 {
-    if (m_buffer != nullptr)
+    if (_buffer != nullptr)
     {
-        m_position = 0;
+        _position = 0;
         return true;
     }
     return false;

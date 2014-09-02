@@ -32,7 +32,6 @@
 
 #include "base/CCPlatformMacros.h"
 #include "CCStdC.h"
-#include <list>
 #include <string>
 #include <vector>
 

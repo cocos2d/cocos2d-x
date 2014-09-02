@@ -29,6 +29,8 @@
 
 NS_CC_BEGIN
 
+class IndexBuffer;
+
 class CC_DLL Primitive : public Ref
 {
 public:

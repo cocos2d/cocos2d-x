@@ -295,7 +295,7 @@ GLViewImpl::~GLViewImpl()
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1)) {
         ret->autorelease();
         return ret;
@@ -306,7 +306,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
 
 GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -317,7 +317,7 @@ GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, f
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new GLViewImpl();
+    auto ret = new (std::nothrow) GLViewImpl();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -328,7 +328,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
 
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
 {
-    auto ret = new GLViewImpl();
+    auto ret = new (std::nothrow) GLViewImpl();
     if(ret && ret->initWithFullscreen(viewName, videoMode, monitor)) {
         ret->autorelease();
         return ret;
@@ -650,8 +650,10 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
 {
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
     //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+    float cursorX = (_mouseX - _viewPortRect.origin.x) / _scaleX;
+    float cursorY = (_viewPortRect.origin.y + _viewPortRect.size.height - _mouseY) / _scaleY;
     event.setScrollData((float)x, -(float)y);
-    event.setCursorPosition(_mouseX, this->getViewPortRect().size.height - _mouseY);
+    event.setCursorPosition(cursorX, cursorY);
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 

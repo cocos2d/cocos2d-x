@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ObjectFactory.h"
+#include "base/ObjectFactory.h"
 
 
 NS_CC_BEGIN
@@ -76,7 +76,7 @@ ObjectFactory* ObjectFactory::getInstance()
 {
     if ( nullptr == _sharedFactory)
     {
-        _sharedFactory = new ObjectFactory();
+        _sharedFactory = new (std::nothrow) ObjectFactory();
     }
     return _sharedFactory;
 }

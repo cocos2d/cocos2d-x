@@ -2,8 +2,8 @@
 -- @module cc
 
 --------------------------------------------------------
--- the cc Mesh
--- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
+-- the cc Skeleton3D
+-- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
 
 
 --------------------------------------------------------
@@ -12,8 +12,8 @@
 
 
 --------------------------------------------------------
--- the cc Skeleton3D
--- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
+-- the cc Mesh
+-- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
 
 
 --------------------------------------------------------

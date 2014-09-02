@@ -53,7 +53,7 @@ FontAtlas::FontAtlas(Font &theFont)
     {
         _commonLineHeight = _font->getFontMaxHeight();
         _fontAscender = fontTTf->getFontAscender();
-        auto texture = new Texture2D;
+        auto texture = new (std::nothrow) Texture2D;
         _currentPage = 0;
         _currentPageOrigX = 0;
         _currentPageOrigY = 0;
@@ -256,7 +256,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
                         _currentPageOrigY = 0;
                         memset(_currentPageData, 0, _currentPageDataSize);
                         _currentPage++;
-                        auto tex = new Texture2D;
+                        auto tex = new (std::nothrow) Texture2D;
                         if (_antialiasEnabled)
                         {
                             tex->setAntiAliasTexParameters();

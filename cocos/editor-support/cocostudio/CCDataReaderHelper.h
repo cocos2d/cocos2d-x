@@ -36,7 +36,6 @@ THE SOFTWARE.
 
 #include <string>
 #include <queue>
-#include <list>
 #include <mutex>
 #include <thread>
 #include <condition_variable>

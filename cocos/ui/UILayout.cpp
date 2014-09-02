@@ -130,7 +130,7 @@ void Layout::onExit()
 
 Layout* Layout::create()
 {
-    Layout* layout = new Layout();
+    Layout* layout = new (std::nothrow) Layout();
     if (layout && layout->init())
     {
         layout->autorelease();
@@ -574,7 +574,7 @@ void Layout::onSizeChanged()
     _clippingRectDirty = true;
     if (_backGroundImage)
     {
-        _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
+        _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
         if (_backGroundScale9Enabled && _backGroundImage)
         {
             _backGroundImage->setPreferredSize(_contentSize);
@@ -640,7 +640,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     }
     
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
-    _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
+    _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
     updateBackGroundImageRGBA();
 }
 
@@ -699,7 +699,7 @@ void Layout::addBackGroundImage()
     
     addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
    
-    _backGroundImage->setPosition(Vec2(_contentSize.width/2.0f, _contentSize.height/2.0f));
+    _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
 }
 
 void Layout::removeBackGroundImage()

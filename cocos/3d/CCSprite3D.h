@@ -25,7 +25,6 @@
 #ifndef __CCSPRITE3D_H__
 #define __CCSPRITE3D_H__
 
-#include <vector>
 #include <unordered_map>
 
 #include "base/CCVector.h"
@@ -33,9 +32,9 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
+#include "3d/CCSkeleton3D.h" // need to include for lua-binding
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
-#include "3d/CCMesh.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/3dExport.h"
 
@@ -47,10 +46,7 @@ class Mesh;
 class Texture2D;
 class MeshSkin;
 class AttachNode;
-class SubMeshState;
-class Skeleton3D;
 struct NodeData;
-class SubMesh;
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
 {
