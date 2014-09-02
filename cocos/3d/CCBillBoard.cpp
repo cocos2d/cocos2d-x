@@ -27,17 +27,18 @@
 #include "base/CCDirector.h"
 #include "base/CCCamera.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 
 BillBorad::BillBorad()
+: _zDepthInView(0.0f)
 {
 
 }
 
 BillBorad::~BillBorad()
 {
-
 }
 
 BillBorad* BillBorad::createWithTexture(Texture2D *texture)
@@ -91,27 +92,24 @@ BillBorad* BillBorad::create()
 
 void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    calculateBillBoradMatrix(_BillBoradMat);
-    Mat4 transMat = transform;
-    transMat *= _BillBoradMat;
-    // Don't do calculate the culling if the transform was not updated
-    _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transMat, _contentSize) : _insideBounds;
-
-    if(_insideBounds)
-    {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transMat);
-        renderer->addCommand(&_quadCommand);
-    }
-}
-
-void BillBorad::calculateBillBoradMatrix(Mat4 &dst)
-{
     auto camera = Camera::getVisitingCamera();
-    dst =  camera->getViewMatrix().getInversed();
+    if (memcmp(_preViewMat.m, camera->getViewMatrix().m, sizeof(float) * 16) != 0)
+    {
+        Mat4 viewInverseMat =  camera->getInverseViewMatrix();
+        viewInverseMat.m[12] = viewInverseMat.m[13] = viewInverseMat.m[14] = 0;
+        Mat4 modelViewMat = camera->getViewMatrix() * transform;
+        _preViewMat = camera->getViewMatrix();
+        _zDepthInView = -modelViewMat.m[14];
+        _mv = viewInverseMat;
+    }
+    //// Don't do calculate the culling if the transform was not updated
+    //_insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transMat, _contentSize) : _insideBounds;
 
-    dst.m[12]=0;
-    dst.m[13]=0;
-    dst.m[14]=0;
+    //if(_insideBounds)
+    {
+            _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform * _mv);
+            renderer->addTransparentCommand(&_quadCommand);
+    }
 }
 
 NS_CC_END

@@ -398,6 +398,7 @@ void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
             auto cmd = static_cast<QuadCommand*>(command);
             
             _batchedQuadCommands.push_back(cmd);
+            _numQuads = cmd->getQuadCount();
             memcpy(_quads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
             convertToWorldCoordinates(_quads, cmd->getQuadCount(), cmd->getModelView());
             drawBatchedQuads();
@@ -458,7 +459,9 @@ void Renderer::render()
         if (_transparentRenderGroups.size())
         {
             _transparentRenderGroups.sort();
+            glEnable(GL_DEPTH_TEST);
             visitTransparentRenderQueue(_transparentRenderGroups);
+            glDisable(GL_DEPTH_TEST);
         }
     }
     clean();
