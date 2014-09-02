@@ -10,78 +10,106 @@
 -- @overload self, cc.Node, int, int         
 -- @function [parent=#ProtectedNode] addProtectedChild
 -- @param self
--- @param #cc.Node node
--- @param #int int
--- @param #int int
+-- @param #cc.Node child
+-- @param #int localZOrder
+-- @param #int tag
 
 --------------------------------
+-- 
 -- @function [parent=#ProtectedNode] disableCascadeColor 
 -- @param self
         
 --------------------------------
+-- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter<br>
+-- param tag       An interger number that identifies a child node<br>
+-- param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
 -- @function [parent=#ProtectedNode] removeProtectedChildByTag 
 -- @param self
--- @param #int int
--- @param #bool bool
+-- @param #int tag
+-- @param #bool cleanup
         
 --------------------------------
+-- Reorders a child according to a new z value.<br>
+-- param child     An already added child node. It MUST be already added.<br>
+-- param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
 -- @function [parent=#ProtectedNode] reorderProtectedChild 
 -- @param self
--- @param #cc.Node node
--- @param #int int
+-- @param #cc.Node child
+-- @param #int localZOrder
         
 --------------------------------
+-- Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.<br>
+-- param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.<br>
+-- js removeAllChildren<br>
+-- lua removeAllChildren
 -- @function [parent=#ProtectedNode] removeAllProtectedChildrenWithCleanup 
 -- @param self
--- @param #bool bool
+-- @param #bool cleanup
         
 --------------------------------
+-- 
 -- @function [parent=#ProtectedNode] disableCascadeOpacity 
 -- @param self
         
 --------------------------------
+-- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
+-- This appraoch can improves the performance massively.<br>
+-- note Don't call this manually unless a child added needs to be removed in the same frame
 -- @function [parent=#ProtectedNode] sortAllProtectedChildren 
 -- @param self
         
 --------------------------------
+-- Gets a child from the container with its tag<br>
+-- param tag   An identifier to find the child node.<br>
+-- return a Node object whose tag equals to the input parameter
 -- @function [parent=#ProtectedNode] getProtectedChildByTag 
 -- @param self
--- @param #int int
+-- @param #int tag
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
+-- Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.<br>
+-- param child     The child node which will be removed.<br>
+-- param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
 -- @function [parent=#ProtectedNode] removeProtectedChild 
 -- @param self
--- @param #cc.Node node
--- @param #bool bool
+-- @param #cc.Node child
+-- @param #bool cleanup
         
 --------------------------------
+-- Removes all children from the container with a cleanup.<br>
+-- see `removeAllChildrenWithCleanup(bool)`
 -- @function [parent=#ProtectedNode] removeAllProtectedChildren 
 -- @param self
         
 --------------------------------
+-- 
 -- @function [parent=#ProtectedNode] create 
 -- @param self
 -- @return ProtectedNode#ProtectedNode ret (return value: cc.ProtectedNode)
         
 --------------------------------
+-- / @} end of Children and Parent
 -- @function [parent=#ProtectedNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #mat4_table mat4
--- @param #unsigned int int
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
         
 --------------------------------
+-- 
 -- @function [parent=#ProtectedNode] updateDisplayedOpacity 
 -- @param self
--- @param #unsigned char char
+-- @param #unsigned char parentOpacity
         
 --------------------------------
+-- 
 -- @function [parent=#ProtectedNode] updateDisplayedColor 
 -- @param self
--- @param #color3b_table color3b
+-- @param #color3b_table parentColor
         
 --------------------------------
+-- 
 -- @function [parent=#ProtectedNode] cleanup 
 -- @param self
         
