@@ -1538,7 +1538,6 @@ BillBoardTest::BillBoardTest()
     auto layer3D=Layer::create();
     addChild(layer3D,0);
     _layerBillBorad=layer3D;
-    DrawNode3D* line =DrawNode3D::create();
     auto s = Director::getInstance()->getWinSize();
     if (_camera == nullptr)
     {
@@ -1551,8 +1550,8 @@ BillBoardTest::BillBoardTest()
     {
         std::string fileName = "Sprite3DTest/orc.c3b";
         auto sprite = Sprite3D::create(fileName);
-        sprite->setScale(3);
         sprite->setRotation3D(Vec3(0,180,0));
+        sprite->setScale(2.0f);
         _layerBillBorad->addChild(sprite);
         //test attach
         auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
@@ -1564,6 +1563,43 @@ BillBoardTest::BillBoardTest()
             sprite->runAction(RepeatForever::create(animate));
         }
     }
+
+    {
+        std::string fileName = "Sprite3DTest/orc.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setRotation3D(Vec3(0,180,0));
+        sprite->setPosition3D(Vec3(100.0f, 0.0f, 0.0f));
+        sprite->setScale(2.0f);
+        _layerBillBorad->addChild(sprite);
+        //test attach
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+        auto animation = Animation3D::create(fileName);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            sprite->runAction(RepeatForever::create(animate));
+        }
+    }
+
+    {
+        std::string fileName = "Sprite3DTest/orc.c3b";
+        auto sprite = Sprite3D::create(fileName);
+        sprite->setRotation3D(Vec3(0,180,0));
+        sprite->setPosition3D(Vec3(-100.0f, 0.0f, 0.0f));
+        sprite->setScale(2.0f);
+        _layerBillBorad->addChild(sprite);
+        //test attach
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+        auto animation = Animation3D::create(fileName);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            sprite->runAction(RepeatForever::create(animate));
+        }
+    }
+
     addNewBillBoradWithCoords(Vec3(20,5,0));
     addNewBillBoradWithCoords(Vec3(60,5,0));
     addNewBillBoradWithCoords(Vec3(100,5,0));
@@ -1576,20 +1612,6 @@ BillBoardTest::BillBoardTest()
     addNewAniBillBoradWithCoords(Vec3(-180,0,0));
     _camera->setPosition3D(Vec3(0, 130, 230));
     _camera->lookAt(Vec3(0,0,100), Vec3(0,1,0));
-
-    //for( int j =-20; j<=20 ;j++)
-    //{
-    //    line->drawLine(Vec3(-100, 0, 5*j),Vec3(100,0,5*j),Color4F(0,1,0,1));
-    //}
-    ////draw z
-    //for( int j =-20; j<=20 ;j++)
-    //{
-    //    line->drawLine(Vec3(5*j, 0, -100),Vec3(5*j,0,100),Color4F(0,1,0,1));
-    //}
-    ////draw y
-    ////line->drawLine(Vec3(0, -50, 0),Vec3(0,0,0),Color4F(0,0.5,0,1));
-    ////line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
-    //_layerBillBorad->addChild(line);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"rotate+");

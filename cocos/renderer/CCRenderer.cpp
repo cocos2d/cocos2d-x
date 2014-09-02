@@ -456,7 +456,7 @@ void Renderer::render()
         
         //Process render commands
         //draw transparent objects here, do not batch for transparent objects
-        if (_transparentRenderGroups.size())
+        if (0 < _transparentRenderGroups.size())
         {
             _transparentRenderGroups.sort();
             glEnable(GL_DEPTH_TEST);
