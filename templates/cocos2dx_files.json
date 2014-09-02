@@ -226,6 +226,8 @@
         "cocos/3d/CCSprite3D.h", 
         "cocos/3d/CCSprite3DMaterial.cpp", 
         "cocos/3d/CCSprite3DMaterial.h", 
+        "cocos/3d/CCSequence3D.cpp", 
+        "cocos/3d/CCSequence3D.h", 
         "cocos/3d/CMakeLists.txt", 
         "cocos/3d/cocos3d.h", 
         "cocos/Android.mk", 
