@@ -65,7 +65,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
     _label = Label::create();
     _label->setSystemFontSize(size.height-12);
-	// align the text vertically center
+    // align the text vertically center
     _label->setAnchorPoint(Vec2(0, 0.5f));
     _label->setPosition(Vec2(5, size.height / 2.0f));
     _label->setColor(_colText);
@@ -73,7 +73,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setSystemFontSize(size.height-12);
-	// align the text vertically center
+    // align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
     _labelPlaceHolder->setPosition(Vec2(5, size.height / 2.0f));
     _labelPlaceHolder->setVisible(false);
@@ -86,15 +86,15 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if(_label != nullptr) {
-		_label->setSystemFontName(pFontName);
-		_label->setSystemFontSize(fontSize);
-	}
-	
-	if(_labelPlaceHolder != nullptr) {
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if(_label != nullptr) {
+        _label->setSystemFontName(pFontName);
+        _label->setSystemFontSize(fontSize);
+    }
+    
+    if(_labelPlaceHolder != nullptr) {
+        _labelPlaceHolder->setSystemFontName(pFontName);
+        _labelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
 
 void EditBoxImplWin::setFontColor(const Color3B& color)
@@ -105,10 +105,10 @@ void EditBoxImplWin::setFontColor(const Color3B& color)
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(_labelPlaceHolder != nullptr) {
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if(_labelPlaceHolder != nullptr) {
+        _labelPlaceHolder->setSystemFontName(pFontName);
+        _labelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
 
 void EditBoxImplWin::setPlaceholderFontColor(const Color3B& color)
@@ -144,14 +144,14 @@ void EditBoxImplWin::setReturnType(EditBox::KeyboardReturnType returnType)
 
 bool EditBoxImplWin::isEditing()
 {
-    return false;
+    return _isEditing;
 }
 
 void EditBoxImplWin::setText(const char* pText)
 {
     if (pText != nullptr)
     {
-        if (_text.compare(pText))
+        if (_text.compare(pText) == 0)
         {
             return;
         }
@@ -166,7 +166,7 @@ void EditBoxImplWin::setText(const char* pText)
         {
             _labelPlaceHolder->setVisible(false);
 
-			if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
+            if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
             {
                 std::string strToShow;
 
@@ -215,8 +215,8 @@ void EditBoxImplWin::setPlaceHolder(const char* pText)
 
 void EditBoxImplWin::setPosition(const Vec2& pos)
 {
-	//_label->setPosition(pos);
-	//_labelPlaceHolder->setPosition(pos);
+    //_label->setPosition(pos);
+    //_labelPlaceHolder->setPosition(pos);
 }
 
 void EditBoxImplWin::setVisible(bool visible)
@@ -229,7 +229,7 @@ void EditBoxImplWin::setContentSize(const Size& size)
 
 void EditBoxImplWin::setAnchorPoint(const Vec2& anchorPoint)
 { // don't need to be implemented on win32 platform.
-	
+    
 }
 
 void EditBoxImplWin::visit(void)
@@ -275,14 +275,14 @@ void EditBoxImplWin::openKeyboard()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
     
-	const char* placeHolder = _labelPlaceHolder->getString().c_str();
-	if (strcmp(placeHolder, "") == 0)
-		placeHolder = "Enter value";
+    const char* placeHolder = _labelPlaceHolder->getString().c_str();
+    if (strcmp(placeHolder, "") == 0)
+        placeHolder = "Enter value";
 
-	char pText[100]= {0};
-	std::string text = getText();
-	if (text.length())
-		strncpy(pText, text.c_str(), 100);
+    char pText[100]= {0};
+    std::string text = getText();
+    if (text.length())
+        strncpy(pText, text.c_str(), 100);
 
     WIN32INPUTBOX_PARAM param;
     param.szTitle = "Input";
@@ -308,16 +308,16 @@ void EditBoxImplWin::openKeyboard()
     delete _inputBox;
     _inputBox = NULL;
     _isEditing = false;
-	
-	if (didChange) 	
-		setText(pText);
+    
+    if (didChange)     
+        setText(pText);
 
-	if (_delegate != nullptr) {
-		if (didChange)
-			_delegate->editBoxTextChanged(_editBox, getText());
-		_delegate->editBoxEditingDidEnd(_editBox);
-		_delegate->editBoxReturn(_editBox);
-	}
+    if (_delegate != nullptr) {
+        if (didChange)
+            _delegate->editBoxTextChanged(_editBox, getText());
+        _delegate->editBoxEditingDidEnd(_editBox);
+        _delegate->editBoxReturn(_editBox);
+    }
     
 #if CC_ENABLE_SCRIPT_BINDING
     if (nullptr != _editBox && 0 != _editBox->getScriptEditBoxHandler())
