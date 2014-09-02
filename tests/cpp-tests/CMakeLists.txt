@@ -2,7 +2,6 @@ set(APP_NAME cpp-tests)
 
 if(WIN32)
   set(PLATFORM_SRC
-    Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp
     Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
     Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
     proj.win32/main.cpp
@@ -82,7 +81,6 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
   Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
   Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
@@ -125,7 +123,6 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
-  Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
