@@ -93,12 +93,13 @@ BillBorad* BillBorad::create()
 void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     auto camera = Camera::getVisitingCamera();
-    if (memcmp(_preViewMat.m, camera->getViewMatrix().m, sizeof(float) * 16) != 0)
+	const Mat4 &viewMat = camera->getViewMatrix();
+    if (memcmp(_preViewMat.m, viewMat.m, sizeof(float) * 16) != 0)
     {
         Mat4 viewInverseMat =  camera->getInverseViewMatrix();
         viewInverseMat.m[12] = viewInverseMat.m[13] = viewInverseMat.m[14] = 0;
-        Mat4 modelViewMat = camera->getViewMatrix() * transform;
-        _preViewMat = camera->getViewMatrix();
+        Mat4 modelViewMat = viewMat * transform;
+        _preViewMat = viewMat;
         _zDepthInView = -modelViewMat.m[14];
         _mv = viewInverseMat;
     }
