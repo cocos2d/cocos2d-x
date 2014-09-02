@@ -398,7 +398,7 @@ void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
             auto cmd = static_cast<QuadCommand*>(command);
             
             _batchedQuadCommands.push_back(cmd);
-            _numQuads = cmd->getQuadCount();
+            _numQuads = (int)cmd->getQuadCount();
             memcpy(_quads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
             convertToWorldCoordinates(_quads, cmd->getQuadCount(), cmd->getModelView());
             drawBatchedQuads();
@@ -445,9 +445,6 @@ void Renderer::render()
     
     if (_glViewAssigned)
     {
-        // cleanup
-        _drawnBatches = _drawnVertices = 0;
-
         //Process render commands
         //1. Sort render commands based on ID
         for (auto &renderqueue : _renderGroups)
