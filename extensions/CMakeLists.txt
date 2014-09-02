@@ -11,11 +11,6 @@ set(EXTENSIONS_SRC
   GUI/CCControlExtension/CCControlSwitch.cpp
   GUI/CCControlExtension/CCControlUtils.cpp
   GUI/CCControlExtension/CCInvocation.cpp
-  GUI/CCControlExtension/CCScale9Sprite.cpp
-  GUI/CCEditBox/CCEditBox.cpp
-  GUI/CCEditBox/CCEditBoxImplAndroid.cpp
-  GUI/CCEditBox/CCEditBoxImplNone.cpp
-  GUI/CCEditBox/CCEditBoxImplWin.cpp
   GUI/CCScrollView/CCScrollView.cpp
   GUI/CCScrollView/CCTableView.cpp
   GUI/CCScrollView/CCTableViewCell.cpp
