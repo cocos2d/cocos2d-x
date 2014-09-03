@@ -405,7 +405,7 @@ void CWin32InputBox::SetText(const char* pText)
 
 char* CWin32InputBox::AnsiToUtf8(const char* strAnsi)
 {
-	char* ret = NULL;
+	char* ret;
     size_t lenAnsi = strlen(strAnsi);
     if (lenAnsi > 0)
 	{	
