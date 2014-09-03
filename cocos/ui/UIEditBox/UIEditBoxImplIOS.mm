@@ -22,20 +22,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCEditBoxImplIOS.h"
+#include "UIEditBoxImplIOS.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #define kLabelZOrder  9999
 
-#include "CCEditBox.h"
+#include "UIEditBox.h"
 #import "CCEAGLView.h"
 
-#define getEditBoxImplIOS() ((cocos2d::extension::EditBoxImplIOS*)editBox_)
+#define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS*)editBox_)
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
-@implementation CCCustomUITextField
+@implementation UICustomUITextField
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
@@ -50,7 +50,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 @end
 
 
-@implementation CCEditBoxImplIOS_objc
+@implementation UIEditBoxImplIOS_objc
 
 @synthesize textField = textField_;
 @synthesize editState = editState_;
@@ -71,7 +71,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     if (self)
     {
         editState_ = NO;
-        self.textField = [[[CCCustomUITextField alloc] initWithFrame: frameRect] autorelease];
+        self.textField = [[[UICustomUITextField alloc] initWithFrame: frameRect] autorelease];
 
         [textField_ setTextColor:[UIColor whiteColor]];
          //TODO: need to delete hard code here.
@@ -159,14 +159,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getEditBox());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
@@ -183,7 +183,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     editState_ = NO;
     getEditBoxImplIOS()->refreshInactiveText();
     
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getEditBox());
@@ -191,7 +191,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
@@ -240,14 +240,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
 - (void) textChanged
 {
     // NSLog(@"text is %@", self.textField.text);
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
@@ -260,7 +260,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
 @end
 
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
@@ -307,7 +309,7 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
             rect.size.height /= 2.0f;
         }
         
-        _systemControl = [[CCEditBoxImplIOS_objc alloc] initWithFrame:rect editBox:this];
+        _systemControl = [[UIEditBoxImplIOS_objc alloc] initWithFrame:rect editBox:this];
         if (!_systemControl) break;
         
 		initInactiveLabels(size);
@@ -668,7 +670,9 @@ void EditBoxImplIOS::onEndEditing()
 	}
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
 

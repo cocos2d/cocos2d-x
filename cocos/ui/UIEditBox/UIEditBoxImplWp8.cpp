@@ -22,20 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCEditBoxImplWp8.h"
-#include "CCEditBox.h"
+#include "UIEditBoxImplWp8.h"
+#include "UIEditBox.h"
 #include "CCGLViewImpl.h"
 #include "base/CCScriptSupport.h"
 #include "base/ccUTF8.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-	return new CCEditBoxImplWp8(pEditBox);
+	return new UIEditBoxImplWp8(pEditBox);
 }
 
-CCEditBoxImplWp8::CCEditBoxImplWp8( EditBox* pEditText )
+UIEditBoxImplWp8::UIEditBoxImplWp8( EditBox* pEditText )
 	: EditBoxImpl(pEditText)
 	, m_pLabel(NULL)
 	, m_pLabelPlaceHolder(NULL)
@@ -49,12 +51,12 @@ CCEditBoxImplWp8::CCEditBoxImplWp8( EditBox* pEditText )
 
 }
 
-CCEditBoxImplWp8::~CCEditBoxImplWp8()
+UIEditBoxImplWp8::~UIEditBoxImplWp8()
 {
 
 }
 
-void CCEditBoxImplWp8::openKeyboard()
+void UIEditBoxImplWp8::openKeyboard()
 {
 	if (_delegate != NULL)
 	{
@@ -92,7 +94,7 @@ void CCEditBoxImplWp8::openKeyboard()
     GLViewImpl::sharedOpenGLView()->OpenXamlEditBox(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, (int)m_eEditBoxInputMode, (int)m_eEditBoxInputFlag, receiveHandler);
 }
 
-bool CCEditBoxImplWp8::initWithSize( const Size& size )
+bool UIEditBoxImplWp8::initWithSize( const Size& size )
 {
 	//! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
 	m_pLabel = Label::createWithSystemFont("", "", size.height-12);
@@ -114,7 +116,7 @@ bool CCEditBoxImplWp8::initWithSize( const Size& size )
 	return true;
 }
 
-void CCEditBoxImplWp8::setFont( const char* pFontName, int fontSize )
+void UIEditBoxImplWp8::setFont( const char* pFontName, int fontSize )
 {
 	if(m_pLabel != NULL) {
 		m_pLabel->setSystemFontName(pFontName);
@@ -127,13 +129,13 @@ void CCEditBoxImplWp8::setFont( const char* pFontName, int fontSize )
 	}
 }
 
-void CCEditBoxImplWp8::setFontColor( const Color3B& color )
+void UIEditBoxImplWp8::setFontColor( const Color3B& color )
 {
 	m_colText = color;
 	m_pLabel->setColor(color);
 }
 
-void CCEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
+void UIEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
 {
 	if(m_pLabelPlaceHolder != NULL) {
 		m_pLabelPlaceHolder->setSystemFontName(pFontName);
@@ -141,43 +143,43 @@ void CCEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
 	}
 }
 
-void CCEditBoxImplWp8::setPlaceholderFontColor( const Color3B& color )
+void UIEditBoxImplWp8::setPlaceholderFontColor( const Color3B& color )
 {
 	m_colPlaceHolder = color;
 	m_pLabelPlaceHolder->setColor(color);
 }
 
-void CCEditBoxImplWp8::setInputMode( EditBox::InputMode inputMode )
+void UIEditBoxImplWp8::setInputMode( EditBox::InputMode inputMode )
 {
 	m_eEditBoxInputMode = inputMode;
 }
 
-void CCEditBoxImplWp8::setInputFlag(EditBox::InputFlag inputFlag )
+void UIEditBoxImplWp8::setInputFlag(EditBox::InputFlag inputFlag )
 {
 	m_eEditBoxInputFlag = inputFlag;
 }
 
-void CCEditBoxImplWp8::setMaxLength( int maxLength )
+void UIEditBoxImplWp8::setMaxLength( int maxLength )
 {
 	m_nMaxLength = maxLength;
 }
 
-int CCEditBoxImplWp8::getMaxLength()
+int UIEditBoxImplWp8::getMaxLength()
 {
 	return m_nMaxLength;
 }
 
-void CCEditBoxImplWp8::setReturnType( EditBox::KeyboardReturnType returnType )
+void UIEditBoxImplWp8::setReturnType( EditBox::KeyboardReturnType returnType )
 {
 	m_eKeyboardReturnType = returnType;
 }
 
-bool CCEditBoxImplWp8::isEditing()
+bool UIEditBoxImplWp8::isEditing()
 {
 	return false;
 }
 
-void CCEditBoxImplWp8::setText( const char* pText )
+void UIEditBoxImplWp8::setText( const char* pText )
 {
 	if (pText != NULL)
 	{
@@ -215,12 +217,12 @@ void CCEditBoxImplWp8::setText( const char* pText )
 	}
 }
 
-const char* CCEditBoxImplWp8::getText( void )
+const char* UIEditBoxImplWp8::getText( void )
 {
 	return m_strText.c_str();
 }
 
-void CCEditBoxImplWp8::setPlaceHolder( const char* pText )
+void UIEditBoxImplWp8::setPlaceHolder( const char* pText )
 {
 	if (pText != NULL)
 	{
@@ -234,47 +236,47 @@ void CCEditBoxImplWp8::setPlaceHolder( const char* pText )
 	}
 }
 
-void CCEditBoxImplWp8::setPosition( const Vec2& pos )
+void UIEditBoxImplWp8::setPosition( const Vec2& pos )
 {
 
 }
 
-void CCEditBoxImplWp8::setVisible( bool visible )
+void UIEditBoxImplWp8::setVisible( bool visible )
 {
 
 }
 
-void CCEditBoxImplWp8::setContentSize( const Size& size )
+void UIEditBoxImplWp8::setContentSize( const Size& size )
 {
 
 }
 
-void CCEditBoxImplWp8::setAnchorPoint( const Vec2& anchorPoint )
+void UIEditBoxImplWp8::setAnchorPoint( const Vec2& anchorPoint )
 {
 
 }
 
-void CCEditBoxImplWp8::visit( void )
+void UIEditBoxImplWp8::visit( void )
 {
 
 }
 
-void CCEditBoxImplWp8::doAnimationWhenKeyboardMove( float duration, float distance )
+void UIEditBoxImplWp8::doAnimationWhenKeyboardMove( float duration, float distance )
 {
 
 }
 
-void CCEditBoxImplWp8::closeKeyboard()
+void UIEditBoxImplWp8::closeKeyboard()
 {
 
 }
 
-void CCEditBoxImplWp8::onEnter( void )
+void UIEditBoxImplWp8::onEnter( void )
 {
 
 }
 
-Platform::String^ CCEditBoxImplWp8::stringToPlatformString( std::string strSrc )
+Platform::String^ UIEditBoxImplWp8::stringToPlatformString( std::string strSrc )
 {
 	// to wide char
 	int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);  
@@ -286,7 +288,7 @@ Platform::String^ CCEditBoxImplWp8::stringToPlatformString( std::string strSrc )
 	return strDst;
 }
 
-std::string CCEditBoxImplWp8::PlatformStringTostring( Platform::String^ strSrc )
+std::string UIEditBoxImplWp8::PlatformStringTostring( Platform::String^ strSrc )
 {
 	const wchar_t* pWStr = strSrc->Data();
 	int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);  
@@ -300,4 +302,6 @@ std::string CCEditBoxImplWp8::PlatformStringTostring( Platform::String^ strSrc )
 	return strDst;
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
