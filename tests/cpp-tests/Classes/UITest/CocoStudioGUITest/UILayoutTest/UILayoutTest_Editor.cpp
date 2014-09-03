@@ -50,7 +50,11 @@ void UILayoutTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -64,8 +68,12 @@ void UILayoutTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         case 3:
         {
             _layout->removeFromParentAndCleanup(true);
-            
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.csb");
+         
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -183,7 +191,11 @@ void UILayoutTest_Color_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -198,7 +210,11 @@ void UILayoutTest_Color_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.csb");
+             /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -314,7 +330,11 @@ void UILayoutTest_Gradient_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -329,7 +349,11 @@ void UILayoutTest_Gradient_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -446,7 +470,11 @@ void UILayoutTest_BackGroundImage_Editor::switchLoadMethod(cocos2d::Ref *pSender
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -461,7 +489,11 @@ void UILayoutTest_BackGroundImage_Editor::switchLoadMethod(cocos2d::Ref *pSender
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -579,7 +611,11 @@ void UILayoutTest_BackGroundImage_Scale9_Editor::switchLoadMethod(cocos2d::Ref *
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -594,7 +630,11 @@ void UILayoutTest_BackGroundImage_Scale9_Editor::switchLoadMethod(cocos2d::Ref *
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -711,8 +751,12 @@ void UILayoutTest_Layout_Linear_Vertical_Editor::switchLoadMethod(cocos2d::Ref *
         case 2:
         {
             _layout->removeFromParentAndCleanup(true);
-            
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/crossplatform_UILayout_Linear_Vertical_Layout_Editor_1.ExportJson");
+         
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/crossplatform_UILayout_Linear_Vertical_Layout_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/crossplatform_UILayout_Linear_Vertical_Layout_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -727,7 +771,11 @@ void UILayoutTest_Layout_Linear_Vertical_Editor::switchLoadMethod(cocos2d::Ref *
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/crossplatform_UILayout_Linear_Vertical_Layout_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/crossplatform_UILayout_Linear_Vertical_Layout_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/crossplatform_UILayout_Linear_Vertical_Layout_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -845,7 +893,11 @@ void UILayoutTest_Layout_Linear_Horizontal_Editor::switchLoadMethod(cocos2d::Ref
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/crossplatform_UILayout_Linear_Horizontal_Layout_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/crossplatform_UILayout_Linear_Horizontal_Layout_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/crossplatform_UILayout_Linear_Horizontal_Layout_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -860,7 +912,11 @@ void UILayoutTest_Layout_Linear_Horizontal_Editor::switchLoadMethod(cocos2d::Ref
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/crossplatform_UILayout_Linear_Horizontal_Layout_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/crossplatform_UILayout_Linear_Horizontal_Layout_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/crossplatform_UILayout_Linear_Horizontal_Layout_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -977,7 +1033,11 @@ void UILayoutTest_Layout_Relative_Align_Parent_Editor::switchLoadMethod(cocos2d:
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/crossplatform_UILayout_Relative_Align_Parent_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/crossplatform_UILayout_Relative_Align_Parent_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/crossplatform_UILayout_Relative_Align_Parent_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -992,7 +1052,11 @@ void UILayoutTest_Layout_Relative_Align_Parent_Editor::switchLoadMethod(cocos2d:
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/crossplatform_UILayout_Relative_Align_Parent_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/crossplatform_UILayout_Relative_Align_Parent_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/crossplatform_UILayout_Relative_Align_Parent_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -1050,12 +1114,10 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
         
-        /* peterson protocol buffers */
         Menu* menu = static_cast<Menu*>(getChildByTag(1));
         MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
         MenuItem* selectedItem = menuItemToggle->getSelectedItem();
         menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
-        /**/
         
         return true;
     }
@@ -1110,7 +1172,11 @@ void UILayoutTest_Layout_Relative_Location_Editor::switchLoadMethod(cocos2d::Ref
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/crossplatform_UILayout_Relative_Align_Location_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/crossplatform_UILayout_Relative_Align_Location_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/crossplatform_UILayout_Relative_Align_Location_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -1125,7 +1191,11 @@ void UILayoutTest_Layout_Relative_Location_Editor::switchLoadMethod(cocos2d::Ref
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/crossplatform_UILayout_Relative_Align_Location_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/crossplatform_UILayout_Relative_Align_Location_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/crossplatform_UILayout_Relative_Align_Location_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);

@@ -23,7 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionTimelineCache.h"
-#include "CCNodeReader.h"
+/* peterson */
+#include "CSLoader.h"
+// before
+//#include "CCNodeReader.h"
+ /**/
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
@@ -120,7 +124,31 @@ void ActionTimelineCache::removeAction(const std::string& fileName)
     }
 }
 
-ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
+/* peterson */
+ActionTimeline* ActionTimelineCache::createAction(const std::string& filename)
+{
+    std::string path = filename;
+    size_t pos = path.find_last_of('.');
+    std::string suffix = path.substr(pos + 1, path.length());
+    CCLOG("suffix = %s", suffix.c_str());
+    
+    ActionTimelineCache* cache = ActionTimelineCache::getInstance();
+    
+    if (suffix == "csb")
+    {
+        return cache->createActionFromProtocolBuffers(filename);
+    }
+    else if (suffix == "json" || suffix == "ExportJson")
+    {
+        return cache->createActionFromJson(filename);
+    }
+    
+    return nullptr;
+}
+/**/
+
+/* peterson */
+ActionTimeline* ActionTimelineCache::createActionFromJson(const std::string& fileName)
 {
     ActionTimeline* action = _animationActions.at(fileName);
     if (action == nullptr)
@@ -129,6 +157,19 @@ ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
     }
     return action->clone();
 }
+// before
+/*
+ ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
+ {
+ ActionTimeline* action = _animationActions.at(fileName);
+ if (action == nullptr)
+ {
+ action = loadAnimationActionWithFile(fileName);
+ }
+ return action->clone();
+ }
+ */
+/**/
 
 ActionTimeline* ActionTimelineCache::loadAnimationActionWithFile(const std::string& fileName)
 {
@@ -395,7 +436,11 @@ Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
         SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
         if(spriteFrame == nullptr)
         {
-            std::string jsonPath = NodeReader::getInstance()->getJsonPath();
+            /* peterson */
+            std::string jsonPath = CSLoader::getInstance()->getJsonPath();
+            // before
+//            std::string jsonPath = NodeReader::getInstance()->getJsonPath();
+            /**/
             path = jsonPath + texture;
         }
 

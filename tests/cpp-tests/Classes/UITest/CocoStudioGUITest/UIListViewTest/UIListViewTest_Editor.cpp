@@ -50,7 +50,10 @@ void UIListViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.ExportJson");
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -65,7 +68,11 @@ void UIListViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -182,7 +189,11 @@ void UIListViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -197,7 +208,11 @@ void UIListViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);

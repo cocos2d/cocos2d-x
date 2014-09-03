@@ -64,5 +64,8 @@ THE SOFTWARE.
 #include "cocostudio/ActionTimeline/CCTimeLine.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
 #include "cocostudio/CocosStudioExport.h"
+/* peterson */
+#include "cocostudio/ActionTimeline/CSLoader.h"
+/**/
 
 #endif

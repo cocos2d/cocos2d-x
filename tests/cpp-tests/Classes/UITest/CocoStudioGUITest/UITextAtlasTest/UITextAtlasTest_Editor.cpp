@@ -39,7 +39,11 @@ void UITextAtlasTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -54,7 +58,11 @@ void UITextAtlasTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);

@@ -64,9 +64,17 @@ public:
 
     /** Remove action with filename, and also remove other resource relate with this file */
     void removeAction(const std::string& fileName);
+    
+    /* peterson */
+    static ActionTimeline* createAction(const std::string& fileName);
+    /**/
 
+    /* peterson */
     /** Clone a action with the specified name from the container. */
-    ActionTimeline* createAction(const std::string& fileName);
+    ActionTimeline* createActionFromJson(const std::string& fileName);
+    // before
+//    ActionTimeline* createAction(const std::string& fileName);
+    /**/
 
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);

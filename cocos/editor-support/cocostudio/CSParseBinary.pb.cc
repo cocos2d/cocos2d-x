@@ -23,9 +23,9 @@ void protobuf_ShutdownFile_CSParseBinary_2eproto() {
   delete ResourceData::default_instance_;
   delete CheckBoxOptions::default_instance_;
   delete ImageViewOptions::default_instance_;
-  delete LabelAtlasOptions::default_instance_;
-  delete LabelBMFontOptions::default_instance_;
-  delete LabelOptions::default_instance_;
+  delete TextAtlasOptions::default_instance_;
+  delete TextBMFontOptions::default_instance_;
+  delete TextOptions::default_instance_;
   delete LoadingBarOptions::default_instance_;
   delete ListViewOptions::default_instance_;
   delete PageViewOptions::default_instance_;
@@ -34,6 +34,11 @@ void protobuf_ShutdownFile_CSParseBinary_2eproto() {
   delete SliderOptions::default_instance_;
   delete SpriteOptions::default_instance_;
   delete TextFieldOptions::default_instance_;
+  delete TMXTiledMapOptions::default_instance_;
+  delete ParticleSystemOptions::default_instance_;
+  delete ProjectNodeOptions::default_instance_;
+  delete ComponentOptions::default_instance_;
+  delete ComAudioOptions::default_instance_;
   delete NodeAction::default_instance_;
   delete TimeLine::default_instance_;
   delete Frame::default_instance_;
@@ -65,9 +70,9 @@ void protobuf_AddDesc_CSParseBinary_2eproto() {
   ResourceData::default_instance_ = new ResourceData();
   CheckBoxOptions::default_instance_ = new CheckBoxOptions();
   ImageViewOptions::default_instance_ = new ImageViewOptions();
-  LabelAtlasOptions::default_instance_ = new LabelAtlasOptions();
-  LabelBMFontOptions::default_instance_ = new LabelBMFontOptions();
-  LabelOptions::default_instance_ = new LabelOptions();
+  TextAtlasOptions::default_instance_ = new TextAtlasOptions();
+  TextBMFontOptions::default_instance_ = new TextBMFontOptions();
+  TextOptions::default_instance_ = new TextOptions();
   LoadingBarOptions::default_instance_ = new LoadingBarOptions();
   ListViewOptions::default_instance_ = new ListViewOptions();
   PageViewOptions::default_instance_ = new PageViewOptions();
@@ -76,6 +81,11 @@ void protobuf_AddDesc_CSParseBinary_2eproto() {
   SliderOptions::default_instance_ = new SliderOptions();
   SpriteOptions::default_instance_ = new SpriteOptions();
   TextFieldOptions::default_instance_ = new TextFieldOptions();
+  TMXTiledMapOptions::default_instance_ = new TMXTiledMapOptions();
+  ParticleSystemOptions::default_instance_ = new ParticleSystemOptions();
+  ProjectNodeOptions::default_instance_ = new ProjectNodeOptions();
+  ComponentOptions::default_instance_ = new ComponentOptions();
+  ComAudioOptions::default_instance_ = new ComAudioOptions();
   NodeAction::default_instance_ = new NodeAction();
   TimeLine::default_instance_ = new TimeLine();
   Frame::default_instance_ = new Frame();
@@ -93,9 +103,9 @@ void protobuf_AddDesc_CSParseBinary_2eproto() {
   ResourceData::default_instance_->InitAsDefaultInstance();
   CheckBoxOptions::default_instance_->InitAsDefaultInstance();
   ImageViewOptions::default_instance_->InitAsDefaultInstance();
-  LabelAtlasOptions::default_instance_->InitAsDefaultInstance();
-  LabelBMFontOptions::default_instance_->InitAsDefaultInstance();
-  LabelOptions::default_instance_->InitAsDefaultInstance();
+  TextAtlasOptions::default_instance_->InitAsDefaultInstance();
+  TextBMFontOptions::default_instance_->InitAsDefaultInstance();
+  TextOptions::default_instance_->InitAsDefaultInstance();
   LoadingBarOptions::default_instance_->InitAsDefaultInstance();
   ListViewOptions::default_instance_->InitAsDefaultInstance();
   PageViewOptions::default_instance_->InitAsDefaultInstance();
@@ -104,6 +114,11 @@ void protobuf_AddDesc_CSParseBinary_2eproto() {
   SliderOptions::default_instance_->InitAsDefaultInstance();
   SpriteOptions::default_instance_->InitAsDefaultInstance();
   TextFieldOptions::default_instance_->InitAsDefaultInstance();
+  TMXTiledMapOptions::default_instance_->InitAsDefaultInstance();
+  ParticleSystemOptions::default_instance_->InitAsDefaultInstance();
+  ProjectNodeOptions::default_instance_->InitAsDefaultInstance();
+  ComponentOptions::default_instance_->InitAsDefaultInstance();
+  ComAudioOptions::default_instance_->InitAsDefaultInstance();
   NodeAction::default_instance_->InitAsDefaultInstance();
   TimeLine::default_instance_->InitAsDefaultInstance();
   Frame::default_instance_->InitAsDefaultInstance();
@@ -134,17 +149,16 @@ struct StaticDescriptorInitializer_CSParseBinary_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int CSParseBinary::kClassnameFieldNumber;
-const int CSParseBinary::kNameFieldNumber;
+const int CSParseBinary::kVersionFieldNumber;
+const int CSParseBinary::kCocos2DVersionFieldNumber;
+const int CSParseBinary::kEditorTypeFieldNumber;
 const int CSParseBinary::kDataScaleFieldNumber;
 const int CSParseBinary::kDesignHeightFieldNumber;
 const int CSParseBinary::kDesignWidthFieldNumber;
-const int CSParseBinary::kVersionFieldNumber;
 const int CSParseBinary::kTexturesFieldNumber;
 const int CSParseBinary::kTexturesPngFieldNumber;
 const int CSParseBinary::kNodeTreeFieldNumber;
 const int CSParseBinary::kActionFieldNumber;
-const int CSParseBinary::kCocos2DVersionFieldNumber;
 #endif  // !_MSC_VER
 
 CSParseBinary::CSParseBinary()
@@ -175,15 +189,14 @@ CSParseBinary::CSParseBinary(const CSParseBinary& from)
 
 void CSParseBinary::SharedCtor() {
   _cached_size_ = 0;
-  classname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  cocos2dversion_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  editortype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   datascale_ = 0;
   designheight_ = 0;
   designwidth_ = 0;
-  version_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   nodetree_ = NULL;
   action_ = NULL;
-  cocos2dversion_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -192,17 +205,14 @@ CSParseBinary::~CSParseBinary() {
 }
 
 void CSParseBinary::SharedDtor() {
-  if (classname_ != &::google::protobuf::internal::kEmptyString) {
-    delete classname_;
-  }
-  if (name_ != &::google::protobuf::internal::kEmptyString) {
-    delete name_;
-  }
   if (version_ != &::google::protobuf::internal::kEmptyString) {
     delete version_;
   }
   if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
     delete cocos2dversion_;
+  }
+  if (editortype_ != &::google::protobuf::internal::kEmptyString) {
+    delete editortype_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -236,24 +246,24 @@ CSParseBinary* CSParseBinary::New() const {
 
 void CSParseBinary::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_classname()) {
-      if (classname_ != &::google::protobuf::internal::kEmptyString) {
-        classname_->clear();
-      }
-    }
-    if (has_name()) {
-      if (name_ != &::google::protobuf::internal::kEmptyString) {
-        name_->clear();
-      }
-    }
-    datascale_ = 0;
-    designheight_ = 0;
-    designwidth_ = 0;
     if (has_version()) {
       if (version_ != &::google::protobuf::internal::kEmptyString) {
         version_->clear();
       }
     }
+    if (has_cocos2dversion()) {
+      if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
+        cocos2dversion_->clear();
+      }
+    }
+    if (has_editortype()) {
+      if (editortype_ != &::google::protobuf::internal::kEmptyString) {
+        editortype_->clear();
+      }
+    }
+    datascale_ = 0;
+    designheight_ = 0;
+    designwidth_ = 0;
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (has_nodetree()) {
@@ -261,11 +271,6 @@ void CSParseBinary::Clear() {
     }
     if (has_action()) {
       if (action_ != NULL) action_->::protocolbuffers::NodeAction::Clear();
-    }
-    if (has_cocos2dversion()) {
-      if (cocos2dversion_ != &::google::protobuf::internal::kEmptyString) {
-        cocos2dversion_->clear();
-      }
     }
   }
   textures_.Clear();
@@ -279,35 +284,49 @@ bool CSParseBinary::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string classname = 1;
+      // optional string version = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_classname()));
+                input, this->mutable_version()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_name;
+        if (input->ExpectTag(18)) goto parse_cocos2dVersion;
         break;
       }
 
-      // optional string name = 2;
+      // optional string cocos2dVersion = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_name:
+         parse_cocos2dVersion:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name()));
+                input, this->mutable_cocos2dversion()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(29)) goto parse_dataScale;
+        if (input->ExpectTag(26)) goto parse_editorType;
         break;
       }
 
-      // optional float dataScale = 3;
+      // optional string editorType = 3;
       case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_editorType:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_editortype()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(37)) goto parse_dataScale;
+        break;
+      }
+
+      // optional float dataScale = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
          parse_dataScale:
@@ -318,12 +337,12 @@ bool CSParseBinary::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(32)) goto parse_designHeight;
+        if (input->ExpectTag(40)) goto parse_designHeight;
         break;
       }
 
-      // optional int32 designHeight = 4;
-      case 4: {
+      // optional int32 designHeight = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_designHeight:
@@ -334,12 +353,12 @@ bool CSParseBinary::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(40)) goto parse_designWidth;
+        if (input->ExpectTag(48)) goto parse_designWidth;
         break;
       }
 
-      // optional int32 designWidth = 5;
-      case 5: {
+      // optional int32 designWidth = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_designWidth:
@@ -347,20 +366,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &designwidth_)));
           set_has_designwidth();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(50)) goto parse_version;
-        break;
-      }
-
-      // optional string version = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_version:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_version()));
         } else {
           goto handle_uninterpreted;
         }
@@ -422,20 +427,6 @@ bool CSParseBinary::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(90)) goto parse_cocos2dVersion;
-        break;
-      }
-
-      // optional string cocos2dVersion = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_cocos2dVersion:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_cocos2dversion()));
-        } else {
-          goto handle_uninterpreted;
-        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -457,37 +448,37 @@ bool CSParseBinary::MergePartialFromCodedStream(
 
 void CSParseBinary::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional string classname = 1;
-  if (has_classname()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->classname(), output);
-  }
-
-  // optional string name = 2;
-  if (has_name()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->name(), output);
-  }
-
-  // optional float dataScale = 3;
-  if (has_datascale()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->datascale(), output);
-  }
-
-  // optional int32 designHeight = 4;
-  if (has_designheight()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->designheight(), output);
-  }
-
-  // optional int32 designWidth = 5;
-  if (has_designwidth()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->designwidth(), output);
-  }
-
-  // optional string version = 6;
+  // optional string version = 1;
   if (has_version()) {
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      6, this->version(), output);
+      1, this->version(), output);
+  }
+
+  // optional string cocos2dVersion = 2;
+  if (has_cocos2dversion()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->cocos2dversion(), output);
+  }
+
+  // optional string editorType = 3;
+  if (has_editortype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->editortype(), output);
+  }
+
+  // optional float dataScale = 4;
+  if (has_datascale()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->datascale(), output);
+  }
+
+  // optional int32 designHeight = 5;
+  if (has_designheight()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->designheight(), output);
+  }
+
+  // optional int32 designWidth = 6;
+  if (has_designwidth()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->designwidth(), output);
   }
 
   // repeated string textures = 7;
@@ -514,56 +505,50 @@ void CSParseBinary::SerializeWithCachedSizes(
       10, this->action(), output);
   }
 
-  // optional string cocos2dVersion = 11;
-  if (has_cocos2dversion()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      11, this->cocos2dversion(), output);
-  }
-
 }
 
 int CSParseBinary::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string classname = 1;
-    if (has_classname()) {
+    // optional string version = 1;
+    if (has_version()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->classname());
+          this->version());
     }
 
-    // optional string name = 2;
-    if (has_name()) {
+    // optional string cocos2dVersion = 2;
+    if (has_cocos2dversion()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name());
+          this->cocos2dversion());
     }
 
-    // optional float dataScale = 3;
+    // optional string editorType = 3;
+    if (has_editortype()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->editortype());
+    }
+
+    // optional float dataScale = 4;
     if (has_datascale()) {
       total_size += 1 + 4;
     }
 
-    // optional int32 designHeight = 4;
+    // optional int32 designHeight = 5;
     if (has_designheight()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->designheight());
     }
 
-    // optional int32 designWidth = 5;
+    // optional int32 designWidth = 6;
     if (has_designwidth()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->designwidth());
-    }
-
-    // optional string version = 6;
-    if (has_version()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->version());
     }
 
   }
@@ -580,13 +565,6 @@ int CSParseBinary::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->action());
-    }
-
-    // optional string cocos2dVersion = 11;
-    if (has_cocos2dversion()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->cocos2dversion());
     }
 
   }
@@ -620,11 +598,14 @@ void CSParseBinary::MergeFrom(const CSParseBinary& from) {
   textures_.MergeFrom(from.textures_);
   texturespng_.MergeFrom(from.texturespng_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_classname()) {
-      set_classname(from.classname());
+    if (from.has_version()) {
+      set_version(from.version());
     }
-    if (from.has_name()) {
-      set_name(from.name());
+    if (from.has_cocos2dversion()) {
+      set_cocos2dversion(from.cocos2dversion());
+    }
+    if (from.has_editortype()) {
+      set_editortype(from.editortype());
     }
     if (from.has_datascale()) {
       set_datascale(from.datascale());
@@ -635,9 +616,6 @@ void CSParseBinary::MergeFrom(const CSParseBinary& from) {
     if (from.has_designwidth()) {
       set_designwidth(from.designwidth());
     }
-    if (from.has_version()) {
-      set_version(from.version());
-    }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_nodetree()) {
@@ -645,9 +623,6 @@ void CSParseBinary::MergeFrom(const CSParseBinary& from) {
     }
     if (from.has_action()) {
       mutable_action()->::protocolbuffers::NodeAction::MergeFrom(from.action());
-    }
-    if (from.has_cocos2dversion()) {
-      set_cocos2dversion(from.cocos2dversion());
     }
   }
 }
@@ -665,17 +640,16 @@ bool CSParseBinary::IsInitialized() const {
 
 void CSParseBinary::Swap(CSParseBinary* other) {
   if (other != this) {
-    std::swap(classname_, other->classname_);
-    std::swap(name_, other->name_);
+    std::swap(version_, other->version_);
+    std::swap(cocos2dversion_, other->cocos2dversion_);
+    std::swap(editortype_, other->editortype_);
     std::swap(datascale_, other->datascale_);
     std::swap(designheight_, other->designheight_);
     std::swap(designwidth_, other->designwidth_);
-    std::swap(version_, other->version_);
     textures_.Swap(&other->textures_);
     texturespng_.Swap(&other->texturespng_);
     std::swap(nodetree_, other->nodetree_);
     std::swap(action_, other->action_);
-    std::swap(cocos2dversion_, other->cocos2dversion_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -696,10 +670,9 @@ const int NodeTree::kWidgetOptionsFieldNumber;
 const int NodeTree::kButtonOptionsFieldNumber;
 const int NodeTree::kCheckBoxOptionsFieldNumber;
 const int NodeTree::kImageViewOptionsFieldNumber;
-const int NodeTree::kSpriteOptionsFieldNumber;
-const int NodeTree::kLabelAtlasOptionsFieldNumber;
-const int NodeTree::kLabelBMFontOptionsFieldNumber;
-const int NodeTree::kLabelOptionsFieldNumber;
+const int NodeTree::kTextAtlasOptionsFieldNumber;
+const int NodeTree::kTextBMFontOptionsFieldNumber;
+const int NodeTree::kTextOptionsFieldNumber;
 const int NodeTree::kLoadingBarOptionsFieldNumber;
 const int NodeTree::kSliderOptionsFieldNumber;
 const int NodeTree::kTextFieldOptionsFieldNumber;
@@ -707,6 +680,10 @@ const int NodeTree::kScrollViewOptionsFieldNumber;
 const int NodeTree::kPageViewOptionsFieldNumber;
 const int NodeTree::kListViewOptionsFieldNumber;
 const int NodeTree::kPanelOptionsFieldNumber;
+const int NodeTree::kSpriteOptionsFieldNumber;
+const int NodeTree::kTmxTiledMapOptionsFieldNumber;
+const int NodeTree::kParticleSystemOptionsFieldNumber;
+const int NodeTree::kProjectNodeOptionsFieldNumber;
 #endif  // !_MSC_VER
 
 NodeTree::NodeTree()
@@ -740,28 +717,22 @@ void NodeTree::InitAsDefaultInstance() {
   imageviewoptions_ = const_cast< ::protocolbuffers::ImageViewOptions*>(&::protocolbuffers::ImageViewOptions::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  spriteoptions_ = const_cast< ::protocolbuffers::SpriteOptions*>(
-      ::protocolbuffers::SpriteOptions::internal_default_instance());
+  textatlasoptions_ = const_cast< ::protocolbuffers::TextAtlasOptions*>(
+      ::protocolbuffers::TextAtlasOptions::internal_default_instance());
 #else
-  spriteoptions_ = const_cast< ::protocolbuffers::SpriteOptions*>(&::protocolbuffers::SpriteOptions::default_instance());
+  textatlasoptions_ = const_cast< ::protocolbuffers::TextAtlasOptions*>(&::protocolbuffers::TextAtlasOptions::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  labelatlasoptions_ = const_cast< ::protocolbuffers::LabelAtlasOptions*>(
-      ::protocolbuffers::LabelAtlasOptions::internal_default_instance());
+  textbmfontoptions_ = const_cast< ::protocolbuffers::TextBMFontOptions*>(
+      ::protocolbuffers::TextBMFontOptions::internal_default_instance());
 #else
-  labelatlasoptions_ = const_cast< ::protocolbuffers::LabelAtlasOptions*>(&::protocolbuffers::LabelAtlasOptions::default_instance());
+  textbmfontoptions_ = const_cast< ::protocolbuffers::TextBMFontOptions*>(&::protocolbuffers::TextBMFontOptions::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  labelbmfontoptions_ = const_cast< ::protocolbuffers::LabelBMFontOptions*>(
-      ::protocolbuffers::LabelBMFontOptions::internal_default_instance());
+  textoptions_ = const_cast< ::protocolbuffers::TextOptions*>(
+      ::protocolbuffers::TextOptions::internal_default_instance());
 #else
-  labelbmfontoptions_ = const_cast< ::protocolbuffers::LabelBMFontOptions*>(&::protocolbuffers::LabelBMFontOptions::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  labeloptions_ = const_cast< ::protocolbuffers::LabelOptions*>(
-      ::protocolbuffers::LabelOptions::internal_default_instance());
-#else
-  labeloptions_ = const_cast< ::protocolbuffers::LabelOptions*>(&::protocolbuffers::LabelOptions::default_instance());
+  textoptions_ = const_cast< ::protocolbuffers::TextOptions*>(&::protocolbuffers::TextOptions::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   loadingbaroptions_ = const_cast< ::protocolbuffers::LoadingBarOptions*>(
@@ -805,6 +776,30 @@ void NodeTree::InitAsDefaultInstance() {
 #else
   paneloptions_ = const_cast< ::protocolbuffers::PanelOptions*>(&::protocolbuffers::PanelOptions::default_instance());
 #endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  spriteoptions_ = const_cast< ::protocolbuffers::SpriteOptions*>(
+      ::protocolbuffers::SpriteOptions::internal_default_instance());
+#else
+  spriteoptions_ = const_cast< ::protocolbuffers::SpriteOptions*>(&::protocolbuffers::SpriteOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  tmxtiledmapoptions_ = const_cast< ::protocolbuffers::TMXTiledMapOptions*>(
+      ::protocolbuffers::TMXTiledMapOptions::internal_default_instance());
+#else
+  tmxtiledmapoptions_ = const_cast< ::protocolbuffers::TMXTiledMapOptions*>(&::protocolbuffers::TMXTiledMapOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  particlesystemoptions_ = const_cast< ::protocolbuffers::ParticleSystemOptions*>(
+      ::protocolbuffers::ParticleSystemOptions::internal_default_instance());
+#else
+  particlesystemoptions_ = const_cast< ::protocolbuffers::ParticleSystemOptions*>(&::protocolbuffers::ParticleSystemOptions::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  projectnodeoptions_ = const_cast< ::protocolbuffers::ProjectNodeOptions*>(
+      ::protocolbuffers::ProjectNodeOptions::internal_default_instance());
+#else
+  projectnodeoptions_ = const_cast< ::protocolbuffers::ProjectNodeOptions*>(&::protocolbuffers::ProjectNodeOptions::default_instance());
+#endif
 }
 
 NodeTree::NodeTree(const NodeTree& from)
@@ -821,10 +816,9 @@ void NodeTree::SharedCtor() {
   buttonoptions_ = NULL;
   checkboxoptions_ = NULL;
   imageviewoptions_ = NULL;
-  spriteoptions_ = NULL;
-  labelatlasoptions_ = NULL;
-  labelbmfontoptions_ = NULL;
-  labeloptions_ = NULL;
+  textatlasoptions_ = NULL;
+  textbmfontoptions_ = NULL;
+  textoptions_ = NULL;
   loadingbaroptions_ = NULL;
   slideroptions_ = NULL;
   textfieldoptions_ = NULL;
@@ -832,6 +826,10 @@ void NodeTree::SharedCtor() {
   pageviewoptions_ = NULL;
   listviewoptions_ = NULL;
   paneloptions_ = NULL;
+  spriteoptions_ = NULL;
+  tmxtiledmapoptions_ = NULL;
+  particlesystemoptions_ = NULL;
+  projectnodeoptions_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -855,10 +853,9 @@ void NodeTree::SharedDtor() {
     delete buttonoptions_;
     delete checkboxoptions_;
     delete imageviewoptions_;
-    delete spriteoptions_;
-    delete labelatlasoptions_;
-    delete labelbmfontoptions_;
-    delete labeloptions_;
+    delete textatlasoptions_;
+    delete textbmfontoptions_;
+    delete textoptions_;
     delete loadingbaroptions_;
     delete slideroptions_;
     delete textfieldoptions_;
@@ -866,6 +863,10 @@ void NodeTree::SharedDtor() {
     delete pageviewoptions_;
     delete listviewoptions_;
     delete paneloptions_;
+    delete spriteoptions_;
+    delete tmxtiledmapoptions_;
+    delete particlesystemoptions_;
+    delete projectnodeoptions_;
   }
 }
 
@@ -913,19 +914,16 @@ void NodeTree::Clear() {
     if (has_imageviewoptions()) {
       if (imageviewoptions_ != NULL) imageviewoptions_->::protocolbuffers::ImageViewOptions::Clear();
     }
-    if (has_spriteoptions()) {
-      if (spriteoptions_ != NULL) spriteoptions_->::protocolbuffers::SpriteOptions::Clear();
+    if (has_textatlasoptions()) {
+      if (textatlasoptions_ != NULL) textatlasoptions_->::protocolbuffers::TextAtlasOptions::Clear();
     }
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (has_labelatlasoptions()) {
-      if (labelatlasoptions_ != NULL) labelatlasoptions_->::protocolbuffers::LabelAtlasOptions::Clear();
+    if (has_textbmfontoptions()) {
+      if (textbmfontoptions_ != NULL) textbmfontoptions_->::protocolbuffers::TextBMFontOptions::Clear();
     }
-    if (has_labelbmfontoptions()) {
-      if (labelbmfontoptions_ != NULL) labelbmfontoptions_->::protocolbuffers::LabelBMFontOptions::Clear();
-    }
-    if (has_labeloptions()) {
-      if (labeloptions_ != NULL) labeloptions_->::protocolbuffers::LabelOptions::Clear();
+    if (has_textoptions()) {
+      if (textoptions_ != NULL) textoptions_->::protocolbuffers::TextOptions::Clear();
     }
     if (has_loadingbaroptions()) {
       if (loadingbaroptions_ != NULL) loadingbaroptions_->::protocolbuffers::LoadingBarOptions::Clear();
@@ -942,13 +940,25 @@ void NodeTree::Clear() {
     if (has_pageviewoptions()) {
       if (pageviewoptions_ != NULL) pageviewoptions_->::protocolbuffers::PageViewOptions::Clear();
     }
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (has_listviewoptions()) {
       if (listviewoptions_ != NULL) listviewoptions_->::protocolbuffers::ListViewOptions::Clear();
     }
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (has_paneloptions()) {
       if (paneloptions_ != NULL) paneloptions_->::protocolbuffers::PanelOptions::Clear();
+    }
+    if (has_spriteoptions()) {
+      if (spriteoptions_ != NULL) spriteoptions_->::protocolbuffers::SpriteOptions::Clear();
+    }
+    if (has_tmxtiledmapoptions()) {
+      if (tmxtiledmapoptions_ != NULL) tmxtiledmapoptions_->::protocolbuffers::TMXTiledMapOptions::Clear();
+    }
+    if (has_particlesystemoptions()) {
+      if (particlesystemoptions_ != NULL) particlesystemoptions_->::protocolbuffers::ParticleSystemOptions::Clear();
+    }
+    if (has_projectnodeoptions()) {
+      if (projectnodeoptions_ != NULL) projectnodeoptions_->::protocolbuffers::ProjectNodeOptions::Clear();
     }
   }
   children_.Clear();
@@ -1055,68 +1065,54 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(66)) goto parse_spriteOptions;
+        if (input->ExpectTag(66)) goto parse_textAtlasOptions;
         break;
       }
 
-      // optional .protocolbuffers.SpriteOptions spriteOptions = 8;
+      // optional .protocolbuffers.TextAtlasOptions textAtlasOptions = 8;
       case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_spriteOptions:
+         parse_textAtlasOptions:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_spriteoptions()));
+               input, mutable_textatlasoptions()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(82)) goto parse_labelAtlasOptions;
+        if (input->ExpectTag(74)) goto parse_textBMFontOptions;
         break;
       }
 
-      // optional .protocolbuffers.LabelAtlasOptions labelAtlasOptions = 10;
+      // optional .protocolbuffers.TextBMFontOptions textBMFontOptions = 9;
+      case 9: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_textBMFontOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_textbmfontoptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(82)) goto parse_textOptions;
+        break;
+      }
+
+      // optional .protocolbuffers.TextOptions textOptions = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_labelAtlasOptions:
+         parse_textOptions:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_labelatlasoptions()));
+               input, mutable_textoptions()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(90)) goto parse_labelBMFontOptions;
+        if (input->ExpectTag(90)) goto parse_loadingBarOptions;
         break;
       }
 
-      // optional .protocolbuffers.LabelBMFontOptions labelBMFontOptions = 11;
+      // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 11;
       case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_labelBMFontOptions:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_labelbmfontoptions()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(98)) goto parse_labelOptions;
-        break;
-      }
-
-      // optional .protocolbuffers.LabelOptions labelOptions = 12;
-      case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_labelOptions:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_labeloptions()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(106)) goto parse_loadingBarOptions;
-        break;
-      }
-
-      // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 13;
-      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_loadingBarOptions:
@@ -1125,12 +1121,12 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(114)) goto parse_sliderOptions;
+        if (input->ExpectTag(98)) goto parse_sliderOptions;
         break;
       }
 
-      // optional .protocolbuffers.SliderOptions sliderOptions = 14;
-      case 14: {
+      // optional .protocolbuffers.SliderOptions sliderOptions = 12;
+      case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_sliderOptions:
@@ -1139,12 +1135,12 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(122)) goto parse_textFieldOptions;
+        if (input->ExpectTag(106)) goto parse_textFieldOptions;
         break;
       }
 
-      // optional .protocolbuffers.TextFieldOptions textFieldOptions = 15;
-      case 15: {
+      // optional .protocolbuffers.TextFieldOptions textFieldOptions = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_textFieldOptions:
@@ -1153,12 +1149,12 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(130)) goto parse_scrollViewOptions;
+        if (input->ExpectTag(114)) goto parse_scrollViewOptions;
         break;
       }
 
-      // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 16;
-      case 16: {
+      // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 14;
+      case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_scrollViewOptions:
@@ -1167,12 +1163,12 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(138)) goto parse_pageViewOptions;
+        if (input->ExpectTag(122)) goto parse_pageViewOptions;
         break;
       }
 
-      // optional .protocolbuffers.PageViewOptions pageViewOptions = 17;
-      case 17: {
+      // optional .protocolbuffers.PageViewOptions pageViewOptions = 15;
+      case 15: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_pageViewOptions:
@@ -1181,12 +1177,12 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(146)) goto parse_listViewOptions;
+        if (input->ExpectTag(130)) goto parse_listViewOptions;
         break;
       }
 
-      // optional .protocolbuffers.ListViewOptions listViewOptions = 18;
-      case 18: {
+      // optional .protocolbuffers.ListViewOptions listViewOptions = 16;
+      case 16: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_listViewOptions:
@@ -1195,17 +1191,73 @@ bool NodeTree::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(154)) goto parse_PanelOptions;
+        if (input->ExpectTag(138)) goto parse_PanelOptions;
         break;
       }
 
-      // optional .protocolbuffers.PanelOptions PanelOptions = 19;
-      case 19: {
+      // optional .protocolbuffers.PanelOptions PanelOptions = 17;
+      case 17: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_PanelOptions:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_paneloptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(146)) goto parse_spriteOptions;
+        break;
+      }
+
+      // optional .protocolbuffers.SpriteOptions spriteOptions = 18;
+      case 18: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_spriteOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_spriteoptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(154)) goto parse_tmxTiledMapOptions;
+        break;
+      }
+
+      // optional .protocolbuffers.TMXTiledMapOptions tmxTiledMapOptions = 19;
+      case 19: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_tmxTiledMapOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_tmxtiledmapoptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(162)) goto parse_particleSystemOptions;
+        break;
+      }
+
+      // optional .protocolbuffers.ParticleSystemOptions particleSystemOptions = 20;
+      case 20: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_particleSystemOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_particlesystemoptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(170)) goto parse_projectNodeOptions;
+        break;
+      }
+
+      // optional .protocolbuffers.ProjectNodeOptions projectNodeOptions = 21;
+      case 21: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_projectNodeOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_projectnodeoptions()));
         } else {
           goto handle_uninterpreted;
         }
@@ -1272,70 +1324,88 @@ void NodeTree::SerializeWithCachedSizes(
       7, this->imageviewoptions(), output);
   }
 
-  // optional .protocolbuffers.SpriteOptions spriteOptions = 8;
-  if (has_spriteoptions()) {
+  // optional .protocolbuffers.TextAtlasOptions textAtlasOptions = 8;
+  if (has_textatlasoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      8, this->spriteoptions(), output);
+      8, this->textatlasoptions(), output);
   }
 
-  // optional .protocolbuffers.LabelAtlasOptions labelAtlasOptions = 10;
-  if (has_labelatlasoptions()) {
+  // optional .protocolbuffers.TextBMFontOptions textBMFontOptions = 9;
+  if (has_textbmfontoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      10, this->labelatlasoptions(), output);
+      9, this->textbmfontoptions(), output);
   }
 
-  // optional .protocolbuffers.LabelBMFontOptions labelBMFontOptions = 11;
-  if (has_labelbmfontoptions()) {
+  // optional .protocolbuffers.TextOptions textOptions = 10;
+  if (has_textoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      11, this->labelbmfontoptions(), output);
+      10, this->textoptions(), output);
   }
 
-  // optional .protocolbuffers.LabelOptions labelOptions = 12;
-  if (has_labeloptions()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      12, this->labeloptions(), output);
-  }
-
-  // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 13;
+  // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 11;
   if (has_loadingbaroptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      13, this->loadingbaroptions(), output);
+      11, this->loadingbaroptions(), output);
   }
 
-  // optional .protocolbuffers.SliderOptions sliderOptions = 14;
+  // optional .protocolbuffers.SliderOptions sliderOptions = 12;
   if (has_slideroptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      14, this->slideroptions(), output);
+      12, this->slideroptions(), output);
   }
 
-  // optional .protocolbuffers.TextFieldOptions textFieldOptions = 15;
+  // optional .protocolbuffers.TextFieldOptions textFieldOptions = 13;
   if (has_textfieldoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      15, this->textfieldoptions(), output);
+      13, this->textfieldoptions(), output);
   }
 
-  // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 16;
+  // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 14;
   if (has_scrollviewoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      16, this->scrollviewoptions(), output);
+      14, this->scrollviewoptions(), output);
   }
 
-  // optional .protocolbuffers.PageViewOptions pageViewOptions = 17;
+  // optional .protocolbuffers.PageViewOptions pageViewOptions = 15;
   if (has_pageviewoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      17, this->pageviewoptions(), output);
+      15, this->pageviewoptions(), output);
   }
 
-  // optional .protocolbuffers.ListViewOptions listViewOptions = 18;
+  // optional .protocolbuffers.ListViewOptions listViewOptions = 16;
   if (has_listviewoptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      18, this->listviewoptions(), output);
+      16, this->listviewoptions(), output);
   }
 
-  // optional .protocolbuffers.PanelOptions PanelOptions = 19;
+  // optional .protocolbuffers.PanelOptions PanelOptions = 17;
   if (has_paneloptions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      19, this->paneloptions(), output);
+      17, this->paneloptions(), output);
+  }
+
+  // optional .protocolbuffers.SpriteOptions spriteOptions = 18;
+  if (has_spriteoptions()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      18, this->spriteoptions(), output);
+  }
+
+  // optional .protocolbuffers.TMXTiledMapOptions tmxTiledMapOptions = 19;
+  if (has_tmxtiledmapoptions()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      19, this->tmxtiledmapoptions(), output);
+  }
+
+  // optional .protocolbuffers.ParticleSystemOptions particleSystemOptions = 20;
+  if (has_particlesystemoptions()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      20, this->particlesystemoptions(), output);
+  }
+
+  // optional .protocolbuffers.ProjectNodeOptions projectNodeOptions = 21;
+  if (has_projectnodeoptions()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      21, this->projectnodeoptions(), output);
   }
 
 }
@@ -1386,85 +1456,106 @@ int NodeTree::ByteSize() const {
           this->imageviewoptions());
     }
 
-    // optional .protocolbuffers.SpriteOptions spriteOptions = 8;
-    if (has_spriteoptions()) {
+    // optional .protocolbuffers.TextAtlasOptions textAtlasOptions = 8;
+    if (has_textatlasoptions()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->spriteoptions());
+          this->textatlasoptions());
     }
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .protocolbuffers.LabelAtlasOptions labelAtlasOptions = 10;
-    if (has_labelatlasoptions()) {
+    // optional .protocolbuffers.TextBMFontOptions textBMFontOptions = 9;
+    if (has_textbmfontoptions()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->labelatlasoptions());
+          this->textbmfontoptions());
     }
 
-    // optional .protocolbuffers.LabelBMFontOptions labelBMFontOptions = 11;
-    if (has_labelbmfontoptions()) {
+    // optional .protocolbuffers.TextOptions textOptions = 10;
+    if (has_textoptions()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->labelbmfontoptions());
+          this->textoptions());
     }
 
-    // optional .protocolbuffers.LabelOptions labelOptions = 12;
-    if (has_labeloptions()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->labeloptions());
-    }
-
-    // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 13;
+    // optional .protocolbuffers.LoadingBarOptions loadingBarOptions = 11;
     if (has_loadingbaroptions()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->loadingbaroptions());
     }
 
-    // optional .protocolbuffers.SliderOptions sliderOptions = 14;
+    // optional .protocolbuffers.SliderOptions sliderOptions = 12;
     if (has_slideroptions()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->slideroptions());
     }
 
-    // optional .protocolbuffers.TextFieldOptions textFieldOptions = 15;
+    // optional .protocolbuffers.TextFieldOptions textFieldOptions = 13;
     if (has_textfieldoptions()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->textfieldoptions());
     }
 
-    // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 16;
+    // optional .protocolbuffers.ScrollViewOptions scrollViewOptions = 14;
     if (has_scrollviewoptions()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->scrollviewoptions());
     }
 
-    // optional .protocolbuffers.PageViewOptions pageViewOptions = 17;
+    // optional .protocolbuffers.PageViewOptions pageViewOptions = 15;
     if (has_pageviewoptions()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->pageviewoptions());
     }
 
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional .protocolbuffers.ListViewOptions listViewOptions = 18;
+    // optional .protocolbuffers.ListViewOptions listViewOptions = 16;
     if (has_listviewoptions()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->listviewoptions());
     }
 
-    // optional .protocolbuffers.PanelOptions PanelOptions = 19;
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional .protocolbuffers.PanelOptions PanelOptions = 17;
     if (has_paneloptions()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->paneloptions());
+    }
+
+    // optional .protocolbuffers.SpriteOptions spriteOptions = 18;
+    if (has_spriteoptions()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->spriteoptions());
+    }
+
+    // optional .protocolbuffers.TMXTiledMapOptions tmxTiledMapOptions = 19;
+    if (has_tmxtiledmapoptions()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->tmxtiledmapoptions());
+    }
+
+    // optional .protocolbuffers.ParticleSystemOptions particleSystemOptions = 20;
+    if (has_particlesystemoptions()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->particlesystemoptions());
+    }
+
+    // optional .protocolbuffers.ProjectNodeOptions projectNodeOptions = 21;
+    if (has_projectnodeoptions()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->projectnodeoptions());
     }
 
   }
@@ -1509,19 +1600,16 @@ void NodeTree::MergeFrom(const NodeTree& from) {
     if (from.has_imageviewoptions()) {
       mutable_imageviewoptions()->::protocolbuffers::ImageViewOptions::MergeFrom(from.imageviewoptions());
     }
-    if (from.has_spriteoptions()) {
-      mutable_spriteoptions()->::protocolbuffers::SpriteOptions::MergeFrom(from.spriteoptions());
+    if (from.has_textatlasoptions()) {
+      mutable_textatlasoptions()->::protocolbuffers::TextAtlasOptions::MergeFrom(from.textatlasoptions());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_labelatlasoptions()) {
-      mutable_labelatlasoptions()->::protocolbuffers::LabelAtlasOptions::MergeFrom(from.labelatlasoptions());
+    if (from.has_textbmfontoptions()) {
+      mutable_textbmfontoptions()->::protocolbuffers::TextBMFontOptions::MergeFrom(from.textbmfontoptions());
     }
-    if (from.has_labelbmfontoptions()) {
-      mutable_labelbmfontoptions()->::protocolbuffers::LabelBMFontOptions::MergeFrom(from.labelbmfontoptions());
-    }
-    if (from.has_labeloptions()) {
-      mutable_labeloptions()->::protocolbuffers::LabelOptions::MergeFrom(from.labeloptions());
+    if (from.has_textoptions()) {
+      mutable_textoptions()->::protocolbuffers::TextOptions::MergeFrom(from.textoptions());
     }
     if (from.has_loadingbaroptions()) {
       mutable_loadingbaroptions()->::protocolbuffers::LoadingBarOptions::MergeFrom(from.loadingbaroptions());
@@ -1538,13 +1626,25 @@ void NodeTree::MergeFrom(const NodeTree& from) {
     if (from.has_pageviewoptions()) {
       mutable_pageviewoptions()->::protocolbuffers::PageViewOptions::MergeFrom(from.pageviewoptions());
     }
-  }
-  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_listviewoptions()) {
       mutable_listviewoptions()->::protocolbuffers::ListViewOptions::MergeFrom(from.listviewoptions());
     }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_paneloptions()) {
       mutable_paneloptions()->::protocolbuffers::PanelOptions::MergeFrom(from.paneloptions());
+    }
+    if (from.has_spriteoptions()) {
+      mutable_spriteoptions()->::protocolbuffers::SpriteOptions::MergeFrom(from.spriteoptions());
+    }
+    if (from.has_tmxtiledmapoptions()) {
+      mutable_tmxtiledmapoptions()->::protocolbuffers::TMXTiledMapOptions::MergeFrom(from.tmxtiledmapoptions());
+    }
+    if (from.has_particlesystemoptions()) {
+      mutable_particlesystemoptions()->::protocolbuffers::ParticleSystemOptions::MergeFrom(from.particlesystemoptions());
+    }
+    if (from.has_projectnodeoptions()) {
+      mutable_projectnodeoptions()->::protocolbuffers::ProjectNodeOptions::MergeFrom(from.projectnodeoptions());
     }
   }
 }
@@ -1569,10 +1669,9 @@ void NodeTree::Swap(NodeTree* other) {
     std::swap(buttonoptions_, other->buttonoptions_);
     std::swap(checkboxoptions_, other->checkboxoptions_);
     std::swap(imageviewoptions_, other->imageviewoptions_);
-    std::swap(spriteoptions_, other->spriteoptions_);
-    std::swap(labelatlasoptions_, other->labelatlasoptions_);
-    std::swap(labelbmfontoptions_, other->labelbmfontoptions_);
-    std::swap(labeloptions_, other->labeloptions_);
+    std::swap(textatlasoptions_, other->textatlasoptions_);
+    std::swap(textbmfontoptions_, other->textbmfontoptions_);
+    std::swap(textoptions_, other->textoptions_);
     std::swap(loadingbaroptions_, other->loadingbaroptions_);
     std::swap(slideroptions_, other->slideroptions_);
     std::swap(textfieldoptions_, other->textfieldoptions_);
@@ -1580,6 +1679,10 @@ void NodeTree::Swap(NodeTree* other) {
     std::swap(pageviewoptions_, other->pageviewoptions_);
     std::swap(listviewoptions_, other->listviewoptions_);
     std::swap(paneloptions_, other->paneloptions_);
+    std::swap(spriteoptions_, other->spriteoptions_);
+    std::swap(tmxtiledmapoptions_, other->tmxtiledmapoptions_);
+    std::swap(particlesystemoptions_, other->particlesystemoptions_);
+    std::swap(projectnodeoptions_, other->projectnodeoptions_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -1622,10 +1725,13 @@ const int WidgetOptions::kTagFieldNumber;
 const int WidgetOptions::kAnchorPointXFieldNumber;
 const int WidgetOptions::kAnchorPointYFieldNumber;
 const int WidgetOptions::kIgnoreSizeFieldNumber;
+const int WidgetOptions::kRotationSkewXFieldNumber;
+const int WidgetOptions::kRotationSkewYFieldNumber;
 const int WidgetOptions::kLayoutParameterFieldNumber;
 const int WidgetOptions::kCustomPropertyFieldNumber;
 const int WidgetOptions::kFrameEventFieldNumber;
 const int WidgetOptions::kNameFieldNumber;
+const int WidgetOptions::kComponentOptionsFieldNumber;
 #endif  // !_MSC_VER
 
 WidgetOptions::WidgetOptions()
@@ -1679,6 +1785,8 @@ void WidgetOptions::SharedCtor() {
   anchorpointx_ = 0;
   anchorpointy_ = 0;
   ignoresize_ = false;
+  rotationskewx_ = 0;
+  rotationskewy_ = 0;
   layoutparameter_ = NULL;
   customproperty_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   frameevent_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -1773,9 +1881,13 @@ void WidgetOptions::Clear() {
     anchorpointx_ = 0;
     anchorpointy_ = 0;
     ignoresize_ = false;
+    rotationskewx_ = 0;
+    rotationskewy_ = 0;
     if (has_layoutparameter()) {
       if (layoutparameter_ != NULL) layoutparameter_->::protocolbuffers::LayoutParameter::Clear();
     }
+  }
+  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (has_customproperty()) {
       if (customproperty_ != &::google::protobuf::internal::kEmptyString) {
         customproperty_->clear();
@@ -1786,14 +1898,13 @@ void WidgetOptions::Clear() {
         frameevent_->clear();
       }
     }
-  }
-  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
         name_->clear();
       }
     }
   }
+  componentoptions_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2260,12 +2371,44 @@ bool WidgetOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(242)) goto parse_layoutParameter;
+        if (input->ExpectTag(245)) goto parse_rotationSkewX;
         break;
       }
 
-      // optional .protocolbuffers.LayoutParameter layoutParameter = 30;
+      // optional float rotationSkewX = 30;
       case 30: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_rotationSkewX:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &rotationskewx_)));
+          set_has_rotationskewx();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(253)) goto parse_rotationSkewY;
+        break;
+      }
+
+      // optional float rotationSkewY = 31;
+      case 31: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_rotationSkewY:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &rotationskewy_)));
+          set_has_rotationskewy();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(258)) goto parse_layoutParameter;
+        break;
+      }
+
+      // optional .protocolbuffers.LayoutParameter layoutParameter = 32;
+      case 32: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_layoutParameter:
@@ -2274,12 +2417,12 @@ bool WidgetOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(250)) goto parse_customProperty;
+        if (input->ExpectTag(266)) goto parse_customProperty;
         break;
       }
 
-      // optional string customProperty = 31;
-      case 31: {
+      // optional string customProperty = 33;
+      case 33: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_customProperty:
@@ -2288,12 +2431,12 @@ bool WidgetOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(258)) goto parse_frameEvent;
+        if (input->ExpectTag(274)) goto parse_frameEvent;
         break;
       }
 
-      // optional string frameEvent = 32;
-      case 32: {
+      // optional string frameEvent = 34;
+      case 34: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_frameEvent:
@@ -2302,12 +2445,12 @@ bool WidgetOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(266)) goto parse_name;
+        if (input->ExpectTag(282)) goto parse_name;
         break;
       }
 
-      // optional string name = 33;
-      case 33: {
+      // optional string name = 35;
+      case 35: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_name:
@@ -2316,6 +2459,21 @@ bool WidgetOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(290)) goto parse_componentOptions;
+        break;
+      }
+
+      // repeated .protocolbuffers.ComponentOptions componentOptions = 36;
+      case 36: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_componentOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_componentoptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(290)) goto parse_componentOptions;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2483,28 +2641,44 @@ void WidgetOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(29, this->ignoresize(), output);
   }
 
-  // optional .protocolbuffers.LayoutParameter layoutParameter = 30;
+  // optional float rotationSkewX = 30;
+  if (has_rotationskewx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(30, this->rotationskewx(), output);
+  }
+
+  // optional float rotationSkewY = 31;
+  if (has_rotationskewy()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(31, this->rotationskewy(), output);
+  }
+
+  // optional .protocolbuffers.LayoutParameter layoutParameter = 32;
   if (has_layoutparameter()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      30, this->layoutparameter(), output);
+      32, this->layoutparameter(), output);
   }
 
-  // optional string customProperty = 31;
+  // optional string customProperty = 33;
   if (has_customproperty()) {
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      31, this->customproperty(), output);
+      33, this->customproperty(), output);
   }
 
-  // optional string frameEvent = 32;
+  // optional string frameEvent = 34;
   if (has_frameevent()) {
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      32, this->frameevent(), output);
+      34, this->frameevent(), output);
   }
 
-  // optional string name = 33;
+  // optional string name = 35;
   if (has_name()) {
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      33, this->name(), output);
+      35, this->name(), output);
+  }
+
+  // repeated .protocolbuffers.ComponentOptions componentOptions = 36;
+  for (int i = 0; i < this->componentoptions_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      36, this->componentoptions(i), output);
   }
 
 }
@@ -2684,30 +2858,40 @@ int WidgetOptions::ByteSize() const {
       total_size += 2 + 1;
     }
 
-    // optional .protocolbuffers.LayoutParameter layoutParameter = 30;
+    // optional float rotationSkewX = 30;
+    if (has_rotationskewx()) {
+      total_size += 2 + 4;
+    }
+
+    // optional float rotationSkewY = 31;
+    if (has_rotationskewy()) {
+      total_size += 2 + 4;
+    }
+
+    // optional .protocolbuffers.LayoutParameter layoutParameter = 32;
     if (has_layoutparameter()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->layoutparameter());
     }
 
-    // optional string customProperty = 31;
+  }
+  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+    // optional string customProperty = 33;
     if (has_customproperty()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->customproperty());
     }
 
-    // optional string frameEvent = 32;
+    // optional string frameEvent = 34;
     if (has_frameevent()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->frameevent());
     }
 
-  }
-  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
-    // optional string name = 33;
+    // optional string name = 35;
     if (has_name()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -2715,6 +2899,14 @@ int WidgetOptions::ByteSize() const {
     }
 
   }
+  // repeated .protocolbuffers.ComponentOptions componentOptions = 36;
+  total_size += 2 * this->componentoptions_size();
+  for (int i = 0; i < this->componentoptions_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->componentoptions(i));
+  }
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -2728,6 +2920,7 @@ void WidgetOptions::CheckTypeAndMergeFrom(
 
 void WidgetOptions::MergeFrom(const WidgetOptions& from) {
   GOOGLE_CHECK_NE(&from, this);
+  componentoptions_.MergeFrom(from.componentoptions_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_x()) {
       set_x(from.x());
@@ -2822,17 +3015,23 @@ void WidgetOptions::MergeFrom(const WidgetOptions& from) {
     if (from.has_ignoresize()) {
       set_ignoresize(from.ignoresize());
     }
+    if (from.has_rotationskewx()) {
+      set_rotationskewx(from.rotationskewx());
+    }
+    if (from.has_rotationskewy()) {
+      set_rotationskewy(from.rotationskewy());
+    }
     if (from.has_layoutparameter()) {
       mutable_layoutparameter()->::protocolbuffers::LayoutParameter::MergeFrom(from.layoutparameter());
     }
+  }
+  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from.has_customproperty()) {
       set_customproperty(from.customproperty());
     }
     if (from.has_frameevent()) {
       set_frameevent(from.frameevent());
     }
-  }
-  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from.has_name()) {
       set_name(from.name());
     }
@@ -2881,10 +3080,13 @@ void WidgetOptions::Swap(WidgetOptions* other) {
     std::swap(anchorpointx_, other->anchorpointx_);
     std::swap(anchorpointy_, other->anchorpointy_);
     std::swap(ignoresize_, other->ignoresize_);
+    std::swap(rotationskewx_, other->rotationskewx_);
+    std::swap(rotationskewy_, other->rotationskewy_);
     std::swap(layoutparameter_, other->layoutparameter_);
     std::swap(customproperty_, other->customproperty_);
     std::swap(frameevent_, other->frameevent_);
     std::swap(name_, other->name_);
+    componentoptions_.Swap(&other->componentoptions_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
     std::swap(_cached_size_, other->_cached_size_);
@@ -5927,22 +6129,22 @@ void ImageViewOptions::Swap(ImageViewOptions* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int LabelAtlasOptions::kNameFieldNumber;
-const int LabelAtlasOptions::kClassnameFieldNumber;
-const int LabelAtlasOptions::kStringValueFieldNumber;
-const int LabelAtlasOptions::kCharMapFileFieldNumber;
-const int LabelAtlasOptions::kCharMapFileDataFieldNumber;
-const int LabelAtlasOptions::kStartCharMapFieldNumber;
-const int LabelAtlasOptions::kItemWidthFieldNumber;
-const int LabelAtlasOptions::kItemHeightFieldNumber;
+const int TextAtlasOptions::kNameFieldNumber;
+const int TextAtlasOptions::kClassnameFieldNumber;
+const int TextAtlasOptions::kStringValueFieldNumber;
+const int TextAtlasOptions::kCharMapFileFieldNumber;
+const int TextAtlasOptions::kCharMapFileDataFieldNumber;
+const int TextAtlasOptions::kStartCharMapFieldNumber;
+const int TextAtlasOptions::kItemWidthFieldNumber;
+const int TextAtlasOptions::kItemHeightFieldNumber;
 #endif  // !_MSC_VER
 
-LabelAtlasOptions::LabelAtlasOptions()
+TextAtlasOptions::TextAtlasOptions()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
-void LabelAtlasOptions::InitAsDefaultInstance() {
+void TextAtlasOptions::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   charmapfiledata_ = const_cast< ::protocolbuffers::ResourceData*>(
       ::protocolbuffers::ResourceData::internal_default_instance());
@@ -5951,13 +6153,13 @@ void LabelAtlasOptions::InitAsDefaultInstance() {
 #endif
 }
 
-LabelAtlasOptions::LabelAtlasOptions(const LabelAtlasOptions& from)
+TextAtlasOptions::TextAtlasOptions(const TextAtlasOptions& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void LabelAtlasOptions::SharedCtor() {
+void TextAtlasOptions::SharedCtor() {
   _cached_size_ = 0;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   classname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -5970,11 +6172,11 @@ void LabelAtlasOptions::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-LabelAtlasOptions::~LabelAtlasOptions() {
+TextAtlasOptions::~TextAtlasOptions() {
   SharedDtor();
 }
 
-void LabelAtlasOptions::SharedDtor() {
+void TextAtlasOptions::SharedDtor() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
@@ -5999,12 +6201,12 @@ void LabelAtlasOptions::SharedDtor() {
   }
 }
 
-void LabelAtlasOptions::SetCachedSize(int size) const {
+void TextAtlasOptions::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const LabelAtlasOptions& LabelAtlasOptions::default_instance() {
+const TextAtlasOptions& TextAtlasOptions::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_CSParseBinary_2eproto();
 #else
@@ -6013,13 +6215,13 @@ const LabelAtlasOptions& LabelAtlasOptions::default_instance() {
   return *default_instance_;
 }
 
-LabelAtlasOptions* LabelAtlasOptions::default_instance_ = NULL;
+TextAtlasOptions* TextAtlasOptions::default_instance_ = NULL;
 
-LabelAtlasOptions* LabelAtlasOptions::New() const {
-  return new LabelAtlasOptions;
+TextAtlasOptions* TextAtlasOptions::New() const {
+  return new TextAtlasOptions;
 }
 
-void LabelAtlasOptions::Clear() {
+void TextAtlasOptions::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
@@ -6055,7 +6257,7 @@ void LabelAtlasOptions::Clear() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-bool LabelAtlasOptions::MergePartialFromCodedStream(
+bool TextAtlasOptions::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -6191,7 +6393,7 @@ bool LabelAtlasOptions::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void LabelAtlasOptions::SerializeWithCachedSizes(
+void TextAtlasOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
@@ -6241,7 +6443,7 @@ void LabelAtlasOptions::SerializeWithCachedSizes(
 
 }
 
-int LabelAtlasOptions::ByteSize() const {
+int TextAtlasOptions::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -6308,12 +6510,12 @@ int LabelAtlasOptions::ByteSize() const {
   return total_size;
 }
 
-void LabelAtlasOptions::CheckTypeAndMergeFrom(
+void TextAtlasOptions::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const LabelAtlasOptions*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const TextAtlasOptions*>(&from));
 }
 
-void LabelAtlasOptions::MergeFrom(const LabelAtlasOptions& from) {
+void TextAtlasOptions::MergeFrom(const TextAtlasOptions& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_name()) {
@@ -6343,18 +6545,18 @@ void LabelAtlasOptions::MergeFrom(const LabelAtlasOptions& from) {
   }
 }
 
-void LabelAtlasOptions::CopyFrom(const LabelAtlasOptions& from) {
+void TextAtlasOptions::CopyFrom(const TextAtlasOptions& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool LabelAtlasOptions::IsInitialized() const {
+bool TextAtlasOptions::IsInitialized() const {
 
   return true;
 }
 
-void LabelAtlasOptions::Swap(LabelAtlasOptions* other) {
+void TextAtlasOptions::Swap(TextAtlasOptions* other) {
   if (other != this) {
     std::swap(name_, other->name_);
     std::swap(classname_, other->classname_);
@@ -6369,26 +6571,26 @@ void LabelAtlasOptions::Swap(LabelAtlasOptions* other) {
   }
 }
 
-::std::string LabelAtlasOptions::GetTypeName() const {
-  return "protocolbuffers.LabelAtlasOptions";
+::std::string TextAtlasOptions::GetTypeName() const {
+  return "protocolbuffers.TextAtlasOptions";
 }
 
 
 // ===================================================================
 
 #ifndef _MSC_VER
-const int LabelBMFontOptions::kNameFieldNumber;
-const int LabelBMFontOptions::kClassnameFieldNumber;
-const int LabelBMFontOptions::kTextFieldNumber;
-const int LabelBMFontOptions::kFileNameDataFieldNumber;
+const int TextBMFontOptions::kNameFieldNumber;
+const int TextBMFontOptions::kClassnameFieldNumber;
+const int TextBMFontOptions::kTextFieldNumber;
+const int TextBMFontOptions::kFileNameDataFieldNumber;
 #endif  // !_MSC_VER
 
-LabelBMFontOptions::LabelBMFontOptions()
+TextBMFontOptions::TextBMFontOptions()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
-void LabelBMFontOptions::InitAsDefaultInstance() {
+void TextBMFontOptions::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
       ::protocolbuffers::ResourceData::internal_default_instance());
@@ -6397,13 +6599,13 @@ void LabelBMFontOptions::InitAsDefaultInstance() {
 #endif
 }
 
-LabelBMFontOptions::LabelBMFontOptions(const LabelBMFontOptions& from)
+TextBMFontOptions::TextBMFontOptions(const TextBMFontOptions& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void LabelBMFontOptions::SharedCtor() {
+void TextBMFontOptions::SharedCtor() {
   _cached_size_ = 0;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   classname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -6412,11 +6614,11 @@ void LabelBMFontOptions::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-LabelBMFontOptions::~LabelBMFontOptions() {
+TextBMFontOptions::~TextBMFontOptions() {
   SharedDtor();
 }
 
-void LabelBMFontOptions::SharedDtor() {
+void TextBMFontOptions::SharedDtor() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
@@ -6435,12 +6637,12 @@ void LabelBMFontOptions::SharedDtor() {
   }
 }
 
-void LabelBMFontOptions::SetCachedSize(int size) const {
+void TextBMFontOptions::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const LabelBMFontOptions& LabelBMFontOptions::default_instance() {
+const TextBMFontOptions& TextBMFontOptions::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_CSParseBinary_2eproto();
 #else
@@ -6449,13 +6651,13 @@ const LabelBMFontOptions& LabelBMFontOptions::default_instance() {
   return *default_instance_;
 }
 
-LabelBMFontOptions* LabelBMFontOptions::default_instance_ = NULL;
+TextBMFontOptions* TextBMFontOptions::default_instance_ = NULL;
 
-LabelBMFontOptions* LabelBMFontOptions::New() const {
-  return new LabelBMFontOptions;
+TextBMFontOptions* TextBMFontOptions::New() const {
+  return new TextBMFontOptions;
 }
 
-void LabelBMFontOptions::Clear() {
+void TextBMFontOptions::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
@@ -6479,7 +6681,7 @@ void LabelBMFontOptions::Clear() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-bool LabelBMFontOptions::MergePartialFromCodedStream(
+bool TextBMFontOptions::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -6555,7 +6757,7 @@ bool LabelBMFontOptions::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void LabelBMFontOptions::SerializeWithCachedSizes(
+void TextBMFontOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
@@ -6583,7 +6785,7 @@ void LabelBMFontOptions::SerializeWithCachedSizes(
 
 }
 
-int LabelBMFontOptions::ByteSize() const {
+int TextBMFontOptions::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -6622,12 +6824,12 @@ int LabelBMFontOptions::ByteSize() const {
   return total_size;
 }
 
-void LabelBMFontOptions::CheckTypeAndMergeFrom(
+void TextBMFontOptions::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const LabelBMFontOptions*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const TextBMFontOptions*>(&from));
 }
 
-void LabelBMFontOptions::MergeFrom(const LabelBMFontOptions& from) {
+void TextBMFontOptions::MergeFrom(const TextBMFontOptions& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_name()) {
@@ -6645,18 +6847,18 @@ void LabelBMFontOptions::MergeFrom(const LabelBMFontOptions& from) {
   }
 }
 
-void LabelBMFontOptions::CopyFrom(const LabelBMFontOptions& from) {
+void TextBMFontOptions::CopyFrom(const TextBMFontOptions& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool LabelBMFontOptions::IsInitialized() const {
+bool TextBMFontOptions::IsInitialized() const {
 
   return true;
 }
 
-void LabelBMFontOptions::Swap(LabelBMFontOptions* other) {
+void TextBMFontOptions::Swap(TextBMFontOptions* other) {
   if (other != this) {
     std::swap(name_, other->name_);
     std::swap(classname_, other->classname_);
@@ -6667,48 +6869,55 @@ void LabelBMFontOptions::Swap(LabelBMFontOptions* other) {
   }
 }
 
-::std::string LabelBMFontOptions::GetTypeName() const {
-  return "protocolbuffers.LabelBMFontOptions";
+::std::string TextBMFontOptions::GetTypeName() const {
+  return "protocolbuffers.TextBMFontOptions";
 }
 
 
 // ===================================================================
 
 #ifndef _MSC_VER
-const int LabelOptions::kNameFieldNumber;
-const int LabelOptions::kClassnameFieldNumber;
-const int LabelOptions::kFontNameFieldNumber;
-const int LabelOptions::kFontFileFieldNumber;
-const int LabelOptions::kFontSizeFieldNumber;
-const int LabelOptions::kTextFieldNumber;
-const int LabelOptions::kAreaWidthFieldNumber;
-const int LabelOptions::kAreaHeightFieldNumber;
-const int LabelOptions::kHAlignmentFieldNumber;
-const int LabelOptions::kVAlignmentFieldNumber;
-const int LabelOptions::kTouchScaleEnableFieldNumber;
+const int TextOptions::kNameFieldNumber;
+const int TextOptions::kClassnameFieldNumber;
+const int TextOptions::kFontNameFieldNumber;
+const int TextOptions::kFontFileFieldNumber;
+const int TextOptions::kFontSizeFieldNumber;
+const int TextOptions::kTextFieldNumber;
+const int TextOptions::kAreaWidthFieldNumber;
+const int TextOptions::kAreaHeightFieldNumber;
+const int TextOptions::kHAlignmentFieldNumber;
+const int TextOptions::kVAlignmentFieldNumber;
+const int TextOptions::kTouchScaleEnableFieldNumber;
+const int TextOptions::kFontResourceFieldNumber;
 #endif  // !_MSC_VER
 
-LabelOptions::LabelOptions()
+TextOptions::TextOptions()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
 }
 
-void LabelOptions::InitAsDefaultInstance() {
+void TextOptions::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(
       ::protocolbuffers::ResourceData::internal_default_instance());
 #else
   fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
 #endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  fontresource_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
+  fontresource_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
 }
 
-LabelOptions::LabelOptions(const LabelOptions& from)
+TextOptions::TextOptions(const TextOptions& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void LabelOptions::SharedCtor() {
+void TextOptions::SharedCtor() {
   _cached_size_ = 0;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   classname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -6721,14 +6930,15 @@ void LabelOptions::SharedCtor() {
   halignment_ = 0;
   valignment_ = 0;
   touchscaleenable_ = false;
+  fontresource_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-LabelOptions::~LabelOptions() {
+TextOptions::~TextOptions() {
   SharedDtor();
 }
 
-void LabelOptions::SharedDtor() {
+void TextOptions::SharedDtor() {
   if (name_ != &::google::protobuf::internal::kEmptyString) {
     delete name_;
   }
@@ -6747,15 +6957,16 @@ void LabelOptions::SharedDtor() {
   if (this != default_instance_) {
   #endif
     delete fontfile_;
+    delete fontresource_;
   }
 }
 
-void LabelOptions::SetCachedSize(int size) const {
+void TextOptions::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const LabelOptions& LabelOptions::default_instance() {
+const TextOptions& TextOptions::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_CSParseBinary_2eproto();
 #else
@@ -6764,13 +6975,13 @@ const LabelOptions& LabelOptions::default_instance() {
   return *default_instance_;
 }
 
-LabelOptions* LabelOptions::default_instance_ = NULL;
+TextOptions* TextOptions::default_instance_ = NULL;
 
-LabelOptions* LabelOptions::New() const {
-  return new LabelOptions;
+TextOptions* TextOptions::New() const {
+  return new TextOptions;
 }
 
-void LabelOptions::Clear() {
+void TextOptions::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::kEmptyString) {
@@ -6803,11 +7014,14 @@ void LabelOptions::Clear() {
     halignment_ = 0;
     valignment_ = 0;
     touchscaleenable_ = false;
+    if (has_fontresource()) {
+      if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-bool LabelOptions::MergePartialFromCodedStream(
+bool TextOptions::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -6974,6 +7188,20 @@ bool LabelOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(98)) goto parse_fontResource;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fontResource = 12;
+      case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_fontResource:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_fontresource()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -6993,7 +7221,7 @@ bool LabelOptions::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void LabelOptions::SerializeWithCachedSizes(
+void TextOptions::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string name = 1;
   if (has_name()) {
@@ -7055,9 +7283,15 @@ void LabelOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->touchscaleenable(), output);
   }
 
+  // optional .protocolbuffers.ResourceData fontResource = 12;
+  if (has_fontresource()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      12, this->fontresource(), output);
+  }
+
 }
 
-int LabelOptions::ByteSize() const {
+int TextOptions::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -7134,6 +7368,13 @@ int LabelOptions::ByteSize() const {
       total_size += 1 + 1;
     }
 
+    // optional .protocolbuffers.ResourceData fontResource = 12;
+    if (has_fontresource()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->fontresource());
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -7141,12 +7382,12 @@ int LabelOptions::ByteSize() const {
   return total_size;
 }
 
-void LabelOptions::CheckTypeAndMergeFrom(
+void TextOptions::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const LabelOptions*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const TextOptions*>(&from));
 }
 
-void LabelOptions::MergeFrom(const LabelOptions& from) {
+void TextOptions::MergeFrom(const TextOptions& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_name()) {
@@ -7184,21 +7425,24 @@ void LabelOptions::MergeFrom(const LabelOptions& from) {
     if (from.has_touchscaleenable()) {
       set_touchscaleenable(from.touchscaleenable());
     }
+    if (from.has_fontresource()) {
+      mutable_fontresource()->::protocolbuffers::ResourceData::MergeFrom(from.fontresource());
+    }
   }
 }
 
-void LabelOptions::CopyFrom(const LabelOptions& from) {
+void TextOptions::CopyFrom(const TextOptions& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool LabelOptions::IsInitialized() const {
+bool TextOptions::IsInitialized() const {
 
   return true;
 }
 
-void LabelOptions::Swap(LabelOptions* other) {
+void TextOptions::Swap(TextOptions* other) {
   if (other != this) {
     std::swap(name_, other->name_);
     std::swap(classname_, other->classname_);
@@ -7211,13 +7455,14 @@ void LabelOptions::Swap(LabelOptions* other) {
     std::swap(halignment_, other->halignment_);
     std::swap(valignment_, other->valignment_);
     std::swap(touchscaleenable_, other->touchscaleenable_);
+    std::swap(fontresource_, other->fontresource_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::std::string LabelOptions::GetTypeName() const {
-  return "protocolbuffers.LabelOptions";
+::std::string TextOptions::GetTypeName() const {
+  return "protocolbuffers.TextOptions";
 }
 
 
@@ -13312,6 +13557,8 @@ const int SpriteOptions::kIgnoreSizeFieldNumber;
 const int SpriteOptions::kLayoutParameterFieldNumber;
 const int SpriteOptions::kCustomPropertyFieldNumber;
 const int SpriteOptions::kFileNameFieldNumber;
+const int SpriteOptions::kFlippedXFieldNumber;
+const int SpriteOptions::kFlippedYFieldNumber;
 const int SpriteOptions::kFileNameDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -13357,6 +13604,8 @@ void SpriteOptions::SharedCtor() {
   layoutparameter_ = NULL;
   customproperty_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  flippedx_ = false;
+  flippedy_ = false;
   filenamedata_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -13444,6 +13693,10 @@ void SpriteOptions::Clear() {
         filename_->clear();
       }
     }
+    flippedx_ = false;
+    flippedy_ = false;
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (has_filenamedata()) {
       if (filenamedata_ != NULL) filenamedata_->::protocolbuffers::ResourceData::Clear();
     }
@@ -13666,12 +13919,44 @@ bool SpriteOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(122)) goto parse_fileNameData;
+        if (input->ExpectTag(120)) goto parse_flippedX;
         break;
       }
 
-      // optional .protocolbuffers.ResourceData fileNameData = 15;
+      // optional bool flippedX = 15;
       case 15: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_flippedX:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &flippedx_)));
+          set_has_flippedx();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(128)) goto parse_flippedY;
+        break;
+      }
+
+      // optional bool flippedY = 16;
+      case 16: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_flippedY:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &flippedy_)));
+          set_has_flippedy();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(138)) goto parse_fileNameData;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fileNameData = 17;
+      case 17: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_fileNameData:
@@ -13776,10 +14061,20 @@ void SpriteOptions::SerializeWithCachedSizes(
       14, this->filename(), output);
   }
 
-  // optional .protocolbuffers.ResourceData fileNameData = 15;
+  // optional bool flippedX = 15;
+  if (has_flippedx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(15, this->flippedx(), output);
+  }
+
+  // optional bool flippedY = 16;
+  if (has_flippedy()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(16, this->flippedy(), output);
+  }
+
+  // optional .protocolbuffers.ResourceData fileNameData = 17;
   if (has_filenamedata()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      15, this->filenamedata(), output);
+      17, this->filenamedata(), output);
   }
 
 }
@@ -13874,9 +14169,21 @@ int SpriteOptions::ByteSize() const {
           this->filename());
     }
 
-    // optional .protocolbuffers.ResourceData fileNameData = 15;
+    // optional bool flippedX = 15;
+    if (has_flippedx()) {
+      total_size += 1 + 1;
+    }
+
+    // optional bool flippedY = 16;
+    if (has_flippedy()) {
+      total_size += 2 + 1;
+    }
+
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional .protocolbuffers.ResourceData fileNameData = 17;
     if (has_filenamedata()) {
-      total_size += 1 +
+      total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->filenamedata());
     }
@@ -13940,6 +14247,14 @@ void SpriteOptions::MergeFrom(const SpriteOptions& from) {
     if (from.has_filename()) {
       set_filename(from.filename());
     }
+    if (from.has_flippedx()) {
+      set_flippedx(from.flippedx());
+    }
+    if (from.has_flippedy()) {
+      set_flippedy(from.flippedy());
+    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_filenamedata()) {
       mutable_filenamedata()->::protocolbuffers::ResourceData::MergeFrom(from.filenamedata());
     }
@@ -13973,6 +14288,8 @@ void SpriteOptions::Swap(SpriteOptions* other) {
     std::swap(layoutparameter_, other->layoutparameter_);
     std::swap(customproperty_, other->customproperty_);
     std::swap(filename_, other->filename_);
+    std::swap(flippedx_, other->flippedx_);
+    std::swap(flippedy_, other->flippedy_);
     std::swap(filenamedata_, other->filenamedata_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
@@ -14000,6 +14317,7 @@ const int TextFieldOptions::kMaxLengthEnableFieldNumber;
 const int TextFieldOptions::kMaxLengthFieldNumber;
 const int TextFieldOptions::kAreaWidthFieldNumber;
 const int TextFieldOptions::kAreaHeightFieldNumber;
+const int TextFieldOptions::kFontResourceFieldNumber;
 #endif  // !_MSC_VER
 
 TextFieldOptions::TextFieldOptions()
@@ -14013,6 +14331,12 @@ void TextFieldOptions::InitAsDefaultInstance() {
       ::protocolbuffers::ResourceData::internal_default_instance());
 #else
   fontfile_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  fontresource_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
+  fontresource_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
 #endif
 }
 
@@ -14037,6 +14361,7 @@ void TextFieldOptions::SharedCtor() {
   maxlength_ = 0;
   areawidth_ = 0;
   areaheight_ = 0;
+  fontresource_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -14069,6 +14394,7 @@ void TextFieldOptions::SharedDtor() {
   if (this != default_instance_) {
   #endif
     delete fontfile_;
+    delete fontresource_;
   }
 }
 
@@ -14135,6 +14461,9 @@ void TextFieldOptions::Clear() {
     maxlength_ = 0;
     areawidth_ = 0;
     areaheight_ = 0;
+    if (has_fontresource()) {
+      if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -14334,6 +14663,20 @@ bool TextFieldOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(114)) goto parse_fontResource;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fontResource = 14;
+      case 14: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_fontResource:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_fontresource()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -14427,6 +14770,12 @@ void TextFieldOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(13, this->areaheight(), output);
   }
 
+  // optional .protocolbuffers.ResourceData fontResource = 14;
+  if (has_fontresource()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      14, this->fontresource(), output);
+  }
+
 }
 
 int TextFieldOptions::ByteSize() const {
@@ -14518,6 +14867,13 @@ int TextFieldOptions::ByteSize() const {
       total_size += 1 + 4;
     }
 
+    // optional .protocolbuffers.ResourceData fontResource = 14;
+    if (has_fontresource()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->fontresource());
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -14574,6 +14930,9 @@ void TextFieldOptions::MergeFrom(const TextFieldOptions& from) {
     if (from.has_areaheight()) {
       set_areaheight(from.areaheight());
     }
+    if (from.has_fontresource()) {
+      mutable_fontresource()->::protocolbuffers::ResourceData::MergeFrom(from.fontresource());
+    }
   }
 }
 
@@ -14603,6 +14962,7 @@ void TextFieldOptions::Swap(TextFieldOptions* other) {
     std::swap(maxlength_, other->maxlength_);
     std::swap(areawidth_, other->areawidth_);
     std::swap(areaheight_, other->areaheight_);
+    std::swap(fontresource_, other->fontresource_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -14610,6 +14970,1261 @@ void TextFieldOptions::Swap(TextFieldOptions* other) {
 
 ::std::string TextFieldOptions::GetTypeName() const {
   return "protocolbuffers.TextFieldOptions";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int TMXTiledMapOptions::kTmxFileFieldNumber;
+const int TMXTiledMapOptions::kTmxStringFieldNumber;
+const int TMXTiledMapOptions::kResourcePathFieldNumber;
+const int TMXTiledMapOptions::kFileNameDataFieldNumber;
+#endif  // !_MSC_VER
+
+TMXTiledMapOptions::TMXTiledMapOptions()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+}
+
+void TMXTiledMapOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+}
+
+TMXTiledMapOptions::TMXTiledMapOptions(const TMXTiledMapOptions& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void TMXTiledMapOptions::SharedCtor() {
+  _cached_size_ = 0;
+  tmxfile_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  tmxstring_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  resourcepath_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  filenamedata_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+TMXTiledMapOptions::~TMXTiledMapOptions() {
+  SharedDtor();
+}
+
+void TMXTiledMapOptions::SharedDtor() {
+  if (tmxfile_ != &::google::protobuf::internal::kEmptyString) {
+    delete tmxfile_;
+  }
+  if (tmxstring_ != &::google::protobuf::internal::kEmptyString) {
+    delete tmxstring_;
+  }
+  if (resourcepath_ != &::google::protobuf::internal::kEmptyString) {
+    delete resourcepath_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+    delete filenamedata_;
+  }
+}
+
+void TMXTiledMapOptions::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const TMXTiledMapOptions& TMXTiledMapOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
+  return *default_instance_;
+}
+
+TMXTiledMapOptions* TMXTiledMapOptions::default_instance_ = NULL;
+
+TMXTiledMapOptions* TMXTiledMapOptions::New() const {
+  return new TMXTiledMapOptions;
+}
+
+void TMXTiledMapOptions::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_tmxfile()) {
+      if (tmxfile_ != &::google::protobuf::internal::kEmptyString) {
+        tmxfile_->clear();
+      }
+    }
+    if (has_tmxstring()) {
+      if (tmxstring_ != &::google::protobuf::internal::kEmptyString) {
+        tmxstring_->clear();
+      }
+    }
+    if (has_resourcepath()) {
+      if (resourcepath_ != &::google::protobuf::internal::kEmptyString) {
+        resourcepath_->clear();
+      }
+    }
+    if (has_filenamedata()) {
+      if (filenamedata_ != NULL) filenamedata_->::protocolbuffers::ResourceData::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+bool TMXTiledMapOptions::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string tmxFile = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_tmxfile()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_tmxString;
+        break;
+      }
+
+      // optional string tmxString = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_tmxString:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_tmxstring()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_resourcePath;
+        break;
+      }
+
+      // optional string resourcePath = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_resourcePath:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_resourcepath()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_fileNameData;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fileNameData = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_fileNameData:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_filenamedata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void TMXTiledMapOptions::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional string tmxFile = 1;
+  if (has_tmxfile()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->tmxfile(), output);
+  }
+
+  // optional string tmxString = 2;
+  if (has_tmxstring()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->tmxstring(), output);
+  }
+
+  // optional string resourcePath = 3;
+  if (has_resourcepath()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->resourcepath(), output);
+  }
+
+  // optional .protocolbuffers.ResourceData fileNameData = 4;
+  if (has_filenamedata()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      4, this->filenamedata(), output);
+  }
+
+}
+
+int TMXTiledMapOptions::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string tmxFile = 1;
+    if (has_tmxfile()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->tmxfile());
+    }
+
+    // optional string tmxString = 2;
+    if (has_tmxstring()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->tmxstring());
+    }
+
+    // optional string resourcePath = 3;
+    if (has_resourcepath()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->resourcepath());
+    }
+
+    // optional .protocolbuffers.ResourceData fileNameData = 4;
+    if (has_filenamedata()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->filenamedata());
+    }
+
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void TMXTiledMapOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const TMXTiledMapOptions*>(&from));
+}
+
+void TMXTiledMapOptions::MergeFrom(const TMXTiledMapOptions& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_tmxfile()) {
+      set_tmxfile(from.tmxfile());
+    }
+    if (from.has_tmxstring()) {
+      set_tmxstring(from.tmxstring());
+    }
+    if (from.has_resourcepath()) {
+      set_resourcepath(from.resourcepath());
+    }
+    if (from.has_filenamedata()) {
+      mutable_filenamedata()->::protocolbuffers::ResourceData::MergeFrom(from.filenamedata());
+    }
+  }
+}
+
+void TMXTiledMapOptions::CopyFrom(const TMXTiledMapOptions& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TMXTiledMapOptions::IsInitialized() const {
+
+  return true;
+}
+
+void TMXTiledMapOptions::Swap(TMXTiledMapOptions* other) {
+  if (other != this) {
+    std::swap(tmxfile_, other->tmxfile_);
+    std::swap(tmxstring_, other->tmxstring_);
+    std::swap(resourcepath_, other->resourcepath_);
+    std::swap(filenamedata_, other->filenamedata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string TMXTiledMapOptions::GetTypeName() const {
+  return "protocolbuffers.TMXTiledMapOptions";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int ParticleSystemOptions::kPlistFileFieldNumber;
+const int ParticleSystemOptions::kTotalParticlesFieldNumber;
+const int ParticleSystemOptions::kFileNameDataFieldNumber;
+#endif  // !_MSC_VER
+
+ParticleSystemOptions::ParticleSystemOptions()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+}
+
+void ParticleSystemOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+}
+
+ParticleSystemOptions::ParticleSystemOptions(const ParticleSystemOptions& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ParticleSystemOptions::SharedCtor() {
+  _cached_size_ = 0;
+  plistfile_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  totalparticles_ = 0;
+  filenamedata_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ParticleSystemOptions::~ParticleSystemOptions() {
+  SharedDtor();
+}
+
+void ParticleSystemOptions::SharedDtor() {
+  if (plistfile_ != &::google::protobuf::internal::kEmptyString) {
+    delete plistfile_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+    delete filenamedata_;
+  }
+}
+
+void ParticleSystemOptions::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ParticleSystemOptions& ParticleSystemOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
+  return *default_instance_;
+}
+
+ParticleSystemOptions* ParticleSystemOptions::default_instance_ = NULL;
+
+ParticleSystemOptions* ParticleSystemOptions::New() const {
+  return new ParticleSystemOptions;
+}
+
+void ParticleSystemOptions::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_plistfile()) {
+      if (plistfile_ != &::google::protobuf::internal::kEmptyString) {
+        plistfile_->clear();
+      }
+    }
+    totalparticles_ = 0;
+    if (has_filenamedata()) {
+      if (filenamedata_ != NULL) filenamedata_->::protocolbuffers::ResourceData::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+bool ParticleSystemOptions::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string plistFile = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_plistfile()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_totalParticles;
+        break;
+      }
+
+      // optional int32 totalParticles = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_totalParticles:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &totalparticles_)));
+          set_has_totalparticles();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_fileNameData;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fileNameData = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_fileNameData:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_filenamedata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ParticleSystemOptions::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional string plistFile = 1;
+  if (has_plistfile()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->plistfile(), output);
+  }
+
+  // optional int32 totalParticles = 2;
+  if (has_totalparticles()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->totalparticles(), output);
+  }
+
+  // optional .protocolbuffers.ResourceData fileNameData = 3;
+  if (has_filenamedata()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, this->filenamedata(), output);
+  }
+
+}
+
+int ParticleSystemOptions::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string plistFile = 1;
+    if (has_plistfile()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->plistfile());
+    }
+
+    // optional int32 totalParticles = 2;
+    if (has_totalparticles()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->totalparticles());
+    }
+
+    // optional .protocolbuffers.ResourceData fileNameData = 3;
+    if (has_filenamedata()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->filenamedata());
+    }
+
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ParticleSystemOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ParticleSystemOptions*>(&from));
+}
+
+void ParticleSystemOptions::MergeFrom(const ParticleSystemOptions& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_plistfile()) {
+      set_plistfile(from.plistfile());
+    }
+    if (from.has_totalparticles()) {
+      set_totalparticles(from.totalparticles());
+    }
+    if (from.has_filenamedata()) {
+      mutable_filenamedata()->::protocolbuffers::ResourceData::MergeFrom(from.filenamedata());
+    }
+  }
+}
+
+void ParticleSystemOptions::CopyFrom(const ParticleSystemOptions& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ParticleSystemOptions::IsInitialized() const {
+
+  return true;
+}
+
+void ParticleSystemOptions::Swap(ParticleSystemOptions* other) {
+  if (other != this) {
+    std::swap(plistfile_, other->plistfile_);
+    std::swap(totalparticles_, other->totalparticles_);
+    std::swap(filenamedata_, other->filenamedata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string ParticleSystemOptions::GetTypeName() const {
+  return "protocolbuffers.ParticleSystemOptions";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int ProjectNodeOptions::kFileNameFieldNumber;
+#endif  // !_MSC_VER
+
+ProjectNodeOptions::ProjectNodeOptions()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+}
+
+void ProjectNodeOptions::InitAsDefaultInstance() {
+}
+
+ProjectNodeOptions::ProjectNodeOptions(const ProjectNodeOptions& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ProjectNodeOptions::SharedCtor() {
+  _cached_size_ = 0;
+  filename_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ProjectNodeOptions::~ProjectNodeOptions() {
+  SharedDtor();
+}
+
+void ProjectNodeOptions::SharedDtor() {
+  if (filename_ != &::google::protobuf::internal::kEmptyString) {
+    delete filename_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void ProjectNodeOptions::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ProjectNodeOptions& ProjectNodeOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
+  return *default_instance_;
+}
+
+ProjectNodeOptions* ProjectNodeOptions::default_instance_ = NULL;
+
+ProjectNodeOptions* ProjectNodeOptions::New() const {
+  return new ProjectNodeOptions;
+}
+
+void ProjectNodeOptions::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_filename()) {
+      if (filename_ != &::google::protobuf::internal::kEmptyString) {
+        filename_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+bool ProjectNodeOptions::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string fileName = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_filename()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ProjectNodeOptions::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional string fileName = 1;
+  if (has_filename()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->filename(), output);
+  }
+
+}
+
+int ProjectNodeOptions::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string fileName = 1;
+    if (has_filename()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->filename());
+    }
+
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ProjectNodeOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ProjectNodeOptions*>(&from));
+}
+
+void ProjectNodeOptions::MergeFrom(const ProjectNodeOptions& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_filename()) {
+      set_filename(from.filename());
+    }
+  }
+}
+
+void ProjectNodeOptions::CopyFrom(const ProjectNodeOptions& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ProjectNodeOptions::IsInitialized() const {
+
+  return true;
+}
+
+void ProjectNodeOptions::Swap(ProjectNodeOptions* other) {
+  if (other != this) {
+    std::swap(filename_, other->filename_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string ProjectNodeOptions::GetTypeName() const {
+  return "protocolbuffers.ProjectNodeOptions";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int ComponentOptions::kTypeFieldNumber;
+const int ComponentOptions::kComAudioOptionsFieldNumber;
+#endif  // !_MSC_VER
+
+ComponentOptions::ComponentOptions()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+}
+
+void ComponentOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  comaudiooptions_ = const_cast< ::protocolbuffers::ComAudioOptions*>(
+      ::protocolbuffers::ComAudioOptions::internal_default_instance());
+#else
+  comaudiooptions_ = const_cast< ::protocolbuffers::ComAudioOptions*>(&::protocolbuffers::ComAudioOptions::default_instance());
+#endif
+}
+
+ComponentOptions::ComponentOptions(const ComponentOptions& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ComponentOptions::SharedCtor() {
+  _cached_size_ = 0;
+  type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  comaudiooptions_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ComponentOptions::~ComponentOptions() {
+  SharedDtor();
+}
+
+void ComponentOptions::SharedDtor() {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    delete type_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+    delete comaudiooptions_;
+  }
+}
+
+void ComponentOptions::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ComponentOptions& ComponentOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
+  return *default_instance_;
+}
+
+ComponentOptions* ComponentOptions::default_instance_ = NULL;
+
+ComponentOptions* ComponentOptions::New() const {
+  return new ComponentOptions;
+}
+
+void ComponentOptions::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_type()) {
+      if (type_ != &::google::protobuf::internal::kEmptyString) {
+        type_->clear();
+      }
+    }
+    if (has_comaudiooptions()) {
+      if (comaudiooptions_ != NULL) comaudiooptions_->::protocolbuffers::ComAudioOptions::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+bool ComponentOptions::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string type = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_type()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_comAudioOptions;
+        break;
+      }
+
+      // optional .protocolbuffers.ComAudioOptions comAudioOptions = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_comAudioOptions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_comaudiooptions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ComponentOptions::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional string type = 1;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->type(), output);
+  }
+
+  // optional .protocolbuffers.ComAudioOptions comAudioOptions = 2;
+  if (has_comaudiooptions()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, this->comaudiooptions(), output);
+  }
+
+}
+
+int ComponentOptions::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string type = 1;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->type());
+    }
+
+    // optional .protocolbuffers.ComAudioOptions comAudioOptions = 2;
+    if (has_comaudiooptions()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->comaudiooptions());
+    }
+
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ComponentOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ComponentOptions*>(&from));
+}
+
+void ComponentOptions::MergeFrom(const ComponentOptions& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_type()) {
+      set_type(from.type());
+    }
+    if (from.has_comaudiooptions()) {
+      mutable_comaudiooptions()->::protocolbuffers::ComAudioOptions::MergeFrom(from.comaudiooptions());
+    }
+  }
+}
+
+void ComponentOptions::CopyFrom(const ComponentOptions& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ComponentOptions::IsInitialized() const {
+
+  return true;
+}
+
+void ComponentOptions::Swap(ComponentOptions* other) {
+  if (other != this) {
+    std::swap(type_, other->type_);
+    std::swap(comaudiooptions_, other->comaudiooptions_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string ComponentOptions::GetTypeName() const {
+  return "protocolbuffers.ComponentOptions";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int ComAudioOptions::kNameFieldNumber;
+const int ComAudioOptions::kEnabledFieldNumber;
+const int ComAudioOptions::kLoopFieldNumber;
+const int ComAudioOptions::kVolumeFieldNumber;
+const int ComAudioOptions::kFileNameDataFieldNumber;
+#endif  // !_MSC_VER
+
+ComAudioOptions::ComAudioOptions()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+}
+
+void ComAudioOptions::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
+  filenamedata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+}
+
+ComAudioOptions::ComAudioOptions(const ComAudioOptions& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ComAudioOptions::SharedCtor() {
+  _cached_size_ = 0;
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  enabled_ = false;
+  loop_ = false;
+  volume_ = 0;
+  filenamedata_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ComAudioOptions::~ComAudioOptions() {
+  SharedDtor();
+}
+
+void ComAudioOptions::SharedDtor() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+    delete filenamedata_;
+  }
+}
+
+void ComAudioOptions::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ComAudioOptions& ComAudioOptions::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_CSParseBinary_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_CSParseBinary_2eproto();
+#endif
+  return *default_instance_;
+}
+
+ComAudioOptions* ComAudioOptions::default_instance_ = NULL;
+
+ComAudioOptions* ComAudioOptions::New() const {
+  return new ComAudioOptions;
+}
+
+void ComAudioOptions::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::kEmptyString) {
+        name_->clear();
+      }
+    }
+    enabled_ = false;
+    loop_ = false;
+    volume_ = 0;
+    if (has_filenamedata()) {
+      if (filenamedata_ != NULL) filenamedata_->::protocolbuffers::ResourceData::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+bool ComAudioOptions::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string name = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_enabled;
+        break;
+      }
+
+      // optional bool enabled = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_enabled:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &enabled_)));
+          set_has_enabled();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_loop;
+        break;
+      }
+
+      // optional bool loop = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_loop:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &loop_)));
+          set_has_loop();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_volume;
+        break;
+      }
+
+      // optional int32 volume = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_volume:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &volume_)));
+          set_has_volume();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(42)) goto parse_fileNameData;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fileNameData = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_fileNameData:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_filenamedata()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ComAudioOptions::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional string name = 1;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->name(), output);
+  }
+
+  // optional bool enabled = 2;
+  if (has_enabled()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->enabled(), output);
+  }
+
+  // optional bool loop = 3;
+  if (has_loop()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->loop(), output);
+  }
+
+  // optional int32 volume = 4;
+  if (has_volume()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->volume(), output);
+  }
+
+  // optional .protocolbuffers.ResourceData fileNameData = 5;
+  if (has_filenamedata()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      5, this->filenamedata(), output);
+  }
+
+}
+
+int ComAudioOptions::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string name = 1;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+
+    // optional bool enabled = 2;
+    if (has_enabled()) {
+      total_size += 1 + 1;
+    }
+
+    // optional bool loop = 3;
+    if (has_loop()) {
+      total_size += 1 + 1;
+    }
+
+    // optional int32 volume = 4;
+    if (has_volume()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->volume());
+    }
+
+    // optional .protocolbuffers.ResourceData fileNameData = 5;
+    if (has_filenamedata()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->filenamedata());
+    }
+
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ComAudioOptions::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const ComAudioOptions*>(&from));
+}
+
+void ComAudioOptions::MergeFrom(const ComAudioOptions& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_name()) {
+      set_name(from.name());
+    }
+    if (from.has_enabled()) {
+      set_enabled(from.enabled());
+    }
+    if (from.has_loop()) {
+      set_loop(from.loop());
+    }
+    if (from.has_volume()) {
+      set_volume(from.volume());
+    }
+    if (from.has_filenamedata()) {
+      mutable_filenamedata()->::protocolbuffers::ResourceData::MergeFrom(from.filenamedata());
+    }
+  }
+}
+
+void ComAudioOptions::CopyFrom(const ComAudioOptions& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ComAudioOptions::IsInitialized() const {
+
+  return true;
+}
+
+void ComAudioOptions::Swap(ComAudioOptions* other) {
+  if (other != this) {
+    std::swap(name_, other->name_);
+    std::swap(enabled_, other->enabled_);
+    std::swap(loop_, other->loop_);
+    std::swap(volume_, other->volume_);
+    std::swap(filenamedata_, other->filenamedata_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string ComAudioOptions::GetTypeName() const {
+  return "protocolbuffers.ComAudioOptions";
 }
 
 

@@ -52,7 +52,11 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -67,7 +71,11 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -186,7 +194,11 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -201,7 +213,13 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+            // before
+            /*
             Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+             */
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -320,7 +338,11 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.ExportJson");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.ExportJson");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.ExportJson");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -335,7 +357,11 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+            /* peterson */
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+            // before
+//            Node* node = cocostudio::timeline::NodeReader::getInstance()->createNodeFromProtocolBuffers("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+            /**/
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);

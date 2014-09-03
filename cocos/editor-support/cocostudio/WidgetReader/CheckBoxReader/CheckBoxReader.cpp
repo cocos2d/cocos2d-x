@@ -102,9 +102,9 @@ namespace cocostudio
                 
                 checkBox->loadTextureFrontCrossDisabled(backgroundValue, imageFileNameType);
             }
-//            else if (key == "selectedState"){
-//                checkBox->setSelectedState(valueToBool(value));
-//            }
+            else if (key == "selectedState"){
+                checkBox->setSelectedState(valueToBool(value));
+            }
         }
         
         this->endSetBasicProperties(widget);
@@ -148,6 +148,9 @@ namespace cocostudio
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic, P_Path, (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         
+        bool selectedState = DICTOOL->getBooleanValue_json(options, "selectedState");
+        checkBox->setSelectedState(selectedState);
+        
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
     }
@@ -188,6 +191,9 @@ namespace cocostudio
         int frontCrossDisabledType = frontCrossDisabledDic.resourcetype();
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic.path(), (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
+        
+        bool selectedState = options.selectedstate();
+        checkBox->setSelectedState(selectedState);
         
         
         // other commonly protperties

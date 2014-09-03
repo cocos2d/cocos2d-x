@@ -113,7 +113,7 @@ namespace cocostudio
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
-        const protocolbuffers::LabelBMFontOptions& options = nodeTree.labelbmfontoptions();
+        const protocolbuffers::TextBMFontOptions& options = nodeTree.textbmfontoptions();
         
         
         const protocolbuffers::ResourceData& cmftDic = options.filenamedata();

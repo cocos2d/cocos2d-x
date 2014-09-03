@@ -146,7 +146,7 @@ namespace cocostudio
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         Text* label = static_cast<Text*>(widget);
-        const protocolbuffers::LabelOptions& options = nodeTree.labeloptions();
+        const protocolbuffers::TextOptions& options = nodeTree.textoptions();
         
         bool touchScaleChangeAble = options.touchscaleenable();
         label->setTouchScaleChangeEnabled(touchScaleChangeAble);

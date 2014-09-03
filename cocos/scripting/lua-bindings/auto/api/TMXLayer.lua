@@ -1,8 +1,8 @@
 
 --------------------------------
 -- @module TMXLayer
--- @extend Node
--- @parent_module ccexp
+-- @extend SpriteBatchNode
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TMXLayer] getPositionAt 
@@ -14,6 +14,10 @@
 -- @function [parent=#TMXLayer] setLayerOrientation 
 -- @param self
 -- @param #int int
+        
+--------------------------------
+-- @function [parent=#TMXLayer] releaseMap 
+-- @param self
         
 --------------------------------
 -- @function [parent=#TMXLayer] getLayerSize 
@@ -46,29 +50,23 @@
 -- @param #vec2_table vec2
         
 --------------------------------
--- @overload self         
--- @overload self         
--- @function [parent=#TMXLayer] getProperties
+-- @function [parent=#TMXLayer] initWithTilesetInfo 
 -- @param self
--- @return map_table#map_table ret (retunr value: map_table)
-
+-- @param #cc.TMXTilesetInfo tmxtilesetinfo
+-- @param #cc.TMXLayerInfo tmxlayerinfo
+-- @param #cc.TMXMapInfo map
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- @function [parent=#TMXLayer] setupTiles 
 -- @param self
         
 --------------------------------
--- @function [parent=#TMXLayer] setupTileSprite 
--- @param self
--- @param #cc.Sprite sprite
--- @param #vec2_table vec2
--- @param #int int
-        
---------------------------------
--- @overload self, int, vec2_table, int         
--- @overload self, int, vec2_table         
+-- @overload self, unsigned int, vec2_table, int         
+-- @overload self, unsigned int, vec2_table         
 -- @function [parent=#TMXLayer] setTileGID
 -- @param self
--- @param #int int
+-- @param #unsigned int int
 -- @param #vec2_table vec2
 -- @param #int tmxtileflags_
 
@@ -104,6 +102,13 @@
 -- @return TMXTilesetInfo#TMXTilesetInfo ret (return value: cc.TMXTilesetInfo)
         
 --------------------------------
+-- @overload self         
+-- @overload self         
+-- @function [parent=#TMXLayer] getProperties
+-- @param self
+-- @return map_table#map_table ret (retunr value: map_table)
+
+--------------------------------
 -- @function [parent=#TMXLayer] getTileAt 
 -- @param self
 -- @param #vec2_table vec2
@@ -115,25 +120,25 @@
 -- @param #cc.TMXTilesetInfo tmxtilesetinfo
 -- @param #cc.TMXLayerInfo tmxlayerinfo
 -- @param #cc.TMXMapInfo map
--- @return experimental::TMXLayer#experimental::TMXLayer ret (return value: cc.experimental::TMXLayer)
+-- @return TMXLayer#TMXLayer ret (return value: cc.TMXLayer)
+        
+--------------------------------
+-- @function [parent=#TMXLayer] addChild 
+-- @param self
+-- @param #cc.Node node
+-- @param #int int
+-- @param #int int
+        
+--------------------------------
+-- @function [parent=#TMXLayer] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#TMXLayer] removeChild 
 -- @param self
 -- @param #cc.Node node
 -- @param #bool bool
-        
---------------------------------
--- @function [parent=#TMXLayer] draw 
--- @param self
--- @param #cc.Renderer renderer
--- @param #mat4_table mat4
--- @param #unsigned int int
-        
---------------------------------
--- @function [parent=#TMXLayer] getDescription 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- @function [parent=#TMXLayer] TMXLayer 

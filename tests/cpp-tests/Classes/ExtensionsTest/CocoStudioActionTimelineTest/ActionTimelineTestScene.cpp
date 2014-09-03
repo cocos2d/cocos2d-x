@@ -150,7 +150,11 @@ void ActionTimelineTestLayer::onExit()
     backItem = restartItem = nextItem = nullptr;
 
     ActionTimelineCache::getInstance()->purge();
-    NodeReader::getInstance()->purge();
+    /* peterson */
+    CSLoader::getInstance()->purge();
+    // before
+//    NodeReader::getInstance()->purge();
+    /**/
 
     Layer::onExit();
 }
@@ -196,8 +200,15 @@ void TestActionTimeline::onEnter()
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
+    /* peterson */
+    Node* node = CSLoader::createNode("ActionTimeline/boy_1.ExportJson");
+    ActionTimeline* action = ActionTimelineCache::createAction("ActionTimeline/boy_1.ExportJson");
+    // before
+    /*
     Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
     ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+     */
+    /**/
 
     node->runAction(action);
     action->gotoFrameAndPlay(0, 60, true);
@@ -222,8 +233,15 @@ void TestChangePlaySection::onEnter()
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
+    /* peterson */
+    Node* node = CSLoader::createNode("ActionTimeline/boy_1.ExportJson");
+    action = ActionTimelineCache::createAction("ActionTimeline/boy_1.ExportJson");
+    // before
+    /*
     Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
     action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+     */
+    /**/
 
     node->runAction(action);
     action->gotoFrameAndPlay(70, action->getDuration(), true);
@@ -260,8 +278,15 @@ void TestTimelineFrameEvent::onEnter()
 
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
-    Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
-    ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+    /* peterson */
+    Node* node = CSLoader::createNode("ActionTimeline/boy_1.ExportJson");
+    ActionTimeline* action = ActionTimelineCache::createAction("ActionTimeline/boy_1.ExportJson");
+    // before
+    /*
+     Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+     ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+     */
+    /**/
 
     node->runAction(action);
     action->gotoFrameAndPlay(0, 60, true);
@@ -306,8 +331,15 @@ void TestTimelinePerformance::onEnter()
 
     for (int i = 0; i< 100; i++)
     {
-        Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
-        ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+        /* peterson */
+        Node* node = CSLoader::createNode("ActionTimeline/boy_1.ExportJson");
+        ActionTimeline* action = ActionTimelineCache::createAction("ActionTimeline/boy_1.ExportJson");
+        // before
+        /*
+         Node* node = NodeReader::getInstance()->createNode("ActionTimeline/boy_1.ExportJson");
+         ActionTimeline* action = ActionTimelineCache::getInstance()->createAction("ActionTimeline/boy_1.ExportJson");
+         */
+        /**/
 
         node->runAction(action);
         action->gotoFrameAndPlay(70, action->getDuration(), true);

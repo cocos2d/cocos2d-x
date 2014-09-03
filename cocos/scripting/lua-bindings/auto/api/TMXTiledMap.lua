@@ -2,7 +2,7 @@
 --------------------------------
 -- @module TMXTiledMap
 -- @extend Node
--- @parent_module ccexp
+-- @parent_module cc
 
 --------------------------------
 -- @function [parent=#TMXTiledMap] setObjectGroups 
@@ -49,12 +49,6 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- @function [parent=#TMXTiledMap] getPropertiesForGID 
--- @param self
--- @param #int int
--- @return Value#Value ret (return value: cc.Value)
-        
---------------------------------
 -- @function [parent=#TMXTiledMap] setTileSize 
 -- @param self
 -- @param #size_table size
@@ -68,7 +62,7 @@
 -- @function [parent=#TMXTiledMap] getLayer 
 -- @param self
 -- @param #string str
--- @return experimental::TMXLayer#experimental::TMXLayer ret (return value: cc.experimental::TMXLayer)
+-- @return TMXLayer#TMXLayer ret (return value: cc.TMXLayer)
         
 --------------------------------
 -- @function [parent=#TMXTiledMap] getMapOrientation 
@@ -84,14 +78,14 @@
 -- @function [parent=#TMXTiledMap] create 
 -- @param self
 -- @param #string str
--- @return experimental::TMXTiledMap#experimental::TMXTiledMap ret (return value: cc.experimental::TMXTiledMap)
+-- @return TMXTiledMap#TMXTiledMap ret (return value: cc.TMXTiledMap)
         
 --------------------------------
 -- @function [parent=#TMXTiledMap] createWithXML 
 -- @param self
 -- @param #string str
 -- @param #string str
--- @return experimental::TMXTiledMap#experimental::TMXTiledMap ret (return value: cc.experimental::TMXTiledMap)
+-- @return TMXTiledMap#TMXTiledMap ret (return value: cc.TMXTiledMap)
         
 --------------------------------
 -- @function [parent=#TMXTiledMap] getDescription 

@@ -1,33 +1,47 @@
 
 --------------------------------
 -- @module ScrollView
--- @extend Layout
--- @parent_module ccui
+-- @extend Layer,ActionTweenDelegate
+-- @parent_module cc
 
 --------------------------------
--- @function [parent=#ScrollView] scrollToTop 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToPercentHorizontal 
--- @param self
--- @param #float float
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] isInertiaScrollEnabled 
+-- @function [parent=#ScrollView] isClippingToBounds 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToPercentBothDirection 
+-- @function [parent=#ScrollView] setContainer 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- @function [parent=#ScrollView] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ScrollView] setContentOffsetInDuration 
 -- @param self
 -- @param #vec2_table vec2
 -- @param #float float
--- @param #bool bool
+        
+--------------------------------
+-- @function [parent=#ScrollView] setZoomScaleInDuration 
+-- @param self
+-- @param #float float
+-- @param #float float
+        
+--------------------------------
+-- @function [parent=#ScrollView] updateTweenAction 
+-- @param self
+-- @param #float float
+-- @param #string str
+        
+--------------------------------
+-- @function [parent=#ScrollView] setMaxScale 
+-- @param self
+-- @param #float float
         
 --------------------------------
 -- @function [parent=#ScrollView] getDirection 
@@ -35,19 +49,35 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToBottomLeft 
+-- @function [parent=#ScrollView] getContainer 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @function [parent=#ScrollView] setMinScale 
 -- @param self
 -- @param #float float
--- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] getInnerContainer 
+-- @function [parent=#ScrollView] getZoomScale 
 -- @param self
--- @return Layout#Layout ret (return value: ccui.Layout)
+-- @return float#float ret (return value: float)
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToBottom 
+-- @function [parent=#ScrollView] updateInset 
 -- @param self
+        
+--------------------------------
+-- @function [parent=#ScrollView] initWithViewSize 
+-- @param self
+-- @param #size_table size
+-- @param #cc.Node node
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] pause 
+-- @param self
+-- @param #cc.Ref ref
         
 --------------------------------
 -- @function [parent=#ScrollView] setDirection 
@@ -55,207 +85,141 @@
 -- @param #int direction
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToTopLeft 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToTopRight 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToBottomLeft 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] setInnerContainerSize 
--- @param self
--- @param #size_table size
-        
---------------------------------
--- @function [parent=#ScrollView] getInnerContainerSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
-        
---------------------------------
--- @function [parent=#ScrollView] isBounceEnabled 
+-- @function [parent=#ScrollView] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToPercentVertical 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#ScrollView] addEventListener 
--- @param self
--- @param #function func
-        
---------------------------------
--- @function [parent=#ScrollView] setInertiaScrollEnabled 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToTopLeft 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToPercentHorizontal 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToBottomRight 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] setBounceEnabled 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToTop 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToLeft 
--- @param self
--- @param #float float
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] jumpToPercentBothDirection 
+-- @function [parent=#ScrollView] setContentOffset 
 -- @param self
 -- @param #vec2_table vec2
-        
---------------------------------
--- @function [parent=#ScrollView] scrollToPercentVertical 
--- @param self
--- @param #float float
--- @param #float float
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToBottom 
+-- @function [parent=#ScrollView] isDragging 
 -- @param self
--- @param #float float
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isTouchEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isBounceable 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] setTouchEnabled 
+-- @param self
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToBottomRight 
+-- @function [parent=#ScrollView] onTouchMoved 
 -- @param self
--- @param #float float
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ScrollView] getContentOffset 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @function [parent=#ScrollView] resume 
+-- @param self
+-- @param #cc.Ref ref
+        
+--------------------------------
+-- @function [parent=#ScrollView] setClippingToBounds 
+-- @param self
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToLeft 
+-- @function [parent=#ScrollView] setViewSize 
 -- @param self
+-- @param #size_table size
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToRight 
+-- @function [parent=#ScrollView] onTouchCancelled 
 -- @param self
--- @param #float float
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+        
+--------------------------------
+-- @function [parent=#ScrollView] getViewSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- @function [parent=#ScrollView] maxContainerOffset 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @function [parent=#ScrollView] setBounceable 
+-- @param self
 -- @param #bool bool
         
 --------------------------------
--- @function [parent=#ScrollView] jumpToRight 
+-- @function [parent=#ScrollView] onTouchBegan 
 -- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @function [parent=#ScrollView] scrollToTopRight 
+-- @function [parent=#ScrollView] isTouchMoved 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] isNodeVisible 
+-- @param self
+-- @param #cc.Node node
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @function [parent=#ScrollView] minContainerOffset 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- @overload self, float, bool         
+-- @overload self, float         
+-- @function [parent=#ScrollView] setZoomScale
 -- @param self
 -- @param #float float
 -- @param #bool bool
-        
+
 --------------------------------
--- @function [parent=#ScrollView] create 
+-- @overload self         
+-- @overload self, size_table, cc.Node         
+-- @function [parent=#ScrollView] create
 -- @param self
--- @return ScrollView#ScrollView ret (return value: ccui.ScrollView)
-        
+-- @param #size_table size
+-- @param #cc.Node node
+-- @return ScrollView#ScrollView ret (retunr value: cc.ScrollView)
+
 --------------------------------
--- @function [parent=#ScrollView] createInstance 
--- @param self
--- @return Ref#Ref ret (return value: cc.Ref)
-        
---------------------------------
--- @overload self, cc.Node, int         
--- @overload self, cc.Node         
--- @overload self, cc.Node, int, int         
 -- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#ScrollView] addChild
 -- @param self
 -- @param #cc.Node node
 -- @param #int int
--- @param #string str
-
---------------------------------
--- @function [parent=#ScrollView] getChildByName 
--- @param self
--- @param #string str
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- @function [parent=#ScrollView] getDescription 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- @function [parent=#ScrollView] update 
--- @param self
--- @param #float float
-        
---------------------------------
--- @function [parent=#ScrollView] getLayoutType 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- @function [parent=#ScrollView] removeAllChildrenWithCleanup 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#ScrollView] removeAllChildren 
--- @param self
-        
---------------------------------
--- @function [parent=#ScrollView] findNextFocusedWidget 
--- @param self
--- @param #int focusdirection
--- @param #ccui.Widget widget
--- @return Widget#Widget ret (return value: ccui.Widget)
-        
---------------------------------
--- @function [parent=#ScrollView] removeChild 
--- @param self
--- @param #cc.Node node
--- @param #bool bool
-        
---------------------------------
--- @overload self         
--- @overload self         
--- @function [parent=#ScrollView] getChildren
--- @param self
--- @return array_table#array_table ret (retunr value: array_table)
-
---------------------------------
--- @function [parent=#ScrollView] getChildByTag 
--- @param self
 -- @param #int int
--- @return Node#Node ret (return value: cc.Node)
+
+--------------------------------
+-- @function [parent=#ScrollView] setContentSize 
+-- @param self
+-- @param #size_table size
         
 --------------------------------
--- @function [parent=#ScrollView] getChildrenCount 
+-- @function [parent=#ScrollView] getContentSize 
 -- @param self
--- @return long#long ret (return value: long)
-        
---------------------------------
--- @function [parent=#ScrollView] setLayoutType 
--- @param self
--- @param #int type
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- @function [parent=#ScrollView] ScrollView 
