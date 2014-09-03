@@ -3698,7 +3698,6 @@
         "cocos/scripting/lua-bindings/auto/api/EaseSineIn.lua", 
         "cocos/scripting/lua-bindings/auto/api/EaseSineInOut.lua", 
         "cocos/scripting/lua-bindings/auto/api/EaseSineOut.lua", 
-        "cocos/scripting/lua-bindings/auto/api/EditBox.lua", 
         "cocos/scripting/lua-bindings/auto/api/Event.lua", 
         "cocos/scripting/lua-bindings/auto/api/EventAcceleration.lua", 
         "cocos/scripting/lua-bindings/auto/api/EventController.lua", 
