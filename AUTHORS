@@ -989,6 +989,9 @@ Developers:
         
     xiangxw
         Fixed the bug that Console::sendPrompt() will send extra `\0`
+        
+    kaishiqi
+        Fixed a but that cursor postion is wrong on desktop.
     
 Retired Core Developers:
     WenSheng Yang

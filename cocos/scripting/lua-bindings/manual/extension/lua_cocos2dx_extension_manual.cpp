@@ -1045,7 +1045,7 @@ static void extendTableView(lua_State* L)
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
-    extendEditBox(tolua_S);
+    /* extendEditBox(tolua_S); */
     extendAssetsManager(tolua_S);
     extendScrollView(tolua_S);
     extendTableView(tolua_S);

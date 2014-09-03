@@ -24,7 +24,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -33,7 +33,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -192,15 +192,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSwitch.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlUtils.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp" />
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.cpp" />
-    <ClCompile Include="..\..\extensions\GUI\CCEditBox\CCEditBox.cpp" />
-    <ClCompile Include="..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.cpp" />
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsSprite.cpp" />
-    <ClCompile Include="..\..\extensions\proj.win32\Win32InputBox.cpp" />
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c" />
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
@@ -409,9 +405,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\ui\CocosGUI.cpp" />
+    <ClCompile Include="..\ui\proj.win32\Win32InputBox.cpp" />
     <ClCompile Include="..\ui\UIButton.cpp" />
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
+    <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp" />
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImplWin.cpp" />
     <ClCompile Include="..\ui\UIHBox.cpp" />
     <ClCompile Include="..\ui\UIHelper.cpp" />
     <ClCompile Include="..\ui\UIImageView.cpp" />
@@ -516,16 +515,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSwitch.h" />
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlUtils.h" />
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.h" />
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.h" />
-    <ClInclude Include="..\..\extensions\GUI\CCEditBox\CCEditBox.h" />
-    <ClInclude Include="..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h" />
-    <ClInclude Include="..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.h" />
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCTableView.h" />
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.h" />
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
-    <ClInclude Include="..\..\extensions\proj.win32\Win32InputBox.h" />
     <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\external\json\document.h" />
@@ -786,9 +780,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
     <ClInclude Include="..\ui\GUIExport.h" />
+    <ClInclude Include="..\ui\proj.win32\Win32InputBox.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
+    <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl.h" />
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImplWin.h" />
     <ClInclude Include="..\ui\UIHBox.h" />
     <ClInclude Include="..\ui\UIHelper.h" />
     <ClInclude Include="..\ui\UIImageView.h" />

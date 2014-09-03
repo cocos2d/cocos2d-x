@@ -23,10 +23,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEditBox.h"
-#include "CCEditBoxImpl.h"
+#include "UIEditBox.h"
+#include "UIEditBoxImpl.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace ui {
 
 static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
 
@@ -42,6 +44,7 @@ EditBox::EditBox(void)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
+, _backgroundSprite(nullptr)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
 #endif
@@ -57,26 +60,21 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref *sender, Control::EventType controlEvent)
+void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
 {
-    _editBoxImpl->openKeyboard();
+    if (controlEvent == Widget::TouchEventType::ENDED) {
+        _editBoxImpl->openKeyboard();
+    }
 }
 
-EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale9Sprite* pPressed9SpriteBg/* = nullptr*/, Scale9Sprite* pDisabled9SpriteBg/* = nullptr*/)
+EditBox* EditBox::create(const Size& size,
+                         const std::string& normalSprite,
+                        TextureResType texType /*= TextureResType::LOCAL*/)
 {
-    EditBox* pRet = new (std::nothrow) EditBox();
+    EditBox* pRet = new EditBox();
     
-    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, pNormal9SpriteBg))
+    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, texType))
     {
-        if (pPressed9SpriteBg != nullptr)
-        {
-            pRet->setBackgroundSpriteForState(pPressed9SpriteBg, Control::State::HIGH_LIGHTED);
-        }
-        
-        if (pDisabled9SpriteBg != nullptr)
-        {
-            pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, Control::State::DISABLED);
-        }
         pRet->autorelease();
     }
     else
@@ -86,19 +84,79 @@ EditBox* EditBox::create(const Size& size, Scale9Sprite* pNormal9SpriteBg, Scale
     
     return pRet;
 }
-
-bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pPressed9SpriteBg)
+    
+    
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite *pressedSprite, Scale9Sprite* disabledSprite)
 {
-    if (ControlButton::initWithBackgroundSprite(pPressed9SpriteBg))
+    EditBox* pRet = new (std::nothrow) EditBox();
+    
+    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite))
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+    
+    return pRet;
+}
+    
+bool EditBox::initWithSizeAndBackgroundSprite(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *pNormal9SpriteBg)
+{
+    if (Widget::init())
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
         _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
         
-        this->setZoomOnTouchDown(false);
-        this->setPreferredSize(size);
+        _backgroundSprite = pNormal9SpriteBg;
+        
+        this->setContentSize(size);
         this->setPosition(Vec2(0, 0));
-        this->addTargetWithActionForControlEvent(this, cccontrol_selector(EditBox::touchDownAction), Control::EventType::TOUCH_UP_INSIDE);
+        
+        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
+        _backgroundSprite->setContentSize(size);
+        this->addProtectedChild(_backgroundSprite);
+        
+        this->setTouchEnabled(true);
+        
+        this->addTouchEventListener(CC_CALLBACK_2(EditBox::touchDownAction, this));
+        
+        return true;
+    }
+    return false;
+}
+
+
+bool EditBox::initWithSizeAndBackgroundSprite(const Size& size,
+                                                        const std::string& pNormal9SpriteBg,
+                                                        TextureResType texType)
+{
+    if (Widget::init())
+    {
+        _editBoxImpl = __createSystemEditBox(this);
+        _editBoxImpl->initWithSize(size);
+        _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
+       
+        if (texType == Widget::TextureResType::LOCAL)
+        {
+            _backgroundSprite = Scale9Sprite::create(pNormal9SpriteBg);
+        }
+        else
+        {
+            _backgroundSprite = Scale9Sprite::createWithSpriteFrameName(pNormal9SpriteBg);
+        }
+        this->setContentSize(size);
+        this->setPosition(Vec2(0, 0));
+        
+        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
+        _backgroundSprite->setContentSize(size);
+        this->addProtectedChild(_backgroundSprite);
+        
+        this->setTouchEnabled(true);
+        
+        this->addTouchEventListener(CC_CALLBACK_2(EditBox::touchDownAction, this));
         
         return true;
     }
@@ -284,7 +342,7 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 /* override function */
 void EditBox::setPosition(const Vec2& pos)
 {
-    ControlButton::setPosition(pos);
+    Widget::setPosition(pos);
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setPosition(pos);
@@ -293,7 +351,7 @@ void EditBox::setPosition(const Vec2& pos)
 
 void EditBox::setVisible(bool visible)
 {
-    ControlButton::setVisible(visible);
+    Widget::setVisible(visible);
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setVisible(visible);
@@ -302,16 +360,25 @@ void EditBox::setVisible(bool visible)
 
 void EditBox::setContentSize(const Size& size)
 {
-    ControlButton::setContentSize(size);
+    Widget::setContentSize(size);
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setContentSize(size);
     }
 }
+    
+void EditBox::adaptRenderers()
+{
+    if (_contentSizeDirty)
+    {
+        _backgroundSprite->setContentSize(_contentSize);
+        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
+    }
+}
 
 void EditBox::setAnchorPoint(const Vec2& anchorPoint)
 {
-    ControlButton::setAnchorPoint(anchorPoint);
+    Widget::setAnchorPoint(anchorPoint);
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setAnchorPoint(anchorPoint);
@@ -320,7 +387,7 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
 
 void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    ControlButton::visit(renderer, parentTransform, parentFlags);
+    Widget::visit(renderer, parentTransform, parentFlags);
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->visit();
@@ -337,7 +404,7 @@ void EditBox::onEnter(void)
     }
 #endif
     
-    ControlButton::onEnter();
+    Widget::onEnter();
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->onEnter();
@@ -357,7 +424,7 @@ void EditBox::updatePosition(float dt)
 
 void EditBox::onExit(void)
 {
-    ControlButton::onExit();
+    Widget::onExit();
     if (_editBoxImpl != nullptr)
     {
         // remove system edit control
@@ -432,4 +499,6 @@ void EditBox::unregisterScriptEditBoxHandler(void)
 }
 #endif
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
