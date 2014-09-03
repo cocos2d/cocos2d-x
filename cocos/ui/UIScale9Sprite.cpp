@@ -140,11 +140,28 @@ namespace ui {
         return true;
     }
     
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, bool rotated, const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return init(sprite, rect, rotated, capInsets);
+    }
+    
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, const cocos2d::Rect &capInsets)
+    {
+        return initWithBatchNode(batchnode, rect, false, capInsets);
+    }
+    
 #define    TRANSLATE_X(x, y, xtranslate) \
 x+=xtranslate;                       \
 
 #define    TRANSLATE_Y(x, y, ytranslate) \
-y+=ytranslate;                       \
+y+=ytranslate;         \
+
+    bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &originalRect, bool rotated, const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return this->updateWithSprite(sprite, originalRect, rotated, capInsets);
+    }
 
     bool Scale9Sprite::updateWithSprite(Sprite* sprite, const Rect& originalRect, bool rotated, const Rect& capInsets)
     {
