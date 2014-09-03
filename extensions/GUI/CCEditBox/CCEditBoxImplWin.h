@@ -34,8 +34,6 @@
 #include "CCEditBoxImpl.h"
 #include "extensions/ExtensionExport.h"
 
-class CWin32InputBox;
-
 NS_CC_EXT_BEGIN
 
 class EditBox;
@@ -102,9 +100,6 @@ private:
     int   _maxLength;
     Size _editSize;
 
-    static void editBoxCallbackFunc(const char* pText, void* ctx);
-    bool _isEditing;
-    CWin32InputBox* _inputBox;
 	/*
     Size     _contentSize;
     HWND       _sysEdit;

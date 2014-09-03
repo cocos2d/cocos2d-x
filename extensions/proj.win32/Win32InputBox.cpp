@@ -102,8 +102,6 @@ WIN32INPUTBOX_PARAM::WIN32INPUTBOX_PARAM()
 CWin32InputBox::CWin32InputBox(WIN32INPUTBOX_PARAM *param)
 {
   _param = param;
-  _hwndEditCtrl = NULL;
-  _depth = 0;
 }
 
 CWin32InputBox::~CWin32InputBox()
@@ -121,10 +119,10 @@ WIN32INPUTBOX_PARAM *CWin32InputBox::GetParam()
   return _param;
 }
 
-INT_PTR CWin32InputBox::Run()
+INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
 {
   // Check mandatory parameters
-  if (_param->szResult == 0)
+  if (param->szResult == 0)
   {
     ::SetLastError(ERROR_INVALID_PARAMETER);
     return 0;
@@ -132,13 +130,13 @@ INT_PTR CWin32InputBox::Run()
 
   LPDLGTEMPLATE dlgTemplate;
 
-  if (_param->DlgTemplateName != 0)
+  if (param->DlgTemplateName != 0)
   {
-    HMODULE hModule = (HMODULE)_param->hInstance;
+    HMODULE hModule = (HMODULE)param->hInstance;
 #ifdef __MINGW32__
-    HRSRC rcDlg = ::FindResource(hModule, (LPWSTR)(ULONG_PTR)(size_t)(_param->DlgTemplateName), RT_DIALOG);
+    HRSRC rcDlg = ::FindResource(hModule, (LPWSTR)(ULONG_PTR)(size_t)(param->DlgTemplateName), RT_DIALOG);
 #else
-    HRSRC rcDlg = ::FindResource(hModule, MAKEINTRESOURCE(_param->DlgTemplateName), RT_DIALOG);
+    HRSRC rcDlg = ::FindResource(hModule, MAKEINTRESOURCE(param->DlgTemplateName), RT_DIALOG);
 #endif
     if (rcDlg == nullptr)
       return 0;
@@ -149,9 +147,9 @@ INT_PTR CWin32InputBox::Run()
 
     dlgTemplate = (LPDLGTEMPLATE) hglobalDlg;
   }
-  else if (_param->DlgTemplateData != 0)
+  else if (param->DlgTemplateData != 0)
   {
-    dlgTemplate = (LPDLGTEMPLATE) _param->DlgTemplateData;
+    dlgTemplate = (LPDLGTEMPLATE) param->DlgTemplateData;
   }
 
   MSDN_DLGTEMPLATEEX *dlgTemplateEx = 
@@ -159,40 +157,61 @@ INT_PTR CWin32InputBox::Run()
 
   if (dlgTemplateEx != 0)
   {
-    dlgTemplateEx->exStyle |= _param->dwExStylesPlus;
-    dlgTemplateEx->style   |= _param->dwStylesPlus;
-    dlgTemplateEx->exStyle &= _param->dwExStylesMinus;
-    dlgTemplateEx->style   &= _param->dwStylesMinus;
+    dlgTemplateEx->exStyle |= param->dwExStylesPlus;
+    dlgTemplateEx->style   |= param->dwStylesPlus;
+    dlgTemplateEx->exStyle &= param->dwExStylesMinus;
+    dlgTemplateEx->style   &= param->dwStylesMinus;
 
-    if (_param->bCenter)
+    if (param->bCenter)
       dlgTemplateEx->style |= DS_CENTER;
 
-    if (_param->xPos != -1)
-      dlgTemplateEx->x = _param->xPos;
-    if (_param->yPos != -1)
-      dlgTemplateEx->y = _param->yPos;
+    if (param->xPos != -1)
+      dlgTemplateEx->x = param->xPos;
+    if (param->yPos != -1)
+      dlgTemplateEx->y = param->yPos;
   }
   else
   {
-    dlgTemplate->dwExtendedStyle  |= _param->dwExStylesPlus;
-    dlgTemplate->style            |= _param->dwStylesPlus;
-    dlgTemplate->dwExtendedStyle  &= _param->dwExStylesMinus;
-    dlgTemplate->style            &= _param->dwStylesMinus;
+    dlgTemplate->dwExtendedStyle  |= param->dwExStylesPlus;
+    dlgTemplate->style            |= param->dwStylesPlus;
+    dlgTemplate->dwExtendedStyle  &= param->dwExStylesMinus;
+    dlgTemplate->style            &= param->dwStylesMinus;
 
-    if (_param->bCenter)
+    if (param->bCenter)
       dlgTemplate->style |= DS_CENTER;
 
-    if (_param->xPos != -1)
-      dlgTemplate->x = _param->xPos;
+    if (param->xPos != -1)
+      dlgTemplate->x = param->xPos;
 
-    if (_param->yPos != -1)
-      dlgTemplate->y = _param->yPos;
+    if (param->yPos != -1)
+      dlgTemplate->y = param->yPos;
   }
 
+  CWin32InputBox inputbox(param);
+
   // Resize dialog and SHOW or HIDE multiline
-  INT_PTR r = ::DialogBoxIndirectParam(_param->hInstance, dlgTemplate, _param->hwndOwner, (DLGPROC)DlgProc, (LPARAM)this);
+  INT_PTR r = ::DialogBoxIndirectParam(param->hInstance, dlgTemplate, param->hwndOwner, (DLGPROC)DlgProc, (LPARAM)&inputbox);
 
   return r;
+}
+
+INT_PTR CWin32InputBox::InputBox(
+  LPCSTR szTitle, 
+  LPCSTR szPrompt, 
+  LPSTR szResult, 
+  DWORD nResultSize,
+  bool bMultiLine,
+  HWND hwndParent)
+{
+  WIN32INPUTBOX_PARAM param;
+
+  param.szTitle = szTitle;
+  param.szPrompt = szPrompt;
+  param.szResult = szResult;
+  param.nResultSize = nResultSize;
+  param.bMultiline = bMultiLine;
+  param.hwndOwner = hwndParent;
+  return InputBoxEx(&param);
 }
 
 void CWin32InputBox::InitDialog()
@@ -202,19 +221,8 @@ void CWin32InputBox::InitDialog()
     ::SetDlgItemText(_param->hDlg, (int) definputbox_buttonids[i], definputbox_buttonnames[i]);
 
   // Set other controls
-  char* title = Utf8ToAnsi(_param->szTitle);
-  if (title != NULL)
-  {
-    ::SetWindowTextA(_param->hDlg, title);
-    free(title);
-  }
-
-  char* prompt = Utf8ToAnsi(_param->szPrompt);
-  if (prompt != NULL)
-  {
-    ::SetDlgItemTextA(_param->hDlg, definputbox_id_prompt, prompt);
-    free(prompt);
-  }
+  ::SetWindowTextA(_param->hDlg, Utf8ToAnsi(_param->szTitle).c_str());
+  ::SetDlgItemTextA(_param->hDlg, definputbox_id_prompt, Utf8ToAnsi(_param->szPrompt).c_str());
 
   HWND hwndEdit1 = ::GetDlgItem(_param->hDlg, definputbox_id_edit1);
   HWND hwndEdit2 = ::GetDlgItem(_param->hDlg, definputbox_id_edit2);
@@ -224,12 +232,7 @@ void CWin32InputBox::InitDialog()
   else
     _hwndEditCtrl = hwndEdit1;
 
-  char* result = Utf8ToAnsi(_param->szResult);
-  if (result != NULL)
-  {
-    ::SetWindowTextA(_hwndEditCtrl, result);
-    free(result);
-  }
+  ::SetWindowTextA(_hwndEditCtrl, Utf8ToAnsi(_param->szResult).c_str());
 
   RECT rectDlg, rectEdit1, rectEdit2;
 
@@ -272,32 +275,11 @@ void CWin32InputBox::InitDialog()
 
     ::ShowWindow(hwndEdit2, SW_HIDE);
   }
-
-  if (_param->nMaxLength > 0)
-  {
-    ::SendMessageA(hwndEdit1, EM_SETLIMITTEXT, (WPARAM)_param->nMaxLength, 0);
-    ::SendMessageA(hwndEdit2, EM_SETLIMITTEXT, (WPARAM)_param->nMaxLength, 0);
-  }
-
-  switch (_param->eInputFlag)
-  {
-  case kWin32InputBoxPassword:
-    ::SendMessageA(hwndEdit1, EM_SETPASSWORDCHAR, (WPARAM)'*', 0);
-    ::SendMessageA(hwndEdit2, EM_SETPASSWORDCHAR, (WPARAM)'*', 0);
-    break;
-  case kWin32InputBoxCaps:
-    ::SetWindowLongA(hwndEdit1, GWL_STYLE, ::GetWindowLongA(hwndEdit1, GWL_STYLE) | ES_UPPERCASE);
-    ::SetWindowLongA(hwndEdit2, GWL_STYLE, ::GetWindowLongA(hwndEdit2, GWL_STYLE) | ES_UPPERCASE);
-    break;
-  default:
-    break;
-  }
 }
 
 // Message handler for about box.
 LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-  static const UINT_PTR dwId = 0x2000;
   CWin32InputBox *_this = (CWin32InputBox *) ::GetWindowLongPtr(hDlg, GWLP_USERDATA);
   WIN32INPUTBOX_PARAM *param = _this ? _this->GetParam() : 0;
 
@@ -310,13 +292,6 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
       _this = (CWin32InputBox *)  lParam;
       _this->_param->hDlg = hDlg;
       _this->InitDialog();
-      SetTimer(hDlg, dwId, 1, NULL);
-      return TRUE;
-    }
-
-    case WM_TIMER:
-    {
-      cocos2d::Director::getInstance()->mainLoop();
       return TRUE;
     }
 
@@ -340,40 +315,14 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
             _this->_param->szResult, 
             _this->_param->nResultSize);
 
-		  char* strUtf8 = AnsiToUtf8(_this->_param->szResult);
-          if (strUtf8 != NULL)
-          {
-            memset(_this->_param->szResult, 0, _this->_param->nResultSize);
-            strncpy(_this->_param->szResult, strUtf8, _this->_param->nResultSize - 1);
-            free(strUtf8);
-          }
-          else
-          {
-            _this->_param->szResult[0] = '\0';
-          }
+		  std::string strUtf8 = AnsiToUtf8(_this->_param->szResult);
+
+		  memset(_this->_param->szResult, 0, _this->_param->nResultSize);
+		  strncpy(_this->_param->szResult, strUtf8.c_str(), _this->_param->nResultSize-1);
+
           ::EndDialog(hDlg, buttonId);
           return TRUE;
         }
-      }
-
-      if (HIWORD(wParam) == EN_CHANGE && _this->_depth == 0 && _this->_param->lpfnCallBack != NULL)
-      {
-        HWND hwndEditCtrl = (HWND)lParam;
-        char buf[100];
-        ::GetWindowTextA(hwndEditCtrl, buf, 100);
-        ++_this->_depth;
-        char* utf8Str = AnsiToUtf8(buf);
-        if (utf8Str != NULL)
-        {
-          _this->_param->lpfnCallBack(utf8Str, _this->_param->lpCtx);
-          free(utf8Str);
-        }
-        else
-        {
-          _this->_param->lpfnCallBack("", _this->_param->lpCtx);
-        }
-        --_this->_depth;
-        return TRUE;
       }
     }
     break;
@@ -381,38 +330,16 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
   return FALSE;
 }
 
-void CWin32InputBox::SetText(const char* pText)
-{
-  if (_hwndEditCtrl != NULL)
-  {
-    char* ansiStr = Utf8ToAnsi(pText);
-    if (ansiStr != NULL)
-    {
-      size_t len = strlen(ansiStr);
-      DWORD dwBegin, dwEnd;
-      ::SendMessageA(_hwndEditCtrl, EM_GETSEL, (WPARAM)&dwBegin, (LPARAM)&dwEnd);
-      ::SendMessageA(_hwndEditCtrl, WM_SETTEXT, 0, (LPARAM)ansiStr);
-      ::SendMessageA(_hwndEditCtrl, EM_SETSEL, (WPARAM)MIN(dwBegin, len), (LPARAM)MIN(dwEnd, len));
-      free(ansiStr);
-    }
-    else
-    {
-      ::SendMessageA(_hwndEditCtrl, WM_SETTEXT, 0, (LPARAM)"");
-      ::SendMessageA(_hwndEditCtrl, EM_SETSEL, (WPARAM)0, (LPARAM)0);
-    }
-  }
-}
 
-char* CWin32InputBox::AnsiToUtf8(const char* strAnsi)
+std::string CWin32InputBox::AnsiToUtf8(std::string strAnsi)
 {
-	char* ret;
-    size_t lenAnsi = strlen(strAnsi);
-    if (lenAnsi > 0)
+	std::string ret;
+	if (strAnsi.length() > 0)
 	{	
-		int nWideStrLength = MultiByteToWideChar(CP_ACP, 0, strAnsi, -1, nullptr, 0);
+		int nWideStrLength = MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, nullptr, 0);
 		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength+1)*sizeof(WCHAR));
 		memset(pwszBuf, 0, (nWideStrLength+1)*sizeof(WCHAR));
-		MultiByteToWideChar(CP_ACP, 0, strAnsi, -1, pwszBuf, nWideStrLength+1);
+		MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
 
 		int nUtf8Length = WideCharToMultiByte( CP_UTF8,0,pwszBuf,-1,nullptr,0,nullptr,FALSE );
 		char* pszUtf8Buf = (char*)malloc((nUtf8Length+1)*sizeof(char));
@@ -421,21 +348,21 @@ char* CWin32InputBox::AnsiToUtf8(const char* strAnsi)
 		WideCharToMultiByte(CP_UTF8, 0, pwszBuf, -1, pszUtf8Buf, (nUtf8Length+1)*sizeof(char), nullptr, FALSE);
 		ret = pszUtf8Buf;
 
+		free(pszUtf8Buf);
 		free(pwszBuf);
 	}
 	return ret;
 }
 
-char* CWin32InputBox::Utf8ToAnsi(const char* strUTF8)
+std::string CWin32InputBox::Utf8ToAnsi(std::string strUTF8)
 {
-    char *ret = NULL;
-    size_t lenUTF8 = strlen(strUTF8);
-    if (lenUTF8 > 0)
+	std::string ret;
+	if (strUTF8.length() > 0)
 	{
-		int nWideStrLength = MultiByteToWideChar(CP_UTF8, 0, strUTF8, -1, nullptr, 0);
+		int nWideStrLength = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, nullptr, 0);
 		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength+1)*sizeof(WCHAR));
 		memset(pwszBuf, 0, (nWideStrLength+1)*sizeof(WCHAR));
-		MultiByteToWideChar(CP_UTF8, 0, strUTF8, -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
+		MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, pwszBuf, (nWideStrLength+1)*sizeof(WCHAR));
 
 		int nAnsiStrLength = WideCharToMultiByte( CP_ACP,0,pwszBuf,-1,nullptr,0,nullptr,FALSE );
 		char* pszAnsiBuf = (char*)malloc((nAnsiStrLength+1)*sizeof(char));
@@ -444,6 +371,7 @@ char* CWin32InputBox::Utf8ToAnsi(const char* strUTF8)
 		WideCharToMultiByte(CP_ACP, 0, pwszBuf, -1, pszAnsiBuf, (nAnsiStrLength+1)*sizeof(char), nullptr, FALSE);
 		ret = pszAnsiBuf;
 
+		free(pszAnsiBuf);
 		free(pwszBuf);
 	}
 
