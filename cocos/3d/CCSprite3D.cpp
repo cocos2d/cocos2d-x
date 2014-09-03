@@ -231,6 +231,7 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite)
     {
+        sprite->setName(nodedata->id);
         auto mesh = Mesh::create(nodedata->id, getMeshIndexData(modeldata->subMeshId));
         if (modeldata->matrialId == "" && matrialdatas.materials.size())
         {
@@ -385,7 +386,6 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                 auto sprite = createSprite3DNode(nodedata,it,matrialdatas);
                 if (sprite)
                 {
-                    sprite->setName(nodedata->id);
                     if(root)
                     {
                         root->addChild(sprite);
