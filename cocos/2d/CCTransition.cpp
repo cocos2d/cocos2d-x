@@ -1278,7 +1278,7 @@ void TransitionCrossFade::onEnter()
     LayerColor* layer = LayerColor::create(color);
 
     // create the first render texture for inScene
-    RenderTexture* inTexture = RenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture* inTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
 
     if (nullptr == inTexture)
     {
@@ -1295,7 +1295,7 @@ void TransitionCrossFade::onEnter()
     inTexture->end();
 
     // create the second render texture for outScene
-    RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
     outTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
     outTexture->setPosition(size.width/2, size.height/2);
     outTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
