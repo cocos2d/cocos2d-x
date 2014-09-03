@@ -385,6 +385,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                 auto sprite = createSprite3DNode(nodedata,it,matrialdatas);
                 if (sprite)
                 {
+                    sprite->setName(nodedata->id);
                     if(root)
                     {
                         root->addChild(sprite);
@@ -399,6 +400,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         node= Node::create();
         if(node)
         {
+            node->setName(nodedata->id);
             node->setAdditionalTransform(&nodedata->transform);
             if(root)
             {
