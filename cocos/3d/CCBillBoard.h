@@ -87,8 +87,10 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    Mat4 _preViewMat;
-    Mat4 _mv;
+    Mat4 _camWorldMat;
+    Mat4 _transform;
+    Mat4 _billboardTransform;
+    
     float _zDepthInView;
 
 private:
