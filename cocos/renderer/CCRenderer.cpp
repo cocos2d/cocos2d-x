@@ -440,7 +440,7 @@ void Renderer::render()
     //Uncomment this once everything is rendered by new renderer
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //TODO setup camera or MVP
+    //TODO: setup camera or MVP
     _isRendering = true;
     
     if (_glViewAssigned)
@@ -515,7 +515,7 @@ void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quanti
 
 void Renderer::drawBatchedQuads()
 {
-    //TODO we can improve the draw performance by insert material switching command before hand.
+    //TODO: we can improve the draw performance by insert material switching command before hand.
 
     int quadsToDraw = 0;
     int startQuad = 0;
@@ -644,7 +644,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     auto scene = Director::getInstance()->getRunningScene();
     // only cull the default camera. The culling algorithm is valid for default camera.
-    if (scene->_defaultCamera != Camera::getVisitingCamera())
+    if (scene && scene->_defaultCamera != Camera::getVisitingCamera())
         return true;
     
     // half size of the screen

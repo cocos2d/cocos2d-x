@@ -472,8 +472,6 @@
 		1AC35BEE18CECF0C00F37B72 /* CCControlStepperTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7318CECF0B00F37B72 /* CCControlStepperTest.cpp */; };
 		1AC35BEF18CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7618CECF0B00F37B72 /* CCControlSwitchTest.cpp */; };
 		1AC35BF018CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7618CECF0B00F37B72 /* CCControlSwitchTest.cpp */; };
-		1AC35BF118CECF0C00F37B72 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7918CECF0B00F37B72 /* EditBoxTest.cpp */; };
-		1AC35BF218CECF0C00F37B72 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7918CECF0B00F37B72 /* EditBoxTest.cpp */; };
 		1AC35BF318CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7B18CECF0B00F37B72 /* ExtensionsTest.cpp */; };
 		1AC35BF418CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7B18CECF0B00F37B72 /* ExtensionsTest.cpp */; };
 		1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A7E18CECF0B00F37B72 /* HttpClientTest.cpp */; };
@@ -484,8 +482,6 @@
 		1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8218CECF0B00F37B72 /* WebSocketTest.cpp */; };
 		1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */; };
 		1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */; };
-		1AC35BFD18CECF0C00F37B72 /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8818CECF0B00F37B72 /* Scale9SpriteTest.cpp */; };
-		1AC35BFE18CECF0C00F37B72 /* Scale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8818CECF0B00F37B72 /* Scale9SpriteTest.cpp */; };
 		1AC35BFF18CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8B18CECF0B00F37B72 /* CustomTableViewCell.cpp */; };
 		1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8B18CECF0B00F37B72 /* CustomTableViewCell.cpp */; };
 		1AC35C0118CECF0C00F37B72 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8D18CECF0B00F37B72 /* TableViewTestScene.cpp */; };
@@ -863,8 +859,12 @@
 		29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D8B191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp */; };
 		290E94B5196FC16900694919 /* CocostudioParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290E94B3196FC16900694919 /* CocostudioParserTest.cpp */; };
 		290E94B6196FC16900694919 /* CocostudioParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290E94B3196FC16900694919 /* CocostudioParserTest.cpp */; };
+		292CF01419A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */; };
+		292CF01519A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */; };
 		295824591987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		2958245A1987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
+		298D7F6F19AC31F300FF096D /* UIWebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */; };
+		29AFEF6719ACCAA000F6B10A /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
 		29FBBBFE196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
@@ -2553,8 +2553,6 @@
 		1AC35A7418CECF0B00F37B72 /* CCControlStepperTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlStepperTest.h; sourceTree = "<group>"; };
 		1AC35A7618CECF0B00F37B72 /* CCControlSwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlSwitchTest.cpp; sourceTree = "<group>"; };
 		1AC35A7718CECF0B00F37B72 /* CCControlSwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlSwitchTest.h; sourceTree = "<group>"; };
-		1AC35A7918CECF0B00F37B72 /* EditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditBoxTest.cpp; sourceTree = "<group>"; };
-		1AC35A7A18CECF0B00F37B72 /* EditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBoxTest.h; sourceTree = "<group>"; };
 		1AC35A7B18CECF0B00F37B72 /* ExtensionsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionsTest.cpp; sourceTree = "<group>"; };
 		1AC35A7C18CECF0B00F37B72 /* ExtensionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionsTest.h; sourceTree = "<group>"; };
 		1AC35A7E18CECF0B00F37B72 /* HttpClientTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClientTest.cpp; sourceTree = "<group>"; };
@@ -2565,8 +2563,6 @@
 		1AC35A8318CECF0B00F37B72 /* WebSocketTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketTest.h; sourceTree = "<group>"; };
 		1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotificationCenterTest.cpp; sourceTree = "<group>"; };
 		1AC35A8618CECF0B00F37B72 /* NotificationCenterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCenterTest.h; sourceTree = "<group>"; };
-		1AC35A8818CECF0B00F37B72 /* Scale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scale9SpriteTest.cpp; sourceTree = "<group>"; };
-		1AC35A8918CECF0B00F37B72 /* Scale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scale9SpriteTest.h; sourceTree = "<group>"; };
 		1AC35A8B18CECF0B00F37B72 /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1AC35A8C18CECF0B00F37B72 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1AC35A8D18CECF0B00F37B72 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
@@ -2884,8 +2880,13 @@
 		29080D8C191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest_Editor.h; sourceTree = "<group>"; };
 		290E94B3196FC16900694919 /* CocostudioParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CocostudioParserTest.cpp; path = ../CocostudioParserTest.cpp; sourceTree = "<group>"; };
 		290E94B4196FC16900694919 /* CocostudioParserTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocostudioParserTest.h; path = ../CocostudioParserTest.h; sourceTree = "<group>"; };
+		292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBoxTest.cpp; sourceTree = "<group>"; };
+		292CF01319A1965E00E8E6A0 /* UIEditBoxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxTest.h; sourceTree = "<group>"; };
 		295824571987415900F9746D /* UIScale9SpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9SpriteTest.cpp; sourceTree = "<group>"; };
 		295824581987415900F9746D /* UIScale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9SpriteTest.h; sourceTree = "<group>"; };
+		298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIWebViewTest.cpp; path = UIWebViewTest/UIWebViewTest.cpp; sourceTree = "<group>"; };
+		298D7F6E19AC31F300FF096D /* UIWebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewTest.h; path = UIWebViewTest/UIWebViewTest.h; sourceTree = "<group>"; };
+		29AFEF6619ACCAA000F6B10A /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Test.html; path = "../tests/cpp-tests/Resources/Test.html"; sourceTree = "<group>"; };
 		29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocostudioParserJsonTest.cpp; sourceTree = "<group>"; };
 		29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocostudioParserJsonTest.h; sourceTree = "<group>"; };
 		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
@@ -5768,12 +5769,10 @@
 				1AC359DF18CECF0B00F37B72 /* CocoStudioComponentsTest */,
 				1AC35A5818CECF0B00F37B72 /* CocoStudioSceneTest */,
 				1AC35A6118CECF0B00F37B72 /* ControlExtensionTest */,
-				1AC35A7818CECF0B00F37B72 /* EditBoxTest */,
 				1AC35A7B18CECF0B00F37B72 /* ExtensionsTest.cpp */,
 				1AC35A7C18CECF0B00F37B72 /* ExtensionsTest.h */,
 				1AC35A7D18CECF0B00F37B72 /* NetworkTest */,
 				1AC35A8418CECF0B00F37B72 /* NotificationCenterTest */,
-				1AC35A8718CECF0B00F37B72 /* Scale9SpriteTest */,
 				1AC35A8A18CECF0B00F37B72 /* TableViewTest */,
 			);
 			path = ExtensionsTest;
@@ -6015,15 +6014,6 @@
 			path = CCControlSwitchTest;
 			sourceTree = "<group>";
 		};
-		1AC35A7818CECF0B00F37B72 /* EditBoxTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A7918CECF0B00F37B72 /* EditBoxTest.cpp */,
-				1AC35A7A18CECF0B00F37B72 /* EditBoxTest.h */,
-			);
-			path = EditBoxTest;
-			sourceTree = "<group>";
-		};
 		1AC35A7D18CECF0B00F37B72 /* NetworkTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -6044,15 +6034,6 @@
 				1AC35A8618CECF0B00F37B72 /* NotificationCenterTest.h */,
 			);
 			path = NotificationCenterTest;
-			sourceTree = "<group>";
-		};
-		1AC35A8718CECF0B00F37B72 /* Scale9SpriteTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A8818CECF0B00F37B72 /* Scale9SpriteTest.cpp */,
-				1AC35A8918CECF0B00F37B72 /* Scale9SpriteTest.h */,
-			);
-			path = Scale9SpriteTest;
 			sourceTree = "<group>";
 		};
 		1AC35A8A18CECF0B00F37B72 /* TableViewTest */ = {
@@ -6495,6 +6476,7 @@
 				1AC35CB518CED84500F37B72 /* effect1.raw */,
 				1AC35CB618CED84500F37B72 /* effect1.wav */,
 				1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */,
+				29AFEF6619ACCAA000F6B10A /* Test.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -6907,6 +6889,15 @@
 			path = UIWidgetAddNodeTest;
 			sourceTree = "<group>";
 		};
+		298D7F6C19AC31C000FF096D /* UIWebViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */,
+				298D7F6E19AC31F300FF096D /* UIWebViewTest.h */,
+			);
+			name = UIWebViewTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -6988,8 +6979,11 @@
 		29FBBC00196A9F0D00E65826 /* UIAndEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				298D7F6C19AC31C000FF096D /* UIWebViewTest */,
 				295824571987415900F9746D /* UIScale9SpriteTest.cpp */,
 				295824581987415900F9746D /* UIScale9SpriteTest.h */,
+				292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */,
+				292CF01319A1965E00E8E6A0 /* UIEditBoxTest.h */,
 				29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */,
 				29080D20191B595E0066F8DF /* CocosGUIScene.h */,
 				29080D37191B595E0066F8DF /* GUIEditorTest.cpp */,
@@ -7816,6 +7810,7 @@
 				1AC35D0918CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CFF18CED84500F37B72 /* Particles in Resources */,
 				1AC35C8818CECF1400F37B72 /* Default-568h@2x.png in Resources */,
+				29AFEF6719ACCAA000F6B10A /* Test.html in Resources */,
 				1AC35CD518CED84500F37B72 /* ccb in Resources */,
 				1AC35CE118CED84500F37B72 /* configs in Resources */,
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
@@ -7953,7 +7948,6 @@
 				1AC35B6718CECF0C00F37B72 /* AnimationsTestLayer.cpp in Sources */,
 				29080DB7191B595E0066F8DF /* UIListViewTest_Editor.cpp in Sources */,
 				1AC35BF918CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
-				1AC35BF118CECF0C00F37B72 /* EditBoxTest.cpp in Sources */,
 				1AC35B3918CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
 				1AC35BE318CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DB1191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
@@ -8004,7 +7998,6 @@
 				29080DD1191B595E0066F8DF /* UISliderTest_Editor.cpp in Sources */,
 				1AC35B2718CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4918CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
-				1AC35BFD18CECF0C00F37B72 /* Scale9SpriteTest.cpp in Sources */,
 				1AC35B4318CECF0C00F37B72 /* Bug-624.cpp in Sources */,
 				1AC35BF718CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
 				1AC35C4F18CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
@@ -8023,6 +8016,7 @@
 				1AC35B7D18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
 				29080D9F191B595E0066F8DF /* CustomReader.cpp in Sources */,
 				1AC35BE718CECF0C00F37B72 /* CCControlScene.cpp in Sources */,
+				292CF01419A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */,
 				29080DBF191B595E0066F8DF /* UIPageViewTest_Editor.cpp in Sources */,
 				1AC35B5F18CECF0C00F37B72 /* DataVisitorTest.cpp in Sources */,
 				1AC35B5D18CECF0C00F37B72 /* CurrentLanguageTest.cpp in Sources */,
@@ -8149,7 +8143,6 @@
 				1AC35B6818CECF0C00F37B72 /* AnimationsTestLayer.cpp in Sources */,
 				29080D8E191B595E0066F8DF /* CocosGUIScene.cpp in Sources */,
 				1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
-				1AC35BF218CECF0C00F37B72 /* EditBoxTest.cpp in Sources */,
 				38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				2958245A1987415900F9746D /* UIScale9SpriteTest.cpp in Sources */,
 				1AC35B3A18CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
@@ -8204,9 +8197,9 @@
 				1AC35C0618CECF0C00F37B72 /* FontTest.cpp in Sources */,
 				1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
 				1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */,
+				292CF01519A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */,
 				1AC35B2818CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4A18CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
-				1AC35BFE18CECF0C00F37B72 /* Scale9SpriteTest.cpp in Sources */,
 				C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */,
 				1AC35B4418CECF0C00F37B72 /* Bug-624.cpp in Sources */,
 				1AC35BF818CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
@@ -8316,6 +8309,7 @@
 				1AC35B3E18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
 				29080DAC191B595E0066F8DF /* UIFocusTest.cpp in Sources */,
 				1AC35BF618CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
+				298D7F6F19AC31F300FF096D /* UIWebViewTest.cpp in Sources */,
 				29080DA6191B595E0066F8DF /* UIButtonTest_Editor.cpp in Sources */,
 				1AC35B5018CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 			);

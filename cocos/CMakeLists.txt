@@ -85,12 +85,11 @@ list(REMOVE_ITEM cocos2d_source_files
      "${CMAKE_CURRENT_SOURCE_DIR}/base/CCController-android.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/base/CCUserDefaultAndroid.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/ui/UIVideoPlayerAndroid.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/ui/UIWebView.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/ui/UIWebViewImpl_android.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/storage/local-storage/LocalStorageAndroid.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/base/CCEventController.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/base/CCEventListenerController.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}/../extensions/GUI/CCEditBox/CCEditBoxImplAndroid.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}/../extensions/GUI/CCEditBox/CCEditBoxImplWin.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}/../extensions/GUI/CCEditBox/CCEditBoxImplWp8.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/editor-support/cocostudio/proj.wp8/pch.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/../extensions/proj.wp8/pch.cpp")
 

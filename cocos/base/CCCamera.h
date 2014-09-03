@@ -24,7 +24,6 @@ THE SOFTWARE.
 #ifndef _CCCAMERA_H__
 #define _CCCAMERA_H__
 
-#include "base/CCVector.h"
 #include "2d/CCNode.h"
 
 NS_CC_BEGIN

@@ -24,13 +24,7 @@
 
 #include "3d/CCSprite3DMaterial.h"
 
-#include "platform/CCFileUtils.h"
-#include "renderer/CCTextureCache.h"
-#include "base/CCEventCustom.h"
-#include "base/CCEventListenerCustom.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventType.h"
-#include "base/CCDirector.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 

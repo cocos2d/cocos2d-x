@@ -30,6 +30,32 @@ g_guisTests[] =
         }
     },
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "WebViewTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(KWebViewTest);
+            sceneManager->setMinUISceneId(KWebViewTest);
+            sceneManager->setMaxUISceneId(KWebViewTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+#endif
+    {
+        "EditBox Test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIEditBoxTest);
+            sceneManager->setMinUISceneId(kUIEditBoxTest);
+            sceneManager->setMaxUISceneId(kUIEditBoxTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
     {
         "focus test",
         [](Ref* sender)
@@ -37,7 +63,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
-            //TODO: improve ListView focus
+            // TODO: improve ListView focus
             sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);

@@ -31,6 +31,11 @@ UIRelativeBox.cpp \
 UIVideoPlayerAndroid.cpp \
 UIDeprecated.cpp \
 UIScale9Sprite.cpp \
+UIWebView.cpp \
+UIWebViewImpl_android.cpp \
+UIEditBox/UIEditBox.cpp \
+UIEditBox/UIEditBoxImplAndroid.cpp \
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support

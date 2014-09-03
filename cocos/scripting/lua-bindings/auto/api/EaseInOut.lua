@@ -5,23 +5,27 @@
 -- @parent_module cc
 
 --------------------------------
+--  Creates the action with the inner action and the rate parameter 
 -- @function [parent=#EaseInOut] create 
 -- @param self
--- @param #cc.ActionInterval actioninterval
--- @param #float float
+-- @param #cc.ActionInterval action
+-- @param #float rate
 -- @return EaseInOut#EaseInOut ret (return value: cc.EaseInOut)
         
 --------------------------------
+-- 
 -- @function [parent=#EaseInOut] clone 
 -- @param self
 -- @return EaseInOut#EaseInOut ret (return value: cc.EaseInOut)
         
 --------------------------------
+-- 
 -- @function [parent=#EaseInOut] update 
 -- @param self
--- @param #float float
+-- @param #float time
         
 --------------------------------
+-- 
 -- @function [parent=#EaseInOut] reverse 
 -- @param self
 -- @return EaseInOut#EaseInOut ret (return value: cc.EaseInOut)

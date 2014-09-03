@@ -30,14 +30,15 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
+#include "3d/3dExport.h"
 
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
+#include "base/CCVector.h"
 #include "math/CCMath.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCVertexIndexBuffer.h"
-#include "3d/3dExport.h"
+
 
 NS_CC_BEGIN
 
