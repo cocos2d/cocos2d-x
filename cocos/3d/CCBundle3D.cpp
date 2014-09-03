@@ -760,7 +760,17 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
     if (_version == "0.1" || _version == "1.2" || _version == "0.2")
     {
         SkinData   skinData;
-        loadSkinData("", &skinData);
+        if (!loadSkinData("", &skinData))
+        {
+            auto node= new (std::nothrow) NodeData();
+            auto modelnode = new (std::nothrow) ModelData();
+            modelnode->matrialId = "";
+            modelnode->subMeshId = "";
+            node->modelNodeDatas.push_back(modelnode);
+            nodedatas.nodes.push_back(node);
+            return true;
+        }
+        
         auto nodeDatas = new (std::nothrow) NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
         int index = 0;
         size_t i;
