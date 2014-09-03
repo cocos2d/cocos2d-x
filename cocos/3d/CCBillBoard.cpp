@@ -94,6 +94,22 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     auto camera = Camera::getVisitingCamera();
     const Mat4 &viewMat = camera->getViewMatrix();
+//    const Mat4& camWorldMat = camera->getNodeToWorldTransform();
+//    Vec3 camDir(transform.m[12] - camWorldMat.m[12], transform.m[13] - camWorldMat.m[13], transform.m[14] - camWorldMat.m[14]);
+//    camDir.normalize();
+//    static Vec3 upAxis(0.0f, 1.0f, 0.0f);
+//    Vec3 x, y;
+//    camWorldMat.transformVector(upAxis, &y);
+//    Vec3::cross(camDir, y, &x);
+//    x.normalize();
+//    Vec3::cross(x, camDir, &y);
+//    Mat4 newTransform;
+//    newTransform.m[0] = x.x; newTransform.m[1] = x.y; newTransform.m[2] = x.z;
+//    newTransform.m[4] = y.x; newTransform.m[5] = y.y; newTransform.m[6] = y.z;
+//    newTransform.m[8] = -camDir.x; newTransform.m[9] = -camDir.y; newTransform.m[10] = -camDir.z;
+//    newTransform.m[12] = transform.m[12]; newTransform.m[13] = transform.m[13]; newTransform.m[14] = transform.m[14];
+    
+    
     if (memcmp(_preViewMat.m, viewMat.m, sizeof(float) * 16) != 0)
     {
         Mat4 viewInverseMat =  camera->getInverseViewMatrix();
@@ -106,7 +122,7 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     //FIXME: frustum culling here
     {
-            _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform * _mv);
+            _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, newTransform/*transform * _mv*/);
             renderer->addTransparentCommand(&_quadCommand);
     }
 }
