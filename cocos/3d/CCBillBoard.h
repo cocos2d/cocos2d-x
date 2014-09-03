@@ -76,6 +76,7 @@ public:
      */
     static BillBorad* createWithTexture(Texture2D *texture);
 
+    //override
     /** draw BillBorad object */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 

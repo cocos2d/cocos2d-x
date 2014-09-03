@@ -103,10 +103,8 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         _zDepthInView = -modelViewMat.m[14];
         _mv = viewInverseMat;
     }
-    //// Don't do calculate the culling if the transform was not updated
-    //_insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transMat, _contentSize) : _insideBounds;
 
-    //if(_insideBounds)
+    //FIXME: frustum culling here
     {
             _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform * _mv);
             renderer->addTransparentCommand(&_quadCommand);
