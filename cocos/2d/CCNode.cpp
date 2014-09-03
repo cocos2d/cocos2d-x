@@ -126,6 +126,7 @@ Node::Node(void)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 , _usingNormalizedPosition(false)
+, _normalizedPositionDirty(false)
 , _name("")
 , _hashOfName(0)
 , _cameraMask(1)
@@ -613,6 +614,7 @@ void Node::setNormalizedPosition(const Vec2& position)
 
     _normalizedPosition = position;
     _usingNormalizedPosition = true;
+    _normalizedPositionDirty = true;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
@@ -1210,17 +1212,21 @@ void Node::visit()
 
 uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
 {
+    if(_usingNormalizedPosition) {
+        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
+        if ((parentFlags & FLAGS_CONTENT_SIZE_DIRTY) || _normalizedPositionDirty) {
+            auto s = _parent->getContentSize();
+            _position.x = _normalizedPosition.x * s.width;
+            _position.y = _normalizedPosition.y * s.height;
+            _transformUpdated = _transformDirty = _inverseDirty = true;
+            _normalizedPositionDirty = false;
+        }
+    }
+    
     uint32_t flags = parentFlags;
     flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);
     flags |= (_contentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);
-
-    if(_usingNormalizedPosition && (flags & FLAGS_CONTENT_SIZE_DIRTY)) {
-        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
-        auto s = _parent->getContentSize();
-        _position.x = _normalizedPosition.x * s.width;
-        _position.y = _normalizedPosition.y * s.height;
-        _transformUpdated = _transformDirty = _inverseDirty = true;
-    }
+    
 
     if(flags & FLAGS_DIRTY_MASK)
         _modelViewTransform = this->transform(parentTransform);
