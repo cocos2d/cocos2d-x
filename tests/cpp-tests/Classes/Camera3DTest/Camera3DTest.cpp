@@ -68,7 +68,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     struct V3F_C4B
     {
-        Vec3     vertices;
+        FloatVec3     vertices;
         Color4B  colors;
     };
     

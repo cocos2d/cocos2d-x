@@ -59,7 +59,7 @@ public:
     
     void setDisplayColor(const Vec4& color);
     
-    void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
+    void setMatrixPalette(const FloatVec4* matrixPalette) { _matrixPalette = matrixPalette; }
     
     void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
     
@@ -100,7 +100,7 @@ protected:
     Vec4 _displayColor; // in order to support tint and fade in fade out
     
     // used for skin
-    const Vec4* _matrixPalette;
+    const FloatVec4* _matrixPalette;
     int   _matrixPaletteSize;
     
     uint32_t _materialID; //material ID

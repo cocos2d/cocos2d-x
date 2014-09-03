@@ -1653,21 +1653,21 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
             }
             animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime, rotate));
 
-            Vec3 scale;
+            float scale[3];
             if (_binaryReader.read(&scale, 4, 3) != 3)
             {
                 CCLOGINFO("Failed to read AnimationData: scale '%s'.", _path.c_str());
                 return false;
             }
-            animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, scale));
+            animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, Vec3(scale)));
 
-            Vec3 position;
+            float position[3];
             if (_binaryReader.read(&position, 4, 3) != 3)
             {
                 CCLOGINFO("Failed to read AnimationData: position '%s'.", _path.c_str());
                 return false;
             }
-            animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
+            animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, Vec3(position)));
         }
     }
     return true;

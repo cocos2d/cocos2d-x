@@ -66,7 +66,7 @@ public:
     int getBoneIndex(Bone3D* bone) const;
     
     /**compute matrix palette used by gpu skin*/
-    Vec4* getMatrixPalette();
+    FloatVec4* getMatrixPalette();
     
     /**getSkinBoneCount() * 3*/
     ssize_t getMatrixPaletteSize() const;
@@ -98,7 +98,7 @@ protected:
     // This array is passed to the vertex shader as a uniform.
     // Each 4x3 row-wise matrix is represented as 3 Vec4's.
     // The number of Vec4's is (_skinBones.size() * 3).
-    Vec4* _matrixPalette;
+    FloatVec4* _matrixPalette;
 };
 
 NS_CC_END

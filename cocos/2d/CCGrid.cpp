@@ -326,11 +326,11 @@ void Grid3D::blit(void)
     unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
     // position
-    setGLBufferData(_vertices, numOfPoints * sizeof(Vec3), 0);
+    setGLBufferData(_vertices, numOfPoints * sizeof(FloatVec3), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     // texCoords
-    setGLBufferData(_texCoordinates, numOfPoints * sizeof(Vec2), 1);
+    setGLBufferData(_texCoordinates, numOfPoints * sizeof(FloatVec2), 1);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLIndexData(_indices, n * 12, 0);
@@ -361,9 +361,9 @@ void Grid3D::calculateVertexPoints(void)
 
     unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
-    _vertices = malloc(numOfPoints * sizeof(Vec3));
-    _originalVertices = malloc(numOfPoints * sizeof(Vec3));
-    _texCoordinates = malloc(numOfPoints * sizeof(Vec2));
+    _vertices = malloc(numOfPoints * sizeof(FloatVec3));
+    _originalVertices = malloc(numOfPoints * sizeof(FloatVec3));
+    _texCoordinates = malloc(numOfPoints * sizeof(FloatVec2));
     _indices = (GLushort*)malloc(_gridSize.width * _gridSize.height * sizeof(GLushort) * 6);
 
     GLfloat *vertArray = (GLfloat*)_vertices;
@@ -420,7 +420,7 @@ void Grid3D::calculateVertexPoints(void)
         }
     }
 
-    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
+    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(FloatVec3));
 }
 
 Vec3 Grid3D::getVertex(const Vec2& pos) const
@@ -461,7 +461,7 @@ void Grid3D::reuse(void)
 {
     if (_reuseGrid > 0)
     {
-        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
+        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(FloatVec3));
         --_reuseGrid;
     }
 }
@@ -541,11 +541,11 @@ void TiledGrid3D::blit(void)
     int numQuads = _gridSize.width * _gridSize.height;
 
     // position
-    setGLBufferData(_vertices, (numQuads*4*sizeof(Vec3)), 0);
+    setGLBufferData(_vertices, (numQuads*4*sizeof(FloatVec3)), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     // texCoords
-    setGLBufferData(_texCoordinates, (numQuads*4*sizeof(Vec2)), 1);
+    setGLBufferData(_texCoordinates, (numQuads*4*sizeof(FloatVec2)), 1);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLIndexData(_indices, n * 12, 0);
@@ -576,9 +576,9 @@ void TiledGrid3D::calculateVertexPoints(void)
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_indices);
 
-    _vertices = malloc(numQuads*4*sizeof(Vec3));
-    _originalVertices = malloc(numQuads*4*sizeof(Vec3));
-    _texCoordinates = malloc(numQuads*4*sizeof(Vec2));
+    _vertices = malloc(numQuads*4*sizeof(FloatVec3));
+    _originalVertices = malloc(numQuads*4*sizeof(FloatVec3));
+    _texCoordinates = malloc(numQuads*4*sizeof(FloatVec2));
     _indices = (GLushort*)malloc(numQuads*6*sizeof(GLushort));
 
     GLfloat *vertArray = (GLfloat*)_vertices;

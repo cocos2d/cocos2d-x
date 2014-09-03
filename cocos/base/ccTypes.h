@@ -197,7 +197,7 @@ struct CC_DLL Tex2F {
 //! Vec2 Sprite component
 struct CC_DLL PointSprite
 {
-    Vec2   pos;        // 8 bytes
+    FloatVec2   pos;        // 8 bytes
     Color4B    color;      // 4 bytes
     GLfloat    size;       // 4 bytes
 };
@@ -205,26 +205,26 @@ struct CC_DLL PointSprite
 //!    A 2D Quad. 4 * 2 floats
 struct CC_DLL Quad2
 {
-    Vec2        tl;
-    Vec2        tr;
-    Vec2        bl;
-    Vec2        br;
+    FloatVec2        tl;
+    FloatVec2        tr;
+    FloatVec2        bl;
+    FloatVec2        br;
 };
 
 
 //!    A 3D Quad. 4 * 3 floats
 struct CC_DLL Quad3 {
-    Vec3        bl;
-    Vec3        br;
-    Vec3        tl;
-    Vec3        tr;
+    FloatVec3        bl;
+    FloatVec3        br;
+    FloatVec3        tl;
+    FloatVec3        tr;
 };
 
 //! a Vec2 with a vertex point, a tex coord point and a color 4B
 struct V2F_C4B_T2F
 {
     //! vertices (2F)
-    Vec2       vertices;
+    FloatVec2       vertices;
     //! colors (4B)
     Color4B        colors;
     //! tex coords (2F)
@@ -235,7 +235,7 @@ struct V2F_C4B_T2F
 struct CC_DLL V2F_C4F_T2F
 {
     //! vertices (2F)
-    Vec2       vertices;
+    FloatVec2       vertices;
     //! colors (4F)
     Color4F        colors;
     //! tex coords (2F)
@@ -246,7 +246,7 @@ struct CC_DLL V2F_C4F_T2F
 struct CC_DLL V3F_C4B_T2F
 {
     //! vertices (3F)
-    Vec3     vertices;            // 12 bytes
+    FloatVec3     vertices;            // 12 bytes
 
     //! colors (4B)
     Color4B      colors;              // 4 bytes
@@ -259,7 +259,7 @@ struct CC_DLL V3F_C4B_T2F
 struct CC_DLL V3F_T2F
 {
     //! vertices (2F)
-    Vec3       vertices;
+    FloatVec3       vertices;
     //! tex coords (2F)
     Tex2F          texCoords;
 };

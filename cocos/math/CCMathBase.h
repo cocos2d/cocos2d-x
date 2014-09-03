@@ -44,6 +44,8 @@
 #define CC_MATH_USE_DOUBLES 0 // use float by default
 #endif
 
+// NOTE: ccScalar is not fully supported, use it only in Mat4, Vec4, Vec3 now.
+
 #if CC_MATH_USE_DOUBLES
     typedef double ccScalar;
     #define ccsqrt sqrt

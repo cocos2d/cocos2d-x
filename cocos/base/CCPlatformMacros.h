@@ -311,11 +311,5 @@ public: virtual void set##funName(varType var)   \
     #endif
 #endif
 
-// SSE requires 16 bytes alignment for better performance
-#ifdef __SSE__
-#define CC_ALIGNED_16 __attribute__ ((aligned (16)))
-#else
-#define CC_ALIGNED_16
-#endif
 
 #endif // __CC_PLATFORM_MACROS_H__

@@ -406,17 +406,10 @@ void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quanti
     for(ssize_t i=0; i<quantity; ++i)
     {
         V3F_C4B_T2F_Quad *q = &quads[i];
-        Vec3 *vec1 = (Vec3*)&q->bl.vertices;
-        modelView.transformPoint(vec1);
-
-        Vec3 *vec2 = (Vec3*)&q->br.vertices;
-        modelView.transformPoint(vec2);
-
-        Vec3 *vec3 = (Vec3*)&q->tr.vertices;
-        modelView.transformPoint(vec3);
-
-        Vec3 *vec4 = (Vec3*)&q->tl.vertices;
-        modelView.transformPoint(vec4);
+        MathHelpers::transformPoint(modelView, q->bl.vertices);
+        MathHelpers::transformPoint(modelView, q->br.vertices);
+        MathHelpers::transformPoint(modelView, q->tr.vertices);
+        MathHelpers::transformPoint(modelView, q->tl.vertices);
     }
 }
 

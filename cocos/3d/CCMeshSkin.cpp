@@ -100,11 +100,11 @@ int MeshSkin::getBoneIndex(Bone3D* bone) const
 }
 
 //compute matrix palette used by gpu skin
-Vec4* MeshSkin::getMatrixPalette()
+FloatVec4* MeshSkin::getMatrixPalette()
 {
     if (_matrixPalette == nullptr)
     {
-        _matrixPalette = new Vec4[_skinBones.size() * PALETTE_ROWS];
+        _matrixPalette = new FloatVec4[_skinBones.size() * PALETTE_ROWS];
     }
     int i = 0, paletteIndex = 0;
     static Mat4 t;
