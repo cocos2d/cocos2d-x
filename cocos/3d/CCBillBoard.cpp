@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 BillBorad::BillBorad()
 : _zDepthInView(0.0f)
-, _mode(Mode::View_Oriented)
+, _mode(Mode::View_Point_Oriented)
 {
 
 }
@@ -105,7 +105,7 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         Vec3 camDir;
         switch (_mode)
         {
-        case Mode::View_Oriented:
+        case Mode::View_Point_Oriented:
             camDir = Vec3(transform.m[12] - camWorldMat.m[12], transform.m[13] - camWorldMat.m[13], transform.m[14] - camWorldMat.m[14]);
             break;
         case Mode::View_Plane_Oriented:
@@ -144,8 +144,8 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     //FIXME: frustum culling here
     {
-            _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _billboardTransform);
-            renderer->addTransparentCommand(&_quadCommand);
+        _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _billboardTransform);
+        renderer->addTransparentCommand(&_quadCommand);
     }
 }
 
