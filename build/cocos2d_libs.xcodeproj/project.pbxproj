@@ -948,7 +948,7 @@
 		15AE1BC819AAE00000C27E9E /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5352180E3060000584C8 /* AssetsManager.h */; };
 		15AE1BC919AAE01E00C27E9E /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168351807AF4E005B8026 /* CCControl.cpp */; };
 		15AE1BCA19AAE01E00C27E9E /* CCControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168361807AF4E005B8026 /* CCControl.h */; };
-		15AE1BCB19AAE01E00C27E9E /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168371807AF4E005B8026 /* CCControlButton.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		15AE1BCB19AAE01E00C27E9E /* CCControlButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168371807AF4E005B8026 /* CCControlButton.cpp */; };
 		15AE1BCC19AAE01E00C27E9E /* CCControlButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168381807AF4E005B8026 /* CCControlButton.h */; };
 		15AE1BCD19AAE01E00C27E9E /* CCControlColourPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168391807AF4E005B8026 /* CCControlColourPicker.cpp */; };
 		15AE1BCE19AAE01E00C27E9E /* CCControlColourPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1683A1807AF4E005B8026 /* CCControlColourPicker.h */; };
