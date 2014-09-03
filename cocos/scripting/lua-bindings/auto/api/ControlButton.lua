@@ -122,7 +122,7 @@
 -- @function [parent=#ControlButton] getBackgroundSpriteForState 
 -- @param self
 -- @param #int state
--- @return Scale9Sprite#Scale9Sprite ret (return value: cc.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -159,7 +159,7 @@
 -- 
 -- @function [parent=#ControlButton] getBackgroundSprite 
 -- @param self
--- @return Scale9Sprite#Scale9Sprite ret (return value: cc.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- Returns the title color used for a state.<br>
@@ -205,7 +205,7 @@
 -- in "CCControlState".
 -- @function [parent=#ControlButton] setBackgroundSpriteForState 
 -- @param self
--- @param #cc.Scale9Sprite sprite
+-- @param #ccui.Scale9Sprite sprite
 -- @param #int state
         
 --------------------------------
@@ -218,7 +218,7 @@
 -- 
 -- @function [parent=#ControlButton] setBackgroundSprite 
 -- @param self
--- @param #cc.Scale9Sprite var
+-- @param #ccui.Scale9Sprite var
         
 --------------------------------
 -- 
@@ -288,9 +288,9 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @overload self, cc.Scale9Sprite         
+-- @overload self, ccui.Scale9Sprite         
 -- @overload self         
--- @overload self, cc.Node, cc.Scale9Sprite         
+-- @overload self, cc.Node, ccui.Scale9Sprite         
 -- @overload self, string, string, float         
 -- @function [parent=#ControlButton] create
 -- @param self
