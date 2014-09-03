@@ -91,8 +91,8 @@ bool ControlButtonTest_HelloVariableSize::init()
 ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(const char * title)
 {
     /** Creates and return a button with a default background and title color. */
-    auto backgroundButton = Scale9Sprite::create("extensions/button.png");
-    auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+    auto backgroundButton = cocos2d::extension::Scale9Sprite::create("extensions/button.png");
+    auto backgroundHighlightedButton = cocos2d::extension::Scale9Sprite::create("extensions/buttonHighlighted.png");
     
     auto titleButton = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 30);
 
@@ -258,7 +258,7 @@ bool ControlButtonTest_Styling::init()
         layer->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         
         // Add the black background
-        auto backgroundButton = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto backgroundButton = cocos2d::extension::Scale9Sprite::create("extensions/buttonBackground.png");
         backgroundButton->setContentSize(Size(max_w + 14, max_h + 14));
         backgroundButton->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         addChild(backgroundButton);
