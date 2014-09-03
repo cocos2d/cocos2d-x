@@ -33,6 +33,7 @@ NS_CC_BEGIN
 
 BillBorad::BillBorad()
 : _zDepthInView(0.0f)
+, _mode(Mode::View_Oriented)
 {
 
 }
@@ -41,11 +42,12 @@ BillBorad::~BillBorad()
 {
 }
 
-BillBorad* BillBorad::createWithTexture(Texture2D *texture)
+BillBorad* BillBorad::createWithTexture(Texture2D *texture, Mode mode)
 {
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->initWithTexture(texture))
     {
+        billborad->_mode = mode;
         billborad->autorelease();
         return billborad;
     }
@@ -54,11 +56,12 @@ BillBorad* BillBorad::createWithTexture(Texture2D *texture)
 }
 
 
-BillBorad* BillBorad::create(const std::string& filename)
+BillBorad* BillBorad::create(const std::string& filename, Mode mode)
 {
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->initWithFile(filename))
     {
+        billborad->_mode = mode;
         billborad->autorelease();
         return billborad;
     }
@@ -66,11 +69,12 @@ BillBorad* BillBorad::create(const std::string& filename)
     return nullptr;
 }
 
-BillBorad* BillBorad::create(const std::string& filename, const Rect& rect)
+BillBorad* BillBorad::create(const std::string& filename, const Rect& rect, Mode mode)
 {
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->initWithFile(filename, rect))
     {
+        billborad->_mode = mode;
         billborad->autorelease();
         return billborad;
     }
@@ -78,11 +82,12 @@ BillBorad* BillBorad::create(const std::string& filename, const Rect& rect)
     return nullptr;
 }
 
-BillBorad* BillBorad::create()
+BillBorad* BillBorad::create(Mode mode)
 {
     BillBorad *billborad = new (std::nothrow) BillBorad();
     if (billborad && billborad->init())
     {
+        billborad->_mode = mode;
         billborad->autorelease();
         return billborad;
     }
@@ -98,7 +103,17 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_transform.m, transform.m, sizeof(float) * 16) != 0)
     {
         Vec3 camDir;
-        camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
+        switch (_mode)
+        {
+        case Mode::View_Oriented:
+            camDir = Vec3(transform.m[12] - camWorldMat.m[12], transform.m[13] - camWorldMat.m[13], transform.m[14] - camWorldMat.m[14]);
+            break;
+        case Mode::View_Plane_Oriented:
+            camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
+            break;
+        default:
+            break;
+        }
 
         if (camDir.length() < MATH_TOLERANCE)
         {
@@ -132,6 +147,16 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _billboardTransform);
             renderer->addTransparentCommand(&_quadCommand);
     }
+}
+
+void BillBorad::setMode( Mode mode )
+{
+    _mode = mode;
+}
+
+BillBorad::Mode BillBorad::getMode() const
+{
+    return _mode;
 }
 
 NS_CC_END

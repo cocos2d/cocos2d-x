@@ -36,6 +36,11 @@ class CC_DLL BillBorad : public Sprite
 {
 public:
 
+    enum class Mode
+    {
+        View_Oriented,
+        View_Plane_Oriented
+    };
     /// @{
     /// @name Creators
 
@@ -44,7 +49,7 @@ public:
      *
      * @return An autoreleased BillBorad object.
      */
-    static BillBorad* create();
+    static BillBorad* create(Mode mode = Mode::View_Oriented);
 
     /**
      * Creates a BillBorad with an image filename.
@@ -55,7 +60,7 @@ public:
      * @param   filename A path to image file, e.g., "scene1/monster.png"
      * @return  An autoreleased BillBorad object.
      */
-    static BillBorad* create(const std::string& filename);
+    static BillBorad* create(const std::string& filename, Mode mode = Mode::View_Oriented);
 
     /**
      * Creates a BillBorad with an image filename and a rect.
@@ -64,7 +69,7 @@ public:
      * @param   rect     A subrect of the image file
      * @return  An autoreleased BillBorad object
      */
-    static BillBorad* create(const std::string& filename, const Rect& rect);
+    static BillBorad* create(const std::string& filename, const Rect& rect, Mode mode = Mode::View_Oriented);
 
      /**
      * Creates a BillBorad with a Texture2D object.
@@ -74,7 +79,13 @@ public:
      * @param   texture    A pointer to a Texture2D object.
      * @return  An autoreleased BillBorad object
      */
-    static BillBorad* createWithTexture(Texture2D *texture);
+    static BillBorad* createWithTexture(Texture2D *texture, Mode mode = Mode::View_Oriented);
+
+    /** Set the billboard rotation mode. */
+    void setMode(Mode mode);
+
+    /** Get the billboard rotation mode. */
+    Mode getMode() const;
 
     //override
     /** draw BillBorad object */
@@ -92,6 +103,8 @@ protected:
     Mat4 _billboardTransform;
     
     float _zDepthInView;
+
+    Mode _mode;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);
