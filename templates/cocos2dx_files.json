@@ -4030,6 +4030,8 @@
         "cocos/scripting/lua-bindings/manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.h", 
         "cocos/scripting/lua-bindings/manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp", 
         "cocos/scripting/lua-bindings/manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h", 
+        "cocos/scripting/lua-bindings/manual/cocostudio/CustomGUIReader.cpp", 
+        "cocos/scripting/lua-bindings/manual/cocostudio/CustomGUIReader.h", 
         "cocos/scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp", 
         "cocos/scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.hpp", 
         "cocos/scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.cpp", 
