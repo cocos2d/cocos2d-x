@@ -395,8 +395,6 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 
 	_label->setSystemFontName(pFontName);
 	_label->setSystemFontSize(fontSize);
-	_labelPlaceHolder->setSystemFontName(pFontName);
-	_labelPlaceHolder->setSystemFontSize(fontSize);
 }
 
 void EditBoxImplIOS::setFontColor(const Color3B& color)
@@ -407,7 +405,8 @@ void EditBoxImplIOS::setFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	// TODO: need to be implemented.
+	_labelPlaceHolder->setSystemFontName(pFontName);
+	_labelPlaceHolder->setSystemFontSize(fontSize);
 }
 
 void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)

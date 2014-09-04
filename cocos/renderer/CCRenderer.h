@@ -38,6 +38,7 @@ NS_CC_BEGIN
 
 class EventListenerCustom;
 class QuadCommand;
+class TrianglesCommand;
 class MeshCommand;
 
 /** Class that knows how to sort `RenderCommand` objects.
@@ -91,7 +92,9 @@ Whenever possible prefer to use `QuadCommand` objects since the renderer will au
 class CC_DLL Renderer
 {
 public:
-    static const int VBO_SIZE = 65536 / 6;
+    static const int VBO_SIZE = 8192;
+    static const int INDEX_VBO_SIZE = 8192 * 6 / 4;
+    
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 
     Renderer();
@@ -142,7 +145,6 @@ public:
 
 protected:
 
-    void setupIndices();
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
     void setupVBOAndVAO();
@@ -162,7 +164,7 @@ protected:
     
     void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
-    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
+    void fillVerticesAndIndices(const TrianglesCommand* cmd);
 
     std::stack<int> _commandGroupStack;
     
@@ -172,14 +174,15 @@ protected:
     uint32_t _lastMaterialID;
 
     MeshCommand*              _lastBatchedMeshCommand;
-    std::vector<QuadCommand*> _batchedQuadCommands;
+    std::vector<TrianglesCommand*> _batchedCommands;
 
-    V3F_C4B_T2F_Quad _quads[VBO_SIZE];
-    GLushort _indices[6 * VBO_SIZE];
+    V3F_C4B_T2F _verts[VBO_SIZE];
+    GLushort _indices[INDEX_VBO_SIZE];
     GLuint _quadVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
-    int _numQuads;
+    int _filledVertex;
+    int _filledIndex;
     
     bool _glViewAssigned;
 
