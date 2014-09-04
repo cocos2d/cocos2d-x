@@ -25,7 +25,9 @@
 #ifndef __Cocos2d_Plugin_WebView_H_
 #define __Cocos2d_Plugin_WebView_H_
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "base/CCPlatformConfig.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 
 #include "ui/UIWidget.h"
