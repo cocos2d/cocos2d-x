@@ -30,9 +30,9 @@
 NS_CC_BEGIN
 
 /**
- * Inherit from Sprite, achieve BillBorad.
+ * Inherit from Sprite, achieve BillBoard.
  */
-class CC_DLL BillBorad : public Sprite
+class CC_3D_DLL BillBoard : public Sprite
 {
 public:
 
@@ -45,41 +45,41 @@ public:
     /// @name Creators
 
     /**
-     * Creates an empty BillBorad without texture. You can call setTexture method subsequently.
+     * Creates an empty BillBoard without texture. You can call setTexture method subsequently.
      *
-     * @return An autoreleased BillBorad object.
+     * @return An autoreleased BillBoard object.
      */
-    static BillBorad* create(Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* create(Mode mode = Mode::View_Point_Oriented);
 
     /**
-     * Creates a BillBorad with an image filename.
+     * Creates a BillBoard with an image filename.
      *
-     * After creation, the rect of BillBorad will be the size of the image,
+     * After creation, the rect of BillBoard will be the size of the image,
      * and the offset will be (0,0).
      *
      * @param   filename A path to image file, e.g., "scene1/monster.png"
-     * @return  An autoreleased BillBorad object.
+     * @return  An autoreleased BillBoard object.
      */
-    static BillBorad* create(const std::string& filename, Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* create(const std::string& filename, Mode mode = Mode::View_Point_Oriented);
 
     /**
-     * Creates a BillBorad with an image filename and a rect.
+     * Creates a BillBoard with an image filename and a rect.
      *
      * @param   filename A path to image file, e.g., "scene1/monster.png"
      * @param   rect     A subrect of the image file
-     * @return  An autoreleased BillBorad object
+     * @return  An autoreleased BillBoard object
      */
-    static BillBorad* create(const std::string& filename, const Rect& rect, Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* create(const std::string& filename, const Rect& rect, Mode mode = Mode::View_Point_Oriented);
 
      /**
-     * Creates a BillBorad with a Texture2D object.
+     * Creates a BillBoard with a Texture2D object.
      *
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
      *
      * @param   texture    A pointer to a Texture2D object.
-     * @return  An autoreleased BillBorad object
+     * @return  An autoreleased BillBoard object
      */
-    static BillBorad* createWithTexture(Texture2D *texture, Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* createWithTexture(Texture2D *texture, Mode mode = Mode::View_Point_Oriented);
 
     /** Set the billboard rotation mode. */
     void setMode(Mode mode);
@@ -88,13 +88,13 @@ public:
     Mode getMode() const;
 
     //override
-    /** draw BillBorad object */
+    /** draw BillBoard object */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 
 CC_CONSTRUCTOR_ACCESS:
-    BillBorad();
-    virtual ~BillBorad();
+    BillBoard();
+    virtual ~BillBoard();
 
 protected:
 
@@ -105,9 +105,10 @@ protected:
     float _zDepthInView;
 
     Mode _mode;
+    bool _modeDirty;
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(BillBorad);
+    CC_DISALLOW_COPY_AND_ASSIGN(BillBoard);
 
 };
 
