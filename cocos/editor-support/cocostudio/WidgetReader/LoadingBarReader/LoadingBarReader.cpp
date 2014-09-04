@@ -148,9 +148,19 @@ namespace cocostudio
         
         LoadingBar* loadingBar = static_cast<LoadingBar*>(widget);
         const protocolbuffers::LoadingBarOptions& options = nodeTree.loadingbaroptions();
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
 		const protocolbuffers::ResourceData& imageFileNameDic = options.texturedata();
         int imageFileNameType = imageFileNameDic.resourcetype();
+		/* peterson */
+		if (imageFileNameType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
+		}
+		/**/
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         

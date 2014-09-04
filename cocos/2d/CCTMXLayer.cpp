@@ -64,6 +64,12 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     if( tilesetInfo )
     {
         texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
+		/* peterson cheat */
+		if (!texture)
+		{
+			return false;
+		}
+		/**/
     }
 
     if (SpriteBatchNode::initWithTexture(texture, static_cast<ssize_t>(capacity)))

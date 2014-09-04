@@ -91,6 +91,10 @@ namespace cocostudio
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);
 		const protocolbuffers::ScrollViewOptions& options = nodeTree.scrollviewoptions();
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
         scrollView->setClippingEnabled(options.clipable());
         
@@ -138,6 +142,12 @@ namespace cocostudio
         
 		const protocolbuffers::ResourceData& imageFileNameDic = options.backgroundimagedata();
         int imageFileNameType = imageFileNameDic.resourcetype();
+		/* peterson */
+		if (imageFileNameType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
+		}
+		/**/
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         scrollView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         

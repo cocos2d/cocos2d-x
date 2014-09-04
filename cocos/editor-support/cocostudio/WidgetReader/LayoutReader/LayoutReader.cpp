@@ -315,6 +315,10 @@ namespace cocostudio
         
         Layout* panel = static_cast<Layout*>(widget);
 		const protocolbuffers::PanelOptions& options = nodeTree.paneloptions();
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
         panel->setClippingEnabled(options.clipable());
         
@@ -405,6 +409,12 @@ namespace cocostudio
         
 		const protocolbuffers::ResourceData& imageFileNameDic = options.backgroundimagedata();
         int imageFileNameType = imageFileNameDic.resourcetype();
+		/* peterson */
+		if (imageFileNameType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
+		}
+		/**/
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         

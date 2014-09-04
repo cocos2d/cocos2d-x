@@ -108,6 +108,12 @@ TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 
     // tell the layerinfo to release the ownership of the tiles map.
     layerInfo->_ownTiles = false;
+	/* peterson cheat */
+	if (!layer)
+	{
+		return nullptr;
+	}
+	/**/
     layer->setupTiles();
 
     return layer;
@@ -176,6 +182,12 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
+			/* peterson cheat */
+			if (!child)
+			{
+				continue;
+			}
+			/**/
             addChild(child, idx, idx);
             
             // update content size with the max size

@@ -194,6 +194,10 @@ namespace cocostudio
         
         Slider* slider = static_cast<Slider*>(widget);
         const protocolbuffers::SliderOptions& options = nodeTree.slideroptions();
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
         bool barTextureScale9Enable = options.scale9enable();
         slider->setScale9Enabled(barTextureScale9Enable);
@@ -205,7 +209,13 @@ namespace cocostudio
         float barLength = options.has_length() ? options.length() : 290;
         
 		const protocolbuffers::ResourceData& imageFileNameDic = options.barfilenamedata();
-        int imageFileNameType = imageFileNameDic.resourcetype();
+        int imageFileNameType = imageFileNameDic.resourcetype();		
+		/* peterson */
+		if (imageFileNameType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
+		}
+		/**/
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         
@@ -219,6 +229,12 @@ namespace cocostudio
         //loading normal slider ball texture
         const protocolbuffers::ResourceData& normalDic = options.ballnormaldata();
         int normalType = normalDic.resourcetype();
+		/* peterson */
+		if (normalType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + normalDic.plistfile());			
+		}
+		/**/
         imageFileName = this->getResourcePath(normalDic.path(), (Widget::TextureResType)normalType);
         slider->loadSlidBallTextureNormal(imageFileName, (Widget::TextureResType)normalType);
         
@@ -226,18 +242,36 @@ namespace cocostudio
         //loading slider ball press texture
         const protocolbuffers::ResourceData& pressedDic = options.ballpresseddata();
         int pressedType = pressedDic.resourcetype();
+		/* peterson */
+		if (pressedType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + pressedDic.plistfile());			
+		}
+		/**/
         std::string pressedFileName = this->getResourcePath(pressedDic.path(), (Widget::TextureResType)pressedType);
         slider->loadSlidBallTexturePressed(pressedFileName, (Widget::TextureResType)pressedType);
         
         //loading silder ball disable texture
         const protocolbuffers::ResourceData& disabledDic = options.balldisableddata();
         int disabledType = disabledDic.resourcetype();
+		/* peterson */
+		if (disabledType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + disabledDic.plistfile());			
+		}
+		/**/
         std::string disabledFileName = this->getResourcePath(disabledDic.path(), (Widget::TextureResType)disabledType);
         slider->loadSlidBallTextureDisabled(disabledFileName, (Widget::TextureResType)disabledType);
         
         //load slider progress texture
         const protocolbuffers::ResourceData& progressBarDic = options.progressbardata();
         int progressBarType = progressBarDic.resourcetype();
+		/* peterson */
+		if (progressBarType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + progressBarDic.plistfile());			
+		}
+		/**/
         std::string progressBarFileName = this->getResourcePath(progressBarDic.path(), (Widget::TextureResType)progressBarType);
         slider->loadProgressBarTexture(progressBarFileName, (Widget::TextureResType)progressBarType);
         

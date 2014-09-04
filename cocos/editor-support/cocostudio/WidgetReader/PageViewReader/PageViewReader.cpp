@@ -51,6 +51,10 @@ namespace cocostudio
         
         PageView* pageView = static_cast<PageView*>(widget);
         const protocolbuffers::PageViewOptions& options = nodeTree.pageviewoptions();
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
         CCLOG("options.clipable() = %d", options.clipable());
         pageView->setClippingEnabled(options.clipable());
@@ -97,6 +101,12 @@ namespace cocostudio
         
 		const protocolbuffers::ResourceData& imageFileNameDic = options.backgroundimagedata();
         int imageFileNameType = imageFileNameDic.resourcetype();
+		/* peterson */
+		if (imageFileNameType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
+		}
+		/**/
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         pageView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         

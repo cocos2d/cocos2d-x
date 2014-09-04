@@ -102,9 +102,9 @@ namespace cocostudio
                 
                 checkBox->loadTextureFrontCrossDisabled(backgroundValue, imageFileNameType);
             }
-            else if (key == "selectedState"){
-                checkBox->setSelectedState(valueToBool(value));
-            }
+//            else if (key == "selectedState"){
+//                checkBox->setSelectedState(valueToBool(value));
+//            }
         }
         
         this->endSetBasicProperties(widget);
@@ -148,9 +148,6 @@ namespace cocostudio
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic, P_Path, (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         
-        bool selectedState = DICTOOL->getBooleanValue_json(options, "selectedState");
-        checkBox->setSelectedState(selectedState);
-        
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
     }
@@ -161,39 +158,70 @@ namespace cocostudio
         
         CheckBox* checkBox = static_cast<CheckBox*>(widget);
         const protocolbuffers::CheckBoxOptions& options = nodeTree.checkboxoptions();
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
         //load background image
 		const protocolbuffers::ResourceData& backGroundDic = options.backgroundboxdata();
         int backGroundType = backGroundDic.resourcetype();
+		/* peterson */
+		if (backGroundType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + backGroundDic.plistfile());			
+		}
+		/**/
         std::string backGroundTexturePath = this->getResourcePath(backGroundDic.path(), (Widget::TextureResType)backGroundType);
         checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
         
         //load background selected image
         const protocolbuffers::ResourceData& backGroundSelectedDic = options.backgroundboxselecteddata();
         int backGroundSelectedType = backGroundSelectedDic.resourcetype();
+		/* peterson */
+		if (backGroundSelectedType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + backGroundSelectedDic.plistfile());			
+		}
+		/**/
         std::string backGroundSelectedTexturePath = this->getResourcePath(backGroundSelectedDic.path(), (Widget::TextureResType)backGroundSelectedType);
         checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
         
         //load frontCross image
         const protocolbuffers::ResourceData& frontCrossDic = options.frontcrossdata();
         int frontCrossType = frontCrossDic.resourcetype();
+		/* peterson */
+		if (frontCrossType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + frontCrossDic.plistfile());			
+		}
+		/**/
         std::string frontCrossFileName = this->getResourcePath(frontCrossDic.path(), (Widget::TextureResType)frontCrossType);
         checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
         
         //load backGroundBoxDisabledData
         const protocolbuffers::ResourceData& backGroundDisabledDic = options.backgroundboxdisableddata();
         int backGroundDisabledType = backGroundDisabledDic.resourcetype();
+		/* peterson */
+		if (backGroundDisabledType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + backGroundDisabledDic.plistfile());			
+		}
+		/**/
         std::string backGroundDisabledFileName = this->getResourcePath(backGroundDisabledDic.path(), (Widget::TextureResType)backGroundDisabledType);
         checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
         
         ///load frontCrossDisabledData
         const protocolbuffers::ResourceData& frontCrossDisabledDic = options.frontcrossdisableddata();
         int frontCrossDisabledType = frontCrossDisabledDic.resourcetype();
+		/* peterson */
+		if (frontCrossDisabledType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + frontCrossDisabledDic.plistfile());			
+		}
+		/**/
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic.path(), (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
-        
-        bool selectedState = options.selectedstate();
-        checkBox->setSelectedState(selectedState);
         
         
         // other commonly protperties
