@@ -31,20 +31,21 @@
 
 NS_CC_BEGIN
 
-BillBorad::BillBorad()
+BillBoard::BillBoard()
 : _zDepthInView(0.0f)
 , _mode(Mode::View_Point_Oriented)
+, _modeDirty(false)
 {
 
 }
 
-BillBorad::~BillBorad()
+BillBoard::~BillBoard()
 {
 }
 
-BillBorad* BillBorad::createWithTexture(Texture2D *texture, Mode mode)
+BillBoard* BillBoard::createWithTexture(Texture2D *texture, Mode mode)
 {
-    BillBorad *billborad = new (std::nothrow) BillBorad();
+    BillBoard *billborad = new (std::nothrow) BillBoard();
     if (billborad && billborad->initWithTexture(texture))
     {
         billborad->_mode = mode;
@@ -56,9 +57,9 @@ BillBorad* BillBorad::createWithTexture(Texture2D *texture, Mode mode)
 }
 
 
-BillBorad* BillBorad::create(const std::string& filename, Mode mode)
+BillBoard* BillBoard::create(const std::string& filename, Mode mode)
 {
-    BillBorad *billborad = new (std::nothrow) BillBorad();
+    BillBoard *billborad = new (std::nothrow) BillBoard();
     if (billborad && billborad->initWithFile(filename))
     {
         billborad->_mode = mode;
@@ -69,9 +70,9 @@ BillBorad* BillBorad::create(const std::string& filename, Mode mode)
     return nullptr;
 }
 
-BillBorad* BillBorad::create(const std::string& filename, const Rect& rect, Mode mode)
+BillBoard* BillBoard::create(const std::string& filename, const Rect& rect, Mode mode)
 {
-    BillBorad *billborad = new (std::nothrow) BillBorad();
+    BillBoard *billborad = new (std::nothrow) BillBoard();
     if (billborad && billborad->initWithFile(filename, rect))
     {
         billborad->_mode = mode;
@@ -82,9 +83,9 @@ BillBorad* BillBorad::create(const std::string& filename, const Rect& rect, Mode
     return nullptr;
 }
 
-BillBorad* BillBorad::create(Mode mode)
+BillBoard* BillBoard::create(Mode mode)
 {
-    BillBorad *billborad = new (std::nothrow) BillBorad();
+    BillBoard *billborad = new (std::nothrow) BillBoard();
     if (billborad && billborad->init())
     {
         billborad->_mode = mode;
@@ -95,12 +96,12 @@ BillBorad* BillBorad::create(Mode mode)
     return nullptr;
 }
 
-void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     auto camera = Camera::getVisitingCamera();
     
     const Mat4& camWorldMat = camera->getNodeToWorldTransform();
-    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_transform.m, transform.m, sizeof(float) * 16) != 0)
+    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_transform.m, transform.m, sizeof(float) * 16) != 0 || _modeDirty)
     {
         Vec3 camDir;
         switch (_mode)
@@ -114,6 +115,7 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         default:
             break;
         }
+        _modeDirty = false;
 
         if (camDir.length() < MATH_TOLERANCE)
         {
@@ -149,12 +151,13 @@ void BillBorad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void BillBorad::setMode( Mode mode )
+void BillBoard::setMode( Mode mode )
 {
     _mode = mode;
+    _modeDirty = true;
 }
 
-BillBorad::Mode BillBorad::getMode() const
+BillBoard::Mode BillBoard::getMode() const
 {
     return _mode;
 }
