@@ -101,18 +101,6 @@ const Mat4& Camera::getViewMatrix() const
     }
     return _view;
 }
-const Mat4& Camera::getInverseViewMatrix() const
-{
-    Mat4 viewInv(getNodeToWorldTransform());
-    static int count = sizeof(float) * 16;
-    if (memcmp(viewInv.m, _viewInv.m, count) != 0)
-    {
-        _viewProjectionDirty = true;
-        _viewInv = viewInv;
-        _view = viewInv.getInversed();
-    }
-    return _viewInv;
-}
 void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
 {
     Vec3 upv = up;

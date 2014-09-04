@@ -119,12 +119,6 @@ public:
     * @return The camera view matrix.
     */
     const Mat4& getViewMatrix() const;
-    /**
-    * Gets the camera's inverse view matrix.
-    *
-    * @return The camera inverse view matrix.
-    */
-    const Mat4& getInverseViewMatrix() const;
 
     /**get view projection matrix*/
     const Mat4& getViewProjectionMatrix() const;
