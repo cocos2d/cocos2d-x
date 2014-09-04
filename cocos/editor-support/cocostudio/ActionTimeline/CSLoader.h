@@ -31,7 +31,6 @@
 
 namespace protocolbuffers
 {
-    class CSParseBinary;
     class NodeTree;
 	class WidgetOptions;
     class SpriteOptions;
@@ -79,11 +78,6 @@ public:
     cocos2d::Node* nodeFromProtocolBuffersFile(const std::string& fileName);
     cocos2d::Node* nodeFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree);
     
-    /* peterson for editor */
-    cocos2d::Node* createNodeFromProtocolBuffers(const protocolbuffers::CSParseBinary& parseBinary);
-    cocos2d::Node* nodeFromProtocolBuffersFile(const protocolbuffers::CSParseBinary& parseBinary);
-    /**/
-    
     void setRecordProtocolBuffersPath(bool record) { _recordProtocolBuffersPath = record; }
     bool isRecordProtocolBuffersPath() const { return _recordProtocolBuffersPath; }
     
@@ -120,13 +114,11 @@ protected:
     void setPropsForSpriteFromProtocolBuffers(cocos2d::Node* node,
                                               const protocolbuffers::SpriteOptions& spriteOptions,
                                               const protocolbuffers::WidgetOptions& nodeOptions);
-    /* peterson */
-    void setPropsForParticleFromProtocolBuffers(cocos2d::Node* node,
-                                                const protocolbuffers::ParticleSystemOptions& particleSystemOptions,
-                                                const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForTMXTiledMapFromProtocolBuffers(cocos2d::Node* node,
-                                                   const protocolbuffers::TMXTiledMapOptions& tmxTiledMapOptions,
-                                                   const protocolbuffers::WidgetOptions& nodeOptions);
+    /* peterson */    
+	cocos2d::Node* createParticleFromProtocolBuffers(const protocolbuffers::ParticleSystemOptions& particleSystemOptions,
+													 const protocolbuffers::WidgetOptions& nodeOptions);    
+	cocos2d::Node* createTMXTiledMapFromProtocolBuffers(const protocolbuffers::TMXTiledMapOptions& tmxTiledMapOptions,
+														const protocolbuffers::WidgetOptions& nodeOptions);    	
     void setPropsForProjectNodeFromProtocolBuffers(cocos2d::Node* node,
                                                    const protocolbuffers::ProjectNodeOptions& projectNodeOptions,
                                                    const protocolbuffers::WidgetOptions& nodeOptions);

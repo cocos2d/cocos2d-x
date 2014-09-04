@@ -189,13 +189,12 @@ namespace cocostudio
             std::string passwordStyleText = options.has_passwordstyletext() ? options.passwordstyletext() : "*";
             textField->setPasswordStyleText(passwordStyleText.c_str());
         }
-
+        
 		if (options.has_fontresource())
 		{
 			const protocolbuffers::ResourceData& resourceData = options.fontresource();
 		    textField->setFontName(resourceData.path());
 		}
-        
         
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);

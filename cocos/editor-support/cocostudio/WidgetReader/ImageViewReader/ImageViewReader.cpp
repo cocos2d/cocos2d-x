@@ -149,12 +149,21 @@ namespace cocostudio
     {
         WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
         
-        const protocolbuffers::ImageViewOptions& options = nodeTree.imageviewoptions();
-        
+        const protocolbuffers::ImageViewOptions& options = nodeTree.imageviewoptions();        
         ImageView* imageView = static_cast<ImageView*>(widget);
+
+		/* peterson */
+		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+		/**/
         
         const protocolbuffers::ResourceData& imageFileNameDic = options.filenamedata();
         int imageFileNameType = imageFileNameDic.resourcetype();
+		/* peterson */
+		if (imageFileNameType == 1)
+		{
+			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
+		}
+		/**/
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         
@@ -170,17 +179,9 @@ namespace cocostudio
         
         if (scale9Enable)
         {
-            CCLOG("options.has_scale9width = %d", options.has_scale9width());
-            CCLOG("options.has_scale9height = %d", options.has_scale9height());
-            
-            CCLOG("options.scale9width() = %f", options.scale9width());
-            CCLOG("options.scale9height() = %f", options.scale9height());
             
             float swf = options.has_scale9width() ? options.scale9width() : 80.0f;
             float shf = options.has_scale9height() ? options.scale9height() : 80.0f;
-            
-            CCLOG("swf = %f", swf);
-            CCLOG("shf = %f", shf);
             imageView->setContentSize(Size(swf, shf));
             
             
