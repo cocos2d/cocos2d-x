@@ -60,6 +60,7 @@ Controller g_aTestNames[] = {
 	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
+    { "Node: BillBoard Test", [](){  return new BillBoardTestScene(); }},
     { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
