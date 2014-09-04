@@ -70,6 +70,7 @@ Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp \
 Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp \
 Classes/UITest/CocoStudioGUITest/UIScene.cpp \
 Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp \
+Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp \
 Classes/UITest/CocoStudioGUITest/UISceneManager.cpp \
 Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
 Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp \
@@ -123,12 +124,10 @@ Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControl
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
-Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp \
 Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
 Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
 Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
-Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp \
 Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \

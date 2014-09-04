@@ -240,7 +240,7 @@ extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsign
 // from native
 extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
 extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
-extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec3);
+extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4);
 extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count);
 extern void size_to_luaval(lua_State* L,const Size& sz);
 extern void rect_to_luaval(lua_State* L,const Rect& rt);

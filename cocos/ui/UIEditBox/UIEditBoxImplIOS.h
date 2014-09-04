@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013 Jozef Pridavok
+ Copyright (c) 2012 James Chen
  
  http://www.cocos2d-x.org
  
@@ -23,36 +23,68 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCEditBoxIMPLWIN_H__
-#define __CCEditBoxIMPLWIN_H__
+#ifndef __UIEditBoxIMPLIOS_H__
+#define __UIEditBoxIMPLIOS_H__
 
 #include "cocos2d.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "extensions/ExtensionMacros.h"
-#include "CCEditBoxImpl.h"
-#include "extensions/ExtensionExport.h"
+#include "UIEditBoxImpl.h"
 
-NS_CC_EXT_BEGIN
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@interface UICustomUITextField : UITextField
+{
+}
+
+@end
+
+
+@interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
+{
+    UICustomUITextField* textField_;
+    void* editBox_;
+    BOOL editState_;
+}
+
+@property(nonatomic, retain) UITextField* textField;
+@property(nonatomic, readonly, getter = isEditState) BOOL editState;
+@property(nonatomic, assign) void* editBox;
+
+-(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox;
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+-(void) setPosition:(CGPoint) pos;
+-(void) setContentSize:(CGSize) size;
+-(void) visit;
+-(void) openKeyboard;
+-(void) closeKeyboard;
+
+@end
+
+NS_CC_BEGIN
+
+namespace ui {
 
 class EditBox;
 
-class CC_EX_DLL EditBoxImplWin : public EditBoxImpl
+class EditBoxImplIOS : public EditBoxImpl
 {
 public:
     /**
      * @js NA
      */
-    EditBoxImplWin(EditBox* pEditText);
+    EditBoxImplIOS(EditBox* pEditText);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~EditBoxImplWin();
+    virtual ~EditBoxImplIOS();
     
     virtual bool initWithSize(const Size& size);
-	virtual void setFont(const char* pFontName, int fontSize);
+    virtual void setFont(const char* pFontName, int fontSize);
     virtual void setFontColor(const Color3B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
     virtual void setPlaceholderFontColor(const Color3B& color);
@@ -65,52 +97,51 @@ public:
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
+    virtual void refreshInactiveText();
     virtual void setPlaceHolder(const char* pText);
     virtual void setPosition(const Vec2& pos);
-	virtual void setVisible(bool visible);
+    virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
-    virtual void setAnchorPoint(const Vec2& anchorPoint);
+	virtual void setAnchorPoint(const Vec2& anchorPoint);
+    virtual void updatePosition(float dt) override;
     /**
      * @js NA
      * @lua NA
      */
     virtual void visit(void);
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance);
-    virtual void openKeyboard();
-    virtual void closeKeyboard();
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter(void);
+	virtual void onEnter(void);
+    virtual void doAnimationWhenKeyboardMove(float duration, float distance);
+    virtual void openKeyboard();
+    virtual void closeKeyboard();
+	
+	virtual void onEndEditing();
 private:
-
-    Label* _label;
-    Label* _labelPlaceHolder;
-    EditBox::InputMode    _editBoxInputMode;
-    EditBox::InputFlag    _editBoxInputFlag;
-    EditBox::KeyboardReturnType  _keyboardReturnType;
-    
-    std::string _text;
-    std::string _placeHolder;
-    
-    Color3B _colText;
-    Color3B _colPlaceHolder;
-
-    int   _maxLength;
-    Size _editSize;
-
-	/*
-    Size     _contentSize;
-    HWND       _sysEdit;
-    int        _maxTextLength;
-	*/
+	void			initInactiveLabels(const Size& size);
+	void			setInactiveText(const char* pText);
+	void			adjustTextFieldPosition();
+    void            placeInactiveLabels();
+	
+    Label*     _label;
+    Label*     _labelPlaceHolder;
+    Size          _contentSize;
+    Vec2         _position;
+    Vec2         _anchorPoint;
+    UIEditBoxImplIOS_objc* _systemControl;
+    int             _maxTextLength;
+    bool            _inRetinaMode;
 };
 
 
-NS_CC_EXT_END
+}
 
-#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+NS_CC_END
 
-#endif /* __CCEditBoxIMPLWIN_H__ */
+
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
+
+#endif /* __UIEditBoxIMPLIOS_H__ */
 
