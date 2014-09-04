@@ -26,7 +26,7 @@
 #define __CCBILLBOARD_H__
 
 #include "2d/CCSprite.h"
-
+#include "3d/3dExport.h"
 NS_CC_BEGIN
 
 /**
