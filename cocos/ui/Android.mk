@@ -31,6 +31,11 @@ UIRelativeBox.cpp \
 UIVideoPlayerAndroid.cpp \
 UIDeprecated.cpp \
 UIScale9Sprite.cpp \
+UIWebView.cpp \
+UIWebViewImpl_android.cpp \
+UIEditBox/UIEditBox.cpp \
+UIEditBox/UIEditBoxImplAndroid.cpp \
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../editor-support
@@ -39,13 +44,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../external \
 $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/../editor-support
+$(LOCAL_PATH)/../editor-support \
+$(LOCAL_PATH)/../platform/android
 
-
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_extension_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,extensions)
-$(call import-module,.)

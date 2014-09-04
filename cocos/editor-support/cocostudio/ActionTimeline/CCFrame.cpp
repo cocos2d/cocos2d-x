@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
 
 USING_NS_CC;
 
@@ -61,7 +63,7 @@ void Frame::cloneProperty(Frame* frame)
 // VisibleFrame
 VisibleFrame* VisibleFrame::create()
 {
-    VisibleFrame* frame = new VisibleFrame();
+    VisibleFrame* frame = new (std::nothrow) VisibleFrame();
     if (frame)
     {
         frame->autorelease();
@@ -97,7 +99,7 @@ Frame* VisibleFrame::clone()
 // TextureFrame
 TextureFrame* TextureFrame::create()
 {
-    TextureFrame* frame = new TextureFrame();
+    TextureFrame* frame = new (std::nothrow) TextureFrame();
     if (frame)
     {
         frame->autorelease();
@@ -148,7 +150,7 @@ Frame* TextureFrame::clone()
 // RotationFrame
 RotationFrame* RotationFrame::create()
 {
-    RotationFrame* frame = new RotationFrame();
+    RotationFrame* frame = new (std::nothrow) RotationFrame();
     if (frame)
     {
         frame->autorelease();
@@ -197,7 +199,7 @@ Frame* RotationFrame::clone()
 // SkewFrame
 SkewFrame* SkewFrame::create()
 {
-    SkewFrame* frame = new SkewFrame();
+    SkewFrame* frame = new (std::nothrow) SkewFrame();
     if (frame)
     {
         frame->autorelease();
@@ -254,7 +256,7 @@ Frame* SkewFrame::clone()
 // RotationSkewFrame
 RotationSkewFrame* RotationSkewFrame::create()
 {
-    RotationSkewFrame* frame = new RotationSkewFrame();
+    RotationSkewFrame* frame = new (std::nothrow) RotationSkewFrame();
     if (frame)
     {
         frame->autorelease();
@@ -307,7 +309,7 @@ Frame* RotationSkewFrame::clone()
 // PositionFrame
 PositionFrame* PositionFrame::create()
 {
-    PositionFrame* frame = new PositionFrame();
+    PositionFrame* frame = new (std::nothrow) PositionFrame();
     if (frame)
     {
         frame->autorelease();
@@ -359,7 +361,7 @@ Frame* PositionFrame::clone()
 // ScaleFrame
 ScaleFrame* ScaleFrame::create()
 {
-    ScaleFrame* frame = new ScaleFrame();
+    ScaleFrame* frame = new (std::nothrow) ScaleFrame();
     if (frame)
     {
         frame->autorelease();
@@ -414,7 +416,7 @@ Frame* ScaleFrame::clone()
 // AnchorPointFrame
 AnchorPointFrame* AnchorPointFrame::create()
 {
-    AnchorPointFrame* frame = new AnchorPointFrame();
+    AnchorPointFrame* frame = new (std::nothrow) AnchorPointFrame();
     if (frame)
     {
         frame->autorelease();
@@ -450,7 +452,7 @@ Frame* AnchorPointFrame::clone()
 // InnerActionFrame
 InnerActionFrame* InnerActionFrame::create()
 {
-    InnerActionFrame* frame = new InnerActionFrame();
+    InnerActionFrame* frame = new (std::nothrow) InnerActionFrame();
     if (frame)
     {
         frame->autorelease();
@@ -486,7 +488,7 @@ Frame* InnerActionFrame::clone()
 // ColorFrame
 ColorFrame* ColorFrame::create()
 {
-    ColorFrame* frame = new ColorFrame();
+    ColorFrame* frame = new (std::nothrow) ColorFrame();
     if (frame)
     {
         frame->autorelease();
@@ -549,7 +551,7 @@ Frame* ColorFrame::clone()
 // EventFrame
 EventFrame* EventFrame::create()
 {
-    EventFrame* frame = new EventFrame();
+    EventFrame* frame = new (std::nothrow) EventFrame();
     if (frame)
     {
         frame->autorelease();
@@ -584,7 +586,7 @@ Frame* EventFrame::clone()
 // ZOrderFrame
 ZOrderFrame* ZOrderFrame::create()
 {
-    ZOrderFrame* frame = new ZOrderFrame();
+    ZOrderFrame* frame = new (std::nothrow) ZOrderFrame();
     if (frame)
     {
         frame->autorelease();

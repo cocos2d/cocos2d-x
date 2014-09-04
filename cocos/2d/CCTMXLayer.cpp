@@ -26,16 +26,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTMXLayer.h"
-
-#include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
-#include "base/ccCArray.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
-
 #include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN
@@ -45,7 +40,7 @@ NS_CC_BEGIN
 
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *ret = new TMXLayer();
+    TMXLayer *ret = new (std::nothrow) TMXLayer();
     if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
         ret->autorelease();
@@ -55,7 +50,7 @@ TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {    
-    // XXX: is 35% a good estimate ?
+    // FIXME:: is 35% a good estimate ?
     Size size = layerInfo->_layerSize;
     float totalNumberOfTiles = size.width * size.height;
     float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
@@ -175,7 +170,7 @@ void TMXLayer::setupTiles()
             //    gid = CFSwapInt32( gid );
             /* We support little endian.*/
 
-            // XXX: gid == 0 --> empty tile
+            // FIXME:: gid == 0 --> empty tile
             if (gid != 0) 
             {
                 this->appendTileForGID(gid, Vec2(x, y));
@@ -243,8 +238,8 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     {
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(Vec2(0.5f,0.5f));
-        sprite->setPosition(Vec2(getPositionAt(pos).x + sprite->getContentSize().height/2,
-           getPositionAt(pos).y + sprite->getContentSize().width/2 ) );
+        sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
+           getPositionAt(pos).y + sprite->getContentSize().width/2 );
 
         int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
 
@@ -292,7 +287,7 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
     }
     else
     {
-        // XXX HACK: Needed because if "batch node" is nil,
+        // FIXME: HACK: Needed because if "batch node" is nil,
 		// then the Sprite'squad will be reset
         _reusedTile->setBatchNode(nullptr);
         
@@ -472,7 +467,7 @@ ssize_t TMXLayer::atlasIndexForExistantZ(int z)
 
 ssize_t TMXLayer::atlasIndexForNewZ(int z)
 {
-    // XXX: This can be improved with a sort of binary search
+    // FIXME:: This can be improved with a sort of binary search
     ssize_t i=0;
     for (i=0; i< _atlasIndexArray->num ; i++) 
     {

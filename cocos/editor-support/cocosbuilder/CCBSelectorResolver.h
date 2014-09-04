@@ -18,7 +18,7 @@ namespace cocosbuilder {
     return callfuncN_selector(METHOD); \
 }
 
-class CCBSelectorResolver {
+class CC_DLL CCBSelectorResolver {
     public:
     /**
      * @js NA
@@ -31,7 +31,7 @@ class CCBSelectorResolver {
 };
 
 
-class CCBScriptOwnerProtocol {
+class CC_DLL CCBScriptOwnerProtocol {
 public:
     /**
      * @js NA

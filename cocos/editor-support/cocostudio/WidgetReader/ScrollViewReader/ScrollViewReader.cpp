@@ -32,14 +32,14 @@ namespace cocostudio
     {
         if (!instanceScrollViewReader)
         {
-            instanceScrollViewReader = new ScrollViewReader();
+            instanceScrollViewReader = new (std::nothrow) ScrollViewReader();
         }
         return instanceScrollViewReader;
     }
     
     void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
-        //TODO::need to refactor...
+        //TODO: need to refactor...
         LayoutReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
         
         ScrollView* scrollView = static_cast<ScrollView*>(widget);

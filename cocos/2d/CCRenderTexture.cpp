@@ -27,23 +27,13 @@ THE SOFTWARE.
 #include "2d/CCRenderTexture.h"
 
 #include "base/ccUtils.h"
-#include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
-#include "2d/CCGrid.h"
 #include "base/CCEventType.h"
-#include "base/CCConfiguration.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
-#include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
-
-#include "CCGL.h"
 
 
 NS_CC_BEGIN
@@ -150,7 +140,7 @@ void RenderTexture::listenToForeground(EventCustom *event)
 
 RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
 {
-    RenderTexture *ret = new RenderTexture();
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
 
     if(ret && ret->initWithWidthAndHeight(w, h, eFormat))
     {
@@ -163,7 +153,7 @@ RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eForm
 
 RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    RenderTexture *ret = new RenderTexture();
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
 
     if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
     {
@@ -176,7 +166,7 @@ RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eForm
 
 RenderTexture * RenderTexture::create(int w, int h)
 {
-    RenderTexture *ret = new RenderTexture();
+    RenderTexture *ret = new (std::nothrow) RenderTexture();
 
     if(ret && ret->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, 0))
     {
@@ -231,7 +221,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         memset(data, 0, dataLen);
         _pixelFormat = format;
 
-        _texture = new Texture2D();
+        _texture = new (std::nothrow) Texture2D();
         if (_texture)
         {
             _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
@@ -245,7 +235,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         
         if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
         {
-            _textureCopy = new Texture2D();
+            _textureCopy = new (std::nothrow) Texture2D();
             if (_textureCopy)
             {
                 _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
@@ -356,7 +346,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     Director::getInstance()->getRenderer()->addCommand(&_beginWithClearCommand);
 }
 
-//TODO find a better way to clear the screen, there is no need to rebind render buffer there.
+//TODO: find a better way to clear the screen, there is no need to rebind render buffer there.
 void RenderTexture::clear(float r, float g, float b, float a)
 {
     this->beginWithClear(r, g, b, a);
@@ -488,13 +478,13 @@ Image* RenderTexture::newImage(bool fliimage)
 
     GLubyte *buffer = nullptr;
     GLubyte *tempData = nullptr;
-    Image *image = new Image();
+    Image *image = new (std::nothrow) Image();
 
     do
     {
-        CC_BREAK_IF(! (buffer = new GLubyte[savedBufferWidth * savedBufferHeight * 4]));
+        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]));
 
-        if(! (tempData = new GLubyte[savedBufferWidth * savedBufferHeight * 4]))
+        if(! (tempData = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]))
         {
             delete[] buffer;
             buffer = nullptr;
@@ -504,7 +494,7 @@ Image* RenderTexture::newImage(bool fliimage)
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
-        //TODO move this to configration, so we don't check it every time
+        // TODO: move this to configration, so we don't check it every time
         /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
          */
         if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
@@ -604,7 +594,7 @@ void RenderTexture::onBegin()
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
-    //TODO move this to configration, so we don't check it every time
+    // TODO: move this to configration, so we don't check it every time
     /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
     if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))

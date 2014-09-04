@@ -25,17 +25,12 @@
 #ifndef __CCMESHSKIN_H__
 #define __CCMESHSKIN_H__
 
-#include <unordered_map>
-
 #include "3d/CCBundle3DData.h"
-#include "3d/CCSkeleton3D.h"
-
-#include "base/ccMacros.h"
+#include "3d/3dExport.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
-#include "base/ccTypes.h"
 #include "math/CCMath.h"
-#include "3d/3dExport.h"
+
 
 NS_CC_BEGIN
 

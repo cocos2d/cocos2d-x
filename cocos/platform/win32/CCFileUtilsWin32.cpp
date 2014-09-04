@@ -147,7 +147,7 @@ static Data getData(const std::string& filename, bool forString)
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
 
-        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, nullptr);
+        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
         
         size = ::GetFileSize(fileHandle, nullptr);
@@ -222,7 +222,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
 
-        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, nullptr);
+        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
         
         *size = ::GetFileSize(fileHandle, nullptr);
@@ -278,7 +278,7 @@ string FileUtilsWin32::getWritablePath() const
     ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);
 
     // Debug app uses executable directory; Non-debug app uses local app data directory
-#ifndef _DEBUG
+//#ifndef _DEBUG
         // Get filename of executable only, e.g. MyGame.exe
         char *base_name = strrchr(full_path, '\\');
 
@@ -306,7 +306,7 @@ string FileUtilsWin32::getWritablePath() const
                 }
             }
         }
-#endif // not defined _DEBUG
+//#endif // not defined _DEBUG
 
     // If fetching of local app data directory fails, use the executable one
     string ret((char*)full_path);

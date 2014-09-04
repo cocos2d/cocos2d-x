@@ -24,17 +24,13 @@
 
 #include "2d/CCNodeGrid.h"
 #include "2d/CCGrid.h"
-
-#include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
-
 
 NS_CC_BEGIN
 
 NodeGrid* NodeGrid::create()
 {
-    NodeGrid * ret = new NodeGrid();
+    NodeGrid * ret = new (std::nothrow) NodeGrid();
     if (ret && ret->init())
     {
         ret->autorelease();

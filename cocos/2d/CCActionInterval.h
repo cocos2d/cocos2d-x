@@ -30,14 +30,16 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "2d/CCNode.h"
 #include "2d/CCAction.h"
-#include "2d/CCSpriteFrame.h"
 #include "2d/CCAnimation.h"
 #include "base/CCProtocols.h"
 #include "base/CCVector.h"
 
 NS_CC_BEGIN
+
+class Node;
+class SpriteFrame;
+class EventCustom;
 
 /**
  * @addtogroup actions

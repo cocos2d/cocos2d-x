@@ -8,7 +8,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class LayerGradientLoader : public LayerLoader {
+class CC_DLL LayerGradientLoader : public LayerLoader {
 public:
     /**
      * @js NA

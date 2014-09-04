@@ -34,19 +34,17 @@ THE SOFTWARE.
  * To create sprite frames and texture atlas, use this tool:
  * http://zwoptex.zwopple.com/
  */
-
+#include <set>
+#include <string>
 #include "2d/CCSpriteFrame.h"
-#include "renderer/CCTexture2D.h"
 #include "base/CCRef.h"
 #include "base/CCValue.h"
 #include "base/CCMap.h"
 
-#include <set>
-#include <string>
-
 NS_CC_BEGIN
 
 class Sprite;
+class Texture2D;
 
 /**
  * @addtogroup sprite_nodes

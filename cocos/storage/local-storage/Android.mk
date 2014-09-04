@@ -17,7 +17,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../..
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 
 include $(BUILD_STATIC_LIBRARY)
 

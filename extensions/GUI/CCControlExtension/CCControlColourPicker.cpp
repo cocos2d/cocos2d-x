@@ -86,9 +86,9 @@ bool ControlColourPicker::init()
         float hueShift                = 8;
         float colourShift             = 28;
         
-        _huePicker = new ControlHuePicker();
+        _huePicker = new (std::nothrow) ControlHuePicker();
         _huePicker->initWithTargetAndPos(spriteSheet, Vec2(backgroundPointZero.x + hueShift, backgroundPointZero.y + hueShift));
-        _colourPicker = new ControlSaturationBrightnessPicker();
+        _colourPicker = new (std::nothrow) ControlSaturationBrightnessPicker();
         _colourPicker->initWithTargetAndPos(spriteSheet, Vec2(backgroundPointZero.x + colourShift, backgroundPointZero.y + colourShift));
         
         // Setup events
@@ -110,7 +110,7 @@ bool ControlColourPicker::init()
 
 ControlColourPicker* ControlColourPicker::create()
 {
-    ControlColourPicker *pRet = new ControlColourPicker();
+    ControlColourPicker *pRet = new (std::nothrow) ControlColourPicker();
     pRet->init();
     pRet->autorelease();
     return pRet;
@@ -119,7 +119,7 @@ ControlColourPicker* ControlColourPicker::create()
 
 void ControlColourPicker::setColor(const Color3B& color)
 {
-    // XXX fixed me if not correct
+    // FIXME: fixed me if not correct
     Control::setColor(color);
     
     RGBA rgba;
@@ -167,7 +167,7 @@ void ControlColourPicker::hueSliderValueChanged(Ref * sender, Control::EventType
 
     // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
-    // XXX fixed me if not correct
+    // FIXME: fixed me if not correct
     Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback
@@ -183,7 +183,7 @@ void ControlColourPicker::colourSliderValueChanged(Ref * sender, Control::EventT
 
      // Update the value
     RGBA rgb    = ControlUtils::RGBfromHSV(_hsv);
-    // XXX fixed me if not correct
+    // FIXME: fixed me if not correct
     Control::setColor(Color3B((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
     // Send Control callback

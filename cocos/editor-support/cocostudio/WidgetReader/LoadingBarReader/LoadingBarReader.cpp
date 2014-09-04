@@ -37,7 +37,7 @@ namespace cocostudio
     {
         if (!instanceLoadingBar)
         {
-            instanceLoadingBar = new LoadingBarReader();
+            instanceLoadingBar = new (std::nothrow) LoadingBarReader();
         }
         return instanceLoadingBar;
     }

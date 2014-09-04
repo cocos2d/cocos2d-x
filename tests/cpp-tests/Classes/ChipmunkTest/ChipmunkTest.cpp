@@ -32,7 +32,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     
     // title
     auto label = Label::createWithTTF("Multi touch the screen", "fonts/Marker Felt.ttf", 36.0f);
-    label->setPosition(cocos2d::Vec2( VisibleRect::center().x, VisibleRect::top().y - 30));
+    label->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
     this->addChild(label, -1);
 
     // reset button
@@ -60,7 +60,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
-    menu->setPosition(cocos2d::Vec2(VisibleRect::right().x-100, VisibleRect::top().y-60));
+    menu->setPosition(VisibleRect::right().x-100, VisibleRect::top().y-60);
 
     scheduleUpdate();
 #else
@@ -68,7 +68,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
                                             "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Vec2(size.width/2, size.height/2));
+    label->setPosition(size.width/2, size.height/2);
     
     addChild(label);
     
@@ -160,14 +160,14 @@ void ChipmunkTestLayer::createResetButton()
 
     auto menu = Menu::create(reset, nullptr);
 
-    menu->setPosition(cocos2d::Vec2(VisibleRect::center().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + 30);
     this->addChild(menu, -1);
 }
 
 void ChipmunkTestLayer::reset(Ref* sender)
 {
-    auto s = new ChipmunkAccelTouchTestScene();
-    auto child = new ChipmunkTestLayer();
+    auto s = new (std::nothrow) ChipmunkAccelTouchTestScene();
+    auto child = new (std::nothrow) ChipmunkTestLayer();
     s->addChild(child);
     child->release();
     Director::getInstance()->replaceScene(s);
@@ -249,7 +249,7 @@ void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
 
 void ChipmunkAccelTouchTestScene::runThisTest()
 {
-    auto layer = new ChipmunkTestLayer();
+    auto layer = new (std::nothrow) ChipmunkTestLayer();
     addChild(layer);
     layer->release();
 

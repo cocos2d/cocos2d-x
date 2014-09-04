@@ -38,7 +38,7 @@ namespace cocostudio
     {
         if (!instanceTextFieldReader)
         {
-            instanceTextFieldReader = new TextFieldReader();
+            instanceTextFieldReader = new (std::nothrow) TextFieldReader();
         }
         return instanceTextFieldReader;
     }

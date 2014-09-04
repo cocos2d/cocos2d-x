@@ -479,7 +479,7 @@ UserDefault* UserDefault::getInstance()
     
     if (! _userDefault)
     {
-        _userDefault = new UserDefault();
+        _userDefault = new (std::nothrow) UserDefault();
     }
     
     return _userDefault;
@@ -490,13 +490,13 @@ void UserDefault::destroyInstance()
     CC_SAFE_DELETE(_userDefault);
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 UserDefault* UserDefault::sharedUserDefault()
 {
     return UserDefault::getInstance();
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 void UserDefault::purgeSharedUserDefault()
 {
     UserDefault::destroyInstance();

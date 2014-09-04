@@ -145,7 +145,7 @@ void AtlasDemoNew::onEnter()
 
 void AtlasDemoNew::restartCallback(Ref* sender)
 {
-    auto s = new AtlasTestSceneNew();
+    auto s = new (std::nothrow) AtlasTestSceneNew();
     s->addChild(restartAtlasActionNew()); 
 
     Director::getInstance()->replaceScene(s);
@@ -154,7 +154,7 @@ void AtlasDemoNew::restartCallback(Ref* sender)
 
 void AtlasDemoNew::nextCallback(Ref* sender)
 {
-    auto s = new AtlasTestSceneNew();
+    auto s = new (std::nothrow) AtlasTestSceneNew();
     s->addChild( nextAtlasActionNew() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -162,7 +162,7 @@ void AtlasDemoNew::nextCallback(Ref* sender)
 
 void AtlasDemoNew::backCallback(Ref* sender)
 {
-    auto s = new AtlasTestSceneNew();
+    auto s = new (std::nothrow) AtlasTestSceneNew();
     s->addChild( backAtlasActionNew() );
     Director::getInstance()->replaceScene(s);
     s->release();

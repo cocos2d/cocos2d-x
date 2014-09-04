@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCComponent.h"
-#include "base/CCScriptSupport.h"
 
 
 NS_CC_BEGIN
@@ -110,7 +109,7 @@ bool Component::serialize(void *ar)
 
 Component* Component::create(void)
 {
-    Component * ret = new Component();
+    Component * ret = new (std::nothrow) Component();
     if (ret != nullptr && ret->init())
     {
         ret->autorelease();

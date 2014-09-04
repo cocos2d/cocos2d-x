@@ -71,7 +71,7 @@ void TextureAtlasEncryptionDemo::onEnter()
 
 void TextureAtlasEncryptionTestScene::runThisTest()
 {
-    auto layer = new TextureAtlasEncryptionDemo;
+    auto layer = new (std::nothrow) TextureAtlasEncryptionDemo;
     layer->autorelease();
     
     addChild(layer);

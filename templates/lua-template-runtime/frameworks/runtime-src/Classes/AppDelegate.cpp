@@ -65,12 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     lua_State* L = engine->getLuaStack()->getLuaState();
-    lua_getglobal(L, "_G");
-    if (lua_istable(L,-1))//stack:...,_G,
-    {
-        lua_module_register(L);
-    }
-    lua_pop(L, 1);//statck:...
+    lua_module_register(L);
 
     LuaStack* stack = engine->getLuaStack();
     stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));

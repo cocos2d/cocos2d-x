@@ -1818,7 +1818,7 @@ static int tolua_cocos2d_CallFunc_create(lua_State* tolua_S)
             ref = luaL_ref(tolua_S, LUA_REGISTRYINDEX);
             hasExtraData = true;
         }
-        LuaCallFunc* tolua_ret = new LuaCallFunc();
+        LuaCallFunc* tolua_ret = new (std::nothrow) LuaCallFunc();
         tolua_ret->initWithFunction([=](void* self,Node* target){
             int callbackHandler =  ScriptHandlerMgr::getInstance()->getObjectHandler((void*)tolua_ret, ScriptHandlerMgr::HandlerType::CALLFUNC);
             
@@ -2978,7 +2978,7 @@ static int tolua_cocos2dx_GLProgram_create(lua_State* tolua_S)
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.GLProgram:create"); arg0 = arg0_tmp.c_str();
         std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "cc.GLProgram:create"); arg1 = arg1_tmp.c_str();
         
-        GLProgram* tolua_ret = new GLProgram();
+        GLProgram* tolua_ret = new (std::nothrow) GLProgram();
         if (nullptr == tolua_ret)
             return 0;        
 
@@ -3249,7 +3249,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLfloat[sizeof(GLfloat) * 4 * arg2];
+        arg1 = new (std::nothrow) GLfloat[sizeof(GLfloat) * 4 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate matrixArry in the lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv failed!");
@@ -3322,7 +3322,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLfloat[sizeof(GLfloat) * 9 * arg2];
+        arg1 = new (std::nothrow) GLfloat[sizeof(GLfloat) * 9 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate matrixArry in the lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv failed!");
@@ -3396,7 +3396,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLfloat[sizeof(GLfloat) * 16 * arg2];
+        arg1 = new (std::nothrow) GLfloat[sizeof(GLfloat) * 16 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate matrixArry in the lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv failed!");
@@ -3468,7 +3468,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLint[sizeof(GLint) * 3 * arg2];
+        arg1 = new (std::nothrow) GLint[sizeof(GLint) * 3 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate intArray in the lua_cocos2dx_GLProgram_setUniformLocationWith3iv failed!");
@@ -3542,7 +3542,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLint[sizeof(GLint) * 4 * arg2];
+        arg1 = new (std::nothrow) GLint[sizeof(GLint) * 4 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate intArray in the lua_cocos2dx_GLProgram_setUniformLocationWith4iv failed!");
@@ -3614,7 +3614,7 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        arg1 = new GLint[sizeof(GLint) * 2 * arg2];
+        arg1 = new (std::nothrow) GLint[sizeof(GLint) * 2 * arg2];
         if (nullptr == arg1)
         {
             CCLOG("Allocate intArray in the lua_cocos2dx_GLProgram_setUniformLocationWith2iv failed!");
@@ -4301,7 +4301,7 @@ static void extendParticleBatchNode(lua_State* tolua_S)
 NS_CC_BEGIN
 EventListenerAcceleration* LuaEventListenerAcceleration::create()
 {
-    EventListenerAcceleration* eventAcceleration = new EventListenerAcceleration();
+    EventListenerAcceleration* eventAcceleration = new (std::nothrow) EventListenerAcceleration();
     if (nullptr == eventAcceleration)
         return nullptr;
     
@@ -4322,7 +4322,7 @@ EventListenerAcceleration* LuaEventListenerAcceleration::create()
 
 EventListenerCustom* LuaEventListenerCustom::create(const std::string& eventName)
 {
-    EventListenerCustom* eventCustom = new EventListenerCustom();
+    EventListenerCustom* eventCustom = new (std::nothrow) EventListenerCustom();
     if (nullptr == eventCustom)
         return nullptr;
     
@@ -5934,7 +5934,7 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
             return 0;
         }
         
-        arg5 = new GLfloat[len];
+        arg5 = new (std::nothrow) GLfloat[len];
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S,i + 1);
@@ -6505,6 +6505,80 @@ static void extendTextureCache(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+int lua_cocos2dx_GLView_getAllTouches(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLView* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::GLView*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLView_getAllTouches'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        
+        std::vector<cocos2d::Touch*> ret = cobj->getAllTouches();
+        lua_newtable(tolua_S);
+        if (ret.empty())
+            return 1;
+        
+        int index = 1;
+        for (const auto& obj : ret)
+        {
+            if (nullptr == obj)
+                continue;
+            
+            lua_pushnumber(tolua_S, (lua_Number)index);
+            int ID = (obj) ? (int)obj->_ID : -1;
+            int* luaID = (obj) ? &obj->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)obj, "cc.Touch");
+            lua_rawset(tolua_S, -3);
+            ++index;
+        }
+
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLView:getAllTouches",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_getAllTouches'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendGLView(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.GLView");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "getAllTouches", lua_cocos2dx_GLView_getAllTouches);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -6559,6 +6633,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerFocus(tolua_S);
     extendApplication(tolua_S);
     extendTextureCache(tolua_S);
+    extendGLView(tolua_S);
     
     return 0;
 }
