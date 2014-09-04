@@ -158,6 +158,7 @@ THE SOFTWARE.
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCPrimitive.h"
 #include "renderer/CCPrimitiveCommand.h"
+#include "renderer/CCTrianglesCommand.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"

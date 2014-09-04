@@ -33,8 +33,7 @@
 NS_CC_BEGIN
 
 QuadCommand::QuadCommand()
-:TrianglesCommand()
-,_quads(nullptr)
+:_quads(nullptr)
 ,_quadsCount(0)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
