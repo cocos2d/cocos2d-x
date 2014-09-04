@@ -23,6 +23,9 @@
 #include "UIWebViewTest/UIWebViewTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#include "UIEditBoxTest.h"
+#endif
 
 
 USING_NS_CC;
@@ -36,6 +39,9 @@ static const char* s_testArray[] =
     "UIButtonTest_RemoveSelf",
     "UIButtonTestSwitchScale9",
     "UIButtonTestZoomScale",
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    "UIEditBoxTest",
+#endif
     "UICheckBoxTest",
     "UISliderTest",
     "UISliderTest_Scale9",
@@ -373,6 +379,11 @@ Scene *UISceneManager::currentUIScene()
             return UIS9Flip::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9ChangeAnchorPoint:
             return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+        case kUIEditBoxTest:
+            return UIEditBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+#endif
+       
     }
     return nullptr;
 }

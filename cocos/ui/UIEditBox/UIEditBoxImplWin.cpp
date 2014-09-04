@@ -22,14 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCEditBoxImplWin.h"
+#include "UIEditBoxImplWin.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#include "CCEditBox.h"
+#include "UIEditBox.h"
 #include "proj.win32/Win32InputBox.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
@@ -293,6 +295,8 @@ void EditBoxImplWin::onEnter(void)
 
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */

@@ -30,6 +30,7 @@
 #include "CCLuaValue.h"
 #include "CocoStudio.h"
 #include "CCLuaEngine.h"
+#include "CustomGUIReader.h"
 
 using namespace cocostudio;
 
@@ -554,6 +555,53 @@ static void extendActionTimeline(lua_State* L)
     lua_pop(L, 1);
 }
 
+int lua_cocos2dx_CustomGUIReader_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.CustomGUIReader",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 3)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.CustomGUIReader:create");
+            if (!ok) { break; }
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err)) {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION arg1 = toluafix_ref_function(tolua_S,3,0);
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(tolua_S,4,"LUA_FUNCTION",0,&tolua_err)) {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION arg2 = toluafix_ref_function(tolua_S,4,0);
+
+            cocostudio::CustomGUIReader* ret = cocostudio::CustomGUIReader::create(arg0, arg1, arg2);
+            object_to_luaval<cocostudio::CustomGUIReader>(tolua_S, "ccs.CustomGUIReader",(cocostudio::CustomGUIReader*)ret);
+            return 1;
+        }
+    } while (0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "ccs.CustomGUIReader:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_CustomGUIReader_create'.",&tolua_err);
+#endif
+    return 0;
+}
 
 int register_all_cocos2dx_coco_studio_manual(lua_State* L)
 {
@@ -569,6 +617,26 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
     return 0;
 }
 
+int lua_register_cocos2dx_coco_studio_CustomGUIReader(lua_State* tolua_S)
+{
+    tolua_module(tolua_S,"ccs",0);
+    tolua_beginmodule(tolua_S,"ccs");
+    
+
+    tolua_usertype(tolua_S,"ccs.CustomGUIReader");
+    tolua_cclass(tolua_S,"CustomGUIReader","ccs.CustomGUIReader","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"CustomGUIReader");
+        tolua_function(tolua_S,"create",lua_cocos2dx_CustomGUIReader_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocostudio::CustomGUIReader).name();
+    g_luaType[typeName] = "ccs.CustomGUIReader";
+    g_typeCast["CustomGUIReader"] = "ccs.CustomGUIReader";
+
+    tolua_endmodule(tolua_S);
+    return 1;
+}
+
 int register_cocostudio_module(lua_State* L)
 {
     lua_getglobal(L, "_G");
@@ -576,6 +644,7 @@ int register_cocostudio_module(lua_State* L)
     {
         register_all_cocos2dx_studio(L);
         register_all_cocos2dx_coco_studio_manual(L);
+        lua_register_cocos2dx_coco_studio_CustomGUIReader(L);
     }
     lua_pop(L, 1);
 

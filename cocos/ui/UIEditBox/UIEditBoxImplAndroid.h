@@ -23,63 +23,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCEditBoxIMPLIOS_H__
-#define __CCEditBoxIMPLIOS_H__
+#ifndef __UIEDITBOXIMPLANDROID_H__
+#define __UIEDITBOXIMPLANDROID_H__
 
 #include "cocos2d.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "extensions/ExtensionMacros.h"
-#include "CCEditBoxImpl.h"
+#include "UIEditBoxImpl.h"
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+NS_CC_BEGIN
 
-@interface CCCustomUITextField : UITextField
-{
-}
-
-@end
-
-
-@interface CCEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
-{
-    CCCustomUITextField* textField_;
-    void* editBox_;
-    BOOL editState_;
-}
-
-@property(nonatomic, retain) UITextField* textField;
-@property(nonatomic, readonly, getter = isEditState) BOOL editState;
-@property(nonatomic, assign) void* editBox;
-
--(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox;
--(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
--(void) setPosition:(CGPoint) pos;
--(void) setContentSize:(CGSize) size;
--(void) visit;
--(void) openKeyboard;
--(void) closeKeyboard;
-
-@end
-
-NS_CC_EXT_BEGIN
+namespace ui {
 
 class EditBox;
 
-class EditBoxImplIOS : public EditBoxImpl
+class EditBoxImplAndroid : public EditBoxImpl
 {
 public:
     /**
      * @js NA
      */
-    EditBoxImplIOS(EditBox* pEditText);
+    EditBoxImplAndroid(EditBox* pEditText);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~EditBoxImplIOS();
+    virtual ~EditBoxImplAndroid();
     
     virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
@@ -95,13 +65,11 @@ public:
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
-    virtual void refreshInactiveText();
     virtual void setPlaceHolder(const char* pText);
     virtual void setPosition(const Vec2& pos);
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
 	virtual void setAnchorPoint(const Vec2& anchorPoint);
-    virtual void updatePosition(float dt) override;
     /**
      * @js NA
      * @lua NA
@@ -111,33 +79,34 @@ public:
      * @js NA
      * @lua NA
      */
-	virtual void onEnter(void);
+    virtual void onEnter(void);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
-	
-	virtual void onEndEditing();
+    
 private:
-	void			initInactiveLabels(const Size& size);
-	void			setInactiveText(const char* pText);
-	void			adjustTextFieldPosition();
-    void            placeInactiveLabels();
-	
-    Label*     _label;
-    Label*     _labelPlaceHolder;
-    Size          _contentSize;
-    Vec2         _position;
-    Vec2         _anchorPoint;
-    CCEditBoxImplIOS_objc* _systemControl;
-    int             _maxTextLength;
-    bool            _inRetinaMode;
+    Label* _label;
+    Label* _labelPlaceHolder;
+    EditBox::InputMode    _editBoxInputMode;
+    EditBox::InputFlag    _editBoxInputFlag;
+    EditBox::KeyboardReturnType  _keyboardReturnType;
+    
+    std::string _text;
+    std::string _placeHolder;
+    
+    Color3B _colText;
+    Color3B _colPlaceHolder;
+
+    int   _maxLength;
+    Size _editSize;
 };
 
 
-NS_CC_EXT_END
+}
 
+NS_CC_END
 
-#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
+#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) */
 
-#endif /* __CCEditBoxIMPLIOS_H__ */
+#endif /* __UIEDITBOXIMPLANDROID_H__ */
 

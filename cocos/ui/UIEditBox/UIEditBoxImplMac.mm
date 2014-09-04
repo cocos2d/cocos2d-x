@@ -23,19 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEditBoxImplMac.h"
+#include "UIEditBoxImplMac.h"
 #include "base/CCDirector.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#include "CCEditBox.h"
+#include "UIEditBox.h"
 
 
-#define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
+#define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac*)editBox_)
 
 
 
-@implementation CCEditBoxImplMac
+@implementation UIEditBoxImplMac
 
 @synthesize textField = textField_;
 @synthesize secureTextField = secureTextField_;
@@ -163,14 +163,14 @@
 - (void)controlTextDidBeginEditing:(NSNotification *)notification
 {
     editState_ = YES;
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplMac()->getEditBox());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
@@ -183,7 +183,7 @@
 - (void)controlTextDidEndEditing:(NSNotification *)notification
 {
     editState_ = NO;
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplMac()->getEditBox());
@@ -191,7 +191,7 @@
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
@@ -233,14 +233,14 @@
  */
 - (void)controlTextDidChange:(NSNotification *)notification
 {
-    cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxTextChanged(getEditBoxImplMac()->getEditBox(), getEditBoxImplMac()->getText());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::extension::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplMac()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
@@ -252,7 +252,9 @@
 
 @end
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
@@ -292,7 +294,7 @@ bool EditBoxImplMac::initWithSize(const Size& size)
          rect.size.height /= 2.0f;
     }
     
-    _sysEdit = [[CCEditBoxImplMac alloc] initWithFrame:rect editBox:this];
+    _sysEdit = [[UIEditBoxImplMac alloc] initWithFrame:rect editBox:this];
     
     if (!_sysEdit)
         return false;
@@ -514,7 +516,9 @@ void EditBoxImplMac::onEnter(void)
     adjustTextFieldPosition();
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 

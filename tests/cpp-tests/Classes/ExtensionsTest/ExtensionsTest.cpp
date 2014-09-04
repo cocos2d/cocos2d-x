@@ -18,11 +18,6 @@
 #include "NetworkTest/SocketIOTest.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
-#include "EditBoxTest/EditBoxTest.h"
-#endif
-
-#include "Scale9SpriteTest/Scale9SpriteTest.h"
 
 enum
 {
@@ -35,15 +30,6 @@ static struct {
 	std::function<void(Ref* sender)> callback;
 } g_extensionsTests[] = {
 	{ "NotificationCenterTest", [](Ref* sender) { runNotificationCenterTest(); }
-	},
-    { "Scale9SpriteTest", [](Ref* sender) {
-            auto scene = new (std::nothrow) S9SpriteTestScene();
-            if (scene)
-            {
-                scene->runThisTest();
-                scene->release();
-            }
-        }
 	},
 	{ "CCControlButtonTest", [](Ref *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
@@ -68,10 +54,7 @@ static struct {
 	{ "SocketIOTest", [](Ref *sender){ runSocketIOTest();}
 	},
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	{ "EditBoxTest", [](Ref *sender){ runEditBoxTest();}
-	},
-#endif
+
 	{ "TableViewTest", [](Ref *sender){ runTableViewTest();}
 	},
 	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new (std::nothrow) ArmatureTestScene();
