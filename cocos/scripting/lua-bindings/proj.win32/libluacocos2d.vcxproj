@@ -56,6 +56,7 @@
     <ClCompile Include="..\manual\cocosbuilder\CCBProxy.cpp" />
     <ClCompile Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.cpp" />
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp" />
+    <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp" />
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.cpp" />
     <ClCompile Include="..\manual\extension\lua_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\manual\LuaBasicConversions.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="..\manual\cocosbuilder\CCBProxy.h" />
     <ClInclude Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.h" />
     <ClInclude Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.h" />
+    <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h" />
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp" />
     <ClInclude Include="..\manual\extension\lua_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\manual\LuaBasicConversions.h" />
@@ -208,7 +210,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -217,7 +219,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

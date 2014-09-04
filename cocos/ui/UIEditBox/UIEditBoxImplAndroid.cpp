@@ -23,16 +23,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEditBoxImplAndroid.h"
+#include "UIEditBoxImplAndroid.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "CCEditBox.h"
+#include "UIEditBox.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
@@ -309,7 +311,9 @@ void EditBoxImplAndroid::closeKeyboard()
 	
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) */
 

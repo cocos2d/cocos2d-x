@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 James Chen
+ Copyright (c) 2012 Jozef Pridavok
  
  http://www.cocos2d-x.org
  
@@ -23,32 +23,63 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCEDITBOXIMPLANDROID_H__
-#define __CCEDITBOXIMPLANDROID_H__
+#ifndef __UIEditBoxIMPLMAC_H__
+#define __UIEditBoxIMPLMAC_H__
 
 #include "cocos2d.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#include "extensions/ExtensionMacros.h"
-#include "CCEditBoxImpl.h"
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
-NS_CC_EXT_BEGIN
+#include "UIEditBoxImpl.h"
 
+
+@interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
+{
+    NSTextField* textField_;
+    NSSecureTextField* secureTextField_;
+    void* editBox_;
+    BOOL editState_;
+    NSMutableDictionary* placeholderAttributes_;
+}
+
+@property(nonatomic, retain) NSTextField* textField;
+@property(nonatomic, retain) NSSecureTextField* secureTextField;
+@property(nonatomic, retain) NSMutableDictionary* placeholderAttributes;
+@property(nonatomic, readonly, getter = isEditState) BOOL editState;
+@property(nonatomic, assign) void* editBox;
+
+-(id) initWithFrame: (NSRect) frameRect editBox: (void*) editBox;
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+-(void) setPosition:(NSPoint) pos;
+-(void) setContentSize:(NSSize) size;
+-(void) visit;
+-(void) openKeyboard;
+-(void) closeKeyboard;
+
+@end
+
+
+NS_CC_BEGIN
+
+namespace ui {
+    
 class EditBox;
 
-class EditBoxImplAndroid : public EditBoxImpl
+class EditBoxImplMac : public EditBoxImpl
 {
 public:
     /**
      * @js NA
      */
-    EditBoxImplAndroid(EditBox* pEditText);
+    EditBoxImplMac(EditBox* pEditText);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~EditBoxImplAndroid();
+    virtual ~EditBoxImplMac();
     
     virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
@@ -68,42 +99,38 @@ public:
     virtual void setPosition(const Vec2& pos);
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
-	virtual void setAnchorPoint(const Vec2& anchorPoint);
+    virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
      * @js NA
      * @lua NA
      */
     virtual void visit(void);
+    virtual void doAnimationWhenKeyboardMove(float duration, float distance);
+    virtual void openKeyboard();
+    virtual void closeKeyboard();
+    virtual void updatePosition(float dt) override;
     /**
      * @js NA
      * @lua NA
      */
-	virtual void onEnter(void);
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance);
-    virtual void openKeyboard();
-    virtual void closeKeyboard();
-    
+    virtual void onEnter(void);
 private:
-    Label* _label;
-    Label* _labelPlaceHolder;
-    EditBox::InputMode    _editBoxInputMode;
-    EditBox::InputFlag    _editBoxInputFlag;
-    EditBox::KeyboardReturnType  _keyboardReturnType;
-    
-    std::string _text;
-    std::string _placeHolder;
-    
-    Color3B _colText;
-    Color3B _colPlaceHolder;
-
-    int   _maxLength;
-    Size _editSize;
+    NSPoint    convertDesignCoordToScreenCoord(const Vec2& designCoord, bool bInRetinaMode);
+    void       adjustTextFieldPosition();
+    Size     _contentSize;
+    Vec2    _position;
+    Vec2    _anchorPoint;
+    int        _maxTextLength;
+    bool       _inRetinaMode;
+    UIEditBoxImplMac*  _sysEdit;
 };
 
 
-NS_CC_EXT_END
+}
 
-#endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) */
+NS_CC_END
 
-#endif /* __CCEDITBOXIMPLANDROID_H__ */
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
+#endif /* __UIEditBoxIMPLMAC_H__ */
 

@@ -5,41 +5,49 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] getAmplitudeRate 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] setAmplitudeRate 
 -- @param self
--- @param #float float
+-- @param #float amp
         
 --------------------------------
+--  how many seconds had elapsed since the actions started to run. 
 -- @function [parent=#ActionInterval] getElapsed 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
         
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] step 
 -- @param self
--- @param #float float
+-- @param #float dt
         
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] clone 
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] reverse 
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
+-- 
 -- @function [parent=#ActionInterval] isDone 
 -- @param self
 -- @return bool#bool ret (return value: bool)

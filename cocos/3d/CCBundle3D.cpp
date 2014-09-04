@@ -201,7 +201,7 @@ bool Bundle3D::load(const std::string& path)
     }
     else 
     {
-        CCLOGINFO("%s is invalid file formate", path);
+        CCLOG("warning: %s is invalid file formate", path.c_str());
     }
 
     ret?(_path = path):(_path = "");
@@ -302,7 +302,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         }
         return true;
     }
-    CCLOG("load %s file error: %s", fullPath.c_str(), ret.c_str());
+    CCLOG("warning: load %s file error: %s", fullPath.c_str(), ret.c_str());
     return false;
 }
 
@@ -376,7 +376,7 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
         {
             return loadMeshDatasBinary_0_2(meshdatas);
         }
-        else if(_version == "0.3")
+        else
         {
             return loadMeshDatasBinary(meshdatas);
         }
@@ -391,7 +391,7 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
         {
             return loadMeshDataJson_0_2(meshdatas);
         }
-        else if(_version == "0.3")
+        else
         {
             return loadMeshDatasJson(meshdatas);
         }
@@ -405,7 +405,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
     unsigned int meshSize = 0;
     if (_binaryReader.read(&meshSize, 4, 1) != 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
     for(int i = 0; i < meshSize ; i++ )
@@ -415,7 +415,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
         // read mesh data
         if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
         {
-            CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
             return false;
         }
         meshData->attribCount = attribSize;
@@ -426,7 +426,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             unsigned int vSize;
             if (_binaryReader.read(&vSize, 4, 1) != 1)
             {
-                CCLOGINFO("Failed to read meshdata: usage or size '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
                 return false;
             }
             std::string type = _binaryReader.readString();
@@ -440,14 +440,14 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
         // Read vertex data
         if (_binaryReader.read(&vertexSizeInFloat, 4, 1) != 1 || vertexSizeInFloat == 0)
         {
-            CCLOGINFO("Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
             return false;
         }
 
         meshData->vertex.resize(vertexSizeInFloat);
         if (_binaryReader.read(&meshData->vertex[0], 4, vertexSizeInFloat) != vertexSizeInFloat)
         {
-            CCLOGINFO("Failed to read meshdata: vertex element '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
             return false;
         }
 
@@ -463,13 +463,13 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             unsigned int nIndexCount;
             if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
             {
-                CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
                 return false;
             }
             indexArray.resize(nIndexCount);
             if (_binaryReader.read(&indexArray[0], 2, nIndexCount) != nIndexCount)
             {
-                CCLOGINFO("Failed to read meshdata: indices '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
                 return false;
             }
             meshData->subMeshIndices.push_back(indexArray);
@@ -492,7 +492,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
     unsigned int attribSize=0;
     if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
     enum
@@ -514,7 +514,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         unsigned int vUsage, vSize;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: usage or size '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
             return false;
         }
 
@@ -550,14 +550,14 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
     // Read vertex data
     if (_binaryReader.read(&meshdata->vertexSizeInFloat, 4, 1) != 1 || meshdata->vertexSizeInFloat == 0)
     {
-        CCLOGINFO("Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
         return false;
     }
 
     meshdata->vertex.resize(meshdata->vertexSizeInFloat);
     if (_binaryReader.read(&meshdata->vertex[0], 4, meshdata->vertexSizeInFloat) != meshdata->vertexSizeInFloat)
     {
-        CCLOGINFO("Failed to read meshdata: vertex element '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
         return false;
     }
 
@@ -568,7 +568,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         unsigned int nIndexCount;
         if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
             return false;
         }
 
@@ -576,7 +576,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         indices.resize(nIndexCount);
         if (_binaryReader.read(&indices[0], 2, nIndexCount) != nIndexCount)
         {
-            CCLOGINFO("Failed to read meshdata: indices '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
             return false;
         }
 
@@ -600,7 +600,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
     unsigned int attribSize=0;
     if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
     enum
@@ -622,7 +622,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         unsigned int vUsage, vSize;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: usage or size '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
             return false;
         }
 
@@ -658,14 +658,14 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
     // Read vertex data
     if (_binaryReader.read(&meshdata->vertexSizeInFloat, 4, 1) != 1 || meshdata->vertexSizeInFloat == 0)
     {
-        CCLOGINFO("Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
         return false;
     }
 
     meshdata->vertex.resize(meshdata->vertexSizeInFloat);
     if (_binaryReader.read(&meshdata->vertex[0], 4, meshdata->vertexSizeInFloat) != meshdata->vertexSizeInFloat)
     {
-        CCLOGINFO("Failed to read meshdata: vertex element '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
         return false;
     }
 
@@ -673,7 +673,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
     unsigned int submeshCount;
     if (_binaryReader.read(&submeshCount, 4, 1) != 1)
     {
-        CCLOGINFO("Failed to read meshdata: submeshCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: submeshCount '%s'.", _path.c_str());
         return false;
     }
 
@@ -682,7 +682,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         unsigned int nIndexCount;
         if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
             return false;
         }
 
@@ -690,7 +690,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         indices.resize(nIndexCount);
         if (_binaryReader.read(&indices[0], 2, nIndexCount) != nIndexCount)
         {
-            CCLOGINFO("Failed to read meshdata: indices '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
             return false;
         }
 
@@ -760,7 +760,17 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
     if (_version == "0.1" || _version == "1.2" || _version == "0.2")
     {
         SkinData   skinData;
-        loadSkinData("", &skinData);
+        if (!loadSkinData("", &skinData))
+        {
+            auto node= new (std::nothrow) NodeData();
+            auto modelnode = new (std::nothrow) ModelData();
+            modelnode->matrialId = "";
+            modelnode->subMeshId = "";
+            node->modelNodeDatas.push_back(modelnode);
+            nodedatas.nodes.push_back(node);
+            return true;
+        }
+        
         auto nodeDatas = new (std::nothrow) NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
         int index = 0;
         size_t i;
@@ -823,7 +833,7 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
         {
             return loadMaterialsBinary_0_2(materialdatas);
         }
-        else if (_version == "0.3")
+        else
         {
             return loadMaterialsBinary(materialdatas);
         } 
@@ -838,7 +848,7 @@ bool Bundle3D::loadMaterials(MaterialDatas& materialdatas)
         {
             return loadMaterialDataJson_0_2(materialdatas);
         }
-        else if (_version == "0.3")
+        else
         {
             return loadMaterialsJson(materialdatas);
         }  
@@ -866,13 +876,13 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
             textureData.id = _binaryReader.readString();
             if (textureData.id.empty())
             {
-                CCLOGINFO("Failed to read Materialdata: texturePath is empty '%s'.", textureID.c_str());
+                CCLOG("warning: Failed to read Materialdata: texturePath is empty '%s'.", textureData.id.c_str());
                 return false;
             }
             std::string texturePath = _binaryReader.readString();
             if (texturePath.empty())
             {
-                CCLOGINFO("Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
                 return false;
             }
 
@@ -898,7 +908,7 @@ bool Bundle3D::loadMaterialsBinary_0_1(MaterialDatas& materialdatas)
     std::string texturePath = _binaryReader.readString();
     if (texturePath.empty())
     {
-        CCLOGINFO("Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
         return false;
     }
 
@@ -926,7 +936,7 @@ bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
         std::string texturePath = _binaryReader.readString();
         if (texturePath.empty())
         {
-            CCLOGINFO("Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
             return false;
         }
 
@@ -987,7 +997,11 @@ bool Bundle3D::loadJson(const std::string& path)
     }
 
     const rapidjson::Value& mash_data_array = _jsonReader[VERSION];
-    _version = mash_data_array.GetString();
+    if (mash_data_array.IsArray()) // Compatible with the old version
+        _version = "1.2";
+    else
+        _version = mash_data_array.GetString();
+    
     return true;
 }
 
@@ -1251,7 +1265,7 @@ bool Bundle3D::loadBinary(const std::string& path)
     if (_binaryBuffer->isNull()) 
     {
         clear();
-        CCLOGINFO(false, "Failed to read file: %s", path.c_str());
+        CCLOG("warning: Failed to read file: %s", path.c_str());
         return false;
     }
 
@@ -1264,14 +1278,14 @@ bool Bundle3D::loadBinary(const std::string& path)
     if (_binaryReader.read(sig, 1, 4) != 4 || memcmp(sig, identifier, 4) != 0)
     {
         clear();
-        CCLOGINFO(false, "Invalid identifier: %s", path.c_str());
+        CCLOG("warning: Invalid identifier: %s", path.c_str());
         return false;
     }
 
     // Read version
     unsigned char ver[2];
     if (_binaryReader.read(ver, 1, 2)!= 2){
-        CCLOG("Failed to read version:");
+        CCLOG("warning: Failed to read version:");
         return false;
     }
 
@@ -1283,7 +1297,7 @@ bool Bundle3D::loadBinary(const std::string& path)
     if (_binaryReader.read(&_referenceCount, 4, 1) != 1)
     {
         clear();
-        CCLOGINFO("Failed to read ref table size '%s'.", path.c_str());
+        CCLOG("warning: Failed to read ref table size '%s'.", path.c_str());
         return false;
     }
 
@@ -1297,7 +1311,7 @@ bool Bundle3D::loadBinary(const std::string& path)
             _binaryReader.read(&_references[i].offset, 4, 1) != 1)
         {
             clear();
-            CCLOGINFO("Failed to read ref number %d for bundle '%s'.", i, path.c_str());
+            CCLOG("warning: Failed to read ref number %d for bundle '%s'.", (int)i, path.c_str());
             CC_SAFE_DELETE_ARRAY(_references);
             return false;
         }
@@ -1318,7 +1332,7 @@ bool Bundle3D::loadMeshDataBinary(MeshData* meshdata)
     }
     else
     {
-        CCLOGINFO(false, "Unsupported version of loadMeshDataBinary() : %s", _version);
+        CCLOG("warning: Unsupported version of loadMeshDataBinary() : %s", _version.c_str());
         return false;
     }
 }
@@ -1331,7 +1345,7 @@ bool Bundle3D::loadMeshDataBinary_0_1(MeshData* meshdata)
     // read mesh data
     if (_binaryReader.read(&meshdata->attribCount, 4, 1) != 1 || meshdata->attribCount < 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
 
@@ -1341,7 +1355,7 @@ bool Bundle3D::loadMeshDataBinary_0_1(MeshData* meshdata)
         unsigned int vUsage, vSize;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: usage or size '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
             return false;
         }
 
@@ -1354,14 +1368,14 @@ bool Bundle3D::loadMeshDataBinary_0_1(MeshData* meshdata)
     // Read vertex data
     if (_binaryReader.read(&meshdata->vertexSizeInFloat, 4, 1) != 1 || meshdata->vertexSizeInFloat == 0)
     {
-        CCLOGINFO("Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
         return false;
     }
 
     meshdata->vertex.resize(meshdata->vertexSizeInFloat);
     if (_binaryReader.read(&meshdata->vertex[0], 4, meshdata->vertexSizeInFloat) != meshdata->vertexSizeInFloat)
     {
-        CCLOGINFO("Failed to read meshdata: vertex element '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
         return false;
     }
 
@@ -1374,7 +1388,7 @@ bool Bundle3D::loadMeshDataBinary_0_1(MeshData* meshdata)
         unsigned int nIndexCount;
         if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
             return false;
         }
 
@@ -1382,7 +1396,7 @@ bool Bundle3D::loadMeshDataBinary_0_1(MeshData* meshdata)
         indices.resize(nIndexCount);
         if (_binaryReader.read(&indices[0], 2, nIndexCount) != nIndexCount)
         {
-            CCLOGINFO("Failed to read meshdata: indices '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
             return false;
         }
 
@@ -1402,7 +1416,7 @@ bool Bundle3D::loadMeshDataBinary_0_2(MeshData* meshdata)
     // read mesh data
     if (_binaryReader.read(&meshdata->attribCount, 4, 1) != 1 || meshdata->attribCount < 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
 
@@ -1412,7 +1426,7 @@ bool Bundle3D::loadMeshDataBinary_0_2(MeshData* meshdata)
         unsigned int vUsage, vSize;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: usage or size '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
             return false;
         }
 
@@ -1425,14 +1439,14 @@ bool Bundle3D::loadMeshDataBinary_0_2(MeshData* meshdata)
     // Read vertex data
     if (_binaryReader.read(&meshdata->vertexSizeInFloat, 4, 1) != 1 || meshdata->vertexSizeInFloat == 0)
     {
-        CCLOGINFO("Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
         return false;
     }
 
     meshdata->vertex.resize(meshdata->vertexSizeInFloat);
     if (_binaryReader.read(&meshdata->vertex[0], 4, meshdata->vertexSizeInFloat) != meshdata->vertexSizeInFloat)
     {
-        CCLOGINFO("Failed to read meshdata: vertex element '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
         return false;
     }
 
@@ -1440,7 +1454,7 @@ bool Bundle3D::loadMeshDataBinary_0_2(MeshData* meshdata)
     unsigned int submeshCount;
     if (_binaryReader.read(&submeshCount, 4, 1) != 1)
     {
-        CCLOGINFO("Failed to read meshdata: submeshCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: submeshCount '%s'.", _path.c_str());
         return false;
     }
 
@@ -1449,7 +1463,7 @@ bool Bundle3D::loadMeshDataBinary_0_2(MeshData* meshdata)
         unsigned int nIndexCount;
         if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
         {
-            CCLOGINFO("Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
             return false;
         }
 
@@ -1457,7 +1471,7 @@ bool Bundle3D::loadMeshDataBinary_0_2(MeshData* meshdata)
         indices.resize(nIndexCount);
         if (_binaryReader.read(&indices[0], 2, nIndexCount) != nIndexCount)
         {
-            CCLOGINFO("Failed to read meshdata: indices '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
             return false;
         }
 
@@ -1478,7 +1492,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     float bindShape[16];
     if (!_binaryReader.readMatrix(bindShape))
     {
-        CCLOGINFO("Failed to read SkinData: bindShape matrix  '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read SkinData: bindShape matrix  '%s'.", _path.c_str());
         return false;
     }
 
@@ -1486,7 +1500,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
     unsigned int boneNum;
     if (!_binaryReader.read(&boneNum))
     {
-        CCLOGINFO("Failed to read SkinData: boneNum  '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read SkinData: boneNum  '%s'.", _path.c_str());
         return false;
     }
 
@@ -1498,7 +1512,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         skindata->skinBoneNames.push_back(skinBoneName);
         if (!_binaryReader.readMatrix(bindpos))
         {
-            CCLOGINFO("Failed to load SkinData: bindpos '%s'.", _path.c_str());
+            CCLOG("warning: Failed to load SkinData: bindpos '%s'.", _path.c_str());
             return false;
         }
         skindata->inverseBindPoseMatrices.push_back(bindpos);
@@ -1539,7 +1553,7 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
 
         if (!_binaryReader.readMatrix(transform))
         {
-            CCLOGINFO("Failed to load SkinData: transform '%s'.", _path.c_str());
+            CCLOG("warning: Failed to load SkinData: transform '%s'.", _path.c_str());
             return false;
         }
 
@@ -1584,7 +1598,7 @@ bool Bundle3D::loadMaterialDataBinary(MaterialData* materialdata)
         std::string texturePath = _binaryReader.readString();
         if (texturePath.empty())
         {
-            CCLOGINFO("Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read Materialdata: texturePath is empty '%s'.", _path.c_str());
             return false;
         }
 
@@ -1600,11 +1614,11 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
     if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
         return false;
     unsigned int animNum=0;
-    if( _version == "0.3")
+    if( _version == "0.3"|| _version == "0.4")
     {
         if (!_binaryReader.read(&animNum))
         {
-            CCLOGINFO("Failed to read AnimationData: animNum '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read AnimationData: animNum '%s'.", _path.c_str());
             return false;
         }
     }
@@ -1612,14 +1626,14 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
 
     if (!_binaryReader.read(&animationdata->_totalTime))
     {
-        CCLOGINFO("Failed to read AnimationData: totalTime '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read AnimationData: totalTime '%s'.", _path.c_str());
         return false;
     }
 
     unsigned int nodeAnimationNum;
     if (!_binaryReader.read(&nodeAnimationNum))
     {
-        CCLOGINFO("Failed to read AnimationData: animNum '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read AnimationData: animNum '%s'.", _path.c_str());
         return false;
     }
     for (unsigned int i = 0; i < nodeAnimationNum; ++i)
@@ -1628,7 +1642,7 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
         unsigned int keyframeNum;
         if (!_binaryReader.read(&keyframeNum))
         {
-            CCLOGINFO("Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
             return false;
         }
         
@@ -1641,33 +1655,68 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
             float keytime;
             if (!_binaryReader.read(&keytime))
             {
-                CCLOGINFO("Failed to read AnimationData: keytime '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read AnimationData: keytime '%s'.", _path.c_str());
                 return false;
             }
 
-            Quaternion  rotate;
-            if (_binaryReader.read(&rotate, 4, 4) != 4)
+            // transform flag
+            unsigned char transformFlag(0);
+            if (_version == "0.4")
             {
-                CCLOGINFO("Failed to read AnimationData: rotate '%s'.", _path.c_str());
-                return false;
+                if (!_binaryReader.read(&transformFlag))
+                {
+                    CCLOG("warning: Failed to read AnimationData: transformFlag '%s'.", _path.c_str());
+                    return false;
+                }
             }
-            animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime, rotate));
+            
+            // rotation
+            bool hasRotate = true;
+            if (_version == "0.4")
+                hasRotate = transformFlag & 0x01;
+            
+            if (hasRotate)
+            {
+                Quaternion  rotate;
+                if (_binaryReader.read(&rotate, 4, 4) != 4)
+                {
+                    CCLOG("warning: Failed to read AnimationData: rotate '%s'.", _path.c_str());
+                    return false;
+                }
+                animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime, rotate));
+            }
 
-            Vec3 scale;
-            if (_binaryReader.read(&scale, 4, 3) != 3)
+            // scale
+            bool hasScale = true;
+            if (_version == "0.4")
+                hasScale = (transformFlag >> 1) & 0x01;
+            
+            if (hasScale)
             {
-                CCLOGINFO("Failed to read AnimationData: scale '%s'.", _path.c_str());
-                return false;
+                Vec3 scale;
+                if (_binaryReader.read(&scale, 4, 3) != 3)
+                {
+                    CCLOG("warning: Failed to read AnimationData: scale '%s'.", _path.c_str());
+                    return false;
+                }
+                animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, scale));
             }
-            animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, scale));
-
-            Vec3 position;
-            if (_binaryReader.read(&position, 4, 3) != 3)
+            
+            // translation
+            bool hasTranslation = true;
+            if (_version == "0.4")
+                hasTranslation = (transformFlag >> 2) & 0x01;
+            
+            if (hasTranslation)
             {
-                CCLOGINFO("Failed to read AnimationData: position '%s'.", _path.c_str());
-                return false;
+                Vec3 position;
+                if (_binaryReader.read(&position, 4, 3) != 3)
+                {
+                    CCLOG("warning: Failed to read AnimationData: position '%s'.", _path.c_str());
+                    return false;
+                }
+                animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
             }
-            animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
         }
     }
     return true;
@@ -1697,11 +1746,6 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 {
     NodeData* nodedata = new (std::nothrow) NodeData();;
-    //if (jvalue.HasMember(PARTS))
-       // nodedata = new (std::nothrow) ModelNodeData();
-    //else
-     //nodedata = new (std::nothrow) NodeData();
-
     // id
     nodedata->id = jvalue[ID].GetString();
 
@@ -1732,7 +1776,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
             if (modelnodedata->subMeshId == "" || modelnodedata->matrialId == "")
             {
                 std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
-                CCASSERT(false, err.c_str()); 
+                CCLOG("warning: Node %s part is missing meshPartId or materialId", nodedata->id.c_str());
                 return nullptr;
             }
 
@@ -1747,7 +1791,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
                     // node
                     if (!bone.HasMember(NODE))
                     {
-                        CCASSERT(false, "Bone node ID missing");
+                        CCLOG("warning: Bone node ID missing");
                         return nullptr;
                     }
 
@@ -1791,7 +1835,7 @@ bool Bundle3D::loadNodesBinary(NodeDatas& nodedatas)
     unsigned int nodeSize = 0;
     if (_binaryReader.read(&nodeSize, 4, 1) != 1)
     {
-        CCASSERT(false, "Failed to read nodes");
+        CCLOG("warning: Failed to read nodes");
         return false;
     }
 
@@ -1816,7 +1860,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     bool skeleton_;
     if (_binaryReader.read(&skeleton_, 1, 1) != 1)
     {
-        CCASSERT(false, "Failed to read is sleleton");
+        CCLOG("warning: Failed to read is sleleton");
         return nullptr;
     }
     if (skeleton_)
@@ -1826,14 +1870,14 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     Mat4 transform;
     if (!_binaryReader.readMatrix(transform.m))
     {
-        CCASSERT(false,"Failed to read transform matrix");
+        CCLOG("warning: Failed to read transform matrix");
         return nullptr;
     }
     // parts
     unsigned int partsSize = 0;
     if (_binaryReader.read(&partsSize, 4, 1) != 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return nullptr;
     }
 
@@ -1842,7 +1886,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     nodedata->transform = transform;
     if (partsSize > 0)
     {
-        for (rapidjson::SizeType i = 0; i < partsSize; i++)
+        for (unsigned int i = 0; i < partsSize; i++)
         {
             auto modelnodedata  = new (std::nothrow) ModelData();
             modelnodedata->subMeshId = _binaryReader.readString();
@@ -1851,7 +1895,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
             if (modelnodedata->subMeshId == "" || modelnodedata->matrialId == "")
             {
                 std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
-                CCASSERT(false, err.c_str()); 
+                CCLOG("Node %s part is missing meshPartId or materialId", nodedata->id.c_str());
                 return nullptr;
             }
 
@@ -1859,13 +1903,13 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
             unsigned int bonesSize = 0;
             if (_binaryReader.read(&bonesSize, 4, 1) != 1)
             {
-                CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
                 return nullptr;
             }
 
             if (bonesSize > 0)
             {
-                for (rapidjson::SizeType j = 0; j < bonesSize; j++) 
+                for (unsigned int j = 0; j < bonesSize; j++)
                 {
                     std::string name = _binaryReader.readString();
                     modelnodedata->bones.push_back(name);
@@ -1882,7 +1926,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
             unsigned int uvMapping = 0;
             if (_binaryReader.read(&uvMapping, 4, 1) != 1)
             {
-                CCLOGINFO("Failed to read nodedata: uvMapping '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read nodedata: uvMapping '%s'.", _path.c_str());
                 return nullptr;
             }
             for( int j = 0 ;j < uvMapping ; j++ )
@@ -1890,7 +1934,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                 unsigned int textureIndexSize=0;
                 if (_binaryReader.read(&textureIndexSize, 4, 1) != 1)
                 {
-                    CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+                    CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
                     return nullptr;
                 }
                 for(int k =0; k < textureIndexSize ; k++ )
@@ -1905,22 +1949,16 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
             nodedata->modelNodeDatas.push_back(modelnodedata);
         }
     }
-    //else
-    //{
-    //    nodedata = new (std::nothrow) NodeData();
-    //    nodedata->id = id;
-    //    nodedata->transform = transform;
-    //}
 
     unsigned int childrenSize = 0;
     if (_binaryReader.read(&childrenSize, 4, 1) != 1)
     {
-        CCLOGINFO("Failed to read meshdata: attribCount '%s'.", _path.c_str());
+        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return nullptr;
     }
     if (childrenSize > 0)
     {
-        for (rapidjson::SizeType i = 0; i <  childrenSize; i++)
+        for (unsigned int i = 0; i <  childrenSize; i++)
         {
             NodeData* tempdata = parseNodesRecursivelyBinary(skeleton);
             nodedata->children.push_back(tempdata);
@@ -1969,7 +2007,7 @@ GLenum Bundle3D::parseGLType(const std::string& str)
     }
     else
     {
-        CCASSERT(false, "Wrong GL type");
+        CCASSERT(false, "Invalid GL type");
         return 0;
     }
 }
@@ -2100,7 +2138,7 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
             // Found a match
             if (_binaryReader.seek(ref->offset, SEEK_SET) == false)
             {
-                CCLOGINFO("Failed to seek to object '%s' in bundle '%s'.", ref->id.c_str(), _path.c_str());
+                CCLOG("warning: Failed to seek to object '%s' in bundle '%s'.", ref->id.c_str(), _path.c_str());
                 return nullptr;
             }
             return ref;
