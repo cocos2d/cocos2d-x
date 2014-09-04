@@ -896,6 +896,7 @@ Developers:
         
     kezhuw
         AutoReleasePool manager improvement
+        Fixed a bug that condition variable sleep on unrelated mutex in HttpClient
         
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
