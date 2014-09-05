@@ -5163,7 +5163,7 @@ static int tolua_cocos2dx_EventListenerMouse_create(lua_State* tolua_S)
     
     argc = lua_gettop(tolua_S) - 1;
     
-    if (argc == 1)
+    if (argc == 0)
     {
         cocos2d::EventListenerMouse* tolua_ret = cocos2d::EventListenerMouse::create();
         if(nullptr == tolua_ret)
@@ -5176,7 +5176,7 @@ static int tolua_cocos2dx_EventListenerMouse_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerMouse:create",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerMouse:create",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
