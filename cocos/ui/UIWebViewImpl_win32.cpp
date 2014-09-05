@@ -19,62 +19,60 @@ namespace {
     {
     public:
         Win32WebView()
-            : m_pWebBrowser2(NULL)
-            , m_bCanGoBack(true)
-            , m_bCanGoForward(true)
-            , m_dwCookie(0)
-            , m_ulRef(0)
+            : _webBrowser2(NULL)
+            , _canGoBack(true)
+            , _canGoForward(true)
         {
             lazyInit();
         }
 
         bool createWebView()
         {
-            bool bRet = false;
+            bool ret = false;
             do
             {
                 HWND hwnd = cocos2d::Director::getInstance()->getOpenGLView()->getWin32Window();
-                m_winContainer.Create(hwnd, NULL, NULL, WS_CHILD | WS_VISIBLE);
+                _winContainer.Create(hwnd, NULL, NULL, WS_CHILD | WS_VISIBLE);
 
                 HRESULT hr;
-                hr = m_winContainer.CreateControl(L"shell.Explorer.2");
+                hr = _winContainer.CreateControl(L"shell.Explorer.2");
                 CC_BREAK_IF(FAILED(hr));
-                hr = m_winContainer.QueryControl(__uuidof(IWebBrowser2), (void **)&m_pWebBrowser2);
-                CC_BREAK_IF(FAILED(hr) || m_pWebBrowser2 == NULL);
+                hr = _winContainer.QueryControl(__uuidof(IWebBrowser2), (void **)&_webBrowser2);
+                CC_BREAK_IF(FAILED(hr) || _webBrowser2 == NULL);
 
-                m_pWebBrowser2->put_Silent(VARIANT_TRUE);
+                _webBrowser2->put_Silent(VARIANT_TRUE);
 
                 VARIANT varURL;
                 VariantInit(&varURL);
                 varURL.vt = VT_BSTR;
                 varURL.bstrVal = SysAllocString(L"about:blank");
-                hr = m_pWebBrowser2->Navigate2(&varURL, NULL, NULL, NULL, NULL);
+                hr = _webBrowser2->Navigate2(&varURL, NULL, NULL, NULL, NULL);
                 VariantClear(&varURL);
                 CC_BREAK_IF(FAILED(hr));
 
-                bRet = true;
+                ret = true;
             } while (0);
 
-            if (!bRet)
+            if (!ret)
             {
                 removeWebView();
             }
-            return bRet;
+            return ret;
         }
 
         void removeWebView()
         {
-            if (m_pWebBrowser2 != NULL)
+            if (_webBrowser2 != NULL)
             {
-                m_pWebBrowser2->Release();
-                m_pWebBrowser2 = NULL;
+                _webBrowser2->Release();
+                _webBrowser2 = NULL;
             }
-            m_winContainer.DestroyWindow();
+            _winContainer.DestroyWindow();
         }
 
         void setWebViewRect(const int left, const int top, const int width, const int height)
         {
-            m_winContainer.MoveWindow(left, top, width, height);
+            _winContainer.MoveWindow(left, top, width, height);
         }
 
         void setJavascriptInterfaceScheme(const std::string &scheme)
@@ -104,7 +102,7 @@ namespace {
             if (SUCCEEDED(CreateStreamOnHGlobal(hHTMLText, TRUE, &pStream)))
             {
                 IDispatch* pHtmlDoc = NULL;
-                if (SUCCEEDED(m_pWebBrowser2->get_Document(&pHtmlDoc)))
+                if (SUCCEEDED(_webBrowser2->get_Document(&pHtmlDoc)))
                 {
                     IPersistStreamInit* pPersistStreamInit = NULL;
                     if (SUCCEEDED(pHtmlDoc->QueryInterface(IID_IPersistStreamInit, (void **)&pPersistStreamInit)))
@@ -139,7 +137,7 @@ namespace {
             VariantInit(&varURL);
             varURL.vt = VT_BSTR;
             varURL.bstrVal = SysAllocString((WCHAR *)unicodeStr);
-            m_pWebBrowser2->Navigate2(&varURL, NULL, NULL, NULL, NULL);
+            _webBrowser2->Navigate2(&varURL, NULL, NULL, NULL, NULL);
             VariantClear(&varURL);
 
             GlobalFree(unicodeStr);
@@ -166,7 +164,7 @@ namespace {
             VariantInit(&varURL);
             varURL.vt = VT_BSTR;
             varURL.bstrVal = SysAllocString((WCHAR *)unicodeStr);
-            hr = m_pWebBrowser2->Navigate2(&varURL, NULL, NULL, NULL, NULL);
+            hr = _webBrowser2->Navigate2(&varURL, NULL, NULL, NULL, NULL);
             VariantClear(&varURL);
 
             GlobalFree(unicodeStr);
@@ -174,32 +172,32 @@ namespace {
 
         void stopLoading()
         {
-            m_pWebBrowser2->Stop();
+            _webBrowser2->Stop();
         }
 
         void reload()
         {
-            m_pWebBrowser2->Refresh();
+            _webBrowser2->Refresh();
         }
 
         bool canGoBack()
         {
-            return m_bCanGoBack;
+            return _canGoBack;
         }
 
         bool canGoForward()
         {
-            return m_bCanGoForward;
+            return _canGoForward;
         }
 
         void goBack()
         {
-            m_pWebBrowser2->GoBack();
+            _webBrowser2->GoBack();
         }
 
         void goForward()
         {
-            m_pWebBrowser2->GoForward();
+            _webBrowser2->GoForward();
         }
 
         void evaluateJS(const std::string &js)
@@ -215,23 +213,21 @@ namespace {
 
         void setWebViewVisible(const bool visible)
         {
-            m_pWebBrowser2->put_Visible(visible ? VARIANT_TRUE : VARIANT_FALSE);
+            _webBrowser2->put_Visible(visible ? VARIANT_TRUE : VARIANT_FALSE);
         }
 
     private:
-        CAxWindow m_winContainer;
-        IWebBrowser2 *m_pWebBrowser2;
-        bool m_bCanGoBack;
-        bool m_bCanGoForward;
-        DWORD m_dwCookie;
-        ULONG m_ulRef;
+        CAxWindow _winContainer;
+        IWebBrowser2 *_webBrowser2;
+        bool _canGoBack;
+        bool _canGoForward;
 
-        static bool s_bIsInitialized;
+        static bool s_isInitialized;
         static CComModule s_module;
 
         static void lazyInit()
         {
-            if (!s_bIsInitialized)
+            if (!s_isInitialized)
             {
                 HWND hwnd = cocos2d::Director::getInstance()->getOpenGLView()->getWin32Window();
                 LONG style = GetWindowLong(hwnd, GWL_STYLE);
@@ -241,11 +237,11 @@ namespace {
                 CoInitialize(NULL);
                 s_module.Init(NULL, hInstance);
                 AtlAxWinInit();
-                s_bIsInitialized = true;
+                s_isInitialized = true;
             }
         }
     };
-    bool Win32WebView::s_bIsInitialized = false;
+    bool Win32WebView::s_isInitialized = false;
     CComModule Win32WebView::s_module;
 
 } // namespace
@@ -414,4 +410,4 @@ namespace cocos2d {
     } // namespace experimental
 } //namespace cocos2d
 
-#endif
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
