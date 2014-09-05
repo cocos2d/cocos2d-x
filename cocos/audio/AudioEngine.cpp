@@ -33,8 +33,6 @@
 #include "ios/AudioEngine-inl.h"
 #endif
 
-static cocos2d::AudioEngine *s_sharedAudioEngine = nullptr;
-
 #define TIME_DELAY_PRECISION 0.0001
 
 using namespace cocos2d;
@@ -42,76 +40,78 @@ using namespace cocos2d;
 const int AudioEngine::INVAILD_AUDIO_ID = -1;
 const float AudioEngine::TIME_UNKNOWN = -1.0f;
 
-AudioEngine* AudioEngine::getInstance()
-{
-    if (!s_sharedAudioEngine)
-    {
-        s_sharedAudioEngine = new (std::nothrow) AudioEngine();
-        CCASSERT(s_sharedAudioEngine, "FATAL: Not enough memory");
+//audio file path,audio IDs
+std::unordered_map<std::string,std::list<int>> AudioEngine::_audioIDs;
+//profileName,ProfileManage
+std::unordered_map<std::string, AudioEngine::ProfileManage> AudioEngine::_profileManages;
+int AudioEngine::_maxInstances = kMaxSources;
+AudioEngine::ProfileManage* AudioEngine::_defaultProfileManage;
+std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioInfos;
+AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
-        if(!s_sharedAudioEngine->init()){
-            delete s_sharedAudioEngine;
-            s_sharedAudioEngine = nullptr;
+void AudioEngine::end()
+{
+    delete _audioEngineImpl;
+    _audioEngineImpl = nullptr;
+
+    delete _defaultProfileManage;
+    _defaultProfileManage = nullptr;
+}
+
+bool AudioEngine::lazyInit()
+{
+    if (_audioEngineImpl == nullptr)
+    {
+        _audioEngineImpl = new (std::nothrow) AudioEngineImpl();
+        if(!_audioEngineImpl ||  !_audioEngineImpl->init() ){
+           return false;
         }
     }
 
-    return s_sharedAudioEngine;
+    return true;
 }
 
-void AudioEngine::destroyInstance()
-{
-    delete s_sharedAudioEngine;
-    s_sharedAudioEngine = nullptr;
-}
-
-AudioEngine::AudioEngine()
-    : _maxInstances(kMaxSources)
-{
-    _audioEngineImpl = new (std::nothrow) AudioEngineImpl(this);
-
-    _audioProfiles["audioengine_defaultProfile"] = new AudioProfile;
-    _defaultProfile = _audioProfiles["audioengine_defaultProfile"];
-}
-
-AudioEngine::~AudioEngine()
-{
-    for (auto it = _audioProfiles.begin(); it != _audioProfiles.end(); ++it) {
-        delete it->second;
-    }
-    _audioProfiles.clear();
-
-    delete _audioEngineImpl;
-}
-
-bool AudioEngine::init()
-{
-    return _audioEngineImpl->init();
-}
-
-int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, AudioProfile *profile)
+int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, const AudioProfile *profile)
 {
     int ret = AudioEngine::INVAILD_AUDIO_ID;
-    if ( !FileUtils::getInstance()->isFileExist(filePath)){
-        return ret;
-    }
 
     do {
-        auto targetProfile = profile;
-        if (!targetProfile) {
-            targetProfile = _defaultProfile;
+        if (_audioEngineImpl == nullptr)
+        {
+            _audioEngineImpl = new (std::nothrow) AudioEngineImpl();
+            if(!_audioEngineImpl ||  !_audioEngineImpl->init() ){
+                break;
+            }
         }
 
-        if (_audioInfos.size() >= _maxInstances || (targetProfile->maxInstances != 0 && targetProfile->audioIDs.size() >= targetProfile->maxInstances)) {
-            log("Fail to play %s cause by limited max instance",filePath.c_str());
+        if ( !FileUtils::getInstance()->isFileExist(filePath)){
             break;
         }
 
-        if (targetProfile->minDelay > TIME_DELAY_PRECISION) {
-            auto currTime = utils::gettime();
-            if (targetProfile->lastPlayTime > TIME_DELAY_PRECISION && currTime - targetProfile->lastPlayTime <= targetProfile->minDelay) {
-                log("Fail to play %s cause by limited minimum delay",filePath.c_str());
-                break;
-            }
+        ProfileManage* manage = _defaultProfileManage;
+        if (profile && profile != &manage->profile){
+            CC_ASSERT(!profile->name.empty());
+            manage = &_profileManages[profile->name];
+            manage->profile = *profile;
+        }
+        
+        if (_audioInfos.size() >= _maxInstances) {
+            log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
+            break;
+        }
+        if (manage)
+        {
+             if(manage->profile.maxInstances != 0 && manage->audioIDs.size() >= manage->profile.maxInstances){
+                 log("Fail to play %s cause by limited max instance of AudioProfile",filePath.c_str());
+                 break;
+             }
+             if (manage->profile.minDelay > TIME_DELAY_PRECISION) {
+                 auto currTime = utils::gettime();
+                 if (manage->lastPlayTime > TIME_DELAY_PRECISION && currTime - manage->lastPlayTime <= manage->profile.minDelay) {
+                     log("Fail to play %s cause by limited minimum delay",filePath.c_str());
+                     break;
+                 }
+             }
         }
         
         if (volume < 0.0f) {
@@ -121,7 +121,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, Au
             volume = 1.0f;
         }
         
-        ret = _audioEngineImpl->play2d(filePath, loop, volume, targetProfile);
+        ret = _audioEngineImpl->play2d(filePath, loop, volume);
         if (ret != INVAILD_AUDIO_ID)
         {
             _audioIDs[filePath].push_back(ret);
@@ -132,8 +132,10 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, Au
             audioRef.loop = loop;
             audioRef.is3dAudio = false;
             audioRef.filePath = &it->first;
-            audioRef.profile = targetProfile;
-            //audioRef.state = AudioEngine::AudioState::PLAYING;
+
+            manage->lastPlayTime = utils::gettime();
+            manage->audioIDs.push_back(ret);
+            audioRef.profileManage = manage;
         }
     } while (0);
 
@@ -214,8 +216,8 @@ void AudioEngine::stop(int audioID)
     if (it != _audioInfos.end()){
         _audioEngineImpl->stop(audioID);
 
-        if (it->second.profile) {
-            it->second.profile->audioIDs.remove(audioID);
+        if (it->second.profileManage) {
+            it->second.profileManage->audioIDs.remove(audioID);
         }
         _audioIDs[*it->second.filePath].remove(audioID);
         _audioInfos.erase(audioID);
@@ -226,8 +228,8 @@ void AudioEngine::remove(int audioID)
 {
     auto it = _audioInfos.find(audioID);
     if (it != _audioInfos.end()){
-        if (it->second.profile) {
-            it->second.profile->audioIDs.remove(audioID);
+        if (it->second.profileManage) {
+            it->second.profileManage->audioIDs.remove(audioID);
         }
         _audioIDs[*it->second.filePath].remove(audioID);
         _audioInfos.erase(audioID);
@@ -240,8 +242,8 @@ void AudioEngine::stopAll()
     auto itEnd = _audioInfos.end();
     for (auto it = _audioInfos.begin(); it != itEnd; ++it)
     {
-        if (it->second.profile){
-            it->second.profile->audioIDs.remove(it->first);
+        if (it->second.profileManage){
+            it->second.profileManage->audioIDs.remove(it->first);
         }
     }
     _audioIDs.clear();
@@ -255,11 +257,12 @@ void AudioEngine::uncache(const std::string &filePath)
         int audioID;
         for (auto it = _audioIDs[filePath].begin() ; it != itEnd; ++it) {
             audioID = *it;
+            log("uncache id:%d", audioID);
             _audioEngineImpl->stop(audioID);
             
             auto& info = _audioInfos[audioID];
-            if (info.profile) {
-                info.profile->audioIDs.remove(audioID);
+            if (info.profileManage) {
+                info.profileManage->audioIDs.remove(audioID);
             }
             _audioInfos.erase(audioID);
         }
@@ -326,63 +329,7 @@ bool AudioEngine::setMaxAudioInstance(unsigned int maxInstances)
     return false;
 }
 
-void AudioEngine::setDefaultProfile(AudioProfile *profile)
-{
-    if (_defaultProfile != profile && _defaultProfile) {
-        auto itEnd = _defaultProfile->audioIDs.end();
-        for (auto it = _defaultProfile->audioIDs.begin() ; it != itEnd; ++it) {
-            _audioInfos[*it].profile = profile;
-            profile->audioIDs.push_back(*it);
-        }
-        _defaultProfile->audioIDs.clear();
-    }
-
-    _defaultProfile = profile;
-}
-
-void AudioEngine::setProfile(int audioID, AudioProfile *profile)
-{
-    auto it = _audioInfos.find(audioID);
-    if (it != _audioInfos.end())
-    {
-        if (it->second.profile) {
-            it->second.profile->audioIDs.remove(audioID);
-        }
-
-        it->second.profile = profile;
-        if (profile) {
-            profile->audioIDs.push_back(audioID);
-        }
-    }
-}
-
-AudioProfile* AudioEngine::createProfile(const std::string &name, int maxInstances, double minDelay, float minRange, float maxRange)
-{
-    if (_audioProfiles.find(name) == _audioProfiles.end()) {
-        _audioProfiles[name] = new AudioProfile;
-    }
-    auto profile = _audioProfiles[name];
-    
-    profile->maxInstances = maxInstances;
-    profile->minDelay = minDelay;
-    profile->minRange = minRange;
-    profile->maxRange = maxRange;
-    
-    return profile;
-}
-
-AudioProfile* AudioEngine::getProfile(const std::string &name)
-{
-    auto it = _audioProfiles.find(name);
-    if (it != _audioProfiles.end()) {
-        return it->second;
-    } else {
-        log("AudioEngine::getProfile-->profile:%s not found", name.c_str());
-        return nullptr;
-    }
-}
-
-bool AudioEngine::isLoop(int audioID) const
+bool AudioEngine::isLoop(int audioID)
 {
     auto tmpIterator = _audioInfos.find(audioID);
     if (tmpIterator != _audioInfos.end())
@@ -394,7 +341,7 @@ bool AudioEngine::isLoop(int audioID) const
     return false;
 }
 
-float AudioEngine::getVolume(int audioID) const
+float AudioEngine::getVolume(int audioID)
 {
     auto tmpIterator = _audioInfos.find(audioID);
     if (tmpIterator != _audioInfos.end())
@@ -406,7 +353,7 @@ float AudioEngine::getVolume(int audioID) const
     return 0.0f;
 }
 
-AudioEngine::AudioState AudioEngine::getState(int audioID) const
+AudioEngine::AudioState AudioEngine::getState(int audioID)
 {
     auto tmpIterator = _audioInfos.find(audioID);
     if (tmpIterator != _audioInfos.end())
@@ -420,19 +367,35 @@ AudioEngine::AudioState AudioEngine::getState(int audioID) const
 
 AudioProfile* AudioEngine::getProfile(int audioID)
 {
-    auto tmpIterator = _audioInfos.find(audioID);
-    if (tmpIterator != _audioInfos.end())
+    auto it = _audioInfos.find(audioID);
+    if (it != _audioInfos.end())
     {
-        return tmpIterator->second.profile;
+        return &it->second.profileManage->profile;
     }
     
     log("AudioEngine::getProfile-->The audio instance %d is non-existent", audioID);
     return nullptr;
 }
 
-AudioProfile* AudioEngine::getDefaultProfile() const
+AudioProfile* AudioEngine::getDefaultProfile()
 {
-    return _defaultProfile;
+    if (_defaultProfileManage == nullptr)
+    {
+        _defaultProfileManage = new (std::nothrow) ProfileManage();
+    }
+    
+    return &_defaultProfileManage->profile;
+}
+
+AudioProfile* AudioEngine::getProfile(const std::string &name)
+{
+    auto it = _profileManages.find(name);
+    if (it != _profileManages.end()) {
+        return &it->second.profile;
+    } else {
+        log("AudioEngine::getProfile-->profile:%s not found", name.c_str());
+        return nullptr;
+    }
 }
 
 unsigned int AudioEngine::getMaxAudioInstance()

@@ -99,7 +99,10 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
             // open asset as file descriptor
             off_t start, length;
             int fd = AAsset_openFileDescriptor(asset, &start, &length);
-            assert(0 <= fd);
+            if (fd <= 0){
+                AAsset_close(asset);
+                break;
+            }
             AAsset_close(asset);
 
             // configure audio source
@@ -154,9 +157,8 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
 }
 
 //====================================================
-AudioEngineImpl::AudioEngineImpl(AudioEngine* audioEngine)
-    : _audioEngine(audioEngine)
-    , nextAudioID(0)
+AudioEngineImpl::AudioEngineImpl()
+    : nextAudioID(0)
     , _engineObject(nullptr)
     , _engineEngine(nullptr)
     , _outputMixObject(nullptr)
@@ -208,7 +210,7 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
-int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume, AudioProfile* profile)
+int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume)
 {
     auto audioId = AudioEngine::INVAILD_AUDIO_ID;
 
@@ -231,12 +233,7 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
         (*(player._fdPlayerPlay))->RegisterCallback(player._fdPlayerPlay, PlayOverEvent, (void*)this);
         (*(player._fdPlayerPlay))->SetCallbackEventsMask(player._fdPlayerPlay, SL_PLAYEVENT_HEADATEND);
 
-        if (profile) {
-            profile->lastPlayTime = utils::gettime();
-            profile->audioIDs.push_back(audioId);
-        }
-
-        _audioEngine->_audioInfos[audioId].state = AudioEngine::AudioState::PLAYING;
+        AudioEngine::_audioInfos[audioId].state = AudioEngine::AudioState::PLAYING;
     } while (0);
 
     return audioId;
@@ -251,9 +248,9 @@ void AudioEngineImpl::playerFinishCallback(SLPlayItf caller, SLuint32 playEvent)
         {
             if (iter->second._finishCallback)
             {
-                iter->second._finishCallback(iter->second._audioID, *_audioEngine->_audioInfos[iter->second._audioID].filePath); 
+                iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioInfos[iter->second._audioID].filePath); 
             }
-            _audioEngine->stop(iter->second._audioID);
+            AudioEngine::stop(iter->second._audioID);
             break;
         }
     }
@@ -264,7 +261,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerVolume)->SetVolumeLevel(player._fdPlayerVolume, MIN_VOLUME_MILLIBEL + RANGE_VOLUME_MILLIBEL * volume);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%lu",__func__, result);
+        log("%s error:%u",__func__, result);
     }
 }
 
@@ -283,7 +280,7 @@ void AudioEngineImpl::pause(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_PAUSED);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%lu",__func__, result);
+        log("%s error:%u",__func__, result);
     }
 }
 
@@ -292,7 +289,7 @@ void AudioEngineImpl::resume(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_PLAYING);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%lu",__func__, result);
+        log("%s error:%u",__func__, result);
     }
 }
 
@@ -301,7 +298,7 @@ void AudioEngineImpl::stop(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_STOPPED);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%lu",__func__, result);
+        log("%s error:%u",__func__, result);
     }
 
     _audioPlayers.erase(audioID);

@@ -63,16 +63,14 @@ private:
     friend class AudioEngineImpl;
 };
 
-class AudioEngine;
-class AudioProfile;
 class AudioEngineImpl
 {
 public:
-    AudioEngineImpl(AudioEngine* audioEngine);
+    AudioEngineImpl();
     ~AudioEngineImpl();
 
     bool init();
-    int play2d(const std::string &fileFullPath ,bool loop ,float volume, AudioProfile* profile);
+    int play2d(const std::string &fileFullPath ,bool loop ,float volume);
     void setVolume(int audioID,float volume);
     void setLoop(int audioID, bool loop);
     void pause(int audioID);
@@ -89,7 +87,6 @@ public:
     void uncache(const std::string& filePath){}
     void uncacheAll(){}
 private:
-    AudioEngine* _audioEngine;
 
     // engine interfaces
     SLObjectItf _engineObject;
