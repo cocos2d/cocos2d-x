@@ -1,6 +1,10 @@
 #ifndef __cocos2d_plugin_WebViewImpl_win32_H_
 #define __cocos2d_plugin_WebViewImpl_win32_H_
 
+#include "base/CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include <string>
 #include "CCStdC.h"
 
@@ -70,5 +74,7 @@ namespace cocos2d {
         } // namespace ui
     } // namespace experimental
 } //cocos2d
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif //__cocos2d_plugin_WebViewImpl_win32_H_
