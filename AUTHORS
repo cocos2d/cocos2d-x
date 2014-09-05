@@ -809,6 +809,7 @@ Developers:
         Added Device::setKeepScreenOn()
         Fixed Label performance problem
         Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
+        Added getAllTouches() in GLViewProtocol
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
