@@ -1,3 +1,7 @@
+#include "base/CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include <atlbase.h>
 #include <atlwin.h>
 #include <ExDispid.h>
@@ -409,3 +413,5 @@ namespace cocos2d {
         } // namespace ui
     } // namespace experimental
 } //namespace cocos2d
+
+#endif
