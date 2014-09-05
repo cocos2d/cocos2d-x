@@ -271,7 +271,7 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     _renderGroups[renderQueue].push_back(command);
 }
 
-void Renderer::addTransparentCommand(RenderCommand* command)
+void Renderer::addCommandToTransparentQueue(RenderCommand* command)
 {
     _transparentRenderGroups.push_back(command);
 }
@@ -390,7 +390,7 @@ void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
         }
         else if(RenderCommand::Type::GROUP_COMMAND == commandType)
         {
-            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+            int renderQueueID = (static_cast<GroupCommand*>(command))->getRenderQueueID();
             visitRenderQueue(_renderGroups[renderQueueID]);
         }
         else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)

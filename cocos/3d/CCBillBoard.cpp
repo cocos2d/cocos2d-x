@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 BillBoard::BillBoard()
 : _zDepthInView(0.0f)
-, _mode(Mode::View_Point_Oriented)
+, _mode(Mode::VIEW_POINT_ORIENTED)
 , _modeDirty(false)
 {
 
@@ -106,13 +106,14 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         Vec3 camDir;
         switch (_mode)
         {
-        case Mode::View_Point_Oriented:
+        case Mode::VIEW_POINT_ORIENTED:
             camDir = Vec3(transform.m[12] - camWorldMat.m[12], transform.m[13] - camWorldMat.m[13], transform.m[14] - camWorldMat.m[14]);
             break;
-        case Mode::View_Plane_Oriented:
+        case Mode::VIEW_PLANE_ORIENTED:
             camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
             break;
         default:
+                CCASSERT(false, "invalid billboard mode");
             break;
         }
         _modeDirty = false;
@@ -147,7 +148,7 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     //FIXME: frustum culling here
     {
         _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _billboardTransform);
-        renderer->addTransparentCommand(&_quadCommand);
+        renderer->addCommandToTransparentQueue(&_quadCommand);
     }
 }
 

@@ -39,8 +39,8 @@ public:
 
     enum class Mode
     {
-        View_Point_Oriented,
-        View_Plane_Oriented
+        VIEW_POINT_ORIENTED, // orient to the camera
+        VIEW_PLANE_ORIENTED // orient to the XOY plane of camera
     };
     /// @{
     /// @name Creators
@@ -50,7 +50,7 @@ public:
      *
      * @return An autoreleased BillBoard object.
      */
-    static BillBoard* create(Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* create(Mode mode = Mode::VIEW_POINT_ORIENTED);
 
     /**
      * Creates a BillBoard with an image filename.
@@ -61,7 +61,7 @@ public:
      * @param   filename A path to image file, e.g., "scene1/monster.png"
      * @return  An autoreleased BillBoard object.
      */
-    static BillBoard* create(const std::string& filename, Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* create(const std::string& filename, Mode mode = Mode::VIEW_POINT_ORIENTED);
 
     /**
      * Creates a BillBoard with an image filename and a rect.
@@ -70,7 +70,7 @@ public:
      * @param   rect     A subrect of the image file
      * @return  An autoreleased BillBoard object
      */
-    static BillBoard* create(const std::string& filename, const Rect& rect, Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* create(const std::string& filename, const Rect& rect, Mode mode = Mode::VIEW_POINT_ORIENTED);
 
      /**
      * Creates a BillBoard with a Texture2D object.
@@ -80,7 +80,7 @@ public:
      * @param   texture    A pointer to a Texture2D object.
      * @return  An autoreleased BillBoard object
      */
-    static BillBoard* createWithTexture(Texture2D *texture, Mode mode = Mode::View_Point_Oriented);
+    static BillBoard* createWithTexture(Texture2D *texture, Mode mode = Mode::VIEW_POINT_ORIENTED);
 
     /** Set the billboard rotation mode. */
     void setMode(Mode mode);

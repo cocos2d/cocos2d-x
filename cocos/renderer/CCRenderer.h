@@ -61,7 +61,7 @@ protected:
     std::vector<RenderCommand*> _queuePosZ;
 };
 
-//render queue for transparency object
+//render queue for transparency object, NOTE that the _globalOrder of RenderCommand is the distance to the camera when added to the transparent queue
 class TransparentRenderQueue {
 public:
     void push_back(RenderCommand* command);
@@ -110,7 +110,7 @@ public:
     void addCommand(RenderCommand* command, int renderQueue);
     
     /** add transprent command */
-    void addTransparentCommand(RenderCommand* command);
+    void addCommandToTransparentQueue(RenderCommand* command);
 
     /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);
