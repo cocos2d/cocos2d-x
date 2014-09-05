@@ -133,8 +133,10 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             audioRef.is3dAudio = false;
             audioRef.filePath = &it->first;
 
-            manage->lastPlayTime = utils::gettime();
-            manage->audioIDs.push_back(ret);
+            if (manage) {
+                manage->lastPlayTime = utils::gettime();
+                manage->audioIDs.push_back(ret);
+            }
             audioRef.profileManage = manage;
         }
     } while (0);

@@ -33,7 +33,6 @@
 #include "AudioPlayer.h"
 
 NS_CC_BEGIN
-class AudioEngine;
 class AudioProfile;
 
 #define kMaxSources 32
@@ -43,11 +42,11 @@ class AudioEngineThreadPool;
 class AudioEngineImpl : public cocos2d::Ref
 {
 public:
-    AudioEngineImpl(AudioEngine* audioEngine);
+    AudioEngineImpl();
     ~AudioEngineImpl();
     
     bool init();
-    int play2d(const std::string &fileFullPath ,bool loop ,float volume, AudioProfile* profile);
+    int play2d(const std::string &fileFullPath ,bool loop ,float volume);
     void setVolume(int audioID,float volume);
     void setLoop(int audioID, bool loop);
     bool pause(int audioID);
@@ -68,7 +67,6 @@ private:
     void _play2d(AudioCache *cache, int audioID);
     
     AudioEngineThreadPool* _threadPool;
-    AudioEngine* _audioEngine;
     
     ALuint _alSources[kMaxSources];
     

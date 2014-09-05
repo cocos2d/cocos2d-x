@@ -132,9 +132,8 @@ namespace cocos2d {
     };
 }
 
-AudioEngineImpl::AudioEngineImpl(AudioEngine* audioEngine)
-: _audioEngine(audioEngine)
-, _lazyInitLoop(true)
+AudioEngineImpl::AudioEngineImpl()
+: _lazyInitLoop(true)
 , nextAudioID(0)
 , _threadPool(nullptr)
 {
@@ -193,7 +192,7 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
-int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume, AudioProfile* profile)
+int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
     if (s_ALDevice == nullptr) {
         return AudioEngine::INVAILD_AUDIO_ID;
@@ -233,11 +232,6 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     
     _alSourceUsed[alSource] = true;
     
-    if (profile) {
-        profile->lastPlayTime = utils::gettime();
-        profile->audioIDs.push_back(nextAudioID);
-    }
-    
     if (_lazyInitLoop) {
         _lazyInitLoop = false;
         
@@ -254,7 +248,7 @@ void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
         auto playerIt = _audioPlayers.find(audioID);
         if (playerIt != _audioPlayers.end()) {
             if (playerIt->second.play2d(cache)) {
-                _audioEngine->_audioInfos[audioID].state = AudioEngine::AudioState::PLAYING;
+                AudioEngine::_audioInfos[audioID].state = AudioEngine::AudioState::PLAYING;
             }
             else{
                 _threadMutex.lock();
@@ -455,7 +449,7 @@ void AudioEngineImpl::update(float dt)
             if (playerIt != _audioPlayers.end()) {
                 _alSourceUsed[playerIt->second._alSource] = false;
                 _audioPlayers.erase(audioID);
-                _audioEngine->remove(audioID);
+                AudioEngine::remove(audioID);
             }
         }
         size_t removeCacheCount = _removeCaches.size();
@@ -478,12 +472,12 @@ void AudioEngineImpl::update(float dt)
         
         if (player._ready && sourceState == AL_STOPPED) {
             _alSourceUsed[player._alSource] = false;
-            auto& audioInfo = _audioEngine->_audioInfos[audioID];
+            auto& audioInfo = AudioEngine::_audioInfos[audioID];
             if (player._finishCallbak) {
                 player._finishCallbak(audioID, *audioInfo.filePath);
             }
             
-            _audioEngine->remove(audioID);
+            AudioEngine::remove(audioID);
             
             it = _audioPlayers.erase(it);
         }
