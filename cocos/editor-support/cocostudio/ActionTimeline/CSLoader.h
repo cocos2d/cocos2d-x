@@ -111,6 +111,7 @@ protected:
     /**/
     
     void setPropsForNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
+    void setPropsForSingleNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
     void setPropsForSpriteFromProtocolBuffers(cocos2d::Node* node,
                                               const protocolbuffers::SpriteOptions& spriteOptions,
                                               const protocolbuffers::WidgetOptions& nodeOptions);
@@ -118,12 +119,13 @@ protected:
 	cocos2d::Node* createParticleFromProtocolBuffers(const protocolbuffers::ParticleSystemOptions& particleSystemOptions,
 													 const protocolbuffers::WidgetOptions& nodeOptions);    
 	cocos2d::Node* createTMXTiledMapFromProtocolBuffers(const protocolbuffers::TMXTiledMapOptions& tmxTiledMapOptions,
-														const protocolbuffers::WidgetOptions& nodeOptions);    	
+														const protocolbuffers::WidgetOptions& nodeOptions);    
     void setPropsForProjectNodeFromProtocolBuffers(cocos2d::Node* node,
                                                    const protocolbuffers::ProjectNodeOptions& projectNodeOptions,
                                                    const protocolbuffers::WidgetOptions& nodeOptions);
+    void setPropsForSimpleAudioFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
     
-    
+    cocos2d::Component* createComponentFromProtocolBuffers(const protocolbuffers::ComponentOptions& componentOptions);
     void setPropsForComponentFromProtocolBuffers(cocos2d::Component* component, const protocolbuffers::ComponentOptions& componentOptions);
     
     void setPropsForComAudioFromProtocolBuffers(cocos2d::Component* component,
