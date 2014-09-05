@@ -299,7 +299,7 @@ protected:
     Vec2 _squareVertices[4];
     Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vec3 _noMVPVertices[4];
+    FloatVec3 _noMVPVertices[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

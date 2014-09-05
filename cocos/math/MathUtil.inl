@@ -17,10 +17,9 @@
 
  This file was modified to fit the cocos2d-x project
  */
-
 NS_CC_MATH_BEGIN
 
-inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
+inline void MathUtil::addMatrix(const ccScalar* m, ccScalar scalar, ccScalar* dst)
 {
     dst[0]  = m[0]  + scalar;
     dst[1]  = m[1]  + scalar;
@@ -40,7 +39,7 @@ inline void MathUtil::addMatrix(const float* m, float scalar, float* dst)
     dst[15] = m[15] + scalar;
 }
 
-inline void MathUtil::addMatrix(const float* m1, const float* m2, float* dst)
+inline void MathUtil::addMatrix(const ccScalar* m1, const ccScalar* m2, ccScalar* dst)
 {
     dst[0]  = m1[0]  + m2[0];
     dst[1]  = m1[1]  + m2[1];
@@ -60,7 +59,7 @@ inline void MathUtil::addMatrix(const float* m1, const float* m2, float* dst)
     dst[15] = m1[15] + m2[15];
 }
 
-inline void MathUtil::subtractMatrix(const float* m1, const float* m2, float* dst)
+inline void MathUtil::subtractMatrix(const ccScalar* m1, const ccScalar* m2, ccScalar* dst)
 {
     dst[0]  = m1[0]  - m2[0];
     dst[1]  = m1[1]  - m2[1];
@@ -80,7 +79,7 @@ inline void MathUtil::subtractMatrix(const float* m1, const float* m2, float* ds
     dst[15] = m1[15] - m2[15];
 }
 
-inline void MathUtil::multiplyMatrix(const float* m, float scalar, float* dst)
+inline void MathUtil::multiplyMatrix(const ccScalar* m, ccScalar scalar, ccScalar* dst)
 {
     dst[0]  = m[0]  * scalar;
     dst[1]  = m[1]  * scalar;
@@ -100,10 +99,10 @@ inline void MathUtil::multiplyMatrix(const float* m, float scalar, float* dst)
     dst[15] = m[15] * scalar;
 }
 
-inline void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* dst)
+inline void MathUtil::multiplyMatrix(const ccScalar* m1, const ccScalar* m2, ccScalar* dst)
 {
     // Support the case where m1 or m2 is the same array as dst.
-    float product[16];
+    ccScalar product[16];
 
     product[0]  = m1[0] * m2[0]  + m1[4] * m2[1] + m1[8]   * m2[2]  + m1[12] * m2[3];
     product[1]  = m1[1] * m2[0]  + m1[5] * m2[1] + m1[9]   * m2[2]  + m1[13] * m2[3];
@@ -128,7 +127,7 @@ inline void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* ds
     memcpy(dst, product, MATRIX_SIZE);
 }
 
-inline void MathUtil::negateMatrix(const float* m, float* dst)
+inline void MathUtil::negateMatrix(const ccScalar* m, ccScalar* dst)
 {
     dst[0]  = -m[0];
     dst[1]  = -m[1];
@@ -148,9 +147,9 @@ inline void MathUtil::negateMatrix(const float* m, float* dst)
     dst[15] = -m[15];
 }
 
-inline void MathUtil::transposeMatrix(const float* m, float* dst)
+inline void MathUtil::transposeMatrix(const ccScalar* m, ccScalar* dst)
 {
-    float t[16] = {
+    ccScalar t[16] = {
         m[0], m[4], m[8], m[12],
         m[1], m[5], m[9], m[13],
         m[2], m[6], m[10], m[14],
@@ -159,20 +158,20 @@ inline void MathUtil::transposeMatrix(const float* m, float* dst)
     memcpy(dst, t, MATRIX_SIZE);
 }
 
-inline void MathUtil::transformVec4(const float* m, float x, float y, float z, float w, float* dst)
+inline void MathUtil::transformVec4(const ccScalar* m, ccScalar x, ccScalar y, ccScalar z, ccScalar w, ccScalar* dst)
 {
     dst[0] = x * m[0] + y * m[4] + z * m[8] + w * m[12];
     dst[1] = x * m[1] + y * m[5] + z * m[9] + w * m[13];
     dst[2] = x * m[2] + y * m[6] + z * m[10] + w * m[14];
 }
 
-inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
+inline void MathUtil::transformVec4(const ccScalar* m, const ccScalar* v, ccScalar* dst)
 {
     // Handle case where v == dst.
-    float x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + v[3] * m[12];
-    float y = v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + v[3] * m[13];
-    float z = v[0] * m[2] + v[1] * m[6] + v[2] * m[10] + v[3] * m[14];
-    float w = v[0] * m[3] + v[1] * m[7] + v[2] * m[11] + v[3] * m[15];
+    ccScalar x = v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + v[3] * m[12];
+    ccScalar y = v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + v[3] * m[13];
+    ccScalar z = v[0] * m[2] + v[1] * m[6] + v[2] * m[10] + v[3] * m[14];
+    ccScalar w = v[0] * m[3] + v[1] * m[7] + v[2] * m[11] + v[3] * m[15];
 
     dst[0] = x;
     dst[1] = y;
@@ -180,11 +179,11 @@ inline void MathUtil::transformVec4(const float* m, const float* v, float* dst)
     dst[3] = w;
 }
 
-inline void MathUtil::crossVec3(const float* v1, const float* v2, float* dst)
+inline void MathUtil::crossVec3(const ccScalar* v1, const ccScalar* v2, ccScalar* dst)
 {
-    float x = (v1[1] * v2[2]) - (v1[2] * v2[1]);
-    float y = (v1[2] * v2[0]) - (v1[0] * v2[2]);
-    float z = (v1[0] * v2[1]) - (v1[1] * v2[0]);
+    ccScalar x = (v1[1] * v2[2]) - (v1[2] * v2[1]);
+    ccScalar y = (v1[2] * v2[0]) - (v1[0] * v2[2]);
+    ccScalar z = (v1[0] * v2[1]) - (v1[1] * v2[0]);
 
     dst[0] = x;
     dst[1] = y;

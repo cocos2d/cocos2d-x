@@ -860,14 +860,14 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     Mat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
-        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], FloatMat4(matrixP.m), 1);
 
     if(_flags.usesMV)
-        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], FloatMat4(matrixMV.m), 1);
 
     if(_flags.usesMVP) {
         Mat4 matrixMVP = matrixP * matrixMV;
-        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], FloatMat4(matrixMVP.m), 1);
     }
 
     if(_flags.usesTime) {

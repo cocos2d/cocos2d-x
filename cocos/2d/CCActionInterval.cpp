@@ -796,15 +796,15 @@ RotateTo* RotateTo::clone(void) const
 	return a;
 }
 
-void RotateTo::calculateAngles(float &startAngle, float &diffAngle, float dstAngle)
+void RotateTo::calculateAngles(ccScalar &startAngle, ccScalar &diffAngle, ccScalar dstAngle)
 {
     if (startAngle > 0)
     {
-        startAngle = fmodf(startAngle, 360.0f);
+        startAngle = ccfmod(startAngle, 360.0f);
     }
     else
     {
-        startAngle = fmodf(startAngle, -360.0f);
+        startAngle = ccfmod(startAngle, -360.0f);
     }
 
     diffAngle = dstAngle - startAngle;

@@ -1,6 +1,7 @@
 #ifndef __CCMATHBASE_H__
 #define __CCMATHBASE_H__
 
+#include <math.h>
 #include <memory>
 #include <string.h>
 #include "base/CCPlatformMacros.h"
@@ -33,5 +34,44 @@
     #define USING_NS_CC_MATH 
 #endif
 
+#ifdef __SSE2__
+#define CC_MATH_USE_DOUBLES 1
+#else
+#define CC_MATH_USE_DOUBLES 0
+#endif // __SSE2__
+
+#ifndef CC_MATH_USE_DOUBLES
+#define CC_MATH_USE_DOUBLES 0 // use float by default
+#endif
+
+// NOTE: ccScalar is not fully supported, use it only in Mat4, Vec4, Vec3 now.
+
+#if CC_MATH_USE_DOUBLES
+    typedef double ccScalar;
+    #define ccsqrt sqrt
+    #define ccsin sin
+    #define cccos cos
+    #define ccacos acos
+    #define ccatan2 atan2
+    #define ccmod fmod
+    #define ccexp exp
+    #define ccpow pow
+    #define ccfloor floor
+    #define ccceil ceil
+    #define ccfmod fmod
+#else
+    typedef float ccScalar;
+    #define ccsqrt sqrtf
+    #define ccsin sinf
+    #define cccos cosf
+    #define ccacos acosf
+    #define ccatan2 atan2f
+    #define ccmod fmodf
+    #define ccexp expf
+    #define ccpow powf
+    #define ccfloor floorf
+    #define ccceil ceilf
+    #define ccfmod fmodf
+#endif
 
 #endif // __CCMATHBASE_H__

@@ -1693,7 +1693,7 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
             
             if (hasScale)
             {
-                Vec3 scale;
+                float scale[3];
                 if (_binaryReader.read(&scale, 4, 3) != 3)
                 {
                     CCLOG("warning: Failed to read AnimationData: scale '%s'.", _path.c_str());
@@ -1709,7 +1709,7 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
             
             if (hasTranslation)
             {
-                Vec3 position;
+                float position[3];
                 if (_binaryReader.read(&position, 4, 3) != 3)
                 {
                     CCLOG("warning: Failed to read AnimationData: position '%s'.", _path.c_str());
@@ -1867,8 +1867,8 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
         skeleton = true;
     
     // transform
-    Mat4 transform;
-    if (!_binaryReader.readMatrix(transform.m))
+    float transform[16];
+    if (!_binaryReader.readMatrix(transform))
     {
         CCLOG("warning: Failed to read transform matrix");
         return nullptr;
@@ -1914,8 +1914,8 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                     std::string name = _binaryReader.readString();
                     modelnodedata->bones.push_back(name);
 
-                    Mat4 invbindpos;
-                    if (!_binaryReader.readMatrix(invbindpos.m))
+                    float invbindpos[16];
+                    if (!_binaryReader.readMatrix(invbindpos))
                     {
                         return nullptr;
                     }

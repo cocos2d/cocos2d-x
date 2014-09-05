@@ -392,8 +392,7 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
     for(ssize_t i=0; i< cmd->getVertexCount(); ++i)
     {
         V3F_C4B_T2F *q = &_verts[i + _filledVertex];
-        Vec3 *vec1 = (Vec3*)&q->vertices;
-        modelView.transformPoint(vec1);
+        MathHelpers::transformPoint(modelView, q->vertices);
     }
     
     const unsigned short* indices = cmd->getIndices();

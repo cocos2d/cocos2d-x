@@ -68,35 +68,39 @@ public:
 
 private:
 
-    inline static void addMatrix(const float* m, float scalar, float* dst);
+    inline static void addMatrix(const ccScalar* m, ccScalar scalar, ccScalar* dst);
 
-    inline static void addMatrix(const float* m1, const float* m2, float* dst);
+    inline static void addMatrix(const ccScalar* m1, const ccScalar* m2, ccScalar* dst);
 
-    inline static void subtractMatrix(const float* m1, const float* m2, float* dst);
+    inline static void subtractMatrix(const ccScalar* m1, const ccScalar* m2, ccScalar* dst);
 
-    inline static void multiplyMatrix(const float* m, float scalar, float* dst);
+    inline static void multiplyMatrix(const ccScalar* m, ccScalar scalar, ccScalar* dst);
 
-    inline static void multiplyMatrix(const float* m1, const float* m2, float* dst);
+    inline static void multiplyMatrix(const ccScalar* m1, const ccScalar* m2, ccScalar* dst);
 
-    inline static void negateMatrix(const float* m, float* dst);
+    inline static void negateMatrix(const ccScalar* m, ccScalar* dst);
 
-    inline static void transposeMatrix(const float* m, float* dst);
+    inline static void transposeMatrix(const ccScalar* m, ccScalar* dst);
 
-    inline static void transformVec4(const float* m, float x, float y, float z, float w, float* dst);
+    inline static void transformVec4(const ccScalar* m, ccScalar x, ccScalar y, ccScalar z, ccScalar w, ccScalar* dst);
 
-    inline static void transformVec4(const float* m, const float* v, float* dst);
+    inline static void transformVec4(const ccScalar* m, const ccScalar* v, ccScalar* dst);
 
-    inline static void crossVec3(const float* v1, const float* v2, float* dst);
+    inline static void crossVec3(const ccScalar* v1, const ccScalar* v2, ccScalar* dst);
 
     MathUtil();
 };
 
 NS_CC_MATH_END
 
-#define MATRIX_SIZE ( sizeof(float) * 16)
+#define MATRIX_SIZE ( sizeof(ccScalar) * 16)
 
-#ifdef USE_NEON
+#if defined(USE_NEON)
+#if CC_MATH_USE_DOUBLES
+#error "Only float supported via Neon, try: #define CC_MATH_USE_DOUBLES 0"
+#else
 #include "MathUtilNeon.inl"
+#endif // CC_MATH_USE_DOUBLES
 #else
 #include "MathUtil.inl"
 #endif

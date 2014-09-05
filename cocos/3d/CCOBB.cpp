@@ -71,7 +71,7 @@ static Mat4 _getConvarianceMatrix(const Vec3* vertPos, int vertCount)
     return Cov;
 }
 
-static float& _getElement( Vec3& point, int index)
+static ccScalar& _getElement( Vec3& point, int index)
 {
     if (index == 0)
         return point.x;

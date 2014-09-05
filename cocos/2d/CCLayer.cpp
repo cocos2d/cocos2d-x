@@ -600,7 +600,7 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
     // Attributes
     //
 #ifdef EMSCRIPTEN
-    setGLBufferData(_noMVPVertices, 4 * sizeof(Vec3), 0);
+    setGLBufferData(_noMVPVertices, 4 * sizeof(FloatVec3), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);

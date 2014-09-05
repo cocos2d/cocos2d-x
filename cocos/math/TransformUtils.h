@@ -35,8 +35,10 @@ namespace   cocos2d {
 
 struct AffineTransform;
 
-CC_DLL void CGAffineToGL(const AffineTransform &t, GLfloat *m);
-CC_DLL void GLToCGAffine(const GLfloat *m, AffineTransform *t);
+void CC_DLL CGAffineToGL(const AffineTransform &t, GLfloat *m);
+void CC_DLL CGAffineToGL(const AffineTransform &t, double *m);
+void CC_DLL GLToCGAffine(const GLfloat *m, AffineTransform *t);
+void CC_DLL GLToCGAffine(const double *m, AffineTransform *t);
 }//namespace   cocos2d 
 
 #endif // __SUPPORT_TRANSFORM_UTILS_H__

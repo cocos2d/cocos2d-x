@@ -92,7 +92,7 @@ const Mat4& Camera::getProjectionMatrix() const
 const Mat4& Camera::getViewMatrix() const
 {
     Mat4 viewInv(getNodeToWorldTransform());
-    static int count = sizeof(float) * 16;
+    static int count = sizeof(ccScalar) * 16;
     if (memcmp(viewInv.m, _viewInv.m, count) != 0)
     {
         _viewProjectionDirty = true;

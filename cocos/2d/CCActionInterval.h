@@ -366,7 +366,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, const Vec3& dstAngle3D);
 
     /** calculates the start and diff angles */
-    void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
+    void calculateAngles(ccScalar &startAngle, ccScalar &diffAngle, ccScalar dstAngle);
     
 protected:
     bool _is3D;
