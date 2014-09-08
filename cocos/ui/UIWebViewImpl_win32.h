@@ -1,6 +1,10 @@
 #ifndef __cocos2d_plugin_WebViewImpl_win32_H_
 #define __cocos2d_plugin_WebViewImpl_win32_H_
 
+#include "base/CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include <string>
 #include "CCStdC.h"
 
@@ -16,9 +20,7 @@ namespace cocos2d {
     }
 }
 
-namespace {
-    class Win32WebView;
-}
+class Win32WebControl;
 
 namespace cocos2d {
     namespace experimental {
@@ -63,7 +65,7 @@ namespace cocos2d {
 
             private:
                 bool _createSucceeded;
-                Win32WebView *_systemWebView;
+                Win32WebControl *_systemWebControl;
                 WebView *_webView;
             };
 
@@ -72,3 +74,5 @@ namespace cocos2d {
 } //cocos2d
 
 #endif //__cocos2d_plugin_WebViewImpl_win32_H_
+
+#endif
