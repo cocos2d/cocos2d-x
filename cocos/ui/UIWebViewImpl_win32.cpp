@@ -88,6 +88,8 @@ private:
     void loadUrl(const std::wstring &url) const;
 };
 
+
+
 namespace cocos2d {
     namespace experimental {
         namespace ui {
@@ -830,4 +832,4 @@ HRESULT STDMETHODCALLTYPE Win32WebControl::Invoke(
     return E_NOTIMPL;
 }
 
-#endif
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
