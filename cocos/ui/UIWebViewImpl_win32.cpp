@@ -22,7 +22,8 @@ public:
     bool createWebView(
         const std::function<bool (const std::string &)> &shouldStartLoading,
         const std::function<void (const std::string &)> &didFinishLoading,
-        const std::function<void (const std::string &)> &didFailLoading);
+        const std::function<void (const std::string &)> &didFailLoading,
+        const std::function<void (const std::string &)> &onJsCallback);
     void removeWebView();
     void setWebViewRect(const int left, const int top, const int width, const int height);
     void setJavascriptInterfaceScheme(const std::string &scheme) const;
@@ -76,6 +77,7 @@ private:
     std::function<bool (const std::string &)> _shouldStartLoading;
     std::function<void (const std::string &)> _didFinishLoading;
     std::function<void (const std::string &)> _didFailLoading;
+    std::function<void (const std::string &)> _onJsCallback;
     std::string _htmlWillLoad;
 
     static bool s_isInitialized;
@@ -120,6 +122,12 @@ namespace cocos2d {
                         if (_webView->didFailLoading != nullptr)
                         {
                             _webView->didFailLoading(_webView, url);
+                        }
+                    },
+                    [this](const std::string &url) {
+                        if (_webView->onJsCallback != nullptr)
+                        {
+                            _webView->onJsCallback(_webView, url);
                         }
                     });
             }
@@ -285,8 +293,8 @@ bool Win32WebControl::s_isInitialized = false;
 CComModule Win32WebControl::s_module;
 
 void Win32WebControl::lazyInit()
-{ 
-	HWND hwnd = cocos2d::Director::getInstance()->getOpenGLView()->getWin32Window();
+{
+    HWND hwnd = cocos2d::Director::getInstance()->getOpenGLView()->getWin32Window();
     LONG style = GetWindowLong(hwnd, GWL_STYLE);
     SetWindowLong(hwnd, GWL_STYLE, style | WS_CLIPCHILDREN);
 
@@ -356,7 +364,8 @@ Win32WebControl::Win32WebControl()
 bool Win32WebControl::createWebView(
     const std::function<bool (const std::string &)> &shouldStartLoading,
     const std::function<void (const std::string &)> &didFinishLoading,
-    const std::function<void (const std::string &)> &didFailLoading)
+    const std::function<void (const std::string &)> &didFailLoading,
+    const std::function<void (const std::string &)> &onJsCallback)
 {
     bool ret = false;
     IConnectionPointContainer *container = NULL;
@@ -410,6 +419,7 @@ bool Win32WebControl::createWebView(
     _shouldStartLoading = shouldStartLoading;
     _didFinishLoading = didFinishLoading;
     _didFailLoading = didFailLoading;
+    _onJsCallback = onJsCallback;
     return ret;
 }
 
@@ -446,6 +456,7 @@ void Win32WebControl::setJavascriptInterfaceScheme(const std::string &scheme) co
 
 void Win32WebControl::loadData(const std::string &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) const
 {
+
 }
 
 void Win32WebControl::loadHTMLString(const std::string &html, const std::string &baseURL)
@@ -617,7 +628,7 @@ ULONG STDMETHODCALLTYPE Win32WebControl::Release(void)
 {
     CCASSERT(_reference > 0, "reference count should greater than 0");
     InterlockedDecrement(&_reference);
-    // should NOT delete this if _reference == 0, otherwise, it will crash when call removeWebView
+    // do not delete this if _reference == 0, otherwise, it will crash when call removeWebView
     return _reference;
 }
 
@@ -703,9 +714,19 @@ HRESULT STDMETHODCALLTYPE Win32WebControl::Invoke(
                     BSTR url = rgvarg[5].pvarVal->bstrVal;
 
                     *cancel = VARIANT_FALSE;
-                    if (_shouldStartLoading != nullptr && !isUrlJs(url))  // ignore js
+                    if (isUrlJs(url))
                     {
-                        *cancel = _shouldStartLoading(bstr2string(url)) ? VARIANT_FALSE : VARIANT_TRUE;  // VARIANT_TRUE is -1
+                        if (_onJsCallback != nullptr)
+                        {
+                            _onJsCallback(bstr2string(url));
+                        }
+                    }
+                    else
+                    {
+                        if (_shouldStartLoading != nullptr)
+                        {
+                            *cancel = _shouldStartLoading(bstr2string(url)) ? VARIANT_FALSE : VARIANT_TRUE;  // VARIANT_TRUE is -1
+                        }
                     }
                     return S_OK;
                 }
