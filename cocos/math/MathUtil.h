@@ -21,6 +21,10 @@
 #ifndef MATHUTIL_H_
 #define MATHUTIL_H_
 
+#ifdef __SSE__
+#include <xmmintrin.h>
+#endif
+
 #include "CCMathBase.h"
 
 NS_CC_MATH_BEGIN
@@ -67,7 +71,23 @@ public:
     static void smooth(float* x, float target, float elapsedTime, float riseTime, float fallTime);
 
 private:
-
+#ifdef __SSE__
+    inline static void addMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
+    
+    inline static void addMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
+    
+    inline static void subtractMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
+    
+    inline static void multiplyMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
+    
+    inline static void multiplyMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
+    
+    inline static void negateMatrix(const __m128 m[4], __m128 dst[4]);
+    
+    inline static void transposeMatrix(const __m128 m[4], __m128 dst[4]);
+        
+    inline static void transformVec4(const __m128 m[4], const __m128& v, __m128& dst);
+#endif
     inline static void addMatrix(const float* m, float scalar, float* dst);
 
     inline static void addMatrix(const float* m1, const float* m2, float* dst);
@@ -99,6 +119,9 @@ NS_CC_MATH_END
 #include "MathUtilNeon.inl"
 #else
 #include "MathUtil.inl"
+#if defined(__SSE__)
+#include "MathUtilSSE.inl"
+#endif
 #endif
 
 #endif

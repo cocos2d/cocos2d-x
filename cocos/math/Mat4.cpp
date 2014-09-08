@@ -414,8 +414,11 @@ void Mat4::add(float scalar)
 void Mat4::add(float scalar, Mat4* dst)
 {
     GP_ASSERT(dst);
-
+#ifdef __SSE__
+    MathUtil::addMatrix(col, scalar, dst->col);
+#else
     MathUtil::addMatrix(m, scalar, dst->m);
+#endif
 }
 
 void Mat4::add(const Mat4& mat)
@@ -426,8 +429,11 @@ void Mat4::add(const Mat4& mat)
 void Mat4::add(const Mat4& m1, const Mat4& m2, Mat4* dst)
 {
     GP_ASSERT(dst);
-
+#ifdef __SSE__
+    MathUtil::addMatrix(m1.col, m2.col, dst->col);
+#else
     MathUtil::addMatrix(m1.m, m2.m, dst->m);
+#endif
 }
 
 bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
@@ -700,8 +706,11 @@ void Mat4::multiply(float scalar, Mat4* dst) const
 void Mat4::multiply(const Mat4& m, float scalar, Mat4* dst)
 {
     GP_ASSERT(dst);
-
+#ifdef __SSE__
+    MathUtil::multiplyMatrix(m.col, scalar, dst->col);
+#else
     MathUtil::multiplyMatrix(m.m, scalar, dst->m);
+#endif
 }
 
 void Mat4::multiply(const Mat4& mat)
@@ -712,13 +721,20 @@ void Mat4::multiply(const Mat4& mat)
 void Mat4::multiply(const Mat4& m1, const Mat4& m2, Mat4* dst)
 {
     GP_ASSERT(dst);
-
+#ifdef __SSE__
+    MathUtil::multiplyMatrix(m1.col, m2.col, dst->col);
+#else
     MathUtil::multiplyMatrix(m1.m, m2.m, dst->m);
+#endif
 }
 
 void Mat4::negate()
 {
+#ifdef __SSE__
+    MathUtil::negateMatrix(col, col);
+#else
     MathUtil::negateMatrix(m, m);
+#endif
 }
 
 Mat4 Mat4::getNegated() const
@@ -870,8 +886,11 @@ void Mat4::subtract(const Mat4& mat)
 void Mat4::subtract(const Mat4& m1, const Mat4& m2, Mat4* dst)
 {
     GP_ASSERT(dst);
-
+#ifdef __SSE__
+    MathUtil::subtractMatrix(m1.col, m2.col, dst->col);
+#else
     MathUtil::subtractMatrix(m1.m, m2.m, dst->m);
+#endif
 }
 
 void Mat4::transformPoint(Vec3* point) const
@@ -912,8 +931,11 @@ void Mat4::transformVector(Vec4* vector) const
 void Mat4::transformVector(const Vec4& vector, Vec4* dst) const
 {
     GP_ASSERT(dst);
-
+#ifdef __SSE__
+    MathUtil::transformVec4(col, vector.v, dst->v);
+#else
     MathUtil::transformVec4(m, (const float*) &vector, (float*)dst);
+#endif
 }
 
 void Mat4::translate(float x, float y, float z)
@@ -940,7 +962,11 @@ void Mat4::translate(const Vec3& t, Mat4* dst) const
 
 void Mat4::transpose()
 {
+#ifdef __SSE__
+    MathUtil::transposeMatrix(col, col);
+#else
     MathUtil::transposeMatrix(m, m);
+#endif
 }
 
 Mat4 Mat4::getTransposed() const
