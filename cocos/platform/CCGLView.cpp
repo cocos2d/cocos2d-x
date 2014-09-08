@@ -56,6 +56,21 @@ namespace {
         return -1;
     }
     
+    static std::vector<Touch*> getAllTouchesVector()
+    {
+        std::vector<Touch*> ret;
+        int i;
+        int temp = g_indexBitsUsed;
+        
+        for (i = 0; i < EventTouch::MAX_TOUCHES; i++) {
+            if ( temp & 0x00000001) {
+                ret.push_back(g_touches[i]);
+            }
+            temp >>= 1;
+        }
+        return ret;
+    }
+    
     static void removeUsedIndexBit(int index)
     {
         if (index < 0 || index >= EventTouch::MAX_TOUCHES)
@@ -421,6 +436,11 @@ void GLView::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]
 const Rect& GLView::getViewPortRect() const
 {
     return _viewPortRect;
+}
+
+std::vector<Touch*> GLView::getAllTouches() const
+{
+    return getAllTouchesVector();
 }
 
 float GLView::getScaleX() const

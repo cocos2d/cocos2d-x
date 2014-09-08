@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A035ACBB1782469700987F6C"
-               BuildableName = "build all tests Mac"
-               BlueprintName = "build all tests Mac"
-               ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+               BlueprintIdentifier = "1551A33E158F2AB200E66CFE"
+               BuildableName = "libcocos2d Mac.a"
+               BlueprintName = "libcocos2d Mac"
+               ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,8 +31,8 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
@@ -42,10 +42,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A035ACBB1782469700987F6C"
-            BuildableName = "build all tests Mac"
-            BlueprintName = "build all tests Mac"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+            BlueprintIdentifier = "1551A33E158F2AB200E66CFE"
+            BuildableName = "libcocos2d Mac.a"
+            BlueprintName = "libcocos2d Mac"
+            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A035ACBB1782469700987F6C"
-            BuildableName = "build all tests Mac"
-            BlueprintName = "build all tests Mac"
-            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
+            BlueprintIdentifier = "1551A33E158F2AB200E66CFE"
+            BuildableName = "libcocos2d Mac.a"
+            BlueprintName = "libcocos2d Mac"
+            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
