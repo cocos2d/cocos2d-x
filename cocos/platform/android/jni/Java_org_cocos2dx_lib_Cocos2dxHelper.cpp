@@ -219,6 +219,20 @@ void setKeepScreenOnJni(bool value) {
     }
 }
 
+extern bool openURLJNI(const char* url) {
+    JniMethodInfo t;
+    
+    bool ret = false;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "openURL", "(Ljava/lang/String;)Z")) {
+        jstring stringArg = t.env->NewStringUTF(url);
+        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
+        
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(stringArg);
+    }
+    return ret;
+}
+
 // functions for UserDefault
 bool getBoolForKeyJNI(const char* key, bool defaultValue)
 {
