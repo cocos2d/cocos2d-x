@@ -2,6 +2,7 @@ cocos2d-x-3.3??      ??
     [NEW]           ActionManager: added removeAllActionsByTag()
     [NEW]           GLViewProtocol: added getAllTouches()
     [NEW]           Node: added stopAllActionsByTag()
+    [NEW]           PhysicsWorld: add setSubsteps() and getSubsteps()
     [NEW]           Renderer: added TriangleCommand
     [NEW]           UI: added `WebView` on iOS and Android
     

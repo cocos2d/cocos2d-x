@@ -25,10 +25,14 @@
 #include "3d/CCAnimate3D.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCSkeleton3D.h"
-#include "3d/CCMeshSkin.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
+
+std::unordered_map<Sprite3D*, Animate3D*> Animate3D::s_fadeInAnimates;
+std::unordered_map<Sprite3D*, Animate3D*> Animate3D::s_fadeOutAnimates;
+std::unordered_map<Sprite3D*, Animate3D*> Animate3D::s_runningAnimates;
+float      Animate3D::_transTime = 0.1f;
 
 //create Animate3D using Animation.
 Animate3D* Animate3D::create(Animation3D* animation)
@@ -107,6 +111,40 @@ void Animate3D::startWithTarget(Node *target)
     {
         CCLOG("warning: no animation finde for the skeleton");
     }
+    
+    auto runningAction = s_runningAnimates.find(sprite);
+    if (runningAction != s_runningAnimates.end())
+    {
+        //make the running action fade out
+        auto action = (*runningAction).second;
+        if (action != this)
+        {
+            s_fadeOutAnimates[sprite] = action;
+            action->_state = Animate3D::Animate3DState::FadeOut;
+            action->_accTransTime = 0.0f;
+            action->_weight = 1.0f;
+            action->_lastTime = 0.f;
+            
+            s_fadeInAnimates[sprite] = this;
+            _accTransTime = 0.0f;
+            _state = Animate3D::Animate3DState::FadeIn;
+            _weight = 0.f;
+            _lastTime = 0.f;
+        }
+    }
+    else
+    {
+        s_runningAnimates[sprite] = this;
+        _state = Animate3D::Animate3DState::Running;
+        _weight = 1.0f;
+    }
+}
+
+void Animate3D::stop()
+{
+    removeFromMap();
+    
+    ActionInterval::stop();
 }
 
 //! called every frame with it's delta time. DON'T override unless you know what you are doing.
@@ -117,36 +155,69 @@ void Animate3D::step(float dt)
 
 void Animate3D::update(float t)
 {
-    if (_target && _weight > 0.f)
+    if (_target)
     {
-        float transDst[3], rotDst[4], scaleDst[3];
-        float* trans = nullptr, *rot = nullptr, *scale = nullptr;
-        if (_playReverse)
-            t = 1 - t;
+        if (_state == Animate3D::Animate3DState::FadeIn && _lastTime > 0.f)
+        {
+            _accTransTime += (t - _lastTime) * getDuration();
+            
+            _weight = _accTransTime / _transTime;
+            if (_weight >= 1.0f)
+            {
+                _accTransTime = _transTime;
+                _weight = 1.0f;
+                _state = Animate3D::Animate3DState::Running;
+                Sprite3D* sprite = static_cast<Sprite3D*>(_target);
+                s_fadeInAnimates.erase(sprite);
+                s_runningAnimates[sprite] = this;
+            }
+        }
+        else if (_state == Animate3D::Animate3DState::FadeOut && _lastTime > 0.f)
+        {
+            _accTransTime += (t - _lastTime) * getDuration();
+            
+            _weight = 1 - _accTransTime / _transTime;
+            if (_weight <= 0.0f)
+            {
+                _accTransTime = _transTime;
+                _weight = 0.0f;
+                
+                Sprite3D* sprite = static_cast<Sprite3D*>(_target);
+                s_fadeOutAnimates.erase(sprite);
+            }
+        }
+        _lastTime = t;
         
-        t = _start + t * _last;
-        for (const auto& it : _boneCurves) {
-            auto bone = it.first;
-            auto curve = it.second;
-            if (curve->translateCurve)
-            {
-                curve->translateCurve->evaluate(t, transDst, EvaluateType::INT_LINEAR);
-                trans = &transDst[0];
+        if (_weight > 0.0f)
+        {
+            float transDst[3], rotDst[4], scaleDst[3];
+            float* trans = nullptr, *rot = nullptr, *scale = nullptr;
+            if (_playReverse)
+                t = 1 - t;
+            
+            t = _start + t * _last;
+            for (const auto& it : _boneCurves) {
+                auto bone = it.first;
+                auto curve = it.second;
+                if (curve->translateCurve)
+                {
+                    curve->translateCurve->evaluate(t, transDst, EvaluateType::INT_LINEAR);
+                    trans = &transDst[0];
+                }
+                if (curve->rotCurve)
+                {
+                    curve->rotCurve->evaluate(t, rotDst, EvaluateType::INT_QUAT_SLERP);
+                    rot = &rotDst[0];
+                }
+                if (curve->scaleCurve)
+                {
+                    curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
+                    scale = &scaleDst[0];
+                }
+                bone->setAnimationValue(trans, rot, scale, this, _weight);
             }
-            if (curve->rotCurve)
-            {
-                curve->rotCurve->evaluate(t, rotDst, EvaluateType::INT_QUAT_SLERP);
-                rot = &rotDst[0];
-            }
-            if (curve->scaleCurve)
-            {
-                curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
-                scale = &scaleDst[0];
-            }
-            bone->setAnimationValue(trans, rot, scale, this, _weight);
         }
     }
-    
 }
 
 float Animate3D::getSpeed() const
@@ -172,12 +243,32 @@ Animate3D::Animate3D()
 , _last(1.f)
 , _animation(nullptr)
 , _playReverse(false)
+, _state(Animate3D::Animate3DState::Running)
+, _accTransTime(0.0f)
+, _lastTime(0.0f)
 {
     
 }
 Animate3D::~Animate3D()
 {
+    removeFromMap();
+    
     CC_SAFE_RELEASE(_animation);
+}
+
+void Animate3D::removeFromMap()
+{
+    //remove this action from map
+    if (_target)
+    {
+        Sprite3D* sprite = static_cast<Sprite3D*>(_target);
+        if (_state == Animate3D::Animate3DState::FadeIn)
+            s_fadeInAnimates.erase(sprite);
+        else if (_state == Animate3D::Animate3DState::FadeOut)
+            s_fadeOutAnimates.erase(sprite);
+        else
+            s_runningAnimates.erase(sprite);
+    }
 }
 
 NS_CC_END

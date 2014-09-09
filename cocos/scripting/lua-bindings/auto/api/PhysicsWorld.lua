@@ -22,9 +22,17 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- set the number of substeps in an update of the physics world.<br>
+-- One physics update will be divided into several substeps to increase its accuracy.<br>
+-- default value is 1
+-- @function [parent=#PhysicsWorld] setSubsteps 
+-- @param self
+-- @param #int steps
+        
+--------------------------------
 -- To control the step of physics, if you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.<br>
 -- Defaut value is true.<br>
--- Note: if you set auto step to false, setSpeed and setUpdateRate won't work, you need to control the time step by yourself.
+-- Note: if you set auto step to false, setSpeed setSubsteps and setUpdateRate won't work, you need to control the time step by yourself.
 -- @function [parent=#PhysicsWorld] setAutoStep 
 -- @param self
 -- @param #bool autoStep
@@ -94,6 +102,12 @@
 -- @function [parent=#PhysicsWorld] setUpdateRate 
 -- @param self
 -- @param #int rate
+        
+--------------------------------
+--  get the number of substeps 
+-- @function [parent=#PhysicsWorld] getSubsteps 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  get the speed of physics world 

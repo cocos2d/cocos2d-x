@@ -1,19 +1,16 @@
 set(APP_NAME cpp-empty-test)
 
 if(ANDROID)
-
   set(PLATFORM_SRC
     proj.android/jni/hellocpp/main.cpp
   )
 
 elseif(WINDOWS)
-
   set(PLATFORM_SRC
     proj.win32/main.cpp
   )
 
 elseif(IOS)
-
   set(PLATFORM_SRC
     proj.ios/main.m
     proj.ios/AppController.mm
@@ -21,16 +18,17 @@ elseif(IOS)
   )
 
 elseif(MACOSX)
-
   set(PLATFORM_SRC
-    proj.mac/main.m
+    proj.mac/main.cpp
   )
 
 elseif(LINUX)
-
   set(PLATFORM_SRC
     proj.linux/main.cpp
   )
+
+else()
+  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 
 endif()
 
@@ -76,6 +74,7 @@ else()
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
     )
+
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)

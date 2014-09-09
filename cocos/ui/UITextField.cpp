@@ -404,7 +404,7 @@ Size TextField::getTouchSize()const
     return Size(_touchWidth, _touchHeight);
 }
 
-void TextField::setText(const std::string& text)
+void TextField::setString(const std::string& text)
 {
     std::string strText(text);
     
@@ -412,7 +412,7 @@ void TextField::setText(const std::string& text)
     {
         int max = _textFieldRenderer->getMaxLength();
         long text_count = StringUtils::getCharacterCountInUTF8String(text);
-        long total = text_count + StringUtils::getCharacterCountInUTF8String(getStringValue());
+        long total = text_count + StringUtils::getCharacterCountInUTF8String(getString());
         if (total > max)
         {
             strText = Helper::getSubStringOfUTF8String(strText, 0, max);
@@ -513,7 +513,7 @@ void TextField::didNotSelectSelf()
     _textFieldRenderer->detachWithIME();
 }
 
-const std::string& TextField::getStringValue()const
+const std::string& TextField::getString()const
 {
     return _textFieldRenderer->getString();
 }
@@ -549,7 +549,7 @@ void TextField::setMaxLength(int length)
 {
     _textFieldRenderer->setMaxLength(length);
     
-    setText(getStringValue());
+    setString(getString());
 }
 
 int TextField::getMaxLength()const
@@ -572,7 +572,7 @@ void TextField::setPasswordStyleText(const char *styleText)
     _textFieldRenderer->setPasswordStyleText(styleText);
     _passwordStyleText = styleText;
     
-    setText(getStringValue());
+    setString(getString());
 }
     
 const char* TextField::getPasswordStyleText()const
@@ -767,8 +767,8 @@ void TextField::copySpecialProperties(Widget *widget)
     TextField* textField = dynamic_cast<TextField*>(widget);
     if (textField)
     {
-        setText(textField->_textFieldRenderer->getString());
-        setPlaceHolder(textField->getStringValue());
+        setString(textField->_textFieldRenderer->getString());
+        setPlaceHolder(textField->getString());
         setFontSize(textField->_fontSize);
         setFontName(textField->_fontName);
         setMaxLengthEnabled(textField->isMaxLengthEnabled());

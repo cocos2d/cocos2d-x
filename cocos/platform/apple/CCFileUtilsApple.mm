@@ -25,16 +25,18 @@ THE SOFTWARE.
 ****************************************************************************/
 #import <Foundation/Foundation.h>
 
+#include "CCFileUtilsApple.h"
+
 #include <string>
 #include <stack>
-#include "deprecated/CCString.h"
-#include "CCFileUtils.h"
+
 #include "base/CCDirector.h"
-#include "CCSAXParser.h"
-#include "CCDictionary.h"
+#include "deprecated/CCString.h"
+#include "deprecated/CCDictionary.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCSAXParser.h"
 #include "unzip.h"
 
-#include "CCFileUtilsApple.h"
 
 NS_CC_BEGIN
 

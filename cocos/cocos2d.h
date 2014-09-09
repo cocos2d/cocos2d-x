@@ -108,6 +108,7 @@ THE SOFTWARE.
 
 // 2d nodes
 #include "2d/CCNode.h"
+#include "2d/CCProtectedNode.h"
 #include "2d/CCAtlasNode.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "2d/CCDrawNode.h"
@@ -266,6 +267,20 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 
+//3d
+#include "3d/CCAABB.h"
+#include "3d/CCOBB.h"
+#include "3d/CCRay.h"
+#include "3d/CCSprite3D.h"
+#include "3d/CCMesh.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCAnimate3D.h"
+#include "3d/CCAnimation3D.h"
+#include "3d/CCSprite3DMaterial.h"
+#include "3d/CCAttachNode.h"
+#include "3d/CCMeshVertexIndexData.h"
+#include "3d/CCSkeleton3D.h"
+
 // Deprecated include
 #include "deprecated/CCDictionary.h"
 #include "deprecated/CCArray.h"
@@ -278,9 +293,6 @@ THE SOFTWARE.
 #include "deprecated/CCNotificationCenter.h"
 // CCDeprecated.h must be included at the end
 #include "deprecated/CCDeprecated.h"
-
-//3d
-#include "3d/cocos3d.h"
 
 
 NS_CC_BEGIN

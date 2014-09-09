@@ -24,6 +24,7 @@
  ****************************************************************************/
 #include "UIEditBoxImplWin.h"
 
+#include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 #include "UIEditBox.h"
