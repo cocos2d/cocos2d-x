@@ -295,6 +295,13 @@ void Node::setLocalZOrder(int z)
     _eventDispatcher->setDirtyForNode(this);
 }
 
+/// zOrder setter : private method
+/// used internally to alter the zOrder variable. DON'T call this method manually
+void Node::_setLocalZOrder(int z)
+{
+    _localZOrder = z;
+}
+
 void Node::setGlobalZOrder(float globalZOrder)
 {
     if (_globalZOrder != globalZOrder)
