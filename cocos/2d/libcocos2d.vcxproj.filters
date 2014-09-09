@@ -589,6 +589,9 @@
     <ClCompile Include="..\renderer\CCCustomCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgram.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -1583,6 +1586,9 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCBatchCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCCustomCommand.h">

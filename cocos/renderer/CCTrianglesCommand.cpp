@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,70 +22,79 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
-#include "renderer/CCQuadCommand.h"
-
+#include "renderer/CCTrianglesCommand.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
-QuadCommand::QuadCommand()
-:_quads(nullptr)
-,_quadsCount(0)
+TrianglesCommand::TrianglesCommand()
+:_materialID(0)
+,_textureID(0)
+,_glProgramState(nullptr)
+,_blendType(BlendFunc::DISABLE)
 {
-    _type = RenderCommand::Type::QUAD_COMMAND;
+    _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
 
-void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const Mat4 &mv)
+void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
-
-    _globalOrder = globalOrder;
-
-    _quadsCount = quadCount;
-    _quads = quad;
     
-    //generate triangles
+    _globalOrder = globalOrder;
+    
+    _triangles = triangles;
+    if(_triangles.indexCount % 3 != 0)
     {
-        static std::vector<GLushort> QUADINDICESMAX;
-        if(QUADINDICESMAX.size() == 0)
-        {
-            QUADINDICESMAX.resize(Renderer::INDEX_VBO_SIZE);
-            for(ssize_t i = 0; i < Renderer::INDEX_VBO_SIZE / 6; ++i)
-            {
-                QUADINDICESMAX[ 6 * i + 0] = 4 * i + 0;
-                QUADINDICESMAX[ 6 * i + 1] = 4 * i + 1;
-                QUADINDICESMAX[ 6 * i + 2] = 4 * i + 2;
-                QUADINDICESMAX[ 6 * i + 3] = 4 * i + 3;
-                QUADINDICESMAX[ 6 * i + 4] = 4 * i + 2;
-                QUADINDICESMAX[ 6 * i + 5] = 4 * i + 1;
-            }
-        }
-        
-        _triangles.vertCount = quadCount * 4;
-        _triangles.indexCount = quadCount * 6;
-        _triangles.indices = &QUADINDICESMAX[0];
-        _triangles.verts = &quad->tl;
+        ssize_t count = _triangles.indexCount;
+        _triangles.indexCount = count / 3 * 3;
+        CCLOGERROR("Resize indexCount from %zd to %zd, size must be multiple times of 3", count, _triangles.indexCount);
     }
-
     _mv = mv;
-
+    
     if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != glProgramState) {
-
+        
         _textureID = textureID;
         _blendType = blendType;
         _glProgramState = glProgramState;
-
+        
         generateMaterialID();
     }
 }
 
-QuadCommand::~QuadCommand()
+TrianglesCommand::~TrianglesCommand()
 {
+}
+
+void TrianglesCommand::generateMaterialID()
+{
+    
+    if(_glProgramState->getUniformCount() > 0)
+    {
+        _materialID = TrianglesCommand::MATERIAL_ID_DO_NOT_BATCH;
+    }
+    else
+    {
+        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
+        int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
+        
+        _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+    }
+}
+
+void TrianglesCommand::useMaterial() const
+{
+    //Set texture
+    GL::bindTexture2D(_textureID);
+    
+    //set blend mode
+    GL::blendFunc(_blendType.src, _blendType.dst);
+    
+    _glProgramState->apply(_mv);
 }
 
 NS_CC_END

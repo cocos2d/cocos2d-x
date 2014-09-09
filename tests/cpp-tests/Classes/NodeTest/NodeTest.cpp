@@ -73,6 +73,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeGlobalZValueTest),
     CL(NodeNormalizedPositionTest1),
     CL(NodeNormalizedPositionTest2),
+    CL(NodeNormalizedPositionBugTest),
     CL(NodeNameTest),
 };
 
@@ -1227,10 +1228,48 @@ void NodeNormalizedPositionTest2::update(float dt)
 
     Size s = Size(_copyContentSize.width*norm, _copyContentSize.height*norm);
     setContentSize(s);
-
     CCLOG("s: %f,%f", s.width, s.height);
 }
 
+
+//------------------------------------------------------------------
+//
+// NodeNormalizedPositionBugTest
+//
+//------------------------------------------------------------------
+NodeNormalizedPositionBugTest::NodeNormalizedPositionBugTest()
+: _accum(0)
+{
+    Vec2 position;
+   
+    position = Vec2(0.5,0.5);
+
+    
+    sprite = Sprite::create("Images/grossini.png");
+    sprite->setNormalizedPosition(position);
+    addChild(sprite);
+    
+    scheduleUpdate();
+}
+
+std::string NodeNormalizedPositionBugTest::title() const
+{
+    return "NodeNormalizedPositionBugTest";
+}
+
+std::string NodeNormalizedPositionBugTest::subtitle() const
+{
+    return "When changing sprite normalizedPosition, the sprite doesn't move!";
+}
+
+void NodeNormalizedPositionBugTest::update(float dt)
+{
+    _accum += dt;
+    
+    // for 5 seconds
+    float norm = clampf(sinf(_accum), 0, 1.0);
+    sprite->setNormalizedPosition(Vec2(norm,norm));
+}
 
 std::string NodeNameTest::title() const
 {

@@ -653,6 +653,12 @@
     <ClCompile Include="..\3d\CCRay.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1332,6 +1338,12 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCRay.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMeshVertexIndexData.h">
       <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>

@@ -141,7 +141,15 @@ public:
     inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
     /** get the update rate */
     inline int getUpdateRate() { return _updateRate; }
-    
+    /**
+     * set the number of substeps in an update of the physics world.
+     * One physics update will be divided into several substeps to increase its accuracy.
+     * default value is 1
+     */
+    void setSubsteps(int steps);
+    /** get the number of substeps */
+    inline int getSubsteps() const { return _substeps; }
+
     /** set the debug draw mask */
     void setDebugDrawMask(int mask);
     /** get the bebug draw mask */
@@ -150,7 +158,7 @@ public:
     /**
      * To control the step of physics, if you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.
      * Defaut value is true.
-     * Note: if you set auto step to false, setSpeed and setUpdateRate won't work, you need to control the time step by yourself.
+     * Note: if you set auto step to false, setSpeed setSubsteps and setUpdateRate won't work, you need to control the time step by yourself.
      */
     void setAutoStep(bool autoStep){ _autoStep = autoStep; }
     /** Get the auto step */
@@ -194,6 +202,7 @@ protected:
     int _updateRate;
     int _updateRateCount;
     float _updateTime;
+    int _substeps;
     PhysicsWorldInfo* _info;
     
     Vector<PhysicsBody*> _bodies;

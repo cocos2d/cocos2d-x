@@ -91,7 +91,6 @@ public class Cocos2dxHelper {
     		Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
     
             Cocos2dxBitmap.setContext(activity);
-            Cocos2dxETCLoader.setContext(activity);
             sActivity = activity;
 
             sInited = true;
