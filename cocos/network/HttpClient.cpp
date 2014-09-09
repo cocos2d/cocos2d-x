@@ -47,15 +47,12 @@ namespace network {
 static std::mutex       s_requestQueueMutex;
 static std::mutex       s_responseQueueMutex;
 
-static std::mutex       s_SleepMutex;
-static std::condition_variable      s_SleepCondition;
+static std::condition_variable_any s_SleepCondition;
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
 #endif
-
-static bool s_need_quit = false;
 
 static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
@@ -102,43 +99,31 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 static void processResponse(HttpResponse* response, char* errorBuffer);
 
+static HttpRequest *s_requestSentinel = new HttpRequest;
+
 // Worker thread
 void HttpClient::networkThread()
 {    
-    HttpRequest *request = nullptr;
-    
     auto scheduler = Director::getInstance()->getScheduler();
     
     while (true) 
     {
-        if (s_need_quit)
-        {
-            break;
-        }
-        
+        HttpRequest *request;
+
         // step 1: send http request if the requestQueue isn't empty
-        request = nullptr;
-        
-        s_requestQueueMutex.lock();
-        
-        //Get request task from queue
-        
-        if (!s_requestQueue->empty())
         {
+            std::lock_guard<std::mutex> lock(s_requestQueueMutex);
+            while (s_requestQueue->empty()) {
+                s_SleepCondition.wait(s_requestQueueMutex);
+            }
             request = s_requestQueue->at(0);
             s_requestQueue->erase(0);
         }
-        
-        s_requestQueueMutex.unlock();
-        
-        if (nullptr == request)
-        {
-            // Wait for http request tasks from main thread
-            std::unique_lock<std::mutex> lk(s_SleepMutex); 
-            s_SleepCondition.wait(lk);
-            continue;
+
+        if (request == s_requestSentinel) {
+            break;
         }
-        
+
         // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
@@ -462,12 +447,14 @@ HttpClient::HttpClient()
 
 HttpClient::~HttpClient()
 {
-    s_need_quit = true;
-    
     if (s_requestQueue != nullptr) {
+        {
+            std::lock_guard<std::mutex> lock(s_requestQueueMutex);
+            s_requestQueue->pushBack(s_requestSentinel);
+        }
         s_SleepCondition.notify_one();
     }
-    
+
     s_pHttpClient = nullptr;
 }
 
@@ -480,9 +467,7 @@ bool HttpClient::lazyInitThreadSemphore()
         
         s_requestQueue = new (std::nothrow) Vector<HttpRequest*>();
         s_responseQueue = new (std::nothrow) Vector<HttpResponse*>();
-        
-		s_need_quit = false;
-		
+
         auto t = std::thread(CC_CALLBACK_0(HttpClient::networkThread, this));
         t.detach();
     }

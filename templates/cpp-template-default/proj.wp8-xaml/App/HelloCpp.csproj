@@ -102,12 +102,24 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\res\fonts\Marker Felt.ttf">
+      <Link>Assets\Resources\fonts\Marker Felt.ttf</Link>
+    </None>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\res\CloseNormal.png">
+      <Link>Assets\Resources\CloseNormal.png</Link>
+    </Content>
+    <Content Include="..\..\res\CloseSelected.png">
+      <Link>Assets\Resources\CloseSelected.png</Link>
+    </Content>
+    <Content Include="..\..\res\HelloWorld.png">
+      <Link>Assets\Resources\HelloWorld.png</Link>
+    </Content>
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -154,14 +166,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\..\res\**\*">
-      <Link>Assets\res\%(RecursiveDir)%(FileName)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
@@ -172,6 +177,5 @@
   <Target Name="AfterBuild">
   </Target>
     -->
-<ProjectExtensions />
- 
+  <ProjectExtensions />
 </Project>

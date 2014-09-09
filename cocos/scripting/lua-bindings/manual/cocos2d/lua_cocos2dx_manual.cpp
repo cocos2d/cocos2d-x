@@ -5163,7 +5163,7 @@ static int tolua_cocos2dx_EventListenerMouse_create(lua_State* tolua_S)
     
     argc = lua_gettop(tolua_S) - 1;
     
-    if (argc == 1)
+    if (argc == 0)
     {
         cocos2d::EventListenerMouse* tolua_ret = cocos2d::EventListenerMouse::create();
         if(nullptr == tolua_ret)
@@ -5176,7 +5176,7 @@ static int tolua_cocos2dx_EventListenerMouse_create(lua_State* tolua_S)
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerMouse:create",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerMouse:create",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -6505,6 +6505,80 @@ static void extendTextureCache(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+int lua_cocos2dx_GLView_getAllTouches(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::GLView* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::GLView*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_GLView_getAllTouches'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        
+        std::vector<cocos2d::Touch*> ret = cobj->getAllTouches();
+        lua_newtable(tolua_S);
+        if (ret.empty())
+            return 1;
+        
+        int index = 1;
+        for (const auto& obj : ret)
+        {
+            if (nullptr == obj)
+                continue;
+            
+            lua_pushnumber(tolua_S, (lua_Number)index);
+            int ID = (obj) ? (int)obj->_ID : -1;
+            int* luaID = (obj) ? &obj->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)obj, "cc.Touch");
+            lua_rawset(tolua_S, -3);
+            ++index;
+        }
+
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLView:getAllTouches",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_GLView_getAllTouches'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendGLView(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.GLView");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "getAllTouches", lua_cocos2dx_GLView_getAllTouches);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -6559,6 +6633,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerFocus(tolua_S);
     extendApplication(tolua_S);
     extendTextureCache(tolua_S);
+    extendGLView(tolua_S);
     
     return 0;
 }

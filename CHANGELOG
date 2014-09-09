@@ -1,11 +1,16 @@
 cocos2d-x-3.3??      ??
     [NEW]           ActionManager: added removeAllActionsByTag()
+    [NEW]           GLViewProtocol: added getAllTouches()
     [NEW]           Node: added stopAllActionsByTag()
+    [NEW]           PhysicsWorld: add setSubsteps() and getSubsteps()
+    [NEW]           Renderer: added TriangleCommand
     [NEW]           UI: added `WebView` on iOS and Android
     
     [FIX]           EditBox: moved to ui:EditBox
+    [FIX]           HttpClient: condition variable sleep on unrelated mutex
     [FIX]           Node: create unneeded temple `Vec2` object in `setPosition(int, int)`, `setPositionX()` and `setPositionY()`
     [FIX]           Node: skew effect is wrong
+    [FIX]           Node: setNormalizedPosition can not take effect if parent position is not changed
     [FIX]           TextureAtlas: may crash if only drawing part of it
 
 cocos2d-x-3.3alpha0  Aug.28 2014
