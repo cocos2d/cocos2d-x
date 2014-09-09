@@ -181,9 +181,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Node] _setLocalZOrder 
+-- @function [parent=#Node] getOpacity 
 -- @param self
--- @param #int z
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
 -- 
@@ -274,12 +274,6 @@
 -- @function [parent=#Node] setOnEnterCallback 
 -- @param self
 -- @param #function callback
-        
---------------------------------
--- 
--- @function [parent=#Node] getOpacity 
--- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
 --  Sets the position (x,y) using values between 0 and 1.<br>
@@ -485,18 +479,6 @@
 -- e.g., `batchNode->addChild(myCustomNode)`, while you can only addChild(sprite) before.
 -- @function [parent=#Node] updateTransform 
 -- @param self
-        
---------------------------------
--- Sets the shader program for this node<br>
--- Since v2.0, each rendering node must set its shader program.<br>
--- It should be set in initialize phase.<br>
--- code<br>
--- node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
--- endcode<br>
--- param shaderProgram The shader program
--- @function [parent=#Node] setGLProgram 
--- @param self
--- @param #cc.GLProgram glprogram
         
 --------------------------------
 -- Determines if the node is visible<br>
@@ -976,6 +958,18 @@
 -- @function [parent=#Node] getWorldToNodeTransform 
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- Sets the shader program for this node<br>
+-- Since v2.0, each rendering node must set its shader program.<br>
+-- It should be set in initialize phase.<br>
+-- code<br>
+-- node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
+-- endcode<br>
+-- param shaderProgram The shader program
+-- @function [parent=#Node] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
         
 --------------------------------
 -- Gets the scale factor of the node,  when X and Y have the same scale factor.<br>

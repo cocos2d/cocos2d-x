@@ -38,5 +38,6 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCBillBoard.h"
+#include "3d/CCSkeleton3D.h"
 
 #endif

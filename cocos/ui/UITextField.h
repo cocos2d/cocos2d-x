@@ -147,8 +147,11 @@ public:
     
     virtual void didNotSelectSelf();
     
-    void setText(const std::string& text);
-    const std::string& getStringValue()const;
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+    
+    void setString(const std::string& text);
+    const std::string& getString()const;
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     

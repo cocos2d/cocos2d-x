@@ -92,8 +92,8 @@ Whenever possible prefer to use `QuadCommand` objects since the renderer will au
 class CC_DLL Renderer
 {
 public:
-    static const int VBO_SIZE = 8192;
-    static const int INDEX_VBO_SIZE = 8192 * 6 / 4;
+    static const int VBO_SIZE = 65536;
+    static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
     
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 

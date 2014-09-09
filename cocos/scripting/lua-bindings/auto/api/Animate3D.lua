@@ -39,22 +39,16 @@
 -- @return Animate3D#Animate3D ret (retunr value: cc.Animate3D)
 
 --------------------------------
+--  animate transistion time 
+-- @function [parent=#Animate3D] getTransitionTime 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- 
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self
 -- @param #cc.Node target
-        
---------------------------------
--- 
--- @function [parent=#Animate3D] step 
--- @param self
--- @param #float dt
-        
---------------------------------
--- 
--- @function [parent=#Animate3D] clone 
--- @param self
--- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
         
 --------------------------------
 -- 
@@ -64,8 +58,25 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Animate3D] clone 
+-- @param self
+-- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] stop 
+-- @param self
+        
+--------------------------------
+-- 
 -- @function [parent=#Animate3D] update 
 -- @param self
 -- @param #float t
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] step 
+-- @param self
+-- @param #float dt
         
 return nil
