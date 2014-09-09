@@ -1,9 +1,21 @@
 set(APP_NAME lua-tests)
 
 set(SAMPLE_SRC
-  proj.linux/main.cpp
-  Classes/AppDelegate.cpp
+    Classes/AppDelegate.cpp
+    Classes/lua_assetsmanager_test_sample.cpp
 )
+
+if(LINUX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.linux/main.cpp
+     )
+elseif(MACOSX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.ios_mac/mac/main.cpp
+     )
+endif()
 
 include_directories(
   Classes

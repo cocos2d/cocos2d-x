@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "base/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+
 #include "UIEditBoxImplWp8.h"
 #include "UIEditBox.h"
 #include "CCGLViewImpl.h"
@@ -305,3 +308,5 @@ std::string UIEditBoxImplWp8::PlatformStringTostring( Platform::String^ strSrc )
 }
 
 NS_CC_END
+
+#endif // WP8
