@@ -21,7 +21,7 @@
 #ifndef MATH_VEC4_H
 #define MATH_VEC4_H
 
-#ifdef __SSE__
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
 #include <xmmintrin.h>
 #endif
 
@@ -37,7 +37,7 @@ class Mat4;
 class CC_DLL Vec4
 {
 public:
-#ifdef __SSE__
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
     union {
         struct {
             float x;
