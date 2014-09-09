@@ -502,16 +502,15 @@ bool PlaySimultaneouslyTest::init()
 {
     auto ret = AudioEngineTestDemo::init();
     
-    char text[30];
+    char text[36];
     int tmp = 81;
     for(int index = 0; index < TEST_COUNT; ++index){
-        sprintf(text,"SoundEffectsFX009/FX0%d.mp3",tmp + index);
-        //sprintf(text,"audio2/1 (%d).mp3",1 + index);
+        sprintf(text,"audio/SoundEffectsFX009/FX0%d.mp3",tmp + index);
         _files[index] = text;
     }
     _playingcount = 0;
     
-    auto playItem = TextButton::create("play-10-audio", [&](TextButton* button){
+    auto playItem = TextButton::create("play-simultaneously", [&](TextButton* button){
         int audioId;
         _playingcount = 0;
         button->setEnabled(false);
@@ -668,7 +667,7 @@ bool InvalidAudioFileTest::init()
     this->addChild(playItem);
     
     auto playItem2 = TextButton::create("play not-existent file", [&](TextButton* button){
-        AudioEngine::play2d("NotExistFile.mp3");
+        AudioEngine::play2d("not-existent file.mp3");
     });
     playItem2->setNormalizedPosition(Vec2(0.5f, 0.4f));
     this->addChild(playItem2);
@@ -696,7 +695,7 @@ bool LargeAudioFileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     auto playItem = TextButton::create("play large audio file", [&](TextButton* button){
-        AudioEngine::play2d("NotExistFile.mp3");
+        AudioEngine::play2d("audio/Chee Lai(Arise).mp3");
     });
     playItem->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
     this->addChild(playItem);
