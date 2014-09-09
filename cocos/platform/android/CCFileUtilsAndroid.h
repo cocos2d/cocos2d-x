@@ -47,8 +47,8 @@ NS_CC_BEGIN
 class CC_DLL FileUtilsAndroid : public FileUtils
 {
     friend class FileUtils;
-    FileUtilsAndroid();
 public:
+    FileUtilsAndroid();
     /**
      * @js NA
      * @lua NA
