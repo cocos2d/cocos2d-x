@@ -47,10 +47,6 @@ public:
     
     /* minimum delay in between sounds */
     double minDelay;
-
-    /*the following property only take effect on 3d audio */
-    float minRange;
-    float maxRange;
  
     AudioProfile()
     : minDelay(0.0)
@@ -73,6 +69,7 @@ class EXPORT_DLL AudioEngine
 public:
     enum class AudioState
     {
+        ERROR  = -1,
         INITIAL,
         PLAYING,
         PAUSED
@@ -84,7 +81,7 @@ public:
 
     static bool lazyInit();
     /**
-     * Release the shared Audio Engine object
+     * Release related objects
      @warning It must be called before the application exit
      */
     static void end();
@@ -98,7 +95,7 @@ public:
      * @param filePath The path of an audio file
      * @param loop Whether audio instance loop or not
      * @param volume volume value (range from 0.0 to 1.0)
-     * @param profile a profile return by createProfile/getProfile function
+     * @param profile a profile for audio instance
      * @return an audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
      */
     static int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f, const AudioProfile *profile = nullptr);
@@ -198,12 +195,16 @@ public:
      */
     static void uncacheAll();
     
-    /**  Gets the profiles of audio instance.
+    /**  Gets the audio profile by id of audio instance.
      * @param audioID an audioID returned by the play2d function
-     * @return the profile of audio instance
+     * @return the audio profile
      */
     static AudioProfile* getProfile(int audioID);
 
+    /**  Gets the audio profile by name.
+     * @param name name of audio profile
+     * @return the audio profile
+     */
     static AudioProfile* getProfile(const std::string &name);
 
 protected:

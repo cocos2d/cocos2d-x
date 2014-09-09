@@ -871,6 +871,8 @@
 		38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
 		38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
+		3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */; };
+		3E2BDAD219BEA3E20055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
 		3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		3E6177241960FAED00DE83F5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		3E6177251960FAED00DE83F5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -2892,6 +2894,9 @@
 		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
 		38FA2E72194AEBE100FF2BE4 /* ActionTimelineTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTimelineTestScene.h; sourceTree = "<group>"; };
 		38FA2E75194AECF800FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ActionTimeline; path = "../tests/cpp-tests/Resources/ActionTimeline"; sourceTree = "<group>"; };
+		3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewAudioEngineTest.cpp; sourceTree = "<group>"; };
+		3E2BDACF19BEA3410055CDCD /* NewAudioEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAudioEngineTest.h; sourceTree = "<group>"; };
+		3E2BDAD119BEA3E20055CDCD /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = "../tests/cpp-tests/Resources/audio"; sourceTree = "<group>"; };
 		3E6176B71960FA6300DE83F5 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		3E6176B81960FA6300DE83F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3E6176B91960FA6300DE83F5 /* AppMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
@@ -5422,6 +5427,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BDACD19BEA3410055CDCD /* NewAudioEngineTest */,
 				3E9E75CB199324A8005B7047 /* Camera3DTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
@@ -6445,6 +6451,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BDAD119BEA3E20055CDCD /* audio */,
 				38FA2E75194AECF800FF2BE4 /* ActionTimeline */,
 				B2507B6A192589AF00FA4972 /* Shaders3D */,
 				3E92EA841921A7720094CD21 /* Sprite3DTest */,
@@ -7024,6 +7031,15 @@
 				38FA2E72194AEBE100FF2BE4 /* ActionTimelineTestScene.h */,
 			);
 			path = CocoStudioActionTimelineTest;
+			sourceTree = "<group>";
+		};
+		3E2BDACD19BEA3410055CDCD /* NewAudioEngineTest */ = {
+			isa = PBXGroup;
+			children = (
+				3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */,
+				3E2BDACF19BEA3410055CDCD /* NewAudioEngineTest.h */,
+			);
+			path = NewAudioEngineTest;
 			sourceTree = "<group>";
 		};
 		3E6176B51960FA6300DE83F5 /* game-controller-test */ = {
@@ -7814,6 +7830,7 @@
 				1AC35CD518CED84500F37B72 /* ccb in Resources */,
 				1AC35CE118CED84500F37B72 /* configs in Resources */,
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
+				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
 				1AC35D0B18CED84500F37B72 /* zwoptex in Resources */,
@@ -8204,6 +8221,7 @@
 				1AC35B4418CECF0C00F37B72 /* Bug-624.cpp in Sources */,
 				1AC35BF818CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
 				1AC35C5018CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
+				3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */,
 				1AC35C0418CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,

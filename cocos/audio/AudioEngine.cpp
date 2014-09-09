@@ -364,7 +364,7 @@ AudioEngine::AudioState AudioEngine::getState(int audioID)
     }
 
     log("AudioEngine::getState-->The audio instance %d is non-existent", audioID);
-    return AudioState::INITIAL;
+    return AudioState::ERROR;
 }
 
 AudioProfile* AudioEngine::getProfile(int audioID)

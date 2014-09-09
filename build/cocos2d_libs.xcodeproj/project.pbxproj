@@ -1377,6 +1377,14 @@
 		299CF1FC19A434BC00C378C1 /* ccRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299CF1F919A434BC00C378C1 /* ccRandom.cpp */; };
 		299CF1FD19A434BC00C378C1 /* ccRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 299CF1FA19A434BC00C378C1 /* ccRandom.h */; };
 		299CF1FE19A434BC00C378C1 /* ccRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 299CF1FA19A434BC00C378C1 /* ccRandom.h */; };
+		3E2BDABE19BEA28E0055CDCD /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDABD19BEA28E0055CDCD /* AudioEngine.h */; };
+		3E2BDAC519BEA29F0055CDCD /* AudioCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDABF19BEA29F0055CDCD /* AudioCache.h */; };
+		3E2BDAC619BEA29F0055CDCD /* AudioCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAC019BEA29F0055CDCD /* AudioCache.mm */; };
+		3E2BDAC719BEA29F0055CDCD /* AudioEngine-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDAC119BEA29F0055CDCD /* AudioEngine-inl.h */; };
+		3E2BDAC819BEA29F0055CDCD /* AudioEngine-inl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAC219BEA29F0055CDCD /* AudioEngine-inl.mm */; };
+		3E2BDAC919BEA29F0055CDCD /* AudioPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDAC319BEA29F0055CDCD /* AudioPlayer.h */; };
+		3E2BDACA19BEA29F0055CDCD /* AudioPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAC419BEA29F0055CDCD /* AudioPlayer.mm */; };
+		3E2BDACC19BEA2AB0055CDCD /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACB19BEA2AB0055CDCD /* AudioEngine.cpp */; };
 		3E6176681960F89B00DE83F5 /* CCController-iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176551960F89B00DE83F5 /* CCController-iOS.mm */; };
 		3E6176691960F89B00DE83F5 /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176561960F89B00DE83F5 /* CCController.h */; };
 		3E6176741960F89B00DE83F5 /* CCEventController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176611960F89B00DE83F5 /* CCEventController.cpp */; };
@@ -2366,6 +2374,14 @@
 		37936A3C1869B76800E974DD /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		37936A3D1869B76800E974DD /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		3E2BDABD19BEA28E0055CDCD /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
+		3E2BDABF19BEA29F0055CDCD /* AudioCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCache.h; sourceTree = "<group>"; };
+		3E2BDAC019BEA29F0055CDCD /* AudioCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioCache.mm; sourceTree = "<group>"; };
+		3E2BDAC119BEA29F0055CDCD /* AudioEngine-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioEngine-inl.h"; sourceTree = "<group>"; };
+		3E2BDAC219BEA29F0055CDCD /* AudioEngine-inl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AudioEngine-inl.mm"; sourceTree = "<group>"; };
+		3E2BDAC319BEA29F0055CDCD /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
+		3E2BDAC419BEA29F0055CDCD /* AudioPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioPlayer.mm; sourceTree = "<group>"; };
+		3E2BDACB19BEA2AB0055CDCD /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		3E6176551960F89B00DE83F5 /* CCController-iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "CCController-iOS.mm"; path = "../base/CCController-iOS.mm"; sourceTree = "<group>"; };
 		3E6176561960F89B00DE83F5 /* CCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCController.h; path = ../base/CCController.h; sourceTree = "<group>"; };
 		3E6176611960F89B00DE83F5 /* CCEventController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEventController.cpp; path = ../base/CCEventController.cpp; sourceTree = "<group>"; };
@@ -4105,6 +4121,7 @@
 		46A15FD01807A56F005B8026 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BDACB19BEA2AB0055CDCD /* AudioEngine.cpp */,
 				46A15FE01807A56F005B8026 /* include */,
 				46A15FE31807A56F005B8026 /* ios */,
 				46A15FF31807A56F005B8026 /* mac */,
@@ -4116,6 +4133,7 @@
 		46A15FE01807A56F005B8026 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BDABD19BEA28E0055CDCD /* AudioEngine.h */,
 				46A15FE11807A56F005B8026 /* Export.h */,
 				46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */,
 			);
@@ -4125,6 +4143,12 @@
 		46A15FE31807A56F005B8026 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BDABF19BEA29F0055CDCD /* AudioCache.h */,
+				3E2BDAC019BEA29F0055CDCD /* AudioCache.mm */,
+				3E2BDAC119BEA29F0055CDCD /* AudioEngine-inl.h */,
+				3E2BDAC219BEA29F0055CDCD /* AudioEngine-inl.mm */,
+				3E2BDAC319BEA29F0055CDCD /* AudioPlayer.h */,
+				3E2BDAC419BEA29F0055CDCD /* AudioPlayer.mm */,
 				46A15FE41807A56F005B8026 /* CDAudioManager.h */,
 				46A15FE51807A56F005B8026 /* CDAudioManager.m */,
 				46A15FE61807A56F005B8026 /* CDConfig.h */,
@@ -5545,6 +5569,7 @@
 				B37510861823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				15AE1BC019AADFF000C27E9E /* WebSocket.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
+				3E2BDABE19BEA28E0055CDCD /* AudioEngine.h in Headers */,
 				15AE192D19AAD35100C27E9E /* CCActionFrame.h in Headers */,
 				15AE192F19AAD35100C27E9E /* CCActionFrameEasing.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,
@@ -5553,6 +5578,7 @@
 				1A570088180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				15AE1B9319AADA9A00C27E9E /* UIHelper.h in Headers */,
 				50ABBD9E1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
+				3E2BDAC719BEA29F0055CDCD /* AudioEngine-inl.h in Headers */,
 				15AE1B9619AADA9A00C27E9E /* CocosGUI.h in Headers */,
 				1A57008C180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				1A570090180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
@@ -5578,6 +5604,7 @@
 				1A570111180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
 				50ABBE381925AB6F00A911A9 /* CCConsole.h in Headers */,
 				50ABBE8A1925AB6F00A911A9 /* CCMap.h in Headers */,
+				3E2BDAC519BEA29F0055CDCD /* AudioCache.h in Headers */,
 				503DD8E61926736A00CD74DD /* CCEAGLView.h in Headers */,
 				50ABBE4C1925AB6F00A911A9 /* CCEventAcceleration.h in Headers */,
 				50ABBD571925AB0000A911A9 /* TransformUtils.h in Headers */,
@@ -5608,6 +5635,7 @@
 				15AE1AAD19AAD40300C27E9E /* b2WorldCallbacks.h in Headers */,
 				1A5701A4180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
 				15AE1C0219AAE01E00C27E9E /* CCScrollView.h in Headers */,
+				3E2BDAC919BEA29F0055CDCD /* AudioPlayer.h in Headers */,
 				15AE1AFF19AAD42500C27E9E /* cpPinJoint.h in Headers */,
 				1A5701A8180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
 				15AE1A4C19AAD3D500C27E9E /* b2EdgeShape.h in Headers */,
@@ -6572,10 +6600,12 @@
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				15AE1BB919AADFF000C27E9E /* HttpClient.cpp in Sources */,
 				15AE1B4319AAD43700C27E9E /* cpSpaceHash.c in Sources */,
+				3E2BDACC19BEA2AB0055CDCD /* AudioEngine.cpp in Sources */,
 				15AE1A1D19AAD3A700C27E9E /* SlotData.cpp in Sources */,
 				50ABBD551925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				292DB14419B4574100A80320 /* UIEditBoxImplAndroid.cpp in Sources */,
 				15AE193619AAD35100C27E9E /* CCArmature.cpp in Sources */,
+				3E2BDACA19BEA29F0055CDCD /* AudioPlayer.mm in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1AC419AAD40300C27E9E /* b2FrictionJoint.cpp in Sources */,
 				15AE1BEC19AAE01E00C27E9E /* CCControlColourPicker.cpp in Sources */,
@@ -6714,6 +6744,7 @@
 				15AE1A3A19AAD3D500C27E9E /* b2BroadPhase.cpp in Sources */,
 				15AE19B619AAD39700C27E9E /* TextBMFontReader.cpp in Sources */,
 				15AE1BFD19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
+				3E2BDAC619BEA29F0055CDCD /* AudioCache.mm in Sources */,
 				B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				15AE18CE19AAD33D00C27E9E /* CCNodeLoader.cpp in Sources */,
 				29394CF719B01DBA00D2DE1A /* UIWebViewImpl_iOS.mm in Sources */,
@@ -6747,6 +6778,7 @@
 				50ABBE321925AB6F00A911A9 /* CCConfiguration.cpp in Sources */,
 				15AE1A9F19AAD40300C27E9E /* b2Timer.cpp in Sources */,
 				15AE1AD419AAD40300C27E9E /* b2WeldJoint.cpp in Sources */,
+				3E2BDAC819BEA29F0055CDCD /* AudioEngine-inl.mm in Sources */,
 				1A5702C9180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				15AE1A0519AAD3A700C27E9E /* Bone.cpp in Sources */,
 				15AE1B3D19AAD43700C27E9E /* cpCollision.c in Sources */,
