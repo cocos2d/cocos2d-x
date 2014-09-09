@@ -251,7 +251,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite2->setScale(4.f);
     sprite2->setTexture("Sprite3DTest/boss.png");
     sprite2->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite2->setContentSize(Size(20, 20));
     sprite2->setAnchorPoint(Vec2(0.5, 0.5));
     
     //add to scene
