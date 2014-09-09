@@ -177,6 +177,12 @@ Application::Platform  Application::getTargetPlatform()
     return Platform::OS_WP8;
 }
 
+bool Application::openURL(const std::string &url)
+{
+    //TODO release this method
+    return false;
+}
+
 void Application::setResourceRootPath(const std::string& rootResDir)
 {
     m_resourceRootPath = rootResDir;

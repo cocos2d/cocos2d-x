@@ -83,6 +83,13 @@ public:
      @brief Get target platform
      */
     virtual Platform getTargetPlatform();
+    
+    /**
+     @brief Open url in default browser
+     @param String with url to open.
+     @return true if the resource located by the URL was successfully opened; otherwise false.
+     */
+    virtual bool openURL(const std::string &url);
 
 	/**
 	@brief  This function will be called when the application screen size is changed.
