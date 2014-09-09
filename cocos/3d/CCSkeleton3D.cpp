@@ -231,6 +231,7 @@ void Bone3D::updateLocalMat()
                     }
                     quat = Quaternion(it.localRot.x * weight + quat.x, it.localRot.y * weight + quat.y, it.localRot.z * weight + quat.z, it.localRot.w * weight + quat.w);
                 }
+                quat.normalize();
             }
         }
         

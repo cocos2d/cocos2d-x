@@ -137,6 +137,18 @@ function UITextFieldDeprecated.addEventListenerTextField(self,handler)
     return self:addEventListener(handler)
 end
 rawset(ccui.TextField,"addEventListenerTextField", UITextFieldDeprecated.addEventListenerTextField)
+
+function UITextFieldDeprecated.setText(self, str)
+    deprecatedTip("ccui.TextField:setText","ccui.TextField:setString")
+    return self:setString(str)
+end
+rawset(ccui.TextField,"setText", UITextFieldDeprecated.setText)
+
+function UITextFieldDeprecated.getStringValue(self)
+    deprecatedTip("ccui.TextField:getStringValue","ccui.TextField:getString")
+    return self:getString()
+end
+rawset(ccui.TextField,"getStringValue", UITextFieldDeprecated.getStringValue)
 --functions of ccui.TextField will be deprecated end
 
 --functions of ccui.PageView will be deprecated begin
