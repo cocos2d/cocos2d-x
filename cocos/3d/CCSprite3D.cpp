@@ -53,6 +53,7 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite && sprite->initWithFile(modelPath))
     {
+        sprite->_contentSize = sprite->getBoundingBox().size;
         sprite->autorelease();
         return sprite;
     }

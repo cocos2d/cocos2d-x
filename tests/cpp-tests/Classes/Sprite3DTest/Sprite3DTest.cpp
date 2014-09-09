@@ -241,7 +241,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite1->setScale(4.f);
     sprite1->setTexture("Sprite3DTest/boss.png");
     sprite1->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite1->setContentSize(Size(20, 20));
     
     //add to scene
     addChild( sprite1 );
@@ -252,7 +251,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite2->setScale(4.f);
     sprite2->setTexture("Sprite3DTest/boss.png");
     sprite2->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite2->setContentSize(Size(20, 20));
     sprite2->setAnchorPoint(Vec2(0.5, 0.5));
     
     //add to scene
@@ -266,14 +264,11 @@ Sprite3DHitTest::Sprite3DHitTest()
     
     listener1->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
-        
-        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-        Size s = target->getContentSize();
-        Rect rect = Rect(-s.width/2, -s.height/2, s.width, s.height);
-        
-        if (rect.containsPoint(locationInNode))
+      
+        Rect rect = target->getBoundingBox();        
+        if (rect.containsPoint(touch->getLocation()))
         {
-            log("sprite3d began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("sprite3d began... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
             target->setOpacity(100);
             return true;
         }
