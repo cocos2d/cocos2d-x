@@ -220,8 +220,6 @@
         "cocos/3d/CCObjLoader.h", 
         "cocos/3d/CCRay.cpp", 
         "cocos/3d/CCRay.h", 
-        "cocos/3d/CCSequence3D.cpp", 
-        "cocos/3d/CCSequence3D.h",
         "cocos/3d/CCSkeleton3D.cpp", 
         "cocos/3d/CCSkeleton3D.h", 
         "cocos/3d/CCSprite3D.cpp", 
