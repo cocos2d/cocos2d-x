@@ -64,15 +64,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
+#import "CCEAGLView-ios.h"
+
 #import <QuartzCore/QuartzCore.h>
-#import "CCGLViewImpl.h"
-#import "CCEAGLView.h"
-#import "CCES2Renderer.h"
-#import "CCDirector.h"
-#import "CCSet.h"
-#import "CCTouch.h"
-#import "CCIMEDispatcher.h"
-#import "OpenGL_Internal.h"
+
+#import "base/CCDirector.h"
+#import "deprecated/CCSet.h"
+#import "base/CCTouch.h"
+#import "base/CCIMEDispatcher.h"
+#import "CCGLViewImpl-ios.h"
+#import "CCES2Renderer-ios.h"
+#import "OpenGL_Internal-ios.h"
+
 //CLASS IMPLEMENTATIONS:
 
 #define IOS_MAX_TOUCHES_COUNT     10

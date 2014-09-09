@@ -1,7 +1,7 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,36 +22,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include "platform/CCGL.h"
+#include "CCLock-apple.h"
 
-class GLBufferedNode
+NS_CC_BEGIN
+
+Lock::Lock(void)
 {
-public:
-    /**
-     * @js ctor
-     */
-    GLBufferedNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~GLBufferedNode();
+}
 
-    /**
-     * Load the given data into this Node's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+Lock::~Lock(void)
+{
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint _bufferObject[BUFFER_SLOTS];
-    GLuint _bufferSize[BUFFER_SLOTS];
+}
 
-    GLuint _indexBufferObject[BUFFER_SLOTS];
-    GLuint _indexBufferSize[BUFFER_SLOTS];
-};
-#endif // __CC_GL_BUFFERED_NODE__
+void Lock::lock(void)
+{
+    
+}
+
+void Lock::unlock(void)
+{
+    
+}
+
+NS_CC_END

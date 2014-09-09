@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 
-#include "UIEditBoxImplWp8.h"
+#include "UIEditBoxImpl-wp8.h"
 #include "UIEditBox.h"
 #include "CCGLViewImpl.h"
 #include "base/CCScriptSupport.h"

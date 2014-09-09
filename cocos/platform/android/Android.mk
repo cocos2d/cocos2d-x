@@ -7,12 +7,12 @@ LOCAL_MODULE := cocos2dxandroid_static
 LOCAL_MODULE_FILENAME := libcocos2dandroid
 
 LOCAL_SRC_FILES := \
-CCApplication.cpp \
-CCCommon.cpp \
-CCDevice.cpp \
-CCGLViewImpl.cpp \
-CCFileUtilsAndroid.cpp \
-javaactivity.cpp \
+CCApplication-android.cpp \
+CCCommon-android.cpp \
+CCDevice-android.cpp \
+CCGLViewImpl-android.cpp \
+CCFileUtils-android.cpp \
+javaactivity-android.cpp \
 jni/DPIJni.cpp \
 jni/IMEJni.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \

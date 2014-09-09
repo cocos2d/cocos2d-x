@@ -1,7 +1,7 @@
 /****************************************************************************
-Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,36 +22,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CC_GL_BUFFERED_NODE__
-#define __CC_GL_BUFFERED_NODE__
 
-#include "platform/CCGL.h"
+#ifndef __PLATFORM_CCGL_H__
+#define __PLATFORM_CCGL_H__
 
-class GLBufferedNode
-{
-public:
-    /**
-     * @js ctor
-     */
-    GLBufferedNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~GLBufferedNode();
+#include "base/CCPlatformConfig.h"
 
-    /**
-     * Load the given data into this Node's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
-     */
-    void setGLBufferData(void *buf, GLuint bufSize, int slot);
-    void setGLIndexData(void *buf, GLuint bufSize, int slot);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+#include "platform/mac/CCGL-mac.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "platform/ios/CCGL-ios.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "platform/android/CCGL-android.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include "platform/win32/CCGL-win32.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#include "platform/winrt/CCGL.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#include "platform/linux/CCGL-linux.h"
+#endif
 
-    // We allocate 4 buffer objs per node, and index into them as slots.
-#define BUFFER_SLOTS 4
-    GLuint _bufferObject[BUFFER_SLOTS];
-    GLuint _bufferSize[BUFFER_SLOTS];
-
-    GLuint _indexBufferObject[BUFFER_SLOTS];
-    GLuint _indexBufferSize[BUFFER_SLOTS];
-};
-#endif // __CC_GL_BUFFERED_NODE__
+#endif /* __PLATFORM_CCPLATFORMDEFINE_H__*/

@@ -23,8 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLViewImpl.h"
-#include "CCApplication.h"
+#include "CCGLViewImpl-desktop.h"
+
+#include <unordered_map>
+
+#include "platform/CCApplication.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCEventDispatcher.h"
@@ -34,7 +37,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 
-#include <unordered_map>
 
 NS_CC_BEGIN
 

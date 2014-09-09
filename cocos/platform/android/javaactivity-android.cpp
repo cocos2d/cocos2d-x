@@ -25,7 +25,8 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCApplication.h"
+#include "CCApplication-android.h"
+#include "CCGLViewImpl-android.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventType.h"
@@ -34,7 +35,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "2d/CCDrawingPrimitives.h"
-#include "CCGLViewImpl.h"
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <jni.h>

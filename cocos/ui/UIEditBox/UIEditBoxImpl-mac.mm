@@ -23,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBoxImplMac.h"
-#include "base/CCDirector.h"
+#include "UIEditBoxImpl-mac.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
+#include "base/CCDirector.h"
 #include "UIEditBox.h"
 
 

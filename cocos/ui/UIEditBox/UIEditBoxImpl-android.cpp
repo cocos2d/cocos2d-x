@@ -23,14 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBoxImplAndroid.h"
+#include "UIEditBoxImpl-android.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 #include "UIEditBox.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-
+#include "2d/CCLabel.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 

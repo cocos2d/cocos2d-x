@@ -27,7 +27,9 @@ THE SOFTWARE.
 #define __BASE_CC_PLATFORM_CONFIG_H__
 
 /**
-Config of cocos2d-x project, per target platform.
+  Config of cocos2d-x project, per target platform.
+  
+  THIS FILE MUST NOT INCLUDE ANY OTHER FILE
 */
 
 //////////////////////////////////////////////////////////////////////////

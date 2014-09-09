@@ -31,10 +31,12 @@
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCPlatformMacros.h"
-#import "CCESRenderer.h"
+#import "CCESRenderer-ios.h"
+
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+
+#import "CCPlatformMacros.h"
 
 @interface CCES2Renderer : NSObject <CCESRenderer>
 {

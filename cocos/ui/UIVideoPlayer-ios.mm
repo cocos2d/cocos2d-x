@@ -24,14 +24,15 @@
 
 #include "UIVideoPlayer.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
-#include "CCEAGLView.h"
+
+#include "platform/ios/CCEAGLView-ios.h"
 #import <MediaPlayer/MediaPlayer.h>
 #include "base/CCDirector.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
 @interface UIVideoViewWrapperIos : NSObject
 

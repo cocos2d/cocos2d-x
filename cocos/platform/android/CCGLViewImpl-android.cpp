@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCGLViewImpl.h"
+#include "CCGLViewImpl-android.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
 #include "jni/IMEJni.h"

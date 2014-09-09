@@ -28,12 +28,13 @@
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 
-#import "CCES2Renderer.h"
+#include "base/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCPlatformMacros.h"
-#import "OpenGL_Internal.h"
+#import "CCES2Renderer-ios.h"
+#import "base/CCPlatformMacros.h"
+#import "OpenGL_Internal-ios.h"
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define NSLog(...)       do {} while (0)

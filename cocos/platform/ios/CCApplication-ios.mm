@@ -29,8 +29,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CCGeometry.h"
-#import "CCDirectorCaller.h"
+#import "math/CCGeometry.h"
+#import "CCDirectorCaller-ios.h"
 
 NS_CC_BEGIN
 

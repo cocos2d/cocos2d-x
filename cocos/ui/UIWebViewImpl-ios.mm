@@ -24,11 +24,11 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "UIWebViewImpl_iOS.h"
+#include "UIWebViewImpl-ios.h"
 #include "renderer/CCRenderer.h"
-#include "CCDirector.h"
-#include "CCGLView.h"
-#include "CCEAGLView.h"
+#include "base/CCDirector.h"
+#include "platform/CCGLView.h"
+#include "platform/ios/CCEAGLView-ios.h"
 #include "platform/CCFileUtils.h"
 #include "ui/UIWebView.h"
 

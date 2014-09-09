@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include "renderer/CCTexture2D.h"
 
-#include "CCGL.h"
+#include "platform/CCGL.h"
 #include "platform/CCImage.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"

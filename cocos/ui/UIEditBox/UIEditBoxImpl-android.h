@@ -34,6 +34,8 @@
 
 NS_CC_BEGIN
 
+class Label;
+
 namespace ui {
 
 class EditBox;
