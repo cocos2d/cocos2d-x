@@ -21,7 +21,7 @@
 #ifndef MATHUTIL_H_
 #define MATHUTIL_H_
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
+#ifdef __SSE__
 #include <xmmintrin.h>
 #endif
 
@@ -71,7 +71,7 @@ public:
     static void smooth(float* x, float target, float elapsedTime, float riseTime, float fallTime);
 
 private:
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
+#ifdef __SSE__
     inline static void addMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
     
     inline static void addMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);

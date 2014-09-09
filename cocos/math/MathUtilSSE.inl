@@ -1,5 +1,5 @@
 NS_CC_MATH_BEGIN
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
+
 inline void MathUtil::addMatrix(const __m128 m[4], float scalar, __m128 dst[4])
 {
     __m128 s = _mm_set1_ps(scalar);
@@ -148,5 +148,5 @@ inline void MathUtil::transformVec4(const __m128 m[4], const __m128& v, __m128& 
             _mm_add_ps(_mm_mul_ps(m[2], col3), _mm_mul_ps(m[3], col4))
           );
 }
-#endif
+
 NS_CC_MATH_END

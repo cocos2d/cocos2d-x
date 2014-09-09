@@ -24,7 +24,7 @@
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
+#ifdef __SSE__
 #include <xmmintrin.h>
 #endif
 
@@ -81,7 +81,7 @@ public:
     /**
      * Stores the columns of this 4x4 matrix.
      * */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) && defined (__SSE__)
+#ifdef __SSE__
     union {
         __m128 col[4];
         float m[16];
