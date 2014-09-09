@@ -281,14 +281,6 @@ void Node::setSkewY(float skewY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
-
-/// zOrder setter : private method
-/// used internally to alter the zOrder variable. DON'T call this method manually 
-void Node::_setLocalZOrder(int z)
-{
-    _localZOrder = z;
-}
-
 void Node::setLocalZOrder(int z)
 {
     if (_localZOrder == z)
@@ -1172,7 +1164,7 @@ void Node::insertChild(Node* child, int z)
     _transformUpdated = true;
     _reorderChildDirty = true;
     _children.pushBack(child);
-    child->_setLocalZOrder(z);
+    child->_localZOrder = z;
 }
 
 void Node::reorderChild(Node *child, int zOrder)
@@ -1180,7 +1172,7 @@ void Node::reorderChild(Node *child, int zOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setLocalZOrder(zOrder);
+    child->_localZOrder = zOrder;
 }
 
 void Node::sortAllChildren()
