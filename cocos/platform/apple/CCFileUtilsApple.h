@@ -26,9 +26,10 @@
 #ifndef __CC_FILEUTILS_APPLE_H__
 #define __CC_FILEUTILS_APPLE_H__
 
-#include "CCFileUtils.h"
 #include <string>
 #include <vector>
+
+#include "platform/CCFileUtils.h"
 #include "base/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 

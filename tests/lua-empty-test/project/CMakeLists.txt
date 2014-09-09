@@ -1,9 +1,20 @@
 set(APP_NAME lua-empty-test)
 
 set(SAMPLE_SRC
-  proj.linux/main.cpp
   Classes/AppDelegate.cpp
 )
+
+if(LINUX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.linux/main.cpp
+     )
+elseif(MACOSX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.mac/main.cpp
+     )
+endif()
 
 include_directories(
   Classes

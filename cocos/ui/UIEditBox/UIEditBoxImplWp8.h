@@ -24,6 +24,9 @@ THE SOFTWARE.
 #ifndef __UIEditBoxIMPLWP8_H__
 #define __UIEditBoxIMPLWP8_H__
 
+#include "base/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+
 #include "UIEditBoxImpl.h"
 
 NS_CC_BEGIN
@@ -84,5 +87,7 @@ namespace ui {
 }
 
 NS_CC_END
+
+#endif //WP8
 
 #endif

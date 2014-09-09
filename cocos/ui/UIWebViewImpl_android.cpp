@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifdef __ANDROID__
+
 #include "UIWebViewImpl_android.h"
 
 #include <unordered_map>
@@ -433,3 +435,4 @@ namespace cocos2d {
     } // namespace experimental
 } //namespace cocos2d
 
+#endif // __ANDROID__

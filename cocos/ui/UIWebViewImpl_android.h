@@ -25,6 +25,8 @@
 #ifndef __cocos2d_plugin_WebViewImpl_android_H_
 #define __cocos2d_plugin_WebViewImpl_android_H_
 
+#ifdef __ANDROID__
+
 #include <iosfwd>
 
 namespace cocos2d {
@@ -92,5 +94,7 @@ namespace cocos2d {
         } // namespace ui
     } // namespace experimental
 } //cocos2d
+
+#endif // __ANDROID__
 
 #endif //__cocos2d_plugin_WebViewImpl_android_H_

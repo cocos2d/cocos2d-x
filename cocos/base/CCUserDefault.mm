@@ -23,16 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "base/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
+#import <Foundation/Foundation.h>
+
+#include <string>
+
 #import "CCUserDefault.h"
-#import <string>
-#import "platform/CCFileUtils.h"
 #import "tinyxml2.h"
 #import "CCPlatformConfig.h"
 #import "CCPlatformMacros.h"
 #import "base64.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-
+#import "platform/CCFileUtils.h"
 
 #define XML_FILE_NAME "UserDefault.xml"
 
