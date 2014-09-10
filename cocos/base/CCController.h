@@ -26,7 +26,7 @@
 #ifndef __cocos2d_libs__CCController__
 #define __cocos2d_libs__CCController__
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <string>
 #include <vector>
 #include <unordered_map>

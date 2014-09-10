@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_LINUX_H__
 #define __CC_FILEUTILS_LINUX_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "platform/CCFileUtils.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 #include <string>
 #include <vector>
