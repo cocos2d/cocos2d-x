@@ -27,6 +27,7 @@
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/platform/desktop
+  ${CMAKE_CURRENT_SOURCE_DIR}/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/audio/include
   ${CMAKE_CURRENT_SOURCE_DIR}/editor-support
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/tinyxml2
@@ -40,7 +41,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/glfw3/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/websockets/include/${PLATFORM_FOLDER}
-  ${CMAKE_CURRENT_SOURCE_DIR}/../external/chipmunk/include/chipmunk
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/xxhash
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/ConvertUTF
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/${PLATFORM_FOLDER}-specific/fmod/include/${ARCH_DIR}
