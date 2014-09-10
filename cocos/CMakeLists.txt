@@ -27,6 +27,7 @@
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/platform/desktop
+  ${CMAKE_CURRENT_SOURCE_DIR}/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/audio/include
   ${CMAKE_CURRENT_SOURCE_DIR}/editor-support
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/tinyxml2
@@ -506,37 +507,6 @@ set(COCOS2D_EXTENSIONS_SRC
     ../extensions/physics-nodes/CCPhysicsSprite.cpp
     )
 
-set(CHIPMUNK_SRC
-    ../external/chipmunk/src/chipmunk.c
-    ../external/chipmunk/src/cpArbiter.c
-    ../external/chipmunk/src/cpArray.c
-    ../external/chipmunk/src/cpBB.c
-    ../external/chipmunk/src/cpBBTree.c
-    ../external/chipmunk/src/cpBody.c
-    ../external/chipmunk/src/cpCollision.c
-    ../external/chipmunk/src/cpHashSet.c
-    ../external/chipmunk/src/cpPolyShape.c
-    ../external/chipmunk/src/cpShape.c
-    ../external/chipmunk/src/cpSpace.c
-    ../external/chipmunk/src/cpSpaceComponent.c
-    ../external/chipmunk/src/cpSpaceHash.c
-    ../external/chipmunk/src/cpSpaceQuery.c
-    ../external/chipmunk/src/cpSpaceStep.c
-    ../external/chipmunk/src/cpSpatialIndex.c
-    ../external/chipmunk/src/cpSweep1D.c
-    ../external/chipmunk/src/cpVect.c
-    ../external/chipmunk/src/constraints/cpConstraint.c
-    ../external/chipmunk/src/constraints/cpDampedRotarySpring.c
-    ../external/chipmunk/src/constraints/cpDampedSpring.c
-    ../external/chipmunk/src/constraints/cpGearJoint.c
-    ../external/chipmunk/src/constraints/cpGrooveJoint.c
-    ../external/chipmunk/src/constraints/cpPinJoint.c
-    ../external/chipmunk/src/constraints/cpPivotJoint.c
-    ../external/chipmunk/src/constraints/cpRatchetJoint.c
-    ../external/chipmunk/src/constraints/cpRotaryLimitJoint.c
-    ../external/chipmunk/src/constraints/cpSimpleMotor.c
-    ../external/chipmunk/src/constraints/cpSlideJoint.c
-    )
 
 set(BOX2D_SRC
     ../external/Box2D/Collision/b2BroadPhase.cpp
@@ -587,7 +557,7 @@ set(BOX2D_SRC
     ../external/Box2D/Rope/b2Rope.cpp
     )
 
-add_library(cocos2d STATIC ${COCOS2D_SRC} ${COCOS2D_EXTENSIONS_SRC} ${BOX2D_SRC} ${CHIPMUNK_SRC})
+add_library(cocos2d STATIC ${COCOS2D_SRC} ${COCOS2D_EXTENSIONS_SRC} ${BOX2D_SRC})
 
 if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
     set(FMOD_LIB "fmodex64")
@@ -634,7 +604,7 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-target_link_libraries(cocos2d jpeg webp tiff freetype png z curl ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d jpeg webp tiff freetype chipmunk png z curl ${PLATFORM_SPECIFIC_LIBS})
 
 set_target_properties(cocos2d
     PROPERTIES

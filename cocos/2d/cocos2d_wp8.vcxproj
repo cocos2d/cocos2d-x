@@ -93,8 +93,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
