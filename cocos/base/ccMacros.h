@@ -33,7 +33,7 @@ THE SOFTWARE.
 #endif
 
 #include "base/CCConsole.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 #ifndef CCASSERT
 #if COCOS2D_DEBUG > 0

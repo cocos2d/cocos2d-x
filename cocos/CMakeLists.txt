@@ -93,7 +93,7 @@ set(COCOS2D_BASE_SRC
     base/CCScriptSupport.cpp
     base/CCTouch.cpp
     base/CCUserDefault.cpp
-    base/CCUserDefaultAndroid.cpp
+    base/CCUserDefault-android.cpp
     base/CCValue.cpp
     base/ObjectFactory.cpp
     base/TGAlib.cpp
@@ -219,15 +219,15 @@ set(COCOS2D_BASE_SRC
     ui/UITextBMFont.cpp
     ui/UITextField.cpp
     ui/UIVBox.cpp
-    ui/UIVideoPlayerAndroid.cpp
+    ui/UIVideoPlayer-android.cpp
     ui/UIWebView.cpp
-    ui/UIWebViewImpl_android.cpp
+    ui/UIWebViewImpl-android.cpp
     ui/UIWidget.cpp
     ui/UIEditBox/UIEditBox.cpp
-    ui/UIEditBox/UIEditBoxImplAndroid.cpp
-    ui/UIEditBox/UIEditBoxImplNone.cpp
-    ui/UIEditBox/UIEditBoxImplWin.cpp
-    ui/UIEditBox/UIEditBoxImplWp8.cpp
+    ui/UIEditBox/UIEditBoxImpl-android.cpp
+    ui/UIEditBox/UIEditBoxImpl-stub.cpp
+    ui/UIEditBox/UIEditBoxImpl-win32.cpp
+    ui/UIEditBox/UIEditBoxImpl-wp8.cpp
 
     math/CCAffineTransform.cpp
     math/CCGeometry.cpp
@@ -287,14 +287,14 @@ set(COCOS2D_BASE_SRC
     platform/CCThread.cpp
 
     storage/local-storage/LocalStorage.cpp
-    storage/local-storage/LocalStorageAndroid.cpp
+    storage/local-storage/LocalStorage-android.cpp
     )
 
 if(MACOSX)
   set(COCOS2D_BASE_SRC
     ${COCOS2D_BASE_SRC}
-    ui/UIEditBox/UIEditBoxImplIOS.mm
-    ui/UIEditBox/UIEditBoxImplMac.mm
+    ui/UIEditBox/UIEditBoxImpl-ios.mm
+    ui/UIEditBox/UIEditBoxImpl-mac.mm
     base/CCUserDefault.mm
   )
 endif()
@@ -451,27 +451,27 @@ set(COCOS2D_EXTERNAL_SRC
     )
 
 set(COCOS2D_DESKTOP_SRC
-    platform/desktop/CCGLViewImpl.cpp
+    platform/desktop/CCGLViewImpl-desktop.cpp
     )
 
 if(LINUX)
     set(COCOS2D_PLATFORM_SRC
         ${COCOS2D_DESKTOP_SRC}
-        platform/linux/CCApplication.cpp
-        platform/linux/CCCommon.cpp
-        platform/linux/CCDevice.cpp
-        platform/linux/CCFileUtilsLinux.cpp
-        platform/linux/CCStdC.cpp
+        platform/linux/CCApplication-linux.cpp
+        platform/linux/CCCommon-linux.cpp
+        platform/linux/CCDevice-linux.cpp
+        platform/linux/CCFileUtils-linux.cpp
+        platform/linux/CCStdC-linux.cpp
     )
 elseif(MACOSX)
     set(COCOS2D_PLATFORM_SRC
         ${COCOS2D_DESKTOP_SRC}
-        platform/mac/CCApplication.mm
-        platform/mac/CCCommon.mm
-        platform/mac/CCDevice.mm
-        platform/apple/CCLock.cpp
-        platform/apple/CCFileUtilsApple.mm
-        platform/apple/CCThread.mm
+        platform/mac/CCApplication-mac.mm
+        platform/mac/CCCommon-mac.mm
+        platform/mac/CCDevice-mac.mm
+        platform/apple/CCLock-apple.cpp
+        platform/apple/CCFileUtils-apple.mm
+        platform/apple/CCThread-apple.mm
         )
 else()
     message( FATAL_ERROR "Unsupported architecture, CMake will exit" )

@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include <math.h>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
 

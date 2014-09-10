@@ -27,7 +27,7 @@
 #define __CCEVENT_H__
 
 #include "base/CCRef.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

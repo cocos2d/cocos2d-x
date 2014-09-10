@@ -175,21 +175,21 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
-#include "base/CCPlatformConfig.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "platform/ios/CCApplication.h"
-    #include "platform/ios/CCGLViewImpl.h"
-    #include "platform/ios/CCGL.h"
-    #include "platform/ios/CCStdC.h"
+    #include "platform/ios/CCApplication-ios.h"
+    #include "platform/ios/CCGLViewImpl-ios.h"
+    #include "platform/ios/CCGL-ios.h"
+    #include "platform/ios/CCStdC-ios.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "platform/android/CCApplication.h"
-    #include "platform/android/CCGLViewImpl.h"
-    #include "platform/android/CCGL.h"
-    #include "platform/android/CCStdC.h"
+    #include "platform/android/CCApplication-android.h"
+    #include "platform/android/CCGLViewImpl-android.h"
+    #include "platform/android/CCGL-android.h"
+    #include "platform/android/CCStdC-android.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
@@ -200,24 +200,24 @@ THE SOFTWARE.
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #include "platform/win32/CCApplication.h"
-    #include "platform/desktop/CCGLViewImpl.h"
-    #include "platform/win32/CCGL.h"
-    #include "platform/win32/CCStdC.h"
+    #include "platform/win32/CCApplication-win32.h"
+    #include "platform/desktop/CCGLViewImpl-desktop.h"
+    #include "platform/win32/CCGL-win32.h"
+    #include "platform/win32/CCStdC-win32.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    #include "platform/mac/CCApplication.h"
-    #include "platform/desktop/CCGLViewImpl.h"
-    #include "platform/mac/CCGL.h"
-    #include "platform/mac/CCStdC.h"
+    #include "platform/desktop/CCGLViewImpl-desktop.h"
+    #include "platform/mac/CCApplication-mac.h"
+    #include "platform/mac/CCGL-mac.h"
+    #include "platform/mac/CCStdC-mac.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    #include "platform/linux/CCApplication.h"
-    #include "platform/desktop/CCGLViewImpl.h"
-    #include "platform/linux/CCGL.h"
-    #include "platform/linux/CCStdC.h"
+    #include "platform/linux/CCApplication-linux.h"
+    #include "platform/desktop/CCGLViewImpl-desktop.h"
+    #include "platform/linux/CCGL-linux.h"
+    #include "platform/linux/CCStdC-linux.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -230,7 +230,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCGLViewImpl.h"
+	#include "platform/wp8/CCGLViewImpl-wp8.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 	#include "platform/winrt/CCPrecompiledShaders.h"

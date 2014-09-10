@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __UIHELPER_H__
 
 #include <string>
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
 
 NS_CC_BEGIN
