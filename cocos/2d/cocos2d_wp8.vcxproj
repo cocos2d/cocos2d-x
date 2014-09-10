@@ -93,8 +93,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -341,7 +341,7 @@
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
-    <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp" />
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl-wp8.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\DirectXBase.cpp" />
     <ClCompile Include="..\platform\wp8\pch.cpp">
@@ -495,8 +495,6 @@
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNS.h" />
-    <ClInclude Include="..\base\CCPlatformConfig.h" />
-    <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProtocols.h" />
     <ClInclude Include="..\base\ccRandom.h" />
@@ -553,13 +551,19 @@
     <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h" />
     <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h" />
     <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h" />
+    <ClInclude Include="..\platform\CCApplication.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
+    <ClInclude Include="..\platform\CCGL.h" />
     <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
+    <ClInclude Include="..\platform\CCPlatformConfig.h" />
+    <ClInclude Include="..\platform\CCPlatformDefine.h" />
+    <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
+    <ClInclude Include="..\platform\CCStdC.h" />
     <ClInclude Include="..\platform\CCThread.h" />
     <ClInclude Include="..\platform\winrt\CCApplication.h" />
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h" />
@@ -576,7 +580,7 @@
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
-    <ClInclude Include="..\platform\wp8\CCGLViewImpl.h" />
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl-wp8.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\DirectXBase.h" />
     <ClInclude Include="..\platform\wp8\pch.h" />

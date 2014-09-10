@@ -219,9 +219,9 @@ protected:
     
     cocos2d::Sprite3D* _sprite;
     
-    cocos2d::Animate3D* _swim;
+    cocos2d::Action* _swim;
     cocos2d::Animate3D* _hurt;
-    float _transTime;
+
     float _elapseTransTime;
     
     State   _state;

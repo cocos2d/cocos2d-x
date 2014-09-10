@@ -18,7 +18,7 @@
         
 --------------------------------
 -- 
--- @function [parent=#TextField] getStringValue 
+-- @function [parent=#TextField] getString 
 -- @param self
 -- @return string#string ret (return value: string)
         
@@ -63,6 +63,12 @@
 -- @function [parent=#TextField] setInsertText 
 -- @param self
 -- @param #bool insertText
+        
+--------------------------------
+-- 
+-- @function [parent=#TextField] setString 
+-- @param self
+-- @param #string text
         
 --------------------------------
 -- 
@@ -194,12 +200,6 @@
 -- @function [parent=#TextField] setDetachWithIME 
 -- @param self
 -- @param #bool detach
-        
---------------------------------
--- 
--- @function [parent=#TextField] setText 
--- @param self
--- @param #string text
         
 --------------------------------
 -- 

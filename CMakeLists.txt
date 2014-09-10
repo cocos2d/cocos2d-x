@@ -27,8 +27,8 @@ cmake_minimum_required(VERSION 2.8)
 project (Cocos2dx)
 
 # The version number
-set(Cocos2dxSamples_VERSION_MAJOR 3)
-set(Cocos2dxSamples_VERSION_MINOR 1)
+set(COCOS2D_X_VERSION 3.3.0)
+#set(CMAKE_C_COMPILER_INIT g++)
 
 include(build/BuildHelpers.CMakeLists.txt)
 
@@ -58,10 +58,14 @@ if(WINDOWS)
   ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)
 elseif(MACOSX)
+  ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
+  ADD_DEFINITIONS (-DUSE_FILE32API)
   set(PLATFORM_FOLDER mac)
-else(LINUX)
+elseif(LINUX)
   ADD_DEFINITIONS(-DLINUX)
   set(PLATFORM_FOLDER linux)
+else()
+  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
 if(MINGW)
@@ -78,15 +82,28 @@ endif()
 
 # architecture
 if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-set(ARCH_DIR "64-bit")
+  set(ARCH_DIR "64-bit")
+elseif ( CMAKE_SIZEOF_VOID_P EQUAL 4 )
+  set(ARCH_DIR "32-bit")
 else()
-set(ARCH_DIR "32-bit")
+  message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
+endif()
+
+# Specific Include Directories
+if(LINUX)
+  set(PLATFORM_INCLUDE_DIR
+    /usr/include
+    /usr/include/GLFW
+    /usr/local/include/GLFW
+  )
+else()
+  set(PLATFORM_INCLUDE_DIR
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
+  )
 endif()
 
 include_directories(
-  /usr/include
-  /usr/include/GLFW
-  /usr/local/include/GLFW
+  ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
@@ -94,15 +111,33 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+# Specific Link Directories
+if(LINUX)
+  set(PLATFORM_LINK_DIR
+    /usr/local/lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/fmod/prebuilt/${ARCH_DIR}
+  )
+  set(PLATFORM_FOLDER_ARCH
+      ${PLATFORM_FOLDER}/${ARCH_DIR}
+  )
+else()
+  set(PLATFORM_FOLDER_ARCH
+    ${PLATFORM_FOLDER}
+  )
+  set(PLATFORM_LINK_DIR
+   ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER_ARCH}
+  )
+endif()
+
 link_directories(
-  /usr/local/lib
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/fmod/prebuilt/${ARCH_DIR}
+  ${PLATFORM_LINK_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
 )
 
 # libcocos2d.a

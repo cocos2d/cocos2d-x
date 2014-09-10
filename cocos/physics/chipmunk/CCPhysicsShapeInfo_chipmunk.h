@@ -30,7 +30,7 @@
 
 #include <vector>
 #include <unordered_map>
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 typedef uintptr_t cpGroup;
 struct cpShape;

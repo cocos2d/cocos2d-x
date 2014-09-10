@@ -29,7 +29,7 @@
 #include <string>
 #include <memory>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 
 NS_CC_BEGIN
@@ -54,9 +54,7 @@ public:
         MOUSE,
         ACCELERATION,
         FOCUS,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 		GAME_CONTROLLER,
-#endif
         CUSTOM
     };
 

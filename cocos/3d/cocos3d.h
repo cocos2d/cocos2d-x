@@ -25,17 +25,7 @@
 #ifndef __COCOS_3D_COCOS3D_H__
 #define __COCOS_3D_COCOS3D_H__
 
-//3d
-#include "3d/CCAABB.h"
-#include "3d/CCOBB.h"
-#include "3d/CCRay.h"
-#include "3d/CCSprite3D.h"
-#include "3d/CCMesh.h"
-#include "3d/CCMeshSkin.h"
-#include "3d/CCAnimate3D.h"
-#include "3d/CCAnimation3D.h"
-#include "3d/CCSprite3DMaterial.h"
-#include "3d/CCAttachNode.h"
-#include "3d/CCMeshVertexIndexData.h"
+// DON'T ADD FILES HERE
+// ADD THEM IN THE COCOS2D.H HEADER FILE
 
 #endif

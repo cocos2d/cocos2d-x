@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -104,7 +104,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(Ou
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\debug-lib\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
@@ -155,7 +155,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\release-lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
     <Link>
@@ -374,12 +374,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\releas
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
-    <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp" />
-    <ClCompile Include="..\platform\win32\CCApplication.cpp" />
-    <ClCompile Include="..\platform\win32\CCCommon.cpp" />
-    <ClCompile Include="..\platform\win32\CCDevice.cpp" />
-    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
-    <ClCompile Include="..\platform\win32\CCStdC.cpp" />
+    <ClCompile Include="..\platform\desktop\CCGLViewImpl-desktop.cpp" />
+    <ClCompile Include="..\platform\win32\CCApplication-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCCommon-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCDevice-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCFileUtils-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCStdC-win32.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
     <ClCompile Include="..\renderer\CCGLProgram.cpp" />
@@ -408,7 +408,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\releas
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp" />
-    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImplWin.cpp" />
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp" />
     <ClCompile Include="..\ui\UIHBox.cpp" />
     <ClCompile Include="..\ui\UIHelper.cpp" />
     <ClCompile Include="..\ui\UIImageView.cpp" />
@@ -747,12 +747,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\releas
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
-    <ClInclude Include="..\platform\desktop\CCGLViewImpl.h" />
-    <ClInclude Include="..\platform\win32\CCApplication.h" />
-    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h" />
-    <ClInclude Include="..\platform\win32\CCGL.h" />
-    <ClInclude Include="..\platform\win32\CCPlatformDefine.h" />
-    <ClInclude Include="..\platform\win32\CCStdC.h" />
+    <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h" />
+    <ClInclude Include="..\platform\win32\CCApplication-win32.h" />
+    <ClInclude Include="..\platform\win32\CCFileUtils-win32.h" />
+    <ClInclude Include="..\platform\win32\CCGL-win32.h" />
+    <ClInclude Include="..\platform\win32\CCPlatformDefine-win32.h" />
+    <ClInclude Include="..\platform\win32\CCStdC-win32.h" />
     <ClInclude Include="..\platform\win32\compat\stdint.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
@@ -784,8 +784,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\releas
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl.h" />
-    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImplWin.h" />
     <ClInclude Include="..\ui\UIHBox.h" />
     <ClInclude Include="..\ui\UIHelper.h" />
     <ClInclude Include="..\ui\UIImageView.h" />
