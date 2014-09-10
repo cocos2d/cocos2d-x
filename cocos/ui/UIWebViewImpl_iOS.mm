@@ -33,10 +33,10 @@
 #include "ui/UIWebView.h"
 
 @interface UIWebViewWrapper : NSObject
-@property (nonatomic) std::function<bool(std::string url)> shouldStartLoading;
-@property (nonatomic) std::function<void(std::string url)> didFinishLoading;
-@property (nonatomic) std::function<void(std::string url)> didFailLoading;
-@property (nonatomic) std::function<void(std::string url)> onJsCallback;
+@property (nonatomic) std::function<bool(const std::string &url)> shouldStartLoading;
+@property (nonatomic) std::function<void(const std::string &url)> didFinishLoading;
+@property (nonatomic) std::function<void(const std::string &url)> didFailLoading;
+@property (nonatomic) std::function<void(const std::string &url)> onJsCallback;
 
 @property(nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
 @property(nonatomic, readonly, getter=canGoForward) BOOL canGoForward;
@@ -230,23 +230,23 @@ WebViewImpl::WebViewImpl(WebView *webView)
         _webView(webView) {
     [_uiWebViewWrapper retain];
             
-    _uiWebViewWrapper.shouldStartLoading = [this](std::string url) {
+    _uiWebViewWrapper.shouldStartLoading = [this](const std::string &url) {
         if (this->_webView->shouldStartLoading) {
             return this->_webView->shouldStartLoading(this->_webView, url);
         }
         return true;
     };
-    _uiWebViewWrapper.didFinishLoading = [this](std::string url) {
+    _uiWebViewWrapper.didFinishLoading = [this](const std::string &url) {
         if (this->_webView->didFinishLoading) {
             this->_webView->didFinishLoading(this->_webView, url);
         }
     };
-    _uiWebViewWrapper.didFailLoading = [this](std::string url) {
+    _uiWebViewWrapper.didFailLoading = [this](const std::string &url) {
         if (this->_webView->didFailLoading) {
             this->_webView->didFailLoading(this->_webView, url);
         }
     };
-    _uiWebViewWrapper.onJsCallback = [this](std::string url) {
+    _uiWebViewWrapper.onJsCallback = [this](const std::string &url) {
         if (this->_webView->onJsCallback) {
             this->_webView->onJsCallback(this->_webView, url);
         }

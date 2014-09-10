@@ -147,20 +147,20 @@ bool WebViewTest::init()
     return false;
 }
 
-bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender, std::string url)
+bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewShouldStartLoading, url is %s", url.c_str());
     
     return true;
 }
 
-void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, std::string url)
+void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFinishLoading, url is %s", url.c_str());
 
 }
 
-void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, std::string url)
+void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFailLoading, url is %s", url.c_str());
 
