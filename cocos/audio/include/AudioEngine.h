@@ -70,7 +70,7 @@ public:
     enum class AudioState
     {
         ERROR  = -1,
-        INITIAL,
+        INITIALZING,
         PLAYING,
         PAUSED
     };
@@ -178,9 +178,9 @@ public:
      */
     static void setFinishCallback(int audioID, const std::function<void(int,const std::string&)>& callback);
     
-    static unsigned int getMaxAudioInstance();
+    static int getMaxAudioInstance() {return _maxInstances;}
     
-    static bool setMaxAudioInstance(unsigned int maxInstances);
+    static bool setMaxAudioInstance(int maxInstances);
     
     /** Uncache the audio data from internal buffer.
      * AudioEngine cache audio data on ios platform
@@ -233,7 +233,7 @@ protected:
         AudioInfo()
         : profileManage(nullptr)
         , duration(TIME_UNKNOWN)
-        , state(AudioState::INITIAL)
+        , state(AudioState::INITIALZING)
         {
             
         }
@@ -250,13 +250,13 @@ protected:
     };
 
     //audioID,audioAttribute
-    static std::unordered_map<int, AudioInfo> _audioInfos;
+    static std::unordered_map<int, AudioInfo> _audioIDInfoMap;
     
     //audio file path,audio IDs
-    static std::unordered_map<std::string,std::list<int>> _audioIDs;
+    static std::unordered_map<std::string,std::list<int>> _audioPathIDMap;
     
     //profileName,ProfileManage
-    static std::unordered_map<std::string, ProfileManage> _profileManages;
+    static std::unordered_map<std::string, ProfileManage> _audioPathProfileManageMap;
     
     static int _maxInstances;
     

@@ -248,7 +248,7 @@ void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
         auto playerIt = _audioPlayers.find(audioID);
         if (playerIt != _audioPlayers.end()) {
             if (playerIt->second.play2d(cache)) {
-                AudioEngine::_audioInfos[audioID].state = AudioEngine::AudioState::PLAYING;
+                AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
             }
             else{
                 _threadMutex.lock();
@@ -408,7 +408,7 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
         }
         
         if (player._largeFile) {
-            //ret = player.setTime(time);
+            ret = player.setTime(time);
             break;
         }
         else {
@@ -472,7 +472,7 @@ void AudioEngineImpl::update(float dt)
         
         if (player._ready && sourceState == AL_STOPPED) {
             _alSourceUsed[player._alSource] = false;
-            auto& audioInfo = AudioEngine::_audioInfos[audioID];
+            auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
             if (player._finishCallbak) {
                 player._finishCallbak(audioID, *audioInfo.filePath);
             }

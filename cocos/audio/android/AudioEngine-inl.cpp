@@ -38,9 +38,6 @@
 #include <android/log.h>
 #include <jni.h>
 
-#define MIN_VOLUME_MILLIBEL -7000
-#define RANGE_VOLUME_MILLIBEL 7000
-
 using namespace cocos2d;
 
 void PlayOverEvent(SLPlayItf caller, void* context, SLuint32 playEvent)
@@ -145,7 +142,11 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
             (*_fdPlayerSeek)->SetLoop(_fdPlayerSeek, SL_BOOLEAN_TRUE, 0, SL_TIME_UNKNOWN);
         }
 
-        (*_fdPlayerVolume)->SetVolumeLevel(_fdPlayerVolume, MIN_VOLUME_MILLIBEL + RANGE_VOLUME_MILLIBEL * volume);
+        int dbVolume = 2000 * log10(volume);
+        if(dbVolume < SL_MILLIBEL_MIN){
+            dbVolume = SL_MILLIBEL_MIN;
+        }
+        (*_fdPlayerVolume)->SetVolumeLevel(_fdPlayerVolume, dbVolume);
 
         result = (*_fdPlayerPlay)->SetPlayState(_fdPlayerPlay, SL_PLAYSTATE_PLAYING);
         if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
@@ -233,7 +234,7 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
         (*(player._fdPlayerPlay))->RegisterCallback(player._fdPlayerPlay, PlayOverEvent, (void*)this);
         (*(player._fdPlayerPlay))->SetCallbackEventsMask(player._fdPlayerPlay, SL_PLAYEVENT_HEADATEND);
 
-        AudioEngine::_audioInfos[audioId].state = AudioEngine::AudioState::PLAYING;
+        AudioEngine::_audioIDInfoMap[audioId].state = AudioEngine::AudioState::PLAYING;
     } while (0);
 
     return audioId;
@@ -248,7 +249,7 @@ void AudioEngineImpl::playerFinishCallback(SLPlayItf caller, SLuint32 playEvent)
         {
             if (iter->second._finishCallback)
             {
-                iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioInfos[iter->second._audioID].filePath); 
+                iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioIDInfoMap[iter->second._audioID].filePath); 
             }
             AudioEngine::stop(iter->second._audioID);
             break;
@@ -259,9 +260,13 @@ void AudioEngineImpl::playerFinishCallback(SLPlayItf caller, SLuint32 playEvent)
 void AudioEngineImpl::setVolume(int audioID,float volume)
 {
     auto& player = _audioPlayers[audioID];
-    auto result = (*player._fdPlayerVolume)->SetVolumeLevel(player._fdPlayerVolume, MIN_VOLUME_MILLIBEL + RANGE_VOLUME_MILLIBEL * volume);
+    int dbVolume = 2000 * log10(volume);
+    if(dbVolume < SL_MILLIBEL_MIN){
+        dbVolume = SL_MILLIBEL_MIN;
+    }
+    auto result = (*player._fdPlayerVolume)->SetVolumeLevel(player._fdPlayerVolume, dbVolume);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu",__func__, result);
     }
 }
 
@@ -280,7 +285,7 @@ void AudioEngineImpl::pause(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_PAUSED);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu",__func__, result);
     }
 }
 
@@ -289,7 +294,7 @@ void AudioEngineImpl::resume(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_PLAYING);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu",__func__, result);
     }
 }
 
@@ -298,7 +303,7 @@ void AudioEngineImpl::stop(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_STOPPED);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu",__func__, result);
     }
 
     _audioPlayers.erase(audioID);
@@ -339,14 +344,7 @@ float AudioEngineImpl::getCurrentTime(int audioID)
     SLmillisecond currPos;
     auto& player = _audioPlayers[audioID];
     (*player._fdPlayerPlay)->GetPosition(player._fdPlayerPlay, &currPos);
-
-    if (currPos > player._duration){
-        float pos = currPos/1000.0f;
-        return fmod(pos, player._duration);
-    }
-    else {
-        return currPos / 1000.0f;
-    }
+    return currPos / 1000.0f;
 }
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time)
