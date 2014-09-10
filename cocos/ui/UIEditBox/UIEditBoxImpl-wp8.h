@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __UIEditBoxIMPLWP8_H__
 #define __UIEditBoxIMPLWP8_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 
 #include "UIEditBoxImpl.h"

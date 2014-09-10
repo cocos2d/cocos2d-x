@@ -29,7 +29,7 @@
 #include <vector>
 #include <stack>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"

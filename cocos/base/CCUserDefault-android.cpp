@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCUserDefault.h"
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #include "base/ccUtils.h"
 #include "platform/CCCommon.h"
 #include "base/base64.h"

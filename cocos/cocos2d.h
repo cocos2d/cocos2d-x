@@ -175,8 +175,8 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
-#include "base/CCPlatformConfig.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication-ios.h"

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_IOS_H__
 #define __CC_APPLICATION_IOS_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "platform/CCCommon.h"

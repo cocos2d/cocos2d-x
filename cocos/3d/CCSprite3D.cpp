@@ -31,7 +31,7 @@
 #include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"

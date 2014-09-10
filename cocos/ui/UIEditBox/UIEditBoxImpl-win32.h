@@ -26,7 +26,7 @@
 #ifndef __UIEditBoxIMPLWIN_H__
 #define __UIEditBoxIMPLWIN_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 

@@ -33,7 +33,7 @@
 #include <string>
 #include <vector>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
 
 struct libwebsocket;

@@ -26,7 +26,7 @@
 #ifndef _CCLabelTextFormatter_h_
 #define _CCLabelTextFormatter_h_
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

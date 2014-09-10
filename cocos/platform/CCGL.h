@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __PLATFORM_CCGL_H__
 #define __PLATFORM_CCGL_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "platform/mac/CCGL-mac.h"

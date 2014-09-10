@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include <stack>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "2d/CCScene.h"

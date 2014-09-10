@@ -29,7 +29,7 @@ Copyright (c) 2013-2014 Chukong Technologies
  * define some platform specific macros
  */
 #include "base/ccConfig.h"
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformDefine.h"
 
 /**
