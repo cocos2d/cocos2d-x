@@ -29,10 +29,10 @@
 #include <vector>
 #include <stack>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 

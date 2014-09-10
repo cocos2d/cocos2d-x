@@ -25,7 +25,7 @@
 #ifndef cocos2d_libs_UIDeprecated_h
 #define cocos2d_libs_UIDeprecated_h
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIListView.h"

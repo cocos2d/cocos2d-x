@@ -22,7 +22,6 @@
  */
 
 #include "2d/CCDrawNode.h"
-#include "CCGL.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
@@ -31,6 +30,7 @@
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 

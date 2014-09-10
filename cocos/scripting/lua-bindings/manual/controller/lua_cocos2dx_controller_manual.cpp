@@ -31,7 +31,7 @@
 #include "cocos2d/LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
-#include "CCGameController.h"
+#include "base/CCGameController.h"
 
 
 static void cloneEventListenerControllerHandler(const cocos2d::EventListenerController* src,cocos2d::EventListenerController* dst,  ScriptHandlerMgr::HandlerType type)

@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <vector>
 #include <unordered_map>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 #include "base/CCValue.h"
 #include "base/CCData.h"

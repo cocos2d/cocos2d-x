@@ -32,8 +32,8 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
-#include "CCGL.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 

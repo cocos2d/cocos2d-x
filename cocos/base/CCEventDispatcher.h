@@ -31,10 +31,10 @@
 #include <vector>
 #include <set>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCEventListener.h"
 #include "base/CCEvent.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 

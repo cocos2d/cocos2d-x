@@ -29,7 +29,7 @@
 #if CC_USE_PHYSICS
 
 #include <vector>
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "math/CCGeometry.h"
 
 struct cpSpace;

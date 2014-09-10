@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "2d/CCActionCamera.h"
 #include "2d/CCNode.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 //

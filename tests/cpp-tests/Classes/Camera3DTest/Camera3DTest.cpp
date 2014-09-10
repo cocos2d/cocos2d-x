@@ -27,9 +27,6 @@ THE SOFTWARE.
 #include <algorithm>
 #include "../testResource.h"
 
-#include "3d/CCAttachNode.h"
-#include "3d/cocos3d.h"
-
 ////////////DrawLine/////////////////////
 
 class DrawLine3D: public Node

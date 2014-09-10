@@ -41,12 +41,12 @@ THE SOFTWARE.
 #include <string.h>
 #include <cmath>
 
-#include "CCGL.h"
+#include "2d/CCActionCatmullRom.h"
 #include "base/CCDirector.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
-#include "2d/CCActionCatmullRom.h"
 #include "renderer/CCRenderer.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 #ifndef M_PI

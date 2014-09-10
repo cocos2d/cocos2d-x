@@ -1,5 +1,4 @@
 #include "lua_cocos2dx_3d_auto.hpp"
-#include "cocos3d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 
