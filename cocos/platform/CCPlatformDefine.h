@@ -37,7 +37,7 @@ THE SOFTWARE.
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "platform/win32/CCPlatformDefine-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include "platform/wp8/CCPlatformDefine-wp8.h"
+#include "platform/winrt/CCPlatformDefine.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCPlatformDefine-linux.h"
 #endif
