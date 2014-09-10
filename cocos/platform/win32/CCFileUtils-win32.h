@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_WIN32_H__
 #define __CC_FILEUTILS_WIN32_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "platform/CCFileUtils.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 #include <string>
 #include <vector>

@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "platform/CCDevice.h"
 #include "platform/CCFileUtils.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 

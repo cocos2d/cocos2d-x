@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEWIMPL_ANDROID_H__
 #define __CC_EGLVIEWIMPL_ANDROID_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "base/CCRef.h"
