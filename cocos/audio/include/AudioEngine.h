@@ -211,35 +211,25 @@ protected:
     
     static void remove(int audioID);
     
-    class ProfileManage
+    struct ProfileHelper
     {
-    public:
         AudioProfile profile;
-
-        ProfileManage()
-            : lastPlayTime(0.0)
-        {
-
-        }
 
         std::list<int> audioIDs;
 
         double lastPlayTime;
-    };
 
-    class AudioInfo
-    {
-    public:
-        AudioInfo()
-        : profileManage(nullptr)
-        , duration(TIME_UNKNOWN)
-        , state(AudioState::INITIALZING)
+        ProfileHelper()
+            : lastPlayTime(0.0)
         {
-            
+
         }
-        
+    };
+    
+    struct AudioInfo
+    {
         const std::string* filePath;
-        ProfileManage* profileManage;
+        ProfileHelper* profileHelper;
         
         float volume;
         bool loop;
@@ -247,6 +237,14 @@ protected:
         AudioState state;
         
         bool is3dAudio;
+
+        AudioInfo()
+            : profileHelper(nullptr)
+            , duration(TIME_UNKNOWN)
+            , state(AudioState::INITIALZING)
+        {
+
+        }
     };
 
     //audioID,audioAttribute
@@ -255,12 +253,12 @@ protected:
     //audio file path,audio IDs
     static std::unordered_map<std::string,std::list<int>> _audioPathIDMap;
     
-    //profileName,ProfileManage
-    static std::unordered_map<std::string, ProfileManage> _audioPathProfileManageMap;
+    //profileName,ProfileHelper
+    static std::unordered_map<std::string, ProfileHelper> _audioPathProfileHelperMap;
     
     static int _maxInstances;
     
-    static ProfileManage* _defaultProfileManage;
+    static ProfileHelper* _defaultProfileHelper;
     
     static AudioEngineImpl* _audioEngineImpl;
     

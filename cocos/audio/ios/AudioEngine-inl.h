@@ -33,7 +33,6 @@
 #include "AudioPlayer.h"
 
 NS_CC_BEGIN
-class AudioProfile;
 
 #define kMaxSources 32
 

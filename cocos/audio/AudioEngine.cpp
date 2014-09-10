@@ -42,10 +42,10 @@ const float AudioEngine::TIME_UNKNOWN = -1.0f;
 
 //audio file path,audio IDs
 std::unordered_map<std::string,std::list<int>> AudioEngine::_audioPathIDMap;
-//profileName,ProfileManage
-std::unordered_map<std::string, AudioEngine::ProfileManage> AudioEngine::_audioPathProfileManageMap;
+//profileName,ProfileHelper
+std::unordered_map<std::string, AudioEngine::ProfileHelper> AudioEngine::_audioPathProfileHelperMap;
 int AudioEngine::_maxInstances = kMaxSources;
-AudioEngine::ProfileManage* AudioEngine::_defaultProfileManage;
+AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
@@ -54,8 +54,8 @@ void AudioEngine::end()
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
 
-    delete _defaultProfileManage;
-    _defaultProfileManage = nullptr;
+    delete _defaultProfileHelper;
+    _defaultProfileHelper = nullptr;
 }
 
 bool AudioEngine::lazyInit()
@@ -84,10 +84,10 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             break;
         }
 
-        ProfileManage* manage = _defaultProfileManage;
+        ProfileHelper* manage = _defaultProfileHelper;
         if (profile && profile != &manage->profile){
             CC_ASSERT(!profile->name.empty());
-            manage = &_audioPathProfileManageMap[profile->name];
+            manage = &_audioPathProfileHelperMap[profile->name];
             manage->profile = *profile;
         }
         
@@ -133,7 +133,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
                 manage->lastPlayTime = utils::gettime();
                 manage->audioIDs.push_back(ret);
             }
-            audioRef.profileManage = manage;
+            audioRef.profileHelper = manage;
         }
     } while (0);
 
@@ -152,15 +152,18 @@ void AudioEngine::setLoop(int audioID, bool loop)
 void AudioEngine::setVolume(int audioID, float volume)
 {
     auto it = _audioIDInfoMap.find(audioID);
-    if (it != _audioIDInfoMap.end() && it->second.volume != volume){
+    if (it != _audioIDInfoMap.end()){
         if (volume < 0.0f) {
             volume = 0.0f;
         }
         else if (volume > 1.0f){
             volume = 1.0f;
         }
-        _audioEngineImpl->setVolume(audioID, volume);
-        it->second.volume = volume;
+
+        if (it->second.volume != volume){
+            _audioEngineImpl->setVolume(audioID, volume);
+            it->second.volume = volume;
+        }
     }
 }
 
@@ -222,8 +225,8 @@ void AudioEngine::remove(int audioID)
 {
     auto it = _audioIDInfoMap.find(audioID);
     if (it != _audioIDInfoMap.end()){
-        if (it->second.profileManage) {
-            it->second.profileManage->audioIDs.remove(audioID);
+        if (it->second.profileHelper) {
+            it->second.profileHelper->audioIDs.remove(audioID);
         }
         _audioPathIDMap[*it->second.filePath].remove(audioID);
         _audioIDInfoMap.erase(audioID);
@@ -236,8 +239,8 @@ void AudioEngine::stopAll()
     auto itEnd = _audioIDInfoMap.end();
     for (auto it = _audioIDInfoMap.begin(); it != itEnd; ++it)
     {
-        if (it->second.profileManage){
-            it->second.profileManage->audioIDs.remove(it->first);
+        if (it->second.profileHelper){
+            it->second.profileHelper->audioIDs.remove(it->first);
         }
     }
     _audioPathIDMap.clear();
@@ -254,8 +257,8 @@ void AudioEngine::uncache(const std::string &filePath)
             
             auto itInfo = _audioIDInfoMap.find(audioID);
             if (itInfo != _audioIDInfoMap.end()){
-                if (itInfo->second.profileManage) {
-                    itInfo->second.profileManage->audioIDs.remove(audioID);
+                if (itInfo->second.profileHelper) {
+                    itInfo->second.profileHelper->audioIDs.remove(audioID);
                 }
                 _audioIDInfoMap.erase(audioID);
             }
@@ -363,7 +366,7 @@ AudioProfile* AudioEngine::getProfile(int audioID)
     auto it = _audioIDInfoMap.find(audioID);
     if (it != _audioIDInfoMap.end())
     {
-        return &it->second.profileManage->profile;
+        return &it->second.profileHelper->profile;
     }
     
     return nullptr;
@@ -371,18 +374,18 @@ AudioProfile* AudioEngine::getProfile(int audioID)
 
 AudioProfile* AudioEngine::getDefaultProfile()
 {
-    if (_defaultProfileManage == nullptr)
+    if (_defaultProfileHelper == nullptr)
     {
-        _defaultProfileManage = new (std::nothrow) ProfileManage();
+        _defaultProfileHelper = new (std::nothrow) ProfileHelper();
     }
     
-    return &_defaultProfileManage->profile;
+    return &_defaultProfileHelper->profile;
 }
 
 AudioProfile* AudioEngine::getProfile(const std::string &name)
 {
-    auto it = _audioPathProfileManageMap.find(name);
-    if (it != _audioPathProfileManageMap.end()) {
+    auto it = _audioPathProfileHelperMap.find(name);
+    if (it != _audioPathProfileHelperMap.end()) {
         return &it->second.profile;
     } else {
         return nullptr;
