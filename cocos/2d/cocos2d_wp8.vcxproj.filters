@@ -611,9 +611,6 @@
     <ClCompile Include="..\platform\CCGLView.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -658,6 +655,9 @@
     </ClCompile>
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl-wp8.cpp">
+      <Filter>platform\wp8</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1292,9 +1292,6 @@
     <ClInclude Include="..\platform\CCGLView.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\wp8\CCGLViewImpl.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
     <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
     </ClInclude>
@@ -1357,6 +1354,9 @@
     </ClInclude>
     <ClInclude Include="..\platform\CCStdC.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl-wp8.h">
+      <Filter>platform\wp8</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

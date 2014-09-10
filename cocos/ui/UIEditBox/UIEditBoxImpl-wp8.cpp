@@ -27,9 +27,10 @@ THE SOFTWARE.
 
 #include "UIEditBoxImpl-wp8.h"
 #include "UIEditBox.h"
-#include "CCGLViewImpl.h"
+#include "CCGLViewImpl-wp8.h"
 #include "base/CCScriptSupport.h"
 #include "base/ccUTF8.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 

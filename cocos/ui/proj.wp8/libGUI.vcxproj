@@ -185,8 +185,8 @@
     <ClInclude Include="..\..\ui\UIWidget.h" />
     <ClInclude Include="..\UIDeprecated.h" />
     <ClInclude Include="..\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBoxImpl-wp8.h" />
     <ClInclude Include="..\UIEditBox\UIEditBoxImpl.h" />
-    <ClInclude Include="..\UIEditBox\UIEditBoxImplWp8.h" />
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UIRelativeBox.h" />
@@ -214,7 +214,7 @@
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
     <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIEditBox\UIEditBox.cpp" />
-    <ClCompile Include="..\UIEditBox\UIEditBoxImplWp8.cpp" />
+    <ClCompile Include="..\UIEditBox\UIEditBoxImpl-wp8.cpp" />
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />

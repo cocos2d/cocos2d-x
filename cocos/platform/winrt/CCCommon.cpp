@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCWinRTUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "platform/wp8/CCGLViewImpl.h"
+#include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)

@@ -341,7 +341,7 @@
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
-    <ClCompile Include="..\platform\wp8\CCGLViewImpl.cpp" />
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl-wp8.cpp" />
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\DirectXBase.cpp" />
     <ClCompile Include="..\platform\wp8\pch.cpp">
@@ -580,7 +580,7 @@
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
-    <ClInclude Include="..\platform\wp8\CCGLViewImpl.h" />
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl-wp8.h" />
     <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\DirectXBase.h" />
     <ClInclude Include="..\platform\wp8\pch.h" />

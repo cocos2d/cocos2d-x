@@ -93,7 +93,7 @@
     <ClInclude Include="..\UIEditBox\UIEditBoxImpl.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\UIEditBox\UIEditBoxImplWp8.h">
+    <ClInclude Include="..\UIEditBox\UIEditBoxImpl-wp8.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,7 +173,7 @@
     <ClCompile Include="..\UIEditBox\UIEditBox.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\UIEditBox\UIEditBoxImplWp8.cpp">
+    <ClCompile Include="..\UIEditBox\UIEditBoxImpl-wp8.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>

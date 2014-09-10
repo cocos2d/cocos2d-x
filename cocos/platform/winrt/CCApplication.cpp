@@ -26,7 +26,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "platform/winrt/CCGLViewImpl.h"
 #else
-#include "platform/wp8/CCGLViewImpl.h"
+#include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
 #include "base/CCDirector.h"
 #include <algorithm>
