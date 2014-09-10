@@ -6,6 +6,8 @@ cocos2d-x-3.3??      ??
     [NEW]           Renderer: added TriangleCommand
     [NEW]           UI: added `WebView` on iOS and Android
     
+    [FIX]           C++: CMake works for Mac builds
+    [FIX]           C++: Reorganized cocos2d/platform folder. Easier to add new platforms
     [FIX]           EditBox: moved to ui:EditBox
     [FIX]           HttpClient: condition variable sleep on unrelated mutex
     [FIX]           Node: create unneeded temple `Vec2` object in `setPosition(int, int)`, `setPositionX()` and `setPositionY()`
