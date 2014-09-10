@@ -393,8 +393,16 @@ namespace cocostudio
             ecb = options.has_bgendcolorb() ? options.bgendcolorb() : 255;
         }
         
-        float bgcv1 = options.vectorx();
-        float bgcv2 = options.has_vectory() ? options.vectory() : -0.5f;
+        float bgcv1 = 1.0f; 
+        float bgcv2 = 1.0f;
+        if(options.has_vectorx())
+        {
+           bgcv1 = options.vectorx();
+        }
+        if(options.has_vectory())
+        {
+           bgcv2 = options.vectory();
+        }
         panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
         int co = options.has_bgcoloropacity() ? options.bgcoloropacity() : 100;
