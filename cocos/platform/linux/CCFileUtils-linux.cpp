@@ -26,10 +26,10 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCFileUtilsLinux.h"
+#include "CCFileUtils-linux.h"
+#include "CCApplication-linux.h"
 #include "platform/CCCommon.h"
 #include "base/ccMacros.h"
-#include "CCApplication.h"
 #include "deprecated/CCString.h"
 #include <unistd.h>
 #include <sys/stat.h>

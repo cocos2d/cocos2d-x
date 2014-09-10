@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCStdC.h"
+#include "CCStdC-linux.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 

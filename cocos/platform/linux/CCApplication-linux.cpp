@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "base/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCApplication.h"
+#include "CCApplication-linux.h"
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
