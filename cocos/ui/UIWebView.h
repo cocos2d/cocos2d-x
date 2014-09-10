@@ -62,19 +62,19 @@ public:
     * @param url content URL.
     * @return YES if the web view should begin loading content; otherwise, NO .
     */
-    std::function<bool(WebView *sender, std::string url)> shouldStartLoading;
+    std::function<bool(WebView *sender, const std::string &url)> shouldStartLoading;
     /**
     * Call after a web view finishes loading.
     * @param sender The web view that has finished loading.
     * @param url content URL.
     */
-    std::function<void(WebView *sender, std::string url)> didFinishLoading;
+    std::function<void(WebView *sender, const std::string &url)> didFinishLoading;
     /**
     * Call if a web view failed to load content.
     * @param sender The web view that has failed loading.
     * @param url content URL.
     */
-    std::function<void(WebView *sender, std::string url)> didFailLoading;
+    std::function<void(WebView *sender, const std::string &url)> didFailLoading;
 
     /**
     * Set javascript interface scheme.
@@ -85,7 +85,7 @@ public:
     /**
     * This callback called when load URL that start with javascript interface scheme.
     */
-    std::function<void(WebView *sender, std::string message)> onJsCallback;
+    std::function<void(WebView *sender, const std::string &message)> onJsCallback;
 
     /**
     * Sets the main page contents, MIME type, content encoding, and base URL.
