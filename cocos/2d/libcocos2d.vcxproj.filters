@@ -631,21 +631,6 @@
     <ClCompile Include="..\renderer\CCTextureCache.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\win32\CCApplication.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CCCommon.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CCDevice.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CCStdC.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\math\CCAffineTransform.cpp">
       <Filter>math</Filter>
     </ClCompile>
@@ -717,9 +702,6 @@
     </ClCompile>
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp">
       <Filter>storage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp">
-      <Filter>platform\desktop</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCGLView.cpp">
       <Filter>platform</Filter>
@@ -1126,9 +1108,6 @@
     <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImplWin.cpp">
-      <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControl.cpp">
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClCompile>
@@ -1163,6 +1142,27 @@
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\proj.win32\Win32InputBox.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCApplication-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCCommon-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCDevice-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCFileUtils-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CCStdC-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\desktop\CCGLViewImpl-desktop.cpp">
+      <Filter>platform\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1639,21 +1639,6 @@
     <ClInclude Include="..\platform\win32\compat\stdint.h">
       <Filter>platform\win32\compat</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\win32\CCApplication.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CCGL.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CCPlatformDefine.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CCStdC.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\math\CCAffineTransform.h">
       <Filter>math</Filter>
     </ClInclude>
@@ -1743,9 +1728,6 @@
     </ClInclude>
     <ClInclude Include="..\storage\local-storage\LocalStorage.h">
       <Filter>storage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\desktop\CCGLViewImpl.h">
-      <Filter>platform\desktop</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCGLView.h">
       <Filter>platform</Filter>
@@ -2248,9 +2230,6 @@
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImplWin.h">
-      <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControl.h">
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClInclude>
@@ -2288,6 +2267,27 @@
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\proj.win32\Win32InputBox.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCApplication-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCFileUtils-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCGL-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCPlatformDefine-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCStdC-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h">
+      <Filter>platform\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
   </ItemGroup>

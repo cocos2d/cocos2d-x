@@ -24,8 +24,8 @@
 #import <UIKit/UIKit.h>
 #import "AppController.h"
 #import "cocos2d.h"
+#import "platform/ios/CCEAGLView-ios.h"
 #import "AppDelegate.h"
-#import "CCEAGLView.h"
 #import "RootViewController.h"
 
 @implementation AppController

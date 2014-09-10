@@ -994,6 +994,9 @@ Developers:
         
     kaishiqi
         Fixed a but that cursor postion is wrong on desktop.
+        
+    jagd
+        Added setSubsteps() and getSubsteps() in PhysicsWorld
     
 Retired Core Developers:
     WenSheng Yang

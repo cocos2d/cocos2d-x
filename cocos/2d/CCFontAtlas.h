@@ -25,11 +25,12 @@
 #ifndef _CCFontAtlas_h_
 #define _CCFontAtlas_h_
 
-#include "base/CCPlatformMacros.h"
-#include "base/CCRef.h"
-#include "CCStdC.h" // ssize_t on windows
 #include <string>
 #include <unordered_map>
+
+#include "platform/CCPlatformMacros.h"
+#include "base/CCRef.h"
+#include "platform/CCStdC.h" // ssize_t on windows
 
 NS_CC_BEGIN
 

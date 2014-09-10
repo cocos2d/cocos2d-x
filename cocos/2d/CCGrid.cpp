@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 // implementation of GridBase

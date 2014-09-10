@@ -122,7 +122,7 @@ base/CCScheduler.cpp \
 base/CCScriptSupport.cpp \
 base/CCTouch.cpp \
 base/CCUserDefault.cpp \
-base/CCUserDefaultAndroid.cpp \
+base/CCUserDefault-android.cpp \
 base/CCValue.cpp \
 base/TGAlib.cpp \
 base/ZipUtils.cpp \

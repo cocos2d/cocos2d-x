@@ -808,7 +808,6 @@ Animate3DTest::Animate3DTest()
 , _swim(nullptr)
 , _sprite(nullptr)
 , _moveAction(nullptr)
-, _transTime(0.1f)
 , _elapseTransTime(0.f)
 {
     addSprite3D();
@@ -842,28 +841,21 @@ void Animate3DTest::update(float dt)
     if (_state == State::HURT_TO_SWIMMING)
     {
         _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
         
-        if (t >= 1.f)
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
         {
-            t = 1.f;
             _sprite->stopAction(_hurt);
             _state = State::SWIMMING;
         }
-        _swim->setWeight(t);
-        _hurt->setWeight(1.f - t);
     }
     else if (_state == State::SWIMMING_TO_HURT)
     {
         _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
-        if (t >= 1.f)
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
         {
-            t = 1.f;
+            _sprite->stopAction(_swim);
             _state = State::HURT;
         }
-        _swim->setWeight(1.f - t);
-        _hurt->setWeight(t);
     }
 }
 
@@ -880,8 +872,9 @@ void Animate3DTest::addSprite3D()
     if (animation)
     {
         auto animate = Animate3D::create(animation, 0.f, 1.933f);
-        sprite->runAction(RepeatForever::create(animate));
-        _swim = animate;
+        _swim = RepeatForever::create(animate);
+        sprite->runAction(_swim);
+        
         _swim->retain();
         _hurt = Animate3D::create(animation, 1.933f, 2.8f);
         _hurt->retain();
@@ -910,8 +903,10 @@ void Animate3DTest::reachEndCallBack()
 
 void Animate3DTest::renewCallBack()
 {
-    _sprite->stopActionByTag(101);
+    //rerun swim action
+    _sprite->runAction(_swim);
     _state = State::HURT_TO_SWIMMING;
+    _elapseTransTime = 0.0f;
 }
 
 void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
@@ -928,12 +923,14 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 //hurt the tortoise
                 if (_state == State::SWIMMING)
                 {
+                    _elapseTransTime = 0.0f;
+                    _state = State::SWIMMING_TO_HURT;
+                    _sprite->stopAction(_hurt);
                     _sprite->runAction(_hurt);
-                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    auto delay = DelayTime::create(_hurt->getDuration() - Animate3D::getTransitionTime());
                     auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
                     seq->setTag(101);
                     _sprite->runAction(seq);
-                    _state = State::SWIMMING_TO_HURT;
                 }
                 return;
             }

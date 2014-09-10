@@ -879,6 +879,18 @@ void PhysicsWorld::setGravity(const Vect& gravity)
     _info->setGravity(gravity);
 }
 
+void PhysicsWorld::setSubsteps(int steps)
+{
+    if(steps > 0)
+    {
+        _substeps = steps;
+        if (steps > 1)
+        {
+          _updateRate = 1;
+        }
+    }
+}
+
 void PhysicsWorld::step(float delta)
 {
     if (_autoStep)
@@ -914,10 +926,14 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
         _updateTime += delta;
         if (++_updateRateCount >= _updateRate)
         {
-            _info->step(_updateTime * _speed);
-            for (auto& body : _bodies)
+            const float dt = _updateTime * _speed / _substeps;
+            for (int i = 0; i < _substeps; ++i)
             {
-                body->update(_updateTime * _speed);
+                _info->step(dt);
+                for (auto& body : _bodies)
+                {
+                    body->update(dt);
+                }
             }
             _updateRateCount = 0;
             _updateTime = 0.0f;
@@ -936,6 +952,7 @@ PhysicsWorld::PhysicsWorld()
 , _updateRate(1)
 , _updateRateCount(0)
 , _updateTime(0.0f)
+, _substeps(1)
 , _info(nullptr)
 , _scene(nullptr)
 , _delayDirty(false)

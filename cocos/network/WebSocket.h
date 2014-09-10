@@ -30,10 +30,11 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
-#include "base/CCPlatformMacros.h"
-#include "CCStdC.h"
 #include <string>
 #include <vector>
+
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCStdC.h"
 
 struct libwebsocket;
 struct libwebsocket_context;
