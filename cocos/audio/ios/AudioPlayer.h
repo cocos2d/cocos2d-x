@@ -29,7 +29,7 @@
 #import <OpenAL/al.h>
 #include <string>
 #include <mutex>
-#include "base/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
 class AudioCache;

@@ -32,7 +32,7 @@
 
 #include "audio/include/AudioEngine.h"
 #include "base/CCDirector.h"
-#include "platform/android/CCFileUtilsAndroid.h"
+#include "platform/android/CCFileUtils-android.h"
 
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
@@ -120,23 +120,23 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         const SLInterfaceID ids[3] = {SL_IID_SEEK, SL_IID_PREFETCHSTATUS, SL_IID_VOLUME};
         const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
         auto result = (*engineEngine)->CreateAudioPlayer(engineEngine, &_fdPlayerObject, &audioSrc, &audioSnk, 3, ids, req);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("create audio player fail"); break; }
 
         // realize the player
         result = (*_fdPlayerObject)->Realize(_fdPlayerObject, SL_BOOLEAN_FALSE);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("realize the player fail"); break; }
 
         // get the play interface
         result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_PLAY, &_fdPlayerPlay);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the play interface fail"); break; }
 
         // get the seek interface
         result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_SEEK, &_fdPlayerSeek);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the seek interface fail"); break; }
 
         // get the volume interface
         result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_VOLUME, &_fdPlayerVolume);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the volume interface fail"); break; }
 
         if (loop){
             (*_fdPlayerSeek)->SetLoop(_fdPlayerSeek, SL_BOOLEAN_TRUE, 0, SL_TIME_UNKNOWN);
@@ -149,7 +149,7 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         (*_fdPlayerVolume)->SetVolumeLevel(_fdPlayerVolume, dbVolume);
 
         result = (*_fdPlayerPlay)->SetPlayState(_fdPlayerPlay, SL_PLAYSTATE_PLAYING);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("SetPlayState fail"); break; }
 
         ret = true;
     } while (0);
@@ -159,7 +159,7 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
 
 //====================================================
 AudioEngineImpl::AudioEngineImpl()
-    : nextAudioID(0)
+    : currentAudioID(0)
     , _engineObject(nullptr)
     , _engineEngine(nullptr)
     , _outputMixObject(nullptr)
@@ -185,25 +185,25 @@ bool AudioEngineImpl::init()
     do{
         // create engine
         auto result = slCreateEngine(&_engineObject, 0, nullptr, 0, nullptr, nullptr);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("create opensl engine fail"); break; }
 
         // realize the engine
         result = (*_engineObject)->Realize(_engineObject, SL_BOOLEAN_FALSE);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("realize the engine fail"); break; }
 
         // get the engine interface, which is needed in order to create other objects
         result = (*_engineObject)->GetInterface(_engineObject, SL_IID_ENGINE, &_engineEngine);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the engine interface fail"); break; }
 
         // create output mix
         const SLInterfaceID outputMixIIDs[] = {};
         const SLboolean outputMixReqs[] = {};
         result = (*_engineEngine)->CreateOutputMix(_engineEngine, &_outputMixObject, 0, outputMixIIDs, outputMixReqs);           
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("create output mix fail"); break; }
 
         // realize the output mix
         result = (*_outputMixObject)->Realize(_outputMixObject, SL_BOOLEAN_FALSE);
-        if(SL_RESULT_SUCCESS != result){ LOG_FUN break; }
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("realize the output mix fail"); break; }
 
         ret = true;
     }while (false);
@@ -220,15 +220,15 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
         if (_engineEngine == nullptr)
             break;
 
-        auto& player = _audioPlayers[nextAudioID];
+        auto& player = _audioPlayers[currentAudioID];
         auto initPlayer = player.init( _engineEngine, _outputMixObject, fileFullPath, volume, loop);
         if (!initPlayer){
-            _audioPlayers.erase(nextAudioID);
+            _audioPlayers.erase(currentAudioID);
             log("%s,%d message:create player for %s fail", __func__, __LINE__, fileFullPath.c_str());
             break;
         }
 
-        audioId = nextAudioID++;
+        audioId = currentAudioID++;
         player._audioID = audioId;
 
         (*(player._fdPlayerPlay))->RegisterCallback(player._fdPlayerPlay, PlayOverEvent, (void*)this);

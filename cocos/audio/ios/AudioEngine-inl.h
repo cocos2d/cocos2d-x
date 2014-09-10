@@ -34,7 +34,7 @@
 
 NS_CC_BEGIN
 
-#define kMaxSources 32
+#define MAX_AUDIOINSTANCES 32
 
 class AudioEngineThreadPool;
 
@@ -67,7 +67,7 @@ private:
     
     AudioEngineThreadPool* _threadPool;
     
-    ALuint _alSources[kMaxSources];
+    ALuint _alSources[MAX_AUDIOINSTANCES];
     
     //source,used
     std::unordered_map<ALuint, bool> _alSourceUsed;
@@ -80,12 +80,12 @@ private:
     
     std::mutex _threadMutex;
     
-    std::vector<AudioCache*> _removeCaches;
-    std::vector<int> _removeAudioIDs;
+    std::vector<AudioCache*> _toRemoveCaches;
+    std::vector<int> _toRemoveAudioIDs;
     
     bool _lazyInitLoop;
     
-    int nextAudioID;
+    int _currentAudioID;
     
 };
 NS_CC_END

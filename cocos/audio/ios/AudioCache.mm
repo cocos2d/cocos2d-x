@@ -26,19 +26,20 @@
 #import <OpenAL/alc.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
 
-#define PCMDATA_CACHEMAXSIZE 1048576//1MB
+#define PCMDATA_CACHEMAXSIZE 1048576
 
 typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
-ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
+static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
 {
 	static	alBufferDataStaticProcPtr	proc = NULL;
     
-    if (proc == NULL) {
+    if (proc == NULL){
         proc = (alBufferDataStaticProcPtr) alcGetProcAddress(NULL, (const ALCchar*) "alBufferDataStatic");
     }
     
-    if (proc)
+    if (proc){
         proc(bid, format, data, size, freq);
+    }
 	
     return;
 }
@@ -60,9 +61,9 @@ AudioCache::~AudioCache()
 {
     _release = true;
     if(_pcmData){
-        if (_alBufferReady) {
+        if (_alBufferReady)
             alDeleteBuffers(1, &_alBufferId);
-        }
+        
         _readThreadMutex.lock();
         _readThreadMutex.unlock();
         free(_pcmData);
@@ -79,8 +80,8 @@ void AudioCache::readDataThread()
 {
     _readThreadMutex.lock();
     
-	AudioStreamBasicDescription		theFileFormat;
-	UInt32 thePropertySize = sizeof(theFileFormat);
+    AudioStreamBasicDescription		theFileFormat;
+    UInt32 thePropertySize = sizeof(theFileFormat);
     
     SInt64 theFileLengthInFrames;
     SInt64 readInFrames;
@@ -130,7 +131,10 @@ void AudioCache::readDataThread()
     // Get the total frame count
 	thePropertySize = sizeof(theFileLengthInFrames);
 	error = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileLengthFrames, &thePropertySize, &theFileLengthInFrames);
-	if(error) { printf("initOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %d\n", (int)error); goto ExitThread; }
+	if(error) {
+        printf("initOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %d\n", (int)error);
+        goto ExitThread;
+    }
 	
 	_dataSize = (ALsizei)(theFileLengthInFrames * outputFormat.mBytesPerFrame);
     _format = (outputFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
@@ -142,7 +146,8 @@ void AudioCache::readDataThread()
         alGenBuffers(1, &_alBufferId);
         auto alError = alGetError();
         if (alError != AL_NO_ERROR) {
-            printf("error attaching audio to buffer: %x\n", alError); goto ExitThread;
+            printf("error attaching audio to buffer: %x\n", alError);
+            goto ExitThread;
         }
         alBufferDataStaticProc(_alBufferId, _format, _pcmData, _dataSize, _sampleRate);
         
@@ -199,16 +204,14 @@ void AudioCache::readDataThread()
     
 ExitThread:
     CFRelease(fileURL);
-    if (extRef) ExtAudioFileDispose(extRef);
+    if (extRef)
+        ExtAudioFileDispose(extRef);
     
     _readThreadMutex.unlock();
-    if (_queBufferFrames > 0) {
+    if (_queBufferFrames > 0)
         _alBufferReady = true;
-        invokingCallbacks();
-    }
-    else {
-        invokingCallbacks();
-    }
+    
+    invokingCallbacks();
 }
 
 void AudioCache::invokingCallbacks()

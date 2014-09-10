@@ -32,9 +32,9 @@
 #include <unordered_map>
 #include "base/ccUtils.h"
 
-#define kMaxSources 24
+#define MAX_AUDIOINSTANCES 24
 
-#define LOG_FUN log("error: %s,%d",__func__,__LINE__);
+#define ERRORLOG(msg) log("fun:%s,line:%d,msg:%s",__func__,__LINE__,#msg)
 
 NS_CC_BEGIN
 
@@ -98,7 +98,7 @@ private:
     //audioID,AudioInfo
     std::unordered_map<int, AudioPlayer>  _audioPlayers;
 
-    int nextAudioID;
+    int currentAudioID;
 };
 
 #endif // __AUDIO_ENGINE_INL_H_

@@ -84,7 +84,7 @@ namespace cocos2d {
             _sleepCondition.notify_all();
         }
         
-        void stop()
+        void destroy()
         {
             _running = false;
             _sleepCondition.notify_all();
@@ -109,7 +109,6 @@ namespace cocos2d {
                 
                 if (nullptr == task)
                 {
-                    // Wait for http request tasks from main thread
                     std::unique_lock<std::mutex> lk(_sleepMutex);
                     _sleepCondition.wait(lk);
                     continue;
@@ -134,7 +133,7 @@ namespace cocos2d {
 
 AudioEngineImpl::AudioEngineImpl()
 : _lazyInitLoop(true)
-, nextAudioID(0)
+, _currentAudioID(0)
 , _threadPool(nullptr)
 {
     
@@ -143,7 +142,7 @@ AudioEngineImpl::AudioEngineImpl()
 AudioEngineImpl::~AudioEngineImpl()
 {
     if (s_ALContext) {
-        alDeleteSources(kMaxSources, _alSources);
+        alDeleteSources(MAX_AUDIOINSTANCES, _alSources);
         
         _audioCaches.clear();
         
@@ -153,7 +152,7 @@ AudioEngineImpl::~AudioEngineImpl()
         alcCloseDevice(s_ALDevice);
     }
     if (_threadPool) {
-        _threadPool->stop();
+        _threadPool->destroy();
         delete _threadPool;
     }
 }
@@ -172,7 +171,7 @@ bool AudioEngineImpl::init()
             s_ALContext = alcCreateContext(s_ALDevice, nullptr);
             alcMakeContextCurrent(s_ALContext);
             
-            alGenSources(kMaxSources, _alSources);
+            alGenSources(MAX_AUDIOINSTANCES, _alSources);
             alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
@@ -180,7 +179,7 @@ bool AudioEngineImpl::init()
                 break;
             }
             
-            for (int i = 0; i < kMaxSources; ++i) {
+            for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
                 _alSourceUsed[_alSources[i]] = false;
             }
             
@@ -200,7 +199,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     
     bool sourceFlag = false;
     ALuint alSource = 0;
-    for (int i = 0; i < kMaxSources; ++i) {
+    for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
         alSource = _alSources[i];
         
         if ( !_alSourceUsed[alSource]) {
@@ -224,11 +223,11 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         audioCache = &it->second;
     }
     
-    auto player = &_audioPlayers[nextAudioID];
+    auto player = &_audioPlayers[_currentAudioID];
     player->_alSource = alSource;
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addCallbacks(std::bind(&AudioEngineImpl::_play2d,this,audioCache,nextAudioID));
+    audioCache->addCallbacks(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
     
     _alSourceUsed[alSource] = true;
     
@@ -239,7 +238,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
     }
     
-    return nextAudioID++;
+    return _currentAudioID++;
 }
 
 void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
@@ -252,15 +251,15 @@ void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
             }
             else{
                 _threadMutex.lock();
-                _removeAudioIDs.push_back(audioID);
+                _toRemoveAudioIDs.push_back(audioID);
                 _threadMutex.unlock();
             }
         }
     }
     else {
         _threadMutex.lock();
-        _removeCaches.push_back(cache);
-        _removeAudioIDs.push_back(audioID);
+        _toRemoveCaches.push_back(cache);
+        _toRemoveAudioIDs.push_back(audioID);
         _threadMutex.unlock();
     }
 }
@@ -357,7 +356,7 @@ bool AudioEngineImpl::stop(int audioID)
 
 void AudioEngineImpl::stopAll()
 {
-    for(int index = 0; index < kMaxSources; ++index)
+    for(int index = 0; index < MAX_AUDIOINSTANCES; ++index)
     {
         alSourceStop(_alSources[index]);
         alSourcei(_alSources[index], AL_BUFFER, NULL);
@@ -442,9 +441,9 @@ void AudioEngineImpl::update(float dt)
     int audioID;
     
     if (_threadMutex.try_lock()) {
-        size_t removeAudioCount = _removeAudioIDs.size();
+        size_t removeAudioCount = _toRemoveAudioIDs.size();
         for (size_t index = 0; index < removeAudioCount; ++index) {
-            audioID = _removeAudioIDs[index];
+            audioID = _toRemoveAudioIDs[index];
             auto playerIt = _audioPlayers.find(audioID);
             if (playerIt != _audioPlayers.end()) {
                 _alSourceUsed[playerIt->second._alSource] = false;
@@ -452,11 +451,11 @@ void AudioEngineImpl::update(float dt)
                 AudioEngine::remove(audioID);
             }
         }
-        size_t removeCacheCount = _removeCaches.size();
+        size_t removeCacheCount = _toRemoveCaches.size();
         for (size_t index = 0; index < removeCacheCount; ++index) {
             auto itEnd = _audioCaches.end();
             for (auto it = _audioCaches.begin(); it != itEnd; ++it) {
-                if (&it->second == _removeCaches[index]) {
+                if (&it->second == _toRemoveCaches[index]) {
                     _audioCaches.erase(it);
                     break;
                 }
@@ -484,6 +483,13 @@ void AudioEngineImpl::update(float dt)
         else{
             ++it;
         }
+    }
+    
+    if(_audioPlayers.empty()){
+        _lazyInitLoop = true;
+        
+        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+        scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     }
 }
 

@@ -33,7 +33,7 @@
 #include <mutex>
 #include <vector>
 
-#include "base/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 #define QUEUEBUFFER_NUM 3
 
