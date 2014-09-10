@@ -139,3 +139,4 @@ project.properties
 /v*-lua-runtime-*.zip
 /tools/fbx-conv/
 external/chipmunk
+tests/cpp-tests/Resources/audio
