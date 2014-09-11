@@ -37,7 +37,7 @@
 extern "C" {
 #endif
 
-typedef struct {
+typedef struct spSlotData {
 	const char* const name;
 	const spBoneData* const boneData;
 	const char* attachmentName;

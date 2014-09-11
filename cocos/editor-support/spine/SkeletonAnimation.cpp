@@ -98,6 +98,11 @@ void SkeletonAnimation::initialize () {
 	stateInternal->disposeTrackEntry = disposeTrackEntry;
 }
 
+SkeletonAnimation::SkeletonAnimation ()
+		: SkeletonRenderer() {
+	initialize();
+}
+
 SkeletonAnimation::SkeletonAnimation (spSkeletonData *skeletonData)
 		: SkeletonRenderer(skeletonData) {
 	initialize();
@@ -159,6 +164,11 @@ spTrackEntry* SkeletonAnimation::addAnimation (int trackIndex, const std::string
 		return 0;
 	}
 	return spAnimationState_addAnimation(_state, trackIndex, animation, loop, delay);
+}
+
+spAnimation* SkeletonAnimation::findAnimation(const std::string& name) const
+{
+	return spSkeletonData_findAnimation(_skeleton->data, name.c_str());
 }
 
 spTrackEntry* SkeletonAnimation::getCurrent (int trackIndex) { 
