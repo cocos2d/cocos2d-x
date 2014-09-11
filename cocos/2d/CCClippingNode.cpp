@@ -208,17 +208,17 @@ void ClippingNode::drawFullScreenQuadClearStencil()
         Vec2(-1, 1)
     };
     
-    GLProgram* s_shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    s_shader->retain();
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    glProgram->retain();
     
-    int s_colorLocation = s_shader->getUniformLocation("u_color");
+    int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
     
     Color4F color(1, 1, 1, 1);
     
-    s_shader->use();
-    s_shader->setUniformsForBuiltins();
-    s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &color.r, 1);
+    glProgram->use();
+    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
     
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     

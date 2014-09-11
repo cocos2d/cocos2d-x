@@ -68,7 +68,8 @@ public:
     void drawCircle(const Vec2 &center, float radius, float angle, unsigned int segments, bool drawLineToCenter, const Color4F &color);
     
     void drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color);
-    
+
+    /** draw a cubic bezier curve with color and number of segments */
     void drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color);
     
     void drawCardinalSpline(PointArray *config, float tension,  unsigned int segments, const Color4F &color);
@@ -103,10 +104,7 @@ public:
     /** draw a triangle with color */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
-    /** draw a cubic bezier curve with color and number of segments */
-    //void drawCubicBezier(const Vec2& from, const Vec2& control1, const Vec2& control2, const Vec2& to, unsigned int segments, const Color4F &color);
-
-    /** draw a quadratic bezier curve with color and number of segments */
+    /** draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead*/
     CC_DEPRECATED_ATTRIBUTE void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */

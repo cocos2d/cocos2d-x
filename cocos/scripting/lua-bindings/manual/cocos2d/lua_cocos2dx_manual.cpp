@@ -2754,10 +2754,7 @@ int tolua_cocos2dx_DrawNode_drawSolidPoly(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
-    
     
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
@@ -2768,7 +2765,7 @@ int tolua_cocos2dx_DrawNode_drawSolidPoly(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!self)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawSolidPoly'", nullptr);
+        tolua_error(tolua_S,"invalid 'self' in function 'lua_cocos2dx_DrawNode_drawSolidPoly'", nullptr);
         return 0;
     }
 #endif
@@ -2796,7 +2793,7 @@ int tolua_cocos2dx_DrawNode_drawSolidPoly(lua_State* tolua_S)
 #endif
                 }
                 
-                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawNode:drawPoints"))
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawNode:drawSolidPoly"))
                 {
                     lua_pop(tolua_S, 1);
                     CC_SAFE_DELETE_ARRAY(points);
@@ -2916,10 +2913,7 @@ int tolua_cocos2dx_DrawNode_drawCardinalSpline(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
-    
     
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
@@ -2985,10 +2979,7 @@ int tolua_cocos2dx_DrawNode_drawCatmullRom(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
-    
     
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
@@ -2999,7 +2990,7 @@ int tolua_cocos2dx_DrawNode_drawCatmullRom(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!self)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawCatmullRom'", nullptr);
+        tolua_error(tolua_S,"invalid 'self' in function 'lua_cocos2dx_DrawNode_drawCatmullRom'", nullptr);
         return 0;
     }
 #endif
@@ -3052,10 +3043,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
-    
     
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
@@ -3066,7 +3054,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!self)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_drawPoints'", nullptr);
+        tolua_error(tolua_S,"invalid 'self' in function 'lua_cocos2dx_DrawNode_drawPoints'", nullptr);
         return 0;
     }
 #endif

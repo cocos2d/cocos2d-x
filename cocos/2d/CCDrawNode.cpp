@@ -184,9 +184,9 @@ void DrawNode::ensureCapacityGLPoint(int count)
     
     if(_bufferCountGLPoint + count > _bufferCapacityGLPoint)
     {
-		_bufferCapacityGLPoint += MAX(_bufferCapacityGLPoint, count);
-		_bufferGLPoint = (V2F_C4B_T2F*)realloc(_bufferGLPoint, _bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
-	}
+        _bufferCapacityGLPoint += MAX(_bufferCapacityGLPoint, count);
+        _bufferGLPoint = (V2F_C4B_T2F*)realloc(_bufferGLPoint, _bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
+    }
 }
 
 void DrawNode::ensureCapacityGLLine(int count)
@@ -195,9 +195,9 @@ void DrawNode::ensureCapacityGLLine(int count)
     
     if(_bufferCountGLLine + count > _bufferCapacityGLLine)
     {
-		_bufferCapacityGLLine += MAX(_bufferCapacityGLLine, count);
-		_bufferGLLine = (V2F_C4B_T2F*)realloc(_bufferGLLine, _bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
-	}
+        _bufferCapacityGLLine += MAX(_bufferCapacityGLLine, count);
+        _bufferGLLine = (V2F_C4B_T2F*)realloc(_bufferGLLine, _bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
+    }
 }
 
 bool DrawNode::init()
@@ -390,12 +390,12 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
 
 void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
 {
-    GLProgram* s_shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    s_shader->use();
-    s_shader->setUniformsForBuiltins(transform);
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    glProgram->use();
+    glProgram->setUniformsForBuiltins(transform);
     
-    s_shader->setUniformLocationWith4fv(s_shader->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
-    s_shader->setUniformLocationWith1f(s_shader->getUniformLocation("u_pointSize"), _pointSize);
+    glProgram->setUniformLocationWith4fv(glProgram->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
+    glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_pointSize"), _pointSize);
     
     glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
     glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
