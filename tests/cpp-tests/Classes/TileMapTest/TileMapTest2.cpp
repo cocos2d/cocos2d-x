@@ -728,28 +728,9 @@ TMXOrthoObjectsTestNew::TMXOrthoObjectsTestNew()
 
     Value objectsVal = Value(objects);
     CCLOG("%s", objectsVal.getDescription().c_str());
-}
-
-void TMXOrthoObjectsTestNew::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTestNew::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
-}
-
-void TMXOrthoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
-    auto map = static_cast<cocos2d::experimental::TMXTiledMap*>( getChildByTag(kTagTileMap) );
-    auto pos = map->getPosition();
-    auto group = map->getObjectGroup("Object Group 1");
-
-    auto& objects = group->getObjects();
-
+    auto drawNode = DrawNode::create();
+    Color4F color(1.0, 1.0, 1.0, 1.0);
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
@@ -759,17 +740,12 @@ void TMXOrthoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
         
-        glLineWidth(3);
-        
-        DrawPrimitives::drawLine( pos + Vec2(x, y), pos + Vec2((x+width), y) );
-        DrawPrimitives::drawLine( pos + Vec2((x+width), y), pos + Vec2((x+width), (y+height)) );
-        DrawPrimitives::drawLine( pos + Vec2((x+width), (y+height)), pos + Vec2(x, (y+height)) );
-        DrawPrimitives::drawLine( pos + Vec2(x, (y+height)), pos + Vec2(x, y) );
-        
-        glLineWidth(1);
+        drawNode->drawLine(Vec2(x, y), Vec2(x + width, y), color);
+        drawNode->drawLine(Vec2(x + width, y), Vec2(x + width, y + height), color);
+        drawNode->drawLine(Vec2(x + width,y + height), Vec2(x,y + height), color);
+        drawNode->drawLine(Vec2(x,y + height), Vec2(x,y), color);
     }
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    map->addChild(drawNode);
 }
 
 std::string TMXOrthoObjectsTestNew::title() const
@@ -803,46 +779,24 @@ TMXIsoObjectsTestNew::TMXIsoObjectsTestNew()
     
     Value objectsVal = Value(objects);
     CCLOG("%s", objectsVal.getDescription().c_str());
-}
-
-void TMXIsoObjectsTestNew::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTestNew::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
-}
-
-void TMXIsoObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto map = (cocos2d::experimental::TMXTiledMap*) getChildByTag(kTagTileMap);
-    auto pos = map->getPosition();
-    auto group = map->getObjectGroup("Object Group 1");
-
-    auto& objects = group->getObjects();
+    
+    auto drawNode = DrawNode::create();
+    Color4F color(1.0, 1.0, 1.0, 1.0);
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
+        
         float x = dict["x"].asFloat();
         float y = dict["y"].asFloat();
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
         
-        glLineWidth(3);
-        
-        DrawPrimitives::drawLine( pos + Vec2(x,y), pos + Vec2(x+width,y) );
-        DrawPrimitives::drawLine( pos + Vec2(x+width,y), pos + Vec2(x+width,y+height) );
-        DrawPrimitives::drawLine( pos + Vec2(x+width,y+height), pos + Vec2(x,y+height) );
-        DrawPrimitives::drawLine( pos + Vec2(x,y+height), pos + Vec2(x,y) );
-        
-        glLineWidth(1);
+        drawNode->drawLine(Vec2(x, y), Vec2(x + width, y), color);
+        drawNode->drawLine(Vec2(x + width, y), Vec2(x + width, y + height), color);
+        drawNode->drawLine(Vec2(x + width,y + height), Vec2(x,y + height), color);
+        drawNode->drawLine(Vec2(x,y + height), Vec2(x,y), color);
     }
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    map->addChild(drawNode, 10);
 }
 
 std::string TMXIsoObjectsTestNew::title() const
@@ -1460,29 +1414,11 @@ TMXGIDObjectsTestNew::TMXGIDObjectsTestNew()
     CCLOG("Contentsize: %f, %f", s.width, s.height);
 
     CCLOG("----> Iterating over all the group objets");
-    //auto group = map->objectGroupNamed("Object Layer 1");
-
-}
-
-void TMXGIDObjectsTestNew::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTestNew::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
-}
-
-void TMXGIDObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto map = (cocos2d::experimental::TMXTiledMap*)getChildByTag(kTagTileMap);
-    auto pos = map->getPosition();
-    auto group = map->getObjectGroup("Object Layer 1");
     
-    auto& objects = group->getObjects();
+    auto drawNode = DrawNode::create();
+    Color4F color(1.0, 1.0, 1.0, 1.0);
+    auto group = map->getObjectGroup("Object Layer 1");
+    auto objects = group->getObjects();
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
@@ -1492,17 +1428,12 @@ void TMXGIDObjectsTestNew::onDraw(const Mat4 &transform, uint32_t flags)
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
         
-        glLineWidth(3);
-        
-        DrawPrimitives::drawLine(pos + Vec2(x, y), pos + Vec2(x + width, y));
-        DrawPrimitives::drawLine(pos + Vec2(x + width, y), pos + Vec2(x + width, y + height));
-        DrawPrimitives::drawLine(pos + Vec2(x + width,y + height), pos + Vec2(x,y + height));
-        DrawPrimitives::drawLine(pos + Vec2(x,y + height), pos + Vec2(x,y));
-        
-        glLineWidth(1);
+        drawNode->drawLine(Vec2(x, y), Vec2(x + width, y), color);
+        drawNode->drawLine(Vec2(x + width, y), Vec2(x + width, y + height), color);
+        drawNode->drawLine(Vec2(x + width,y + height), Vec2(x,y + height), color);
+        drawNode->drawLine(Vec2(x,y + height), Vec2(x,y), color);
     }
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    map->addChild(drawNode, 10);
 }
 
 std::string TMXGIDObjectsTestNew::title() const

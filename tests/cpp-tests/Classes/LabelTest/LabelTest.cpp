@@ -484,11 +484,16 @@ Atlas4::Atlas4()
 {
     _time = 0;
 
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto drawNode = DrawNode::create();
+    drawNode->drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2), Color4F(1.0, 1.0, 1.0, 1.0) );
+    drawNode->drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height), Color4F(1.0, 1.0, 1.0, 1.0) );
+    addChild(drawNode, -1);
+
     // Upper Label
     auto label = LabelBMFont::create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
     addChild(label);
-    
-    auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Vec2(s.width/2, s.height/2) );
     label->setAnchorPoint( Vec2::ANCHOR_MIDDLE );
@@ -530,27 +535,6 @@ Atlas4::Atlas4()
     lastChar->runAction( rot_4ever->clone() );
     
     schedule( schedule_selector(Atlas4::step), 0.1f);
-}
-
-void Atlas4::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void Atlas4::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto s = Director::getInstance()->getWinSize();
-    DrawPrimitives::drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2) );
-    DrawPrimitives::drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height) );
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void Atlas4::step(float dt)
@@ -1644,36 +1628,13 @@ LabelBMFontBounds::LabelBMFontBounds()
     addChild(layer, -10);
     
     // LabelBMFont
-    label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    auto label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
     addChild(label1);
     label1->setPosition(Vec2(s.width/2, s.height/2));
-}
-
-std::string LabelBMFontBounds::title() const
-{
-    return "Testing LabelBMFont Bounds";
-}
-
-std::string LabelBMFontBounds::subtitle() const
-{
-    return "You should see string enclosed by a box";
-}
-
-void LabelBMFontBounds::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void LabelBMFontBounds::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
+    
+    auto drawNode = DrawNode::create();
+    
     auto labelSize = label1->getContentSize();
     auto origin = Director::getInstance()->getWinSize();
     
@@ -1687,9 +1648,18 @@ void LabelBMFontBounds::onDraw(const Mat4 &transform, uint32_t flags)
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    DrawPrimitives::drawPoly(vertices, 4, true);
+    drawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    addChild(drawNode);
+}
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+std::string LabelBMFontBounds::title() const
+{
+    return "Testing LabelBMFont Bounds";
+}
+
+std::string LabelBMFontBounds::subtitle() const
+{
+    return "You should see string enclosed by a box";
 }
 
 // LabelBMFontCrashTest

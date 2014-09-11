@@ -276,6 +276,10 @@ Sprite::Sprite(void)
 , _texture(nullptr)
 , _insideBounds(true)
 {
+#if CC_SPRITE_DEBUG_DRAW
+    _debugDrawNode = DrawNode::create();
+    addChild(_debugDrawNode);
+#endif //CC_SPRITE_DEBUG_DRAW
 }
 
 Sprite::~Sprite(void)
@@ -595,32 +599,17 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
         renderer->addCommand(&_quadCommand);
 #if CC_SPRITE_DEBUG_DRAW
-        _customDebugDrawCommand.init(_globalZOrder);
-        _customDebugDrawCommand.func = CC_CALLBACK_0(Sprite::drawDebugData, this);
-        renderer->addCommand(&_customDebugDrawCommand);
+        _debugDrawNode->clear();
+        Vec2 vertices[4] = {
+            Vec2( _quad.bl.vertices.x, _quad.bl.vertices.y ),
+            Vec2( _quad.br.vertices.x, _quad.br.vertices.y ),
+            Vec2( _quad.tr.vertices.x, _quad.tr.vertices.y ),
+            Vec2( _quad.tl.vertices.x, _quad.tl.vertices.y ),
+        };
+        _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif //CC_SPRITE_DEBUG_DRAW
     }
 }
-#if CC_SPRITE_DEBUG_DRAW
-void Sprite::drawDebugData()
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    Mat4 oldModelView;
-    oldModelView = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    // draw bounding box
-    Vec2 vertices[4] = {
-        Vec2( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-        Vec2( _quad.br.vertices.x, _quad.br.vertices.y ),
-        Vec2( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-        Vec2( _quad.tl.vertices.x, _quad.tl.vertices.y ),
-    };
-    DrawPrimitives::drawPoly(vertices, 4, true);
-    
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldModelView);
-}
-#endif //CC_SPRITE_DEBUG_DRAW
 
 // Node overrides
 void Sprite::addChild(Node *child, int zOrder, int tag)
