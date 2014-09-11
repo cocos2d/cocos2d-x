@@ -1528,6 +1528,13 @@ class ButtonOptions : public ::google::protobuf::MessageLite {
   inline bool scale9enable() const;
   inline void set_scale9enable(bool value);
 
+  // optional bool displaystate = 22;
+  inline bool has_displaystate() const;
+  inline void clear_displaystate();
+  static const int kDisplaystateFieldNumber = 22;
+  inline bool displaystate() const;
+  inline void set_displaystate(bool value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.ButtonOptions)
  private:
   inline void set_has_name();
@@ -1572,6 +1579,8 @@ class ButtonOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_scale9height();
   inline void set_has_scale9enable();
   inline void clear_has_scale9enable();
+  inline void set_has_displaystate();
+  inline void clear_has_displaystate();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -1594,9 +1603,10 @@ class ButtonOptions : public ::google::protobuf::MessageLite {
   float scale9width_;
   float scale9height_;
   bool scale9enable_;
+  bool displaystate_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(21 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(22 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -1913,6 +1923,13 @@ class CheckBoxOptions : public ::google::protobuf::MessageLite {
   inline bool selectedstate() const;
   inline void set_selectedstate(bool value);
 
+  // optional bool displaystate = 14;
+  inline bool has_displaystate() const;
+  inline void clear_displaystate();
+  static const int kDisplaystateFieldNumber = 14;
+  inline bool displaystate() const;
+  inline void set_displaystate(bool value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.CheckBoxOptions)
  private:
   inline void set_has_name();
@@ -1941,6 +1958,8 @@ class CheckBoxOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_frontcrossdisableddata();
   inline void set_has_selectedstate();
   inline void clear_has_selectedstate();
+  inline void set_has_displaystate();
+  inline void clear_has_displaystate();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -1955,9 +1974,10 @@ class CheckBoxOptions : public ::google::protobuf::MessageLite {
   ::protocolbuffers::ResourceData* backgroundboxdisableddata_;
   ::protocolbuffers::ResourceData* frontcrossdisableddata_;
   bool selectedstate_;
+  bool displaystate_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -2846,6 +2866,20 @@ class LoadingBarOptions : public ::google::protobuf::MessageLite {
   inline bool scale9enable() const;
   inline void set_scale9enable(bool value);
 
+  // optional float scale9Width = 12;
+  inline bool has_scale9width() const;
+  inline void clear_scale9width();
+  static const int kScale9WidthFieldNumber = 12;
+  inline float scale9width() const;
+  inline void set_scale9width(float value);
+
+  // optional float scale9Height = 13;
+  inline bool has_scale9height() const;
+  inline void clear_scale9height();
+  static const int kScale9HeightFieldNumber = 13;
+  inline float scale9height() const;
+  inline void set_scale9height(float value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.LoadingBarOptions)
  private:
   inline void set_has_name();
@@ -2870,6 +2904,10 @@ class LoadingBarOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_capinsetsheight();
   inline void set_has_scale9enable();
   inline void clear_has_scale9enable();
+  inline void set_has_scale9width();
+  inline void clear_has_scale9width();
+  inline void set_has_scale9height();
+  inline void clear_has_scale9height();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -2882,9 +2920,11 @@ class LoadingBarOptions : public ::google::protobuf::MessageLite {
   float capinsetswidth_;
   float capinsetsheight_;
   bool scale9enable_;
+  float scale9width_;
+  float scale9height_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -3172,6 +3212,20 @@ class ListViewOptions : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 itemmargin() const;
   inline void set_itemmargin(::google::protobuf::int32 value);
 
+  // optional float scale9Width = 30;
+  inline bool has_scale9width() const;
+  inline void clear_scale9width();
+  static const int kScale9WidthFieldNumber = 30;
+  inline float scale9width() const;
+  inline void set_scale9width(float value);
+
+  // optional float scale9Height = 31;
+  inline bool has_scale9height() const;
+  inline void clear_scale9height();
+  static const int kScale9HeightFieldNumber = 31;
+  inline float scale9height() const;
+  inline void set_scale9height(float value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.ListViewOptions)
  private:
   inline void set_has_name();
@@ -3232,6 +3286,10 @@ class ListViewOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_gravity();
   inline void set_has_itemmargin();
   inline void clear_has_itemmargin();
+  inline void set_has_scale9width();
+  inline void clear_has_scale9width();
+  inline void set_has_scale9height();
+  inline void clear_has_scale9height();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -3262,9 +3320,11 @@ class ListViewOptions : public ::google::protobuf::MessageLite {
   ::google::protobuf::int32 direction_;
   ::google::protobuf::int32 gravity_;
   ::google::protobuf::int32 itemmargin_;
+  float scale9width_;
+  float scale9height_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(29 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(31 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -3510,6 +3570,20 @@ class PageViewOptions : public ::google::protobuf::MessageLite {
   inline bool backgroundscale9enable() const;
   inline void set_backgroundscale9enable(bool value);
 
+  // optional float scale9Width = 24;
+  inline bool has_scale9width() const;
+  inline void clear_scale9width();
+  static const int kScale9WidthFieldNumber = 24;
+  inline float scale9width() const;
+  inline void set_scale9width(float value);
+
+  // optional float scale9Height = 25;
+  inline bool has_scale9height() const;
+  inline void clear_scale9height();
+  static const int kScale9HeightFieldNumber = 25;
+  inline float scale9height() const;
+  inline void set_scale9height(float value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.PageViewOptions)
  private:
   inline void set_has_name();
@@ -3558,6 +3632,10 @@ class PageViewOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_capinsetsheight();
   inline void set_has_backgroundscale9enable();
   inline void clear_has_backgroundscale9enable();
+  inline void set_has_scale9width();
+  inline void clear_has_scale9width();
+  inline void set_has_scale9height();
+  inline void clear_has_scale9height();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -3582,9 +3660,11 @@ class PageViewOptions : public ::google::protobuf::MessageLite {
   float capinsetsy_;
   float capinsetswidth_;
   float capinsetsheight_;
+  float scale9width_;
+  float scale9height_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(23 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(25 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -3844,6 +3924,20 @@ class PanelOptions : public ::google::protobuf::MessageLite {
   inline bool adaptscreen() const;
   inline void set_adaptscreen(bool value);
 
+  // optional float scale9Width = 26;
+  inline bool has_scale9width() const;
+  inline void clear_scale9width();
+  static const int kScale9WidthFieldNumber = 26;
+  inline float scale9width() const;
+  inline void set_scale9width(float value);
+
+  // optional float scale9Height = 27;
+  inline bool has_scale9height() const;
+  inline void clear_scale9height();
+  static const int kScale9HeightFieldNumber = 27;
+  inline float scale9height() const;
+  inline void set_scale9height(float value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.PanelOptions)
  private:
   inline void set_has_name();
@@ -3896,6 +3990,10 @@ class PanelOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_layouttype();
   inline void set_has_adaptscreen();
   inline void clear_has_adaptscreen();
+  inline void set_has_scale9width();
+  inline void clear_has_scale9width();
+  inline void set_has_scale9height();
+  inline void clear_has_scale9height();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -3922,9 +4020,11 @@ class PanelOptions : public ::google::protobuf::MessageLite {
   float capinsetswidth_;
   float capinsetsheight_;
   ::google::protobuf::int32 layouttype_;
+  float scale9width_;
+  float scale9height_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(25 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(27 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -4205,6 +4305,20 @@ class ScrollViewOptions : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 layouttype() const;
   inline void set_layouttype(::google::protobuf::int32 value);
 
+  // optional float scale9Width = 29;
+  inline bool has_scale9width() const;
+  inline void clear_scale9width();
+  static const int kScale9WidthFieldNumber = 29;
+  inline float scale9width() const;
+  inline void set_scale9width(float value);
+
+  // optional float scale9Height = 30;
+  inline bool has_scale9height() const;
+  inline void clear_scale9height();
+  static const int kScale9HeightFieldNumber = 30;
+  inline float scale9height() const;
+  inline void set_scale9height(float value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.ScrollViewOptions)
  private:
   inline void set_has_name();
@@ -4263,6 +4377,10 @@ class ScrollViewOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_bounceenable();
   inline void set_has_layouttype();
   inline void clear_has_layouttype();
+  inline void set_has_scale9width();
+  inline void clear_has_scale9width();
+  inline void set_has_scale9height();
+  inline void clear_has_scale9height();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -4292,9 +4410,11 @@ class ScrollViewOptions : public ::google::protobuf::MessageLite {
   bool clipable_;
   bool bounceenable_;
   ::google::protobuf::int32 layouttype_;
+  float scale9width_;
+  float scale9height_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(28 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(30 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -4612,6 +4732,13 @@ class SliderOptions : public ::google::protobuf::MessageLite {
   inline float length() const;
   inline void set_length(float value);
 
+  // optional bool displaystate = 31;
+  inline bool has_displaystate() const;
+  inline void clear_displaystate();
+  static const int kDisplaystateFieldNumber = 31;
+  inline bool displaystate() const;
+  inline void set_displaystate(bool value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.SliderOptions)
  private:
   inline void set_has_name();
@@ -4674,6 +4801,8 @@ class SliderOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_slidballanchorpointy();
   inline void set_has_length();
   inline void clear_has_length();
+  inline void set_has_displaystate();
+  inline void clear_has_displaystate();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -4701,13 +4830,14 @@ class SliderOptions : public ::google::protobuf::MessageLite {
   float progressbarcapinsetsheight_;
   float scale9width_;
   float scale9height_;
-  bool scale9enable_;
   float slidballanchorpointx_;
   float slidballanchorpointy_;
+  bool scale9enable_;
+  bool displaystate_;
   float length_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(30 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(31 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -10774,6 +10904,28 @@ inline void ButtonOptions::set_scale9enable(bool value) {
   scale9enable_ = value;
 }
 
+// optional bool displaystate = 22;
+inline bool ButtonOptions::has_displaystate() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+inline void ButtonOptions::set_has_displaystate() {
+  _has_bits_[0] |= 0x00200000u;
+}
+inline void ButtonOptions::clear_has_displaystate() {
+  _has_bits_[0] &= ~0x00200000u;
+}
+inline void ButtonOptions::clear_displaystate() {
+  displaystate_ = false;
+  clear_has_displaystate();
+}
+inline bool ButtonOptions::displaystate() const {
+  return displaystate_;
+}
+inline void ButtonOptions::set_displaystate(bool value) {
+  set_has_displaystate();
+  displaystate_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // ResourceData
@@ -11664,6 +11816,28 @@ inline bool CheckBoxOptions::selectedstate() const {
 inline void CheckBoxOptions::set_selectedstate(bool value) {
   set_has_selectedstate();
   selectedstate_ = value;
+}
+
+// optional bool displaystate = 14;
+inline bool CheckBoxOptions::has_displaystate() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void CheckBoxOptions::set_has_displaystate() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void CheckBoxOptions::clear_has_displaystate() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void CheckBoxOptions::clear_displaystate() {
+  displaystate_ = false;
+  clear_has_displaystate();
+}
+inline bool CheckBoxOptions::displaystate() const {
+  return displaystate_;
+}
+inline void CheckBoxOptions::set_displaystate(bool value) {
+  set_has_displaystate();
+  displaystate_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -13682,6 +13856,50 @@ inline void LoadingBarOptions::set_scale9enable(bool value) {
   scale9enable_ = value;
 }
 
+// optional float scale9Width = 12;
+inline bool LoadingBarOptions::has_scale9width() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void LoadingBarOptions::set_has_scale9width() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void LoadingBarOptions::clear_has_scale9width() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void LoadingBarOptions::clear_scale9width() {
+  scale9width_ = 0;
+  clear_has_scale9width();
+}
+inline float LoadingBarOptions::scale9width() const {
+  return scale9width_;
+}
+inline void LoadingBarOptions::set_scale9width(float value) {
+  set_has_scale9width();
+  scale9width_ = value;
+}
+
+// optional float scale9Height = 13;
+inline bool LoadingBarOptions::has_scale9height() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void LoadingBarOptions::set_has_scale9height() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void LoadingBarOptions::clear_has_scale9height() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void LoadingBarOptions::clear_scale9height() {
+  scale9height_ = 0;
+  clear_has_scale9height();
+}
+inline float LoadingBarOptions::scale9height() const {
+  return scale9height_;
+}
+inline void LoadingBarOptions::set_scale9height(float value) {
+  set_has_scale9height();
+  scale9height_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // ListViewOptions
@@ -14488,6 +14706,50 @@ inline void ListViewOptions::set_itemmargin(::google::protobuf::int32 value) {
   itemmargin_ = value;
 }
 
+// optional float scale9Width = 30;
+inline bool ListViewOptions::has_scale9width() const {
+  return (_has_bits_[0] & 0x20000000u) != 0;
+}
+inline void ListViewOptions::set_has_scale9width() {
+  _has_bits_[0] |= 0x20000000u;
+}
+inline void ListViewOptions::clear_has_scale9width() {
+  _has_bits_[0] &= ~0x20000000u;
+}
+inline void ListViewOptions::clear_scale9width() {
+  scale9width_ = 0;
+  clear_has_scale9width();
+}
+inline float ListViewOptions::scale9width() const {
+  return scale9width_;
+}
+inline void ListViewOptions::set_scale9width(float value) {
+  set_has_scale9width();
+  scale9width_ = value;
+}
+
+// optional float scale9Height = 31;
+inline bool ListViewOptions::has_scale9height() const {
+  return (_has_bits_[0] & 0x40000000u) != 0;
+}
+inline void ListViewOptions::set_has_scale9height() {
+  _has_bits_[0] |= 0x40000000u;
+}
+inline void ListViewOptions::clear_has_scale9height() {
+  _has_bits_[0] &= ~0x40000000u;
+}
+inline void ListViewOptions::clear_scale9height() {
+  scale9height_ = 0;
+  clear_has_scale9height();
+}
+inline float ListViewOptions::scale9height() const {
+  return scale9height_;
+}
+inline void ListViewOptions::set_scale9height(float value) {
+  set_has_scale9height();
+  scale9height_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // PageViewOptions
@@ -15160,6 +15422,50 @@ inline bool PageViewOptions::backgroundscale9enable() const {
 inline void PageViewOptions::set_backgroundscale9enable(bool value) {
   set_has_backgroundscale9enable();
   backgroundscale9enable_ = value;
+}
+
+// optional float scale9Width = 24;
+inline bool PageViewOptions::has_scale9width() const {
+  return (_has_bits_[0] & 0x00800000u) != 0;
+}
+inline void PageViewOptions::set_has_scale9width() {
+  _has_bits_[0] |= 0x00800000u;
+}
+inline void PageViewOptions::clear_has_scale9width() {
+  _has_bits_[0] &= ~0x00800000u;
+}
+inline void PageViewOptions::clear_scale9width() {
+  scale9width_ = 0;
+  clear_has_scale9width();
+}
+inline float PageViewOptions::scale9width() const {
+  return scale9width_;
+}
+inline void PageViewOptions::set_scale9width(float value) {
+  set_has_scale9width();
+  scale9width_ = value;
+}
+
+// optional float scale9Height = 25;
+inline bool PageViewOptions::has_scale9height() const {
+  return (_has_bits_[0] & 0x01000000u) != 0;
+}
+inline void PageViewOptions::set_has_scale9height() {
+  _has_bits_[0] |= 0x01000000u;
+}
+inline void PageViewOptions::clear_has_scale9height() {
+  _has_bits_[0] &= ~0x01000000u;
+}
+inline void PageViewOptions::clear_scale9height() {
+  scale9height_ = 0;
+  clear_has_scale9height();
+}
+inline float PageViewOptions::scale9height() const {
+  return scale9height_;
+}
+inline void PageViewOptions::set_scale9height(float value) {
+  set_has_scale9height();
+  scale9height_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -15878,6 +16184,50 @@ inline bool PanelOptions::adaptscreen() const {
 inline void PanelOptions::set_adaptscreen(bool value) {
   set_has_adaptscreen();
   adaptscreen_ = value;
+}
+
+// optional float scale9Width = 26;
+inline bool PanelOptions::has_scale9width() const {
+  return (_has_bits_[0] & 0x02000000u) != 0;
+}
+inline void PanelOptions::set_has_scale9width() {
+  _has_bits_[0] |= 0x02000000u;
+}
+inline void PanelOptions::clear_has_scale9width() {
+  _has_bits_[0] &= ~0x02000000u;
+}
+inline void PanelOptions::clear_scale9width() {
+  scale9width_ = 0;
+  clear_has_scale9width();
+}
+inline float PanelOptions::scale9width() const {
+  return scale9width_;
+}
+inline void PanelOptions::set_scale9width(float value) {
+  set_has_scale9width();
+  scale9width_ = value;
+}
+
+// optional float scale9Height = 27;
+inline bool PanelOptions::has_scale9height() const {
+  return (_has_bits_[0] & 0x04000000u) != 0;
+}
+inline void PanelOptions::set_has_scale9height() {
+  _has_bits_[0] |= 0x04000000u;
+}
+inline void PanelOptions::clear_has_scale9height() {
+  _has_bits_[0] &= ~0x04000000u;
+}
+inline void PanelOptions::clear_scale9height() {
+  scale9height_ = 0;
+  clear_has_scale9height();
+}
+inline float PanelOptions::scale9height() const {
+  return scale9height_;
+}
+inline void PanelOptions::set_scale9height(float value) {
+  set_has_scale9height();
+  scale9height_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -16662,6 +17012,50 @@ inline ::google::protobuf::int32 ScrollViewOptions::layouttype() const {
 inline void ScrollViewOptions::set_layouttype(::google::protobuf::int32 value) {
   set_has_layouttype();
   layouttype_ = value;
+}
+
+// optional float scale9Width = 29;
+inline bool ScrollViewOptions::has_scale9width() const {
+  return (_has_bits_[0] & 0x10000000u) != 0;
+}
+inline void ScrollViewOptions::set_has_scale9width() {
+  _has_bits_[0] |= 0x10000000u;
+}
+inline void ScrollViewOptions::clear_has_scale9width() {
+  _has_bits_[0] &= ~0x10000000u;
+}
+inline void ScrollViewOptions::clear_scale9width() {
+  scale9width_ = 0;
+  clear_has_scale9width();
+}
+inline float ScrollViewOptions::scale9width() const {
+  return scale9width_;
+}
+inline void ScrollViewOptions::set_scale9width(float value) {
+  set_has_scale9width();
+  scale9width_ = value;
+}
+
+// optional float scale9Height = 30;
+inline bool ScrollViewOptions::has_scale9height() const {
+  return (_has_bits_[0] & 0x20000000u) != 0;
+}
+inline void ScrollViewOptions::set_has_scale9height() {
+  _has_bits_[0] |= 0x20000000u;
+}
+inline void ScrollViewOptions::clear_has_scale9height() {
+  _has_bits_[0] &= ~0x20000000u;
+}
+inline void ScrollViewOptions::clear_scale9height() {
+  scale9height_ = 0;
+  clear_has_scale9height();
+}
+inline float ScrollViewOptions::scale9height() const {
+  return scale9height_;
+}
+inline void ScrollViewOptions::set_scale9height(float value) {
+  set_has_scale9height();
+  scale9height_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -17714,6 +18108,28 @@ inline float SliderOptions::length() const {
 inline void SliderOptions::set_length(float value) {
   set_has_length();
   length_ = value;
+}
+
+// optional bool displaystate = 31;
+inline bool SliderOptions::has_displaystate() const {
+  return (_has_bits_[0] & 0x40000000u) != 0;
+}
+inline void SliderOptions::set_has_displaystate() {
+  _has_bits_[0] |= 0x40000000u;
+}
+inline void SliderOptions::clear_has_displaystate() {
+  _has_bits_[0] &= ~0x40000000u;
+}
+inline void SliderOptions::clear_displaystate() {
+  displaystate_ = false;
+  clear_has_displaystate();
+}
+inline bool SliderOptions::displaystate() const {
+  return displaystate_;
+}
+inline void SliderOptions::set_displaystate(bool value) {
+  set_has_displaystate();
+  displaystate_ = value;
 }
 
 // -------------------------------------------------------------------

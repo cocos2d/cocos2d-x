@@ -159,6 +159,14 @@ namespace cocostudio
             float cw = options.has_capinsetswidth() ? options.capinsetswidth() : 1;
             float ch = options.has_capinsetsheight() ? options.capinsetsheight() : 1;
             scrollView->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
+            bool sw = options.has_scale9width();
+            bool sh = options.has_scale9height();
+            if (sw && sh)
+            {
+                float swf = options.scale9width();
+                float shf = options.scale9height();
+                scrollView->setContentSize(Size(swf, shf));
+            }
         }
         
         scrollView->setLayoutType((Layout::Type)options.layouttype());
