@@ -5,22 +5,26 @@
 -- @parent_module ccs
 
 --------------------------------
+-- 
 -- @function [parent=#DisplayData] copy 
 -- @param self
--- @param #ccs.DisplayData displaydata
+-- @param #ccs.DisplayData displayData
         
 --------------------------------
+-- 
 -- @function [parent=#DisplayData] changeDisplayToTexture 
 -- @param self
--- @param #string str
+-- @param #string displayName
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- 
 -- @function [parent=#DisplayData] create 
 -- @param self
 -- @return DisplayData#DisplayData ret (return value: ccs.DisplayData)
         
 --------------------------------
+-- js ctor
 -- @function [parent=#DisplayData] DisplayData 
 -- @param self
         

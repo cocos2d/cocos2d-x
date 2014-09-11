@@ -5,32 +5,37 @@
 -- @parent_module cc
 
 --------------------------------
+--  creates the action 
 -- @function [parent=#JumpBy] create 
 -- @param self
--- @param #float float
--- @param #vec2_table vec2
--- @param #float float
--- @param #int int
+-- @param #float duration
+-- @param #vec2_table position
+-- @param #float height
+-- @param #int jumps
 -- @return JumpBy#JumpBy ret (return value: cc.JumpBy)
         
 --------------------------------
+-- 
 -- @function [parent=#JumpBy] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
         
 --------------------------------
+-- 
 -- @function [parent=#JumpBy] clone 
 -- @param self
 -- @return JumpBy#JumpBy ret (return value: cc.JumpBy)
         
 --------------------------------
+-- 
 -- @function [parent=#JumpBy] reverse 
 -- @param self
 -- @return JumpBy#JumpBy ret (return value: cc.JumpBy)
         
 --------------------------------
+-- 
 -- @function [parent=#JumpBy] update 
 -- @param self
--- @param #float float
+-- @param #float time
         
 return nil

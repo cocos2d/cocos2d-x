@@ -5,11 +5,13 @@
 -- @parent_module ccs
 
 --------------------------------
+-- 
 -- @function [parent=#ParticleDisplayData] create 
 -- @param self
 -- @return ParticleDisplayData#ParticleDisplayData ret (return value: ccs.ParticleDisplayData)
         
 --------------------------------
+-- js ctor
 -- @function [parent=#ParticleDisplayData] ParticleDisplayData 
 -- @param self
         

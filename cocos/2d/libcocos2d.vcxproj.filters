@@ -76,14 +76,8 @@
     <Filter Include="extension\GUI">
       <UniqueIdentifier>{b27aba95-51a2-413c-8570-0aff9adf2b6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="extension\GUI\CCControlExtension">
-      <UniqueIdentifier>{220cf2ee-61b0-40cf-a88a-8627e4e609f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="extension\GUI\CCScrollView">
       <UniqueIdentifier>{a1f539bc-d5be-4224-a4d2-01c0b6f17d6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="extension\GUI\CCEditBox">
-      <UniqueIdentifier>{dc45cd54-4576-4401-87b7-a276f91a45bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="extension\physics_nodes">
       <UniqueIdentifier>{1de7fce7-0dee-4571-8fcd-43eb617aaf8b}</UniqueIdentifier>
@@ -210,6 +204,12 @@
     </Filter>
     <Filter Include="cocosbuilder\Source Files">
       <UniqueIdentifier>{8579ed15-b266-4f80-818d-a3a9251c4248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\UIWidgets\EditBox">
+      <UniqueIdentifier>{89eb6312-dc7f-4fda-b9b2-ab67c31ddd55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\GUI\CCControlExtensions">
+      <UniqueIdentifier>{118d80ca-ccf2-480c-b87d-25220af23440}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -787,42 +787,6 @@
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControl.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlColourPicker.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlHuePicker.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlPotentiometer.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSlider.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlStepper.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSwitch.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlUtils.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.cpp">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCScrollView.cpp">
       <Filter>extension\GUI\CCScrollView</Filter>
     </ClCompile>
@@ -831,15 +795,6 @@
     </ClCompile>
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.cpp">
       <Filter>extension\GUI\CCScrollView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCEditBox\CCEditBox.cpp">
-      <Filter>extension\GUI\CCEditBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.cpp">
-      <Filter>extension\GUI\CCEditBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\proj.win32\Win32InputBox.cpp">
-      <Filter>extension\GUI\CCEditBox</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp">
       <Filter>extension\physics_nodes</Filter>
@@ -1164,6 +1119,48 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocosbuilder\CCSpriteLoader.cpp">
       <Filter>cocosbuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImplWin.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControl.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlColourPicker.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlHuePicker.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlPotentiometer.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSlider.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlStepper.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlSwitch.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlUtils.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\proj.win32\Win32InputBox.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1825,45 +1822,6 @@
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManager.h">
       <Filter>extension\AssetsManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControl.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlButton.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlColourPicker.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlExtensions.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlHuePicker.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlPotentiometer.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSlider.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlStepper.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSwitch.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlUtils.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.h">
-      <Filter>extension\GUI\CCControlExtension</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCScrollView.h">
       <Filter>extension\GUI\CCScrollView</Filter>
     </ClInclude>
@@ -1872,18 +1830,6 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.h">
       <Filter>extension\GUI\CCScrollView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCEditBox\CCEditBox.h">
-      <Filter>extension\GUI\CCEditBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h">
-      <Filter>extension\GUI\CCEditBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.h">
-      <Filter>extension\GUI\CCEditBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\proj.win32\Win32InputBox.h">
-      <Filter>extension\GUI\CCEditBox</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.h">
       <Filter>extension\physics_nodes</Filter>
@@ -2289,6 +2235,54 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocosbuilder\CocosBuilder.h">
       <Filter>cocosbuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIEditBox\UIEditBox.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImplWin.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControl.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlButton.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlColourPicker.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlExtensions.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlHuePicker.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlPotentiometer.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSlider.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlStepper.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlSwitch.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControlUtils.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.h">
+      <Filter>extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\proj.win32\Win32InputBox.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

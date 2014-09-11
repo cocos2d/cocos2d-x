@@ -32,9 +32,8 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "CCScale9Sprite.h"
+#include "extensions/ExtensionDeprecated.h"
 #include "base/CCMap.h"
-#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
