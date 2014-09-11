@@ -1,5 +1,6 @@
 cocos2d-x-3.3??      ??
     [NEW]           ActionManager: added removeAllActionsByTag()
+    [NEW]           Audio: added new audio system for iOS and Android
     [NEW]           GLViewProtocol: added getAllTouches()
     [NEW]           Node: added stopAllActionsByTag()
     [NEW]           PhysicsWorld: add setSubsteps() and getSubsteps()
@@ -13,6 +14,7 @@ cocos2d-x-3.3??      ??
     [FIX]           Node: create unneeded temple `Vec2` object in `setPosition(int, int)`, `setPositionX()` and `setPositionY()`
     [FIX]           Node: skew effect is wrong
     [FIX]           Node: setNormalizedPosition can not take effect if parent position is not changed
+    [FIX]           External: ScrollView: scroll view hidden picks up the touch events
     [FIX]           TextureAtlas: may crash if only drawing part of it
 
 cocos2d-x-3.3alpha0  Aug.28 2014
