@@ -387,6 +387,10 @@ namespace cocostudio
         float y = options.y();
         widget->setPosition(Vec2(x, y));
         
+		if(options.has_alpha())
+		{
+			widget->setOpacity(options.alpha());
+		}
         
         widget->setScaleX(options.has_scalex() ? options.scalex() : 1.0);
         
@@ -462,7 +466,6 @@ namespace cocostudio
     {
         const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
         
-        widget->setOpacity(options.opacity());
         
         bool isColorRExists = options.has_colorr();
         bool isColorGExists = options.has_colorg();
