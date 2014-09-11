@@ -58,13 +58,13 @@ LightTestDemo::LightTestDemo()
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
     _directionalLightLabel = Label::createWithTTF(ttfConfig,"Directional Light ON");
     _directionalLightLabel->retain();
-    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::DIRECTIONAL));
+    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::LightType::DIRECTIONAL));
     _pointLightLabel = Label::createWithTTF(ttfConfig,"Point Light OFF");
     _pointLightLabel->retain();
-    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::POINT));
+    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::LightType::POINT));
     _spotLightLabel = Label::createWithTTF(ttfConfig,"Spot Light OFF");
     _spotLightLabel->retain();
-    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::SPOT));
+    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::LightType::SPOT));
     auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
@@ -205,18 +205,18 @@ void LightTestDemo::addSprite()
 void LightTestDemo::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
-    _directionalLight = Light3D::CreateDirectionalLight(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
+    _directionalLight = Light3D::createDirectionalLight(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
     _directionalLight->retain();
     addChild(_directionalLight);
     _directionalLight->setCameraMask(2);
 
-    _pointLight = Light3D::CreatePointLight(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
+    _pointLight = Light3D::createPointLight(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
     _pointLight->retain();
     _pointLight->setEnabled(false);
     addChild(_pointLight);
     _pointLight->setCameraMask(2);
 
-    _spotLight = Light3D::CreateSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
+    _spotLight = Light3D::createSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);
@@ -280,7 +280,7 @@ void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
 {
     switch (lightType)
     {
-    case Light3D::DIRECTIONAL:
+    case Light3D::LightType::DIRECTIONAL:
         {
             char str[32];
             bool isON = !_directionalLight->getEnabled();
@@ -290,7 +290,7 @@ void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
         }
         break;
 
-    case Light3D::POINT:
+    case Light3D::LightType::POINT:
         {
             char str[32];
             bool isON = !_pointLight->getEnabled();
@@ -300,7 +300,7 @@ void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
         }
         break;
 
-    case Light3D::SPOT:
+    case Light3D::LightType::SPOT:
         {
             char str[32];
             bool isON = !_spotLight->getEnabled();

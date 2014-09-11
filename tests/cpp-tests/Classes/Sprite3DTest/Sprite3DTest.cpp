@@ -552,7 +552,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
             _glProgramState->apply(transform);
  
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        glDrawElements(mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), mesh->getIndexFormat(), 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

@@ -18,7 +18,7 @@ Light3D::~Light3D()
 Light3D* Light3D::createDirectionalLight( const Vec3 &direction, const Color3B &color )
 {
     Light3D *light = new Light3D;
-    light->_lightType = DIRECTIONAL;
+    light->_lightType = Light3D::LightType::DIRECTIONAL;
     light->calculateRotation(direction);
     light->setColor(color);
     light->autorelease();
@@ -28,7 +28,7 @@ Light3D* Light3D::createDirectionalLight( const Vec3 &direction, const Color3B &
 Light3D* Light3D::createPointLight( const Vec3 &position, const Color3B &color, float range )
 {
     Light3D *light = new Light3D;
-    light->_lightType = POINT;
+    light->_lightType = Light3D::LightType::POINT;
     light->setPosition3D(position);
     light->setColor(color);
     light->_range = range;
@@ -39,7 +39,7 @@ Light3D* Light3D::createPointLight( const Vec3 &position, const Color3B &color, 
 Light3D* Light3D::createSpotLight( const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range )
 {
     Light3D *light = new Light3D;
-    light->_lightType = SPOT;
+    light->_lightType = Light3D::LightType::SPOT;
     light->calculateRotation(direction);
     light->setPosition3D(position);
     light->setColor(color);

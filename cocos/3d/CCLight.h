@@ -26,14 +26,15 @@
 #define __CCLIGHT_H__
 
 #include "2d/CCNode.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-class CC_DLL Light3D : public Node
+class CC_3D_DLL Light3D : public Node
 {
 public:
 
-    enum LightType
+    enum class LightType
     {
         DIRECTIONAL = 0,
         POINT = 1,
