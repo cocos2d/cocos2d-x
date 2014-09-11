@@ -45,7 +45,7 @@ public:
     // Therefore, 'OS_' prefix is added to avoid conflicts with the definitions of system macros.
     enum class Platform
     {
-        OS_WINDOWS,
+        OS_WINDOWS_COCOS_SPEC, // solve conflict, OS_WINDOWS already defined on shlwapi.h
         OS_LINUX,
         OS_MAC,
         OS_ANDROID,
