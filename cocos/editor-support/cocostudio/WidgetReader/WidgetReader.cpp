@@ -394,7 +394,12 @@ namespace cocostudio
         widget->setScaleY(options.has_scaley() ? options.scaley() : 1.0);
         
         
-        widget->setRotation(options.has_rotation() ? options.rotation() : 1.0);
+        widget->setRotation(options.has_rotation() ? options.rotation() : 0.0);
+
+		
+		widget->setRotationSkewX(options.has_rotation() ? options.rotationskewx() : 0.0);
+
+		widget->setRotationSkewY(options.has_rotation() ? options.rotationskewy() : 0.0);
         
         bool vb = options.has_visible();
         if (vb)
