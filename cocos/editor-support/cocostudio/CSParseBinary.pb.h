@@ -926,6 +926,13 @@ class WidgetOptions : public ::google::protobuf::MessageLite {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
+  // optional int32 Alpha = 37;
+  inline bool has_alpha() const;
+  inline void clear_alpha();
+  static const int kAlphaFieldNumber = 37;
+  inline ::google::protobuf::int32 alpha() const;
+  inline void set_alpha(::google::protobuf::int32 value);
+
   // repeated .protocolbuffers.ComponentOptions componentOptions = 36;
   inline int componentoptions_size() const;
   inline void clear_componentoptions();
@@ -1010,6 +1017,8 @@ class WidgetOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_frameevent();
   inline void set_has_name();
   inline void clear_has_name();
+  inline void set_has_alpha();
+  inline void clear_has_alpha();
 
   float x_;
   float y_;
@@ -1047,9 +1056,10 @@ class WidgetOptions : public ::google::protobuf::MessageLite {
   ::std::string* frameevent_;
   ::std::string* name_;
   ::google::protobuf::RepeatedPtrField< ::protocolbuffers::ComponentOptions > componentoptions_;
+  ::google::protobuf::int32 alpha_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(36 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(37 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -2139,6 +2149,20 @@ class ImageViewOptions : public ::google::protobuf::MessageLite {
   inline bool scale9enable() const;
   inline void set_scale9enable(bool value);
 
+  // optional bool flippedX = 12;
+  inline bool has_flippedx() const;
+  inline void clear_flippedx();
+  static const int kFlippedXFieldNumber = 12;
+  inline bool flippedx() const;
+  inline void set_flippedx(bool value);
+
+  // optional bool flippedY = 13;
+  inline bool has_flippedy() const;
+  inline void clear_flippedy();
+  static const int kFlippedYFieldNumber = 13;
+  inline bool flippedy() const;
+  inline void set_flippedy(bool value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.ImageViewOptions)
  private:
   inline void set_has_name();
@@ -2163,6 +2187,10 @@ class ImageViewOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_scale9height();
   inline void set_has_scale9enable();
   inline void clear_has_scale9enable();
+  inline void set_has_flippedx();
+  inline void clear_has_flippedx();
+  inline void set_has_flippedy();
+  inline void clear_has_flippedy();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -2175,9 +2203,11 @@ class ImageViewOptions : public ::google::protobuf::MessageLite {
   float scale9width_;
   float scale9height_;
   bool scale9enable_;
+  bool flippedx_;
+  bool flippedy_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -2663,6 +2693,13 @@ class TextOptions : public ::google::protobuf::MessageLite {
   inline ::protocolbuffers::ResourceData* release_fontresource();
   inline void set_allocated_fontresource(::protocolbuffers::ResourceData* fontresource);
 
+  // optional bool IsCustomSize = 13;
+  inline bool has_iscustomsize() const;
+  inline void clear_iscustomsize();
+  static const int kIsCustomSizeFieldNumber = 13;
+  inline bool iscustomsize() const;
+  inline void set_iscustomsize(bool value);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.TextOptions)
  private:
   inline void set_has_name();
@@ -2689,6 +2726,8 @@ class TextOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_touchscaleenable();
   inline void set_has_fontresource();
   inline void clear_has_fontresource();
+  inline void set_has_iscustomsize();
+  inline void clear_has_iscustomsize();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -2701,10 +2740,11 @@ class TextOptions : public ::google::protobuf::MessageLite {
   ::google::protobuf::int32 halignment_;
   ::google::protobuf::int32 valignment_;
   bool touchscaleenable_;
+  bool iscustomsize_;
   ::protocolbuffers::ResourceData* fontresource_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -5295,6 +5335,20 @@ class TextFieldOptions : public ::google::protobuf::MessageLite {
   inline float areaheight() const;
   inline void set_areaheight(float value);
 
+  // optional float anchorPointX = 15;
+  inline bool has_anchorpointx() const;
+  inline void clear_anchorpointx();
+  static const int kAnchorPointXFieldNumber = 15;
+  inline float anchorpointx() const;
+  inline void set_anchorpointx(float value);
+
+  // optional float anchorPointY = 16;
+  inline bool has_anchorpointy() const;
+  inline void clear_anchorpointy();
+  static const int kAnchorPointYFieldNumber = 16;
+  inline float anchorpointy() const;
+  inline void set_anchorpointy(float value);
+
   // optional .protocolbuffers.ResourceData fontResource = 14;
   inline bool has_fontresource() const;
   inline void clear_fontresource();
@@ -5303,6 +5357,13 @@ class TextFieldOptions : public ::google::protobuf::MessageLite {
   inline ::protocolbuffers::ResourceData* mutable_fontresource();
   inline ::protocolbuffers::ResourceData* release_fontresource();
   inline void set_allocated_fontresource(::protocolbuffers::ResourceData* fontresource);
+
+  // optional bool IsCustomSize = 17;
+  inline bool has_iscustomsize() const;
+  inline void clear_iscustomsize();
+  static const int kIsCustomSizeFieldNumber = 17;
+  inline bool iscustomsize() const;
+  inline void set_iscustomsize(bool value);
 
   // @@protoc_insertion_point(class_scope:protocolbuffers.TextFieldOptions)
  private:
@@ -5332,8 +5393,14 @@ class TextFieldOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_areawidth();
   inline void set_has_areaheight();
   inline void clear_has_areaheight();
+  inline void set_has_anchorpointx();
+  inline void clear_has_anchorpointx();
+  inline void set_has_anchorpointy();
+  inline void clear_has_anchorpointy();
   inline void set_has_fontresource();
   inline void clear_has_fontresource();
+  inline void set_has_iscustomsize();
+  inline void clear_has_iscustomsize();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -5342,16 +5409,19 @@ class TextFieldOptions : public ::google::protobuf::MessageLite {
   ::std::string* text_;
   ::std::string* placeholder_;
   ::google::protobuf::int32 fontsize_;
+  ::google::protobuf::int32 maxlength_;
+  ::std::string* passwordstyletext_;
   bool passwordenable_;
   bool maxlengthenable_;
-  ::std::string* passwordstyletext_;
-  ::google::protobuf::int32 maxlength_;
+  bool iscustomsize_;
   float areawidth_;
-  ::protocolbuffers::ResourceData* fontresource_;
   float areaheight_;
+  float anchorpointx_;
+  ::protocolbuffers::ResourceData* fontresource_;
+  float anchorpointy_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(17 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -9609,6 +9679,28 @@ inline void WidgetOptions::set_allocated_name(::std::string* name) {
   }
 }
 
+// optional int32 Alpha = 37;
+inline bool WidgetOptions::has_alpha() const {
+  return (_has_bits_[1] & 0x00000008u) != 0;
+}
+inline void WidgetOptions::set_has_alpha() {
+  _has_bits_[1] |= 0x00000008u;
+}
+inline void WidgetOptions::clear_has_alpha() {
+  _has_bits_[1] &= ~0x00000008u;
+}
+inline void WidgetOptions::clear_alpha() {
+  alpha_ = 0;
+  clear_has_alpha();
+}
+inline ::google::protobuf::int32 WidgetOptions::alpha() const {
+  return alpha_;
+}
+inline void WidgetOptions::set_alpha(::google::protobuf::int32 value) {
+  set_has_alpha();
+  alpha_ = value;
+}
+
 // repeated .protocolbuffers.ComponentOptions componentOptions = 36;
 inline int WidgetOptions::componentoptions_size() const {
   return componentoptions_.size();
@@ -12250,6 +12342,50 @@ inline void ImageViewOptions::set_scale9enable(bool value) {
   scale9enable_ = value;
 }
 
+// optional bool flippedX = 12;
+inline bool ImageViewOptions::has_flippedx() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void ImageViewOptions::set_has_flippedx() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void ImageViewOptions::clear_has_flippedx() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void ImageViewOptions::clear_flippedx() {
+  flippedx_ = false;
+  clear_has_flippedx();
+}
+inline bool ImageViewOptions::flippedx() const {
+  return flippedx_;
+}
+inline void ImageViewOptions::set_flippedx(bool value) {
+  set_has_flippedx();
+  flippedx_ = value;
+}
+
+// optional bool flippedY = 13;
+inline bool ImageViewOptions::has_flippedy() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void ImageViewOptions::set_has_flippedy() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void ImageViewOptions::clear_has_flippedy() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void ImageViewOptions::clear_flippedy() {
+  flippedy_ = false;
+  clear_has_flippedy();
+}
+inline bool ImageViewOptions::flippedy() const {
+  return flippedy_;
+}
+inline void ImageViewOptions::set_flippedy(bool value) {
+  set_has_flippedy();
+  flippedy_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // TextAtlasOptions
@@ -13444,6 +13580,28 @@ inline void TextOptions::set_allocated_fontresource(::protocolbuffers::ResourceD
   } else {
     clear_has_fontresource();
   }
+}
+
+// optional bool IsCustomSize = 13;
+inline bool TextOptions::has_iscustomsize() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void TextOptions::set_has_iscustomsize() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void TextOptions::clear_has_iscustomsize() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void TextOptions::clear_iscustomsize() {
+  iscustomsize_ = false;
+  clear_has_iscustomsize();
+}
+inline bool TextOptions::iscustomsize() const {
+  return iscustomsize_;
+}
+inline void TextOptions::set_iscustomsize(bool value) {
+  set_has_iscustomsize();
+  iscustomsize_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -19340,15 +19498,59 @@ inline void TextFieldOptions::set_areaheight(float value) {
   areaheight_ = value;
 }
 
-// optional .protocolbuffers.ResourceData fontResource = 14;
-inline bool TextFieldOptions::has_fontresource() const {
+// optional float anchorPointX = 15;
+inline bool TextFieldOptions::has_anchorpointx() const {
   return (_has_bits_[0] & 0x00002000u) != 0;
 }
-inline void TextFieldOptions::set_has_fontresource() {
+inline void TextFieldOptions::set_has_anchorpointx() {
   _has_bits_[0] |= 0x00002000u;
 }
-inline void TextFieldOptions::clear_has_fontresource() {
+inline void TextFieldOptions::clear_has_anchorpointx() {
   _has_bits_[0] &= ~0x00002000u;
+}
+inline void TextFieldOptions::clear_anchorpointx() {
+  anchorpointx_ = 0;
+  clear_has_anchorpointx();
+}
+inline float TextFieldOptions::anchorpointx() const {
+  return anchorpointx_;
+}
+inline void TextFieldOptions::set_anchorpointx(float value) {
+  set_has_anchorpointx();
+  anchorpointx_ = value;
+}
+
+// optional float anchorPointY = 16;
+inline bool TextFieldOptions::has_anchorpointy() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void TextFieldOptions::set_has_anchorpointy() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void TextFieldOptions::clear_has_anchorpointy() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void TextFieldOptions::clear_anchorpointy() {
+  anchorpointy_ = 0;
+  clear_has_anchorpointy();
+}
+inline float TextFieldOptions::anchorpointy() const {
+  return anchorpointy_;
+}
+inline void TextFieldOptions::set_anchorpointy(float value) {
+  set_has_anchorpointy();
+  anchorpointy_ = value;
+}
+
+// optional .protocolbuffers.ResourceData fontResource = 14;
+inline bool TextFieldOptions::has_fontresource() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void TextFieldOptions::set_has_fontresource() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void TextFieldOptions::clear_has_fontresource() {
+  _has_bits_[0] &= ~0x00008000u;
 }
 inline void TextFieldOptions::clear_fontresource() {
   if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
@@ -19380,6 +19582,28 @@ inline void TextFieldOptions::set_allocated_fontresource(::protocolbuffers::Reso
   } else {
     clear_has_fontresource();
   }
+}
+
+// optional bool IsCustomSize = 17;
+inline bool TextFieldOptions::has_iscustomsize() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void TextFieldOptions::set_has_iscustomsize() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void TextFieldOptions::clear_has_iscustomsize() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void TextFieldOptions::clear_iscustomsize() {
+  iscustomsize_ = false;
+  clear_has_iscustomsize();
+}
+inline bool TextFieldOptions::iscustomsize() const {
+  return iscustomsize_;
+}
+inline void TextFieldOptions::set_iscustomsize(bool value) {
+  set_has_iscustomsize();
+  iscustomsize_ = value;
 }
 
 // -------------------------------------------------------------------

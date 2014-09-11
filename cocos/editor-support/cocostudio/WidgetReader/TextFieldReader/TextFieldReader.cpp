@@ -138,12 +138,13 @@ namespace cocostudio
     
     void TextFieldReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
     {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        
-        
         TextField* textField = static_cast<TextField*>(widget);
         const protocolbuffers::TextFieldOptions& options = nodeTree.textfieldoptions();
-        
+		bool IsCustomSize = options.iscustomsize();
+		widget->ignoreContentAdaptWithSize(!IsCustomSize);
+
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        WidgetReader::setAnchorPointForWidget(widget, nodeTree);
         
         bool ph = options.has_placeholder();
         if (ph)
@@ -198,5 +199,6 @@ namespace cocostudio
         
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
+
     }
 }
