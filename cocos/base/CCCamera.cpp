@@ -25,7 +25,6 @@
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
-#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -33,7 +32,7 @@ Camera* Camera::_visitingCamera = nullptr;
 
 Camera* Camera::create()
 {
-    Camera* camera = new Camera();
+    Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
     camera->autorelease();
     
@@ -42,7 +41,7 @@ Camera* Camera::create()
 
 Camera* Camera::createPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane)
 {
-    auto ret = new Camera();
+    auto ret = new (std::nothrow) Camera();
     if (ret)
     {
         ret->initPerspective(fieldOfView, aspectRatio, nearPlane, farPlane);
@@ -55,7 +54,7 @@ Camera* Camera::createPerspective(float fieldOfView, float aspectRatio, float ne
 
 Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane)
 {
-    auto ret = new Camera();
+    auto ret = new (std::nothrow) Camera();
     if (ret)
     {
         ret->initOrthographic(zoomX, zoomY, nearPlane, farPlane);

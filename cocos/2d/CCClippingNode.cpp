@@ -26,14 +26,11 @@
  */
 
 #include "2d/CCClippingNode.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 
-#include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -84,7 +81,7 @@ ClippingNode::~ClippingNode()
 
 ClippingNode* ClippingNode::create()
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -99,7 +96,7 @@ ClippingNode* ClippingNode::create()
 
 ClippingNode* ClippingNode::create(Node *pStencil)
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init(pStencil))
     {
         ret->autorelease();
@@ -248,7 +245,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         program->use();
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
-        // XXX: we should have a way to apply shader to all nodes without having to do this
+        // FIXME: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
         
 #endif
@@ -438,7 +435,7 @@ void ClippingNode::onAfterDrawStencil()
             glDisable(GL_ALPHA_TEST);
         }
 #else
-// XXX: we need to find a way to restore the shaders of the stencil node and its childs
+// FIXME: we need to find a way to restore the shaders of the stencil node and its childs
 #endif
     }
 

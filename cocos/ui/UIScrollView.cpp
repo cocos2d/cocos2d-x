@@ -84,7 +84,7 @@ ScrollView::~ScrollView()
 
 ScrollView* ScrollView::create()
 {
-    ScrollView* widget = new ScrollView();
+    ScrollView* widget = new (std::nothrow) ScrollView();
     if (widget && widget->init())
     {
         widget->autorelease();

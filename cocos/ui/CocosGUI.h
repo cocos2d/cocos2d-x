@@ -47,11 +47,12 @@ THE SOFTWARE.
 #include "ui/UIRelativeBox.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "ui/UIVideoPlayer.h"
+#include "ui/UIWebView.h"
 #endif
 #include "ui/UIDeprecated.h"
 #include "ui/GUIExport.h"
 #include "ui/UIScale9Sprite.h"
-
+#include "ui/UIEditBox/UIEditBox.h"
 
 NS_CC_BEGIN
 namespace ui {

@@ -32,8 +32,8 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
-#include "CCGL.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
@@ -362,7 +362,7 @@ struct CC_DLL BlendFunc
 // Label::VAlignment
 // Label::HAlignment
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
 enum class CC_DLL TextVAlignment
 {
@@ -371,7 +371,7 @@ enum class CC_DLL TextVAlignment
     BOTTOM,
 };
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
 enum class CC_DLL TextHAlignment
 {

@@ -124,7 +124,7 @@ void Sprite3DTestDemo::onEnter()
 
 void Sprite3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild(restartSpriteTestAction());
     
     Director::getInstance()->replaceScene(s);
@@ -133,7 +133,7 @@ void Sprite3DTestDemo::restartCallback(Ref* sender)
 
 void Sprite3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -141,7 +141,7 @@ void Sprite3DTestDemo::nextCallback(Ref* sender)
 
 void Sprite3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -241,7 +241,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite1->setScale(4.f);
     sprite1->setTexture("Sprite3DTest/boss.png");
     sprite1->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite1->setContentSize(Size(20, 20));
     
     //add to scene
     addChild( sprite1 );
@@ -252,7 +251,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite2->setScale(4.f);
     sprite2->setTexture("Sprite3DTest/boss.png");
     sprite2->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite2->setContentSize(Size(20, 20));
     sprite2->setAnchorPoint(Vec2(0.5, 0.5));
     
     //add to scene
@@ -266,14 +264,11 @@ Sprite3DHitTest::Sprite3DHitTest()
     
     listener1->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
-        
-        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-        Size s = target->getContentSize();
-        Rect rect = Rect(-s.width/2, -s.height/2, s.width, s.height);
-        
-        if (rect.containsPoint(locationInNode))
+      
+        Rect rect = target->getBoundingBox();        
+        if (rect.containsPoint(touch->getLocation()))
         {
-            log("sprite3d began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("sprite3d began... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
             target->setOpacity(100);
             return true;
         }
@@ -321,7 +316,7 @@ static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1
 
 EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
 {
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
@@ -338,7 +333,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
     if (path.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(path))
     {
         sprite->autorelease();
@@ -416,7 +411,7 @@ GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
 
 Effect3DOutline* Effect3DOutline::create()
 {
-    Effect3DOutline* effect = new Effect3DOutline();
+    Effect3DOutline* effect = new (std::nothrow) Effect3DOutline();
     if(effect && effect->init())
     {
         effect->autorelease();
@@ -808,7 +803,6 @@ Animate3DTest::Animate3DTest()
 , _swim(nullptr)
 , _sprite(nullptr)
 , _moveAction(nullptr)
-, _transTime(0.1f)
 , _elapseTransTime(0.f)
 {
     addSprite3D();
@@ -842,28 +836,21 @@ void Animate3DTest::update(float dt)
     if (_state == State::HURT_TO_SWIMMING)
     {
         _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
         
-        if (t >= 1.f)
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
         {
-            t = 1.f;
             _sprite->stopAction(_hurt);
             _state = State::SWIMMING;
         }
-        _swim->setWeight(t);
-        _hurt->setWeight(1.f - t);
     }
     else if (_state == State::SWIMMING_TO_HURT)
     {
         _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
-        if (t >= 1.f)
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
         {
-            t = 1.f;
+            _sprite->stopAction(_swim);
             _state = State::HURT;
         }
-        _swim->setWeight(1.f - t);
-        _hurt->setWeight(t);
     }
 }
 
@@ -880,8 +867,9 @@ void Animate3DTest::addSprite3D()
     if (animation)
     {
         auto animate = Animate3D::create(animation, 0.f, 1.933f);
-        sprite->runAction(RepeatForever::create(animate));
-        _swim = animate;
+        _swim = RepeatForever::create(animate);
+        sprite->runAction(_swim);
+        
         _swim->retain();
         _hurt = Animate3D::create(animation, 1.933f, 2.8f);
         _hurt->retain();
@@ -910,8 +898,10 @@ void Animate3DTest::reachEndCallBack()
 
 void Animate3DTest::renewCallBack()
 {
-    _sprite->stopActionByTag(101);
+    //rerun swim action
+    _sprite->runAction(_swim);
     _state = State::HURT_TO_SWIMMING;
+    _elapseTransTime = 0.0f;
 }
 
 void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
@@ -928,12 +918,14 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 //hurt the tortoise
                 if (_state == State::SWIMMING)
                 {
+                    _elapseTransTime = 0.0f;
+                    _state = State::SWIMMING_TO_HURT;
+                    _sprite->stopAction(_hurt);
                     _sprite->runAction(_hurt);
-                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    auto delay = DelayTime::create(_hurt->getDuration() - Animate3D::getTransitionTime());
                     auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
                     seq->setTag(101);
                     _sprite->runAction(seq);
-                    _state = State::SWIMMING_TO_HURT;
                 }
                 return;
             }

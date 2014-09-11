@@ -34,11 +34,9 @@ THE SOFTWARE.
 
 #include "3d/CCLight.h"
 #include "base/CCDirector.h"
-#include "base/ccMacros.h"
 #include "base/uthash.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
-#include "CCGL.h"
 
 #include "deprecated/CCString.h"
 

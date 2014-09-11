@@ -1,6 +1,7 @@
 #ifndef _CCB_CCBREADER_H_
 #define _CCB_CCBREADER_H_
 
+#include <set>
 #include <string>
 #include <vector>
 #include "2d/CCNode.h"
@@ -11,7 +12,7 @@
 #include "cocosbuilder/CCBAnimationManager.h"
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
-    T * ptr = new T(); \
+    T * ptr = new (std::nothrow) T(); \
     if(ptr != NULL) { \
         ptr->autorelease(); \
         return ptr; \
@@ -21,7 +22,7 @@
 }
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(T, METHOD) static T * METHOD() { \
-    T * ptr = new T(); \
+    T * ptr = new (std::nothrow) T(); \
     if(ptr != NULL && ptr->init()) { \
         ptr->autorelease(); \
         return ptr; \

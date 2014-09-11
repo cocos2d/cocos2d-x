@@ -52,8 +52,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(CameraTest1),
-    //Camera has been removed from CCNode
-    //todo add new feature to support it
+    // TODO: Camera has been removed from CCNode, add new feature to support it
     // CL(CameraTest2),
     CL(CameraCenterTest),
     CL(Test2),
@@ -66,8 +65,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeToWorld3D),
     CL(SchedulerTest1),
     CL(CameraOrbitTest),
-    //Camera has been removed from CCNode
-    //todo add new feature to support it
+    // TODO: Camera has been removed from CCNode, add new feature to support it
     //CL(CameraZoomTest),
     CL(ConvertToNode),
     CL(NodeOpaqueTest),
@@ -75,6 +73,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeGlobalZValueTest),
     CL(NodeNormalizedPositionTest1),
     CL(NodeNormalizedPositionTest2),
+    CL(NodeNormalizedPositionBugTest),
     CL(NodeNameTest),
 };
 
@@ -129,7 +128,7 @@ void TestCocosNodeDemo::onEnter()
 
 void TestCocosNodeDemo::restartCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -138,7 +137,7 @@ void TestCocosNodeDemo::restartCallback(Ref* sender)
 
 void TestCocosNodeDemo::nextCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -146,7 +145,7 @@ void TestCocosNodeDemo::nextCallback(Ref* sender)
 
 void TestCocosNodeDemo::backCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -989,7 +988,7 @@ class MySprite : public Sprite
 public:
     static MySprite* create(const std::string &spritefilename)
     {
-        auto sprite = new MySprite;
+        auto sprite = new (std::nothrow) MySprite;
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 
@@ -1229,10 +1228,48 @@ void NodeNormalizedPositionTest2::update(float dt)
 
     Size s = Size(_copyContentSize.width*norm, _copyContentSize.height*norm);
     setContentSize(s);
-
     CCLOG("s: %f,%f", s.width, s.height);
 }
 
+
+//------------------------------------------------------------------
+//
+// NodeNormalizedPositionBugTest
+//
+//------------------------------------------------------------------
+NodeNormalizedPositionBugTest::NodeNormalizedPositionBugTest()
+: _accum(0)
+{
+    Vec2 position;
+   
+    position = Vec2(0.5,0.5);
+
+    
+    sprite = Sprite::create("Images/grossini.png");
+    sprite->setNormalizedPosition(position);
+    addChild(sprite);
+    
+    scheduleUpdate();
+}
+
+std::string NodeNormalizedPositionBugTest::title() const
+{
+    return "NodeNormalizedPositionBugTest";
+}
+
+std::string NodeNormalizedPositionBugTest::subtitle() const
+{
+    return "When changing sprite normalizedPosition, the sprite doesn't move!";
+}
+
+void NodeNormalizedPositionBugTest::update(float dt)
+{
+    _accum += dt;
+    
+    // for 5 seconds
+    float norm = clampf(sinf(_accum), 0, 1.0);
+    sprite->setNormalizedPosition(Vec2(norm,norm));
+}
 
 std::string NodeNameTest::title() const
 {

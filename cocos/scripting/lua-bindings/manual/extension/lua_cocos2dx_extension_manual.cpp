@@ -96,7 +96,7 @@ static int tolua_cocos2dx_ScrollView_setDelegate(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        LuaScrollViewDelegate* delegate = new LuaScrollViewDelegate();
+        LuaScrollViewDelegate* delegate = new (std::nothrow) LuaScrollViewDelegate();
         if (nullptr == delegate)
             return 0;
         
@@ -538,7 +538,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         LuaAssetsManagerDelegateProtocol* delegate = dynamic_cast<LuaAssetsManagerDelegateProtocol*>( self->getDelegate());
         if (nullptr == delegate)
         {
-            delegate = new LuaAssetsManagerDelegateProtocol();
+            delegate = new (std::nothrow) LuaAssetsManagerDelegateProtocol();
             if (nullptr == delegate)
                 return 0;
             
@@ -698,7 +698,7 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
     
     if (0 == argc)
     {
-        LUA_TableViewDelegate* delegate = new LUA_TableViewDelegate();
+        LUA_TableViewDelegate* delegate = new (std::nothrow) LUA_TableViewDelegate();
         if (nullptr == delegate)
             return 0;
         
@@ -835,7 +835,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
     
     if (0 == argc)
     {
-        LUA_TableViewDataSource* dataSource = new LUA_TableViewDataSource();
+        LUA_TableViewDataSource* dataSource = new (std::nothrow) LUA_TableViewDataSource();
         if (nullptr == dataSource)
             return 0;
         
@@ -886,7 +886,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
     
     if (2 == argc || 1 == argc)
     {
-        LUA_TableViewDataSource* dataSource = new LUA_TableViewDataSource();
+        LUA_TableViewDataSource* dataSource = new (std::nothrow) LUA_TableViewDataSource();
         Size size;
         ok &= luaval_to_size(L, 2, &size, "cc.TableView:create");
         
@@ -1045,7 +1045,7 @@ static void extendTableView(lua_State* L)
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
-    extendEditBox(tolua_S);
+    /* extendEditBox(tolua_S); */
     extendAssetsManager(tolua_S);
     extendScrollView(tolua_S);
     extendTableView(tolua_S);

@@ -25,13 +25,12 @@
 #ifndef __CCEVENTLISTENER_H__
 #define __CCEVENTLISTENER_H__
 
-#include "base/CCPlatformMacros.h"
-#include "base/CCRef.h"
-
 #include <functional>
 #include <string>
 #include <memory>
-#include <set>
+
+#include "platform/CCPlatformMacros.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 
@@ -55,9 +54,7 @@ public:
         MOUSE,
         ACCELERATION,
         FOCUS,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 		GAME_CONTROLLER,
-#endif
         CUSTOM
     };
 

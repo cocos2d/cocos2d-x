@@ -13,6 +13,7 @@
 -- @return VBox#VBox ret (retunr value: ccui.VBox)
 
 --------------------------------
+-- Default constructor
 -- @function [parent=#VBox] VBox 
 -- @param self
         

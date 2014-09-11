@@ -207,11 +207,9 @@
     <ClCompile Include="..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
-    <ClCompile Include="..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
-    <ClCompile Include="..\..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
@@ -250,6 +248,7 @@
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.cpp" />
@@ -410,11 +409,9 @@
     <ClInclude Include="..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
-    <ClInclude Include="..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
-    <ClInclude Include="..\..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\..\Classes\FileUtilsTest\FileUtilsTest.h" />
@@ -453,6 +450,7 @@
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.h" />
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.h" />
@@ -653,9 +651,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\external\Box2D\proj.wp8\Box2D.vcxproj">
       <Project>{c55734a3-702c-4fa1-b950-32c8e169302f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\external\chipmunk\proj.wp8\chipmunk.vcxproj">
-      <Project>{ba568a33-98f9-4d2a-bfff-c065adcb447a}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

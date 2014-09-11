@@ -29,7 +29,7 @@
 
 #include <mutex>
 
-#include "cocos2d.h"
+#include "2d/CCNode.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 

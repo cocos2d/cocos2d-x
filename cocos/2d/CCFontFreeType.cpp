@@ -172,7 +172,7 @@ FontFreeType::~FontFreeType()
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    FontAtlas *atlas = new FontAtlas(*this);
+    FontAtlas *atlas = new (std::nothrow) FontAtlas(*this);
     if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
         std::u16string utf16;

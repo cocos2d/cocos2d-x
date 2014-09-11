@@ -24,6 +24,7 @@
 
 #include "CCPhysicsBodyInfo_chipmunk.h"
 #if CC_USE_PHYSICS
+#include "chipmunk.h"
 NS_CC_BEGIN
 
 PhysicsBodyInfo::PhysicsBodyInfo()

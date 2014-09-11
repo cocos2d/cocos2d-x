@@ -140,11 +140,28 @@ namespace ui {
         return true;
     }
     
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, bool rotated, const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return init(sprite, rect, rotated, capInsets);
+    }
+    
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, const cocos2d::Rect &capInsets)
+    {
+        return initWithBatchNode(batchnode, rect, false, capInsets);
+    }
+    
 #define    TRANSLATE_X(x, y, xtranslate) \
 x+=xtranslate;                       \
 
 #define    TRANSLATE_Y(x, y, ytranslate) \
-y+=ytranslate;                       \
+y+=ytranslate;         \
+
+    bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &originalRect, bool rotated, const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return this->updateWithSprite(sprite, originalRect, rotated, capInsets);
+    }
 
     bool Scale9Sprite::updateWithSprite(Sprite* sprite, const Rect& originalRect, bool rotated, const Rect& capInsets)
     {
@@ -431,23 +448,23 @@ y+=ytranslate;                       \
         _centre->setAnchorPoint(Vec2(0,0));
         
         // Position corners
-        _bottomLeft->setPosition(Vec2(0,0));
-        _bottomRight->setPosition(Vec2(leftWidth+rescaledWidth,0));
-        _topLeft->setPosition(Vec2(0, bottomHeight+rescaledHeight));
-        _topRight->setPosition(Vec2(leftWidth+rescaledWidth, bottomHeight+rescaledHeight));
+        _bottomLeft->setPosition(0,0);
+        _bottomRight->setPosition(leftWidth+rescaledWidth,0);
+        _topLeft->setPosition(0, bottomHeight+rescaledHeight);
+        _topRight->setPosition(leftWidth+rescaledWidth, bottomHeight+rescaledHeight);
         
         // Scale and position borders
-        _left->setPosition(Vec2(0, bottomHeight));
+        _left->setPosition(0, bottomHeight);
         _left->setScaleY(verticalScale);
-        _right->setPosition(Vec2(leftWidth+rescaledWidth,bottomHeight));
+        _right->setPosition(leftWidth+rescaledWidth,bottomHeight);
         _right->setScaleY(verticalScale);
-        _bottom->setPosition(Vec2(leftWidth,0));
+        _bottom->setPosition(leftWidth,0);
         _bottom->setScaleX(horizontalScale);
-        _top->setPosition(Vec2(leftWidth,bottomHeight+rescaledHeight));
+        _top->setPosition(leftWidth,bottomHeight+rescaledHeight);
         _top->setScaleX(horizontalScale);
         
         // Position centre
-        _centre->setPosition(Vec2(leftWidth, bottomHeight));
+        _centre->setPosition(leftWidth, bottomHeight);
     }
     
     bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
@@ -459,7 +476,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
         {
             pReturn->autorelease();
@@ -477,7 +494,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(file, rect) )
         {
             pReturn->autorelease();
@@ -496,7 +513,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& file)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(capInsets, file) )
         {
             pReturn->autorelease();
@@ -515,7 +532,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithFile(file) )
         {
             pReturn->autorelease();
@@ -539,7 +556,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
         {
             pReturn->autorelease();
@@ -557,7 +574,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
         {
             pReturn->autorelease();
@@ -582,7 +599,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
         {
             pReturn->autorelease();
@@ -600,7 +617,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
         {
             pReturn->autorelease();
@@ -615,7 +632,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
     {
-        Scale9Sprite* pReturn = new Scale9Sprite();
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
         if ( pReturn && pReturn->init(_scale9Image, _spriteRect, capInsets) )
         {
             pReturn->autorelease();
@@ -627,7 +644,7 @@ y+=ytranslate;                       \
     
     Scale9Sprite* Scale9Sprite::create()
     {
-        Scale9Sprite *pReturn = new Scale9Sprite();
+        Scale9Sprite *pReturn = new (std::nothrow) Scale9Sprite();
         if (pReturn && pReturn->init())
         {
             pReturn->autorelease();
@@ -894,8 +911,8 @@ y+=ytranslate;                       \
     {
         if (_scale9Image)
         {
-            _scale9Image->setPosition(Vec2(_contentSize.width * _scale9Image->getAnchorPoint().x,
-                                           _contentSize.height * _scale9Image->getAnchorPoint().y));
+            _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
+                                           _contentSize.height * _scale9Image->getAnchorPoint().y);
         }
     }
     

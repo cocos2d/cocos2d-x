@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_BASE64_H__
 #define __SUPPORT_BASE64_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #ifdef __cplusplus
 extern "C" {

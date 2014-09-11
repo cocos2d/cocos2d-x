@@ -29,7 +29,6 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_H__
 
 #include "2d/CCNode.h"
-#include "base/CCProtocols.h"
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 

@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
