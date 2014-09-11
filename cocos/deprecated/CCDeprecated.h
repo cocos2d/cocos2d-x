@@ -956,7 +956,7 @@ CC_DEPRECATED_ATTRIBUTE const LanguageType kLanguagePolish      = LanguageType::
 CC_DEPRECATED_ATTRIBUTE typedef LanguageType ccLanguageType;
 
 
-CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS;
+CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWindows      = Application::Platform::OS_WINDOWS_COCOS_SPEC;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetLinux        = Application::Platform::OS_LINUX;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetMacOS        = Application::Platform::OS_MAC;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
