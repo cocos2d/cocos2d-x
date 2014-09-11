@@ -664,6 +664,7 @@
         "cocos/math/MathUtil.h", 
         "cocos/math/MathUtil.inl", 
         "cocos/math/MathUtilNeon.inl", 
+        "cocos/math/MathUtilSSE.inl", 
         "cocos/math/Quaternion.cpp", 
         "cocos/math/Quaternion.h", 
         "cocos/math/Quaternion.inl", 

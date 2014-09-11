@@ -39,6 +39,7 @@ Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
+Classes/NewAudioEngineTest/NewAudioEngineTest.cpp \
 Classes/ConfigurationTest/ConfigurationTest.cpp \
 Classes/ConsoleTest/ConsoleTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
