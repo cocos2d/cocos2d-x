@@ -480,25 +480,19 @@ void DrawNode::drawCubicBezier(const Vec2& from, const Vec2& control1, const Vec
     Tex2F texCoord = Tex2F(0.0, 0.0);
     Color4B col = Color4B(color);
     Vec2 vertex;
-    Vec2 firstVertex = Vec2(from.x, from.y);
-    Vec2 lastVertex = Vec2(to.x, to.y);
+    Vec2 lastVertex = Vec2(from.x, from.y);
 
     float t = 0;
-    for(unsigned int i = segments + 1; i > 0; i--)
+    for(unsigned int i = segments; i > 0; i--)
     {
         float x = powf(1 - t, 3) * from.x + 3.0f * powf(1 - t, 2) * t * control1.x + 3.0f * (1 - t) * t * t * control2.x + t * t * t * to.x;
         float y = powf(1 - t, 3) * from.y + 3.0f * powf(1 - t, 2) * t * control1.y + 3.0f * (1 - t) * t * t * control2.y + t * t * t * to.y;
         vertex = Vec2(x, y);
 
-        V2F_C4B_T2F a = {firstVertex, col, texCoord };
-        V2F_C4B_T2F b = {lastVertex, col, texCoord };
-        V2F_C4B_T2F c = {vertex, col, texCoord };
-        V2F_C4B_T2F_Triangle triangle = {a, b, c};
-        ((V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount))[0] = triangle;
+        drawSegment(Point(lastVertex.x, lastVertex.y), Point(vertex.x, vertex.y), 0.5f, color);
 
         lastVertex = vertex;
         t += 1.0f / segments;
-        _bufferCount += 3;
     }
     _dirty = true;
 }
