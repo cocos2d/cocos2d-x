@@ -36,6 +36,7 @@
 #include "CCPlatformMacros.h"
 
 #define QUEUEBUFFER_NUM 3
+#define QUEUEBUFFER_TIME_STEP 0.1
 
 NS_CC_BEGIN
 
@@ -51,7 +52,7 @@ public:
     
 private:
     
-    void readDataThread();
+    void readDataTask();
     
     void invokingCallbacks();
     
@@ -81,9 +82,9 @@ private:
     std::mutex _callbackMutex;
     
     std::vector< std::function<void()> > _callbacks;
-    std::mutex _readThreadMutex;
+    std::mutex _readDataTaskMutex;
     
-    bool _release;
+    bool _exitReadDataTask;
     std::string _fileFullPath;
     
     friend class AudioEngineImpl;

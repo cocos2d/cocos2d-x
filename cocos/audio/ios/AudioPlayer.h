@@ -60,15 +60,13 @@ private:
     ALuint _alSource;
     
     //play by circular buffer
-    bool _largeFile;
-    ALuint _bufferIds[3];
-    int _bufferIndex;
-    int _frameIndex;
     float _currTime;
-    std::mutex _rotateBufferMtx;
+    bool _streamingSource;
+    ALuint _bufferIds[3];
+    std::thread _rotateBufferThread;
     std::timed_mutex _timeMtx;
-    
-    bool _release;
+    bool _exitThread;
+    bool _timeDirty;
     
     friend class AudioEngineImpl;
 };

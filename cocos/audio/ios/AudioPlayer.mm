@@ -29,8 +29,9 @@
 using namespace cocos2d;
 
 AudioPlayer::AudioPlayer()
-: _release(false)
-, _largeFile(false)
+: _exitThread(false)
+, _timeDirty(false)
+, _streamingSource(false)
 , _currTime(0.0f)
 , _finishCallbak(nullptr)
 , _ready(false)
@@ -41,18 +42,18 @@ AudioPlayer::AudioPlayer()
 
 AudioPlayer::~AudioPlayer()
 {
-    _release = true;
+    _exitThread = true;
     if (_audioCache && _audioCache->_queBufferFrames > 0) {
         _timeMtx.unlock();
-        _rotateBufferMtx.lock();
-        _rotateBufferMtx.unlock();
+        if (_rotateBufferThread.joinable()) {
+            _rotateBufferThread.join();
+        }
         alDeleteBuffers(3, _bufferIds);
     }
 }
 
 bool AudioPlayer::play2d(AudioCache* cache)
 {
-    bool ret = true;
     if (!cache->_alBufferReady) {
         return false;
     }
@@ -72,7 +73,7 @@ bool AudioPlayer::play2d(AudioCache* cache)
         alSourcei(_alSource, AL_BUFFER, _audioCache->_alBufferId);
         
     } else {
-        _largeFile = true;
+        _streamingSource = true;
         
         auto alError = alGetError();
         alGenBuffers(3, _bufferIds);
@@ -85,12 +86,11 @@ bool AudioPlayer::play2d(AudioCache* cache)
             alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
             
             _timeMtx.lock();
-            auto rotateThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
-            rotateThread.detach();
+            _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
         }
         else {
-            printf("error:%s, error code:%x", __PRETTY_FUNCTION__,alError);
-            ret = false;
+            printf("%s:alGenBuffers error code:%x", __PRETTY_FUNCTION__,alError);
+            return false;
         }
     }
     
@@ -99,17 +99,16 @@ bool AudioPlayer::play2d(AudioCache* cache)
     auto alError = alGetError();
     
     if (alError != AL_NO_ERROR) {
-        ret = false;
-        printf("error:%s, error code:%x\n", __PRETTY_FUNCTION__,alError);
+        printf("%s:alSourcePlay error code:%x\n", __PRETTY_FUNCTION__,alError);
+        return false;
     }
     
-    return ret;
+    return true;
 }
 
 void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
-    _rotateBufferMtx.lock();
-    printf("%s start\n",__func__);
+    printf("%s start\n",__PRETTY_FUNCTION__);
     
     ALint sourceState;
     ALint bufferProcessed = 0;
@@ -121,7 +120,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
     if(error) {
-        printf("rotateBufferThread: ExtAudioFileOpenURL FAILED, Error = %d\n", error);
+        printf("%s: ExtAudioFileOpenURL FAILED, Error = %d\n", __PRETTY_FUNCTION__, error);
         goto ExitBufferThread;
     }
     
@@ -136,19 +135,25 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
         ExtAudioFileSeek(extRef, offsetFrame);
     }
     
-    while (!_release) {
+    while (!_exitThread) {
         alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
         if (sourceState == AL_PLAYING) {
             alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
             while (bufferProcessed > 0) {
                 bufferProcessed--;
-                
-                _currTime += 0.2f;
-                if (_currTime > _audioCache->_duration) {
-                    if (_loop) {
-                        _currTime = 0.0f;
-                    } else {
-                        _currTime = _audioCache->_duration;
+                if (_timeDirty) {
+                    _timeDirty = false;
+                    offsetFrame = _currTime * _audioCache->outputFormat.mSampleRate;
+                    ExtAudioFileSeek(extRef, offsetFrame);
+                }
+                else {
+                    _currTime += QUEUEBUFFER_TIME_STEP;
+                    if (_currTime > _audioCache->_duration) {
+                        if (_loop) {
+                            _currTime = 0.0f;
+                        } else {
+                            _currTime = _audioCache->_duration;
+                        }
                     }
                 }
                 
@@ -161,6 +166,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                         theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
                         ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
                     } else {
+                        _exitThread = true;
                         break;
                     }
                 }
@@ -172,7 +178,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
             }
         }
         
-        _timeMtx.try_lock_for(std::chrono::milliseconds(100));
+        _timeMtx.try_lock_for(std::chrono::milliseconds(50));
     }
     
 ExitBufferThread:
@@ -182,21 +188,13 @@ ExitBufferThread:
         ExtAudioFileDispose(extRef);
     }
     free(tmpBuffer);
-    _rotateBufferMtx.unlock();
-    printf("%s end\n",__func__);
+    printf("%s: end\n",__PRETTY_FUNCTION__);
 }
 
 bool AudioPlayer::setLoop(bool loop)
 {
-    if (!_release ) {
+    if (!_exitThread ) {
         _loop = loop;
-        if (_rotateBufferMtx.try_lock() && loop) {
-            _rotateBufferMtx.unlock();
-            
-            auto rotateThread = std::thread(&AudioPlayer::rotateBufferThread,this, 0);
-            rotateThread.detach();
-        }
-        
         return true;
     }
     
@@ -205,57 +203,10 @@ bool AudioPlayer::setLoop(bool loop)
 
 bool AudioPlayer::setTime(float time)
 {
-    return  false;
-    
-    if (!_release && time >= 0.0f && time < _audioCache->_duration) {
-        _release = true;
-        _timeMtx.unlock();
-        _rotateBufferMtx.lock();
-        _rotateBufferMtx.unlock();
+    if (!_exitThread && time >= 0.0f && time < _audioCache->_duration) {
         
         _currTime = time;
-        alSourcei(_alSource, AL_BUFFER, NULL);
-        
-        ExtAudioFileRef extRef = nullptr;
-        AudioBufferList		theDataBuffer;
-        char* bufferData[QUEUEBUFFER_NUM];
-        
-        auto fileURL = (CFURLRef)[[NSURL fileURLWithPath:[NSString stringWithCString:_audioCache->_fileFullPath.c_str() encoding:[NSString defaultCStringEncoding]]] retain];
-        auto error = ExtAudioFileOpenURL(fileURL, &extRef);
-        error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_audioCache->outputFormat), &_audioCache->outputFormat);
-        
-		theDataBuffer.mNumberBuffers = QUEUEBUFFER_NUM;
-        for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
-            bufferData[index] = (char*)malloc(_audioCache->_queBufferBytes);
-            
-            theDataBuffer.mBuffers[index].mDataByteSize = _audioCache->_queBufferBytes;
-            theDataBuffer.mBuffers[index].mNumberChannels = _audioCache->outputFormat.mChannelsPerFrame;
-            theDataBuffer.mBuffers[index].mData = bufferData[index];
-        }
-		
-        int offsetFrames = time * _audioCache->outputFormat.mSampleRate;
-        if (offsetFrames != 0) {
-            error = ExtAudioFileSeek(extRef, offsetFrames);
-        }
-        
-        UInt32 frames = _audioCache->_queBufferFrames * QUEUEBUFFER_NUM;
-        ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
-        
-        for (int index = 0; index < theDataBuffer.mNumberBuffers; ++index) {
-            alBufferData(_bufferIds[index], _audioCache->_format, bufferData[index], theDataBuffer.mBuffers[index].mDataByteSize, _audioCache->_sampleRate);
-            free(bufferData[index]);
-        }
-        alSourceQueueBuffers(_alSource, theDataBuffer.mNumberBuffers, _bufferIds);
-        
-    ExitSetTime:
-        CFRelease(fileURL);
-        // Dispose the ExtAudioFileRef, it is no longer needed
-        if (extRef){
-            ExtAudioFileDispose(extRef);
-        }
-        
-        auto rotateThread = std::thread(&AudioPlayer::rotateBufferThread,this, offsetFrames + QUEUEBUFFER_NUM * _audioCache->_queBufferFrames+ 1);
-        rotateThread.detach();
+        _timeDirty = true;
         
         return true;
     }

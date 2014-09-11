@@ -175,7 +175,7 @@ bool AudioEngineImpl::init()
             alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
-                printf("Error generating sources! %x\n", alError);
+                printf("%s:generating sources fail! error = %x\n", __PRETTY_FUNCTION__, alError);
                 break;
             }
             
@@ -217,7 +217,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         audioCache = &_audioCaches[filePath];
         audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
         
-        _threadPool->addTask(std::bind(&AudioCache::readDataThread, audioCache));
+        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
     }
     else {
         audioCache = &it->second;
@@ -274,7 +274,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
         
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
-            printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
         }
     }
 }
@@ -284,7 +284,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop)
     auto& player = _audioPlayers[audioID];
     
     if (player._ready) {
-        if (player._largeFile) {
+        if (player._streamingSource) {
             player.setLoop(loop);
         } else {
             if (loop) {
@@ -295,7 +295,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop)
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+                printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
             }
         }
     }
@@ -312,7 +312,7 @@ bool AudioEngineImpl::pause(int audioID)
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
-        printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+        printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
     }
     
     return ret;
@@ -326,7 +326,7 @@ bool AudioEngineImpl::resume(int audioID)
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
-        printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+        printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
     }
     
     return ret;
@@ -342,7 +342,7 @@ bool AudioEngineImpl::stop(int audioID)
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
             ret = false;
-            printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
         }
     }
     
@@ -381,7 +381,7 @@ float AudioEngineImpl::getCurrentTime(int audioID)
     float ret = 0.0f;
     auto& player = _audioPlayers[audioID];
     if(player._ready){
-        if (player._largeFile) {
+        if (player._streamingSource) {
             ret = player.getTime();
         } else {
             alGetSourcef(player._alSource, AL_SEC_OFFSET, &ret);
@@ -406,14 +406,14 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             break;
         }
         
-        if (player._largeFile) {
+        if (player._streamingSource) {
             ret = player.setTime(time);
             break;
         }
         else {
             if (player._audioCache->_bytesOfRead != player._audioCache->_dataSize &&
                 (time * player._audioCache->_sampleRate * player._audioCache->_bytesPerFrame) > player._audioCache->_bytesOfRead) {
-                printf("setCurrentTime fail for audio %d",audioID);
+                printf("%s: audio id = %d\n", __PRETTY_FUNCTION__,audioID);
                 break;
             }
             
@@ -421,7 +421,7 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+                printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
             }
             ret = true;
         }
