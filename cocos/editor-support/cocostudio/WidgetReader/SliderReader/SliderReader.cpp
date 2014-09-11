@@ -275,7 +275,13 @@ namespace cocostudio
         std::string progressBarFileName = this->getResourcePath(progressBarDic.path(), (Widget::TextureResType)progressBarType);
         slider->loadProgressBarTexture(progressBarFileName, (Widget::TextureResType)progressBarType);
         
-        
+        bool displaystate = true;
+		if(options.has_displaystate())
+		{
+			displaystate = options.displaystate();
+		}
+		slider->setBright(displaystate);
+
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }

@@ -223,6 +223,12 @@ namespace cocostudio
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic.path(), (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         
+		bool displaystate = true;
+		if(options.has_displaystate())
+		{
+			displaystate = options.displaystate();
+		}
+		checkBox->setBright(displaystate);
         
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
