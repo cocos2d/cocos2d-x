@@ -15,7 +15,7 @@ Light3D::~Light3D()
 {
 }
 
-Light3D* Light3D::CreateDirectionalLight( const Vec3 &direction, const Color3B &color )
+Light3D* Light3D::createDirectionalLight( const Vec3 &direction, const Color3B &color )
 {
     Light3D *light = new Light3D;
     light->_lightType = DIRECTIONAL;
@@ -25,7 +25,7 @@ Light3D* Light3D::CreateDirectionalLight( const Vec3 &direction, const Color3B &
     return light;
 }
 
-Light3D* Light3D::CreatePointLight( const Vec3 &position, const Color3B &color, float range )
+Light3D* Light3D::createPointLight( const Vec3 &position, const Color3B &color, float range )
 {
     Light3D *light = new Light3D;
     light->_lightType = POINT;
@@ -36,7 +36,7 @@ Light3D* Light3D::CreatePointLight( const Vec3 &position, const Color3B &color, 
     return light;
 }
 
-Light3D* Light3D::CreateSpotLight( const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range )
+Light3D* Light3D::createSpotLight( const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range )
 {
     Light3D *light = new Light3D;
     light->_lightType = SPOT;
@@ -118,9 +118,9 @@ void Light3D::onExit()
     Node::onExit();
 }
 
-void Light3D::setEnabled( bool isON )
+void Light3D::setEnabled( bool enabled )
 {
-    _isEnabled = isON;
+    _isEnabled = enabled;
 }
 
 bool Light3D::getEnabled()
@@ -144,27 +144,30 @@ void Light3D::setDirection( const Vec3 &dir )
 Vec3 Light3D::getDirection() const
 {
     Mat4 mat = getNodeToParentTransform();
-    mat.m[12] = mat.m[13] = mat.m[14] = 0.0f;
-    mat.inverse();
-    mat.transpose();
-
-    Vec3 dir;
-    mat.transformVector(0.0f, 0.0f, -1.0f, 0.0f, &dir);
-
-    return dir;
+//    mat.m[12] = mat.m[13] = mat.m[14] = 0.0f;
+//    mat.inverse();
+//    mat.transpose();
+//
+//    Vec3 dir;
+//    mat.transformVector(0.0f, 0.0f, -1.0f, 0.0f, &dir);
+//
+//    return dir;
+    
+    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 
 Vec3 Light3D::getWorldDirection() const
 {
     Mat4 mat = getNodeToWorldTransform();
-    mat.m[12] = mat.m[13] = mat.m[14] = 0.0f;
-    mat.inverse();
-    mat.transpose();
-
-    Vec3 dir;
-    mat.transformVector(0.0f, 0.0f, -1.0f, 0.0f, &dir);
-
-    return dir;
+//    mat.m[12] = mat.m[13] = mat.m[14] = 0.0f;
+//    mat.inverse();
+//    mat.transpose();
+//
+//    Vec3 dir;
+//    mat.transformVector(0.0f, 0.0f, -1.0f, 0.0f, &dir);
+//
+//    return dir;
+    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 
 NS_CC_END

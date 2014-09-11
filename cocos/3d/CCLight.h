@@ -43,9 +43,9 @@ public:
     /**
      * Create light according to type.
      */
-    static Light3D* CreateDirectionalLight(const Vec3 &direction, const Color3B &color);
-    static Light3D* CreatePointLight(const Vec3 &position, const Color3B &color, float range);
-    static Light3D* CreateSpotLight(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
+    static Light3D* createDirectionalLight(const Vec3 &direction, const Color3B &color);
+    static Light3D* createPointLight(const Vec3 &position, const Color3B &color, float range);
+    static Light3D* createSpotLight(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
 
     //override
     virtual void onEnter() override;
@@ -59,7 +59,7 @@ public:
     /**
      * Sets Light Enabled.
      */
-    void setEnabled(bool isON);
+    void setEnabled(bool enabled);
 
     /**
      * Gets Light Enabled.
