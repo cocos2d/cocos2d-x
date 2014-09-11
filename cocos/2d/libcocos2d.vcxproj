@@ -24,7 +24,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -33,7 +33,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -77,7 +77,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\Box2d;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\box2d;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -104,9 +104,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(Ou
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\debug-lib\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\box2d\prebuilt\debug-lib\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\debug-lib\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
@@ -157,9 +155,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\chipmunk\prebuilt\release-lib\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\box2d\prebuilt\release-lib\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-lib\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*" "$(OutDir)"
+</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -208,6 +205,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClCompile Include="..\3d\CCAnimate3D.cpp" />
     <ClCompile Include="..\3d\CCAnimation3D.cpp" />
     <ClCompile Include="..\3d\CCAttachNode.cpp" />
+    <ClCompile Include="..\3d\CCBillBoard.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
@@ -377,12 +375,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
-    <ClCompile Include="..\platform\desktop\CCGLViewImpl.cpp" />
-    <ClCompile Include="..\platform\win32\CCApplication.cpp" />
-    <ClCompile Include="..\platform\win32\CCCommon.cpp" />
-    <ClCompile Include="..\platform\win32\CCDevice.cpp" />
-    <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
-    <ClCompile Include="..\platform\win32\CCStdC.cpp" />
+    <ClCompile Include="..\platform\desktop\CCGLViewImpl-desktop.cpp" />
+    <ClCompile Include="..\platform\win32\CCApplication-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCCommon-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCDevice-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCFileUtils-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCStdC-win32.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
     <ClCompile Include="..\renderer\CCGLProgram.cpp" />
@@ -401,6 +399,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
@@ -410,7 +409,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp" />
-    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImplWin.cpp" />
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp" />
     <ClCompile Include="..\ui\UIHBox.cpp" />
     <ClCompile Include="..\ui\UIHelper.cpp" />
     <ClCompile Include="..\ui\UIImageView.cpp" />
@@ -542,6 +541,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClInclude Include="..\3d\CCAnimation3D.h" />
     <ClInclude Include="..\3d\CCAnimationCurve.h" />
     <ClInclude Include="..\3d\CCAttachNode.h" />
+    <ClInclude Include="..\3d\CCBillBoard.h" />
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCBundleReader.h" />
@@ -749,12 +749,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClInclude Include="..\platform\CCImage.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
-    <ClInclude Include="..\platform\desktop\CCGLViewImpl.h" />
-    <ClInclude Include="..\platform\win32\CCApplication.h" />
-    <ClInclude Include="..\platform\win32\CCFileUtilsWin32.h" />
-    <ClInclude Include="..\platform\win32\CCGL.h" />
-    <ClInclude Include="..\platform\win32\CCPlatformDefine.h" />
-    <ClInclude Include="..\platform\win32\CCStdC.h" />
+    <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h" />
+    <ClInclude Include="..\platform\win32\CCApplication-win32.h" />
+    <ClInclude Include="..\platform\win32\CCFileUtils-win32.h" />
+    <ClInclude Include="..\platform\win32\CCGL-win32.h" />
+    <ClInclude Include="..\platform\win32\CCPlatformDefine-win32.h" />
+    <ClInclude Include="..\platform\win32\CCStdC-win32.h" />
     <ClInclude Include="..\platform\win32\compat\stdint.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
@@ -775,6 +775,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h" />
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
     <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
@@ -785,8 +786,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl.h" />
-    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImplWin.h" />
     <ClInclude Include="..\ui\UIHBox.h" />
     <ClInclude Include="..\ui\UIHelper.h" />
     <ClInclude Include="..\ui\UIImageView.h" />
@@ -884,6 +885,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\spine\prebuilt\release-l
     <None Include="..\math\Vec3.inl" />
     <None Include="..\math\Vec4.inl" />
     <None Include="cocos2d.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\external\Box2D\proj.win32\libbox2d.vcxproj">
+      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\editor-support\spine\proj.win32\libSpine.vcxproj">
+      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

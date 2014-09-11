@@ -16,6 +16,7 @@ Classes/ActionManagerTest/ActionManagerTest.cpp \
 Classes/ActionsEaseTest/ActionsEaseTest.cpp \
 Classes/ActionsProgressTest/ActionsProgressTest.cpp \
 Classes/ActionsTest/ActionsTest.cpp \
+Classes/BillBoardTest/BillBoardTest.cpp \
 Classes/Box2DTest/Box2dTest.cpp \
 Classes/Box2DTestBed/Box2dView.cpp \
 Classes/Box2DTestBed/GLES-Render.cpp \
@@ -38,6 +39,7 @@ Classes/ChipmunkTest/ChipmunkTest.cpp \
 Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
+Classes/NewAudioEngineTest/NewAudioEngineTest.cpp \
 Classes/ConfigurationTest/ConfigurationTest.cpp \
 Classes/ConsoleTest/ConsoleTest.cpp \
 Classes/CurlTest/CurlTest.cpp \

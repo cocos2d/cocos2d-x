@@ -28,13 +28,13 @@ UIRichText.cpp \
 UIHBox.cpp \
 UIVBox.cpp \
 UIRelativeBox.cpp \
-UIVideoPlayerAndroid.cpp \
+UIVideoPlayer-android.cpp \
 UIDeprecated.cpp \
 UIScale9Sprite.cpp \
 UIWebView.cpp \
-UIWebViewImpl_android.cpp \
+UIWebViewImpl-android.cpp \
 UIEditBox/UIEditBox.cpp \
-UIEditBox/UIEditBoxImplAndroid.cpp \
+UIEditBox/UIEditBoxImpl-android.cpp \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \

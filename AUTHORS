@@ -809,6 +809,7 @@ Developers:
         Added Device::setKeepScreenOn()
         Fixed Label performance problem
         Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
+        Added getAllTouches() in GLViewProtocol
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -896,6 +897,7 @@ Developers:
         
     kezhuw
         AutoReleasePool manager improvement
+        Fixed a bug that condition variable sleep on unrelated mutex in HttpClient
         
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
@@ -992,6 +994,12 @@ Developers:
         
     kaishiqi
         Fixed a but that cursor postion is wrong on desktop.
+        
+    jagd
+        Added setSubsteps() and getSubsteps() in PhysicsWorld
+        
+    denpen
+        Fixed a bug that scroll view hidden picks up the touch events.
     
 Retired Core Developers:
     WenSheng Yang

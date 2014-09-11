@@ -28,14 +28,14 @@ THE SOFTWARE.
 #ifndef __CCDIRECTOR_H__
 #define __CCDIRECTOR_H__
 
-#include "base/CCPlatformMacros.h"
+#include <stack>
 
+#include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "2d/CCScene.h"
-#include "CCGL.h"
-#include <stack>
 #include "math/CCMath.h"
+#include "platform/CCGL.h"
 #include "platform/CCGLView.h"
 
 NS_CC_BEGIN

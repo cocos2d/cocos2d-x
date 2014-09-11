@@ -486,8 +486,9 @@ void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, u
     sortAllChildren();
     draw(renderer, _modelViewTransform, flags);
 
-    // reset for next frame
-    _orderOfArrival = 0;
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // setOrderOfArrival(0);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }

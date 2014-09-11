@@ -126,6 +126,7 @@ Node::Node(void)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 , _usingNormalizedPosition(false)
+, _normalizedPositionDirty(false)
 , _name("")
 , _hashOfName(0)
 , _cameraMask(1)
@@ -280,14 +281,6 @@ void Node::setSkewY(float skewY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
-
-/// zOrder setter : private method
-/// used internally to alter the zOrder variable. DON'T call this method manually 
-void Node::_setLocalZOrder(int z)
-{
-    _localZOrder = z;
-}
-
 void Node::setLocalZOrder(int z)
 {
     if (_localZOrder == z)
@@ -300,6 +293,13 @@ void Node::setLocalZOrder(int z)
     }
 
     _eventDispatcher->setDirtyForNode(this);
+}
+
+/// zOrder setter : private method
+/// used internally to alter the zOrder variable. DON'T call this method manually
+void Node::_setLocalZOrder(int z)
+{
+    _localZOrder = z;
 }
 
 void Node::setGlobalZOrder(float globalZOrder)
@@ -613,6 +613,7 @@ void Node::setNormalizedPosition(const Vec2& position)
 
     _normalizedPosition = position;
     _usingNormalizedPosition = true;
+    _normalizedPositionDirty = true;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
@@ -1170,7 +1171,7 @@ void Node::insertChild(Node* child, int z)
     _transformUpdated = true;
     _reorderChildDirty = true;
     _children.pushBack(child);
-    child->_setLocalZOrder(z);
+    child->_localZOrder = z;
 }
 
 void Node::reorderChild(Node *child, int zOrder)
@@ -1178,7 +1179,7 @@ void Node::reorderChild(Node *child, int zOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setLocalZOrder(zOrder);
+    child->_localZOrder = zOrder;
 }
 
 void Node::sortAllChildren()
@@ -1210,17 +1211,21 @@ void Node::visit()
 
 uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
 {
+    if(_usingNormalizedPosition) {
+        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
+        if ((parentFlags & FLAGS_CONTENT_SIZE_DIRTY) || _normalizedPositionDirty) {
+            auto s = _parent->getContentSize();
+            _position.x = _normalizedPosition.x * s.width;
+            _position.y = _normalizedPosition.y * s.height;
+            _transformUpdated = _transformDirty = _inverseDirty = true;
+            _normalizedPositionDirty = false;
+        }
+    }
+    
     uint32_t flags = parentFlags;
     flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);
     flags |= (_contentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);
-
-    if(_usingNormalizedPosition && (flags & FLAGS_CONTENT_SIZE_DIRTY)) {
-        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
-        auto s = _parent->getContentSize();
-        _position.x = _normalizedPosition.x * s.width;
-        _position.y = _normalizedPosition.y * s.height;
-        _transformUpdated = _transformDirty = _inverseDirty = true;
-    }
+    
 
     if(flags & FLAGS_DIRTY_MASK)
         _modelViewTransform = this->transform(parentTransform);

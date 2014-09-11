@@ -28,7 +28,7 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <vector>
 #include <unordered_map>
 

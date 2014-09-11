@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __SUPPORT_TRANSFORM_UTILS_H__
 
 // TODO: when in MAC or windows, it includes <OpenGL/gl.h>
-#include "CCGL.h"
+#include "platform/CCGL.h"
 #include "base/ccMacros.h"
 
 namespace   cocos2d {

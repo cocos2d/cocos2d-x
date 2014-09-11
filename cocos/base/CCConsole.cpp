@@ -56,7 +56,7 @@
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #include "base/CCConfiguration.h"
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"

@@ -144,10 +144,7 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat,
     meshdata.subMeshIndices.push_back(indices);
     meshdata.subMeshIds.push_back("");
     auto meshvertexdata = MeshVertexData::create(meshdata);
-    auto indexbuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)indices.size());
-    
-    AABB aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), indices);
-    auto indexData = MeshIndexData::create("", meshvertexdata, indexbuffer, aabb);
+    auto indexData = meshvertexdata->getMeshIndexDataByIndex(0);
     
     return create("", indexData);
 }

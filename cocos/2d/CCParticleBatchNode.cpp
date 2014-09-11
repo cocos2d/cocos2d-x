@@ -218,7 +218,7 @@ int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag, co
     else
         child->setName(name);
     
-    child->_setLocalZOrder(z);
+    child->setLocalZOrder(z);
 
     child->setParent(this);
 
@@ -285,7 +285,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
         }
     }
 
-    child->_setLocalZOrder(zOrder);
+    child->setLocalZOrder(zOrder);
 }
 
 void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
