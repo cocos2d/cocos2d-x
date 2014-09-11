@@ -39,7 +39,7 @@ public: \
 static Scene* sceneWithTitle(const char * title) \
 { \
     Scene* pScene = Scene::create(); \
-    UIScene_Editor* uiLayer = new UIScene_Editor(); \
+    UIScene_Editor* uiLayer = new (std::nothrow) UIScene_Editor(); \
     if (uiLayer && uiLayer->init()) \
     { \
         uiLayer->autorelease(); \

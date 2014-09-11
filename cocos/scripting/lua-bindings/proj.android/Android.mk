@@ -66,6 +66,7 @@ LOCAL_SRC_FILES += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \
 
 #cocostudio
 LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
+                   ../manual/cocostudio/CustomGUIReader.cpp \
                    ../auto/lua_cocos2dx_studio_auto.cpp
 
 #spine

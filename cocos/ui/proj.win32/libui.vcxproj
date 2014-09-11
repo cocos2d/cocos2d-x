@@ -11,6 +11,69 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CocosGUI.h" />
+    <ClInclude Include="..\GUIExport.h" />
+    <ClInclude Include="..\UIButton.h" />
+    <ClInclude Include="..\UICheckBox.h" />
+    <ClInclude Include="..\UIDeprecated.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBoxImpl.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBoxImplWin.h" />
+    <ClInclude Include="..\UIHBox.h" />
+    <ClInclude Include="..\UIHelper.h" />
+    <ClInclude Include="..\UIImageView.h" />
+    <ClInclude Include="..\UILayout.h" />
+    <ClInclude Include="..\UILayoutManager.h" />
+    <ClInclude Include="..\UILayoutParameter.h" />
+    <ClInclude Include="..\UIListView.h" />
+    <ClInclude Include="..\UILoadingBar.h" />
+    <ClInclude Include="..\UIPageView.h" />
+    <ClInclude Include="..\UIRelativeBox.h" />
+    <ClInclude Include="..\UIRichText.h" />
+    <ClInclude Include="..\UIScale9Sprite.h" />
+    <ClInclude Include="..\UIScrollView.h" />
+    <ClInclude Include="..\UISlider.h" />
+    <ClInclude Include="..\UIText.h" />
+    <ClInclude Include="..\UITextAtlas.h" />
+    <ClInclude Include="..\UITextBMFont.h" />
+    <ClInclude Include="..\UITextField.h" />
+    <ClInclude Include="..\UIVBox.h" />
+    <ClInclude Include="..\UIWidget.h" />
+    <ClInclude Include="Win32InputBox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CocosGUI.cpp" />
+    <ClCompile Include="..\UIButton.cpp" />
+    <ClCompile Include="..\UICheckBox.cpp" />
+    <ClCompile Include="..\UIDeprecated.cpp" />
+    <ClCompile Include="..\UIEditBox\UIEditBox.cpp" />
+    <ClCompile Include="..\UIEditBox\UIEditBoxImplWin.cpp" />
+    <ClCompile Include="..\UIHBox.cpp" />
+    <ClCompile Include="..\UIHelper.cpp" />
+    <ClCompile Include="..\UIImageView.cpp" />
+    <ClCompile Include="..\UILayout.cpp" />
+    <ClCompile Include="..\UILayoutManager.cpp" />
+    <ClCompile Include="..\UILayoutParameter.cpp" />
+    <ClCompile Include="..\UIListView.cpp" />
+    <ClCompile Include="..\UILoadingBar.cpp" />
+    <ClCompile Include="..\UIPageView.cpp" />
+    <ClCompile Include="..\UIRelativeBox.cpp" />
+    <ClCompile Include="..\UIRichText.cpp" />
+    <ClCompile Include="..\UIScale9Sprite.cpp" />
+    <ClCompile Include="..\UIScrollView.cpp" />
+    <ClCompile Include="..\UISlider.cpp" />
+    <ClCompile Include="..\UIText.cpp" />
+    <ClCompile Include="..\UITextAtlas.cpp" />
+    <ClCompile Include="..\UITextBMFont.cpp" />
+    <ClCompile Include="..\UITextField.cpp" />
+    <ClCompile Include="..\UIVBox.cpp" />
+    <ClCompile Include="..\UIWidget.cpp" />
+    <ClCompile Include="Win32InputBox.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
+      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>

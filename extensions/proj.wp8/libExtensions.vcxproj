@@ -176,9 +176,6 @@
     <ClCompile Include="..\GUI\CCControlExtension\CCControlSwitch.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlUtils.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCInvocation.cpp" />
-    <ClCompile Include="..\GUI\CCControlExtension\CCScale9Sprite.cpp" />
-    <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp" />
-    <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWp8.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
@@ -208,10 +205,6 @@
     <ClInclude Include="..\GUI\CCControlExtension\CCControlSwitch.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlUtils.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCInvocation.h" />
-    <ClInclude Include="..\GUI\CCControlExtension\CCScale9Sprite.h" />
-    <ClInclude Include="..\GUI\CCEditBox\CCEditBox.h" />
-    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImpl.h" />
-    <ClInclude Include="..\GUI\CCEditBox\CCEditBoxImplWp8.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />

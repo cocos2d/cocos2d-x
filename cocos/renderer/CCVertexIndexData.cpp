@@ -23,6 +23,9 @@
  ****************************************************************************/
 
 #include "renderer/CCVertexIndexData.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCVertexIndexBuffer.h"
+
 NS_CC_BEGIN
 
 VertexData* VertexData::create()

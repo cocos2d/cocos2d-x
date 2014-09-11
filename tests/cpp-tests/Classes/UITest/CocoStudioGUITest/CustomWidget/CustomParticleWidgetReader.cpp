@@ -31,7 +31,7 @@ CustomParticleWidgetReader* CustomParticleWidgetReader::getInstance()
 {
     if (!_instanceCustomParticleWidgetReader)
     {
-        _instanceCustomParticleWidgetReader = new CustomParticleWidgetReader();
+        _instanceCustomParticleWidgetReader = new (std::nothrow) CustomParticleWidgetReader();
     }
     return _instanceCustomParticleWidgetReader;
 }

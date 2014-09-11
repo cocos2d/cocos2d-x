@@ -24,17 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCLabelAtlas.h"
+#include "2d/CCLabelAtlas.h"
 #include "renderer/CCTextureAtlas.h"
-#include "2d/CCDrawingPrimitives.h"
 #include "platform/CCFileUtils.h"
-#include "base/ccConfig.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
-#include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 
@@ -49,7 +43,7 @@ NS_CC_BEGIN
 
 LabelAtlas* LabelAtlas::create()
 {
-    LabelAtlas* ret = new LabelAtlas();
+    LabelAtlas* ret = new (std::nothrow) LabelAtlas();
     if (ret)
     {
         ret->autorelease();
@@ -64,7 +58,7 @@ LabelAtlas* LabelAtlas::create()
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    LabelAtlas* ret = new LabelAtlas();
+    LabelAtlas* ret = new (std::nothrow) LabelAtlas();
     if(ret && ret->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
         ret->autorelease();
@@ -93,7 +87,7 @@ bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, i
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& fntFile)
 {    
-    LabelAtlas *ret = new LabelAtlas();
+    LabelAtlas *ret = new (std::nothrow) LabelAtlas();
     if (ret)
     {
         if (ret->initWithString(string, fntFile))

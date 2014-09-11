@@ -202,9 +202,6 @@
     <Filter Include="Classes\FileUtilsTest">
       <UniqueIdentifier>{a4c2111f-cf9f-492c-884d-3de24715adce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
-      <UniqueIdentifier>{18a69e7e-8ca7-475a-bfbb-7296baab16ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest">
       <UniqueIdentifier>{0ef55f53-411a-4661-b5d5-13930da52e68}</UniqueIdentifier>
     </Filter>
@@ -219,9 +216,6 @@
     </Filter>
     <Filter Include="Classes\ConfigurationTest">
       <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\Scale9SpriteTest">
-      <UniqueIdentifier>{3d73aa04-d66e-43d3-921f-b867a753c113}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioArmatureTest">
       <UniqueIdentifier>{a6e7d28e-46a3-46c4-9735-b39e96f776f0}</UniqueIdentifier>
@@ -594,9 +588,6 @@
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp">
       <Filter>Classes\FileUtilsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
-      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClCompile>
@@ -617,9 +608,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BaseTest.cpp">
       <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp">
-      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -866,6 +854,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Sprite3DTest\DrawNode3D.cpp">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1307,9 +1298,6 @@
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h">
       <Filter>Classes\FileUtilsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
-      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClInclude>
@@ -1333,9 +1321,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BaseTest.h">
       <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h">
-      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -1600,6 +1585,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Sprite3DTest\DrawNode3D.h">
       <Filter>Classes\Sprite3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

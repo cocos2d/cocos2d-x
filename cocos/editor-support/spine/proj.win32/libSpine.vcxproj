@@ -11,9 +11,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\2d\libcocos2d.vcxproj">
-      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
+    <ClInclude Include="..\Animation.h" />
+    <ClInclude Include="..\AnimationState.h" />
+    <ClInclude Include="..\AnimationStateData.h" />
+    <ClInclude Include="..\Atlas.h" />
+    <ClInclude Include="..\AtlasAttachmentLoader.h" />
+    <ClInclude Include="..\Attachment.h" />
+    <ClInclude Include="..\AttachmentLoader.h" />
+    <ClInclude Include="..\Bone.h" />
+    <ClInclude Include="..\BoneData.h" />
+    <ClInclude Include="..\BoundingBoxAttachment.h" />
+    <ClInclude Include="..\CCSkeleton.h" />
+    <ClInclude Include="..\CCSkeletonAnimation.h" />
+    <ClInclude Include="..\extension.h" />
+    <ClInclude Include="..\Event.h" />
+    <ClInclude Include="..\EventData.h" />
+    <ClInclude Include="..\Json.h" />
+    <ClInclude Include="..\RegionAttachment.h" />
+    <ClInclude Include="..\Skeleton.h" />
+    <ClInclude Include="..\SkeletonBounds.h" />
+    <ClInclude Include="..\SkeletonData.h" />
+    <ClInclude Include="..\SkeletonJson.h" />
+    <ClInclude Include="..\Skin.h" />
+    <ClInclude Include="..\Slot.h" />
+    <ClInclude Include="..\SlotData.h" />
+    <ClInclude Include="..\spine-cocos2dx.h" />
+    <ClInclude Include="..\spine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Animation.cpp" />
@@ -28,9 +51,9 @@
     <ClCompile Include="..\BoundingBoxAttachment.cpp" />
     <ClCompile Include="..\CCSkeleton.cpp" />
     <ClCompile Include="..\CCSkeletonAnimation.cpp" />
+    <ClCompile Include="..\extension.cpp" />
     <ClCompile Include="..\Event.cpp" />
     <ClCompile Include="..\EventData.cpp" />
-    <ClCompile Include="..\extension.cpp" />
     <ClCompile Include="..\Json.cpp" />
     <ClCompile Include="..\RegionAttachment.cpp" />
     <ClCompile Include="..\Skeleton.cpp" />
@@ -42,37 +65,9 @@
     <ClCompile Include="..\SlotData.cpp" />
     <ClCompile Include="..\spine-cocos2dx.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Animation.h" />
-    <ClInclude Include="..\AnimationState.h" />
-    <ClInclude Include="..\AnimationStateData.h" />
-    <ClInclude Include="..\Atlas.h" />
-    <ClInclude Include="..\AtlasAttachmentLoader.h" />
-    <ClInclude Include="..\Attachment.h" />
-    <ClInclude Include="..\AttachmentLoader.h" />
-    <ClInclude Include="..\Bone.h" />
-    <ClInclude Include="..\BoneData.h" />
-    <ClInclude Include="..\BoundingBoxAttachment.h" />
-    <ClInclude Include="..\CCSkeleton.h" />
-    <ClInclude Include="..\CCSkeletonAnimation.h" />
-    <ClInclude Include="..\Event.h" />
-    <ClInclude Include="..\EventData.h" />
-    <ClInclude Include="..\extension.h" />
-    <ClInclude Include="..\Json.h" />
-    <ClInclude Include="..\RegionAttachment.h" />
-    <ClInclude Include="..\Skeleton.h" />
-    <ClInclude Include="..\SkeletonBounds.h" />
-    <ClInclude Include="..\SkeletonData.h" />
-    <ClInclude Include="..\SkeletonJson.h" />
-    <ClInclude Include="..\Skin.h" />
-    <ClInclude Include="..\Slot.h" />
-    <ClInclude Include="..\SlotData.h" />
-    <ClInclude Include="..\spine-cocos2dx.h" />
-    <ClInclude Include="..\spine.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}</ProjectGuid>
-    <RootNamespace>libspine</RootNamespace>
+    <RootNamespace>libSpine</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

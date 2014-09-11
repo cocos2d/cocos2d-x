@@ -53,7 +53,7 @@ static void _checkPath()
     if (s_pszResourcePath.empty())
     {
 		// TODO: needs to be tested
-		s_pszResourcePath = convertPathFormatToUnixStyle(CCFileUtilsWinRT::getAppPath() + '\\' + "Assets\\res" + '\\');
+		s_pszResourcePath = convertPathFormatToUnixStyle(CCFileUtilsWinRT::getAppPath() + '\\' + "Assets\\Resources" + '\\');
     }
 }
 

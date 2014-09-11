@@ -138,7 +138,7 @@ void AtlasDemo::onEnter()
 
 void AtlasDemo::restartCallback(Ref* sender)
 {
-    auto s = new AtlasTestScene();
+    auto s = new (std::nothrow) AtlasTestScene();
     s->addChild(restartAtlasAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -147,7 +147,7 @@ void AtlasDemo::restartCallback(Ref* sender)
 
 void AtlasDemo::nextCallback(Ref* sender)
 {
-    auto s = new AtlasTestScene();
+    auto s = new (std::nothrow) AtlasTestScene();
     s->addChild( nextAtlasAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -155,7 +155,7 @@ void AtlasDemo::nextCallback(Ref* sender)
 
 void AtlasDemo::backCallback(Ref* sender)
 {
-    auto s = new AtlasTestScene();
+    auto s = new (std::nothrow) AtlasTestScene();
     s->addChild( backAtlasAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1669,7 +1669,7 @@ void LabelBMFontCrashTest::onEnter()
     
     auto winSize = Director::getInstance()->getWinSize();
     //Create a label and add it
-    auto label1 = new LabelBMFont();
+    auto label1 = new (std::nothrow) LabelBMFont();
     label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
     this->addChild(label1);
     // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.

@@ -26,7 +26,7 @@
 #ifndef __cocos2d_libs__EventListenerController__
 #define __cocos2d_libs__EventListenerController__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCEventListener.h"
 
 NS_CC_BEGIN

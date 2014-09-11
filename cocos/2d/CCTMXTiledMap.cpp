@@ -24,13 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTMXTiledMap.h"
-#include "CCTMXXMLParser.h"
-#include "CCTMXLayer.h"
+#include "2d/CCTMXTiledMap.h"
+#include "2d/CCTMXXMLParser.h"
+#include "2d/CCTMXLayer.h"
 #include "2d/CCSprite.h"
 #include "deprecated/CCString.h" // For StringUtils::format
-
-#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -38,7 +36,7 @@ NS_CC_BEGIN
 
 TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 {
-    TMXTiledMap *ret = new TMXTiledMap();
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
     if (ret->initWithTMXFile(tmxFile))
     {
         ret->autorelease();
@@ -50,7 +48,7 @@ TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 
 TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    TMXTiledMap *ret = new TMXTiledMap();
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
     if (ret->initWithXML(tmxString, resourcePath))
     {
         ret->autorelease();
@@ -138,7 +136,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                         //    gid = CFSwapInt32( gid );
                         /* We support little endian.*/
 
-                        // XXX: gid == 0 --> empty tile
+                        // FIXME:: gid == 0 --> empty tile
                         if( gid != 0 ) 
                         {
                             // Optimization: quick return

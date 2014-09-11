@@ -29,7 +29,6 @@ THE SOFTWARE.
 #define __CCTRANSITION_H__
 
 #include "2d/CCScene.h"
-#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 

@@ -165,7 +165,7 @@ bool ComRender::serialize(void* r)
 			else if(strcmp(className, "CCParticleSystemQuad") == 0 && filePath.find(".plist") != filePath.npos)
 			{
 				_render = CCParticleSystemQuad::create(filePath.c_str());
-				_render->setPosition(Point(0.0f, 0.0f));
+				_render->setPosition(0.0f, 0.0f);
 				_render->retain();
                 
                 ret = true;
@@ -345,7 +345,7 @@ bool ComRender::serialize(void* r)
 
 ComRender* ComRender::create(void)
 {
-    ComRender * ret = new ComRender();
+    ComRender * ret = new (std::nothrow) ComRender();
     if (ret != nullptr && ret->init())
     {
         ret->autorelease();
@@ -359,7 +359,7 @@ ComRender* ComRender::create(void)
 
 ComRender* ComRender::create(cocos2d::Node *node, const char *comName)
 {
-    ComRender * ret = new ComRender(node, comName);
+    ComRender * ret = new (std::nothrow) ComRender(node, comName);
     if (ret != nullptr && ret->init())
     {
         ret->autorelease();

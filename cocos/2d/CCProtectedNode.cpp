@@ -49,7 +49,7 @@ ProtectedNode::~ProtectedNode()
 
 ProtectedNode * ProtectedNode::create(void)
 {
-	ProtectedNode * ret = new ProtectedNode();
+	ProtectedNode * ret = new (std::nothrow) ProtectedNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -249,7 +249,7 @@ void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 {
     _reorderProtectedChildDirty = true;
     _protectedChildren.pushBack(child);
-    child->_setLocalZOrder(z);
+    child->setLocalZOrder(z);
 }
 
 void ProtectedNode::sortAllProtectedChildren()
@@ -265,7 +265,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderProtectedChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setLocalZOrder(localZOrder);
+    child->setLocalZOrder(localZOrder);
 }
 
 void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)

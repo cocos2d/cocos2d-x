@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCBatchNode.h"
-#include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
 
@@ -38,7 +37,7 @@ namespace cocostudio {
 
 BatchNode *BatchNode::create()
 {
-    BatchNode *batchNode = new BatchNode();
+    BatchNode *batchNode = new (std::nothrow) BatchNode();
     if (batchNode && batchNode->init())
     {
         batchNode->autorelease();
@@ -75,7 +74,7 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
         armature->setBatchNode(this);
         if (_groupCommand == nullptr)
         {
-            _groupCommand = new GroupCommand();
+            _groupCommand = new (std::nothrow) GroupCommand();
         }
     }
 }
@@ -89,7 +88,7 @@ void BatchNode::addChild(cocos2d::Node *child, int zOrder, const std::string &na
         armature->setBatchNode(this);
         if (_groupCommand == nullptr)
         {
-            _groupCommand = new GroupCommand();
+            _groupCommand = new (std::nothrow) GroupCommand();
         }
     }
 }

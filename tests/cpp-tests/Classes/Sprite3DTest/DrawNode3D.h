@@ -25,9 +25,7 @@
 #ifndef __DRAW_NODE_3D_H__
 #define __DRAW_NODE_3D_H__
 
-#include "2d/CCNode.h"
-#include "base/ccTypes.h"
-#include "renderer/CCCustomCommand.h"
+#include "cocos2d.h"
 
 NS_CC_BEGIN
 

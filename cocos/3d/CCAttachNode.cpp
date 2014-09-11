@@ -25,17 +25,11 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCSkeleton3D.h"
 
-#include "2d/CCNode.h"
-
-#include "base/CCDirector.h"
-#include "base/CCPlatformMacros.h"
-#include "base/ccMacros.h"
-
 NS_CC_BEGIN
 
 AttachNode* AttachNode::create(Bone3D* attachBone)
 {
-    auto attachnode = new AttachNode();
+    auto attachnode = new (std::nothrow) AttachNode();
     attachnode->_attachBone = attachBone;
     attachnode->autorelease();
     

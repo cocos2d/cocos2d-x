@@ -73,7 +73,7 @@ void BaseLayer::onEnter()
 
 void BaseLayer::restartCallback(cocos2d::Ref *pSender)
 {
-    auto s = new DrawPrimitivesTestScene();
+    auto s = new (std::nothrow) DrawPrimitivesTestScene();
     s->addChild(restartAction());
     
     Director::getInstance()->replaceScene(s);
@@ -82,7 +82,7 @@ void BaseLayer::restartCallback(cocos2d::Ref *pSender)
 
 void BaseLayer::nextCallback(cocos2d::Ref *pSender)
 {
-    auto s = new DrawPrimitivesTestScene();;
+    auto s = new (std::nothrow) DrawPrimitivesTestScene();;
     s->addChild(nextAction());
     
     Director::getInstance()->replaceScene(s);
@@ -91,7 +91,7 @@ void BaseLayer::nextCallback(cocos2d::Ref *pSender)
 
 void BaseLayer::backCallback(cocos2d::Ref *pSender)
 {
-    auto s = new DrawPrimitivesTestScene();
+    auto s = new (std::nothrow) DrawPrimitivesTestScene();
     s->addChild(backAction());
     
     Director::getInstance()->replaceScene(s);

@@ -22,17 +22,17 @@
  */
 
 #include "2d/CCDrawNode.h"
-#include "CCGL.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
-#include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "2d/CCActionCatmullRom.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
@@ -154,7 +154,7 @@ DrawNode::~DrawNode()
 
 DrawNode* DrawNode::create()
 {
-    DrawNode* ret = new DrawNode();
+    DrawNode* ret = new (std::nothrow) DrawNode();
     if (ret && ret->init())
     {
         ret->autorelease();
