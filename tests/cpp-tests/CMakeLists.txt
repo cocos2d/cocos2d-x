@@ -21,6 +21,7 @@ set(TESTS_SRC
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
   Classes/ActionsTest/ActionsTest.cpp
+  Classes/BillBoardTest/BillBoardTest.cpp
   Classes/Box2DTest/Box2dTest.cpp
   Classes/Box2DTestBed/Box2dView.cpp
   Classes/Box2DTestBed/GLES-Render.cpp

@@ -203,6 +203,8 @@
         "cocos/3d/CCAnimationCurve.inl", 
         "cocos/3d/CCAttachNode.cpp", 
         "cocos/3d/CCAttachNode.h", 
+        "cocos/3d/CCBillBoard.cpp",
+        "cocos/3d/CCBillBoard.h",
         "cocos/3d/CCBundle3D.cpp", 
         "cocos/3d/CCBundle3D.h", 
         "cocos/3d/CCBundle3DData.h", 
