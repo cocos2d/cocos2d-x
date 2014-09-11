@@ -1,5 +1,6 @@
 cocos2d-x-3.3??      ??
     [NEW]           ActionManager: added removeAllActionsByTag()
+    [NEW]           Audio: added new audio system for iOS and Android
     [NEW]           GLViewProtocol: added getAllTouches()
     [NEW]           Node: added stopAllActionsByTag()
     [NEW]           PhysicsWorld: add setSubsteps() and getSubsteps()
