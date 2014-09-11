@@ -79,7 +79,7 @@ public class AppActivity extends Cocos2dxActivity{
 			{
 				AlertDialog.Builder builder=new AlertDialog.Builder(this);
 				builder.setTitle("Warning");
-				builder.setMessage("Open Wifi for debuging...");
+				builder.setMessage("Please open WIFI for debuging...");
 				builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 					
 					@Override
@@ -89,7 +89,9 @@ public class AppActivity extends Cocos2dxActivity{
 						System.exit(0);
 					}
 				});
-				builder.setCancelable(false);
+
+				builder.setNegativeButton("Cancel", null);
+				builder.setCancelable(true);
 				builder.show();
 			}
 		}
