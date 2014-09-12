@@ -39,6 +39,7 @@ static const char* s_testArray[] =
     "UIButtonTest_RemoveSelf",
     "UIButtonTestSwitchScale9",
     "UIButtonTestZoomScale",
+    "UIButtonTextOnly",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     "UIEditBoxTest",
 #endif
@@ -195,6 +196,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTestSwitchScale9::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTestZoomScale:
             return UIButtonTestZoomScale::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTextOnly:
+            return UIButtonTextOnly::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             

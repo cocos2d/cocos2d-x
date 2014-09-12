@@ -470,8 +470,12 @@ void Button::adaptRenderers()
     }
 }
 
-const Size& Button::getVirtualRendererSize() const
+const Size Button::getVirtualRendererSize() const
 {
+    Size titleSize = _titleRenderer->getContentSize();
+    if (titleSize.width > _normalTextureSize.width) {
+        return titleSize;
+    }
     return _normalTextureSize;
 }
 

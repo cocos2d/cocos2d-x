@@ -449,7 +449,7 @@ void Slider::adaptRenderers()
     }
 }
 
-const Size& Slider::getVirtualRendererSize() const
+const Size Slider::getVirtualRendererSize() const
 {
     return _barRenderer->getContentSize();
 }

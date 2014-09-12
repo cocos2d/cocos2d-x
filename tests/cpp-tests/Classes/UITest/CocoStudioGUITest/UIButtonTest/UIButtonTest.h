@@ -118,4 +118,15 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIButtonTextOnly : public UIScene
+{
+public:
+    UIButtonTextOnly();
+    ~UIButtonTextOnly();
+    bool init();
+
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTextOnly)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIButtonTest__) */

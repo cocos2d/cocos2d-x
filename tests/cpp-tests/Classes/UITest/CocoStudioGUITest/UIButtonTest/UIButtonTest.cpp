@@ -297,7 +297,7 @@ bool UIButtonTest_Title::init()
         
         // Create the button with title
         Button* button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
-        button->setTitleText("Title Button");
+        button->setTitleText("Title Button Large than button!");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setTitleColor(Color3B::YELLOW);
         CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
@@ -592,3 +592,51 @@ void UIButtonTestZoomScale::sliderEvent(Ref *pSender, Slider::EventType type)
         _displayValueLabel->setString(String::createWithFormat("Zoom Scale: %f", zoomScale)->getCString());
     }
 }
+
+// UIButtonTestZoomScale
+UIButtonTextOnly::UIButtonTextOnly()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIButtonTextOnly::~UIButtonTextOnly()
+{
+}
+
+bool UIButtonTextOnly::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("Text Only Button", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button
+        auto button = Button::create();
+        button->setNormalizedPosition(Vec2(0.5, 0.5));
+        button->setTitleText("PLAY GAME");
+        button->setPressedActionEnabled(true);
+        button->addClickEventListener([this](Ref* sender) {
+            CCLOG("touched!");
+        });
+        _uiLayer->addChild(button);
+        
+        return true;
+    }
+    return false;
+}
+
