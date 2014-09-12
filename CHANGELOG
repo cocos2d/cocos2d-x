@@ -1,6 +1,7 @@
 cocos2d-x-3.3??      ??
     [NEW]           ActionManager: added removeAllActionsByTag()
     [NEW]           Audio: added new audio system for iOS and Android
+    [FIX]           DrawNode: has any many functions as `DrawPrimitive`
     [NEW]           GLViewProtocol: added getAllTouches()
     [NEW]           Node: added stopAllActionsByTag()
     [NEW]           PhysicsWorld: add setSubsteps() and getSubsteps()
@@ -16,6 +17,8 @@ cocos2d-x-3.3??      ??
     [FIX]           Node: setNormalizedPosition can not take effect if parent position is not changed
     [FIX]           External: ScrollView: scroll view hidden picks up the touch events
     [FIX]           TextureAtlas: may crash if only drawing part of it
+    [FIX]           UI: Button: a button can not be touched if it only contains title
+    [FIX]           UI: Button: title can not be scaled if a button is scaled
 
 cocos2d-x-3.3alpha0  Aug.28 2014
     [NEW]           3D: Added Camera, AABB, OBB and Ray

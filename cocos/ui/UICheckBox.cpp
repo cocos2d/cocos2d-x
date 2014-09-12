@@ -450,7 +450,7 @@ void CheckBox::adaptRenderers()
     }
 }
 
-const Size& CheckBox::getVirtualRendererSize() const
+Size CheckBox::getVirtualRendererSize() const
 {
     return _backGroundBoxRenderer->getContentSize();
 }
