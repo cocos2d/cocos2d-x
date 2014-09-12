@@ -1097,7 +1097,7 @@ void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(Widget*w
     {
         textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
     }
-    textField->setText(DICTOOL->getStringValue_json(options, "text"));
+    textField->setString(DICTOOL->getStringValue_json(options, "text"));
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {

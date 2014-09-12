@@ -77,7 +77,7 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
         return "cc.LayerColor";
     }
     
-    if (NULL != dynamic_cast<Scale9Sprite*>(pNode)) {
+    if (NULL != dynamic_cast<ui::Scale9Sprite*>(pNode)) {
         return "cc.LayerGradient";
     }
     
