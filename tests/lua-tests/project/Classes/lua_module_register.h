@@ -14,10 +14,11 @@
 
 int lua_module_register(lua_State* L)
 {
+    register_ui_moudle(L);
+    //extension module must be registed after ui module
     register_extension_module(L);
     register_cocostudio_module(L);
     register_cocosbuilder_module(L);
-    register_ui_moudle(L);
     register_spine_module(L);
     register_network_module(L);
     register_cocosdenshion_module(L);
