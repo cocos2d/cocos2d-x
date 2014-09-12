@@ -1429,7 +1429,7 @@ int lua_cocos2dx_ui_Widget_getVirtualRendererSize(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        const cocos2d::Size& ret = cobj->getVirtualRendererSize();
+        cocos2d::Size ret = cobj->getVirtualRendererSize();
         size_to_luaval(tolua_S, ret);
         return 1;
     }
