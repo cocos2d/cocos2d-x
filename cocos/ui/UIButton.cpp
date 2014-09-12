@@ -37,6 +37,7 @@ static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
+static const float ZOOM_ACTION_TIME_STEP = 0.05;
     
 IMPLEMENT_CLASS_GUI_INFO(Button)
     
@@ -361,17 +362,15 @@ void Button::onPressStateChangedToNormal()
     {
         if (_pressedActionEnabled)
         {
-            _buttonNormalRenderer->stopAllActions();
-            _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
-            _buttonNormalRenderer->runAction(zoomAction);
-            _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+            this->stopAllActions();
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0, 1.0);
+            this->runAction(zoomAction);
         }
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+        this->stopAllActions();
+        this->setScale(1.0, 1.0);
     }
 }
 
@@ -385,11 +384,9 @@ void Button::onPressStateChangedToPressed()
         
         if (_pressedActionEnabled)
         {
-            _buttonNormalRenderer->stopAllActions();
-            _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
-            _buttonClickedRenderer->runAction(zoomAction);
-            _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+            this->stopAllActions();
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0 + _zoomScale, 1.0 + _zoomScale);
+            this->runAction(zoomAction);
         }
     }
     else
@@ -403,8 +400,8 @@ void Button::onPressStateChangedToPressed()
         }
         else
         {
-            _buttonNormalRenderer->stopAllActions();
-            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize +_zoomScale, _normalTextureScaleYInSize + _zoomScale);
+            this->stopAllActions();
+            this->setScale(1.0 +_zoomScale, 1.0 + _zoomScale);
         }
     }
 }
@@ -414,8 +411,6 @@ void Button::onPressStateChangedToDisabled()
     _buttonNormalRenderer->setVisible(false);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(true);
-    _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
-    _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
 
 void Button::updateFlippedX()
@@ -473,7 +468,7 @@ void Button::adaptRenderers()
 const Size Button::getVirtualRendererSize() const
 {
     Size titleSize = _titleRenderer->getContentSize();
-    if (titleSize.width > _normalTextureSize.width) {
+    if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0) {
         return titleSize;
     }
     return _normalTextureSize;
