@@ -489,7 +489,7 @@ public:
     virtual Node* getVirtualRenderer();
 
 
-    virtual const Size getVirtualRendererSize() const;
+    virtual Size getVirtualRendererSize() const;
     
 
     /**
