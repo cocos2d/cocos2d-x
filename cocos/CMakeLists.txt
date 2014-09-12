@@ -192,6 +192,7 @@ set(COCOS2D_BASE_SRC
     3d/CCSkeleton3D.cpp
     3d/CCSprite3D.cpp
     3d/CCSprite3DMaterial.cpp
+    3d/CCBillBoard.cpp
 
     network/HttpClient.cpp
     network/SocketIO.cpp
@@ -296,7 +297,7 @@ if(MACOSX)
     ${COCOS2D_BASE_SRC}
     ui/UIEditBox/UIEditBoxImpl-ios.mm
     ui/UIEditBox/UIEditBoxImpl-mac.mm
-    base/CCUserDefault.mm
+    base/CCUserDefault-apple.mm
   )
 endif()
 

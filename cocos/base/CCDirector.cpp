@@ -284,6 +284,9 @@ void Director::drawScene()
     
     if (_runningScene)
     {
+        //clear draw stats
+        _renderer->clearDrawStats();
+        
         Camera* defaultCamera = nullptr;
         const auto& cameras = _runningScene->_cameras;
         //draw with camera

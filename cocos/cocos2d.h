@@ -280,6 +280,7 @@ THE SOFTWARE.
 #include "3d/CCAttachNode.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCSkeleton3D.h"
+#include "3d/CCBillBoard.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

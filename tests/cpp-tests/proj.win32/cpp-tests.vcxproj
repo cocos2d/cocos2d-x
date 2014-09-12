@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\BaseTest.cpp" />
+    <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\Classes\Camera3DTest\Camera3DTest.cpp" />
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
@@ -316,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\BaseTest.h" />
+    <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h" />

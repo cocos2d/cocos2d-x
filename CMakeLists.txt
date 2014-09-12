@@ -24,7 +24,7 @@
 # ****************************************************************************/
 
 cmake_minimum_required(VERSION 2.8)
-project (Cocos2dx)
+project (Cocos2d-X)
 
 # The version number
 set(COCOS2D_X_VERSION 3.3.0)
@@ -43,6 +43,7 @@ endif(DEBUG_MODE)
 set(CMAKE_C_FLAGS_DEBUG "-DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
+# Compiler options
 if(MSVC)
   ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
                   -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
@@ -52,8 +53,12 @@ else()
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+  if(CLANG)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+  endif()
 endif(MSVC)
 
+# Some macro definitions
 if(WINDOWS)
   ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)

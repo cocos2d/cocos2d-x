@@ -39,6 +39,9 @@ Controller g_aTestNames[] = {
 	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
 	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
 	{ "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); } },
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
+#endif
 	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
 	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
 	{ "Bugs", []() { return new BugsTestScene(); } },
@@ -60,6 +63,7 @@ Controller g_aTestNames[] = {
 	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
 	{ "Fonts", []() { return new FontTestScene(); } },
 	{ "Interval", [](){return new IntervalTestScene(); } },
+    { "Node: BillBoard Test", [](){  return new BillBoardTestScene(); }},
     { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
 	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
 	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
