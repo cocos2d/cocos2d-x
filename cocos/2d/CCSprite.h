@@ -540,8 +540,7 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     QuadCommand      _quadCommand;          /// quad command
 #if CC_SPRITE_DEBUG_DRAW
-    CustomCommand   _customDebugDrawCommand;
-    void drawDebugData();
+    DrawNode *_debugDrawNode;
 #endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data

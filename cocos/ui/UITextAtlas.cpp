@@ -135,7 +135,7 @@ void TextAtlas::adaptRenderers()
     }
 }
 
-const Size& TextAtlas::getVirtualRendererSize() const
+Size TextAtlas::getVirtualRendererSize() const
 {
     return _labelAtlasRenderer->getContentSize();
 }

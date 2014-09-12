@@ -129,7 +129,7 @@ void TextBMFont::adaptRenderers()
     }
 }
 
-const Size& TextBMFont::getVirtualRendererSize() const
+Size TextBMFont::getVirtualRendererSize() const
 {
     return _labelBMFontRenderer->getContentSize();
 }
