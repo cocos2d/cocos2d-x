@@ -32,8 +32,8 @@
 
 #import "CCUserDefault.h"
 #import "tinyxml2.h"
-#import "CCPlatformConfig.h"
-#import "CCPlatformMacros.h"
+#import "platform/CCPlatformConfig.h"
+#import "platform/CCPlatformMacros.h"
 #import "base64.h"
 #import "platform/CCFileUtils.h"
 

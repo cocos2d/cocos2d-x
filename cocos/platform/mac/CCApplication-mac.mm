@@ -26,11 +26,10 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#import "CCApplication.h"
-
 #import <Cocoa/Cocoa.h>
 #include <algorithm>
 
+#import "platform/CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "math/CCGeometry.h"
 #include "base/CCDirector.h"
