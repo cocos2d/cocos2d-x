@@ -194,8 +194,15 @@ namespace cocostudio
             
         }
         
-        
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
+
+		bool flipX   = options.flippedx();
+		bool flipY   = options.flippedy();
+    
+		if(flipX != false)
+			imageView->setFlippedX(flipX);
+		if(flipY != false)
+			imageView->setFlippedY(flipY);
     }
 }

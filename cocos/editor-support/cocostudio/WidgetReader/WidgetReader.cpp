@@ -387,6 +387,10 @@ namespace cocostudio
         float y = options.y();
         widget->setPosition(Vec2(x, y));
         
+		if(options.has_alpha())
+		{
+			widget->setOpacity(options.alpha());
+		}
         
         widget->setScaleX(options.has_scalex() ? options.scalex() : 1.0);
         
@@ -394,7 +398,12 @@ namespace cocostudio
         widget->setScaleY(options.has_scaley() ? options.scaley() : 1.0);
         
         
-        widget->setRotation(options.has_rotation() ? options.rotation() : 1.0);
+        widget->setRotation(options.has_rotation() ? options.rotation() : 0.0);
+
+		
+		widget->setRotationSkewX(options.has_rotation() ? options.rotationskewx() : 0.0);
+
+		widget->setRotationSkewY(options.has_rotation() ? options.rotationskewy() : 0.0);
         
         bool vb = options.has_visible();
         if (vb)
@@ -457,7 +466,6 @@ namespace cocostudio
     {
         const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
         
-        widget->setOpacity(options.opacity());
         
         bool isColorRExists = options.has_colorr();
         bool isColorGExists = options.has_colorg();

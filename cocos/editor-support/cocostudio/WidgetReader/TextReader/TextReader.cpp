@@ -141,12 +141,15 @@ namespace cocostudio
     
     void TextReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
     {
+		Text* label = static_cast<Text*>(widget);
+        const protocolbuffers::TextOptions& options = nodeTree.textoptions();
+        
+		bool IsCustomSize = options.iscustomsize();
+		label->ignoreContentAdaptWithSize(!IsCustomSize);
+
         WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
         
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
-        
-        Text* label = static_cast<Text*>(widget);
-        const protocolbuffers::TextOptions& options = nodeTree.textoptions();
         
         bool touchScaleChangeAble = options.touchscaleenable();
         label->setTouchScaleChangeEnabled(touchScaleChangeAble);
@@ -191,7 +194,8 @@ namespace cocostudio
 		    label->setFontName(resourceData.path());
 		}
         
-        
+
+
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }

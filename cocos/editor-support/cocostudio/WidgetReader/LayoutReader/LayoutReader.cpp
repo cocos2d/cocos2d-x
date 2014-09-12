@@ -34,6 +34,8 @@ namespace cocostudio
     static const char* P_ColorType = "colorType";
     static const char* P_BackGroundImageData = "backGroundImageData";
     static const char* P_LayoutType = "layoutType";
+    static const char* P_Scale9Width = "scale9Width";
+    static const char* P_Scale9Height = "scale9Height";
     
     static LayoutReader* instanceLayoutReader = nullptr;
     
@@ -393,8 +395,16 @@ namespace cocostudio
             ecb = options.has_bgendcolorb() ? options.bgendcolorb() : 255;
         }
         
-        float bgcv1 = options.vectorx();
-        float bgcv2 = options.has_vectory() ? options.vectory() : -0.5f;
+        float bgcv1 = 1.0f; 
+        float bgcv2 = 1.0f;
+		if(options.has_vectorx())
+		{
+			bgcv1 = options.vectorx();
+		}
+		if(options.has_vectory())
+		{
+			bgcv2 = options.vectory();
+		}
         panel->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
         int co = options.has_bgcoloropacity() ? options.bgcoloropacity() : 100;
@@ -426,6 +436,15 @@ namespace cocostudio
             float cw = options.has_capinsetswidth() ? options.capinsetswidth() : 1;
             float ch = options.has_capinsetsheight() ? options.capinsetsheight() : 1;
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
+
+            bool sw = options.has_scale9width();
+            bool sh = options.has_scale9height();
+            if (sw && sh)
+            {
+                float swf = options.scale9width();
+                float shf = options.scale9height();
+                panel->setContentSize(Size(swf, shf));
+            }
         }
         
         panel->setLayoutType((Layout::Type)options.layouttype());

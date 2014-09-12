@@ -1731,6 +1731,7 @@ const int WidgetOptions::kLayoutParameterFieldNumber;
 const int WidgetOptions::kCustomPropertyFieldNumber;
 const int WidgetOptions::kFrameEventFieldNumber;
 const int WidgetOptions::kNameFieldNumber;
+const int WidgetOptions::kAlphaFieldNumber;
 const int WidgetOptions::kComponentOptionsFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1791,6 +1792,7 @@ void WidgetOptions::SharedCtor() {
   customproperty_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   frameevent_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  alpha_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1903,6 +1905,7 @@ void WidgetOptions::Clear() {
         name_->clear();
       }
     }
+    alpha_ = 0;
   }
   componentoptions_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2474,6 +2477,22 @@ bool WidgetOptions::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(290)) goto parse_componentOptions;
+        if (input->ExpectTag(296)) goto parse_Alpha;
+        break;
+      }
+
+      // optional int32 Alpha = 37;
+      case 37: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_Alpha:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &alpha_)));
+          set_has_alpha();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -2679,6 +2698,11 @@ void WidgetOptions::SerializeWithCachedSizes(
   for (int i = 0; i < this->componentoptions_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       36, this->componentoptions(i), output);
+  }
+
+  // optional int32 Alpha = 37;
+  if (has_alpha()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(37, this->alpha(), output);
   }
 
 }
@@ -2898,6 +2922,13 @@ int WidgetOptions::ByteSize() const {
           this->name());
     }
 
+    // optional int32 Alpha = 37;
+    if (has_alpha()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->alpha());
+    }
+
   }
   // repeated .protocolbuffers.ComponentOptions componentOptions = 36;
   total_size += 2 * this->componentoptions_size();
@@ -3035,6 +3066,9 @@ void WidgetOptions::MergeFrom(const WidgetOptions& from) {
     if (from.has_name()) {
       set_name(from.name());
     }
+    if (from.has_alpha()) {
+      set_alpha(from.alpha());
+    }
   }
 }
 
@@ -3086,6 +3120,7 @@ void WidgetOptions::Swap(WidgetOptions* other) {
     std::swap(customproperty_, other->customproperty_);
     std::swap(frameevent_, other->frameevent_);
     std::swap(name_, other->name_);
+    std::swap(alpha_, other->alpha_);
     componentoptions_.Swap(&other->componentoptions_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
@@ -3762,6 +3797,7 @@ const int ButtonOptions::kCapInsetsHeightFieldNumber;
 const int ButtonOptions::kScale9WidthFieldNumber;
 const int ButtonOptions::kScale9HeightFieldNumber;
 const int ButtonOptions::kScale9EnableFieldNumber;
+const int ButtonOptions::kDisplaystateFieldNumber;
 #endif  // !_MSC_VER
 
 ButtonOptions::ButtonOptions()
@@ -3819,6 +3855,7 @@ void ButtonOptions::SharedCtor() {
   scale9width_ = 0;
   scale9height_ = 0;
   scale9enable_ = false;
+  displaystate_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3940,6 +3977,7 @@ void ButtonOptions::Clear() {
     scale9width_ = 0;
     scale9height_ = 0;
     scale9enable_ = false;
+    displaystate_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -4261,6 +4299,22 @@ bool ButtonOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(176)) goto parse_displaystate;
+        break;
+      }
+
+      // optional bool displaystate = 22;
+      case 22: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_displaystate:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &displaystate_)));
+          set_has_displaystate();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4395,6 +4449,11 @@ void ButtonOptions::SerializeWithCachedSizes(
   // optional bool scale9Enable = 21;
   if (has_scale9enable()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(21, this->scale9enable(), output);
+  }
+
+  // optional bool displaystate = 22;
+  if (has_displaystate()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(22, this->displaystate(), output);
   }
 
 }
@@ -4540,6 +4599,11 @@ int ButtonOptions::ByteSize() const {
       total_size += 2 + 1;
     }
 
+    // optional bool displaystate = 22;
+    if (has_displaystate()) {
+      total_size += 2 + 1;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -4622,6 +4686,9 @@ void ButtonOptions::MergeFrom(const ButtonOptions& from) {
     if (from.has_scale9enable()) {
       set_scale9enable(from.scale9enable());
     }
+    if (from.has_displaystate()) {
+      set_displaystate(from.displaystate());
+    }
   }
 }
 
@@ -4659,6 +4726,7 @@ void ButtonOptions::Swap(ButtonOptions* other) {
     std::swap(scale9width_, other->scale9width_);
     std::swap(scale9height_, other->scale9height_);
     std::swap(scale9enable_, other->scale9enable_);
+    std::swap(displaystate_, other->displaystate_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -4934,6 +5002,7 @@ const int CheckBoxOptions::kFrontCrossDataFieldNumber;
 const int CheckBoxOptions::kBackGroundBoxDisabledDataFieldNumber;
 const int CheckBoxOptions::kFrontCrossDisabledDataFieldNumber;
 const int CheckBoxOptions::kSelectedStateFieldNumber;
+const int CheckBoxOptions::kDisplaystateFieldNumber;
 #endif  // !_MSC_VER
 
 CheckBoxOptions::CheckBoxOptions()
@@ -4995,6 +5064,7 @@ void CheckBoxOptions::SharedCtor() {
   backgroundboxdisableddata_ = NULL;
   frontcrossdisableddata_ = NULL;
   selectedstate_ = false;
+  displaystate_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5112,6 +5182,7 @@ void CheckBoxOptions::Clear() {
       if (frontcrossdisableddata_ != NULL) frontcrossdisableddata_->::protocolbuffers::ResourceData::Clear();
     }
     selectedstate_ = false;
+    displaystate_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -5301,6 +5372,22 @@ bool CheckBoxOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(112)) goto parse_displaystate;
+        break;
+      }
+
+      // optional bool displaystate = 14;
+      case 14: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_displaystate:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &displaystate_)));
+          set_has_displaystate();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -5397,6 +5484,11 @@ void CheckBoxOptions::SerializeWithCachedSizes(
   // optional bool selectedState = 13;
   if (has_selectedstate()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(13, this->selectedstate(), output);
+  }
+
+  // optional bool displaystate = 14;
+  if (has_displaystate()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(14, this->displaystate(), output);
   }
 
 }
@@ -5496,6 +5588,11 @@ int CheckBoxOptions::ByteSize() const {
       total_size += 1 + 1;
     }
 
+    // optional bool displaystate = 14;
+    if (has_displaystate()) {
+      total_size += 1 + 1;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -5552,6 +5649,9 @@ void CheckBoxOptions::MergeFrom(const CheckBoxOptions& from) {
     if (from.has_selectedstate()) {
       set_selectedstate(from.selectedstate());
     }
+    if (from.has_displaystate()) {
+      set_displaystate(from.displaystate());
+    }
   }
 }
 
@@ -5581,6 +5681,7 @@ void CheckBoxOptions::Swap(CheckBoxOptions* other) {
     std::swap(backgroundboxdisableddata_, other->backgroundboxdisableddata_);
     std::swap(frontcrossdisableddata_, other->frontcrossdisableddata_);
     std::swap(selectedstate_, other->selectedstate_);
+    std::swap(displaystate_, other->displaystate_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -5605,6 +5706,8 @@ const int ImageViewOptions::kCapInsetsWidthFieldNumber;
 const int ImageViewOptions::kScale9WidthFieldNumber;
 const int ImageViewOptions::kScale9HeightFieldNumber;
 const int ImageViewOptions::kScale9EnableFieldNumber;
+const int ImageViewOptions::kFlippedXFieldNumber;
+const int ImageViewOptions::kFlippedYFieldNumber;
 #endif  // !_MSC_VER
 
 ImageViewOptions::ImageViewOptions()
@@ -5640,6 +5743,8 @@ void ImageViewOptions::SharedCtor() {
   scale9width_ = 0;
   scale9height_ = 0;
   scale9enable_ = false;
+  flippedx_ = false;
+  flippedy_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5715,6 +5820,8 @@ void ImageViewOptions::Clear() {
     scale9width_ = 0;
     scale9height_ = 0;
     scale9enable_ = false;
+    flippedx_ = false;
+    flippedy_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -5888,6 +5995,38 @@ bool ImageViewOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(96)) goto parse_flippedX;
+        break;
+      }
+
+      // optional bool flippedX = 12;
+      case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_flippedX:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &flippedx_)));
+          set_has_flippedx();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(104)) goto parse_flippedY;
+        break;
+      }
+
+      // optional bool flippedY = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_flippedY:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &flippedy_)));
+          set_has_flippedy();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -5968,6 +6107,16 @@ void ImageViewOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->scale9enable(), output);
   }
 
+  // optional bool flippedX = 12;
+  if (has_flippedx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(12, this->flippedx(), output);
+  }
+
+  // optional bool flippedY = 13;
+  if (has_flippedy()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(13, this->flippedy(), output);
+  }
+
 }
 
 int ImageViewOptions::ByteSize() const {
@@ -6039,6 +6188,16 @@ int ImageViewOptions::ByteSize() const {
       total_size += 1 + 1;
     }
 
+    // optional bool flippedX = 12;
+    if (has_flippedx()) {
+      total_size += 1 + 1;
+    }
+
+    // optional bool flippedY = 13;
+    if (has_flippedy()) {
+      total_size += 1 + 1;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -6089,6 +6248,12 @@ void ImageViewOptions::MergeFrom(const ImageViewOptions& from) {
     if (from.has_scale9enable()) {
       set_scale9enable(from.scale9enable());
     }
+    if (from.has_flippedx()) {
+      set_flippedx(from.flippedx());
+    }
+    if (from.has_flippedy()) {
+      set_flippedy(from.flippedy());
+    }
   }
 }
 
@@ -6116,6 +6281,8 @@ void ImageViewOptions::Swap(ImageViewOptions* other) {
     std::swap(scale9width_, other->scale9width_);
     std::swap(scale9height_, other->scale9height_);
     std::swap(scale9enable_, other->scale9enable_);
+    std::swap(flippedx_, other->flippedx_);
+    std::swap(flippedy_, other->flippedy_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -6889,6 +7056,7 @@ const int TextOptions::kHAlignmentFieldNumber;
 const int TextOptions::kVAlignmentFieldNumber;
 const int TextOptions::kTouchScaleEnableFieldNumber;
 const int TextOptions::kFontResourceFieldNumber;
+const int TextOptions::kIsCustomSizeFieldNumber;
 #endif  // !_MSC_VER
 
 TextOptions::TextOptions()
@@ -6931,6 +7099,7 @@ void TextOptions::SharedCtor() {
   valignment_ = 0;
   touchscaleenable_ = false;
   fontresource_ = NULL;
+  iscustomsize_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7017,6 +7186,7 @@ void TextOptions::Clear() {
     if (has_fontresource()) {
       if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
     }
+    iscustomsize_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -7202,6 +7372,22 @@ bool TextOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(104)) goto parse_IsCustomSize;
+        break;
+      }
+
+      // optional bool IsCustomSize = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_IsCustomSize:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &iscustomsize_)));
+          set_has_iscustomsize();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7287,6 +7473,11 @@ void TextOptions::SerializeWithCachedSizes(
   if (has_fontresource()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       12, this->fontresource(), output);
+  }
+
+  // optional bool IsCustomSize = 13;
+  if (has_iscustomsize()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(13, this->iscustomsize(), output);
   }
 
 }
@@ -7375,6 +7566,11 @@ int TextOptions::ByteSize() const {
           this->fontresource());
     }
 
+    // optional bool IsCustomSize = 13;
+    if (has_iscustomsize()) {
+      total_size += 1 + 1;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -7428,6 +7624,9 @@ void TextOptions::MergeFrom(const TextOptions& from) {
     if (from.has_fontresource()) {
       mutable_fontresource()->::protocolbuffers::ResourceData::MergeFrom(from.fontresource());
     }
+    if (from.has_iscustomsize()) {
+      set_iscustomsize(from.iscustomsize());
+    }
   }
 }
 
@@ -7456,6 +7655,7 @@ void TextOptions::Swap(TextOptions* other) {
     std::swap(valignment_, other->valignment_);
     std::swap(touchscaleenable_, other->touchscaleenable_);
     std::swap(fontresource_, other->fontresource_);
+    std::swap(iscustomsize_, other->iscustomsize_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -7480,6 +7680,8 @@ const int LoadingBarOptions::kCapInsetsYFieldNumber;
 const int LoadingBarOptions::kCapInsetsWidthFieldNumber;
 const int LoadingBarOptions::kCapInsetsHeightFieldNumber;
 const int LoadingBarOptions::kScale9EnableFieldNumber;
+const int LoadingBarOptions::kScale9WidthFieldNumber;
+const int LoadingBarOptions::kScale9HeightFieldNumber;
 #endif  // !_MSC_VER
 
 LoadingBarOptions::LoadingBarOptions()
@@ -7515,6 +7717,8 @@ void LoadingBarOptions::SharedCtor() {
   capinsetswidth_ = 0;
   capinsetsheight_ = 0;
   scale9enable_ = false;
+  scale9width_ = 0;
+  scale9height_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7590,6 +7794,8 @@ void LoadingBarOptions::Clear() {
     capinsetswidth_ = 0;
     capinsetsheight_ = 0;
     scale9enable_ = false;
+    scale9width_ = 0;
+    scale9height_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -7763,6 +7969,38 @@ bool LoadingBarOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(101)) goto parse_scale9Width;
+        break;
+      }
+
+      // optional float scale9Width = 12;
+      case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Width:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9width_)));
+          set_has_scale9width();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(109)) goto parse_scale9Height;
+        break;
+      }
+
+      // optional float scale9Height = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Height:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9height_)));
+          set_has_scale9height();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7843,6 +8081,16 @@ void LoadingBarOptions::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->scale9enable(), output);
   }
 
+  // optional float scale9Width = 12;
+  if (has_scale9width()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(12, this->scale9width(), output);
+  }
+
+  // optional float scale9Height = 13;
+  if (has_scale9height()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(13, this->scale9height(), output);
+  }
+
 }
 
 int LoadingBarOptions::ByteSize() const {
@@ -7918,6 +8166,16 @@ int LoadingBarOptions::ByteSize() const {
       total_size += 1 + 1;
     }
 
+    // optional float scale9Width = 12;
+    if (has_scale9width()) {
+      total_size += 1 + 4;
+    }
+
+    // optional float scale9Height = 13;
+    if (has_scale9height()) {
+      total_size += 1 + 4;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -7968,6 +8226,12 @@ void LoadingBarOptions::MergeFrom(const LoadingBarOptions& from) {
     if (from.has_scale9enable()) {
       set_scale9enable(from.scale9enable());
     }
+    if (from.has_scale9width()) {
+      set_scale9width(from.scale9width());
+    }
+    if (from.has_scale9height()) {
+      set_scale9height(from.scale9height());
+    }
   }
 }
 
@@ -7995,6 +8259,8 @@ void LoadingBarOptions::Swap(LoadingBarOptions* other) {
     std::swap(capinsetswidth_, other->capinsetswidth_);
     std::swap(capinsetsheight_, other->capinsetsheight_);
     std::swap(scale9enable_, other->scale9enable_);
+    std::swap(scale9width_, other->scale9width_);
+    std::swap(scale9height_, other->scale9height_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -8037,6 +8303,8 @@ const int ListViewOptions::kBounceEnableFieldNumber;
 const int ListViewOptions::kDirectionFieldNumber;
 const int ListViewOptions::kGravityFieldNumber;
 const int ListViewOptions::kItemMarginFieldNumber;
+const int ListViewOptions::kScale9WidthFieldNumber;
+const int ListViewOptions::kScale9HeightFieldNumber;
 #endif  // !_MSC_VER
 
 ListViewOptions::ListViewOptions()
@@ -8090,6 +8358,8 @@ void ListViewOptions::SharedCtor() {
   direction_ = 0;
   gravity_ = 0;
   itemmargin_ = 0;
+  scale9width_ = 0;
+  scale9height_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -8187,6 +8457,8 @@ void ListViewOptions::Clear() {
     direction_ = 0;
     gravity_ = 0;
     itemmargin_ = 0;
+    scale9width_ = 0;
+    scale9height_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -8648,6 +8920,38 @@ bool ListViewOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(245)) goto parse_scale9Width;
+        break;
+      }
+
+      // optional float scale9Width = 30;
+      case 30: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Width:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9width_)));
+          set_has_scale9width();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(253)) goto parse_scale9Height;
+        break;
+      }
+
+      // optional float scale9Height = 31;
+      case 31: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Height:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9height_)));
+          set_has_scale9height();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -8816,6 +9120,16 @@ void ListViewOptions::SerializeWithCachedSizes(
   // optional int32 itemMargin = 29;
   if (has_itemmargin()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(29, this->itemmargin(), output);
+  }
+
+  // optional float scale9Width = 30;
+  if (has_scale9width()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(30, this->scale9width(), output);
+  }
+
+  // optional float scale9Height = 31;
+  if (has_scale9height()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(31, this->scale9height(), output);
   }
 
 }
@@ -9011,6 +9325,16 @@ int ListViewOptions::ByteSize() const {
           this->itemmargin());
     }
 
+    // optional float scale9Width = 30;
+    if (has_scale9width()) {
+      total_size += 2 + 4;
+    }
+
+    // optional float scale9Height = 31;
+    if (has_scale9height()) {
+      total_size += 2 + 4;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -9119,6 +9443,12 @@ void ListViewOptions::MergeFrom(const ListViewOptions& from) {
     if (from.has_itemmargin()) {
       set_itemmargin(from.itemmargin());
     }
+    if (from.has_scale9width()) {
+      set_scale9width(from.scale9width());
+    }
+    if (from.has_scale9height()) {
+      set_scale9height(from.scale9height());
+    }
   }
 }
 
@@ -9164,6 +9494,8 @@ void ListViewOptions::Swap(ListViewOptions* other) {
     std::swap(direction_, other->direction_);
     std::swap(gravity_, other->gravity_);
     std::swap(itemmargin_, other->itemmargin_);
+    std::swap(scale9width_, other->scale9width_);
+    std::swap(scale9height_, other->scale9height_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -9200,6 +9532,8 @@ const int PageViewOptions::kCapInsetsYFieldNumber;
 const int PageViewOptions::kCapInsetsWidthFieldNumber;
 const int PageViewOptions::kCapInsetsHeightFieldNumber;
 const int PageViewOptions::kBackGroundScale9EnableFieldNumber;
+const int PageViewOptions::kScale9WidthFieldNumber;
+const int PageViewOptions::kScale9HeightFieldNumber;
 #endif  // !_MSC_VER
 
 PageViewOptions::PageViewOptions()
@@ -9247,6 +9581,8 @@ void PageViewOptions::SharedCtor() {
   capinsetswidth_ = 0;
   capinsetsheight_ = 0;
   backgroundscale9enable_ = false;
+  scale9width_ = 0;
+  scale9height_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -9336,6 +9672,10 @@ void PageViewOptions::Clear() {
     capinsetswidth_ = 0;
     capinsetsheight_ = 0;
     backgroundscale9enable_ = false;
+    scale9width_ = 0;
+  }
+  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+    scale9height_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -9701,6 +10041,38 @@ bool PageViewOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(197)) goto parse_scale9Width;
+        break;
+      }
+
+      // optional float scale9Width = 24;
+      case 24: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Width:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9width_)));
+          set_has_scale9width();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(205)) goto parse_scale9Height;
+        break;
+      }
+
+      // optional float scale9Height = 25;
+      case 25: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Height:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9height_)));
+          set_has_scale9height();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -9839,6 +10211,16 @@ void PageViewOptions::SerializeWithCachedSizes(
   // optional bool backGroundScale9Enable = 23;
   if (has_backgroundscale9enable()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(23, this->backgroundscale9enable(), output);
+  }
+
+  // optional float scale9Width = 24;
+  if (has_scale9width()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(24, this->scale9width(), output);
+  }
+
+  // optional float scale9Height = 25;
+  if (has_scale9height()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(25, this->scale9height(), output);
   }
 
 }
@@ -9996,6 +10378,18 @@ int PageViewOptions::ByteSize() const {
       total_size += 2 + 1;
     }
 
+    // optional float scale9Width = 24;
+    if (has_scale9width()) {
+      total_size += 2 + 4;
+    }
+
+  }
+  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+    // optional float scale9Height = 25;
+    if (has_scale9height()) {
+      total_size += 2 + 4;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -10084,6 +10478,14 @@ void PageViewOptions::MergeFrom(const PageViewOptions& from) {
     if (from.has_backgroundscale9enable()) {
       set_backgroundscale9enable(from.backgroundscale9enable());
     }
+    if (from.has_scale9width()) {
+      set_scale9width(from.scale9width());
+    }
+  }
+  if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+    if (from.has_scale9height()) {
+      set_scale9height(from.scale9height());
+    }
   }
 }
 
@@ -10123,6 +10525,8 @@ void PageViewOptions::Swap(PageViewOptions* other) {
     std::swap(capinsetswidth_, other->capinsetswidth_);
     std::swap(capinsetsheight_, other->capinsetsheight_);
     std::swap(backgroundscale9enable_, other->backgroundscale9enable_);
+    std::swap(scale9width_, other->scale9width_);
+    std::swap(scale9height_, other->scale9height_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -10161,6 +10565,8 @@ const int PanelOptions::kCapInsetsHeightFieldNumber;
 const int PanelOptions::kBackGroundScale9EnableFieldNumber;
 const int PanelOptions::kLayoutTypeFieldNumber;
 const int PanelOptions::kAdaptScreenFieldNumber;
+const int PanelOptions::kScale9WidthFieldNumber;
+const int PanelOptions::kScale9HeightFieldNumber;
 #endif  // !_MSC_VER
 
 PanelOptions::PanelOptions()
@@ -10210,6 +10616,8 @@ void PanelOptions::SharedCtor() {
   backgroundscale9enable_ = false;
   layouttype_ = 0;
   adaptscreen_ = false;
+  scale9width_ = 0;
+  scale9height_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -10303,6 +10711,8 @@ void PanelOptions::Clear() {
   }
   if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     adaptscreen_ = false;
+    scale9width_ = 0;
+    scale9height_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -10700,6 +11110,38 @@ bool PanelOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(213)) goto parse_scale9Width;
+        break;
+      }
+
+      // optional float scale9Width = 26;
+      case 26: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Width:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9width_)));
+          set_has_scale9width();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(221)) goto parse_scale9Height;
+        break;
+      }
+
+      // optional float scale9Height = 27;
+      case 27: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Height:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9height_)));
+          set_has_scale9height();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -10848,6 +11290,16 @@ void PanelOptions::SerializeWithCachedSizes(
   // optional bool adaptScreen = 25;
   if (has_adaptscreen()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(25, this->adaptscreen(), output);
+  }
+
+  // optional float scale9Width = 26;
+  if (has_scale9width()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(26, this->scale9width(), output);
+  }
+
+  // optional float scale9Height = 27;
+  if (has_scale9height()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(27, this->scale9height(), output);
   }
 
 }
@@ -11019,6 +11471,16 @@ int PanelOptions::ByteSize() const {
       total_size += 2 + 1;
     }
 
+    // optional float scale9Width = 26;
+    if (has_scale9width()) {
+      total_size += 2 + 4;
+    }
+
+    // optional float scale9Height = 27;
+    if (has_scale9height()) {
+      total_size += 2 + 4;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -11115,6 +11577,12 @@ void PanelOptions::MergeFrom(const PanelOptions& from) {
     if (from.has_adaptscreen()) {
       set_adaptscreen(from.adaptscreen());
     }
+    if (from.has_scale9width()) {
+      set_scale9width(from.scale9width());
+    }
+    if (from.has_scale9height()) {
+      set_scale9height(from.scale9height());
+    }
   }
 }
 
@@ -11156,6 +11624,8 @@ void PanelOptions::Swap(PanelOptions* other) {
     std::swap(backgroundscale9enable_, other->backgroundscale9enable_);
     std::swap(layouttype_, other->layouttype_);
     std::swap(adaptscreen_, other->adaptscreen_);
+    std::swap(scale9width_, other->scale9width_);
+    std::swap(scale9height_, other->scale9height_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -11197,6 +11667,8 @@ const int ScrollViewOptions::kDirectionFieldNumber;
 const int ScrollViewOptions::kClipAbleFieldNumber;
 const int ScrollViewOptions::kBounceEnableFieldNumber;
 const int ScrollViewOptions::kLayoutTypeFieldNumber;
+const int ScrollViewOptions::kScale9WidthFieldNumber;
+const int ScrollViewOptions::kScale9HeightFieldNumber;
 #endif  // !_MSC_VER
 
 ScrollViewOptions::ScrollViewOptions()
@@ -11249,6 +11721,8 @@ void ScrollViewOptions::SharedCtor() {
   clipable_ = false;
   bounceenable_ = false;
   layouttype_ = 0;
+  scale9width_ = 0;
+  scale9height_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -11345,6 +11819,8 @@ void ScrollViewOptions::Clear() {
     clipable_ = false;
     bounceenable_ = false;
     layouttype_ = 0;
+    scale9width_ = 0;
+    scale9height_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -11790,6 +12266,38 @@ bool ScrollViewOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(237)) goto parse_scale9Width;
+        break;
+      }
+
+      // optional float scale9Width = 29;
+      case 29: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Width:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9width_)));
+          set_has_scale9width();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(245)) goto parse_scale9Height;
+        break;
+      }
+
+      // optional float scale9Height = 30;
+      case 30: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_scale9Height:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &scale9height_)));
+          set_has_scale9height();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -11953,6 +12461,16 @@ void ScrollViewOptions::SerializeWithCachedSizes(
   // optional int32 layoutType = 28;
   if (has_layouttype()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(28, this->layouttype(), output);
+  }
+
+  // optional float scale9Width = 29;
+  if (has_scale9width()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(29, this->scale9width(), output);
+  }
+
+  // optional float scale9Height = 30;
+  if (has_scale9height()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(30, this->scale9height(), output);
   }
 
 }
@@ -12141,6 +12659,16 @@ int ScrollViewOptions::ByteSize() const {
           this->layouttype());
     }
 
+    // optional float scale9Width = 29;
+    if (has_scale9width()) {
+      total_size += 2 + 4;
+    }
+
+    // optional float scale9Height = 30;
+    if (has_scale9height()) {
+      total_size += 2 + 4;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -12246,6 +12774,12 @@ void ScrollViewOptions::MergeFrom(const ScrollViewOptions& from) {
     if (from.has_layouttype()) {
       set_layouttype(from.layouttype());
     }
+    if (from.has_scale9width()) {
+      set_scale9width(from.scale9width());
+    }
+    if (from.has_scale9height()) {
+      set_scale9height(from.scale9height());
+    }
   }
 }
 
@@ -12290,6 +12824,8 @@ void ScrollViewOptions::Swap(ScrollViewOptions* other) {
     std::swap(clipable_, other->clipable_);
     std::swap(bounceenable_, other->bounceenable_);
     std::swap(layouttype_, other->layouttype_);
+    std::swap(scale9width_, other->scale9width_);
+    std::swap(scale9height_, other->scale9height_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -12333,6 +12869,7 @@ const int SliderOptions::kScale9EnableFieldNumber;
 const int SliderOptions::kSlidBallAnchorPointXFieldNumber;
 const int SliderOptions::kSlidBallAnchorPointYFieldNumber;
 const int SliderOptions::kLengthFieldNumber;
+const int SliderOptions::kDisplaystateFieldNumber;
 #endif  // !_MSC_VER
 
 SliderOptions::SliderOptions()
@@ -12411,6 +12948,7 @@ void SliderOptions::SharedCtor() {
   slidballanchorpointx_ = 0;
   slidballanchorpointy_ = 0;
   length_ = 0;
+  displaystate_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -12542,6 +13080,7 @@ void SliderOptions::Clear() {
     slidballanchorpointx_ = 0;
     slidballanchorpointy_ = 0;
     length_ = 0;
+    displaystate_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -13005,6 +13544,22 @@ bool SliderOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(248)) goto parse_displaystate;
+        break;
+      }
+
+      // optional bool displaystate = 31;
+      case 31: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_displaystate:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &displaystate_)));
+          set_has_displaystate();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -13185,6 +13740,11 @@ void SliderOptions::SerializeWithCachedSizes(
   // optional float length = 30;
   if (has_length()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(30, this->length(), output);
+  }
+
+  // optional bool displaystate = 31;
+  if (has_displaystate()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(31, this->displaystate(), output);
   }
 
 }
@@ -13373,6 +13933,11 @@ int SliderOptions::ByteSize() const {
       total_size += 2 + 4;
     }
 
+    // optional bool displaystate = 31;
+    if (has_displaystate()) {
+      total_size += 2 + 1;
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -13484,6 +14049,9 @@ void SliderOptions::MergeFrom(const SliderOptions& from) {
     if (from.has_length()) {
       set_length(from.length());
     }
+    if (from.has_displaystate()) {
+      set_displaystate(from.displaystate());
+    }
   }
 }
 
@@ -13530,6 +14098,7 @@ void SliderOptions::Swap(SliderOptions* other) {
     std::swap(slidballanchorpointx_, other->slidballanchorpointx_);
     std::swap(slidballanchorpointy_, other->slidballanchorpointy_);
     std::swap(length_, other->length_);
+    std::swap(displaystate_, other->displaystate_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -14317,7 +14886,10 @@ const int TextFieldOptions::kMaxLengthEnableFieldNumber;
 const int TextFieldOptions::kMaxLengthFieldNumber;
 const int TextFieldOptions::kAreaWidthFieldNumber;
 const int TextFieldOptions::kAreaHeightFieldNumber;
+const int TextFieldOptions::kAnchorPointXFieldNumber;
+const int TextFieldOptions::kAnchorPointYFieldNumber;
 const int TextFieldOptions::kFontResourceFieldNumber;
+const int TextFieldOptions::kIsCustomSizeFieldNumber;
 #endif  // !_MSC_VER
 
 TextFieldOptions::TextFieldOptions()
@@ -14361,7 +14933,10 @@ void TextFieldOptions::SharedCtor() {
   maxlength_ = 0;
   areawidth_ = 0;
   areaheight_ = 0;
+  anchorpointx_ = 0;
+  anchorpointy_ = 0;
   fontresource_ = NULL;
+  iscustomsize_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -14461,9 +15036,14 @@ void TextFieldOptions::Clear() {
     maxlength_ = 0;
     areawidth_ = 0;
     areaheight_ = 0;
+    anchorpointx_ = 0;
+    anchorpointy_ = 0;
     if (has_fontresource()) {
       if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
     }
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    iscustomsize_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -14677,6 +15257,54 @@ bool TextFieldOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(125)) goto parse_anchorPointX;
+        break;
+      }
+
+      // optional float anchorPointX = 15;
+      case 15: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_anchorPointX:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &anchorpointx_)));
+          set_has_anchorpointx();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(133)) goto parse_anchorPointY;
+        break;
+      }
+
+      // optional float anchorPointY = 16;
+      case 16: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+         parse_anchorPointY:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &anchorpointy_)));
+          set_has_anchorpointy();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(136)) goto parse_IsCustomSize;
+        break;
+      }
+
+      // optional bool IsCustomSize = 17;
+      case 17: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_IsCustomSize:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &iscustomsize_)));
+          set_has_iscustomsize();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -14776,6 +15404,21 @@ void TextFieldOptions::SerializeWithCachedSizes(
       14, this->fontresource(), output);
   }
 
+  // optional float anchorPointX = 15;
+  if (has_anchorpointx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(15, this->anchorpointx(), output);
+  }
+
+  // optional float anchorPointY = 16;
+  if (has_anchorpointy()) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(16, this->anchorpointy(), output);
+  }
+
+  // optional bool IsCustomSize = 17;
+  if (has_iscustomsize()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(17, this->iscustomsize(), output);
+  }
+
 }
 
 int TextFieldOptions::ByteSize() const {
@@ -14867,11 +15510,28 @@ int TextFieldOptions::ByteSize() const {
       total_size += 1 + 4;
     }
 
+    // optional float anchorPointX = 15;
+    if (has_anchorpointx()) {
+      total_size += 1 + 4;
+    }
+
+    // optional float anchorPointY = 16;
+    if (has_anchorpointy()) {
+      total_size += 2 + 4;
+    }
+
     // optional .protocolbuffers.ResourceData fontResource = 14;
     if (has_fontresource()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->fontresource());
+    }
+
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional bool IsCustomSize = 17;
+    if (has_iscustomsize()) {
+      total_size += 2 + 1;
     }
 
   }
@@ -14930,8 +15590,19 @@ void TextFieldOptions::MergeFrom(const TextFieldOptions& from) {
     if (from.has_areaheight()) {
       set_areaheight(from.areaheight());
     }
+    if (from.has_anchorpointx()) {
+      set_anchorpointx(from.anchorpointx());
+    }
+    if (from.has_anchorpointy()) {
+      set_anchorpointy(from.anchorpointy());
+    }
     if (from.has_fontresource()) {
       mutable_fontresource()->::protocolbuffers::ResourceData::MergeFrom(from.fontresource());
+    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (from.has_iscustomsize()) {
+      set_iscustomsize(from.iscustomsize());
     }
   }
 }
@@ -14962,7 +15633,10 @@ void TextFieldOptions::Swap(TextFieldOptions* other) {
     std::swap(maxlength_, other->maxlength_);
     std::swap(areawidth_, other->areawidth_);
     std::swap(areaheight_, other->areaheight_);
+    std::swap(anchorpointx_, other->anchorpointx_);
+    std::swap(anchorpointy_, other->anchorpointy_);
     std::swap(fontresource_, other->fontresource_);
+    std::swap(iscustomsize_, other->iscustomsize_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }

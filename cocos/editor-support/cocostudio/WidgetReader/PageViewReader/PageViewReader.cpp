@@ -85,8 +85,16 @@ namespace cocostudio
         ecg = options.has_bgendcolorg() ? options.bgendcolorg() : 150;
         ecb = options.has_bgendcolorb() ? options.bgendcolorb() : 100;
         
-        float bgcv1 = options.vectorx();
-        float bgcv2 = options.has_vectory() ? options.vectory() : -0.5f;
+		float bgcv1 = 1.0f; 
+        float bgcv2 = 1.0f;
+		if(options.has_vectorx())
+		{
+			bgcv1 = options.vectorx();
+		}
+		if(options.has_vectory())
+		{
+			bgcv2 = options.vectory();
+		}
         pageView->setBackGroundColorVector(Vec2(bgcv1, bgcv2));
         
         int co = options.has_bgcoloropacity() ? options.bgcoloropacity() : 100;
@@ -118,6 +126,14 @@ namespace cocostudio
             float cw = options.has_capinsetswidth() ? options.capinsetswidth() : 1;
             float ch = options.has_capinsetsheight() ? options.capinsetsheight() : 1;
             pageView->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
+            bool sw = options.has_scale9width();
+            bool sh = options.has_scale9height();
+            if (sw && sh)
+            {
+                float swf = options.scale9width();
+                float shf = options.scale9height();
+                pageView->setContentSize(Size(swf, shf));
+            }
         }
         
         const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();

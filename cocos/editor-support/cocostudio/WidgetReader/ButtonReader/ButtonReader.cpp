@@ -319,7 +319,13 @@ namespace cocostudio
         int fontSize = options.has_fontsize() ? options.fontsize() : 14;
         button->setTitleFontSize(fontSize);
         
-        
+		bool displaystate = true;
+		if(options.has_displaystate())
+		{
+			displaystate = options.displaystate();
+		}
+		button->setBright(displaystate);
+
         const char* fontName = options.has_fontname() ? options.fontname().c_str() : "微软雅黑";
         button->setTitleFontName(fontName);
         
