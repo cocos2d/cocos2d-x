@@ -178,6 +178,11 @@ VideoPlayer::VideoPlayer()
 {
     _videoPlayerIndex = createVideoWidgetJNI();
     s_allVideoPlayers[_videoPlayerIndex] = this;
+
+#if CC_VIDEOPLAYER_DEBUG_DRAW
+    _debugDrawNode = DrawNode::create();
+    addchild(_debugDrawNode);
+#endif
 }
 
 VideoPlayer::~VideoPlayer()
@@ -224,9 +229,16 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
     }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
-    _customDebugDrawCommand.init(_globalZOrder);
-    _customDebugDrawCommand.func = CC_CALLBACK_0(VideoPlayer::drawDebugData, this);
-    renderer->addCommand(&_customDebugDrawCommand);
+    _debugDrawNode->clear();
+    auto size = getContentSize();
+    Point vertices[4]=
+    {
+        Point::ZERO,
+        Point(size.width, 0),
+        Point(size.width, size.height),
+        Point(0, size.height)
+    };
+    _debugdrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif
 }
 

@@ -134,11 +134,7 @@ public:
     TMXOrthoObjectsTestNew(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXIsoObjectsTestNew : public TileDemoNew
@@ -147,11 +143,7 @@ public:
     TMXIsoObjectsTestNew(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXResizeTestNew : public TileDemoNew
@@ -291,13 +283,7 @@ class TMXGIDObjectsTestNew : public TileDemoNew
 public:
     TMXGIDObjectsTestNew();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
+    virtual std::string subtitle() const override;   
 };
 
 class TileMapTestSceneNew : public TestScene
