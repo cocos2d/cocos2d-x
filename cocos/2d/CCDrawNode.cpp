@@ -536,7 +536,7 @@ void DrawNode::drawCircle(const Vec2 &center, float radius, float angle, unsigne
 
 void DrawNode::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color)
 {
-    Vec2* vertices = new Vec2[segments + 1];
+    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
     if( ! vertices )
         return;
     

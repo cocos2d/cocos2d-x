@@ -924,10 +924,10 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
   
     Vec2 pt = Director::getInstance()->getWinSize();
     Vec2 vertices[] = {
-    Vec2::ZERO,
-    Vec2(pt.x, 0),
-    pt,
-    Vec2(0, pt.y)
+        Vec2::ZERO,
+        Vec2(pt.x, 0),
+        pt,
+        Vec2(0, pt.y)
     };
 
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
