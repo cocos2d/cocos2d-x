@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __ccRandom_H_
 #define __ccRandom_H_
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <random>
 
 

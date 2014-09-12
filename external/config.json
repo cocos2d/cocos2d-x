@@ -1,9 +1,10 @@
 {
-    "version":"v3-deps-9",
-    "zip_file_size":"73295462",
+    "version":"v3-deps-10",
+    "zip_file_size":"72683180",
     "repo_name":"cocos2d-x-3rd-party-libs-bin",
     "repo_parent":"https://github.com/cocos2d/",
     "move_dirs":{
-        "fbx-conv":"tools"
+        "fbx-conv":"tools",
+        "audio": "tests/cpp-tests/Resources"
     }
 }

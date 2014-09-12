@@ -30,7 +30,6 @@ extern "C" {
 }
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "3d/cocos3d.h"
 
 using namespace cocos2d;
 

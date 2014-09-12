@@ -31,7 +31,7 @@
 #include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
@@ -53,6 +53,7 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite && sprite->initWithFile(modelPath))
     {
+        sprite->_contentSize = sprite->getBoundingBox().size;
         sprite->autorelease();
         return sprite;
     }

@@ -150,9 +150,11 @@ public:
     virtual void setLocalZOrder(int localZOrder);
 
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    
     /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      */
-    virtual void _setLocalZOrder(int z);
+    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
+
     /**
      * Gets the local Z order of this node.
      *

@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "2d/CCMenu.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
-#include "CCStdC.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
+#include "platform/CCStdC.h"
 #include "deprecated/CCString.h"
 
 #include <vector>

@@ -27,10 +27,11 @@ THE SOFTWARE.
 #ifndef __CCCONFIGURATION_H__
 #define __CCCONFIGURATION_H__
 
-#include "base/CCRef.h"
-#include "CCGL.h"
-#include "base/CCValue.h"
 #include <string>
+
+#include "base/CCRef.h"
+#include "base/CCValue.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 

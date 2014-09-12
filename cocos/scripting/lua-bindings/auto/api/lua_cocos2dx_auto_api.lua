@@ -732,6 +732,11 @@
 
 
 --------------------------------------------------------
+-- the cc ProtectedNode
+-- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc GLProgramState
 -- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
 
@@ -1204,11 +1209,6 @@
 --------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
-
-
---------------------------------------------------------
--- the cc ProtectedNode
--- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
 
 
 return nil

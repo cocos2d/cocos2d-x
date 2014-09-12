@@ -57,9 +57,8 @@ THE SOFTWARE.
 #include "base/CCConsole.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
-
-#include "CCApplication.h"
-#include "CCGLViewImpl.h"
+#include "platform/CCApplication.h"
+//#include "platform/CCGLViewImpl.h"
 
 /**
  Position of the FPS
@@ -285,6 +284,9 @@ void Director::drawScene()
     
     if (_runningScene)
     {
+        //clear draw stats
+        _renderer->clearDrawStats();
+        
         Camera* defaultCamera = nullptr;
         const auto& cameras = _runningScene->_cameras;
         //draw with camera

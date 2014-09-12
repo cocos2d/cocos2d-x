@@ -994,6 +994,12 @@ Developers:
         
     kaishiqi
         Fixed a but that cursor postion is wrong on desktop.
+        
+    jagd
+        Added setSubsteps() and getSubsteps() in PhysicsWorld
+        
+    denpen
+        Fixed a bug that scroll view hidden picks up the touch events.
     
 Retired Core Developers:
     WenSheng Yang

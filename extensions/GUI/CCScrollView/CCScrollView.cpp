@@ -343,6 +343,19 @@ void ScrollView::setContainer(Node * pContainer)
     this->setViewSize(this->_viewSize);
 }
 
+bool ScrollView::hasVisibleParents() const
+{
+    auto parent = this->getParent();
+    for( auto c = parent; c != nullptr; c = c->getParent() )
+    {
+        if( !c->isVisible() )
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void ScrollView::relocateContainer(bool animated)
 {
     Vec2 oldPoint, min, max;
@@ -625,7 +638,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 {
-    if (!this->isVisible())
+    if (!this->isVisible() || !this->hasVisibleParents())
     {
         return false;
     }

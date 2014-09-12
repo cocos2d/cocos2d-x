@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 
 
 #include "deprecated/CCString.h"
