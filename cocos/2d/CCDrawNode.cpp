@@ -505,7 +505,7 @@ void DrawNode::drawCircle(const Vec2& center, float radius, float angle, unsigne
 {
     const float coef = 2.0f * (float)M_PI/segments;
     
-    Vec2 *vertices = new Vec2[segments+2];
+    Vec2 *vertices = new (std::nothrow) Vec2[segments+2];
     if( ! vertices )
         return;
     
@@ -537,6 +537,8 @@ void DrawNode::drawCircle(const Vec2 &center, float radius, float angle, unsigne
 void DrawNode::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color)
 {
     Vec2* vertices = new Vec2[segments + 1];
+    if( ! vertices )
+        return;
     
     float t = 0.0f;
     for(unsigned int i = 0; i < segments; i++)
@@ -555,7 +557,9 @@ void DrawNode::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec
 
 void DrawNode::drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color)
 {
-    Vec2* vertices = new Vec2[segments + 1];
+    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    if( ! vertices )
+        return;
     
     float t = 0;
     for (unsigned int i = 0; i < segments; i++)
@@ -574,7 +578,9 @@ void DrawNode::drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const V
 
 void DrawNode::drawCardinalSpline(PointArray *config, float tension,  unsigned int segments, const Color4F &color)
 {
-    Vec2* vertices = new Vec2[segments + 1];
+    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    if( ! vertices )
+        return;
     
     ssize_t p;
     float lt;
@@ -641,19 +647,19 @@ void DrawNode::drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Ve
     ensureCapacity(vertex_count);
 	
     V2F_C4B_T2F a = {lb, Color4B(color), Tex2F(-1.0, -1.0) };
-	V2F_C4B_T2F b = {lt, Color4B(color), Tex2F(-1.0,  1.0) };
-	V2F_C4B_T2F c = {rt, Color4B(color), Tex2F( 1.0,  1.0) };
-	V2F_C4B_T2F d = {rb, Color4B(color), Tex2F( 1.0, -1.0) };
-    
-	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+    V2F_C4B_T2F b = {lt, Color4B(color), Tex2F(-1.0,  1.0) };
+    V2F_C4B_T2F c = {rt, Color4B(color), Tex2F( 1.0,  1.0) };
+    V2F_C4B_T2F d = {rb, Color4B(color), Tex2F( 1.0, -1.0) };
+
+    V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle0 = {a, b, c};
     V2F_C4B_T2F_Triangle triangle1 = {a, c, d};
-	triangles[0] = triangle0;
-	triangles[1] = triangle1;
+    triangles[0] = triangle0;
+    triangles[1] = triangle1;
 	
-	_bufferCount += vertex_count;
-	
-	_dirty = true;
+    _bufferCount += vertex_count;
+
+    _dirty = true;
 }
 
 void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color)
@@ -858,11 +864,11 @@ void DrawNode::drawSolidCircle(const Vec2& center, float radius, float angle, un
 {
     const float coef = 2.0f * (float)M_PI/segments;
     
-    Vec2 *vertices = (Vec2*)calloc(sizeof(Vec2)*(segments+2), 1);
+    Vec2 *vertices = new (std::nothrow) Vec2[segments];
     if( ! vertices )
         return;
     
-    for(unsigned int i = 0;i <= segments; i++)
+    for(unsigned int i = 0;i < segments; i++)
     {
         float rads = i*coef;
         GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
@@ -871,12 +877,10 @@ void DrawNode::drawSolidCircle(const Vec2& center, float radius, float angle, un
         vertices[i].x = j;
         vertices[i].y = k;
     }
-    vertices[segments+1].x = center.x;
-    vertices[segments+1].y = center.y;
     
     drawSolidPoly(vertices, segments, color);
     
-    ::free( vertices );
+    CC_SAFE_DELETE_ARRAY(vertices);
 }
 
 void DrawNode::drawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments, const Color4F& color)

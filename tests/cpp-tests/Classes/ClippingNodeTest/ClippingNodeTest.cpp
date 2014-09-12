@@ -717,10 +717,10 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
     CHECK_GL_ERROR_DEBUG();
         
     Vec2 vertices[] = {
-    Vec2::ZERO,
-    Vec2(pt.x, 0),
-    pt,
-    Vec2(0, pt.y)
+        Vec2::ZERO,
+        Vec2(pt.x, 0),
+        pt,
+        Vec2(0, pt.y)
     };
 
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
