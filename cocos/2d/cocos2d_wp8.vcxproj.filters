@@ -659,6 +659,9 @@
     <ClCompile Include="..\platform\wp8\CCGLViewImpl-wp8.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCBillBoard.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1357,6 +1360,9 @@
     </ClInclude>
     <ClInclude Include="..\platform\wp8\CCGLViewImpl-wp8.h">
       <Filter>platform\wp8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBillBoard.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
