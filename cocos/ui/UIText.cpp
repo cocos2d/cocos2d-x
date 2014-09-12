@@ -292,7 +292,7 @@ void Text::adaptRenderers()
     }
 }
 
-const Size& Text::getVirtualRendererSize() const
+Size Text::getVirtualRendererSize() const
 {
     return _labelRenderer->getContentSize();
 }
