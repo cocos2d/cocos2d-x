@@ -33,10 +33,10 @@
 #include "ui/UIWebView.h"
 
 @interface UIWebViewWrapper : NSObject
-@property (nonatomic) std::function<bool(const std::string &url)> shouldStartLoading;
-@property (nonatomic) std::function<void(const std::string &url)> didFinishLoading;
-@property (nonatomic) std::function<void(const std::string &url)> didFailLoading;
-@property (nonatomic) std::function<void(const std::string &url)> onJsCallback;
+@property (nonatomic) std::function<bool(std::string url)> shouldStartLoading;
+@property (nonatomic) std::function<void(std::string url)> didFinishLoading;
+@property (nonatomic) std::function<void(std::string url)> didFailLoading;
+@property (nonatomic) std::function<void(std::string url)> onJsCallback;
 
 @property(nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
 @property(nonatomic, readonly, getter=canGoForward) BOOL canGoForward;
