@@ -55,6 +55,9 @@ public:
 
     /** Enable cookie support. **/
     void enableCookies(const char* cookieFile);
+    
+    /** Enable SSL verification. */
+    void enableSSLVerification(const std::string& caFile);
         
     /**
      * Add a get request to task queue
