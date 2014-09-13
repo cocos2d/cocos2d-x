@@ -447,7 +447,7 @@ void HttpClient::enableCookies(const char* cookieFile) {
     }
 }
     
-void HttpClient::enableSSLVerification(const std::string& caFile)
+void HttpClient::setSSLVerification(const std::string& caFile)
 {
     s_sslCaFilename = caFile;
 }

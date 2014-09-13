@@ -56,8 +56,12 @@ public:
     /** Enable cookie support. **/
     void enableCookies(const char* cookieFile);
     
-    /** Enable SSL verification. */
-    void enableSSLVerification(const std::string& caFile);
+    /**
+     * Set root certificate path for SSL verification.
+     * @param caFile a full path of root certificate.
+     *               if it is empty, SSL verification is disabled.
+     */
+    void setSSLVerification(const std::string& caFile);
         
     /**
      * Add a get request to task queue
