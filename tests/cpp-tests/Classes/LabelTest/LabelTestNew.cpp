@@ -263,12 +263,18 @@ std::string LabelFNTColorAndOpacity::subtitle() const
 LabelFNTSpriteActions::LabelFNTSpriteActions()
 {
     _time = 0;
+    
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto drawNode = DrawNode::create();
+    drawNode->drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2), Color4F(1.0, 1.0, 1.0, 1.0) );
+    drawNode->drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height), Color4F(1.0, 1.0, 1.0, 1.0) );
+    addChild(drawNode, -1);
 
     // Upper Label
     auto label = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "Bitmap Font Atlas");
     addChild(label);
     
-    auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Vec2(s.width/2, s.height/2) ); 
     
@@ -308,28 +314,6 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     lastChar->runAction( rot_4ever->clone() );
     
     schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
-}
-
-void LabelFNTSpriteActions::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
-
-}
-
-void LabelFNTSpriteActions::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-    
-    auto s = Director::getInstance()->getWinSize();
-    DrawPrimitives::drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2) );
-    DrawPrimitives::drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height) );
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void LabelFNTSpriteActions::step(float dt)
@@ -894,35 +878,11 @@ LabelFNTBounds::LabelFNTBounds()
     addChild(layer, -10);
     
     // LabelBMFont
-    label1 = Label::createWithBMFont("fonts/boundsTestFont.fnt", "Testing Glyph Designer", TextHAlignment::CENTER,s.width);
+    auto label1 = Label::createWithBMFont("fonts/boundsTestFont.fnt", "Testing Glyph Designer", TextHAlignment::CENTER,s.width);
     addChild(label1);
     label1->setPosition(Vec2(s.width/2, s.height/2));
-}
 
-std::string LabelFNTBounds::title() const
-{
-    return "New Label + .FNT + Bounds";
-}
-
-std::string LabelFNTBounds::subtitle() const
-{
-    return "You should see string enclosed by a box";
-}
-
-void LabelFNTBounds::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
-}
-
-void LabelFNTBounds::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-    
+    auto drawNode = DrawNode::create();
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
     
@@ -936,9 +896,18 @@ void LabelFNTBounds::onDraw(const Mat4 &transform, uint32_t flags)
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    DrawPrimitives::drawPoly(vertices, 4, true);
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    drawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    addChild(drawNode);
+}
+
+std::string LabelFNTBounds::title() const
+{
+    return "New Label + .FNT + Bounds";
+}
+
+std::string LabelFNTBounds::subtitle() const
+{
+    return "You should see string enclosed by a box";
 }
 
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
@@ -1508,16 +1477,8 @@ LabelTTFOldNew::LabelTTFOldNew()
     auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition(Vec2(s.width/2, delta * 2));
-}
 
-void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto label1 = (Label*)getChildByTag(kTagBitmapAtlas1);
+    auto drawNode = DrawNode::create();
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
     
@@ -1531,16 +1492,14 @@ void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    DrawPrimitives::setDrawColor4B(Color4B::RED.r,Color4B::RED.g,Color4B::RED.b,Color4B::RED.a);
-    DrawPrimitives::drawPoly(vertices, 4, true);
-
-    auto label2 = (Label*)getChildByTag(kTagBitmapAtlas2);
+    drawNode->drawPoly(vertices, 4, true, Color4F(1.0, 0.0, 0.0, 1.0));
+    
     labelSize = label2->getContentSize();
     origin    = Director::getInstance()->getWinSize();
-
+    
     origin.width = origin.width   / 2 - (labelSize.width / 2);
     origin.height = origin.height / 2 - (labelSize.height / 2);
-
+    
     Vec2 vertices2[4]=
     {
         Vec2(origin.width, origin.height),
@@ -1548,17 +1507,9 @@ void LabelTTFOldNew::onDraw(const Mat4 &transform, uint32_t flags)
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    DrawPrimitives::setDrawColor4B(Color4B::WHITE.r,Color4B::WHITE.g,Color4B::WHITE.b,Color4B::WHITE.a);
-    DrawPrimitives::drawPoly(vertices2, 4, true);
+    drawNode->drawPoly(vertices2, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
     
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-}
-
-void LabelTTFOldNew::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
+    addChild(drawNode);
 }
 
 std::string LabelTTFOldNew::title() const

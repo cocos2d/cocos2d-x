@@ -1339,6 +1339,15 @@ void ActionFollow::onEnter()
     centerSprites(1);
     auto s = Director::getInstance()->getWinSize();
 
+    DrawNode* drawNode = DrawNode::create();
+    float x = s.width*2 - 100;
+    float y = s.height;
+    
+    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
+    drawNode->drawPoly(vertices, 4, true,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    
+    this->addChild(drawNode);
+
     _grossini->setPosition(-200, s.height / 2);
     auto move = MoveBy::create(2, Vec2(s.width * 3, 0));
     auto move_back = move->reverse();
@@ -1348,32 +1357,6 @@ void ActionFollow::onEnter()
     _grossini->runAction(rep);
 
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
-}
-
-void ActionFollow::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, flags);
-    
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionFollow::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto winSize = Director::getInstance()->getWinSize();
-    
-    float x = winSize.width*2 - 100;
-    float y = winSize.height;
-    
-    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
-    DrawPrimitives::drawPoly(vertices, 4, true);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string ActionFollow::subtitle() const
@@ -1623,6 +1606,11 @@ void ActionCatmullRomStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
     
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCatmullRom(array, 50, Color4F(1.0, 1.0, 0.0, 0.5));
+    this->addChild(drawNode1);
+    
     //
     // sprite 2 (To)
     //
@@ -1652,54 +1640,13 @@ void ActionCatmullRomStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
     
-    array->retain();
-    _array1 = array;
-    array2->retain();
-    _array2 = array2;
+    auto drawNode2 = DrawNode::create();
+    drawNode2->drawCatmullRom(array2, 50, Color4F(1.0, 0.0, 0.0, 0.5));
+    this->addChild(drawNode2);
 }
 
 ActionCatmullRomStacked::~ActionCatmullRomStacked()
 {
-    CC_SAFE_RELEASE(_array1);
-    CC_SAFE_RELEASE(_array2);
-}
-
-void ActionCatmullRomStacked::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionCatmullRomStacked::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCatmullRom(_array1,50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCatmullRom(_array2,50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCatmullRomStacked::title() const
@@ -1753,6 +1700,11 @@ void ActionCardinalSplineStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
     
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCardinalSpline(array, 0, 100, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode1);
+    
     //
     // sprite 2 (By)
     //
@@ -1775,61 +1727,14 @@ void ActionCardinalSplineStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
     
-    array->retain();
-    _array = array;
+    auto drawNode2 = DrawNode::create();
+    drawNode2->setPosition(Vec2(s.width/2,50));
+    drawNode2->drawCardinalSpline(array, 1, 100, Color4F(0.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode2);
 }
 
 ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
 {
-    CC_SAFE_RELEASE(_array);
-}
-
-void ActionCardinalSplineStacked::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    auto s = Director::getInstance()->getWinSize();
-    
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(s.width/2, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionCardinalSplineStacked::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCardinalSplineStacked::title() const
@@ -2163,6 +2068,10 @@ void ActionCatmullRom::onEnter()
     
     _tamara->runAction(seq);
     
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCatmullRom(array, 50, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode1);
     
     //
     // sprite 2 (To)
@@ -2186,57 +2095,14 @@ void ActionCatmullRom::onEnter()
     
     _kathia->runAction(seq2);
     
-    _array1 = array;
-    _array1->retain();
-    _array2 = array2;
-    _array2->retain();
+    auto drawNode2 = DrawNode::create();
+    drawNode2->drawCatmullRom(array2, 50, Color4F(0.0, 1.0, 1.0, 1.0));
+    this->addChild(drawNode2);
 }
 
 ActionCatmullRom::~ActionCatmullRom()
 {
-    _array1->release();
-    _array2->release();
 }
-
-void ActionCatmullRom::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-
-void ActionCatmullRom::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCatmullRom(_array1, 50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCatmullRom(_array2,50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
-}
-
 
 std::string ActionCatmullRom::title() const
 {
@@ -2280,6 +2146,11 @@ void ActionCardinalSpline::onEnter()
     _tamara->setPosition(50, 50);
     _tamara->runAction(seq);
     
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCardinalSpline(array, 0, 100, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode1);
+    
     //
     // sprite 2 (By)
     //
@@ -2294,59 +2165,14 @@ void ActionCardinalSpline::onEnter()
     _kathia->setPosition(s.width/2, 50);
     _kathia->runAction(seq2);
     
-    _array = array;
-    array->retain();
+    auto drawNode2 = DrawNode::create();
+    drawNode2->setPosition(Vec2(s.width/2, 50));
+    drawNode2->drawCardinalSpline(array, 1, 100, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode2);
 }
 
 ActionCardinalSpline::~ActionCardinalSpline()
 {
-    _array->release();
-}
-
-void ActionCardinalSpline::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    auto s = Director::getInstance()->getWinSize();
-    
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(s.width/2, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionCardinalSpline::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCardinalSpline::title() const
