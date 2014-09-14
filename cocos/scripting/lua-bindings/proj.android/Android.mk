@@ -28,7 +28,9 @@ LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../../../../external/lua/tolua/tolua_map.c \
           ../../../../external/lua/tolua/tolua_push.c \
           ../../../../external/lua/tolua/tolua_to.c \
-          ../../../../external/xxtea/xxtea.cpp
+          ../../../../external/xxtea/xxtea.cpp \
+          ../auto/lua_cocos2dx_audioengine_auto.cpp \
+          ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
 
 #3d
 LOCAL_SRC_FILES += ../manual/3d/lua_cocos2dx_3d_manual.cpp \
@@ -100,6 +102,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../manual/cocos2d \
                     $(LOCAL_PATH)/../manual/3d \
                     $(LOCAL_PATH)/../manual/cocosdenshion \
+                    $(LOCAL_PATH)/../manual/audioengine \
                     $(LOCAL_PATH)/../manual/network \
                     $(LOCAL_PATH)/../manual/extension \
                     $(LOCAL_PATH)/../manual/cocostudio \
@@ -121,6 +124,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/cocos2d \
                            $(LOCAL_PATH)/../manual/3d \
                            $(LOCAL_PATH)/../manual/cocosdenshion \
+                           $(LOCAL_PATH)/../manual/audioengine \
                            $(LOCAL_PATH)/../manual/network \
                            $(LOCAL_PATH)/../manual/cocosbuilder \
                            $(LOCAL_PATH)/../manual/cocostudio \
