@@ -235,6 +235,9 @@ void AudioEngine::remove(int audioID)
 
 void AudioEngine::stopAll()
 {
+    if(!_audioEngineImpl){
+        return;
+    }
     _audioEngineImpl->stopAll();
     auto itEnd = _audioIDInfoMap.end();
     for (auto it = _audioIDInfoMap.begin(); it != itEnd; ++it)
@@ -270,6 +273,9 @@ void AudioEngine::uncache(const std::string &filePath)
 
 void AudioEngine::uncacheAll()
 {
+    if(!_audioEngineImpl){
+        return;
+    }
     stopAll();
     _audioEngineImpl->uncacheAll();
 }

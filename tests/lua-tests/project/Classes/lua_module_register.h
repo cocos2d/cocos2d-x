@@ -9,7 +9,7 @@
 #include "network/lua_cocos2dx_network_manual.h"
 #include "cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h"
 #include "3d/lua_cocos2dx_3d_manual.h"
-
+#include "audioengine/lua_cocos2dx_audioengine_manual.h"
 
 
 int lua_module_register(lua_State* L)
@@ -23,6 +23,9 @@ int lua_module_register(lua_State* L)
     register_network_module(L);
     register_cocosdenshion_module(L);
     register_cocos3d_module(L);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    register_audioengine_module(L);
+#endif
     return 1;
 }
 
