@@ -55,7 +55,7 @@ public:
 
     void loadHTMLString(const std::string &string, const std::string &baseURL);
 
-    void loadUrl(const std::string &url);
+    void loadURL(const std::string &url);
 
     void loadFile(const std::string &fileName);
 

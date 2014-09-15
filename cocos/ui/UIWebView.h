@@ -45,45 +45,11 @@ public:
     static WebView *create();
 
     /**
-    * Default constructor
-    */
-    WebView();
-
-    /**
-    * Default destructor
-    */
-    virtual ~WebView();
-
-    /**
-    * Call before a web view begins loading.
-    * @param sender The web view that is about to load new content.
-    * @param url content URL.
-    * @return YES if the web view should begin loading content; otherwise, NO .
-    */
-    std::function<bool(WebView *sender, std::string url)> shouldStartLoading;
-    /**
-    * Call after a web view finishes loading.
-    * @param sender The web view that has finished loading.
-    * @param url content URL.
-    */
-    std::function<void(WebView *sender, std::string url)> didFinishLoading;
-    /**
-    * Call if a web view failed to load content.
-    * @param sender The web view that has failed loading.
-    * @param url content URL.
-    */
-    std::function<void(WebView *sender, std::string url)> didFailLoading;
-
-    /**
     * Set javascript interface scheme.
     * @see #onJsCallback
     */
     void setJavascriptInterfaceScheme(const std::string &scheme);
 
-    /**
-    * This callback called when load URL that start with javascript interface scheme.
-    */
-    std::function<void(WebView *sender, std::string message)> onJsCallback;
 
     /**
     * Sets the main page contents, MIME type, content encoding, and base URL.
@@ -109,7 +75,7 @@ public:
     * Loads the given URL.
     * @param url content URL
     */
-    void loadUrl(const std::string &url);
+    void loadURL(const std::string &url);
 
     /**
     * Loads the given fileName.
@@ -162,9 +128,67 @@ public:
     virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
 
     virtual void setVisible(bool visible) override;
+    
+    typedef std::function<void(WebView *sender, std::string url)> ccWebViewCallbak;
+    
+    
+    /**
+     * Call before a web view begins loading.
+     * @param sender The web view that is about to load new content.
+     * @param url content URL.
+     * @return YES if the web view should begin loading content; otherwise, NO .
+     */
+    void setOnShouldStartLoading(const std::function<bool(WebView *sender, std::string url)>& callback);
+    
+    /**
+     * Call after a web view finishes loading.
+     * @param sender The web view that has finished loading.
+     * @param url content URL.
+     */
+    void setOnDidFinishLoading(const ccWebViewCallbak& callback);
+    
+    /**
+     * Call if a web view failed to load content.
+     * @param sender The web view that has failed loading.
+     * @param url content URL.
+     */
+    void setOnDidFailLoading(const ccWebViewCallbak& callback);
+    
+    /**
+     * This callback called when load URL that start with javascript interface scheme.
+     */
+    void setOnJSCallback(const ccWebViewCallbak& callback);
+    
+    std::function<bool(WebView *sender, std::string url)> getOnShouldStartLoading()const;
+    ccWebViewCallbak getOnDidFinishLoading()const;
+    ccWebViewCallbak getOnDidFailLoading()const;
+    ccWebViewCallbak getOnJSCallback()const;
+    
+protected:
+    virtual cocos2d::ui::Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    
+    std::function<bool(WebView *sender, std::string url)> _onShouldStartLoading;
+    
+    ccWebViewCallbak _onDidFinishLoading;
+    
+    ccWebViewCallbak _onDidFailLoading;
+   
+    ccWebViewCallbak _onJSCallback;
+
+    /**
+     * Default constructor
+     */
+    WebView();
+    
+    /**
+     * Default destructor
+     */
+    virtual ~WebView();
 
 private:
     WebViewImpl *_impl;
+    friend class WebViewImpl;
 };
         
       } // namespace ui
