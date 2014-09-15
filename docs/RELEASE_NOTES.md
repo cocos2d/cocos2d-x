@@ -249,7 +249,8 @@ auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
 camera->setCameraFlag(CameraFlag::CAMERA_USER1);
 addChild(camera); //add this camera
 
-billboard->setCameraMask((unsigned short)CameraFlag::CAMERA_USER1);//This billboard is only seen by the camera with flag CameraFlag::CAMERA_USER1.
+//This billboard is only seen by the camera with flag CameraFlag::CAMERA_USER1.
+billboard->setCameraMask((unsigned short)CameraFlag::CAMERA_USER1);
 ```
 
 
