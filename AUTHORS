@@ -1000,6 +1000,9 @@ Developers:
         
     denpen
         Fixed a bug that scroll view hidden picks up the touch events.
+        
+    joewan
+        Fixed memory leak when use menu_selector
     
 Retired Core Developers:
     WenSheng Yang
