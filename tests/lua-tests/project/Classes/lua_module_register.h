@@ -24,7 +24,7 @@ int lua_module_register(lua_State* L)
     register_cocos3d_module(L);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     register_audioengine_module(L);
-#end
+#endif
     return 1;
 }
 
