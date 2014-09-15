@@ -244,7 +244,7 @@ Full test case please refer to `tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest
 auto billboard = BillBoard::create("Images/Icon.png");
 addChild(billboard);
 
-//create camera that is seeing the camera. It is seen by the default camera by default
+//create camera that is looking at this billboard. Otherwise, it is seen by the default camera
 auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
 camera->setCameraFlag(CameraFlag::CAMERA_USER1);
 addChild(camera); //add this camera
