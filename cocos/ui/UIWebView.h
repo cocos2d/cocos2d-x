@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __Cocos2d_Plugin_WebView_H_
-#define __Cocos2d_Plugin_WebView_H_
+#ifndef __COCOS2D_UI_WEBVIEW_H
+#define __COCOS2D_UI_WEBVIEW_H
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
@@ -173,4 +173,4 @@ private:
 
 #endif
 
-#endif //__Cocos2d_Plugin_WebView_H_
+#endif //__COCOS2D_UI_WEBVIEW_H
