@@ -364,7 +364,7 @@ void Button::onPressStateChangedToNormal()
         {
             _buttonNormalRenderer->stopAllActions();
             _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
             _buttonNormalRenderer->runAction(zoomAction);
             _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
             
@@ -394,7 +394,7 @@ void Button::onPressStateChangedToPressed()
         {
             _buttonNormalRenderer->stopAllActions();
             _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
             _buttonClickedRenderer->runAction(zoomAction);
             _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
             

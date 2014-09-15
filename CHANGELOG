@@ -1,4 +1,5 @@
 cocos2d-x-3.3??      ??
+    [NEW]           3d: added `BillBoard`
     [NEW]           ActionManager: added removeAllActionsByTag()
     [NEW]           Audio: added new audio system for iOS and Android
     [FIX]           DrawNode: has any many functions as `DrawPrimitive`

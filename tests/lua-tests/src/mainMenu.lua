@@ -57,13 +57,18 @@ require "src/PhysicsTest/PhysicsTest"
 require "src/CaptureScreenTest/CaptureScreenTest"
 require "src/VideoPlayerTest/VideoPlayerTest"
 require "src/FastTiledMapTest/FastTiledMapTest"
-
+require "src/NewAudioEngineTest/NewAudioEngineTest"
 
 local LINE_SPACE = 40
 
 local CurPos = {x = 0, y = 0}
 local BeginPos = {x = 0, y = 0}
 
+local audioEndineSupported = false
+local currPlatform = cc.Application:getInstance():getTargetPlatform()
+if (cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
+    audioEndineSupported = true
+end
 
 local _allTests = {
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
@@ -72,6 +77,7 @@ local _allTests = {
     { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
     { isSupported = true,  name = "AssetsManagerTest"      , create_func   =         AssetsManagerTestMain      },
+    { isSupported = audioEndineSupported, name = "AudioEngineTest", create_func = AudioEngineTest},
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },

@@ -873,6 +873,9 @@
 		38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */; };
 		3E2BDAD219BEA3E20055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		3E2BDAFF19C5E5B40055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
 		3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		3E6177241960FAED00DE83F5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		3E6177251960FAED00DE83F5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -2899,6 +2902,7 @@
 		3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewAudioEngineTest.cpp; sourceTree = "<group>"; };
 		3E2BDACF19BEA3410055CDCD /* NewAudioEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAudioEngineTest.h; sourceTree = "<group>"; };
 		3E2BDAD119BEA3E20055CDCD /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = "../tests/cpp-tests/Resources/audio"; sourceTree = "<group>"; };
+		3E2BDB0019C5E5D40055CDCD /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = background.wav; path = "../tests/cpp-tests/Resources/background.wav"; sourceTree = "<group>"; };
 		3E6176B71960FA6300DE83F5 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		3E6176B81960FA6300DE83F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3E6176B91960FA6300DE83F5 /* AppMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMacros.h; sourceTree = "<group>"; };
@@ -6456,6 +6460,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3E2BDB0019C5E5D40055CDCD /* background.wav */,
 				3E2BDAD119BEA3E20055CDCD /* audio */,
 				38FA2E75194AECF800FF2BE4 /* ActionTimeline */,
 				B2507B6A192589AF00FA4972 /* Shaders3D */,
@@ -7688,6 +7693,7 @@
 				15D1FD251998637C00302043 /* luaoc.lua in Resources */,
 				1AC35DD718CEE65200F37B72 /* Particles in Resources */,
 				15D1FD761998642800302043 /* experimentalUIConstants.lua in Resources */,
+				3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */,
 				1AC35D9D18CEE5D100F37B72 /* Icon-120.png in Resources */,
 				15D1FD781998642800302043 /* GuiConstants.lua in Resources */,
 				15C90B3E18E66BF200D69802 /* http.lua in Resources */,
@@ -7724,6 +7730,7 @@
 				15D1FCF81998637C00302043 /* Cocos2dConstants.lua in Resources */,
 				1AC35DD318CEE65200F37B72 /* Images in Resources */,
 				1AC35DF018CEE65B00F37B72 /* effect2.ogg in Resources */,
+				3E2BDAFF19C5E5B40055CDCD /* audio in Resources */,
 				1AC35DEB18CEE65B00F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				15D1FD56199863F900302043 /* DeprecatedExtensionFunc.lua in Resources */,
 				1AC35DCA18CEE65200F37B72 /* animations in Resources */,
@@ -7854,6 +7861,7 @@
 				1AC35D0118CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
+				3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */,
 				1AC35CCB18CED84500F37B72 /* animations in Resources */,
 				3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */,
 				3E92EA861921A7720094CD21 /* Sprite3DTest in Resources */,
