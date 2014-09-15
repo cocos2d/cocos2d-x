@@ -235,7 +235,23 @@ Full test case please refer to `tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest
 
 ## BillBoard
 
-TBD
+`BillBoard` is a rectangle always faces to the camera. It is useful in the 3D world. People use BillBoard to create trees in some racing games. It looks real, but the cost is much lower than 3d tree.
+
+`BillBoard` inherits from Sprite, so it also supports animate. Here is example of creating BillBoard.
+
+```c++
+//create billboard from .png
+auto billboard = BillBoard::create("Images/Icon.png");
+addChild(billboard);
+
+//create camera that is seeing the camera. It is seen by the default camera by default
+auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+camera->setCameraFlag(CameraFlag::CAMERA_USER1);
+addChild(camera); //add this camera
+
+billboard->setCameraMask((unsigned short)CameraFlag::CAMERA_USER1);//This billboard is only seen by the camera with flag CameraFlag::CAMERA_USER1.
+```
+
 
 ## Primitive
 
