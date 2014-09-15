@@ -39,16 +39,16 @@ endif()
 if( UNIX ) #assume linux
 set(GAME_SRC
   proj.linux/main.cpp
-  src/AppDelegate.cpp
-  src/HelloWorldScene.cpp
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
 )
 elseif ( WIN32 )
 set(GAME_SRC
   proj.win32/main.cpp
   proj.win32/main.h
   proj.win32/resource.h
-  src/AppDelegate.cpp
-  src/HelloWorldScene.cpp
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
 )
 endif()
 
@@ -163,14 +163,14 @@ if ( WIN32 )
   #also copying dlls to binary directory for the executable to run
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/gles/prebuilt/glew32.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/zlib/prebuilt/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	)
 else()
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
     )
 
 endif()
