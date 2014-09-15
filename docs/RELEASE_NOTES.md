@@ -290,8 +290,38 @@ Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex a
 TBD
 
 ## WebView
+WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
 
-TBD
+The class is under `cocos2d::ui::experimental` namespace.
+
+As we clarified the `experimental` namespace before, the `experimental` namespace doesn't mean the widget is incomplete, but only due to the lack of full platform support. Feel free to use the WebView
+widget in your game.
+
+To display the website Google in a WebView, we could simply write:
+
+```cpp
+    _webView = cocos2d::experimental::ui::WebView::create();
+    _webView->setPosition(winSize/2);
+    _webView->setContentSize(winSize * 0.5);
+    _webView->loadUrl("http://www.google.com");
+    _webView->setScalesPageToFit(true);
+```
+
+The `setscalesPageToFit` method will adjust the WebView content to fit the content size you set.
+
+We could also set some callback to the WebView:
+
+```cpp
+    //we should check the validation of the URL and decide whether to continue or not
+    _webView->shouldStartLoading = CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this);
+    //called when web page is finish loading
+    _webView->didFinishLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFinishLoading, this);
+    //called when web page is fail loading
+    _webView->didFailLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFailLoading, this);
+```
+
+For full test case, please refer to [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp)
+
 
 ## New audio
 
