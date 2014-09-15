@@ -132,8 +132,8 @@ protected:
     Texture2D* _texture;  //texture that submesh is using
     MeshSkin*  _skin;     //skin
     bool       _visible; // is the submesh visible
+    bool       _isTransparent; // is this mesh transparent, it is a property of material in fact
     
-    //since 3.3
     std::string  _name;
     MeshIndexData*     _meshIndexData;
     GLProgramState* _glProgramState;

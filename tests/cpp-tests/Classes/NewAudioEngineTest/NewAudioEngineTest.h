@@ -43,6 +43,8 @@ class AudioEngineTestDemo : public BaseTest
 {
 public:
     virtual std::string title() const override;
+    virtual void onExit() override;
+
     void backCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void restartCallback(Ref* sender);
