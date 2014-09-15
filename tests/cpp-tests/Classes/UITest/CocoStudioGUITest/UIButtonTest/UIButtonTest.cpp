@@ -482,6 +482,7 @@ bool UIButtonTestSwitchScale9::init()
                                         "cocosui/animationbuttonpressed.png");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTestSwitchScale9::touchEvent, this));
+        button->setTitleText("Button Title");
         button->ignoreContentAdaptWithSize(false);
         
         _uiLayer->addChild(button);

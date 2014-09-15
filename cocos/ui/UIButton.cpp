@@ -548,10 +548,7 @@ void Button::normalTextureScaleChangedWithSize()
             _normalTextureScaleYInSize = scaleY;
         }
     }
-    if (_titleRenderer->getString().size() > 0) {
-        _titleRenderer->setScaleX(_titleRenderer->getScaleX() + _normalTextureScaleXInSize - 1.0);
-        _titleRenderer->setScaleY(_titleRenderer->getScaleY() + _normalTextureScaleYInSize - 1.0);
-    }
+
     _buttonNormalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
