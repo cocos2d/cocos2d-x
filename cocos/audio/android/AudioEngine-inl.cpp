@@ -251,7 +251,8 @@ void AudioEngineImpl::playerFinishCallback(SLPlayItf caller, SLuint32 playEvent)
             {
                 iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioIDInfoMap[iter->second._audioID].filePath); 
             }
-            AudioEngine::stop(iter->second._audioID);
+            AudioEngine::remove(iter->second._audioID);
+            _audioPlayers.erase(iter);
             break;
         }
     }
