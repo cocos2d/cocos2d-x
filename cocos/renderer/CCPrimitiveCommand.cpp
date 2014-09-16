@@ -77,6 +77,7 @@ void PrimitiveCommand::execute() const
     _glProgramState->apply(_mv);
     
     _primitive->draw();
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_primitive->getCount());
 }
 
 NS_CC_END
