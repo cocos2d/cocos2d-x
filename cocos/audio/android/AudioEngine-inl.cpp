@@ -39,6 +39,7 @@
 #include <jni.h>
 
 using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 void PlayOverEvent(SLPlayItf caller, void* context, SLuint32 playEvent)
 {

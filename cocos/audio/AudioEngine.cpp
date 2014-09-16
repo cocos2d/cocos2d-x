@@ -36,6 +36,7 @@
 #define TIME_DELAY_PRECISION 0.0001
 
 using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 const int AudioEngine::INVAILD_AUDIO_ID = -1;
 const float AudioEngine::TIME_UNKNOWN = -1.0f;
