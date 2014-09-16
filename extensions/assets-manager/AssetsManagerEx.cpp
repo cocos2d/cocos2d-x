@@ -209,7 +209,7 @@ void AssetsManagerEx::setStoragePath(const std::string& storagePath)
 
     _storagePath = storagePath;
     adjustPath(_storagePath);
-    _fileUtils->createDirectories(_storagePath);
+    _fileUtils->createDirectory(_storagePath);
 }
 
 void AssetsManagerEx::adjustPath(std::string &path)
@@ -278,7 +278,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
         {
             //There are not directory entry in some case.
             //So we need to create directory when decompressing file entry
-            if ( !_fileUtils->createDirectories(basename(fullPath)) )
+            if ( !_fileUtils->createDirectory(basename(fullPath)) )
             {
                 // Failed to create directory
                 CCLOG("AssetsManagerEx : can not create directory %s\n", fullPath.c_str());
@@ -545,7 +545,7 @@ void AssetsManagerEx::startUpdate()
                 {
                     std::string path = diff.asset.path;
                     // Create path
-                    _fileUtils->createDirectories(basename(_storagePath + path));
+                    _fileUtils->createDirectory(basename(_storagePath + path));
 
                     Downloader::DownloadUnit unit;
                     unit.customId = it->first;
