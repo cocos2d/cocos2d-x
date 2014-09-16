@@ -42,7 +42,7 @@ class Manifest : public Ref
 {
 public:
     
-    friend class AssetsManager;
+    friend class AssetsManagerEx;
     
     //! The type of difference
     enum class DiffType {

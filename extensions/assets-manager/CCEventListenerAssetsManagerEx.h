@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__CCEventListenerAssetsManager__
-#define __cocos2d_libs__CCEventListenerAssetsManager__
+#ifndef __cocos2d_libs__CCEventListenerAssetsManagerEx__
+#define __cocos2d_libs__CCEventListenerAssetsManagerEx__
 
 #include "base/CCEventListener.h"
 #include "base/CCEventListenerCustom.h"
@@ -31,55 +31,55 @@
 
 NS_CC_EXT_BEGIN
 
-class EventAssetsManager;
-class AssetsManager;
+class EventAssetsManagerEx;
+class AssetsManagerEx;
 
 /**
  *  Usage:
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
- *        auto manager = AssetsManager::create(manifestUrl, storagePath);
+ *        auto manager = AssetsManagerEx::create(manifestUrl, storagePath);
  *     Adds a listener:
  *
- *        auto callback = [](EventAssetsManager* event){ do_some_thing(); };
- *        auto listener = EventListenerAssetsManager::create(manager, callback);
+ *        auto callback = [](EventAssetsManagerEx* event){ do_some_thing(); };
+ *        auto listener = EventListenerAssetsManagerEx::create(manager, callback);
  *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
  *
  *     Removes a listener
  *
  *        dispatcher->removeEventListener(listener);
  */
-class EventListenerAssetsManager : public cocos2d::EventListenerCustom
+class EventListenerAssetsManagerEx : public cocos2d::EventListenerCustom
 {
 public:
-    friend class AssetsManager;
+    friend class AssetsManagerEx;
     
     /** Creates an event listener with type and callback.
      *  @param eventType The type of the event.
      *  @param callback The callback function when the specified event was emitted.
      */
-    static EventListenerAssetsManager* create(AssetsManager *assetsManager, const std::function<void(EventAssetsManager*)>& callback);
+    static EventListenerAssetsManagerEx* create(AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback);
     
     /// Overrides
     virtual bool checkAvailable() override;
-    virtual EventListenerAssetsManager* clone() override;
+    virtual EventListenerAssetsManagerEx* clone() override;
     
 CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
-    EventListenerAssetsManager();
+    EventListenerAssetsManagerEx();
     
     /** Initializes event with type and callback function */
-    bool init(const AssetsManager *assetsManager, const std::function<void(EventAssetsManager*)>& callback);
+    bool init(const AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback);
     
 protected:
     static const std::string LISTENER_ID;
     
-    std::function<void(EventAssetsManager*)> _onAssetsManagerEvent;
+    std::function<void(EventAssetsManagerEx*)> _onAssetsManagerExEvent;
     
-    const AssetsManager *_assetsManager;
+    const AssetsManagerEx *_AssetsManagerEx;
     
-    //friend class luaEventListenerAssetsManager;
+    //friend class luaEventListenerAssetsManagerEx;
 };
 
 NS_CC_EXT_END
 
-#endif /* defined(__cocos2d_libs__CCEventListenerAssetsManager__) */
+#endif /* defined(__cocos2d_libs__CCEventListenerAssetsManagerEx__) */

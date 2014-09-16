@@ -21,9 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "AssetsManager.h"
+#include "AssetsManagerEx.h"
 
-#include "CCEventListenerAssetsManager.h"
+#include "CCEventListenerAssetsManagerEx.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
@@ -42,13 +42,13 @@ NS_CC_EXT_BEGIN
 
 #define DEFAULT_CONNECTION_TIMEOUT 8
 
-const std::string AssetsManager::VERSION_ID = "@version";
-const std::string AssetsManager::MANIFEST_ID = "@manifest";
-const std::string AssetsManager::BATCH_UPDATE_ID = "@batch_update";
+const std::string AssetsManagerEx::VERSION_ID = "@version";
+const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
+const std::string AssetsManagerEx::BATCH_UPDATE_ID = "@batch_update";
 
-// Implementation of AssetsManager
+// Implementation of AssetsManagerEx
 
-AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
 : _updateState(State::UNCHECKED)
 , _waitToUpdate(false)
 , _totalToDownload(0)
@@ -68,20 +68,20 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     std::string pointer = StringUtils::format("%p", this);
-    _eventName = EventListenerAssetsManager::LISTENER_ID + pointer;
+    _eventName = EventListenerAssetsManagerEx::LISTENER_ID + pointer;
     _fileUtils = FileUtils::getInstance();
     _updateState = State::UNCHECKED;
 
     _downloader = std::make_shared<Downloader>();
     _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
-    _downloader->_onError = std::bind(&AssetsManager::onError, this, std::placeholders::_1);
-    _downloader->_onProgress = std::bind(&AssetsManager::onProgress,
+    _downloader->_onError = std::bind(&AssetsManagerEx::onError, this, std::placeholders::_1);
+    _downloader->_onProgress = std::bind(&AssetsManagerEx::onProgress,
                                          this,
                                          std::placeholders::_1,
                                          std::placeholders::_2,
                                          std::placeholders::_3,
                                          std::placeholders::_4);
-    _downloader->_onSuccess = std::bind(&AssetsManager::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    _downloader->_onSuccess = std::bind(&AssetsManagerEx::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     setStoragePath(storagePath);
     _cacheVersionPath = _storagePath + VERSION_FILENAME;
     _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
@@ -101,7 +101,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
     _remoteManifest = new Manifest();
 }
 
-AssetsManager::~AssetsManager()
+AssetsManagerEx::~AssetsManagerEx()
 {
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
@@ -113,9 +113,9 @@ AssetsManager::~AssetsManager()
     CC_SAFE_RELEASE(_remoteManifest);
 }
 
-AssetsManager* AssetsManager::create(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath)
 {
-    AssetsManager* ret = new AssetsManager(manifestUrl, storagePath);
+    AssetsManagerEx* ret = new AssetsManagerEx(manifestUrl, storagePath);
     if (ret)
     {
         ret->autorelease();
@@ -127,7 +127,7 @@ AssetsManager* AssetsManager::create(const std::string& manifestUrl, const std::
     return ret;
 }
 
-void AssetsManager::prepareLocalManifest()
+void AssetsManagerEx::prepareLocalManifest()
 {
     // An alias to assets
     _assets = &(_localManifest->getAssets());
@@ -136,7 +136,7 @@ void AssetsManager::prepareLocalManifest()
     _localManifest->prependSearchPaths();
 }
 
-void AssetsManager::loadLocalManifest(const std::string& manifestUrl)
+void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
 {
     // Prefer to use the cached manifest file, if not found use user configured manifest file
     if (_fileUtils->isFileExist(_cacheManifestPath))
@@ -159,12 +159,12 @@ void AssetsManager::loadLocalManifest(const std::string& manifestUrl)
     // Fail to load local manifest
     if (!_localManifest->isLoaded())
     {
-        CCLOG("AssetsManager : No local manifest file found error.\n");
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
+        CCLOG("AssetsManagerEx : No local manifest file found error.\n");
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
     }
 }
 
-std::string AssetsManager::basename(const std::string& path) const
+std::string AssetsManagerEx::basename(const std::string& path) const
 {
     size_t found = path.find_last_of("/\\");
     
@@ -178,7 +178,7 @@ std::string AssetsManager::basename(const std::string& path) const
     }
 }
 
-std::string AssetsManager::get(const std::string& key) const
+std::string AssetsManagerEx::get(const std::string& key) const
 {
     auto it = _assets->find(key);
     if (it != _assets->cend()) {
@@ -187,22 +187,22 @@ std::string AssetsManager::get(const std::string& key) const
     else return "";
 }
 
-const Manifest* AssetsManager::getLocalManifest() const
+const Manifest* AssetsManagerEx::getLocalManifest() const
 {
     return _localManifest;
 }
 
-const Manifest* AssetsManager::getRemoteManifest() const
+const Manifest* AssetsManagerEx::getRemoteManifest() const
 {
     return _remoteManifest;
 }
 
-const std::string& AssetsManager::getStoragePath() const
+const std::string& AssetsManagerEx::getStoragePath() const
 {
     return _storagePath;
 }
 
-void AssetsManager::setStoragePath(const std::string& storagePath)
+void AssetsManagerEx::setStoragePath(const std::string& storagePath)
 {
     if (_storagePath.size() > 0)
         _fileUtils->removeDirectory(_storagePath);
@@ -212,7 +212,7 @@ void AssetsManager::setStoragePath(const std::string& storagePath)
     _fileUtils->createDirectories(_storagePath);
 }
 
-void AssetsManager::adjustPath(std::string &path)
+void AssetsManagerEx::adjustPath(std::string &path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
@@ -220,13 +220,13 @@ void AssetsManager::adjustPath(std::string &path)
     }
 }
 
-bool AssetsManager::decompress(const std::string &zip)
+bool AssetsManagerEx::decompress(const std::string &zip)
 {
     // Find root path for zip file
     size_t pos = zip.find_last_of("/\\");
     if (pos == std::string::npos)
     {
-        CCLOG("AssetsManager : no root path specified for zip file %s\n", zip.c_str());
+        CCLOG("AssetsManagerEx : no root path specified for zip file %s\n", zip.c_str());
         return false;
     }
     const std::string rootPath = zip.substr(0, pos+1);
@@ -235,7 +235,7 @@ bool AssetsManager::decompress(const std::string &zip)
     unzFile zipfile = unzOpen(zip.c_str());
     if (! zipfile)
     {
-        CCLOG("AssetsManager : can not open downloaded zip file %s\n", zip.c_str());
+        CCLOG("AssetsManagerEx : can not open downloaded zip file %s\n", zip.c_str());
         return false;
     }
     
@@ -243,7 +243,7 @@ bool AssetsManager::decompress(const std::string &zip)
     unz_global_info global_info;
     if (unzGetGlobalInfo(zipfile, &global_info) != UNZ_OK)
     {
-        CCLOG("AssetsManager : can not read file global info of %s\n", zip.c_str());
+        CCLOG("AssetsManagerEx : can not read file global info of %s\n", zip.c_str());
         unzClose(zipfile);
         return false;
     }
@@ -266,7 +266,7 @@ bool AssetsManager::decompress(const std::string &zip)
                                   NULL,
                                   0) != UNZ_OK)
         {
-            CCLOG("AssetsManager : can not read compressed file info\n");
+            CCLOG("AssetsManagerEx : can not read compressed file info\n");
             unzClose(zipfile);
             return false;
         }
@@ -281,7 +281,7 @@ bool AssetsManager::decompress(const std::string &zip)
             if ( !_fileUtils->createDirectories(basename(fullPath)) )
             {
                 // Failed to create directory
-                CCLOG("AssetsManager : can not create directory %s\n", fullPath.c_str());
+                CCLOG("AssetsManagerEx : can not create directory %s\n", fullPath.c_str());
                 unzClose(zipfile);
                 return false;
             }
@@ -292,7 +292,7 @@ bool AssetsManager::decompress(const std::string &zip)
             // Open current file.
             if (unzOpenCurrentFile(zipfile) != UNZ_OK)
             {
-                CCLOG("AssetsManager : can not extract file %s\n", fileName);
+                CCLOG("AssetsManagerEx : can not extract file %s\n", fileName);
                 unzClose(zipfile);
                 return false;
             }
@@ -301,7 +301,7 @@ bool AssetsManager::decompress(const std::string &zip)
             FILE *out = fopen(fullPath.c_str(), "wb");
             if (!out)
             {
-                CCLOG("AssetsManager : can not create decompress destination file %s\n", fullPath.c_str());
+                CCLOG("AssetsManagerEx : can not create decompress destination file %s\n", fullPath.c_str());
                 unzCloseCurrentFile(zipfile);
                 unzClose(zipfile);
                 return false;
@@ -314,7 +314,7 @@ bool AssetsManager::decompress(const std::string &zip)
                 error = unzReadCurrentFile(zipfile, readBuffer, BUFFER_SIZE);
                 if (error < 0)
                 {
-                    CCLOG("AssetsManager : can not read zip file %s, error code is %d\n", fileName, error);
+                    CCLOG("AssetsManagerEx : can not read zip file %s, error code is %d\n", fileName, error);
                     fclose(out);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
@@ -337,7 +337,7 @@ bool AssetsManager::decompress(const std::string &zip)
         {
             if (unzGoToNextFile(zipfile) != UNZ_OK)
             {
-                CCLOG("AssetsManager : can not read next file for decompressing\n");
+                CCLOG("AssetsManagerEx : can not read next file for decompressing\n");
                 unzClose(zipfile);
                 return false;
             }
@@ -348,32 +348,32 @@ bool AssetsManager::decompress(const std::string &zip)
     return true;
 }
 
-void AssetsManager::decompressDownloadedZip()
+void AssetsManagerEx::decompressDownloadedZip()
 {
     // Decompress all compressed files
     for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
         std::string zipfile = *it;
         if (!decompress(zipfile))
         {
-            dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
         }
         _fileUtils->removeFile(zipfile);
     }
     _compressedFiles.clear();
 }
 
-void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, const std::string &assetId/* = ""*/, const std::string &message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
+void AssetsManagerEx::dispatchUpdateEvent(EventAssetsManagerEx::EventCode code, const std::string &assetId/* = ""*/, const std::string &message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
-    EventAssetsManager event(_eventName, this, code, _percent, _percentByFile, assetId, message, curle_code, curlm_code);
+    EventAssetsManagerEx event(_eventName, this, code, _percent, _percentByFile, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);
 }
 
-AssetsManager::State AssetsManager::getState() const
+AssetsManagerEx::State AssetsManagerEx::getState() const
 {
     return _updateState;
 }
 
-void AssetsManager::downloadVersion()
+void AssetsManagerEx::downloadVersion()
 {
     if (_updateState != State::PREDOWNLOAD_VERSION)
         return;
@@ -389,13 +389,13 @@ void AssetsManager::downloadVersion()
     // No version file found
     else
     {
-        CCLOG("AssetsManager : No version file found, step skipped\n");
+        CCLOG("AssetsManagerEx : No version file found, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
 }
 
-void AssetsManager::parseVersion()
+void AssetsManagerEx::parseVersion()
 {
     if (_updateState != State::VERSION_LOADED)
         return;
@@ -404,7 +404,7 @@ void AssetsManager::parseVersion()
 
     if (!_remoteManifest->isVersionLoaded())
     {
-        CCLOG("AssetsManager : Fail to parse version file, step skipped\n");
+        CCLOG("AssetsManagerEx : Fail to parse version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
@@ -413,12 +413,12 @@ void AssetsManager::parseVersion()
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
-            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
         }
         else
         {
             _updateState = State::NEED_UPDATE;
-            dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::NEW_VERSION_FOUND);
 
             // Wait to update so continue the process
             if (_waitToUpdate)
@@ -430,7 +430,7 @@ void AssetsManager::parseVersion()
     }
 }
 
-void AssetsManager::downloadManifest()
+void AssetsManagerEx::downloadManifest()
 {
     if (_updateState != State::PREDOWNLOAD_MANIFEST)
         return;
@@ -445,13 +445,13 @@ void AssetsManager::downloadManifest()
     // No manifest file found
     else
     {
-        CCLOG("AssetsManager : No manifest file found, check update failed\n");
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST);
+        CCLOG("AssetsManagerEx : No manifest file found, check update failed\n");
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST);
         _updateState = State::UNCHECKED;
     }
 }
 
-void AssetsManager::parseManifest()
+void AssetsManagerEx::parseManifest()
 {
     if (_updateState != State::MANIFEST_LOADED)
         return;
@@ -460,8 +460,8 @@ void AssetsManager::parseManifest()
 
     if (!_remoteManifest->isLoaded())
     {
-        CCLOG("AssetsManager : Error parsing manifest file\n");
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
+        CCLOG("AssetsManagerEx : Error parsing manifest file\n");
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
     }
     else
@@ -469,12 +469,12 @@ void AssetsManager::parseManifest()
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
-            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
         }
         else
         {
             _updateState = State::NEED_UPDATE;
-            dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::NEW_VERSION_FOUND);
 
             if (_waitToUpdate)
             {
@@ -484,7 +484,7 @@ void AssetsManager::parseManifest()
     }
 }
 
-void AssetsManager::startUpdate()
+void AssetsManagerEx::startUpdate()
 {
     if (_updateState != State::NEED_UPDATE)
         return;
@@ -508,7 +508,7 @@ void AssetsManager::startUpdate()
         _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
         
         std::string msg = StringUtils::format("Resuming from previous unfinished update, %d files remains to be finished.", _totalToDownload);
-        dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "", msg);
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
     }
     // Check difference
     else
@@ -527,7 +527,7 @@ void AssetsManager::startUpdate()
             _updateState = State::UP_TO_DATE;
             // Rename temporary manifest to valid manifest
             _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
-            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
         }
         else
         {
@@ -571,14 +571,14 @@ void AssetsManager::startUpdate()
             _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
             
             std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "", msg);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
         }
     }
 
     _waitToUpdate = false;
 }
 
-void AssetsManager::updateSucceed()
+void AssetsManagerEx::updateSucceed()
 {
     // Every thing is correctly downloaded, do the following
     // 1. rename temporary manifest to valid manifest
@@ -595,15 +595,15 @@ void AssetsManager::updateSucceed()
     // 5. Set update state
     _updateState = State::UP_TO_DATE;
     // 6. Notify finished event
-    dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+    dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FINISHED);
 }
 
-void AssetsManager::checkUpdate()
+void AssetsManagerEx::checkUpdate()
 {
     if (!_localManifest->isLoaded())
     {
-        CCLOG("AssetsManager : No local manifest file found error.\n");
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
+        CCLOG("AssetsManagerEx : No local manifest file found error.\n");
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
 
@@ -616,13 +616,13 @@ void AssetsManager::checkUpdate()
             break;
         case State::UP_TO_DATE:
         {
-            dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
         }
             break;
         case State::FAIL_TO_UPDATE:
         case State::NEED_UPDATE:
         {
-            dispatchUpdateEvent(EventAssetsManager::EventCode::NEW_VERSION_FOUND);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::NEW_VERSION_FOUND);
         }
             break;
         default:
@@ -630,12 +630,12 @@ void AssetsManager::checkUpdate()
     }
 }
 
-void AssetsManager::update()
+void AssetsManagerEx::update()
 {
     if (!_localManifest->isLoaded())
     {
-        CCLOG("AssetsManager : No local manifest file found error.\n");
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
+        CCLOG("AssetsManagerEx : No local manifest file found error.\n");
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
 
@@ -691,7 +691,7 @@ void AssetsManager::update()
     }
 }
 
-void AssetsManager::updateAssets(const Downloader::DownloadUnits& assets)
+void AssetsManagerEx::updateAssets(const Downloader::DownloadUnits& assets)
 {
     if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
     {
@@ -710,30 +710,30 @@ void AssetsManager::updateAssets(const Downloader::DownloadUnits& assets)
     }
 }
 
-const Downloader::DownloadUnits& AssetsManager::getFailedAssets() const
+const Downloader::DownloadUnits& AssetsManagerEx::getFailedAssets() const
 {
     return _failedUnits;
 }
 
-void AssetsManager::downloadFailedAssets()
+void AssetsManagerEx::downloadFailedAssets()
 {
-    CCLOG("AssetsManager : Start update %lu failed assets.\n", _failedUnits.size());
+    CCLOG("AssetsManagerEx : Start update %lu failed assets.\n", _failedUnits.size());
     updateAssets(_failedUnits);
 }
 
 
-void AssetsManager::onError(const Downloader::Error &error)
+void AssetsManagerEx::onError(const Downloader::Error &error)
 {
     // Skip version error occured
     if (error.customId == VERSION_ID)
     {
-        CCLOG("AssetsManager : Fail to download version file, step skipped\n");
+        CCLOG("AssetsManagerEx : Fail to download version file, step skipped\n");
         _updateState = State::PREDOWNLOAD_MANIFEST;
         downloadManifest();
     }
     else if (error.customId == MANIFEST_ID)
     {
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
     }
     else
     {
@@ -744,17 +744,17 @@ void AssetsManager::onError(const Downloader::Error &error)
             Downloader::DownloadUnit unit = unitIt->second;
             _failedUnits.emplace(unit.customId, unit);
         }
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
     }
 }
 
-void AssetsManager::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
+void AssetsManagerEx::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
 {
     if (customId == VERSION_ID || customId == MANIFEST_ID)
     {
         _percent = 100 * (total - downloaded) / total;
         // Notify progression event
-        dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, customId);
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, customId);
         return;
     }
     else
@@ -794,13 +794,13 @@ void AssetsManager::onProgress(double total, double downloaded, const std::strin
             if ((int)currentPercent != (int)_percent) {
                 _percent = currentPercent;
                 // Notify progression event
-                dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "");
+                dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
             }
         }
     }
 }
 
-void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
 {
     if (customId == VERSION_ID)
     {
@@ -823,7 +823,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
             decompressDownloadedZip();
             
             _updateState = State::FAIL_TO_UPDATE;
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FAILED);
         }
         else
         {
@@ -853,10 +853,10 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
             
             _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
             // Notify progression event
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "");
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
         }
         // Notify asset updated event
-        dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ASSET_UPDATED, customId);
         
         unitIt = _failedUnits.find(customId);
         // Found unit and delete it
@@ -868,7 +868,7 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
     }
 }
 
-void AssetsManager::destroyDownloadedVersion()
+void AssetsManagerEx::destroyDownloadedVersion()
 {
     _fileUtils->removeFile(_cacheVersionPath);
     _fileUtils->removeFile(_cacheManifestPath);

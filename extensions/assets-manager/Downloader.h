@@ -37,7 +37,7 @@ class CC_DLL Downloader : public std::enable_shared_from_this<Downloader>
 {
 public:
 
-    friend class AssetsManager;
+    friend class AssetsManagerEx;
 
     enum class ErrorCode
     {

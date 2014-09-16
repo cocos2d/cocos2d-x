@@ -22,24 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerAssetsManager.h"
-#include "CCEventAssetsManager.h"
-#include "AssetsManager.h"
+#include "CCEventListenerAssetsManagerEx.h"
+#include "CCEventAssetsManagerEx.h"
+#include "AssetsManagerEx.h"
 
 NS_CC_EXT_BEGIN
 
-const std::string EventListenerAssetsManager::LISTENER_ID = "__cc_assets_manager_";
+const std::string EventListenerAssetsManagerEx::LISTENER_ID = "__cc_assets_manager_";
 
-EventListenerAssetsManager::EventListenerAssetsManager()
-: _onAssetsManagerEvent(nullptr)
-, _assetsManager(nullptr)
+EventListenerAssetsManagerEx::EventListenerAssetsManagerEx()
+: _onAssetsManagerExEvent(nullptr)
+, _AssetsManagerEx(nullptr)
 {
 }
 
-EventListenerAssetsManager* EventListenerAssetsManager::create(cocos2d::extension::AssetsManager *assetsManager, const std::function<void(EventAssetsManager*)>& callback)
+EventListenerAssetsManagerEx* EventListenerAssetsManagerEx::create(cocos2d::extension::AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback)
 {
-    EventListenerAssetsManager* ret = new EventListenerAssetsManager();
-    if (ret && ret->init(assetsManager, callback))
+    EventListenerAssetsManagerEx* ret = new EventListenerAssetsManagerEx();
+    if (ret && ret->init(AssetsManagerEx, callback))
     {
         ret->autorelease();
     }
@@ -50,19 +50,19 @@ EventListenerAssetsManager* EventListenerAssetsManager::create(cocos2d::extensio
     return ret;
 }
 
-bool EventListenerAssetsManager::init(const AssetsManager *assetsManager, const std::function<void(EventAssetsManager*)>& callback)
+bool EventListenerAssetsManagerEx::init(const AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback)
 {
     bool ret = false;
     
-    _assetsManager = assetsManager;
-    _onAssetsManagerEvent = callback;
+    _AssetsManagerEx = AssetsManagerEx;
+    _onAssetsManagerExEvent = callback;
     
     auto func = [this](EventCustom *event) -> void
     {
-        EventAssetsManager *eventAssetsManager = dynamic_cast<EventAssetsManager*>(event);
-        _onAssetsManagerEvent(eventAssetsManager);
+        EventAssetsManagerEx *eventAssetsManagerEx = dynamic_cast<EventAssetsManagerEx*>(event);
+        _onAssetsManagerExEvent(eventAssetsManagerEx);
     };
-    std::string pointer = StringUtils::format("%p", assetsManager);
+    std::string pointer = StringUtils::format("%p", AssetsManagerEx);
     if (EventListenerCustom::init(LISTENER_ID + pointer, func))
     {
         ret = true;
@@ -70,10 +70,10 @@ bool EventListenerAssetsManager::init(const AssetsManager *assetsManager, const 
     return ret;
 }
 
-EventListenerAssetsManager* EventListenerAssetsManager::clone()
+EventListenerAssetsManagerEx* EventListenerAssetsManagerEx::clone()
 {
-    EventListenerAssetsManager* ret = new EventListenerAssetsManager();
-    if (ret && ret->init(_assetsManager, _onAssetsManagerEvent))
+    EventListenerAssetsManagerEx* ret = new EventListenerAssetsManagerEx();
+    if (ret && ret->init(_AssetsManagerEx, _onAssetsManagerExEvent))
     {
         ret->autorelease();
     }
@@ -84,10 +84,10 @@ EventListenerAssetsManager* EventListenerAssetsManager::clone()
     return ret;
 }
 
-bool EventListenerAssetsManager::checkAvailable()
+bool EventListenerAssetsManagerEx::checkAvailable()
 {
     bool ret = false;
-    if (EventListener::checkAvailable() && _assetsManager != nullptr && _onAssetsManagerEvent != nullptr)
+    if (EventListener::checkAvailable() && _AssetsManagerEx != nullptr && _onAssetsManagerExEvent != nullptr)
     {
         ret = true;
     }

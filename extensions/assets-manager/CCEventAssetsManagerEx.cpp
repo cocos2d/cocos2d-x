@@ -22,14 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventAssetsManager.h"
+#include "CCEventAssetsManagerEx.h"
 #include "base/ccMacros.h"
 #include <functional>
-#include "AssetsManager.h"
+#include "AssetsManagerEx.h"
 
 NS_CC_EXT_BEGIN
 
-EventAssetsManager::EventAssetsManager(const std::string& eventName, cocos2d::extension::AssetsManager *manager, const EventCode &code, float percent/* = 0 */, float percentByFile/* = 0*/, const std::string& assetId/* = "" */, const std::string& message/* = "" */, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
+EventAssetsManagerEx::EventAssetsManagerEx(const std::string& eventName, cocos2d::extension::AssetsManagerEx *manager, const EventCode &code, float percent/* = 0 */, float percentByFile/* = 0*/, const std::string& assetId/* = "" */, const std::string& message/* = "" */, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 : EventCustom(eventName)
 , _manager(manager)
 , _code(code)
