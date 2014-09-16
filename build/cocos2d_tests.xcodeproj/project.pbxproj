@@ -938,6 +938,8 @@
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B609E67319C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
+		BAF92D5219C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */; };
+		BAF92D5319C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -2961,6 +2963,8 @@
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		B609E67119C18DAD003D0074 /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
+		BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManagerExTest.cpp; sourceTree = "<group>"; };
+		BAF92D5119C89BAC003BCFEF /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManagerExTest.h; sourceTree = "<group>"; };
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
@@ -5778,6 +5782,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				BAF92D4F19C89BAC003BCFEF /* AssetsManagerExTest */,
 				38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
@@ -7160,6 +7165,15 @@
 			name = BillBoardTest;
 			sourceTree = "<group>";
 		};
+		BAF92D4F19C89BAC003BCFEF /* AssetsManagerExTest */ = {
+			isa = PBXGroup;
+			children = (
+				BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */,
+				BAF92D5119C89BAC003BCFEF /* AssetsManagerExTest.h */,
+			);
+			path = AssetsManagerExTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -8143,6 +8157,7 @@
 				1AC35C2918CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35CA618CECF1E00F37B72 /* main.cpp in Sources */,
 				1AC35BE918CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
+				BAF92D5219C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B7318CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
 				1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				1AC35C3518CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
@@ -8270,6 +8285,7 @@
 				1AC35C5E18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35B7C18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
 				1AC35BF418CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
+				BAF92D5319C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B3618CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2E18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				29080DCA191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
