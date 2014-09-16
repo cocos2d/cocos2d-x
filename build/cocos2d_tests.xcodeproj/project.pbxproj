@@ -647,8 +647,8 @@
 		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
-		1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
-		1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
+		1AC35D8318CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */; };
+		1AC35D8418CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */; };
 		1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D8718CEE5D100F37B72 /* AppController.mm */; };
 		1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */; };
 		1AC35D9A18CEE5D100F37B72 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8918CEE5D100F37B72 /* Default.png */; };
@@ -837,8 +837,8 @@
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
-		BA53B19E192B556F002E0804 /* AssetsManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */; };
-		BA53B19F192B556F002E0804 /* AssetsManagerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */; };
+		BA53B19E192B556F002E0804 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B19C192B556F002E0804 /* AssetsManagerExTest.cpp */; };
+		BA53B19F192B556F002E0804 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA53B19C192B556F002E0804 /* AssetsManagerExTest.cpp */; };
 		BA53B1B5192C4035002E0804 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B1B4192C4035002E0804 /* Manifests */; };
 		BA53B1B6192C4035002E0804 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BA53B1B4192C4035002E0804 /* Manifests */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -1739,8 +1739,8 @@
 		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
-		1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
+		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanagerex_test_sample.cpp; sourceTree = "<group>"; };
+		1AC35D8018CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanagerex_test_sample.h; sourceTree = "<group>"; };
 		1AC35D8618CEE5D100F37B72 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1AC35D8718CEE5D100F37B72 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1882,8 +1882,8 @@
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
-		BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AssetsManagerTest.cpp; path = ExtensionsTest/AssetsManagerTest/AssetsManagerTest.cpp; sourceTree = "<group>"; };
-		BA53B19D192B556F002E0804 /* AssetsManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssetsManagerTest.h; path = ExtensionsTest/AssetsManagerTest/AssetsManagerTest.h; sourceTree = "<group>"; };
+		BA53B19C192B556F002E0804 /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AssetsManagerExTest.cpp; path = ExtensionsTest/AssetsManagerTest/AssetsManagerExTest.cpp; sourceTree = "<group>"; };
+		BA53B19D192B556F002E0804 /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssetsManagerExTest.h; path = ExtensionsTest/AssetsManagerTest/AssetsManagerExTest.h; sourceTree = "<group>"; };
 		BA53B1B4192C4035002E0804 /* Manifests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Manifests; path = "../tests/cpp-tests/Resources/Manifests"; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
@@ -2579,7 +2579,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				BA53B171192B07C1002E0804 /* AssetsManagerTest */,
+				BA53B171192B07C1002E0804 /* AssetsManagerExTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
 				1AC359DF18CECF0B00F37B72 /* CocoStudioComponentsTest */,
@@ -3435,8 +3435,8 @@
 			children = (
 				1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */,
 				1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */,
-				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */,
-				1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */,
+				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */,
+				1AC35D8018CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.h */,
 			);
 			name = Classes;
 			path = "../tests/lua-tests/project/Classes";
@@ -3851,13 +3851,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BA53B171192B07C1002E0804 /* AssetsManagerTest */ = {
+		BA53B171192B07C1002E0804 /* AssetsManagerExTest */ = {
 			isa = PBXGroup;
 			children = (
-				BA53B19C192B556F002E0804 /* AssetsManagerTest.cpp */,
-				BA53B19D192B556F002E0804 /* AssetsManagerTest.h */,
+				BA53B19C192B556F002E0804 /* AssetsManagerExTest.cpp */,
+				BA53B19D192B556F002E0804 /* AssetsManagerExTest.h */,
 			);
-			name = AssetsManagerTest;
+			name = AssetsManagerExTest;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -4595,7 +4595,7 @@
 				1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */,
-				1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
+				1AC35D8318CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4608,7 +4608,7 @@
 				1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */,
 				1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */,
-				1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
+				1AC35D8418CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4777,7 +4777,7 @@
 				29080DAB191B595E0066F8DF /* UIFocusTest.cpp in Sources */,
 				29080DD9191B595E0066F8DF /* UITextBMFontTest_Editor.cpp in Sources */,
 				1AC35B5918CECF0C00F37B72 /* controller.cpp in Sources */,
-				BA53B19E192B556F002E0804 /* AssetsManagerTest.cpp in Sources */,
+				BA53B19E192B556F002E0804 /* AssetsManagerExTest.cpp in Sources */,
 				1AC35C2918CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35CA618CECF1E00F37B72 /* main.cpp in Sources */,
 				1AC35BE918CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
@@ -4850,7 +4850,7 @@
 				29080DBE191B595E0066F8DF /* UIPageViewTest.cpp in Sources */,
 				1AC35BDC18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
 				1AC35B4C18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
-				BA53B19F192B556F002E0804 /* AssetsManagerTest.cpp in Sources */,
+				BA53B19F192B556F002E0804 /* AssetsManagerExTest.cpp in Sources */,
 				1AC35C5218CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B7A18CECF0C00F37B72 /* EnemyController.cpp in Sources */,
 				29080DE6191B595E0066F8DF /* UIWidgetAddNodeTest_Editor.cpp in Sources */,
