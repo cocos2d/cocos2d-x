@@ -25,7 +25,9 @@
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
 
+using namespace cocos2d;
 using namespace cocos2d::ui;
+using namespace cocos2d::experimental;
 
 namespace {
     
@@ -166,7 +168,7 @@ Layer* restartAction()
         bool _enabled;
     };
     
-    class SliderEx : public ui::Slider
+    class SliderEx : public Slider
     {
     public:
         enum class TouchEvent
