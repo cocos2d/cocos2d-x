@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module AudioProfile
--- @parent_module cc
+-- @parent_module ccexp
 
 --------------------------------
 -- 
