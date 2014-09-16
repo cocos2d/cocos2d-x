@@ -322,6 +322,9 @@
     <Filter Include="Classes\Camera3DTest">
       <UniqueIdentifier>{d17dc00f-2b4d-46af-a1ff-c3f4d937d621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\BillBoardTest">
+      <UniqueIdentifier>{4dadf399-3bf1-4d35-85d1-d8def766fe0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -856,6 +859,9 @@
       <Filter>Classes\Camera3DTest</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
+    <ClCompile Include="..\..\Classes\BillBoardTest\BillBoardTest.cpp">
+      <Filter>Classes\BillBoardTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1589,6 +1595,9 @@
       <Filter>Classes\Camera3DTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
+    <ClInclude Include="..\..\Classes\BillBoardTest\BillBoardTest.h">
+      <Filter>Classes\BillBoardTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libcurl.dll" />

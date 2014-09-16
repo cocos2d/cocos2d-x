@@ -451,7 +451,7 @@ void RichText::setAnchorPoint(const Vec2 &pt)
     _elementRenderersContainer->setAnchorPoint(pt);
 }
     
-const Size& RichText::getVirtualRendererSize() const
+Size RichText::getVirtualRendererSize() const
 {
     return _elementRenderersContainer->getContentSize();
 }

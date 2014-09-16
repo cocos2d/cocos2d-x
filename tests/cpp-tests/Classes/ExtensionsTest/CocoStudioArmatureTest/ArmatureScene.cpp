@@ -764,6 +764,10 @@ void TestColliderDetector::onEnter()
     bullet = cocos2d::extension::PhysicsSprite::createWithSpriteFrameName("25.png");
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     bullet = Sprite::createWithSpriteFrameName("25.png");
+
+    drawNode = DrawNode::create();
+    addChild(drawNode, -1);
+
 #endif
     addChild(bullet);
 
@@ -1070,21 +1074,35 @@ void TestColliderDetector::update(float delta)
 }
 void TestColliderDetector::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void TestColliderDetector::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-    
-    armature2->drawContour();
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    for(auto& element : armature2->getBoneDic())
+    {
+        Bone *bone = element.second;
+        ColliderDetector *detector = bone->getColliderDetector();
+        
+        if (!detector)
+            continue;
+        
+        const cocos2d::Vector<ColliderBody*>& bodyList = detector->getColliderBodyList();
+        
+        for (auto& object : bodyList)
+        {
+            ColliderBody *body = static_cast<ColliderBody*>(object);
+            const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
+            
+            unsigned long length = vertexList.size();
+            Vec2 *points = new Vec2[length];
+            for (unsigned long i = 0; i<length; i++)
+            {
+                Vec2 p = vertexList.at(i);
+                points[i].x = p.x;
+                points[i].y = p.y;
+            }
+            drawNode->clear();
+            drawNode->drawPoly(points, (unsigned int)length, true, Color4F(1.0, 1.0, 1.0, 1.0));
+            
+            delete []points;
+        }
+    }
 }
 #endif
 
@@ -1104,6 +1122,9 @@ void TestBoundingBox::onEnter()
 
     Sprite *sprite = Sprite::create("Images/background3.png");
     armature->addChild(sprite);
+
+    _drawNode = DrawNode::create();
+    this->addChild(_drawNode);
 }
 std::string TestBoundingBox::title() const
 {
@@ -1111,21 +1132,9 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-
-}
-
-void TestBoundingBox::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
-    
     rect = armature->getBoundingBox();
-    
-    DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
-    DrawPrimitives::drawRect(rect.origin, Vec2(rect.getMaxX(), rect.getMaxY()));
+    _drawNode->clear();
+    _drawNode->drawRect(rect.origin, Vec2(rect.getMaxX(), rect.getMaxY()), Color4F(1.0, 0.5, 0.5, 1.0));
 }
 
 void TestAnchorPoint::onEnter()

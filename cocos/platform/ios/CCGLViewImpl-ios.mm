@@ -101,7 +101,7 @@ GLViewImpl::GLViewImpl()
 
 GLViewImpl::~GLViewImpl()
 {
-    CCEAGLView *glview = (CCEAGLView*) _eaglview;
+    //CCEAGLView *glview = (CCEAGLView*) _eaglview;
     //[glview release];
 }
 

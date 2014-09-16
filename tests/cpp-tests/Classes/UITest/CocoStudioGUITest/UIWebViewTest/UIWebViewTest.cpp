@@ -43,12 +43,12 @@ bool WebViewTest::init()
         _webView = cocos2d::experimental::ui::WebView::create();
         _webView->setPosition(winSize/2);
         _webView->setContentSize(winSize * 0.5);
-        _webView->loadUrl("http://www.google.com");
+        _webView->loadURL("http://www.google.com");
         _webView->setScalesPageToFit(true);
         
-        _webView->shouldStartLoading = CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this);
-        _webView->didFinishLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFinishLoading, this);
-        _webView->didFailLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFailLoading, this);
+        _webView->setOnShouldStartLoading(CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this));
+        _webView->setOnDidFinishLoading(CC_CALLBACK_2(WebViewTest::onWebViewDidFinishLoading, this));
+        _webView->setOnDidFailLoading(CC_CALLBACK_2(WebViewTest::onWebViewDidFailLoading, this));
         
         this->addChild(_webView);
         
@@ -71,7 +71,7 @@ bool WebViewTest::init()
         resetBtn->setPosition(Vec2(winSize/2) + Vec2(50, _webView->getContentSize().height/2 +
                                             resetBtn->getContentSize().height/2 + 10));
         resetBtn->addClickEventListener([=](Ref*){
-            _webView->loadUrl(std::string("http://") + urlTextField->getStringValue());
+            _webView->loadURL(std::string("http://") + urlTextField->getString());
         });
         this->addChild(resetBtn);
         

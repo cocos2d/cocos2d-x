@@ -184,6 +184,7 @@
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
+    <ClCompile Include="..\..\Classes\BillBoardTest\BillBoardTest.cpp" />
     <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\..\Classes\Camera3DTest\Camera3DTest.cpp" />
     <ClCompile Include="..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
@@ -378,6 +379,7 @@
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
     <ClInclude Include="..\..\Classes\BaseTest.h" />
+    <ClInclude Include="..\..\Classes\BillBoardTest\BillBoardTest.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\Mobile.h" />

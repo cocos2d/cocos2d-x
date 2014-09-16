@@ -468,7 +468,7 @@ void Widget::onSizeChanged()
     }
 }
 
-const Size& Widget::getVirtualRendererSize() const
+Size Widget::getVirtualRendererSize() const
 {
     return _contentSize;
 }

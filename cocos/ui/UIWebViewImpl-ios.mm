@@ -231,24 +231,24 @@ WebViewImpl::WebViewImpl(WebView *webView)
     [_uiWebViewWrapper retain];
             
     _uiWebViewWrapper.shouldStartLoading = [this](std::string url) {
-        if (this->_webView->shouldStartLoading) {
-            return this->_webView->shouldStartLoading(this->_webView, url);
+        if (this->_webView->_onShouldStartLoading) {
+            return this->_webView->_onShouldStartLoading(this->_webView, url);
         }
         return true;
     };
     _uiWebViewWrapper.didFinishLoading = [this](std::string url) {
-        if (this->_webView->didFinishLoading) {
-            this->_webView->didFinishLoading(this->_webView, url);
+        if (this->_webView->_onDidFinishLoading) {
+            this->_webView->_onDidFinishLoading(this->_webView, url);
         }
     };
     _uiWebViewWrapper.didFailLoading = [this](std::string url) {
-        if (this->_webView->didFailLoading) {
-            this->_webView->didFailLoading(this->_webView, url);
+        if (this->_webView->_onDidFailLoading) {
+            this->_webView->_onDidFailLoading(this->_webView, url);
         }
     };
     _uiWebViewWrapper.onJsCallback = [this](std::string url) {
-        if (this->_webView->onJsCallback) {
-            this->_webView->onJsCallback(this->_webView, url);
+        if (this->_webView->_onJSCallback) {
+            this->_webView->_onJSCallback(this->_webView, url);
         }
     };
 }
@@ -275,7 +275,7 @@ void WebViewImpl::loadHTMLString(const std::string &string, const std::string &b
     [_uiWebViewWrapper loadHTMLString:string baseURL:baseURL];
 }
 
-void WebViewImpl::loadUrl(const std::string &url) {
+void WebViewImpl::loadURL(const std::string &url) {
     [_uiWebViewWrapper loadUrl:url];
 }
 

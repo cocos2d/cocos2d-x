@@ -297,9 +297,14 @@ void AudioEngineTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-void AudioEngineTestDemo::backCallback(Ref* sender)
+void AudioEngineTestDemo::onExit()
 {
     AudioEngine::stopAll();
+    BaseTest::onExit();
+}
+
+void AudioEngineTestDemo::backCallback(Ref* sender)
+{
     auto scene = new AudioEngineTestScene();
     auto layer = backAction();
     
@@ -310,7 +315,6 @@ void AudioEngineTestDemo::backCallback(Ref* sender)
 
 void AudioEngineTestDemo::nextCallback(Ref* sender)
 {
-    AudioEngine::stopAll();
     auto scene = new AudioEngineTestScene();
     auto layer = nextAction();
     
@@ -321,7 +325,6 @@ void AudioEngineTestDemo::nextCallback(Ref* sender)
 
 void AudioEngineTestDemo::restartCallback(Ref* sender)
 {
-    AudioEngine::stopAll();
     auto scene = new AudioEngineTestScene();
     auto layer = restartAction();
     

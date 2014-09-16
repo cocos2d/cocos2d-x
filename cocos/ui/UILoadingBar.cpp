@@ -265,7 +265,7 @@ void LoadingBar::ignoreContentAdaptWithSize(bool ignore)
     }
 }
 
-const Size& LoadingBar::getVirtualRendererSize() const
+Size LoadingBar::getVirtualRendererSize() const
 {
     return _barRendererTextureSize;
 }

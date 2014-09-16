@@ -64,15 +64,17 @@ FontAtlas::FontAtlas(Font &theFont)
             _letterPadding += 2 * FontFreeType::DistanceMapSpread;    
         }
         _currentPageDataSize = CacheTextureWidth * CacheTextureHeight;
-        if(fontTTf->getOutlineSize() > 0)
+        auto outlineSize = fontTTf->getOutlineSize();
+        if(outlineSize > 0)
         {
+            _commonLineHeight += 2 * outlineSize * CC_CONTENT_SCALE_FACTOR();
             _currentPageDataSize *= 2;
         }    
 
         _currentPageData = new unsigned char[_currentPageDataSize];
         memset(_currentPageData, 0, _currentPageDataSize);
 
-        auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
+        auto  pixelFormat = outlineSize > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
         texture->initWithData(_currentPageData, _currentPageDataSize, 
             pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
 

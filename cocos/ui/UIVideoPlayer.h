@@ -84,8 +84,7 @@ namespace experimental{
             virtual ~VideoPlayer();
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
-            CustomCommand _customDebugDrawCommand;
-            void VideoPlayer::drawDebugData();
+            DrawNode *_debugDrawNode;
 #endif
 
             enum class Source

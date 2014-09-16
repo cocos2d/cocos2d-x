@@ -81,7 +81,7 @@ public:
      */
     ssize_t getStringLength()const;
 
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     /**
      * Returns the "class name" of widget.

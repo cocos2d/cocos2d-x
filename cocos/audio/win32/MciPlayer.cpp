@@ -161,6 +161,7 @@ void MciPlayer::Stop()
 {
     _SendGenericCommand(MCI_STOP);
     _playing = false;
+    _times = 0;
 }
 
 void MciPlayer::Rewind()

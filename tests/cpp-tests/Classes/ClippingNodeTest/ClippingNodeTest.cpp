@@ -677,15 +677,75 @@ void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
 {
     this->setupStencilForClippingOnPlane(planeIndex);
     CHECK_GL_ERROR_DEBUG();
-    DrawPrimitives::drawSolidRect(Vec2::ZERO, pt, Color4F(1, 1, 1, 1));
+
+    Vec2 vertices[] = {
+        Vec2::ZERO,
+        Vec2(pt.x, 0),
+        pt,
+        Vec2(0, pt.y)
+    };
+    
+    auto glProgram= GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    glProgram->retain();
+    
+    int colorLocation = glProgram->getUniformLocation("u_color");
+    CHECK_GL_ERROR_DEBUG();
+
+    Color4F color(1, 1, 1, 1);
+    
+    glProgram->use();
+    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+    
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vec2)*4, vertices, GL_STREAM_DRAW);
+    
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
 
 void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
 {
     this->setupStencilForDrawingOnPlane(planeIndex);
     CHECK_GL_ERROR_DEBUG();
-    
-    DrawPrimitives::drawSolidRect(Vec2::ZERO, pt, _planeColor[planeIndex]);
+        
+    Vec2 vertices[] = {
+        Vec2::ZERO,
+        Vec2(pt.x, 0),
+        pt,
+        Vec2(0, pt.y)
+    };
+
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    glProgram->retain();
+
+    int colorLocation = glProgram->getUniformLocation("u_color");
+    CHECK_GL_ERROR_DEBUG();
+
+    Color4F color = _planeColor[planeIndex];
+    glProgram->use();
+    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vec2)*4, vertices, GL_STREAM_DRAW);
+
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 }
 
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
@@ -861,7 +921,40 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    DrawPrimitives::drawSolidRect(Vec2::ZERO, Vec2(Director::getInstance()->getWinSize()), Color4F(1, 1, 1, 1));
+  
+    Vec2 pt = Director::getInstance()->getWinSize();
+    Vec2 vertices[] = {
+        Vec2::ZERO,
+        Vec2(pt.x, 0),
+        pt,
+        Vec2(0, pt.y)
+    };
+
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    glProgram->retain();
+
+    int colorLocation = glProgram->getUniformLocation("u_color");
+    CHECK_GL_ERROR_DEBUG();
+
+    Color4F color(1, 1, 1, 1);
+
+    glProgram->use();
+    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vec2)*4, vertices, GL_STREAM_DRAW);
+
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
+    
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
     glDisable(GL_DEPTH_TEST);

@@ -584,9 +584,6 @@
     <ClCompile Include="..\base\CCCamera.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCModuleManager.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -598,6 +595,12 @@
     </ClCompile>
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\ccRandom.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1209,9 +1212,6 @@
     <ClInclude Include="..\base\CCCamera.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCModuleManager.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="..\renderer\CCPrimitiveCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -1223,6 +1223,27 @@
     </ClInclude>
     <ClInclude Include="..\renderer\CCVertexIndexData.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformDefine.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGL.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCStdC.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\ccRandom.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

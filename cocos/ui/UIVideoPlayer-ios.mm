@@ -275,6 +275,11 @@ VideoPlayer::VideoPlayer()
 , _isPlaying(false)
 {
     _videoView = [[UIVideoViewWrapperIos alloc] init:this];
+
+#if CC_VIDEOPLAYER_DEBUG_DRAW
+    _debugDrawNode = DrawNode::create();
+    addChild(_debugDrawNode);
+#endif
 }
 
 VideoPlayer::~VideoPlayer()
@@ -324,9 +329,16 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
     }
     
 #if CC_VIDEOPLAYER_DEBUG_DRAW
-    _customDebugDrawCommand.init(_globalZOrder);
-    _customDebugDrawCommand.func = CC_CALLBACK_0(VideoPlayer::drawDebugData, this);
-    renderer->addCommand(&_customDebugDrawCommand);
+    _debugDrawNode->clear();
+    auto size = getContentSize();
+    Point vertices[4]=
+    {
+        Point::ZERO,
+        Point(size.width, 0),
+        Point(size.width, size.height),
+        Point(0, size.height)
+    };
+    _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif
 }
 
@@ -348,31 +360,6 @@ void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
         [((UIVideoViewWrapperIos*)_videoView) setKeepRatioEnabled:enable];
     }
 }
-
-#if CC_VIDEOPLAYER_DEBUG_DRAW
-void VideoPlayer::drawDebugData()
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    
-    auto size = getContentSize();
-    
-    Point vertices[4]=
-    {
-        Point::ZERO,
-        Point(size.width, 0),
-        Point(size.width, size.height),
-        Point(0, size.height)
-    };
-    
-    DrawPrimitives::drawPoly(vertices, 4, true);
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-}
-#endif
 
 void VideoPlayer::play()
 {

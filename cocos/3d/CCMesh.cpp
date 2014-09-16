@@ -43,6 +43,7 @@ Mesh::Mesh()
 , _visibleChanged(nullptr)
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+, _isTransparent(false)
 {
     
 }

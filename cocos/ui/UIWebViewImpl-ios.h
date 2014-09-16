@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_plugin_WebViewImpl_IOS_H_
-#define __cocos2d_plugin_WebViewImpl_IOS_H_
+#ifndef __COCOS2D_UI_WEBVIEWIMPL_IOS_H_
+#define __COCOS2D_UI_WEBVIEWIMPL_IOS_H_
 
 #include <iosfwd>
 
@@ -55,7 +55,7 @@ public:
 
     void loadHTMLString(const std::string &string, const std::string &baseURL);
 
-    void loadUrl(const std::string &url);
+    void loadURL(const std::string &url);
 
     void loadFile(const std::string &fileName);
 
@@ -88,4 +88,4 @@ private:
   } // namespace experimental
 }//namespace cocos2d
 
-#endif //__cocos2d_plugin_WebViewImpl_IOS_H_
+#endif /* __COCOS2D_UI_WEBVIEWIMPL_IOS_H_ */

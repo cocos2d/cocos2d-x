@@ -108,7 +108,7 @@ public:
      */
     virtual std::string getDescription() const override;
 
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     
 CC_CONSTRUCTOR_ACCESS:

@@ -238,7 +238,7 @@ void ImageView::adaptRenderers()
     }
 }
 
-const Size& ImageView::getVirtualRendererSize() const
+Size ImageView::getVirtualRendererSize() const
 {
     return _imageTextureSize;
 }

@@ -106,7 +106,7 @@ public:
 
     void setVerticalSpace(float space);
     virtual void setAnchorPoint(const Vec2 &pt);
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     void formatText();
     virtual void ignoreContentAdaptWithSize(bool ignore);
     virtual std::string getDescription() const override;
