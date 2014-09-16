@@ -278,7 +278,7 @@ VideoPlayer::VideoPlayer()
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
-    addchild(_debugDrawNode);
+    addChild(_debugDrawNode);
 #endif
 }
 
@@ -338,7 +338,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
         Point(size.width, size.height),
         Point(0, size.height)
     };
-    _debugdrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif
 }
 

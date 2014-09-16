@@ -17,11 +17,11 @@
     <ClCompile Include="src\EditBoxEvent.cpp">
       <Filter>platform_src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\HelloWorldScene.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\AppDelegate.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,19 +44,19 @@
     <ClInclude Include="src\EditBoxEvent.h">
       <Filter>platform_src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\AppDelegate.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\HelloWorldScene.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\Classes\HelloWorldScene.h">
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="platform_src">
       <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{6e41adf9-1cf5-4085-ae27-accb4c9eab3d}</UniqueIdentifier>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{ddb0f381-1dc4-44a0-ab28-0f672a551265}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

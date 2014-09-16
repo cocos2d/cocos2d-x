@@ -25,7 +25,9 @@
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
 
+using namespace cocos2d;
 using namespace cocos2d::ui;
+using namespace cocos2d::experimental;
 
 namespace {
     
@@ -166,7 +168,7 @@ Layer* restartAction()
         bool _enabled;
     };
     
-    class SliderEx : public ui::Slider
+    class SliderEx : public Slider
     {
     public:
         enum class TouchEvent
@@ -297,9 +299,14 @@ void AudioEngineTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
-void AudioEngineTestDemo::backCallback(Ref* sender)
+void AudioEngineTestDemo::onExit()
 {
     AudioEngine::stopAll();
+    BaseTest::onExit();
+}
+
+void AudioEngineTestDemo::backCallback(Ref* sender)
+{
     auto scene = new AudioEngineTestScene();
     auto layer = backAction();
     
@@ -310,7 +317,6 @@ void AudioEngineTestDemo::backCallback(Ref* sender)
 
 void AudioEngineTestDemo::nextCallback(Ref* sender)
 {
-    AudioEngine::stopAll();
     auto scene = new AudioEngineTestScene();
     auto layer = nextAction();
     
@@ -321,7 +327,6 @@ void AudioEngineTestDemo::nextCallback(Ref* sender)
 
 void AudioEngineTestDemo::restartCallback(Ref* sender)
 {
-    AudioEngine::stopAll();
     auto scene = new AudioEngineTestScene();
     auto layer = restartAction();
     

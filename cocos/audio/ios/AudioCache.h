@@ -39,6 +39,7 @@
 #define QUEUEBUFFER_TIME_STEP 0.1
 
 NS_CC_BEGIN
+namespace experimental{
 
 class AudioEngineImpl;
 class AudioPlayer;
@@ -91,6 +92,7 @@ private:
     friend class AudioPlayer;
 } ;
 
+}
 NS_CC_END
 
 #endif // __AUDIO_CACHE_H_

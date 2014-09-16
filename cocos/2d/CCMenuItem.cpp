@@ -97,6 +97,11 @@ bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 
 MenuItem::~MenuItem()
 {
+}
+
+void MenuItem::onExit()
+{
+	Node::onExit();
 	CC_SAFE_RELEASE(_target);
 }
 
