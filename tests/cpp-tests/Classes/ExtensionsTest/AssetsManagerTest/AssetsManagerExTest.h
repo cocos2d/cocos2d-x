@@ -1,19 +1,19 @@
-#ifndef __AssetsManager_Test_H__
-#define __AssetsManager_Test_H__
+#ifndef __AssetsManagerEx_Test_H__
+#define __AssetsManagerEx_Test_H__
 
 #include "extensions/cocos-ext.h"
 #include "../../testBasic.h"
 #include "../../BaseTest.h"
-#include "extensions/assets-manager/AssetsManager.h"
+#include "extensions/assets-manager/AssetsManagerEx.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class AssetsManagerTestLayer : public BaseTest
+class AssetsManagerExTestLayer : public BaseTest
 {
 public:
-    AssetsManagerTestLayer(const std::string& spritePath);
-    ~AssetsManagerTestLayer(void);
+    AssetsManagerExTestLayer(const std::string& spritePath);
+    ~AssetsManagerExTestLayer(void);
     
     virtual std::string title() const;
     void onEnter();
@@ -27,17 +27,17 @@ private:
     std::string _spritePath;
 };
 
-class AssetsManagerTestScene : public TestScene
+class AssetsManagerExTestScene : public TestScene
 {
 public:
-    AssetsManagerTestScene(std::string background);
+    AssetsManagerExTestScene(std::string background);
     virtual void runThisTest() override;
 };
 
-class AssetsManagerLoaderScene : public TestScene
+class AssetsManagerExLoaderScene : public TestScene
 {
 public:
-    AssetsManagerLoaderScene();
+    AssetsManagerExLoaderScene();
     
     virtual void runThisTest() override;
     
@@ -46,9 +46,9 @@ public:
     static int currentScene;
     
 private:
-    AssetsManager *_am;
+    AssetsManagerEx *_am;
     Label *_progress;
-    EventListenerAssetsManager* _amListener;
+    EventListenerAssetsManagerEx* _amListener;
 };
 
-#endif /* defined(__AssetsManager_Test_H__) */
+#endif /* defined(__AssetsManagerEx_Test_H__) */

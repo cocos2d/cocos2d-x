@@ -1,28 +1,28 @@
-#include "AssetsManagerTest.h"
+#include "AssetsManagerExTest.h"
 #include "../../testResource.h"
 #include "cocos2d.h"
-#include "extensions/assets-manager/CCEventAssetsManager.h"
-#include "extensions/assets-manager/CCEventListenerAssetsManager.h"
+#include "extensions/assets-manager/CCEventAssetsManagerEx.h"
+#include "extensions/assets-manager/CCEventListenerAssetsManagerEx.h"
 
 const char* sceneManifests[] = {"AMTestScene1/project.manifest", "AMTestScene2/project.manifest", "AMTestScene3/project.manifest"};
-const char* storagePaths[] = {"CppTests/AssetsManagerTest/scene1/", "CppTests/AssetsManagerTest/scene2/", "CppTests/AssetsManagerTest/scene3"};
+const char* storagePaths[] = {"CppTests/AssetsManagerExTest/scene1/", "CppTests/AssetsManagerExTest/scene2/", "CppTests/AssetsManagerExTest/scene3"};
 const char* backgroundPaths[] = {"Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"};
 
-AssetsManagerTestLayer::AssetsManagerTestLayer(const std::string& spritePath)
+AssetsManagerExTestLayer::AssetsManagerExTestLayer(const std::string& spritePath)
 : _spritePath(spritePath)
 {
 }
 
-AssetsManagerTestLayer::~AssetsManagerTestLayer(void)
+AssetsManagerExTestLayer::~AssetsManagerExTestLayer(void)
 {
 }
 
-std::string AssetsManagerTestLayer::title() const
+std::string AssetsManagerExTestLayer::title() const
 {
-    return "AssetsManagerTest";
+    return "AssetsManagerExTest";
 }
 
-void AssetsManagerTestLayer::onEnter()
+void AssetsManagerExTestLayer::onEnter()
 {
     BaseTest::onEnter();
     _background = Sprite::create(_spritePath);
@@ -33,57 +33,57 @@ void AssetsManagerTestLayer::onEnter()
     }
 }
 
-void AssetsManagerTestLayer::restartCallback(Ref* sender)
+void AssetsManagerExTestLayer::restartCallback(Ref* sender)
 {
 }
 
-void AssetsManagerTestLayer::nextCallback(Ref* sender)
+void AssetsManagerExTestLayer::nextCallback(Ref* sender)
 {
-    if (AssetsManagerLoaderScene::currentScene < 2)
+    if (AssetsManagerExLoaderScene::currentScene < 2)
     {
-        AssetsManagerLoaderScene::currentScene++;
+        AssetsManagerExLoaderScene::currentScene++;
     }
     else
     {
-        AssetsManagerLoaderScene::currentScene = 0;
+        AssetsManagerExLoaderScene::currentScene = 0;
     }
-    auto scene = new AssetsManagerLoaderScene();
+    auto scene = new AssetsManagerExLoaderScene();
     scene->runThisTest();
     scene->release();
 }
 
-void AssetsManagerTestLayer::backCallback(Ref* sender)
+void AssetsManagerExTestLayer::backCallback(Ref* sender)
 {
-    if (AssetsManagerLoaderScene::currentScene > 0)
+    if (AssetsManagerExLoaderScene::currentScene > 0)
     {
-        AssetsManagerLoaderScene::currentScene--;
+        AssetsManagerExLoaderScene::currentScene--;
     }
-    else AssetsManagerLoaderScene::currentScene = 2;
-    auto scene = new AssetsManagerLoaderScene();
+    else AssetsManagerExLoaderScene::currentScene = 2;
+    auto scene = new AssetsManagerExLoaderScene();
     scene->runThisTest();
     scene->release();
 }
 
 
-AssetsManagerTestScene::AssetsManagerTestScene(std::string background)
+AssetsManagerExTestScene::AssetsManagerExTestScene(std::string background)
 {
-    auto layer = new AssetsManagerTestLayer(background);
+    auto layer = new AssetsManagerExTestLayer(background);
     addChild(layer);
     layer->release();
 }
 
-void AssetsManagerTestScene::runThisTest()
+void AssetsManagerExTestScene::runThisTest()
 {
 }
 
-int AssetsManagerLoaderScene::currentScene = 0;
-AssetsManagerLoaderScene::AssetsManagerLoaderScene()
+int AssetsManagerExLoaderScene::currentScene = 0;
+AssetsManagerExLoaderScene::AssetsManagerExLoaderScene()
 : _progress(nullptr)
 , _amListener(nullptr)
 {
 }
 
-void AssetsManagerLoaderScene::runThisTest()
+void AssetsManagerExLoaderScene::runThisTest()
 {
     int currentId = currentScene;
     std::string manifestPath = sceneManifests[currentId], storagePath = FileUtils::getInstance()->getWritablePath() + storagePaths[currentId];
@@ -100,41 +100,41 @@ void AssetsManagerLoaderScene::runThisTest()
     _progress->setPosition( Vec2(VisibleRect::center().x, VisibleRect::center().y + 50) );
     layer->addChild(_progress);
     
-    _am = AssetsManager::create(manifestPath, storagePath);
+    _am = AssetsManagerEx::create(manifestPath, storagePath);
     _am->retain();
     
     if (!_am->getLocalManifest()->isLoaded())
     {
         CCLOG("Fail to update assets, step skipped.");
-        AssetsManagerTestScene *scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+        AssetsManagerExTestScene *scene = new AssetsManagerExTestScene(backgroundPaths[currentId]);
         Director::getInstance()->replaceScene(scene);
         scene->release();
     }
     else
     {
-        _amListener = cocos2d::extension::EventListenerAssetsManager::create(_am, [currentId, this](EventAssetsManager* event){
+        _amListener = cocos2d::extension::EventListenerAssetsManagerEx::create(_am, [currentId, this](EventAssetsManagerEx* event){
             static int failCount = 0;
-            AssetsManagerTestScene *scene;
+            AssetsManagerExTestScene *scene;
             switch (event->getEventCode())
             {
-                case EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST:
+                case EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST:
                 {
                     CCLOG("No local manifest file found, skip assets update.");
-                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    scene = new AssetsManagerExTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     scene->release();
                 }
                     break;
-                case EventAssetsManager::EventCode::UPDATE_PROGRESSION:
+                case EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION:
                 {
                     std::string assetId = event->getAssetId();
                     float percent = event->getPercent();
                     std::string str;
-                    if (assetId == AssetsManager::VERSION_ID)
+                    if (assetId == AssetsManagerEx::VERSION_ID)
                     {
                         str = StringUtils::format("Version file: %.2f", percent) + "%";
                     }
-                    else if (assetId == AssetsManager::MANIFEST_ID)
+                    else if (assetId == AssetsManagerEx::MANIFEST_ID)
                     {
                         str = StringUtils::format("Manifest file: %.2f", percent) + "%";
                     }
@@ -147,25 +147,25 @@ void AssetsManagerLoaderScene::runThisTest()
                         this->_progress->setString(str);
                 }
                     break;
-                case EventAssetsManager::EventCode::ERROR_DOWNLOAD_MANIFEST:
-                case EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST:
+                case EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST:
+                case EventAssetsManagerEx::EventCode::ERROR_PARSE_MANIFEST:
                 {
                     CCLOG("Fail to download manifest file, update skipped.");
-                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    scene = new AssetsManagerExTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     scene->release();
                 }
                     break;
-                case EventAssetsManager::EventCode::ALREADY_UP_TO_DATE:
-                case EventAssetsManager::EventCode::UPDATE_FINISHED:
+                case EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE:
+                case EventAssetsManagerEx::EventCode::UPDATE_FINISHED:
                 {
                     CCLOG("Update finished. %s", event->getMessage().c_str());
-                    scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                    scene = new AssetsManagerExTestScene(backgroundPaths[currentId]);
                     Director::getInstance()->replaceScene(scene);
                     scene->release();
                 }
                     break;
-                case EventAssetsManager::EventCode::UPDATE_FAILED:
+                case EventAssetsManagerEx::EventCode::UPDATE_FAILED:
                 {
                     CCLOG("Update failed. %s", event->getMessage().c_str());
 
@@ -178,18 +178,18 @@ void AssetsManagerLoaderScene::runThisTest()
                     {
                         CCLOG("Reach maximum fail count, exit update process");
                         failCount = 0;
-                        scene = new AssetsManagerTestScene(backgroundPaths[currentId]);
+                        scene = new AssetsManagerExTestScene(backgroundPaths[currentId]);
                         Director::getInstance()->replaceScene(scene);
                         scene->release();
                     }
                 }
                     break;
-                case EventAssetsManager::EventCode::ERROR_UPDATING:
+                case EventAssetsManagerEx::EventCode::ERROR_UPDATING:
                 {
                     CCLOG("Asset %s : %s", event->getAssetId().c_str(), event->getMessage().c_str());
                 }
                     break;
-                case EventAssetsManager::EventCode::ERROR_DECOMPRESS:
+                case EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS:
                 {
                     CCLOG("%s", event->getMessage().c_str());
                 }
@@ -206,7 +206,7 @@ void AssetsManagerLoaderScene::runThisTest()
     }
 }
 
-void AssetsManagerLoaderScene::onExit()
+void AssetsManagerExLoaderScene::onExit()
 {
     _eventDispatcher->removeEventListener(_amListener);
     _am->release();
