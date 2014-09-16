@@ -948,7 +948,7 @@ int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType handlerType,vo
     return ret;
 }
 
-int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data)
+int LuaEngine::handleAssetsManagerExEvent(ScriptHandlerMgr::HandlerType type,void* data)
 {
     if (nullptr == data)
         return 0;

@@ -17,9 +17,9 @@ local sceneManifests =
 --UNCHECK
 local storagePaths = 
 {
-    "LuaTests/AssetsManagerTest/scene1",
-    "LuaTests/AssetsManagerTest/scene2", 
-    "LuaTests/AssetsManagerTest/scene3",
+    "LuaTests/AssetsManagerExTest/scene1",
+    "LuaTests/AssetsManagerExTest/scene2", 
+    "LuaTests/AssetsManagerExTest/scene3",
 }
 
 local backgroundPaths = 
@@ -30,7 +30,7 @@ local backgroundPaths =
 }
 
 -------------------------------------
---  AssetsManager1 Test
+--  AssetsManagerEx1 Test
 -------------------------------------
 local AMTestScene1 = {}
 AMTestScene1.__index = AMTestScene1
@@ -44,7 +44,7 @@ function AMTestScene1.create()
     local function onEnter()
 
         Helper.initWithLayer(layer)
-        Helper.titleLabel:setString("AssetsManagerTest1")
+        Helper.titleLabel:setString("AssetsManagerExTest1")
 
         local sprite = cc.Sprite:create("Images/Icon.png")
         layer:addChild(sprite)
@@ -57,7 +57,7 @@ function AMTestScene1.create()
         local  progress = cc.Label:createWithTTF(ttfConfig, "0%", cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
-        am = cc.AssetsManager:create("Manifests/AMTestScene1/project.manifest", "LuaTests/AssetsManagerTest/scene1")
+        am = cc.AssetsManagerEx:create("Manifests/AMTestScene1/project.manifest", "LuaTests/AssetsManagerExTest/scene1")
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
@@ -68,44 +68,44 @@ function AMTestScene1.create()
         else
             local function onUpdateEvent(event)
                 local eventCode = event:getEventCode()
-                if eventCode == cc.EventAssetsManager.EventCode.ERROR_NO_LOCAL_MANIFEST then
+                if eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
                     local background = cc.Sprite:create("Images/background1.jpg")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif  eventCode == cc.EventAssetsManager.EventCode.UPDATE_PROGRESSION then
+                elseif  eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_PROGRESSION then
                     local assetId = event:getAssetId()
                     local percent = event:getPercent()
                     local strInfo = ""
 
-                    if assetId == cc.AssetsManagerStatic.VERSION_ID then
+                    if assetId == cc.AssetsManagerExStatic.VERSION_ID then
                         strInfo = string.format("Version file: %d%%", percent)
-                    elseif assetId == cc.AssetsManagerStatic.MANIFEST_ID then
+                    elseif assetId == cc.AssetsManagerExStatic.MANIFEST_ID then
                         strInfo = string.format("Manifest file: %d%%", percent)
                     else
                         strInfo = string.format("%d%%", percent)
                     end
                     progress:setString(strInfo)
-                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_DOWNLOAD_MANIFEST or 
-                       eventCode == cc.EventAssetsManager.EventCode.ERROR_PARSE_MANIFEST then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_DOWNLOAD_MANIFEST or 
+                       eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
                     local background = cc.Sprite:create("Images/background1.jpg")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif eventCode == cc.EventAssetsManager.EventCode.ALREADY_UP_TO_DATE or 
-                       eventCode == cc.EventAssetsManager.EventCode.UPDATE_FINISHED then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ALREADY_UP_TO_DATE or 
+                       eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
                         local background = cc.Sprite:create("Images/background1.jpg")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_UPDATING then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
                         local background = cc.Sprite:create("Images/background1.jpg")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end
             end
-            local listener = cc.EventListenerAssetsManager:create(am,onUpdateEvent)
+            local listener = cc.EventListenerAssetsManagerEx:create(am,onUpdateEvent)
             cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
             
             am:update()
@@ -126,7 +126,7 @@ end
 
 
 -------------------------------------
---  AssetsManager2 Test
+--  AssetsManagerEx2 Test
 -------------------------------------
 local AMTestScene2 = {}
 AMTestScene2.__index = AMTestScene2
@@ -140,7 +140,7 @@ function AMTestScene2.create()
     local function onEnter()
 
         Helper.initWithLayer(layer)
-        Helper.titleLabel:setString("AssetsManagerTest2")
+        Helper.titleLabel:setString("AssetsManagerExTest2")
 
         local sprite = cc.Sprite:create("Images/Icon.png")
         layer:addChild(sprite)
@@ -154,7 +154,7 @@ function AMTestScene2.create()
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
 
-        am = cc.AssetsManager:create("Manifests/AMTestScene2/project.manifest", "LuaTests/AssetsManagerTest/scene2")
+        am = cc.AssetsManagerEx:create("Manifests/AMTestScene2/project.manifest", "LuaTests/AssetsManagerExTest/scene2")
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
@@ -165,44 +165,44 @@ function AMTestScene2.create()
         else
             local function onUpdateEvent(event)
                 local eventCode = event:getEventCode()
-                if eventCode == cc.EventAssetsManager.EventCode.ERROR_NO_LOCAL_MANIFEST then
+                if eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
                     local background = cc.Sprite:create("Images/background2.jpg")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif  eventCode == cc.EventAssetsManager.EventCode.UPDATE_PROGRESSION then
+                elseif  eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_PROGRESSION then
                     local assetId = event:getAssetId()
                     local percent = event:getPercent()
                     local strInfo = ""
 
-                    if assetId == cc.AssetsManagerStatic.VERSION_ID then
+                    if assetId == cc.AssetsManagerExStatic.VERSION_ID then
                         strInfo = string.format("Version file: %d%%", percent)
-                    elseif assetId == cc.AssetsManagerStatic.MANIFEST_ID then
+                    elseif assetId == cc.AssetsManagerExStatic.MANIFEST_ID then
                         strInfo = string.format("Manifest file: %d%%", percent)
                     else
                         strInfo = string.format("%d%%", percent)
                     end
                     progress:setString(strInfo)
-                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_DOWNLOAD_MANIFEST or 
-                       eventCode == cc.EventAssetsManager.EventCode.ERROR_PARSE_MANIFEST then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_DOWNLOAD_MANIFEST or 
+                       eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
                     local background = cc.Sprite:create("Images/background2.jpg")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif eventCode == cc.EventAssetsManager.EventCode.ALREADY_UP_TO_DATE or 
-                       eventCode == cc.EventAssetsManager.EventCode.UPDATE_FINISHED then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ALREADY_UP_TO_DATE or 
+                       eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
                         local background = cc.Sprite:create("Images/background2.jpg")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_UPDATING then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
                         local background = cc.Sprite:create("Images/background2.jpg")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end
             end
-            local listener = cc.EventListenerAssetsManager:create(am,onUpdateEvent)
+            local listener = cc.EventListenerAssetsManagerEx:create(am,onUpdateEvent)
             cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
             
             am:update()
@@ -222,7 +222,7 @@ function AMTestScene2.create()
 end
 
 -------------------------------------
---  AssetsManager3 Test
+--  AssetsManagerEx3 Test
 -------------------------------------
 local AMTestScene3 = {}
 AMTestScene3.__index = AMTestScene3
@@ -236,7 +236,7 @@ function AMTestScene3.create()
     local function onEnter()
 
         Helper.initWithLayer(layer)
-        Helper.titleLabel:setString("AssetsManagerTest3")
+        Helper.titleLabel:setString("AssetsManagerExTest3")
 
         local sprite = cc.Sprite:create("Images/Icon.png")
         layer:addChild(sprite)
@@ -250,7 +250,7 @@ function AMTestScene3.create()
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
 
-        am = cc.AssetsManager:create("Manifests/AMTestScene3/project.manifest", "LuaTests/AssetsManagerTest/scene3")
+        am = cc.AssetsManagerEx:create("Manifests/AMTestScene3/project.manifest", "LuaTests/AssetsManagerExTest/scene3")
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
@@ -261,44 +261,44 @@ function AMTestScene3.create()
         else
             local function onUpdateEvent(event)
                 local eventCode = event:getEventCode()
-                if eventCode == cc.EventAssetsManager.EventCode.ERROR_NO_LOCAL_MANIFEST then
+                if eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
                     local background = cc.Sprite:create("Images/background3.png")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif  eventCode == cc.EventAssetsManager.EventCode.UPDATE_PROGRESSION then
+                elseif  eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_PROGRESSION then
                     local assetId = event:getAssetId()
                     local percent = event:getPercent()
                     local strInfo = ""
 
-                    if assetId == cc.AssetsManagerStatic.VERSION_ID then
+                    if assetId == cc.AssetsManagerExStatic.VERSION_ID then
                         strInfo = string.format("Version file: %d%%", percent)
-                    elseif assetId == cc.AssetsManagerStatic.MANIFEST_ID then
+                    elseif assetId == cc.AssetsManagerExStatic.MANIFEST_ID then
                         strInfo = string.format("Manifest file: %d%%", percent)
                     else
                         strInfo = string.format("%d%%", percent)
                     end
                     progress:setString(strInfo)
-                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_DOWNLOAD_MANIFEST or 
-                       eventCode == cc.EventAssetsManager.EventCode.ERROR_PARSE_MANIFEST then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_DOWNLOAD_MANIFEST or 
+                       eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
                     local background = cc.Sprite:create("Images/background3.png")
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif eventCode == cc.EventAssetsManager.EventCode.ALREADY_UP_TO_DATE or 
-                       eventCode == cc.EventAssetsManager.EventCode.UPDATE_FINISHED then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ALREADY_UP_TO_DATE or 
+                       eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
                         local background = cc.Sprite:create("Images/background3.png")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
-                elseif eventCode == cc.EventAssetsManager.EventCode.ERROR_UPDATING then
+                elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
                         local background = cc.Sprite:create("Images/background3.png")
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end
             end
-            local listener = cc.EventListenerAssetsManager:create(am,onUpdateEvent)
+            local listener = cc.EventListenerAssetsManagerEx:create(am,onUpdateEvent)
             cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
             
             am:update()
@@ -318,9 +318,9 @@ function AMTestScene3.create()
 end
 
 -------------------------------------
---  AssetsManager Test
+--  AssetsManagerEx Test
 -------------------------------------
-function AssetsManagerTestMain()
+function AssetsManagerExTestMain()
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = 

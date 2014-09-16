@@ -146,7 +146,7 @@ private:
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
     int handleEvenCustom(void* data);
-    int handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleAssetsManagerExEvent(ScriptHandlerMgr::HandlerType type,void* data);
     int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data);
     int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data, int numResults, const std::function<void(lua_State*,int)>& func);
     int handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data);
