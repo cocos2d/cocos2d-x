@@ -27,7 +27,7 @@ cmake_minimum_required(VERSION 2.8)
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.3.0)
+set(COCOS2D_X_VERSION 3.3.0-beta0)
 #set(CMAKE_C_COMPILER_INIT g++)
 
 include(build/BuildHelpers.CMakeLists.txt)
