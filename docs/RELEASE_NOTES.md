@@ -357,7 +357,7 @@ The difference compared to old audio engine
 * all functions are static, which means you can more easy to invoke function, such as `Audio::play2d()`
 * there is only one method `play2d()` to play music or effect
 * should use `Audio::getState()` to determine an audio is playing, paused
-* its class name is `cocos2d::AudioEngine` in c++, and its module name is `cc.AudioEngine` in lua-binding
+* its class name is `cocos2d::experimental::AudioEngine` in c++, and its module name is `ccexp.AudioEngine` in lua-binding
 * there is not preload function, you can play an audio immediately
 
 Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAudioEngineTest.cpp`.
