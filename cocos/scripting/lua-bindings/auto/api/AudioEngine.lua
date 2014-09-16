@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module AudioEngine
--- @parent_module cc
+-- @parent_module ccexp
 
 --------------------------------
 -- 
@@ -124,7 +124,7 @@
 -- @param #string filePath
 -- @param #bool loop
 -- @param #float volume
--- @param #cc.AudioProfile profile
+-- @param #cc.experimental::AudioProfile profile
 -- @return int#int ret (return value: int)
         
 --------------------------------
@@ -173,7 +173,7 @@
 -- return the default profile of audio instances
 -- @function [parent=#AudioEngine] getDefaultProfile 
 -- @param self
--- @return AudioProfile#AudioProfile ret (return value: cc.AudioProfile)
+-- @return experimental::AudioProfile#experimental::AudioProfile ret (return value: cc.experimental::AudioProfile)
         
 --------------------------------
 -- @overload self, string         
@@ -181,6 +181,6 @@
 -- @function [parent=#AudioEngine] getProfile
 -- @param self
 -- @param #int audioID
--- @return AudioProfile#AudioProfile ret (retunr value: cc.AudioProfile)
+-- @return experimental::AudioProfile#experimental::AudioProfile ret (retunr value: cc.experimental::AudioProfile)
 
 return nil
