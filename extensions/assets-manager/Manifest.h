@@ -27,6 +27,7 @@
 
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
+#include "Downloader.h"
 
 #include <string>
 #include <unordered_map>
@@ -50,11 +51,18 @@ public:
         MODIFIED
     };
     
+    enum class DownloadState {
+        UNSTARTED,
+        DOWNLOADING,
+        SUCCESSED
+    };
+    
     //! Asset object
     struct Asset {
         std::string md5;
         std::string path;
         bool compressed;
+        DownloadState downloadState;
     };
     
     //! Object indicate the difference between two Assets
@@ -95,19 +103,24 @@ protected:
     Manifest(const std::string& manifestUrl = "");
     
     /** @brief Parse the manifest file information into this manifest
-     @param manifestUrl Url of the local manifest
+     * @param manifestUrl Url of the local manifest
      */
     void parse(const std::string& manifestUrl);
     
     /** @brief Check whether the version of this manifest equals to another.
-     @param b   The other manifest
+     * @param b   The other manifest
      */
     bool versionEquals(const Manifest *b) const;
     
     /** @brief Generate difference between this Manifest and another.
-     @param b   The other manifest
+     * @param b   The other manifest
      */
     std::unordered_map<std::string, AssetDiff> genDiff(const Manifest *b) const;
+    
+    /** @brief Generate resuming download assets list
+     * @param units   The download units reference to be modified by the generation result
+     */
+    void genResumeAssetsList(Downloader::DownloadUnits *units) const;
     
     /** @brief Prepend all search paths to the FileUtils.
      */
@@ -116,6 +129,8 @@ protected:
     void loadVersion(const rapidjson::Document &json);
     
     void loadManifest(const rapidjson::Document &json);
+    
+    void saveToFile(const std::string &filepath);
     
     Asset parseAsset(const std::string &path, const rapidjson::Value &json);
     
@@ -130,13 +145,19 @@ protected:
     const std::unordered_map<std::string, std::string>& getGroupVerions() const;
     
     /** @brief Gets version for the given group.
-     @param group   Key of the requested group
+     * @param group   Key of the requested group
      */
     const std::string& getGroupVersion(const std::string &group) const;
     
     /** @brief Gets assets.
      */
     const std::unordered_map<std::string, Asset>& getAssets() const;
+    
+    /** @brief Set the download state for an asset
+     * @param key   Key of the asset to set
+     * @param state The current download state of the asset
+     */
+    void setAssetDownloadState(const std::string &key, const DownloadState &state);
     
 private:
     
@@ -178,6 +199,8 @@ private:
     
     //! All search paths
     std::vector<std::string> _searchPaths;
+    
+    rapidjson::Document _json;
 };
 
 NS_CC_EXT_END

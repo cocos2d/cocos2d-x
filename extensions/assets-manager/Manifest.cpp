@@ -23,7 +23,11 @@
  ****************************************************************************/
 
 #include "Manifest.h"
+#include "json/filestream.h"
+#include "json/prettywriter.h"
+#include "json/stringbuffer.h"
 
+#include <fstream>
 
 #define KEY_VERSION             "version"
 #define KEY_PACKAGE_URL         "packageUrl"
@@ -40,6 +44,7 @@
 #define KEY_GROUP               "group"
 #define KEY_COMPRESSED          "compressed"
 #define KEY_COMPRESSED_FILE     "compressedFile"
+#define KEY_DOWNLOAD_STATE      "downloadState"
 
 NS_CC_EXT_BEGIN
 
@@ -62,7 +67,6 @@ void Manifest::parse(const std::string& manifestUrl)
 {
     clear();
 	std::string content;
-	rapidjson::Document json;
 	if (_fileUtils->isFileExist(manifestUrl))
 	{
 		// Load file content
@@ -75,19 +79,19 @@ void Manifest::parse(const std::string& manifestUrl)
 		else
 		{
 			// Parse file with rapid json
-			json.Parse<0>(content.c_str());
+			_json.Parse<0>(content.c_str());
 			// Print error
-			if (json.HasParseError()) {
-			size_t offset = json.GetErrorOffset();
+			if (_json.HasParseError()) {
+			size_t offset = _json.GetErrorOffset();
 			if (offset > 0)
 			offset--;
 			std::string errorSnippet = content.substr(offset, 10);
-			CCLOG("File parse error %s at <%s>\n", json.GetParseError(), errorSnippet.c_str());
+			CCLOG("File parse error %s at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
 			}
 		}
 	}
-			
-    if (json.IsObject())
+	
+    if (_json.IsObject())
     {
         // Register the local manifest root
         size_t found = manifestUrl.find_last_of("/\\");
@@ -95,7 +99,7 @@ void Manifest::parse(const std::string& manifestUrl)
         {
             _manifestRoot = manifestUrl.substr(0, found+1);
         }
-        loadManifest(json);
+        loadManifest(_json);
     }
 }
 
@@ -190,6 +194,31 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     return diff_map;
 }
 
+void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
+{
+    for (auto it = _assets.begin(); it != _assets.end(); ++it)
+    {
+        Asset asset = it->second;
+        
+        if (asset.downloadState != DownloadState::SUCCESSED)
+        {
+            Downloader::DownloadUnit unit;
+            unit.customId = it->first;
+            unit.srcUrl = _packageUrl + asset.path;
+            unit.storagePath = _manifestRoot + asset.path;
+            if (asset.downloadState == DownloadState::DOWNLOADING)
+            {
+                unit.resumeDownload = true;
+            }
+            else
+            {
+                unit.resumeDownload = false;
+            }
+            units->emplace(unit.customId, unit);
+        }
+    }
+}
+
 
 void Manifest::prependSearchPaths()
 {
@@ -250,6 +279,43 @@ const std::unordered_map<std::string, Manifest::Asset>& Manifest::getAssets() co
     return _assets;
 }
 
+void Manifest::setAssetDownloadState(const std::string &key, const Manifest::DownloadState &state)
+{
+    auto valueIt = _assets.find(key);
+    if (valueIt != _assets.end())
+    {
+        valueIt->second.downloadState = state;
+        
+        // Update json object
+        if(_json.IsObject())
+        {
+            if ( _json.HasMember(KEY_ASSETS) )
+            {
+                rapidjson::Value &assets = _json[KEY_ASSETS];
+                if (assets.IsObject())
+                {
+                    for (rapidjson::Value::MemberIterator itr = assets.MemberonBegin(); itr != assets.MemberonEnd(); ++itr)
+                    {
+                        std::string jkey = itr->name.GetString();
+                        if (jkey == key) {
+                            rapidjson::Value &entry = itr->value;
+                            rapidjson::Value &value = entry[KEY_DOWNLOAD_STATE];
+                            if (value.IsInt())
+                            {
+                                value.SetInt((int)state);
+                            }
+                            else
+                            {
+                                entry.AddMember<int>(KEY_DOWNLOAD_STATE, (int)state, _json.GetAllocator());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 void Manifest::clear()
 {
     if (_versionLoaded || _loaded)
@@ -294,6 +360,12 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
         asset.compressed = json[KEY_COMPRESSED].GetBool();
     }
     else asset.compressed = false;
+    
+    if ( json.HasMember(KEY_DOWNLOAD_STATE) && json[KEY_DOWNLOAD_STATE].IsInt() )
+    {
+        asset.downloadState = (DownloadState)(json[KEY_DOWNLOAD_STATE].GetInt());
+    }
+    else asset.downloadState = DownloadState::UNSTARTED;
     
     return asset;
 }
@@ -393,6 +465,17 @@ void Manifest::loadManifest(const rapidjson::Document &json)
     }
     
     _loaded = true;
+}
+
+void Manifest::saveToFile(const std::string &filepath)
+{
+    rapidjson::StringBuffer buffer;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+    _json.Accept(writer);
+    
+    std::ofstream output(filepath, std::ofstream::out);
+    if(!output.bad())
+        output << buffer.GetString() << std::endl;
 }
 
 NS_CC_EXT_END
