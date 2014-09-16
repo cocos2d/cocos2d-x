@@ -173,8 +173,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\chipmunk\prebuilt\wp8\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
