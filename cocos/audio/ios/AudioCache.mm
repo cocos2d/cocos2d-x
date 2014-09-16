@@ -44,6 +44,7 @@ static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* da
     return;
 }
 using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
 : _pcmData(nullptr)

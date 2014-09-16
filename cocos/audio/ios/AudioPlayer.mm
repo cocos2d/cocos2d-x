@@ -27,6 +27,7 @@
 #import <AudioToolbox/ExtendedAudioFile.h>
 
 using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 AudioPlayer::AudioPlayer()
 : _exitThread(false)
