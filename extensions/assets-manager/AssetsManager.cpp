@@ -29,13 +29,6 @@
 #include <curl/easy.h>
 #include <stdio.h>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <dirent.h>
-#endif
-
 #include "unzip.h"
 
 NS_CC_EXT_BEGIN
@@ -61,6 +54,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 , _totalToDownload(0)
 , _totalWaitToDownload(0)
 , _percent(0)
+, _percentByFile(0)
 , _manifestUrl(manifestUrl)
 , _storagePath("")
 , _cacheVersionPath("")
@@ -68,6 +62,7 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
 , _tempManifestPath("")
 , _assets(nullptr)
 , _localManifest(nullptr)
+, _tempManifest(nullptr)
 , _remoteManifest(nullptr)
 {
     // Init variables
@@ -92,19 +87,29 @@ AssetsManager::AssetsManager(const std::string& manifestUrl, const std::string& 
     _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
     _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
 
+    // Init and load local manifest
     _localManifest = new Manifest();
-    loadManifest(manifestUrl);
+    loadLocalManifest(manifestUrl);
+    
+    // Init and load temporary manifest
+    _tempManifest = new Manifest();
+    _tempManifest->parse(_tempManifestPath);
+    if (!_tempManifest->isLoaded())
+        _fileUtils->removeFile(_tempManifestPath);
 
+    // Init remote manifest for future usage
     _remoteManifest = new Manifest();
 }
 
 AssetsManager::~AssetsManager()
 {
-    removeFile(_tempManifestPath);
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
     CC_SAFE_RELEASE(_localManifest);
+    // _tempManifest could share a ptr with _remoteManifest or _localManifest
+    if (_tempManifest != _localManifest && _tempManifest != _remoteManifest)
+        CC_SAFE_RELEASE(_tempManifest);
     CC_SAFE_RELEASE(_remoteManifest);
 }
 
@@ -131,17 +136,16 @@ void AssetsManager::prepareLocalManifest()
     _localManifest->prependSearchPaths();
 }
 
-void AssetsManager::loadManifest(const std::string& manifestUrl)
+void AssetsManager::loadLocalManifest(const std::string& manifestUrl)
 {
     // Prefer to use the cached manifest file, if not found use user configured manifest file
-    // Prepend storage path to avoid multi package conflict issue
     if (_fileUtils->isFileExist(_cacheManifestPath))
     {
         _localManifest->parse(_cacheManifestPath);
         if (_localManifest->isLoaded())
             prepareLocalManifest();
         else
-            removeFile(_cacheManifestPath);
+            _fileUtils->removeFile(_cacheManifestPath);
     }
     
     // Fail to found or load cached manifest file
@@ -155,8 +159,22 @@ void AssetsManager::loadManifest(const std::string& manifestUrl)
     // Fail to load local manifest
     if (!_localManifest->isLoaded())
     {
-        CCLOG("AssetsManager : No local manifest file found error.");
+        CCLOG("AssetsManager : No local manifest file found error.\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
+    }
+}
+
+std::string AssetsManager::basename(const std::string& path) const
+{
+    size_t found = path.find_last_of("/\\");
+    
+    if (std::string::npos != found)
+    {
+        return path.substr(0, found);
+    }
+    else
+    {
+        return path;
     }
 }
 
@@ -187,11 +205,11 @@ const std::string& AssetsManager::getStoragePath() const
 void AssetsManager::setStoragePath(const std::string& storagePath)
 {
     if (_storagePath.size() > 0)
-        removeDirectory(_storagePath);
+        _fileUtils->removeDirectory(_storagePath);
 
     _storagePath = storagePath;
     adjustPath(_storagePath);
-    createDirectory(_storagePath);
+    _fileUtils->createDirectories(_storagePath);
 }
 
 void AssetsManager::adjustPath(std::string &path)
@@ -202,137 +220,13 @@ void AssetsManager::adjustPath(std::string &path)
     }
 }
 
-bool AssetsManager::createDirectory(const std::string& path)
-{
-    // Split the path
-    size_t start = 0;
-    size_t found = path.find_first_of("/\\", start);
-    std::string subpath;
-    std::vector<std::string> dirs;
-    while (found != std::string::npos)
-    {
-        subpath = path.substr(start, found - start + 1);
-        if (subpath.size() > 0) dirs.push_back(subpath);
-        start = found+1;
-        found = path.find_first_of("/\\", start);
-    }
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *dir = NULL;
-
-    // Create path recursively
-    subpath = "";
-    for (int i = 0; i < dirs.size(); ++i) {
-        subpath += dirs[i];
-        dir = opendir(subpath.c_str());
-        if (!dir)
-        {
-            int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-            if (ret != 0 && (errno != EEXIST))
-            {
-                return false;
-            }
-        }
-    }
-    return true;
-#else
-    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
-    {
-		subpath = "";
-		for(int i = 0 ; i < dirs.size() ; ++i)
-		{
-			subpath += dirs[i];
-			BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
-            if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
-            {
-                return false;
-            }
-		}
-    }
-    return true;
-#endif
-}
-
-bool AssetsManager::removeDirectory(const std::string& path)
-{
-    if (path.size() > 0 && path[path.size() - 1] != '/')
-    {
-        CCLOGERROR("Fail to remove directory, invalid path: %s", path.c_str());
-        return false;
-    }
-
-    // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    std::string command = "rm -r ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
-        return false;
-#else
-    std::string command = "rd /s /q ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-	if (WinExec(command.c_str(), SW_HIDE) > 31)
-        return true;
-    else
-        return false;
-#endif
-}
-
-bool AssetsManager::removeFile(const std::string &path)
-{
-    // Remove downloaded file
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    std::string command = "rm -f ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
-        return false;
-#else
-    std::string command = "del /q ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-	if (WinExec(command.c_str(), SW_HIDE) > 31)
-        return true;
-    else
-        return false;
-#endif
-}
-
-bool AssetsManager::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
-{
-    // Rename a file
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    std::string oldPath = path + oldname;
-    std::string newPath = path + name;
-    if (rename(oldPath.c_str(), newPath.c_str()) != 0)
-    {
-        CCLOGERROR("Fail to rename file %s to %s !", oldPath.c_str(), newPath.c_str());
-        return false;
-    }
-    return true;
-#else
-    std::string command = "ren ";
-    // Path may include space.
-    command += "\"" + path + oldname + "\" \"" + name + "\"";
-	if (WinExec(command.c_str(), SW_HIDE) > 31)
-        return true;
-    else
-        return false;
-#endif
-}
-
 bool AssetsManager::decompress(const std::string &zip)
 {
     // Find root path for zip file
     size_t pos = zip.find_last_of("/\\");
     if (pos == std::string::npos)
     {
-        CCLOG("AssetsManager : no root path specified for zip file %s", zip.c_str());
+        CCLOG("AssetsManager : no root path specified for zip file %s\n", zip.c_str());
         return false;
     }
     const std::string rootPath = zip.substr(0, pos+1);
@@ -341,7 +235,7 @@ bool AssetsManager::decompress(const std::string &zip)
     unzFile zipfile = unzOpen(zip.c_str());
     if (! zipfile)
     {
-        CCLOG("AssetsManager : can not open downloaded zip file %s", zip.c_str());
+        CCLOG("AssetsManager : can not open downloaded zip file %s\n", zip.c_str());
         return false;
     }
     
@@ -349,7 +243,7 @@ bool AssetsManager::decompress(const std::string &zip)
     unz_global_info global_info;
     if (unzGetGlobalInfo(zipfile, &global_info) != UNZ_OK)
     {
-        CCLOG("AssetsManager : can not read file global info of %s", zip.c_str());
+        CCLOG("AssetsManager : can not read file global info of %s\n", zip.c_str());
         unzClose(zipfile);
         return false;
     }
@@ -372,7 +266,7 @@ bool AssetsManager::decompress(const std::string &zip)
                                   NULL,
                                   0) != UNZ_OK)
         {
-            CCLOG("AssetsManager : can not read compressed file info");
+            CCLOG("AssetsManager : can not read compressed file info\n");
             unzClose(zipfile);
             return false;
         }
@@ -384,10 +278,10 @@ bool AssetsManager::decompress(const std::string &zip)
         {
             //There are not directory entry in some case.
             //So we need to create directory when decompressing file entry
-            if ( !createDirectory(fullPath) )
+            if ( !_fileUtils->createDirectories(basename(fullPath)) )
             {
                 // Failed to create directory
-                CCLOG("AssetsManager : can not create directory %s", fullPath.c_str());
+                CCLOG("AssetsManager : can not create directory %s\n", fullPath.c_str());
                 unzClose(zipfile);
                 return false;
             }
@@ -398,7 +292,7 @@ bool AssetsManager::decompress(const std::string &zip)
             // Open current file.
             if (unzOpenCurrentFile(zipfile) != UNZ_OK)
             {
-                CCLOG("AssetsManager : can not extract file %s", fileName);
+                CCLOG("AssetsManager : can not extract file %s\n", fileName);
                 unzClose(zipfile);
                 return false;
             }
@@ -407,7 +301,7 @@ bool AssetsManager::decompress(const std::string &zip)
             FILE *out = fopen(fullPath.c_str(), "wb");
             if (!out)
             {
-                CCLOG("AssetsManager : can not create decompress destination file %s", fullPath.c_str());
+                CCLOG("AssetsManager : can not create decompress destination file %s\n", fullPath.c_str());
                 unzCloseCurrentFile(zipfile);
                 unzClose(zipfile);
                 return false;
@@ -420,7 +314,7 @@ bool AssetsManager::decompress(const std::string &zip)
                 error = unzReadCurrentFile(zipfile, readBuffer, BUFFER_SIZE);
                 if (error < 0)
                 {
-                    CCLOG("AssetsManager : can not read zip file %s, error code is %d", fileName, error);
+                    CCLOG("AssetsManager : can not read zip file %s, error code is %d\n", fileName, error);
                     fclose(out);
                     unzCloseCurrentFile(zipfile);
                     unzClose(zipfile);
@@ -443,7 +337,7 @@ bool AssetsManager::decompress(const std::string &zip)
         {
             if (unzGoToNextFile(zipfile) != UNZ_OK)
             {
-                CCLOG("AssetsManager : can not read next file for decompressing");
+                CCLOG("AssetsManager : can not read next file for decompressing\n");
                 unzClose(zipfile);
                 return false;
             }
@@ -454,9 +348,23 @@ bool AssetsManager::decompress(const std::string &zip)
     return true;
 }
 
+void AssetsManager::decompressDownloadedZip()
+{
+    // Decompress all compressed files
+    for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
+        std::string zipfile = *it;
+        if (!decompress(zipfile))
+        {
+            dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
+        }
+        _fileUtils->removeFile(zipfile);
+    }
+    _compressedFiles.clear();
+}
+
 void AssetsManager::dispatchUpdateEvent(EventAssetsManager::EventCode code, const std::string &assetId/* = ""*/, const std::string &message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
-    EventAssetsManager event(_eventName, this, code, _percent, assetId, message, curle_code, curlm_code);
+    EventAssetsManager event(_eventName, this, code, _percent, _percentByFile, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);
 }
 
@@ -555,14 +463,12 @@ void AssetsManager::parseManifest()
         CCLOG("AssetsManager : Error parsing manifest file\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
-        removeFile(_tempManifestPath);
     }
     else
     {
         if (_localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
-            removeFile(_tempManifestPath);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
@@ -583,64 +489,120 @@ void AssetsManager::startUpdate()
     if (_updateState != State::NEED_UPDATE)
         return;
 
-    // Check difference
-    if (_localManifest != nullptr && _remoteManifest != nullptr)
+    _updateState = State::UPDATING;
+    // Clean up before update
+    _failedUnits.clear();
+    _downloadUnits.clear();
+    _compressedFiles.clear();
+    _totalWaitToDownload = _totalToDownload = 0;
+    _percent = _percentByFile = _sizeCollected = _totalSize = 0;
+    _downloadedSize.clear();
+    _totalEnabled = false;
+    
+    // Temporary manifest exists, resuming previous download
+    if (_tempManifest->isLoaded() && _tempManifest->versionEquals(_remoteManifest))
     {
+        _tempManifest->genResumeAssetsList(&_downloadUnits);
+        
+        _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
+        _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+        
+        std::string msg = StringUtils::format("Resuming from previous unfinished update, %d files remains to be finished.", _totalToDownload);
+        dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "", msg);
+    }
+    // Check difference
+    else
+    {
+        // Temporary manifest not exists,
+        // it will be used to register the download states of each asset,
+        // in this case, it equals remote manifest.
+        if(!_tempManifest->isLoaded()) {
+            _tempManifest->release();
+            _tempManifest = _remoteManifest;
+        }
+        
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
         if (diff_map.size() == 0)
         {
             _updateState = State::UP_TO_DATE;
             // Rename temporary manifest to valid manifest
-            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+            _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
             dispatchUpdateEvent(EventAssetsManager::EventCode::ALREADY_UP_TO_DATE);
         }
         else
         {
-            _updateState = State::UPDATING;
-            // UPDATE
-            // Clean up before update
-            _failedUnits.clear();
-            _downloadUnits.clear();
-            _compressedFiles.clear();
-            _totalWaitToDownload = _totalToDownload = 0;
-            _percent = _sizeCollected = _totalSize = 0;
-            _downloadedSize.clear();
-            _totalEnabled = false;
-            
             // Generate download units for all assets that need to be updated or added
             std::string packageUrl = _remoteManifest->getPackageUrl();
-            for (auto it = diff_map.begin(); it != diff_map.end(); ++it) {
+            for (auto it = diff_map.begin(); it != diff_map.end(); ++it)
+            {
                 Manifest::AssetDiff diff = it->second;
 
-                if (diff.type == Manifest::DiffType::DELETED) {
-                    removeFile(_storagePath + diff.asset.path);
+                if (diff.type == Manifest::DiffType::DELETED)
+                {
+                    _fileUtils->removeFile(_storagePath + diff.asset.path);
                 }
                 else
                 {
                     std::string path = diff.asset.path;
                     // Create path
-                    createDirectory(_storagePath + path);
+                    _fileUtils->createDirectories(basename(_storagePath + path));
 
                     Downloader::DownloadUnit unit;
                     unit.customId = it->first;
                     unit.srcUrl = packageUrl + path;
                     unit.storagePath = _storagePath + path;
+                    unit.resumeDownload = false;
                     _downloadUnits.emplace(unit.customId, unit);
                 }
             }
+            // Set other assets' downloadState to SUCCESSED
+            auto assets = _remoteManifest->getAssets();
+            for (auto it = assets.cbegin(); it != assets.cend(); ++it)
+            {
+                const std::string &key = it->first;
+                auto diffIt = diff_map.find(key);
+                if (diffIt == diff_map.end())
+                {
+                    _tempManifest->setAssetDownloadState(key, Manifest::DownloadState::SUCCESSED);
+                }
+            }
+            
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
             _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+            
+            std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "", msg);
         }
     }
 
     _waitToUpdate = false;
 }
 
+void AssetsManager::updateSucceed()
+{
+    // Every thing is correctly downloaded, do the following
+    // 1. rename temporary manifest to valid manifest
+    _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+    // 2. swap the localManifest
+    if (_localManifest != nullptr)
+        _localManifest->release();
+    _localManifest = _remoteManifest;
+    _remoteManifest = nullptr;
+    // 3. make local manifest take effect
+    prepareLocalManifest();
+    // 4. decompress all compressed files
+    decompressDownloadedZip();
+    // 5. Set update state
+    _updateState = State::UP_TO_DATE;
+    // 6. Notify finished event
+    dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+}
+
 void AssetsManager::checkUpdate()
 {
     if (!_localManifest->isLoaded())
     {
-        CCLOG("AssetsManager : No local manifest file found error.");
+        CCLOG("AssetsManager : No local manifest file found error.\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
@@ -672,7 +634,7 @@ void AssetsManager::update()
 {
     if (!_localManifest->isLoaded())
     {
-        CCLOG("AssetsManager : No local manifest file found error.");
+        CCLOG("AssetsManager : No local manifest file found error.\n");
         dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
@@ -741,6 +703,10 @@ void AssetsManager::updateAssets(const Downloader::DownloadUnits& assets)
             _downloadUnits = assets;
             _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
         }
+        else if (size == 0 && _totalWaitToDownload == 0)
+        {
+            updateSucceed();
+        }
     }
 }
 
@@ -751,6 +717,7 @@ const Downloader::DownloadUnits& AssetsManager::getFailedAssets() const
 
 void AssetsManager::downloadFailedAssets()
 {
+    CCLOG("AssetsManager : Start update %lu failed assets.\n", _failedUnits.size());
     updateAssets(_failedUnits);
 }
 
@@ -807,6 +774,9 @@ void AssetsManager::onProgress(double total, double downloaded, const std::strin
         // Collect information if not registed
         if (!found)
         {
+            // Set download state to DOWNLOADING, this will run only once in the download process
+            _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::DOWNLOADING);
+            // Register the download size information
             _downloadedSize.emplace(customId, downloaded);
             _totalSize += total;
             _sizeCollected++;
@@ -847,42 +817,29 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
         // Finished with error check
         if (_failedUnits.size() > 0 || _totalWaitToDownload > 0)
         {
+            // Save current download manifest information for resuming
+            _tempManifest->saveToFile(_tempManifestPath);
+            
+            decompressDownloadedZip();
+            
             _updateState = State::FAIL_TO_UPDATE;
             dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FAILED);
         }
         else
         {
-            // Every thing is correctly downloaded, do the following
-            // 1. rename temporary manifest to valid manifest
-            renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
-            // 2. swap the localManifest
-            if (_localManifest != nullptr)
-                _localManifest->release();
-            _localManifest = _remoteManifest;
-            _remoteManifest = nullptr;
-            // 3. make local manifest take effect
-            prepareLocalManifest();
-            // 4. decompress all compressed files
-            for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
-                std::string zipfile = *it;
-                if (!decompress(zipfile))
-                {
-                    dispatchUpdateEvent(EventAssetsManager::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
-                }
-                removeFile(zipfile);
-            }
-            // 5. Set update state
-            _updateState = State::UP_TO_DATE;
-            // 6. Notify finished event
-            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_FINISHED);
+            updateSucceed();
         }
     }
     else
     {
-        // Add file to need decompress list
         auto assets = _remoteManifest->getAssets();
         auto assetIt = assets.find(customId);
-        if (assetIt != assets.end()) {
+        if (assetIt != assets.end())
+        {
+            // Set download state to SUCCESSED
+            _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::SUCCESSED);
+            
+            // Add file to need decompress list
             if (assetIt->second.compressed) {
                 _compressedFiles.push_back(storagePath);
             }
@@ -893,6 +850,10 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
         {
             // Reduce count only when unit found in _downloadUnits
             _totalWaitToDownload--;
+            
+            _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
+            // Notify progression event
+            dispatchUpdateEvent(EventAssetsManager::EventCode::UPDATE_PROGRESSION, "");
         }
         // Notify asset updated event
         dispatchUpdateEvent(EventAssetsManager::EventCode::ASSET_UPDATED, customId);
@@ -909,8 +870,8 @@ void AssetsManager::onSuccess(const std::string &srcUrl, const std::string &stor
 
 void AssetsManager::destroyDownloadedVersion()
 {
-    removeFile(_cacheVersionPath);
-    removeFile(_cacheManifestPath);
+    _fileUtils->removeFile(_cacheVersionPath);
+    _fileUtils->removeFile(_cacheManifestPath);
 }
 
 NS_CC_EXT_END

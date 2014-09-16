@@ -114,17 +114,11 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     
-    static bool createDirectory(const std::string &path);
-    
-    static bool removeDirectory(const std::string &path);
-    
-    static bool removeFile(const std::string &path);
-    
-    static bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
+    std::string basename(const std::string& path) const;
     
     std::string get(const std::string& key) const;
     
-    void loadManifest(const std::string& manifestUrl);
+    void loadLocalManifest(const std::string& manifestUrl);
     
     void prepareLocalManifest();
     
@@ -139,7 +133,9 @@ protected:
     void downloadManifest();
     void parseManifest();
     void startUpdate();
+    void updateSucceed();
     bool decompress(const std::string &filename);
+    void decompressDownloadedZip();
     
     /** @brief Update a list of assets under the current AssetsManager context
      */
@@ -221,6 +217,9 @@ private:
     //! Local manifest
     Manifest *_localManifest;
     
+    //! Local temporary manifest for download resuming
+    Manifest *_tempManifest;
+    
     //! Remote manifest
     Manifest *_remoteManifest;
     
@@ -228,16 +227,19 @@ private:
     bool _waitToUpdate;
     
     //! All assets unit to download
-    std::unordered_map<std::string, Downloader::DownloadUnit> _downloadUnits;
+    Downloader::DownloadUnits _downloadUnits;
     
     //! All failed units
-    std::unordered_map<std::string, Downloader::DownloadUnit> _failedUnits;
+    Downloader::DownloadUnits _failedUnits;
     
     //! All files to be decompressed
     std::vector<std::string> _compressedFiles;
     
     //! Download percent
     float _percent;
+    
+    //! Download percent by file
+    float _percentByFile;
     
     //! Indicate whether the total size should be enabled
     int _totalEnabled;

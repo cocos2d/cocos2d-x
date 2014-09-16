@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "Downloader.h"
-#include "AssetsManager.h"
+#include "AssetsManagerEx.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
@@ -60,7 +60,7 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
         
         if (nowDownloaded == totalToDownload)
         {
-            AssetsManager::renameFile(data.path, data.name + TEMP_EXT, data.name);
+            AssetsManagerEx::renameFile(data.path, data.name + TEMP_EXT, data.name);
             
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
                 if (!data.downloader.expired())
@@ -269,7 +269,7 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        AssetsManager::removeFile(data.path + data.name + TEMP_EXT);
+        AssetsManagerEx::removeFile(data.path + data.name + TEMP_EXT);
         std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
         this->notifyError(msg, customId, res);
     }
@@ -447,7 +447,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
         ProgressData *data = *it;
         if (data->downloaded < data->totalToDownload)
         {
-            AssetsManager::removeFile(data->path + data->name + TEMP_EXT);
+            AssetsManagerEx::removeFile(data->path + data->name + TEMP_EXT);
             this->notifyError(ErrorCode::NETWORK, "Unable to download file", data->customId);
         }
     }
