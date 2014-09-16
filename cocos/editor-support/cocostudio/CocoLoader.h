@@ -25,11 +25,7 @@
 #ifndef _COCOLOADER_H
 #define _COCOLOADER_H
 
-#include <stdio.h>
-#include <vector>
-#include <cstdio>
 #include <stdint.h>
-#include "json/rapidjson.h"
 #include "json/document.h"
 #include "cocostudio/CocosStudioExport.h"
 

@@ -368,6 +368,7 @@ Developers:
 
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
+        Added a feature that CCSSceneReader can load name properties as node names.
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
@@ -805,6 +806,10 @@ Developers:
         Add support of software PVRTC v1 decompression
         Fixed a bug that ttf font have not effect on Mac OS X
         Fixed a bug that before touchMove Touch::_prevPoint contains junk
+        Added Device::setKeepScreenOn()
+        Fixed Label performance problem
+        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
+        Added getAllTouches() in GLViewProtocol
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -892,6 +897,7 @@ Developers:
         
     kezhuw
         AutoReleasePool manager improvement
+        Fixed a bug that condition variable sleep on unrelated mutex in HttpClient
         
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
@@ -915,6 +921,8 @@ Developers:
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
         Fix video scale issue in iOS
         Fix iOS VideoPlayer memory leak
+        Added c++11 random library support
+        Added WebView widget which supports iOS and Android
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
@@ -922,6 +930,7 @@ Developers:
     Teivaz
         Custom uniform search optimization
         Fixed compiling error on WP8.
+        Added method for custom precompiled shader program loading on WP8
         
     chareice
         Make `setup.py` work on zsh
@@ -979,6 +988,21 @@ Developers:
         
     zaWasp
         Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
+        
+    xiangxw
+        Fixed the bug that Console::sendPrompt() will send extra `\0`
+        
+    kaishiqi
+        Fixed a but that cursor postion is wrong on desktop.
+        
+    jagd
+        Added setSubsteps() and getSubsteps() in PhysicsWorld
+        
+    denpen
+        Fixed a bug that scroll view hidden picks up the touch events.
+        
+    joewan
+        Fixed memory leak when use menu_selector
     
 Retired Core Developers:
     WenSheng Yang

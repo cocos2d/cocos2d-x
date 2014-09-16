@@ -456,6 +456,7 @@ function UICheckBoxTest:initExtend()
         
     local checkBox = ccui.CheckBox:create()
     checkBox:setTouchEnabled(true)
+    checkBox:setSelectedState(true)
     checkBox:loadTextures("cocosui/check_box_normal.png",
                                "cocosui/check_box_normal_press.png",
                                "cocosui/check_box_active.png",

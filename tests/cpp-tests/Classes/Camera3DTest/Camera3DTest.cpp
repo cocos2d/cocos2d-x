@@ -27,9 +27,6 @@ THE SOFTWARE.
 #include <algorithm>
 #include "../testResource.h"
 
-#include "3d/CCAttachNode.h"
-#include "3d/cocos3d.h"
-
 ////////////DrawLine/////////////////////
 
 class DrawLine3D: public Node
@@ -82,7 +79,7 @@ private:
 
 DrawLine3D* DrawLine3D::create()
 {
-    auto ret = new DrawLine3D();
+    auto ret = new (std::nothrow) DrawLine3D();
     if (ret && ret->init())
         return ret;
     CC_SAFE_DELETE(ret);
@@ -125,7 +122,7 @@ void DrawLine3D::onDraw(const Mat4 &transform, uint32_t flags)
     
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), &(_buffer[0].colors));
-    glDrawArrays(GL_LINES, 0, _buffer.size());
+    glDrawArrays(GL_LINES, 0, static_cast<int>(_buffer.size()));
     glDisable(GL_DEPTH_TEST);
 }
 
@@ -284,13 +281,13 @@ void Camera3DTestDemo::onEnter()
     auto menu = Menu::create(menuItem1,menuItem2,menuItem3,menuItem4,menuItem5,menuItem6,menuItem7,NULL);
 
     menu->setPosition(Vec2::ZERO);
-    menuItem1->setPosition( Vec2( s.width-50, VisibleRect::top().y-50 ) );
-    menuItem2->setPosition( Vec2( s.width-50, VisibleRect::top().y-100) );
-    menuItem3->setPosition( Vec2( s.width-50, VisibleRect::top().y-150) );
-    menuItem4->setPosition( Vec2( s.width-50, VisibleRect::top().y-200) );
-    menuItem5->setPosition( Vec2(VisibleRect::left().x+100, VisibleRect::top().y-50) );
-    menuItem6->setPosition( Vec2(VisibleRect::left().x+100, VisibleRect::top().y -100));
-    menuItem7->setPosition( Vec2(VisibleRect::left().x+100, VisibleRect::top().y -150));
+    menuItem1->setPosition(s.width-50, VisibleRect::top().y-50 );
+    menuItem2->setPosition(s.width-50, VisibleRect::top().y-100);
+    menuItem3->setPosition(s.width-50, VisibleRect::top().y-150);
+    menuItem4->setPosition(s.width-50, VisibleRect::top().y-200);
+    menuItem5->setPosition(VisibleRect::left().x+100, VisibleRect::top().y-50);
+    menuItem6->setPosition(VisibleRect::left().x+100, VisibleRect::top().y -100);
+    menuItem7->setPosition(VisibleRect::left().x+100, VisibleRect::top().y -150);
     addChild(menu, 0);
     schedule(schedule_selector(Camera3DTestDemo::updateCamera), 0.0f);
     if (_camera == nullptr)
@@ -328,7 +325,7 @@ void Camera3DTestDemo::onExit()
 
 void Camera3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild(restartSpriteTestAction());
 
     Director::getInstance()->replaceScene(s);
@@ -337,14 +334,14 @@ void Camera3DTestDemo::restartCallback(Ref* sender)
 
 void Camera3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
 }
 void Camera3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Camera3DTestScene();
+    auto s = new (std::nothrow) Camera3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -353,7 +350,6 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
 {
 
     auto sprite = Sprite3D::create(fileName);
-    sprite->setScale(1);
     _layer3D->addChild(sprite);
     float globalZOrder=sprite->getGlobalZOrder();
     sprite->setPosition3D( Vec3( p.x, p.y,p.z) );
@@ -364,34 +360,12 @@ void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool p
         if (animation)
         {
             auto animate = Animate3D::create(animation);
-            bool inverse = (std::rand() % 3 == 0);
-
-            int rand2 = std::rand();
-            float speed = 1.0f;
-            if(rand2 % 3 == 1)
-            {
-                speed = animate->getSpeed() + CCRANDOM_0_1();
-            }
-            else if(rand2 % 3 == 2)
-            {
-                speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
-            }
-            animate->setSpeed(inverse ? -speed : speed);
             sprite->runAction(RepeatForever::create(animate));
-            //auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
-            // sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
         }
     }
     if(bindCamera)
     {
         _sprite3D=sprite;
-       // auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
-      //  sp->setScale(3);
-        //sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
-        //ParticleSystem3D* particleSystem3D = ParticleSystem3D::create("CameraTest/particle3Dtest1.particle");
-        //particleSystem3D->start();
-        //sprite->getAttachNode("Bip001 R Hand")->addChild(particleSystem3D);
-
     }
     sprite->setScale(scale);
 

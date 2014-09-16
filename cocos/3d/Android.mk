@@ -12,22 +12,23 @@ CCOBB.cpp \
 CCAnimate3D.cpp \
 CCAnimation3D.cpp \
 CCAttachNode.cpp \
+CCBillBoard.cpp \
 CCBundle3D.cpp \
 CCBundleReader.cpp \
 CCMesh.cpp \
 CCMeshSkin.cpp \
+CCMeshVertexIndexData.cpp \
 CCSprite3DMaterial.cpp \
 CCObjLoader.cpp \
 CCSkeleton3D.cpp \
-CCSprite3D.cpp \
-CCSubMesh.cpp \
-CCSubMeshState.cpp \
+CCSprite3D.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/../../external \
+                    $(LOCAL_PATH)/../platform/android
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 
 include $(BUILD_STATIC_LIBRARY)

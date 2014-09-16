@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
@@ -84,6 +84,13 @@ public:
         VERTEX_ATTRIB_POSITION,
         VERTEX_ATTRIB_COLOR,
         VERTEX_ATTRIB_TEX_COORD,
+        VERTEX_ATTRIB_TEX_COORD1,
+        VERTEX_ATTRIB_TEX_COORD2,
+        VERTEX_ATTRIB_TEX_COORD3,
+        VERTEX_ATTRIB_TEX_COORD4,
+        VERTEX_ATTRIB_TEX_COORD5,
+        VERTEX_ATTRIB_TEX_COORD6,
+        VERTEX_ATTRIB_TEX_COORD7,
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
@@ -152,6 +159,13 @@ public:
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
+    static const char* ATTRIBUTE_NAME_TEX_COORD1;
+    static const char* ATTRIBUTE_NAME_TEX_COORD2;
+    static const char* ATTRIBUTE_NAME_TEX_COORD3;
+    static const char* ATTRIBUTE_NAME_TEX_COORD4;
+    static const char* ATTRIBUTE_NAME_TEX_COORD5;
+    static const char* ATTRIBUTE_NAME_TEX_COORD6;
+    static const char* ATTRIBUTE_NAME_TEX_COORD7;
     static const char* ATTRIBUTE_NAME_NORMAL;
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;

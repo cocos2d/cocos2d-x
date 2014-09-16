@@ -1,30 +1,32 @@
 set(APP_NAME lua-empty-test)
 
 set(SAMPLE_SRC
-  proj.linux/main.cpp
   Classes/AppDelegate.cpp
 )
 
+if(LINUX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.linux/main.cpp
+     )
+elseif(MACOSX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.mac/main.cpp
+     )
+endif()
+
 include_directories(
   Classes
-  ../../../cocos/scripting/lua-bindings
+  ../../../cocos/scripting/lua-bindings/manual
   ../../../external/lua/lua
   ../../../external/lua/tolua
 )
 
 # add the executable
-add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
-)
+add_executable(${APP_NAME} ${SAMPLE_SRC})
 
-target_link_libraries(${APP_NAME}
-  luacocos2d
-  luacocosdenshion
-  luanetwork
-  audio
-  cocos2d
-  network
-)
+target_link_libraries(${APP_NAME} cocos2d luacocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 

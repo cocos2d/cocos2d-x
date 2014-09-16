@@ -67,5 +67,6 @@
 #define CREATE_CLASS_WIDGET_READER_INFO(className) \
     cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
 
+#define CC_VIDEOPLAYER_DEBUG_DRAW  0
 
 #endif /* defined(__TestCpp__GUIDefine__) */

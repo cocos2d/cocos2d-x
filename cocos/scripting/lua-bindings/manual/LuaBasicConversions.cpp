@@ -1995,23 +1995,23 @@ void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3)
     lua_rawset(L, -3);
 }
 
-void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec3)
+void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4)
 {
     if (NULL  == L)
         return;
     
     lua_newtable(L);                                    /* L: table */
     lua_pushstring(L, "x");                             /* L: table key */
-    lua_pushnumber(L, (lua_Number) vec3.x);             /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) vec4.x);             /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     lua_pushstring(L, "y");                             /* L: table key */
-    lua_pushnumber(L, (lua_Number) vec3.y);             /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) vec4.y);             /* L: table key value*/
     lua_rawset(L, -3);
     lua_pushstring(L, "z");                             /* L: table key */
-    lua_pushnumber(L, (lua_Number) vec3.z);             /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) vec4.z);             /* L: table key value*/
     lua_rawset(L, -3);
     lua_pushstring(L, "w");                             /* L: table key */
-    lua_pushnumber(L, (lua_Number) vec3.z);             /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) vec4.w);             /* L: table key value*/
     lua_rawset(L, -3);
 }
 

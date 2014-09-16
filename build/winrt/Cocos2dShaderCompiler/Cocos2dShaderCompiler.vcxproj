@@ -249,9 +249,6 @@
     <ProjectReference Include="..\..\..\cocos\2d\cocos2d_winrt.vcxproj">
       <Project>{2330edf4-5596-4b53-8ba5-158ddde713d9}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\chipmunk\proj.winrt\chipmunk.vcxproj">
-      <Project>{8b143765-5c1b-4076-9384-3e0ec3650b1a}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

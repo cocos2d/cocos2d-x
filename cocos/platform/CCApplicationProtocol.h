@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_PROTOCOL_H__
 #define __CC_APPLICATION_PROTOCOL_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCScriptSupport.h"
 #include "base/CCAutoreleasePool.h"
 
@@ -101,6 +101,15 @@ public:
     * @lua NA
     */
     virtual void setAnimationInterval(double interval) = 0;
+
+    //subclass override the function to set OpenGL context attribution instead of use default value
+    //and now can only set six attributions:redBits,greenBits,blueBits,alphaBits,depthBits,stencilBits
+    //default value are(5,6,5,0,16,0), usually use as follows:
+    /*void AppDelegate::initGLContextAttrs(){
+        GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+        GLView::setGLContextAttrs(glContextAttrs);
+    }*/
+    virtual void initGLContextAttrs() {}
 
     /**
     @brief Get current language config

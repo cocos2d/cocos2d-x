@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <string>
 #include "JniHelper.h"
-#include "CCFileUtilsAndroid.h"
+#include "CCFileUtils-android.h"
 #include "android/asset_manager_jni.h"
 #include "deprecated/CCString.h"
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -205,6 +205,16 @@ void disableAccelerometerJni() {
 
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "disableAccelerometer", "()V")) {
         t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void setKeepScreenOnJni(bool value) {
+    JniMethodInfo t;
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setKeepScreenOn", "(Z)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, value);
+        
         t.env->DeleteLocalRef(t.classID);
     }
 }

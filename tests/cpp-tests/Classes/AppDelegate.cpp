@@ -43,11 +43,22 @@ AppDelegate::~AppDelegate()
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
+//if you want a different context,just modify the value of glContextAttrs
+//it will takes effect on all platforms
+void AppDelegate::initGLContextAttrs()
+{
+    //set OpenGL context attributions,now can only set six attributions:
+    //red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // As an example, load config file
-    // XXX: This should be loaded before the Director is initialized,
-    // XXX: but at this point, the director is already initialized
+    // FIXME:: This should be loaded before the Director is initialized,
+    // FIXME:: but at this point, the director is already initialized
     Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
@@ -112,7 +123,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
     auto scene = Scene::create();
-    auto layer = new TestController();
+    auto layer = new (std::nothrow) TestController();
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     layer->addConsoleAutoTest();
 #endif

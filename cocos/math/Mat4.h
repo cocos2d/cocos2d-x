@@ -24,6 +24,10 @@
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 
+#ifdef __SSE__
+#include <xmmintrin.h>
+#endif
+
 NS_CC_MATH_BEGIN
 
 //class Plane;
@@ -77,7 +81,14 @@ public:
     /**
      * Stores the columns of this 4x4 matrix.
      * */
+#ifdef __SSE__
+    union {
+        __m128 col[4];
+        float m[16];
+    };
+#else
     float m[16];
+#endif
 
     /**
      * Constructs a matrix initialized to the identity matrix:

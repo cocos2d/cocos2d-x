@@ -16,6 +16,9 @@
     <ClInclude Include="..\UIButton.h" />
     <ClInclude Include="..\UICheckBox.h" />
     <ClInclude Include="..\UIDeprecated.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBoxImpl.h" />
+    <ClInclude Include="..\UIEditBox\UIEditBoxImplWin.h" />
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
@@ -36,12 +39,15 @@
     <ClInclude Include="..\UITextField.h" />
     <ClInclude Include="..\UIVBox.h" />
     <ClInclude Include="..\UIWidget.h" />
+    <ClInclude Include="Win32InputBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
     <ClCompile Include="..\UIDeprecated.cpp" />
+    <ClCompile Include="..\UIEditBox\UIEditBox.cpp" />
+    <ClCompile Include="..\UIEditBox\UIEditBoxImplWin.cpp" />
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
@@ -62,6 +68,7 @@
     <ClCompile Include="..\UITextField.cpp" />
     <ClCompile Include="..\UIVBox.cpp" />
     <ClCompile Include="..\UIWidget.cpp" />
+    <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">

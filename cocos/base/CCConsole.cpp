@@ -56,7 +56,7 @@
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #include "base/CCConfiguration.h"
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
@@ -131,7 +131,7 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    send(fd, prompt, sizeof(prompt),0);
+    send(fd, prompt, strlen(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
@@ -237,7 +237,7 @@ static void _log(const char *format, va_list args)
 
 }
 
-// XXX: Deprecated
+// FIXME: Deprecated
 void CCLog(const char * format, ...)
 {
     va_list args;

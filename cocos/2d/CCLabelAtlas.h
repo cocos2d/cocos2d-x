@@ -90,17 +90,23 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     LabelAtlas()
     :_string("")
-    {}
+    {
+#if CC_LABELATLAS_DEBUG_DRAW
+        _debugDrawNode = DrawNode::create();
+        addChild(_debugDrawNode);
+#endif
+    }
 
     virtual ~LabelAtlas()
     {
         _string.clear();
     }
+    
+protected:
     virtual void updateColor() override;
 
 #if CC_LABELATLAS_DEBUG_DRAW
-    CustomCommand   _customDebugDrawCommand;
-    void drawDebugData(const Mat4& transform, bool transformUpdated);
+    DrawNode *_debugDrawNode;
 #endif
 
     // string to render

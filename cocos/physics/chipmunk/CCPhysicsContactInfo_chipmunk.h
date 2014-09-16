@@ -28,8 +28,7 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "chipmunk.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 NS_CC_BEGIN
 
 class PhysicsContact;

@@ -54,7 +54,7 @@ ImageView::~ImageView()
     
 ImageView* ImageView::create(const std::string &imageFileName, TextureResType texType)
 {
-    ImageView *widget = new ImageView;
+    ImageView *widget = new (std::nothrow) ImageView;
     if (widget && widget->init(imageFileName, texType)) {
         widget->autorelease();
         return widget;
@@ -65,7 +65,7 @@ ImageView* ImageView::create(const std::string &imageFileName, TextureResType te
 
 ImageView* ImageView::create()
 {
-    ImageView* widget = new ImageView();
+    ImageView* widget = new (std::nothrow) ImageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -238,7 +238,7 @@ void ImageView::adaptRenderers()
     }
 }
 
-const Size& ImageView::getVirtualRendererSize() const
+Size ImageView::getVirtualRendererSize() const
 {
     return _imageTextureSize;
 }

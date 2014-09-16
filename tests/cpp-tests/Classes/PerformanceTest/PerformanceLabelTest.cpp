@@ -108,7 +108,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    auto menuLayer = new LabelMenuLayer(true, TEST_COUNT, LabelMainScene::_s_labelCurCase);
+    auto menuLayer = new (std::nothrow) LabelMenuLayer(true, TEST_COUNT, LabelMainScene::_s_labelCurCase);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
     
@@ -441,7 +441,7 @@ void  LabelMainScene::onAutoTest(Ref* sender)
 void runLabelTest()
 {
     LabelMainScene::_s_autoTest = false;
-    auto scene = new LabelMainScene;
+    auto scene = new (std::nothrow) LabelMainScene;
     scene->initWithSubTest(LabelMainScene::AUTO_TEST_NODE_NUM);
     Director::getInstance()->replaceScene(scene);
     scene->release();

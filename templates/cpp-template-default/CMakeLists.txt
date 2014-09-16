@@ -1,12 +1,10 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 set(APP_NAME MyGame)
 project (${APP_NAME})
 
 include(cocos2d/build/BuildHelpers.CMakeLists.txt)
 
-option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
-option(USE_BOX2D "Use box2d for physics library" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 
 if(DEBUG_MODE)
@@ -27,25 +25,9 @@ elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
 
 endif()
-
-if(USE_CHIPMUNK)
-  message("Using chipmunk ...")
-  add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
-  if(UNIX) # assuming linux
-    add_definitions(-DLINUX )
-  endif()
-elseif(USE_BOX2D)
-  message("Using box2d ...")
-  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
-  if(UNIX) # assuming linux
-    add_definitions(-DLINUX )
-  endif()
-else(USE_CHIPMUNK)
-  message(FATAL_ERROR "Must choose a physics library.")
-endif(USE_CHIPMUNK)
 
 # architecture
 if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
@@ -57,16 +39,16 @@ endif()
 if( UNIX ) #assume linux
 set(GAME_SRC
   proj.linux/main.cpp
-  src/AppDelegate.cpp
-  src/HelloWorldScene.cpp
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
 )
 elseif ( WIN32 )
 set(GAME_SRC
   proj.win32/main.cpp
   proj.win32/main.h
   proj.win32/resource.h
-  src/AppDelegate.cpp
-  src/HelloWorldScene.cpp
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
 )
 endif()
 
@@ -150,6 +132,8 @@ include_directories(
   ${COCOS2D_ROOT}/external/xxhash
 )
 
+ADD_DEFINITIONS(-DLINUX)
+
 link_directories(
   /usr/local/lib
   ${COCOS2D_ROOT}/external/jpeg/prebuilt/linux/${ARCH_DIR}
@@ -162,81 +146,13 @@ link_directories(
 )
 endif()
 
-if(USE_CHIPMUNK)
-
-	include_directories(${COCOS2D_ROOT}/external/chipmunk/include/chipmunk)
-	# chipmunk library
-	add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
-endif()
-
-if(USE_BOX2D)
-	# box2d library
-	add_subdirectory(${COCOS2D_ROOT}/external/Box2D)
-endif()
-
-# unzip library
-add_subdirectory(${COCOS2D_ROOT}/external/unzip)
-
-# tinyxml2 library
-add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
-
-# audio
-add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
-
-# xxhash library
-add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
-
-# cocos2d
+# libcocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
-# cocos3d library
-add_subdirectory(${COCOS2D_ROOT}/cocos/3d)
 
-# network library
-add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+add_executable(${APP_NAME} ${GAME_SRC})
 
-# ui library
-add_subdirectory(${COCOS2D_ROOT}/cocos/ui)
-
-# sqlite3 library
-add_subdirectory(${COCOS2D_ROOT}/cocos/storage)
-
-# extensions
-add_subdirectory(${COCOS2D_ROOT}/extensions)
-
-## Editor Support
-
-# spine
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/spine)
-
-# cocosbuilder
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocosbuilder)
-
-# cocostudio
-add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocostudio)
-
-if ( WIN32 )
-	# add the executable
-	add_executable(${APP_NAME}
-	  WIN32
-	  ${GAME_SRC}
-	)
-else()
-	# add the executable
-	add_executable(${APP_NAME}
-	  ${GAME_SRC}
-	)
-endif()
-
-if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-set(FMOD_LIB "fmodex64")
-else()
-set(FMOD_LIB "fmodex")
-endif()
-
-target_link_libraries(${APP_NAME}
-  cocos2d
-  )
+target_link_libraries(${APP_NAME} cocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
@@ -247,14 +163,14 @@ if ( WIN32 )
   #also copying dlls to binary directory for the executable to run
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/gles/prebuilt/glew32.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/zlib/prebuilt/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	)
 else()
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
     )
 
 endif()

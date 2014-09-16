@@ -8,8 +8,9 @@ macro(pre_build TARGET_NAME)
     COMMENT "${TARGET_NAME}_PRE_BUILD ..."
     )
 
-  add_custom_target( ${TARGET_NAME}_CORE_PRE_BUILD )
-  add_dependencies( ${TARGET_NAME}_PRE_BUILD ${TARGET_NAME}_CORE_PRE_BUILD )
+  add_custom_target(${TARGET_NAME}_CORE_PRE_BUILD)
+  add_dependencies(${TARGET_NAME}_PRE_BUILD ${TARGET_NAME}_CORE_PRE_BUILD)
+  add_dependencies(${TARGET_NAME} ${TARGET_NAME}_PRE_BUILD)
 endmacro()
 
 #cmake has some strange defaults, this should help us a lot
