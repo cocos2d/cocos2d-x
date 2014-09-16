@@ -755,7 +755,9 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
         }
     }
     
-    CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
+    if(isPopupNotify()){
+        CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
+    }
 
     // FIXME: Should it return nullptr ? or an empty string ?
     // The file wasn't found, return the file name passed in.
@@ -912,46 +914,26 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
 
 std::string FileUtils::searchFullPathForFilename(const std::string& filename) const
 {
-    // If filename is absolute path, we don't need to consider 'search paths' and 'resolution orders'.
     if (isAbsolutePath(filename))
     {
         return filename;
     }
-    
-    // Already Cached ?
-    auto cacheIter = _fullPathCache.find(filename);
-    if( cacheIter != _fullPathCache.end() )
+    std::string path = const_cast<FileUtils*>(this)->fullPathForFilename(filename);
+    if (0 == path.compare(filename))
     {
-        return cacheIter->second;
+        return "";
     }
-    
-    // Get the new file name.
-    const std::string newFilename( getNewFilename(filename) );
-    
-	std::string fullpath;
-    
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    else
     {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
-        {
-            fullpath = const_cast<FileUtils*>(this)->getPathForFilename(newFilename, *resolutionIt, *searchIt);
-            
-            if (!fullpath.empty())
-            {
-                // Using the filename passed in as key.
-                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(filename, fullpath));
-                return fullpath;
-            }
-        }
+        return path;
     }
-    return "";
 }
 
 bool FileUtils::isFileExist(const std::string& filename) const
 {
     if (isAbsolutePath(filename))
     {
-        return isFileExistInternal(filename);
+        return filename;
     }
     else
     {
@@ -966,6 +948,275 @@ bool FileUtils::isFileExist(const std::string& filename) const
 bool FileUtils::isAbsolutePath(const std::string& path) const
 {
     return (path[0] == '/');
+}
+
+bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+	struct stat st;
+	if (stat(dirPath.c_str(), &st) == 0)
+    {
+        return S_ISDIR(st.st_mode);
+    }    
+	return false;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	WIN32_FILE_ATTRIBUTE_DATA wfad;
+	if (GetFileAttributesExA(dirPath.c_str(), GetFileExInfoStandard, &wfad))
+	{
+		return true;
+	}
+	return false;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
+    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
+        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
+    {
+		return true;
+    }
+    return false;
+#endif
+}
+
+bool FileUtils::isDirectoryExist(const std::string& dirPath)
+{
+    CCASSERT(!dirPath.empty(), "Invalid path");
+    
+    if (isAbsolutePath(dirPath))
+    {
+        return isDirectoryExistInternal(dirPath);
+    }
+    
+    // Already Cached ?
+    auto cacheIter = _fullPathCache.find(dirPath);
+    if( cacheIter != _fullPathCache.end() )
+    {
+        return isDirectoryExistInternal(cacheIter->second);
+    }
+    
+	std::string fullpath;
+    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    {
+        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        {
+            // searchPath + file_path + resourceDirectory
+            fullpath = *searchIt + dirPath + *resolutionIt;
+            if (isDirectoryExistInternal(fullpath))
+            {
+                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(dirPath, fullpath));
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+bool FileUtils::createDirectory(const std::string& path)
+{
+    CCASSERT(!path.empty(), "Invalid path");
+    
+    if (isDirectoryExist(path))
+        return true;
+    
+    // Split the path
+    size_t start = 0;
+    size_t found = path.find_first_of("/\\", start);
+    std::string subpath;
+    std::vector<std::string> dirs;
+    
+    if (found != std::string::npos)
+    {
+        while (true)
+        {
+            subpath = path.substr(start, found - start + 1);
+            if (!subpath.empty())
+                dirs.push_back(subpath);
+            start = found+1;
+            found = path.find_first_of("/\\", start);
+            if (found == std::string::npos)
+            {
+                if (start < path.length())
+                {
+                    dirs.push_back(path.substr(start));
+                }
+                break;
+            }
+        }
+    }
+    
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    DIR *dir = NULL;
+    
+    // Create path recursively
+    subpath = "";
+    for (int i = 0; i < dirs.size(); ++i) {
+        subpath += dirs[i];
+        dir = opendir(subpath.c_str());
+        if (!dir)
+        {
+            int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+            if (ret != 0 && (errno != EEXIST))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	WIN32_FILE_ATTRIBUTE_DATA wfad;
+	if (!(GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, &wfad)))
+	{
+		subpath = "";
+		for(int i = 0 ; i < dirs.size() ; ++i)
+		{
+			subpath += dirs[i];
+			BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
+			if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+		subpath = "";
+		for(int i = 0 ; i < dirs.size() ; ++i)
+		{
+			subpath += dirs[i];
+			BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
+            if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+            {
+                return false;
+            }
+		}
+    }
+    return true;
+#endif
+}
+
+bool FileUtils::removeDirectory(const std::string& path)
+{
+    if (path.size() > 0 && path[path.size() - 1] != '/')
+    {
+        CCLOGERROR("Fail to remove directory, path must termniate with '/': %s", path.c_str());
+        return false;
+    }
+    
+    // Remove downloaded files
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    std::string command = "rm -r ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    if (system(command.c_str()) >= 0)
+        return true;
+    else
+        return false;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	if (RemoveDirectoryA(path.c_str()))
+	{
+		return true;
+	}
+	return false;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    std::string command = "rd /s /q ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+	if (WinExec(command.c_str(), SW_HIDE) > 31)
+        return true;
+    else
+        return false;
+#endif
+}
+
+bool FileUtils::removeFile(const std::string &path)
+{
+    // Remove downloaded file
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    std::string command = "rm -f ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    if (system(command.c_str()) >= 0)
+        return true;
+    else
+        return false;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	if (DeleteFileA(path.c_str()))
+	{
+		return true;
+	}
+	return false;
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    std::string command = "del /q ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+	if (WinExec(command.c_str(), SW_HIDE) > 31)
+        return true;
+    else
+        return false;
+#endif
+}
+
+bool FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+{
+    CCASSERT(!path.empty(), "Invalid path");
+    
+    // Rename a file
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+    std::string oldPath = path + oldname;
+    std::string newPath = path + name;
+    if (rename(oldPath.c_str(), newPath.c_str()) != 0)
+    {
+        CCLOGERROR("Fail to rename file %s to %s !", oldPath.c_str(), newPath.c_str());
+        return false;
+    }
+    return true;
+#else
+    std::string command = "ren ";
+    // Path may include space.
+    command += "\"" + path + oldname + "\" \"" + name + "\"";
+	if (WinExec(command.c_str(), SW_HIDE) > 31)
+        return true;
+    else
+        return false;
+#endif
+}
+
+long FileUtils::getFileSize(const std::string &filepath)
+{
+    CCASSERT(!filepath.empty(), "Invalid path");
+    
+    std::string fullpath = filepath;
+    if (!isAbsolutePath(filepath))
+    {
+        fullpath = searchFullPathForFilename(filepath);
+        if (fullpath.empty())
+            return 0;
+    }
+    
+    struct stat info;
+    // Get data associated with "crt_stat.c":
+    int result = stat( fullpath.c_str(), &info );
+    
+    // Check if statistics are valid:
+    if( result != 0 )
+    {
+        // Failed
+        return -1;
+    }
+    else
+    {
+        return (long)(info.st_size);
+    }
 }
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const

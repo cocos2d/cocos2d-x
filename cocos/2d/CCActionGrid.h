@@ -48,16 +48,21 @@ public:
     virtual GridBase* getGrid();
 
     // overrides
-	virtual GridAction * clone() const override = 0;
+    virtual GridAction * clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
     virtual GridAction* reverse() const override;
     virtual void startWithTarget(Node *target) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     GridAction() {}
     virtual ~GridAction() {}
     /** initializes the action with size and duration */
     bool initWithDuration(float duration, const Size& gridSize);
 
+protected:
     Size _gridSize;
     
     NodeGrid* _gridNodeTarget;
@@ -109,7 +114,11 @@ public:
     void setVertex(const Vec2& position, const Vec3& vertex);
 
     // Overrides
-	virtual Grid3DAction * clone() const override = 0;
+    virtual Grid3DAction * clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 };
 
 /** @brief Base class for TiledGrid3D actions */
@@ -156,7 +165,11 @@ public:
     virtual GridBase* getGrid();
 
     // Override
-    virtual TiledGrid3DAction * clone() const override = 0;
+    virtual TiledGrid3DAction * clone() const override
+    {
+        CC_ASSERT(0);
+        return nullptr;
+    }
 };
 
 /** @brief AccelDeccelAmplitude action */
@@ -169,20 +182,20 @@ public:
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
     /** set amplitude rate */
-    inline void setRate(float fRate) { _rate = fRate; }
+    inline void setRate(float rate) { _rate = rate; }
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-	virtual AccelDeccelAmplitude* clone() const override;
-	virtual AccelDeccelAmplitude* reverse() const override;
+    virtual AccelDeccelAmplitude* clone() const override;
+    virtual AccelDeccelAmplitude* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     AccelDeccelAmplitude() {}
     virtual ~AccelDeccelAmplitude();
     
     /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *pAction, float duration);
+    bool initWithAction(Action *action, float duration);
 
 protected:
     float _rate;
@@ -207,8 +220,8 @@ public:
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-	virtual AccelAmplitude* clone() const override;
-	virtual AccelAmplitude* reverse() const override;
+    virtual AccelAmplitude* clone() const override;
+    virtual AccelAmplitude* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     AccelAmplitude() {}
@@ -232,15 +245,15 @@ public:
     static DeccelAmplitude* create(Action *action, float duration);
 
     /** get amplitude rate */
-    inline float getRate(void) const { return _rate; }
+    inline float getRate() const { return _rate; }
     /** set amplitude rate */
     inline void setRate(float rate) { _rate = rate; }
 
     // overrides
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-	virtual DeccelAmplitude* clone() const override;
-	virtual DeccelAmplitude* reverse() const override;
+    virtual DeccelAmplitude* clone() const override;
+    virtual DeccelAmplitude* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     DeccelAmplitude() {}
@@ -270,13 +283,14 @@ public:
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
-	virtual StopGrid* clone() const override;
-	virtual StopGrid* reverse() const override;
+    virtual StopGrid* clone() const override;
+    virtual StopGrid* reverse() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     StopGrid() {}
     virtual ~StopGrid() {}
     
+protected:
     NodeGrid* _gridNodeTarget;
     
     void cacheTargetAsGridNode();
@@ -294,8 +308,8 @@ public:
 
     // Override
     virtual void startWithTarget(Node *target) override;
-	virtual ReuseGrid* clone() const override;
-	virtual ReuseGrid* reverse() const override;
+    virtual ReuseGrid* clone() const override;
+    virtual ReuseGrid* reverse() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     ReuseGrid() {}

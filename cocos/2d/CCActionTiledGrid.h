@@ -142,7 +142,7 @@ public:
     virtual void update(float time) override;
 	virtual FadeOutTRTiles* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutTRTiles() {}
     virtual ~FadeOutTRTiles() {}
 
@@ -163,7 +163,7 @@ public:
     virtual float testFunc(const Size& pos, float time) override;
 	virtual FadeOutBLTiles* clone() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutBLTiles() {}
     virtual ~FadeOutBLTiles() {}
 
@@ -186,7 +186,7 @@ public:
 	virtual FadeOutUpTiles* clone() const override;
     virtual float testFunc(const Size& pos, float time) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutUpTiles() {}
     virtual ~FadeOutUpTiles() {}
 
@@ -207,7 +207,7 @@ public:
 	virtual FadeOutDownTiles* clone() const override;
     virtual float testFunc(const Size& pos, float time) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FadeOutDownTiles() {}
     virtual ~FadeOutDownTiles() {}
 
@@ -259,11 +259,11 @@ public:
     static WavesTiles3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /** waves amplitude */
-    inline float getAmplitude(void) const { return _amplitude; }
+    inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /** waves amplitude rate */
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
@@ -296,11 +296,11 @@ public:
     static JumpTiles3D* create(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
     /** amplitude of the sin*/
-    inline float getAmplitude(void) const { return _amplitude; }
+    inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /** amplitude rate */
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override

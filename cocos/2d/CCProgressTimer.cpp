@@ -27,17 +27,9 @@ THE SOFTWARE.
 
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
-#include "2d/CCDrawingPrimitives.h"
-#include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
+#include "2d/CCSprite.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
-#include "math/TransformUtils.h"
-
-// extern
-#include <float.h>
 
 NS_CC_BEGIN
 
@@ -59,7 +51,7 @@ ProgressTimer::ProgressTimer()
 
 ProgressTimer* ProgressTimer::create(Sprite* sp)
 {
-    ProgressTimer *progressTimer = new ProgressTimer();
+    ProgressTimer *progressTimer = new (std::nothrow) ProgressTimer();
     if (progressTimer->initWithSprite(sp))
     {
         progressTimer->autorelease();
@@ -500,7 +492,7 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
     return Vec2::ZERO;
 }
 
-void ProgressTimer::onDraw(const Mat4 &transform, bool transformUpdated)
+void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 {
 
     getGLProgram()->use();
@@ -512,22 +504,9 @@ void ProgressTimer::onDraw(const Mat4 &transform, bool transformUpdated)
 
     GL::bindTexture2D( _sprite->getTexture()->getName() );
 
-#ifdef EMSCRIPTEN
-    setGLBufferData((void*) _vertexData, (_vertexDataCount * sizeof(V2F_C4B_T2F)), 0);
-
-    int offset = 0;
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
-
-    offset += sizeof(Vec2);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
-
-    offset += sizeof(Color4B);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid*)offset);
-#else
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
-#endif // EMSCRIPTEN
 
     if(_type == Type::RADIAL)
     {
@@ -551,13 +530,13 @@ void ProgressTimer::onDraw(const Mat4 &transform, bool transformUpdated)
     }
 }
 
-void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if( ! _vertexData || ! _sprite)
         return;
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 

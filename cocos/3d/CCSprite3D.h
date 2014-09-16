@@ -25,61 +25,188 @@
 #ifndef __CCSPRITE3D_H__
 #define __CCSPRITE3D_H__
 
-#include <vector>
+#include <unordered_map>
 
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
+#include "3d/CCSkeleton3D.h" // need to include for lua-binding
+#include "3d/CCAABB.h"
+#include "3d/CCBundle3DData.h"
+#include "3d/CCMeshVertexIndexData.h"
+#include "3d/3dExport.h"
+
 
 NS_CC_BEGIN
 
 class GLProgramState;
 class Mesh;
 class Texture2D;
-
-/** Sprite3D: TODO add description */
-class Sprite3D : public Node, public BlendProtocol
+class MeshSkin;
+class AttachNode;
+struct NodeData;
+/** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
+class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
-    /// creates a Sprite3D
+    /** creates a Sprite3D*/
     static Sprite3D* create(const std::string &modelPath);
-
+  
     // creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
     
-    //set texture
+    /**set texture, set the first if multiple textures exist*/
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
+    
+    /**get SubMeshState by index*/
+    Mesh* getMeshByIndex(int index) const;
+    
+    /**get SubMeshState by Name */
+    Mesh* getMeshByName(const std::string& name) const;
 
-    Mesh* getMesh() const { return _mesh; }
+    /**get mesh*/
+    Mesh* getMesh() const { return _meshes.at(0); }
+    
+    /**get skin*/
+    CC_DEPRECATED_ATTRIBUTE MeshSkin* getSkin() const;
+    
+    Skeleton3D* getSkeleton() const { return _skeleton; }
+    
+    /**get AttachNode by bone name, return nullptr if not exist*/
+    AttachNode* getAttachNode(const std::string& boneName);
+    
+    /**remove attach node*/
+    void removeAttachNode(const std::string& boneName);
+    
+    /**remove all attach nodes*/
+    void removeAllAttachNode();
 
     // overrides
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
+    
+    // overrides
+    /** set GLProgramState, you should bind attributes by yourself */
+    virtual void setGLProgramState(GLProgramState *glProgramState) override;
+    /** just rember bind attributes */
+    virtual void setGLProgram(GLProgram *glprogram) override;
+    
+    /*
+     * Get AABB
+     * If the sprite has animation, it can't be calculated accuratly,
+     * because bone can drive the vertices, we just use the origin vertices
+     * to calculate the AABB.
+     */
+    const AABB& getAABB() const;
+    
+    /**
+     * Returns 2d bounding-box
+     * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
+     */
+    virtual Rect getBoundingBox() const override;
 
-protected:
+    // set which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK, default GL_BACK
+    void setCullFace(GLenum cullFace);
+    // set cull face enable or not
+    void setCullFaceEnabled(bool enable);
+
+CC_CONSTRUCTOR_ACCESS:
+    
     Sprite3D();
     virtual ~Sprite3D();
     bool initWithFile(const std::string &path);
     
-    //.mtl file should at the same directory with the same name if exist
+    bool initFrom(const NodeDatas& nodedatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas);
+    
+    /**load sprite3d from cache, return true if succeed, false otherwise*/
+    bool loadFromCache(const std::string& path);
+    
+    /**.mtl file should at the same directory with the same name if exist*/
     bool loadFromObj(const std::string& path);
+    
+    /**load from .c3b or .c3t*/
+    bool loadFromC3x(const std::string& path);
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
+    /**draw*/
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
-    virtual GLProgram* getDefaultGLProgram(bool textured = true);
-    
+    /**generate default GLProgramState*/
     void genGLProgramState();
 
-    Mesh              *_mesh;
-    MeshCommand        _meshCommand;
-    Texture2D*        _texture;
-    BlendFunc _blend;
+    void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
+    void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
+    Sprite3D* createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas);
+
+    /**get MeshIndexData by Id*/
+    MeshIndexData* getMeshIndexData(const std::string& indexId) const;
+    
+    void  addMesh(Mesh* mesh);
+    
+    void onAABBDirty() { _aabbDirty = true; }
+    
+protected:
+
+    Skeleton3D*                  _skeleton; //skeleton
+    
+    Vector<MeshVertexData*>      _meshVertexDatas;
+    
+    std::unordered_map<std::string, AttachNode*> _attachments;
+
+    BlendFunc                    _blend;
+    
+    Vector<Mesh*>              _meshes;
+
+    mutable AABB                 _aabb;                 // cache current aabb
+    mutable Mat4                 _nodeToWorldTransform; // cache the matrix
+    bool                         _aabbDirty;
 };
 
-extern std::string s_attributeNames[];
+///////////////////////////////////////////////////////
+class Sprite3DCache
+{
+public:
+    struct Sprite3DData
+    {
+        Vector<MeshVertexData*>   meshVertexDatas;
+        NodeDatas*      nodedatas;
+        MaterialDatas*  materialdatas;
+        ~Sprite3DData()
+        {
+            if (nodedatas)
+                delete nodedatas;
+            if (materialdatas)
+                delete materialdatas;
+            meshVertexDatas.clear();
+        }
+    };
+    
+    /**get & destroy*/
+    static Sprite3DCache* getInstance();
+    static void destroyInstance();
+    
+    Sprite3DData* getSpriteData(const std::string& key) const;
+    
+    bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
+    
+    void removeSprite3DData(const std::string& key);
+    
+    void removeAllSprite3DData();
+    
+    CC_CONSTRUCTOR_ACCESS:
+    Sprite3DCache();
+    ~Sprite3DCache();
+    
+protected:
+    
+    
+    static Sprite3DCache*                        _cacheInstance;
+    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
+};
+
+extern std::string CC_3D_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_

@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include <string>
 #include <map>
-#include <map>
 
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
@@ -182,10 +181,12 @@ public:
      possible load them as if they have (or not) the alpha channel premultiplied.
 
      By default it is disabled.
+     
+     deprecated, please use Image::setPVRImagesHavePremultipliedAlpha() instead.
 
      @since v0.99.5
      */
-    static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    CC_DEPRECATED_ATTRIBUTE static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
     
 public:
     /**
@@ -202,6 +203,12 @@ public:
      * @lua NA
      */
     virtual std::string getDescription() const;
+
+	/** release only the gl texture.
+     * @js NA
+     * @lua NA
+     */
+	void releaseGLTexture();
 
     /** Initializes with a texture2d with data 
      * @js NA

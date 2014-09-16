@@ -4,9 +4,6 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{93d0a037-2d39-405e-bcbd-1fc145864722}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\AccelerometerTest">
-      <UniqueIdentifier>{363b8049-7ead-47e9-87a4-54937a9dd336}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ActionManagerTest">
       <UniqueIdentifier>{9152809d-3942-4fee-a9e7-4c80694c197e}</UniqueIdentifier>
     </Filter>
@@ -208,12 +205,6 @@
     <Filter Include="Classes\IntervalTest">
       <UniqueIdentifier>{4987366e-5062-4719-bdeb-d098e0c1406c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\KeyboardTest">
-      <UniqueIdentifier>{fb894f07-e61e-4094-aaf2-038ea1bb9250}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\KeypadTest">
-      <UniqueIdentifier>{2a93c1ef-7a60-417f-a140-ac144caf4271}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\LabelTest">
       <UniqueIdentifier>{fe4f901a-eec1-4f49-833b-fccf28979a65}</UniqueIdentifier>
     </Filter>
@@ -320,9 +311,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\VisibleRect.cpp">
       <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\AccelerometerTest\AccelerometerTest.cpp">
-      <Filter>Classes\AccelerometerTest</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
       <Filter>Classes\ActionManagerTest</Filter>
@@ -567,12 +555,6 @@
     <ClCompile Include="..\..\..\Classes\IntervalTest\IntervalTest.cpp">
       <Filter>Classes\IntervalTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\KeyboardTest\KeyboardTest.cpp">
-      <Filter>Classes\KeyboardTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\KeypadTest\KeypadTest.cpp">
-      <Filter>Classes\KeypadTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\LabelTest\LabelTestNew.cpp">
       <Filter>Classes\LabelTest</Filter>
     </ClCompile>
@@ -740,9 +722,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\VisibleRect.h">
       <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Classes\AccelerometerTest\AccelerometerTest.h">
-      <Filter>Classes\AccelerometerTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\ActionManagerTest\ActionManagerTest.h">
       <Filter>Classes\ActionManagerTest</Filter>
@@ -1178,12 +1157,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\IntervalTest\IntervalTest.h">
       <Filter>Classes\IntervalTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Classes\KeyboardTest\KeyboardTest.h">
-      <Filter>Classes\KeyboardTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Classes\KeypadTest\KeypadTest.h">
-      <Filter>Classes\KeypadTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Classes\LabelTest\LabelTestNew.h">
       <Filter>Classes\LabelTest</Filter>

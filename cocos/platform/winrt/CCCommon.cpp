@@ -23,11 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "platform/CCCommon.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 #include "CCWinRTUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "platform/wp8/CCGLView.h"
+#include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)
@@ -50,7 +50,7 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
     // Show the message dialog
     msg->ShowAsync();
 #else
-    GLView::sharedOpenGLView()->ShowMessageBox(title, message);
+    GLViewImpl::sharedOpenGLView()->ShowMessageBox(title, message);
 #endif
 
 }

@@ -22,7 +22,7 @@ SceneTestLayer1::SceneTestLayer1()
     auto item2 = MenuItemFont::create( "Test pushScene w/transition", CC_CALLBACK_1(SceneTestLayer1::onPushSceneTran, this));
     auto item3 = MenuItemFont::create( "Quit", CC_CALLBACK_1(SceneTestLayer1::onQuit, this));
     
-    auto menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create( item1, item2, item3, nullptr );
     menu->alignItemsVertically();
     
     addChild( menu );
@@ -62,8 +62,8 @@ SceneTestLayer1::~SceneTestLayer1()
 
 void SceneTestLayer1::onPushScene(Ref* sender)
 {
-    auto scene = new SceneTestScene();
-    auto layer = new SceneTestLayer2();
+    auto scene = new (std::nothrow) SceneTestScene();
+    auto layer = new (std::nothrow) SceneTestLayer2();
     scene->addChild( layer, 0 );
     Director::getInstance()->pushScene( scene );
     scene->release();
@@ -72,8 +72,8 @@ void SceneTestLayer1::onPushScene(Ref* sender)
 
 void SceneTestLayer1::onPushSceneTran(Ref* sender)
 {
-    auto scene = new SceneTestScene();
-    auto layer = new SceneTestLayer2();
+    auto scene = new (std::nothrow) SceneTestScene();
+    auto layer = new (std::nothrow) SceneTestLayer2();
     scene->addChild( layer, 0 );
 
     Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
@@ -107,7 +107,7 @@ SceneTestLayer2::SceneTestLayer2()
     auto item2 = MenuItemFont::create( "replaceScene w/transition", CC_CALLBACK_1(SceneTestLayer2::onReplaceSceneTran, this));
     auto item3 = MenuItemFont::create( "Go Back", CC_CALLBACK_1(SceneTestLayer2::onGoBack, this));
     
-    auto menu = Menu::create( item1, item2, item3, NULL );
+    auto menu = Menu::create( item1, item2, item3, nullptr );
     menu->alignItemsVertically();
     
     addChild( menu );
@@ -137,7 +137,7 @@ void SceneTestLayer2::onGoBack(Ref* sender)
 
 void SceneTestLayer2::onReplaceScene(Ref* sender)
 {
-    auto scene = new SceneTestScene();
+    auto scene = new (std::nothrow) SceneTestScene();
     auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( scene );
@@ -147,7 +147,7 @@ void SceneTestLayer2::onReplaceScene(Ref* sender)
 
 void SceneTestLayer2::onReplaceSceneTran(Ref* sender)
 {
-    auto scene = new SceneTestScene();
+    auto scene = new (std::nothrow) SceneTestScene();
     auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
@@ -176,7 +176,7 @@ bool SceneTestLayer3::init()
         auto item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
         auto item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 
-        auto menu = Menu::create(item0, item1, item2, item3, NULL);
+        auto menu = Menu::create(item0, item1, item2, item3, nullptr);
         this->addChild(menu);
         menu->alignItemsVertically();
 
@@ -200,7 +200,8 @@ void SceneTestLayer3::testDealloc(float dt)
 
 void SceneTestLayer3::item0Clicked(Ref* sender)
 {
-    auto newScene = Scene::create();
+    auto s = Director::getInstance()->getWinSize();
+    auto newScene = Scene::createWithSize(s);
     newScene->addChild(SceneTestLayer3::create());
     Director::getInstance()->pushScene(TransitionFade::create(0.5, newScene, Color3B(0,255,255)));
 }
@@ -222,7 +223,7 @@ void SceneTestLayer3::item3Clicked(Ref* sender)
 
 void SceneTestScene::runThisTest()
 {
-    auto layer = new SceneTestLayer1();
+    auto layer = new (std::nothrow) SceneTestLayer1();
     addChild(layer);
     layer->release();
 

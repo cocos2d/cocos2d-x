@@ -86,7 +86,7 @@ public:
     /**
     @brief    If the sender doesn't want to draw, return true.
     */
-    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         CC_UNUSED_PARAM(sender);
         return false;
@@ -165,7 +165,7 @@ public:
     virtual void setSecureTextEntry(bool value);
     virtual bool isSecureTextEntry();
 
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
 protected:
     //////////////////////////////////////////////////////////////////////////

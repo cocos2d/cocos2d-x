@@ -28,7 +28,7 @@ THE SOFTWARE.
 #ifndef __CCCONFIG_H__
 #define __CCCONFIG_H__
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 
 /**
  @file
@@ -202,9 +202,6 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  0 -- disabled
  1 -- draw bounding box
  2 -- draw texture box
- 0 -- disabled
- 1 -- draw bounding box
- 2 -- draw texture box
 */
 #ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0
@@ -272,6 +269,24 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_USE_PHYSICS 1
 #endif
 
+/** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_JPEG
+#define CC_USE_JPEG  1
+#endif // CC_USE_JPEG
+
+/** Support TIFF or not. If your application don't use TIFF format picture, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_TIFF
+#define CC_USE_TIFF  1
+#endif // CC_USE_TIFF
+
+/** Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_WEBP
+#define CC_USE_WEBP  1
+#endif // CC_USE_WEBP
+
 /** Enable Script binding */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1
@@ -286,5 +301,5 @@ To enable set it to a value different than 0. Disabled by default.
 #ifndef CC_CONSTRUCTOR_ACCESS
 #define CC_CONSTRUCTOR_ACCESS protected
 #endif
-
+ 
 #endif // __CCCONFIG_H__

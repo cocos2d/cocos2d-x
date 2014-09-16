@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
+#include "lua_module_register.h"
 
 using namespace CocosDenshion;
 
@@ -17,6 +18,17 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     SimpleAudioEngine::end();
+}
+
+//if you want a different context,just modify the value of glContextAttrs
+//it will takes effect on all platforms
+void AppDelegate::initGLContextAttrs()
+{
+    //set OpenGL context attributions,now can only set six attributions:
+    //red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
@@ -41,19 +53,22 @@ bool AppDelegate::applicationDidFinishLaunching()
         bool isLanscape = ConfigParser::getInstance()->isLanscape();
         createSimulator(title.c_str(),viewSize.width,viewSize.height,isLanscape);
 #else
-        glview = GLView::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
+        glview = cocos2d::GLViewImpl::createWithRect(title.c_str(), Rect(0,0,viewSize.width,viewSize.height));
         director->setOpenGLView(glview);
 #endif
     }
 
-    // turn on display FPS
-    director->setDisplayStats(true);
-
+   
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
    
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_module_register(L);
+
+    LuaStack* stack = engine->getLuaStack();
+    stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
     
     //register custom function
     //LuaStack* stack = engine->getLuaStack();

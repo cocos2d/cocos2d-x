@@ -23,27 +23,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UITextField.h"
+#include "platform/CCFileUtils.h"
+#include "ui/UIHelper.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-static int _calcCharCount(const char * pszText)
-{
-    int n = 0;
-    char ch = 0;
-    while ((ch = *pszText))
-    {
-        CC_BREAK_IF(! ch);
-        
-        if (0x80 != (0xC0 & ch))
-        {
-            ++n;
-        }
-        ++pszText;
-    }
-    return n;
-}
 
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
@@ -63,7 +49,7 @@ UICCTextField::~UICCTextField()
 
 UICCTextField * UICCTextField::create(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    UICCTextField *pRet = new UICCTextField();
+    UICCTextField *pRet = new (std::nothrow) UICCTextField();
     
     if(pRet && pRet->initWithPlaceHolder("", fontName, fontSize))
     {
@@ -129,7 +115,7 @@ void UICCTextField::insertText(const char*  text, size_t len)
     {
         if (_maxLengthEnabled)
         {
-            int text_count = _calcCharCount(getString().c_str());
+            long text_count = StringUtils::getCharacterCountInUTF8String(getString());
             if (text_count >= _maxLength)
             {
                 // password
@@ -140,69 +126,16 @@ void UICCTextField::insertText(const char*  text, size_t len)
                 return;
             }
             
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32))
-            int input_count = _calcCharCount(text);
-            int total = total = text_count + input_count;
+            long input_count = StringUtils::getCharacterCountInUTF8String(text);
+            long total = text_count + input_count;
             
             if (total > _maxLength)
             {
-                int end = 0;
-                int length = _maxLength - text_count;
+                long length = _maxLength - text_count;
                 
-                for (int i = 0; i < length; ++i)
-                {
-                    char value = text[i];
-                    
-                    if (value >= 0 && value <= 127) // ascii
-                    {
-                        end++;
-                    }
-                    else
-                    {
-                        end += 3;
-                    }
-                }
-                input_text = input_text.substr(0, end);
-                len  = end;
+                input_text = Helper::getSubStringOfUTF8String(input_text, 0, length);
+                len  = input_text.length();
             }
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            int input_count = _calcCharCount(text);
-            int total = text_count + input_count;
-            if (total > _maxLength)
-            {
-                int ascii = 0;
-                int unicode = 0;
-                int end = 0;
-                int count = 0;
-                
-                for (int i = 0; i < total * 3; ++i)
-                {
-                    char value = text[i];
-                    
-                    if (value >= 0 && value <= 127) // ascii
-                    {
-                        ascii++;
-                        count++;
-                    }
-                    else
-                    {
-                        unicode++;
-                        if (unicode % 3 == 0)
-                        {
-                            count++;
-                        }
-                    }
-                    
-                    if (count == _maxLength)
-                    {
-                        break;
-                    }
-                }
-                end = ascii + unicode;
-                input_text = input_text.substr(0, end);
-                len  = end;
-            }
-#endif
         }
     }
     TextFieldTTF::insertText(input_text.c_str(), len);
@@ -246,7 +179,7 @@ void UICCTextField::setMaxLengthEnabled(bool enable)
     _maxLengthEnabled = enable;
 }
 
-bool UICCTextField::isMaxLengthEnabled()
+bool UICCTextField::isMaxLengthEnabled()const
 {
     return _maxLengthEnabled;
 }
@@ -256,12 +189,12 @@ void UICCTextField::setMaxLength(int length)
     _maxLength = length;
 }
 
-int UICCTextField::getMaxLength()
+int UICCTextField::getMaxLength()const
 {
     return _maxLength;
 }
 
-int UICCTextField::getCharCount()
+int UICCTextField::getCharCount()const
 {
     return TextFieldTTF::getCharCount();
 }
@@ -271,7 +204,7 @@ void UICCTextField::setPasswordEnabled(bool enable)
     _passwordEnabled = enable;
 }
 
-bool UICCTextField::isPasswordEnabled()
+bool UICCTextField::isPasswordEnabled()const
 {
     return _passwordEnabled;
 }
@@ -293,8 +226,8 @@ void UICCTextField::setPasswordStyleText(const std::string& styleText)
 void UICCTextField::setPasswordText(const std::string& text)
 {
     std::string tempStr = "";
-    int text_count = _calcCharCount(text.c_str());
-    int max = text_count;
+    long text_count = StringUtils::getCharacterCountInUTF8String(text);
+    long max = text_count;
     
     if (_maxLengthEnabled)
     {
@@ -317,7 +250,7 @@ void UICCTextField::setAttachWithIME(bool attach)
     _attachWithIME = attach;
 }
 
-bool UICCTextField::getAttachWithIME()
+bool UICCTextField::getAttachWithIME()const
 {
     return _attachWithIME;
 }
@@ -327,7 +260,7 @@ void UICCTextField::setDetachWithIME(bool detach)
     _detachWithIME = detach;
 }
 
-bool UICCTextField::getDetachWithIME()
+bool UICCTextField::getDetachWithIME()const
 {
     return _detachWithIME;
 }
@@ -337,7 +270,7 @@ void UICCTextField::setInsertText(bool insert)
     _insertText = insert;
 }
 
-bool UICCTextField::getInsertText()
+bool UICCTextField::getInsertText()const
 {
     return _insertText;
 }
@@ -347,7 +280,7 @@ void UICCTextField::setDeleteBackward(bool deleteBackward)
     _deleteBackward = deleteBackward;
 }
 
-bool UICCTextField::getDeleteBackward()
+bool UICCTextField::getDeleteBackward()const
 {
     return _deleteBackward;
 }
@@ -366,7 +299,10 @@ _textFieldEventListener(nullptr),
 _textFieldEventSelector(nullptr),
 _eventCallback(nullptr),
 _passwordStyleText(""),
-_textFieldRendererAdaptDirty(true)
+_textFieldRendererAdaptDirty(true),
+_fontName("Thonburi"),
+_fontSize(10),
+_fontType(FontType::SYSTEM)
 {
 }
 
@@ -378,7 +314,7 @@ TextField::~TextField()
 
 TextField* TextField::create()
 {
-    TextField* widget = new TextField();
+    TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -390,7 +326,7 @@ TextField* TextField::create()
     
 TextField* TextField::create(const std::string &placeholder, const std::string &fontName, int fontSize)
 {
-    TextField* widget = new TextField();
+    TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
         widget->setPlaceHolder(placeholder);
@@ -415,6 +351,14 @@ bool TextField::init()
     
 void TextField::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Widget::onEnter();
     scheduleUpdate();
 }
@@ -455,52 +399,23 @@ bool TextField::hitTest(const Vec2 &pt)
     return false;
 }
     
-Size TextField::getTouchSize()
+Size TextField::getTouchSize()const
 {
     return Size(_touchWidth, _touchHeight);
 }
 
-void TextField::setText(const std::string& text)
+void TextField::setString(const std::string& text)
 {
     std::string strText(text);
     
     if (isMaxLengthEnabled())
     {
         int max = _textFieldRenderer->getMaxLength();
-        int text_count = _calcCharCount(text.c_str());
-        int total = text_count + _calcCharCount(getStringValue().c_str());
+        long text_count = StringUtils::getCharacterCountInUTF8String(text);
+        long total = text_count + StringUtils::getCharacterCountInUTF8String(getString());
         if (total > max)
         {
-            int ascii = 0;
-            int unicode = 0;
-            int end = 0;
-            int count = 0;
-            
-            for (int i = 0; i < total * 3; ++i)
-            {
-                char value = text[i];
-                
-                if (value >= 0 && value <= 127) // ascii
-                {
-                    ascii++;
-                    count++;
-                }
-                else
-                {
-                    unicode++;
-                    if (unicode % 3 == 0)
-                    {
-                        count++;
-                    }
-                }
-                
-                if (count == max)
-                {
-                    break;
-                }
-            }
-            end = ascii + unicode;
-            strText = strText.substr(0, end);
+            strText = Helper::getSubStringOfUTF8String(strText, 0, max);
         }
     }
     
@@ -526,33 +441,71 @@ void TextField::setPlaceHolder(const std::string& value)
     updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
-const std::string& TextField::getPlaceHolder()
+const std::string& TextField::getPlaceHolder()const
 {
     return _textFieldRenderer->getPlaceHolder();
+}
+    
+const Color4B& TextField::getPlaceHolderColor()const
+{
+    return _textFieldRenderer->getColorSpaceHolder();
+}
+    
+void TextField::setPlaceHolderColor(const cocos2d::Color3B &color)
+{
+    _textFieldRenderer->setColorSpaceHolder(color);
+}
+    
+void TextField::setPlaceHolderColor(const cocos2d::Color4B &color)
+{
+    _textFieldRenderer->setColorSpaceHolder(color);
+}
+    
+void TextField::setTextColor(const cocos2d::Color4B &textColor)
+{
+    _textFieldRenderer->setTextColor(textColor);
 }
 
 void TextField::setFontSize(int size)
 {
-    _textFieldRenderer->setSystemFontSize(size);
+    if (_fontType == FontType::SYSTEM) {
+        _textFieldRenderer->setSystemFontSize(size);
+    } else {
+        TTFConfig config = _textFieldRenderer->getTTFConfig();
+        config.fontSize = size;
+        _textFieldRenderer->setTTFConfig(config);
+    }
+    _fontSize = size;
     _textFieldRendererAdaptDirty = true;
     updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
-int TextField::getFontSize()
+int TextField::getFontSize()const
 {
-    return _textFieldRenderer->getSystemFontSize();
+    return _fontSize;
 }
 
 void TextField::setFontName(const std::string& name)
 {
-    _textFieldRenderer->setSystemFontName(name);
+    if(FileUtils::getInstance()->isFileExist(name))
+    {
+        TTFConfig config = _textFieldRenderer->getTTFConfig();
+        config.fontFilePath = name;
+        config.fontSize = _fontSize;
+        _textFieldRenderer->setTTFConfig(config);
+        _fontType = FontType::TTF;
+    } else {
+        _textFieldRenderer->setSystemFontName(name);
+        _fontType = FontType::SYSTEM;
+    }
+    _fontName = name;
     _textFieldRendererAdaptDirty = true;
     updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
 }
     
-const std::string& TextField::getFontName()
+const std::string& TextField::getFontName()const
 {
-    return _textFieldRenderer->getSystemFontName();
+    return _fontName;
 }
 
 void TextField::didNotSelectSelf()
@@ -560,10 +513,15 @@ void TextField::didNotSelectSelf()
     _textFieldRenderer->detachWithIME();
 }
 
-const std::string& TextField::getStringValue()
+const std::string& TextField::getString()const
 {
     return _textFieldRenderer->getString();
 }
+    
+int TextField::getStringLength() const {
+    return _textFieldRenderer->getStringLength();
+}
+
 
 bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
@@ -571,6 +529,8 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
+    } else {
+        this->didNotSelectSelf();
     }
     return pass;
 }
@@ -580,7 +540,7 @@ void TextField::setMaxLengthEnabled(bool enable)
     _textFieldRenderer->setMaxLengthEnabled(enable);
 }
 
-bool TextField::isMaxLengthEnabled()
+bool TextField::isMaxLengthEnabled()const
 {
     return _textFieldRenderer->isMaxLengthEnabled();
 }
@@ -589,10 +549,10 @@ void TextField::setMaxLength(int length)
 {
     _textFieldRenderer->setMaxLength(length);
     
-    setText(getStringValue());
+    setString(getString());
 }
 
-int TextField::getMaxLength()
+int TextField::getMaxLength()const
 {
     return _textFieldRenderer->getMaxLength();
 }
@@ -602,7 +562,7 @@ void TextField::setPasswordEnabled(bool enable)
     _textFieldRenderer->setPasswordEnabled(enable);
 }
 
-bool TextField::isPasswordEnabled()
+bool TextField::isPasswordEnabled()const
 {
     return _textFieldRenderer->isPasswordEnabled();
 }
@@ -610,13 +570,12 @@ bool TextField::isPasswordEnabled()
 void TextField::setPasswordStyleText(const char *styleText)
 {
     _textFieldRenderer->setPasswordStyleText(styleText);
-    
     _passwordStyleText = styleText;
     
-    setText(getStringValue());
+    setString(getString());
 }
     
-const char* TextField::getPasswordStyleText()
+const char* TextField::getPasswordStyleText()const
 {
     return _passwordStyleText.c_str();
 }
@@ -651,7 +610,7 @@ void TextField::update(float dt)
     }
 }
 
-bool TextField::getAttachWithIME()
+bool TextField::getAttachWithIME()const
 {
     return _textFieldRenderer->getAttachWithIME();
 }
@@ -661,7 +620,7 @@ void TextField::setAttachWithIME(bool attach)
     _textFieldRenderer->setAttachWithIME(attach);
 }
 
-bool TextField::getDetachWithIME()
+bool TextField::getDetachWithIME()const
 {
     return _textFieldRenderer->getDetachWithIME();
 }
@@ -671,7 +630,7 @@ void TextField::setDetachWithIME(bool detach)
     _textFieldRenderer->setDetachWithIME(detach);
 }
 
-bool TextField::getInsertText()
+bool TextField::getInsertText()const
 {
     return _textFieldRenderer->getInsertText();
 }
@@ -681,7 +640,7 @@ void TextField::setInsertText(bool insertText)
     _textFieldRenderer->setInsertText(insertText);
 }
 
-bool TextField::getDeleteBackward()
+bool TextField::getDeleteBackward()const
 {
     return _textFieldRenderer->getDeleteBackward();
 }
@@ -693,6 +652,7 @@ void TextField::setDeleteBackward(bool deleteBackward)
 
 void TextField::attachWithIMEEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
@@ -700,10 +660,12 @@ void TextField::attachWithIMEEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ATTACH_WITH_IME);
     }
+    this->release();
 }
 
 void TextField::detachWithIMEEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
@@ -711,10 +673,12 @@ void TextField::detachWithIMEEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::DETACH_WITH_IME);
     }
+    this->release();
 }
 
 void TextField::insertTextEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
@@ -722,10 +686,12 @@ void TextField::insertTextEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::INSERT_TEXT);
     }
+    this->release();
 }
 
 void TextField::deleteBackwardEvent()
 {
+    this->retain();
     if (_textFieldEventListener && _textFieldEventSelector)
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
@@ -733,6 +699,7 @@ void TextField::deleteBackwardEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::DELETE_BACKWARD);
     }
+    this->release();
 }
 
 void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
@@ -763,29 +730,14 @@ void TextField::adaptRenderers()
 
 void TextField::textfieldRendererScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (!_ignoreSize)
     {
-        _textFieldRenderer->setDimensions(0,0);
-        _textFieldRenderer->setScale(1.0f);
-    }
-    else
-    {
-        _textFieldRenderer->setDimensions(_size.width,_size.height);
-        Size textureSize = getContentSize();
-        if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
-        {
-            _textFieldRenderer->setScale(1.0f);
-            return;
-        }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
-        _textFieldRenderer->setScaleX(scaleX);
-        _textFieldRenderer->setScaleY(scaleY);
+        _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
     }
     _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
-const Size& TextField::getVirtualRendererSize() const
+Size TextField::getVirtualRendererSize() const
 {
     return _textFieldRenderer->getContentSize();
 }
@@ -798,21 +750,6 @@ Node* TextField::getVirtualRenderer()
 std::string TextField::getDescription() const
 {
     return "TextField";
-}
-    
-void TextField::updateTextureColor()
-{
-    updateColorToRenderer(_textFieldRenderer);
-}
-
-void TextField::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_textFieldRenderer);
-}
-
-void TextField::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_textFieldRenderer);
 }
 
 void TextField::attachWithIME()
@@ -830,10 +767,10 @@ void TextField::copySpecialProperties(Widget *widget)
     TextField* textField = dynamic_cast<TextField*>(widget);
     if (textField)
     {
-        setText(textField->_textFieldRenderer->getString());
-        setPlaceHolder(textField->getStringValue());
-        setFontSize(textField->_textFieldRenderer->getSystemFontSize());
-        setFontName(textField->_textFieldRenderer->getSystemFontName());
+        setString(textField->_textFieldRenderer->getString());
+        setPlaceHolder(textField->getString());
+        setFontSize(textField->_fontSize);
+        setFontName(textField->_fontName);
         setMaxLengthEnabled(textField->isMaxLengthEnabled());
         setMaxLength(textField->getMaxLength());
         setPasswordEnabled(textField->isPasswordEnabled());
@@ -850,7 +787,7 @@ void TextField::copySpecialProperties(Widget *widget)
     
 void TextField::setTextAreaSize(const Size &size)
 {
-    _textFieldRenderer->setDimensions(size.width,size.height);
+    this->setContentSize(size);
 }
 
 void TextField::setTextHorizontalAlignment(TextHAlignment alignment)

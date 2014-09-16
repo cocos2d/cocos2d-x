@@ -45,17 +45,17 @@ int getFontSizeAccordingHeightJni(int height) {
     return ret;
 }
 
-std::string getStringWithEllipsisJni(const char* pszText, float width, float fontSize) {
+std::string getStringWithEllipsisJni(const char* text, float width, float fontSize) {
     std::string ret;
     JniMethodInfo t;
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxBitmap", "getStringWithEllipsis", "(Ljava/lang/String;FF)Ljava/lang/String;")) {
         jstring stringArg1;
 
-        if (!pszText) {
+        if (!text) {
             stringArg1 = t.env->NewStringUTF("");
         } else {
-            stringArg1 = t.env->NewStringUTF(pszText);
+            stringArg1 = t.env->NewStringUTF(text);
         }
 
         jstring retFromJava = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, width, fontSize);

@@ -43,7 +43,7 @@ PhysicsSprite::PhysicsSprite()
 
 PhysicsSprite* PhysicsSprite::create()
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -58,7 +58,7 @@ PhysicsSprite* PhysicsSprite::create()
 
 PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithTexture(pTexture))
     {
         pRet->autorelease();
@@ -73,7 +73,7 @@ PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture)
 
 PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture, const Rect& rect)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithTexture(pTexture, rect))
     {
         pRet->autorelease();
@@ -88,7 +88,7 @@ PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture, const Rect&
 
 PhysicsSprite* PhysicsSprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithSpriteFrame(pSpriteFrame))
     {
         pRet->autorelease();
@@ -103,7 +103,7 @@ PhysicsSprite* PhysicsSprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 
 PhysicsSprite* PhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithSpriteFrameName(pszSpriteFrameName))
     {
         pRet->autorelease();
@@ -118,7 +118,7 @@ PhysicsSprite* PhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFra
 
 PhysicsSprite* PhysicsSprite::create(const char *pszFileName)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -133,7 +133,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName)
 
 PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithFile(pszFileName, rect))
     {
         pRet->autorelease();
@@ -172,7 +172,7 @@ const Vec2& PhysicsSprite::getPosition() const
 
 void PhysicsSprite::getPosition(float* x, float* y) const
 {
-    if (x == NULL || y == NULL) {
+    if (x == nullptr || y == nullptr) {
         return;
     }
     const Vec2& pos = getPosFromPhysics();
@@ -397,14 +397,14 @@ const Mat4& PhysicsSprite::getNodeToParentTransform() const
 	return _transform;
 }
 
-void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (isDirty())
     {
         syncPhysicsTransform();
     }
     
-    Sprite::draw(renderer, _transform, transformUpdated);
+    Sprite::draw(renderer, _transform, flags);
 }
 
 NS_CC_EXT_END

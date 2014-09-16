@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __ANDROID_IME_JNI_H__
 
 extern "C" {
-    extern void setKeyboardStateJNI(int bOpen);
+    extern void setKeyboardStateJNI(int open);
     extern void openKeyboardJNI();
     extern void closeKeyboardJNI();
 }

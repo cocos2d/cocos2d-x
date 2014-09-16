@@ -29,7 +29,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 #include "base/CCValue.h"
 #include "base/CCData.h"
@@ -288,13 +288,13 @@ public:
      */
     virtual void setPopupNotify(bool notify);
     virtual bool isPopupNotify();
-    
+
     /**
      *  Converts the contents of a file to a ValueMap.
      *  @note This method is used internally.
      */
     virtual ValueMap getValueMapFromFile(const std::string& filename);
-    
+
     /**
      *  Converts the contents of a file to a ValueMap.
      *  @note This method is used internally.
@@ -383,7 +383,7 @@ public:
      *  @return The file size.
      */
     virtual long getFileSize(const std::string &filepath);
-    
+
     /** Returns the full path cache */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
     

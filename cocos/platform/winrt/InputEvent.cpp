@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "InputEvent.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "base/CCEventAcceleration.h"
 
 NS_CC_BEGIN
@@ -57,13 +57,13 @@ void PointerEvent::execute()
     switch(m_type)
     {
     case PointerEventType::PointerPressed:
-        GLView::sharedOpenGLView()->OnPointerPressed(m_args.Get());
+        GLViewImpl::sharedOpenGLView()->OnPointerPressed(m_args.Get());
         break;
     case PointerEventType::PointerMoved:
-        GLView::sharedOpenGLView()->OnPointerMoved(m_args.Get());
+        GLViewImpl::sharedOpenGLView()->OnPointerMoved(m_args.Get());
         break;           
     case PointerEventType::PointerReleased:
-        GLView::sharedOpenGLView()->OnPointerReleased(m_args.Get());
+        GLViewImpl::sharedOpenGLView()->OnPointerReleased(m_args.Get());
         break;
     }
 }
@@ -119,7 +119,7 @@ BackButtonEvent::BackButtonEvent()
 
 void BackButtonEvent::execute()
 {
-    GLView::sharedOpenGLView()->OnBackKeyPress();
+    GLViewImpl::sharedOpenGLView()->OnBackKeyPress();
 }
 
 

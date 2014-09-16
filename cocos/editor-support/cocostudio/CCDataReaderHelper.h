@@ -29,10 +29,13 @@ THE SOFTWARE.
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "cocostudio/CocosStudioExport.h"
+
+#include "json/document.h"
+#include "DictionaryHelper.h"
 
 #include <string>
 #include <queue>
-#include <list>
 #include <mutex>
 #include <thread>
 #include <condition_variable>
@@ -43,19 +46,21 @@ namespace tinyxml2
 }
 
 namespace cocostudio {
-
+    class CocoLoader;
+    struct stExpCocoNode;
 /**
  *  @js NA
  *  @lua NA
  */
-class  DataReaderHelper : cocos2d::Ref
+class CC_STUDIO_DLL DataReaderHelper : cocos2d::Ref
 {
 protected:
 
 	enum ConfigType
 	{
 		DragonBone_XML,
-		CocoStudio_JSON
+		CocoStudio_JSON,
+        CocoStudio_Binary
 	};
 
 	typedef struct _AsyncStruct
@@ -171,7 +176,24 @@ public:
     static ContourData *decodeContour(const rapidjson::Value& json);
 
     static void decodeNode(BaseData *node, const rapidjson::Value& json, DataInfo *dataInfo);
-
+    
+// for binary decode
+public:
+	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = nullptr);
+	static ArmatureData *decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static BoneData *decodeBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static DisplayData *decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static AnimationData *decodeAnimation(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static MovementData *decodeMovement(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    
+	static MovementBoneData *decodeMovementBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static FrameData *decodeFrame(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    
+	static TextureData *decodeTexture(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
+	static ContourData *decodeContour(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
+    
+	static void decodeNode(BaseData *node, CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    
 protected:
 	void loadData();
 

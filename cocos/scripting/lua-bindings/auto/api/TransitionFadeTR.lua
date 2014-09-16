@@ -2,31 +2,36 @@
 --------------------------------
 -- @module TransitionFadeTR
 -- @extend TransitionScene,TransitionEaseScene
+-- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#TransitionFadeTR] easeActionWithAction 
 -- @param self
--- @param #cc.ActionInterval actioninterval
+-- @param #cc.ActionInterval action
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
+-- 
 -- @function [parent=#TransitionFadeTR] actionWithSize 
 -- @param self
 -- @param #size_table size
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
+-- 
 -- @function [parent=#TransitionFadeTR] create 
 -- @param self
--- @param #float float
+-- @param #float t
 -- @param #cc.Scene scene
 -- @return TransitionFadeTR#TransitionFadeTR ret (return value: cc.TransitionFadeTR)
         
 --------------------------------
+-- 
 -- @function [parent=#TransitionFadeTR] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table transform
+-- @param #unsigned int flags
         
 return nil

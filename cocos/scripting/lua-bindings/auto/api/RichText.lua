@@ -2,62 +2,71 @@
 --------------------------------
 -- @module RichText
 -- @extend Widget
+-- @parent_module ccui
 
 --------------------------------
+-- 
 -- @function [parent=#RichText] insertElement 
 -- @param self
--- @param #ccui.RichElement richelement
--- @param #int int
+-- @param #ccui.RichElement element
+-- @param #int index
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] setAnchorPoint 
 -- @param self
--- @param #cc.Vec2 vec2
+-- @param #vec2_table pt
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] pushBackElement 
 -- @param self
--- @param #ccui.RichElement richelement
+-- @param #ccui.RichElement element
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] ignoreContentAdaptWithSize 
 -- @param self
--- @param #bool bool
+-- @param #bool ignore
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] setVerticalSpace 
 -- @param self
--- @param #float float
+-- @param #float space
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] formatText 
 -- @param self
         
 --------------------------------
--- overload function: removeElement(ccui.RichElement)
---          
--- overload function: removeElement(int)
---          
+-- @overload self, ccui.RichElement         
+-- @overload self, int         
 -- @function [parent=#RichText] removeElement
 -- @param self
--- @param #int int
+-- @param #int index
 
 --------------------------------
+-- 
 -- @function [parent=#RichText] create 
 -- @param self
 -- @return RichText#RichText ret (return value: ccui.RichText)
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+-- 
 -- @function [parent=#RichText] RichText 
 -- @param self
         

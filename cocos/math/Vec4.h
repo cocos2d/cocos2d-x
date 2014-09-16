@@ -21,6 +21,10 @@
 #ifndef MATH_VEC4_H
 #define MATH_VEC4_H
 
+#ifdef __SSE__
+#include <xmmintrin.h>
+#endif
+
 #include "math/CCMathBase.h"
 
 NS_CC_MATH_BEGIN
@@ -30,10 +34,20 @@ class Mat4;
 /**
  * Defines 4-element floating point vector.
  */
-class Vec4
+class CC_DLL Vec4
 {
 public:
-
+#ifdef __SSE__
+    union {
+        struct {
+            float x;
+            float y;
+            float z;
+            float w;
+        };
+        __m128 v;
+    };
+#else
     /**
      * The x-coordinate.
      */
@@ -53,7 +67,7 @@ public:
      * The w-coordinate.
      */
     float w;
-
+#endif
     /**
      * Constructs a new vector initialized to all zeros.
      */

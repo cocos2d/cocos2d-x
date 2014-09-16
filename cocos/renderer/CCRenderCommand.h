@@ -28,7 +28,7 @@
 
 #include <stdint.h>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -37,7 +37,7 @@ NS_CC_BEGIN
 *
  The `Renderer` knows how to render `RenderCommands` objects.
  */
-class RenderCommand
+class CC_DLL RenderCommand
 {
 public:
 
@@ -49,6 +49,8 @@ public:
         BATCH_COMMAND,
         GROUP_COMMAND,
         MESH_COMMAND,
+        PRIMITIVE_COMMAND,
+        TRIANGLES_COMMAND
     };
 
     /** Get Render Command Id */

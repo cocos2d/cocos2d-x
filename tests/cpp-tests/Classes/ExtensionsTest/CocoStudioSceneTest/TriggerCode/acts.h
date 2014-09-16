@@ -15,6 +15,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	 int  _tag;
@@ -32,6 +33,7 @@ public:
 	virtual bool init();
 	virtual void done();
 	virtual void serialize(const rapidjson::Value &val);
+	virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
 	virtual void removeAll();
 private:
 	int  _tag;
@@ -50,6 +52,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -69,6 +72,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -87,6 +91,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -106,6 +111,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -124,6 +130,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -144,6 +151,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -162,6 +170,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -181,6 +190,7 @@ public:
      virtual bool init();
      virtual void done();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _id;
@@ -197,10 +207,11 @@ public:
 	virtual bool init();
 	virtual void done();
 	virtual void serialize(const rapidjson::Value &val);
+	virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
 	virtual void removeAll();
 private:
 	int _tag;
-	std::string _ComName;
+	std::string _comName;
 	std::string _aniname;
 };
 

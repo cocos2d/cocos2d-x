@@ -33,14 +33,14 @@ THE SOFTWARE.
 
 #include "renderer/CCTexture2D.h"
 
-#include "CCGL.h"
+#include "platform/CCGL.h"
 #include "platform/CCImage.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
@@ -61,7 +61,7 @@ namespace {
     typedef Texture2D::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
     static const PixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
     {
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, Texture2D::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA4444, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB5A1, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
@@ -79,7 +79,7 @@ namespace {
 #endif
         
 #ifdef GL_ETC1_RGB8_OES
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 24, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
         
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
@@ -120,8 +120,6 @@ const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePix
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
-
-static bool _PVRHaveAlphaPremultiplied = false;
 
 //////////////////////////////////////////////////////////////////////////
 //conventer function
@@ -455,6 +453,16 @@ Texture2D::~Texture2D()
     }
 }
 
+void Texture2D::releaseGLTexture()
+{
+    if(_name)
+    {
+        GL::deleteTexture(_name);
+    }
+    _name = 0;
+}
+
+
 Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
     return _pixelFormat;
@@ -535,23 +543,11 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     mipmap.address = (unsigned char*)data;
     mipmap.len = static_cast<int>(dataLen);
     return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh);
-
-    //update information
-    _contentSize = contentSize;
-    _maxS = contentSize.width / (float)(pixelsWide);
-    _maxT = contentSize.height / (float)(pixelsHigh);
 }
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
 {
-    // cocos2d-x is currently calling this multiple times on the same Texture2D
-    // if the GL texture has already been created,it will be leaked in OpenGL
-    // For now, call deleteTexture if the texture already exists
-    if(_name)
-    {
-        GL::deleteTexture(_name);
-      _name = 0;
-    }
+
 
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
@@ -606,8 +602,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
-    
 
+    if(_name != 0)
+    {
+        GL::deleteTexture(_name);
+        _name = 0;
+    }
 
     glGenTextures(1, &_name);
     GL::bindTexture2D(_name);
@@ -709,7 +709,7 @@ std::string Texture2D::getDescription() const
 // implementation Texture2D (Image)
 bool Texture2D::initWithImage(Image *image)
 {
-    return initWithImage(image, PixelFormat::NONE);
+    return initWithImage(image, g_defaultAlphaPixelFormat);
 }
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
@@ -734,14 +734,14 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
     unsigned char*   tempData = image->getData();
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
-    PixelFormat      pixelFormat = PixelFormat::NONE;
+    PixelFormat      pixelFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getRenderFormat() : format;
     PixelFormat      renderFormat = image->getRenderFormat();
     size_t	         tempDataLen = image->getDataLen();
 
 
     if (image->getNumberOfMipmaps() > 1)
     {
-        if (format != PixelFormat::NONE)
+        if (pixelFormat != image->getRenderFormat())
         {
             CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
         }
@@ -752,7 +752,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     }
     else if (image->isCompressed())
     {
-        if (format != PixelFormat::NONE)
+        if (pixelFormat != image->getRenderFormat())
         {
             CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
         }
@@ -762,15 +762,6 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     }
     else
     {
-        // compute pixel format
-        if (format != PixelFormat::NONE)
-        {
-            pixelFormat = format;
-        }else
-        {
-            pixelFormat = g_defaultAlphaPixelFormat;
-        }
-
         unsigned char* outTempData = nullptr;
         ssize_t outTempDataLen = 0;
 
@@ -786,20 +777,8 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         }
 
         // set the premultiplied tag
-        if (!image->hasPremultipliedAlpha())
-        {
-            if (image->getFileType() == Image::Format::PVR)
-            {
-                _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
-            }else
-            {
-                CCLOG("wanning: We cann't find the data is premultiplied or not, we will assume it's false.");
-                _hasPremultipliedAlpha = false;
-            }
-        }else
-        {
-            _hasPremultipliedAlpha = image->isPremultipliedAlpha();
-        }
+        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        
         return true;
     }
 }
@@ -1030,6 +1009,14 @@ rgba(1) -> 12345678
 */
 Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
 {
+    // don't need to convert
+    if (format == originFormat || format == PixelFormat::AUTO)
+    {
+        *outData = (unsigned char*)data;
+        *outDataLen = dataLen;
+        return originFormat;
+    }
+    
     switch (originFormat)
     {
     case PixelFormat::I8:
@@ -1121,7 +1108,8 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._stroke._strokeSize *= contentScaleFactor;
     textDef._shadow._shadowEnabled = false;
     
-    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, _hasPremultipliedAlpha);
+    bool hasPremultipliedAlpha;
+    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, hasPremultipliedAlpha);
     if(outData.isNull())
     {
         return false;
@@ -1136,6 +1124,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     {
         free(outTempData);
     }
+    _hasPremultipliedAlpha = hasPremultipliedAlpha;
 
     return ret;
 }
@@ -1215,10 +1204,10 @@ void Texture2D::drawInRect(const Rect& rect)
 
 void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
+    Image::setPVRImagesHavePremultipliedAlpha(haveAlphaPremultiplied);
 }
 
-    
+
 //
 // Use to apply MIN/MAG filter
 //

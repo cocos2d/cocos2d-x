@@ -287,6 +287,7 @@ private:
 
 class PremultipliedAlphaTest : public ParticleDemo
 {
+    bool _hasEmitter;
 public:
     virtual void onEnter() override;
     void readdPaticle(float delta);
@@ -320,6 +321,14 @@ public:
 };
 
 class ParticleAutoBatching : public ParticleDemo
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class ParticleResetTotalParticles : public ParticleDemo
 {
 public:
     virtual void onEnter() override;

@@ -7,6 +7,8 @@
 //
 
 #include "CustomParticleWidget.h"
+#include "2d/CCParticleSystem.h"
+#include "2d/CCParticleSystemQuad.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -30,7 +32,7 @@ Ref* CustomParticleWidget::createInstance()
 
 CustomParticleWidget* CustomParticleWidget::create()
 {
-    CustomParticleWidget* custom = new CustomParticleWidget();
+    CustomParticleWidget* custom = new (std::nothrow) CustomParticleWidget();
     
     if (custom && custom->init())
     {
@@ -38,7 +40,7 @@ CustomParticleWidget* CustomParticleWidget::create()
         return custom;
     }
     CC_SAFE_DELETE(custom);
-    return NULL;
+    return nullptr;
 }
 
 bool CustomParticleWidget::init()
@@ -72,8 +74,10 @@ void CustomParticleWidget::setParticlePlist(const char *plist)
         _emitter->removeFromParent();
         _emitter = ParticleSystemQuad::create(plist);
     }
-    Node::addChild(_emitter , getLocalZOrder() + 1, -1);
-    
+    //Warning!!! don't forget to set the position
+    addChild(_emitter , getLocalZOrder() + 1, -1);
+    this->setParticlePosition(Vec2::ZERO);
+
     _emitterPlist = plist;
 }
 

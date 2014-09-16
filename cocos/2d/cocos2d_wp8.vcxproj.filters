@@ -22,9 +22,6 @@
     <Filter Include="deprecated">
       <UniqueIdentifier>{5598fb0c-c012-45b6-8e43-447e7891b61d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2d">
-      <UniqueIdentifier>{fdee8fd3-05f9-46a1-aa15-6ceb16358145}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3d">
       <UniqueIdentifier>{f3673af7-9bbd-463b-a3a9-a081e67248d8}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="external\xxhash">
       <UniqueIdentifier>{a36c6808-a8d6-43f4-bfb0-e08ee2747a21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2d">
+      <UniqueIdentifier>{fdee8fd3-05f9-46a1-aa15-6ceb16358145}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -490,9 +490,6 @@
     <ClCompile Include="..\base\CCUserDefault.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCUserDefaultAndroid.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -517,9 +514,6 @@
     <ClCompile Include="..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCGLViewProtocol.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCImage.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -528,9 +522,6 @@
     </ClCompile>
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\wp8\CCGLView.cpp">
-      <Filter>platform\wp8</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
       <Filter>platform\wp8</Filter>
@@ -586,13 +577,91 @@
     <ClCompile Include="..\3d\CCSprite3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCSprite3DDataCache.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\renderer\CCMeshCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\wp8\pch.cpp" />
+    <ClCompile Include="..\base\ObjectFactory.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAnimate3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAnimation3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCBundle3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCMeshSkin.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCBundleReader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFastTMXLayer.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFastTMXTiledMap.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CCGLView.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="CCProtectedNode.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\pvr.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCSkeleton3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAttachNode.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCCamera.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCPrimitive.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\ccRandom.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCAABB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCOBB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCRay.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\wp8\CCGLViewImpl-wp8.cpp">
+      <Filter>platform\wp8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCBillBoard.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1039,12 +1108,6 @@
     <ClInclude Include="..\base\CCNS.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCPlatformConfig.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCPlatformMacros.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\CCProfiling.h">
       <Filter>base</Filter>
     </ClInclude>
@@ -1117,9 +1180,6 @@
     <ClInclude Include="..\platform\CCFileUtils.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCGLViewProtocol.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCImage.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -1130,9 +1190,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\DirectXBase.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\CCGLView.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\Direct3DBase.h">
@@ -1198,13 +1255,115 @@
     <ClInclude Include="..\3d\CCSprite3D.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCSprite3DDataCache.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\renderer\CCMeshCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\pch.h" />
+    <ClInclude Include="..\base\ObjectFactory.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAnimate3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAnimation3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAnimationCurve.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundle3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundle3DData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMeshSkin.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSprite3DMaterial.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBundleReader.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFastTMXLayer.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFastTMXTiledMap.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGLView.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="CCProtectedNode.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\pvr.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSkeleton3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAttachNode.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCCamera.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPrimitiveCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCPrimitive.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCVertexIndexBuffer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCVertexIndexData.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\ccRandom.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCAABB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCOBB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCRay.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMeshVertexIndexData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCApplication.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCGL.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformDefine.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCStdC.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\wp8\CCGLViewImpl-wp8.h">
+      <Filter>platform\wp8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBillBoard.h">
+      <Filter>3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

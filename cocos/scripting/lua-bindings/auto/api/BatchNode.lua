@@ -2,41 +2,42 @@
 --------------------------------
 -- @module BatchNode
 -- @extend Node
+-- @parent_module ccs
 
 --------------------------------
+-- js NA
 -- @function [parent=#BatchNode] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
 -- @function [parent=#BatchNode] create 
 -- @param self
 -- @return BatchNode#BatchNode ret (return value: ccs.BatchNode)
         
 --------------------------------
--- overload function: addChild(cc.Node, int)
---          
--- overload function: addChild(cc.Node)
---          
--- overload function: addChild(cc.Node, int, int)
---          
+-- @overload self, cc.Node, int, string         
+-- @overload self, cc.Node, int, int         
 -- @function [parent=#BatchNode] addChild
 -- @param self
--- @param #cc.Node node
--- @param #int int
--- @param #int int
+-- @param #cc.Node pChild
+-- @param #int zOrder
+-- @param #int tag
 
 --------------------------------
+-- 
 -- @function [parent=#BatchNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
--- @param #cc.Mat4 mat4
--- @param #bool bool
+-- @param #mat4_table transform
+-- @param #unsigned int flags
         
 --------------------------------
+-- 
 -- @function [parent=#BatchNode] removeChild 
 -- @param self
--- @param #cc.Node node
--- @param #bool bool
+-- @param #cc.Node child
+-- @param #bool cleanup
         
 return nil

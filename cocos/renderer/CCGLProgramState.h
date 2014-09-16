@@ -47,7 +47,7 @@ class EventCustom;
 // UniformValue
 //
 //
-class UniformValue
+class CC_DLL UniformValue
 {
     friend class GLProgram;
     friend class GLProgramState;
@@ -62,7 +62,7 @@ public:
     void setVec3(const Vec3& value);
     void setVec4(const Vec4& value);
     void setMat4(const Mat4& value);
-    void setCallback(const std::function<void(Uniform*)> &callback);
+    void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
     void setTexture(GLuint textureId, GLuint activeTexture);
 
     void apply();
@@ -83,7 +83,7 @@ protected:
             GLuint textureId;
             GLuint textureUnit;
         } tex;
-        std::function<void(Uniform*)> *callback;
+        std::function<void(GLProgram*, Uniform*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
         ~U(){}
@@ -99,7 +99,7 @@ protected:
 // VertexAttribValue
 //
 //
-class VertexAttribValue
+class CC_DLL VertexAttribValue
 {
     friend class GLProgram;
     friend class GLProgramState;
@@ -143,7 +143,7 @@ protected:
  A GLProgram can be used by thousands of Nodes, but if different uniform values 
  are going to be used, then each node will need its own GLProgramState
  */
-class GLProgramState : public Ref
+class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
@@ -157,7 +157,16 @@ public:
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
+    // apply GLProgram, attributes and uniforms
     void apply(const Mat4& modelView);
+    
+    void applyGLProgram(const Mat4& modelView);
+    /**
+     * apply vertex attributes
+     * @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not
+     */
+    void applyAttributes(bool applyAttribFlags = true);
+    void applyUniforms();
 
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
@@ -176,10 +185,20 @@ public:
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
-    void setUniformCallback(const std::string &uniformName, const std::function<void(Uniform*)> &callback);
+    void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     void setUniformTexture(const std::string &uniformName, GLuint textureId);
-    
+
+    void setUniformInt(GLint uniformLocation, int value);
+    void setUniformFloat(GLint uniformLocation, float value);
+    void setUniformVec2(GLint uniformLocation, const Vec2& value);
+    void setUniformVec3(GLint uniformLocation, const Vec3& value);
+    void setUniformVec4(GLint uniformLocation, const Vec4& value);
+    void setUniformMat4(GLint uniformLocation, const Mat4& value);
+    void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
+    void setUniformTexture(GLint uniformLocation, Texture2D *texture);
+    void setUniformTexture(GLint uniformLocation, GLuint textureId);
+
 protected:
     GLProgramState();
     ~GLProgramState();
@@ -187,10 +206,13 @@ protected:
     void resetGLProgram();
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
+    UniformValue* getUniformValue(GLint uniformLocation);
     
     bool _uniformAttributeValueDirty;
-    std::unordered_map<std::string, UniformValue> _uniforms;
+    std::unordered_map<std::string, GLint> _uniformsByName;
+    std::unordered_map<GLint, UniformValue> _uniforms;
     std::unordered_map<std::string, VertexAttribValue> _attributes;
+    std::unordered_map<std::string, int> _boundTextureUnits;
 
     int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;

@@ -19,7 +19,7 @@ bool UISliderTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("Move the slider thumb","Move the slider thumb",32);
@@ -30,7 +30,7 @@ bool UISliderTest::init()
         // Add the alert
         Text* alert = Text::create("Slider","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         _uiLayer->addChild(alert);        
         
         // Create the slider
@@ -74,7 +74,7 @@ bool UISliderTest_Scale9::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getSize();
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the slider alert will be displayed
         _displayValueLabel = Text::create("Move the slider thumb","fonts/Marker Felt.ttf",32);
@@ -85,7 +85,7 @@ bool UISliderTest_Scale9::init()
         // Add the alert
         Text *alert = Text::create("Slider scale9 render","fonts/Marker Felt.ttf",30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the slider
@@ -95,7 +95,7 @@ bool UISliderTest_Scale9::init()
         slider->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
         slider->setScale9Enabled(true);
         slider->setCapInsets(Rect(0, 0, 0, 0));
-        slider->setSize(Size(250.0f, 19));
+        slider->setContentSize(Size(250.0f, 19));
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
         slider->addEventListener(CC_CALLBACK_2(UISliderTest_Scale9::sliderEvent, this));
         _uiLayer->addChild(slider);

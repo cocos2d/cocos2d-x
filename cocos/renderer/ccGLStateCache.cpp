@@ -165,19 +165,22 @@ void bindTexture2DN(GLuint textureUnit, GLuint textureId)
 
 void deleteTexture(GLuint textureId)
 {
-    deleteTextureN(0, textureId);
-}
-
-void deleteTextureN(GLuint textureUnit, GLuint textureId)
-{
 #if CC_ENABLE_GL_STATE_CACHE
-	if (s_currentBoundTexture[textureUnit] == textureId)
+    for (size_t i = 0; i < MAX_ACTIVE_TEXTURE; ++i)
     {
-		s_currentBoundTexture[textureUnit] = -1;
+        if (s_currentBoundTexture[i] == textureId)
+        {
+            s_currentBoundTexture[i] = -1;
+        }
     }
 #endif // CC_ENABLE_GL_STATE_CACHE
     
 	glDeleteTextures(1, &textureId);
+}
+
+void deleteTextureN(GLuint textureUnit, GLuint textureId)
+{
+    deleteTexture(textureId);
 }
 
 void activeTexture(GLenum texture)

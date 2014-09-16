@@ -60,7 +60,7 @@ DirectXPage::~DirectXPage()
 
 void DirectXPage::OnCompile(Object^ sender, RoutedEventArgs^ args)
 {
-    compiler.Compile();
+    compiler.Compile(ResultText);
 }
 
 // Saves the current state of the app for suspend and terminate events.

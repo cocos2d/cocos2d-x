@@ -26,14 +26,12 @@
  */
 
 #include "2d/CCClippingNode.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 
-#include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -84,7 +82,7 @@ ClippingNode::~ClippingNode()
 
 ClippingNode* ClippingNode::create()
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -99,7 +97,7 @@ ClippingNode* ClippingNode::create()
 
 ClippingNode* ClippingNode::create(Node *pStencil)
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init(pStencil))
     {
         ret->autorelease();
@@ -142,6 +140,14 @@ bool ClippingNode::init(Node *stencil)
 
 void ClippingNode::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     
     if (_stencil != nullptr)
@@ -195,23 +201,41 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
+    Vec2 vertices[] = {
+        Vec2(-1, -1),
+        Vec2(1, -1),
+        Vec2(1, 1),
+        Vec2(-1, 1)
+    };
     
-    DrawPrimitives::drawSolidRect(Vec2(-1,-1), Vec2(1,1), Color4F(1, 1, 1, 1));
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    glProgram->retain();
+    
+    int colorLocation = glProgram->getUniformLocation("u_color");
+    CHECK_GL_ERROR_DEBUG();
+    
+    Color4F color(1, 1, 1, 1);
+    
+    glProgram->use();
+    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+    
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
 }
 
-void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated)
+void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if(!_visible)
         return;
     
-    bool dirty = parentTransformUpdated || _transformUpdated;
-    if(dirty)
-        _modelViewTransform = transform(parentTransform);
-    _transformUpdated = false;
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -243,19 +267,20 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool p
         program->use();
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
-        // XXX: we should have a way to apply shader to all nodes without having to do this
+        // FIXME: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
         
 #endif
 
     }
-    _stencil->visit(renderer, _modelViewTransform, dirty);
+    _stencil->visit(renderer, _modelViewTransform, flags);
 
     _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
 
     int i = 0;
+    bool visibleByCamera = isVisitableByVisitingCamera();
     
     if(!_children.empty())
     {
@@ -266,19 +291,20 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, bool p
             auto node = _children.at(i);
             
             if ( node && node->getLocalZOrder() < 0 )
-                node->visit(renderer, _modelViewTransform, dirty);
+                node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, dirty);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, dirty);
+            (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
-        this->draw(renderer, _modelViewTransform, dirty);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     _afterVisitCmd.init(_globalZOrder);
@@ -431,7 +457,7 @@ void ClippingNode::onAfterDrawStencil()
             glDisable(GL_ALPHA_TEST);
         }
 #else
-// XXX: we need to find a way to restore the shaders of the stencil node and its childs
+// FIXME: we need to find a way to restore the shaders of the stencil node and its childs
 #endif
     }
 

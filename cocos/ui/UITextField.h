@@ -26,6 +26,8 @@ THE SOFTWARE.
 #define __UITEXTFIELD_H__
 
 #include "ui/UIWidget.h"
+#include "2d/CCTextFieldTTF.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +37,7 @@ namespace ui {
  *  @js NA
  *  @lua NA
  */
-class UICCTextField: public TextFieldTTF, public TextFieldDelegate
+class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     UICCTextField();
@@ -59,22 +61,26 @@ public:
     void closeIME();
     
     void setMaxLengthEnabled(bool enable);
-    bool isMaxLengthEnabled();
+    bool isMaxLengthEnabled()const;
     void setMaxLength(int length);
-    int getMaxLength();
-    int getCharCount();
+    int getMaxLength()const;
+    int getCharCount()const;
+    
     void setPasswordEnabled(bool enable);
-    bool isPasswordEnabled();
+    bool isPasswordEnabled()const;
     void setPasswordStyleText(const std::string& styleText);
     void setPasswordText(const std::string& text);
+    
     void setAttachWithIME(bool attach);
-    bool getAttachWithIME();
+    bool getAttachWithIME()const;
     void setDetachWithIME(bool detach);
-    bool getDetachWithIME();
+    bool getDetachWithIME()const;
+    
     void setInsertText(bool insert);
-    bool getInsertText();
+    bool getInsertText()const;
+    
     void setDeleteBackward(bool deleteBackward);
-    bool getDeleteBackward();
+    bool getDeleteBackward()const;
 protected:
     bool _maxLengthEnabled;
     int _maxLength;
@@ -86,7 +92,7 @@ protected:
     bool _deleteBackward;
 };
 
-CC_DEPRECATED_ATTRIBUTE typedef enum
+typedef enum
 {
     TEXTFIELD_EVENT_ATTACH_WITH_IME,
     TEXTFIELD_EVENT_DETACH_WITH_IME,
@@ -94,14 +100,14 @@ CC_DEPRECATED_ATTRIBUTE typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
+typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
 /** class UITextField : public Widget
 *   @js NA
 *   @lua NA
 */
-class TextField : public Widget
+class CC_GUI_DLL TextField : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -123,36 +129,56 @@ public:
                              const std::string& fontName,
                              int fontSize);
     void setTouchSize(const Size &size);
-    Size getTouchSize();
+    Size getTouchSize()const;
     void setTouchAreaEnabled(bool enable);
     virtual bool hitTest(const Vec2 &pt);
-    void setText(const std::string& text);
+    
     void setPlaceHolder(const std::string& value);
-    const std::string& getPlaceHolder();
+    const std::string& getPlaceHolder()const;
+    const Color4B& getPlaceHolderColor()const;
+    void setPlaceHolderColor(const Color3B& color);
+    void setPlaceHolderColor(const Color4B& color);
+    void setTextColor(const Color4B& textColor);
+    
     void setFontSize(int size);
-    int getFontSize();
+    int getFontSize()const;
     void setFontName(const std::string& name);
-    const std::string& getFontName();
+    const std::string& getFontName()const;
+    
     virtual void didNotSelectSelf();
-    const std::string& getStringValue();
+    
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+    
+    void setString(const std::string& text);
+    const std::string& getString()const;
+    
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
+    
     void setMaxLengthEnabled(bool enable);
-    bool isMaxLengthEnabled();
+    bool isMaxLengthEnabled()const;
     void setMaxLength(int length);
-    int getMaxLength();
+
+    int getMaxLength()const;
+    int getStringLength() const;
     void setPasswordEnabled(bool enable);
-    bool isPasswordEnabled();
+    bool isPasswordEnabled()const;
     void setPasswordStyleText(const char* styleText);
-    const char* getPasswordStyleText();
+    const char* getPasswordStyleText()const;
+    
     virtual void update(float dt) override;
-    bool getAttachWithIME();
+    
+    bool getAttachWithIME()const;
     void setAttachWithIME(bool attach);
-    bool getDetachWithIME();
+    bool getDetachWithIME()const;
     void setDetachWithIME(bool detach);
-    bool getInsertText();
+    
+    bool getInsertText()const;
     void setInsertText(bool insertText);
-    bool getDeleteBackward();
+    
+    bool getDeleteBackward()const;
     void setDeleteBackward(bool deleteBackward);
+    
     CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
     void addEventListener(const ccTextFieldCallback& callback);
     
@@ -161,7 +187,7 @@ public:
      */
     virtual std::string getDescription() const override;
 
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     void attachWithIME();
     virtual void onEnter() override;
@@ -180,10 +206,9 @@ protected:
     void insertTextEvent();
     void deleteBackwardEvent();
     virtual void onSizeChanged() override;
-    virtual void updateTextureColor() override;
-    virtual void updateTextureOpacity() override;
-    virtual void updateTextureRGBA() override;
+  
     void textfieldRendererScaleChangedWithSize();
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
@@ -211,6 +236,16 @@ protected:
     
     std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
+private:
+    enum class FontType
+    {
+        SYSTEM,
+        TTF
+    };
+
+    std::string _fontName;
+    int _fontSize;
+    FontType _fontType;
 };
 
 }

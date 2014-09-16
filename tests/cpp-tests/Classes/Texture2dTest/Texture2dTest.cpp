@@ -79,7 +79,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TextureJPEG),
     CL(TextureTIFF),
     CL(TextureTGA),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_INRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     CL(TextureWEBP),
 #endif
     CL(TexturePixelFormat),
@@ -261,11 +261,37 @@ void TexturePNG::onEnter()
     img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
     addChild(img);
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+    
+    // Test PNG files with different pixel formats
+    // grayscale without alpha
+    auto i8 = Sprite::create("Images/test_image_i8.png");
+    i8->setPosition(s.width/4.0f, s.height/4.0f);
+    addChild(i8);
+    
+    // grayscale with alpha
+    auto ai88 = Sprite::create("Images/test_image_ai88.png");
+    ai88->setPosition(s.width / 4.0f, s.height * 3.0f / 4.0f);
+    addChild(ai88);
+    
+    // rgb without alpha
+    auto rgb888 = Sprite::create("Images/test_image_rgb888.png");
+    rgb888->setPosition(s.width * 3.0f / 4.0f, s.height / 4.0f);
+    addChild(rgb888);
+    
+    // rgba with alpha
+    auto rgba8888 = Sprite::create("Images/test_image_rgba8888.png");
+    rgba8888->setPosition(s.width * 3.0f / 4.0f, s.height * 3.0f / 4.0f);
+    addChild(rgba8888);
 }
 
 std::string TexturePNG::title() const
 {
     return "PNG Test";
+}
+
+std::string TexturePNG::subtitle() const
+{
+    return "LB:I8, LT:AI8\nRB:RGB888, RT: RGBA8888";
 }
 
 //------------------------------------------------------------------
@@ -344,8 +370,8 @@ void TextureMipMap::onEnter()
     auto scale2 = scale1->clone();
     auto sc_back2 = scale2->reverse();
 
-    img0->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
-    img1->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
+    img0->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, nullptr)));
+    img1->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, nullptr)));
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 }
 
@@ -394,8 +420,8 @@ void TexturePVRMipMap::onEnter()
         auto scale2 = scale1->clone();
         auto sc_back2 = scale2->reverse();
         
-        imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
-        img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
+        imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, nullptr)));
+        img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, nullptr)));
     }
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 }
@@ -437,8 +463,8 @@ void TexturePVRMipMap2::onEnter()
     auto scale2 = scale1->clone();
     auto sc_back2 = scale2->reverse();
     
-    imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
-    img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
+    imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, nullptr)));
+    img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, nullptr)));
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 }
 
@@ -734,7 +760,7 @@ void TexturePVRRGB888::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto img = Sprite::create("Images/test_image_rgb888.pvr");
-    if (img != NULL)
+    if (img != nullptr)
     {
         img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
         addChild(img);
@@ -1335,7 +1361,7 @@ void TextureAlias::onEnter()
     // scale them to show
     auto sc = ScaleBy::create(3, 8.0f);
     auto sc_back = sc->reverse();
-    auto scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, NULL));
+    auto scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, nullptr));
     auto scaleToo = scaleforever->clone();
 
     sprite2->runAction(scaleforever);
@@ -1430,7 +1456,7 @@ void TexturePixelFormat::onEnter()
 
     auto fadeout = FadeOut::create(2);
     auto fadein  = FadeIn::create(2);
-    auto seq = Sequence::create(DelayTime::create(2), fadeout, fadein, NULL);
+    auto seq = Sequence::create(DelayTime::create(2), fadeout, fadein, nullptr);
     auto seq_4ever = RepeatForever::create(seq);
     auto seq_4ever2 = seq_4ever->clone();
     auto seq_4ever3 = seq_4ever->clone();
@@ -1525,7 +1551,7 @@ void TextureAsync::onEnter()
 
     auto scale = ScaleBy::create(0.3f, 2);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create(scale, scale_back, NULL);
+    auto seq = Sequence::create(scale, scale_back, nullptr);
     label->runAction(RepeatForever::create(seq));
 
     scheduleOnce(schedule_selector(TextureAsync::loadImages), 1.0f);
@@ -1533,6 +1559,7 @@ void TextureAsync::onEnter()
 
 TextureAsync::~TextureAsync()
 {
+    Director::getInstance()->getTextureCache()->unbindAllImageAsync();
     Director::getInstance()->getTextureCache()->removeAllTextures();
 }
 
@@ -1611,7 +1638,7 @@ void TextureGlClamp::onEnter()
     sprite->runAction(rotate);
     auto scale = ScaleBy::create(2, 0.04f);
     auto scaleBack = scale->reverse();
-    auto seq = Sequence::create(scale, scaleBack, NULL);
+    auto seq = Sequence::create(scale, scaleBack, nullptr);
     sprite->runAction(seq);
 }
 
@@ -1648,7 +1675,7 @@ void TextureGlRepeat::onEnter()
     sprite->runAction(rotate);
     auto scale = ScaleBy::create(2, 0.04f);
     auto scaleBack = scale->reverse();
-    auto seq = Sequence::create(scale, scaleBack, NULL);
+    auto seq = Sequence::create(scale, scaleBack, nullptr);
     sprite->runAction(seq);
 }
 
@@ -1670,7 +1697,7 @@ TextureGlRepeat::~TextureGlRepeat()
 void TextureSizeTest::onEnter()
 {
     TextureDemo::onEnter();
-    Sprite *sprite = NULL;
+    Sprite *sprite = nullptr;
     
     log("Loading 512x512 image...");
     sprite = Sprite::create("Images/texture512x512.png");
@@ -1793,17 +1820,17 @@ std::string TextureDrawAtPoint::subtitle() const
     return "draws 2 textures using drawAtPoint";
 }
 
-void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    TextureDemo::draw(renderer, transform, transformUpdated);
+    TextureDemo::draw(renderer, transform, flags);
     
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
 }
 
-void TextureDrawAtPoint::onDraw(const Mat4 &transform, bool transformUpdated)
+void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1836,16 +1863,16 @@ TextureDrawInRect::~TextureDrawInRect()
     _Tex2F->release();
 }
 
-void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    TextureDemo::draw(renderer, transform, transformUpdated);
+    TextureDemo::draw(renderer, transform, flags);
 
     _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, transformUpdated);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
 
-void TextureDrawInRect::onDraw(const Mat4 &transform, bool transformUpdated)
+void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -1893,7 +1920,7 @@ void TextureTestScene::runThisTest()
 void TextureMemoryAlloc::onEnter()
 {
     TextureDemo::onEnter();
-    _background = NULL;
+    _background = nullptr;
     
     MenuItemFont::setFontSize(24);
     
@@ -1912,14 +1939,14 @@ void TextureMemoryAlloc::onEnter()
     auto item5 = MenuItemFont::create("A8", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item5->setTag(4);
     
-    auto menu = Menu::create(item1, item2, item3, item4, item5, NULL);
+    auto menu = Menu::create(item1, item2, item3, item4, item5, nullptr);
     menu->alignItemsHorizontally();
     
     addChild(menu);
     
     auto warmup = MenuItemFont::create("warm up texture", CC_CALLBACK_1(TextureMemoryAlloc::changeBackgroundVisible, this));
     
-    auto menu2 = Menu::create(warmup, NULL);
+    auto menu2 = Menu::create(warmup, nullptr);
 
     menu2->alignItemsHorizontally();
     
@@ -1951,36 +1978,20 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
 	switch (tag) 
     {
 		case 0:
-			file = "Images/background.png";
+			file = "Images/test_image.png";
 			break;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            // android can not pack .gz file into apk file
         case 1:
-            file = "Images/fire_rgba8888.pvr";
+            file = "Images/test_image_rgba8888.pvr";
             break;
         case 2:
-            file = "Images/grossini_prv_rgba8888.pvr";
+            file = "Images/test_image_rgb888.pvr";
             break;
         case 3:
-            file = "Images/grossini_prv_rgba4444.pvr";
+            file = "Images/test_image_rgba4444.pvr";
             break;
         case 4:
             file = "Images/test_image_a8.pvr";
             break;
-#else
-		case 1:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 2:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 3:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 4:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-#endif
 	}
 
     _background = Sprite::create(file.c_str());
@@ -2047,7 +2058,7 @@ void TexturePVRv3Premult::transformSprite(cocos2d::Sprite *sprite)
     auto fade = FadeOut::create(2);
     auto dl = DelayTime::create(2);
     auto fadein = fade->reverse();
-    auto seq = Sequence::create(fade, fadein, dl, NULL);
+    auto seq = Sequence::create(fade, fadein, dl, nullptr);
     auto repeat = RepeatForever::create(seq);
     sprite->runAction(repeat);
 }

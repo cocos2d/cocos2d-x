@@ -22,11 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCApplication.h"
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include "platform/winrt/CCGLView.h"
+#include "platform/winrt/CCGLViewImpl.h"
 #else
-#include "platform/wp8/CCGLView.h"
+#include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
 #include "base/CCDirector.h"
 #include <algorithm>
@@ -75,7 +75,7 @@ int Application::run()
         return 0;
     }
 
-	GLView::sharedOpenGLView()->Run();
+	GLViewImpl::sharedOpenGLView()->Run();
 	return 0;
 }
 
@@ -103,7 +103,7 @@ const char * Application::getCurrentLanguageCode()
     if (GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH))
     {
         wchar_t* primary = wcstok(localeName, L"-");
-        std::string code = CCUnicodeToUtf8(primary);
+        code = CCUnicodeToUtf8(primary);
     }
     else
     {

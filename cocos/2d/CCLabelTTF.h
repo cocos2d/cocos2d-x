@@ -150,7 +150,7 @@ public:
      * @lua NA
      */
     virtual std::string getDescription() const override;
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     virtual const Size& getContentSize() const override;
 protected:
     Label*    _renderLabel;

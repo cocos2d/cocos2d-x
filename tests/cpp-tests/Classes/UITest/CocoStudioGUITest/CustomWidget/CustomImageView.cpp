@@ -1,6 +1,7 @@
 
 
 #include "CustomImageView.h"
+#include "2d/CCNode.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -23,7 +24,7 @@ Ref* CustomImageView::createInstance()
 
 CustomImageView* CustomImageView::create()
 {
-    CustomImageView* custom = new CustomImageView();
+    CustomImageView* custom = new (std::nothrow) CustomImageView();
     
     if (custom && custom->init())
     {
@@ -31,7 +32,7 @@ CustomImageView* CustomImageView::create()
         return custom;
     }
     CC_SAFE_DELETE(custom);
-    return NULL;
+    return nullptr;
 }
 
 bool CustomImageView::init()
@@ -48,7 +49,7 @@ void CustomImageView::initRenderer()
     ImageView::initRenderer();
     
     _label = Label::create();
-    CCNodeRGBA::addChild(_label, getLocalZOrder() + 1, -1);
+    addChild(_label, getLocalZOrder() + 1, -1);
 }
 
 void CustomImageView::setText(const std::string &text)

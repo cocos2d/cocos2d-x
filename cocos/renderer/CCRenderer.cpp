@@ -26,10 +26,12 @@
 
 #include <algorithm>
 
+#include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
@@ -38,6 +40,8 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
+#include "base/CCCamera.h"
+#include "2d/CCScene.h"
 
 NS_CC_BEGIN
 
@@ -98,6 +102,32 @@ void RenderQueue::clear()
     _queuePosZ.clear();
 }
 
+// helper
+static bool compareTransparentRenderCommand(RenderCommand* a, RenderCommand* b)
+{
+    return a->getGlobalOrder() > b->getGlobalOrder();
+}
+
+void TransparentRenderQueue::push_back(RenderCommand* command)
+{
+    _queueCmd.push_back(command);
+}
+
+void TransparentRenderQueue::sort()
+{
+    std::sort(std::begin(_queueCmd), std::end(_queueCmd), compareTransparentRenderCommand);
+}
+
+RenderCommand* TransparentRenderQueue::operator[](ssize_t index) const
+{
+    return _queueCmd[index];
+}
+
+void TransparentRenderQueue::clear()
+{
+    _queueCmd.clear();
+}
+
 //
 //
 //
@@ -108,20 +138,22 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
-,_numQuads(0)
+,_lastBatchedMeshCommand(nullptr)
+,_filledVertex(0)
+,_filledIndex(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
 {
-    _groupCommandManager = new GroupCommandManager();
+    _groupCommandManager = new (std::nothrow) GroupCommandManager();
     
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _batchedQuadCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
+    _batchedCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
 }
 
 Renderer::~Renderer()
@@ -144,32 +176,17 @@ Renderer::~Renderer()
 void Renderer::initGLView()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-        /** listen the event that coming to foreground on Android */
+    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+        /** listen the event that renderer was recreated on Android/WP8 */
         this->setupBuffer();
     });
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
 #endif
-
-    setupIndices();
     
     setupBuffer();
     
     _glViewAssigned = true;
-}
-
-void Renderer::setupIndices()
-{
-    for( int i=0; i < VBO_SIZE; i++)
-    {
-        _indices[i*6+0] = (GLushort) (i*4+0);
-        _indices[i*6+1] = (GLushort) (i*4+1);
-        _indices[i*6+2] = (GLushort) (i*4+2);
-        _indices[i*6+3] = (GLushort) (i*4+3);
-        _indices[i*6+4] = (GLushort) (i*4+2);
-        _indices[i*6+5] = (GLushort) (i*4+1);
-    }
 }
 
 void Renderer::setupBuffer()
@@ -192,7 +209,7 @@ void Renderer::setupVBOAndVAO()
     glGenBuffers(2, &_buffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
 
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -207,7 +224,7 @@ void Renderer::setupVBOAndVAO()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
     GL::bindVAO(0);
@@ -230,11 +247,11 @@ void Renderer::mapBuffers()
     GL::bindVAO(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
@@ -252,6 +269,11 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
     _renderGroups[renderQueue].push_back(command);
+}
+
+void Renderer::addCommandToTransparentQueue(RenderCommand* command)
+{
+    _transparentRenderGroups.push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)
@@ -281,24 +303,22 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     {
         auto command = queue[index];
         auto commandType = command->getType();
-        if(RenderCommand::Type::QUAD_COMMAND == commandType)
+        if(RenderCommand::Type::QUAD_COMMAND == commandType || RenderCommand::Type::TRIANGLES_COMMAND == commandType)
         {
-            auto cmd = static_cast<QuadCommand*>(command);
+            flush3D();
+            auto cmd = static_cast<TrianglesCommand*>(command);
             //Batch quads
-            if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
+            if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
             {
-                CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-                
+                CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+                CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
                 //Draw batched quads if VBO is full
                 drawBatchedQuads();
             }
             
-            _batchedQuadCommands.push_back(cmd);
+            _batchedCommands.push_back(cmd);
             
-            memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-            convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
-            
-            _numQuads += cmd->getQuadCount();
+            fillVerticesAndIndices(cmd);
 
         }
         else if(RenderCommand::Type::GROUP_COMMAND == commandType)
@@ -319,9 +339,77 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             auto cmd = static_cast<BatchCommand*>(command);
             cmd->execute();
         }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
         {
             flush();
+            auto cmd = static_cast<PrimitiveCommand*>(command);
+            cmd->execute();
+        }
+        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        {
+            flush2D();
+            auto cmd = static_cast<MeshCommand*>(command);
+            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            {
+                flush3D();
+                cmd->preBatchDraw();
+                cmd->batchDraw();
+                _lastBatchedMeshCommand = cmd;
+            }
+            else
+            {
+                cmd->batchDraw();
+            }
+        }
+        else
+        {
+            CCLOGERROR("Unknown commands in renderQueue");
+        }
+    }
+}
+
+void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
+{
+    // do not batch for transparent objects
+    ssize_t size = queue.size();
+    
+    _batchedCommands.clear();
+    _filledVertex = 0;
+    _filledIndex = 0;
+    
+    for (ssize_t index = 0; index < size; ++index)
+    {
+        auto command = queue[index];
+        auto commandType = command->getType();
+        if(RenderCommand::Type::QUAD_COMMAND == commandType || RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+        {
+            auto cmd = static_cast<TrianglesCommand*>(command);
+            _batchedCommands.push_back(cmd);
+            fillVerticesAndIndices(cmd);
+            drawBatchedQuads();
+        }
+        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
+        {
+            int renderQueueID = (static_cast<GroupCommand*>(command))->getRenderQueueID();
+            visitRenderQueue(_renderGroups[renderQueueID]);
+        }
+        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
+        {
+            auto cmd = static_cast<CustomCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
+        {
+            auto cmd = static_cast<BatchCommand*>(command);
+            cmd->execute();
+        }
+        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
+        {
+            auto cmd = static_cast<PrimitiveCommand*>(command);
+            cmd->execute();
+        }
+        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        {
             auto cmd = static_cast<MeshCommand*>(command);
             cmd->execute();
         }
@@ -337,14 +425,11 @@ void Renderer::render()
     //Uncomment this once everything is rendered by new renderer
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //TODO setup camera or MVP
+    //TODO: setup camera or MVP
     _isRendering = true;
     
     if (_glViewAssigned)
     {
-        // cleanup
-        _drawnBatches = _drawnVertices = 0;
-
         //Process render commands
         //1. Sort render commands based on ID
         for (auto &renderqueue : _renderGroups)
@@ -353,6 +438,16 @@ void Renderer::render()
         }
         visitRenderQueue(_renderGroups[0]);
         flush();
+        
+        //Process render commands
+        //draw transparent objects here, do not batch for transparent objects
+        if (0 < _transparentRenderGroups.size())
+        {
+            _transparentRenderGroups.sort();
+            glEnable(GL_DEPTH_TEST);
+            visitTransparentRenderQueue(_transparentRenderGroups);
+            glDisable(GL_DEPTH_TEST);
+        }
     }
     clean();
     _isRendering = false;
@@ -372,49 +467,55 @@ void Renderer::clean()
     }
 
     // Clear batch quad commands
-    _batchedQuadCommands.clear();
-    _numQuads = 0;
-
+    _batchedCommands.clear();
+    _filledVertex = 0;
+    _filledIndex = 0;
     _lastMaterialID = 0;
+    _lastBatchedMeshCommand = nullptr;
+    
+    _transparentRenderGroups.clear();
 }
 
-void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView)
+void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
-//    kmMat4 matrixP, mvp;
-//    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
-//    kmMat4Multiply(&mvp, &matrixP, &modelView);
-    for(ssize_t i=0; i<quantity; ++i)
+    memcpy(_verts + _filledVertex, cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
+    const Mat4& modelView = cmd->getModelView();
+    
+    for(ssize_t i=0; i< cmd->getVertexCount(); ++i)
     {
-        V3F_C4B_T2F_Quad *q = &quads[i];
-        Vec3 *vec1 = (Vec3*)&q->bl.vertices;
+        V3F_C4B_T2F *q = &_verts[i + _filledVertex];
+        Vec3 *vec1 = (Vec3*)&q->vertices;
         modelView.transformPoint(vec1);
-
-        Vec3 *vec2 = (Vec3*)&q->br.vertices;
-        modelView.transformPoint(vec2);
-
-        Vec3 *vec3 = (Vec3*)&q->tr.vertices;
-        modelView.transformPoint(vec3);
-
-        Vec3 *vec4 = (Vec3*)&q->tl.vertices;
-        modelView.transformPoint(vec4);
     }
+    
+    const unsigned short* indices = cmd->getIndices();
+    //fill index
+    for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
+    {
+        _indices[_filledIndex + i] = _filledVertex + indices[i];
+    }
+    
+    _filledVertex += cmd->getVertexCount();
+    _filledIndex += cmd->getIndexCount();
 }
 
 void Renderer::drawBatchedQuads()
 {
-    //TODO we can improve the draw performance by insert material switching command before hand.
+    //TODO: we can improve the draw performance by insert material switching command before hand.
 
-    int quadsToDraw = 0;
-    int startQuad = 0;
+    int indexToDraw = 0;
+    int startIndex = 0;
 
     //Upload buffer to VBO
-    if(_numQuads <= 0 || _batchedQuadCommands.empty())
+    if(_filledVertex <= 0 || _filledIndex <= 0 || _batchedCommands.empty())
     {
         return;
     }
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        //Bind VAO
+        GL::bindVAO(_quadVAO);
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
@@ -425,22 +526,22 @@ void Renderer::drawBatchedQuads()
 //        glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
 
         // option 3: orphaning + glMapBuffer
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_DYNAMIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
+        memcpy(buf, _verts, sizeof(_verts[0])* _filledVertex);
         glUnmapBuffer(GL_ARRAY_BUFFER);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        //Bind VAO
-        GL::bindVAO(_quadVAO);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
     }
     else
     {
-#define kQuadSize sizeof(_quads[0].bl)
+#define kQuadSize sizeof(_verts[0])
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _numQuads , _quads, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex , _verts, GL_DYNAMIC_DRAW);
 
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
@@ -454,23 +555,24 @@ void Renderer::drawBatchedQuads()
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
     }
 
     //Start drawing verties in batch
-    for(const auto& cmd : _batchedQuadCommands)
+    for(const auto& cmd : _batchedCommands)
     {
         auto newMaterialID = cmd->getMaterialID();
-        if(_lastMaterialID != newMaterialID || newMaterialID == QuadCommand::MATERIAL_ID_DO_NOT_BATCH)
+        if(_lastMaterialID != newMaterialID || newMaterialID == TrianglesCommand::MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
-            if(quadsToDraw > 0)
+            if(indexToDraw > 0)
             {
-                glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
                 _drawnBatches++;
-                _drawnVertices += quadsToDraw*6;
+                _drawnVertices += indexToDraw;
 
-                startQuad += quadsToDraw;
-                quadsToDraw = 0;
+                startIndex += indexToDraw;
+                indexToDraw = 0;
             }
 
             //Use new material
@@ -478,15 +580,15 @@ void Renderer::drawBatchedQuads()
             _lastMaterialID = newMaterialID;
         }
 
-        quadsToDraw += cmd->getQuadCount();
+        indexToDraw += cmd->getIndexCount();
     }
 
     //Draw any remaining quad
-    if(quadsToDraw > 0)
+    if(indexToDraw > 0)
     {
-        glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+        glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
         _drawnBatches++;
-        _drawnVertices += quadsToDraw*6;
+        _drawnVertices += indexToDraw;
     }
 
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -500,20 +602,41 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    _batchedQuadCommands.clear();
-    _numQuads = 0;
+    _batchedCommands.clear();
+    _filledVertex = 0;
+    _filledIndex = 0;
 }
 
 void Renderer::flush()
 {
+    flush2D();
+    flush3D();
+}
+
+void Renderer::flush2D()
+{
     drawBatchedQuads();
     _lastMaterialID = 0;
+}
+
+void Renderer::flush3D()
+{
+    if (_lastBatchedMeshCommand)
+    {
+        _lastBatchedMeshCommand->postBatchDraw();
+        _lastBatchedMeshCommand = nullptr;
+    }
 }
 
 // helpers
 
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
+    auto scene = Director::getInstance()->getRunningScene();
+    // only cull the default camera. The culling algorithm is valid for default camera.
+    if (scene && scene->_defaultCamera != Camera::getVisitingCamera())
+        return true;
+    
     // half size of the screen
     Size screen_half = Director::getInstance()->getWinSize();
     screen_half.width /= 2;

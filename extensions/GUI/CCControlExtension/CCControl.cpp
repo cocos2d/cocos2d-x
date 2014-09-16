@@ -50,7 +50,7 @@ Control::Control()
 
 Control* Control::create()
 {
-    Control* pRet = new Control();
+    Control* pRet = new (std::nothrow) Control();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -59,7 +59,7 @@ Control* Control::create()
     else
     {
         CC_SAFE_DELETE(pRet);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -154,7 +154,7 @@ void Control::addTargetWithActionForControlEvents(Ref* target, Handler action, E
  *
  * @param target The target object that is, the object to which the action 
  * message is sent. It cannot be nil. The target is not retained.
- * @param action A selector identifying an action message. It cannot be NULL.
+ * @param action A selector identifying an action message. It cannot be nullptr.
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
@@ -264,7 +264,7 @@ Vector<Invocation*>& Control::dispatchListforControlEvent(EventType controlEvent
     // If the invocation list does not exist for the  dispatch table, we create it
     if (iter == _dispatchTable.end())
     {
-        invocationList = new Vector<Invocation*>();
+        invocationList = new (std::nothrow) Vector<Invocation*>();
         _dispatchTable[(int)controlEvent] = invocationList;
     }
     else
@@ -320,7 +320,7 @@ bool Control::isHighlighted() const
 bool Control::hasVisibleParents() const
 {
     auto parent = this->getParent();
-    for( auto c = parent; c != NULL; c = c->getParent() )
+    for( auto c = parent; c != nullptr; c = c->getParent() )
     {
         if( !c->isVisible() )
         {

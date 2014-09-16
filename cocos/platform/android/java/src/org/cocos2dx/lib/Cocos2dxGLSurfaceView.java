@@ -158,7 +158,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	@Override
 	public void onResume() {
 		super.onResume();
-
+		this.setRenderMode(RENDERMODE_CONTINUOUSLY);
 		this.queueEvent(new Runnable() {
 			@Override
 			public void run() {
@@ -175,7 +175,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleOnPause();
 			}
 		});
-
+		this.setRenderMode(RENDERMODE_WHEN_DIRTY);
 		//super.onPause();
 	}
 
@@ -292,6 +292,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_BACK:
+				Cocos2dxVideoHelper.mVideoHandler.sendEmptyMessage(Cocos2dxVideoHelper.KeyEventBack);
 			case KeyEvent.KEYCODE_MENU:
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 			case KeyEvent.KEYCODE_DPAD_RIGHT:

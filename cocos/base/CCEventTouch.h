@@ -26,17 +26,18 @@
 #define __cocos2d_libs__TouchEvent__
 
 #include "base/CCEvent.h"
-#include "base/CCTouch.h"
 #include <vector>
 
 NS_CC_BEGIN
 
+class Touch;
+
 #define TOUCH_PERF_DEBUG 1
 
-class EventTouch : public Event
+class CC_DLL EventTouch : public Event
 {
 public:
-    static const int MAX_TOUCHES = 5;
+    static const int MAX_TOUCHES = 15;
     
     enum class EventCode
     {
@@ -60,7 +61,7 @@ private:
     EventCode _eventCode;
     std::vector<Touch*> _touches;
 
-    friend class GLViewProtocol;
+    friend class GLView;
 };
 
 

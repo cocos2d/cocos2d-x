@@ -2,29 +2,34 @@
 --------------------------------
 -- @module PhysicsShapeEdgeSegment
 -- @extend PhysicsShape
+-- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#PhysicsShapeEdgeSegment] getPointB 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
 -- @function [parent=#PhysicsShapeEdgeSegment] getPointA 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
 -- @function [parent=#PhysicsShapeEdgeSegment] create 
 -- @param self
--- @param #cc.Vec2 vec2
--- @param #cc.Vec2 vec2
--- @param #cc.PhysicsMaterial physicsmaterial
--- @param #float float
+-- @param #vec2_table a
+-- @param #vec2_table b
+-- @param #cc.PhysicsMaterial material
+-- @param #float border
 -- @return PhysicsShapeEdgeSegment#PhysicsShapeEdgeSegment ret (return value: cc.PhysicsShapeEdgeSegment)
         
 --------------------------------
+-- 
 -- @function [parent=#PhysicsShapeEdgeSegment] getCenter 
 -- @param self
--- @return Vec2#Vec2 ret (return value: cc.Vec2)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 return nil

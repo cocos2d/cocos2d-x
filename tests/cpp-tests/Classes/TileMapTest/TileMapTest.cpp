@@ -123,7 +123,7 @@ void TileDemo::onExit()
 }
 void TileDemo::restartCallback(Ref* sender)
 {
-    auto s = new TileMapTestScene();
+    auto s = new (std::nothrow) TileMapTestScene();
     s->addChild(restartTileMapAction());
 
     Director::getInstance()->replaceScene(s);
@@ -132,7 +132,7 @@ void TileDemo::restartCallback(Ref* sender)
 
 void TileDemo::nextCallback(Ref* sender)
 {
-    auto s = new TileMapTestScene();
+    auto s = new (std::nothrow) TileMapTestScene();
     s->addChild( nextTileMapAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -140,7 +140,7 @@ void TileDemo::nextCallback(Ref* sender)
 
 void TileDemo::backCallback(Ref* sender)
 {
-    auto s = new TileMapTestScene();
+    auto s = new (std::nothrow) TileMapTestScene();
     s->addChild( backTileMapAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -195,7 +195,7 @@ TileMapTest::TileMapTest()
     auto scale = ScaleBy::create(4, 0.8f);
     auto scaleBack = scale->reverse();
 
-    auto seq = Sequence::create(scale, scaleBack, NULL);
+    auto seq = Sequence::create(scale, scaleBack, nullptr);
 
     map->runAction(RepeatForever::create(seq));
 }
@@ -291,7 +291,7 @@ TMXOrthoTest::TMXOrthoTest()
 
     auto scale = ScaleBy::create(10, 0.1f);
     auto back = scale->reverse();
-    auto seq = Sequence::create(scale, back, NULL);
+    auto seq = Sequence::create(scale, back, nullptr);
     auto repeat = RepeatForever::create(seq);
     map->runAction(repeat);
 
@@ -332,7 +332,7 @@ TMXOrthoTest2::TMXOrthoTest2()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    SpriteBatchNode* child = NULL;
+    SpriteBatchNode* child = nullptr;
 
     for(const auto &obj : children) {
         child = static_cast<SpriteBatchNode*>(obj);
@@ -361,7 +361,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
     auto& children = map->getChildren();
-    SpriteBatchNode* child = NULL;
+    SpriteBatchNode* child = nullptr;
 
     for(const auto &node : children) {
         child = static_cast<SpriteBatchNode*>(node);
@@ -483,7 +483,7 @@ TMXReadWriteTest::TMXReadWriteTest()
     auto fadein = FadeIn::create(2);
     auto scaleback = ScaleTo::create(1, 1);
     auto finish = CallFuncN::create(CC_CALLBACK_1(TMXReadWriteTest::removeSprite, this));
-    auto seq0 = Sequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, NULL);
+    auto seq0 = Sequence::create(move, rotate, scale, opacity, fadein, scaleback, finish, nullptr);
     auto seq1 = seq0->clone();
     auto seq2 = seq0->clone();
     auto seq3 = seq0->clone();
@@ -757,28 +757,9 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 
     Value objectsVal = Value(objects);
     CCLOG("%s", objectsVal.getDescription().c_str());
-}
 
-void TMXOrthoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_renderCmd);
-}
-
-void TMXOrthoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
+    auto drawNode = DrawNode::create();
     
-    auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
-    auto pos = map->getPosition();
-    auto group = map->getObjectGroup("Object Group 1");
-
-    auto& objects = group->getObjects();
-
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
@@ -788,17 +769,14 @@ void TMXOrthoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
         
-        glLineWidth(3);
+        Color4F color(1.0, 1.0, 1.0, 1.0);
         
-        DrawPrimitives::drawLine( pos + Vec2(x, y), pos + Vec2((x+width), y) );
-        DrawPrimitives::drawLine( pos + Vec2((x+width), y), pos + Vec2((x+width), (y+height)) );
-        DrawPrimitives::drawLine( pos + Vec2((x+width), (y+height)), pos + Vec2(x, (y+height)) );
-        DrawPrimitives::drawLine( pos + Vec2(x, (y+height)), pos + Vec2(x, y) );
-        
-        glLineWidth(1);
+        drawNode->drawLine( Vec2(x, y), Vec2((x+width), y), color );
+        drawNode->drawLine( Vec2((x+width), y), Vec2((x+width), (y+height)), color );
+        drawNode->drawLine( Vec2((x+width), (y+height)), Vec2(x, (y+height)), color );
+        drawNode->drawLine( Vec2(x, (y+height)), Vec2(x, y), color );
     }
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    map->addChild(drawNode);
 }
 
 std::string TMXOrthoObjectsTest::title() const
@@ -832,46 +810,26 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
     
     Value objectsVal = Value(objects);
     CCLOG("%s", objectsVal.getDescription().c_str());
-}
-
-void TMXIsoObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_renderCmd);
-}
-
-void TMXIsoObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
-    auto pos = map->getPosition();
-    auto group = map->getObjectGroup("Object Group 1");
-
-    auto& objects = group->getObjects();
+    
+    auto drawNode = DrawNode::create();
+    
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
+        
         float x = dict["x"].asFloat();
         float y = dict["y"].asFloat();
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
         
-        glLineWidth(3);
+        Color4F color(1.0, 1.0, 1.0, 1.0);
         
-        DrawPrimitives::drawLine( pos + Vec2(x,y), pos + Vec2(x+width,y) );
-        DrawPrimitives::drawLine( pos + Vec2(x+width,y), pos + Vec2(x+width,y+height) );
-        DrawPrimitives::drawLine( pos + Vec2(x+width,y+height), pos + Vec2(x,y+height) );
-        DrawPrimitives::drawLine( pos + Vec2(x,y+height), pos + Vec2(x,y) );
-        
-        glLineWidth(1);
+        drawNode->drawLine( Vec2(x, y), Vec2((x+width), y), color );
+        drawNode->drawLine( Vec2((x+width), y), Vec2((x+width), (y+height)), color );
+        drawNode->drawLine( Vec2((x+width), (y+height)), Vec2(x, (y+height)), color );
+        drawNode->drawLine( Vec2(x, (y+height)), Vec2(x, y), color );
     }
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    map->addChild(drawNode, 10);
 }
 
 std::string TMXIsoObjectsTest::title() const
@@ -947,7 +905,7 @@ TMXIsoZorder::TMXIsoZorder()
     
     auto move = MoveBy::create(10, Vec2(300,250));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
     schedule( schedule_selector(TMXIsoZorder::repositionSprite) );
@@ -1013,7 +971,7 @@ TMXOrthoZorder::TMXOrthoZorder()
     
     auto move = MoveBy::create(10, Vec2(400,450));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
     schedule( schedule_selector(TMXOrthoZorder::repositionSprite));
@@ -1075,7 +1033,7 @@ TMXIsoVertexZ::TMXIsoVertexZ()
     
     auto move = MoveBy::create(10, Vec2(300,250) * (1/CC_CONTENT_SCALE_FACTOR()));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
     schedule( schedule_selector(TMXIsoVertexZ::repositionSprite));
@@ -1147,7 +1105,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
 
     auto move = MoveBy::create(10, Vec2(400,450) * (1/CC_CONTENT_SCALE_FACTOR()));
     auto back = move->reverse();
-    auto seq = Sequence::create(move, back,NULL);
+    auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
     schedule(schedule_selector(TMXOrthoVertexZ::repositionSprite));
@@ -1389,7 +1347,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     std::string file = resources + "/orthogonal-test1.tmx";
 
     auto str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
-    CCASSERT(str != NULL, "Unable to open file");
+    CCASSERT(str != nullptr, "Unable to open file");
 
     auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
     addChild(map, 0, kTagTileMap);
@@ -1519,28 +1477,10 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
     CCLOG("Contentsize: %f, %f", s.width, s.height);
 
     CCLOG("----> Iterating over all the group objets");
-    //auto group = map->objectGroupNamed("Object Layer 1");
-
-}
-
-void TMXGIDObjectsTest::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
-{
-    _renderCmd.init(_globalZOrder);
-    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this, transform, transformUpdated);
-    renderer->addCommand(&_renderCmd);
-}
-
-void TMXGIDObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
-    auto pos = map->getPosition();
-    auto group = map->getObjectGroup("Object Layer 1");
     
+    auto drawNode = DrawNode::create();
+    Color4F color(1.0, 1.0, 1.0, 1.0);
+    auto group = map->getObjectGroup("Object Layer 1");
     auto& objects = group->getObjects();
     for (auto& obj : objects)
     {
@@ -1551,17 +1491,12 @@ void TMXGIDObjectsTest::onDraw(const Mat4 &transform, bool transformUpdated)
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
         
-        glLineWidth(3);
-        
-        DrawPrimitives::drawLine(pos + Vec2(x, y), pos + Vec2(x + width, y));
-        DrawPrimitives::drawLine(pos + Vec2(x + width, y), pos + Vec2(x + width, y + height));
-        DrawPrimitives::drawLine(pos + Vec2(x + width,y + height), pos + Vec2(x,y + height));
-        DrawPrimitives::drawLine(pos + Vec2(x,y + height), pos + Vec2(x,y));
-        
-        glLineWidth(1);
+        drawNode->drawLine(Vec2(x, y), Vec2(x + width, y), color);
+        drawNode->drawLine(Vec2(x + width, y), Vec2(x + width, y + height), color);
+        drawNode->drawLine(Vec2(x + width,y + height), Vec2(x,y + height), color);
+        drawNode->drawLine(Vec2(x,y + height), Vec2(x,y), color);
     }
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    map->addChild(drawNode);
 }
 
 std::string TMXGIDObjectsTest::title() const

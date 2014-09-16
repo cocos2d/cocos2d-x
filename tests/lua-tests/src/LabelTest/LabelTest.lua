@@ -263,12 +263,17 @@ function Atlas4.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Atlas4.layer = layer
+    
+    local s = cc.Director:getInstance():getWinSize()
+
+    local drawNode = cc.DrawNode:create()
+    drawNode:drawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2), cc.c4f(1,1,1,1))
+    drawNode:drawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height), cc.c4f(1,1,1,1))
+    layer:addChild(drawNode, -10)
 
     -- Upper Label
     local label = cc.LabelBMFont:create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt")
     layer:addChild(label)
-
-    local s = cc.Director:getInstance():getWinSize()
 
     label:setPosition( cc.p(s.width/2, s.height/2) )
     label:setAnchorPoint( cc.p(0.5, 0.5) )
@@ -311,17 +316,9 @@ function Atlas4.create()
     local lastChar = label2:getChildByTag(3)
     lastChar:runAction(rot_4ever:clone())
 
-    layer:registerScriptHandler(Atlas4.onNodeEvent)
-
     Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString( "Using fonts as cc.Sprite objects. Some characters should rotate.")
     return layer
-end
-
-function Atlas4.draw()
-    local s = cc.Director:getInstance():getWinSize()
-    cc.DrawPrimitives.drawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2) )
-    cc.DrawPrimitives.drawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height) )
 end
 
 function Atlas4.step(dt)

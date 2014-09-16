@@ -26,9 +26,6 @@ THE SOFTWARE.
 
 #include "2d/CCTransitionPageTurn.h"
 #include "base/CCDirector.h"
-#include "2d/CCActionInterval.h"
-#include "2d/CCActionInstant.h"
-#include "2d/CCActionGrid.h"
 #include "2d/CCActionPageTurn3D.h"
 #include "2d/CCNodeGrid.h"
 #include "renderer/CCRenderer.h"
@@ -56,7 +53,7 @@ TransitionPageTurn::~TransitionPageTurn()
 /** creates a base transition with duration and incoming scene */
 TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool backwards)
 {
-    TransitionPageTurn * transition = new TransitionPageTurn();
+    TransitionPageTurn * transition = new (std::nothrow) TransitionPageTurn();
     transition->initWithDuration(t,scene,backwards);
     transition->autorelease();
     return transition;
@@ -65,7 +62,7 @@ TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool back
 /** initializes a transition with duration and incoming scene */
 bool TransitionPageTurn::initWithDuration(float t, Scene *scene, bool backwards)
 {
-    // XXX: needed before [super init]
+    // FIXME:: needed before [super init]
     _back = backwards;
 
     if (TransitionScene::initWithDuration(t, scene))
@@ -92,27 +89,27 @@ void TransitionPageTurn::onDisablePolygonOffset()
     glPolygonOffset(0, 0);
 }
 
-void TransitionPageTurn::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void TransitionPageTurn::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Scene::draw(renderer, transform, transformUpdated);
+    Scene::draw(renderer, transform, flags);
     
     if( _isInSceneOnTop ) {
-        _outSceneProxy->visit(renderer, transform, transformUpdated);
+        _outSceneProxy->visit(renderer, transform, flags);
         _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
         renderer->addCommand(&_enableOffsetCmd);
-        _inSceneProxy->visit(renderer, transform, transformUpdated);
+        _inSceneProxy->visit(renderer, transform, flags);
         _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
         renderer->addCommand(&_disableOffsetCmd);
     } else {
-        _inSceneProxy->visit(renderer, transform, transformUpdated);
+        _inSceneProxy->visit(renderer, transform, flags);
         
         _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
         renderer->addCommand(&_enableOffsetCmd);
         
-        _outSceneProxy->visit(renderer, transform, transformUpdated);
+        _outSceneProxy->visit(renderer, transform, flags);
         
         _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __BASE_CCREF_H__
 #define __BASE_CCREF_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccConfig.h"
 
 #define CC_USE_MEM_LEAK_DETECTION 0
@@ -142,6 +142,8 @@ public:
     unsigned int        _ID;
     /// Lua reference id
     int                 _luaID;
+    /// scriptObject, support for swift
+    void* _scriptObject;
 #endif
 
     // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined and its value isn't zero)

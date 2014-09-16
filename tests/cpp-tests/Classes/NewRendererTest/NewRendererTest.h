@@ -146,4 +146,22 @@ protected:
     virtual ~VBOFullTest();
 };
 
+class CaptureScreenTest : public MultiSceneTest
+{
+    static const int childTag = 119;
+public:
+    CREATE_FUNC(CaptureScreenTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    CaptureScreenTest();
+    ~CaptureScreenTest();
+
+    void onCaptured(Ref*);
+    void afterCaptured(bool succeed, const std::string& outputFile);
+
+    std::string _filename;
+};
+
 #endif //__NewRendererTest_H_

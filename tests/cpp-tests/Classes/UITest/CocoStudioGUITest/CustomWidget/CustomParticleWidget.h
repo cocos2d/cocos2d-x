@@ -11,6 +11,10 @@
 
 #include "ui/CocosGUI.h"
 
+namespace cocos2d {
+    class ParticleSystem;
+}
+
 class CustomParticleWidget : public cocos2d::ui::Widget
 {
 public:

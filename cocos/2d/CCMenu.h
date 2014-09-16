@@ -28,11 +28,10 @@ THE SOFTWARE.
 
 #include "2d/CCMenuItem.h"
 #include "2d/CCLayer.h"
-#include "base/CCVector.h"
-#include "base/CCEventTouch.h"
 #include "base/CCValue.h"
 
 NS_CC_BEGIN
+class Touch;
 
 /**
  * @addtogroup GUI
@@ -132,6 +131,7 @@ public:
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child, int zOrder, int tag) override;
+    virtual void addChild(Node * child, int zOrder, const std::string &name) override;
     
     virtual void onEnter() override;
     virtual void onExit() override;

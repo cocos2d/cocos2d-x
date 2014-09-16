@@ -34,19 +34,17 @@ THE SOFTWARE.
  * To create sprite frames and texture atlas, use this tool:
  * http://zwoptex.zwopple.com/
  */
-
+#include <set>
+#include <string>
 #include "2d/CCSpriteFrame.h"
-#include "renderer/CCTexture2D.h"
 #include "base/CCRef.h"
 #include "base/CCValue.h"
 #include "base/CCMap.h"
 
-#include <set>
-#include <string>
-
 NS_CC_BEGIN
 
 class Sprite;
+class Texture2D;
 
 /**
  * @addtogroup sprite_nodes
@@ -61,7 +59,7 @@ class CC_DLL SpriteFrameCache : public Ref
 {
 public:
     /** Returns the shared instance of the Sprite Frame cache */
-    static SpriteFrameCache* getInstance(void);
+    static SpriteFrameCache* getInstance();
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
@@ -82,7 +80,7 @@ public:
      * @lua NA
      */
     virtual ~SpriteFrameCache();
-    bool init(void);
+    bool init();
 
 public:
     /** Adds multiple Sprite Frames from a plist file.
@@ -105,6 +103,12 @@ public:
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
+
+    /** Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. 
+     * @js addSpriteFrames
+     * @lua addSpriteFrames
+     */
+    void addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -134,6 +138,12 @@ public:
     * @since v0.99.5
     */
     void removeSpriteFramesFromFile(const std::string& plist);
+
+    /** Removes multiple Sprite Frames from a plist file content.
+    * Sprite Frames stored in this file will be removed.
+    * It is convenient to call this method when a specific texture needs to be removed.
+    */
+    void removeSpriteFramesFromFileContent(const std::string& plist_content);
 
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.

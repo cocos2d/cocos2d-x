@@ -23,15 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIImageView.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-
-
-#define STATIC_CAST_CCSPRITE static_cast<Sprite*>(_imageRenderer)
-#define STATIC_CAST_SCALE9SPRITE static_cast<extension::Scale9Sprite*>(_imageRenderer)
     
 static const int IMAGE_RENDERER_Z = (-1);
     
@@ -44,7 +41,7 @@ _capInsets(Rect::ZERO),
 _imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(TextureResType::LOCAL),
-_imageTextureSize(_size),
+_imageTextureSize(_contentSize),
 _imageRendererAdaptDirty(true)
 {
 
@@ -57,7 +54,7 @@ ImageView::~ImageView()
     
 ImageView* ImageView::create(const std::string &imageFileName, TextureResType texType)
 {
-    ImageView *widget = new ImageView;
+    ImageView *widget = new (std::nothrow) ImageView;
     if (widget && widget->init(imageFileName, texType)) {
         widget->autorelease();
         return widget;
@@ -68,7 +65,7 @@ ImageView* ImageView::create(const std::string &imageFileName, TextureResType te
 
 ImageView* ImageView::create()
 {
-    ImageView* widget = new ImageView();
+    ImageView* widget = new (std::nothrow) ImageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -107,7 +104,9 @@ bool ImageView::init(const std::string &imageFileName, TextureResType texType)
 
 void ImageView::initRenderer()
 {
-    _imageRenderer = Sprite::create();
+    _imageRenderer = Scale9Sprite::create();
+    _imageRenderer->setScale9Enabled(false);
+    
     addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 
@@ -122,77 +121,52 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
     switch (_imageTexType)
     {
         case TextureResType::LOCAL:
-            if (_scale9Enabled)
-            {
-                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
-                imageRendererScale9->initWithFile(fileName);
-                imageRendererScale9->setCapInsets(_capInsets);
-            }
-            else
-            {
-                Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
-                imageRenderer->setTexture(fileName);
-            }
+            _imageRenderer->initWithFile(fileName);
             break;
         case TextureResType::PLIST:
-            if (_scale9Enabled)
-            {
-                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
-                imageRendererScale9->initWithSpriteFrameName(fileName);
-                imageRendererScale9->setCapInsets(_capInsets);
-            }
-            else
-            {
-                Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
-                imageRenderer->setSpriteFrame(fileName);
-            }
+            _imageRenderer->initWithSpriteFrameName(fileName);
             break;
         default:
             break;
     }
+    
     _imageTextureSize = _imageRenderer->getContentSize();
     updateFlippedX();
     updateFlippedY();
-    updateRGBAToRenderer(_imageRenderer);
+    this->updateChildrenDisplayedRGBA();
+
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
 }
 
 void ImageView::setTextureRect(const Rect &rect)
 {
+    //This API should be refactor
     if (_scale9Enabled)
     {
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setTextureRect(rect);
+        auto sprite = _imageRenderer->getSprite();
+        if (sprite)
+        {
+            sprite->setTextureRect(rect);
+        }
+        else
+        {
+            CCLOG("Warning!! you should load texture before set the texture's rect!");
+        }
     }
 }
     
 void ImageView::updateFlippedX()
 {
-    if (_scale9Enabled)
-    {
-        int flip = _flippedX ? -1 : 1;
-        STATIC_CAST_SCALE9SPRITE->setScaleX(flip);
-    }
-    else
-    {
-        STATIC_CAST_CCSPRITE->setFlippedX(_flippedX);
-    }
+    _imageRenderer->setFlippedX(_flippedX);
 }
     
 void ImageView::updateFlippedY()
 {
-    if (_scale9Enabled)
-    {
-        int flip = _flippedY ? -1 : 1;
-        STATIC_CAST_SCALE9SPRITE->setScaleY(flip);
-    }
-    else
-    {
-        STATIC_CAST_CCSPRITE->setFlippedY(_flippedY);
-    }
+    _imageRenderer->setFlippedY(_flippedY);
 
 }
 
@@ -205,18 +179,8 @@ void ImageView::setScale9Enabled(bool able)
     
     
     _scale9Enabled = able;
-    removeProtectedChild(_imageRenderer);
-    _imageRenderer = nullptr;
-    if (_scale9Enabled)
-    {
-        _imageRenderer = extension::Scale9Sprite::create();
-    }
-    else
-    {
-        _imageRenderer = Sprite::create();
-    }
-    loadTexture(_textureFile,_imageTexType);
-    addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
+    _imageRenderer->setScale9Enabled(_scale9Enabled);
+    
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -230,7 +194,7 @@ void ImageView::setScale9Enabled(bool able)
     setCapInsets(_capInsets);
 }
     
-bool ImageView::isScale9Enabled()
+bool ImageView::isScale9Enabled()const
 {
     return _scale9Enabled;
 }
@@ -251,10 +215,10 @@ void ImageView::setCapInsets(const Rect &capInsets)
     {
         return;
     }
-    STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
+    _imageRenderer->setCapInsets(capInsets);
 }
 
-const Rect& ImageView::getCapInsets()
+const Rect& ImageView::getCapInsets()const
 {
     return _capInsets;
 }
@@ -274,7 +238,7 @@ void ImageView::adaptRenderers()
     }
 }
 
-const Size& ImageView::getVirtualRendererSize() const
+Size ImageView::getVirtualRendererSize() const
 {
     return _imageTextureSize;
 }
@@ -297,7 +261,7 @@ void ImageView::imageTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
+            _imageRenderer->setPreferredSize(_contentSize);
         }
         else
         {
@@ -307,8 +271,8 @@ void ImageView::imageTextureScaleChangedWithSize()
                 _imageRenderer->setScale(1.0f);
                 return;
             }
-            float scaleX = _size.width / textureSize.width;
-            float scaleY = _size.height / textureSize.height;
+            float scaleX = _contentSize.width / textureSize.width;
+            float scaleY = _contentSize.height / textureSize.height;
             _imageRenderer->setScaleX(scaleX);
             _imageRenderer->setScaleY(scaleY);
         }
@@ -319,21 +283,6 @@ void ImageView::imageTextureScaleChangedWithSize()
 std::string ImageView::getDescription() const
 {
     return "ImageView";
-}
-    
-void ImageView::updateTextureColor()
-{
-    updateColorToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_imageRenderer);
 }
 
 Widget* ImageView::createCloneInstance()

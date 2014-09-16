@@ -26,14 +26,13 @@
 #define _CC_BATCHCOMMAND_H_
 
 #include "renderer/CCRenderCommand.h"
-#include "renderer/CCGLProgram.h"
-#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
 class TextureAtlas;
+class GLProgram;
 
-class BatchCommand : public RenderCommand
+class CC_DLL BatchCommand : public RenderCommand
 {
 public:
 

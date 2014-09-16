@@ -20,6 +20,9 @@ namespace
         CL(PhysicsContactTest),
         CL(PhysicsPositionRotationTest),
         CL(PhysicsSetGravityEnableTest),
+        CL(Bug5482),
+        CL(PhysicsFixedUpdate),
+        CL(PhysicsTransformTest),
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -120,7 +123,7 @@ std::string PhysicsDemo::subtitle() const
 
 void PhysicsDemo::restartCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -128,7 +131,7 @@ void PhysicsDemo::restartCallback(Ref* sender)
 
 void PhysicsDemo::nextCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -136,7 +139,7 @@ void PhysicsDemo::nextCallback(Ref* sender)
 
 void PhysicsDemo::backCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -154,7 +157,7 @@ void PhysicsDemo::onEnter()
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
     
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
     menu->setPosition(Vec2(VisibleRect::right().x-50, VisibleRect::top().y-10));
 }
@@ -550,7 +553,7 @@ void PhysicsDemoRayCast::onEnter()
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Change Mode(any)", CC_CALLBACK_1(PhysicsDemoRayCast::changeModeCallback, this));
     
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
     menu->setPosition(Vec2(VisibleRect::left().x+100, VisibleRect::top().y-10));
     
@@ -915,6 +918,7 @@ std::string PhysicsDemoJoints::title() const
 void PhysicsDemoActions::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->getPhysicsWorld()->setGravity(Vect::ZERO);
     
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoActions::onTouchBegan, this);
@@ -933,16 +937,22 @@ void PhysicsDemoActions::onEnter()
     Sprite* sp4 = addGrossiniAtPosition(VisibleRect::leftTop() + Vec2(50, -50));
     sp4->getPhysicsBody()->setGravityEnable(false);
     
+    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    sp3->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    sp4->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     
     auto actionTo = JumpTo::create(2, Vec2(100,100), 50, 4);
     auto actionBy = JumpBy::create(2, Vec2(300,0), 50, 4);
     auto actionUp = JumpBy::create(2, Vec2(0,50), 80, 4);
     auto actionByBack = actionBy->reverse();
+    auto rotateBy = RotateBy::create(2, 180);
+    auto rotateByBack = RotateBy::create(2, -180);
     
     sp1->runAction(RepeatForever::create(actionUp));
-    sp2->runAction(RepeatForever::create(Sequence::create(actionBy, actionByBack, NULL)));
+    sp2->runAction(RepeatForever::create(Sequence::create(actionBy, actionByBack, nullptr)));
     sp3->runAction(actionTo);
-    sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), NULL)));
+    sp4->runAction(RepeatForever::create(Sequence::create(rotateBy, rotateByBack, nullptr)));
 }
 
 std::string PhysicsDemoActions::title() const
@@ -1205,7 +1215,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     PhysicsBody* body = shape->getBody();
     int count = shape->getPointsCount();
     int pointsCount = 0;
-    Vec2* points = new Vec2[count + 1];
+    Vec2* points = new (std::nothrow) Vec2[count + 1];
     
     for (int i=0, j=count-1; i<count; j=i, ++i)
     {
@@ -1305,7 +1315,7 @@ void PhysicsContactTest::onEnter()
     decrease1->setTag(1);
     increase1->setTag(1);
     
-    auto menu1 = Menu::create(decrease1, increase1, NULL);
+    auto menu1 = Menu::create(decrease1, increase1, nullptr);
     menu1->alignItemsHorizontally();
     menu1->setPosition(Vec2(s.width/2, s.height-50));
     addChild(menu1, 1);
@@ -1321,7 +1331,7 @@ void PhysicsContactTest::onEnter()
     decrease2->setTag(2);
     increase2->setTag(2);
     
-    auto menu2 = Menu::create(decrease2, increase2, NULL);
+    auto menu2 = Menu::create(decrease2, increase2, nullptr);
     menu2->alignItemsHorizontally();
     menu2->setPosition(Vec2(s.width/2, s.height-90));
     addChild(menu2, 1);
@@ -1337,7 +1347,7 @@ void PhysicsContactTest::onEnter()
     decrease3->setTag(3);
     increase3->setTag(3);
     
-    auto menu3 = Menu::create(decrease3, increase3, NULL);
+    auto menu3 = Menu::create(decrease3, increase3, nullptr);
     menu3->alignItemsHorizontally();
     menu3->setPosition(Vec2(s.width/2, s.height-130));
     addChild(menu3, 1);
@@ -1353,7 +1363,7 @@ void PhysicsContactTest::onEnter()
     decrease4->setTag(4);
     increase4->setTag(4);
     
-    auto menu4 = Menu::create(decrease4, increase4, NULL);
+    auto menu4 = Menu::create(decrease4, increase4, nullptr);
     menu4->alignItemsHorizontally();
     menu4->setPosition(Vec2(s.width/2, s.height-170));
     addChild(menu4, 1);
@@ -1569,9 +1579,9 @@ void PhysicsPositionRotationTest::onEnter()
     anchorNode->setAnchorPoint(Vec2(0.1f, 0.9f));
     anchorNode->setPosition(100, 100);
     anchorNode->setScale(0.25);
+    addChild(anchorNode);
     anchorNode->setPhysicsBody(PhysicsBody::createBox(anchorNode->getContentSize()*anchorNode->getScale()));
     anchorNode->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
-    addChild(anchorNode);
     
     //parent test
     auto parent = Sprite::create("Images/YellowSquare.png");
@@ -1584,7 +1594,7 @@ void PhysicsPositionRotationTest::onEnter()
     auto leftBall = Sprite::create("Images/ball.png");
     leftBall->setPosition(-30, 0);
     leftBall->cocos2d::Node::setScale(2);
-    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width/4));
+    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width));
     leftBall->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     parent->addChild(leftBall);
     
@@ -1658,6 +1668,204 @@ std::string PhysicsSetGravityEnableTest::title() const
 std::string PhysicsSetGravityEnableTest::subtitle() const
 {
     return "only yellow box drop down";
+}
+
+void Bug5482::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _scene->toggleDebug();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemo::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemo::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemo::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    _bodyInA = false;
+    
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    //button
+    MenuItemFont::setFontSize(18);
+    _button = MenuItemFont::create("Set Body To A", CC_CALLBACK_1(Bug5482::changeBodyCallback, this));
+    
+    auto menu = Menu::create(_button, nullptr);
+    this->addChild(menu);
+    
+    _nodeA = Sprite::create("Images/YellowSquare.png");
+    _nodeA->setPosition(VisibleRect::center().x - 150, 100);
+    this->addChild(_nodeA);
+    
+    _nodeB = Sprite::create("Images/YellowSquare.png");
+    _nodeB->setPosition(VisibleRect::center().x + 150, 100);
+    this->addChild(_nodeB);
+    
+    _body = PhysicsBody::createBox(_nodeA->getContentSize());
+    _body->setTag(DRAG_BODYS_TAG);
+    _body->retain();
+}
+
+void Bug5482::onExit()
+{
+    PhysicsDemo::onExit();
+    _body->release();
+}
+
+void Bug5482::changeBodyCallback(Ref* sender)
+{
+    Sprite* node = _bodyInA ? _nodeB : _nodeA;
+    
+    node->setPhysicsBody(_body);
+    
+    _bodyInA = !_bodyInA;
+}
+
+std::string Bug5482::title() const
+{
+    return "bug 5482: setPhysicsBodyTest";
+}
+
+std::string Bug5482::subtitle() const
+{
+    return "change physics body to the other.";
+}
+
+void PhysicsFixedUpdate::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    this->addChild(wall);
+    
+    addBall();
+    
+    scheduleOnce(schedule_selector(PhysicsFixedUpdate::updateStart), 2);
+}
+
+void PhysicsFixedUpdate::addBall()
+{
+    auto ball = Sprite::create("Images/ball.png");
+    ball->setPosition(100, 100);
+    ball->setPhysicsBody(PhysicsBody::createCircle(ball->getContentSize().width/2, PhysicsMaterial(0.1f, 1, 0.0f)));
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    ball->getPhysicsBody()->setVelocity(Point(1000, 20));
+    this->addChild(ball);
+}
+
+void PhysicsFixedUpdate::updateStart(float delta)
+{
+    addBall();
+    
+    _scene->getPhysicsWorld()->setAutoStep(false);
+    scheduleUpdate();
+}
+
+void PhysicsFixedUpdate::update(float delta)
+{
+    
+    // use fixed time and calculate 3 times per frame makes physics simulate more precisely.
+    for (int i = 0; i < 3; ++i)
+    {
+        _scene->getPhysicsWorld()->step(1/180.0f);
+    }
+}
+
+std::string PhysicsFixedUpdate::title() const
+{
+    return "Fixed Update Test";
+}
+
+std::string PhysicsFixedUpdate::subtitle() const
+{
+    return "The secend ball should not run across the wall";
+}
+
+bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event *event)
+{
+    Node* child = this->getChildByTag(1);
+    child->setPosition(this->convertTouchToNodeSpace(touch));
+    return false;
+}
+
+void PhysicsTransformTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+    _scene->toggleDebug();
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsTransformTest::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    addChild(wall);
+    
+    //parent test
+    auto parent = Sprite::create("Images/YellowSquare.png");
+    parent->setPosition(200, 100);
+    parent->setScale(0.25);
+    parent->setPhysicsBody(PhysicsBody::createBox(parent->getContentSize()*parent->getScale(), PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    parent->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    parent->setTag(1);
+    addChild(parent);
+    
+    auto leftBall = Sprite::create("Images/ball.png");
+    leftBall->setPosition(-30, 0);
+    leftBall->cocos2d::Node::setScale(2);
+    leftBall->setPhysicsBody(PhysicsBody::createCircle(leftBall->getContentSize().width, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    leftBall->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    parent->addChild(leftBall);
+    
+    ScaleTo* scaleTo = ScaleTo::create(2.0, 0.5);
+    ScaleTo* scaleBack = ScaleTo::create(2.0, 1.0);
+    parent->runAction(RepeatForever::create(Sequence::create(scaleTo, scaleBack, nullptr)));
+    
+    auto normal = Sprite::create("Images/YellowSquare.png");
+    normal->setPosition(300, 100);
+    normal->setScale(0.25, 0.5);
+    auto size = parent->getContentSize();
+    size.width *= normal->getScaleX();
+    size.height *= normal->getScaleY();
+    normal->setPhysicsBody(PhysicsBody::createBox(size, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    normal->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    addChild(normal);
+    
+    auto bullet = Sprite::create("Images/ball.png");
+    bullet->setPosition(200, 200);
+    bullet->setPhysicsBody(PhysicsBody::createCircle(bullet->getContentSize().width/2, PhysicsMaterial(0.1f, 1.0f, 0.0f)));
+    bullet->getPhysicsBody()->setVelocity(Vect(100, 100));
+    this->addChild(bullet);
+    
+    
+    MoveBy* move = MoveBy::create(2.0f, Vec2(100, 100));
+    MoveBy* move2 = MoveBy::create(2.0f, Vec2(-200, 0));
+    MoveBy* move3 = MoveBy::create(2.0f, Vec2(100, -100));
+    ScaleTo* scale = ScaleTo::create(3.0f, 0.3f);
+    ScaleTo* scale2 = ScaleTo::create(3.0f, 1.0f);
+    
+    RotateBy* rotate = RotateBy::create(6.0f, 360);
+    
+    this->runAction(RepeatForever::create(Sequence::create(move, move2, move3, nullptr)));
+    this->runAction(RepeatForever::create(Sequence::create(scale, scale2, nullptr)));
+    this->runAction(RepeatForever::create(rotate));
+}
+
+std::string PhysicsTransformTest::title() const
+{
+    return "Physics transform test";
 }
 
 #endif // ifndef CC_USE_PHYSICS

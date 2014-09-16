@@ -31,7 +31,7 @@ void ReleasePoolTestScene::runThisTest()
     
     // reference count should be added when added into auto release pool
     
-    TestObject *obj = new TestObject("testobj");
+    TestObject *obj = new (std::nothrow) TestObject("testobj");
     obj->autorelease();
     assert(obj->getReferenceCount() == 1);
     
@@ -69,12 +69,17 @@ void ReleasePoolTestScene::runThisTest()
         for (int i = 0; i < 100; ++i)
         {
             snprintf(name, 20, "object%d", i);
-            TestObject *tmpObj = new TestObject(name);
+            TestObject *tmpObj = new (std::nothrow) TestObject(name);
             tmpObj->autorelease();
         }
     }
     
     // object in pool2 should be released
+
+    {
+        new AutoreleasePool;
+        PoolManager::destroyInstance();
+    }
     
     Director::getInstance()->replaceScene(this);
 }

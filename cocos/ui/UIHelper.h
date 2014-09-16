@@ -26,7 +26,8 @@ THE SOFTWARE.
 #define __UIHELPER_H__
 
 #include <string>
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +39,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class Helper
+class CC_GUI_DLL Helper
 {
 public:
     /**
@@ -65,6 +66,18 @@ public:
     
     /*temp action*/
     static Widget* seekActionWidgetByActionTag(Widget* root, int tag);
+    
+    /**
+     * @brief Get a UTF8 substring from a std::string with a given start position and length
+     *  Sample:  std::string str = "中国中国中国”;  substr = getSubStringOfUTF8String(str,0,2) will = "中国"
+     * @param start The start position of the substring.
+     * @param length The length of the substring in UTF8 count
+     * @return a UTF8 substring
+     */
+    static std::string getSubStringOfUTF8String(const std::string& str,
+                                   std::string::size_type start,
+                                   std::string::size_type length);
+
 };
 }
 

@@ -21,8 +21,12 @@ string getIPAddress()
             if (cursor->ifa_addr->sa_family == AF_INET && (cursor->ifa_flags & IFF_LOOPBACK) == 0)
             {
                 NSString *name = [NSString stringWithUTF8String:cursor->ifa_name];
-                if ([name isEqualToString:@"en0"])  // Wi-Fi adapter
-                    return [[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)cursor->ifa_addr)->sin_addr)]UTF8String];
+                if ([name rangeOfString:@"en" options:NSCaseInsensitiveSearch].length > 0) {
+                    string ipaddr = [[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)cursor->ifa_addr)->sin_addr)]UTF8String];
+                    if (!ipaddr.empty()) {
+                        return ipaddr;
+                    }
+                }
             }
             cursor = cursor->ifa_next;
         }

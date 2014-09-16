@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __AUTORELEASEPOOL_H__
 #define __AUTORELEASEPOOL_H__
 
-#include <stack>
 #include <vector>
 #include <string>
 #include "base/CCRef.h"
@@ -163,8 +162,7 @@ private:
     
     static PoolManager* s_singleInstance;
     
-    std::deque<AutoreleasePool*> _releasePoolStack;
-    AutoreleasePool *_curReleasePool;
+    std::vector<AutoreleasePool*> _releasePoolStack;
 };
 
 // end of base_nodes group

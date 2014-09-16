@@ -137,3 +137,6 @@ project.properties
 /templates/lua-template-runtime/runtime
 /v*-deps-*.zip
 /v*-lua-runtime-*.zip
+/tools/fbx-conv/
+external/chipmunk
+tests/cpp-tests/Resources/audio

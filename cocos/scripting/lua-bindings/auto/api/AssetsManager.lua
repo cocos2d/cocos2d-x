@@ -1,45 +1,94 @@
 
 --------------------------------
 -- @module AssetsManager
--- @extend Ref
+-- @extend Node
+-- @parent_module cc
 
 --------------------------------
--- @function [parent=#AssetsManager] getState 
+-- 
+-- @function [parent=#AssetsManager] setStoragePath 
 -- @param self
--- @return AssetsManager::State#AssetsManager::State ret (return value: cc.AssetsManager::State)
+-- @param #char storagePath
         
 --------------------------------
+-- 
+-- @function [parent=#AssetsManager] setPackageUrl 
+-- @param self
+-- @param #char packageUrl
+        
+--------------------------------
+-- 
 -- @function [parent=#AssetsManager] checkUpdate 
 -- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
 -- @function [parent=#AssetsManager] getStoragePath 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return char#char ret (return value: char)
         
 --------------------------------
+-- 
 -- @function [parent=#AssetsManager] update 
 -- @param self
         
 --------------------------------
--- @function [parent=#AssetsManager] getLocalManifest 
+--  @brief Sets connection time out in seconds
+-- @function [parent=#AssetsManager] setConnectionTimeout 
 -- @param self
--- @return Manifest#Manifest ret (return value: cc.Manifest)
+-- @param #unsigned int timeout
         
 --------------------------------
--- @function [parent=#AssetsManager] getRemoteManifest 
+-- 
+-- @function [parent=#AssetsManager] setVersionFileUrl 
 -- @param self
--- @return Manifest#Manifest ret (return value: cc.Manifest)
+-- @param #char versionFileUrl
         
 --------------------------------
--- @function [parent=#AssetsManager] downloadFailedAssets 
+-- 
+-- @function [parent=#AssetsManager] getPackageUrl 
+-- @param self
+-- @return char#char ret (return value: char)
+        
+--------------------------------
+--  @brief Gets connection time out in secondes
+-- @function [parent=#AssetsManager] getConnectionTimeout 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+        
+--------------------------------
+-- 
+-- @function [parent=#AssetsManager] getVersion 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#AssetsManager] getVersionFileUrl 
+-- @param self
+-- @return char#char ret (return value: char)
+        
+--------------------------------
+-- 
+-- @function [parent=#AssetsManager] deleteVersion 
 -- @param self
         
 --------------------------------
+-- 
 -- @function [parent=#AssetsManager] create 
 -- @param self
--- @param #string str
--- @param #string str
+-- @param #char packageUrl
+-- @param #char versionFileUrl
+-- @param #char storagePath
+-- @param #function errorCallback
+-- @param #function progressCallback
+-- @param #function successCallback
 -- @return AssetsManager#AssetsManager ret (return value: cc.AssetsManager)
+        
+--------------------------------
+-- 
+-- @function [parent=#AssetsManager] AssetsManager 
+-- @param self
         
 return nil

@@ -246,7 +246,7 @@ TransitionScene* createTransition(int index, float t, Scene* s)
 
 void TransitionsTestScene::runThisTest()
 {
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     addChild(layer);
     layer->release();
 
@@ -280,7 +280,7 @@ TestLayer1::TestLayer1(void)
     auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
     auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
 
-    auto menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -299,9 +299,9 @@ TestLayer1::~TestLayer1(void)
 
 void TestLayer1::restartCallback(Ref* sender)
 {
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer2();
+    auto layer = new (std::nothrow) TestLayer2();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -318,9 +318,9 @@ void TestLayer1::nextCallback(Ref* sender)
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer2();
+    auto layer = new (std::nothrow) TestLayer2();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -339,9 +339,9 @@ void TestLayer1::backCallback(Ref* sender)
     if( s_nSceneIdx < 0 )
         s_nSceneIdx += total;    
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer2();
+    auto layer = new (std::nothrow) TestLayer2();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -410,7 +410,7 @@ TestLayer2::TestLayer2()
     auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
     auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
 
-    auto menu = Menu::create(item1, item2, item3, NULL);
+    auto menu = Menu::create(item1, item2, item3, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
@@ -429,9 +429,9 @@ TestLayer2::~TestLayer2()
 
 void TestLayer2::restartCallback(Ref* sender)
 {
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -448,9 +448,9 @@ void TestLayer2::nextCallback(Ref* sender)
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -469,9 +469,9 @@ void TestLayer2::backCallback(Ref* sender)
     if( s_nSceneIdx < 0 )
         s_nSceneIdx += total;    
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);

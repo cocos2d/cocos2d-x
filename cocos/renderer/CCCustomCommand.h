@@ -27,11 +27,10 @@
 #define _CC_CUSTOMCOMMAND_H_
 
 #include "renderer/CCRenderCommand.h"
-#include "renderer/CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
-class CustomCommand : public RenderCommand
+class CC_DLL CustomCommand : public RenderCommand
 {
 public:
     CustomCommand();

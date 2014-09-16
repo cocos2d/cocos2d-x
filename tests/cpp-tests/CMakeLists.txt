@@ -2,23 +2,26 @@ set(APP_NAME cpp-tests)
 
 if(WIN32)
   set(PLATFORM_SRC
-    Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp
-    Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
-    Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
     proj.win32/main.cpp
   )
-else()
+elseif(MACOSX)
+  set(PLATFORM_SRC
+    proj.mac/main.cpp
+  )
+elseif(LINUX)
   set(PLATFORM_SRC
     proj.linux/main.cpp
   )
+else()
+  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-set(SAMPLE_SRC
-  Classes/AccelerometerTest/AccelerometerTest.cpp
+set(TESTS_SRC
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
   Classes/ActionsTest/ActionsTest.cpp
+  Classes/BillBoardTest/BillBoardTest.cpp
   Classes/Box2DTest/Box2dTest.cpp
   Classes/Box2DTestBed/Box2dView.cpp
   Classes/Box2DTestBed/GLES-Render.cpp
@@ -36,6 +39,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
   Classes/BugsTest/Bug-Child.cpp
+  Classes/Camera3DTest/Camera3DTest.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
@@ -67,6 +71,7 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
   Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
+  Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp
@@ -81,7 +86,10 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
+  Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
@@ -121,14 +129,11 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
-  Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
-  Classes/KeyboardTest/KeyboardTest.cpp
   Classes/InputTest/MouseTest.cpp
-  Classes/KeypadTest/KeypadTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
@@ -161,11 +166,13 @@ set(SAMPLE_SRC
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpriteTest/SpriteTest.cpp
   Classes/Sprite3DTest/Sprite3DTest.cpp
+  Classes/Sprite3DTest/DrawNode3D.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
   Classes/TextureCacheTest/TextureCacheTest.cpp
   Classes/TileMapTest/TileMapTest.cpp
+  Classes/TileMapTest/TileMapTest2.cpp
   Classes/TouchesTest/Ball.cpp
   Classes/TouchesTest/Paddle.cpp
   Classes/TouchesTest/TouchesTest.cpp
@@ -188,23 +195,44 @@ set(SAMPLE_SRC
   ${PLATFORM_SRC}
 )
 
+if(LINUX)
+    set(EXTENDED_TESTS_SRC
+    )
+else()
+    set(EXTENDED_TESTS_SRC
+        Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+        Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+        Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+
+        Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
+        Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
+        Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp
+        Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
+        Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIScene.cpp
+        Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+        Classes/UITest/CocoStudioGUITest/UISceneManager_Editor.cpp
+        Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp
+    )
+endif()
+
+
 include_directories(
   Classes
+  ${CMAKE_SOURCE_DIR}/external/chipmunk/include/chipmunk
+  ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
 # add the executable
 add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
+  ${TESTS_SRC}
+  ${EXTENDED_TESTS_SRC}
 )
 
 target_link_libraries(${APP_NAME}
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
-  audio
   cocos2d
-  box2d
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

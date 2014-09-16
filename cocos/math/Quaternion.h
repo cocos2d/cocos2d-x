@@ -57,7 +57,7 @@ class Mat4;
  * q4 = (-0.8, 0.0, -0.6, 0.0).
  * For the point p = (1.0, 1.0, 1.0), the following figures show the trajectories of p using lerp, slerp, and squad.
  */
-class Quaternion
+class CC_DLL Quaternion
 {
     friend class Curve;
     friend class Transform;
@@ -369,6 +369,9 @@ public:
      * @return This quaternion, after the multiplication occurs.
      */
     inline Quaternion& operator*=(const Quaternion& q);
+    
+    /** equals to Quaternion(0,0,0, 0) */
+    static const Quaternion ZERO;
 
 private:
 

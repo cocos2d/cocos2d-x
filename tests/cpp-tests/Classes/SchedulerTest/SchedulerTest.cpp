@@ -28,7 +28,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RescheduleSelector),
     CL(SchedulerDelayAndRepeat),
     CL(SchedulerIssue2268),
-    CL(ScheduleCallbackTest)
+    CL(ScheduleCallbackTest),
+    CL(ScheduleUpdatePriority)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -71,7 +72,7 @@ void SchedulerTestLayer::onEnter()
 
 void SchedulerTestLayer::backCallback(Ref* sender)
 {
-    auto scene = new SchedulerTestScene();
+    auto scene = new (std::nothrow) SchedulerTestScene();
     auto layer = backSchedulerTest();
 
     scene->addChild(layer);
@@ -81,7 +82,7 @@ void SchedulerTestLayer::backCallback(Ref* sender)
 
 void SchedulerTestLayer::nextCallback(Ref* sender)
 {
-    auto scene = new SchedulerTestScene();
+    auto scene = new (std::nothrow) SchedulerTestScene();
     auto layer = nextSchedulerTest();
 
     scene->addChild(layer);
@@ -91,7 +92,7 @@ void SchedulerTestLayer::nextCallback(Ref* sender)
 
 void SchedulerTestLayer::restartCallback(Ref* sender)
 {
-    auto scene = new SchedulerTestScene();
+    auto scene = new (std::nothrow) SchedulerTestScene();
     auto layer = restartSchedulerTest();
 
     scene->addChild(layer);
@@ -217,7 +218,7 @@ void SchedulerPauseResumeAll::onEnter()
     scheduleUpdate();
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
-    schedule(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f, false, 0);
+    scheduleOnce(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f);
 }
 
 void SchedulerPauseResumeAll::update(float delta)
@@ -252,11 +253,20 @@ void SchedulerPauseResumeAll::pause(float dt)
 
     // should have only 2 items: ActionManager, self
     CCASSERT(_pausedTargets.size() == 2, "Error: pausedTargets should have only 2 items");
+    
+    unschedule(schedule_selector(SchedulerPauseResumeAll::tick1));
+    unschedule(schedule_selector(SchedulerPauseResumeAll::tick2));
+    resume();
+    scheduleOnce(schedule_selector(SchedulerPauseResumeAll::resume), 2.0f);
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
 {
     log("Resuming");
+    
+    schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
+    schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
+    
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
     _pausedTargets.clear();
@@ -615,32 +625,32 @@ void SchedulerUpdate::onEnter()
 {
     SchedulerTestLayer::onEnter();
 
-    auto d = new TestNode();
+    auto d = new (std::nothrow) TestNode();
     d->initWithString("---", 50);
     addChild(d);
     d->release();
 
-    auto b = new TestNode();
+    auto b = new (std::nothrow) TestNode();
     b->initWithString("3rd", 0);
     addChild(b);
     b->release();
 
-    auto a = new TestNode();
+    auto a = new (std::nothrow) TestNode();
     a->initWithString("1st", -10);
     addChild(a);
     a->release();
 
-    auto c = new TestNode();
+    auto c = new (std::nothrow) TestNode();
     c->initWithString("4th", 10);
     addChild(c);
     c->release();
 
-    auto e = new TestNode();
+    auto e = new (std::nothrow) TestNode();
     e->initWithString("5th", 20);
     addChild(e);
     e->release();
 
-    auto f = new TestNode();
+    auto f = new (std::nothrow) TestNode();
     f->initWithString("2nd", -5);
     addChild(f);
     f->release();
@@ -851,9 +861,9 @@ void SchedulerTimeScale::onEnter()
     auto rot1 = RotateBy::create(4, 360*2);
     auto rot2 = rot1->reverse();
 
-    auto seq3_1 = Sequence::create(jump2, jump1, NULL);
-    auto seq3_2 = Sequence::create(rot1, rot2, NULL);
-    auto spawn = Spawn::create(seq3_1, seq3_2, NULL);
+    auto seq3_1 = Sequence::create(jump2, jump1, nullptr);
+    auto seq3_2 = Sequence::create(rot1, rot2, nullptr);
+    auto spawn = Spawn::create(seq3_1, seq3_2, nullptr);
     auto action = Repeat::create(spawn, 50);
 
     auto action2 = action->clone();
@@ -945,7 +955,7 @@ void TwoSchedulers::onEnter()
     auto jump1 = JumpBy::create(4, Vec2(0,0), 100, 4);
     auto jump2 = jump1->reverse();
 
-    auto seq = Sequence::create(jump2, jump1, NULL);
+    auto seq = Sequence::create(jump2, jump1, nullptr);
     auto action = RepeatForever::create(seq);
 
         //
@@ -963,12 +973,12 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched1 = new Scheduler();
+    sched1 = new (std::nothrow) Scheduler();
 
     defaultScheduler->scheduleUpdate(sched1, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
-    actionManager1 = new ActionManager();
+    actionManager1 = new (std::nothrow) ActionManager();
     sched1->scheduleUpdate(actionManager1, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) 
@@ -990,11 +1000,11 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched2 = new Scheduler();;
+    sched2 = new (std::nothrow) Scheduler();;
     defaultScheduler->scheduleUpdate(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler
-    actionManager2 = new ActionManager();
+    actionManager2 = new (std::nothrow) ActionManager();
     sched2->scheduleUpdate(actionManager2, 0, false);
 
     for( unsigned int i=0; i < 10; i++ ) {
@@ -1146,6 +1156,48 @@ void ScheduleCallbackTest::onEnter()
 void ScheduleCallbackTest::callback(float dt)
 {
     log("In the callback of schedule(CC_CALLBACK_1(XXX::member_function), this), this, ...), dt = %f", dt);
+}
+
+
+// ScheduleUpdatePriority
+
+std::string ScheduleUpdatePriority::title() const
+{
+    return "ScheduleUpdatePriorityTest";
+}
+
+std::string ScheduleUpdatePriority::subtitle() const
+{
+    return "click to change update priority with random value";
+}
+
+bool ScheduleUpdatePriority::onTouchBegan(Touch* touch, Event* event)
+{
+    int priority = static_cast<int>(CCRANDOM_0_1() * 11) - 5;  // -5 ~ 5
+    CCLOG("change update priority to %d", priority);
+    scheduleUpdateWithPriority(priority);
+    return true;
+}
+
+void ScheduleUpdatePriority::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    scheduleUpdate();
+
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(ScheduleUpdatePriority::onTouchBegan, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void ScheduleUpdatePriority::onExit()
+{
+    Node::onExit();
+    unscheduleUpdate();
+}
+
+void ScheduleUpdatePriority::update(float dt)
+{
 }
 
 //------------------------------------------------------------------

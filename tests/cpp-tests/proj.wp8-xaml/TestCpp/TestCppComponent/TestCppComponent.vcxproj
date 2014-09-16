@@ -183,7 +183,6 @@
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\EditBoxEvent.cpp" />
     <ClCompile Include="..\..\..\..\cocos\2d\platform\wp8-xaml\InputEvent.cpp" />
-    <ClCompile Include="..\..\..\Classes\AccelerometerTest\AccelerometerTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ActionManagerTest\ActionManagerTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ActionsEaseTest\ActionsEaseTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ActionsProgressTest\ActionsProgressTest.cpp" />
@@ -268,8 +267,6 @@
     <ClCompile Include="..\..\..\Classes\FontTest\FontTest.cpp" />
     <ClCompile Include="..\..\..\Classes\InputTest\MouseTest.cpp" />
     <ClCompile Include="..\..\..\Classes\IntervalTest\IntervalTest.cpp" />
-    <ClCompile Include="..\..\..\Classes\KeyboardTest\KeyboardTest.cpp" />
-    <ClCompile Include="..\..\..\Classes\KeypadTest\KeypadTest.cpp" />
     <ClCompile Include="..\..\..\Classes\LabelTest\LabelTest.cpp" />
     <ClCompile Include="..\..\..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\..\..\Classes\LayerTest\LayerTest.cpp" />
@@ -328,7 +325,6 @@
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\EditBoxEvent.h" />
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\InputEvent.h" />
     <ClInclude Include="..\..\..\..\cocos\2d\platform\wp8-xaml\InputEventTypes.h" />
-    <ClInclude Include="..\..\..\Classes\AccelerometerTest\AccelerometerTest.h" />
     <ClInclude Include="..\..\..\Classes\ActionManagerTest\ActionManagerTest.h" />
     <ClInclude Include="..\..\..\Classes\ActionsEaseTest\ActionsEaseTest.h" />
     <ClInclude Include="..\..\..\Classes\ActionsProgressTest\ActionsProgressTest.h" />
@@ -477,8 +473,6 @@
     <ClInclude Include="..\..\..\Classes\FontTest\FontTest.h" />
     <ClInclude Include="..\..\..\Classes\InputTest\MouseTest.h" />
     <ClInclude Include="..\..\..\Classes\IntervalTest\IntervalTest.h" />
-    <ClInclude Include="..\..\..\Classes\KeyboardTest\KeyboardTest.h" />
-    <ClInclude Include="..\..\..\Classes\KeypadTest\KeypadTest.h" />
     <ClInclude Include="..\..\..\Classes\LabelTest\LabelTest.h" />
     <ClInclude Include="..\..\..\Classes\LabelTest\LabelTestNew.h" />
     <ClInclude Include="..\..\..\Classes\LayerTest\LayerTest.h" />

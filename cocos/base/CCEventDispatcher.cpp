@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "base/CCEventDispatcher.h"
-#include "base/CCEvent.h"
-#include "base/CCEventTouch.h"
+#include <algorithm>
+
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventListenerAcceleration.h"
@@ -31,12 +31,12 @@
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventListenerFocus.h"
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "base/CCEventListenerController.h"
+#endif
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
-
-#include <algorithm>
 
 
 #define DUMP_LISTENER_ITEM_PRIORITY_INFO 0
@@ -94,6 +94,11 @@ static EventListener::ListenerID __getListenerID(Event* event)
             // return UNKNOWN instead.
             CCASSERT(false, "Don't call this method if the event is for touch.");
             break;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        case Event::Type::GAME_CONTROLLER:
+            ret = EventListenerController::LISTENER_ID;
+            break;
+#endif
         default:
             CCASSERT(false, "Invalid type!");
             break;
@@ -204,6 +209,7 @@ EventDispatcher::EventDispatcher()
     // Therefore, internal listeners would not be cleaned when removeAllEventListeners is invoked.
     _internalCustomListenerIDs.insert(EVENT_COME_TO_FOREGROUND);
     _internalCustomListenerIDs.insert(EVENT_COME_TO_BACKGROUND);
+    _internalCustomListenerIDs.insert(EVENT_RENDERER_RECREATED);
 }
 
 EventDispatcher::~EventDispatcher()
@@ -453,7 +459,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     if (itr == _listenerMap.end())
     {
         
-        listeners = new EventListenerVector();
+        listeners = new (std::nothrow) EventListenerVector();
         _listenerMap.insert(std::make_pair(listenerID, listeners));
     }
     else
@@ -606,7 +612,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (l->getAssociatedNode() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getAssociatedNode(), l);
-                    l->setAssociatedNode(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+                    l->setAssociatedNode(nullptr);  // nullptr out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
@@ -1269,7 +1275,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
                 if (l->getAssociatedNode() != nullptr)
                 {
                     dissociateNodeAndEventListener(l->getAssociatedNode(), l);
-                    l->setAssociatedNode(nullptr);  // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+                    l->setAssociatedNode(nullptr);  // nullptr out the node pointer so we don't have any dangling pointers to destroyed nodes.
                 }
                 
                 if (_inDispatch == 0)
