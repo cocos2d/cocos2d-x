@@ -1160,10 +1160,7 @@ bool initRuntime()
     LuaStack* stack = engine->getLuaStack();
     register_runtime_override_function(stack->getLuaState());
     luaopen_debugger(engine->getLuaStack()->getLuaState());
-
-    if (!ConfigParser::getInstance()->isInit()) {
-        ConfigParser::getInstance()->readConfig();
-    }
+    
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();

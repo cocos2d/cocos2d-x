@@ -40,7 +40,6 @@ public:
     int getUploadPort();
     bool isLanscape();
     bool isWindowTop();
-    bool isInit();
     
 private:
     ConfigParser(void);
@@ -50,7 +49,6 @@ private:
     string _viewName;
     string _entryfile;
     bool _isLandscape;
-    bool _isInit;
     bool _isWindowTop;
     int _consolePort;
     int _uploadPort;

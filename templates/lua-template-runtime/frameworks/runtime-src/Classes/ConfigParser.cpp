@@ -12,18 +12,13 @@ ConfigParser *ConfigParser::getInstance(void)
     if (!s_sharedInstance)
     {
         s_sharedInstance = new ConfigParser();
+        s_sharedInstance->readConfig();
     }
     return s_sharedInstance;
 }
 
-bool ConfigParser::isInit()
-{
-    return _isInit;
-}
-
 void ConfigParser::readConfig()
 {
-    _isInit = true;
     _isWindowTop = false;
     _consolePort = 6010;
     _uploadPort = 6020;
@@ -107,7 +102,7 @@ void ConfigParser::readConfig()
 
 }
 
-ConfigParser::ConfigParser(void):_isInit(false),_isLandscape(true)
+ConfigParser::ConfigParser(void):_isLandscape(true)
 {
     _initViewSize.setSize(960,640);
     _viewName = "HelloLua";
