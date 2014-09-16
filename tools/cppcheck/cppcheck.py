@@ -18,9 +18,7 @@ def add_define(name):
 	global cppcheck_cmd 
 	cppcheck_cmd += '-D' + name + ' '
 
-add_include_path('../cocos')
-add_define('CC_DLL')
-add_define('CC_STUDIO_DLL')
+add_include_path('../../cocos')
 
 cppcheck_cmd += '--force '
 cppcheck_cmd += '--enable=all '
