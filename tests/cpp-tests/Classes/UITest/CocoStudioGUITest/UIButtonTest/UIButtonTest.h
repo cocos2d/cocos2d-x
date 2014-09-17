@@ -141,4 +141,16 @@ protected:
     UI_SCENE_CREATE_FUNC(UIButtonIgnoreContentSizeTest)
     Text* _displayValueLabel;
 };
+
+class UIButtonTitleEffectTest : public UIScene
+{
+public:
+    UIButtonTitleEffectTest();
+    ~UIButtonTitleEffectTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTitleEffectTest)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIButtonTest__) */
