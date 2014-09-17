@@ -362,15 +362,23 @@ void Button::onPressStateChangedToNormal()
     {
         if (_pressedActionEnabled)
         {
-            this->stopAllActions();
-            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0, 1.0);
-            this->runAction(zoomAction);
+            _buttonNormalRenderer->stopAllActions();
+            _buttonClickedRenderer->stopAllActions();
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            _buttonNormalRenderer->runAction(zoomAction);
+            _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+            
+            _titleRenderer->stopAllActions();
+            _titleRenderer->runAction(zoomAction->clone());
         }
     }
     else
     {
-        this->stopAllActions();
-        this->setScale(1.0, 1.0);
+        _buttonNormalRenderer->stopAllActions();
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+        _titleRenderer->stopAllActions();
+        _titleRenderer->setScaleX(_normalTextureScaleXInSize);
+        _titleRenderer->setScaleY(_normalTextureScaleYInSize);
     }
 }
 
@@ -384,9 +392,15 @@ void Button::onPressStateChangedToPressed()
         
         if (_pressedActionEnabled)
         {
-            this->stopAllActions();
-            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0 + _zoomScale, 1.0 + _zoomScale);
-            this->runAction(zoomAction);
+            _buttonNormalRenderer->stopAllActions();
+            _buttonClickedRenderer->stopAllActions();
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+            _buttonClickedRenderer->runAction(zoomAction);
+            _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+            
+            _titleRenderer->stopAllActions();
+            //we must call zoomAction->clone here
+            _titleRenderer->runAction(zoomAction->clone());
         }
     }
     else
@@ -400,8 +414,12 @@ void Button::onPressStateChangedToPressed()
         }
         else
         {
-            this->stopAllActions();
-            this->setScale(1.0 +_zoomScale, 1.0 + _zoomScale);
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize +_zoomScale, _normalTextureScaleYInSize + _zoomScale);
+            
+            _titleRenderer->stopAllActions();
+            _titleRenderer->setScaleX(_normalTextureScaleXInSize + _zoomScale);
+            _titleRenderer->setScaleY(_normalTextureScaleYInSize + _zoomScale);
         }
     }
 }
@@ -411,6 +429,8 @@ void Button::onPressStateChangedToDisabled()
     _buttonNormalRenderer->setVisible(false);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(true);
+    _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+    _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
 
 void Button::updateFlippedX()
@@ -528,6 +548,7 @@ void Button::normalTextureScaleChangedWithSize()
             _normalTextureScaleYInSize = scaleY;
         }
     }
+
     _buttonNormalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
@@ -668,6 +689,11 @@ void Button::setTitleFontName(const std::string& fontName)
         _type = FontType::SYSTEM;
     }
     _fontName = fontName;
+}
+    
+Label* Button::getTitleRenderer()const
+{
+    return _titleRenderer;
 }
 
 const std::string& Button::getTitleFontName() const

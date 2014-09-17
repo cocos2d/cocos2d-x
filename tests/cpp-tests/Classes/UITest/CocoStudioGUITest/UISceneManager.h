@@ -40,6 +40,7 @@ enum
     kUIButtonTestZoomScale,
     kUIButtonTextOnly,
     kUIButtonIgnoreContentSizeTest,
+    kUIButtonTitleEffectTest,
     kUIEditBoxTest,
     kUICheckBoxTest,
     kUISliderTest,

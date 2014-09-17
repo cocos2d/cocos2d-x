@@ -218,7 +218,7 @@ void SchedulerPauseResumeAll::onEnter()
     scheduleUpdate();
     schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
-    schedule(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f, false, 0);
+    scheduleOnce(schedule_selector(SchedulerPauseResumeAll::pause), 3.0f);
 }
 
 void SchedulerPauseResumeAll::update(float delta)
@@ -253,11 +253,20 @@ void SchedulerPauseResumeAll::pause(float dt)
 
     // should have only 2 items: ActionManager, self
     CCASSERT(_pausedTargets.size() == 2, "Error: pausedTargets should have only 2 items");
+    
+    unschedule(schedule_selector(SchedulerPauseResumeAll::tick1));
+    unschedule(schedule_selector(SchedulerPauseResumeAll::tick2));
+    resume();
+    scheduleOnce(schedule_selector(SchedulerPauseResumeAll::resume), 2.0f);
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
 {
     log("Resuming");
+    
+    schedule(schedule_selector(SchedulerPauseResumeAll::tick1), 0.5f);
+    schedule(schedule_selector(SchedulerPauseResumeAll::tick2), 1.0f);
+    
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
     _pausedTargets.clear();

@@ -1,8 +1,8 @@
-# cocos2d-x v3.3alpha0 Release Notes #
+# cocos2d-x v3.3beta0 Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.3alpha0 Release Notes](#user-content-cocos2d-x-v33alpha0-release-notes)
+- [cocos2d-x v3.3beta0 Release Notes](#user-content-cocos2d-x-v33beta0-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
@@ -13,7 +13,7 @@
 		- [Windows](#user-content-windows)
 		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Highlights of v3.3alpha0](#user-content-highlights-of-v33alpha0)
+- [Highlights of v3.3beta0](#user-content-highlights-of-v33beta0)
 - [Features in detail](#user-content-features-in-detail)
 	- [Camera](#user-content-camera)
 	- [Reskin](#user-content-reskin)
@@ -21,11 +21,11 @@
 	- [Better support for FBX](#user-content-better-support-for-fbx)
 	- [New fbx-conv](#user-content-new-fbx-conv)
 	- [AABB, OBB and Ray](#user-content-aabb-obb-and-ray)
-	- [ui::Scale9Sprite](#user-content-uiscale9sprite)
-	- [c++11 random support](#user-content-c11-random-support)
-	- [RenderTexture save function](#user-content-rendertexture-save-function)
+	- [BillBoard](#user-content-billboard)
 	- [Primitive](#user-content-primitive)
-	- [Consistent way to set GL context attributes](#user-content-consistent-way-to-set-gl-context-attributes)
+	- [Triangles command](#user-content-triangles-command)
+	- [WebView](#user-content-webview)
+	- [New audio](#user-content-new-audio)
 	- [Only two libraries left](#user-content-only-two-libraries-left)
 
 # Misc Information
@@ -117,17 +117,14 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# Highlights of v3.3alpha0
+# Highlights of v3.3beta0
 
-* 3d: `Camera`, 'Reskin', 'Attachment', 'Better support for FBX', 'New fbx-conv', `AABB`, `OBB` and `Ray`
-* ui: added `Scale9Sprite`
-* FileUitls: added `isDirectoryExist()`, `createDirectory()`, `removeDirectory()`, `removeFile()`, `renameFile()` and `getFileSize()`
-* Device: added `setKeepScreenOn()` on iOS and Android 
-* Added c++11 random support
-* RenderTexture: added a call back function for `saveToFile()`
+* 3d: `Camera`, 'Reskin', 'Attachment', 'Better support for FBX', 'New fbx-conv', `AABB`, `OBB`, `Ray` and `BillBoard`
+* audio: new audio is added on iOS and Android
+* DrawNode: added as many functions as `DrawPrimitive`, and `DrawPrimitive` is deprecated
 * Primitive: Support Points, Lines and Triagles for rendering
-* SpriteFrameCache: support loading from plist file content data
-* Added a consistent way to set GL context attributes for all platforms
+* Renderer: added `trianle command`
+* UI: added `WebView` on iOS and Android
 * Only two libraries in cocos2d-x, one for c++ codes, another one for lua-binding codes
 * Many other small features added and many bugs fixed
 
@@ -185,7 +182,7 @@ auto mesh1 = sprite3d->getMeshByName("coat1");
 mesh1->setVisible(false);
 ```
 
-Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+Full test case please refer to `tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp`.
 
 ## Attachment
 
@@ -200,7 +197,7 @@ auto attachNode = sprite->getAttachNode("left_hand");
 attachNode->addChild(weapon);
 ```
 
-Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+Full test case please refer to `tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp`.
 
 ## Better support for FBX
 
@@ -234,56 +231,28 @@ ray._direction = farP - nearP;
 ray.intersects(sprite3d->getAABB( ) );
 ```
 
-Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+Full test case please refer to `tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp`.
 
-## ui::Scale9Sprite
+## BillBoard
 
-Now we have implemented a new Scale9Sprite class under ui module. Its internal implementation is concise than the previous one plus more features.
-The main reason of reimplementing this class is that the Scale9Sprite is heavily used in ui module. Now the ui module is not dependent from extension module.
-By applying the new ui::Scale9Sprite, the code inside many widget classes are more cleaner and elegant.
+`BillBoard` is a rectangle always faces to the camera. It is useful in the 3D world. People use BillBoard to create trees in some racing games. It looks real, but the cost is much lower than 3d tree.
 
-We could manually toggle "slice 9" feature by one function call:
+`BillBoard` inherits from Sprite, so it also supports animate. Here is example of creating BillBoard.
 
 ```c++
-//ui::Scale9Sprite is slice 9 enabled on default
-auto sprite = ui::Scale9Sprite::create("foo.png");
-sprite->setScale9Enabled(false);
+//create billboard from .png
+auto billboard = BillBoard::create("Images/Icon.png");
+addChild(billboard);
+
+//create camera that is looking at this billboard. Otherwise, it is seen by the default camera
+auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+camera->setCameraFlag(CameraFlag::CAMERA_USER1);
+addChild(camera); //add this camera
+
+//This billboard is only seen by the camera with flag CameraFlag::CAMERA_USER1.
+billboard->setCameraMask((unsigned short)CameraFlag::CAMERA_USER1);
 ```
 
-It also supports Flipping now.
-
-```c++
-auto sprite = ui::Scale9Sprite::create("bar.png");
-sprite->setFlippedX(true);
-sprite->setFlippedY(false);
-```
-
-Since the ui::Scale9Sprite is a Node rather than a Sprite, so you can't add it to a batch node. If you do want to do some actions on the internal sprite, 
-you could call `sprite->getSprite()` to access it. 
-
-Full test case please refer to `tests/cpp-tests/Classes/UITests/CocostudioGUITest/UIScale9SpriteTest.cpp`.
-
-## c++11 random support
-
-Since `rand()` is not good(refer to [this document](http://c-faq.com/lib/randrange.html)), we use c++11 random library to do generate random number, and provide a function to easily using:
-
-```c++
-int randInt = cocos2d::random(1, 10);
-float randFloat = cocos2d::random(1.f, 10.f);
-```
-
-## RenderTexture save function
-
-`RenderTexture::saveToFile()` will not save rendertexture when the function returns, because it just send render command to renderer. The file will be saved after render command is executed. It is not convenient if you want to use the saved file to do some work. So we added a parameter in `RenderTexture::saveToFile()` to set a call back function when the file is saved.
-
-```c++
-renderTexture->begin();
-...
-renderTexture->end();
-
-renderTexture->saveToFile("myFile.png", true, callback);
-
-```
 
 ## Primitive
 
@@ -293,59 +262,115 @@ Here is a simple example of rendering a quad in `Sprite`.
 
 1. create verexBuffer
 
-	```c++
-	auto vertexBuffer = VerexBuffer::create(sizeof(V3F_C4B_T2F), 4);
-	vertexBuffer->updateVertices(&_quad, 4, 0);
-	```
+```c++
+auto vertexBuffer = VerexBuffer::create(sizeof(V3F_C4B_T2F), 4);
+vertexBuffer->updateVertices(&_quad, 4, 0);
+```
 
 2. create vertexData
 
-	```c++
-	auto vertexData = VertexData::create();
-	vertexData->addStream(vertexBuffer, VertexStreamAttribute(0, VERTEX_ATTRIB_POSITION, GL_FLOAT, 3, fasle));
-	vertexData->addStream(vertexBuffer, VertexStreamAttribute(12, VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BTYE, 4, true));
-	vertexData->addStream(vertexBuffer, VertexStreamAttribute(16, VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2, fasle));
+```c++
+auto vertexData = VertexData::create();
+vertexData->addStream(vertexBuffer, VertexStreamAttribute(0, VERTEX_ATTRIB_POSITION, GL_FLOAT, 3, fasle));
+vertexData->addStream(vertexBuffer, VertexStreamAttribute(12, VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BTYE, 4, true));
+vertexData->addStream(vertexBuffer, VertexStreamAttribute(16, VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2, fasle));
 	```
 3. create IndexBuffer
 	
-	```c++
-	auto indexBuffer = IndexBuffer::create(IndexType::INDEX_TYPE_SHORT_16, 6);
-	short indices[6] = {0,1,2,3,2,1};
-	indexBuffer->updateIndices(indices,6, 0);
-	```
+```c++
+auto indexBuffer = IndexBuffer::create(IndexType::INDEX_TYPE_SHORT_16, 6);
+short indices[6] = {0,1,2,3,2,1};
+indexBuffer->updateIndices(indices,6, 0);
+```
 4. create primitive
 	
-	```c++
-	auto primitve = Primitive::create(vertexData, indexBuffer, GL_TRIANGLES);
-	primitive->setStart(0);
-	primitive->setCount(6);
-	```
+```c++
+auto primitve = Primitive::create(vertexData, indexBuffer, GL_TRIANGLES);
+primitive->setStart(0);
+primitive->setCount(6);
+```
 5. add command to renderer
 	
-	```c++
-	_command->init(globalZorder,textureID, glprogramState, blend, primitve, modelViewMatrix);
-	renderer->addCommand(&_command);
-	```
+```c++
+_command->init(globalZorder,textureID, glprogramState, blend, primitve, modelViewMatrix);
+renderer->addCommand(&_command);
+```
 
 Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex and index sharing, multiple streams. It has some constrains:
 
 1. The size of vertex and index Buffer is fixed, which means data must be pre allocated.
+
 2. Batching is not supported.
 
-## Consistent way to set GL context attributes
+## Triangles command
 
-Now you can set GL context attributes by override `Application::initGLContextAttrs()`, then set GL context attributes there.
+We have enhanced auto batching feature by introduce `TrianglesCommand`, the rendering of the `Triangles` can be auto batched. Now if we have anything which can be rendered by `Triangles`, we can use `TrianglesCommand` or inherit from `TrianglesCommand` to take use of auto batching feature and gain rendering improvements. The `QuadCommand`, which is used for `Quad` rendering, is a good example of inheriting from `TrianglesCommand`.
 
-```c++
-void AppDelegate::initGLContextAttrs()
-{
-    // r:8 g:8 a:8 depth:24 stencil:8
-    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
-    GLView::setGLContextAttrs(glContextAttrs);
-}
+The step to use Triangle Command is very simple.
+
+```
+	Triangles trs{verts, indices, vertCount, indexCount};
+	command->init(globalZOrder,textureID, glProgramState,blend,trs,matrix);
+	renderer->addCommand(command);
+```
+To improve performance, `Triangles` will hold a weak reference to the vertices and indices data to be rendered, which is the same like `QuadCommand`. The userer should not release any rendered data before the `Command` is executed by `Renderer`.
+
+## WebView
+WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
+
+The class is under `cocos2d::ui::experimental` namespace.
+
+As we clarified the `experimental` namespace before, the `experimental` namespace doesn't mean the widget is incomplete, but only due to the lack of full platform support. Feel free to use the WebView
+widget in your game.
+
+To display the website Google in a WebView, we could simply write:
+
+```cpp
+    _webView = cocos2d::experimental::ui::WebView::create();
+    _webView->setPosition(winSize/2);
+    _webView->setContentSize(winSize * 0.5);
+    _webView->loadUrl("http://www.google.com");
+    _webView->setScalesPageToFit(true);
 ```
 
-Now can only support setting bits of `r`, `g`, `b`, `a`, `depth buffer` and `stencil buffer`. We will support other attributes if needed.
+The `setscalesPageToFit` method will adjust the WebView content to fit the content size you set.
+
+We could also set some callback to the WebView:
+
+```cpp
+    //we should check the validation of the URL and decide whether to continue or not
+    _webView->shouldStartLoading = CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this);
+    //called when web page is finish loading
+    _webView->didFinishLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFinishLoading, this);
+    //called when web page is fail loading
+    _webView->didFailLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFailLoading, this);
+```
+
+For full test case, please refer to [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp)
+
+
+## New audio
+
+New audio is more powerful than old one, and it is not compatible with old one. We will deprecated old one when new audio is ready on all supported platforms. Now it only supports iOS and Android. We plan to finish it on v3.4.
+
+What's enhanced in new audio engine:
+
+* can play more than one backgournd music
+* can have a call back when an audio(music or effect) finishs
+* can get duration of an audio
+* can get/set playback position of a playing audio
+* can change loop state when playing
+
+The difference compared to old audio engine
+
+* all functions are static, which means you can more easy to invoke function, such as `Audio::play2d()`
+* there is only one method `play2d()` to play music or effect
+* should use `Audio::getState()` to determine an audio is playing, paused
+* its class name is `cocos2d::experimental::AudioEngine` in c++, and its module name is `ccexp.AudioEngine` in lua-binding
+* there is not preload function, you can play an audio immediately
+
+Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAudioEngineTest.cpp`.
+
 
 ## Only two libraries left
 

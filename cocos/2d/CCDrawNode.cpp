@@ -264,7 +264,7 @@ bool DrawNode::init()
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
 
-    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         GL::bindVAO(0);

@@ -36,6 +36,7 @@
 #define TIME_DELAY_PRECISION 0.0001
 
 using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 const int AudioEngine::INVAILD_AUDIO_ID = -1;
 const float AudioEngine::TIME_UNKNOWN = -1.0f;
@@ -235,6 +236,9 @@ void AudioEngine::remove(int audioID)
 
 void AudioEngine::stopAll()
 {
+    if(!_audioEngineImpl){
+        return;
+    }
     _audioEngineImpl->stopAll();
     auto itEnd = _audioIDInfoMap.end();
     for (auto it = _audioIDInfoMap.begin(); it != itEnd; ++it)
@@ -270,6 +274,9 @@ void AudioEngine::uncache(const std::string &filePath)
 
 void AudioEngine::uncacheAll()
 {
+    if(!_audioEngineImpl){
+        return;
+    }
     stopAll();
     _audioEngineImpl->uncacheAll();
 }

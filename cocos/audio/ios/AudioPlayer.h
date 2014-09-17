@@ -32,6 +32,8 @@
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
+namespace experimental{
+
 class AudioCache;
 class AudioEngineImpl;
 
@@ -70,6 +72,8 @@ private:
     
     friend class AudioEngineImpl;
 };
+
+}
 NS_CC_END
 #endif // __AUDIO_PLAYER_H_
 #endif

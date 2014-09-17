@@ -63,7 +63,7 @@ namespace cocostudio
             else if(key == P_PlaceHolder){
                 textField->setPlaceHolder(value);
             }else if(key == P_Text){
-                textField->setText(value);
+                textField->setString(value);
             }else if(key == P_FontSize){
                 textField->setFontSize(valueToInt(value));
             }else if(key == P_FontName){
@@ -96,7 +96,7 @@ namespace cocostudio
         {
             textField->setPlaceHolder(DICTOOL->getStringValue_json(options, P_PlaceHolder,"input words here"));
         }
-        textField->setText(DICTOOL->getStringValue_json(options, P_Text,"Text Tield"));
+        textField->setString(DICTOOL->getStringValue_json(options, P_Text,"Text Tield"));
        
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     
