@@ -4,7 +4,6 @@
 #include "extensions/cocos-ext.h"
 #include "../../testBasic.h"
 #include "../../BaseTest.h"
-#include "extensions/assets-manager/AssetsManagerEx.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

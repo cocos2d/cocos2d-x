@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "AssetsManagerEx.h"
-
 #include "CCEventListenerAssetsManagerEx.h"
+#include "cocos2d.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>

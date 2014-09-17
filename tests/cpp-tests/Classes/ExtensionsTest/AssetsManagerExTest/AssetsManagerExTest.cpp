@@ -1,8 +1,6 @@
 #include "AssetsManagerExTest.h"
 #include "../../testResource.h"
 #include "cocos2d.h"
-#include "extensions/assets-manager/CCEventAssetsManagerEx.h"
-#include "extensions/assets-manager/CCEventListenerAssetsManagerEx.h"
 
 const char* sceneManifests[] = {"AMTestScene1/project.manifest", "AMTestScene2/project.manifest", "AMTestScene3/project.manifest"};
 const char* storagePaths[] = {"CppTests/AssetsManagerExTest/scene1/", "CppTests/AssetsManagerExTest/scene2/", "CppTests/AssetsManagerExTest/scene3"};
