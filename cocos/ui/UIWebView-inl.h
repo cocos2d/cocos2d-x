@@ -168,7 +168,7 @@ namespace experimental{
             _onDidFinishLoading = callback;
         }
         
-        void WebView::setOnShouldStartLoading(const std::function<bool(WebView *sender, std::string url)> &callback)
+        void WebView::setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)> &callback)
         {
             _onShouldStartLoading = callback;
         }
@@ -178,7 +178,7 @@ namespace experimental{
             _onJSCallback = callback;
         }
         
-        std::function<bool(WebView *sender, std::string url)> WebView::getOnShouldStartLoading()const
+        std::function<bool(WebView *sender, const std::string &url)> WebView::getOnShouldStartLoading()const
         {
             return _onShouldStartLoading;
         }
