@@ -24,7 +24,15 @@
 -- @param #bool able
         
 --------------------------------
--- brief Return a zoom scale 
+-- Return the inner title renderer of Button<br>
+-- since v3.3
+-- @function [parent=#Button] getTitleRenderer 
+-- @param self
+-- @return Label#Label ret (return value: cc.Label)
+        
+--------------------------------
+-- brief Return a zoom scale <br>
+-- since v3.3
 -- @function [parent=#Button] getZoomScale 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -166,7 +174,8 @@
         
 --------------------------------
 --  When user pressed the button, the button will zoom to a scale.<br>
--- The final scale of the button  equals (button original scale + _zoomScale)
+-- The final scale of the button  equals (button original scale + _zoomScale)<br>
+-- since v3.3
 -- @function [parent=#Button] setZoomScale 
 -- @param self
 -- @param #float scale
