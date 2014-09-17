@@ -64,6 +64,8 @@ static char s_errorBuffer[CURL_ERROR_SIZE] = {0};
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
 static std::string s_cookieFilename = "";
+    
+static std::string s_sslCaFilename = "";
 
 // Callback function used by libcurl for collect response data
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -205,8 +207,14 @@ static bool configureCURL(CURL *handle, char *errorBuffer)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    if (s_sslCaFilename.empty()) {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    } else {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
+        curl_easy_setopt(handle, CURLOPT_CAINFO, s_sslCaFilename.c_str());
+    }
     
     // FIXED #3224: The subthread of CCHttpClient interrupts main thread if timeout comes.
     // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
@@ -437,6 +445,11 @@ void HttpClient::enableCookies(const char* cookieFile) {
     else {
         s_cookieFilename = (FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
+}
+    
+void HttpClient::setSSLVerification(const std::string& caFile)
+{
+    s_sslCaFilename = caFile;
 }
 
 HttpClient::HttpClient()

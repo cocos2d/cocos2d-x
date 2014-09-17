@@ -1108,6 +1108,9 @@
     <ClCompile Include="..\editor-support\cocosbuilder\CCSpriteLoader.cpp">
       <Filter>cocosbuilder\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCBillBoard.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
     <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
@@ -2229,6 +2232,9 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocosbuilder\CocosBuilder.h">
       <Filter>cocosbuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCBillBoard.h">
+      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h">
       <Filter>ui\UIWidgets\EditBox</Filter>

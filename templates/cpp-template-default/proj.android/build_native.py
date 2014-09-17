@@ -114,7 +114,7 @@ def copy_resources(app_android_root):
 
     # copy resources
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../res")
+    resources_dir = os.path.join(app_android_root, "../Resources")
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 

@@ -322,7 +322,7 @@ namespace cocos2d {
                 loadHTMLStringJNI(_viewTag, string, baseURL);
             }
 
-            void WebViewImpl::loadUrl(const std::string &url) {
+            void WebViewImpl::loadURL(const std::string &url) {
                 loadUrlJNI(_viewTag, url);
             }
 
@@ -371,8 +371,8 @@ namespace cocos2d {
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
                     auto webView = s_WebViewImpls[viewTag]->_webView;
-                    if (webView->shouldStartLoading) {
-                        return webView->shouldStartLoading(webView, url);
+                    if (webView->_onShouldStartLoading) {
+                        return webView->_onShouldStartLoading(webView, url);
                     }
                 }
                 return true;
@@ -382,8 +382,8 @@ namespace cocos2d {
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
                     auto webView = s_WebViewImpls[viewTag]->_webView;
-                    if (webView->didFinishLoading) {
-                        webView->didFinishLoading(webView, url);
+                    if (webView->_onDidFinishLoading) {
+                        webView->_onDidFinishLoading(webView, url);
                     }
                 }
             }
@@ -392,8 +392,8 @@ namespace cocos2d {
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
                     auto webView = s_WebViewImpls[viewTag]->_webView;
-                    if (webView->didFailLoading) {
-                        webView->didFailLoading(webView, url);
+                    if (webView->_onDidFailLoading) {
+                        webView->_onDidFailLoading(webView, url);
                     }
                 }
             }
@@ -402,8 +402,8 @@ namespace cocos2d {
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
                     auto webView = s_WebViewImpls[viewTag]->_webView;
-                    if (webView->onJsCallback) {
-                        webView->onJsCallback(webView, message);
+                    if (webView->_onJSCallback) {
+                        webView->_onJSCallback(webView, message);
                     }
                 }
             }

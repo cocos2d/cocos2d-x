@@ -143,6 +143,7 @@
       <PreprocessorDefinitions>WINRT;_DEBUG;_LIB;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <AdditionalOptions>-Zm110 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,8 +152,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -172,8 +173,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\external\winrt-specific\zlib\prebuilt\$(Platform);$(ProjectDir)..\..\external\png\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\jpeg\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\tiff\prebuilt\winrt\$(Platform);$(ProjectDir)..\..\external\chipmunk\prebuilt\wp8\$(Platform);$(ProjectDir)..\..\external\freetype2\prebuilt\winrt\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
@@ -346,9 +347,9 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="..\base\CCIMEDispatcher.cpp" />
-    <ClCompile Include="..\base\CCModuleManager.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
+    <ClCompile Include="..\base\ccRandom.cpp" />
     <ClCompile Include="..\base\CCRef.cpp" />
     <ClCompile Include="..\base\CCScheduler.cpp" />
     <ClCompile Include="..\base\CCScriptSupport.cpp" />
@@ -434,6 +435,7 @@
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="CCAction.cpp" />
@@ -542,12 +544,12 @@
     <ClInclude Include="..\base\CCIMEDispatcher.h" />
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
-    <ClInclude Include="..\base\CCModuleManager.h" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCPlatformConfig.h" />
     <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProtocols.h" />
+    <ClInclude Include="..\base\ccRandom.h" />
     <ClInclude Include="..\base\CCRef.h" />
     <ClInclude Include="..\base\CCRefPtr.h" />
     <ClInclude Include="..\base\CCScheduler.h" />
@@ -605,9 +607,14 @@
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />
     <ClInclude Include="..\platform\CCFileUtils.h" />
+    <ClInclude Include="..\platform\CCGL.h" />
     <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
+    <ClInclude Include="..\platform\CCPlatformConfig.h" />
+    <ClInclude Include="..\platform\CCPlatformDefine.h" />
+    <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
+    <ClInclude Include="..\platform\CCStdC.h" />
     <ClInclude Include="..\platform\CCThread.h" />
     <ClInclude Include="..\platform\winrt\CCApplication.h" />
     <ClInclude Include="..\platform\winrt\CCFileUtilsWinRT.h" />
@@ -645,6 +652,7 @@
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\renderer\CCTrianglesCommand.h" />
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
     <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="CCAction.h" />

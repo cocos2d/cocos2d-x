@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="win32">
@@ -327,6 +327,9 @@
     </Filter>
     <Filter Include="Classes\LightTest">
       <UniqueIdentifier>{9befe67d-c725-4807-885f-edee45f95951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\BillBoardTest">
+      <UniqueIdentifier>{54a30b92-ddfb-420e-908b-886c23c21cf1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -863,6 +866,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp">
+      <Filter>Classes\BillBoardTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1597,6 +1603,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h">
+      <Filter>Classes\BillBoardTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

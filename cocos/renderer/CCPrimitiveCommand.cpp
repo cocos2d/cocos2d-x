@@ -27,6 +27,10 @@
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCRenderer.h"
+
+#include "base/CCDirector.h"
+
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -77,6 +81,7 @@ void PrimitiveCommand::execute() const
     _glProgramState->apply(_mv);
     
     _primitive->draw();
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_primitive->getCount());
 }
 
 NS_CC_END

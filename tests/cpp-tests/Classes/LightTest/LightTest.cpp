@@ -1,14 +1,11 @@
-#include "LightTestDemo.h"
+#include "LightTest.h"
 
 static int sceneIdx = -1;
 
 
 static std::function<Layer*()> createFunctions[] =
 {
-    //CL(DirectionalLightTestDemo),
-    //CL(PointLightTestDemo),
-    //CL(SpotLightTestDemo)
-    CL(LightTestDemo)
+    CL(LightTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -39,7 +36,7 @@ static Layer* restartSpriteTestAction()
     return layer;
 }
 
-LightTestDemo::LightTestDemo()
+LightTest::LightTest()
     : _directionalLight(nullptr)
     , _pointLight(nullptr)
     , _spotLight(nullptr)
@@ -58,13 +55,13 @@ LightTestDemo::LightTestDemo()
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
     _directionalLightLabel = Label::createWithTTF(ttfConfig,"Directional Light ON");
     _directionalLightLabel->retain();
-    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::LightType::DIRECTIONAL));
+    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,Light3D::LightType::DIRECTIONAL));
     _pointLightLabel = Label::createWithTTF(ttfConfig,"Point Light OFF");
     _pointLightLabel->retain();
-    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::LightType::POINT));
+    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,Light3D::LightType::POINT));
     _spotLightLabel = Label::createWithTTF(ttfConfig,"Spot Light OFF");
     _spotLightLabel->retain();
-    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTestDemo::SwitchLight,this,Light3D::LightType::SPOT));
+    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,Light3D::LightType::SPOT));
     auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
@@ -77,7 +74,7 @@ LightTestDemo::LightTestDemo()
 }
 
 
-LightTestDemo::~LightTestDemo()
+LightTest::~LightTest()
 {
     if (_spotLightLabel)
         _spotLightLabel->release();
@@ -98,17 +95,17 @@ LightTestDemo::~LightTestDemo()
         _spotLight->release();
 }
 
-std::string LightTestDemo::title() const
+std::string LightTest::title() const
 {
     return "Light Test";
 }
 
-std::string LightTestDemo::subtitle() const
+std::string LightTest::subtitle() const
 {
     return "";
 }
 
-void LightTestDemo::restartCallback( Ref* sender )
+void LightTest::restartCallback( Ref* sender )
 {
     auto s = new LightTestScene();
     s->addChild(restartSpriteTestAction());
@@ -116,7 +113,7 @@ void LightTestDemo::restartCallback( Ref* sender )
     s->release();
 }
 
-void LightTestDemo::nextCallback( Ref* sender )
+void LightTest::nextCallback( Ref* sender )
 {
     auto s = new LightTestScene();
     s->addChild( nextSpriteTestAction() );
@@ -124,7 +121,7 @@ void LightTestDemo::nextCallback( Ref* sender )
     s->release();
 }
 
-void LightTestDemo::backCallback( Ref* sender )
+void LightTest::backCallback( Ref* sender )
 {
     auto s = new LightTestScene();
     s->addChild( backSpriteTestAction() );
@@ -132,17 +129,17 @@ void LightTestDemo::backCallback( Ref* sender )
     s->release();
 }
 
-void LightTestDemo::onEnter()
+void LightTest::onEnter()
 {
     BaseTest::onEnter();
 }
 
-void LightTestDemo::onExit()
+void LightTest::onExit()
 {
     BaseTest::onExit();
 }
 
-void LightTestDemo::addSprite()
+void LightTest::addSprite()
 {
     auto s = Director::getInstance()->getWinSize();
 
@@ -202,7 +199,7 @@ void LightTestDemo::addSprite()
     }
 }
 
-void LightTestDemo::addLights()
+void LightTest::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
     _directionalLight = Light3D::createDirectionalLight(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
@@ -250,7 +247,7 @@ void LightTestDemo::addLights()
     }
 }
 
-void LightTestDemo::update( float delta )
+void LightTest::update( float delta )
 {
     static float angleDelta = 0.0;
     if (_directionalLight)
@@ -276,7 +273,7 @@ void LightTestDemo::update( float delta )
     BaseTest::update(delta);
 }
 
-void LightTestDemo::SwitchLight( Ref* sender,Light3D::LightType lightType )
+void LightTest::SwitchLight( Ref* sender,Light3D::LightType lightType )
 {
     switch (lightType)
     {

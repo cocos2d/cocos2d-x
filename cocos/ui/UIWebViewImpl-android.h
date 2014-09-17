@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_plugin_WebViewImpl_android_H_
-#define __cocos2d_plugin_WebViewImpl_android_H_
+#ifndef __COCOS2D__UI__WEBVIEWIMPL_ANDROID_H_
+#define __COCOS2D__UI__WEBVIEWIMPL_ANDROID_H_
 
 #ifdef __ANDROID__
 
@@ -57,7 +57,7 @@ namespace cocos2d {
 
                 void loadHTMLString(const std::string &string, const std::string &baseURL);
 
-                void loadUrl(const std::string &url);
+                void loadURL(const std::string &url);
 
                 void loadFile(const std::string &fileName);
 
@@ -97,4 +97,4 @@ namespace cocos2d {
 
 #endif // __ANDROID__
 
-#endif //__cocos2d_plugin_WebViewImpl_android_H_
+#endif /* __COCOS2D__UI__WEBVIEWIMPL_ANDROID_H_ */

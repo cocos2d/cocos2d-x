@@ -379,13 +379,7 @@ public:
     CREATE_FUNC(ActionFollow);
 
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-
-protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
-    CustomCommand _customCommand;
 };
 
 class ActionTargeted : public ActionsDemo
@@ -454,20 +448,9 @@ public:
     CREATE_FUNC(ActionCatmullRomStacked);
 
     virtual ~ActionCatmullRomStacked();
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
-    //cached data and callback
-    Mat4 _modelViewMV1;
-    Mat4 _modelViewMV2;
-    PointArray* _array1;
-    PointArray* _array2;
-    CustomCommand _customCommand;
 };
 
 class ActionCardinalSplineStacked : public ActionsDemo
@@ -476,18 +459,9 @@ public:
     CREATE_FUNC(ActionCardinalSplineStacked);
 
     virtual ~ActionCardinalSplineStacked();
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
-    Mat4 _modelViewMV1;
-    Mat4 _modelViewMV2;
-    CustomCommand _customCommand;
-    PointArray* _array;
 };
 
 class Issue1305 : public ActionsDemo
@@ -584,18 +558,8 @@ public:
     ~ActionCatmullRom();
     
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
-
-protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
-    Mat4 _modelViewMV1;
-    Mat4 _modelViewMV2;
-    CustomCommand _customCommand;
-    PointArray *_array1;
-    PointArray *_array2;
 };
 
 class ActionCardinalSpline : public ActionsDemo
@@ -606,17 +570,8 @@ public:
     ~ActionCardinalSpline();
     
     virtual void onEnter() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
-
-protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
-    PointArray *_array;
-    Mat4 _modelViewMV1;
-    Mat4 _modelViewMV2;
-    CustomCommand _customCommand;
 };
 
 class PauseResumeActions : public ActionsDemo

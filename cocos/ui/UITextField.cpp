@@ -737,7 +737,7 @@ void TextField::textfieldRendererScaleChangedWithSize()
     _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
-const Size& TextField::getVirtualRendererSize() const
+Size TextField::getVirtualRendererSize() const
 {
     return _textFieldRenderer->getContentSize();
 }

@@ -27,6 +27,7 @@
 #import <AudioToolbox/ExtendedAudioFile.h>
 
 using namespace cocos2d;
+using namespace cocos2d::experimental;
 
 AudioPlayer::AudioPlayer()
 : _exitThread(false)
@@ -120,7 +121,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
     if(error) {
-        printf("%s: ExtAudioFileOpenURL FAILED, Error = %d\n", __PRETTY_FUNCTION__, error);
+        printf("%s: ExtAudioFileOpenURL FAILED, Error = %ld\n", __PRETTY_FUNCTION__, error);
         goto ExitBufferThread;
     }
     

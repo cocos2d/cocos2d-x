@@ -43,6 +43,8 @@ class AudioEngineTestDemo : public BaseTest
 {
 public:
     virtual std::string title() const override;
+    virtual void onExit() override;
+
     void backCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void restartCallback(Ref* sender);
@@ -109,7 +111,7 @@ public:
 private:
     static const int FILE_COUNT = 4;
     std::string _files[FILE_COUNT];
-    AudioProfile _audioProfile;
+    cocos2d::experimental::AudioProfile _audioProfile;
     
     int _audioCount;
     Label* _showLabel;

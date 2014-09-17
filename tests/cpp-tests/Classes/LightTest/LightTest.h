@@ -29,12 +29,12 @@
 #include "../BaseTest.h"
 #include "3d/CCLight.h"
 
-class LightTestDemo : public BaseTest
+class LightTest : public BaseTest
 {
 public:
-    CREATE_FUNC(LightTestDemo);
-    LightTestDemo();
-    virtual ~LightTestDemo();
+    CREATE_FUNC(LightTest);
+    LightTest();
+    virtual ~LightTest();
 
     virtual std::string title() const;
     virtual std::string subtitle() const;

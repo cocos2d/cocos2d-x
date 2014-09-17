@@ -118,8 +118,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -144,8 +144,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -170,8 +170,8 @@
     </Link>
     <Lib>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;ws2_32.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -226,6 +226,7 @@
     <ClCompile Include="..\3d\CCAnimate3D.cpp" />
     <ClCompile Include="..\3d\CCAnimation3D.cpp" />
     <ClCompile Include="..\3d\CCAttachNode.cpp" />
+    <ClCompile Include="..\3d\CCBillBoard.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
@@ -450,6 +451,7 @@
     <ClInclude Include="..\3d\CCAnimation3D.h" />
     <ClInclude Include="..\3d\CCAnimationCurve.h" />
     <ClInclude Include="..\3d\CCAttachNode.h" />
+    <ClInclude Include="..\3d\CCBillBoard.h" />
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCBundleReader.h" />
