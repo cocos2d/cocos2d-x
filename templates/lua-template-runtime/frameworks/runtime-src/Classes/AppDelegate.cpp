@@ -38,10 +38,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     initRuntime();
 #endif
     
-    if (!ConfigParser::getInstance()->isInit()) {
-            ConfigParser::getInstance()->readConfig();
-        }
-
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
@@ -57,10 +53,6 @@ bool AppDelegate::applicationDidFinishLaunching()
         director->setOpenGLView(glview);
 #endif
     }
-
-   
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
    
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
@@ -98,4 +90,3 @@ void AppDelegate::applicationWillEnterForeground()
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
-

@@ -50,10 +50,7 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-
-namespace cocos2d {
-    extern const char* cocos2dVersion();
-};
+static std::string g_projectPath;
 
 //1M size 
 #define MAXPROTOLENGTH 1048576
@@ -67,7 +64,7 @@ namespace cocos2d {
 extern string getIPAddress();
 const char* getRuntimeVersion()
 {
-    return "1.3";
+    return "1.4";
 }
 
 static string& replaceAll(string& str,const string& old_value,const string& new_value)
@@ -76,7 +73,7 @@ static string& replaceAll(string& str,const string& old_value,const string& new_
     while(true)
     {
         int pos=0;
-        if((pos=str.find(old_value,start))!=string::npos) {
+        if((pos=str.find(old_value, start)) != string::npos) {
             str.replace(pos,old_value.length(),new_value);
             start = pos + new_value.length();
         }
@@ -84,6 +81,7 @@ static string& replaceAll(string& str,const string& old_value,const string& new_
     }
     return str;
 }
+
 static bool resetLuaModule(string fileName)
 {
     if (fileName.empty())
@@ -153,9 +151,6 @@ void startScript(string strDebugArg)
     cocos2d::log("debug args = %s",strDebugArg.c_str());
     engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
-
-
-    
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -739,8 +734,7 @@ public:
         }
 
         char szVersion[1024]={0};
-
-        sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
+        sprintf(szVersion,"runtimeVersion:%s \nengineVersion:%s",getRuntimeVersion(),cocos2dVersion());
         Label* verLable = Label::createWithSystemFont(szVersion,"",24);
         verLable->setAnchorPoint(Vec2(0,0));
         int width = verLable->getBoundingBox().size.width;
@@ -811,11 +805,13 @@ public:
         _console->listenOnTCP(6010);
 #endif
         _fileserver = nullptr;
-#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        _fileserver->listenOnTCP(ConfigParser::getInstance()->getUploadPort());
+#else
         _fileserver->listenOnTCP(6020);
-        _fileserver->readResFileFinfo();
 #endif
+        _fileserver->readResFileFinfo();
     }
 
     ~ConsoleCustomCommand()
@@ -931,6 +927,32 @@ public:
 #else
                     exit(0);
 #endif	
+                }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
+                {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    extern void shutDownApp();
+                    shutDownApp();
+#else
+                    exit(0);
+#endif	
+                }else if (strcmp(strcmd.c_str(),"getplatform")==0)
+                {
+                    string platform="UNKNOW";
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    platform = "WIN32";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+                    platform = "MAC";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                    platform = "IOS";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                    platform = "ANDROID";
+#endif
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value platformValue(rapidjson::kStringType);
+                    platformValue.SetString(platform.c_str(),dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("platform",platformValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }
                 
                 rapidjson::StringBuffer buffer;
@@ -982,13 +1004,17 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        std::string argtmp = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
-            arg0 = g_resourcePath+arg0;
+        std::string originPath = arg0;
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+            arg0 = g_resourcePath+originPath;
         cobj->addSearchPath(arg0);
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+                cobj->addSearchPath(g_projectPath + originPath);        
+#endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
-        cobj->addSearchPath(argtmp);
+    if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+        cobj->addSearchPath(originPath);
 #endif
         return 0;
     }
@@ -1036,17 +1062,22 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
         ok &= luaval_to_std_vector_string(tolua_S, 2,&vecPaths);
         if(!ok)
             return 0;
-        std::vector<std::string> argtmp;
+        std::vector<std::string> originPath; // for IOS platform.
+        std::vector<std::string> projPath; // for Desktop platform.
         for (int i = 0; i < vecPaths.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
             {
-                argtmp.push_back(vecPaths[i]);
+                originPath.push_back(vecPaths[i]); // for IOS platform.
+                projPath.push_back(g_projectPath+vecPaths[i]); //for Desktop platform.
                 vecPaths[i] = g_resourcePath + vecPaths[i];
             }
         }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        vecPaths.insert(vecPaths.end(),projPath.begin(),projPath.end());
+#endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        vecPaths.insert(vecPaths.end(),argtmp.begin(),argtmp.end());
+        vecPaths.insert(vecPaths.end(),originPath.begin(),originPath.end());
 #endif
         cobj->setSearchPaths(vecPaths);
         return 0;
@@ -1093,24 +1124,29 @@ bool initRuntime()
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    if (g_resourcePath.empty())
+    if (g_projectPath.empty())
     {
         extern std::string getCurAppPath();
-        string resourcePath = getCurAppPath();
+        string appPath = getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        resourcePath.append("/../../");
+        appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        resourcePath.append("/../../../");
+        appPath.append("/../../../");
 #endif
-        resourcePath =replaceAll(resourcePath,"\\","/");
-        g_resourcePath = resourcePath;
-    }
-    
-#else
+        appPath =replaceAll(appPath,"\\","/");
+        g_projectPath = appPath;
+    }    
+    searchPathArray.insert(searchPathArray.begin(),g_projectPath);
+#endif
+
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
-    g_resourcePath += "debugruntime/";
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    std::string getCurAppName(void);
+    g_resourcePath += getCurAppName();
+    g_resourcePath +="/";
 #endif
-    
+    g_resourcePath += "debugruntime/";
+   
     g_resourcePath=replaceAll(g_resourcePath,"\\","/");
     if (g_resourcePath.at(g_resourcePath.length()-1) != '/'){
         g_resourcePath.append("/");
@@ -1124,6 +1160,10 @@ bool initRuntime()
     LuaStack* stack = engine->getLuaStack();
     register_runtime_override_function(stack->getLuaState());
     luaopen_debugger(engine->getLuaStack()->getLuaState());
+    
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
     return true;
 }
 
@@ -1145,17 +1185,11 @@ bool startRuntime()
 
     // turn on display FPS
     Director::getInstance()->setDisplayStats(true);
-
-    static ConsoleCustomCommand *g_customCommand;
-    g_customCommand = new ConsoleCustomCommand();
-    g_customCommand->init();
- 
     auto scene = Scene::create();
     auto connectLayer = new ConnectWaitLayer();
     connectLayer->autorelease();
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
-
     return true;
 }
