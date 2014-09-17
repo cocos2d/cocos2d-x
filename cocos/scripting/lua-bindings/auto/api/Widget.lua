@@ -39,7 +39,8 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
--- brief Allow widget touch events to propagate to its parents. Set false will disable propagation
+-- brief Allow widget touch events to propagate to its parents. Set false will disable propagation<br>
+-- since v3.3
 -- @function [parent=#Widget] setPropagateTouchEvents 
 -- @param self
 -- @param #bool isPropagate
@@ -59,7 +60,8 @@
 -- @param #vec2_table percent
         
 --------------------------------
--- brief Specify widget to swallow touches or not
+-- brief Specify widget to swallow touches or not<br>
+-- since v3.3
 -- @function [parent=#Widget] setSwallowTouches 
 -- @param self
 -- @param #bool swallow
@@ -290,7 +292,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Return whether the widget is propagate touch events to its parents or not<br>
+-- since v3.3
 -- @function [parent=#Widget] isPropagateTouchEvents 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -399,7 +402,8 @@
 -- @param #bool bright
         
 --------------------------------
--- 
+-- Return whether the widget is swallowing touch or not<br>
+-- since v3.3
 -- @function [parent=#Widget] isSwallowTouches 
 -- @param self
 -- @return bool#bool ret (return value: bool)

@@ -307,8 +307,38 @@ Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex a
 TBD
 
 ## WebView
+WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
 
-TBD
+The class is under `cocos2d::ui::experimental` namespace.
+
+As we clarified the `experimental` namespace before, the `experimental` namespace doesn't mean the widget is incomplete, but only due to the lack of full platform support. Feel free to use the WebView
+widget in your game.
+
+To display the website Google in a WebView, we could simply write:
+
+```cpp
+    _webView = cocos2d::experimental::ui::WebView::create();
+    _webView->setPosition(winSize/2);
+    _webView->setContentSize(winSize * 0.5);
+    _webView->loadUrl("http://www.google.com");
+    _webView->setScalesPageToFit(true);
+```
+
+The `setscalesPageToFit` method will adjust the WebView content to fit the content size you set.
+
+We could also set some callback to the WebView:
+
+```cpp
+    //we should check the validation of the URL and decide whether to continue or not
+    _webView->shouldStartLoading = CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this);
+    //called when web page is finish loading
+    _webView->didFinishLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFinishLoading, this);
+    //called when web page is fail loading
+    _webView->didFailLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFailLoading, this);
+```
+
+For full test case, please refer to [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp)
+
 
 ## New audio
 
@@ -327,7 +357,7 @@ The difference compared to old audio engine
 * all functions are static, which means you can more easy to invoke function, such as `Audio::play2d()`
 * there is only one method `play2d()` to play music or effect
 * should use `Audio::getState()` to determine an audio is playing, paused
-* its class name is `cocos2d::AudioEngine` in c++, and its module name is `cc.AudioEngine` in lua-binding
+* its class name is `cocos2d::experimental::AudioEngine` in c++, and its module name is `ccexp.AudioEngine` in lua-binding
 * there is not preload function, you can play an audio immediately
 
 Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAudioEngineTest.cpp`.

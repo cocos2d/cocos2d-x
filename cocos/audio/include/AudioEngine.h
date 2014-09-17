@@ -36,6 +36,7 @@
 #endif // ERROR
 
 NS_CC_BEGIN
+    namespace experimental{
 
 class EXPORT_DLL AudioProfile
 {
@@ -265,6 +266,7 @@ protected:
     friend class AudioEngineImpl;
 };
 
+}
 NS_CC_END
 
 #endif // __AUDIO_ENGINE_H_
