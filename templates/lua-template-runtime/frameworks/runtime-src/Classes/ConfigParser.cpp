@@ -32,7 +32,8 @@ void ConfigParser::readConfig()
     fileContent=FileUtils::getInstance()->getStringFromFile(fullPathFile.c_str());
 #endif
 
-    if (fileContent.empty()) {
+    if (fileContent.empty())
+    {
         filecfg=FileUtils::getInstance()->fullPathForFilename(filecfg.c_str());
         fileContent=FileUtils::getInstance()->getStringFromFile(filecfg.c_str());
     }
@@ -51,7 +52,7 @@ void ConfigParser::readConfig()
                     _initViewSize.height = objectInitView["height"].GetUint();
                     if (_initViewSize.height>_initViewSize.width)
                     {
-                        float tmpvalue =_initViewSize.height;
+                        float tmpvalue = _initViewSize.height;
                         _initViewSize.height = _initViewSize.width;
                          _initViewSize.width = tmpvalue;
                     }
@@ -61,23 +62,28 @@ void ConfigParser::readConfig()
                 {
                     _viewName = objectInitView["name"].GetString();
                 }
-                if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool()) {
+                if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool())
+                {
                     _isLandscape = objectInitView["isLandscape"].GetBool();
                 }
-                if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString()) {
+                if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString())
+                {
                     _entryfile = objectInitView["entry"].GetString();
                 }
-                if (objectInitView.HasMember("consolePort")){
+                if (objectInitView.HasMember("consolePort"))
+                {
                     _consolePort = objectInitView["consolePort"].GetUint();
-                    if(_consolePort<=0)
+                    if(_consolePort <= 0)
                         _consolePort = 6010;
                 }
-                if (objectInitView.HasMember("uploadPort")){
+                if (objectInitView.HasMember("uploadPort"))
+                {
                     _uploadPort = objectInitView["uploadPort"].GetUint();
-                    if(_uploadPort<=0)
+                    if(_uploadPort <= 0)
                         _uploadPort = 6020;
                 }
-                if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool()){
+                if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool())
+                {
                     _isWindowTop= objectInitView["isWindowTop"].GetBool();
                 }
             }
@@ -102,7 +108,7 @@ void ConfigParser::readConfig()
 
 }
 
-ConfigParser::ConfigParser(void):_isLandscape(true)
+ConfigParser::ConfigParser(void) : _isLandscape(true)
 {
     _initViewSize.setSize(960,640);
     _viewName = "HelloLua";
