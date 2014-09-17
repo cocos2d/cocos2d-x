@@ -970,7 +970,7 @@ Frame* ActionTimelineCache::loadVisibleFrameFromXML(const tinyxml2::XMLElement *
         std::string name = attribute->Name();
         std::string value = attribute->Value();
         
-        if (name == "value")
+        if (name == "Value")
         {
             frame->setVisible((value == "True") ? true : false);
         }

@@ -791,8 +791,14 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
         std::string filePath = options.filename();
         CCLOG("filePath = %s", filePath.c_str());
         node = createNodeFromProtocolBuffers(_protocolBuffersPath + filePath);
-        
         setPropsForProjectNodeFromProtocolBuffers(node, options, nodeOptions);
+        
+        cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionFromProtocolBuffers(_protocolBuffersPath + filePath);
+        if(action)
+        {
+            node->runAction(action);
+            action->gotoFrameAndPlay(0);
+        }
         
         curOptions = nodeOptions;
     }
@@ -1402,8 +1408,15 @@ Node* CSLoader::nodeFromXML(const tinyxml2::XMLElement *objectData, const std::s
                     
                     if (name == "Path")
                     {
-                        node = createNodeFromProtocolBuffers(_protocolBuffersPath + value);
+                        node = createNodeFromXML(_xmlPath + value);
                         setPropsForProjectNodeFromXML(node, objectData);
+                        
+                        cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionFromXML(_xmlPath + value);
+                        if(action)
+                        {
+                            node->runAction(action);
+                            action->gotoFrameAndPlay(0);
+                        }
                         
                         break;
                     }
