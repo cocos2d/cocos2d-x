@@ -28,7 +28,6 @@ project (Cocos2d-X)
 
 # The version number
 set(COCOS2D_X_VERSION 3.3.0-beta0)
-#set(CMAKE_C_COMPILER_INIT g++)
 
 include(build/BuildHelpers.CMakeLists.txt)
 
@@ -43,9 +42,9 @@ option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk, Tinyxml2 from source" ON)
-option(BUILD_CppTests "Build TestCpp samples" ON)
-option(BUILD_LIBS_LUA "Build lua libraries" ON)
-option(BUILD_LuaTests "Build TestLua samples" ON)
+option(BUILD_CPP_TESTS "Build TestCpp samples" ON)
+option(BUILD_LUA_LIBS "Build lua libraries" ON)
+option(BUILD_LUA_TESTS "Build TestLua samples" ON)
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -70,6 +69,12 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
 endif(MSVC)
+
+if(BUILD_STATIC)
+ set (BUILD_TYPE STATIC)
+else()
+ set (BUILD_TYPE SHARED)
+endif()
 
 # Some macro definitions
 if(WINDOWS)
@@ -114,6 +119,7 @@ else()
   message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
 endif()
 
+
 # Specific Include Directories
 if(LINUX)
   set(PLATFORM_INCLUDE_DIR
@@ -121,7 +127,7 @@ if(LINUX)
     /usr/include/GLFW
     /usr/local/include/GLFW
   )
-else()
+elseif(NOT MINGW)
   set(PLATFORM_INCLUDE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
   )
@@ -145,7 +151,7 @@ if(LINUX)
   set(PLATFORM_FOLDER_ARCH
       ${PLATFORM_FOLDER}/${ARCH_DIR}
   )
-else()
+elseif(NOT MINGW)
   set(PLATFORM_FOLDER_ARCH
     ${PLATFORM_FOLDER}
   )
@@ -154,26 +160,36 @@ else()
   )
 endif()
 
-link_directories(
-  ${PLATFORM_LINK_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
-)
+if(NOT MINGW)
+  link_directories(
+    ${PLATFORM_LINK_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
+  )
+endif()
 
 # libcocos2d.a
 add_subdirectory(cocos)
 
+# build cpp tests
+if(BUILD_CPP_TESTS)
+  add_subdirectory(tests/cpp-empty-test)
+  add_subdirectory(tests/cpp-tests)
+endif(BUILD_CPP_TESTS)
+
 ## Scripting
-add_subdirectory(cocos/scripting/lua-bindings)
+if(BUILD_LUA_LIBS)
+    add_subdirectory(cocos/scripting/lua-bindings)
 
-# build tests
-add_subdirectory(tests/cpp-empty-test)
-add_subdirectory(tests/cpp-tests)
+  # build lua tests
+  if(BUILD_LUA_TESTS)
+    add_subdirectory(tests/lua-tests/project)
+    add_subdirectory(tests/lua-empty-test/project)
+  endif(BUILD_LUA_TESTS)
 
-add_subdirectory(tests/lua-tests/project)
-add_subdirectory(tests/lua-empty-test/project)
+endif(BUILD_LUA_LIBS)
