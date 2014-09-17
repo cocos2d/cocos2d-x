@@ -22,7 +22,6 @@ bool Bug1159Layer::init()
 {
     if (BugsTestBaseLayer::init())
     {
-        Director::getInstance()->setDepthTest(true);
         auto s = Director::getInstance()->getWinSize();
 
         auto background = LayerColor::create(Color4B(255, 0, 255, 255));
@@ -63,6 +62,5 @@ void Bug1159Layer::callBack(Ref* sender)
 
 void Bug1159Layer::onExit()
 {
-    Director::getInstance()->setDepthTest(false);
     BugsTestBaseLayer::onExit();
 }

@@ -151,7 +151,6 @@ class PageTransitionForward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, false);
     }
 };
@@ -161,7 +160,6 @@ class PageTransitionBackward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, true);
     }
 };
