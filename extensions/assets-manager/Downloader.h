@@ -25,15 +25,18 @@
 #ifndef __Downloader__
 #define __Downloader__
 
-#include "cocos2d.h"
+#include "platform/CCFileUtils.h"
 #include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 
 #include <unordered_map>
 #include <string>
+#include <functional>
+#include <memory>
 
 NS_CC_EXT_BEGIN
 
-class CC_DLL Downloader : public std::enable_shared_from_this<Downloader>
+class CC_EX_DLL Downloader : public std::enable_shared_from_this<Downloader>
 {
 public:
 

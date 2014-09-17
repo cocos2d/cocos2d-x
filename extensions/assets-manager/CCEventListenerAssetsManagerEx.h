@@ -28,6 +28,7 @@
 #include "base/CCEventListener.h"
 #include "base/CCEventListenerCustom.h"
 #include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -48,7 +49,7 @@ class AssetsManagerEx;
  *
  *        dispatcher->removeEventListener(listener);
  */
-class EventListenerAssetsManagerEx : public cocos2d::EventListenerCustom
+class CC_EX_DLL EventListenerAssetsManagerEx : public cocos2d::EventListenerCustom
 {
 public:
     friend class AssetsManagerEx;

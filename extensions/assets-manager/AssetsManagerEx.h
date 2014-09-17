@@ -26,12 +26,12 @@
 #define __AssetsManagerEx__
 
 #include "CCEventAssetsManagerEx.h"
-
-#include "cocos2d.h"
 #include "Downloader.h"
 #include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 #include "json/document.h"
+
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -41,7 +41,7 @@ NS_CC_EXT_BEGIN
 /**
  * @brief   This class is used to auto update resources, such as pictures or scripts.
  */
-class AssetsManagerEx : public Ref
+class CC_EX_DLL AssetsManagerEx : public Ref
 {
 public:
     
