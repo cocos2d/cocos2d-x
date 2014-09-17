@@ -69,10 +69,11 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_AUDIO_SRC}
     ${COCOS_UI_SRC}
     ${COCOS_NETWORK_SRC}
-    ${COCOS2D_EDITOR_SUPPORT_SRC}
+    ${COCOS_EDITOR_SUPPORT_SRC}
+    ${COCOS_EXTENSIONS_SRC}
     )
 
-add_library(cocos2d ${BUILD_TYPE} ${COCOS2D_SRC} ${EXTENSIONS_SRC})
+add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
 
 if(MINGW)
