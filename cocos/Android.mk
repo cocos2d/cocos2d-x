@@ -193,7 +193,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/nslog 
+                    $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/base
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \

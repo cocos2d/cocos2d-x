@@ -2,7 +2,7 @@ set(APP_NAME lua-tests)
 
 set(SAMPLE_SRC
     Classes/AppDelegate.cpp
-    Classes/lua_assetsmanager_test_sample.cpp
+    Classes/lua_assetsmanagerex_test_sample.cpp
 )
 
 if(LINUX)
