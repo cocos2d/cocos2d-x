@@ -90,7 +90,9 @@ bool Sprite3D::loadFromCache(const std::string& path)
             }
         }
         
-        genGLProgramState();
+        for (ssize_t i = 0; i < _meshes.size(); i++) {
+            _meshes.at(i)->setGLProgramState(spritedata->glProgramStates.at(i));
+        }
         return true;
     }
     
@@ -113,6 +115,10 @@ bool Sprite3D::loadFromObj(const std::string& path)
         data->materialdatas = materialdatas;
         data->nodedatas = nodeDatas;
         data->meshVertexDatas = _meshVertexDatas;
+        for (const auto mesh : _meshes) {
+            data->glProgramStates.pushBack(mesh->getGLProgramState());
+        }
+        
         Sprite3DCache::getInstance()->addSprite3DData(path, data);
         return true;
     }
@@ -143,6 +149,9 @@ bool Sprite3D::loadFromC3x(const std::string& path)
         data->materialdatas = materialdatas;
         data->nodedatas = nodeDatas;
         data->meshVertexDatas = _meshVertexDatas;
+        for (const auto mesh : _meshes) {
+            data->glProgramStates.pushBack(mesh->getGLProgramState());
+        }
         Sprite3DCache::getInstance()->addSprite3DData(path, data);
         return true;
     }

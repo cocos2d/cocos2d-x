@@ -32,6 +32,7 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
+#include "renderer/CCGLProgramState.h"
 #include "3d/CCSkeleton3D.h" // need to include for lua-binding
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
@@ -41,7 +42,6 @@
 
 NS_CC_BEGIN
 
-class GLProgramState;
 class Mesh;
 class Texture2D;
 class MeshSkin;
@@ -171,6 +171,7 @@ public:
     struct Sprite3DData
     {
         Vector<MeshVertexData*>   meshVertexDatas;
+        Vector<GLProgramState*>   glProgramStates;
         NodeDatas*      nodedatas;
         MaterialDatas*  materialdatas;
         ~Sprite3DData()
@@ -180,6 +181,7 @@ public:
             if (materialdatas)
                 delete materialdatas;
             meshVertexDatas.clear();
+            glProgramStates.clear();
         }
     };
     
