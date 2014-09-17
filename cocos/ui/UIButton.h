@@ -174,6 +174,12 @@ public:
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
+    
+    /**
+     * Return the inner title renderer of Button
+     * @since v3.3
+     */
+    Label* getTitleRenderer()const;
 
     /**
      * Returns the "class name" of widget.
@@ -190,10 +196,12 @@ public:
     const std::string& getTitleFontName() const;
     /** When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)
+     * @since v3.3
      */
     void setZoomScale(float scale);
     /**
      * @brief Return a zoom scale 
+     * @since v3.3
      */
     float getZoomScale()const;
     

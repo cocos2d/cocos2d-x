@@ -690,6 +690,11 @@ void Button::setTitleFontName(const std::string& fontName)
     }
     _fontName = fontName;
 }
+    
+Label* Button::getTitleRenderer()const
+{
+    return _titleRenderer;
+}
 
 const std::string& Button::getTitleFontName() const
 {
