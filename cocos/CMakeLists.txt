@@ -25,6 +25,9 @@
 
 # this CMakeLists is to generate libcocos2d.a
 
+# uncomment following line to use OpenAL instead of FMOD
+#set(COCOS2D_LINUX_OPENAL YES)
+
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/platform/desktop
   ${CMAKE_CURRENT_SOURCE_DIR}/platform
@@ -409,10 +412,17 @@ set(COCOS2D_EDITOR_SUPPORT_SRC
     )
 
 if(LINUX)
-    set(COCOS2D_AUDIO_SRC
-        audio/linux/FmodAudioPlayer.cpp
-        audio/linux/SimpleAudioEngineFMOD.cpp
-        )
+    if(COCOS2D_LINUX_OPENAL)
+        set(COCOS2D_AUDIO_SRC
+            audio/openal/OpenALDecoder.cpp
+            audio/openal/SimpleAudioEngineOpenAL.cpp
+            )
+    else()
+        set(COCOS2D_AUDIO_SRC
+            audio/linux/FmodAudioPlayer.cpp
+            audio/linux/SimpleAudioEngineFMOD.cpp
+            )
+    endif()
 elseif(MACOSX)
     # split it in _C and non C
     # because C files needs to be compiled with C compiler and not C++
@@ -569,16 +579,31 @@ else()
 endif()
 
 if(LINUX)
-    set(PLATFORM_SPECIFIC_LIBS
-        pthread
-        fontconfig
-        GLEW
-        X11
-        rt
-        glfw
-        GL
-        ${FMOD_LIB}
-        )
+    if(COCOS2D_LINUX_OPENAL)
+        set(PLATFORM_SPECIFIC_LIBS
+            pthread
+            fontconfig
+            GLEW
+            X11
+            rt
+            glfw
+            GL
+            openal
+            alut
+            vorbisfile
+            )
+    else()
+        set(PLATFORM_SPECIFIC_LIBS
+            pthread
+            fontconfig
+            GLEW
+            X11
+            rt
+            glfw
+            GL
+            ${FMOD_LIB}
+            )
+    endif()
 elseif(MACOSX)
    INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
