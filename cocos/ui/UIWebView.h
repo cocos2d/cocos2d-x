@@ -25,7 +25,9 @@
 #ifndef __COCOS2D_UI_WEBVIEW_H
 #define __COCOS2D_UI_WEBVIEW_H
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "platform/CCPlatformConfig.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 
 #include "ui/UIWidget.h"
@@ -129,7 +131,7 @@ public:
 
     virtual void setVisible(bool visible) override;
     
-    typedef std::function<void(WebView *sender, std::string url)> ccWebViewCallbak;
+    typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallbak;
     
     
     /**
@@ -138,7 +140,7 @@ public:
      * @param url content URL.
      * @return YES if the web view should begin loading content; otherwise, NO .
      */
-    void setOnShouldStartLoading(const std::function<bool(WebView *sender, std::string url)>& callback);
+    void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
     
     /**
      * Call after a web view finishes loading.
@@ -159,7 +161,7 @@ public:
      */
     void setOnJSCallback(const ccWebViewCallbak& callback);
     
-    std::function<bool(WebView *sender, std::string url)> getOnShouldStartLoading()const;
+    std::function<bool(WebView *sender, const std::string &url)> getOnShouldStartLoading()const;
     ccWebViewCallbak getOnDidFinishLoading()const;
     ccWebViewCallbak getOnDidFailLoading()const;
     ccWebViewCallbak getOnJSCallback()const;
@@ -168,7 +170,7 @@ protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     
-    std::function<bool(WebView *sender, std::string url)> _onShouldStartLoading;
+    std::function<bool(WebView *sender, const std::string &url)> _onShouldStartLoading;
     
     ccWebViewCallbak _onDidFinishLoading;
     
