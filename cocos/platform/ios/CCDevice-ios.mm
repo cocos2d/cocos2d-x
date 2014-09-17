@@ -479,7 +479,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:(BOOL)value];
 }
 
 NS_CC_END
