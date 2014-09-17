@@ -25,6 +25,8 @@
 #ifndef __AssetsManagerEx__
 #define __AssetsManagerEx__
 
+#include "base/CCEventDispatcher.h"
+#include "platform/CCFileUtils.h"
 #include "CCEventAssetsManagerEx.h"
 #include "Downloader.h"
 #include "Manifest.h"
