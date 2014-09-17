@@ -1003,6 +1003,9 @@ Developers:
         
     joewan
         Fixed memory leak when use menu_selector
+        
+    zhongfq
+        Optimize decompress jpg data
     
 Retired Core Developers:
     WenSheng Yang
