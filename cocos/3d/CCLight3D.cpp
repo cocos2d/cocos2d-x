@@ -1,7 +1,152 @@
-#include "CCLight.h"
+#include "CCLight3D.h"
 #include "2d/CCScene.h"
 
 NS_CC_BEGIN
+
+void BaseLight3D::setIntensity(float intensity)
+{
+    CC_ASSERT(intensity >= 0);
+    _intensity = intensity;
+}
+
+void BaseLight3D::onEnter()
+{
+    auto scene = getScene();
+    if (scene)
+    {
+        auto &lights = scene->_lights;
+        auto iter = std::find(lights.begin(), lights.end(), this);
+        if (iter == lights.end())
+            lights.push_back(this);
+    }
+    Node::onEnter();
+}
+void BaseLight3D::onExit()
+{
+    auto scene = getScene();
+    if (scene)
+    {
+        auto &lights = scene->_lights;
+        auto iter = std::find(lights.begin(), lights.end(), this);
+        if (iter != lights.end())
+            lights.erase(iter);
+    }
+    Node::onExit();
+}
+
+BaseLight3D::BaseLight3D()
+: _intensity(1.0f)
+, _enabled(true)
+, _lightFlag(LightFlag::LIGHT0)
+{
+    
+}
+BaseLight3D::~BaseLight3D()
+{
+    
+}
+
+
+////////////////////////////////////////////////////////////////////
+DirectionLight3D* DirectionLight3D::create(const Vec3 &direction, const Color3B &color)
+{
+    
+}
+
+void DirectionLight3D::setDirection(const Vec3 &dir)
+{
+    
+}
+const Vec3& DirectionLight3D::getDirection() const
+{
+    static Vec3 dir;
+    Mat4 mat = getNodeToParentTransform();
+    dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
+    return dir;
+}
+const Vec3& DirectionLight3D::getDirectionInWorld() const
+{
+    static Vec3 dir;
+    Mat4 mat = getNodeToWorldTransform();
+    dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
+    return dir;
+}
+DirectionLight3D::DirectionLight3D()
+{
+    
+}
+DirectionLight3D::~DirectionLight3D()
+{
+    
+}
+
+//////////////////////////////////////////////////////////////////
+PointLight3D* PointLight3D::create(const Vec3 &position, const Color3B &color, float range)
+{
+    
+}
+
+PointLight3D::PointLight3D()
+{
+    
+}
+PointLight3D::~PointLight3D()
+{
+    
+}
+
+//////////////////////////////////////////////////////////////
+SpotLight3D* SpotLight3D::create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range)
+{
+    
+}
+
+void SpotLight3D::setDirection(const Vec3 &dir)
+{
+    
+}
+
+const Vec3& SpotLight3D::getDirection() const
+{
+    
+}
+
+const Vec3& SpotLight3D::getDirectionInWorld() const
+{
+    
+}
+
+void SpotLight3D::setRange(float range)
+{
+    
+}
+
+float SpotLight3D::getRange()
+{
+    
+}
+
+void SpotLight3D::setInnerAngle(float angle)
+{
+    
+}
+
+float SpotLight3D::getInnerAngle()
+{
+    
+}
+
+void SpotLight3D::setOuterAngle(float angle)
+{
+    
+}
+
+float SpotLight3D::getOuterAngle()
+{
+    
+}
+
+/////////////////////////////////////////////////////////////
 
 Light3D::Light3D()
     : _isEnabled(true)

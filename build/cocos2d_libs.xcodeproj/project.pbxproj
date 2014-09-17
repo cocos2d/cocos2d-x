@@ -1803,10 +1803,10 @@
 		B60C5BD519AC68B10056FBDE /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */; };
 		B60C5BD619AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
 		B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
-		B6C039DD19C95E03007207DC /* CCLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039DB19C95E03007207DC /* CCLight.cpp */; };
-		B6C039DE19C95E03007207DC /* CCLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039DB19C95E03007207DC /* CCLight.cpp */; };
-		B6C039DF19C95E03007207DC /* CCLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B6C039DC19C95E03007207DC /* CCLight.h */; };
-		B6C039E019C95E03007207DC /* CCLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B6C039DC19C95E03007207DC /* CCLight.h */; };
+		B6C039DD19C95E03007207DC /* CCLight3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039DB19C95E03007207DC /* CCLight3D.cpp */; };
+		B6C039DE19C95E03007207DC /* CCLight3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039DB19C95E03007207DC /* CCLight3D.cpp */; };
+		B6C039DF19C95E03007207DC /* CCLight3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6C039DC19C95E03007207DC /* CCLight3D.h */; };
+		B6C039E019C95E03007207DC /* CCLight3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6C039DC19C95E03007207DC /* CCLight3D.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -2792,8 +2792,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBillBoard.cpp; sourceTree = "<group>"; };
 		B60C5BD319AC68B10056FBDE /* CCBillBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBillBoard.h; sourceTree = "<group>"; };
-		B6C039DB19C95E03007207DC /* CCLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLight.cpp; sourceTree = "<group>"; };
-		B6C039DC19C95E03007207DC /* CCLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLight.h; sourceTree = "<group>"; };
+		B6C039DB19C95E03007207DC /* CCLight3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLight3D.cpp; sourceTree = "<group>"; };
+		B6C039DC19C95E03007207DC /* CCLight3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLight3D.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4739,8 +4739,8 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
-				B6C039DB19C95E03007207DC /* CCLight.cpp */,
-				B6C039DC19C95E03007207DC /* CCLight.h */,
+				B6C039DB19C95E03007207DC /* CCLight3D.cpp */,
+				B6C039DC19C95E03007207DC /* CCLight3D.h */,
 				B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */,
 				B60C5BD319AC68B10056FBDE /* CCBillBoard.h */,
 				15AE17E319AAD2F700C27E9E /* 3dExport.h */,
@@ -4835,7 +4835,7 @@
 				15AE1A6D19AAD40300C27E9E /* b2ChainAndPolygonContact.h in Headers */,
 				15AE183A19AAD2F700C27E9E /* CCRay.h in Headers */,
 				15AE19E919AAD3A700C27E9E /* Slot.h in Headers */,
-				B6C039DF19C95E03007207DC /* CCLight.h in Headers */,
+				B6C039DF19C95E03007207DC /* CCLight3D.h in Headers */,
 				B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				15AE18A319AAD33D00C27E9E /* CCParticleSystemQuadLoader.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
@@ -5710,7 +5710,7 @@
 				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				50ABBEDA1925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50ABBDC01925AB4100A911A9 /* CCTextureCache.h in Headers */,
-				B6C039E019C95E03007207DC /* CCLight.h in Headers */,
+				B6C039E019C95E03007207DC /* CCLight3D.h in Headers */,
 				B276EF641988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				15AE1A0619AAD3A700C27E9E /* Bone.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
@@ -5881,7 +5881,7 @@
 				15AE1BDC19AAE01E00C27E9E /* CCControlUtils.cpp in Sources */,
 				50ABBEC51925AB6F00A911A9 /* etc1.cpp in Sources */,
 				50643BDE19BFCCA400EF68ED /* LocalStorage-android.cpp in Sources */,
-				B6C039DD19C95E03007207DC /* CCLight.cpp in Sources */,
+				B6C039DD19C95E03007207DC /* CCLight3D.cpp in Sources */,
 				15AE1B5B19AADA9900C27E9E /* UITextAtlas.cpp in Sources */,
 				1A570065180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				50ABBEAB1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
@@ -6614,7 +6614,7 @@
 				15AE196719AAD35100C27E9E /* CCUtilMath.cpp in Sources */,
 				50ABBE201925AB6F00A911A9 /* atitc.cpp in Sources */,
 				50ABBE9A1925AB6F00A911A9 /* CCRef.cpp in Sources */,
-				B6C039DE19C95E03007207DC /* CCLight.cpp in Sources */,
+				B6C039DE19C95E03007207DC /* CCLight3D.cpp in Sources */,
 				15AE18BF19AAD33D00C27E9E /* CCLabelTTFLoader.cpp in Sources */,
 				15AE1B9519AADA9A00C27E9E /* CocosGUI.cpp in Sources */,
 				15AE1A0D19AAD3A700C27E9E /* extension.cpp in Sources */,
