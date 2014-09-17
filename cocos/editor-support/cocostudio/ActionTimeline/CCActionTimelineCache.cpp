@@ -32,6 +32,9 @@ THE SOFTWARE.
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
 #include "../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 #include <fstream>
 
@@ -733,6 +736,560 @@ Frame* ActionTimelineCache::loadZOrderFrameFromProtocolBuffers(const protocolbuf
     
     return frame;
 }
+    
+/* peterson xml */
+ActionTimeline* ActionTimelineCache::createActionFromXML(const std::string &fileName)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == nullptr)
+    {
+        action = loadAnimationActionWithFileFromXML(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromXML(const std::string &fileName)
+{
+    // if already exists an action with filename, then return this action
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action)
+        return action;
+    
+    // Read content from file
+    // xml read
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName).c_str();
+    ssize_t size;
+    std::string content =(char*)FileUtils::getInstance()->getFileData(fullpath, "r", &size);
+    
+    // xml parse
+    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+    document->Parse(content.c_str());
+    
+    const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
+    CCLOG("rootElement name = %s", rootElement->Name());
+    
+    const tinyxml2::XMLElement* element = rootElement->FirstChildElement();
+    
+    bool createEnabled = false;
+    std::string rootType = "";
+    
+    while (element)
+    {
+        CCLOG("entity name = %s", element->Name());
+        
+        if (strcmp("Content", element->Name()) == 0)
+        {
+            const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+            
+            // cheat
+            if (!attribute)
+            {
+                createEnabled = true;
+            }
+            //
+        }
+        
+        if (createEnabled)
+        {
+            break;
+        }
+        
+        const tinyxml2::XMLElement* child = element->FirstChildElement();
+        if (child)
+        {
+            element = child;
+        }
+        else
+        {
+            element = element->NextSiblingElement();
+        }
+    }
+    
+    
+    // serialize
+    if (createEnabled)
+    {
+        const tinyxml2::XMLElement* child = element->FirstChildElement();
+        
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "Animation") // action
+            {
+                const tinyxml2::XMLElement* animation = child;
+                action = loadActionTimelineFromXML(animation);
+            }
+            
+            child = child->NextSiblingElement();
+        }
+    }
+    
+    return action;
+}
+
+ActionTimeline* ActionTimelineCache::loadActionTimelineFromXML(const tinyxml2::XMLElement *animationElement)
+{
+    ActionTimeline* action = ActionTimeline::create();
+    CCLOG("animationElement name = %s", animationElement->Name());
+    
+    // ActionTimeline
+    const tinyxml2::XMLAttribute* attribute = animationElement->FirstAttribute();
+    
+    // attibutes
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "Duration")
+        {
+            action->setDuration(atoi(value.c_str()));
+        }
+        else if (name == "Speed")
+        {
+            action->setTimeSpeed(atof(value.c_str()));
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    // all Timeline
+    const tinyxml2::XMLElement* timelineElement = animationElement->FirstChildElement();
+    while (timelineElement)
+    {
+        Timeline* timeline = loadTimelineFromXML(timelineElement);
+        if (timeline)
+        {
+            action->addTimeline(timeline);
+        }
+        
+        //            protocolbuffers::TimeLine* timeLine = nodeAction->add_timelines();
+        //            convertTimelineProtocolBuffers(timeLine, timelineElement);
+        
+        timelineElement = timelineElement->NextSiblingElement();
+    }
+    
+    return action;
+}
+
+Timeline* ActionTimelineCache::loadTimelineFromXML(const tinyxml2::XMLElement *timelineElement)
+{
+    Timeline* timeline = nullptr;
+    
+    // TimelineData attrsibutes
+    int actionTag = 0;
+    std::string frameType = "";
+    const tinyxml2::XMLAttribute* attribute = timelineElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "ActionTag")
+        {
+            actionTag = atoi(value.c_str());
+        }
+        else if (name == "FrameType")
+        {
+            frameType = value;
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    if (frameType != "")
+    {
+        timeline = Timeline::create();
+        timeline->setActionTag(actionTag);
+    }
+    
+    // all Frame
+    const tinyxml2::XMLElement* frameElement = timelineElement->FirstChildElement();
+    while (frameElement)
+    {
+        Frame* frame = nullptr;
+        
+        if (frameType == FrameType_VisibleFrame)
+        {
+            frame = loadVisibleFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_PositionFrame)
+        {
+            frame = loadPositionFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_ScaleFrame)
+        {
+            frame = loadScaleFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_RotationSkewFrame)
+        {
+            frame = loadRotationSkewFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_AnchorFrame)
+        {
+            frame = loadAnchorPointFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_ColorFrame)
+        {
+            frame = loadColorFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_TextureFrame)
+        {
+            frame = loadTextureFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_EventFrame)
+        {
+            frame = loadEventFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_ZOrderFrame)
+        {
+            frame = loadZOrderFrameFromXML(frameElement);
+        }
+        
+        if (frame)
+        {
+            timeline->addFrame(frame);
+        }
+        
+        frameElement = frameElement->NextSiblingElement();
+    }
+    
+    return timeline;
+}
+
+Frame* ActionTimelineCache::loadVisibleFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    VisibleFrame* frame = VisibleFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "value")
+        {
+            frame->setVisible((value == "True") ? true : false);
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadPositionFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    PositionFrame* frame = PositionFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            frame->setX(atof(value.c_str()));
+        }
+        else if (name == "Y")
+        {
+            frame->setY(atof(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadScaleFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    ScaleFrame* frame = ScaleFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            frame->setScaleX(atof(value.c_str()));
+        }
+        else if (name == "Y")
+        {
+            frame->setScaleY(atof(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadRotationSkewFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    RotationSkewFrame* frame = RotationSkewFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            frame->setSkewX(atof(value.c_str()));
+        }
+        else if (name == "Y")
+        {
+            frame->setSkewY(atof(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadAnchorPointFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    AnchorPointFrame* frame = AnchorPointFrame::create();
+    
+    float anchor_x = 0.5f, anchor_y = 0.5f;
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            anchor_x = atof(value.c_str());
+        }
+        else if (name == "Y")
+        {
+            anchor_y = atof(value.c_str());
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    frame->setAnchorPoint(Vec2(anchor_x, anchor_y));
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadColorFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    ColorFrame* frame = ColorFrame::create();
+    
+    int red = 255, green = 255, blue = 255;
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Alpha")
+        {
+            frame->setAlpha(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    // color
+    const tinyxml2::XMLElement* child = frameElement->FirstChildElement();
+    while (child)
+    {
+        const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "R")
+            {
+                red = atoi(value.c_str());
+            }
+            else if (name == "G")
+            {
+                green = atoi(value.c_str());
+            }
+            else if (name == "B")
+            {
+                blue = atoi(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        child = child->NextSiblingElement();
+    }
+    
+    frame->setColor(Color3B(red, green, blue));
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadTextureFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    TextureFrame* frame = TextureFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "Path") // to be gonna modify
+        {
+            frame->setTextureName(value);
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadEventFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    EventFrame* frame = EventFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "EventStr") // to be gonna modify
+        {
+            frame->setEvent(value);
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadZOrderFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    ZOrderFrame* frame = ZOrderFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "zorder") // to be gonna modify
+        {
+            frame->setZOrder(atoi(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+/**/
 
 }
 }

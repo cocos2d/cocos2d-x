@@ -4,6 +4,9 @@
 #include "ui/UITextField.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -201,4 +204,156 @@ namespace cocostudio
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
 
     }
+    
+    /* peterson xml */
+    void TextFieldReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        TextField* textField = static_cast<TextField*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        bool isCustomSize = false;
+        float width = 0.0f, height = 0.0f;
+        
+        textField->setFontName("微软雅黑");
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "PlaceHolderText")
+            {
+                textField->setPlaceHolder(value);
+            }
+            else if (name == "LabelText")
+            {
+                textField->setText(value);
+            }
+            else if (name == "FontSize")
+            {
+                textField->setFontSize(atoi(value.c_str()));
+            }
+            else if (name == "FontName")
+            {
+                textField->setFontName(value);
+            }
+            else if (name == "MaxLengthEnable")
+            {
+                textField->setMaxLengthEnabled((value == "True") ? true : false);
+            }
+            else if (name == "MaxLengthText")
+            {
+                textField->setMaxLength(atoi(value.c_str()));
+            }
+            else if (name == "PasswordEnable")
+            {
+                textField->setPasswordEnabled((value == "True") ? true : false);
+            }
+            else if (name == "PasswordStyleText")
+            {
+                textField->setPasswordStyleText(value.c_str());
+            }
+            else if (name == "IsCustomSize")
+            {
+                isCustomSize = ((value == "True") ? true : false);
+                //                if (value == "Custom")
+                //                {
+                //                    float areaWidth = 0.0f;
+                //                    objectData->QueryFloatAttribute("Width", &areaWidth);
+                //
+                //                    float areaHeight = 0.0f;
+                //                    objectData->QueryFloatAttribute("Height", &areaHeight);
+                //
+                //                    textField->setTextAreaSize(Size(areaWidth, areaHeight));
+                //                }
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "Size")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setContentSize(Size(width, height));
+            }
+            else if (name == "FontResource")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        textField->setFontName(xmlPath + path);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        if (isCustomSize)
+        {
+            textField->ignoreContentAdaptWithSize(!isCustomSize);
+            textField->setContentSize(Size(width, height));
+        }
+    }
+    /**/
 }

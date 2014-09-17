@@ -42,6 +42,9 @@ THE SOFTWARE.
 #include "cocostudio/CocoLoader.h"
 #include "ui/CocosGUI.h"
 #include "CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
@@ -1607,5 +1610,164 @@ void WidgetPropertiesReader0300::setPropsForAllWidgetFromProtocolBuffers(cocostu
 {
     reader->setPropsFromProtocolBuffers(widget, nodetree);
 }
+    
+/* peterson xml */
+Widget* WidgetPropertiesReader0300::widgetFromXML(const tinyxml2::XMLElement *objectData, const std::string &classType)
+{
+    std::string classname = classType.substr(0, classType.find("ObjectData"));
+    CCLOG("classname = %s", classname.c_str());
+    
+    Widget* widget = this->createGUI(classname);
+    std::string readerName = this->getWidgetReaderClassName(classname);
+    
+    WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
+    
+    if (reader)
+    {
+        // widget parse with widget reader
+        setPropsForAllWidgetFromXML(reader, widget, objectData);
+    }
+    else
+    {
+        //
+        // 1st., custom widget parse properties of parent widget with parent widget reader
+        readerName = this->getWidgetReaderClassName(widget);
+        reader =  this->createWidgetReaderProtocol(readerName);
+        if (reader && widget)
+        {
+            setPropsForAllWidgetFromXML(reader, widget, objectData);
+            
+            // 2nd., custom widget parse with custom reader
+            //                const protocolbuffers::WidgetOptions& widgetOptions = nodetree.widgetoptions();
+            //                const char* customProperty = widgetOptions.customproperty().c_str();
+            const char* customProperty = "";
+            rapidjson::Document customJsonDict;
+            customJsonDict.Parse<0>(customProperty);
+            if (customJsonDict.HasParseError())
+            {
+                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+            }
+            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
+        }
+        else
+        {
+            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your json file.");
+        }
+        //
+    }
+    
+    
+    
+    
+    
+    // children
+    bool containChildrenElement = false;
+    objectData = objectData->FirstChildElement();
+    
+    while (objectData)
+    {
+        CCLOG("objectData name = %s", objectData->Name());
+        
+        if (strcmp("Children", objectData->Name()) == 0)
+        {
+            containChildrenElement = true;
+            break;
+        }
+        
+        objectData = objectData->NextSiblingElement();
+    }
+    
+    if (containChildrenElement)
+    {
+        objectData = objectData->FirstChildElement();
+        CCLOG("objectData name = %s", objectData->Name());
+        
+        while (objectData)
+        {
+            const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+            while (attribute)
+            {
+                std::string name = attribute->Name();
+                std::string value = attribute->Value();
+                
+                if (name == "ctype")
+                {
+                    Widget* child = widgetFromXML(objectData, value);
+                    CCLOG("child = %p", child);
+                    if (child)
+                    {
+                        PageView* pageView = dynamic_cast<PageView*>(widget);
+                        ListView* listView = dynamic_cast<ListView*>(widget);
+                        if (pageView)
+                        {
+                            Layout* layout = dynamic_cast<Layout*>(child);
+                            if (layout)
+                            {
+                                pageView->addPage(layout);
+                            }
+                        }
+                        else if (listView)
+                        {
+                            Widget* widgetChild = dynamic_cast<Widget*>(child);
+                            if (widgetChild)
+                            {
+                                listView->pushBackCustomItem(widgetChild);
+                            }
+                        }
+                        else
+                        {
+                            widget->addChild(child);
+                        }
+                    }
+                    
+                    break;
+                }
+                
+                attribute = attribute->Next();
+            }
+            
+            //            Node* child = nodeFromXML(objectData, value);
+            //            CCLOG("child = %p", child);
+            //            if (child)
+            //            {
+            //                PageView* pageView = dynamic_cast<PageView*>(node);
+            //                ListView* listView = dynamic_cast<ListView*>(node);
+            //                if (pageView)
+            //                {
+            //                    Layout* layout = dynamic_cast<Layout*>(child);
+            //                    if (layout)
+            //                    {
+            //                        pageView->addPage(layout);
+            //                    }
+            //                }
+            //                else if (listView)
+            //                {
+            //                    Widget* widget = dynamic_cast<Widget*>(child);
+            //                    if (widget)
+            //                    {
+            //                        listView->pushBackCustomItem(widget);
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    node->addChild(child);
+            //                }
+            //            }
+            
+            objectData = objectData->NextSiblingElement();
+        }
+    }
+    //
+    
+    CCLOG("widget = %p", widget);
+    
+    return widget;
+}
+
+void WidgetPropertiesReader0300::setPropsForAllWidgetFromXML(cocostudio::WidgetReaderProtocol *reader, cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+{
+    reader->setPropsFromXML(widget, objectData);
+}
+/**/
     
 }

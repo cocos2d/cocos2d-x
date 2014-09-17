@@ -4,6 +4,10 @@
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
 #include "../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+#include "../ActionTimeline/CCActionTimeline.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -487,6 +491,215 @@ namespace cocostudio
         widget->setFlippedX(flipX);
         widget->setFlippedY(flipY);
     }
+    
+    /* peterson xml */
+    void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "Name")
+            {
+                const char* widgetName = value.c_str() ? value.c_str() :"default";
+                widget->setName(widgetName);
+            }
+            else if (name == "ActionTag")
+            {
+                int actionTag = atoi(value.c_str());
+                widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
+            }
+            else if (name == "RotationSkewX")
+            {
+                widget->setRotationSkewX(atof(value.c_str()));
+            }
+            else if (name == "RotationSkewY")
+            {
+                widget->setRotationSkewY(atof(value.c_str()));
+            }
+            else if (name == "Rotation")
+            {
+                widget->setRotation(atoi(value.c_str()));
+            }
+            else if (name == "ZOrder")
+            {
+                widget->setLocalZOrder(atoi(value.c_str()));
+            }
+            else if (name == "Visible")
+            {
+                widget->setVisible((value == "True") ? true : false);
+            }
+            else if (name == "VisibleForFrame")
+            {
+                widget->setVisible((value == "True") ? true : false);
+            }
+            else if (name == "Alpha")
+            {
+                widget->setOpacity(atoi(value.c_str()));
+            }
+            else if (name == "Tag")
+            {
+                widget->setTag(atoi(value.c_str()));
+            }
+            else if (name == "FlipX")
+            {
+                widget->setFlippedX((value == "True") ? true : false);
+            }
+            else if (name == "FlipY")
+            {
+                widget->setFlippedY((value == "True") ? true : false);
+            }
+            else if (name == "TouchEnable")
+            {
+                widget->setTouchEnabled((value == "True") ? true : false);
+            }
+            else if (name == "ControlSizeType")
+            {
+                widget->ignoreContentAdaptWithSize((value == "Auto") ? true : false);
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            if (name == "Children")
+            {
+                break;
+            }
+            else if (name == "Position")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        widget->setPositionX(atof(value.c_str()));
+                    }
+                    else if (name == "Y")
+                    {
+                        widget->setPositionY(atof(value.c_str()));
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "Scale")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "ScaleX")
+                    {
+                        widget->setScaleX(atof(value.c_str()));
+                    }
+                    else if (name == "ScaleY")
+                    {
+                        widget->setScaleY(atof(value.c_str()));
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "AnchorPoint")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float anchor_x = 0.0f, anchor_y = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "ScaleX")
+                    {
+                        anchor_x = atof(value.c_str());
+                    }
+                    else if (name == "ScaleY")
+                    {
+                        anchor_y = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setAnchorPoint(Vec2(anchor_x, anchor_y));
+            }
+            else if (name == "CColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int red = 255, green = 255, blue = 255;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        widget->setOpacity(atoi(value.c_str()));
+                    }
+                    else if (name == "R")
+                    {
+                        red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setColor(Color3B(red, green, blue));
+            }
+            else if (name == "Size")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setContentSize(Size(width, height));
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+    }
+    /**/
     
     void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
     {

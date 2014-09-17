@@ -43,6 +43,13 @@ namespace protocolbuffers
     class TimeLineStringFrame;
 }
 
+/* peterson xml */
+namespace tinyxml2
+{
+    class XMLElement;
+}
+/**/
+
 NS_TIMELINE_BEGIN
 
 class ActionTimeline;
@@ -82,6 +89,12 @@ public:
     ActionTimeline* createActionFromProtocolBuffers(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithFileFromProtocolBuffers(const std::string& fileName);
     
+    /* peterson xml */
+    ActionTimeline* createActionFromXML(const std::string& fileName);
+    ActionTimeline* loadAnimationActionWithFileFromXML(const std::string& fileName);
+    ActionTimeline* loadActionTimelineFromXML(const tinyxml2::XMLElement* animationElement);
+    /**/
+    
 protected:
 
     Timeline* loadTimeline(const rapidjson::Value& json);
@@ -110,6 +123,20 @@ protected:
     Frame* loadTextureFrameFromProtocolBuffers     (const protocolbuffers::TimeLineTextureFrame& frameProtobuf);
     Frame* loadEventFrameFromProtocolBuffers       (const protocolbuffers::TimeLineStringFrame& frameProtobuf);
     Frame* loadZOrderFrameFromProtocolBuffers      (const protocolbuffers::TimeLineIntFrame& frameProtobuf);
+    
+    /* peterson xml */
+    Timeline* loadTimelineFromXML(const tinyxml2::XMLElement* timelineElement);
+    
+    Frame* loadVisibleFrameFromXML     (const tinyxml2::XMLElement* frameElement);
+    Frame* loadPositionFrameFromXML    (const tinyxml2::XMLElement* frameElement);
+    Frame* loadScaleFrameFromXML       (const tinyxml2::XMLElement* frameElement);
+	Frame* loadRotationSkewFrameFromXML(const tinyxml2::XMLElement* frameElement);
+    Frame* loadAnchorPointFrameFromXML (const tinyxml2::XMLElement* frameElement);
+    Frame* loadColorFrameFromXML       (const tinyxml2::XMLElement* frameElement);
+    Frame* loadTextureFrameFromXML     (const tinyxml2::XMLElement* frameElement);
+    Frame* loadEventFrameFromXML       (const tinyxml2::XMLElement* frameElement);
+    Frame* loadZOrderFrameFromXML      (const tinyxml2::XMLElement* frameElement);
+    /**/
 
 protected:
 

@@ -4,6 +4,9 @@
 #include "ui/UICheckBox.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -233,4 +236,270 @@ namespace cocostudio
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
+    
+    /* peterson xml */
+    void CheckBoxReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        CheckBox* checkBox = static_cast<CheckBox*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "CheckedState")
+            {
+                checkBox->setSelectedState((value == "True") ? true : false);
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "NormalBackFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        checkBox->loadTextureBackGround(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        checkBox->loadTextureBackGround(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "PressedBackFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        checkBox->loadTextureBackGroundSelected(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        checkBox->loadTextureBackGroundSelected(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "NodeNormalFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        checkBox->loadTextureFrontCross(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        checkBox->loadTextureFrontCross(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "DisableBackFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        checkBox->loadTextureBackGroundDisabled(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        checkBox->loadTextureBackGroundDisabled(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "NodeDisableFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        checkBox->loadTextureFrontCrossDisabled(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        checkBox->loadTextureFrontCrossDisabled(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+    }
+    /**/
 }

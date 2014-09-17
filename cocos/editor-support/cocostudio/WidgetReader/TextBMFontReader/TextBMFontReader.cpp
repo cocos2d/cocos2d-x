@@ -4,6 +4,9 @@
 #include "ui/UITextBMFont.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -142,4 +145,83 @@ namespace cocostudio
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
+    
+    /* peterson xml */
+    void TextBMFontReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        std::string text = "";
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "LabelText")
+            {
+                text = value;
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "LabelBMFontFile_CNB")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        labelBMFont->setFntFile(xmlPath + path);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        labelBMFont->setString(text);
+    }
+    /**/
 }

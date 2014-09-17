@@ -47,6 +47,10 @@ namespace cocostudio
         
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
         
+        /* peterson xml */
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
+        /**/
+        
     };
 }
 

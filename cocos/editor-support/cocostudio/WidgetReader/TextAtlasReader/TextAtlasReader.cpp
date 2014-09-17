@@ -4,6 +4,9 @@
 #include "ui/UITextAtlas.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -177,4 +180,85 @@ namespace cocostudio
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
+    
+    /* peterson xml */
+    void TextAtlasReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        std::string stringValue = "", startChar = "";
+        int itemWidth = 0, itemHeight = 0;
+        int resourceType = 0;
+        std::string path = "", plistFile = "";
+        
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "LabelText")
+            {
+                stringValue = value;
+            }
+            else if (name == "CharWidth")
+            {
+                itemWidth = atoi(value.c_str());
+            }
+            else if (name == "CharHeight")
+            {
+                itemHeight = atoi(value.c_str());
+            }
+            else if (name == "StartChar")
+            {
+                startChar = value;
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "LabelAtlasFileImage_CNB")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        labelAtlas->setProperty(stringValue, xmlPath + path, itemWidth, itemHeight, startChar);
+    }
+    /**/
 }

@@ -59,6 +59,10 @@ namespace cocostudio
         virtual void setColorPropsFromProtocolBuffers(cocos2d::ui::Widget* widget,
                                                       const protocolbuffers::NodeTree& nodeTree);
         
+        /* peterson xml */
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
+        /**/
+        
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,

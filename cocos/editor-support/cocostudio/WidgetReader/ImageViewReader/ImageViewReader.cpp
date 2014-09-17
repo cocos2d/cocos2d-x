@@ -4,6 +4,9 @@
 #include "ui/UIImageView.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -205,4 +208,138 @@ namespace cocostudio
 		if(flipY != false)
 			imageView->setFlippedY(flipY);
     }
+    
+    /* peterson xml */
+    void ImageViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        ImageView* imageView = static_cast<ImageView*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        bool scale9Enabled = false;
+        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
+        float swf = 0.0f, shf = 0.0f;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "Scale9Enable")
+            {
+                if (value == "True")
+                {
+                    scale9Enabled = true;
+                }
+            }
+            else if (name == "Scale9OriginX")
+            {
+                cx = atof(value.c_str());
+            }
+            else if (name == "Scale9OriginY")
+            {
+                cy = atof(value.c_str());
+            }
+            else if (name == "Scale9Width")
+            {
+                cw = atof(value.c_str());
+            }
+            else if (name == "Scale9Height")
+            {
+                ch = atof(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "Size" && scale9Enabled)
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        swf = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        shf = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "FileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        imageView->loadTexture(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        imageView->loadTexture(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        imageView->setScale9Enabled(scale9Enabled);
+        
+        if (scale9Enabled)
+        {
+            imageView->setCapInsets(Rect(cx, cy, cw, ch));
+            imageView->setContentSize(Size(swf, shf));
+        }
+    }
+    /**/
 }

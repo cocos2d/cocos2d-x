@@ -4,6 +4,9 @@
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -199,4 +202,143 @@ namespace cocostudio
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
+    
+    /* peterson xml */
+    void TextReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        Text* label = static_cast<Text*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        float areaWidth = 0.0f, areaHeight = 0.0f;
+        int halignment = 0, valignment = 0;
+        
+        label->setFontName("微软雅黑");
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "TouchScaleChangeAble")
+            {
+                label->setTouchScaleChangeEnabled((value == "True") ? true : false);
+            }
+            else if (name == "LabelText")
+            {
+                label->setString(value);
+            }
+            else if (name == "FontSize")
+            {
+                label->setFontSize(atoi(value.c_str()));
+            }
+            else if (name == "FontName")
+            {
+                label->setFontName(value);
+            }
+            else if (name == "AreaWidth")
+            {
+                areaWidth = atoi(value.c_str());
+            }
+            else if (name == "AreaHeight")
+            {
+                areaHeight = atoi(value.c_str());
+            }
+            else if (name == "HorizontalAlignmentType")
+            {
+                if (value == "HT_Left")
+                {
+                    halignment = 0;
+                }
+                else if (value == "HT_CENTER")
+                {
+                    halignment = 1;
+                }
+                else if (value == "HT_Right")
+                {
+                    halignment = 2;
+                }
+            }
+            else if (name == "VerticalAlignmentType")
+            {
+                if (value == "VT_Top")
+                {
+                    valignment = 0;
+                }
+                else if (value == "VT_CENTER")
+                {
+                    valignment = 1;
+                }
+                else if (value == "VT_BOTTOM")
+                {
+                    valignment = 2;
+                }
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "FontResource")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        label->setFontName(xmlPath + path);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        if (areaWidth != 0 || areaHeight != 0)
+        {
+            label->setTextAreaSize(Size(areaWidth, areaHeight));
+            label->setTextHorizontalAlignment((TextHAlignment)halignment);
+            label->setTextVerticalAlignment((TextVAlignment)valignment);
+        }
+        
+        CCLOG("label->getFontName() = %s", label->getFontName().c_str()) ;
+    }
+    /**/
 }

@@ -4,6 +4,9 @@
 #include "ui/UIScrollView.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -126,8 +129,8 @@ namespace cocostudio
         ecg = options.has_bgendcolorg() ? options.bgendcolorg() : 150;
         ecb = options.has_bgendcolorb() ? options.bgendcolorb() : 100;
         
-		float bgcv1 = 1.0f; 
-        float bgcv2 = 1.0f;
+		float bgcv1 = 0.0f;
+        float bgcv2 = -0.5f;
 		if(options.has_vectorx())
 		{
 			bgcv1 = options.vectorx();
@@ -207,4 +210,289 @@ namespace cocostudio
         widget->setFlippedX(flipX);
         widget->setFlippedY(flipY);
     }
+    
+    /* peterson xml */
+    void ScrollViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        ScrollView* scrollView = static_cast<ScrollView*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        Layout::BackGroundColorType colorType = Layout::BackGroundColorType::NONE;
+        int color_opacity = 255, bgimg_opacity = 255;
+        int bgimg_red = 255, bgimg_green = 255, bgimg_blue = 255;
+        int red = 255, green = 255, blue = 255;
+        int start_red = 255, start_green = 255, start_blue = 255;
+        int end_red = 255, end_green = 255, end_blue = 255;
+        float vector_color_x = 0.0f, vector_color_y = -0.5f;
+        
+        int resourceType = 0;
+        std::string path = "", plistFile = "";
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "ClipAble")
+            {
+                scrollView->setClippingEnabled((value == "True") ? true : false);
+            }
+            else if (name == "ComboBoxIndex")
+            {
+                colorType = (Layout::BackGroundColorType)atoi(value.c_str());
+            }
+            else if (name == "BackColorAlpha")
+            {
+                color_opacity = atoi(value.c_str());
+            }
+            else if (name == "Alpha")
+            {
+                bgimg_opacity = atoi(value.c_str());
+            }
+            else if (name == "ScrollDirectionType")
+            {
+                if (value == "Vertical")
+                {
+                    scrollView->setDirection(ScrollView::Direction::VERTICAL);
+                }
+                else if (value == "Horizontal")
+                {
+                    scrollView->setDirection(ScrollView::Direction::HORIZONTAL);
+                }
+                else if (value == "Vertical_Horizontal")
+                {
+                    scrollView->setDirection(ScrollView::Direction::BOTH);
+                }
+            }
+            else if (name == "IsBounceEnabled")
+            {
+                scrollView->setBounceEnabled((value == "True") ? true : false);
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "InnerNodeSize")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Width")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Height")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                scrollView->setInnerContainerSize(Size(width, height));
+            }
+            else if (name == "CColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        bgimg_red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        bgimg_green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        bgimg_blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "SingleColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "EndColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        end_red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        end_green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        end_blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "FirstColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        start_red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        start_green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        start_blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "ColorVector")
+            {
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "ScaleX")
+                    {
+                        vector_color_x = atof(value.c_str());
+                    }
+                    else if (name == "ScaleY")
+                    {
+                        vector_color_y = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "FileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        
+        scrollView->setBackGroundColorType(colorType);
+        switch (colorType)
+        {
+            case Layout::BackGroundColorType::SOLID:
+                scrollView->setBackGroundColor(Color3B(red, green, blue));
+                break;
+                
+            case Layout::BackGroundColorType::GRADIENT:
+                scrollView->setBackGroundColor(Color3B(start_red, start_green, start_blue),
+                                               Color3B(end_red, end_green, end_blue));
+                scrollView->setBackGroundColorVector(Vec2(vector_color_x, vector_color_y));
+                break;
+                
+            default:
+                break;
+        }
+        
+        scrollView->setBackGroundColorOpacity(color_opacity);
+        
+        switch (resourceType)
+        {
+            case 0:
+            {
+                scrollView->setBackGroundImage(xmlPath + path, Widget::TextureResType::LOCAL);
+                break;
+            }
+                
+            case 1:
+            {
+                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                scrollView->setBackGroundImage(path, Widget::TextureResType::PLIST);
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+        scrollView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
+        scrollView->setBackGroundImageOpacity(bgimg_opacity);
+    }
+    /**/
 }

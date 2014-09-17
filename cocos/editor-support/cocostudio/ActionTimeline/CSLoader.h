@@ -43,6 +43,13 @@ namespace protocolbuffers
     /**/
 }
 
+/* peterson xml */
+namespace tinyxml2
+{
+    class XMLElement;
+}
+/**/
+
 namespace cocostudio {
     class ComAudio;
 }
@@ -83,6 +90,19 @@ public:
     
     void setProtocolBuffersPath(std::string protocolBuffersPath) { _protocolBuffersPath = protocolBuffersPath; }
     std::string getProtocolBuffersPath() const { return _protocolBuffersPath; }
+    
+    /* peterson xml */
+    cocos2d::Node* createNodeFromXML(const std::string& filename);
+    cocos2d::Node* nodeFromXMLFile(const std::string& fileName);
+    cocos2d::Node* nodeFromXML(const tinyxml2::XMLElement* objectData,
+                               const std::string& classType);
+    
+    void setRecordXMLPath(bool record) { _recordXMLPath = record; }
+    bool isRecordXMLPath() const { return _recordXMLPath; }
+    
+    void setXMLPath(std::string xmlPath) { _xmlPath = xmlPath; }
+    std::string getXMLPath() const { return _xmlPath; }
+    /**/
     
 protected:
     
@@ -132,6 +152,29 @@ protected:
                                                 const protocolbuffers::ComAudioOptions& comAudioOptions);
     /**/
     
+    /* peterson xml */
+    void setPropsForNodeFromXML(cocos2d::Node* node,
+                                const tinyxml2::XMLElement* nodeObjectData);
+    void setPropsForSingleNodeFromXML(cocos2d::Node* node,
+                                      const tinyxml2::XMLElement* nodeObjectData);
+    void setPropsForSpriteFromXML(cocos2d::Node* node,
+                                  const tinyxml2::XMLElement* spriteObjectData);
+    cocos2d::Node* createParticleFromXML(const tinyxml2::XMLElement* particleObjectData);
+	cocos2d::Node* createTMXTiledMapFromXML(const tinyxml2::XMLElement* tmxTiledMapObjectData);
+    void setPropsForProjectNodeFromXML(cocos2d::Node* node,
+                                       const tinyxml2::XMLElement* projectNodeObjectData);
+    void setPropsForSimpleAudioFromXML(cocos2d::Node* node,
+                                       const tinyxml2::XMLElement* simpleAudioObjectData);
+    
+    cocos2d::Component* createComponentFromXML(const tinyxml2::XMLElement* componentObjectData,
+                                               const std::string& componentType);
+    void setPropsForComponentFromXML(cocos2d::Component* component,
+                                     const tinyxml2::XMLElement* componentObjectData);
+    
+    void setPropsForComAudioFromXML(cocos2d::Component* component,
+                                    const tinyxml2::XMLElement* comAudioObjectData);
+    /**/
+    
     bool isWidget(const std::string& type);
     bool isCustomWidget(const std::string& type);
     
@@ -156,6 +199,11 @@ protected:
     
     bool _recordProtocolBuffersPath;
     std::string _protocolBuffersPath;
+    
+    /* peterson xml */
+    bool _recordXMLPath;
+    std::string _xmlPath;
+    /**/
     
     std::string _monoCocos2dxVersion;
 };

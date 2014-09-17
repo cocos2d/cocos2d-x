@@ -111,7 +111,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #endif
 
-    /*
+//    /*
     auto scene = Scene::create();
     auto layer = new TestController();
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -133,17 +133,18 @@ bool AppDelegate::applicationDidFinishLaunching()
         layer->startAutoRun();
     }
 #endif
-     */
+//     */
     
     
-    
-    auto node = CSLoader::createNode("MainScene.csb");
+    /*
+    auto node = CSLoader::createNode("cocosui/test_csb/res/MainScene.csb");
     node->setVisible(true);
     auto scene = Scene::create();
     auto layer = Layer::create();
     layer->addChild(node);
     scene->addChild(layer);
     director->runWithScene(scene);
+     */
     
     return true;
 }

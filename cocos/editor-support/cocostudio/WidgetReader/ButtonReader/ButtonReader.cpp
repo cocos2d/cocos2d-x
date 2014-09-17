@@ -4,6 +4,9 @@
 #include "ui/UIButton.h"
 #include "cocostudio/CocoLoader.h"
 #include "../../CSParseBinary.pb.h"
+/* peterson xml */
+#include "tinyxml2/tinyxml2.h"
+/**/
 
 USING_NS_CC;
 using namespace ui;
@@ -330,7 +333,311 @@ namespace cocostudio
         button->setTitleFontName(fontName);
         
         
+        const protocolbuffers::WidgetOptions& widgetOption = nodeTree.widgetoptions();
+        button->setColor(Color3B(widgetOption.colorr(), widgetOption.colorg(), widgetOption.colorb()));
+        button->setOpacity(widgetOption.opacity());
+        
+        
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
+    
+    /* peterson xml */
+    void ButtonReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        Button* button = static_cast<Button*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        bool scale9Enabled = false;
+        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
+        float swf = 0.0f, shf = 0.0f;
+        std::string text = "";
+        int fontSize = 0;
+        int title_color_red = 255, title_color_green = 255, title_color_blue = 255;
+        int cri = 255, cgi = 255, cbi = 255;
+        int opacity = 255;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "Scale9Enable")
+            {
+                if (value == "True")
+                {
+                    scale9Enabled = true;
+                }
+            }
+            else if (name == "Scale9OriginX")
+            {
+                cx = atof(value.c_str());
+            }
+            else if (name == "Scale9OriginY")
+            {
+                cy = atof(value.c_str());
+            }
+            else if (name == "Scale9Width")
+            {
+                cw = atof(value.c_str());
+            }
+            else if (name == "Scale9Height")
+            {
+                ch = atof(value.c_str());
+            }
+            else if (name == "ButtonText")
+            {
+                text = value;
+            }
+            else if (name == "FontSize")
+            {
+                fontSize = atoi(value.c_str());
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "Size" && scale9Enabled)
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        swf = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        shf = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "CColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        cri = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        cgi = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        cbi = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "TextColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        title_color_red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        title_color_green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        title_color_blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "DisabledFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        button->loadTextureDisabled(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        button->loadTextureDisabled(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "PressedFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        button->loadTexturePressed(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        button->loadTexturePressed(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "NormalFileData")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        button->loadTextureNormal(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        button->loadTextureNormal(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        button->setScale9Enabled(scale9Enabled);
+        
+        
+        if (scale9Enabled)
+        {
+            button->setCapInsets(Rect(cx, cy, cw, ch));
+            button->setContentSize(Size(swf, shf));
+        }
+        
+        button->setTitleText(text);
+        button->setTitleColor(Color3B(title_color_red, title_color_green, title_color_blue));
+        button->setTitleFontSize(fontSize);
+        
+        button->setColor(Color3B(cri,cgi,cbi));
+        button->setOpacity(opacity);
+    }
+    /**/
 }
