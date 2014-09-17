@@ -690,8 +690,8 @@
 		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
-		1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
-		1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
+		1AC35D8318CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */; };
+		1AC35D8418CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */; };
 		1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D8718CEE5D100F37B72 /* AppController.mm */; };
 		1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */; };
 		1AC35D9A18CEE5D100F37B72 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8918CEE5D100F37B72 /* Default.png */; };
@@ -2763,8 +2763,8 @@
 		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
-		1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
+		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanagerex_test_sample.cpp; sourceTree = "<group>"; };
+		1AC35D8018CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanagerex_test_sample.h; sourceTree = "<group>"; };
 		1AC35D8618CEE5D100F37B72 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1AC35D8718CEE5D100F37B72 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -6607,8 +6607,8 @@
 				15427B76198B750300DC375D /* lua_module_register.h */,
 				1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */,
 				1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */,
-				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */,
-				1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */,
+				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */,
+				1AC35D8018CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.h */,
 			);
 			name = Classes;
 			path = "../tests/lua-tests/project/Classes";
@@ -7967,7 +7967,7 @@
 				1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */,
-				1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
+				1AC35D8318CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7980,7 +7980,7 @@
 				1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */,
 				1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */,
-				1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
+				1AC35D8418CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
