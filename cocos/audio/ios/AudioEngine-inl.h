@@ -33,7 +33,7 @@
 #include "AudioPlayer.h"
 
 NS_CC_BEGIN
-
+    namespace experimental{
 #define MAX_AUDIOINSTANCES 32
 
 class AudioEngineThreadPool;
@@ -88,6 +88,7 @@ private:
     int _currentAudioID;
     
 };
+}
 NS_CC_END
 #endif // __AUDIO_ENGINE_INL_H_
 #endif

@@ -31,14 +31,14 @@
 
 static int lua_get_AudioProfile_name(lua_State* L)
 {
-    cocos2d::AudioProfile* self = nullptr;
+    cocos2d::experimental::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.AudioProfile",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -60,14 +60,14 @@ tolua_lerror:
 static int lua_set_AudioProfile_name(lua_State* L)
 {
     int argc = 0;
-    cocos2d::AudioProfile* self = nullptr;
+    cocos2d::experimental::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.AudioProfile",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -99,14 +99,14 @@ tolua_lerror:
 
 static int lua_get_AudioProfile_maxInstances(lua_State* L)
 {
-    cocos2d::AudioProfile* self = nullptr;
+    cocos2d::experimental::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.AudioProfile",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -128,14 +128,14 @@ tolua_lerror:
 static int lua_set_AudioProfile_maxInstances(lua_State* L)
 {
     int argc = 0;
-    cocos2d::AudioProfile* self = nullptr;
+    cocos2d::experimental::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.AudioProfile",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -167,14 +167,14 @@ tolua_lerror:
 
 static int lua_get_AudioProfile_minDelay(lua_State* L)
 {
-    cocos2d::AudioProfile* self = nullptr;
+    cocos2d::experimental::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.AudioProfile",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -196,14 +196,14 @@ tolua_lerror:
 static int lua_set_AudioProfile_minDelay(lua_State* L)
 {
     int argc = 0;
-    cocos2d::AudioProfile* self = nullptr;
+    cocos2d::experimental::AudioProfile* self = nullptr;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"cc.AudioProfile",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccexp.AudioProfile",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    self = (cocos2d::AudioProfile*)  tolua_tousertype(L,1,0);
+    self = (cocos2d::experimental::AudioProfile*)  tolua_tousertype(L,1,0);
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self)
     {
@@ -243,7 +243,7 @@ int lua_cocos2dx_audioengine_AudioEngine_setFinishCallback(lua_State* tolua_S)
 #endif
     
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.AudioEngine",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     argc = lua_gettop(tolua_S) - 1;
@@ -251,7 +251,7 @@ int lua_cocos2dx_audioengine_AudioEngine_setFinishCallback(lua_State* tolua_S)
     if (argc == 2)
     {
         int arg0;
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.AudioEngine:setFinishCallback");
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccexp.AudioEngine:setFinishCallback");
     
 #if COCOS2D_DEBUG >= 1
         if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err))
@@ -262,7 +262,7 @@ int lua_cocos2dx_audioengine_AudioEngine_setFinishCallback(lua_State* tolua_S)
     
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,3,0));
     
-        cocos2d::AudioEngine::setFinishCallback(arg0, [handler](int audioID, std::string filePath){
+        cocos2d::experimental::AudioEngine::setFinishCallback(arg0, [handler](int audioID, std::string filePath){
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         
             stack->pushInt(audioID);
@@ -275,7 +275,7 @@ int lua_cocos2dx_audioengine_AudioEngine_setFinishCallback(lua_State* tolua_S)
     
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AudioEngine:setFinishCallback",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:setFinishCallback",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -292,7 +292,7 @@ int register_audioengine_module(lua_State* L)
         register_all_cocos2dx_audioengine(L);
         if (L)
         {
-            lua_pushstring(L, "cc.AudioProfile");
+            lua_pushstring(L, "ccexp.AudioProfile");
             lua_rawget(L, LUA_REGISTRYINDEX);
             if (lua_istable(L,-1))
             {
@@ -302,7 +302,7 @@ int register_audioengine_module(lua_State* L)
             }
             lua_pop(L, 1);
         
-            lua_pushstring(L, "cc.AudioEngine");
+            lua_pushstring(L, "ccexp.AudioEngine");
             lua_rawget(L, LUA_REGISTRYINDEX);
             if (lua_istable(L,-1))
             {

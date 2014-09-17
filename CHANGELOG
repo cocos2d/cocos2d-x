@@ -12,14 +12,16 @@ cocos2d-x-3.3??      ??
     [FIX]           C++: CMake works for Mac builds
     [FIX]           C++: Reorganized cocos2d/platform folder. Easier to add new platforms
     [FIX]           EditBox: moved to ui:EditBox
+    [FIX]           External: ScrollView: scroll view hidden picks up the touch events
+    [FIX]           FastTileMap: change indices to short because not all devices support int indices
     [FIX]           HttpClient: condition variable sleep on unrelated mutex
+    [FIX]           Image: optimize decompress jpg data
     [FIX]           Label: outline effect may be wrong if outline width is big and font size is big too
     [FIX]           MenuItem: memory leak if using menu_selector 
     [FIX]           MeshCommand: generate wrong meterial id which will cause problem that only first mesh is drawn
     [FIX]           Node: create unneeded temple `Vec2` object in `setPosition(int, int)`, `setPositionX()` and `setPositionY()`
     [FIX]           Node: skew effect is wrong
     [FIX]           Node: setNormalizedPosition can not take effect if parent position is not changed
-    [FIX]           External: ScrollView: scroll view hidden picks up the touch events
     [FIX]           TextureAtlas: may crash if only drawing part of it
     [FIX]           UI: Button: a button can not be touched if it only contains title
     [FIX]           UI: Button: title can not be scaled if a button is scaled

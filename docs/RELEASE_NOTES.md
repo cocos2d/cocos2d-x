@@ -23,7 +23,7 @@
 	- [AABB, OBB and Ray](#user-content-aabb-obb-and-ray)
 	- [BillBoard](#user-content-billboard)
 	- [Primitive](#user-content-primitive)
-	- [Triangle command](#user-content-triangle-command)
+	- [Triangles command](#user-content-triangles-command)
 	- [WebView](#user-content-webview)
 	- [New audio](#user-content-new-audio)
 	- [Only two libraries left](#user-content-only-two-libraries-left)
@@ -302,9 +302,18 @@ Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex a
 
 2. Batching is not supported.
 
-## Triangle command
+## Triangles command
 
-TBD
+We have enhanced auto batching feature by introduce `TrianglesCommand`, the rendering of the `Triangles` can be auto batched. Now if we have anything which can be rendered by `Triangles`, we can use `TrianglesCommand` or inherit from `TrianglesCommand` to take use of auto batching feature and gain rendering improvements. The `QuadCommand`, which is used for `Quad` rendering, is a good example of inheriting from `TrianglesCommand`.
+
+The step to use Triangle Command is very simple.
+
+```
+	Triangles trs{verts, indices, vertCount, indexCount};
+	command->init(globalZOrder,textureID, glProgramState,blend,trs,matrix);
+	renderer->addCommand(command);
+```
+To improve performance, `Triangles` will hold a weak reference to the vertices and indices data to be rendered, which is the same like `QuadCommand`. The userer should not release any rendered data before the `Command` is executed by `Renderer`.
 
 ## WebView
 WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
@@ -357,7 +366,7 @@ The difference compared to old audio engine
 * all functions are static, which means you can more easy to invoke function, such as `Audio::play2d()`
 * there is only one method `play2d()` to play music or effect
 * should use `Audio::getState()` to determine an audio is playing, paused
-* its class name is `cocos2d::AudioEngine` in c++, and its module name is `cc.AudioEngine` in lua-binding
+* its class name is `cocos2d::experimental::AudioEngine` in c++, and its module name is `ccexp.AudioEngine` in lua-binding
 * there is not preload function, you can play an audio immediately
 
 Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAudioEngineTest.cpp`.

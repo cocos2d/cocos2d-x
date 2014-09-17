@@ -510,14 +510,28 @@ public:
 	int getActionTag()const;
     
     /**
-     *@brief Allow widget touch events to propagate to its parents. Set false will disable propagation
+     * @brief Allow widget touch events to propagate to its parents. Set false will disable propagation
+     * @since v3.3
      */
     void setPropagateTouchEvents(bool isPropagate);
-    bool isPropagateTouchEvents()const;
+    
     /**
-     *@brief Specify widget to swallow touches or not
+     * Return whether the widget is propagate touch events to its parents or not
+     * @since v3.3
+     */
+     
+    bool isPropagateTouchEvents()const;
+    
+    /**
+     * @brief Specify widget to swallow touches or not
+     * @since v3.3
      */
     void setSwallowTouches(bool swallow);
+    
+    /**
+     * Return whether the widget is swallowing touch or not
+     * @since v3.3
+     */
     bool isSwallowTouches()const;
     
     /**
