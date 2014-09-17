@@ -13,6 +13,7 @@ cocos2d-x-3.3??      ??
     [FIX]           C++: Reorganized cocos2d/platform folder. Easier to add new platforms
     [FIX]           EditBox: moved to ui:EditBox
     [FIX]           External: ScrollView: scroll view hidden picks up the touch events
+    [FIX]           FastTileMap: change indices to short because not all devices support int indices
     [FIX]           HttpClient: condition variable sleep on unrelated mutex
     [FIX]           Image: optimize decompress jpg data
     [FIX]           Label: outline effect may be wrong if outline width is big and font size is big too
