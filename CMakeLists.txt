@@ -41,7 +41,6 @@ option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-option(BUILD_EXTERN_LIBS "Build Box2d, Chipmunk, Tinyxml2 from source" ON)
 option(BUILD_CPP_TESTS "Build TestCpp samples" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" ON)
 option(BUILD_LUA_TESTS "Build TestLua samples" ON)
@@ -120,19 +119,6 @@ else()
 endif()
 
 
-# Specific Include Directories
-if(LINUX)
-  set(PLATFORM_INCLUDE_DIR
-    /usr/include
-    /usr/include/GLFW
-    /usr/local/include/GLFW
-  )
-elseif(NOT MINGW)
-  set(PLATFORM_INCLUDE_DIR
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
-  )
-endif()
-
 include_directories(
   ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
@@ -160,9 +146,42 @@ elseif(NOT MINGW)
   )
 endif()
 
+
+# NB
+# we need to return these to libraries to their official state rather than 
+# having our custom cocos2d namespace so that we may use system versions if 
+# the platform provides them. It is very important that this
+# is done before we make prebuilt versions of these two libs
+
+include_directories(
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/../external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/../external/xxhash
+
+)
+
+
 if(NOT MINGW)
+
+  include_directories(
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER_ARCH}
+
+  )
+
   link_directories(
-    ${PLATFORM_LINK_DIR}
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
@@ -170,8 +189,13 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
+
   )
+
 endif()
+
 
 # libcocos2d.a
 add_subdirectory(cocos)
