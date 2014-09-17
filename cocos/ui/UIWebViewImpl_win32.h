@@ -61,5 +61,3 @@ namespace cocos2d {
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif //__cocos2d_plugin_WebViewImpl_win32_H_
-
-#endif
