@@ -34,8 +34,6 @@ include(build/BuildHelpers.CMakeLists.txt)
 
 message(${BUILDING_STRING})
 
-<<<<<<< HEAD
-=======
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(BUILD_STATIC "Build static libraries" ON)
@@ -49,7 +47,6 @@ option(BUILD_CppTests "Build TestCpp samples" ON)
 option(BUILD_LIBS_LUA "Build lua libraries" ON)
 option(BUILD_LuaTests "Build TestLua samples" ON)
 
->>>>>>> ae08081... added support for static and shared builds on windows
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
 else(DEBUG_MODE)
@@ -80,7 +77,7 @@ if(WINDOWS)
   if(BUILD_STATIC)
     ADD_DEFINITIONS (-DCC_STATIC)
   else()
-    ADD_DEFINITIONS (-D_USRDLL)
+    ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
   endif()
 
   ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
