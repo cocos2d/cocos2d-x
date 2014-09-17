@@ -25,8 +25,8 @@
 #ifndef __Manifest__
 #define __Manifest__
 
-#include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 #include "Downloader.h"
 
 #include <string>
@@ -38,7 +38,7 @@
 NS_CC_EXT_BEGIN
 
 
-class Manifest : public Ref
+class CC_EX_DLL Manifest : public Ref
 {
 public:
     
