@@ -88,6 +88,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~BaseLight3D();
     
 protected:
+    void setRotationFromDirection( const Vec3 &direction );
+    
+protected:
     float       _intensity;
     LightFlag   _lightFlag;
     bool        _enabled;
@@ -145,9 +148,16 @@ public:
      */
     static PointLight3D* create(const Vec3 &position, const Color3B &color, float range);
     
+    /** get or set range */
+    float getRange() const { return _range; }
+    void setRange(float range) { _range = range; }
+    
 CC_CONSTRUCTOR_ACCESS:
     PointLight3D();
     virtual ~PointLight3D();
+    
+protected:
+    float _range;
 };
 
 class CC_3D_DLL SpotLight3D : public BaseLight3D

@@ -124,16 +124,6 @@ void Scene::onProjectionChanged(EventCustom* event)
     }
 }
 
-void Scene::setAmbientColor( const Color4F &color )
-{
-    _ambientColor = color;
-}
-
-const Color4F& Scene::getAmbientColor() const
-{
-    return _ambientColor;
-}
-
 #if CC_USE_PHYSICS
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
