@@ -97,15 +97,7 @@ protected:
 protected:
     NodeGrid* _inSceneProxy;
     NodeGrid* _outSceneProxy;
-    bool    _back;    
-    static float POLYGON_OFFSET_FACTOR;
-    static float POLYGON_OFFSET_UNITS;
-    
-protected:
-    CustomCommand _enableOffsetCmd;
-    CustomCommand _disableOffsetCmd;
-    void onEnablePolygonOffset();
-    void onDisablePolygonOffset();
+    bool    _back;
 };
 
 // end of transition group
