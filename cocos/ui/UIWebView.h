@@ -31,6 +31,7 @@
 
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 #include "base/CCData.h"
 
 NS_CC_BEGIN
@@ -39,7 +40,7 @@ namespace experimental{
         
 class WebViewImpl;
 
-class WebView : public cocos2d::ui::Widget {
+class CC_GUI_DLL WebView : public cocos2d::ui::Widget {
 public:
     /**
     * Allocates and initializes a WebView.
