@@ -40,7 +40,7 @@ using namespace std;
 NS_CC_BEGIN
 
 static map<std::string, FontBufferInfo> s_fontsNames;
-static vector<FT_Face> s_faces;
+static vector<pair<FT_Face, unsigned char*>> s_faces;
 static FT_Library s_FreeTypeLibrary = nullptr;
 
 CCFreeTypeFont::CCFreeTypeFont() 
@@ -138,7 +138,7 @@ bool CCFreeTypeFont::initWithString(
 
     for (auto i = s_faces.begin(); !error && i != s_faces.end(); ++i)
     {
-        error = FT_Set_Char_Size(*i, nSize << 6, nSize << 6, 72, 72);
+        error = FT_Set_Char_Size(i->first, nSize << 6, nSize << 6, 72, 72);
     }
 
 	if(!error && !m_face)
@@ -340,7 +340,8 @@ void CCFreeTypeFont::setFallbackFonts(const std::vector<const char*>& fonts)
     // Clear out the system fonts first
     for (auto i = s_faces.begin(); i != s_faces.end(); ++i)
     {
-        FT_Done_Face(*i);
+        FT_Done_Face(i->first);
+        delete [] i->second;
     }
     s_faces.clear();
     s_faces.reserve(fonts.size());
@@ -365,7 +366,7 @@ void CCFreeTypeFont::setFallbackFonts(const std::vector<const char*>& fonts)
                 error = FT_Select_Charmap(face, FT_ENCODING_UNICODE);
 
             if (!error)
-                s_faces.push_back(face);
+                s_faces.push_back(pair<FT_Face, unsigned char*>(face, fontData));
         }
     } // end for systemFonts
 }
@@ -653,7 +654,7 @@ FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
         // If the glyph isn't found, search the other faces
         for (auto i = s_faces.begin(); (glyph_index == 0) && (i != s_faces.end()); ++i)
         {
-            face = *i;
+            face = i->first;
             glyph_index = FT_Get_Char_Index(face, c);
         }
 
