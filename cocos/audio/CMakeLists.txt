@@ -5,17 +5,17 @@ endif()
 
 if(WINDOWS)
   set(COCOS_AUDIO_SRC
-    win32/SimpleAudioEngine.cpp
-    win32/MciPlayer.cpp
-	  win32/MciPlayer.h
+    audio/win32/SimpleAudioEngine.cpp
+    audio/win32/MciPlayer.cpp
+	  audio/win32/MciPlayer.h
   )
 
 elseif(LINUX)
   set(COCOS_AUDIO_SRC
-    linux/SimpleAudioEngineFMOD.cpp
-    linux/FmodAudioPlayer.cpp
-	  linux/FmodAudioPlayer.h
-	  linux/AudioPlayer.h
+    audio/linux/SimpleAudioEngineFMOD.cpp
+    audio/linux/FmodAudioPlayer.cpp
+	  audio/linux/FmodAudioPlayer.h
+	  audio/linux/AudioPlayer.h
   )
 
   include_directories( ../external/linux-specific/fmod/include/${ARCH_DIR} )
@@ -25,15 +25,15 @@ elseif(MACOSX)
     # because C files needs to be compiled with C compiler and not C++
     # compiler
     set(COCOS_AUDIO_SRC_C
-        mac/CDAudioManager.m
-        mac/CDOpenALSupport.m
-        mac/CocosDenshion.m
-        mac/SimpleAudioEngine_objc.m
+        audio/mac/CDAudioManager.m
+        audio/mac/CDOpenALSupport.m
+        audio/mac/CocosDenshion.m
+        audio/mac/SimpleAudioEngine_objc.m
        )
     set(COCOS_AUDIO_SRC
         ${COCOS_AUDIO_SRC_C}
-        mac/SimpleAudioEngine.mm
-        mac/CDXMacOSXSupport.mm
+        audio/mac/SimpleAudioEngine.mm
+        audio/mac/CDXMacOSXSupport.mm
        )
     SET_SOURCE_FILES_PROPERTIES(
         ${COCOS_AUDIO_SRC_C}

@@ -29,7 +29,8 @@ project (Cocos2d-X)
 # The version number
 set(COCOS2D_X_VERSION 3.3.0-beta0)
 
-include(build/BuildHelpers.CMakeLists.txt)
+include(cmake/BuildHelpers.CMakeLists.txt)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 message(${BUILDING_STRING})
 
@@ -193,6 +194,7 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
 
   )
+
 
 endif()
 

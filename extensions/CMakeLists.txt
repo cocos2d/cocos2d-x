@@ -2,43 +2,41 @@ if(WINDOWS AND NOT BUILD_STATIC)
   ADD_DEFINITIONS (-D_USREXDLL)
 endif()
 
-set(COCOS_EXTENSIONS_SRC
-  assets-manager/AssetsManager.cpp
-  GUI/CCControlExtension/CCControl.cpp
-  GUI/CCControlExtension/CCControlButton.cpp
-  GUI/CCControlExtension/CCControlColourPicker.cpp
-  GUI/CCControlExtension/CCControlHuePicker.cpp
-  GUI/CCControlExtension/CCControlPotentiometer.cpp
-  GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp
-  GUI/CCControlExtension/CCControlSlider.cpp
-  GUI/CCControlExtension/CCControlStepper.cpp
-  GUI/CCControlExtension/CCControlSwitch.cpp
-  GUI/CCControlExtension/CCControlUtils.cpp
-  GUI/CCControlExtension/CCInvocation.cpp
-  GUI/CCControlExtension/CCScale9Sprite.cpp
-  GUI/CCEditBox/CCEditBox.cpp
-  GUI/CCEditBox/CCEditBoxImplAndroid.cpp
-  GUI/CCEditBox/CCEditBoxImplNone.cpp
-  GUI/CCEditBox/CCEditBoxImplWin.cpp
-  GUI/CCScrollView/CCScrollView.cpp
-  GUI/CCScrollView/CCTableView.cpp
-  GUI/CCScrollView/CCTableViewCell.cpp
-  physics-nodes/CCPhysicsDebugNode.cpp
-  physics-nodes/CCPhysicsSprite.cpp
-)
+if(WINDOWS)
 
-if(WIN32)
-  ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
-
-  set(PLATFORM_EXTENSIONS_SRC
-    proj.win32/Win32InputBox.cpp
-  )
-elseif(APPLE)
+#  set(PLATFORM_EXTENSIONS_SRC
+#    ../extensions/proj.win32/Win32InputBox.cpp
+#  )
+  
+elseif(MACOSX)
 
 else()
-
+#  set(PLATFORM_EXTENSIONS_SRC
+#    ../../extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp)
 endif()
 
 include_directories(
-  ..
+  ../../extensions
+)
+
+set(COCOS_EXTENSIONS_SRC
+
+  ../extensions/assets-manager/AssetsManager.cpp
+  ../extensions/GUI/CCControlExtension/CCControl.cpp
+  ../extensions/GUI/CCControlExtension/CCControlButton.cpp
+  ../extensions/GUI/CCControlExtension/CCControlColourPicker.cpp
+  ../extensions/GUI/CCControlExtension/CCControlHuePicker.cpp
+  ../extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp
+  ../extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp
+  ../extensions/GUI/CCControlExtension/CCControlSlider.cpp
+  ../extensions/GUI/CCControlExtension/CCControlStepper.cpp
+  ../extensions/GUI/CCControlExtension/CCControlSwitch.cpp
+  ../extensions/GUI/CCControlExtension/CCControlUtils.cpp
+  ../extensions/GUI/CCControlExtension/CCInvocation.cpp
+  ../extensions/GUI/CCScrollView/CCScrollView.cpp
+  ../extensions/GUI/CCScrollView/CCTableView.cpp
+  ../extensions/GUI/CCScrollView/CCTableViewCell.cpp
+  ../extensions/physics-nodes/CCPhysicsDebugNode.cpp
+  ../extensions/physics-nodes/CCPhysicsSprite.cpp
+  ${PLATFORM_EXTENSIONS_SRC}
 )

@@ -5,13 +5,13 @@ endif()
 
 if(WINDOWS)
   set(COCOS_UI_SPECIFIC_SRC
-    UIEditBoxImpl-win32.cpp)
+    ui/UIEditBox/UIEditBoxImpl-win32.cpp)
 elseif(MACOSX)
   set(COCOS_UI_SPECIFIC_SRC
-    UIEditBoxImpl-mac.mm)
+    ui/UIEditBox/UIEditBoxImpl-mac.mm)
 elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
-    UIEditBoxImpl-stub.cpp)
+    ui/UIEditBox/UIEditBoxImpl-stub.cpp)
 endif()
 
 #todo: android UIWebViewImpl and UIVideoPlayer

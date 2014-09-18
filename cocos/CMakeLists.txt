@@ -77,6 +77,31 @@ add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
 
 if(MINGW)
+
+  find_package(Freetype REQUIRED)
+  find_package(WebP REQUIRED)
+  #find_package(MiniZip REQUIRED)
+  #${MINIZIP_INCLUDE_DIR}
+
+  #find_package(GLFW REQUIRED)
+  #${GLFW_INCLUDE_DIRS}
+
+  find_package(ZLIB REQUIRED)
+
+  find_package(Chipmunk REQUIRED)
+
+  message( STATUS "ZLIB dirs: ${ZLIB_INCLUDE_DIRS}")
+  message( STATUS "WEBP dirs: ${WEBP_INCLUDE_DIRS}")
+  message( STATUS "FREETYPE dirs: ${FREETYPE_INCLUDE_DIRS}")
+  message( STATUS "Chipmunk dirs: ${CHIPMUNK_INCLUDE_DIRS}")
+
+  include_directories(${FREETYPE_INCLUDE_DIRS} ${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS})
+
+  include_directories(
+  ../external/xxhash
+  ../external/xxtea)
+  
+
   set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glfw3 glew32 opengl32 iconv freetype bz2)
 elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
