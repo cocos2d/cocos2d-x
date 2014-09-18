@@ -131,7 +131,7 @@ public:
 
     virtual void setVisible(bool visible) override;
     
-    typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallbak;
+    typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallback;
     
     
     /**
@@ -147,24 +147,24 @@ public:
      * @param sender The web view that has finished loading.
      * @param url content URL.
      */
-    void setOnDidFinishLoading(const ccWebViewCallbak& callback);
+    void setOnDidFinishLoading(const ccWebViewCallback& callback);
     
     /**
      * Call if a web view failed to load content.
      * @param sender The web view that has failed loading.
      * @param url content URL.
      */
-    void setOnDidFailLoading(const ccWebViewCallbak& callback);
+    void setOnDidFailLoading(const ccWebViewCallback& callback);
     
     /**
      * This callback called when load URL that start with javascript interface scheme.
      */
-    void setOnJSCallback(const ccWebViewCallbak& callback);
+    void setOnJSCallback(const ccWebViewCallback& callback);
     
     std::function<bool(WebView *sender, const std::string &url)> getOnShouldStartLoading()const;
-    ccWebViewCallbak getOnDidFinishLoading()const;
-    ccWebViewCallbak getOnDidFailLoading()const;
-    ccWebViewCallbak getOnJSCallback()const;
+    ccWebViewCallback getOnDidFinishLoading()const;
+    ccWebViewCallback getOnDidFailLoading()const;
+    ccWebViewCallback getOnJSCallback()const;
     
 protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;
@@ -172,11 +172,11 @@ protected:
     
     std::function<bool(WebView *sender, const std::string &url)> _onShouldStartLoading;
     
-    ccWebViewCallbak _onDidFinishLoading;
+    ccWebViewCallback _onDidFinishLoading;
     
-    ccWebViewCallbak _onDidFailLoading;
+    ccWebViewCallback _onDidFailLoading;
    
-    ccWebViewCallbak _onJSCallback;
+    ccWebViewCallback _onJSCallback;
 
     /**
      * Default constructor

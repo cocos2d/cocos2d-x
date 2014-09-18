@@ -104,28 +104,32 @@ namespace cocos2d {
 
                 _createSucceeded = _systemWebControl->createWebView(
                     [this](const std::string &url)->bool {
-                        if (_webView->shouldStartLoading != nullptr)
+                        std::function<bool (WebView *sender, const std::string &url)> shouldStartLoading = _webView->getOnShouldStartLoading();
+                        if (shouldStartLoading != nullptr)
                         {
-                            return _webView->shouldStartLoading(_webView, url);
+                            return onShouldStartLoading(_webView, url);
                         }
                         return true;
                     },
                     [this](const std::string &url) {
-                        if (_webView->didFinishLoading != nullptr)
+                        WebView::ccWebViewCallback didFinishLoading = _webView->getOnDidFinishLoading();
+                        if (didFinishLoading != nullptr)
                         {
-                            _webView->didFinishLoading(_webView, url);
+                            didFinishLoading(_webView, url);
                         }
                     },
                     [this](const std::string &url) {
-                        if (_webView->didFailLoading != nullptr)
+                        WebView::ccWebViewCallback didFinishLoading = _webView->getOnDidFailLoading();
+                        if (didFailLoading != nullptr)
                         {
-                            _webView->didFailLoading(_webView, url);
+                            didFailLoading(_webView, url);
                         }
                     },
                     [this](const std::string &url) {
-                        if (_webView->onJsCallback != nullptr)
+                        WebView::ccWebViewCallback onJsCallback = _webView->getOnJSCallback();
+                        if (onJsCallback != nullptr)
                         {
-                            _webView->onJsCallback(_webView, url);
+                            onJsCallback(_webView, url);
                         }
                     });
             }

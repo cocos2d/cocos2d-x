@@ -158,12 +158,12 @@ namespace experimental{
             }
         }
         
-        void WebView::setOnDidFailLoading(const ccWebViewCallbak &callback)
+        void WebView::setOnDidFailLoading(const ccWebViewCallback &callback)
         {
             _onDidFailLoading = callback;
         }
         
-        void WebView::setOnDidFinishLoading(const ccWebViewCallbak &callback)
+        void WebView::setOnDidFinishLoading(const ccWebViewCallback &callback)
         {
             _onDidFinishLoading = callback;
         }
@@ -173,7 +173,7 @@ namespace experimental{
             _onShouldStartLoading = callback;
         }
         
-        void WebView::setOnJSCallback(const ccWebViewCallbak &callback)
+        void WebView::setOnJSCallback(const ccWebViewCallback &callback)
         {
             _onJSCallback = callback;
         }
@@ -183,17 +183,17 @@ namespace experimental{
             return _onShouldStartLoading;
         }
         
-        WebView::ccWebViewCallbak WebView::getOnDidFailLoading()const
+        WebView::ccWebViewCallback WebView::getOnDidFailLoading()const
         {
             return _onDidFailLoading;
         }
         
-        WebView::ccWebViewCallbak WebView::getOnDidFinishLoading()const
+        WebView::ccWebViewCallback WebView::getOnDidFinishLoading()const
         {
             return _onDidFinishLoading;
         }
         
-        WebView::ccWebViewCallbak WebView::getOnJSCallback()const
+        WebView::ccWebViewCallback WebView::getOnJSCallback()const
         {
             return _onJSCallback;
         }
