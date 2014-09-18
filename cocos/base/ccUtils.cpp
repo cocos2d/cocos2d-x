@@ -205,7 +205,7 @@ Rect getCascadeBoundingBox(Node *node)
         child = dynamic_cast<Node*>(object);
         if (!child->isVisible()) continue;
         
-        const Rect box = child->getCascadeBoundingBox();
+        const Rect box = getCascadeBoundingBox(child);
         if (box.size.width <= 0 || box.size.height <= 0) continue;
         
         if (!merge)
