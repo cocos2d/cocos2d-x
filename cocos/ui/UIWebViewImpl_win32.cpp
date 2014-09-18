@@ -28,7 +28,7 @@ public:
     void setJavascriptInterfaceScheme(const std::string &scheme) const;
     void loadData(const std::string &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) const;
     void loadHTMLString(const std::string &html, const std::string &baseURL);
-    void loadUrl(const std::string &url) const;
+    void loadURL(const std::string &url) const;
     void loadFile(const std::string &filePath) const;
     void stopLoading() const;
     void reload() const;
@@ -84,8 +84,8 @@ private:
     static void lazyInit();
 
     void _loadHTMLString(const std::string &html) const;
-    void loadUrl(BSTR url) const;
-    void loadUrl(const std::wstring &url) const;
+    void loadURL(BSTR url) const;
+    void loadURL(const std::wstring &url) const;
 };
 
 
@@ -161,11 +161,11 @@ namespace cocos2d {
                 }
             }
 
-            void WebViewImpl::loadUrl(const std::string &url)
+            void WebViewImpl::loadURL(const std::string &url)
             {
                 if (_createSucceeded)
                 {
-                    _systemWebControl->loadUrl(url);
+                    _systemWebControl->loadURL(url);
                 }
             }
 
@@ -462,7 +462,7 @@ void Win32WebControl::loadHTMLString(const std::string &html, const std::string 
     //else
     //{
     //    _htmlWillLoad = html;
-    //    loadUrl(baseURL);
+    //    loadURL(baseURL);
     //}
 }
 
@@ -508,7 +508,7 @@ void Win32WebControl::_loadHTMLString(const std::string &html) const
     }
 }
 
-void Win32WebControl::loadUrl(BSTR url) const
+void Win32WebControl::loadURL(BSTR url) const
 {
     VARIANT var;
     VariantInit(&var);
@@ -518,19 +518,19 @@ void Win32WebControl::loadUrl(BSTR url) const
     VariantClear(&var);
 }
 
-void Win32WebControl::loadUrl(const std::wstring &url) const
+void Win32WebControl::loadURL(const std::wstring &url) const
 {
     BSTR bstr = SysAllocString(url.c_str());
-    loadUrl(bstr);
+    loadURL(bstr);
     SysFreeString(bstr);
 }
 
-void Win32WebControl::loadUrl(const std::string &url) const
+void Win32WebControl::loadURL(const std::string &url) const
 {
     HGLOBAL unicodeStr = globalAllocWstringFromString(url);
     if (unicodeStr != NULL)
     {
-        loadUrl(std::wstring((WCHAR *)unicodeStr));
+        loadURL(std::wstring((WCHAR *)unicodeStr));
         GlobalFree(unicodeStr);
     }
 }
@@ -540,7 +540,7 @@ void Win32WebControl::loadFile(const std::string &filePath) const
     HGLOBAL unicodeStr = globalAllocWstringFromString(filePath);
     if (unicodeStr != NULL)
     {
-        loadUrl(std::wstring((WCHAR *)unicodeStr));
+        loadURL(std::wstring((WCHAR *)unicodeStr));
         GlobalFree(unicodeStr);
     }
 }
@@ -579,7 +579,7 @@ void Win32WebControl::evaluateJS(const std::string &js) const
 {
     std::string url("javascript:");
     url.append(js);
-    loadUrl(url);
+    loadURL(url);
 }
 
 void Win32WebControl::setScalesPageToFit(const bool scalesPageToFit) const
@@ -827,7 +827,7 @@ HRESULT STDMETHODCALLTYPE Win32WebControl::Invoke(
                 IDispatch **dis = rgvarg[4].ppdispVal;
                 *dis = NULL;
                 *cancel = VARIANT_TRUE; // forbit to create new window
-                loadUrl(url);
+                loadURL(url);
                 return S_OK;
             }
         }

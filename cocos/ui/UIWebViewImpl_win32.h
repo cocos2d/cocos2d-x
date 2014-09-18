@@ -35,7 +35,7 @@ namespace cocos2d {
                 void setJavascriptInterfaceScheme(const std::string &scheme);
                 void loadData(const cocos2d::Data &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL);
                 void loadHTMLString(const std::string &string, const std::string &baseURL);
-                void loadUrl(const std::string &url);
+                void loadURL(const std::string &url);
                 void loadFile(const std::string &fileName);
                 void stopLoading();
                 void reload();
