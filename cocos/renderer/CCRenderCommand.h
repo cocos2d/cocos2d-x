@@ -77,6 +77,7 @@ protected:
     // commands are sort by depth
     float _globalOrder;
     
+    // transparent flag
     bool  _isTransparent;
 };
 
