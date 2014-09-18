@@ -36,7 +36,7 @@ BillBoard::BillBoard()
 , _mode(Mode::VIEW_POINT_ORIENTED)
 , _modeDirty(false)
 {
-
+    Node::setAnchorPoint(Vec2(0.5f,0.5f));
 }
 
 BillBoard::~BillBoard()
