@@ -355,6 +355,7 @@ namespace cocostudio
         float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
         float swf = 0.0f, shf = 0.0f;
         std::string text = "";
+        std::string fontName = "微软雅黑";
         int fontSize = 0;
         int title_color_red = 255, title_color_green = 255, title_color_blue = 255;
         int cri = 255, cgi = 255, cbi = 255;
@@ -397,6 +398,10 @@ namespace cocostudio
             else if (name == "FontSize")
             {
                 fontSize = atoi(value.c_str());
+            }
+            else if (name == "FontName")
+            {
+                fontName = value;
             }
             else if (name == "Alpha")
             {
@@ -635,6 +640,7 @@ namespace cocostudio
         button->setTitleText(text);
         button->setTitleColor(Color3B(title_color_red, title_color_green, title_color_blue));
         button->setTitleFontSize(fontSize);
+        button->setTitleFontName(fontName);
         
         button->setColor(Color3B(cri,cgi,cbi));
         button->setOpacity(opacity);

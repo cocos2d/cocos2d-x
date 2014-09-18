@@ -183,13 +183,22 @@ namespace cocostudio
         scrollView->setLayoutType((Layout::Type)options.layouttype());
         
         const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
-        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
-        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
-        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
-        scrollView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
         
-        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
-        scrollView->setBackGroundImageOpacity(bgimgopacity);
+        int red = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
+        int green = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
+        int blue = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
+        scrollView->setColor(Color3B(red, green, blue));
+        
+        int opacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+        scrollView->setOpacity(opacity);
+        
+//        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
+//        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
+//        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
+//        scrollView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
+//        
+//        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+//        scrollView->setBackGroundImageOpacity(bgimgopacity);
         
         
         

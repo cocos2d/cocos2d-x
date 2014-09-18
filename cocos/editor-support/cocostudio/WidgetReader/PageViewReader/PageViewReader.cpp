@@ -140,13 +140,22 @@ namespace cocostudio
         }
         
         const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
-        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
-        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
-        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
-        pageView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
         
-        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
-        pageView->setBackGroundImageOpacity(bgimgopacity);
+        int red = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
+        int green = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
+        int blue = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
+        pageView->setColor(Color3B(red, green, blue));
+        
+        int opacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+        pageView->setOpacity(opacity);
+        
+//        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
+//        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
+//        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
+//        pageView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
+//        
+//        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+//        pageView->setBackGroundImageOpacity(bgimgopacity);
         
         
         // other commonly protperties
