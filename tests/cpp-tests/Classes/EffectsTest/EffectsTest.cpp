@@ -275,7 +275,6 @@ class PageTurn3DDemo : public PageTurn3D
 public:
     static ActionInterval* create(float t)
     {
-        Director::getInstance()->setDepthTest(true);
         return PageTurn3D::create(t, Size(15,10)); 
     }
 };
