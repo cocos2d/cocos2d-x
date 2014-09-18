@@ -228,7 +228,7 @@ void LightTest::addLights()
     addChild(_pointLight);
     _pointLight->setCameraMask(2);
 
-    _spotLight = SpotLight3D::create(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.3, 10000.0f);
+    _spotLight = SpotLight3D::create(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);
@@ -359,5 +359,4 @@ void LightTestScene::runThisTest()
 
 LightTestScene::LightTestScene()
 {
-    //setAmbientColor(Color4F(0.2f, 0.2f, 0.2f, 1.0f));
 }
