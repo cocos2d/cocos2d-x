@@ -47,6 +47,7 @@ THE SOFTWARE.
 #define CC_MAX_DIRECTIONAL_LIGHT_NUM 1
 #define CC_MAX_POINT_LIGHT_NUM 1
 #define CC_MAX_SPOT_LIGHT_NUM 1
+#define CC_MAX_AMBIENT_LIGHT_NUM 1
 
 NS_CC_BEGIN
 
@@ -83,9 +84,6 @@ const char* GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE = "Shader3DSkinPosi
 
 
 // uniform names
-const char* GLProgram::UNIFORM_NAME_ENABLED_DIRECTIONAL_LIGHT_NUM = "CC_EnabledDirLightNum";
-const char* GLProgram::UNIFORM_NAME_ENABLED_POINT_LIGHT_NUM = "CC_EnabledPointLightNum";
-const char* GLProgram::UNIFORM_NAME_ENABLED_SPOT_LIGHT_NUM= "CC_EnabledSpotLightNum";
 const char* GLProgram::UNIFORM_NAME_AMBIENT_COLOR = "CC_AmbientColor";
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
@@ -434,22 +432,25 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     }
 
 
-    GLchar def[128];
+    GLchar def[256];
     sprintf(def
            , "#define CC_MAX_DIRECTIONAL_LIGHT_NUM %d \n"
              "#define CC_MAX_POINT_LIGHT_NUM %d \n"
              "#define CC_MAX_SPOT_LIGHT_NUM %d \n"
-           , CC_MAX_DIRECTIONAL_LIGHT_NUM, CC_MAX_POINT_LIGHT_NUM, CC_MAX_SPOT_LIGHT_NUM);
+             "#define CC_MAX_AMBIENT_LIGHT_NUM %d \n"
+           , CC_MAX_DIRECTIONAL_LIGHT_NUM, CC_MAX_POINT_LIGHT_NUM, CC_MAX_SPOT_LIGHT_NUM, CC_MAX_AMBIENT_LIGHT_NUM);
 
     GLchar lightStruct[] = { 
          "#if CC_MAX_DIRECTIONAL_LIGHT_NUM \n"
          "uniform vec3 CC_DirLightSourceColor[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
          "uniform vec3 CC_DirLightSourceDirection[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
+         "uniform float CC_DirLightSourceIntensity[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
          "#endif         \n"
          "#if CC_MAX_POINT_LIGHT_NUM         \n"
          "uniform vec3 CC_PointLightSourceColor[CC_MAX_POINT_LIGHT_NUM];         \n"
          "uniform vec3 CC_PointLightSourcePosition[CC_MAX_POINT_LIGHT_NUM];         \n"
          "uniform float CC_PointLightSourceRangeInverse[CC_MAX_POINT_LIGHT_NUM];         \n"
+         "uniform float CC_PointLightSourceIntensity[CC_MAX_POINT_LIGHT_NUM];         \n"
          "#endif         \n"
          "#if CC_MAX_SPOT_LIGHT_NUM         \n"
          "uniform vec3 CC_SpotLightSourceColor[CC_MAX_SPOT_LIGHT_NUM];         \n"
@@ -458,8 +459,12 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
          "uniform float CC_SpotLightSourceInnerAngleCos[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "uniform float CC_SpotLightSourceOuterAngleCos[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "uniform float CC_SpotLightSourceRangeInverse[CC_MAX_SPOT_LIGHT_NUM];         \n"
+         "uniform float CC_SpotLightSourceIntensity[CC_MAX_SPOT_LIGHT_NUM];         \n"
          "#endif         \n"
-         "uniform vec4 CC_AmbientColor; \n"
+         //"#if CC_MAX_AMBIENT_LIGHT_NUM         \n"
+         "uniform vec3 CC_AmbientLightSourceColor[CC_MAX_AMBIENT_LIGHT_NUM]; \n"
+         "uniform float CC_AmbientLightSourceIntensity[CC_MAX_AMBIENT_LIGHT_NUM]; \n"
+         //"#endif         \n"
     };
     
     const GLchar *sources[] = {
@@ -531,9 +536,6 @@ void GLProgram::bindAttribLocation(const std::string &attributeName, GLuint inde
 
 void GLProgram::updateUniforms()
 {
-    //_builtInUniforms[UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM] = glGetUniformLocation(_program, UNIFORM_NAME_ENABLED_DIRECTIONAL_LIGHT_NUM);
-    //_builtInUniforms[UNIFORM_ENABLED_POINT_LIGHT_NUM] = glGetUniformLocation(_program, UNIFORM_NAME_ENABLED_POINT_LIGHT_NUM);
-    //_builtInUniforms[UNIFORM_ENABLED_SPOT_LIGHT_NUM] = glGetUniformLocation(_program, UNIFORM_NAME_ENABLED_SPOT_LIGHT_NUM);
     _builtInUniforms[UNIFORM_AMBIENT_COLOR] = glGetUniformLocation(_program, UNIFORM_NAME_AMBIENT_COLOR);
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
@@ -551,15 +553,10 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER2] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER2);
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
-    //_flags.usesLights = (
-    //                     _builtInUniforms[UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM] != -1 || 
-    //                     _builtInUniforms[UNIFORM_ENABLED_POINT_LIGHT_NUM] != -1       ||
-    //                     _builtInUniforms[UNIFORM_ENABLED_SPOT_LIGHT_NUM] != -1
-    //                    );
-
     _flags.usesLights = (0 < CC_MAX_DIRECTIONAL_LIGHT_NUM) || 
-                        (0 < CC_MAX_POINT_LIGHT_NUM)       || 
-                        (0 < CC_MAX_SPOT_LIGHT_NUM);
+        (0 < CC_MAX_POINT_LIGHT_NUM)       || 
+        (0 < CC_MAX_SPOT_LIGHT_NUM) ||
+        (0 < CC_MAX_AMBIENT_LIGHT_NUM);
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
@@ -969,79 +966,100 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if(_flags.usesRandom)
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 
-//    if (_flags.usesLights)
-//    {
-//        Director *director = Director::getInstance();
-//        auto scene = director->getRunningScene();
-//        if (scene)
-//        {
-//            auto &lights = scene->getLights();
-//
-//            char str[64];
-//            GLint enabledDirLightNum = 0;
-//            GLint enabledPointLightNum = 0;
-//            GLint enabledSpotLightNum = 0;
-//            for (unsigned int i = 0; i < lights.size(); ++i)
-//            {
-//                Light3D *light = lights[i];
-//                Color3B col = light->getDisplayedColor();
-//                if (!light->getEnabled())
-//                {
-//                    col = Color3B::BLACK;
-//                }
-//                if (light->getLightType() == Light3D::LightType::DIRECTIONAL)
-//                {
-//                    CCASSERT(enabledDirLightNum < CC_MAX_DIRECTIONAL_LIGHT_NUM, "");
-//                    Vec3 dir = light->getWorldDirection();
-//                    dir.normalize();
-//                    sprintf(str, "CC_DirLightSourceColor[%d]", enabledDirLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
-//                    sprintf(str, "CC_DirLightSourceDirection[%d]", enabledDirLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
-//                    ++enabledDirLightNum;
-//                }
-//                else if (light->getLightType() == Light3D::LightType::POINT)
-//                {
-//                    CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
-//                    Mat4 mat= light->getNodeToWorldTransform();
-//                    sprintf(str, "CC_PointLightSourceColor[%d]", enabledPointLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
-//                    sprintf(str, "CC_PointLightSourcePosition[%d]", enabledPointLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
-//                    sprintf(str, "CC_PointLightSourceRangeInverse[%d]", enabledPointLightNum);
-//                    setUniformLocationWith1f(glGetUniformLocation(_program, str), 1.0f / light->getRange());
-//                    ++enabledPointLightNum;
-//                }
-//                else
-//                {
-//                    CCASSERT(enabledSpotLightNum < CC_MAX_SPOT_LIGHT_NUM, "");
-//                    Vec3 dir = light->getWorldDirection();
-//                    dir.normalize();
-//                    Mat4 mat= light->getNodeToWorldTransform();
-//                    sprintf(str, "CC_SpotLightSourceColor[%d]", enabledSpotLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
-//                    sprintf(str, "CC_SpotLightSourcePosition[%d]", enabledSpotLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
-//                    sprintf(str, "CC_SpotLightSourceDirection[%d]", enabledSpotLightNum);
-//                    setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
-//                    sprintf(str, "CC_SpotLightSourceInnerAngleCos[%d]", enabledSpotLightNum);
-//                    setUniformLocationWith1f(glGetUniformLocation(_program, str), cosf(light->getInnerAngle()));
-//                    sprintf(str, "CC_SpotLightSourceOuterAngleCos[%d]", enabledSpotLightNum);
-//                    setUniformLocationWith1f(glGetUniformLocation(_program, str), cosf(light->getOuterAngle()));
-//                    sprintf(str, "CC_SpotLightSourceRangeInverse[%d]", enabledSpotLightNum);
-//                    setUniformLocationWith1f(glGetUniformLocation(_program, str), 1.0f / light->getRange());
-//                    ++enabledSpotLightNum;
-//                }
-//            }
-//
-//            
-//            //setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_DIRECTIONAL_LIGHT_NUM], enabledDirLightNum);
-//            //setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_POINT_LIGHT_NUM], enabledPointLightNum);
-//            //setUniformLocationWith1i(_builtInUniforms[GLProgram::UNIFORM_ENABLED_SPOT_LIGHT_NUM], enabledSpotLightNum);
-//            const auto& ambientColor = scene->getAmbientColor();
-//            setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_AMBIENT_COLOR], ambientColor.r, ambientColor.g, ambientColor.b, ambientColor.a);
-//        }
-//    }
+    if (_flags.usesLights)
+    {
+        Director *director = Director::getInstance();
+        auto scene = director->getRunningScene();
+        if (scene)
+        {
+            auto &lights = scene->getLights();
+            char str[64];
+            GLint enabledDirLightNum = 0;
+            GLint enabledPointLightNum = 0;
+            GLint enabledSpotLightNum = 0;
+            GLint enabledAmbientLightNum = 0;
+            for (unsigned int i = 0; i < lights.size(); ++i)
+            {
+                BaseLight3D *light = lights[i];
+                float intensity = light->isEnabled() == true? light->getIntensity() : 0.0f;
+                switch (light->getLightType())
+                {
+                case LightType::DIRECTIONAL:
+                    {
+                        CCASSERT(enabledDirLightNum < CC_MAX_DIRECTIONAL_LIGHT_NUM, "");
+                        DirectionLight3D *dirLight = static_cast<DirectionLight3D *>(light);
+                        Vec3 dir = dirLight->getDirectionInWorld();
+                        dir.normalize();
+                        const Color3B &col = dirLight->getDisplayedColor();
+                        sprintf(str, "CC_DirLightSourceColor[%d]", enabledDirLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                        sprintf(str, "CC_DirLightSourceDirection[%d]", enabledDirLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
+                        sprintf(str, "CC_DirLightSourceIntensity[%d]", enabledDirLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), intensity);
+                        ++enabledDirLightNum;
+                    }
+                    break;
+                case LightType::POINT:
+                    {
+                        CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
+                        PointLight3D *pointLight = static_cast<PointLight3D *>(light);
+                        Mat4 mat= pointLight->getNodeToWorldTransform();
+                        const Color3B &col = pointLight->getDisplayedColor();
+                        sprintf(str, "CC_PointLightSourceColor[%d]", enabledPointLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                        sprintf(str, "CC_PointLightSourcePosition[%d]", enabledPointLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
+                        sprintf(str, "CC_PointLightSourceRangeInverse[%d]", enabledPointLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), 1.0f / pointLight->getRange());
+                        sprintf(str, "CC_PointLightSourceIntensity[%d]", enabledPointLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), intensity);
+                        ++enabledPointLightNum;
+                    }
+                    break;
+                case LightType::SPOT:
+                    {
+                        CCASSERT(enabledSpotLightNum < CC_MAX_SPOT_LIGHT_NUM, "");
+                        SpotLight3D *spotLight = static_cast<SpotLight3D *>(light);
+                        Vec3 dir = spotLight->getDirectionInWorld();
+                        dir.normalize();
+                        Mat4 mat= light->getNodeToWorldTransform();
+                        const Color3B &col = spotLight->getDisplayedColor();
+                        sprintf(str, "CC_SpotLightSourceColor[%d]", enabledSpotLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                        sprintf(str, "CC_SpotLightSourcePosition[%d]", enabledSpotLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), mat.m[12], mat.m[13], mat.m[14]);
+                        sprintf(str, "CC_SpotLightSourceDirection[%d]", enabledSpotLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), dir.x, dir.y, dir.z);
+                        sprintf(str, "CC_SpotLightSourceInnerAngleCos[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), spotLight->getCosInnerAngle());
+                        sprintf(str, "CC_SpotLightSourceOuterAngleCos[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), spotLight->getCosOuterAngle());
+                        sprintf(str, "CC_SpotLightSourceRangeInverse[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), 1.0f / spotLight->getRange());
+                        sprintf(str, "CC_SpotLightSourceIntensity[%d]", enabledSpotLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), intensity);
+                        ++enabledSpotLightNum;
+                    }
+                    break;
+                case LightType::AMBIENT:
+                    {
+                        CCASSERT(enabledAmbientLightNum < CC_MAX_AMBIENT_LIGHT_NUM, "");
+                        AmbientLight3D *ambLight = static_cast<AmbientLight3D *>(light);
+                        const Color3B &col = ambLight->getDisplayedColor();
+                        sprintf(str, "CC_AmbientLightSourceColor[%d]", enabledAmbientLightNum);
+                        setUniformLocationWith3f(glGetUniformLocation(_program, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                        sprintf(str, "CC_AmbientLightSourceIntensity[%d]", enabledAmbientLightNum);
+                        setUniformLocationWith1f(glGetUniformLocation(_program, str), intensity);
+                        ++enabledAmbientLightNum;
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void GLProgram::reset()

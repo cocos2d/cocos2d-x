@@ -27,7 +27,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "3d/CCLight.h"
+#include "3d/CCLight3D.h"
 
 class LightTest : public BaseTest
 {
@@ -48,7 +48,7 @@ public:
 
     virtual void update(float delta);
 
-    void SwitchLight(Ref* sender, Light3D::LightType lightType);
+    void SwitchLight(Ref* sender, LightType lightType);
 
 private:
 
@@ -57,10 +57,12 @@ private:
 
 private:
 
-    Light3D *_directionalLight;
-    Light3D *_pointLight;
-    Light3D *_spotLight;
+    AmbientLight3D *_ambientLight;
+    DirectionLight3D *_directionalLight;
+    PointLight3D *_pointLight;
+    SpotLight3D *_spotLight;
 
+    Label *_ambientLightLabel;
     Label *_directionalLightLabel;
     Label *_pointLightLabel;
     Label *_spotLightLabel;

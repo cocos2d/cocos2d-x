@@ -53,23 +53,28 @@ LightTest::LightTest()
     addChild(camera);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
-    _directionalLightLabel = Label::createWithTTF(ttfConfig,"Directional Light ON");
+    _ambientLightLabel = Label::createWithTTF(ttfConfig,"Ambient Light ON");
+    _ambientLightLabel->retain();
+    auto menuItem0 = MenuItemLabel::create(_ambientLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,LightType::AMBIENT));
+    _directionalLightLabel = Label::createWithTTF(ttfConfig,"Directional Light OFF");
     _directionalLightLabel->retain();
-    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,Light3D::LightType::DIRECTIONAL));
+    auto menuItem1 = MenuItemLabel::create(_directionalLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,LightType::DIRECTIONAL));
     _pointLightLabel = Label::createWithTTF(ttfConfig,"Point Light OFF");
     _pointLightLabel->retain();
-    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,Light3D::LightType::POINT));
+    auto menuItem2 = MenuItemLabel::create(_pointLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,LightType::POINT));
     _spotLightLabel = Label::createWithTTF(ttfConfig,"Spot Light OFF");
     _spotLightLabel->retain();
-    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,Light3D::LightType::SPOT));
-    auto menu = Menu::create(menuItem1,menuItem2,menuItem3,NULL);
+    auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,LightType::SPOT));
+    auto menu = Menu::create(menuItem0, menuItem1,menuItem2,menuItem3,NULL);
     menu->setPosition(Vec2::ZERO);
+    menuItem0->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem0->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y-50) );
     menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-    menuItem1->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y-50) );
+    menuItem1->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y-100) );
     menuItem2->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-    menuItem2->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y -100));
+    menuItem2->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y -150));
     menuItem3->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-    menuItem3->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y -150));
+    menuItem3->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y -200));
     addChild(menu);
 }
 
@@ -85,14 +90,17 @@ LightTest::~LightTest()
     if (_directionalLightLabel)
         _directionalLightLabel->release();
 
-    if (_directionalLight)
-        _directionalLight->release();
+    if (_spotLight)
+        _spotLight->release();
 
     if (_pointLight)
         _pointLight->release();
 
-    if (_spotLight)
-        _spotLight->release();
+    if (_directionalLight)
+        _directionalLight->release();
+
+    if (_ambientLight)
+        _ambientLight->release();
 }
 
 std::string LightTest::title() const
@@ -202,22 +210,38 @@ void LightTest::addSprite()
 void LightTest::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
-    _directionalLight = Light3D::createDirectionalLight(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
+    _ambientLight = AmbientLight3D::create(Color3B(200, 200, 200));
+    _ambientLight->retain();
+    _ambientLight->setEnabled(true);
+    addChild(_ambientLight);
+    _ambientLight->setCameraMask(2);
+
+    _directionalLight = DirectionLight3D::create(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
     _directionalLight->retain();
+    _directionalLight->setEnabled(false);
     addChild(_directionalLight);
     _directionalLight->setCameraMask(2);
 
-    _pointLight = Light3D::createPointLight(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
+    _pointLight = PointLight3D::create(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
     _pointLight->retain();
     _pointLight->setEnabled(false);
     addChild(_pointLight);
     _pointLight->setCameraMask(2);
 
-    _spotLight = Light3D::createSpotLight(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
+    _spotLight = SpotLight3D::create(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.3, 10000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);
     _spotLight->setCameraMask(2);
+
+    {
+        auto tintto1 = TintTo::create(4, 0, 0, 255);
+        auto tintto2 = TintTo::create(4, 0, 255, 0);
+        auto tintto3 = TintTo::create(4, 255, 0, 0);
+        auto tintto4 = TintTo::create(4, 255, 255, 255);
+        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        _ambientLight->runAction(RepeatForever::create(seq));
+    }
 
     {
         auto tintto1 = TintTo::create(4, 255, 0, 0);
@@ -250,8 +274,11 @@ void LightTest::addLights()
 void LightTest::update( float delta )
 {
     static float angleDelta = 0.0;
+
     if (_directionalLight)
+    {
         _directionalLight->setRotation3D(Vec3(-45.0, -CC_RADIANS_TO_DEGREES(angleDelta), 0.0f));
+    }
 
     if (_pointLight)
     {
@@ -273,34 +300,44 @@ void LightTest::update( float delta )
     BaseTest::update(delta);
 }
 
-void LightTest::SwitchLight( Ref* sender,Light3D::LightType lightType )
+void LightTest::SwitchLight( Ref* sender, LightType lightType )
 {
     switch (lightType)
     {
-    case Light3D::LightType::DIRECTIONAL:
+    case LightType::AMBIENT:
         {
             char str[32];
-            bool isON = !_directionalLight->getEnabled();
+            bool isON = !_ambientLight->isEnabled();
+            sprintf(str, "Ambient Light %s", isON == true? "ON":"OFF");
+            _ambientLight->setEnabled(isON);
+            _ambientLightLabel->setString(str);
+        }
+        break;
+
+    case LightType::DIRECTIONAL:
+        {
+            char str[32];
+            bool isON = !_directionalLight->isEnabled();
             sprintf(str, "Directional Light %s", isON == true? "ON":"OFF");
             _directionalLight->setEnabled(isON);
             _directionalLightLabel->setString(str);
         }
         break;
 
-    case Light3D::LightType::POINT:
+    case LightType::POINT:
         {
             char str[32];
-            bool isON = !_pointLight->getEnabled();
+            bool isON = !_pointLight->isEnabled();
             sprintf(str, "Point Light %s", isON == true? "ON":"OFF");
             _pointLight->setEnabled(isON);
             _pointLightLabel->setString(str);
         }
         break;
 
-    case Light3D::LightType::SPOT:
+    case LightType::SPOT:
         {
             char str[32];
-            bool isON = !_spotLight->getEnabled();
+            bool isON = !_spotLight->isEnabled();
             sprintf(str, "Spot Light %s", isON == true? "ON":"OFF");
             _spotLight->setEnabled(isON);
             _spotLightLabel->setString(str);
@@ -322,5 +359,5 @@ void LightTestScene::runThisTest()
 
 LightTestScene::LightTestScene()
 {
-    setAmbientColor(Color4F(0.2f, 0.2f, 0.2f, 1.0f));
+    //setAmbientColor(Color4F(0.2f, 0.2f, 0.2f, 1.0f));
 }
