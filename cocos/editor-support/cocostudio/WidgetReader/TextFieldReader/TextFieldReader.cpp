@@ -145,6 +145,12 @@ namespace cocostudio
         const protocolbuffers::TextFieldOptions& options = nodeTree.textfieldoptions();
 		bool IsCustomSize = options.iscustomsize();
 		widget->ignoreContentAdaptWithSize(!IsCustomSize);
+        
+        if (IsCustomSize)
+        {
+            const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
+            textField->setContentSize(Size(widgetOptions.width(), widgetOptions.height()));
+        }
 
         WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
         WidgetReader::setAnchorPointForWidget(widget, nodeTree);
@@ -285,7 +291,6 @@ namespace cocostudio
             if (name == "Size")
             {
                 const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
-                float width = 0.0f, height = 0.0f;
                 
                 while (attribute)
                 {
@@ -303,8 +308,6 @@ namespace cocostudio
                     
                     attribute = attribute->Next();
                 }
-                
-                widget->setContentSize(Size(width, height));
             }
             else if (name == "FontResource")
             {
