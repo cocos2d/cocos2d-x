@@ -107,7 +107,7 @@ namespace cocos2d {
                         std::function<bool (WebView *sender, const std::string &url)> shouldStartLoading = _webView->getOnShouldStartLoading();
                         if (shouldStartLoading != nullptr)
                         {
-                            return onShouldStartLoading(_webView, url);
+                            return shouldStartLoading(_webView, url);
                         }
                         return true;
                     },
@@ -119,7 +119,7 @@ namespace cocos2d {
                         }
                     },
                     [this](const std::string &url) {
-                        WebView::ccWebViewCallback didFinishLoading = _webView->getOnDidFailLoading();
+                        WebView::ccWebViewCallback didFailLoading = _webView->getOnDidFailLoading();
                         if (didFailLoading != nullptr)
                         {
                             didFailLoading(_webView, url);
