@@ -1079,11 +1079,6 @@ public:
     /** @deprecated Use getBoundingBox instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
-    /**
-     * This boundingBox will calculate all children's boundingBox every time
-     */
-    virtual Rect getCascadeBoundingBox(void);
-    
     virtual void setEventDispatcher(EventDispatcher* dispatcher);
     virtual EventDispatcher* getEventDispatcher() const { return _eventDispatcher; };
 
