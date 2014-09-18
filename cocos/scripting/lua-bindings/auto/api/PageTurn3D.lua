@@ -5,6 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#PageTurn3D] getGrid 
+-- @param self
+-- @return GridBase#GridBase ret (return value: cc.GridBase)
+        
+--------------------------------
 --  create the action 
 -- @function [parent=#PageTurn3D] create 
 -- @param self
