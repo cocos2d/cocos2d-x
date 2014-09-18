@@ -521,10 +521,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         //support tint and fade
         meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
-        if  (mesh->_isTransparent)
-            renderer->addCommandToTransparentQueue(&meshCommand);
-        else
-            renderer->addCommand(&meshCommand);
+        meshCommand.setTransparent(mesh->_isTransparent);
+        renderer->addCommand(&meshCommand);
     }
 }
 
