@@ -167,10 +167,15 @@ namespace cocostudio
         
         std::string xmlPath = GUIReader::getInstance()->getFilePath();
         
+        bool scale9Enabled = false;
+        float width = 0.0f, height = 0.0f;
+        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
+        
         Layout::BackGroundColorType colorType = Layout::BackGroundColorType::NONE;
-        int color_opacity = 255, bgimg_opacity = 255;
-        int bgimg_red = 255, bgimg_green = 255, bgimg_blue = 255;
+        int color_opacity = 255, bgimg_opacity = 255, opacity = 255;
         int red = 255, green = 255, blue = 255;
+        int bgimg_red = 255, bgimg_green = 255, bgimg_blue = 255;
+        int singleRed = 255, singleGreen = 255, singleBlue = 255;
         int start_red = 255, start_green = 255, start_blue = 255;
         int end_red = 255, end_green = 255, end_blue = 255;
         float vector_color_x = 0.0f, vector_color_y = -0.5f;
@@ -199,7 +204,28 @@ namespace cocostudio
             }
             else if (name == "Alpha")
             {
+                opacity = atoi(value.c_str());
                 bgimg_opacity = atoi(value.c_str());
+            }
+            else if (name == "Scale9Enable")
+            {
+                scale9Enabled = (value == "True") ? true : false;
+            }
+            else if (name == "Scale9OriginX")
+            {
+                cx = atof(value.c_str());
+            }
+            else if (name == "Scale9OriginY")
+            {
+                cy = atof(value.c_str());
+            }
+            else if (name == "Scale9Width")
+            {
+                cw = atof(value.c_str());
+            }
+            else if (name == "Scale9Height")
+            {
+                ch = atof(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -211,7 +237,28 @@ namespace cocostudio
         {
             std::string name = child->Name();
             
-            if (name == "CColor")
+            if (name == "Size")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "CColor")
             {
                 const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
                 
@@ -222,14 +269,17 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
+                        red = atoi(value.c_str());
                         bgimg_red = atoi(value.c_str());
                     }
                     else if (name == "G")
                     {
+                        green = atoi(value.c_str());
                         bgimg_green = atoi(value.c_str());
                     }
                     else if (name == "B")
                     {
+                        blue = atoi(value.c_str());
                         bgimg_blue = atoi(value.c_str());
                     }
                     
@@ -246,15 +296,15 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
-                        red = atoi(value.c_str());
+                        singleRed = atoi(value.c_str());
                     }
                     else if (name == "G")
                     {
-                        green = atoi(value.c_str());
+                        singleGreen = atoi(value.c_str());
                     }
                     else if (name == "B")
                     {
-                        blue = atoi(value.c_str());
+                        singleBlue = atoi(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -310,6 +360,7 @@ namespace cocostudio
             }
             else if (name == "ColorVector")
             {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
                 while (attribute)
                 {
                     std::string name = attribute->Name();
@@ -356,11 +407,14 @@ namespace cocostudio
             child = child->NextSiblingElement();
         }
         
+        pageView->setColor(Color3B(red, green, blue));
+        pageView->setOpacity(opacity);
+        
         pageView->setBackGroundColorType(colorType);
         switch (colorType)
         {
             case Layout::BackGroundColorType::SOLID:
-                pageView->setBackGroundColor(Color3B(red, green, blue));
+                pageView->setBackGroundColor(Color3B(singleRed, singleGreen, singleBlue));
                 break;
                 
             case Layout::BackGroundColorType::GRADIENT:
@@ -394,8 +448,18 @@ namespace cocostudio
                 break;
         }
         
-        pageView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-        pageView->setBackGroundImageOpacity(bgimg_opacity);
+        if (path != "")
+        {
+            if (scale9Enabled)
+            {
+                pageView->setBackGroundImageScale9Enabled(scale9Enabled);
+                pageView->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
+                pageView->setContentSize(Size(width, height));
+            }
+        }
+        
+        //        pageView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
+        //        pageView->setBackGroundImageOpacity(bgimg_opacity);
         
     }
     /**/
