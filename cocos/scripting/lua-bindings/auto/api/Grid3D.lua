@@ -5,6 +5,18 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Grid3D] getNeedDepthTestForBlit 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Grid3D] setNeedDepthTestForBlit 
+-- @param self
+-- @param #bool neededDepthTest
+        
+--------------------------------
 -- @overload self, size_table         
 -- @overload self, size_table, cc.Texture2D, bool         
 -- @function [parent=#Grid3D] create
@@ -21,12 +33,22 @@
         
 --------------------------------
 -- 
--- @function [parent=#Grid3D] blit 
+-- @function [parent=#Grid3D] beforeBlit 
+-- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#Grid3D] afterBlit 
 -- @param self
         
 --------------------------------
 -- 
 -- @function [parent=#Grid3D] reuse 
+-- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#Grid3D] blit 
 -- @param self
         
 --------------------------------
