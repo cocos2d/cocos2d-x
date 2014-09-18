@@ -554,9 +554,9 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
     _flags.usesLights = (0 < CC_MAX_DIRECTIONAL_LIGHT_NUM) || 
-        (0 < CC_MAX_POINT_LIGHT_NUM)       || 
-        (0 < CC_MAX_SPOT_LIGHT_NUM) ||
-        (0 < CC_MAX_AMBIENT_LIGHT_NUM);
+                                  (0 < CC_MAX_POINT_LIGHT_NUM)       || 
+                                  (0 < CC_MAX_SPOT_LIGHT_NUM) ||
+                                  (0 < CC_MAX_AMBIENT_LIGHT_NUM);
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
