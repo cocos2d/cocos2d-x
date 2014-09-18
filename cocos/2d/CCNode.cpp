@@ -808,7 +808,7 @@ Rect Node::getCascadeBoundingBox(void)
     Rect cbb;
 
     // check all childrens bounding box, get maximize box
-    Node* child = NULL;
+    Node* child = nullptr;
     bool merge = false;
     for(auto object : _children)
     {
