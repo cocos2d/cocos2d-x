@@ -803,6 +803,49 @@ Rect Node::getBoundingBox() const
     return RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 }
 
+Rect Node::getCascadeBoundingBox(void)
+{
+    Rect cbb;
+
+    // check all childrens bounding box, get maximize box
+    Node* child = NULL;
+    bool merge = false;
+    for(auto object : _children)
+    {
+        child = dynamic_cast<Node*>(object);
+        if (!child->isVisible()) continue;
+            
+        const Rect box = child->getCascadeBoundingBox();
+        if (box.size.width <= 0 || box.size.height <= 0) continue;
+            
+        if (!merge)
+        {
+            cbb = box;
+            merge = true;
+        }
+        else
+        {
+            cbb.merge(box);
+        }
+    }
+    
+    // merge content size
+    if (_contentSize.width > 0 && _contentSize.height > 0)
+    {
+        const Rect box = RectApplyAffineTransform(Rect(0, 0, _contentSize.width, _contentSize.height), nodeToWorldTransform());
+        if (!merge)
+        {
+            cbb = box;
+        }
+        else
+        {
+            cbb.merge(box);
+        }
+    }
+    
+    return cbb;
+}
+
 // MARK: Children logic
 
 // lazy allocs
