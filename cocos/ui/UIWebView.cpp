@@ -30,7 +30,7 @@
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#include "UIWebViewImpl_win32.h"
+#include "UIWebViewImpl-win32.h"
 #include "UIWebView-inl.h"
 
 #endif

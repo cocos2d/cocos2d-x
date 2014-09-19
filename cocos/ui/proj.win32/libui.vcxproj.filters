@@ -114,7 +114,7 @@
     <ClInclude Include="..\UIWebView.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\UIWebViewImpl_win32.h">
+    <ClInclude Include="..\UIWebViewImpl-win32.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -203,7 +203,7 @@
     <ClCompile Include="..\UIWebView.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\UIWebViewImpl_win32.cpp">
+    <ClCompile Include="..\UIWebViewImpl-win32.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>

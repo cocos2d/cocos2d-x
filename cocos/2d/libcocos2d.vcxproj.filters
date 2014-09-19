@@ -1168,7 +1168,7 @@
     <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui\UIWebViewImpl_win32.cpp">
+    <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIWebView.cpp">
@@ -2302,7 +2302,7 @@
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui\UIWebViewImpl_win32.h">
+    <ClInclude Include="..\ui\UIWebViewImpl-win32.h">
       <Filter>ui\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView-inl.h">

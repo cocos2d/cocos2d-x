@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2014 cocos2d-x.org
+ Author: Jeff Wang <wohaaitinciu@gmail.com>
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+ 
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -6,12 +31,13 @@
 #include <atlwin.h>
 #include <ExDispid.h>
 #include <UrlMon.h>
-#include "UIWebViewImpl_win32.h"
+#include "UIWebViewImpl-win32.h"
 #include "UIWebView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCGLView.h"
 
+// declarate
 class Win32WebControl : public DWebBrowserEvents2
 {
 public:
@@ -290,9 +316,11 @@ CComModule Win32WebControl::s_module;
 
 void Win32WebControl::lazyInit()
 {
+    // reset the main windows style so that its drawing does not cover the webview sub window
     HWND hwnd = cocos2d::Director::getInstance()->getOpenGLView()->getWin32Window();
     LONG style = GetWindowLong(hwnd, GWL_STYLE);
     SetWindowLong(hwnd, GWL_STYLE, style | WS_CLIPCHILDREN);
+
     HINSTANCE hInstance = GetModuleHandle(NULL);
     CoInitialize(NULL);
     s_module.Init(NULL, hInstance);
@@ -447,14 +475,20 @@ void Win32WebControl::setWebViewRect(const int left, const int top, const int wi
 
 void Win32WebControl::setJavascriptInterfaceScheme(const std::string &scheme) const
 {
+    // To be implemented!
 }
 
 void Win32WebControl::loadData(const std::string &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) const
 {
+    // To be implemented!
 }
 
 void Win32WebControl::loadHTMLString(const std::string &html, const std::string &baseURL)
 {
+    // NOTE: should we load base URL first?
+    // If so, we will cause many loadURL callbacks,
+    // and it would be very difficult to distinguish between `loadURL' and `loadHTMLString'
+
     //if (baseURL.empty())
     //{
         _loadHTMLString(html);
@@ -622,7 +656,7 @@ ULONG STDMETHODCALLTYPE Win32WebControl::Release(void)
 {
     CCASSERT(_reference > 0, "reference count should greater than 0");
     InterlockedDecrement(&_reference);
-    // do not delete this if _reference == 0, otherwise, it will crash when call removeWebView
+    // DO NOT delete this if _reference == 0, otherwise, it will crash when call removeWebView
     return _reference;
 }
 
@@ -709,7 +743,7 @@ HRESULT STDMETHODCALLTYPE Win32WebControl::Invoke(
                     {
                         if (_onJsCallback != nullptr)
                         {
-                            _onJsCallback(bstr2string(url));
+                            _onJsCallback(bstr2string(url + 11));  // skip the prefix `javascript'
                         }
                     }
                     else
