@@ -157,6 +157,7 @@ Sprite3D::Sprite3D()
 : _skeleton(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _aabbDirty(true)
+, _lightMask(-1)
 {
 }
 
