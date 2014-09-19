@@ -6,10 +6,11 @@ endif()
 if(WINDOWS)
   set(COCOS_UI_SPECIFIC_SRC
     ui/UIEditBox/UIEditBoxImpl-win32.cpp)
-elseif(MACOSX)
-  set(COCOS_UI_SPECIFIC_SRC
-    ui/UIEditBox/UIEditBoxImpl-mac.mm)
-elseif(LINUX)
+else()#elseif(MACOSX)
+  #todo: fix mac UI edit box
+  #set(COCOS_UI_SPECIFIC_SRC
+  #  ui/UIEditBox/UIEditBoxImpl-mac.mm)
+#elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
     ui/UIEditBox/UIEditBoxImpl-stub.cpp)
 endif()

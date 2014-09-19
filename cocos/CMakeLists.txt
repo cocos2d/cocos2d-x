@@ -73,11 +73,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EXTENSIONS_SRC}
     )
 
-add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
-
-
 if(MINGW)
-
   find_package(Freetype REQUIRED)
   find_package(WebP REQUIRED)
   #find_package(MiniZip REQUIRED)
@@ -97,11 +93,27 @@ if(MINGW)
 
   include_directories(${FREETYPE_INCLUDE_DIRS} ${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS})
 
-  include_directories(
-  ../external/xxhash
-  ../external/xxtea)
-  
+else()
 
+  #todo: provide prebuild versions of minizip for android ios mac and msvc
+  #done: prebuilt version for mingw-w64 (linux distros should have them also)
+  # check for opensuse the buildbot system arch and ubuntu
+
+  include_directories(
+    ../external/unzip)
+
+endif()
+
+  #todo: provide prebuild versions of the xx libs for all platforms
+  include_directories(
+    ../external/xxhash
+    ../external/xxtea)
+
+
+add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
+
+
+if(MINGW)
   set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glfw3 glew32 opengl32 iconv freetype bz2)
 elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)

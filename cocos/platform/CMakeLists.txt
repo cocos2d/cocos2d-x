@@ -17,7 +17,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/mac/CCDevice-mac.mm
   platform/apple/CCLock-apple.cpp
   platform/apple/CCFileUtils-apple.mm
-  platform/apple/CCThread-apple.m
+  platform/apple/CCThread-apple.mm
 )
 
 elseif(LINUX)
