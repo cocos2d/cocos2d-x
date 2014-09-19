@@ -29,6 +29,7 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "3d/CCLight3D.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -307,6 +308,12 @@ void Sprite3DTestScene::runThisTest()
     addChild(layer);
     
     Director::getInstance()->replaceScene(this);
+}
+
+Sprite3DTestScene::Sprite3DTestScene()
+{
+    AmbientLight3D *light = AmbientLight3D::create(Color3B(255, 255, 255));
+    addChild(light);
 }
 
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )

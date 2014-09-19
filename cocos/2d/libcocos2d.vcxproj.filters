@@ -1039,9 +1039,6 @@
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCLight.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocosbuilder\CCBAnimationManager.cpp">
       <Filter>cocosbuilder\Source Files</Filter>
     </ClCompile>
@@ -1170,6 +1167,9 @@
     </ClCompile>
     <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCLight3D.cpp">
+      <Filter>3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2149,9 +2149,6 @@
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCLight.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\editor-support\cocosbuilder\CCBAnimationManager.h">
       <Filter>cocosbuilder\Header Files</Filter>
     </ClInclude>
@@ -2301,6 +2298,9 @@
     </ClInclude>
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCLight3D.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

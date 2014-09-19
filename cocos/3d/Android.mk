@@ -15,6 +15,7 @@ CCAttachNode.cpp \
 CCBillBoard.cpp \
 CCBundle3D.cpp \
 CCBundleReader.cpp \
+CCLight3D.cpp \
 CCMesh.cpp \
 CCMeshSkin.cpp \
 CCMeshVertexIndexData.cpp \
