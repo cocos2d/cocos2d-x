@@ -36,6 +36,7 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
+#include "3d/CCLight3D.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -59,6 +60,7 @@ MeshCommand::MeshCommand()
 , _matrixPaletteSize(0)
 , _materialID(0)
 , _vao(0)
+, _useLights(false)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
@@ -92,6 +94,11 @@ void MeshCommand::init(float globalOrder,
     _indexFormat = indexFormat;
     _indexCount = indexCount;
     _mv.set(mv);
+
+    _useLights = (0 < CC_MAX_DIRECTIONAL_LIGHT_NUM) || 
+                        (0 < CC_MAX_POINT_LIGHT_NUM)               || 
+                        (0 < CC_MAX_SPOT_LIGHT_NUM)                 ||
+                        (0 < CC_MAX_AMBIENT_LIGHT_NUM);
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
@@ -222,6 +229,11 @@ void MeshCommand::batchDraw()
     
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
+
+    if (_useLights)
+    {
+        applyLightUniforms();
+    }
     
     // Draw
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -261,6 +273,11 @@ void MeshCommand::execute()
     }
     
     _glProgramState->apply(_mv);
+    
+    if (_useLights)
+    {
+        applyLightUniforms();
+    }
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
@@ -306,11 +323,110 @@ void MeshCommand::releaseVAO()
     }
 }
 
+
+void MeshCommand::applyLightUniforms()
+{
+    Director *director = Director::getInstance();
+    auto scene = director->getRunningScene();
+    if (scene)
+    {
+        GLProgram *glProgram = _glProgramState->getGLProgram();
+        GLint programID = glProgram->getProgram();
+        auto &lights = scene->getLights();
+        char str[64];
+        GLint enabledDirLightNum = 0;
+        GLint enabledPointLightNum = 0;
+        GLint enabledSpotLightNum = 0;
+        GLint enabledAmbientLightNum = 0;
+        for (unsigned int i = 0; i < lights.size(); ++i)
+        {
+            BaseLight3D *light = lights[i];
+            float intensity = light->isEnabled() == true? light->getIntensity() : 0.0f;
+            switch (light->getLightType())
+            {
+            case LightType::DIRECTIONAL:
+                {
+                    CCASSERT(enabledDirLightNum < CC_MAX_DIRECTIONAL_LIGHT_NUM, "");
+                    DirectionLight3D *dirLight = static_cast<DirectionLight3D *>(light);
+                    Vec3 dir = dirLight->getDirectionInWorld();
+                    dir.normalize();
+                    const Color3B &col = dirLight->getDisplayedColor();
+                    sprintf(str, "CC_DirLightSourceColor[%d]", enabledDirLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                    sprintf(str, "CC_DirLightSourceDirection[%d]", enabledDirLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), dir.x, dir.y, dir.z);
+                    sprintf(str, "CC_DirLightSourceIntensity[%d]", enabledDirLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), intensity);
+                    ++enabledDirLightNum;
+                }
+                break;
+            case LightType::POINT:
+                {
+                    CCASSERT(enabledPointLightNum < CC_MAX_POINT_LIGHT_NUM, "");
+                    PointLight3D *pointLight = static_cast<PointLight3D *>(light);
+                    Mat4 mat= pointLight->getNodeToWorldTransform();
+                    const Color3B &col = pointLight->getDisplayedColor();
+                    sprintf(str, "CC_PointLightSourceColor[%d]", enabledPointLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                    sprintf(str, "CC_PointLightSourcePosition[%d]", enabledPointLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), mat.m[12], mat.m[13], mat.m[14]);
+                    sprintf(str, "CC_PointLightSourceRangeInverse[%d]", enabledPointLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), 1.0f / pointLight->getRange());
+                    sprintf(str, "CC_PointLightSourceIntensity[%d]", enabledPointLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), intensity);
+                    ++enabledPointLightNum;
+                }
+                break;
+            case LightType::SPOT:
+                {
+                    CCASSERT(enabledSpotLightNum < CC_MAX_SPOT_LIGHT_NUM, "");
+                    SpotLight3D *spotLight = static_cast<SpotLight3D *>(light);
+                    Vec3 dir = spotLight->getDirectionInWorld();
+                    dir.normalize();
+                    Mat4 mat= light->getNodeToWorldTransform();
+                    const Color3B &col = spotLight->getDisplayedColor();
+                    sprintf(str, "CC_SpotLightSourceColor[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                    sprintf(str, "CC_SpotLightSourcePosition[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), mat.m[12], mat.m[13], mat.m[14]);
+                    sprintf(str, "CC_SpotLightSourceDirection[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), dir.x, dir.y, dir.z);
+                    sprintf(str, "CC_SpotLightSourceInnerAngleCos[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), spotLight->getCosInnerAngle());
+                    sprintf(str, "CC_SpotLightSourceOuterAngleCos[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), spotLight->getCosOuterAngle());
+                    sprintf(str, "CC_SpotLightSourceRangeInverse[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), 1.0f / spotLight->getRange());
+                    sprintf(str, "CC_SpotLightSourceIntensity[%d]", enabledSpotLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), intensity);
+                    ++enabledSpotLightNum;
+                }
+                break;
+            case LightType::AMBIENT:
+                {
+                    CCASSERT(enabledAmbientLightNum < CC_MAX_AMBIENT_LIGHT_NUM, "");
+                    AmbientLight3D *ambLight = static_cast<AmbientLight3D *>(light);
+                    const Color3B &col = ambLight->getDisplayedColor();
+                    sprintf(str, "CC_AmbientLightSourceColor[%d]", enabledAmbientLightNum);
+                    glProgram->setUniformLocationWith3f(glGetUniformLocation(programID, str), col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
+                    sprintf(str, "CC_AmbientLightSourceIntensity[%d]", enabledAmbientLightNum);
+                    glProgram->setUniformLocationWith1f(glGetUniformLocation(programID, str), intensity);
+                    ++enabledAmbientLightNum;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;
 }
+
 #endif
 
 NS_CC_END

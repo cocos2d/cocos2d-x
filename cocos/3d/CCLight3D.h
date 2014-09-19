@@ -30,6 +30,11 @@
 
 NS_CC_BEGIN
 
+#define CC_MAX_DIRECTIONAL_LIGHT_NUM 1
+#define CC_MAX_POINT_LIGHT_NUM 1
+#define CC_MAX_SPOT_LIGHT_NUM 1
+#define CC_MAX_AMBIENT_LIGHT_NUM 1
+
 enum class LightType
 {
     DIRECTIONAL = 0,
