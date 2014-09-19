@@ -324,6 +324,7 @@ protected:
 class Sprite3DTestScene : public TestScene
 {
 public:
+    Sprite3DTestScene();
     virtual void runThisTest();
 };
 

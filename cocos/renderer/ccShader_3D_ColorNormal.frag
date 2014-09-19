@@ -45,14 +45,14 @@ void main(void)
     vec3 normal  = normalize(v_normal);
 \n#endif\n
 
-    vec4 combinedColor = CC_AmbientColor;
+    vec4 combinedColor = vec4(0.0, 0.0, 0.0, 1.0);
 
     // Directional light contribution
 \n#if (CC_MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
     for (int i = 0; i < CC_MAX_DIRECTIONAL_LIGHT_NUM; ++i)
     {
         vec3 lightDirection = normalize(CC_DirLightSourceDirection[i] * 2.0);
-        combinedColor.xyz += computeLighting(normal, -lightDirection, CC_DirLightSourceColor[i], 1.0);
+        combinedColor.xyz += computeLighting(normal, -lightDirection, CC_DirLightSourceColor[i] * CC_DirLightSourceIntensity[i], 1.0);
     }
 \n#endif\n
 
@@ -62,7 +62,7 @@ void main(void)
     {
         vec3 ldir = v_vertexToPointLightDirection[i] * CC_PointLightSourceRangeInverse[i];
         float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
-        combinedColor.xyz += computeLighting(normal, normalize(v_vertexToPointLightDirection[i]), CC_PointLightSourceColor[i], attenuation);
+        combinedColor.xyz += computeLighting(normal, normalize(v_vertexToPointLightDirection[i]), CC_PointLightSourceColor[i] * CC_PointLightSourceIntensity[i], attenuation);
     }
 \n#endif\n
 
@@ -82,14 +82,21 @@ void main(void)
 
         // Apply spot attenuation
         attenuation *= smoothstep(CC_SpotLightSourceOuterAngleCos[i], CC_SpotLightSourceInnerAngleCos[i], spotCurrentAngleCos);
-        combinedColor.xyz += computeLighting(normal, vertexToSpotLightDirection, CC_SpotLightSourceColor[i], attenuation);
+        combinedColor.xyz += computeLighting(normal, vertexToSpotLightDirection, CC_SpotLightSourceColor[i] * CC_SpotLightSourceIntensity[i], attenuation);
     }
 \n#endif\n
 
-\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
+\n#if (CC_MAX_AMBIENT_LIGHT_NUM > 0)\n
+    for (int i = 0; i < CC_MAX_AMBIENT_LIGHT_NUM; ++i)
+    {
+        combinedColor.xyz += CC_AmbientLightSourceColor[i] * CC_AmbientLightSourceIntensity[i];
+    }
+\n#endif\n
+
+\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0) || (CC_MAX_AMBIENT_LIGHT_NUM > 0))\n
     gl_FragColor = u_color * combinedColor;
 \n#else\n
-     gl_FragColor = u_color;
+    gl_FragColor = u_color;
 \n#endif\n
 
 }

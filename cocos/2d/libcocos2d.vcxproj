@@ -208,7 +208,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCBillBoard.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
-    <ClCompile Include="..\3d\CCLight.cpp" />
+    <ClCompile Include="..\3d\CCLight3D.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
@@ -546,7 +546,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCBundleReader.h" />
-    <ClInclude Include="..\3d\CCLight.h" />
+    <ClInclude Include="..\3d\CCLight3D.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
