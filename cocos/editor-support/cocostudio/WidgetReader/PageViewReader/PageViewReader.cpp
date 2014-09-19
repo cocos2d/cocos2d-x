@@ -146,7 +146,7 @@ namespace cocostudio
         int blue = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
         pageView->setColor(Color3B(red, green, blue));
         
-        int opacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+        int opacity = widgetOptions.has_alpha() ? widgetOptions.alpha() : 255;
         pageView->setOpacity(opacity);
         
 //        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
@@ -467,8 +467,8 @@ namespace cocostudio
             }
         }
         
-        //        pageView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-        //        pageView->setBackGroundImageOpacity(bgimg_opacity);
+//        pageView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
+//        pageView->setBackGroundImageOpacity(bgimg_opacity);
         
     }
     /**/

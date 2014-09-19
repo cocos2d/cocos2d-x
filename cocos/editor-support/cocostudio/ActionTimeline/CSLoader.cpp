@@ -31,10 +31,11 @@
 #include "cocostudio/CocoStudio.h"
 /**/
 
-#include "../CSParseBinary.pb.h"
 /* peterson xml */
 #include "tinyxml2/tinyxml2.h"
 /**/
+
+#include "../CSParseBinary.pb.h"
 
 #include <fstream>
 
@@ -489,6 +490,7 @@ Node* CSLoader::loadSprite(const rapidjson::Value& json)
         else
         {
             sprite = Sprite::createWithSpriteFrame(spriteFrame);
+//            sprite->setFileName(path);
         }
         
         if(!sprite)
@@ -790,16 +792,19 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
         
         std::string filePath = options.filename();
         CCLOG("filePath = %s", filePath.c_str());
-        node = createNodeFromProtocolBuffers(_protocolBuffersPath + filePath);
-        setPropsForProjectNodeFromProtocolBuffers(node, options, nodeOptions);
-        
-        cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionFromProtocolBuffers(_protocolBuffersPath + filePath);
-        if(action)
-        {
-            node->runAction(action);
-            action->gotoFrameAndPlay(0);
-        }
-        
+		if(filePath != "")
+		{
+            node = createNodeFromProtocolBuffers(_protocolBuffersPath + filePath);
+            setPropsForProjectNodeFromProtocolBuffers(node, options, nodeOptions);
+            
+            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionFromProtocolBuffers(_protocolBuffersPath + filePath);
+            if(action)
+            {
+                node->runAction(action);
+                action->gotoFrameAndPlay(0);
+            }
+		}
+     
         curOptions = nodeOptions;
     }
     /* peterson */
@@ -955,8 +960,8 @@ void CSLoader::setPropsForNodeFromProtocolBuffers(cocos2d::Node *node,
     float scalex        = options.scalex();
     float scaley        = options.scaley();
     float rotation      = options.rotation();
-    float rotationSkewX = options.has_rotationskewx() ? options.rotationskewx() : 0.0;
-    float rotationSkewY = options.has_rotationskewy() ? options.rotationskewy() : 0.0;
+    float rotationSkewX      = options.has_rotationskewx() ? options.rotationskewx() : 0.0f;
+    float rotationSkewY      = options.has_rotationskewy() ? options.rotationskewy() : 0.0f;
     float anchorx       = options.has_anchorpointx() ? options.anchorpointx() : 0.0f;
     float anchory       = options.has_anchorpointy() ? options.anchorpointy() : 0.0f;
     int zorder		    = options.zorder();
@@ -989,6 +994,9 @@ void CSLoader::setPropsForNodeFromProtocolBuffers(cocos2d::Node *node,
     
     node->setTag(tag);
     node->setUserObject(ActionTimelineData::create(actionTag));
+    
+    node->setCascadeColorEnabled(true);
+    node->setCascadeOpacityEnabled(true);
     
 }
 
@@ -1080,8 +1088,8 @@ void CSLoader::setPropsForSpriteFromProtocolBuffers(cocos2d::Node *node,
         sprite->setColor(Color3B(red, green, blue));
     }
     
-    bool flipX          = nodeOptions.flipx();
-    bool flipY          = nodeOptions.flipy();
+	bool flipX   = spriteOptions.flippedx();
+    bool flipY   = spriteOptions.flippedy();
     
     if(flipX != false)
         sprite->setFlippedX(flipX);
@@ -1569,6 +1577,9 @@ Node* CSLoader::nodeFromXML(const tinyxml2::XMLElement *objectData, const std::s
 
 void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLElement *nodeObjectData)
 {
+    node->setCascadeColorEnabled(true);
+    node->setCascadeOpacityEnabled(true);
+    
     std::string name = nodeObjectData->Name();
     CCLOG("entity name = %s", name.c_str());
     

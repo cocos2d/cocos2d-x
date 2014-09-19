@@ -267,16 +267,16 @@ namespace cocostudio
             else if (name == "IsCustomSize")
             {
                 isCustomSize = ((value == "True") ? true : false);
-                //                if (value == "Custom")
-                //                {
-                //                    float areaWidth = 0.0f;
-                //                    objectData->QueryFloatAttribute("Width", &areaWidth);
-                //
-                //                    float areaHeight = 0.0f;
-                //                    objectData->QueryFloatAttribute("Height", &areaHeight);
-                //
-                //                    textField->setTextAreaSize(Size(areaWidth, areaHeight));
-                //                }
+//                if (value == "Custom")
+//                {
+//                    float areaWidth = 0.0f;
+//                    objectData->QueryFloatAttribute("Width", &areaWidth);
+//                    
+//                    float areaHeight = 0.0f;
+//                    objectData->QueryFloatAttribute("Height", &areaHeight);
+//                    
+//                    textField->setTextAreaSize(Size(areaWidth, areaHeight));
+//                }
             }
             
             attribute = attribute->Next();

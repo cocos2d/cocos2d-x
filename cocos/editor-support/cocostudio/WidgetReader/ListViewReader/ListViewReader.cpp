@@ -168,13 +168,13 @@ namespace cocostudio
         }
         
         const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
-
+        
         int red = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
         int green = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
         int blue = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
         listView->setColor(Color3B(red, green, blue));
         
-        int opacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+        int opacity = widgetOptions.has_alpha() ? widgetOptions.alpha() : 255;
         listView->setOpacity(opacity);
         
 //        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
@@ -607,8 +607,8 @@ namespace cocostudio
             }
         }
         
-        //        listView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-        //        listView->setBackGroundImageOpacity(bgimg_opacity);
+//        listView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
+//        listView->setBackGroundImageOpacity(bgimg_opacity);
     }
     /**/
 }

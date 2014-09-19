@@ -364,6 +364,9 @@ namespace cocostudio
         
         const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
         
+        widget->setCascadeColorEnabled(true);
+        widget->setCascadeOpacityEnabled(true);
+        
         bool ignoreSizeExsit = options.has_ignoresize();
         if (ignoreSizeExsit)
         {
@@ -404,7 +407,6 @@ namespace cocostudio
         
 //        widget->setRotation(options.has_rotation() ? options.rotation() : 0.0);
 
-		
 		widget->setRotationSkewX(options.has_rotationskewx() ? options.rotationskewx() : 0.0);
 
 		widget->setRotationSkewY(options.has_rotationskewy() ? options.rotationskewy() : 0.0);
@@ -470,7 +472,7 @@ namespace cocostudio
     {
         const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
         
-        
+       
         bool isColorRExists = options.has_colorr();
         bool isColorGExists = options.has_colorg();
         bool isColorBExists = options.has_colorb();
@@ -495,6 +497,9 @@ namespace cocostudio
     /* peterson xml */
     void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
     {
+        widget->setCascadeColorEnabled(true);
+        widget->setCascadeOpacityEnabled(true);
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)

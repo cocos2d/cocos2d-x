@@ -333,6 +333,7 @@ namespace cocostudio
         button->setTitleFontName(fontName);
         
         
+        
         const protocolbuffers::WidgetOptions& widgetOption = nodeTree.widgetoptions();
         button->setColor(Color3B(widgetOption.colorr(), widgetOption.colorg(), widgetOption.colorb()));
         button->setOpacity(widgetOption.opacity());
@@ -406,6 +407,10 @@ namespace cocostudio
             else if (name == "Alpha")
             {
                 opacity = atoi(value.c_str());
+            }
+            else if (name == "DisplayState")
+            {
+                button->setBright((value == "True") ? true : false);
             }
             
             attribute = attribute->Next();

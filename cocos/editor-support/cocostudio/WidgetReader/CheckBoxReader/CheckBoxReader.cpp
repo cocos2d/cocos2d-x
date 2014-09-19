@@ -226,6 +226,8 @@ namespace cocostudio
         std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic.path(), (Widget::TextureResType)frontCrossDisabledType);
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         
+        checkBox->setSelectedState(options.selectedstate());
+        
 		bool displaystate = true;
 		if(options.has_displaystate())
 		{
@@ -256,6 +258,10 @@ namespace cocostudio
             if (name == "CheckedState")
             {
                 checkBox->setSelectedState((value == "True") ? true : false);
+            }
+            else if (name == "DisplayState")
+            {
+                checkBox->setBright((value == "True") ? true : false);
             }
             
             attribute = attribute->Next();

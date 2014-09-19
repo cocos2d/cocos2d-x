@@ -47,7 +47,6 @@ namespace cocostudio
         /* peterson xml */
         virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
         /**/
-
     };
 }
 

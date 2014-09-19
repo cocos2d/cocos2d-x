@@ -342,6 +342,10 @@ namespace cocostudio
             {
                 percent = atoi(value.c_str());
             }
+            else if (name == "DisplayState")
+            {
+                slider->setBright((value == "True") ? true : false);
+            }
             
             attribute = attribute->Next();
         }

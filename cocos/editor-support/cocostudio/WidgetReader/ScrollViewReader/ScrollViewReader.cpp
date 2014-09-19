@@ -189,7 +189,7 @@ namespace cocostudio
         int blue = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
         scrollView->setColor(Color3B(red, green, blue));
         
-        int opacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
+        int opacity = widgetOptions.has_alpha() ? widgetOptions.alpha() : 255;
         scrollView->setOpacity(opacity);
         
 //        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
@@ -563,8 +563,8 @@ namespace cocostudio
             }
         }
         
-        //        scrollView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-        //        scrollView->setBackGroundImageOpacity(bgimg_opacity);
+//        scrollView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
+//        scrollView->setBackGroundImageOpacity(bgimg_opacity);
     }
     /**/
 }
