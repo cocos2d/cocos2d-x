@@ -84,6 +84,8 @@ protected:
     
     // apply renderstate
     void applyRenderState();
+
+    void applyLightUniforms();
     
     //restore to all false
     void restoreRenderState();
@@ -120,6 +122,8 @@ protected:
 
     // ModelView transform
     Mat4 _mv;
+
+    bool _useLights;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     EventListenerCustom* _rendererRecreatedListener;
