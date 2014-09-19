@@ -1232,6 +1232,7 @@ Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
     _labelCubeCount->setPosition(Vec2(s.width/2, s.height-90));
     addChild(_labelCubeCount);
     _hasCollider = false;
+    addOBBCallback(nullptr);
     scheduleUpdate();
 }
 std::string Sprite3DWithOBBPerfromanceTest::title() const
