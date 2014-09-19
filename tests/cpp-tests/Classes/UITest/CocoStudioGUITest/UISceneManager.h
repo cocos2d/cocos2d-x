@@ -41,7 +41,9 @@ enum
     kUIButtonTextOnly,
     kUIButtonIgnoreContentSizeTest,
     kUIButtonTitleEffectTest,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     kUIEditBoxTest,
+#endif
     kUICheckBoxTest,
     kUISliderTest,
     kUISliderTest_Scale9,
