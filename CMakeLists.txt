@@ -172,17 +172,17 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
     ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
     ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
 
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER_ARCH}/freetype2
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
   )
 
 #todo: fix location of freetype includes for linux android on cocos prebuilt repo
