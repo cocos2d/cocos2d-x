@@ -145,6 +145,8 @@ elseif(MACOSX)
     ${FOUNDATION_LIBRARY}
   )
 
+elseif(ANDROID)
+  set(PLATFORM_SPECIFIC_LIBS GLESv2 log z android)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()

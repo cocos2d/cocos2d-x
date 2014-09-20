@@ -94,6 +94,9 @@ elseif(MACOSX)
 elseif(LINUX)
   ADD_DEFINITIONS(-DLINUX)
   set(PLATFORM_FOLDER linux)
+elseif(ANDROID)
+  ADD_DEFINITIONS (-DUSE_FILE32API)
+  set(PLATFORM_FOLDER android)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -178,7 +181,12 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER_ARCH}
 
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER_ARCH}/freetype2
   )
+
+#todo: fix location of freetype includes for linux android on cocos prebuilt repo
+#i.e we should not need to include an extra dir of /freetype2
 
   link_directories(
 
