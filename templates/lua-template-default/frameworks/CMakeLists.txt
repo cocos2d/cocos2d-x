@@ -75,6 +75,7 @@ link_directories(
   ${COCOS2D_ROOT}/external/websockets/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/freetype2/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
+  ${COCOS2D_ROOT}/external/chipmunk/prebuilt/linux/${ARCH_DIR}
 )
 
 # libcocos2d
