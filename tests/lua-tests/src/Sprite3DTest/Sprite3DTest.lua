@@ -1,5 +1,21 @@
 local size = cc.Director:getInstance():getWinSize()
 local scheduler = cc.Director:getInstance():getScheduler()
+local attributeNames = 
+{
+    "a_position",
+    "a_color",
+    "a_texCoord",
+    "a_texCoord1",
+    "a_texCoord2",
+    "a_texCoord3",
+    "a_texCoord4",
+    "a_texCoord5",
+    "a_texCoord6",
+    "a_texCoord7",
+    "a_normal",
+    "a_blendWeight",
+    "a_blendIndex",
+}
 
 ----------------------------------------
 ----Sprite3DBasicTest
@@ -56,6 +72,66 @@ function Sprite3DBasicTest.create()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
 
     Sprite3DBasicTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    return layer
+end
+
+----------------------------------------
+----Sprite3DHitTest
+----------------------------------------
+local Sprite3DHitTest = {}
+Sprite3DHitTest.__index = Sprite3DHitTest
+
+function Sprite3DHitTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Testing Sprite3D Touch in 2D")
+    Helper.subtitleLabel:setString("Tap Sprite3D and Drag")
+
+    local sprite1 = cc.Sprite3D:create("Sprite3DTest/boss1.obj")
+    sprite1:setScale(4.0)
+    sprite1:setTexture("Sprite3DTest/boss.png")
+    sprite1:setPosition( cc.p(size.width/2, size.height/2) )
+    sprite1:runAction(cc.RepeatForever:create(cc.RotateBy:create(3, 360)))
+    layer:addChild(sprite1)
+
+    local sprite2 = cc.Sprite3D:create("Sprite3DTest/boss1.obj")
+    sprite2:setScale(4.0)
+    sprite2:setTexture("Sprite3DTest/boss.png")
+    sprite2:setPosition( cc.p(size.width/2, size.height/2) )
+    sprite2:setAnchorPoint(cc.p(0.5, 0.5))
+    sprite2:runAction(cc.RepeatForever:create(cc.RotateBy:create(3, -360)))
+    layer:addChild(sprite2)
+
+    local listener = cc.EventListenerTouchOneByOne:create()
+    listener:setSwallowTouches(true)
+    listener:registerScriptHandler(function (touch, event)
+        local target = event:getCurrentTarget()
+        local rect   = target:getBoundingBox()
+        if cc.rectContainsPoint(rect, touch:getLocation()) then
+            print(string.format("sprite3d began... x = %f, y = %f", touch:getLocation().x, touch:getLocation().y))
+            target:setOpacity(100)
+            return true
+        end
+
+        return false
+    end,cc.Handler.EVENT_TOUCH_BEGAN )
+
+    listener:registerScriptHandler(function (touch, event)
+        local target = event:getCurrentTarget()
+        local x,y = target:getPosition()
+        target:setPosition(cc.p(x + touch:getDelta().x, y + touch:getDelta().y))
+    end, cc.Handler.EVENT_TOUCH_MOVED)
+
+    listener:registerScriptHandler(function (touch, event)
+        local target = event:getCurrentTarget()
+        print("sprite3d onTouchEnd")
+        target:setOpacity(255)
+    end, cc.Handler.EVENT_TOUCH_ENDED)
+
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, sprite1)
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener:clone(), sprite2)
+
     return layer
 end
 
@@ -294,6 +370,7 @@ function Sprite3DTest()
     Helper.createFunctionTable = 
     {
         Sprite3DBasicTest.create,
+        Sprite3DHitTest.create,
         Sprite3DWithSkinTest.create,
         Animate3DTest.create,
     }
