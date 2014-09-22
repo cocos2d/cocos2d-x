@@ -75,4 +75,6 @@
 #include "Camera3DTest/Camera3DTest.h"
 #include "BillBoardTest/BillBoardTest.h"
 
+#include "OpenURLTest/OpenURLTest.h"
+
 #endif
