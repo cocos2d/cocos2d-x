@@ -37,6 +37,9 @@
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "NewAudioEngineTest/NewAudioEngineTest.h"
+#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
@@ -70,5 +73,6 @@
 
 #include "Sprite3DTest/Sprite3DTest.h"
 #include "Camera3DTest/Camera3DTest.h"
+#include "BillBoardTest/BillBoardTest.h"
 
 #endif

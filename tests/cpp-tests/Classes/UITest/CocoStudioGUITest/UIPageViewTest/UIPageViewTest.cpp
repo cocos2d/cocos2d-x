@@ -1,7 +1,7 @@
 
 
 #include "UIPageViewTest.h"
-
+#include "cocos2d.h"
 
 // UIPageViewTest
 UIPageViewTest::UIPageViewTest()
@@ -308,3 +308,200 @@ void UIPageViewCustomScrollThreshold::sliderEvent(Ref *pSender, Slider::EventTyp
         _displayValueLabel->setString(String::createWithFormat("Scroll Threshold: %f", pageView->getCustomScrollThreshold())->getCString());
     }
 }
+
+// UIPageViewTouchPropagationTest
+UIPageViewTouchPropagationTest::UIPageViewTouchPropagationTest()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIPageViewTouchPropagationTest::~UIPageViewTouchPropagationTest()
+{
+}
+
+bool UIPageViewTouchPropagationTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the dragpanel events will be displayed
+        _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+                                             widgetSize.height / 2.0f +
+                                             _displayValueLabel->getContentSize().height * 1.5));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the black background
+        Text* alert = Text::create("PageView Touch Propagation", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+        
+        // Create the page view
+        PageView* pageView = PageView::create();
+        pageView->setContentSize(Size(240.0f, 130.0f));
+        pageView->setAnchorPoint(Vec2(0.5,0.5));
+        Size backgroundSize = background->getContentSize();
+        pageView->setPosition(Vec2(widgetSize.width / 2.0f ,widgetSize.height / 2.0f));
+        pageView->setBackGroundColor(Color3B::GREEN);
+        pageView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        
+        int pageCount = 4;
+        for (int i = 0; i < pageCount; ++i)
+        {
+            HBox* outerBox = HBox::create();
+            outerBox->setContentSize(Size(240.0f, 130.0f));
+            
+            for (int k = 0; k < 2; ++k) {
+                VBox* innerBox = VBox::create();
+                
+                for (int j = 0; j < 3; j++) {
+                    Button *btn = Button::create("cocosui/animationbuttonnormal.png",
+                                                 "cocosui/animationbuttonpressed.png");
+                    btn->setName(StringUtils::format("button %d", j));
+                    btn->addTouchEventListener( CC_CALLBACK_2(UIPageViewTouchPropagationTest::onButtonClicked, this));
+                    
+                    innerBox->addChild(btn);
+                }
+                
+                LinearLayoutParameter *parameter = LinearLayoutParameter::create();
+                parameter->setMargin(Margin(0,0,100,0));
+                innerBox->setLayoutParameter(parameter);
+                
+                outerBox->addChild(innerBox);
+                
+            }
+            
+            pageView->insertPage(outerBox,i);
+        }
+        
+        pageView->addEventListener(CC_CALLBACK_2(UIPageViewTouchPropagationTest::pageViewEvent, this));
+        pageView->setName("pageView");
+        pageView->addTouchEventListener([](Ref* sender, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::BEGAN)
+            {
+                CCLOG("page view touch began");
+            }
+            else if(type == Widget::TouchEventType::MOVED)
+            {
+                CCLOG("page view touch moved");
+            }
+            else if(type == Widget::TouchEventType::ENDED)
+            {
+                CCLOG("page view touch ended");
+            }
+            else
+            {
+                CCLOG("page view touch cancelled");
+            }
+        });
+        _uiLayer->addChild(pageView);
+        
+        Text *propagationText = Text::create("Allow Propagation", "Arial", 10);
+        propagationText->setAnchorPoint(Vec2(0,0.5));
+        propagationText->setTextColor(Color4B::RED);
+        propagationText->setPosition(Vec2(0, pageView->getPosition().y + 50));
+        _uiLayer->addChild(propagationText);
+        
+        Text *swallowTouchText = Text::create("Swallow Touches", "Arial", 10);
+        swallowTouchText->setAnchorPoint(Vec2(0,0.5));
+        swallowTouchText->setTextColor(Color4B::RED);
+        swallowTouchText->setPosition(Vec2(0, pageView->getPosition().y));
+        _uiLayer->addChild(swallowTouchText);
+        
+        // Create the checkbox
+        CheckBox* checkBox1 = CheckBox::create("cocosui/check_box_normal.png",
+                                              "cocosui/check_box_normal_press.png",
+                                              "cocosui/check_box_active.png",
+                                              "cocosui/check_box_normal_disable.png",
+                                              "cocosui/check_box_active_disable.png");
+        checkBox1->setPosition(propagationText->getPosition() + Vec2(propagationText->getContentSize().width/2, -20));
+        
+        checkBox1->setName("propagation");
+        _uiLayer->addChild(checkBox1);
+        
+        
+        // Create the checkbox
+        CheckBox* checkBox2 = CheckBox::create("cocosui/check_box_normal.png",
+                                              "cocosui/check_box_normal_press.png",
+                                              "cocosui/check_box_active.png",
+                                              "cocosui/check_box_normal_disable.png",
+                                              "cocosui/check_box_active_disable.png");
+        checkBox2->setPosition(swallowTouchText->getPosition() + Vec2(swallowTouchText->getContentSize().width/2, -20));
+
+        checkBox2->setName("swallow");
+        _uiLayer->addChild(checkBox2);
+
+        
+        auto eventListener = EventListenerTouchOneByOne::create();
+        eventListener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
+            CCLOG("layout recieves touches");
+            return true;
+        };
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+        
+        return true;
+    }
+    return false;
+}
+
+void UIPageViewTouchPropagationTest::onButtonClicked(Ref* pSender, Widget::TouchEventType type)
+{
+    Button *btn = (Button*)pSender;
+    CheckBox *ck1 = (CheckBox*)_uiLayer->getChildByName("propagation");
+    CheckBox *ck2 = (CheckBox*)_uiLayer->getChildByName("swallow");
+    auto pageView = (PageView*)_uiLayer->getChildByName("pageView");
+    
+    if (type == Widget::TouchEventType::BEGAN)
+    {
+        if (ck1->isSelected())
+        {
+            btn->setPropagateTouchEvents(true);
+            pageView->setPropagateTouchEvents(true);
+            
+        }else
+        {
+            btn->setPropagateTouchEvents(false);
+            pageView->setPropagateTouchEvents(false);
+        }
+        
+        if (ck2->isSelected())
+        {
+            btn->setSwallowTouches(true);
+            pageView->setSwallowTouches(true);
+        }else
+        {
+            btn->setSwallowTouches(false);
+            pageView->setSwallowTouches(false);
+        }
+    }
+    if (type == Widget::TouchEventType::ENDED) {
+        CCLOG("button clicked");
+    }
+}
+
+
+void UIPageViewTouchPropagationTest::pageViewEvent(Ref *pSender, PageView::EventType type)
+{
+    switch (type)
+    {
+        case PageView::EventType::TURNING:
+        {
+            PageView* pageView = dynamic_cast<PageView*>(pSender);
+            
+            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+

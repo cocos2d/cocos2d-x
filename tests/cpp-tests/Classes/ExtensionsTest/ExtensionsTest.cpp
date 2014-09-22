@@ -18,11 +18,6 @@
 #include "NetworkTest/SocketIOTest.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
-#include "EditBoxTest/EditBoxTest.h"
-#endif
-
-#include "Scale9SpriteTest/Scale9SpriteTest.h"
 
 enum
 {
@@ -36,22 +31,13 @@ static struct {
 } g_extensionsTests[] = {
 	{ "NotificationCenterTest", [](Ref* sender) { runNotificationCenterTest(); }
 	},
-    { "Scale9SpriteTest", [](Ref* sender) {
-            auto scene = new S9SpriteTestScene();
-            if (scene)
-            {
-                scene->runThisTest();
-                scene->release();
-            }
-        }
-	},
 	{ "CCControlButtonTest", [](Ref *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
 		auto scene = pManager->currentControlScene();
 		Director::getInstance()->replaceScene(scene);
 	}},
 	{ "CocosBuilderTest", [](Ref *sender) {
-		auto scene = new CocosBuilderTestScene();
+		auto scene = new (std::nothrow) CocosBuilderTestScene();
 		if (scene)
 		{
 			scene->runThisTest();
@@ -68,25 +54,22 @@ static struct {
 	{ "SocketIOTest", [](Ref *sender){ runSocketIOTest();}
 	},
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	{ "EditBoxTest", [](Ref *sender){ runEditBoxTest();}
-	},
-#endif
+
 	{ "TableViewTest", [](Ref *sender){ runTableViewTest();}
 	},
-	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new ArmatureTestScene();
+	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new (std::nothrow) ArmatureTestScene();
 	                                       scene->runThisTest();
 	                                       scene->release();
 	}
 	},
-    { "CocoStudioActionTimelineTest", [](Ref *sender) { ActionTimelineTestScene *scene = new ActionTimelineTestScene();
+    { "CocoStudioActionTimelineTest", [](Ref *sender) { ActionTimelineTestScene *scene = new (std::nothrow) ActionTimelineTestScene();
     scene->runThisTest();
     scene->release();
     }
     },
     { "CocoStudioComponentsTest", [](Ref *sender) { runComponentsTestLayerTest(); }
     },
-	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new SceneEditorTestScene();
+	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new (std::nothrow) SceneEditorTestScene();
 	                                       scene->runThisTest();
 	                                       scene->release();
  }
@@ -159,7 +142,7 @@ void ExtensionsMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Eve
 
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
 
@@ -184,7 +167,7 @@ void ExtensionsMainLayer::onMouseScroll(Event* event)
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -200,7 +183,7 @@ void ExtensionsMainLayer::onMouseScroll(Event* event)
 
 void ExtensionsTestScene::runThisTest()
 {
-    auto layer = new ExtensionsMainLayer();
+    auto layer = new (std::nothrow) ExtensionsMainLayer();
     addChild(layer);
     layer->release();
     

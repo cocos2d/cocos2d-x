@@ -33,10 +33,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.ViewGroup;
-import android.util.Log;
-import android.widget.FrameLayout;
 import android.preference.PreferenceManager.OnActivityResultListener;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -50,12 +50,24 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// ===========================================================
 	
 	private Cocos2dxGLSurfaceView mGLSurfaceView;
+	private int[] glContextAttrs;
 	private Cocos2dxHandler mHandler;	
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
+	private Cocos2dxWebViewHelper mWebViewHelper = null;
 	
 	public static Context getContext() {
 		return sContext;
+	}
+	
+	public void setKeepScreenOn(boolean value) {
+		final boolean newValue = value;
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mGLSurfaceView.setKeepScreenOn(newValue);
+			}
+		});
 	}
 	
 	protected void onLoadNativeLibraries() {
@@ -84,11 +96,20 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	
     	Cocos2dxHelper.init(this);
     	
+    	this.glContextAttrs = getGLContextAttrs();
     	this.init();
+
     	if (mVideoHelper == null) {
     		mVideoHelper = new Cocos2dxVideoHelper(this, mFrameLayout);
 		}
+    	
+    	if(mWebViewHelper == null){
+    		mWebViewHelper = new Cocos2dxWebViewHelper(mFrameLayout);
+    	}
 	}
+
+	//native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
+	private static native int[] getGLContextAttrs();
 	
 	// ===========================================================
 	// Getter & Setter
@@ -182,7 +203,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
-           this.mGLSurfaceView.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+           this.mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
@@ -192,7 +213,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	}
 	
     public Cocos2dxGLSurfaceView onCreateView() {
-    	return new Cocos2dxGLSurfaceView(this);
+    	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+
+    	glSurfaceView.setEGLConfigChooser(this.glContextAttrs[0], this.glContextAttrs[1],this.glContextAttrs[2],
+    		this.glContextAttrs[3],this.glContextAttrs[4],this.glContextAttrs[5]);
+
+    	return glSurfaceView;
     }
 
    private final static boolean isAndroidEmulator() {

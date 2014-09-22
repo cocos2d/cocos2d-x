@@ -25,16 +25,10 @@
 #ifndef __CCBUNDLE3D_H__
 #define __CCBUNDLE3D_H__
 
-#include <map>
-
 #include "3d/CCBundle3DData.h"
-
-#include "base/ccMacros.h"
-#include "base/CCRef.h"
-#include "base/ccTypes.h"
-
+#include "3d/3dExport.h"
+#include "3d/CCBundleReader.h"
 #include "json/document.h"
-#include "CCBundleReader.h"
 
 NS_CC_BEGIN
 class Animation3D;
@@ -46,7 +40,7 @@ class Data;
  * c3t text file
  * c3b binary file
  */
-class CC_DLL Bundle3D
+class CC_3D_DLL Bundle3D
 {
 public:
     /**you can define yourself bundle and set it, use default bundle otherwise*/
@@ -89,28 +83,39 @@ public:
      */
     virtual bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
-    /**
-     * load skeleton data from bundle
-     *
-     */
-    virtual bool loadSkeletonData(const std::string& id, Skeleton3DData* skeletondata);
-
+    //since 3.3, to support reskin
+    virtual bool loadMeshDatas(MeshDatas& meshdatas);
+    //since 3.3, to support reskin
+    virtual bool loadNodes(NodeDatas& nodedatas);
+    //since 3.3, to support reskin
+    virtual bool loadMaterials(MaterialDatas& materialdatas);
+    
+    //load .obj file
+    static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
+  
 protected:
 
     bool loadJson(const std::string& path);
-    
-    bool loadMeshDataJson(MeshData* meshdata);
-    bool loadMeshDataJson_0_1(MeshData* meshdata);
-    bool loadMeshDataJson_0_2(MeshData* meshdata);
-    
+    bool loadMeshDatasJson(MeshDatas& meshdatas);
+    bool loadMeshDataJson_0_1(MeshDatas& meshdatas);
+    bool loadMeshDataJson_0_2(MeshDatas& meshdatas);
+    bool loadMeshDatasBinary(MeshDatas& meshdatas);
+    bool loadMeshDatasBinary_0_1(MeshDatas& meshdatas);
+    bool loadMeshDatasBinary_0_2(MeshDatas& meshdatas);
+    bool loadMaterialsJson(MaterialDatas& materialdatas);
+    bool loadMaterialDataJson_0_1(MaterialDatas& materialdatas);
+    bool loadMaterialDataJson_0_2(MaterialDatas& materialdatas);
+    bool loadMaterialsBinary(MaterialDatas& materialdatas);
+    bool loadMaterialsBinary_0_1(MaterialDatas& materialdatas);
+    bool loadMaterialsBinary_0_2(MaterialDatas& materialdatas);
+    bool loadMeshDataJson(MeshData* meshdata){return true;}
+    bool loadMeshDataJson_0_1(MeshData* meshdata){return true;}
+    bool loadMeshDataJson_0_2(MeshData* meshdata){return true;}
     bool loadSkinDataJson(SkinData* skindata);
-    
-    bool loadMaterialDataJson(MaterialData* materialdata);
-    bool loadMaterialDataJson_0_1(MaterialData* materialdata);
-    bool loadMaterialDataJson_0_2(MaterialData* materialdata);
-    
+    bool loadMaterialDataJson(MaterialData* materialdata){return true;}
+    bool loadMaterialDataJson_0_1(MaterialData* materialdata){return true;}
+    bool loadMaterialDataJson_0_2(MaterialData* materialdata){return true;}
     bool loadAnimationDataJson(Animation3DData* animationdata);
-
     /**
      * load data in binary
      * @param path The c3b file path
@@ -143,11 +148,31 @@ protected:
      */
     bool loadAnimationDataBinary(Animation3DData* animationdata);
 
+    bool checkIsBone(const std::string& name);
+
+    /**
+     * load nodes of json
+     */
+    bool loadNodesJson(NodeDatas& nodedatas);
+    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
+
+    /**
+     * load nodes of binary
+     */
+    bool loadNodesBinary(NodeDatas& nodedatas);
+    NodeData* parseNodesRecursivelyBinary(bool& skeleton);
+
     /**
      * get define data type
      * @param str The type in string
      */
     GLenum parseGLType(const std::string& str);
+
+     /**
+     * get define data type
+     * @param str The type in string
+     */
+    NTextureData::Usage parseGLTextureType(const std::string& str);
 
     /**
      * get vertex attribute type
@@ -167,16 +192,15 @@ protected:
     */
     Reference* seekToFirstType(unsigned int type);
 
-protected:
 CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
-    ~Bundle3D();
+    virtual ~Bundle3D();
     
 protected:
     
     static Bundle3D* _instance;
     
-    std::string _modelRelativePath;
+    std::string _modelPath;
     std::string         _path;
     
     std::string _version;// the c3b or c3t version
@@ -190,7 +214,6 @@ protected:
     BundleReader _binaryReader;
     unsigned int _referenceCount;
     Reference* _references;
-
     bool  _isBinary;
 };
 

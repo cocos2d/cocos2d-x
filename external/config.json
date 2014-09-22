@@ -1,9 +1,0 @@
-{
-    "version":"v3-deps-7",
-    "zip_file_size":"67964573",
-    "repo_name":"cocos2d-x-3rd-party-libs-bin",
-    "repo_parent":"https://github.com/cocos2d/",
-    "move_dirs":{
-        "fbx-conv":"tools"
-    }
-}

@@ -28,7 +28,7 @@
 
 #include <stdint.h>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -50,6 +50,7 @@ public:
         GROUP_COMMAND,
         MESH_COMMAND,
         PRIMITIVE_COMMAND,
+        TRIANGLES_COMMAND
     };
 
     /** Get Render Command Id */
@@ -57,6 +58,12 @@ public:
 
     /** Returns the Command type */
     inline Type getType() const { return _type; }
+    
+    /** Retruns whether is transparent */
+    inline bool isTransparent() const { return _isTransparent; }
+    
+    /** set transparent flag */
+    inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
 
 protected:
     RenderCommand();
@@ -69,6 +76,9 @@ protected:
 
     // commands are sort by depth
     float _globalOrder;
+    
+    // transparent flag
+    bool  _isTransparent;
 };
 
 NS_CC_END

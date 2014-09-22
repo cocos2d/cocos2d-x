@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2dx_static
+LOCAL_MODULE := cocos2dx_internal_static
 
-LOCAL_MODULE_FILENAME := libcocos2d
+LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
@@ -74,22 +74,6 @@ cocos2d.cpp \
 2d/CCTransitionPageTurn.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
-3d/CCRay.cpp\
-3d/CCAABB.cpp \
-3d/CCOBB.cpp \
-3d/CCAnimate3D.cpp \
-3d/CCAnimation3D.cpp \
-3d/CCAttachNode.cpp \
-3d/CCBundle3D.cpp \
-3d/CCBundleReader.cpp \
-3d/CCMesh.cpp \
-3d/CCMeshSkin.cpp \
-3d/CCSprite3DMaterial.cpp \
-3d/CCObjLoader.cpp \
-3d/CCSkeleton3D.cpp \
-3d/CCSprite3D.cpp \
-3d/CCSubMesh.cpp \
-3d/CCSubMeshState.cpp \
 platform/CCGLView.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
@@ -130,15 +114,15 @@ base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
 base/CCEventTouch.cpp \
 base/CCIMEDispatcher.cpp \
-base/CCModuleManager.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
+base/ccRandom.cpp \
 base/CCRef.cpp \
 base/CCScheduler.cpp \
 base/CCScriptSupport.cpp \
 base/CCTouch.cpp \
 base/CCUserDefault.cpp \
-base/CCUserDefaultAndroid.cpp \
+base/CCUserDefault-android.cpp \
 base/CCValue.cpp \
 base/TGAlib.cpp \
 base/ZipUtils.cpp \
@@ -175,6 +159,7 @@ renderer/CCVertexIndexBuffer.cpp \
 renderer/CCVertexIndexData.cpp \
 renderer/CCPrimitive.cpp \
 renderer/CCPrimitiveCommand.cpp \
+renderer/CCTrianglesCommand.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \
@@ -202,16 +187,17 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
-                    $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/platform \
+                    $(LOCAL_PATH)/base \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/nslog
+                    $(LOCAL_PATH)/../external/nslog 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
-                    $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -226,10 +212,14 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz \
                        -landroid
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
-LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_png_static
+LOCAL_STATIC_LIBRARIES := cocos_freetype2_static
+LOCAL_STATIC_LIBRARIES += cocos_png_static
+LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
+LOCAL_STATIC_LIBRARIES += cocos_tiff_static
+LOCAL_STATIC_LIBRARIES += cocos_webp_static
+LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
+
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
@@ -239,7 +229,40 @@ LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 
 include $(BUILD_STATIC_LIBRARY)
 
+#==============================================================
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := cocos2dx_static
+
+LOCAL_MODULE_FILENAME := libcocos2d
+
+LOCAL_STATIC_LIBRARIES := cocostudio_static
+LOCAL_STATIC_LIBRARIES += audioengine_static
+LOCAL_STATIC_LIBRARIES += cocos3d_static
+LOCAL_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_STATIC_LIBRARIES += spine_static
+LOCAL_STATIC_LIBRARIES += cocos_network_static
+LOCAL_STATIC_LIBRARIES += box2d_static
+
+include $(BUILD_STATIC_LIBRARY)
+#==============================================================
 $(call import-module,freetype2/prebuilt/android)
-$(call import-module,chipmunk)
 $(call import-module,platform/android)
 $(call import-module,png/prebuilt/android)
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)
+$(call import-module,chipmunk/prebuilt/android)
+$(call import-module,3d)
+$(call import-module,audio/android)
+$(call import-module,editor-support/cocosbuilder)
+$(call import-module,editor-support/cocostudio)
+$(call import-module,editor-support/spine)
+$(call import-module,network)
+$(call import-module,ui)
+$(call import-module,extensions)
+$(call import-module,Box2D)
+$(call import-module,curl/prebuilt/android)
+$(call import-module,websockets/prebuilt/android)
+

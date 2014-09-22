@@ -233,7 +233,7 @@ void LuaMinXmlHttpRequest::_sendRequest()
         free((void*) concatHeader);
         free((void*) concatenated);
         
-        // call back lua function --TODO
+        // TODO: call back lua function
         int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
         
         if (0 != handler)
@@ -279,7 +279,7 @@ static int lua_cocos2dx_XMLHttpRequest_constructor(lua_State* L)
     argc = lua_gettop(L)-1;
     if (argc == 0)
     {
-        self = new LuaMinXmlHttpRequest();
+        self = new (std::nothrow) LuaMinXmlHttpRequest();
         self->autorelease();
         int ID =  self? (int)self->_ID : -1;
         int* luaID = self? &self->_luaID : NULL;

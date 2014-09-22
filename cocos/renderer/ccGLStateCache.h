@@ -30,8 +30,8 @@ THE SOFTWARE.
 
 #include <cstdint>
 
-#include "CCGL.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCGL.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

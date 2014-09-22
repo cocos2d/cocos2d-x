@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCActionObject.h"
-#include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocoLoader.h"
 
 #include "base/CCDirector.h"
@@ -115,7 +114,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
     int maxLength = 0;
     for (int i=0; i<actionNodeCount; i++) {
-        ActionNode* actionNode = new ActionNode();
+        ActionNode* actionNode = new (std::nothrow) ActionNode();
         actionNode->autorelease();
         const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
@@ -156,7 +155,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
         stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(cocoLoader);
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
-            ActionNode* actionNode = new ActionNode();
+            ActionNode* actionNode = new (std::nothrow) ActionNode();
             actionNode->autorelease();
             
             actionNode->initWithBinary(cocoLoader, &actionNodeArray[i] , root);

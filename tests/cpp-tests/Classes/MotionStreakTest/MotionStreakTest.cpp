@@ -230,7 +230,7 @@ void MotionStreakTest::modeCallback(Ref *pSender)
 
 void MotionStreakTest::restartCallback(Ref* sender)
 {
-    auto s = new MotionStreakTestScene();//CCScene::create();
+    auto s = new (std::nothrow) MotionStreakTestScene();//CCScene::create();
     s->addChild(restartMotionAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -239,7 +239,7 @@ void MotionStreakTest::restartCallback(Ref* sender)
 
 void MotionStreakTest::nextCallback(Ref* sender)
 {
-    auto s = new MotionStreakTestScene();//CCScene::create();
+    auto s = new (std::nothrow) MotionStreakTestScene();//CCScene::create();
     s->addChild( nextMotionAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -247,7 +247,7 @@ void MotionStreakTest::nextCallback(Ref* sender)
 
 void MotionStreakTest::backCallback(Ref* sender)
 {
-    auto s = new MotionStreakTestScene;//CCScene::create();
+    auto s = new (std::nothrow) MotionStreakTestScene;//CCScene::create();
     s->addChild( backMotionAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

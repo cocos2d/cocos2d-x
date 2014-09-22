@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloCpp", "App\HelloCpp.csproj", "{83CC88FE-7E79-4E1E-A129-742987130B5C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCppComponent", "AppComponent\HelloCppComponent.vcxproj", "{60EC6889-C3C4-45AD-A006-47D9EE689212}"
@@ -7,8 +9,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos2d\cocos\2d\cocos2d_wp8.vcxproj", "{B5AF91B3-64EA-44E1-84B0-D759E93758FB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion", "..\cocos2d\cocos\audio\proj.wp8\CocosDenshion.vcxproj", "{DF125891-EEE9-4466-B903-F828FD272158}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk", "..\cocos2d\external\chipmunk\proj.wp8\chipmunk.vcxproj", "{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "..\cocos2d\extensions\proj.wp8\libExtensions.vcxproj", "{04A0C42F-23BB-469B-A9D8-CA49136ADBD4}"
 EndProject
@@ -124,24 +124,6 @@ Global
 		{DF125891-EEE9-4466-B903-F828FD272158}.Release|Win32.Build.0 = Release|Win32
 		{DF125891-EEE9-4466-B903-F828FD272158}.Release|x86.ActiveCfg = Release|Win32
 		{DF125891-EEE9-4466-B903-F828FD272158}.Release|x86.Build.0 = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|ARM.ActiveCfg = Debug|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|ARM.Build.0 = Debug|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Win32.Build.0 = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|x86.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|x86.Build.0 = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Any CPU.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|ARM.ActiveCfg = Release|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|ARM.Build.0 = Release|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Win32.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Win32.Build.0 = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|x86.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|x86.Build.0 = Release|Win32
 		{04A0C42F-23BB-469B-A9D8-CA49136ADBD4}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{04A0C42F-23BB-469B-A9D8-CA49136ADBD4}.Debug|ARM.ActiveCfg = Debug|ARM
 		{04A0C42F-23BB-469B-A9D8-CA49136ADBD4}.Debug|ARM.Build.0 = Debug|ARM

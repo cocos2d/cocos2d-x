@@ -277,7 +277,7 @@ bool UITextFieldTest_LineWrap::init()
         textField->ignoreContentAdaptWithSize(false);
         ((Label*)(textField->getVirtualRenderer()))->setLineBreakWithoutSpace(true);
         textField->setContentSize(Size(240, 170));
-        textField->setText("input words here");
+        textField->setString("input words here");
         textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
         textField->setTextVerticalAlignment(TextVAlignment::CENTER);
         textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));

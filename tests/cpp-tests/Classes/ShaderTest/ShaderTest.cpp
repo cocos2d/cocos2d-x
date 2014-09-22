@@ -65,7 +65,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 void ShaderTestDemo::backCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();
+    auto s = new (std::nothrow) ShaderTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -73,7 +73,7 @@ void ShaderTestDemo::backCallback(Ref* sender)
 
 void ShaderTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();//CCScene::create();
+    auto s = new (std::nothrow) ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -91,7 +91,7 @@ std::string ShaderTestDemo::subtitle() const
 
 void ShaderTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();
+    auto s = new (std::nothrow) ShaderTestScene();
     s->addChild(restartAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -122,7 +122,7 @@ ShaderNode::~ShaderNode()
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
 {
-    auto node = new ShaderNode();
+    auto node = new (std::nothrow) ShaderNode();
     node->initWithVertex(vert, frag);
     node->autorelease();
 
@@ -439,7 +439,7 @@ SpriteBlur::~SpriteBlur()
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
-    SpriteBlur* pRet = new SpriteBlur();
+    SpriteBlur* pRet = new (std::nothrow) SpriteBlur();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();

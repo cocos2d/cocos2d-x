@@ -348,7 +348,7 @@ std::string TextureTest::subtitle() const
 Scene* TextureTest::scene()
 {
     auto scene = Scene::create();
-    TextureTest *layer = new TextureTest(false, TEST_COUNT, s_nTexCurCase);
+    TextureTest *layer = new (std::nothrow) TextureTest(false, TEST_COUNT, s_nTexCurCase);
     scene->addChild(layer);
     layer->release();
 

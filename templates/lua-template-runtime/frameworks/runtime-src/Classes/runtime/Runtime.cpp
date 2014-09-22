@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "zlib.h"
 #include "lua.h"
 
+// header files for directory operation
 #ifdef _WIN32
 #include <direct.h>
 #else
@@ -50,40 +51,53 @@ using namespace std;
 using namespace cocos2d;
 
 std::string g_resourcePath;
-
-namespace cocos2d {
-    extern const char* cocos2dVersion();
-};
+static std::string g_projectPath;
 
 //1M size 
 #define MAXPROTOLENGTH 1048576
+
+#define PROTO_START "RuntimeSend:"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define usleep(t) Sleep(t)
 #else
-#include <unistd.h>
 #define usleep(t) usleep(t)
 #endif
 
 extern string getIPAddress();
+
 const char* getRuntimeVersion()
 {
-    return "1.3";
+    return "1.4";
 }
 
-static string& replaceAll(string& str,const string& old_value,const string& new_value)
+static string& replaceAll(string& str, const string& old_value, const string& new_value)
 {
-    int start = 0;
+    size_t start = 0;
     while(true)
     {
-        int pos=0;
-        if((pos=str.find(old_value,start))!=string::npos) {
-            str.replace(pos,old_value.length(),new_value);
+        size_t pos = 0;
+        if((pos = str.find(old_value, start)) != string::npos) {
+            str.replace(pos, old_value.length(), new_value);
             start = pos + new_value.length();
         }
         else break;
     }
     return str;
 }
+
+void startScript(string strDebugArg)
+{
+    // register lua engine
+    auto engine = LuaEngine::getInstance();
+    if (!strDebugArg.empty())
+    {
+        engine->executeString(strDebugArg.c_str());
+    }
+    cocos2d::log("debug args = %s", strDebugArg.c_str());
+    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
+}
+
 static bool resetLuaModule(string fileName)
 {
     if (fileName.empty())
@@ -93,23 +107,23 @@ static bool resetLuaModule(string fileName)
     }
     auto engine = LuaEngine::getInstance();
     LuaStack* luaStack = engine->getLuaStack();
-    lua_State* stack=luaStack->getLuaState();
+    lua_State* stack = luaStack->getLuaState();
     lua_getglobal(stack, "package");                         /* L: package */
     lua_getfield(stack, -1, "loaded");                       /* L: package loaded */
     lua_pushnil(stack);                                     /* L: lotable ?-.. nil */
-    while ( 0 != lua_next(stack, -2 ) )                     /* L: lotable ?-.. key value */
+    while (0 != lua_next(stack, -2))                     /* L: lotable ?-.. key value */
     {
         //CCLOG("%s - %s \n", tolua_tostring(stack, -2, ""), lua_typename(stack, lua_type(stack, -1)));
-        std::string key=tolua_tostring(stack, -2, "");
-        std::string tableKey =key;
-        int found = tableKey.rfind(".lua");
-        if (found!=std::string::npos)
-            tableKey = tableKey.substr(0,found);
-        tableKey=replaceAll(tableKey,".","/");
-        tableKey=replaceAll(tableKey,"\\","/");
+        std::string key = tolua_tostring(stack, -2, "");
+        std::string tableKey = key;
+        size_t found = tableKey.rfind(".lua");
+        if (found != std::string::npos)
+            tableKey = tableKey.substr(0, found);
+        tableKey = replaceAll(tableKey, ".", "/");
+        tableKey = replaceAll(tableKey, "\\", "/");
         tableKey.append(".lua");
         found = fileName.rfind(tableKey);
-        if (0 == found || ( found!=std::string::npos && fileName.at(found-1) == '/'))
+        if (0 == found || ( found != std::string::npos && fileName.at(found - 1) == '/'))
         {
             lua_pushstring(stack, key.c_str());
             lua_pushnil(stack);
@@ -123,7 +137,7 @@ static bool resetLuaModule(string fileName)
     lua_pop(stack, 2);
     return true;
 }
-bool reloadScript(string modulefile)
+bool reloadScript(const string& file)
 {
     auto director = Director::getInstance();
     FontFNT::purgeCachedData();
@@ -133,6 +147,7 @@ bool reloadScript(string modulefile)
         director->getTextureCache()->removeAllTextures();
     }
     FileUtils::getInstance()->purgeCachedEntries();
+    string modulefile = file;
     if (!resetLuaModule(modulefile))
     {
         modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
@@ -142,22 +157,9 @@ bool reloadScript(string modulefile)
     std::string require = "require \'" + modulefile + "\'";
     return luaStack->executeString(require.c_str());
 }
-void startScript(string strDebugArg)
-{
-    // register lua engine
-    auto engine = LuaEngine::getInstance();
-    if (!strDebugArg.empty())
-    {
-        engine->executeString(strDebugArg.c_str());
-    }
-    cocos2d::log("debug args = %s",strDebugArg.c_str());
-    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
-}
 
-
-    
-
-#if defined(_MSC_VER) || defined(__MINGW32__)
+// header files for socket
+#ifdef _WIN32
 #include <io.h>
 #include <WS2tcpip.h>
 
@@ -165,20 +167,20 @@ void startScript(string strDebugArg)
 
 #else
 #include <netdb.h>
-#include <unistd.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <sys/un.h>
 #endif
 
 class  FileServer
 {
    static FileServer *s_sharedFileServer;
 public:
-    static FileServer* getShareInstance(){
-        if (s_sharedFileServer == nullptr){
-            s_sharedFileServer=new FileServer();
+    static FileServer* getShareInstance()
+    {
+        if (s_sharedFileServer == nullptr)
+        {
+            s_sharedFileServer = new FileServer();
         }
         return s_sharedFileServer;
     }
@@ -188,23 +190,27 @@ public:
     void readResFileFinfo();
     void addResFileInfo(const char* filename,uint64_t u64);
     void removeResFileInfo(const char *filename);
-    rapidjson::Document* getFileCfgJson(){
+    rapidjson::Document* getFileCfgJson()
+    {
         return &_filecfgjson;
     };
-    string getTransingFileName(){
+    string getTransingFileName()
+    {
         _fileNameMutex.lock();
         string filename = _strFileName;
         _fileNameMutex.unlock();
         return filename;
     }
 protected:
-    FileServer(){
+    FileServer()
+    {
         _listenfd = -1;
         _running = false;
         _endThread = false;
         _protoBuf =nullptr;
     }
-    ~FileServer(){
+    ~FileServer()
+    {
         CC_SAFE_DELETE_ARRAY(_protoBuf);
     }
 private:
@@ -214,10 +220,10 @@ private:
     void addResponse(int fd, string filename,int errortype,int errornum);
     enum PROTONUM
     {
-        FILEPROTO=1,
-        FILESENDCOMPLETE=2,
-        DIRPROTO=3,
-        DIRSENDCOMPLETE=4
+        FILEPROTO = 1,
+        FILESENDCOMPLETE = 2,
+        DIRPROTO = 3,
+        DIRSENDCOMPLETE = 4
     };
 
     struct RecvBufStruct
@@ -266,16 +272,17 @@ void FileServer::readResFileFinfo()
     filecfg.append("/");
     filecfg.append("fileinfo_debug.json");
     FILE * pFile = fopen (filecfg.c_str() , "r");
-    if(pFile){
+    if(pFile)
+    {
         rapidjson::FileStream inputStream(pFile);
         _filecfgjson.ParseStream<0>(inputStream);
         fclose(pFile);
     }
-    if(!_filecfgjson.IsObject()){
+    if(! _filecfgjson.IsObject()){
         _filecfgjson.SetObject();
     }
 
-    //save file info to disk every ten second
+    //save file info to disk every five second
     Director::getInstance()->getScheduler()->schedule([&](float){
         rapidjson::StringBuffer buffer;
         rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
@@ -284,25 +291,25 @@ void FileServer::readResFileFinfo()
         string filecfg = g_resourcePath;
         filecfg.append("/");
         filecfg.append("fileinfo_debug.json");
-        FILE * pFile = fopen (filecfg.c_str() , "w");
+        FILE * pFile = fopen(filecfg.c_str(), "w");
         if (!pFile) return ;
-        fwrite(str,sizeof(char),strlen(str),pFile);
+        fwrite(str,sizeof(char), strlen(str), pFile);
         fclose(pFile);
     },this, 5.0f, false, "fileinfo");
 }
 
 void FileServer::addResFileInfo(const char* filename,uint64_t u64)
 {
-    if (_filecfgjson.HasMember(filename)){
+    if(_filecfgjson.HasMember(filename)){
         _filecfgjson.RemoveMember(filename);
     }
     char filetime[512]= {0};
-    sprintf(filetime,"%llu",u64);
+    sprintf(filetime, "%llu", u64);
     rapidjson::Value filetimeValue(rapidjson::kStringType);
-    filetimeValue.SetString(filetime,_filecfgjson.GetAllocator());
+    filetimeValue.SetString(filetime, _filecfgjson.GetAllocator());
     rapidjson::Value filenameValue(rapidjson::kStringType);
     filenameValue.SetString(filename,_filecfgjson.GetAllocator());
-    _filecfgjson.AddMember(filenameValue.GetString(),filetimeValue,_filecfgjson.GetAllocator());
+    _filecfgjson.AddMember(filenameValue.GetString(), filetimeValue, _filecfgjson.GetAllocator());
 }
 
 void FileServer::removeResFileInfo(const char *filename)
@@ -349,9 +356,10 @@ bool FileServer::listenOnTCP(int port)
             break;          /* success */
         
         close(listenfd);    /* bind error, close and try next one */
-    } while ( (res = res->ai_next) != NULL);
+    } while ((res = res->ai_next) != NULL);
 
-    if (res == NULL) {
+    if (res == NULL)
+    {
         perror("net_listen:");
         freeaddrinfo(ressave);
         return false;
@@ -386,7 +394,8 @@ bool FileServer::listenOnTCP(int port)
     
 void FileServer::stop()
 {
-    if( _running ) {
+    if(_running)
+    {
         _endThread = true;
         _receiveThread.join();
         _writeThread.join();
@@ -394,50 +403,68 @@ void FileServer::stop()
     }
 }
 
-
 static bool CreateDir(const char *sPathName)
 {
     char   DirName[256]={0};
-    strcpy(DirName,   sPathName);
-    int   i,len   =   strlen(DirName);
-    if(DirName[len-1]!='/')
-        strcat(DirName,   "/");
-    
-    len   =   strlen(DirName);
-    for(i=1;   i<len;   i++)
+    strcpy(DirName, sPathName);
+    size_t i, len = strlen(DirName);
+    if(DirName[len-1] != '/')
     {
-        if(DirName[i]=='/')
+        strcat(DirName, "/");
+    }
+    
+    len = strlen(DirName);
+    for(i = 1; i < len; i++)
+    {
+        if(DirName[i] == '/')
         {
-            DirName[i]   =   0;
-            if(access(DirName,   NULL)!=0   )
+            DirName[i] = 0;
+            if(access(DirName, NULL) != 0)
             {
 #ifdef _WIN32
-                if(_mkdir(DirName/*,   0755*/)==-1)
+                if(_mkdir(DirName/*, 0755*/) == -1)
 #else
-                if(mkdir(DirName,   0755)==-1)
+                if(mkdir(DirName, 0755) == -1)
 #endif
                 {
-                    perror("mkdir   error");
-                    return  false;
+                    perror("mkdir error");
+                    return false;
                 }
             }  
-            DirName[i]   =   '/';  
+            DirName[i] = '/';  
         }  
     }  
     
-    return   true;  
+    return true;
 }
 
-static void recvBuf(int fd,char *pbuf,int bufsize)
+static void recvBuf(int fd, char *pbuf, unsigned long bufsize)
 {
-    int startFlagLen = bufsize;
-    while (startFlagLen != 0){
-        int recvlen = recv(fd, pbuf+bufsize-startFlagLen,startFlagLen ,0);
-        if (recvlen<=0) {
+    unsigned long leftLength = bufsize;
+    while (leftLength != 0)
+    {
+        size_t recvlen = recv(fd, pbuf + bufsize - leftLength, leftLength ,0);
+        if (recvlen <= 0)
+        {
             usleep(1);
             continue;
         }
-        startFlagLen -= recvlen;
+        leftLength -= recvlen;
+    }
+}
+
+static void sendBuf(int fd, const char *pbuf, unsigned long bufsize)
+{
+    unsigned long leftLength = bufsize;
+    while (leftLength != 0)
+    {
+        size_t sendlen = send(fd, pbuf + bufsize - leftLength, leftLength ,0);
+        if (sendlen <= 0)
+        {
+            usleep(1);
+            continue;
+        }
+        leftLength -= sendlen;
     }
 }
 
@@ -447,18 +474,20 @@ void FileServer::loopReceiveFile()
     socklen_t client_len;
 
     /* new client */
-    client_len = sizeof( client );
+    client_len = sizeof(client);
     int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
-    if (_protoBuf == nullptr){
+    if (_protoBuf == nullptr)
+    {
         _protoBuf = new char[MAXPROTOLENGTH];
     }
 
     while(!_endThread) { 
 
         // recv start flag
-        char startflag[13]={0};
-        recvBuf(fd,startflag,sizeof(startflag)-1);
-        if (strcmp(startflag,"RuntimeSend:")!=0){
+        char startflag[13] = {0};
+        recvBuf(fd, startflag, sizeof(startflag) - 1);
+        if (strcmp(startflag, PROTO_START) != 0)
+        {
             continue;
         }
     
@@ -468,55 +497,58 @@ void FileServer::loopReceiveFile()
             char char_type[3];
             unsigned short uint16_type;
         }protonum;
-        recvBuf(fd,protonum.char_type,sizeof(protonum.char_type) - 1);
+        recvBuf(fd, protonum.char_type, sizeof(protonum.char_type) - 1);
         //recv protobuf length
         union 
         {
             char char_type[3];
             unsigned short uint16_type;
         }protolength;
-        recvBuf(fd,protolength.char_type,sizeof(protolength.char_type) - 1);
+        recvBuf(fd, protolength.char_type, sizeof(protolength.char_type) - 1);
 
         //recv variable length
-        memset(_protoBuf,0,MAXPROTOLENGTH);
-        recvBuf(fd,_protoBuf,protolength.uint16_type);
+        memset(_protoBuf, 0, MAXPROTOLENGTH);
+        recvBuf(fd, _protoBuf, protolength.uint16_type);
 
         RecvBufStruct recvDataBuf;
         recvDataBuf.fd = fd;
         recvDataBuf.fileProto.ParseFromString(_protoBuf);
-        if (1 == recvDataBuf.fileProto.package_seq()){
+        if (1 == recvDataBuf.fileProto.package_seq())
+        {
             _recvErrorFile = "";
-        }else{
+        } else
+        {
             // recv error
-            if (_recvErrorFile == recvDataBuf.fileProto.file_name()){
+            if (_recvErrorFile == recvDataBuf.fileProto.file_name())
+            {
                 continue;
             }
         }
-        int contentSize = recvDataBuf.fileProto.content_size();
+        unsigned long contentSize = recvDataBuf.fileProto.content_size();
         if (contentSize == 0)
         {
             recvDataBuf.contentBuf="";
             _recvBufListMutex.lock();
             _recvBufList.push_back(recvDataBuf);
             _recvBufListMutex.unlock();
-        }else if(contentSize>0)
+        }else if(contentSize > 0)
         {  
             //recv body data
-            Bytef *contentbuf= new Bytef[contentSize+1];
-            memset(contentbuf,0,contentSize+1);
-            int recvTotalLen = contentSize;
+            Bytef *contentbuf = new Bytef[contentSize+1];
+            memset(contentbuf, 0, contentSize+1);
+            unsigned long recvTotalLen = contentSize;
             while (recvTotalLen != 0){
-                int recvLen = MAXPROTOLENGTH;
+                unsigned long recvLen = MAXPROTOLENGTH;
                 if(recvTotalLen < MAXPROTOLENGTH)
                     recvLen = recvTotalLen;
-                memset(_protoBuf,0,MAXPROTOLENGTH);
-                int result= recv(fd, _protoBuf, recvLen,0);
-                //cocos2d::log("recv fullfilename = %s,file size:%d",recvDataBuf.fileProto.file_name().c_str(),result);
-                if (result<=0) {
+                memset(_protoBuf, 0, MAXPROTOLENGTH);
+                unsigned long result = recv(fd, _protoBuf, recvLen,0);
+                if (result <= 0)
+                {
                     usleep(1);
                     continue;
                 }
-                memcpy(contentbuf+contentSize-recvTotalLen,_protoBuf,result);
+                memcpy(contentbuf + contentSize - recvTotalLen, _protoBuf, result);
                 recvTotalLen -= result;
             }
         
@@ -528,14 +560,14 @@ void FileServer::loopReceiveFile()
                 if (err != Z_OK){
                     CC_SAFE_DELETE_ARRAY(buff);
                     CC_SAFE_DELETE_ARRAY(contentbuf);
-                    addResponse(recvDataBuf.fd,recvDataBuf.fileProto.file_name(),runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR,err);
+                    addResponse(recvDataBuf.fd, recvDataBuf.fileProto.file_name(), runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_UNCOMPRESS_ERROR, err);
                     continue;
                 }
                 CC_SAFE_DELETE_ARRAY(contentbuf);
                 contentbuf = buff;
                 contentSize = uncompressSize; 
             }
-            recvDataBuf.contentBuf.assign((const char*)contentbuf,contentSize);
+            recvDataBuf.contentBuf.assign((const char*)contentbuf, contentSize);
             CC_SAFE_DELETE_ARRAY(contentbuf);
         
             _recvBufListMutex.lock();
@@ -547,11 +579,13 @@ void FileServer::loopReceiveFile()
     
 void FileServer::loopWriteFile()
 {
-     while(!_endThread) { 
+     while(!_endThread)
+     {
          _recvBufListMutex.lock();
-         int recvSize = _recvBufList.size();
+         size_t recvSize = _recvBufList.size();
          _recvBufListMutex.unlock();
-         if(0 == recvSize){
+         if(0 == recvSize)
+         {
              usleep(500);
              continue;
          }
@@ -567,40 +601,47 @@ void FileServer::loopWriteFile()
          _strFileName = filename;
          _fileNameMutex.unlock();
          //cocos2d::log("WriteFile:: fullfilename = %s",filename.c_str());
-         CreateDir(fullfilename.substr(0,fullfilename.find_last_of("/")).c_str());
+         CreateDir(fullfilename.substr(0, fullfilename.find_last_of("/")).c_str());
 
          FILE *fp= nullptr;
-         if (1 == recvDataBuf.fileProto.package_seq()){
+         if (1 == recvDataBuf.fileProto.package_seq())
+         {
              _writeErrorFile ="";
-             fp=fopen(fullfilename.c_str(), "wb");
-         }else{
-             if (_writeErrorFile == filename){
+             fp = fopen(fullfilename.c_str(), "wb");
+         } else
+         {
+             if (_writeErrorFile == filename)
+             {
                  continue;
              }
              fp=fopen(fullfilename.c_str(), "ab");
          }
-         if (nullptr == fp){
-              addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR,errno);
+         if (nullptr == fp)
+         {
+              addResponse(recvDataBuf.fd, filename, runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FOPEN_ERROR, errno);
               continue;
          }
-         if (fp){
-             if (recvDataBuf.contentBuf.size() > 0 && 0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(),fp)){
-                 addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR,errno);
+         if (fp)
+         {
+             if (recvDataBuf.contentBuf.size() > 0 && 0 == fwrite(recvDataBuf.contentBuf.c_str(), sizeof(char), recvDataBuf.contentBuf.size(), fp))
+             {
+                 addResponse(recvDataBuf.fd, filename, runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_FWRITE_ERROR, errno);
                  fclose(fp);
                  continue;
              }
              fclose(fp);
          }
 
-         if (1 == recvDataBuf.fileProto.package_seq()){ // == recvDataBuf.fileProto.package_sum()
+         if (1 == recvDataBuf.fileProto.package_seq())
+         {
              //record new file modify
-             addResFileInfo(filename.c_str(),recvDataBuf.fileProto.modified_time());
-             addResponse(recvDataBuf.fd,filename,runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS,0);
+             addResFileInfo(filename.c_str(), recvDataBuf.fileProto.modified_time());
+             addResponse(recvDataBuf.fd, filename, runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS, 0);
          }
      }
 }
 
-void FileServer::addResponse(int fd, string filename,int errortype,int errornum)
+void FileServer::addResponse(int fd, string filename, int errortype, int errornum)
 {
     switch (errortype)
     {
@@ -632,10 +673,12 @@ void FileServer::loopResponse()
 {
     while(!_endThread) {
         _responseBufListMutex.lock();
-        int responseSize =  _responseBufList.size();
+        size_t responseSize = _responseBufList.size();
         _responseBufListMutex.unlock();
-        if(0 == responseSize){
+        if(0 == responseSize)
+        {
             usleep(500);
+            /* error */
             continue;
         }
 
@@ -650,22 +693,22 @@ void FileServer::loopResponse()
         fileSendProtoComplete.set_result(responseBuf.fileResponseProto.result());
         fileSendProtoComplete.set_error_num(responseBuf.fileResponseProto.error_num());
         fileSendProtoComplete.SerializeToString(&responseString);
-        char dataBuf[1024] ={0};
-        struct ResponseStruct 
+        char dataBuf[1024] = {0};
+        struct ResponseHeaderStruct
         {
             char startFlag[12];
             unsigned short protoNum;
             unsigned short protoBufLen;
         };
-        ResponseStruct responseData;
-        strcpy(responseData.startFlag,"RuntimeSend:");
-        responseData.protoNum=PROTONUM::FILESENDCOMPLETE;
-        responseData.protoBufLen= (unsigned short)responseString.size();
-        memcpy(dataBuf,&responseData,sizeof(responseData));
-        memcpy(dataBuf+sizeof(responseData),responseString.c_str(),responseString.size());
-        cocos2d::log("responseFile:%s,result:%d",fileSendProtoComplete.file_name().c_str(),fileSendProtoComplete.result());
-        int sendLen = send(responseBuf.fd, dataBuf, sizeof(responseData)+responseString.size(),0);
-        //pop response buf
+        ResponseHeaderStruct responseHeader;
+        strcpy(responseHeader.startFlag, PROTO_START);
+        responseHeader.protoNum = PROTONUM::FILESENDCOMPLETE;
+        responseHeader.protoBufLen = (unsigned short) responseString.size();
+        memcpy(dataBuf, &responseHeader, sizeof(responseHeader));
+        memcpy(dataBuf + sizeof(responseHeader), responseString.c_str(), responseString.size());
+        
+        sendBuf(responseBuf.fd, dataBuf, sizeof(responseHeader) + responseString.size());
+        cocos2d::log("responseFile:%s,result:%d", fileSendProtoComplete.file_name().c_str(), fileSendProtoComplete.result());
     }
 }
 
@@ -683,7 +726,8 @@ public:
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
         Image* imagebg = new Image();
         imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
-        if (!ConfigParser::getInstance()->isLanscape()){
+        if (!ConfigParser::getInstance()->isLanscape())
+        {
             imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
             Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight,designWidth,ResolutionPolicy::EXACT_FIT);
         }
@@ -705,13 +749,12 @@ public:
         playSprite->setPosition(Vec2(lanscaptX,lanscaptY));
         addChild(playSprite,9999);
 
-
         Image* imageShine = new Image();
         imageShine->initWithImageData(__shinePngData, sizeof(__shinePngData));
         Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(imageShine, "Shine");
         auto shineSprite = Sprite::createWithTexture(textureShine);
         shineSprite->setOpacity(0);
-        shineSprite->setPosition(Vec2(lanscaptX,lanscaptY));
+        shineSprite->setPosition(Vec2(lanscaptX, lanscaptY));
         Vector<FiniteTimeAction*> arrayOfActions;
         arrayOfActions.pushBack(DelayTime::create(0.4f));
         arrayOfActions.pushBack(FadeTo::create(0.8f,200));
@@ -719,38 +762,36 @@ public:
         arrayOfActions.pushBack(FadeTo::create(0.8f,200));
         arrayOfActions.pushBack(FadeTo::create(0.8f,0));
         arrayOfActions.pushBack(DelayTime::create(0.4f));
-        Sequence * arrayAction = Sequence::create(arrayOfActions);
         shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
         addChild(shineSprite,9998);
 
         string strip = getIPAddress();
         char szIPAddress[512]={0};
-        sprintf(szIPAddress, "IP: %s",strip.c_str());
-        auto IPlabel = Label::createWithSystemFont(szIPAddress,"",72);
+        sprintf(szIPAddress, "IP: %s", strip.c_str());
+        auto IPlabel = Label::createWithSystemFont(szIPAddress, "", 72);
         IPlabel->setAnchorPoint(Vec2(0,0));
         int spaceSizex = 72;
         int spaceSizey = 200;
-        IPlabel->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, VisibleRect::top().y -spaceSizey) );
+        IPlabel->setPosition(Point(VisibleRect::leftTop().x + spaceSizex, VisibleRect::top().y - spaceSizey));
         addChild(IPlabel, 9001);
 
         _transferTip = "waiting for file transfer ...";
-        if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM){
+        if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
+        {
             _transferTip = "waiting for debugger to connect ...";
         }
 
-        char szVersion[1024]={0};
-
-        sprintf(szVersion,"runtimeVersion:%s \ncocos2dVersion:%s",getRuntimeVersion(),cocos2dVersion());
-        Label* verLable = Label::createWithSystemFont(szVersion,"",24);
-        verLable->setAnchorPoint(Vec2(0,0));
+        char szVersion[1024] = {0};
+        sprintf(szVersion,"runtimeVersion:%s \nengineVersion:%s", getRuntimeVersion(), cocos2dVersion());
+        Label* verLable = Label::createWithSystemFont(szVersion, "", 24);
+        verLable->setAnchorPoint(Vec2(0, 0));
         int width = verLable->getBoundingBox().size.width;
-        int height = verLable->getBoundingBox().size.height;
-        verLable->setPosition( Point(VisibleRect::right().x-width, VisibleRect::rightBottom().y) );
+        verLable->setPosition(Point(VisibleRect::right().x-width, VisibleRect::rightBottom().y));
         verLable->setAlignment(TextHAlignment::LEFT);
         addChild(verLable, 9002);
-        _labelUploadFile = Label::createWithSystemFont(_transferTip,"",36);
-        _labelUploadFile->setAnchorPoint(Vec2(0,0));
-        _labelUploadFile->setPosition( Point(VisibleRect::leftTop().x+spaceSizex, IPlabel->getPositionY()-spaceSizex) );
+        _labelUploadFile = Label::createWithSystemFont(_transferTip, "", 36);
+        _labelUploadFile->setAnchorPoint(Vec2(0, 0));
+        _labelUploadFile->setPosition(Point(VisibleRect::leftTop().x + spaceSizex, IPlabel->getPositionY()- spaceSizex));
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
         addChild(_labelUploadFile, 9003);
 
@@ -768,7 +809,7 @@ public:
             auto rect = Rect(0, 0, target->getContentSize().width, target->getContentSize().height);
             if (!rect.containsPoint(point)) return false;
             target->stopAllActions();
-            target->runAction(Sequence::createWithTwoActions(ScaleBy::create(0.05f, 0.9f),ScaleTo::create(0.125f, 1)));
+            target->runAction(Sequence::createWithTwoActions(ScaleBy::create(0.05f, 0.9f), ScaleTo::create(0.125f, 1)));
             return true;
         };
         listener->onTouchEnded = [](Touch* touch, Event  *event){
@@ -783,9 +824,10 @@ public:
         this->scheduleUpdate();
     }
 
-    void update( float fDelta )  
+    // clean up: ignore stdin, stdout and stderr
+    void update(float fDelta)
     {  
-        _transferTip=FileServer::getShareInstance()->getTransingFileName();
+        _transferTip = FileServer::getShareInstance()->getTransingFileName();
         if (_transferTip.empty()){
             return;
         }
@@ -799,10 +841,12 @@ public:
     void init()
     {
         cocos2d::Console *_console = Director::getInstance()->getConsole();
-        static struct Console::Command commands[] = {
+        static struct Console::Command commands[] =
+        {
             {"sendrequest","send command to runtime.Args[json format]",std::bind(&ConsoleCustomCommand::onSendCommand, this, std::placeholders::_1, std::placeholders::_2)},
         };
-        for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++) {
+        for (int i=0;i< sizeof(commands)/sizeof(Console::Command);i++)
+        {
             _console->addCommand(commands[i]);
         }
 #if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
@@ -811,23 +855,25 @@ public:
         _console->listenOnTCP(6010);
 #endif
         _fileserver = nullptr;
-#if(CC_PLATFORM_MAC != CC_TARGET_PLATFORM && CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
         _fileserver= FileServer::getShareInstance();
+#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
+        _fileserver->listenOnTCP(ConfigParser::getInstance()->getUploadPort());
+#else
         _fileserver->listenOnTCP(6020);
-        _fileserver->readResFileFinfo();
 #endif
+        _fileserver->readResFileFinfo();
     }
 
     ~ConsoleCustomCommand()
     {
         Director::getInstance()->getConsole()->stop();
         if(_fileserver)
-        _fileserver->stop();
+            _fileserver->stop();
     }
 
     void onSendCommand(int fd, const std::string &args)
     {
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
             rapidjson::Document dArgParse;
             dArgParse.Parse<0>(args.c_str());
             if (dArgParse.HasMember("cmd"))
@@ -837,92 +883,112 @@ public:
                 rapidjson::Document dReplyParse;
                 dReplyParse.SetObject();
                 dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
-                if (dArgParse.HasMember("seq")) {
+                if (dArgParse.HasMember("seq"))
+                {
                     dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
                 }
                 
-                if(strcmp(strcmd.c_str(),"start-logic")==0){
-                    char szDebugArg[1024]={0};
-                    sprintf(szDebugArg, "require('debugger')(%s,'%s')",dArgParse["debugcfg"].GetString(),g_resourcePath.c_str());
-                    startScript(szDebugArg);
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-
-                }else if(strcmp(strcmd.c_str(),"reload")==0)
+                if(strcmp(strcmd.c_str(), "start-logic") == 0)
                 {
-                    if (dArgParse.HasMember("modulefiles")){
+                    char szDebugArg[1024] = {0};
+                    sprintf(szDebugArg, "require('debugger')(%s,'%s')",dArgParse["debugcfg"].GetString(), g_resourcePath.c_str());
+                    startScript(szDebugArg);
+                    dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+
+                } else if(strcmp(strcmd.c_str(), "reload") == 0)
+                {
+                    if (dArgParse.HasMember("modulefiles"))
+                    {
                         rapidjson::Value bodyvalue(rapidjson::kObjectType);
                         const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
-                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++){
-                            if (!reloadScript(objectfiles[i].GetString())) {
-                                bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
+                        for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
+                        {
+                            if (!reloadScript(objectfiles[i].GetString()))
+                            {
+                                bodyvalue.AddMember(objectfiles[i].GetString(), 1, dReplyParse.GetAllocator());
                             }
                         }
-                        if (0 == objectfiles.Size()){
+                        if (0 == objectfiles.Size())
+                        {
                             reloadScript("");
                         }
-                        dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
+                        dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
                     }
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                }else if(strcmp(strcmd.c_str(),"getversion")==0)
+                    dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                } else if(strcmp(strcmd.c_str(), "getversion") == 0)
                 {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    bodyvalue.AddMember("version",getRuntimeVersion(),dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                }else if(strcmp(strcmd.c_str(),"getfileinfo")==0){
+                    bodyvalue.AddMember("version", getRuntimeVersion(), dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                } else if(strcmp(strcmd.c_str(), "getfileinfo") == 0)
+                {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     if(_fileserver){
                         rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                        for (auto it=filecfgjson->MemberonBegin();it!=filecfgjson->MemberonEnd();++it){
-                            bodyvalue.AddMember(it->name.GetString(),it->value.GetString(),dReplyParse.GetAllocator());
+                        for (auto it=filecfgjson->MemberonBegin(); it != filecfgjson->MemberonEnd(); ++it)
+                        {
+                            bodyvalue.AddMember(it->name.GetString(), it->value.GetString(), dReplyParse.GetAllocator());
                         }
                     }
                     dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
                     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                    
-                }else if (strcmp(strcmd.c_str(),"getEntryfile")==0){
+                   
+                } else if (strcmp(strcmd.c_str(), "getEntryfile") == 0)
+                {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     rapidjson::Value entryFileValue(rapidjson::kStringType);
-                    entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(),dReplyParse.GetAllocator());
-                    bodyvalue.AddMember("entryfile",entryFileValue,dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
-                }else if(strcmp(strcmd.c_str(),"getIP")==0){
+                    entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(), dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("entryfile", entryFileValue, dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body", bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                } else if(strcmp(strcmd.c_str(), "getIP") == 0)
+                {
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
                     rapidjson::Value IPValue(rapidjson::kStringType);
-                    IPValue.SetString(getIPAddress().c_str(),dReplyParse.GetAllocator());
-                    bodyvalue.AddMember("IP",IPValue,dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                    IPValue.SetString(getIPAddress().c_str(), dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("IP", IPValue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body", bodyvalue,dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
 
-                }else if(strcmp(strcmd.c_str(),"remove")==0)
+                } else if(strcmp(strcmd.c_str(), "remove") == 0)
                 {
                     if (dArgParse.HasMember("files"))
                     {
                         rapidjson::Value bodyvalue(rapidjson::kObjectType);
                         const rapidjson::Value& objectfiles = dArgParse["files"];
+                        const char* filename = NULL;
                         for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
                         {
-                            string filename(g_resourcePath);
-                            filename.append("/");
-                            filename.append(objectfiles[i].GetString());
-                            if (FileUtils::getInstance()->isFileExist(filename)) {
-                                if(remove(filename.c_str())==0){
-                                    if (_fileserver)
-                                        _fileserver->removeResFileInfo(objectfiles[i].GetString());
-                                }	
-                                else{
-                                    bodyvalue.AddMember(objectfiles[i].GetString(),2,dReplyParse.GetAllocator());
-                                }
-                            }else{
-                                bodyvalue.AddMember(objectfiles[i].GetString(),1,dReplyParse.GetAllocator());
-                            }
+                            filename = objectfiles[i].GetString();
                             
-                        }
-                        dReplyParse.AddMember("body",bodyvalue,dReplyParse.GetAllocator());
-                    }
-                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                            // remove file from disk
+                            string filepath(g_resourcePath + "/" + filename);
+                            if (FileUtils::getInstance()->isFileExist(filepath)) 
+                            {
+                                if(remove(filepath.c_str()) != 0) 
+                                {
+                                    // remove failed
+                                    bodyvalue.AddMember(filename, 2, dReplyParse.GetAllocator());
+                                }
+                            } else
+                            {
+                                // file not exist
+                                bodyvalue.AddMember(filename, 1, dReplyParse.GetAllocator());
+                            }
 
+                            if (_fileserver)
+                            {
+                                // file remove success, remove it from record
+                                if (! FileUtils::getInstance()->isFileExist(filepath))
+                                    _fileserver->removeResFileInfo(filename);
+                            }
+                        }
+
+                        dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    }
+
+                    dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
                 }else if(strcmp(strcmd.c_str(),"shutdownapp")==0)
                 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -931,17 +997,36 @@ public:
 #else
                     exit(0);
 #endif	
+                } else if(strcmp(strcmd.c_str(),"getplatform") == 0)
+                {
+                    string platform="UNKNOW";
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+                    platform = "WIN32";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+                    platform = "MAC";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                    platform = "IOS";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                    platform = "ANDROID";
+#endif
+                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
+                    rapidjson::Value platformValue(rapidjson::kStringType);
+                    platformValue.SetString(platform.c_str(), dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("platform", platformValue, dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
                 }
                 
                 rapidjson::StringBuffer buffer;
                 rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
                 dReplyParse.Accept(writer);
-                const char* str = buffer.GetString();
-                char msgSize[64]={0x1,0};
-                sprintf(msgSize+1,"%d:",strlen(str));
-                string replymsg(msgSize);
-                replymsg.append(str);
-                send(fd,replymsg.c_str(),replymsg.size(),0);
+                string msgContent = buffer.GetString();
+                char msgLength[64] = {0x1, 0};
+                sprintf(msgLength + 1, "%zu:", msgContent.size());
+                
+                string msg(msgLength + msgContent);
+                
+                sendBuf(fd, msg.c_str(), msg.size());
             }
         });
     }
@@ -982,13 +1067,17 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
         if(!ok)
             return 0;
-        std::string argtmp = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(arg0))
-            arg0 = g_resourcePath+arg0;
+        std::string originPath = arg0;
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+            arg0 = g_resourcePath + originPath;
         cobj->addSearchPath(arg0);
+
+        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+            cobj->addSearchPath(g_projectPath + originPath);
+#endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (!FileUtils::getInstance()->isAbsolutePath(argtmp))
-        cobj->addSearchPath(argtmp);
+            cobj->addSearchPath(originPath);
 #endif
         return 0;
     }
@@ -1036,17 +1125,22 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
         ok &= luaval_to_std_vector_string(tolua_S, 2,&vecPaths);
         if(!ok)
             return 0;
-        std::vector<std::string> argtmp;
+        std::vector<std::string> originPath; // for IOS platform.
+        std::vector<std::string> projPath; // for Desktop platform.
         for (int i = 0; i < vecPaths.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
             {
-                argtmp.push_back(vecPaths[i]);
+                originPath.push_back(vecPaths[i]); // for IOS platform.
+                projPath.push_back(g_projectPath+vecPaths[i]); //for Desktop platform.
                 vecPaths[i] = g_resourcePath + vecPaths[i];
             }
         }
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        vecPaths.insert(vecPaths.end(),projPath.begin(),projPath.end());
+#endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        vecPaths.insert(vecPaths.end(),argtmp.begin(),argtmp.end());
+        vecPaths.insert(vecPaths.end(),originPath.begin(),originPath.end());
 #endif
         cobj->setSearchPaths(vecPaths);
         return 0;
@@ -1069,7 +1163,6 @@ static void register_runtime_override_function(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1)){
         tolua_function(tolua_S,"addSearchPath",lua_cocos2dx_runtime_addSearchPath);
         tolua_function(tolua_S,"setSearchPaths",lua_cocos2dx_runtime_setSearchPaths);
-        
     }
     lua_pop(tolua_S, 1);
 }
@@ -1093,30 +1186,37 @@ bool initRuntime()
     vector<string> searchPathArray;
     searchPathArray=FileUtils::getInstance()->getSearchPaths();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    if (g_resourcePath.empty())
+    if (g_projectPath.empty())
     {
         extern std::string getCurAppPath();
-        string resourcePath = getCurAppPath();
+        string appPath = getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        resourcePath.append("/../../");
+        appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        resourcePath.append("/../../../");
+        appPath.append("/../../../");
 #endif
-        resourcePath =replaceAll(resourcePath,"\\","/");
-        g_resourcePath = resourcePath;
-    }
-    
-#else
+        appPath = replaceAll(appPath, "\\", "/");
+        g_projectPath = appPath;
+    }    
+    searchPathArray.insert(searchPathArray.begin(), g_projectPath);
+#endif
+
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
-    g_resourcePath += "debugruntime/";
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    std::string getCurAppName(void);
+    g_resourcePath += getCurAppName();
+    g_resourcePath += "/";
 #endif
+
+    g_resourcePath += "debugruntime/";
     
-    g_resourcePath=replaceAll(g_resourcePath,"\\","/");
-    if (g_resourcePath.at(g_resourcePath.length()-1) != '/'){
+    g_resourcePath = replaceAll(g_resourcePath, "\\", "/");
+    if (g_resourcePath.at(g_resourcePath.length() - 1) != '/'){
         g_resourcePath.append("/");
     }
     
-    searchPathArray.insert(searchPathArray.begin(),g_resourcePath);
+    searchPathArray.insert(searchPathArray.begin(), g_resourcePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 
     auto engine = LuaEngine::getInstance();
@@ -1124,38 +1224,34 @@ bool initRuntime()
     LuaStack* stack = engine->getLuaStack();
     register_runtime_override_function(stack->getLuaState());
     luaopen_debugger(engine->getLuaStack()->getLuaState());
+    
+    static ConsoleCustomCommand *g_customCommand;
+    g_customCommand = new ConsoleCustomCommand();
+    g_customCommand->init();
     return true;
 }
 
 bool startRuntime()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
-#ifndef _DEBUG 
-    return false; 
-#endif 
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
-#ifdef NDEBUG 
-    return false; 
-#endif 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#ifndef _DEBUG
+    return false;
+#endif
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#ifdef NDEBUG
+    return false;
+#endif
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#ifndef COCOS2D_DEBUG 
-    return false; 
+#ifndef COCOS2D_DEBUG
+    return false;
 #endif
 #endif
 
-    // turn on display FPS
-    Director::getInstance()->setDisplayStats(true);
-
-    static ConsoleCustomCommand *g_customCommand;
-    g_customCommand = new ConsoleCustomCommand();
-    g_customCommand->init();
- 
     auto scene = Scene::create();
     auto connectLayer = new ConnectWaitLayer();
     connectLayer->autorelease();
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
-
     return true;
 }

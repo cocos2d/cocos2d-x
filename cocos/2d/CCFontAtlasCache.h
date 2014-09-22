@@ -28,10 +28,11 @@
 
 #include <unordered_map>
 
-#include "2d/CCFontAtlas.h"
 #include "2d/CCLabel.h"
 
 NS_CC_BEGIN
+
+class FontAtlas;
 
 class CC_DLL FontAtlasCache
 {  

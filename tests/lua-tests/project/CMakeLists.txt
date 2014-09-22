@@ -1,9 +1,21 @@
 set(APP_NAME lua-tests)
 
 set(SAMPLE_SRC
-  proj.linux/main.cpp
-  Classes/AppDelegate.cpp
+    Classes/AppDelegate.cpp
+    Classes/lua_assetsmanager_test_sample.cpp
 )
+
+if(LINUX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.linux/main.cpp
+     )
+elseif(MACOSX)
+  set(SAMPLE_SRC
+     ${SAMPLE_SRC}
+     proj.ios_mac/mac/main.cpp
+     )
+endif()
 
 include_directories(
   Classes
@@ -20,21 +32,7 @@ add_executable(${APP_NAME}
 
 target_link_libraries(${APP_NAME}
   luacocos2d
-  luacocosdenshion
-  luanetwork
-  luacocosbuilder
-  luacocostudio
-  luaspine
-  luaextension
-  luaui
   cocos2d
-  audio
-  cocostudio
-  spine
-  cocosbuilder
-  extensions
-  ui
-  network
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

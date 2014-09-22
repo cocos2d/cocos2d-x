@@ -59,7 +59,7 @@ PageView::~PageView()
 
 PageView* PageView::create()
 {
-    PageView* widget = new PageView();
+    PageView* widget = new (std::nothrow) PageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -343,25 +343,31 @@ bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
 
 void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    handleMoveLogic(touch);
-    Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+    Layout::onTouchMoved(touch, unusedEvent);
+    if (!_isInterceptTouch)
     {
-        widgetParent->interceptTouchEvent(TouchEventType::MOVED,this,touch);
+        handleMoveLogic(touch);
     }
-    moveEvent();
 }
 
 void PageView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchEnded(touch, unusedEvent);
-    handleReleaseLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleReleaseLogic(touch);
+    }
+    _isInterceptTouch = false;
 }
     
 void PageView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
-    handleReleaseLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleReleaseLogic(touch);
+    }
+    _isInterceptTouch = false;
 }
 
 void PageView::doLayout()
@@ -526,12 +532,16 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
     switch (event)
     {
         case TouchEventType::BEGAN:
-            //no-op
+        {
+            _touchBeganPosition = touch->getLocation();
+            _isInterceptTouch = true;
+        }
             break;
         case TouchEventType::MOVED:
         {
             float offset = 0;
             offset = fabs(sender->getTouchBeganPosition().x - touchPoint.x);
+            _touchMovePosition = touch->getLocation();
             if (offset > _childFocusCancelOffset)
             {
                 sender->setHighlighted(false);
@@ -541,7 +551,14 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
             break;
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
+        {
+            _touchEndPosition = touch->getLocation();
             handleReleaseLogic(touch);
+            if (sender->isSwallowTouches())
+            {
+                _isInterceptTouch = false;
+            }
+        }
             break;
     }
 }

@@ -49,7 +49,7 @@ ProtectedNode::~ProtectedNode()
 
 ProtectedNode * ProtectedNode::create(void)
 {
-	ProtectedNode * ret = new ProtectedNode();
+	ProtectedNode * ret = new (std::nothrow) ProtectedNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -249,7 +249,7 @@ void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 {
     _reorderProtectedChildDirty = true;
     _protectedChildren.pushBack(child);
-    child->_setLocalZOrder(z);
+    child->setLocalZOrder(z);
 }
 
 void ProtectedNode::sortAllProtectedChildren()
@@ -265,7 +265,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderProtectedChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setLocalZOrder(localZOrder);
+    child->setLocalZOrder(localZOrder);
 }
 
 void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
@@ -330,8 +330,9 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
         (*it)->visit(renderer, _modelViewTransform, flags);
     
-    // reset for next frame
-    _orderOfArrival = 0;
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // setOrderOfArrival(0);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -414,6 +415,19 @@ void ProtectedNode::disableCascadeColor()
     }
     for(auto child : _protectedChildren){
         child->updateDisplayedColor(Color3B::WHITE);
+    }
+}
+
+void ProtectedNode::disableCascadeOpacity()
+{
+    _displayedOpacity = _realOpacity;
+    
+    for(auto child : _children){
+        child->updateDisplayedOpacity(255);
+    }
+    
+    for(auto child : _protectedChildren){
+        child->updateDisplayedOpacity(255);
     }
 }
 

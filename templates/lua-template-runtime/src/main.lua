@@ -21,6 +21,15 @@ local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
+
+    -- initialize director
+    local director = cc.Director:getInstance()
+
+    --turn on display FPS
+    director:setDisplayStats(true)
+
+    --set FPS. the default value is 1.0/60 if you don't call this
+    director:setAnimationInterval(1.0 / 60)
     
     cc.FileUtils:getInstance():addSearchPath("src")
     cc.FileUtils:getInstance():addSearchPath("res")

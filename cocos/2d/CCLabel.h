@@ -28,7 +28,6 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "2d/CCSpriteBatchNode.h"
-#include "base/ccTypes.h"
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCFontAtlas.h"
 
@@ -275,6 +274,18 @@ public:
 
     CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return getLineHeight();}
 
+CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js NA
+     */
+    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT,
+      TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Label();
+
 protected:
     void onDraw(const Mat4& transform, bool transformUpdated);
 
@@ -293,17 +304,6 @@ protected:
         CHARMAP,
         STRING_TEXTURE
     };
-
-    /**
-    * @js NA
-    */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT, 
-        TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
-    /**
-    * @js NA
-    * @lua NA
-    */
-    virtual ~Label();
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 

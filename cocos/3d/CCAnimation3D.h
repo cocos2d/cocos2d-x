@@ -31,15 +31,15 @@
 
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
-#include "CCBundle3DData.h"
+#include "3d/CCBundle3DData.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
 /**
  * static animation data, shared
  */
-class CC_DLL Animation3D: public Ref
+class CC_3D_DLL Animation3D: public Ref
 {
     friend class Bundle3D;
 public:

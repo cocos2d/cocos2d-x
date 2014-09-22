@@ -195,7 +195,7 @@ void SpriteTestDemo::onEnter()
 
 void SpriteTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild(restartSpriteTestAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -204,7 +204,7 @@ void SpriteTestDemo::restartCallback(Ref* sender)
 
 void SpriteTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -212,7 +212,7 @@ void SpriteTestDemo::nextCallback(Ref* sender)
 
 void SpriteTestDemo::backCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -1909,7 +1909,7 @@ void SpriteFramesFromFileContent::onEnter()
 
 	Image image;
 	image.initWithImageData((const uint8_t*)image_content.c_str(), image_content.size());
-	Texture2D* texture = new Texture2D();
+	Texture2D* texture = new (std::nothrow) Texture2D();
 	texture->initWithImage(&image);
 	texture->autorelease();
 
@@ -3509,7 +3509,7 @@ public:
 
 DoubleSprite* DoubleSprite::create(const std::string& filename)
 {
-    auto sprite = new DoubleSprite;
+    auto sprite = new (std::nothrow) DoubleSprite;
     sprite->initWithFile(filename);
     sprite->autorelease();
     return sprite;

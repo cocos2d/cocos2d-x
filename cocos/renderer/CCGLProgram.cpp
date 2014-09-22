@@ -33,11 +33,9 @@ THE SOFTWARE.
 #endif
 
 #include "base/CCDirector.h"
-#include "base/ccMacros.h"
 #include "base/uthash.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
-#include "CCGL.h"
 
 #include "deprecated/CCString.h"
 
@@ -94,6 +92,13 @@ const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
 const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD1 = "a_texCoord1";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD2 = "a_texCoord2";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD3 = "a_texCoord3";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD4 = "a_texCoord4";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD5 = "a_texCoord5";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD6 = "a_texCoord6";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD7 = "a_texCoord7";
 const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
@@ -281,6 +286,13 @@ void GLProgram::bindPredefinedVertexAttribs()
         {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION},
         {GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD4, GLProgram::VERTEX_ATTRIB_TEX_COORD4},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD5, GLProgram::VERTEX_ATTRIB_TEX_COORD5},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD6, GLProgram::VERTEX_ATTRIB_TEX_COORD6},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD7, GLProgram::VERTEX_ATTRIB_TEX_COORD7},
         {GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
     };
 

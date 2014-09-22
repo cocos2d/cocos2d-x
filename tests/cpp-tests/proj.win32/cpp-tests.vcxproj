@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -109,8 +109,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -139,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\BaseTest.cpp" />
+    <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\Classes\Camera3DTest\Camera3DTest.cpp" />
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
@@ -161,11 +160,9 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
@@ -204,6 +201,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.cpp" />
@@ -233,6 +231,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\UITest.cpp" />
@@ -319,6 +318,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\BaseTest.h" />
+    <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h" />
@@ -349,11 +349,9 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h" />
@@ -392,6 +390,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.h" />
@@ -421,6 +420,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\UITest.h" />
@@ -566,34 +566,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\cocos\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\audio\proj.win32\libcocosdenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\editor-support\cocosbuilder\proj.win32\libcocosbuilder.vcxproj">
-      <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\editor-support\cocostudio\proj.win32\libcocostudio.vcxproj">
-      <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\editor-support\spine\proj.win32\libspine.vcxproj">
-      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\network\proj.win32\libNetwork.vcxproj">
-      <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\ui\proj.win32\libui.vcxproj">
-      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
-      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\external\Box2D\proj.win32\libbox2d.vcxproj">
-      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\external\chipmunk\proj.win32\chipmunk.vcxproj">
-      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

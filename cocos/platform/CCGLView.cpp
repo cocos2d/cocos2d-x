@@ -56,6 +56,21 @@ namespace {
         return -1;
     }
     
+    static std::vector<Touch*> getAllTouchesVector()
+    {
+        std::vector<Touch*> ret;
+        int i;
+        int temp = g_indexBitsUsed;
+        
+        for (i = 0; i < EventTouch::MAX_TOUCHES; i++) {
+            if ( temp & 0x00000001) {
+                ret.push_back(g_touches[i]);
+            }
+            temp >>= 1;
+        }
+        return ret;
+    }
+    
     static void removeUsedIndexBit(int index)
     {
         if (index < 0 || index >= EventTouch::MAX_TOUCHES)
@@ -68,6 +83,19 @@ namespace {
         g_indexBitsUsed &= temp;
     }
     
+}
+
+//default context attributions are setted as follows
+GLContextAttrs GLView::_glContextAttrs = {5, 6, 5, 0, 16, 0};
+
+void GLView::setGLContextAttrs(GLContextAttrs& glContextAttrs)
+{
+    _glContextAttrs = glContextAttrs;
+}
+
+GLContextAttrs GLView::getGLContextAttrs()
+{
+    return _glContextAttrs;
 }
 
 GLView::GLView()
@@ -265,7 +293,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
                 continue;
             }
 
-            Touch* touch = g_touches[unusedIndex] = new Touch();
+            Touch* touch = g_touches[unusedIndex] = new (std::nothrow) Touch();
 			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
@@ -408,6 +436,11 @@ void GLView::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]
 const Rect& GLView::getViewPortRect() const
 {
     return _viewPortRect;
+}
+
+std::vector<Touch*> GLView::getAllTouches() const
+{
+    return getAllTouchesVector();
 }
 
 float GLView::getScaleX() const

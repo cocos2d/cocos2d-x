@@ -499,3 +499,6 @@ cc.ConfigType =
     NONE = 0,
     COCOSTUDIO = 1,
 }
+
+cc.AUDIO_INVAILD_ID   = -1
+cc.AUDIO_TIME_UNKNOWN  = -1.0

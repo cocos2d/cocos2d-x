@@ -47,15 +47,12 @@ namespace network {
 static std::mutex       s_requestQueueMutex;
 static std::mutex       s_responseQueueMutex;
 
-static std::mutex       s_SleepMutex;
-static std::condition_variable      s_SleepCondition;
+static std::condition_variable_any s_SleepCondition;
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
 #endif
-
-static bool s_need_quit = false;
 
 static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
@@ -67,6 +64,8 @@ static char s_errorBuffer[CURL_ERROR_SIZE] = {0};
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
 static std::string s_cookieFilename = "";
+    
+static std::string s_sslCaFilename = "";
 
 // Callback function used by libcurl for collect response data
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -102,47 +101,35 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 static void processResponse(HttpResponse* response, char* errorBuffer);
 
+static HttpRequest *s_requestSentinel = new HttpRequest;
+
 // Worker thread
 void HttpClient::networkThread()
 {    
-    HttpRequest *request = nullptr;
-    
     auto scheduler = Director::getInstance()->getScheduler();
     
     while (true) 
     {
-        if (s_need_quit)
-        {
-            break;
-        }
-        
+        HttpRequest *request;
+
         // step 1: send http request if the requestQueue isn't empty
-        request = nullptr;
-        
-        s_requestQueueMutex.lock();
-        
-        //Get request task from queue
-        
-        if (!s_requestQueue->empty())
         {
+            std::lock_guard<std::mutex> lock(s_requestQueueMutex);
+            while (s_requestQueue->empty()) {
+                s_SleepCondition.wait(s_requestQueueMutex);
+            }
             request = s_requestQueue->at(0);
             s_requestQueue->erase(0);
         }
-        
-        s_requestQueueMutex.unlock();
-        
-        if (nullptr == request)
-        {
-            // Wait for http request tasks from main thread
-            std::unique_lock<std::mutex> lk(s_SleepMutex); 
-            s_SleepCondition.wait(lk);
-            continue;
+
+        if (request == s_requestSentinel) {
+            break;
         }
-        
+
         // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
-        HttpResponse *response = new HttpResponse(request);
+        HttpResponse *response = new (std::nothrow) HttpResponse(request);
         
         processResponse(response, s_errorBuffer);
         
@@ -176,7 +163,7 @@ void HttpClient::networkThread()
 void HttpClient::networkThreadAlone(HttpRequest* request)
 {
     // Create a HttpResponse object, the default setting is http access failed
-    HttpResponse *response = new HttpResponse(request);
+    HttpResponse *response = new (std::nothrow) HttpResponse(request);
     char errorBuffer[CURL_ERROR_SIZE] = { 0 };
     processResponse(response, errorBuffer);
 
@@ -220,8 +207,14 @@ static bool configureCURL(CURL *handle, char *errorBuffer)
     if (code != CURLE_OK) {
         return false;
     }
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    if (s_sslCaFilename.empty()) {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    } else {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
+        curl_easy_setopt(handle, CURLOPT_CAINFO, s_sslCaFilename.c_str());
+    }
     
     // FIXED #3224: The subthread of CCHttpClient interrupts main thread if timeout comes.
     // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
@@ -434,7 +427,7 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
 HttpClient* HttpClient::getInstance()
 {
     if (s_pHttpClient == nullptr) {
-        s_pHttpClient = new HttpClient();
+        s_pHttpClient = new (std::nothrow) HttpClient();
     }
     
     return s_pHttpClient;
@@ -453,6 +446,11 @@ void HttpClient::enableCookies(const char* cookieFile) {
         s_cookieFilename = (FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
 }
+    
+void HttpClient::setSSLVerification(const std::string& caFile)
+{
+    s_sslCaFilename = caFile;
+}
 
 HttpClient::HttpClient()
 : _timeoutForConnect(30)
@@ -462,12 +460,14 @@ HttpClient::HttpClient()
 
 HttpClient::~HttpClient()
 {
-    s_need_quit = true;
-    
     if (s_requestQueue != nullptr) {
+        {
+            std::lock_guard<std::mutex> lock(s_requestQueueMutex);
+            s_requestQueue->pushBack(s_requestSentinel);
+        }
         s_SleepCondition.notify_one();
     }
-    
+
     s_pHttpClient = nullptr;
 }
 
@@ -478,11 +478,9 @@ bool HttpClient::lazyInitThreadSemphore()
         return true;
     } else {
         
-        s_requestQueue = new Vector<HttpRequest*>();
-        s_responseQueue = new Vector<HttpResponse*>();
-        
-		s_need_quit = false;
-		
+        s_requestQueue = new (std::nothrow) Vector<HttpRequest*>();
+        s_responseQueue = new (std::nothrow) Vector<HttpResponse*>();
+
         auto t = std::thread(CC_CALLBACK_0(HttpClient::networkThread, this));
         t.detach();
     }

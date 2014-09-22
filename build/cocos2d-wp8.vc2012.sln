@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos\2d\cocos2d_wp8.vcxproj", "{B5AF91B3-64EA-44E1-84B0-D759E93758FB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor-support\spine\proj.wp8\libSpine.vcxproj", "{7D4FC6EB-9497-4804-98F3-3EAEDC896154}"
@@ -23,8 +25,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "..\extensi
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "..\external\Box2D\proj.wp8\Box2D.vcxproj", "{C55734A3-702C-4FA1-B950-32C8E169302F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk", "..\external\chipmunk\proj.wp8\chipmunk.vcxproj", "{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libLocalStorage", "..\cocos\storage\local-storage\proj.wp8\libLocalStorage.vcxproj", "{88982C27-5A7B-40A8-86E7-B3187B44B322}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -208,26 +208,6 @@ Global
 		{C55734A3-702C-4FA1-B950-32C8E169302F}.Release|x64.ActiveCfg = Release|Win32
 		{C55734A3-702C-4FA1-B950-32C8E169302F}.Release|x86.ActiveCfg = Release|Win32
 		{C55734A3-702C-4FA1-B950-32C8E169302F}.Release|x86.Build.0 = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|ARM.ActiveCfg = Debug|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|ARM.Build.0 = Debug|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|Win32.Build.0 = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|x64.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|x86.ActiveCfg = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Debug|x86.Build.0 = Debug|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Any CPU.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|ARM.ActiveCfg = Release|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|ARM.Build.0 = Release|ARM
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Win32.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|Win32.Build.0 = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|x64.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|x86.ActiveCfg = Release|Win32
-		{BA568A33-98F9-4D2A-BFFF-C065ADCB447A}.Release|x86.Build.0 = Release|Win32
 		{88982C27-5A7B-40A8-86E7-B3187B44B322}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{88982C27-5A7B-40A8-86E7-B3187B44B322}.Debug|ARM.ActiveCfg = Debug|ARM
 		{88982C27-5A7B-40A8-86E7-B3187B44B322}.Debug|ARM.Build.0 = Debug|ARM

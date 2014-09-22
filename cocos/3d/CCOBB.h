@@ -26,10 +26,11 @@
 #define __CC_OBB_H__
 
 #include "CCAABB.h"
+#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-class CC_DLL OBB
+class CC_3D_DLL OBB
 {
 public:
     OBB();

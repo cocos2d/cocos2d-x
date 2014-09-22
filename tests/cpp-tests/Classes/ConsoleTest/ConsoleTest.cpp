@@ -104,7 +104,7 @@ void BaseTestConsole::onEnter()
 
 void BaseTestConsole::restartCallback(Ref* sender)
 {
-    auto s = new ConsoleTestScene();
+    auto s = new (std::nothrow) ConsoleTestScene();
     s->addChild(restartConsoleTest());
 
     Director::getInstance()->replaceScene(s);
@@ -113,7 +113,7 @@ void BaseTestConsole::restartCallback(Ref* sender)
 
 void BaseTestConsole::nextCallback(Ref* sender)
 {
-    auto s = new ConsoleTestScene();
+    auto s = new (std::nothrow) ConsoleTestScene();
     s->addChild( nextConsoleTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -121,7 +121,7 @@ void BaseTestConsole::nextCallback(Ref* sender)
 
 void BaseTestConsole::backCallback(Ref* sender)
 {
-    auto s = new ConsoleTestScene();
+    auto s = new (std::nothrow) ConsoleTestScene();
     s->addChild( backConsoleTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -165,8 +165,8 @@ ConsoleCustomCommand::ConsoleCustomCommand()
     auto label = LabelTTF::create(ss.str(), "Arial", 12);
 
     // position the label on the center of the screen
-    label->setPosition(Point(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height/2 + (label->getContentSize().height/2)));
+    label->setPosition(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height/2 + (label->getContentSize().height/2));
     
     // add the label as a child to this layer
     this->addChild(label, 1);

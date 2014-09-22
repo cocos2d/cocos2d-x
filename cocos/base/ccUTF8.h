@@ -26,7 +26,7 @@
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <vector>
 #include <string>
 

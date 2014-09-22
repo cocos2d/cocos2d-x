@@ -36,7 +36,7 @@ namespace cocostudio {
 Bone *Bone::create()
 {
 
-    Bone *pBone = new Bone();
+    Bone *pBone = new (std::nothrow) Bone();
     if (pBone && pBone->init())
     {
         pBone->autorelease();
@@ -50,7 +50,7 @@ Bone *Bone::create()
 Bone *Bone::create(const std::string& name)
 {
 
-    Bone *pBone = new Bone();
+    Bone *pBone = new (std::nothrow) Bone();
     if (pBone && pBone->init(name))
     {
         pBone->autorelease();
@@ -110,21 +110,21 @@ bool Bone::init(const std::string& name)
         _name = name;
 
         CC_SAFE_DELETE(_tweenData);
-        _tweenData = new FrameData();
+        _tweenData = new (std::nothrow) FrameData();
 
         CC_SAFE_DELETE(_tween);
-        _tween = new Tween();
+        _tween = new (std::nothrow) Tween();
         _tween->init(this);
 
         CC_SAFE_DELETE(_displayManager);
-        _displayManager = new DisplayManager();
+        _displayManager = new (std::nothrow) DisplayManager();
         _displayManager->init(this);
 
         CC_SAFE_DELETE(_worldInfo);
-        _worldInfo = new BaseData();
+        _worldInfo = new (std::nothrow) BaseData();
 
         CC_SAFE_DELETE(_boneData);
-        _boneData  = new BoneData();
+        _boneData  = new (std::nothrow) BoneData();
 
         bRet = true;
     }
