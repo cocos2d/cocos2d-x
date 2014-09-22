@@ -113,7 +113,7 @@ public:
     // set cull face enable or not
     void setCullFaceEnabled(bool enable);
     
-    /** light mask getter & setter, light works only when _lightmask */
+    /** light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff */
     void setLightMask(unsigned short mask) { _lightMask = mask; }
     unsigned short getLightMask() const { return _lightMask; }
 
