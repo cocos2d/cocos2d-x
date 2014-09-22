@@ -54,7 +54,8 @@ Application * Application::sm_pSharedApplication = 0;
 // sharedApplication pointer
 Application * s_pSharedApplication = 0;
 
-Application::Application()
+Application::Application() :
+m_openURLDelegate(nullptr)
 {
     m_nAnimationInterval.QuadPart = 0;
     CC_ASSERT(! sm_pSharedApplication);
@@ -179,8 +180,15 @@ Application::Platform  Application::getTargetPlatform()
 
 bool Application::openURL(const std::string &url)
 {
-    //TODO release this method
-    return false;
+    if (m_openURLDelegate)
+    {
+        m_openURLDelegate(PlatformStringFromString(url));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void Application::setResourceRootPath(const std::string& rootResDir)
