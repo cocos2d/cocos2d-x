@@ -110,7 +110,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
@@ -429,6 +429,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UITextBMFont.cpp" />
     <ClCompile Include="..\ui\UITextField.cpp" />
     <ClCompile Include="..\ui\UIVBox.cpp" />
+    <ClCompile Include="..\ui\UIWebView.cpp" />
+    <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp" />
     <ClCompile Include="..\ui\UIWidget.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
@@ -807,6 +809,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UITextBMFont.h" />
     <ClInclude Include="..\ui\UITextField.h" />
     <ClInclude Include="..\ui\UIVBox.h" />
+    <ClInclude Include="..\ui\UIWebView-inl.h" />
+    <ClInclude Include="..\ui\UIWebView.h" />
+    <ClInclude Include="..\ui\UIWebViewImpl-win32.h" />
     <ClInclude Include="..\ui\UIWidget.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />

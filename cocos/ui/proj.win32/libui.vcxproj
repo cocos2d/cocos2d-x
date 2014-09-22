@@ -38,6 +38,9 @@
     <ClInclude Include="..\UITextBMFont.h" />
     <ClInclude Include="..\UITextField.h" />
     <ClInclude Include="..\UIVBox.h" />
+    <ClInclude Include="..\UIWebView-inl.h" />
+    <ClInclude Include="..\UIWebView.h" />
+    <ClInclude Include="..\UIWebViewImpl-win32.h" />
     <ClInclude Include="..\UIWidget.h" />
     <ClInclude Include="Win32InputBox.h" />
   </ItemGroup>
@@ -67,6 +70,8 @@
     <ClCompile Include="..\UITextBMFont.cpp" />
     <ClCompile Include="..\UITextField.cpp" />
     <ClCompile Include="..\UIVBox.cpp" />
+    <ClCompile Include="..\UIWebView.cpp" />
+    <ClCompile Include="..\UIWebViewImpl-win32.cpp" />
     <ClCompile Include="..\UIWidget.cpp" />
     <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>

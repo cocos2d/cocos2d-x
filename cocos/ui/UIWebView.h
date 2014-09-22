@@ -25,10 +25,13 @@
 #ifndef __COCOS2D_UI_WEBVIEW_H
 #define __COCOS2D_UI_WEBVIEW_H
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "platform/CCPlatformConfig.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 #include "base/CCData.h"
 
 NS_CC_BEGIN
@@ -37,7 +40,7 @@ namespace experimental{
         
 class WebViewImpl;
 
-class WebView : public cocos2d::ui::Widget {
+class CC_GUI_DLL WebView : public cocos2d::ui::Widget {
 public:
     /**
     * Allocates and initializes a WebView.
@@ -129,7 +132,7 @@ public:
 
     virtual void setVisible(bool visible) override;
     
-    typedef std::function<void(WebView *sender, std::string url)> ccWebViewCallbak;
+    typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallback;
     
     
     /**
@@ -138,43 +141,43 @@ public:
      * @param url content URL.
      * @return YES if the web view should begin loading content; otherwise, NO .
      */
-    void setOnShouldStartLoading(const std::function<bool(WebView *sender, std::string url)>& callback);
+    void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
     
     /**
      * Call after a web view finishes loading.
      * @param sender The web view that has finished loading.
      * @param url content URL.
      */
-    void setOnDidFinishLoading(const ccWebViewCallbak& callback);
+    void setOnDidFinishLoading(const ccWebViewCallback& callback);
     
     /**
      * Call if a web view failed to load content.
      * @param sender The web view that has failed loading.
      * @param url content URL.
      */
-    void setOnDidFailLoading(const ccWebViewCallbak& callback);
+    void setOnDidFailLoading(const ccWebViewCallback& callback);
     
     /**
      * This callback called when load URL that start with javascript interface scheme.
      */
-    void setOnJSCallback(const ccWebViewCallbak& callback);
+    void setOnJSCallback(const ccWebViewCallback& callback);
     
-    std::function<bool(WebView *sender, std::string url)> getOnShouldStartLoading()const;
-    ccWebViewCallbak getOnDidFinishLoading()const;
-    ccWebViewCallbak getOnDidFailLoading()const;
-    ccWebViewCallbak getOnJSCallback()const;
+    std::function<bool(WebView *sender, const std::string &url)> getOnShouldStartLoading()const;
+    ccWebViewCallback getOnDidFinishLoading()const;
+    ccWebViewCallback getOnDidFailLoading()const;
+    ccWebViewCallback getOnJSCallback()const;
     
 protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     
-    std::function<bool(WebView *sender, std::string url)> _onShouldStartLoading;
+    std::function<bool(WebView *sender, const std::string &url)> _onShouldStartLoading;
     
-    ccWebViewCallbak _onDidFinishLoading;
+    ccWebViewCallback _onDidFinishLoading;
     
-    ccWebViewCallbak _onDidFailLoading;
+    ccWebViewCallback _onDidFailLoading;
    
-    ccWebViewCallbak _onJSCallback;
+    ccWebViewCallback _onJSCallback;
 
     /**
      * Default constructor
