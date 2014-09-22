@@ -1122,10 +1122,10 @@ bool FileUtils::removeDirectory(const std::string& path)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	std::string Files = path + "*.*";
 	WIN32_FIND_DATA wfd;
-	HANDLE  hFind = FindFirstFileEx(Files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
+	HANDLE  search = FindFirstFileEx(Files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
 	bool ret=true;   
 	std::string Tmp;   
-	if (hFind!=INVALID_HANDLE_VALUE)   
+	if (search!=INVALID_HANDLE_VALUE)   
 	{   
 		bool find=true;   
 		while (find)
@@ -1145,9 +1145,9 @@ bool FileUtils::removeDirectory(const std::string& path)
 					ret = ret && DeleteFile(Tmp.c_str());
 				}
 			}
-			find = FindNextFile(find, &wfd);
+			find = FindNextFile(search, &wfd);
 		}
-		FindClose(find);
+		FindClose(search);
 	}
 	if (ret)
 		return RemoveDirectoryA(path.c_str());
