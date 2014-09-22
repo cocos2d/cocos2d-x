@@ -21,6 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "AudioCache.h"
 #include <thread>
 #import <OpenAL/alc.h>
@@ -238,3 +239,5 @@ void AudioCache::addCallbacks(const std::function<void ()> &callback)
     }
     _callbackMutex.unlock();
 }
+
+#endif
