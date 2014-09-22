@@ -54,7 +54,9 @@ bool UIScene_Editor::init()
         Menu* pMenu =Menu::create(pToggleItem, nullptr);
         pMenu->setPosition( Vec2::ZERO );
         
-        addChild(pMenu, 1, 1);
+        /* peterson */
+//        addChild(pMenu, 1, 1);
+        /**/
 
         return true;
     }

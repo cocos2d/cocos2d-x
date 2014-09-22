@@ -128,15 +128,31 @@ bool UILayoutTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/crossplatform_UILayout_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/windows_ui_layout_editor_1.json"));
        
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
+         */
+        /**/
         
+        /* peterson */
+        /*
         Menu* menu = static_cast<Menu*>(getChildByTag(1));
         MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
         MenuItem* selectedItem = menuItemToggle->getSelectedItem();
         menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        /**/
         
         return true;
     }
@@ -267,15 +283,31 @@ bool UILayoutTest_Color_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/crossplatform_UILayout_Color_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/windows_ui_layout_color_editor_1.json"));
        
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
+         */
+        /**/
         
+        /* peterson */
+        /*
         Menu* menu = static_cast<Menu*>(getChildByTag(1));
         MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
         MenuItem* selectedItem = menuItemToggle->getSelectedItem();
         menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        /**/
         
         return true;
     }
@@ -407,15 +439,31 @@ bool UILayoutTest_Gradient_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/crossplatform_UILayout_Gradient_Color_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/windows_ui_layout_gradient_color_editor_1_0.json"));
         
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
+         */
+        /**/
         
+        /* peterson */
+        /*
         Menu* menu = static_cast<Menu*>(getChildByTag(1));
         MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
         MenuItem* selectedItem = menuItemToggle->getSelectedItem();
         menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        /**/
         
         return true;
     }
@@ -547,16 +595,32 @@ bool UILayoutTest_BackGroundImage_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/crossplatform_UILayout_BackgroundImage_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/windows_ui_layout_backgroundimage_editor_1_0_0.json"));
 
         _touchGroup->addChild(_layout);
       
         this->configureGUIScene();
+         */
+        /**/
         
+        /* peterson */
+        /*
         Menu* menu = static_cast<Menu*>(getChildByTag(1));
         MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
         MenuItem* selectedItem = menuItemToggle->getSelectedItem();
         menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        /**/
         
         return true;
     }
@@ -688,16 +752,32 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/crossplatform_UILayout_Scale9_BackgroundImage_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/windows_ui_layout_scale9_backgroundimage_editor.json"));
  
         _touchGroup->addChild(_layout);
        
         this->configureGUIScene();
+         */
+        /**/
         
+        /* peterson */
+        /*
         Menu* menu = static_cast<Menu*>(getChildByTag(1));
         MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
         MenuItem* selectedItem = menuItemToggle->getSelectedItem();
         menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
+         */
+        /**/
         
         return true;
     }

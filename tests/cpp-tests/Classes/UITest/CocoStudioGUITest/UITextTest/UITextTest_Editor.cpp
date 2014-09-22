@@ -102,9 +102,21 @@ bool UITextTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabel_Editor/crossplatform_UILabel_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabel_Editor/windows_ui_label_editor_1.json"));
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
+         */
+        /**/
         return true;
     }
     

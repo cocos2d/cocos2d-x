@@ -117,10 +117,22 @@ bool UISliderTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
+        /* peterson */
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UISlider_Editor/crossplatform_UISlider_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
+        _touchGroup->addChild(_layout);
+        
+        this->configureGUIScene();
+        // before
+        /*
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UISlider_Editor/windows_ui_slider_editor_1.json"));
         _touchGroup->addChild(_layout);
        
         this->configureGUIScene();
+         */
+        /**/
         
         _displayValueLabel = Text::create();
         _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
