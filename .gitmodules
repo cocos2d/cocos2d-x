@@ -10,3 +10,7 @@
 [submodule "tests/cpp-tests/Resources/ccs-res"]
         path = tests/cpp-tests/Resources/ccs-res
         url = git://github.com/dumganhar/ccs-res.git
+[submodule "external"]
+	path = external
+	url = git://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin.git
+	branch = v3
