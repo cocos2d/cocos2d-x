@@ -425,49 +425,11 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     {
         return false;
     }
-
-
-    GLchar def[256];
-    sprintf(def
-           , "#define CC_MAX_DIRECTIONAL_LIGHT_NUM %d \n"
-             "#define CC_MAX_POINT_LIGHT_NUM %d \n"
-             "#define CC_MAX_SPOT_LIGHT_NUM %d \n"
-             "#define CC_MAX_AMBIENT_LIGHT_NUM %d \n"
-           , CC_MAX_DIRECTIONAL_LIGHT_NUM, CC_MAX_POINT_LIGHT_NUM, CC_MAX_SPOT_LIGHT_NUM, CC_MAX_AMBIENT_LIGHT_NUM);
-
-    GLchar lightStruct[] = { 
-         "#if CC_MAX_DIRECTIONAL_LIGHT_NUM \n"
-         "uniform vec3 CC_DirLightSourceColor[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
-         "uniform vec3 CC_DirLightSourceDirection[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
-         "uniform float CC_DirLightSourceIntensity[CC_MAX_DIRECTIONAL_LIGHT_NUM];         \n"
-         "#endif         \n"
-         "#if CC_MAX_POINT_LIGHT_NUM         \n"
-         "uniform vec3 CC_PointLightSourceColor[CC_MAX_POINT_LIGHT_NUM];         \n"
-         "uniform vec3 CC_PointLightSourcePosition[CC_MAX_POINT_LIGHT_NUM];         \n"
-         "uniform float CC_PointLightSourceRangeInverse[CC_MAX_POINT_LIGHT_NUM];         \n"
-         "uniform float CC_PointLightSourceIntensity[CC_MAX_POINT_LIGHT_NUM];         \n"
-         "#endif         \n"
-         "#if CC_MAX_SPOT_LIGHT_NUM         \n"
-         "uniform vec3 CC_SpotLightSourceColor[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform vec3 CC_SpotLightSourcePosition[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform vec3 CC_SpotLightSourceDirection[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform float CC_SpotLightSourceInnerAngleCos[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform float CC_SpotLightSourceOuterAngleCos[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform float CC_SpotLightSourceRangeInverse[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "uniform float CC_SpotLightSourceIntensity[CC_MAX_SPOT_LIGHT_NUM];         \n"
-         "#endif         \n"
-         //"#if CC_MAX_AMBIENT_LIGHT_NUM         \n"
-         "uniform vec3 CC_AmbientLightSourceColor[CC_MAX_AMBIENT_LIGHT_NUM]; \n"
-         "uniform float CC_AmbientLightSourceIntensity[CC_MAX_AMBIENT_LIGHT_NUM]; \n"
-         //"#endif         \n"
-    };
     
     const GLchar *sources[] = {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #endif
-        def,
-        lightStruct,
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"

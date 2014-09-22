@@ -1,39 +1,50 @@
 
 const char* cc3D_PositionNormalTex_vert = STRINGIFY(
+\n#define MAX_DIRECTIONAL_LIGHT_NUM 1 \n
+\n#define MAX_POINT_LIGHT_NUM 1 \n
+\n#define MAX_SPOT_LIGHT_NUM 1 \n
+\n#define MAX_AMBIENT_LIGHT_NUM 1 \n
+
+\n#if (MAX_POINT_LIGHT_NUM > 0)\n
+uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
+\n#endif\n
+\n#if (MAX_SPOT_LIGHT_NUM > 0)\n
+uniform vec3 u_SpotLightSourcePosition[MAX_SPOT_LIGHT_NUM];
+\n#endif\n
 
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
 attribute vec3 a_normal;
 varying vec2 TextureCoordOut;
 
-\n#if CC_MAX_POINT_LIGHT_NUM\n
-varying vec3 v_vertexToPointLightDirection[CC_MAX_POINT_LIGHT_NUM];
+\n#if MAX_POINT_LIGHT_NUM\n
+varying vec3 v_vertexToPointLightDirection[MAX_POINT_LIGHT_NUM];
 \n#endif\n
-\n#if CC_MAX_SPOT_LIGHT_NUM\n
-varying vec3 v_vertexToSpotLightDirection[CC_MAX_SPOT_LIGHT_NUM];
+\n#if MAX_SPOT_LIGHT_NUM\n
+varying vec3 v_vertexToSpotLightDirection[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
-\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
 varying vec3 v_normal;
 \n#endif\n
 
 void main(void)
 {
     vec4 ePosition = CC_MVMatrix * a_position;
-\n#if (CC_MAX_POINT_LIGHT_NUM > 0)\n
-    for (int i = 0; i < CC_MAX_POINT_LIGHT_NUM; ++i)
+\n#if (MAX_POINT_LIGHT_NUM > 0)\n
+    for (int i = 0; i < MAX_POINT_LIGHT_NUM; ++i)
     {
-        v_vertexToPointLightDirection[i] = CC_PointLightSourcePosition[i].xyz - ePosition.xyz;
+        v_vertexToPointLightDirection[i] = u_PointLightSourcePosition[i].xyz - ePosition.xyz;
     }
 \n#endif\n
 
-\n#if (CC_MAX_SPOT_LIGHT_NUM > 0)\n
-    for (int i = 0; i < CC_MAX_SPOT_LIGHT_NUM; ++i)
+\n#if (MAX_SPOT_LIGHT_NUM > 0)\n
+    for (int i = 0; i < MAX_SPOT_LIGHT_NUM; ++i)
     {
-        v_vertexToSpotLightDirection[i] = CC_SpotLightSourcePosition[i] - ePosition.xyz;
+        v_vertexToSpotLightDirection[i] = u_SpotLightSourcePosition[i] - ePosition.xyz;
     }
 \n#endif\n
         
-\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
     v_normal = CC_NormalMatrix * a_normal;
 \n#endif\n
 
@@ -44,6 +55,18 @@ void main(void)
 );
 
 const char* cc3D_SkinPositionNormalTex_vert = STRINGIFY(
+\n#define MAX_DIRECTIONAL_LIGHT_NUM 1 \n
+\n#define MAX_POINT_LIGHT_NUM 1 \n
+\n#define MAX_SPOT_LIGHT_NUM 1 \n
+\n#define MAX_AMBIENT_LIGHT_NUM 1 \n
+
+\n#if (MAX_POINT_LIGHT_NUM > 0)\n
+uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
+\n#endif\n
+\n#if (MAX_SPOT_LIGHT_NUM > 0)\n
+uniform vec3 u_SpotLightSourcePosition[MAX_SPOT_LIGHT_NUM];
+\n#endif\n
+
 attribute vec3 a_position;
 
 attribute vec4 a_blendWeight;
@@ -60,11 +83,11 @@ uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
 // Varyings
 varying vec2 TextureCoordOut;
 
-\n#if CC_MAX_POINT_LIGHT_NUM\n
-varying vec3 v_vertexToPointLightDirection[CC_MAX_POINT_LIGHT_NUM];
+\n#if MAX_POINT_LIGHT_NUM\n
+varying vec3 v_vertexToPointLightDirection[MAX_POINT_LIGHT_NUM];
 \n#endif\n
-\n#if CC_MAX_SPOT_LIGHT_NUM\n
-varying vec3 v_vertexToSpotLightDirection[CC_MAX_SPOT_LIGHT_NUM];
+\n#if MAX_SPOT_LIGHT_NUM\n
+varying vec3 v_vertexToSpotLightDirection[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
 varying vec3 v_normal;
 
@@ -114,7 +137,7 @@ void getPositionAndNormal(out vec4 position, out vec3 normal)
     position.z = dot(p, matrixPalette3);
     position.w = p.w;
 
-\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
     vec4 n = vec4(a_normal, 0.0);
     normal.x = dot(n, matrixPalette1);
     normal.y = dot(n, matrixPalette2);
@@ -129,21 +152,21 @@ void main()
     getPositionAndNormal(position, normal);
 
     vec4 ePosition = CC_MVMatrix * position;
-\n#if (CC_MAX_POINT_LIGHT_NUM > 0)\n
-    for (int i = 0; i < CC_MAX_POINT_LIGHT_NUM; ++i)
+\n#if (MAX_POINT_LIGHT_NUM > 0)\n
+    for (int i = 0; i < MAX_POINT_LIGHT_NUM; ++i)
     {
-        v_vertexToPointLightDirection[i] = CC_PointLightSourcePosition[i].xyz- ePosition.xyz;
+        v_vertexToPointLightDirection[i] = u_PointLightSourcePosition[i].xyz- ePosition.xyz;
     }
 \n#endif\n
 
-\n#if (CC_MAX_SPOT_LIGHT_NUM > 0)\n
-    for (int i = 0; i < CC_MAX_SPOT_LIGHT_NUM; ++i)
+\n#if (MAX_SPOT_LIGHT_NUM > 0)\n
+    for (int i = 0; i < MAX_SPOT_LIGHT_NUM; ++i)
     {
-        v_vertexToSpotLightDirection[i] = CC_SpotLightSourcePosition[i] - ePosition.xyz;
+        v_vertexToSpotLightDirection[i] = u_SpotLightSourcePosition[i] - ePosition.xyz;
     }
 \n#endif\n
 
-\n#if ((CC_MAX_DIRECTIONAL_LIGHT_NUM > 0) || (CC_MAX_POINT_LIGHT_NUM > 0) || (CC_MAX_SPOT_LIGHT_NUM > 0))\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
     v_normal = CC_NormalMatrix * normal;
 \n#endif\n
 

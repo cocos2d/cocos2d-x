@@ -517,7 +517,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
         
-        meshCommand.init(_globalZOrder, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
+        meshCommand.init(_globalZOrder, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), _lightMask, transform);
         
         auto skin = mesh->getSkin();
         if (skin)

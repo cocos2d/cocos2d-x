@@ -46,7 +46,7 @@ public:
     MeshCommand();
     ~MeshCommand();
 
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, unsigned short lightMask, const Mat4 &mv);
     
     void setCullFaceEnabled(bool enable);
     
@@ -123,7 +123,35 @@ protected:
     // ModelView transform
     Mat4 _mv;
 
-    bool _useLights;
+    unsigned short _lightMask;
+
+protected:
+
+    void updateLightUniforms();
+
+    enum LightUniform
+    {
+        UNIFORM_DIRECTIONAL_COLOR,
+        UNIFORM_DIRECTIONAL_DIR,
+
+        UNIFORM_POINT_COLOR,
+        UNIFORM_POINT_POSITION,
+        UNIFORM_POINT_RANGE_INVERSE,
+
+        UNIFORM_SPOT_COLOR,
+        UNIFORM_SPOT_POSITION,
+        UNIFORM_SPOT_DIR,
+        UNIFORM_SPOT_INNER_ANGLE_COS,
+        UNIFORM_SPOT_OUTER_ANGLE_COS,
+        UNIFORM_SPOT_RANGE_INVERSE,
+
+        UNIFORM_AMBIENT_COLOR,
+
+        UNIFORM_MAX,
+    };
+
+    GLint  _lightUniforms[UNIFORM_MAX];
+    GLint  _preProgram;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     EventListenerCustom* _rendererRecreatedListener;
