@@ -1006,6 +1006,9 @@ Developers:
         
     zhongfq
         Optimize decompress jpg data
+        
+    wohaaitinciu
+        WebView support on windows
     
 Retired Core Developers:
     WenSheng Yang
