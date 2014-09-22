@@ -1078,6 +1078,8 @@
         "cocos/ui/UIWebViewImpl-android.h", 
         "cocos/ui/UIWebViewImpl-ios.h", 
         "cocos/ui/UIWebViewImpl-ios.mm", 
+        "cocos/ui/UIWebViewImpl-win32.cpp", 
+        "cocos/ui/UIWebViewImpl-win32.h", 
         "cocos/ui/UIWidget.cpp", 
         "cocos/ui/UIWidget.h", 
         "cocos/ui/proj.win32/Win32InputBox.cpp", 
