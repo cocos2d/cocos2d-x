@@ -76,6 +76,7 @@ private:
      *  Streaming in openal when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
      */
     char* _queBuffers[QUEUEBUFFER_NUM];
+    ALsizei _queBufferSize[QUEUEBUFFER_NUM];
     UInt32 _queBufferFrames;
     UInt32 _queBufferBytes;
 
