@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
 
@@ -561,7 +561,7 @@ bool AudioProfileTest::init()
     
     char text[30];
     _files[0] = "background.mp3";
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     _files[1] = "background.caf";
 #else
     _files[1] = "background.ogg";

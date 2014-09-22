@@ -21,6 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "AudioPlayer.h"
 #include "AudioCache.h"
 #include "platform/CCFileUtils.h"
@@ -213,3 +214,5 @@ bool AudioPlayer::setTime(float time)
     }
     return false;
 }
+
+#endif
