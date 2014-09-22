@@ -45,6 +45,7 @@ public:
     void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate);
     void SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate);
     void SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate);
+    void SetXamlOpenURLDelegate(PhoneDirect3DXamlAppComponent::Cocos2dOpenURLDelegate^ delegate);
 
     Windows::Foundation::IAsyncAction^ OnSuspending();
     void Connect();
@@ -61,6 +62,7 @@ private:
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
     PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ m_editBoxDelegate;
+    PhoneDirect3DXamlAppComponent::Cocos2dOpenURLDelegate^ m_openURLDelegate;
 
 	// The AppDelegate for the Cocos2D app
 	AppDelegate* mApp;

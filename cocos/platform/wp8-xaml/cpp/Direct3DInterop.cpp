@@ -129,6 +129,11 @@ void Direct3DInterop::OnCocos2dEditboxEvent(Object^ sender, Platform::String^ ar
     cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
 }
 
+void Direct3DInterop::OnCocos2dOpenURL(Platform::String^ url)
+{
+    m_openURLDelegate->Invoke(url);
+}
+
 
 
 
@@ -172,6 +177,12 @@ void Direct3DInterop::SetCocos2dEditBoxDelegate(Cocos2dEditBoxDelegate ^ delegat
 {
     m_editBoxDelegate = delegate;
     m_renderer->SetXamlEditBoxDelegate(delegate);
+}
+
+void Direct3DInterop::SetCocos2dOpenURLDelegate(Cocos2dOpenURLDelegate ^ delegate)
+{
+    m_openURLDelegate = delegate;
+    m_renderer->SetXamlOpenURLDelegate(delegate);
 }
 
 
