@@ -22,7 +22,7 @@
 
 #include "CCPhysicsSprite.h"
 
-#if (!CC_ENABLE_CHIPMUNK_INTEGRATION && !CC_ENABLE_BOX2D_INTEGRATION)
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION && CC_ENABLE_BOX2D_INTEGRATION)
 #error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
@@ -413,4 +413,4 @@ void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 
 NS_CC_EXT_END
 
-#endif // !CC_ENABLE_CHIPMUNK_INTEGRATION && !CC_ENABLE_BOX2D_INTEGRATION
+#endif // CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
