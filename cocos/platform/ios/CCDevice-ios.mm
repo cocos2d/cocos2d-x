@@ -221,7 +221,14 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     textRect.height = constrainSize->height > 0 ? constrainSize->height
     : 0x7fffffff;
     
-    CGSize dim = [str sizeWithFont:font constrainedToSize:textRect];
+    CGSize dim;
+    if(s_isIOS7OrHigher){
+        NSDictionary *attibutes = @{NSFontAttributeName:font};
+        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attibutes context:nil].size;
+    }
+    else {
+        dim = [str sizeWithFont:font constrainedToSize:textRect];
+    }
 
     dim.width = ceilf(dim.width);
     dim.height = ceilf(dim.height);
