@@ -185,7 +185,7 @@ def main():
         return(2)
 
     #copy check_current_3rd_libs
-    check_current_3rd_libs(branch)
+    # check_current_3rd_libs(branch)
 
     # Generate binding glue codes
     if(branch == 'v3'):
