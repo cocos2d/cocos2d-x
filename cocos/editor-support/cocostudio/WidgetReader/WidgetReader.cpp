@@ -367,6 +367,8 @@ namespace cocostudio
         widget->setCascadeColorEnabled(true);
         widget->setCascadeOpacityEnabled(true);
         
+        widget->setUnifySizeEnabled(true);
+        
         bool ignoreSizeExsit = options.has_ignoresize();
         if (ignoreSizeExsit)
         {
@@ -499,6 +501,8 @@ namespace cocostudio
     {
         widget->setCascadeColorEnabled(true);
         widget->setCascadeOpacityEnabled(true);
+        
+        widget->setUnifySizeEnabled(true);
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();

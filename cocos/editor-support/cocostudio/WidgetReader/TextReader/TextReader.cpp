@@ -152,6 +152,8 @@ namespace cocostudio
 
         WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
         
+        label->setUnifySizeEnabled(false);
+        
         std::string jsonPath = GUIReader::getInstance()->getFilePath();
         
         bool touchScaleChangeAble = options.touchscaleenable();
@@ -214,6 +216,8 @@ namespace cocostudio
         
         float areaWidth = 0.0f, areaHeight = 0.0f;
         int halignment = 0, valignment = 0;
+        
+        label->setUnifySizeEnabled(false);
         
         label->setFontName("微软雅黑");
         

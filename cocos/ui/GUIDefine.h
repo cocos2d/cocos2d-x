@@ -67,5 +67,6 @@
 #define CREATE_CLASS_WIDGET_READER_INFO(className) \
     cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
 
+#define __LAYOUT_COMPONENT_NAME "__ui_layout"
 
 #endif /* defined(__TestCpp__GUIDefine__) */

@@ -155,6 +155,10 @@ void Text::setFontName(const std::string& name)
     }
     else{
         _labelRenderer->setSystemFontName(name);
+        if (_type == Type::TTF)
+        {
+            _labelRenderer->requestSystemFontRefresh();
+        }
         _type = Type::SYSTEM;
     }
     _fontName = name;
@@ -306,6 +310,7 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
+        _labelRenderer->setDimensions(0,0);
         _labelRenderer->setScale(1.0f);
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }

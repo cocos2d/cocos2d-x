@@ -461,7 +461,12 @@ Node* Slider::getVirtualRenderer()
 
 void Slider::barRendererScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _barLength = _contentSize.width;
+        _barRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         
         _barRenderer->setScale(1.0f);
@@ -494,7 +499,11 @@ void Slider::barRendererScaleChangedWithSize()
 
 void Slider::progressBarRendererScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _progressBarRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {

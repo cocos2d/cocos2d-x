@@ -155,6 +155,8 @@ namespace cocostudio
         WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
         WidgetReader::setAnchorPointForWidget(widget, nodeTree);
         
+        textField->setUnifySizeEnabled(false);
+        
         bool ph = options.has_placeholder();
         if (ph)
         {
@@ -222,6 +224,8 @@ namespace cocostudio
         
         bool isCustomSize = false;
         float width = 0.0f, height = 0.0f;
+        
+        textField->setUnifySizeEnabled(false);
         
         textField->setFontName("微软雅黑");
         

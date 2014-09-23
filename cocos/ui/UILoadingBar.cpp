@@ -100,14 +100,14 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
     {
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            _barRenderer->setPosition(Vec2(0,0.0f));
+            _barRenderer->setPosition(Vec2(0,_contentSize.height*0.5f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(false);
             }
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-            _barRenderer->setPosition(Vec2(_totalLength,0.0f));
+            _barRenderer->setPosition(Vec2(_totalLength,_contentSize.height*0.5f));
             if (!_scale9Enabled) {
                 _barRenderer->setFlippedX(true);
             }
@@ -216,11 +216,11 @@ void LoadingBar::setPercent(float percent)
     {
         return;
     }
+     _percent = percent;
     if (_totalLength <= 0)
     {
         return;
     }
-    _percent = percent;
     float res = _percent / 100.0f;
     
     if (_scale9Enabled)
@@ -277,7 +277,13 @@ Node* LoadingBar::getVirtualRenderer()
 
 void LoadingBar::barRendererScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        //_barRenderer->setPreferredSize(_contentSize);
+        _totalLength = _contentSize.width;
+        this->setPercent(_percent);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -310,10 +316,10 @@ void LoadingBar::barRendererScaleChangedWithSize()
     switch (_direction)
     {
         case Direction::LEFT:
-            _barRenderer->setPosition(Vec2(0.0f, _contentSize.height / 2.0f));
+            _barRenderer->setPosition(Vec2(0.0f,_contentSize.height*0.5f));
             break;
         case Direction::RIGHT:
-            _barRenderer->setPosition(Vec2(_totalLength, _contentSize.height / 2.0f));
+            _barRenderer->setPosition(Vec2(_totalLength,_contentSize.height*0.5f));
             break;
         default:
             break;

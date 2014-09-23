@@ -86,15 +86,7 @@ void TextBMFont::setFntFile(const std::string& fileName)
         return;
     }
     _fntFileName = fileName;
-	/* peterson cheat */
-	bool result = _labelBMFontRenderer->setBMFontFilePath(fileName);
-	if (!result)
-	{
-		return;
-	}
-	// before
-    //_labelBMFontRenderer->setBMFontFilePath(fileName);
-	/**/
+    _labelBMFontRenderer->setBMFontFilePath(fileName);
     
     _fntFileHasInit = true;
     setString(_stringValue);
