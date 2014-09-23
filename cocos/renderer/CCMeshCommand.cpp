@@ -99,7 +99,7 @@ void MeshCommand::init(float globalOrder,
     _indexCount = indexCount;
     _mv.set(mv);
 
-	setLightUniformNames();
+    setLightUniformNames();
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
