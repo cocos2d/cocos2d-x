@@ -1,4 +1,6 @@
 cocos2d-x-3.3
+    [NEW]           Rect: added merge()
+    [NEW]           Utils: added getCascadeBoundingBox()
     [NEW]           UI: `WebView` support on windows
 
 cocos2d-x-3.3  Sep.20 2014
