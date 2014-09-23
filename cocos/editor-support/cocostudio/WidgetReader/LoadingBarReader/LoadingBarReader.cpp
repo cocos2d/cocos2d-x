@@ -211,6 +211,7 @@ namespace cocostudio
         bool scale9Enabled = false;
         float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
         float swf = 0.0f, shf = 0.0f;
+        int direction = 0;
         
         int percent = 0;
         
@@ -223,7 +224,7 @@ namespace cocostudio
             
             if (name == "ProgressType")
             {
-                loadingBar->setDirection((LoadingBar::Direction)((value == "Left_To_Right") ? 0 : 1));
+                direction = (value == "Left_To_Right") ? 0 : 1;
             }
             else if (name == "ProgressInfo")
             {
@@ -312,6 +313,7 @@ namespace cocostudio
             child = child->NextSiblingElement();
         }
         
+        loadingBar->setDirection((LoadingBar::Direction)direction);
         loadingBar->setPercent(percent);
     }
     /**/
