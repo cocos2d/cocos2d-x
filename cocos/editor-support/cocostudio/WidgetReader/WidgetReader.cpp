@@ -545,7 +545,7 @@ namespace cocostudio
             }
             else if (name == "VisibleForFrame")
             {
-                widget->setVisible((value == "True") ? true : false);
+//                widget->setVisible((value == "True") ? true : false);
             }
             else if (name == "Alpha")
             {

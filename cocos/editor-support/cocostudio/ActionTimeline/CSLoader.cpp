@@ -1620,7 +1620,7 @@ void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLEl
         }
         else if (name == "VisibleForFrame")
         {
-            node->setVisible((value == "True") ? true : false);
+//            node->setVisible((value == "True") ? true : false);
         }
         else if (name == "Alpha")
         {

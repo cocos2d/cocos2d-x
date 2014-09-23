@@ -345,6 +345,10 @@ namespace cocostudio
             else if (name == "DisplayState")
             {
                 slider->setBright((value == "True") ? true : false);
+                if (value == "False")
+                {
+                    slider->setTouchEnabled(false);
+                }
             }
             
             attribute = attribute->Next();

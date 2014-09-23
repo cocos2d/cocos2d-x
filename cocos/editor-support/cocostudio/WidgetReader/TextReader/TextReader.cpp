@@ -258,7 +258,7 @@ namespace cocostudio
                 {
                     halignment = 0;
                 }
-                else if (value == "HT_CENTER")
+                else if (value == "HT_Center")
                 {
                     halignment = 1;
                 }
@@ -273,11 +273,11 @@ namespace cocostudio
                 {
                     valignment = 0;
                 }
-                else if (value == "VT_CENTER")
+                else if (value == "VT_Center")
                 {
                     valignment = 1;
                 }
-                else if (value == "VT_BOTTOM")
+                else if (value == "VT_Bottom")
                 {
                     valignment = 2;
                 }
@@ -338,11 +338,10 @@ namespace cocostudio
         if (areaWidth != 0 || areaHeight != 0)
         {
             label->setTextAreaSize(Size(areaWidth, areaHeight));
-            label->setTextHorizontalAlignment((TextHAlignment)halignment);
-            label->setTextVerticalAlignment((TextVAlignment)valignment);
         }
         
-        CCLOG("label->getFontName() = %s", label->getFontName().c_str()) ;
+        label->setTextHorizontalAlignment((TextHAlignment)halignment);
+        label->setTextVerticalAlignment((TextVAlignment)valignment);
     }
     /**/
 }
