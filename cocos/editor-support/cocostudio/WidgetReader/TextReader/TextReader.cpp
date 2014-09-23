@@ -292,7 +292,32 @@ namespace cocostudio
         {
             std::string name = child->Name();
             
-            if (name == "FontResource")
+            if (name == "Size")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                label->ignoreContentAdaptWithSize(false);
+                label->setContentSize(Size(width, height));
+            }
+            else if (name == "FontResource")
             {
                 const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
                 int resourceType = 0;
