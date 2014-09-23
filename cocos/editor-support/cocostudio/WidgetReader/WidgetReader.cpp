@@ -499,6 +499,8 @@ namespace cocostudio
     /* peterson xml */
     void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
     {
+        widget->setTouchEnabled(false);
+        
         widget->setCascadeColorEnabled(true);
         widget->setCascadeOpacityEnabled(true);
         
