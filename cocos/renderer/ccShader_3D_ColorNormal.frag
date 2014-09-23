@@ -1,9 +1,5 @@
 
 const char* cc3D_ColorNormal_frag = STRINGIFY(
-\n#define MAX_DIRECTIONAL_LIGHT_NUM 1 \n
-\n#define MAX_POINT_LIGHT_NUM 1 \n
-\n#define MAX_SPOT_LIGHT_NUM 1 \n
-\n#define MAX_AMBIENT_LIGHT_NUM 1 \n
 
 \n#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
 uniform vec3 u_DirLightSourceColor[MAX_DIRECTIONAL_LIGHT_NUM];
@@ -20,9 +16,7 @@ uniform float u_SpotLightSourceInnerAngleCos[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceOuterAngleCos[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceRangeInverse[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
-\n#if (MAX_AMBIENT_LIGHT_NUM > 0)\n
-uniform vec3 u_AmbientLightSourceColor[MAX_AMBIENT_LIGHT_NUM];
-\n#endif\n
+uniform vec3 u_AmbientLightSourceColor;
 
 \n#ifdef GL_ES\n
 varying mediump vec2 TextureCoordOut;
@@ -67,7 +61,7 @@ void main(void)
     vec3 normal  = normalize(v_normal);
 \n#endif\n
 
-    vec4 combinedColor = vec4(0.0, 0.0, 0.0, 1.0);
+    vec4 combinedColor = vec4(u_AmbientLightSourceColor, 1.0);
 
     // Directional light contribution
 \n#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
@@ -108,14 +102,7 @@ void main(void)
     }
 \n#endif\n
 
-\n#if (MAX_AMBIENT_LIGHT_NUM > 0)\n
-    for (int i = 0; i < MAX_AMBIENT_LIGHT_NUM; ++i)
-    {
-        combinedColor.xyz += u_AmbientLightSourceColor[i];
-    }
-\n#endif\n
-
-\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0) || (MAX_AMBIENT_LIGHT_NUM > 0))\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
     gl_FragColor = u_color * combinedColor;
 \n#else\n
     gl_FragColor = u_color;

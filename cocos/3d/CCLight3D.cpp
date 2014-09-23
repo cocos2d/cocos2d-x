@@ -92,6 +92,8 @@ DirectionLight3D::~DirectionLight3D()
     
 }
 
+unsigned int DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM = 1;
+
 //////////////////////////////////////////////////////////////////
 PointLight3D* PointLight3D::create(const Vec3 &position, const Color3B &color, float range)
 {
@@ -111,6 +113,8 @@ PointLight3D::~PointLight3D()
 {
     
 }
+
+unsigned int PointLight3D::MAX_POINT_LIGHT_NUM = 1;
 
 //////////////////////////////////////////////////////////////
 SpotLight3D* SpotLight3D::create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range)
@@ -168,6 +172,8 @@ SpotLight3D::~SpotLight3D()
 {
 
 }
+
+unsigned int SpotLight3D::MAX_SPOT_LIGHT_NUM = 1;
 
 /////////////////////////////////////////////////////////////
 

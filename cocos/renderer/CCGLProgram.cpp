@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include <alloca.h>
 #endif
 
-#include "3d/CCLight3D.h"
 #include "base/CCDirector.h"
 #include "base/uthash.h"
 #include "renderer/ccGLStateCache.h"
