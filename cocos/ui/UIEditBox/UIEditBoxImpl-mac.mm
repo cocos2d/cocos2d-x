@@ -29,6 +29,7 @@
 
 #include "base/CCDirector.h"
 #include "UIEditBox.h"
+#include "deprecated/CCString.h"
 
 
 #define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac*)editBox_)
