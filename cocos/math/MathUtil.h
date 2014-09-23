@@ -115,6 +115,10 @@ NS_CC_MATH_END
 
 #define MATRIX_SIZE ( sizeof(float) * 16)
 
+#ifdef __ARM_NEON__
+#define USE_NEON
+#endif
+
 #ifdef USE_NEON
 #include "MathUtilNeon.inl"
 #else
