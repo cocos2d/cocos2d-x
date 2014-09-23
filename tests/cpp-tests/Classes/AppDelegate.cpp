@@ -144,6 +144,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     layer->addChild(node);
     scene->addChild(layer);
     director->runWithScene(scene);
+    
+    auto action = cocostudio::timeline::ActionTimelineCache::createAction("cocosui/test_csb/res/MainScene.csb");
+    if (action)
+    {
+        node->runAction(action);
+        action->gotoFrameAndPlay(0);
+    }
      */
     
     return true;

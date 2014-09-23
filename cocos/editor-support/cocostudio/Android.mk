@@ -59,6 +59,7 @@ ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CSLoader.cpp \
 CSParseBinary.pb.cc \
 ../../../external/protocolBuf/src/google/protobuf/extension_set.cc \
 ../../../external/protocolBuf/src/google/protobuf/generated_message_util.cc \
