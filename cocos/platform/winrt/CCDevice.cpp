@@ -54,6 +54,14 @@ void Device::setAccelerometerEnabled(bool isEnabled)
     static Windows::Foundation::EventRegistrationToken sToken;
     static bool sEnabled = false;
 
+    // we always need to reset the accelerometer
+    if (sAccelerometer)
+    {
+        sAccelerometer->ReadingChanged -= sToken;
+        sAccelerometer = nullptr;
+        sEnabled = false;
+    }
+
 	if (isEnabled)
 	{
         sAccelerometer = Accelerometer::GetDefault();
@@ -118,17 +126,6 @@ void Device::setAccelerometerEnabled(bool isEnabled)
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
 		});
 	}
-	else
-	{
-        if (sAccelerometer)
-        {
-            sAccelerometer->ReadingChanged -= sToken;
-            sAccelerometer = nullptr;
-        }
-
-        sEnabled = false;
-	}
-
 }
 
 void Device::setAccelerometerInterval(float interval)
