@@ -700,7 +700,7 @@ bool LargeAudioFileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     auto playItem = TextButton::create("play large audio file", [&](TextButton* button){
-        AudioEngine::play2d("audio/Chee Lai(Arise).mp3");
+        AudioEngine::play2d("audio/LuckyDay.mp3");
     });
     playItem->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
     this->addChild(playItem);
