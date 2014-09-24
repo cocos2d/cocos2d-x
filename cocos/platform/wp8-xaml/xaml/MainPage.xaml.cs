@@ -134,6 +134,11 @@ namespace PhoneDirect3DXamlAppInterop
             m_textBox.Text = "";
         }
 
+        public void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
+        }
+
         // Called by the Cocos2d-x C++ engine to display a MessageBox
         public void OnCocos2dMessageBoxEvent(String title, String text)
         {
@@ -144,7 +149,7 @@ namespace PhoneDirect3DXamlAppInterop
         }
 
         // events called by the Cocos2d-x C++ engine to be handled by C#
-        public void OnCocos2dEvent(Cocos2dEvent theEvent)
+        public void OnCocos2dEvent(Cocos2dEvent theEvent, String text)
         {
             Dispatcher.BeginInvoke(() =>
             {
@@ -161,11 +166,13 @@ namespace PhoneDirect3DXamlAppInterop
                             m_textBox.Opacity = 0.0;
                             m_textBox.Width = 1;
                             m_textBox.Height = 1;
-                            m_textBox.MaxLength = 1;
                             m_textBox.KeyDown += OnKeyDown;
-                            m_textBox.KeyUp += OnKeyUp;
+                            m_textBox.TextChanged += OnTextChanged;
                             DrawingSurfaceBackground.Children.Add(m_textBox);
                         }
+                        m_textBox.Text = text;
+                        m_textBox.SelectionLength = 0;
+                        m_textBox.SelectionStart = int.MaxValue;
                         m_textBox.Focus();
                         break;
 
