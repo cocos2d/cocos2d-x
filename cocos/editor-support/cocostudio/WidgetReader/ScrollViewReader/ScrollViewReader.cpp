@@ -245,6 +245,8 @@ namespace cocostudio
         int resourceType = 0;
         std::string path = "", plistFile = "";
         
+        int direction = 1;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -293,15 +295,18 @@ namespace cocostudio
             {
                 if (value == "Vertical")
                 {
-                    scrollView->setDirection(ScrollView::Direction::VERTICAL);
+                    direction = 1;
+//                    scrollView->setDirection(ScrollView::Direction::VERTICAL);
                 }
                 else if (value == "Horizontal")
                 {
-                    scrollView->setDirection(ScrollView::Direction::HORIZONTAL);
+                    direction = 2;
+//                    scrollView->setDirection(ScrollView::Direction::HORIZONTAL);
                 }
                 else if (value == "Vertical_Horizontal")
                 {
-                    scrollView->setDirection(ScrollView::Direction::BOTH);
+                    direction = 3;
+//                    scrollView->setDirection(ScrollView::Direction::BOTH);
                 }
             }
             else if (name == "IsBounceEnabled")
@@ -563,6 +568,7 @@ namespace cocostudio
             }
         }
         
+        scrollView->setDirection((ScrollView::Direction)direction);
 //        scrollView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
 //        scrollView->setBackGroundImageOpacity(bgimg_opacity);
     }

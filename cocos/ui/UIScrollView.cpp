@@ -1800,6 +1800,34 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
     }
 }
     
+void ScrollView::setColor(const Color3B& color)
+{
+    this->_innerContainer->setColor(color);
+}
+
+const Color3B& ScrollView::getColor() const
+{
+    return this->_innerContainer->getColor();
+}
+
+bool ScrollView::isCascadeColorEnabled() const
+{
+    return this->_innerContainer->isCascadeColorEnabled();
+}
+void ScrollView::setCascadeColorEnabled(bool cascadeColorEnabled)
+{
+    this->_innerContainer->setCascadeColorEnabled(cascadeColorEnabled);
+}
+
+bool ScrollView::isCascadeOpacityEnabled() const
+{
+    return this->_innerContainer->isCascadeOpacityEnabled();
+}
+
+void ScrollView::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+{
+    this->_innerContainer->setCascadeOpacityEnabled(cascadeOpacityEnabled);
+}
 
 }
 
