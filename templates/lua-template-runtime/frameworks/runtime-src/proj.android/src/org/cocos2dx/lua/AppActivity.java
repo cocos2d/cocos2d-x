@@ -54,7 +54,7 @@ import android.widget.Toast;
 
 public class AppActivity extends Cocos2dxActivity{
 
-	static String hostIPAdress="0.0.0.0";
+	static String hostIPAdress = "0.0.0.0";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
