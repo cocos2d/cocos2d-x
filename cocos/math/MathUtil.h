@@ -69,7 +69,10 @@ public:
      * @param fallTime response time for falling slope (in the same units as elapsedTime).
      */
     static void smooth(float* x, float target, float elapsedTime, float riseTime, float fallTime);
-
+private:
+    //Indicates that if neon is enabled
+    static bool isNeonEnabled();
+    static bool isSSEEnabled();
 private:
 #ifdef __SSE__
     static void addMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
