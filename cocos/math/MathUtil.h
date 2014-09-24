@@ -108,15 +108,10 @@ private:
 
     static void crossVec3(const float* v1, const float* v2, float* dst);
 
-    MathUtil();
 };
 
 NS_CC_MATH_END
 
 #define MATRIX_SIZE ( sizeof(float) * 16)
-
-#ifdef __ARM_NEON__
-#define USE_NEON
-#endif
 
 #endif
