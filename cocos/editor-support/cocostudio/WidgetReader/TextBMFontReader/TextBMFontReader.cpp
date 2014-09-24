@@ -157,6 +157,8 @@ namespace cocostudio
         
         std::string text = "";
         
+        int opacity = 255;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -167,6 +169,10 @@ namespace cocostudio
             if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -222,6 +228,8 @@ namespace cocostudio
         }
         
         labelBMFont->setString(text);
+        
+        labelBMFont->setOpacity(opacity);
     }
     /**/
 }

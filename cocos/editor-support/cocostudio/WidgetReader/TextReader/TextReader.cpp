@@ -217,6 +217,8 @@ namespace cocostudio
         float areaWidth = 0.0f, areaHeight = 0.0f;
         int halignment = 0, valignment = 0;
         
+        int opacity = 255;
+        
         label->setUnifySizeEnabled(false);
         
         label->setFontName("微软雅黑");
@@ -281,6 +283,10 @@ namespace cocostudio
                 {
                     valignment = 2;
                 }
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -367,6 +373,8 @@ namespace cocostudio
         
         label->setTextHorizontalAlignment((TextHAlignment)halignment);
         label->setTextVerticalAlignment((TextVAlignment)valignment);
+        
+        label->setOpacity(opacity);
     }
     /**/
 }

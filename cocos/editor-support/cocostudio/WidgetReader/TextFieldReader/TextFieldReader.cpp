@@ -225,6 +225,8 @@ namespace cocostudio
         bool isCustomSize = false;
         float width = 0.0f, height = 0.0f;
         
+        int opacity = 255;
+        
         textField->setUnifySizeEnabled(false);
         
         textField->setFontName("微软雅黑");
@@ -281,6 +283,10 @@ namespace cocostudio
 //                    
 //                    textField->setTextAreaSize(Size(areaWidth, areaHeight));
 //                }
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -361,6 +367,8 @@ namespace cocostudio
             textField->ignoreContentAdaptWithSize(!isCustomSize);
             textField->setContentSize(Size(width, height));
         }
+        
+        textField->setOpacity(opacity);
     }
     /**/
 }

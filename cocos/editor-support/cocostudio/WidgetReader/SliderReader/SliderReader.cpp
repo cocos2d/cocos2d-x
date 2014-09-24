@@ -304,6 +304,8 @@ namespace cocostudio
         
         int percent = 100;
         
+        int opacity = 255;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -349,6 +351,10 @@ namespace cocostudio
                 {
                     slider->setTouchEnabled(false);
                 }
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -603,6 +609,8 @@ namespace cocostudio
         }
         
         slider->setPercent(percent);
+        
+        slider->setOpacity(opacity);
     }
     /**/
 }

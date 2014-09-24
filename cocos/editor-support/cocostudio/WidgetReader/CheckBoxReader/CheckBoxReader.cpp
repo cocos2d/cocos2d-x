@@ -248,6 +248,8 @@ namespace cocostudio
         
         std::string xmlPath = GUIReader::getInstance()->getFilePath();
         
+        int opacity = 255;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -262,6 +264,10 @@ namespace cocostudio
             else if (name == "DisplayState")
             {
                 checkBox->setBright((value == "True") ? true : false);
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -505,6 +511,8 @@ namespace cocostudio
             }
             
             child = child->NextSiblingElement();
+            
+            checkBox->setOpacity(opacity);
         }
     }
     /**/

@@ -215,6 +215,8 @@ namespace cocostudio
         
         int percent = 0;
         
+        int opacity = 255;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -252,6 +254,10 @@ namespace cocostudio
             else if (name == "Scale9Height")
             {
                 ch = atof(value.c_str());
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -315,6 +321,8 @@ namespace cocostudio
         
         loadingBar->setDirection((LoadingBar::Direction)direction);
         loadingBar->setPercent(percent);
+        
+        loadingBar->setOpacity(opacity);
     }
     /**/
 }

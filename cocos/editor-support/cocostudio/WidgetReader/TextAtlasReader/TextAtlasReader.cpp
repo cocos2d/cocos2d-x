@@ -195,6 +195,8 @@ namespace cocostudio
         int resourceType = 0;
         std::string path = "", plistFile = "";
         
+        int opacity = 255;
+        
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -218,6 +220,10 @@ namespace cocostudio
             else if (name == "StartChar")
             {
                 startChar = value;
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -259,6 +265,8 @@ namespace cocostudio
         }
         
         labelAtlas->setProperty(stringValue, xmlPath + path, itemWidth, itemHeight, startChar);
+        
+        labelAtlas->setOpacity(opacity);
     }
     /**/
 }

@@ -336,7 +336,7 @@ namespace cocostudio
         
         const protocolbuffers::WidgetOptions& widgetOption = nodeTree.widgetoptions();
         button->setColor(Color3B(widgetOption.colorr(), widgetOption.colorg(), widgetOption.colorb()));
-        button->setOpacity(widgetOption.opacity());
+        button->setOpacity(widgetOption.alpha());
         
         
         // other commonly protperties

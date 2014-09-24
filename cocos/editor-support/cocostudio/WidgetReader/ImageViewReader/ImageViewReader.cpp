@@ -222,6 +222,8 @@ namespace cocostudio
         float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
         float swf = 0.0f, shf = 0.0f;
         
+        int opacity = 255;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -251,6 +253,10 @@ namespace cocostudio
             else if (name == "Scale9Height")
             {
                 ch = atof(value.c_str());
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -340,6 +346,8 @@ namespace cocostudio
             imageView->setCapInsets(Rect(cx, cy, cw, ch));
             imageView->setContentSize(Size(swf, shf));
         }
+        
+        imageView->setOpacity(opacity);
     }
     /**/
 }
