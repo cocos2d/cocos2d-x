@@ -31,6 +31,7 @@ def set_description(desc, url):
         traceback.print_exc()
 
 def check_current_3rd_libs(branch):
+    print("start backup old 3rd libs...")
     #get current_libs config
     backup_files = range(2)
     current_files = range(2)
@@ -56,6 +57,7 @@ def check_current_3rd_libs(branch):
         if os.path.isfile(backup_file):
           copy(backup_file, current_file)
     #run download-deps.py
+    print("prepare to downloading ...")
     os.system('python download-deps.py -r no')
     #backup file
     for i, backup_file in enumerate(backup_files):
@@ -185,7 +187,7 @@ def main():
         return(2)
 
     #copy check_current_3rd_libs
-    # check_current_3rd_libs(branch)
+    check_current_3rd_libs(branch)
 
     # Generate binding glue codes
     if(branch == 'v3'):
