@@ -114,7 +114,10 @@ namespace ui {
                 break;
             case SizeType::PreSize:
                 _percentContentSize = size;
-                this->getOwner()->setContentSize(Size(size.x*parentSize.width,size.y*parentSize.height));
+                if (_usingPercentContentSize)
+                {
+                    this->getOwner()->setContentSize(Size(size.x*parentSize.width,size.y*parentSize.height));
+                }
                 break;
             case SizeType::PreSizeEnable:
                 if (_usingPercentContentSize)
