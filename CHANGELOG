@@ -1,4 +1,5 @@
 cocos2d-x-3.3
+    [NEW]           Audio: new audio supports Mac OS X
     [NEW]           Rect: added merge()
     [NEW]           Utils: added getCascadeBoundingBox()
     [NEW]           UI: `WebView` support on windows
