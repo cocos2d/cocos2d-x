@@ -13,6 +13,10 @@ using namespace std;
 
 AppDelegate::AppDelegate()
 {
+#if (COCOS2D_DEBUG > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    initRuntime();
+#endif
 }
 
 AppDelegate::~AppDelegate()
@@ -33,11 +37,6 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    
-#if (COCOS2D_DEBUG > 0)
-    initRuntime();
-#endif
-    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
@@ -67,11 +66,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register_custom_function(stack->getLuaState());
     
 #if (COCOS2D_DEBUG > 0)
-    if (startRuntime())
-        return true;
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    startRuntime();
+#else
+    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 #endif
 
-    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
     return true;
 }
 

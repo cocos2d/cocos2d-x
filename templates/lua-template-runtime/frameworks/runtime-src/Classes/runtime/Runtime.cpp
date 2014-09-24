@@ -61,7 +61,7 @@ static std::string g_projectPath;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define usleep(t) Sleep(t)
 #else
-#define usleep(t) usleep(t)
+#include <unistd.h>
 #endif
 
 extern string getIPAddress();
@@ -716,26 +716,28 @@ class ConnectWaitLayer: public Layer
 {
 private:
     Label* _labelUploadFile;
-    string _transferTip;
 public:
     ConnectWaitLayer()
     {
 #include "ResData.h"
         int designWidth = 1280;
         int designHeight = 800;
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth,designHeight,ResolutionPolicy::EXACT_FIT);
         Image* imagebg = new Image();
-        imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
-        if (!ConfigParser::getInstance()->isLanscape())
+        
+        if (ConfigParser::getInstance()->isLanscape())
+        {
+            imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
+            Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth, designHeight, ResolutionPolicy::EXACT_FIT);
+        } else
         {
             imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
-            Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight,designWidth,ResolutionPolicy::EXACT_FIT);
+            Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight, designWidth, ResolutionPolicy::EXACT_FIT);
         }
         Texture2D* texturebg = Director::getInstance()->getTextureCache()->addImage(imagebg, "play_background");
         auto background = Sprite::createWithTexture(texturebg);
-        background->setAnchorPoint(Vec2(0,0));
-        addChild(background,9000);
-
+        background->setAnchorPoint(Vec2(0.5, 0.5));
+        background->setPosition(VisibleRect::center());
+        addChild(background, 9000);
 
         // variable of below is"play" button position.
         int portraitX = 400;
@@ -746,60 +748,62 @@ public:
         imageplay->initWithImageData(__playEnablePngData, sizeof(__playEnablePngData));
         Texture2D* textureplay = Director::getInstance()->getTextureCache()->addImage(imageplay, "play_enable");
         auto playSprite = Sprite::createWithTexture(textureplay);
-        playSprite->setPosition(Vec2(lanscaptX,lanscaptY));
-        addChild(playSprite,9999);
+        addChild(playSprite, 9999);
 
         Image* imageShine = new Image();
         imageShine->initWithImageData(__shinePngData, sizeof(__shinePngData));
-        Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(imageShine, "Shine");
+        Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(imageShine, "shine");
         auto shineSprite = Sprite::createWithTexture(textureShine);
         shineSprite->setOpacity(0);
-        shineSprite->setPosition(Vec2(lanscaptX, lanscaptY));
         Vector<FiniteTimeAction*> arrayOfActions;
         arrayOfActions.pushBack(DelayTime::create(0.4f));
-        arrayOfActions.pushBack(FadeTo::create(0.8f,200));
-        arrayOfActions.pushBack(FadeTo::create(0.8f,255));
-        arrayOfActions.pushBack(FadeTo::create(0.8f,200));
-        arrayOfActions.pushBack(FadeTo::create(0.8f,0));
+        arrayOfActions.pushBack(FadeTo::create(0.8f, 200));
+        arrayOfActions.pushBack(FadeTo::create(0.8f, 255));
+        arrayOfActions.pushBack(FadeTo::create(0.8f, 200));
+        arrayOfActions.pushBack(FadeTo::create(0.8f, 0));
         arrayOfActions.pushBack(DelayTime::create(0.4f));
         shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
-        addChild(shineSprite,9998);
+        addChild(shineSprite, 9998);
 
         string strip = getIPAddress();
-        char szIPAddress[512]={0};
+        char szIPAddress[64] = {0};
         sprintf(szIPAddress, "IP: %s", strip.c_str());
         auto IPlabel = Label::createWithSystemFont(szIPAddress, "", 72);
-        IPlabel->setAnchorPoint(Vec2(0,0));
+        IPlabel->setAnchorPoint(Vec2(0, 0));
         int spaceSizex = 72;
         int spaceSizey = 200;
         IPlabel->setPosition(Point(VisibleRect::leftTop().x + spaceSizex, VisibleRect::top().y - spaceSizey));
         addChild(IPlabel, 9001);
 
-        _transferTip = "waiting for file transfer ...";
+        string transferTip = "waiting for file transfer ...";
         if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
         {
-            _transferTip = "waiting for debugger to connect ...";
+            transferTip = "waiting for debugger to connect ...";
         }
 
-        char szVersion[1024] = {0};
-        sprintf(szVersion,"runtimeVersion:%s \nengineVersion:%s", getRuntimeVersion(), cocos2dVersion());
+        char szVersion[256] = {0};
+        sprintf(szVersion, "runtimeVersion:%s \nengineVersion:%s", getRuntimeVersion(), cocos2dVersion());
         Label* verLable = Label::createWithSystemFont(szVersion, "", 24);
         verLable->setAnchorPoint(Vec2(0, 0));
         int width = verLable->getBoundingBox().size.width;
-        verLable->setPosition(Point(VisibleRect::right().x-width, VisibleRect::rightBottom().y));
+        verLable->setPosition(Point(VisibleRect::right().x - width, VisibleRect::rightBottom().y));
         verLable->setAlignment(TextHAlignment::LEFT);
         addChild(verLable, 9002);
-        _labelUploadFile = Label::createWithSystemFont(_transferTip, "", 36);
+        _labelUploadFile = Label::createWithSystemFont(transferTip, "", 36);
         _labelUploadFile->setAnchorPoint(Vec2(0, 0));
         _labelUploadFile->setPosition(Point(VisibleRect::leftTop().x + spaceSizex, IPlabel->getPositionY()- spaceSizex));
         _labelUploadFile->setAlignment(TextHAlignment::LEFT);
         addChild(_labelUploadFile, 9003);
 
-        if (!ConfigParser::getInstance()->isLanscape())
+        if (ConfigParser::getInstance()->isLanscape())
         {
-            if (playSprite)   playSprite->setPosition(portraitX,portraitY);
-            if (shineSprite)  shineSprite->setPosition(portraitX,portraitY);
-            _labelUploadFile->setAlignment(TextHAlignment::LEFT);
+            playSprite->setPosition(lanscaptX, lanscaptY);
+            shineSprite->setPosition(lanscaptX, lanscaptY);
+        }
+        else
+        {
+            playSprite->setPosition(portraitX, portraitY);
+            shineSprite->setPosition(portraitX, portraitY);
         }
 
         auto listener = EventListenerTouchOneByOne::create();
@@ -827,11 +831,11 @@ public:
     // clean up: ignore stdin, stdout and stderr
     void update(float fDelta)
     {  
-        _transferTip = FileServer::getShareInstance()->getTransingFileName();
-        if (_transferTip.empty()){
+        string transferTip = FileServer::getShareInstance()->getTransingFileName();
+        if (transferTip.empty()){
             return;
         }
-        _labelUploadFile->setString(_transferTip);
+        _labelUploadFile->setString(transferTip);
     } 
 };
 
@@ -1167,25 +1171,12 @@ static void register_runtime_override_function(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-bool initRuntime()
+void initRuntime()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
-#ifndef _DEBUG 
-    return false; 
-#endif 
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
-#ifdef NDEBUG 
-    return false; 
-#endif 
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#ifndef COCOS2D_DEBUG 
-    return false; 
-#endif
-#endif
-
-    vector<string> searchPathArray;
-    searchPathArray=FileUtils::getInstance()->getSearchPaths();
+    vector<string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    // add peoject's root directory to search path
     if (g_projectPath.empty())
     {
         extern std::string getCurAppPath();
@@ -1201,6 +1192,7 @@ bool initRuntime()
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
 #endif
 
+    // add writable path to search path
     g_resourcePath = FileUtils::getInstance()->getWritablePath();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -1228,30 +1220,14 @@ bool initRuntime()
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();
-    return true;
 }
 
-bool startRuntime()
+void startRuntime()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#ifndef _DEBUG
-    return false;
-#endif
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#ifdef NDEBUG
-    return false;
-#endif
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#ifndef COCOS2D_DEBUG
-    return false;
-#endif
-#endif
-
     auto scene = Scene::create();
     auto connectLayer = new ConnectWaitLayer();
     connectLayer->autorelease();
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
-    return true;
 }
