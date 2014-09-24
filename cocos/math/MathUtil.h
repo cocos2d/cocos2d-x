@@ -72,21 +72,21 @@ public:
 
 private:
 #ifdef __SSE__
-    inline static void addMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
+    static void addMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
     
-    inline static void addMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
+    static void addMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
     
-    inline static void subtractMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
+    static void subtractMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
     
-    inline static void multiplyMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
+    static void multiplyMatrix(const __m128 m[4], float scalar, __m128 dst[4]);
     
-    inline static void multiplyMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
+    static void multiplyMatrix(const __m128 m1[4], const __m128 m2[4], __m128 dst[4]);
     
-    inline static void negateMatrix(const __m128 m[4], __m128 dst[4]);
+    static void negateMatrix(const __m128 m[4], __m128 dst[4]);
     
-    inline static void transposeMatrix(const __m128 m[4], __m128 dst[4]);
+    static void transposeMatrix(const __m128 m[4], __m128 dst[4]);
         
-    inline static void transformVec4(const __m128 m[4], const __m128& v, __m128& dst);
+    static void transformVec4(const __m128 m[4], const __m128& v, __m128& dst);
 #endif
     static void addMatrix(const float* m, float scalar, float* dst);
 
@@ -117,15 +117,6 @@ NS_CC_MATH_END
 
 #ifdef __ARM_NEON__
 #define USE_NEON
-#endif
-
-#ifdef USE_NEON
-#include "MathUtilNeon.inl"
-#else
-#include "MathUtil.inl"
-#if defined(__SSE__)
-#include "MathUtilSSE.inl"
-#endif
 #endif
 
 #endif
