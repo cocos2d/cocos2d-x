@@ -31,6 +31,7 @@ def set_description(desc, url):
         traceback.print_exc()
 
 def check_current_3rd_libs(branch):
+    print("start backup old 3rd libs...")
     #get current_libs config
     backup_files = range(2)
     current_files = range(2)
