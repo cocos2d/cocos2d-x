@@ -88,25 +88,25 @@ private:
         
     inline static void transformVec4(const __m128 m[4], const __m128& v, __m128& dst);
 #endif
-    inline static void addMatrix(const float* m, float scalar, float* dst);
+    static void addMatrix(const float* m, float scalar, float* dst);
 
-    inline static void addMatrix(const float* m1, const float* m2, float* dst);
+    static void addMatrix(const float* m1, const float* m2, float* dst);
 
-    inline static void subtractMatrix(const float* m1, const float* m2, float* dst);
+    static void subtractMatrix(const float* m1, const float* m2, float* dst);
 
-    inline static void multiplyMatrix(const float* m, float scalar, float* dst);
+    static void multiplyMatrix(const float* m, float scalar, float* dst);
 
-    inline static void multiplyMatrix(const float* m1, const float* m2, float* dst);
+    static void multiplyMatrix(const float* m1, const float* m2, float* dst);
 
-    inline static void negateMatrix(const float* m, float* dst);
+    static void negateMatrix(const float* m, float* dst);
 
-    inline static void transposeMatrix(const float* m, float* dst);
+    static void transposeMatrix(const float* m, float* dst);
 
-    inline static void transformVec4(const float* m, float x, float y, float z, float w, float* dst);
+    static void transformVec4(const float* m, float x, float y, float z, float w, float* dst);
 
-    inline static void transformVec4(const float* m, const float* v, float* dst);
+    static void transformVec4(const float* m, const float* v, float* dst);
 
-    inline static void crossVec3(const float* v1, const float* v2, float* dst);
+    static void crossVec3(const float* v1, const float* v2, float* dst);
 
     MathUtil();
 };
