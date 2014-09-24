@@ -1981,7 +1981,8 @@ Node* CSLoader::createTMXTiledMapFromXML(const tinyxml2::XMLElement *tmxTiledMap
             {
                 case 0:
                 {
-                    const char* tmxFile = (_xmlPath + path).c_str();
+                    std::string tmxFile_str = _xmlPath + path;
+                    const char* tmxFile = tmxFile_str.c_str();
                     
                     if (tmxFile && strcmp("", tmxFile) != 0)
                     {
