@@ -1580,6 +1580,8 @@ void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLEl
     node->setCascadeColorEnabled(true);
     node->setCascadeOpacityEnabled(true);
     
+    node->setScale(0.0f, 0.0f);
+    
     std::string name = nodeObjectData->Name();
     CCLOG("entity name = %s", name.c_str());
     

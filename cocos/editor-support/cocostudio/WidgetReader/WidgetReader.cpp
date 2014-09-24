@@ -506,6 +506,8 @@ namespace cocostudio
         
         widget->setUnifySizeEnabled(true);
         
+        widget->setScale(0.0f, 0.0f);
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
