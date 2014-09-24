@@ -1137,8 +1137,6 @@
         "extensions/physics-nodes/CCPhysicsDebugNode.h", 
         "extensions/physics-nodes/CCPhysicsSprite.cpp", 
         "extensions/physics-nodes/CCPhysicsSprite.h", 
-        "extensions/proj.win32/Win32InputBox.cpp", 
-        "extensions/proj.win32/Win32InputBox.h", 
         "extensions/proj.wp8/libExtensions.vcxproj", 
         "extensions/proj.wp8/libExtensions.vcxproj.filters", 
         "extensions/proj.wp8/pch.cpp", 
