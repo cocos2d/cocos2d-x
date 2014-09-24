@@ -188,9 +188,10 @@ void Direct3DInterop::SetCocos2dOpenURLDelegate(Cocos2dOpenURLDelegate ^ delegat
 
 bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
 {
+    Platform::String^ str;
     if(m_delegate)
     {
-        m_delegate->Invoke(event);
+        m_delegate->Invoke(event, str);
         return true;
     }
     return false;
