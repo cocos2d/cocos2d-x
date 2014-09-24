@@ -4,7 +4,6 @@
     "repo_name":"cocos2d-x-3rd-party-libs-bin",
     "repo_parent":"https://github.com/cocos2d/",
     "move_dirs":{
-        "fbx-conv":"tools",
-        "audio": "tests/cpp-tests/Resources"
+        "fbx-conv":"tools"
     }
 }
