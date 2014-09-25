@@ -1226,6 +1226,15 @@ void Label::computeStringNumLines()
     _currNumLines = quantityOfLines;
 }
 
+int Label::getStringNumLines() const {
+    if (_contentDirty)
+    {
+        const_cast<Label*>(this)->updateContent();
+    }
+
+    return _currNumLines;
+}
+
 int Label::getStringLength() const
 {
     return static_cast<int>(_currentUTF16String.length());

@@ -811,6 +811,7 @@ Developers:
         Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
         Added getAllTouches() in GLViewProtocol
         Precompiled headers improvements
+        Added Application::openUrl for all supported platforms ecept WP8 and WinRT
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -1010,6 +1011,12 @@ Developers:
         
     wohaaitinciu
         WebView support on windows
+        
+    guykogus
+        Implemented Application::openUrl for WP8 and WinRT
+        
+    tttreal
+        Fixed Label::getStringNumLines()
     
 Retired Core Developers:
     WenSheng Yang

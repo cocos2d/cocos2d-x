@@ -25,6 +25,7 @@ using Windows.UI.Input;
 using System.Windows.Threading;
 using Microsoft.Phone.Info;
 using Windows.Graphics.Display;
+using Microsoft.Phone.Tasks;
 
 namespace PhoneDirect3DXamlAppInterop
 {
@@ -93,6 +94,7 @@ namespace PhoneDirect3DXamlAppInterop
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
                 m_d3dInterop.SetCocos2dMessageBoxDelegate(OnCocos2dMessageBoxEvent);
                 m_d3dInterop.SetCocos2dEditBoxDelegate(OpenEditBox);
+                m_d3dInterop.SetCocos2dOpenURLDelegate(OpenURL);
             }
         }
 
@@ -204,6 +206,13 @@ namespace PhoneDirect3DXamlAppInterop
             {
                 m_d3dInterop.OnCocos2dEditboxEvent(sender, str, m_receiveHandler);
             }
+        }
+
+        public void OpenURL(String url)
+        {
+            WebBrowserTask webBrowserTask = new WebBrowserTask();
+            webBrowserTask.Uri = new Uri(url, UriKind.Absolute);
+            webBrowserTask.Show();
         }
 
         private void StartTimer()

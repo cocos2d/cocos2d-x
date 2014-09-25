@@ -27,7 +27,6 @@ class ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);
-    void readConfig();
 
     // predefined screen size
     int getScreenSizeCount(void);
@@ -42,6 +41,7 @@ public:
     bool isWindowTop();
     
 private:
+    void readConfig();
     ConfigParser(void);
     static ConfigParser *s_sharedInstance;
     ScreenSizeArray _screenSizeArray;
