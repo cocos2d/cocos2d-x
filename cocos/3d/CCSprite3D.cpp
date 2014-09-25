@@ -29,6 +29,7 @@
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCMesh.h"
+#include "3d/CCLight3D.h"
 
 #include "base/CCDirector.h"
 #include "platform/CCPlatformMacros.h"
@@ -167,6 +168,7 @@ Sprite3D::Sprite3D()
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _aabbDirty(true)
 , _lightMask(-1)
+, _shaderUsingLight(false)
 {
 }
 
@@ -300,6 +302,13 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& 
 }
 void Sprite3D::genGLProgramState()
 {
+    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
+    _shaderUsingLight = false;
+    for (const auto light : lights) {
+        _shaderUsingLight = ((unsigned short)light->getLightFlag() & _lightMask) > 0;
+        if (_shaderUsingLight)
+            break;
+    }
     std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
     for(auto& mesh : _meshVertexDatas)
     {
@@ -314,14 +323,14 @@ void Sprite3D::genGLProgramState()
         {
             if (hasSkin)
             {
-                if (hasNormal)
+                if (hasNormal && _shaderUsingLight)
                     shader = GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
                 else
                     shader = GLProgram::SHADER_3D_SKINPOSITION_TEXTURE;
             }
             else
             {
-                if (hasNormal)
+                if (hasNormal && _shaderUsingLight)
                     shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
                 else
                     shader = GLProgram::SHADER_3D_POSITION_TEXTURE;
@@ -513,6 +522,17 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
+    
+    //check light and determine the shader used
+    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
+    bool usingLight = false;
+    for (const auto light : lights) {
+        usingLight = ((unsigned short)light->getLightFlag() & _lightMask) > 0;
+        if (usingLight)
+            break;
+    }
+    if (usingLight != _shaderUsingLight)
+        genGLProgramState();
     
     int i = 0;
     for (auto& mesh : _meshes) {

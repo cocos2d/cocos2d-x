@@ -167,6 +167,7 @@ protected:
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
     bool                         _aabbDirty;
     unsigned short               _lightMask;
+    bool                         _shaderUsingLight; // is current shader using light ?
 };
 
 ///////////////////////////////////////////////////////
