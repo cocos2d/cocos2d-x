@@ -312,8 +312,7 @@ void Sprite3DTestScene::runThisTest()
 
 Sprite3DTestScene::Sprite3DTestScene()
 {
-    AmbientLight3D *light = AmbientLight3D::create(Color3B(255, 255, 255));
-    addChild(light);
+    
 }
 
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
