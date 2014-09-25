@@ -38,29 +38,6 @@ struct Uniform;
 class EventListenerCustom;
 class EventCustom;
 
-struct DirectionLightUnifromNames
-{
-    std::string color;
-    std::string dir;
-};
-
-struct PointLightUnifromNames
-{
-    std::string color;
-    std::string position;
-    std::string rangeInverse;
-};
-
-struct SpotLightUnifromNames
-{
-    std::string color;
-    std::string position;
-    std::string dir;
-    std::string innerAngleCos;
-    std::string outerAngleCos;
-    std::string rangeInverse;
-};
-
 //it is a common mesh
 class CC_DLL MeshCommand : public RenderCommand
 {
@@ -151,10 +128,6 @@ protected:
     Mat4 _mv;
 
     unsigned short _lightMask;
-
-    static std::vector<DirectionLightUnifromNames> _dirLightUniformNames;
-    static std::vector<PointLightUnifromNames> _pointLightUniformNames;
-    static std::vector<SpotLightUnifromNames> _spotLightUniformNames;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     EventListenerCustom* _rendererRecreatedListener;
