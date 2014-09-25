@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
+#include "3d/CCLight3D.h"
 
 NS_CC_BEGIN
 
@@ -174,8 +175,8 @@ void GLProgramCache::loadDefaultGLPrograms()
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_U_COLOR, p) );
     
     //
-	// Position, Legth(TexCoords, Color (used by Draw Node basically )
-	//
+    // Position, Legth(TexCoords, Color (used by Draw Node basically )
+    //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p) );
@@ -349,7 +350,6 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionTextureColorAlphaTestNoMV:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
             break;
-
         case kShaderType_PositionColor:  
             p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
             break;
@@ -394,13 +394,34 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             p->initWithByteArrays(cc3D_SkinPositionTex_vert, cc3D_ColorTex_frag);
             break;
         case kShaderType_3DPositionNormal:
-            p->initWithByteArrays(cc3D_PositionNormalTex_vert, cc3D_ColorNormal_frag);
+            {
+                GLchar def[256];
+                sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
+                                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
+                                 "\n#define MAX_SPOT_LIGHT_NUM %d \n"
+                                 , DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, PointLight3D::MAX_POINT_LIGHT_NUM, SpotLight3D::MAX_SPOT_LIGHT_NUM);
+                p->initWithByteArrays((std::string(def) + std::string(cc3D_PositionNormalTex_vert)).c_str(), (std::string(def) + std::string(cc3D_ColorNormal_frag)).c_str());
+            }
             break;
         case kShaderType_3DPositionNormalTex:
-            p->initWithByteArrays(cc3D_PositionNormalTex_vert, cc3D_ColorNormalTex_frag);
+            {
+                GLchar def[256];
+                sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
+                                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
+                                 "\n#define MAX_SPOT_LIGHT_NUM %d \n"
+                    , DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, PointLight3D::MAX_POINT_LIGHT_NUM, SpotLight3D::MAX_SPOT_LIGHT_NUM);
+                p->initWithByteArrays((std::string(def) + std::string(cc3D_PositionNormalTex_vert)).c_str(), (std::string(def) + std::string(cc3D_ColorNormalTex_frag)).c_str());
+            }
             break;
         case kShaderType_3DSkinPositionNormalTex:
-            p->initWithByteArrays(cc3D_SkinPositionNormalTex_vert, cc3D_ColorNormalTex_frag);
+            {
+                GLchar def[256];
+                sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
+                                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
+                                 "\n#define MAX_SPOT_LIGHT_NUM %d \n"
+                    , DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, PointLight3D::MAX_POINT_LIGHT_NUM, SpotLight3D::MAX_SPOT_LIGHT_NUM);
+                p->initWithByteArrays((std::string(def) + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (std::string(def) + std::string(cc3D_ColorNormalTex_frag)).c_str());
+            }
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);

@@ -30,11 +30,6 @@
 
 NS_CC_BEGIN
 
-#define CC_MAX_DIRECTIONAL_LIGHT_NUM 1
-#define CC_MAX_POINT_LIGHT_NUM 1
-#define CC_MAX_SPOT_LIGHT_NUM 1
-#define CC_MAX_AMBIENT_LIGHT_NUM 1
-
 enum class LightType
 {
     DIRECTIONAL = 0,
@@ -131,6 +126,10 @@ public:
      * Returns direction in world.
      */
     const Vec3& getDirectionInWorld() const;
+
+public:
+
+    static unsigned int MAX_DIRECTIONAL_LIGHT_NUM;
     
 CC_CONSTRUCTOR_ACCESS:
     DirectionLight3D();
@@ -156,6 +155,10 @@ public:
     /** get or set range */
     float getRange() const { return _range; }
     void setRange(float range) { _range = range; }
+
+public:
+
+    static unsigned int MAX_POINT_LIGHT_NUM;
     
 CC_CONSTRUCTOR_ACCESS:
     PointLight3D();
@@ -242,6 +245,10 @@ public:
     
     /** get cos outAngle */
     float getCosOuterAngle() const { return _cosInnerAngle; }
+
+public:
+
+    static unsigned int MAX_SPOT_LIGHT_NUM;
     
 CC_CONSTRUCTOR_ACCESS:
     SpotLight3D();
