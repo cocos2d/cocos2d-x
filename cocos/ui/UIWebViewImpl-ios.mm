@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "platform/CCPlatformConfig.h"
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "UIWebViewImpl-ios.h"

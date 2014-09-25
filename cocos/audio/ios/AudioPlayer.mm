@@ -21,6 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "AudioPlayer.h"
 #include "AudioCache.h"
 #include "platform/CCFileUtils.h"
@@ -80,14 +81,14 @@ bool AudioPlayer::play2d(AudioCache* cache)
         alGenBuffers(3, _bufferIds);
         alError = alGetError();
         if (alError == AL_NO_ERROR) {
+            _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
+            
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
-                alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferBytes, _audioCache->_sampleRate);
+                alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
             }
-            alSourcei(_alSource, AL_BUFFER, NULL);
             alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
             
             _timeMtx.lock();
-            _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
         }
         else {
             printf("%s:alGenBuffers error code:%x", __PRETTY_FUNCTION__,alError);
@@ -213,3 +214,5 @@ bool AudioPlayer::setTime(float time)
     }
     return false;
 }
+
+#endif

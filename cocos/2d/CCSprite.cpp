@@ -262,6 +262,7 @@ Sprite::Sprite(void)
 : _shouldBeHidden(false)
 , _texture(nullptr)
 , _insideBounds(true)
+, _batchNode(nullptr)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();

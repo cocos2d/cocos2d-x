@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
@@ -29,7 +29,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "android/AudioEngine-inl.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS|| CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "ios/AudioEngine-inl.h"
 #endif
 
