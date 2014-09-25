@@ -526,7 +526,6 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     //check light and determine the shader used
     const auto& lights = Director::getInstance()->getRunningScene()->getLights();
     bool usingLight = false;
-    Color4F ambient(0.f, 0.f, 0.f, 1.f);
     for (const auto light : lights) {
         usingLight = ((unsigned short)light->getLightFlag() & _lightMask) > 0;
         if (usingLight)
