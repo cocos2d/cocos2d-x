@@ -25,13 +25,49 @@ This file was modified to fit the cocos2d-x project
 #include <cpu-features.h>
 #endif
 
-#if defined (__ARM_NEON__) || ((CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) &&!defined(__SSE__))
-#define USE_NEON
+//#define USE_NEON32        : neon 32 code will be used
+//#define USE_NEON64        : neon 64 code will be used
+//#define INCLUDE_NEON32    : neon 32 code included
+//#define INCLUDE_NEON64    : neon 64 code included
+//#define USE_SSE           : SSE code used
+//#define INCLUDE_SSE       : SSE code included
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    #if defined (__arm64__)
+    #define USE_NEON64
+    #define INCLUDE_NEON64
+    #elif defined (__ARM_NEON__)
+    #define USE_NEON32
+    #define INCLUDE_NEON32
+    #else
+    #endif
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #if !defined (__SSE__)
+    //#define INCLUDE_NEON32
+    #endif
+#else
+
+#endif
+
+#if defined (__SSE__)
+#define USE_SSE
+#define INCLUDE_SSE
+#endif
+
+#ifdef INCLUDE_NEON32
 #include "MathUtilNeon.inl"
 #endif
 
-#include "MathUtil.inl"
+#ifdef INCLUDE_NEON64
+// TODO: add neon64 inplementation here
+// #include "MathUtil.inl"
+#endif
+
+#ifdef INCLUDE_SSE
 #include "MathUtilSSE.inl"
+#endif
+
+#include "MathUtil.inl"
 
 NS_CC_MATH_BEGIN
 
@@ -56,11 +92,11 @@ void MathUtil::smooth(float* x, float target, float elapsedTime, float riseTime,
     }
 }
 
-bool MathUtil::isNeonEnabled()
+bool MathUtil::isNeon32Enabled()
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     return true;
-#elif defined (USE_NEON)
+#elif (defined (INCLUDE_NEON32) && (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) )
     if (android_getCpuFamily() == ANDROID_CPU_FAMILY_ARM && (android_getCpuFeatures() & ANDROID_CPU_ARM_FEATURE_NEON) != 0)
         return true;
     else
@@ -70,9 +106,9 @@ bool MathUtil::isNeonEnabled()
 #endif
 }
 
-bool MathUtil::isSSEEnabled()
+bool MathUtil::isNeon64Enabled()
 {
-#ifdef __SSE__
+#ifdef USE_NEON64
     return true;
 #else
     return false;
@@ -81,10 +117,10 @@ bool MathUtil::isSSEEnabled()
 
 void MathUtil::addMatrix(const float* m, float scalar, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::addMatrix(m, scalar, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::addMatrix(m, scalar, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::addMatrix(m, scalar, dst);
     else MathUtilC::addMatrix(m, scalar, dst);
 #else
     MathUtilC::addMatrix(m, scalar, dst);
@@ -93,10 +129,10 @@ void MathUtil::addMatrix(const float* m, float scalar, float* dst)
 
 void MathUtil::addMatrix(const float* m1, const float* m2, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::addMatrix(m1, m2, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::addMatrix(m1, m2, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::addMatrix(m1, m2, dst);
     else MathUtilC::addMatrix(m1, m2, dst);
 #else
     MathUtilC::addMatrix(m1, m2, dst);
@@ -105,10 +141,10 @@ void MathUtil::addMatrix(const float* m1, const float* m2, float* dst)
 
 void MathUtil::subtractMatrix(const float* m1, const float* m2, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::subtractMatrix(m1, m2, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::subtractMatrix(m1, m2, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::subtractMatrix(m1, m2, dst);
     else MathUtilC::subtractMatrix(m1, m2, dst);
 #else
     MathUtilC::subtractMatrix(m1, m2, dst);
@@ -117,10 +153,10 @@ void MathUtil::subtractMatrix(const float* m1, const float* m2, float* dst)
 
 void MathUtil::multiplyMatrix(const float* m, float scalar, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::multiplyMatrix(m, scalar, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::multiplyMatrix(m, scalar, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::multiplyMatrix(m, scalar, dst);
     else MathUtilC::multiplyMatrix(m, scalar, dst);
 #else
     MathUtilC::multiplyMatrix(m, scalar, dst);
@@ -129,10 +165,10 @@ void MathUtil::multiplyMatrix(const float* m, float scalar, float* dst)
 
 void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::multiplyMatrix(m1, m2, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::multiplyMatrix(m1, m2, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::multiplyMatrix(m1, m2, dst);
     else MathUtilC::multiplyMatrix(m1, m2, dst);
 #else
     MathUtilC::multiplyMatrix(m1, m2, dst);
@@ -141,10 +177,10 @@ void MathUtil::multiplyMatrix(const float* m1, const float* m2, float* dst)
 
 void MathUtil::negateMatrix(const float* m, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::negateMatrix(m, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::negateMatrix(m, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::negateMatrix(m, dst);
     else MathUtilC::negateMatrix(m, dst);
 #else
     MathUtilC::negateMatrix(m, dst);
@@ -153,10 +189,10 @@ void MathUtil::negateMatrix(const float* m, float* dst)
 
 void MathUtil::transposeMatrix(const float* m, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::transposeMatrix(m, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::transposeMatrix(m, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::transposeMatrix(m, dst);
     else MathUtilC::transposeMatrix(m, dst);
 #else
     MathUtilC::transposeMatrix(m, dst);
@@ -165,10 +201,10 @@ void MathUtil::transposeMatrix(const float* m, float* dst)
 
 void MathUtil::transformVec4(const float* m, float x, float y, float z, float w, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::transformVec4(m, x, y, z, w, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::transformVec4(m, x, y, z, w, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::transformVec4(m, x, y, z, w, dst);
     else MathUtilC::transformVec4(m, x, y, z, w, dst);
 #else
     MathUtilC::transformVec4(m, x, y, z, w, dst);
@@ -177,10 +213,10 @@ void MathUtil::transformVec4(const float* m, float x, float y, float z, float w,
 
 void MathUtil::transformVec4(const float* m, const float* v, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::transformVec4(m, v, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::transformVec4(m, v, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::transformVec4(m, v, dst);
     else MathUtilC::transformVec4(m, v, dst);
 #else
     MathUtilC::transformVec4(m, v, dst);
@@ -189,10 +225,10 @@ void MathUtil::transformVec4(const float* m, const float* v, float* dst)
 
 void MathUtil::crossVec3(const float* v1, const float* v2, float* dst)
 {
-#ifdef __ARM_NEON__
+#ifdef USE_NEON32
     MathUtilNeon::crossVec3(v1, v2, dst);
-#elif defined (USE_NEON)
-    if(isNeonEnabled()) MathUtilNeon::crossVec3(v1, v2, dst);
+#elif defined (INCLUDE_NEON32)
+    if(isNeon32Enabled()) MathUtilNeon::crossVec3(v1, v2, dst);
     else MathUtilC::crossVec3(v1, v2, dst);
 #else
     MathUtilC::crossVec3(v1, v2, dst);
