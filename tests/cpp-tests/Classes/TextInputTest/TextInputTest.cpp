@@ -250,6 +250,14 @@ void TextFieldTTFDefaultTest::onEnter()
     // add TextFieldTTF
     auto s = Director::getInstance()->getWinSize();
 
+    std::string strSubtitle = subtitle();
+    TTFConfig ttfConfig;
+    ttfConfig.fontFilePath = FONT_NAME;
+    ttfConfig.fontSize = 16;
+    auto subTitle = Label::createWithTTF(ttfConfig, strSubtitle.c_str());
+    addChild(subTitle, 9999);
+    subTitle->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
+
     auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,
         FONT_SIZE);
@@ -309,6 +317,14 @@ void TextFieldTTFActionTest::onEnter()
 
     // add TextFieldTTF
     auto s = Director::getInstance()->getWinSize();
+
+    std::string strSubtitle = subtitle();
+    TTFConfig ttfConfig;
+    ttfConfig.fontFilePath = FONT_NAME;
+    ttfConfig.fontSize = 16;
+    auto subTitle = Label::createWithTTF(ttfConfig, strSubtitle.c_str());
+    addChild(subTitle, 9999);
+    subTitle->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
 
     _textField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
         FONT_NAME,

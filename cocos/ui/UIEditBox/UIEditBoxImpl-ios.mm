@@ -29,6 +29,8 @@
 #define kLabelZOrder  9999
 
 #include "UIEditBox.h"
+#include "base/CCDirector.h"
+#include "2d/CCLabel.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
 #define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS*)editBox_)

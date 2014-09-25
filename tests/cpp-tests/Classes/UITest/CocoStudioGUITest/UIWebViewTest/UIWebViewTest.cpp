@@ -43,7 +43,7 @@ bool WebViewTest::init()
         _webView = cocos2d::experimental::ui::WebView::create();
         _webView->setPosition(winSize/2);
         _webView->setContentSize(winSize * 0.5);
-        _webView->loadURL("http://www.google.com");
+        _webView->loadURL("http://www.baidu.com");
         _webView->setScalesPageToFit(true);
         
         _webView->setOnShouldStartLoading(CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this));

@@ -28,7 +28,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 #include "UIEditBox.h"
-#include "proj.win32/Win32InputBox.h"
+#include "ui/proj.win32/Win32InputBox.h"
 
 NS_CC_BEGIN
 
