@@ -28,5 +28,9 @@
 #include "UIWebViewImpl-android.h"
 #include "UIWebView-inl.h"
 
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
+#include "UIWebViewImpl-win32.h"
+#include "UIWebView-inl.h"
 
 #endif

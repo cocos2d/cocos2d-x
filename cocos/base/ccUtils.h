@@ -82,6 +82,11 @@ namespace utils
     /** Get current exact time, accurate to nanoseconds.
     */
     double CC_DLL gettime();
+
+    /**
+     * calculate all children's boundingBox
+     */
+    Rect getCascadeBoundingBox(Node *node);
 }
 
 NS_CC_END

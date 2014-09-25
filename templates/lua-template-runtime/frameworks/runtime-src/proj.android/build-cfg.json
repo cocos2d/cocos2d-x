@@ -8,17 +8,11 @@
     "copy_resources": [
         {
             "from": "../../../src",
-            "to": "src",
-            "exclude": [
-                "*.gz"
-            ]
+            "to": "src"
         },
         {
             "from": "../../../res",
-            "to": "res",
-            "exclude": [
-                "*.gz"
-            ]
+            "to": "res"
         }
     ],
     "must_copy_resources": [

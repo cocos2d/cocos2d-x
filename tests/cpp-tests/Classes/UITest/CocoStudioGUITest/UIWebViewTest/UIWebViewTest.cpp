@@ -43,7 +43,7 @@ bool WebViewTest::init()
         _webView = cocos2d::experimental::ui::WebView::create();
         _webView->setPosition(winSize/2);
         _webView->setContentSize(winSize * 0.5);
-        _webView->loadURL("http://www.google.com");
+        _webView->loadURL("http://www.baidu.com");
         _webView->setScalesPageToFit(true);
         
         _webView->setOnShouldStartLoading(CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this));
@@ -147,20 +147,20 @@ bool WebViewTest::init()
     return false;
 }
 
-bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender, std::string url)
+bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewShouldStartLoading, url is %s", url.c_str());
     
     return true;
 }
 
-void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, std::string url)
+void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFinishLoading, url is %s", url.c_str());
 
 }
 
-void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, std::string url)
+void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFailLoading, url is %s", url.c_str());
 

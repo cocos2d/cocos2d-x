@@ -134,17 +134,35 @@ void GLViewImpl::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLS
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
+    std::string str;
+    setIMEKeyboardState(bOpen, str);
+}
+
+void GLViewImpl::setIMEKeyboardState(bool bOpen, std::string str)
+{
     if(m_delegate)
     {
         if(bOpen)
         {
-            m_delegate->Invoke(Cocos2dEvent::ShowKeyboard);
+            m_delegate->Invoke(Cocos2dEvent::ShowKeyboard, stringToPlatformString(str));
         }
         else
         {
-            m_delegate->Invoke(Cocos2dEvent::HideKeyboard);
+            m_delegate->Invoke(Cocos2dEvent::HideKeyboard, stringToPlatformString(str));
         }
     }
+}
+
+Platform::String^ GLViewImpl::stringToPlatformString(std::string strSrc)
+{
+    // to wide char
+    int strLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);
+    wchar_t* wstr = new wchar_t[strLen + 1];
+    memset(wstr, 0, strLen + 1);
+    MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, wstr, strLen);
+    Platform::String^ strDst = ref new Platform::String(wstr);
+    delete[] wstr;
+    return strDst;
 }
 
 void GLViewImpl::swapBuffers()
@@ -176,9 +194,10 @@ void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 // user pressed the Back Key on the phone
 void GLViewImpl::OnBackKeyPress()
 {
+    std::string str;
     if(m_delegate)
     {
-        m_delegate->Invoke(Cocos2dEvent::TerminateApp);
+        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
     }
 }
 

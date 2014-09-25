@@ -21,6 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "AudioEngine-inl.h"
 #include "audio/include/AudioEngine.h"
 
@@ -35,17 +36,6 @@ using namespace cocos2d::experimental;
 
 static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
-
-static void AudioInterrupionListenerCallback(void* user_data, UInt32 interruption_state)
-{
-    if(kAudioSessionBeginInterruption == interruption_state){
-        alcMakeContextCurrent(nullptr);
-    }
-    else if (kAudioSessionEndInterruption == interruption_state){
-        AudioSessionSetActive(true);
-        alcMakeContextCurrent(s_ALContext);
-    }
-}
 
 namespace cocos2d {
     namespace experimental {
@@ -149,6 +139,7 @@ AudioEngineImpl::~AudioEngineImpl()
         
         _audioCaches.clear();
         
+        alcMakeContextCurrent(nullptr);
         alcDestroyContext(s_ALContext);
     }
     if (s_ALDevice) {
@@ -162,9 +153,6 @@ AudioEngineImpl::~AudioEngineImpl()
 
 bool AudioEngineImpl::init()
 {
-    //set up the audio session
-    AudioSessionInitialize(nullptr, nullptr, AudioInterrupionListenerCallback, nullptr);
-    
     bool ret = false;
     do{
         s_ALDevice = alcOpenDevice(nullptr);
@@ -450,6 +438,10 @@ void AudioEngineImpl::update(float dt)
             auto playerIt = _audioPlayers.find(audioID);
             if (playerIt != _audioPlayers.end()) {
                 _alSourceUsed[playerIt->second._alSource] = false;
+                if(playerIt->second._finishCallbak) {
+                    auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
+                    playerIt->second._finishCallbak(audioID, *audioInfo.filePath);
+                }
                 _audioPlayers.erase(audioID);
                 AudioEngine::remove(audioID);
             }
@@ -474,8 +466,8 @@ void AudioEngineImpl::update(float dt)
         
         if (player._ready && sourceState == AL_STOPPED) {
             _alSourceUsed[player._alSource] = false;
-            auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
             if (player._finishCallbak) {
+                auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
                 player._finishCallbak(audioID, *audioInfo.filePath);
             }
             
@@ -506,3 +498,5 @@ void AudioEngineImpl::uncacheAll()
 {
     _audioCaches.clear();
 }
+
+#endif

@@ -1171,6 +1171,12 @@
     <ClCompile Include="..\3d\CCLight3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIWebView.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2301,6 +2307,15 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCLight3D.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIWebViewImpl-win32.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIWebView-inl.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIWebView.h">
+      <Filter>ui\UIWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

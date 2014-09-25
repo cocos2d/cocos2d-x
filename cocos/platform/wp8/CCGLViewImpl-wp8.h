@@ -68,8 +68,10 @@ public:
     Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
     virtual void setIMEKeyboardState(bool bOpen);
-	void ShowKeyboard(Windows::Foundation::Rect r);
-	void HideKeyboard(Windows::Foundation::Rect r);
+    virtual void setIMEKeyboardState(bool bOpen, std::string str);
+    Platform::String^ stringToPlatformString(std::string strSrc);
+    void ShowKeyboard(Windows::Foundation::Rect r);
+    void HideKeyboard(Windows::Foundation::Rect r);
 
     // WP8 XAML app
     virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height

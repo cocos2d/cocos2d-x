@@ -268,12 +268,10 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    _renderGroups[renderQueue].push_back(command);
-}
-
-void Renderer::addCommandToTransparentQueue(RenderCommand* command)
-{
-    _transparentRenderGroups.push_back(command);
+    if (command->isTransparent())
+        _transparentRenderGroups.push_back(command);
+    else
+        _renderGroups[renderQueue].push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)

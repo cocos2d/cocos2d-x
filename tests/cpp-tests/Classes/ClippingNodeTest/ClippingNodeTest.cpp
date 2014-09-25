@@ -686,7 +686,6 @@ void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
     };
     
     auto glProgram= GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->retain();
     
     int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
@@ -718,7 +717,6 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
     };
 
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->retain();
 
     int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
@@ -919,7 +917,6 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     };
 
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->retain();
 
     int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();

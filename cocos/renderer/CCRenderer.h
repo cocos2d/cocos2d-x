@@ -108,9 +108,6 @@ public:
 
     /** Adds a `RenderComamnd` into the renderer specifying a particular render queue ID */
     void addCommand(RenderCommand* command, int renderQueue);
-    
-    /** add transprent command */
-    void addCommandToTransparentQueue(RenderCommand* command);
 
     /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);

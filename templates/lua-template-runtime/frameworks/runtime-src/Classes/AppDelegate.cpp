@@ -34,14 +34,10 @@ void AppDelegate::initGLContextAttrs()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     
-#if (COCOS2D_DEBUG>0)
+#if (COCOS2D_DEBUG > 0)
     initRuntime();
 #endif
     
-    if (!ConfigParser::getInstance()->isInit()) {
-            ConfigParser::getInstance()->readConfig();
-        }
-
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
@@ -57,10 +53,6 @@ bool AppDelegate::applicationDidFinishLaunching()
         director->setOpenGLView(glview);
 #endif
     }
-
-   
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
    
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
@@ -74,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
     
-#if (COCOS2D_DEBUG>0)
+#if (COCOS2D_DEBUG > 0)
     if (startRuntime())
         return true;
 #endif
@@ -98,4 +90,3 @@ void AppDelegate::applicationWillEnterForeground()
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
-

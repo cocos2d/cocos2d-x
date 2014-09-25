@@ -876,6 +876,11 @@
 		3E2BDAFF19C5E5B40055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
 		3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
 		3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */; };
+		3E2F27BA19CFF52300E7C490 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		3E2F27BB19CFF52A00E7C490 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		3E2F27BC19D00D7200E7C490 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		3E2F27BD19D00D7D00E7C490 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
 		3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		3E6177241960FAED00DE83F5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		3E6177251960FAED00DE83F5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -7609,6 +7614,7 @@
 				15D1FD2D1998637C00302043 /* OpenglConstants.lua in Resources */,
 				15D1FCF11998637C00302043 /* Cocos2d.lua in Resources */,
 				15D1FD47199863E800302043 /* DeprecatedCocoStudioClass.lua in Resources */,
+				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
 				15D1FD141998637C00302043 /* extern.lua in Resources */,
@@ -7639,6 +7645,7 @@
 				15C90B4918E66C2A00D69802 /* tp.lua in Resources */,
 				15D1FD281998637C00302043 /* Opengl.lua in Resources */,
 				1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */,
+				3E2F27BD19D00D7D00E7C490 /* background.wav in Resources */,
 				15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */,
 				15C90B4718E66C2400D69802 /* socket.lua in Resources */,
 				15C90B3A18E66BE200D69802 /* ftp.lua in Resources */,
@@ -7791,9 +7798,11 @@
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
+				3E2F27BA19CFF52300E7C490 /* audio in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
 				1AC35D0618CED84500F37B72 /* spine in Resources */,
+				3E2F27BB19CFF52A00E7C490 /* background.wav in Resources */,
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
 				1AC35CDE18CED84500F37B72 /* components in Resources */,
 				1AC35D0818CED84500F37B72 /* TileMaps in Resources */,
@@ -8146,6 +8155,7 @@
 				1AC35C6518CECF0C00F37B72 /* UnitTest.cpp in Sources */,
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
+				3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */,
 				1AC35C3918CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */,
 				1AC35B5318CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				29080DD3191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
@@ -8837,6 +8847,8 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.mac/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8850,6 +8862,8 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.mac/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8933,6 +8947,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8954,6 +8970,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,

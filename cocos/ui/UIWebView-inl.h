@@ -158,42 +158,42 @@ namespace experimental{
             }
         }
         
-        void WebView::setOnDidFailLoading(const ccWebViewCallbak &callback)
+        void WebView::setOnDidFailLoading(const ccWebViewCallback &callback)
         {
             _onDidFailLoading = callback;
         }
         
-        void WebView::setOnDidFinishLoading(const ccWebViewCallbak &callback)
+        void WebView::setOnDidFinishLoading(const ccWebViewCallback &callback)
         {
             _onDidFinishLoading = callback;
         }
         
-        void WebView::setOnShouldStartLoading(const std::function<bool(WebView *sender, std::string url)> &callback)
+        void WebView::setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)> &callback)
         {
             _onShouldStartLoading = callback;
         }
         
-        void WebView::setOnJSCallback(const ccWebViewCallbak &callback)
+        void WebView::setOnJSCallback(const ccWebViewCallback &callback)
         {
             _onJSCallback = callback;
         }
         
-        std::function<bool(WebView *sender, std::string url)> WebView::getOnShouldStartLoading()const
+        std::function<bool(WebView *sender, const std::string &url)> WebView::getOnShouldStartLoading()const
         {
             return _onShouldStartLoading;
         }
         
-        WebView::ccWebViewCallbak WebView::getOnDidFailLoading()const
+        WebView::ccWebViewCallback WebView::getOnDidFailLoading()const
         {
             return _onDidFailLoading;
         }
         
-        WebView::ccWebViewCallbak WebView::getOnDidFinishLoading()const
+        WebView::ccWebViewCallback WebView::getOnDidFinishLoading()const
         {
             return _onDidFinishLoading;
         }
         
-        WebView::ccWebViewCallbak WebView::getOnJSCallback()const
+        WebView::ccWebViewCallback WebView::getOnJSCallback()const
         {
             return _onJSCallback;
         }
