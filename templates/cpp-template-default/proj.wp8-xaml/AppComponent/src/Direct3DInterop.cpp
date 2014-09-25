@@ -177,9 +177,10 @@ void Direct3DInterop::SetCocos2dEditBoxDelegate(Cocos2dEditBoxDelegate ^ delegat
 
 bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
 {
+    std::string str;
     if(m_delegate)
     {
-        m_delegate->Invoke(event);
+        m_delegate->Invoke(event, stringToPlatformString(str));
         return true;
     }
     return false;
