@@ -528,10 +528,9 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     bool usingLight = false;
     Color4F ambient(0.f, 0.f, 0.f, 1.f);
     for (const auto light : lights) {
-        if (((unsigned short)light->getLightFlag() & _lightMask) > 0)
-        {
-            usingLight = true;
-        }
+        usingLight = ((unsigned short)light->getLightFlag() & _lightMask) > 0;
+        if (usingLight)
+            break;
     }
     if (usingLight != _shaderUsingLight)
         genGLProgramState();
