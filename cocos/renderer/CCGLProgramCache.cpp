@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
+#include "base/CCConfiguration.h"
 #include "3d/CCLight3D.h"
 
 NS_CC_BEGIN
@@ -395,32 +396,20 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_3DPositionNormal:
             {
-                GLchar def[256];
-                sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
-                                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
-                                 "\n#define MAX_SPOT_LIGHT_NUM %d \n"
-                                 , DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, PointLight3D::MAX_POINT_LIGHT_NUM, SpotLight3D::MAX_SPOT_LIGHT_NUM);
-                p->initWithByteArrays((std::string(def) + std::string(cc3D_PositionNormalTex_vert)).c_str(), (std::string(def) + std::string(cc3D_ColorNormal_frag)).c_str());
+                std::string def = getShaderMacrosForLight();
+                p->initWithByteArrays((def + std::string(cc3D_PositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormal_frag)).c_str());
             }
             break;
         case kShaderType_3DPositionNormalTex:
             {
-                GLchar def[256];
-                sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
-                                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
-                                 "\n#define MAX_SPOT_LIGHT_NUM %d \n"
-                    , DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, PointLight3D::MAX_POINT_LIGHT_NUM, SpotLight3D::MAX_SPOT_LIGHT_NUM);
-                p->initWithByteArrays((std::string(def) + std::string(cc3D_PositionNormalTex_vert)).c_str(), (std::string(def) + std::string(cc3D_ColorNormalTex_frag)).c_str());
+                std::string def = getShaderMacrosForLight();
+                p->initWithByteArrays((def + std::string(cc3D_PositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
         case kShaderType_3DSkinPositionNormalTex:
             {
-                GLchar def[256];
-                sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
-                                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
-                                 "\n#define MAX_SPOT_LIGHT_NUM %d \n"
-                    , DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, PointLight3D::MAX_POINT_LIGHT_NUM, SpotLight3D::MAX_SPOT_LIGHT_NUM);
-                p->initWithByteArrays((std::string(def) + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (std::string(def) + std::string(cc3D_ColorNormalTex_frag)).c_str());
+                std::string def = getShaderMacrosForLight();
+                p->initWithByteArrays((def + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
         default:
@@ -448,6 +437,16 @@ void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
         program->retain();
     
     _programs[key] = program;
+}
+
+std::string GLProgramCache::getShaderMacrosForLight() const
+{
+    GLchar def[256];
+    sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
+            "\n#define MAX_POINT_LIGHT_NUM %d \n"
+            "\n#define MAX_SPOT_LIGHT_NUM %d \n"
+            , Configuration::getInstance()->getMaxSupportDirLightInShader(), Configuration::getInstance()->getMaxSupportPointLightInShader(), Configuration::getInstance()->getMaxSupportSpotLightInShader());
+    return std::string(def);
 }
 
 NS_CC_END

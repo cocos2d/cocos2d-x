@@ -16,6 +16,12 @@
 		<false/>
 		<key>cocos2d.x.testcpp.autorun</key>
 		<false/>
+		<key>cocos2d.x.3d.max_dir_light_in_shader</key>
+		<integer>1</integer>
+		<key>cocos2d.x.3d.max_point_light_in_shader</key>
+		<integer>1</integer>
+		<key>cocos2d.x.3d.max_spot_light_in_shader</key>
+		<integer>1</integer>
 	</dict>
 	<key>metadata</key>
 	<dict>

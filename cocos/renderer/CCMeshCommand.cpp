@@ -30,6 +30,7 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
+#include "base/CCConfiguration.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
@@ -323,6 +324,10 @@ void MeshCommand::setLightUniforms()
 {
     Director *director = Director::getInstance();
     auto scene = director->getRunningScene();
+    const auto& conf = Configuration::getInstance();
+    int maxDirLight = conf->getMaxSupportDirLightInShader();
+    int maxPointLight = conf->getMaxSupportPointLightInShader();
+    int maxSpotLight = conf->getMaxSupportSpotLightInShader();
     if (scene)
     {
         auto &lights = scene->getLights();
@@ -342,7 +347,7 @@ void MeshCommand::setLightUniforms()
                 {
                 case LightType::DIRECTIONAL:
                     {
-                        CCASSERT(enabledDirLightNum < DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM, "");
+                        CCASSERT(enabledDirLightNum < maxDirLight, "");
                         DirectionLight3D *dirLight = static_cast<DirectionLight3D *>(light);
                         Vec3 dir = dirLight->getDirectionInWorld();
                         dir.normalize();
@@ -354,7 +359,7 @@ void MeshCommand::setLightUniforms()
                     break;
                 case LightType::POINT:
                     {
-                        CCASSERT(enabledPointLightNum < PointLight3D::MAX_POINT_LIGHT_NUM, "");
+                        CCASSERT(enabledPointLightNum < maxPointLight, "");
                         PointLight3D *pointLight = static_cast<PointLight3D *>(light);
                         Mat4 mat= pointLight->getNodeToWorldTransform();
                         const Color3B &col = pointLight->getDisplayedColor();
@@ -366,7 +371,7 @@ void MeshCommand::setLightUniforms()
                     break;
                 case LightType::SPOT:
                     {
-                        CCASSERT(enabledSpotLightNum < SpotLight3D::MAX_SPOT_LIGHT_NUM, "");
+                        CCASSERT(enabledSpotLightNum < maxSpotLight, "");
                         SpotLight3D *spotLight = static_cast<SpotLight3D *>(light);
                         Vec3 dir = spotLight->getDirectionInWorld();
                         dir.normalize();
@@ -394,20 +399,20 @@ void MeshCommand::setLightUniforms()
             }
         }
 
-        for (unsigned short i = enabledDirLightNum; i < DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM; ++i)
+        for (unsigned short i = enabledDirLightNum; i < maxDirLight; ++i)
         {
             _glProgramState->setUniformVec3(_dirLightUniformNames[i].color, Vec3::ZERO);
             _glProgramState->setUniformVec3(_dirLightUniformNames[i].dir, Vec3::ZERO);
         }
 
-        for (unsigned short i = enabledPointLightNum; i < PointLight3D::MAX_POINT_LIGHT_NUM; ++i)
+        for (unsigned short i = enabledPointLightNum; i < maxPointLight; ++i)
         {
             _glProgramState->setUniformVec3(_pointLightUniformNames[i].color, Vec3::ZERO);
             _glProgramState->setUniformVec3(_pointLightUniformNames[i].position, Vec3::ZERO);
             _glProgramState->setUniformFloat(_pointLightUniformNames[i].rangeInverse, 0.0f);
         }
 
-        for (unsigned short i = enabledSpotLightNum; i < SpotLight3D::MAX_SPOT_LIGHT_NUM; ++i)
+        for (unsigned short i = enabledSpotLightNum; i < maxSpotLight; ++i)
         {
             _glProgramState->setUniformVec3(_spotLightUniformNames[i].color, Vec3::ZERO);
             _glProgramState->setUniformVec3(_spotLightUniformNames[i].position, Vec3::ZERO);
@@ -423,11 +428,15 @@ void MeshCommand::setLightUniforms()
 
 void MeshCommand::setLightUniformNames()
 {
-    if (_dirLightUniformNames.size() != DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM)
+    const auto& conf = Configuration::getInstance();
+    int maxDirLight = conf->getMaxSupportDirLightInShader();
+    int maxPointLight = conf->getMaxSupportPointLightInShader();
+    int maxSpotLight = conf->getMaxSupportSpotLightInShader();
+    if (_dirLightUniformNames.size() != maxDirLight)
     {
-        _dirLightUniformNames.resize(DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM);
+        _dirLightUniformNames.resize(maxDirLight);
         char str[64];
-        for (unsigned int i = 0; i < DirectionLight3D::MAX_DIRECTIONAL_LIGHT_NUM; ++i)
+        for (unsigned int i = 0; i < maxDirLight; ++i)
         {
             sprintf(str, "u_DirLightSourceColor[%d]", i);
             _dirLightUniformNames[i].color = str;
@@ -436,11 +445,11 @@ void MeshCommand::setLightUniformNames()
         }
     }
 
-    if (_pointLightUniformNames.size() != PointLight3D::MAX_POINT_LIGHT_NUM)
+    if (_pointLightUniformNames.size() != maxPointLight)
     {
-        _pointLightUniformNames.resize(PointLight3D::MAX_POINT_LIGHT_NUM);
+        _pointLightUniformNames.resize(maxPointLight);
         char str[64];
-        for (unsigned int i = 0; i < PointLight3D::MAX_POINT_LIGHT_NUM; ++i)
+        for (unsigned int i = 0; i < maxPointLight; ++i)
         {
             sprintf(str, "u_PointLightSourceColor[%d]", i);
             _pointLightUniformNames[i].color = str;
@@ -451,11 +460,11 @@ void MeshCommand::setLightUniformNames()
         }
     }
 
-    if (_spotLightUniformNames.size() != SpotLight3D::MAX_SPOT_LIGHT_NUM)
+    if (_spotLightUniformNames.size() != maxSpotLight)
     {
-        _spotLightUniformNames.resize(SpotLight3D::MAX_SPOT_LIGHT_NUM);
+        _spotLightUniformNames.resize(maxSpotLight);
         char str[64];
-        for (unsigned int i = 0; i < SpotLight3D::MAX_SPOT_LIGHT_NUM; ++i)
+        for (unsigned int i = 0; i < maxSpotLight; ++i)
         {
             sprintf(str, "u_SpotLightSourceColor[%d]", i);
             _spotLightUniformNames[i].color = str;

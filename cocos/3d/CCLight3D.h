@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCLIGHT_H__
-#define __CCLIGHT_H__
+#ifndef __CCLIGHT3D_H__
+#define __CCLIGHT3D_H__
 
 #include "2d/CCNode.h"
 #include "3d/3dExport.h"
@@ -126,10 +126,6 @@ public:
      * Returns direction in world.
      */
     const Vec3& getDirectionInWorld() const;
-
-public:
-
-    static unsigned int MAX_DIRECTIONAL_LIGHT_NUM;
     
 CC_CONSTRUCTOR_ACCESS:
     DirectionLight3D();
@@ -155,10 +151,6 @@ public:
     /** get or set range */
     float getRange() const { return _range; }
     void setRange(float range) { _range = range; }
-
-public:
-
-    static unsigned int MAX_POINT_LIGHT_NUM;
     
 CC_CONSTRUCTOR_ACCESS:
     PointLight3D();
@@ -245,10 +237,6 @@ public:
     
     /** get cos outAngle */
     float getCosOuterAngle() const { return _cosInnerAngle; }
-
-public:
-
-    static unsigned int MAX_SPOT_LIGHT_NUM;
     
 CC_CONSTRUCTOR_ACCESS:
     SpotLight3D();
