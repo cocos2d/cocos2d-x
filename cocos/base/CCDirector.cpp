@@ -229,14 +229,6 @@ void Director::setDefaultValues(void)
     // PVR v2 has alpha premultiplied ?
     bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
     Image::setPVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
-    
-    // 3d configuration
-    conf->getValue("cocos2d.x.3d.max_directional_lights").asInt();
-    conf->getValue("cocos2d.x.3d.max_point_lights").asInt();
-    conf->getValue("cocos2d.x.3d.max_spot_lights").asInt();
-    //max ambient lights is not limited.
-    //use light or not by default
-    conf->getValue("cocos2d.x.3d.default_use_light").asBool();
 }
 
 void Director::setGLDefaultValues()
