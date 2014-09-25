@@ -1014,6 +1014,9 @@ Developers:
         
     guykogus
         Implemented Application::openUrl for WP8 and WinRT
+        
+    tttreal
+        Fixed Label::getStringNumLines()
     
 Retired Core Developers:
     WenSheng Yang
