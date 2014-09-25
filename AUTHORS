@@ -1010,6 +1010,9 @@ Developers:
         
     wohaaitinciu
         WebView support on windows
+        
+    guykogus
+        Implemented Application::openUrl for WP8 and WinRT
     
 Retired Core Developers:
     WenSheng Yang
