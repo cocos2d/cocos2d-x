@@ -296,7 +296,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -342,7 +342,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -388,7 +388,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -434,7 +434,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -480,7 +480,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+						resourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -511,9 +511,19 @@ namespace cocostudio
             }
             
             child = child->NextSiblingElement();
-            
-            checkBox->setOpacity(opacity);
         }
+        
+        checkBox->setOpacity(opacity);
     }
+
+    int CheckBoxReader::getResourceType(std::string key)
+	{
+		if(key == "Normal" || key == "Default" || key == "MarkedSubImage")
+		{
+			return 	0;	
+		}
+	
+		return 1;
+	}
     /**/
 }

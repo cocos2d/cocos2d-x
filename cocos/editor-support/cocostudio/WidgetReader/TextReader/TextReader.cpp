@@ -154,7 +154,7 @@ namespace cocostudio
         
         label->setUnifySizeEnabled(false);
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
         
         bool touchScaleChangeAble = options.touchscaleenable();
         label->setTouchScaleChangeEnabled(touchScaleChangeAble);
@@ -166,7 +166,7 @@ namespace cocostudio
         
         std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
         
-        std::string fontFilePath = jsonPath.append(fontName);
+        std::string fontFilePath = protocolBuffersPath.append(fontName);
 		if (FileUtils::getInstance()->isFileExist(fontFilePath))
 		{
 			label->setFontName(fontFilePath);
@@ -196,7 +196,7 @@ namespace cocostudio
 		if (options.has_fontresource())
 		{
 			const protocolbuffers::ResourceData& resourceData = options.fontresource();
-		    label->setFontName(resourceData.path());
+		    label->setFontName(protocolBuffersPath + resourceData.path());
 		}
         
 
@@ -340,7 +340,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {

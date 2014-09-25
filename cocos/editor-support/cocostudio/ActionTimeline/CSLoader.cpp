@@ -31,10 +31,6 @@
 #include "cocostudio/CocoStudio.h"
 /**/
 
-/* peterson xml */
-#include "tinyxml2/tinyxml2.h"
-/**/
-
 #include "../CSParseBinary.pb.h"
 
 #include <fstream>
@@ -490,7 +486,7 @@ Node* CSLoader::loadSprite(const rapidjson::Value& json)
         else
         {
             sprite = Sprite::createWithSpriteFrame(spriteFrame);
-//            sprite->setFileName(path);
+            sprite->setFileName(path);
         }
         
         if(!sprite)
@@ -1784,7 +1780,6 @@ void CSLoader::setPropsForSpriteFromXML(cocos2d::Node *node, const tinyxml2::XML
     setPropsForNodeFromXML(node, spriteObjectData);
     
     Sprite* sprite = static_cast<Sprite*>(node);
-    
     int opacity = 255;
     
     // attributes
@@ -1794,17 +1789,17 @@ void CSLoader::setPropsForSpriteFromXML(cocos2d::Node *node, const tinyxml2::XML
         std::string name = attribute->Name();
         std::string value = attribute->Value();
         
-        if (name == "FlipX")
+        if (name == "Alpha")
+        {
+            opacity = atoi(value.c_str());
+        }
+        else if (name == "FlipX")
         {
             sprite->setFlippedX((value == "True") ? true : false);
         }
         else if (name == "FlipY")
         {
             sprite->setFlippedY((value == "True") ? true : false);
-        }
-        else if (name == "Alpha")
-        {
-            opacity = atoi(value.c_str());
         }
         
         attribute = attribute->Next();
@@ -1834,7 +1829,7 @@ void CSLoader::setPropsForSpriteFromXML(cocos2d::Node *node, const tinyxml2::XML
                 }
                 else if (name == "Type")
                 {
-                    resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                 }
                 else if (name == "Plist")
                 {
@@ -1905,7 +1900,7 @@ Node* CSLoader::createParticleFromXML(const tinyxml2::XMLElement *particleObject
                 }
                 else if (name == "Type")
                 {
-                    resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                 }
                 else if (name == "Plist")
                 {
@@ -1969,7 +1964,7 @@ Node* CSLoader::createTMXTiledMapFromXML(const tinyxml2::XMLElement *tmxTiledMap
                 }
                 else if (name == "Type")
                 {
-                    resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                 }
                 else if (name == "Plist")
                 {
@@ -1983,7 +1978,7 @@ Node* CSLoader::createTMXTiledMapFromXML(const tinyxml2::XMLElement *tmxTiledMap
             {
                 case 0:
                 {
-                    std::string tmxFile_str = _xmlPath + path;
+					std::string tmxFile_str = _xmlPath + path;
                     const char* tmxFile = tmxFile_str.c_str();
                     
                     if (tmxFile && strcmp("", tmxFile) != 0)
@@ -2081,7 +2076,7 @@ void CSLoader::setPropsForComAudioFromXML(cocos2d::Component *component, const t
                 }
                 else if (name == "Type")
                 {
-                    resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                 }
                 else if (name == "Plist")
                 {

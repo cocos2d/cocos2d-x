@@ -3798,6 +3798,7 @@ const int ButtonOptions::kScale9WidthFieldNumber;
 const int ButtonOptions::kScale9HeightFieldNumber;
 const int ButtonOptions::kScale9EnableFieldNumber;
 const int ButtonOptions::kDisplaystateFieldNumber;
+const int ButtonOptions::kFontResourceFieldNumber;
 #endif  // !_MSC_VER
 
 ButtonOptions::ButtonOptions()
@@ -3823,6 +3824,12 @@ void ButtonOptions::InitAsDefaultInstance() {
       ::protocolbuffers::ResourceData::internal_default_instance());
 #else
   disableddata_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
+#endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  fontresource_ = const_cast< ::protocolbuffers::ResourceData*>(
+      ::protocolbuffers::ResourceData::internal_default_instance());
+#else
+  fontresource_ = const_cast< ::protocolbuffers::ResourceData*>(&::protocolbuffers::ResourceData::default_instance());
 #endif
 }
 
@@ -3856,6 +3863,7 @@ void ButtonOptions::SharedCtor() {
   scale9height_ = 0;
   scale9enable_ = false;
   displaystate_ = false;
+  fontresource_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3893,6 +3901,7 @@ void ButtonOptions::SharedDtor() {
     delete normaldata_;
     delete presseddata_;
     delete disableddata_;
+    delete fontresource_;
   }
 }
 
@@ -3978,6 +3987,9 @@ void ButtonOptions::Clear() {
     scale9height_ = 0;
     scale9enable_ = false;
     displaystate_ = false;
+    if (has_fontresource()) {
+      if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -4315,6 +4327,20 @@ bool ButtonOptions::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(186)) goto parse_fontResource;
+        break;
+      }
+
+      // optional .protocolbuffers.ResourceData fontResource = 23;
+      case 23: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_fontResource:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_fontresource()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4454,6 +4480,12 @@ void ButtonOptions::SerializeWithCachedSizes(
   // optional bool displaystate = 22;
   if (has_displaystate()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(22, this->displaystate(), output);
+  }
+
+  // optional .protocolbuffers.ResourceData fontResource = 23;
+  if (has_fontresource()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      23, this->fontresource(), output);
   }
 
 }
@@ -4604,6 +4636,13 @@ int ButtonOptions::ByteSize() const {
       total_size += 2 + 1;
     }
 
+    // optional .protocolbuffers.ResourceData fontResource = 23;
+    if (has_fontresource()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->fontresource());
+    }
+
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -4689,6 +4728,9 @@ void ButtonOptions::MergeFrom(const ButtonOptions& from) {
     if (from.has_displaystate()) {
       set_displaystate(from.displaystate());
     }
+    if (from.has_fontresource()) {
+      mutable_fontresource()->::protocolbuffers::ResourceData::MergeFrom(from.fontresource());
+    }
   }
 }
 
@@ -4727,6 +4769,7 @@ void ButtonOptions::Swap(ButtonOptions* other) {
     std::swap(scale9height_, other->scale9height_);
     std::swap(scale9enable_, other->scale9enable_);
     std::swap(displaystate_, other->displaystate_);
+    std::swap(fontresource_, other->fontresource_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }

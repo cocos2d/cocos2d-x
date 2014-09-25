@@ -320,15 +320,6 @@ public:
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
 
-    virtual const Color3B& getColor() const override;
-    virtual void setColor(const Color3B& color)override;
-
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-
-    virtual bool isCascadeOpacityEnabled() const override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
-    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     

@@ -123,6 +123,10 @@ void ScrollView::initRenderer()
 {
     Layout::initRenderer();
     _innerContainer = Layout::create();
+    _innerContainer->setColor(Color3B(255,255,255));
+    _innerContainer->setOpacity(255);
+    _innerContainer->setCascadeColorEnabled(true);
+    _innerContainer->setCascadeOpacityEnabled(true);
     addProtectedChild(_innerContainer, 1, 1);
 }
 
@@ -1799,36 +1803,6 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
         return Widget::findNextFocusedWidget(direction, current);
     }
 }
-    
-void ScrollView::setColor(const Color3B& color)
-{
-    this->_innerContainer->setColor(color);
-}
-
-const Color3B& ScrollView::getColor() const
-{
-    return this->_innerContainer->getColor();
-}
-
-bool ScrollView::isCascadeColorEnabled() const
-{
-    return this->_innerContainer->isCascadeColorEnabled();
-}
-void ScrollView::setCascadeColorEnabled(bool cascadeColorEnabled)
-{
-    this->_innerContainer->setCascadeColorEnabled(cascadeColorEnabled);
-}
-
-bool ScrollView::isCascadeOpacityEnabled() const
-{
-    return this->_innerContainer->isCascadeOpacityEnabled();
-}
-
-void ScrollView::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
-{
-    this->_innerContainer->setCascadeOpacityEnabled(cascadeOpacityEnabled);
-}
-
 }
 
 NS_CC_END

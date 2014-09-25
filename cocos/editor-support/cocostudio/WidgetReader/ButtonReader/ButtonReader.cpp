@@ -332,7 +332,11 @@ namespace cocostudio
         const char* fontName = options.has_fontname() ? options.fontname().c_str() : "微软雅黑";
         button->setTitleFontName(fontName);
         
-        
+        if (options.has_fontresource())
+		{
+			const protocolbuffers::ResourceData& resourceData = options.fontresource();
+		    button->setTitleFontName(protocolBuffersPath + resourceData.path());
+		}
         
         const protocolbuffers::WidgetOptions& widgetOption = nodeTree.widgetoptions();
         button->setColor(Color3B(widgetOption.colorr(), widgetOption.colorg(), widgetOption.colorb()));
@@ -508,7 +512,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
@@ -554,7 +558,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
@@ -600,7 +604,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
@@ -622,6 +626,45 @@ namespace cocostudio
                     {
                         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
                         button->loadTextureNormal(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
+            }
+            else if (name == "FontResource")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        fontName = xmlPath + path;
                         break;
                     }
                         

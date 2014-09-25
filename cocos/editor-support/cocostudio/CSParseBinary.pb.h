@@ -1545,6 +1545,15 @@ class ButtonOptions : public ::google::protobuf::MessageLite {
   inline bool displaystate() const;
   inline void set_displaystate(bool value);
 
+  // optional .protocolbuffers.ResourceData fontResource = 23;
+  inline bool has_fontresource() const;
+  inline void clear_fontresource();
+  static const int kFontResourceFieldNumber = 23;
+  inline const ::protocolbuffers::ResourceData& fontresource() const;
+  inline ::protocolbuffers::ResourceData* mutable_fontresource();
+  inline ::protocolbuffers::ResourceData* release_fontresource();
+  inline void set_allocated_fontresource(::protocolbuffers::ResourceData* fontresource);
+
   // @@protoc_insertion_point(class_scope:protocolbuffers.ButtonOptions)
  private:
   inline void set_has_name();
@@ -1591,6 +1600,8 @@ class ButtonOptions : public ::google::protobuf::MessageLite {
   inline void clear_has_scale9enable();
   inline void set_has_displaystate();
   inline void clear_has_displaystate();
+  inline void set_has_fontresource();
+  inline void clear_has_fontresource();
 
   ::std::string* name_;
   ::std::string* classname_;
@@ -1612,11 +1623,12 @@ class ButtonOptions : public ::google::protobuf::MessageLite {
   float capinsetsheight_;
   float scale9width_;
   float scale9height_;
+  ::protocolbuffers::ResourceData* fontresource_;
   bool scale9enable_;
   bool displaystate_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(22 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(23 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_CSParseBinary_2eproto_impl();
@@ -11016,6 +11028,48 @@ inline bool ButtonOptions::displaystate() const {
 inline void ButtonOptions::set_displaystate(bool value) {
   set_has_displaystate();
   displaystate_ = value;
+}
+
+// optional .protocolbuffers.ResourceData fontResource = 23;
+inline bool ButtonOptions::has_fontresource() const {
+  return (_has_bits_[0] & 0x00400000u) != 0;
+}
+inline void ButtonOptions::set_has_fontresource() {
+  _has_bits_[0] |= 0x00400000u;
+}
+inline void ButtonOptions::clear_has_fontresource() {
+  _has_bits_[0] &= ~0x00400000u;
+}
+inline void ButtonOptions::clear_fontresource() {
+  if (fontresource_ != NULL) fontresource_->::protocolbuffers::ResourceData::Clear();
+  clear_has_fontresource();
+}
+inline const ::protocolbuffers::ResourceData& ButtonOptions::fontresource() const {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return fontresource_ != NULL ? *fontresource_ : *default_instance().fontresource_;
+#else
+  return fontresource_ != NULL ? *fontresource_ : *default_instance_->fontresource_;
+#endif
+}
+inline ::protocolbuffers::ResourceData* ButtonOptions::mutable_fontresource() {
+  set_has_fontresource();
+  if (fontresource_ == NULL) fontresource_ = new ::protocolbuffers::ResourceData;
+  return fontresource_;
+}
+inline ::protocolbuffers::ResourceData* ButtonOptions::release_fontresource() {
+  clear_has_fontresource();
+  ::protocolbuffers::ResourceData* temp = fontresource_;
+  fontresource_ = NULL;
+  return temp;
+}
+inline void ButtonOptions::set_allocated_fontresource(::protocolbuffers::ResourceData* fontresource) {
+  delete fontresource_;
+  fontresource_ = fontresource;
+  if (fontresource) {
+    set_has_fontresource();
+  } else {
+    clear_has_fontresource();
+  }
 }
 
 // -------------------------------------------------------------------

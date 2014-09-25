@@ -242,10 +242,10 @@ namespace cocostudio
         int end_red = 255, end_green = 255, end_blue = 255;
         float vector_color_x = 0.0f, vector_color_y = -0.5f;
         
+        int direction = 1;
+        
         int resourceType = 0;
         std::string path = "", plistFile = "";
-        
-        int direction = 1;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -296,17 +296,14 @@ namespace cocostudio
                 if (value == "Vertical")
                 {
                     direction = 1;
-//                    scrollView->setDirection(ScrollView::Direction::VERTICAL);
                 }
                 else if (value == "Horizontal")
                 {
                     direction = 2;
-//                    scrollView->setDirection(ScrollView::Direction::HORIZONTAL);
                 }
                 else if (value == "Vertical_Horizontal")
                 {
                     direction = 3;
-//                    scrollView->setDirection(ScrollView::Direction::BOTH);
                 }
             }
             else if (name == "IsBounceEnabled")
@@ -503,7 +500,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
@@ -569,6 +566,7 @@ namespace cocostudio
         }
         
         scrollView->setDirection((ScrollView::Direction)direction);
+        
 //        scrollView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
 //        scrollView->setBackGroundImageOpacity(bgimg_opacity);
     }

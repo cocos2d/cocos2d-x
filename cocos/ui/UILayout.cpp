@@ -619,6 +619,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
+        _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;

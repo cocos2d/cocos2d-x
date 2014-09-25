@@ -187,20 +187,20 @@ static void printFileUtils(int fd)
 
 
 #if defined(__MINGW32__)
-static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
-{
-    struct sockaddr_in srcaddr;
-
-    memset(&srcaddr, 0, sizeof(struct sockaddr_in));
-    memcpy(&(srcaddr.sin_addr), src, sizeof(srcaddr.sin_addr));
-
-    srcaddr.sin_family = af;
-    if (WSAAddressToStringA((struct sockaddr*) &srcaddr, sizeof(struct sockaddr_in), 0, dst, (LPDWORD) &cnt) != 0)
-    {
-        return nullptr;
-    }
-    return dst;
-}
+//static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
+//{
+//    struct sockaddr_in srcaddr;
+//
+//    memset(&srcaddr, 0, sizeof(struct sockaddr_in));
+//    memcpy(&(srcaddr.sin_addr), src, sizeof(srcaddr.sin_addr));
+//
+//    srcaddr.sin_family = af;
+//    if (WSAAddressToStringA((struct sockaddr*) &srcaddr, sizeof(struct sockaddr_in), 0, dst, (LPDWORD) &cnt) != 0)
+//    {
+//        return nullptr;
+//    }
+//    return dst;
+//}
 #endif
 
 
@@ -369,21 +369,21 @@ bool Console::listenOnTCP(int port)
 
     listen(listenfd, 50);
 
-    if (res->ai_family == AF_INET) {
-        char buf[INET_ADDRSTRLEN] = "";
-        struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-        if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
-        else
-            perror("inet_ntop");
-    } else if (res->ai_family == AF_INET6) {
-        char buf[INET6_ADDRSTRLEN] = "";
-        struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
-        if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
-        else
-            perror("inet_ntop");
-    }
+    //if (res->ai_family == AF_INET) {
+    //    char buf[INET_ADDRSTRLEN] = "";
+    //    struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+    //    if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
+    //        cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+    //    else
+    //        perror("inet_ntop");
+    //} else if (res->ai_family == AF_INET6) {
+    //    char buf[INET6_ADDRSTRLEN] = "";
+    //    struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+    //    if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
+    //        cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
+    //    else
+    //        perror("inet_ntop");
+    //}
 
 
     freeaddrinfo(ressave);
