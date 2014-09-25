@@ -140,6 +140,7 @@ set(TESTS_SRC
   Classes/MotionStreakTest/MotionStreakTest.cpp
   Classes/MutiTouchTest/MutiTouchTest.cpp
   Classes/NodeTest/NodeTest.cpp
+  Classes/OpenURLTest/OpenURLTest.cpp
   Classes/ParallaxTest/ParallaxTest.cpp
   Classes/ParticleTest/ParticleTest.cpp
   Classes/PerformanceTest/PerformanceAllocTest.cpp

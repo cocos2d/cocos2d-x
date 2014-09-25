@@ -213,6 +213,13 @@ LanguageType Application::getCurrentLanguage()
     return ret;
 }
 
+bool Application::openURL(const std::string &url)
+{
+    NSString* msg = [NSString stringWithCString:url.c_str() encoding:NSUTF8StringEncoding];
+    NSURL* nsUrl = [NSURL URLWithString:msg];
+    return [[NSWorkspace sharedWorkspace] openURL:nsUrl];
+}
+
 void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;

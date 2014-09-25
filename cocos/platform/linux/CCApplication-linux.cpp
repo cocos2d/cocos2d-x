@@ -136,6 +136,12 @@ Application::Platform Application::getTargetPlatform()
     return Platform::OS_LINUX;
 }
 
+bool Application::openURL(const std::string &url)
+{
+    std::string op = std::string("open ").append(url);
+    return system(op.c_str())!=-1;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
