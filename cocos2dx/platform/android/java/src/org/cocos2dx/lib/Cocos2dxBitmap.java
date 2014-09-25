@@ -1,31 +1,30 @@
 /****************************************************************************
-Copyright (c) 2010-2011 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+ * Copyright (c) 2010-2011 cocos2d-x.org
+ * 
+ * http://www.cocos2d-x.org
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -42,576 +41,588 @@ import android.util.FloatMath;
 import android.util.Log;
 
 public class Cocos2dxBitmap {
-	// ===========================================================
-	// Constants
-	// ===========================================================
+    // ===========================================================
+    // Constants
+    // ===========================================================
 
-	/* The values are the same as cocos2dx/platform/CCImage.h. */
-	private static final int HORIZONTALALIGN_LEFT = 1;
-	private static final int HORIZONTALALIGN_RIGHT = 2;
-	private static final int HORIZONTALALIGN_CENTER = 3;
-	private static final int VERTICALALIGN_TOP = 1;
-	private static final int VERTICALALIGN_BOTTOM = 2;
-	private static final int VERTICALALIGN_CENTER = 3;
+    /* The values are the same as cocos2dx/platform/CCImage.h. */
+    private static final int HORIZONTALALIGN_LEFT = 1;
+    private static final int HORIZONTALALIGN_RIGHT = 2;
+    private static final int HORIZONTALALIGN_CENTER = 3;
+    private static final int VERTICALALIGN_TOP = 1;
+    private static final int VERTICALALIGN_BOTTOM = 2;
+    private static final int VERTICALALIGN_CENTER = 3;
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    private static final String PILCROW = "\u00B6";
 
-	private static Context sContext;
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
+    private static Context sContext;
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+    // ===========================================================
+    // Constructors
+    // ===========================================================
 
-	public static void setContext(final Context pContext) {
-		Cocos2dxBitmap.sContext = pContext;
-	}
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+    public static void setContext(final Context pContext) {
+        Cocos2dxBitmap.sContext = pContext;
+    }
 
-	// ===========================================================
-	// Methods
-	// ===========================================================
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
 
-	private static native void nativeInitBitmapDC(final int pWidth,
-			final int pHeight, final byte[] pPixels);
+    // ===========================================================
+    // Methods
+    // ===========================================================
 
-	/**
-	 * @param pWidth
-	 *			the width to draw, it can be 0
-	 * @param pHeight
-	 *			the height to draw, it can be 0
-	 */
-	public static void createTextBitmap(String pString, final String pFontName,
-			final int pFontSize, final int pAlignment, final int pWidth,
-			final int pHeight) {
-		
-		//
-		createTextBitmapShadowStroke( pString, pFontName, pFontSize, 1.0f, 1.0f, 1.0f,   	// text font and color
-									  pAlignment, pWidth, pHeight,							// alignment and size
-									  false, 0.0f, 0.0f, 0.0f,								// no shadow
-									  false, 1.0f, 1.0f, 1.0f, 1.0f);						// no stroke
-									 
-	}
+    private static native void nativeInitBitmapDC(final int pWidth, final int pHeight, final byte[] pPixels);
 
-	public static void createTextBitmapShadowStroke(String pString,  final String pFontName, final int pFontSize,
-													final float fontTintR, final float fontTintG, final float fontTintB,
-													final int pAlignment, final int pWidth, final int pHeight, final boolean shadow,
-													final float shadowDX, final float shadowDY, final float shadowBlur, final boolean stroke,
-													final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
+    /**
+     * @param pWidth
+     *            the width to draw, it can be 0
+     * @param pHeight
+     *            the height to draw, it can be 0
+     */
+    public static void createTextBitmap(String pString, final String pFontName, final int pFontSize, final int pAlignment,
+        final int pWidth, final int pHeight) {
 
-		
-		final int horizontalAlignment = pAlignment & 0x0F;
-		final int verticalAlignment   = (pAlignment >> 4) & 0x0F;
+        //
+        createTextBitmapShadowStroke(pString, pFontName, pFontSize, 1.0f, 1.0f, 1.0f, // text font
+                                                                                      // and color
+            pAlignment, pWidth, pHeight, // alignment and size
+            false, 0.0f, 0.0f, 0.0f, // no shadow
+            false, 1.0f, 1.0f, 1.0f, 1.0f); // no stroke
 
-		pString = Cocos2dxBitmap.refactorString(pString);
-		final Paint paint = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
-		
-		// set the paint color
-		paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
+    }
 
-		final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
-		final int bitmapTotalHeight = (pHeight == 0 ? textProperty.mTotalHeight: pHeight);
-		
-		// padding needed when using shadows (not used otherwise)
-		float bitmapPaddingX   = 0.0f;
-		float bitmapPaddingY   = 0.0f;
-		float renderTextDeltaX = 0.0f;
-		float renderTextDeltaY = 0.0f;
-		
-		if ( shadow ) {
+    public static void createTextBitmapShadowStroke(String pString, final String pFontName, final int pFontSize,
+        final float fontTintR, final float fontTintG, final float fontTintB, final int pAlignment, final int pWidth,
+        final int pHeight, final boolean shadow, final float shadowDX, final float shadowDY, final float shadowBlur,
+        final boolean stroke, final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
 
-			int shadowColor = 0xff7d7d7d;
-			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
-	
-			bitmapPaddingX = Math.abs(shadowDX);
-			bitmapPaddingY = Math.abs(shadowDY);
-					
-			if ( shadowDX < 0.0 )
-			{
-				renderTextDeltaX = bitmapPaddingX;
-			}
-			
-			if ( shadowDY < 0.0 )
-			{
-				renderTextDeltaY = 	bitmapPaddingY;
-			}
-		}
-		
-		final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth + (int)bitmapPaddingX,
-				bitmapTotalHeight + (int)bitmapPaddingY, Bitmap.Config.ARGB_8888);
-		
-		final Canvas canvas = new Canvas(bitmap);
+        final int horizontalAlignment = pAlignment & 0x0F;
+        final int verticalAlignment = (pAlignment >> 4) & 0x0F;
 
-		/* Draw string. */
-		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
-		
-		int x = 0;
-		int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
-		
-		final String[] lines = textProperty.mLines;
-		
-		for (final String line : lines) {
-			
-			x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
-			y += textProperty.mHeightPerLine;
-			
-		}
-		 
-		// draw again with stroke on if needed 
-		if ( stroke ) {
-			
-			final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
-			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize * 0.5f);
-			paintStroke.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
-			
-			x = 0;
-			y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
-			final String[] lines2 = textProperty.mLines;
-			
-			for (final String line : lines2) {
-				
-				x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
-				y += textProperty.mHeightPerLine;
-				
-			}
-			
-		}
-		
-		Cocos2dxBitmap.initNativeObject(bitmap);
-	}
+        pString = Cocos2dxBitmap.refactorString(pString);
+        final Paint paint = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
 
-	private static Paint newPaint(final String pFontName, final int pFontSize,
-			final int pHorizontalAlignment) {
-		final Paint paint = new Paint();
-		paint.setColor(Color.WHITE);
-		paint.setTextSize(pFontSize); 
-		paint.setAntiAlias(true);
+        // set the paint color
+        paint.setARGB(255, (int) (255.0 * fontTintR), (int) (255.0 * fontTintG), (int) (255.0 * fontTintB));
 
-		/* Set type face for paint, now it support .ttf file. */
-		if (pFontName.endsWith(".ttf")) {
-			try {
-				final Typeface typeFace = Cocos2dxTypefaces.get(
-						Cocos2dxBitmap.sContext, pFontName);
-				paint.setTypeface(typeFace);
-			} catch (final Exception e) {
-				Log.e("Cocos2dxBitmap", "error to create ttf type face: "
-						+ pFontName);
+        final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
+        final int bitmapTotalHeight = (pHeight == 0 ? textProperty.mTotalHeight : pHeight);
 
-				/* The file may not find, use system font. */
-				paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
-			}
-		} else {
-			paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
-		}
+        // padding needed when using shadows (not used otherwise)
+        float bitmapPaddingX = 0.0f;
+        float bitmapPaddingY = 0.0f;
+        float renderTextDeltaX = 0.0f;
+        float renderTextDeltaY = 0.0f;
 
-		switch (pHorizontalAlignment) {
-		case HORIZONTALALIGN_CENTER:
-			paint.setTextAlign(Align.CENTER);
-			break;
-		case HORIZONTALALIGN_RIGHT:
-			paint.setTextAlign(Align.RIGHT);
-			break;
-		case HORIZONTALALIGN_LEFT:
-		default:
-			paint.setTextAlign(Align.LEFT);
-			break;
-		}
+        if (shadow) {
 
-		return paint;
-	}
-	
-	private static TextProperty computeTextProperty(final String pString,
-			final int pWidth, final int pHeight, final Paint pPaint) {
-		final FontMetricsInt fm = pPaint.getFontMetricsInt();
-		final int h = (int) Math.ceil(fm.bottom - fm.top);
-		int maxContentWidth = 0;
+            int shadowColor = 0xff7d7d7d;
+            paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
 
-		final String[] lines = Cocos2dxBitmap.splitString(pString, pWidth,
-				pHeight, pPaint);
+            bitmapPaddingX = Math.abs(shadowDX);
+            bitmapPaddingY = Math.abs(shadowDY);
 
-		if (pWidth != 0) {
-			maxContentWidth = pWidth;
-		} else {
-			/* Compute the max width. */
-			int temp = 0;
-			for (final String line : lines) {
-				temp = (int) FloatMath.ceil(pPaint.measureText(line, 0,
-						line.length()));
-				if (temp > maxContentWidth) {
-					maxContentWidth = temp;
-				}
-			}
-		}
+            if (shadowDX < 0.0) {
+                renderTextDeltaX = bitmapPaddingX;
+            }
 
-		return new TextProperty(maxContentWidth, h, lines);
-	}
+            if (shadowDY < 0.0) {
+                renderTextDeltaY = bitmapPaddingY;
+            }
+        }
 
-	private static int computeX(final String pText, final int pMaxWidth,
-			final int pHorizontalAlignment) {
-		int ret = 0;
+        final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth + (int) bitmapPaddingX, bitmapTotalHeight
+            + (int) bitmapPaddingY, Bitmap.Config.ARGB_8888);
 
-		switch (pHorizontalAlignment) {
-		case HORIZONTALALIGN_CENTER:
-			ret = pMaxWidth / 2;
-			break;
-		case HORIZONTALALIGN_RIGHT:
-			ret = pMaxWidth;
-			break;
-		case HORIZONTALALIGN_LEFT:
-		default:
-			break;
-		}
+        final Canvas canvas = new Canvas(bitmap);
 
-		return ret;
-	}
+        /* Draw string. */
+        final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
 
-	private static int computeY(final FontMetricsInt pFontMetricsInt,
-			final int pConstrainHeight, final int pTotalHeight,
-			final int pVerticalAlignment) {
-		int y = -pFontMetricsInt.top;
+        int x = 0;
+        int y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
 
-		if (pConstrainHeight > pTotalHeight) {
-			switch (pVerticalAlignment) {
-			case VERTICALALIGN_TOP:
-				y = -pFontMetricsInt.top;
-				break;
-			case VERTICALALIGN_CENTER:
-				y = -pFontMetricsInt.top + (pConstrainHeight - pTotalHeight)
-						/ 2;
-				break;
-			case VERTICALALIGN_BOTTOM:
-				y = -pFontMetricsInt.top + (pConstrainHeight - pTotalHeight);
-				break;
-			default:
-				break;
-			}
-		}
+        final String[] lines = textProperty.mLines;
 
-		return y;
-	}
+        for (final String line : lines) {
 
-	/*
-	 * If maxWidth or maxHeight is not 0, split the string to fix the maxWidth
-	 * and maxHeight.
-	 */
-	private static String[] splitString(final String pString,
-			final int pMaxWidth, final int pMaxHeight, final Paint pPaint) {
-		final String[] lines = pString.split("\\n");
-		String[] ret = null;
-		final FontMetricsInt fm = pPaint.getFontMetricsInt();
-		final int heightPerLine = (int) Math.ceil(fm.bottom - fm.top);
-		final int maxLines = pMaxHeight / heightPerLine;
+            x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+            canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
+            y += textProperty.mHeightPerLine;
 
-		if (pMaxWidth != 0) {
-			final LinkedList<String> strList = new LinkedList<String>();
-			for (final String line : lines) {
-				/*
-				 * The width of line is exceed maxWidth, should divide it into
-				 * two or more lines.
-				 */
-				final int lineWidth = (int) FloatMath.ceil(pPaint
-						.measureText(line));
-				if (lineWidth > pMaxWidth) {
-					strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidth(
-							line, pMaxWidth, pPaint));
-				} else {
-					strList.add(line);
-				}
+        }
 
-				/* Should not exceed the max height. */
-				if (maxLines > 0 && strList.size() >= maxLines) {
-					break;
-				}
-			}
+        // draw again with stroke on if needed
+        if (stroke) {
 
-			/* Remove exceeding lines. */
-			if (maxLines > 0 && strList.size() > maxLines) {
-				while (strList.size() > maxLines) {
-					strList.removeLast();
-				}
-			}
+            final Paint paintStroke = Cocos2dxBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
+            paintStroke.setStyle(Paint.Style.STROKE);
+            paintStroke.setStrokeWidth(strokeSize * 0.5f);
+            paintStroke.setARGB(255, (int) strokeR * 255, (int) strokeG * 255, (int) strokeB * 255);
 
-			ret = new String[strList.size()];
-			strList.toArray(ret);
-		} else if (pMaxHeight != 0 && lines.length > maxLines) {
-			/* Remove exceeding lines. */
-			final LinkedList<String> strList = new LinkedList<String>();
-			for (int i = 0; i < maxLines; i++) {
-				strList.add(lines[i]);
-			}
-			ret = new String[strList.size()];
-			strList.toArray(ret);
-		} else {
-			ret = lines;
-		}
+            x = 0;
+            y = Cocos2dxBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
+            final String[] lines2 = textProperty.mLines;
 
-		return ret;
-	}
+            for (final String line : lines2) {
 
-//	private static LinkedList<String> divideStringWithMaxWidth(
-//			final String pString, final int pMaxWidth, final Paint pPaint) {
-//		final int charLength = pString.length();
-//		int start = 0;
-//		int tempWidth = 0;
-//		final LinkedList<String> strList = new LinkedList<String>();
-//		
-//		/* Break a String into String[] by the width & should wrap the word. */
-//		for (int i = 1; i <= charLength; ++i) {
-//			tempWidth = (int) FloatMath.ceil(pPaint.measureText(pString, start,
-//					i));
-//			if (tempWidth >= pMaxWidth) {
-//				final int lastIndexOfSpace = pString.substring(0, i)
-//						.lastIndexOf(" ");
-//
-//				if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
-//					/* Should wrap the word. */
-//					strList.add(pString.substring(start, lastIndexOfSpace));
-//					i = lastIndexOfSpace + 1; // skip space
-//				} else {
-//					/* Should not exceed the width. */
-//					if (tempWidth > pMaxWidth) {
-//						strList.add(pString.substring(start, i - 1));
-//						/* Compute from previous char. */
-//						--i;
-//					} else {
-//						strList.add(pString.substring(start, i));
-//					}
-//				}
-//
-//				/* Remove spaces at the beginning of a new line. */
-//				while (i < charLength && pString.charAt(i) == ' ') {
-//					++i;
-//				}
-//
-//				start = i;
-//			}
-//		}
-//
-//		/* Add the last chars. */
-//		if (start < charLength) {
-//			strList.add(pString.substring(start));
-//		}
-//
-//		return strList;
-//	}
-	
-	private static LinkedList<String> divideStringWithMaxWidth( final String pString, final int pMaxWidth, final Paint pPaint)
-	{
-		final LinkedList<String> strList = new LinkedList<String>();
-	
-		//the start index of a word (inclusive)
-		int wordStart = 0;
-	
-		//the end index of a word (exclusive)
-		int wordEnd = 0;
-		
-		while ( wordEnd < pString.length() && wordStart < pString.length() )
-		{
-			//iterate through characters either until we need to word wrap or until the end of the string
-			for ( int charIndex = wordStart; charIndex < pString.length(); charIndex++ )
-			{
-				//we may modify this later based upon word wrap
-				wordEnd = charIndex + 1;
-			
-				//we will use the width of the current word to decide if we need to word wrap
-				int wordWidth = (int) FloatMath.ceil( pPaint.measureText( pString, wordStart, wordEnd ) );
-				
-				//if the width of the current word is greater than the desired width, then we need to wrap
-				if ( wordWidth > pMaxWidth )
-				{
-					//look for the last space in this word so we can end the word there instead
-					int lastSpaceIndex = lastIndexOfWhitespace( pString, charIndex );
-				
-					//if we were unable to find a space, or the last space was before this word started, then we must truncate
-					if ( lastSpaceIndex == -1 || lastSpaceIndex < wordStart )
-					{
-						//the string must be longer than a single character... if one character overflows, we must let it
-						if ( wordEnd - wordStart > 1 )
-						{
-							//we know the previous character was okay, so go back to it
-							wordEnd--;
-						}
-					}
-					//we found a space, so move the wordEnd to be back there
-					else
-					{
-						wordEnd = lastSpaceIndex;
-					}
-				
-					//to get an accurate next word start, we need to trim all spaces at the start of the next word
-					int nextWordStart = wordEnd;
-					for ( ; nextWordStart < pString.length(); nextWordStart++ )
-					{
-						//there is a special case, where we want to append any newlines to the end of the previous string so they are still honored
-						//they cannot precurse the next word because then we would just use that newline forever as a word separator
-						char c = pString.charAt( nextWordStart );
-						if ( c == '\n' )
-						{
-							wordEnd = nextWordStart + 1;
-						}
-						else if ( !Character.isWhitespace( c ) )
-						{
-							break;
-						}
-					}
-				
-					//add this word to the array of words
-					strList.add( pString.substring( wordStart, wordEnd ) );
-					wordStart = nextWordStart;
-					
-					break;
-				}
-			}
-		}
-	
-		//we may need to add a last word
-		if ( wordEnd > wordStart )
-		{
-			strList.add( pString.substring( wordStart, wordEnd ) );
-		}
-		
-		return strList;
-	}
-	
-	private static int lastIndexOfWhitespace( final String str, final int startIndex )
-	{
-		if ( startIndex >= str.length() )
-		{
-			return -1;
-		}
-		
-		for ( int i = startIndex; i >= 0; i-- )
-		{
-			if ( Character.isWhitespace( str.charAt( i ) ) )
-			{
-				return i;
-			} 
-		}
-		
-		return -1;
-	}
+                x = Cocos2dxBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
+                canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
+                y += textProperty.mHeightPerLine;
 
-	private static String refactorString(final String pString) {
-		/* Avoid error when content is "". */
-		if (pString.compareTo("") == 0) {
-			return " ";
-		}
+            }
 
-		/*
-		 * If the font of "\n" is "" or "\n", insert " " in front of it. For
-		 * example: "\nabc" -> " \nabc" "\nabc\n\n" -> " \nabc\n \n".
-		 */
-		final StringBuilder strBuilder = new StringBuilder(pString);
-		int start = 0;
-		int index = strBuilder.indexOf("\n");
-		while (index != -1) {
-			if (index == 0 || strBuilder.charAt(index - 1) == '\n') {
-				strBuilder.insert(start, " ");
-				start = index + 2;
-			} else {
-				start = index + 1;
-			}
+        }
 
-			if (start > strBuilder.length() || index == strBuilder.length()) {
-				break;
-			}
+        Cocos2dxBitmap.initNativeObject(bitmap);
+    }
 
-			index = strBuilder.indexOf("\n", start);
-		}
+    private static Paint newPaint(final String pFontName, final int pFontSize, final int pHorizontalAlignment) {
+        final Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(pFontSize);
+        paint.setAntiAlias(true);
 
-		return strBuilder.toString();
-	}
+        /* Set type face for paint, now it support .ttf file. */
+        if (pFontName.endsWith(".ttf")) {
+            try {
+                final Typeface typeFace = Cocos2dxTypefaces.get(Cocos2dxBitmap.sContext, pFontName);
+                paint.setTypeface(typeFace);
+            } catch (final Exception e) {
+                Log.e("Cocos2dxBitmap", "error to create ttf type face: " + pFontName);
 
-	private static void initNativeObject(final Bitmap pBitmap) {
-		final byte[] pixels = Cocos2dxBitmap.getPixels(pBitmap);
-		if (pixels == null) {
-			return;
-		}
+                /* The file may not find, use system font. */
+                paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
+            }
+        } else {
+            paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
+        }
 
-		Cocos2dxBitmap.nativeInitBitmapDC(pBitmap.getWidth(),
-				pBitmap.getHeight(), pixels);
-	}
+        switch (pHorizontalAlignment) {
+        case HORIZONTALALIGN_CENTER:
+            paint.setTextAlign(Align.CENTER);
+            break;
+        case HORIZONTALALIGN_RIGHT:
+            paint.setTextAlign(Align.RIGHT);
+            break;
+        case HORIZONTALALIGN_LEFT:
+        default:
+            paint.setTextAlign(Align.LEFT);
+            break;
+        }
 
-	private static byte[] getPixels(final Bitmap pBitmap) {
-		if (pBitmap != null) {
-			final byte[] pixels = new byte[pBitmap.getWidth()
-					* pBitmap.getHeight() * 4];
-			final ByteBuffer buf = ByteBuffer.wrap(pixels);
-			buf.order(ByteOrder.nativeOrder());
-			pBitmap.copyPixelsToBuffer(buf);
-			return pixels;
-		}
+        return paint;
+    }
 
-		return null;
-	}
+    private static TextProperty computeTextProperty(final String pString, final int pWidth, final int pHeight, final Paint pPaint) {
+        final FontMetricsInt fm = pPaint.getFontMetricsInt();
+        final int h = (int) Math.ceil(fm.bottom - fm.top);
+        int maxContentWidth = 0;
 
-	private static int getFontSizeAccordingHeight(int height) {
-		Paint paint = new Paint();
-		Rect bounds = new Rect();
+        final String[] lines = Cocos2dxBitmap.splitString(pString, pWidth, pHeight, pPaint);
 
-		paint.setTypeface(Typeface.DEFAULT);
-		int incr_text_size = 1;
-		boolean found_desired_size = false;
+        if (pWidth != 0) {
+            maxContentWidth = pWidth;
+        } else {
+            /* Compute the max width. */
+            int temp = 0;
+            for (final String line : lines) {
+                temp = (int) FloatMath.ceil(pPaint.measureText(line, 0, line.length()));
+                if (temp > maxContentWidth) {
+                    maxContentWidth = temp;
+                }
+            }
+        }
 
-		while (!found_desired_size) {
+        return new TextProperty(maxContentWidth, h, lines);
+    }
 
-			paint.setTextSize(incr_text_size);
-			String text = "SghMNy";
-			paint.getTextBounds(text, 0, text.length(), bounds);
+    private static int computeX(final String pText, final int pMaxWidth, final int pHorizontalAlignment) {
+        int ret = 0;
 
-			incr_text_size++;
+        switch (pHorizontalAlignment) {
+        case HORIZONTALALIGN_CENTER:
+            ret = pMaxWidth / 2;
+            break;
+        case HORIZONTALALIGN_RIGHT:
+            ret = pMaxWidth;
+            break;
+        case HORIZONTALALIGN_LEFT:
+        default:
+            break;
+        }
 
-			if (height - bounds.height() <= 2) {
-				found_desired_size = true;
-			}
-			Log.d("font size", "incr size:" + incr_text_size);
-		}
-		return incr_text_size;
-	}
+        return ret;
+    }
 
-	private static String getStringWithEllipsis(String pString, float width,
-			float fontSize) {
-		if (TextUtils.isEmpty(pString)) {
-			return "";
-		}
+    private static int computeY(final FontMetricsInt pFontMetricsInt, final int pConstrainHeight, final int pTotalHeight,
+        final int pVerticalAlignment) {
+        int y = -pFontMetricsInt.top;
 
-		TextPaint paint = new TextPaint();
-		paint.setTypeface(Typeface.DEFAULT);
-		paint.setTextSize(fontSize);
+        if (pConstrainHeight > pTotalHeight) {
+            switch (pVerticalAlignment) {
+            case VERTICALALIGN_TOP:
+                y = -pFontMetricsInt.top;
+                break;
+            case VERTICALALIGN_CENTER:
+                y = -pFontMetricsInt.top + (pConstrainHeight - pTotalHeight) / 2;
+                break;
+            case VERTICALALIGN_BOTTOM:
+                y = -pFontMetricsInt.top + (pConstrainHeight - pTotalHeight);
+                break;
+            default:
+                break;
+            }
+        }
 
-		return TextUtils.ellipsize(pString, paint, width,
-				TextUtils.TruncateAt.END).toString();
-	}
+        return y;
+    }
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+    /*
+     * If maxWidth or maxHeight is not 0, split the string to fix the maxWidth and maxHeight.
+     */
+    private static String[] splitString(final String pString, final int pMaxWidth, final int pMaxHeight, final Paint pPaint) {
+        final String[] lines = pString.split("\\n");
+        String[] ret = null;
+        final FontMetricsInt fm = pPaint.getFontMetricsInt();
+        final int heightPerLine = (int) Math.ceil(fm.bottom - fm.top);
+        final int maxLines = pMaxHeight / heightPerLine;
 
-	private static class TextProperty {
-		/** The max width of lines. */
-		private final int mMaxWidth;
-		/** The height of all lines. */
-		private final int mTotalHeight;
-		private final int mHeightPerLine;
-		private final String[] mLines;
+        if (pMaxWidth != 0) {
+            final LinkedList<String> strList = new LinkedList<String>();
+            for (final String line : lines) {
+                
+                if (line.contains(PILCROW)) {
+                    strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidthWithPilcrow(line, pMaxWidth, pPaint));
+                } else {
 
-		TextProperty(final int pMaxWidth, final int pHeightPerLine,
-				final String[] pLines) {
-			this.mMaxWidth = pMaxWidth;
-			this.mHeightPerLine = pHeightPerLine;
-			this.mTotalHeight = pHeightPerLine * pLines.length;
-			this.mLines = pLines;
-		}
-	}
+                    /*
+                     * The width of line is exceed maxWidth, should divide it into two or more
+                     * lines.
+                     */
+                    final int lineWidth = (int) FloatMath.ceil(pPaint.measureText(line));
+                    if (lineWidth > pMaxWidth) {
+                        strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidth(line, pMaxWidth, pPaint));
+                    } else {
+                        strList.add(line);
+                    }
+                }
+
+                /* Should not exceed the max height. */
+                if (maxLines > 0 && strList.size() >= maxLines) {
+                    break;
+                }
+            }
+
+            /* Remove exceeding lines. */
+            if (maxLines > 0 && strList.size() > maxLines) {
+                while (strList.size() > maxLines) {
+                    strList.removeLast();
+                }
+            }
+
+            ret = new String[strList.size()];
+            strList.toArray(ret);
+        } else if (pMaxHeight != 0 && lines.length > maxLines) {
+            /* Remove exceeding lines. */
+            final LinkedList<String> strList = new LinkedList<String>();
+            for (int i = 0; i < maxLines; i++) {
+                strList.add(lines[i]);
+            }
+            ret = new String[strList.size()];
+            strList.toArray(ret);
+        } else {
+            ret = lines;
+        }
+
+        return ret;
+    }
+
+    // private static LinkedList<String> divideStringWithMaxWidth(
+    // final String pString, final int pMaxWidth, final Paint pPaint) {
+    // final int charLength = pString.length();
+    // int start = 0;
+    // int tempWidth = 0;
+    // final LinkedList<String> strList = new LinkedList<String>();
+    //
+    // /* Break a String into String[] by the width & should wrap the word. */
+    // for (int i = 1; i <= charLength; ++i) {
+    // tempWidth = (int) FloatMath.ceil(pPaint.measureText(pString, start,
+    // i));
+    // if (tempWidth >= pMaxWidth) {
+    // final int lastIndexOfSpace = pString.substring(0, i)
+    // .lastIndexOf(" ");
+    //
+    // if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
+    // /* Should wrap the word. */
+    // strList.add(pString.substring(start, lastIndexOfSpace));
+    // i = lastIndexOfSpace + 1; // skip space
+    // } else {
+    // /* Should not exceed the width. */
+    // if (tempWidth > pMaxWidth) {
+    // strList.add(pString.substring(start, i - 1));
+    // /* Compute from previous char. */
+    // --i;
+    // } else {
+    // strList.add(pString.substring(start, i));
+    // }
+    // }
+    //
+    // /* Remove spaces at the beginning of a new line. */
+    // while (i < charLength && pString.charAt(i) == ' ') {
+    // ++i;
+    // }
+    //
+    // start = i;
+    // }
+    // }
+    //
+    // /* Add the last chars. */
+    // if (start < charLength) {
+    // strList.add(pString.substring(start));
+    // }
+    //
+    // return strList;
+    // }
+
+    private static LinkedList<String> divideStringWithMaxWidth(final String pString, final int pMaxWidth, final Paint pPaint) {
+        final LinkedList<String> strList = new LinkedList<String>();
+
+        // the start index of a word (inclusive)
+        int wordStart = 0;
+
+        // the end index of a word (exclusive)
+        int wordEnd = 0;
+
+        while (wordEnd < pString.length() && wordStart < pString.length()) {
+            // iterate through characters either until we need to word wrap or until the end of the
+            // string
+            for (int charIndex = wordStart; charIndex < pString.length(); charIndex++) {
+                // we may modify this later based upon word wrap
+                wordEnd = charIndex + 1;
+
+                // we will use the width of the current word to decide if we need to word wrap
+                int wordWidth = (int) FloatMath.ceil(pPaint.measureText(pString, wordStart, wordEnd));
+
+                // if the width of the current word is greater than the desired width, then we need
+                // to wrap
+                if (wordWidth > pMaxWidth) {
+                    // look for the last space in this word so we can end the word there instead
+                    int lastSpaceIndex = lastIndexOfWhitespace(pString, charIndex);
+
+                    // if we were unable to find a space, or the last space was before this word
+                    // started, then we must truncate
+                    if (lastSpaceIndex == -1 || lastSpaceIndex < wordStart) {
+                        // the string must be longer than a single character... if one character
+                        // overflows, we must let it
+                        if (wordEnd - wordStart > 1) {
+                            // we know the previous character was okay, so go back to it
+                            wordEnd--;
+                        }
+                    }
+                    // we found a space, so move the wordEnd to be back there
+                    else {
+                        wordEnd = lastSpaceIndex;
+                    }
+
+                    // to get an accurate next word start, we need to trim all spaces at the start
+                    // of the next word
+                    int nextWordStart = wordEnd;
+                    for (; nextWordStart < pString.length(); nextWordStart++) {
+                        // there is a special case, where we want to append any newlines to the end
+                        // of the previous string so they are still honored
+                        // they cannot precurse the next word because then we would just use that
+                        // newline forever as a word separator
+                        char c = pString.charAt(nextWordStart);
+                        if (c == '\n') {
+                            wordEnd = nextWordStart + 1;
+                        } else if (!Character.isWhitespace(c)) {
+                            break;
+                        }
+                    }
+
+                    // add this word to the array of words
+                    strList.add(pString.substring(wordStart, wordEnd));
+                    wordStart = nextWordStart;
+
+                    break;
+                }
+            }
+        }
+
+        // we may need to add a last word
+        if (wordEnd > wordStart) {
+            strList.add(pString.substring(wordStart, wordEnd));
+        }
+
+        return strList;
+    }
+
+    private static LinkedList<String> divideStringWithMaxWidthWithPilcrow(final String pString, final int pMaxWidth,
+        final Paint pPaint) {
+        final LinkedList<String> strList = new LinkedList<String>();
+        String[] sChunks = pString.split(PILCROW);
+        
+        LinkedList<String> chunks = new LinkedList<String>(Arrays.asList(sChunks));
+        
+        StringBuilder sb = new StringBuilder();
+        int k = 0;
+        float measuredWidth = 0f;
+
+        while (k < chunks.size()) {
+            float textLength = pPaint.measureText(chunks.get(k));
+            if (textLength >= pMaxWidth) {
+                //This chunk is bigger than the max size.  We'll do it the original way.
+                List<String> toAdd = Cocos2dxBitmap.divideStringWithMaxWidth(chunks.get(k), pMaxWidth, pPaint);
+                k++;
+                
+                //We want to include the next line with our other chunks.
+                String last = toAdd.remove(toAdd.size() - 1);
+                chunks.add(k, last);
+                strList.addAll(toAdd);
+                //TODO: If wrapping seems weird, this may be the culprit, set measuredWidth = 0;
+                continue;
+            }
+            // try and append some more chunks to see if it will fit in the width
+            for (; k < chunks.size(); k++) {
+                measuredWidth += pPaint.measureText(chunks.get(k));
+
+                if (measuredWidth < pMaxWidth) {
+                    sb.append(chunks.get(k));
+                    continue;
+                }
+                strList.add(sb.toString());
+                sb.setLength(0);
+                measuredWidth = 0f;
+                break;
+            }
+        }
+        
+        if (sb.length() > 0)
+            strList.add(sb.toString());
+        
+        return strList;
+    }
+
+    private static int lastIndexOfWhitespace(final String str, final int startIndex) {
+        if (startIndex >= str.length()) { return -1; }
+
+        for (int i = startIndex; i >= 0; i--) {
+            if (Character.isWhitespace(str.charAt(i))) { return i; }
+        }
+
+        return -1;
+    }
+
+    private static String refactorString(final String pString) {
+        /* Avoid error when content is "". */
+        if (pString.compareTo("") == 0) { return " "; }
+
+        /*
+         * If the font of "\n" is "" or "\n", insert " " in front of it. For example: "\nabc" ->
+         * " \nabc" "\nabc\n\n" -> " \nabc\n \n".
+         */
+        final StringBuilder strBuilder = new StringBuilder(pString);
+        int start = 0;
+        int index = strBuilder.indexOf("\n");
+        while (index != -1) {
+            if (index == 0 || strBuilder.charAt(index - 1) == '\n') {
+                strBuilder.insert(start, " ");
+                start = index + 2;
+            } else {
+                start = index + 1;
+            }
+
+            if (start > strBuilder.length() || index == strBuilder.length()) {
+                break;
+            }
+
+            index = strBuilder.indexOf("\n", start);
+        }
+
+        return strBuilder.toString();
+    }
+
+    private static void initNativeObject(final Bitmap pBitmap) {
+        final byte[] pixels = Cocos2dxBitmap.getPixels(pBitmap);
+        if (pixels == null) { return; }
+
+        Cocos2dxBitmap.nativeInitBitmapDC(pBitmap.getWidth(), pBitmap.getHeight(), pixels);
+    }
+
+    private static byte[] getPixels(final Bitmap pBitmap) {
+        if (pBitmap != null) {
+            final byte[] pixels = new byte[pBitmap.getWidth() * pBitmap.getHeight() * 4];
+            final ByteBuffer buf = ByteBuffer.wrap(pixels);
+            buf.order(ByteOrder.nativeOrder());
+            pBitmap.copyPixelsToBuffer(buf);
+            return pixels;
+        }
+
+        return null;
+    }
+
+    private static int getFontSizeAccordingHeight(int height) {
+        Paint paint = new Paint();
+        Rect bounds = new Rect();
+
+        paint.setTypeface(Typeface.DEFAULT);
+        int incr_text_size = 1;
+        boolean found_desired_size = false;
+
+        while (!found_desired_size) {
+
+            paint.setTextSize(incr_text_size);
+            String text = "SghMNy";
+            paint.getTextBounds(text, 0, text.length(), bounds);
+
+            incr_text_size++;
+
+            if (height - bounds.height() <= 2) {
+                found_desired_size = true;
+            }
+            Log.d("font size", "incr size:" + incr_text_size);
+        }
+        return incr_text_size;
+    }
+
+    private static String getStringWithEllipsis(String pString, float width, float fontSize) {
+        if (TextUtils.isEmpty(pString)) { return ""; }
+
+        TextPaint paint = new TextPaint();
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(fontSize);
+
+        return TextUtils.ellipsize(pString, paint, width, TextUtils.TruncateAt.END).toString();
+    }
+
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
+
+    private static class TextProperty {
+        /** The max width of lines. */
+        private final int mMaxWidth;
+        /** The height of all lines. */
+        private final int mTotalHeight;
+        private final int mHeightPerLine;
+        private final String[] mLines;
+
+        TextProperty(final int pMaxWidth, final int pHeightPerLine, final String[] pLines) {
+            this.mMaxWidth = pMaxWidth;
+            this.mHeightPerLine = pHeightPerLine;
+            this.mTotalHeight = pHeightPerLine * pLines.length;
+            this.mLines = pLines;
+        }
+    }
 }
