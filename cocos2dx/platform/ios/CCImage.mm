@@ -24,6 +24,8 @@ THE SOFTWARE.
 #import "CCImage.h"
 #import "CCFileUtils.h"
 #import "CCCommon.h"
+#import "CCApplication.h"
+#import "CCCustomBehaviorInjection.h"
 #import <string>
 
 #import <Foundation/Foundation.h>
@@ -394,6 +396,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         // actually draw the text in the context
 		// XXX: ios7 casting
+        str = [[CCCustomBehaviorInjection sharedCustomBehaviorInjection].customDynamicLineBreak customDynamicLineBreakWithString:str font:font textWidth:textWidth];
         [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
         
         // pop the context
