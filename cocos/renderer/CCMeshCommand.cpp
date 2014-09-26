@@ -354,7 +354,7 @@ void MeshCommand::setLightUniforms()
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
     auto &lights = scene->getLights();
-    if (_glProgramState->getVertexAttribsFlags() & GLProgram::VERTEX_ATTRIB_NORMAL)
+    if (_glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
     {
         GLint enabledDirLightNum = 0;
         GLint enabledPointLightNum = 0;
