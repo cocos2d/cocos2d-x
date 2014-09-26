@@ -504,3 +504,16 @@ cc.ConfigType =
 
 cc.AUDIO_INVAILD_ID   = -1
 cc.AUDIO_TIME_UNKNOWN  = -1.0
+
+cc.CameraFlag = 
+{
+    DEFAULT = 1,
+    USER1 = 2,
+    USER2 = 4,
+    USER3 = 8,
+    USER4 = 16,
+    USER5 = 32,
+    USER6 = 64,
+    USER7 = 128,
+    USER8 = 256,
+}
