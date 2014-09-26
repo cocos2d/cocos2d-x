@@ -329,6 +329,9 @@
 		4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */; };
 		4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */; };
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
+		CB2445AB19D4B50900B28BBB /* CCCustomDynamicLineBreaking.h in Headers */ = {isa = PBXBuildFile; fileRef = CB2445AA19D4B50900B28BBB /* CCCustomDynamicLineBreaking.h */; };
+		CB2445AE19D4B5E500B28BBB /* CCCustomBehaviorInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = CB2445AC19D4B5E500B28BBB /* CCCustomBehaviorInjection.h */; };
+		CB2445AF19D4B5E500B28BBB /* CCCustomBehaviorInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = CB2445AD19D4B5E500B28BBB /* CCCustomBehaviorInjection.m */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -644,6 +647,9 @@
 		4EF8998D16E207E70040A527 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
 		4EF8998E16E207E70040A527 /* CCTMXXMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXXMLParser.cpp; sourceTree = "<group>"; };
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
+		CB2445AA19D4B50900B28BBB /* CCCustomDynamicLineBreaking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomDynamicLineBreaking.h; sourceTree = "<group>"; };
+		CB2445AC19D4B5E500B28BBB /* CCCustomBehaviorInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomBehaviorInjection.h; sourceTree = "<group>"; };
+		CB2445AD19D4B5E500B28BBB /* CCCustomBehaviorInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCustomBehaviorInjection.m; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1017,6 +1023,9 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				CB2445AC19D4B5E500B28BBB /* CCCustomBehaviorInjection.h */,
+				CB2445AD19D4B5E500B28BBB /* CCCustomBehaviorInjection.m */,
+				CB2445AA19D4B50900B28BBB /* CCCustomDynamicLineBreaking.h */,
 				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
 				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
 				1551A47E158F2ADE00E66CFE /* CCAccelerometer.h */,
@@ -1366,6 +1375,7 @@
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
+				CB2445AB19D4B50900B28BBB /* CCCustomDynamicLineBreaking.h in Headers */,
 				1551A6D4158F2ADE00E66CFE /* CCKeypadDelegate.h in Headers */,
 				1551A6D6158F2ADE00E66CFE /* CCKeypadDispatcher.h in Headers */,
 				1551A6D8158F2ADE00E66CFE /* CCLabelAtlas.h in Headers */,
@@ -1478,6 +1488,7 @@
 				4EF8999516E207E70040A527 /* CCTMXLayer.h in Headers */,
 				4EF8999716E207E70040A527 /* CCTMXObjectGroup.h in Headers */,
 				4EF8999916E207E70040A527 /* CCTMXTiledMap.h in Headers */,
+				CB2445AE19D4B5E500B28BBB /* CCCustomBehaviorInjection.h in Headers */,
 				4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */,
 				46A393F716E5D01B00210B16 /* CCUserDefault.h in Headers */,
 				1A5B48EA16F084CC008568FC /* CCBool.h in Headers */,
@@ -1638,6 +1649,7 @@
 				1551A73F158F2ADE00E66CFE /* cc2dEAGLView.mm in Sources */,
 				1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
+				CB2445AF19D4B5E500B28BBB /* CCCustomBehaviorInjection.m in Sources */,
 				1551A816158F2ADF00E66CFE /* CCScriptSupport.cpp in Sources */,
 				1551A818158F2ADF00E66CFE /* CCGLProgram.cpp in Sources */,
 				1551A81A158F2ADF00E66CFE /* ccGLStateCache.cpp in Sources */,

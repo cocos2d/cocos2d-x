@@ -65,6 +65,9 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//#include "platform/ios/CCCustomBehaviorInjection.h"
+//#endif
 
 
 /**
