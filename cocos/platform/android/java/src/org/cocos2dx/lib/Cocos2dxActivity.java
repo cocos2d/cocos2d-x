@@ -221,8 +221,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
     public Cocos2dxGLSurfaceView onCreateView() {
     	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
-    	this.glContextAttrs[3] = 0;
-    	this.glContextAttrs[4] = 100;
     	//this line is need on some device if we specify an alpha bits
     	if(this.glContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
     	
