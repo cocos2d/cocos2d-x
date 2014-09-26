@@ -706,7 +706,4 @@
     <None Include="..\renderer\ccShader_Position_uColor.frag" />
     <None Include="..\renderer\ccShader_Position_uColor.vert" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\renderer\CMakeLists.txt" />
-  </ItemGroup>
 </Project>
