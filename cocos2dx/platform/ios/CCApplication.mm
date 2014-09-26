@@ -50,9 +50,6 @@ int CCApplication::run()
     if (applicationDidFinishLaunching()) 
     {
         [[CCDirectorCaller sharedDirectorCaller] startMainLoop];
-//        if (_customBehaviorInjection) {
-//            _customBehaviorInjection = [[CCCustomBehaviorInjection alloc] init];
-//        }
     }
     return 0;
 }
@@ -137,10 +134,5 @@ TargetPlatform CCApplication::getTargetPlatform()
         return kTargetIphone;
     }
 }
-
-//CCCustomBehaviorInjection* CCApplication::getCustomBehaviorInjection()
-//{
-//    return _customBehaviorInjection;
-//}
 
 NS_CC_END
