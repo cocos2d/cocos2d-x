@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/CCCamera.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
+#include "renderer/CCRenderer.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
@@ -122,6 +123,44 @@ void Scene::onProjectionChanged(EventCustom* event)
     {
         _defaultCamera->initDefault();
     }
+}
+
+void Scene::render(Renderer* renderer)
+{
+    auto director = Director::getInstance();
+    Camera* defaultCamera = nullptr;
+    for (const auto& camera : _cameras)
+    {
+        Camera::_visitingCamera = camera;
+        if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
+        {
+            defaultCamera = Camera::_visitingCamera;
+            continue;
+        }
+        
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+        
+        //visit the scene
+        visit(renderer, Mat4::IDENTITY, 0);
+        renderer->render();
+        
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+    //draw with default camera
+    if (defaultCamera)
+    {
+        Camera::_visitingCamera = defaultCamera;
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+        
+        //visit the scene
+        visit(renderer, Mat4::IDENTITY, 0);
+        renderer->render();
+        
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+    Camera::_visitingCamera = nullptr;
 }
 
 #if CC_USE_PHYSICS
