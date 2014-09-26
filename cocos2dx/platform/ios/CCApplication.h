@@ -28,10 +28,6 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//class platform/ios/CCCustomBehaviorInjection.h"
-//#endif
-
 NS_CC_BEGIN
 
 class CCRect;
@@ -77,12 +73,9 @@ public:
      @brief Get target platform
      */
     virtual TargetPlatform getTargetPlatform();
-    
-//    CCCustomBehaviorInjection* getCustomBehaviorInjection();
 
 protected:
     static CCApplication * sm_pSharedApplication;
-//    CCCustomBehaviorInjection *_customBehaviorInjection;
 };
 
 NS_CC_END

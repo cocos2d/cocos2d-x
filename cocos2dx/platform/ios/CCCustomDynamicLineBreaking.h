@@ -11,6 +11,9 @@
 
 @protocol CCCustomDynamicLineBreaking <NSObject>
 
-- (NSString *)customDynamicLineBreakWithString:(NSString *)string font:(UIFont *)font textWidth:(CGFloat)textWidth;
+@property (copy, nonatomic) NSString *textWithDynamicLineBreakIndicators;
+@property (copy, nonatomic) UIFont *font;
+
+- (NSString *)dynamicLineBreakWithLabelWidth:(CGFloat)labelWidth;
 
 @end
