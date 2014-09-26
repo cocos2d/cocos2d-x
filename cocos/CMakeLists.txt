@@ -193,6 +193,7 @@ set(COCOS2D_BASE_SRC
     3d/CCSprite3D.cpp
     3d/CCSprite3DMaterial.cpp
     3d/CCBillBoard.cpp
+    3d/CCLight3D.cpp
 
     network/HttpClient.cpp
     network/SocketIO.cpp

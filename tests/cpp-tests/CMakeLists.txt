@@ -136,6 +136,7 @@ set(TESTS_SRC
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
+  Classes/LightTest/LightTest.cpp
   Classes/MenuTest/MenuTest.cpp
   Classes/MotionStreakTest/MotionStreakTest.cpp
   Classes/MutiTouchTest/MutiTouchTest.cpp
