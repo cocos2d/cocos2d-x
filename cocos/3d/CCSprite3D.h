@@ -114,8 +114,8 @@ public:
     void setCullFaceEnabled(bool enable);
     
     /** light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff */
-    void setLightMask(unsigned short mask) { _lightMask = mask; }
-    unsigned short getLightMask() const { return _lightMask; }
+    void setLightMask(unsigned int mask) { _lightMask = mask; }
+    unsigned int getLightMask() const { return _lightMask; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -166,7 +166,7 @@ protected:
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
     bool                         _aabbDirty;
-    unsigned short               _lightMask;
+    unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
 };
 

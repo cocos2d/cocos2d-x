@@ -48,20 +48,20 @@ static GLenum s_cullFace = 0;
 static bool   s_depthTestEnabled = false;
 static bool   s_depthWriteEnabled = false;
 
-struct DirectionLightUnifromNames
+struct DirectionLightUniformNames
 {
     std::string color;
     std::string dir;
 };
 
-struct PointLightUnifromNames
+struct PointLightUniformNames
 {
     std::string color;
     std::string position;
     std::string rangeInverse;
 };
 
-struct SpotLightUnifromNames
+struct SpotLightUniformNames
 {
     std::string color;
     std::string position;
@@ -71,9 +71,9 @@ struct SpotLightUnifromNames
     std::string rangeInverse;
 };
 
-static std::vector<DirectionLightUnifromNames> s_dirLightUniformNames;
-static std::vector<PointLightUnifromNames> s_pointLightUniformNames;
-static std::vector<SpotLightUnifromNames> s_spotLightUniformNames;
+static std::vector<DirectionLightUniformNames> s_dirLightUniformNames;
+static std::vector<PointLightUniformNames> s_pointLightUniformNames;
+static std::vector<SpotLightUniformNames> s_spotLightUniformNames;
 
 MeshCommand::MeshCommand()
 : _textureID(0)
@@ -362,7 +362,7 @@ void MeshCommand::setLightUniforms()
         Vec3 ambientColor;
         for (const auto& light : lights)
         {
-            bool useLight = light->isEnabled() && ((unsigned short)light->getLightFlag() & _lightMask);
+            bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & _lightMask);
             if (useLight)
             {
                 float intensity = light->getIntensity();
@@ -455,7 +455,7 @@ void MeshCommand::setLightUniforms()
         {
             if (light->getLightType() == LightType::AMBIENT)
             {
-                bool useLight = light->isEnabled() && ((unsigned short)light->getLightFlag() & _lightMask);
+                bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & _lightMask);
                 if (useLight)
                 {
                     hasAmbient = true;

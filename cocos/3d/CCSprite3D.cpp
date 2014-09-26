@@ -305,7 +305,7 @@ void Sprite3D::genGLProgramState()
     const auto& lights = Director::getInstance()->getRunningScene()->getLights();
     _shaderUsingLight = false;
     for (const auto light : lights) {
-        _shaderUsingLight = ((unsigned short)light->getLightFlag() & _lightMask) > 0;
+        _shaderUsingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
         if (_shaderUsingLight)
             break;
     }
@@ -527,7 +527,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     const auto& lights = Director::getInstance()->getRunningScene()->getLights();
     bool usingLight = false;
     for (const auto light : lights) {
-        usingLight = ((unsigned short)light->getLightFlag() & _lightMask) > 0;
+        usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
         if (usingLight)
             break;
     }

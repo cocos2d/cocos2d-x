@@ -63,7 +63,7 @@ class CC_3D_DLL BaseLight3D : public Node
 public:
     
     //get light type
-    virtual LightType getLightType() = 0;
+    virtual LightType getLightType() const = 0;
     
     /** intensity getter and setter */
     float getIntensity() const { return _intensity; }
@@ -99,8 +99,6 @@ protected:
 class CC_3D_DLL DirectionLight3D : public BaseLight3D
 {
 public:
-    //get light type
-    virtual LightType getLightType() { return LightType::DIRECTIONAL; }
     /**
      * Creates a direction light.
      * @param direction The light's direction
@@ -109,6 +107,9 @@ public:
      * @return The new direction light.
      */
     static DirectionLight3D* create(const Vec3 &direction, const Color3B &color);
+    
+    //get light type
+    virtual LightType getLightType() const override { return LightType::DIRECTIONAL; }
     
     /**
      * Sets the Direction in parent.
@@ -136,8 +137,6 @@ CC_CONSTRUCTOR_ACCESS:
 class CC_3D_DLL PointLight3D : public BaseLight3D
 {
 public:
-    //get light type
-    virtual LightType getLightType() { return LightType::POINT; }
     /**
      * Creates a point light.
      * @param position The light's position
@@ -147,6 +146,9 @@ public:
      * @return The new point light.
      */
     static PointLight3D* create(const Vec3 &position, const Color3B &color, float range);
+    
+    //get light type
+    virtual LightType getLightType() const override { return LightType::POINT; }
     
     /** get or set range */
     float getRange() const { return _range; }
@@ -163,8 +165,6 @@ protected:
 class CC_3D_DLL SpotLight3D : public BaseLight3D
 {
 public:
-    //get light type
-    virtual LightType getLightType() { return LightType::SPOT; }
     /**
      * Creates a spot light.
      * @param direction The light's direction
@@ -177,6 +177,9 @@ public:
      * @return The new spot light.
      */
     static SpotLight3D* create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
+    
+    //get light type
+    virtual LightType getLightType() const override { return LightType::SPOT; }
     
     /**
      * Sets the Direction in parent.
@@ -253,7 +256,6 @@ protected:
 class CC_3D_DLL AmbientLight3D : public BaseLight3D
 {
 public:
-    virtual LightType getLightType() { return LightType::AMBIENT; }
     /**
      * Creates a ambient light.
      * @param color The light's color.
@@ -261,6 +263,9 @@ public:
      * @return The new ambient light.
      */
     static AmbientLight3D* create(const Color3B &color);
+    
+    //get light type
+    virtual LightType getLightType() const override { return LightType::AMBIENT; }
     
 CC_CONSTRUCTOR_ACCESS:
     AmbientLight3D();
