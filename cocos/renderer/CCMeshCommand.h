@@ -62,7 +62,7 @@ public:
     
     void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
 
-    void setLightMask(unsigned short lightmask);
+    void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
     
     void execute();
     
@@ -127,7 +127,7 @@ protected:
     // ModelView transform
     Mat4 _mv;
 
-    unsigned short _lightMask;
+    unsigned int _lightMask;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     EventListenerCustom* _rendererRecreatedListener;

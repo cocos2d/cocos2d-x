@@ -530,11 +530,6 @@ void MeshCommand::setLightUniformNames()
     }
 }
 
-void MeshCommand::setLightMask( unsigned short lightmask )
-{
-    _lightMask = lightmask;
-}
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
