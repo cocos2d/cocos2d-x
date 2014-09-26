@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "2d/CCNode.h"
+#include "2d/CCDrawNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCQuadCommand.h"
