@@ -94,12 +94,14 @@ typedef SSIZE_T ssize_t;
 
 #include <Windows.h>
 
+#ifdef WINRT_NO_WINSOCK
 #undef timeval
 struct timeval
 {
 	long tv_sec;		// seconds
 	long tv_usec;    // microSeconds
-};
+}; 
+#endif // WINRT_NO_WINSOCK
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 
 struct timezone
