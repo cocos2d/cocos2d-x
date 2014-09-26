@@ -235,7 +235,7 @@ public:
     float getAdditionalKerning() const;
 
     // string related stuff
-    int getStringNumLines() const { return _currNumLines;}
+    int getStringNumLines() const;
     int getStringLength() const;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }

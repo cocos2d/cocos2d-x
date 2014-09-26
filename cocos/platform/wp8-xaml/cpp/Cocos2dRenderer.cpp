@@ -181,7 +181,12 @@ void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Coco
     }
 }
 
-
-
-
-
+void Cocos2dRenderer::SetXamlOpenURLDelegate(PhoneDirect3DXamlAppComponent::Cocos2dOpenURLDelegate^ delegate)
+{
+    m_openURLDelegate = delegate;
+    Application* app = Application::getInstance();
+    if (app)
+    {
+        app->SetXamlOpenURLDelegate(delegate);
+    }
+}

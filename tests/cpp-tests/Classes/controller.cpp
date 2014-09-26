@@ -105,7 +105,8 @@ Controller g_aTestNames[] = {
 	{ "Touches", [](){return new PongScene();} },
 	{ "Transitions", [](){return new TransitionsTestScene();} },
     { "Unit Test", []() { return new UnitTestScene(); }},
-	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
+    { "URL Open Test", []() { return new OpenURLTestScene(); } },
+    { "UserDefault", []() { return new UserDefaultTestScene(); } },
 	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
 };
 

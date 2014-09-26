@@ -1144,9 +1144,6 @@
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp">
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui\proj.win32\Win32InputBox.cpp">
-      <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCApplication-win32.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -2280,9 +2277,6 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.h">
       <Filter>extension\GUI\CCControlExtensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ui\proj.win32\Win32InputBox.h">
-      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\win32\CCApplication-win32.h">
       <Filter>platform\win32</Filter>

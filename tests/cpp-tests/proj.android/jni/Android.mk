@@ -187,6 +187,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UnitTest/UnitTest.cpp \
 ../../Classes/UITest/UITest.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
+../../Classes/OpenURLTest/OpenURLTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \

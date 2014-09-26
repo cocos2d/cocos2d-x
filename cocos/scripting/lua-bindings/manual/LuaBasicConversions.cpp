@@ -1534,7 +1534,7 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const ch
                     {
                         lua_pop(L,1);
                         ValueMap dictVal;
-                        if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                        if (luaval_to_ccvaluemap(L, lua_gettop(L), &dictVal))
                         {
                             dict[stringKey] = Value(dictVal);
                         }
@@ -1543,7 +1543,7 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const ch
                     {
                         lua_pop(L,1);
                         ValueVector arrVal;
-                        if (luaval_to_ccvaluevector(L, -1, &arrVal))
+                        if (luaval_to_ccvaluevector(L, lua_gettop(L), &arrVal))
                         {
                             dict[stringKey] = Value(arrVal);
                         }
@@ -1622,7 +1622,7 @@ bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* r
                     {
                         lua_pop(L,1);
                         ValueMap dictVal;
-                        if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                        if (luaval_to_ccvaluemap(L, lua_gettop(L), &dictVal))
                         {
                             dict[intKey] = Value(dictVal);
                         }
@@ -1631,7 +1631,7 @@ bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* r
                     {
                         lua_pop(L,1);
                         ValueVector arrVal;
-                        if (luaval_to_ccvaluevector(L, -1, &arrVal))
+                        if (luaval_to_ccvaluevector(L, lua_gettop(L), &arrVal))
                         {
                             dict[intKey] = Value(arrVal);
                         }
@@ -1703,7 +1703,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                 {
                     lua_pop(L,1);
                     ValueMap dictVal;
-                    if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                    if (luaval_to_ccvaluemap(L, lua_gettop(L), &dictVal))
                     {
                         ret->push_back(Value(dictVal));
                     }
@@ -1712,7 +1712,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                 {
                     lua_pop(L,1);
                     ValueVector arrVal;
-                    if(luaval_to_ccvaluevector(L, -1, &arrVal))
+                    if(luaval_to_ccvaluevector(L, lua_gettop(L), &arrVal))
                     {
                         ret->push_back(Value(arrVal));
                     }
