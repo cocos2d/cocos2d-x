@@ -26,9 +26,6 @@
 #define __CC_NETWORK_UTILS_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "base/ccTypes.h"
-#include "base/CCValue.h"
-#include "base/CCData.h"
 
 NS_CC_BEGIN
 
