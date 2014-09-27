@@ -122,13 +122,6 @@ else()
   message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
 endif()
 
-if(LINUX)
-set(PLATFORM_INCLUDE_DIR
-    /usr/include/
-    /usr/local/include/GLFW
-)
-endif()
-
 include_directories(
   ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
