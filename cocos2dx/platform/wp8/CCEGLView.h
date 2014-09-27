@@ -116,6 +116,7 @@ public:
 	
 	int Run();
 	void Render();
+    bool HasEnded();
 
     void resize(int width, int height);
     /* 
