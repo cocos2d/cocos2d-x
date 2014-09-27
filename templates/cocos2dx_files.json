@@ -3560,6 +3560,7 @@
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/CMakeLists.txt", 
+        "cocos/scripting/lua-bindings/auto/api/AABB.lua", 
         "cocos/scripting/lua-bindings/auto/api/Action.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionCamera.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionEase.lua", 
@@ -3601,6 +3602,7 @@
         "cocos/scripting/lua-bindings/auto/api/BatchNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/BezierBy.lua", 
         "cocos/scripting/lua-bindings/auto/api/BezierTo.lua", 
+        "cocos/scripting/lua-bindings/auto/api/BillBoard.lua", 
         "cocos/scripting/lua-bindings/auto/api/Blink.lua", 
         "cocos/scripting/lua-bindings/auto/api/Bone.lua", 
         "cocos/scripting/lua-bindings/auto/api/BoneData.lua", 
@@ -3765,6 +3767,7 @@
         "cocos/scripting/lua-bindings/auto/api/Node.lua", 
         "cocos/scripting/lua-bindings/auto/api/NodeGrid.lua", 
         "cocos/scripting/lua-bindings/auto/api/NodeReader.lua", 
+        "cocos/scripting/lua-bindings/auto/api/OBB.lua", 
         "cocos/scripting/lua-bindings/auto/api/OrbitCamera.lua", 
         "cocos/scripting/lua-bindings/auto/api/PageTurn3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/PageView.lua", 

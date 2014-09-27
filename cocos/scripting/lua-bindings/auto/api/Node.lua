@@ -620,13 +620,6 @@
 -- @param #string name
         
 --------------------------------
--- @overload self, cc.AffineTransform         
--- @overload self, mat4_table         
--- @function [parent=#Node] setAdditionalTransform
--- @param self
--- @param #mat4_table additionalTransform
-
---------------------------------
 -- 
 -- @function [parent=#Node] getDisplayedOpacity 
 -- @param self

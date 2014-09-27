@@ -7316,6 +7316,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1ABCA2F118CD93590087CE3A /* Build configuration list for PBXNativeTarget "lua-tests iOS" */;
 			buildPhases = (
+				150906CB19CFCAF3002C4D97 /* ShellScript */,
 				1ABCA2C918CD93580087CE3A /* Sources */,
 				1ABCA2CA18CD93580087CE3A /* Frameworks */,
 				1ABCA2CB18CD93580087CE3A /* Resources */,
@@ -7930,6 +7931,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		150906CB19CFCAF3002C4D97 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "find ${SRCROOT}/../tests/lua-tests/src/ -name \"*\" -exec touch -cm {} \\;";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		15CBA020196EE56C005877BB /* Sources */ = {
