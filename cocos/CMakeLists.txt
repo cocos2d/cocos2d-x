@@ -68,6 +68,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_BASE_SRC}
     ${COCOS_AUDIO_SRC}
     ${COCOS_UI_SRC}
+    ${COCOS_DEPRECATED_SRC}
     ${COCOS_NETWORK_SRC}
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
@@ -112,13 +113,19 @@ endif()
 
 add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(FMOD_LIB "fmodex64")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(FMOD_LIB "fmodex")
+endif()
 
 if(MINGW)
   set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glfw3 glew32 opengl32 iconv freetype bz2)
 elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets fontconfig png pthread glfw GLEW GL X11 rt z)
+  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets
+  fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX)
 
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )

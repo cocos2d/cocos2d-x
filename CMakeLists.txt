@@ -197,7 +197,7 @@ if(NOT MINGW)
 #i.e we should not need to include an extra dir of /freetype2
 
   link_directories(
-
+    ${PLATFORM_LINK_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
