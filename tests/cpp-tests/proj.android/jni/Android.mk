@@ -142,6 +142,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/MenuTest/MenuTest.cpp \
 ../../Classes/MotionStreakTest/MotionStreakTest.cpp \
 ../../Classes/MutiTouchTest/MutiTouchTest.cpp \
+../../Classes/NetworkUtilsTest/NetworkUtilsTest.cpp \
 ../../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 ../../Classes/NewRendererTest/NewRendererTest.cpp \
 ../../Classes/NodeTest/NodeTest.cpp \

@@ -36,6 +36,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager.OnActivityResultListener;
@@ -183,6 +185,20 @@ public class Cocos2dxHelper {
         } catch (Exception e) {
         }
 		return ret;
+	}
+	
+	public static boolean isNetworkConnected() {
+		ConnectivityManager cm = (ConnectivityManager)sActivity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo network = cm.getActiveNetworkInfo();
+		if (network == null) {
+			return false;
+		} else {
+			if (network.isConnected()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	public static void preloadBackgroundMusic(final String pPath) {

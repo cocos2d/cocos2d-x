@@ -953,6 +953,7 @@
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		F733182119D6BB14009C2B75 /* NetworkUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F733181F19D6BB14009C2B75 /* NetworkUtilsTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2975,6 +2976,8 @@
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		F733181F19D6BB14009C2B75 /* NetworkUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkUtilsTest.cpp; path = NetworkUtilsTest/NetworkUtilsTest.cpp; sourceTree = "<group>"; };
+		F733182019D6BB14009C2B75 /* NetworkUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkUtilsTest.h; path = NetworkUtilsTest/NetworkUtilsTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5482,6 +5485,7 @@
 				1AC35AA918CECF0C00F37B72 /* MenuTest */,
 				1AC35AAC18CECF0C00F37B72 /* MotionStreakTest */,
 				1AC35AAF18CECF0C00F37B72 /* MutiTouchTest */,
+				F733181E19D6BA77009C2B75 /* NetworkUtilsTest */,
 				1AC35AB218CECF0C00F37B72 /* NewEventDispatcherTest */,
 				1AC35AB518CECF0C00F37B72 /* NewRendererTest */,
 				1AC35AB818CECF0C00F37B72 /* NodeTest */,
@@ -7179,6 +7183,15 @@
 			name = BillBoardTest;
 			sourceTree = "<group>";
 		};
+		F733181E19D6BA77009C2B75 /* NetworkUtilsTest */ = {
+			isa = PBXGroup;
+			children = (
+				F733181F19D6BB14009C2B75 /* NetworkUtilsTest.cpp */,
+				F733182019D6BB14009C2B75 /* NetworkUtilsTest.h */,
+			);
+			name = NetworkUtilsTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -8172,6 +8185,7 @@
 				1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				1AC35C3518CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
 				1AC35C3B18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
+				F733182119D6BB14009C2B75 /* NetworkUtilsTest.cpp in Sources */,
 				29080D8F191B595E0066F8DF /* CocoStudioGUITest.cpp in Sources */,
 				1AC35B3D18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,

@@ -12,6 +12,7 @@ CCCommon-android.cpp \
 CCDevice-android.cpp \
 CCGLViewImpl-android.cpp \
 CCFileUtils-android.cpp \
+CCNetworkUtils-android.cpp \
 javaactivity-android.cpp \
 jni/DPIJni.cpp \
 jni/IMEJni.cpp \
