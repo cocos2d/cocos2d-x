@@ -117,6 +117,8 @@ static const char* s_testArray[] =
     "UIS9BatchNodeBasic",
     "UIS9FrameNameSpriteSheet",
     "UIS9FrameNameSpriteSheetRotated",
+    "UIS9FrameNameSpriteSheetCropped",
+    "UIS9FrameNameSpriteSheetCroppedRotated",
     "UIS9BatchNodeScaledNoInsets",
     "UIS9FrameNameSpriteSheetScaledNoInsets",
     "UIS9FrameNameSpriteSheetRotatedScaledNoInsets",
@@ -367,6 +369,10 @@ Scene *UISceneManager::currentUIScene()
             return UIS9FrameNameSpriteSheet::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9FrameNameSpriteSheetRotated:
             return UIS9FrameNameSpriteSheetRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9FrameNameSpriteSheetCropped:
+            return UIS9FrameNameSpriteSheetCropped::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9FrameNameSpriteSheetCroppedRotated:
+            return UIS9FrameNameSpriteSheetCroppedRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9BatchNodeScaledNoInsets:
             return UIS9BatchNodeScaledNoInsets::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9FrameNameSpriteSheetScaledNoInsets:
