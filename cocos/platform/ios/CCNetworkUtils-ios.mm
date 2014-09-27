@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -22,36 +22,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CC_NETWORK_UTILS_H__
-#define __CC_NETWORK_UTILS_H__
 
-#include "platform/CCPlatformMacros.h"
-#include "base/ccTypes.h"
-#include "base/CCValue.h"
-#include "base/CCData.h"
+
+#include "platform/CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#include "CCNetworkUtils.h"
+#include "Reachability.h"
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup platform
- * @{
- */
-
-//! @brief  Helper class to access network status
-class CC_DLL NetworkUtils
+bool NetworkUtils::isNetworkConnected()
 {
-public:
-    /**
-     * Check whether the device is connected to network or not.
-     * This API is currently supporterd for Android and iOS.
-     */
-    static bool isNetworkConnected();
-    
-};
-
-// end of platform group
-/// @}
+    Reachability* reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reachability currentReachabilityStatus];
+    return status != NetworkStatus::NotReachable;
+}
 
 NS_CC_END
 
-#endif    // __CC_NETWORK_UTILS_H__
+#endif // CC_PLATFORM_IOS
+

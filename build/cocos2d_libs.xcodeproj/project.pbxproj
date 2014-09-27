@@ -1816,6 +1816,12 @@
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
 		ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
 		F733181D19D5F8D2009C2B75 /* CCNetworkUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = F733181B19D5F8D2009C2B75 /* CCNetworkUtils.h */; };
+		F733182419D6C359009C2B75 /* CCNetworkUtils-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = F733182319D6C359009C2B75 /* CCNetworkUtils-ios.mm */; };
+		F733182519D6C5B9009C2B75 /* CCNetworkUtils-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = F733182319D6C359009C2B75 /* CCNetworkUtils-ios.mm */; };
+		F733182719D6CD17009C2B75 /* CCNetworkUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F733182619D6CD17009C2B75 /* CCNetworkUtils.cpp */; };
+		F733182A19D6CEC0009C2B75 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = F733182819D6CEC0009C2B75 /* Reachability.h */; };
+		F733182B19D6CEC0009C2B75 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F733182919D6CEC0009C2B75 /* Reachability.m */; };
+		F733182E19D6D0EA009C2B75 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F733182919D6CEC0009C2B75 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2800,6 +2806,10 @@
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 		F733181B19D5F8D2009C2B75 /* CCNetworkUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNetworkUtils.h; sourceTree = "<group>"; };
+		F733182319D6C359009C2B75 /* CCNetworkUtils-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCNetworkUtils-ios.mm"; sourceTree = "<group>"; };
+		F733182619D6CD17009C2B75 /* CCNetworkUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNetworkUtils.cpp; sourceTree = "<group>"; };
+		F733182819D6CEC0009C2B75 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		F733182919D6CEC0009C2B75 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4530,6 +4540,9 @@
 				503DD8DD1926736A00CD74DD /* CCPlatformDefine-ios.h */,
 				503DD8DE1926736A00CD74DD /* CCStdC-ios.h */,
 				503DD8DF1926736A00CD74DD /* OpenGL_Internal-ios.h */,
+				F733182319D6C359009C2B75 /* CCNetworkUtils-ios.mm */,
+				F733182819D6CEC0009C2B75 /* Reachability.h */,
+				F733182919D6CEC0009C2B75 /* Reachability.m */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -4560,6 +4573,7 @@
 				50ABBF2A1926664700A911A9 /* CCSAXParser.h */,
 				50ABBF2B1926664700A911A9 /* CCThread.cpp */,
 				50ABBF2C1926664700A911A9 /* CCThread.h */,
+				F733182619D6CD17009C2B75 /* CCNetworkUtils.cpp */,
 				F733181B19D5F8D2009C2B75 /* CCNetworkUtils.h */,
 			);
 			name = platform;
@@ -4802,6 +4816,7 @@
 				50ABBE8D1925AB6F00A911A9 /* CCNS.h in Headers */,
 				50ABBEA51925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
 				292DB14519B4574100A80320 /* UIEditBoxImpl-android.h in Headers */,
+				F733182A19D6CEC0009C2B75 /* Reachability.h in Headers */,
 				15AE1B9A19AADFDF00C27E9E /* UIHBox.h in Headers */,
 				15AE18EB19AAD35000C27E9E /* CCActionNode.h in Headers */,
 				15AE1A3819AAD3D500C27E9E /* b2Shape.h in Headers */,
@@ -5985,6 +6000,7 @@
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,
 				15AE19D419AAD3A700C27E9E /* BoneData.cpp in Sources */,
 				15AE191719AAD35000C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
+				F733182419D6C359009C2B75 /* CCNetworkUtils-ios.mm in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
@@ -6006,6 +6022,7 @@
 				15AE19D819AAD3A700C27E9E /* CCSkeletonAnimation.cpp in Sources */,
 				15AE19E819AAD3A700C27E9E /* Slot.cpp in Sources */,
 				B24AA985195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
+				F733182B19D6CEC0009C2B75 /* Reachability.m in Sources */,
 				15AE1A6A19AAD40300C27E9E /* b2ChainAndCircleContact.cpp in Sources */,
 				15AE19BE19AAD3A700C27E9E /* Event.cpp in Sources */,
 				1A5701EA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
@@ -6082,6 +6099,7 @@
 				15AE1A7819AAD40300C27E9E /* b2PolygonAndCircleContact.cpp in Sources */,
 				15AE1A3419AAD3D500C27E9E /* b2EdgeShape.cpp in Sources */,
 				15AE1BA319AADFDF00C27E9E /* UILayoutManager.cpp in Sources */,
+				F733182719D6CD17009C2B75 /* CCNetworkUtils.cpp in Sources */,
 				B230ED7119B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				15AE1A5B19AAD40300C27E9E /* b2Timer.cpp in Sources */,
@@ -6247,6 +6265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F733182E19D6D0EA009C2B75 /* Reachability.m in Sources */,
+				F733182519D6C5B9009C2B75 /* CCNetworkUtils-ios.mm in Sources */,
 				15AE1B9819AADAA100C27E9E /* UIVideoPlayer-ios.mm in Sources */,
 				15AE1C0519AAE01E00C27E9E /* CCTableViewCell.cpp in Sources */,
 				15AE198A19AAD36A00C27E9E /* ButtonReader.cpp in Sources */,

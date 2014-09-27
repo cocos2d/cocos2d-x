@@ -954,6 +954,8 @@
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		F733182119D6BB14009C2B75 /* NetworkUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F733181F19D6BB14009C2B75 /* NetworkUtilsTest.cpp */; };
+		F733182219D6C2FA009C2B75 /* NetworkUtilsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F733181F19D6BB14009C2B75 /* NetworkUtilsTest.cpp */; };
+		F733182D19D6D01A009C2B75 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F733182C19D6D01A009C2B75 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2978,6 +2980,7 @@
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		F733181F19D6BB14009C2B75 /* NetworkUtilsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkUtilsTest.cpp; path = NetworkUtilsTest/NetworkUtilsTest.cpp; sourceTree = "<group>"; };
 		F733182019D6BB14009C2B75 /* NetworkUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkUtilsTest.h; path = NetworkUtilsTest/NetworkUtilsTest.h; sourceTree = "<group>"; };
+		F733182C19D6D01A009C2B75 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3159,6 +3162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F733182D19D6D01A009C2B75 /* SystemConfiguration.framework in Frameworks */,
 				15EE465B19A7200300AF29F1 /* libcurl.a in Frameworks */,
 				3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */,
 				1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */,
@@ -6945,6 +6949,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F733182C19D6D01A009C2B75 /* SystemConfiguration.framework */,
 				15EE465A19A7200300AF29F1 /* libcurl.a */,
 				15CBA9DC196EEAA6005877BB /* libz.dylib */,
 				15CBA9DA196EEA90005877BB /* CoreMotion.framework */,
@@ -8210,6 +8215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F733182219D6C2FA009C2B75 /* NetworkUtilsTest.cpp in Sources */,
 				1AC35B3218CECF0C00F37B72 /* GLES-Render.cpp in Sources */,
 				1AC35C5418CECF0C00F37B72 /* TextInputTest.cpp in Sources */,
 				1AC35B4618CECF0C00F37B72 /* Bug-886.cpp in Sources */,
