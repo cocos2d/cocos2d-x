@@ -87,6 +87,7 @@ set(COCOS2D_BASE_SRC
     base/CCEventMouse.cpp
     base/CCEventTouch.cpp
     base/CCIMEDispatcher.cpp
+    base/CCLight.cpp
     base/CCNS.cpp
     base/CCProfiling.cpp
     base/CCRef.cpp
@@ -193,7 +194,6 @@ set(COCOS2D_BASE_SRC
     3d/CCSprite3D.cpp
     3d/CCSprite3DMaterial.cpp
     3d/CCBillBoard.cpp
-    3d/CCLight3D.cpp
 
     network/HttpClient.cpp
     network/SocketIO.cpp
