@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIHelper.h"
 #include "ui/UIWidget.h"
+#include "ui/UILayoutComponent.h"
 
 NS_CC_BEGIN
 
@@ -146,6 +147,37 @@ std::string Helper::getSubStringOfUTF8String(const std::string& str, std::string
     return str.substr(min,max);
 }
 
+        void Helper::doLayout(cocos2d::Node *rootNode)
+        {
+            for(auto& node : rootNode->getChildren())
+            {
+                auto com = node->getComponent(__LAYOUT_COMPONENT_NAME);
+                Node *parent = node->getParent();
+                if (nullptr != com && nullptr != parent) {
+                    LayoutComponent* layoutComponent = (LayoutComponent*)com;
+
+                    if (layoutComponent->isUsingPercentPosition())
+                    {
+                        layoutComponent->RefreshLayoutPosition(LayoutComponent::PositionType::PreRelativePosition,layoutComponent->getPercentPosition());
+                    }
+                    else if (layoutComponent->getReferencePoint() != LayoutComponent::ReferencePoint::BOTTOM_LEFT)
+                    {
+                        layoutComponent->RefreshLayoutPosition(LayoutComponent::PositionType::RelativePosition,layoutComponent->getRelativePosition());
+                    }
+
+                    if (layoutComponent->isUsingPercentContentSize())
+                    {
+                        layoutComponent->RefreshLayoutSize(LayoutComponent::SizeType::PreSize,layoutComponent->getPercentContentSize());
+                    }
+
+                    Widget* uiWidget = dynamic_cast<Widget*>(node);
+                    if ( nullptr == uiWidget )
+                    {
+                        doLayout(node);
+                    }
+                }
+            }
+        }
 }
 
 NS_CC_END

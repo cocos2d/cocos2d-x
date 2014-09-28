@@ -192,6 +192,20 @@ bool Button::isScale9Enabled()const
 
 void Button::ignoreContentAdaptWithSize(bool ignore)
 {
+    if (_unifySize)
+    {
+        if (_scale9Enabled)
+        {
+            ProtectedNode::setContentSize(_customSize);
+        }
+        else
+        {
+            Size s = getVirtualRendererSize();
+            ProtectedNode::setContentSize(s);
+        }
+        onSizeChanged();
+        return;
+    }
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
         Widget::ignoreContentAdaptWithSize(ignore);
@@ -516,7 +530,11 @@ Node* Button::getVirtualRenderer()
 
 void Button::normalTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _buttonNormalRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -554,7 +572,11 @@ void Button::normalTextureScaleChangedWithSize()
 
 void Button::pressedTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _buttonClickedRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -591,7 +613,11 @@ void Button::pressedTextureScaleChangedWithSize()
 
 void Button::disabledTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _buttonDisableRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -686,6 +712,10 @@ void Button::setTitleFontName(const std::string& fontName)
         _type = FontType::TTF;
     } else{
         _titleRenderer->setSystemFontName(fontName);
+        if (_type == FontType::TTF)
+        {
+            _titleRenderer->requestSystemFontRefresh();
+        }
         _type = FontType::SYSTEM;
     }
     _fontName = fontName;

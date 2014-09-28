@@ -48,8 +48,10 @@ namespace ui {
     , _insetLeft(0)
     , _insetTop(0)
     , _insetRight(0)
-    , _insetBottom(0),
-    _scale9Enabled(true)
+    , _insetBottom(0)
+    ,_flippedX(false)
+    ,_flippedY(false)
+    ,_scale9Enabled(true)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }
@@ -877,9 +879,19 @@ y+=ytranslate;         \
                 this->updateWithSprite(this->_scale9Image,
                                        this->_spriteRect,
                                        _spriteFrameRotated, _capInsets);
+                _scale9Image->setVisible(false);
+            }
+        }
+        else
+        {
+            if (_scale9Image)
+            {
+                _scale9Image->setVisible(true);
             }
         }
         _positionsAreDirty = true;
+        this->setFlippedX(_flippedX);
+        this->setFlippedY(_flippedY);
     }
     
     bool Scale9Sprite::isScale9Enabled() const
@@ -1060,33 +1072,15 @@ y+=ytranslate;         \
     void Scale9Sprite::setFlippedX(bool flippedX)
     {
         _flippedX = flippedX;
-        if (_scale9Enabled)
-        {
-            this->setScaleX(-1);
-        }
-        else
-        {
-            if (_scale9Image)
-            {
-                _scale9Image->setFlippedX(flippedX);
-            }
-        }
+        int iScale = _flippedX ? -1:1;
+        this->setScaleX(iScale);
     }
     
     void Scale9Sprite::setFlippedY(bool flippedY)
     {
         _flippedY = flippedY;
-        if (_scale9Enabled)
-        {
-            this->setScaleY(-1);
-        }
-        else
-        {
-            if (_scale9Image)
-            {
-                _scale9Image->setFlippedY(flippedY);
-            }
-        }
+        int iScale = _flippedY ? -1:1;
+        this->setScaleY(iScale);
     }
     
     bool Scale9Sprite::isFlippedX()const

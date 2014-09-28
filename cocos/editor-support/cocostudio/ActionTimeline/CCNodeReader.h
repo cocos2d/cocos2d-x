@@ -30,6 +30,13 @@ THE SOFTWARE.
 #include "cocostudio/CocosStudioExport.h"
 #include "2d/CCNode.h"
 
+namespace protocolbuffers
+{
+    class NodeTree;
+	class WidgetOptions;
+    class SpriteOptions;
+}
+
 namespace cocostudio {
 
 
@@ -56,6 +63,16 @@ public:
 
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
     std::string getJsonPath() const { return _jsonPath; }
+    
+    cocos2d::Node* createNodeFromProtocolBuffers(const std::string& filename);
+    cocos2d::Node* nodeFromProtocolBuffersFile(const std::string& fileName);
+    cocos2d::Node* nodeFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree);
+    
+    void setRecordProtocolBuffersPath(bool record) { _recordProtocolBuffersPath = record; }
+    bool isRecordProtocolBuffersPath() const { return _recordProtocolBuffersPath; }
+    
+    void setProtocolBuffersPath(std::string protocolBuffersPath) { _protocolBuffersPath = protocolBuffersPath; }
+    std::string getProtocolBuffersPath() const { return _protocolBuffersPath; }
 
 protected:
 
@@ -73,6 +90,17 @@ protected:
 
     // load gui
     cocos2d::Node* loadWidget(const rapidjson::Value& json);
+    
+    void setPropsForNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
+    void setPropsForSpriteFromProtocolBuffers(cocos2d::Node* node,
+                                              const protocolbuffers::SpriteOptions& spriteOptions,
+                                              const protocolbuffers::WidgetOptions& nodeOptions);
+    
+    bool isWidget(const std::string& type);
+    bool isCustomWidget(const std::string& type);
+    
+    std::string getGUIClassName(const std::string &name);
+    std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
 
     typedef std::function<cocos2d::Node*(const rapidjson::Value& json)> NodeCreateFunc;
     typedef std::pair<std::string, NodeCreateFunc> Pair;
@@ -82,6 +110,11 @@ protected:
     bool _recordJsonPath;
 
     std::string _jsonPath;
+    
+    bool _recordProtocolBuffersPath;
+    std::string _protocolBuffersPath;
+    
+    std::string _monoCocos2dxVersion;
 };
 
 }

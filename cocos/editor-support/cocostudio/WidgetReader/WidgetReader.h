@@ -54,6 +54,12 @@ namespace cocostudio
                                                      const rapidjson::Value& options);
         
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
+        
+        virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
+        virtual void setColorPropsFromProtocolBuffers(cocos2d::ui::Widget* widget,
+                                                      const protocolbuffers::NodeTree& nodeTree);
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
+        
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
@@ -63,6 +69,11 @@ namespace cocostudio
         
         std::string getResourcePath(CocoLoader* cocoLoader,
                                     stExpCocoNode*	pCocoNode,
+                                    cocos2d::ui::Widget::TextureResType texType);
+        
+        void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
+        
+        std::string getResourcePath(const std::string& path,
                                     cocos2d::ui::Widget::TextureResType texType);
 
         void beginSetBasicProperties(cocos2d::ui::Widget *widget);

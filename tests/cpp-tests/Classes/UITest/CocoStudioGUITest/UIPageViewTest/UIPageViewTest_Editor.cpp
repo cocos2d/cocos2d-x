@@ -1,6 +1,7 @@
 
 
 #include "UIPageViewTest_Editor.h"
+#include "VisibleRect.h"
 
 
 // UIPageViewTest_Editor
@@ -20,21 +21,66 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json"));
-        
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/windows_ui_pageview_editor_1.json"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView_Editor/windows_ui_pageview_editor_1.csb"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -76,10 +122,21 @@ bool UIPageViewTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-       
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
