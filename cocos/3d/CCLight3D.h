@@ -126,7 +126,7 @@ public:
     /**
      * Returns direction in world.
      */
-    const Vec3& getDirectionInWorld() const;
+    Vec3 getDirectionInWorld() const;
     
 CC_CONSTRUCTOR_ACCESS:
     DirectionLight3D();
@@ -196,7 +196,7 @@ public:
     /**
      * Returns direction in world.
      */
-    const Vec3& getDirectionInWorld() const;
+    Vec3 getDirectionInWorld() const;
     
     /**
      * Sets the range of point or spot light.
