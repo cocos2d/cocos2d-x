@@ -1,3 +1,5 @@
+require "OpenglConstants"
+
 local size = cc.Director:getInstance():getWinSize()
 local scheduler = cc.Director:getInstance():getScheduler()
 
@@ -287,6 +289,330 @@ function Animate3DTest.create()
     return layer
 end
 
+----------------------------------------
+----Sprite3DEffectTest
+----------------------------------------
+
+local Sprite3DEffectTest = {}
+Sprite3DEffectTest.__index = Sprite3DEffectTest
+
+function Sprite3DEffectTest.onTouchesEnd(touches, event)
+    for i = 1,table.getn(touches) do
+        local location = touches[i]:getLocation()
+        Sprite3DEffectTest.addNewSpriteWithCoords(Helper.currentLayer, location.x, location.y )
+    end
+end
+
+function Sprite3DEffectTest.addNewSpriteWithCoords(parent,x,y)
+    local sprite = cc.EffectSprite3D:createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png")
+    local effect = cc.Effect3DOutline:create()
+    sprite:addEffect(effect, -1)
+    effect:setOutlineColor({x = 1, y = 0, z = 0})
+    effect:setOutlineWidth(0.01)
+
+    local effect2 = cc.Effect3DOutline:create()
+    sprite:addEffect(effect2, -2)
+    effect2:setOutlineColor({x = 1, y = 1, z = 0})
+    effect2:setOutlineWidth(0.02)
+
+    sprite:setScale(6.0)
+    parent:addChild(sprite)
+    sprite:setPosition(cc.p(x,y))
+
+    local random = math.random()
+    local action = nil
+    if random < 0.2 then
+        action = cc.ScaleBy:create(3,2)
+    elseif random < 0.4 then
+        action = cc.RotateBy:create(3, 360)
+    elseif random < 0.6 then
+        action = cc.Blink:create(1, 3)
+    elseif random < 0.8 then
+        action = cc.TintBy:create(2, 0, -255, -255)
+    else
+        action  = cc.FadeOut:create(2)
+    end
+
+    local action_back = action:reverse()
+    local seq = cc.Sequence:create(action, action_back)
+
+    sprite:runAction(cc.RepeatForever:create(seq))
+end
+
+function Sprite3DEffectTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Testing Sprite3D")
+    Helper.subtitleLabel:setString("Sprite3d with effects")
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(Sprite3DEffectTest.onTouchesEnd,cc.Handler.EVENT_TOUCHES_ENDED )
+
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
+    Sprite3DEffectTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    return layer
+end
+
+----------------------------------------
+----AttachmentTest
+----------------------------------------
+local _ATsprite = nil
+local _AThasWeapon = false
+local AttachmentTest = {}
+AttachmentTest.__index = AttachmentTest
+
+function AttachmentTest.addNewSpriteWithCoords(parent,x,y)
+    local fileName = "Sprite3DTest/orc.c3b"
+    local sprite = cc.Sprite3D:create(fileName)
+    sprite:setScale(5.0)
+    sprite:setRotation3D({x = 0, y = 180, z = 0})
+    sprite:setPosition(cc.p(x, y))
+    local sp = cc.Sprite3D:create("Sprite3DTest/axe.c3b")
+    local attachNode = sprite:getAttachNode("Bip001 R Hand")
+    attachNode:addChild(sp)
+    local animation = cc.Animation3D:create(fileName)
+    if nil ~= animation then
+        local animate = cc.Animate3D:create(animation)
+        sprite:runAction(cc.RepeatForever:create(animate))
+    end
+    parent:addChild(sprite)
+
+    _ATsprite = sprite;
+    _AThasWeapon = true;
+end
+
+function AttachmentTest.onTouchesEnd(touches, event)
+    if _AThasWeapon == true then
+        _ATsprite:removeAllAttachNode()
+    else
+        local sp = cc.Sprite3D:create("Sprite3DTest/axe.c3b")
+        local attachNode = _ATsprite:getAttachNode("Bip001 R Hand")
+        attachNode:addChild(sp)
+    end
+
+    _AThasWeapon = not _AThasWeapon
+end
+
+function AttachmentTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Testing Sprite3D Attachment")
+    Helper.subtitleLabel:setString("touch to switch weapon")
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(AttachmentTest.onTouchesEnd,cc.Handler.EVENT_TOUCHES_ENDED )
+
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
+    AttachmentTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    return layer
+end
+
+----------------------------------------
+----Sprite3DReskinTest
+----------------------------------------
+local _SRTgirlPants = {"Girl_LowerBody01", "Girl_LowerBody02"}
+local _SRTgirlUpperBody = {"Girl_UpperBody01", "Girl_UpperBody02"}
+local _SRTgirlShoes = {"Girl_Shoes01", "Girl_Shoes02"}
+local _SRTgirlHair = {"Girl_Hair01", "Girl_Hair02"}
+local _SRTusePantsId = 1
+local _SRTuseUpperBodyId = 1
+local _SRTuseShoesId = 1
+local _SRTuseHairId = 1
+local _SRTsprite = nil
+local Sprite3DReskinTest = {}
+Sprite3DReskinTest.__index = Sprite3DReskinTest
+
+function Sprite3DReskinTest.addNewSpriteWithCoords(parent,x,y)
+    local fileName = "Sprite3DTest/ReskinGirl.c3b"
+    local sprite = cc.Sprite3D:create(fileName)
+
+    local girlPants = sprite:getMeshByName(_SRTgirlPants[2]);
+    if nil ~= girlPants then
+        girlPants:setVisible(false)
+    end
+    local girlUpBody = sprite:getMeshByName(_SRTgirlUpperBody[2]);
+    if nil ~= girlUpBody then
+        girlUpBody:setVisible(false)
+    end
+    local girlShoes = sprite:getMeshByName(_SRTgirlShoes[2]);
+    if nil ~= girlShoes then
+        girlShoes:setVisible(false)
+    end
+    local girlHair = sprite:getMeshByName(_SRTgirlHair[2]);
+    if nil ~= girlHair then
+        girlHair:setVisible(false)
+    end
+
+    parent:addChild(sprite)
+    sprite:setScale(4.0)
+    sprite:setPosition(cc.p(x, y - 60.0))
+    local animation = cc.Animation3D:create(fileName)
+    if nil ~= animation then
+        local animate = cc.Animate3D:create(animation)
+        sprite:runAction(cc.RepeatForever:create(animate))
+    end
+
+    _SRTsprite = sprite;
+end
+
+function Sprite3DReskinTest.createMenu(parent)
+
+    local function SwitchPants()
+        _SRTusePantsId = _SRTusePantsId + 1
+        if _SRTusePantsId > 2 then
+            _SRTusePantsId = 1
+        end
+        for i = 1, 2 do
+            local mesh = _SRTsprite:getMeshByName(_SRTgirlPants[i])
+            if i == _SRTusePantsId then
+                mesh:setVisible(true)
+            else
+                mesh:setVisible(false)
+            end
+        end
+    end
+
+    local function SwitchUpperBody()
+        _SRTuseUpperBodyId = _SRTuseUpperBodyId + 1
+        if _SRTuseUpperBodyId > 2 then
+            _SRTuseUpperBodyId = 1
+        end
+        for i = 1, 2 do
+            local mesh = _SRTsprite:getMeshByName(_SRTgirlUpperBody[i])
+            if i == _SRTuseUpperBodyId then
+                mesh:setVisible(true)
+            else
+                mesh:setVisible(false)
+            end
+        end
+    end
+
+    local function SwitchShoes()
+        _SRTuseShoesId = _SRTuseShoesId + 1
+        if _SRTuseShoesId > 2 then
+            _SRTuseShoesId = 1
+        end
+        for i = 1, 2 do
+            local mesh = _SRTsprite:getMeshByName(_SRTgirlShoes[i])
+            if i == _SRTuseShoesId then
+                mesh:setVisible(true)
+            else
+                mesh:setVisible(false)
+            end
+        end
+    end
+
+    local function SwitchHair()
+        _SRTuseHairId = _SRTuseHairId + 1
+        if _SRTuseHairId > 2 then
+            _SRTuseHairId = 1
+        end
+        for i = 1, 2 do
+            local mesh = _SRTsprite:getMeshByName(_SRTgirlHair[i])
+            if i == _SRTuseHairId then
+                mesh:setVisible(true)
+            else
+                mesh:setVisible(false)
+            end
+        end
+    end
+
+    local function SwitchClasses()
+        local mesh = _SRTsprite:getMeshByName("Girl_Glasses01")
+        mesh:setVisible(not mesh:isVisible())
+    end
+
+    local label1 = cc.MenuItemLabel:create(cc.Label:createWithTTF("Hair","fonts/arial.ttf",20))
+    local contSize = label1:getContentSize()
+    label1:setPosition(cc.p(50.0, contSize.height * 4.0))
+    label1:registerScriptTapHandler(SwitchHair)
+
+    local label2 = cc.MenuItemLabel:create(cc.Label:createWithTTF("Glasses","fonts/arial.ttf",20))
+    label2:setPosition(cc.p(50.0, contSize.height * 5.0))
+    label2:registerScriptTapHandler(SwitchClasses)
+
+    local label3 = cc.MenuItemLabel:create(cc.Label:createWithTTF("Coat","fonts/arial.ttf",20))
+    label3:setPosition(cc.p(50.0, contSize.height * 6.0))
+    label3:registerScriptTapHandler(SwitchUpperBody)
+
+    local label4 = cc.MenuItemLabel:create(cc.Label:createWithTTF("Pants","fonts/arial.ttf",20))
+    label4:setPosition(cc.p(50.0, contSize.height * 7.0))
+    label4:registerScriptTapHandler(SwitchPants)
+
+    local label5 = cc.MenuItemLabel:create(cc.Label:createWithTTF("Shoes","fonts/arial.ttf",20))
+    label5:setPosition(cc.p(50.0, contSize.height * 8.0))
+    label5:registerScriptTapHandler(SwitchShoes)
+
+    local menu = cc.Menu:create(label1, label2, label3, label4, label5)
+    menu:setPosition(cc.p(0.0, 0.0))
+    parent:addChild(menu)
+end
+
+function Sprite3DReskinTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Testing Sprite3D Reskin")
+    Helper.subtitleLabel:setString("")
+
+    Sprite3DReskinTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    Sprite3DReskinTest.createMenu(layer)
+    return layer
+end
+
+
+----------------------------------------
+----Sprite3DMirrorTest
+----------------------------------------
+local Sprite3DMirrorTest = {}
+Sprite3DMirrorTest.__index = Sprite3DMirrorTest
+
+function Sprite3DMirrorTest.addNewSpriteWithCoords(parent,x,y)
+    local fileName = "Sprite3DTest/orc.c3b"
+    local sprite = cc.Sprite3D:create(fileName)
+    sprite:setScale(5.0)
+    sprite:setRotation3D({x = 0, y = 180, z = 0})
+    sprite:setPosition(cc.p(x - 80.0, y))
+    local sp = cc.Sprite3D:create("Sprite3DTest/axe.c3b")
+    local attachNode = sprite:getAttachNode("Bip001 R Hand")
+    attachNode:addChild(sp)
+    local animation = cc.Animation3D:create(fileName)
+    if nil ~= animation then
+        local animate = cc.Animate3D:create(animation)
+        sprite:runAction(cc.RepeatForever:create(animate))
+    end
+    parent:addChild(sprite)
+
+    sprite = cc.Sprite3D:create(fileName)
+    sprite:setScale(5.0)
+    sprite:setScaleX(-5.0)
+    sprite:setRotation3D({x = 0, y = 180, z = 0})
+    sprite:setPosition(cc.p(x + 80.0, y))
+    sprite:setCullFace(gl.FRONT)
+    sp = cc.Sprite3D:create("Sprite3DTest/axe.c3b")
+    attachNode = sprite:getAttachNode("Bip001 R Hand")
+    attachNode:addChild(sp)
+    animation = cc.Animation3D:create(fileName)
+    if nil ~= animation then
+        local animate = cc.Animate3D:create(animation)
+        sprite:runAction(cc.RepeatForever:create(animate))
+    end
+    parent:addChild(sprite)
+
+end
+
+function Sprite3DMirrorTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Sprite3D Mirror Test")
+    Helper.subtitleLabel:setString("")
+
+    Sprite3DMirrorTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    return layer
+end
 
 function Sprite3DTest()
     local scene = cc.Scene:create()
@@ -296,6 +622,9 @@ function Sprite3DTest()
         Sprite3DBasicTest.create,
         Sprite3DWithSkinTest.create,
         Animate3DTest.create,
+        AttachmentTest.create,
+        Sprite3DReskinTest.create,
+        Sprite3DMirrorTest.create,
     }
 
     scene:addChild(Sprite3DBasicTest.create())
