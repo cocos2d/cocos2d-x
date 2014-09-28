@@ -33,6 +33,7 @@ namespace ui {
     
     Scale9Sprite::Scale9Sprite()
     : _spritesGenerated(false)
+    , _spriteFrameRotated(false)
     , _positionsAreDirty(true)
     , _scale9Image(nullptr)
     , _topLeft(nullptr)
@@ -130,11 +131,11 @@ namespace ui {
         return init(sprite, rect, rotated, Vec2::ZERO, rect.size, capInsets);
     }
     
-    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &origianlSize, const Rect& capInsets)
+    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets)
     {
         if(sprite)
         {
-            this->updateWithSprite(sprite, rect, rotated, offset, origianlSize, capInsets);
+            this->updateWithSprite(sprite, rect, rotated, offset, originalSize, capInsets);
         }
         
         return true;
@@ -917,7 +918,7 @@ y+=ytranslate;         \
         }
         else
         {
-            if (_scale9Image)
+            if (_scale9Image && _scale9Image->getLocalZOrder() < 0 )
             {
                 _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
@@ -939,7 +940,7 @@ y+=ytranslate;         \
         }
         else
         {
-            if (_scale9Image)
+            if (_scale9Image && _scale9Image->getLocalZOrder() >= 0 )
             {
                 _scale9Image->visit(renderer, _modelViewTransform, flags);
             }
