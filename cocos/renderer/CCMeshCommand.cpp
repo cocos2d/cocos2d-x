@@ -31,13 +31,13 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
+#include "base/CCLight.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
-#include "3d/CCLight3D.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -371,7 +371,7 @@ void MeshCommand::setLightUniforms()
                     case LightType::DIRECTIONAL:
                     {
                         CCASSERT(enabledDirLightNum < maxDirLight, "");
-                        DirectionLight3D *dirLight = static_cast<DirectionLight3D *>(light);
+                        auto dirLight = static_cast<DirectionLight *>(light);
                         Vec3 dir = dirLight->getDirectionInWorld();
                         dir.normalize();
                         const Color3B &col = dirLight->getDisplayedColor();
@@ -383,7 +383,7 @@ void MeshCommand::setLightUniforms()
                     case LightType::POINT:
                     {
                         CCASSERT(enabledPointLightNum < maxPointLight, "");
-                        PointLight3D *pointLight = static_cast<PointLight3D *>(light);
+                        auto pointLight = static_cast<PointLight *>(light);
                         Mat4 mat= pointLight->getNodeToWorldTransform();
                         const Color3B &col = pointLight->getDisplayedColor();
                         _glProgramState->setUniformVec3(s_pointLightUniformNames[enabledPointLightNum].color, Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity));
@@ -395,7 +395,7 @@ void MeshCommand::setLightUniforms()
                     case LightType::SPOT:
                     {
                         CCASSERT(enabledSpotLightNum < maxSpotLight, "");
-                        SpotLight3D *spotLight = static_cast<SpotLight3D *>(light);
+                        auto spotLight = static_cast<SpotLight *>(light);
                         Vec3 dir = spotLight->getDirectionInWorld();
                         dir.normalize();
                         Mat4 mat= light->getNodeToWorldTransform();
@@ -411,7 +411,7 @@ void MeshCommand::setLightUniforms()
                         break;
                     case LightType::AMBIENT:
                     {
-                        AmbientLight3D *ambLight = static_cast<AmbientLight3D *>(light);
+                        auto ambLight = static_cast<AmbientLight *>(light);
                         const Color3B &col = ambLight->getDisplayedColor();
                         ambientColor += Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                     }

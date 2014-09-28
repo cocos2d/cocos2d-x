@@ -210,25 +210,25 @@ void LightTest::addSprite()
 void LightTest::addLights()
 {
     auto s = Director::getInstance()->getWinSize();
-    _ambientLight = AmbientLight3D::create(Color3B(200, 200, 200));
+    _ambientLight = AmbientLight::create(Color3B(200, 200, 200));
     _ambientLight->retain();
     _ambientLight->setEnabled(true);
     addChild(_ambientLight);
     _ambientLight->setCameraMask(2);
 
-    _directionalLight = DirectionLight3D::create(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
+    _directionalLight = DirectionLight::create(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
     _directionalLight->retain();
     _directionalLight->setEnabled(false);
     addChild(_directionalLight);
     _directionalLight->setCameraMask(2);
 
-    _pointLight = PointLight3D::create(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
+    _pointLight = PointLight::create(Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 10000.0f);
     _pointLight->retain();
     _pointLight->setEnabled(false);
     addChild(_pointLight);
     _pointLight->setCameraMask(2);
 
-    _spotLight = SpotLight3D::create(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
+    _spotLight = SpotLight::create(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), Color3B(200, 200, 200), 0.0, 0.5, 10000.0f);
     _spotLight->retain();
     _spotLight->setEnabled(false);
     addChild(_spotLight);

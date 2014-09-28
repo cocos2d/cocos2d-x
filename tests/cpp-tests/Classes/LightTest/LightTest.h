@@ -27,7 +27,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "3d/CCLight3D.h"
+#include "base/CCLight.h"
 
 class LightTest : public BaseTest
 {
@@ -57,10 +57,10 @@ private:
 
 private:
 
-    AmbientLight3D *_ambientLight;
-    DirectionLight3D *_directionalLight;
-    PointLight3D *_pointLight;
-    SpotLight3D *_spotLight;
+    AmbientLight *_ambientLight;
+    DirectionLight *_directionalLight;
+    PointLight *_pointLight;
+    SpotLight *_spotLight;
 
     Label *_ambientLightLabel;
     Label *_directionalLightLabel;

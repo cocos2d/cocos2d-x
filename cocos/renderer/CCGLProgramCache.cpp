@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
-#include "3d/CCLight3D.h"
 
 NS_CC_BEGIN
 

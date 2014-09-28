@@ -22,11 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCLIGHT3D_H__
-#define __CCLIGHT3D_H__
+#ifndef __CCLIGHT_H__
+#define __CCLIGHT_H__
 
 #include "2d/CCNode.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +57,7 @@ enum class LightFlag
     LIGHT15 = 1 << 15,
 };
 
-class CC_3D_DLL BaseLight3D : public Node
+class CC_DLL BaseLight : public Node
 {
 public:
     
@@ -84,8 +83,8 @@ public:
     virtual void onExit() override;
     
 CC_CONSTRUCTOR_ACCESS:
-    BaseLight3D();
-    virtual ~BaseLight3D();
+    BaseLight();
+    virtual ~BaseLight();
     
 protected:
     void setRotationFromDirection( const Vec3 &direction );
@@ -96,7 +95,7 @@ protected:
     bool        _enabled;
 };
 
-class CC_3D_DLL DirectionLight3D : public BaseLight3D
+class CC_DLL DirectionLight : public BaseLight
 {
 public:
     /**
@@ -106,7 +105,7 @@ public:
      *
      * @return The new direction light.
      */
-    static DirectionLight3D* create(const Vec3 &direction, const Color3B &color);
+    static DirectionLight* create(const Vec3 &direction, const Color3B &color);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::DIRECTIONAL; }
@@ -129,12 +128,12 @@ public:
     const Vec3& getDirectionInWorld() const;
     
 CC_CONSTRUCTOR_ACCESS:
-    DirectionLight3D();
-    virtual ~DirectionLight3D();
+    DirectionLight();
+    virtual ~DirectionLight();
     
 };
 
-class CC_3D_DLL PointLight3D : public BaseLight3D
+class CC_DLL PointLight : public BaseLight
 {
 public:
     /**
@@ -145,7 +144,7 @@ public:
      *
      * @return The new point light.
      */
-    static PointLight3D* create(const Vec3 &position, const Color3B &color, float range);
+    static PointLight* create(const Vec3 &position, const Color3B &color, float range);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::POINT; }
@@ -155,14 +154,14 @@ public:
     void setRange(float range) { _range = range; }
     
 CC_CONSTRUCTOR_ACCESS:
-    PointLight3D();
-    virtual ~PointLight3D();
+    PointLight();
+    virtual ~PointLight();
     
 protected:
     float _range;
 };
 
-class CC_3D_DLL SpotLight3D : public BaseLight3D
+class CC_DLL SpotLight : public BaseLight
 {
 public:
     /**
@@ -176,7 +175,7 @@ public:
      *
      * @return The new spot light.
      */
-    static SpotLight3D* create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
+    static SpotLight* create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::SPOT; }
@@ -242,8 +241,8 @@ public:
     float getCosOuterAngle() const { return _cosInnerAngle; }
     
 CC_CONSTRUCTOR_ACCESS:
-    SpotLight3D();
-    virtual ~SpotLight3D();
+    SpotLight();
+    virtual ~SpotLight();
     
 protected:
     float _range;
@@ -253,7 +252,7 @@ protected:
     float _cosOuterAngle;
 };
 
-class CC_3D_DLL AmbientLight3D : public BaseLight3D
+class CC_DLL AmbientLight : public BaseLight
 {
 public:
     /**
@@ -262,14 +261,14 @@ public:
      *
      * @return The new ambient light.
      */
-    static AmbientLight3D* create(const Color3B &color);
+    static AmbientLight* create(const Color3B &color);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::AMBIENT; }
     
 CC_CONSTRUCTOR_ACCESS:
-    AmbientLight3D();
-    virtual ~AmbientLight3D();
+    AmbientLight();
+    virtual ~AmbientLight();
 };
 
 NS_CC_END

@@ -62,6 +62,7 @@ THE SOFTWARE.
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
 #include "base/CCCamera.h"
+#include "base/CCLight.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"
@@ -281,7 +282,6 @@ THE SOFTWARE.
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCBillBoard.h"
-#include "3d/CCLight3D.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

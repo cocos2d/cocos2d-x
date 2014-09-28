@@ -29,11 +29,11 @@
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCAttachNode.h"
 #include "3d/CCMesh.h"
-#include "3d/CCLight3D.h"
 
 #include "base/CCDirector.h"
-#include "platform/CCPlatformMacros.h"
+#include "base/CCLight.h"
 #include "base/ccMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
