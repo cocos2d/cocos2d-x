@@ -26,6 +26,7 @@ package org.cocos2dx.lib;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -75,6 +76,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 
 	@Override
 	public void afterTextChanged(final Editable s) {
+		
 		if (this.isFullScreenEdit()) {
 			return;
 		}
@@ -148,6 +150,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 			}
 			
 			final String insertText = text;
+
 			this.mCocos2dxGLSurfaceView.insertText(insertText);
 			/*
 			if (BuildConfig.DEBUG) {
@@ -157,7 +160,11 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
 		}
 		
 		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-			this.mCocos2dxGLSurfaceView.requestFocus();
+//			this.mCocos2dxGLSurfaceView.requestFocus();
+			// we need to consume the done action here, so that IMEDelegate have chance to 
+			// verify if the input text is correct. if it is correct, it will eventually
+			// call didDetachWithIME(); to close the keyboard
+			return true;
 		}
 		return false;
 	}
