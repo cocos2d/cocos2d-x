@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 
+#include "2d/CCScene.h"
+
 NS_CC_BEGIN
 
 namespace {
@@ -189,6 +191,24 @@ const Size& GLView::getFrameSize() const
 void GLView::setFrameSize(float width, float height)
 {
     _designResolutionSize = _screenSize = Size(width, height);
+
+    auto director = Director::getInstance();
+    if (director->getOpenGLView() != NULL)
+    {
+       director->_winSizeInPoints = _designResolutionSize;
+
+       //auto ds = isDisplayStats();
+       //director->setDefaultValues();
+       director->setGLDefaultValues();
+       director->setProjection(director->_projection);
+       //director->createStatsLabel();
+       //director->setDisplayStats(ds);
+
+       // It seems the scene content size doews not matter in most cases but just to be on the safe side.
+       auto scene = director->getRunningScene();
+       if (scene)
+          scene->setContentSize(_designResolutionSize);
+    }
 }
 
 Rect GLView::getVisibleRect() const

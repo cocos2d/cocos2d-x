@@ -51,7 +51,7 @@ void initExtensions() {
 
 NS_CC_BEGIN
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool _ignored_resizable)
 {
     auto ret = new GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
