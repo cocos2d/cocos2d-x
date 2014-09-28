@@ -1165,14 +1165,14 @@
     <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCLight3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIWebView.cpp">
       <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2299,9 +2299,6 @@
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCLight3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\ui\UIWebViewImpl-win32.h">
       <Filter>ui\UIWidgets</Filter>
     </ClInclude>
@@ -2310,6 +2307,9 @@
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
