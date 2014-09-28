@@ -143,7 +143,7 @@ function Camera3DTestDemo:updateState( dt )
             end
         else
             if cosAngle > 0.01 then
-                self._curState = bit._or(State.Rotate,State_Move)
+                self._curState = bit._or(State.Rotate,State.Move)
             else
                 self._curState = State.Move
             end
@@ -164,8 +164,8 @@ function Camera3DTestDemo:move3D(dt)
         local offset = { x = newFaceDir.x * 25.0 * dt, y = newFaceDir.y * 25.0 * dt, z = newFaceDir.z * 25.0 * dt  }
         curPos = { x = curPos.x + offset.x, y = curPos.y + offset.y, z = curPos.z + offset.z}
         self._sprite3D:setPosition3D(curPos)
-        -- offset.x = offset.x
-        -- offset.z = offset.z
+        offset.x = offset.x
+        offset.z = offset.z
         if self._cameraType == CameraType.ThirdCamera then
             local cameraPos = self._camera:getPosition3D()
             cameraPos.x = cameraPos.x + offset.x
@@ -215,7 +215,29 @@ function Camera3DTestDemo:onEnter()
     end, cc.Handler.EVENT_TOUCHES_MOVED)
 
     listener:registerScriptHandler(function(touches, event)
-        -- body
+        for i,v in ipairs(touches) do
+            local touch = v
+            local location = touch:getLocationInView()
+            if self._camera ~= nil and self._sprite3D ~= nil and self._cameraType == CameraType.ThirdCamera then
+                local nearP = cc.vec3(location.x, location.y, -1.0)
+                local farP  = cc.vec3(location.x, location.y, 1.0)
+                
+                local size = cc.Director:getInstance():getWinSize()
+                nearP = self._camera:unproject(size, nearP, nearP)
+                farP  = self._camera:unproject(size, farP, farP)
+                local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+                local dist=0.0
+                local ndd = dir.x * 0 + dir.y * 1 + dir.z * 0
+                if ndd == 0 then
+                    dist=0.0
+                end
+
+                local ndo = nearP.x * 0 + nearP.y * 1 + nearP.z * 0
+                dist= (0 - ndo) / ndd
+                local p =   cc.vec3(nearP.x + dist * dir.x, nearP.y + dist * dir.y, nearP.z + dist * dir.z)
+                self._targetPos = p
+            end
+        end
     end, cc.Handler.EVENT_TOUCHES_ENDED)
 
     local eventDispatcher = self:getEventDispatcher()
@@ -347,7 +369,7 @@ function Camera3DTestDemo:onEnter()
                         local curPos = self._sprite3D:getPosition3D()
                         local newFaceDir = {x = self._targetPos.x - curPos.x, y = self._targetPos.y - curPos.y, z = self._targetPos.z - curPos.z }
                         newFaceDir.y = 0
-                        cc.vec3normalize(newFaceDir)
+                        newFaceDir = cc.vec3normalize(newFaceDir)
 
                         local matTransform = self._sprite3D:getNodeToWorldTransform()
                         local up = {x = matTransform[5], y = matTransform[6] ,z = matTransform[7] }
@@ -356,7 +378,7 @@ function Camera3DTestDemo:onEnter()
                         right = cc.vec3normalize(right)
 
                         local pos = cc.vec3(0, 0, 0)
-                        local mat
+                        local mat = {}
                         mat[1] = right.x
                         mat[2] = right.y
                         mat[3] = right.z
@@ -368,7 +390,7 @@ function Camera3DTestDemo:onEnter()
                         mat[8] = 0.0
     
                         mat[9]  = newFaceDir.x
-                        mat[10]  = newFaceDir.y
+                        mat[10] = newFaceDir.y
                         mat[11] = newFaceDir.z
                         mat[12] = 0.0
     
