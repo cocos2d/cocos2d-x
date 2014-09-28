@@ -370,13 +370,13 @@ end
 function cc.vec3normalize(vec3)
     local n = vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z
     if n == 1.0 then
-        return
+        return vec3
     end
 
     n = math.sqrt(n)
 
     if n < 2e-37 then
-        return
+        return vec3
     end
 
     n = 1.0 / n
