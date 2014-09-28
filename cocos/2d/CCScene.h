@@ -35,6 +35,7 @@ NS_CC_BEGIN
 
 class Camera;
 class BaseLight3D;
+class Renderer;
 class EventListenerCustom;
 class EventCustom;
 #if CC_USE_PHYSICS
@@ -75,6 +76,9 @@ public:
 
     const std::vector<BaseLight3D*>& getLights() const { return _lights; }
     
+    /** render the scene */
+    void render(Renderer* renderer);
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
@@ -89,7 +93,6 @@ protected:
     friend class ProtectedNode;
     friend class SpriteBatchNode;
     friend class Camera;
-    friend class Director;
     friend class BaseLight3D;
     friend class Renderer;
     

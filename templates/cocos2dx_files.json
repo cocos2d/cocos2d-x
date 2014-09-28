@@ -3636,6 +3636,7 @@
         "cocos/scripting/lua-bindings/auto/api/ControlSwitch.lua", 
         "cocos/scripting/lua-bindings/auto/api/Controller.lua", 
         "cocos/scripting/lua-bindings/auto/api/DelayTime.lua", 
+        "cocos/scripting/lua-bindings/auto/api/Device.lua", 
         "cocos/scripting/lua-bindings/auto/api/Director.lua", 
         "cocos/scripting/lua-bindings/auto/api/DisplayData.lua", 
         "cocos/scripting/lua-bindings/auto/api/DisplayManager.lua", 
