@@ -62,6 +62,65 @@ function Sprite3DBasicTest.create()
 end
 
 ----------------------------------------
+----Sprite3DHitTest
+----------------------------------------
+
+local Sprite3DHitTest = {}
+Sprite3DHitTest.__index = Sprite3DHitTest
+
+function Sprite3DHitTest.addNewSpriteWithCoords(parent,x,y)
+    local sprite1 = cc.Sprite3D:create("Sprite3DTest/boss1.obj")
+    sprite1:setScale(4.0)
+    sprite1:setTexture("Sprite3DTest/boss.png")
+    sprite1:setPosition(cc.p(x, y))
+    sprite1:runAction(cc.RepeatForever:create(cc.RotateBy:create(3, 360)))
+    parent:addChild(sprite1)
+
+    local sprite2 = cc.Sprite3D:create("Sprite3DTest/boss1.obj")
+    sprite2:setScale(4.0)
+    sprite2:setTexture("Sprite3DTest/boss.png")
+    sprite2:setPosition(cc.p(x, y))
+    sprite2:setAnchorPoint(cc.p(0.5, 0.5))
+    sprite2:runAction(cc.RepeatForever:create(cc.RotateBy:create(3, -360)))
+    parent:addChild(sprite2)
+
+    local function onTouchBegan(touch, event)
+        local target = event:getCurrentTarget()
+    end
+
+    local function onTouchMoved(touch, event)
+        local target = event:getCurrentTarget()
+    end
+
+    local function onTouchEnded(touch, event)
+        local target = event:getCurrentTarget()
+    end
+
+    local listener1 = cc.EventListenerTouchOneByOne:create()
+    listener1:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN)
+    listener1:registerScriptHandler(onTouchMoved, cc.Handler.EVENT_TOUCH_MOVED)
+    listener1:registerScriptHandler(onTouchEnded, cc.Handler.EVENT_TOUCH_ENDED)
+
+    local listener2 = cc.EventListenerTouchOneByOne:create()
+    listener2:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN)
+    listener2:registerScriptHandler(onTouchMoved, cc.Handler.EVENT_TOUCH_MOVED)
+    listener2:registerScriptHandler(onTouchEnded, cc.Handler.EVENT_TOUCH_ENDED)
+    local eventDispatcher = parent:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener1, sprite1)
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener2, sprite2)
+end
+
+function Sprite3DHitTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Testing Sprite3D Touch in 2D")
+    Helper.subtitleLabel:setString("Tap Sprite3D and Drag")
+
+    Sprite3DHitTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    return layer
+end
+
+----------------------------------------
 ----Sprite3DWithSkinTest
 ----------------------------------------
 local Sprite3DWithSkinTest = {}
@@ -620,6 +679,7 @@ function Sprite3DTest()
     Helper.createFunctionTable = 
     {
         Sprite3DBasicTest.create,
+        Sprite3DHitTest.create,
         Sprite3DWithSkinTest.create,
         Animate3DTest.create,
         AttachmentTest.create,
