@@ -76,9 +76,9 @@ const Vec3& DirectionLight3D::getDirection() const
     dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
     return dir;
 }
-Vec3 DirectionLight3D::getDirectionInWorld() const
+const Vec3& DirectionLight3D::getDirectionInWorld() const
 {
-    Vec3 dir;
+    static Vec3 dir;
     Mat4 mat = getNodeToWorldTransform();
     dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
     return dir;
@@ -139,9 +139,9 @@ const Vec3& SpotLight3D::getDirection() const
     return dir;
 }
 
-Vec3 SpotLight3D::getDirectionInWorld() const
+const Vec3& SpotLight3D::getDirectionInWorld() const
 {
-    Vec3 dir;
+    static Vec3 dir;
     Mat4 mat = getNodeToWorldTransform();
     dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
     return dir;
