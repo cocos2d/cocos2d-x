@@ -1017,6 +1017,12 @@ Developers:
         
     tttreal
         Fixed Label::getStringNumLines()
+        
+    hongliang-goudou
+        Fixed the bug that UI animation playing crash if GUI JSON file is loaded again
+        
+    yestein
+        Add Cocostudio Armature getOffsetPoints API for Lua
     
 Retired Core Developers:
     WenSheng Yang
