@@ -38,14 +38,14 @@ class CC_DLL ClippingRegionNode : public Node
 {    
 public:
     static ClippingRegionNode* create(const Rect& clippingRegion);
-    static ClippingRegionNode* create(void);
+    static ClippingRegionNode* create();
     
-    const Rect getClippingRegion(void) {
+    const Rect& getClippingRegion() const {
         return _clippingRegion;
     }
     void setClippingRegion(const Rect& clippingRegion);
     
-    bool isClippingEnabled(void) {
+    const bool isClippingEnabled() const {
         return _clippingEnabled;
     }
     void setClippingEnabled(bool enabled) {
@@ -56,7 +56,7 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
 protected:
-    ClippingRegionNode(void)
+    ClippingRegionNode()
     : _clippingEnabled(true)
     {
     }

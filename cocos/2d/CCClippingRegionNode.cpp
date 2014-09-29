@@ -20,7 +20,7 @@ ClippingRegionNode* ClippingRegionNode::create(const Rect& clippingRegion)
     return node;
 }
 
-ClippingRegionNode* ClippingRegionNode::create(void)
+ClippingRegionNode* ClippingRegionNode::create()
 {
     ClippingRegionNode* node = new ClippingRegionNode();
     if (node && node->init()) {
