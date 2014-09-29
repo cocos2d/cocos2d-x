@@ -46,7 +46,7 @@ AudioPlayer::~AudioPlayer()
 {
     _exitThread = true;
     if (_audioCache && _audioCache->_queBufferFrames > 0) {
-        _timeMtx.unlock();
+        _sleepCondition.notify_all();
         if (_rotateBufferThread.joinable()) {
             _rotateBufferThread.join();
         }
@@ -81,7 +81,6 @@ bool AudioPlayer::play2d(AudioCache* cache)
         alGenBuffers(3, _bufferIds);
         alError = alGetError();
         if (alError == AL_NO_ERROR) {
-            _timeMtx.lock();
             _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
             
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
@@ -109,8 +108,6 @@ bool AudioPlayer::play2d(AudioCache* cache)
 
 void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
-    printf("%s start\n",__PRETTY_FUNCTION__);
-    
     ALint sourceState;
     ALint bufferProcessed = 0;
     ExtAudioFileRef extRef = nullptr;
@@ -179,7 +176,11 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
             }
         }
         
-        _timeMtx.try_lock_for(std::chrono::milliseconds(50));
+        if (_exitThread) {
+            break;
+        }
+        std::unique_lock<std::mutex> lk(_sleepMutex);
+        _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
     }
     
 ExitBufferThread:
@@ -189,7 +190,6 @@ ExitBufferThread:
         ExtAudioFileDispose(extRef);
     }
     free(tmpBuffer);
-    printf("%s: end\n",__PRETTY_FUNCTION__);
 }
 
 bool AudioPlayer::setLoop(bool loop)
