@@ -407,6 +407,51 @@ static void extendBone(lua_State* L)
     lua_pop(L, 1);
 }
 
+/* peterson */
+int lua_cocos2dx_studio_CSLoader_getInstance(lua_State* L)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(L,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::CSLoader* ret = cocos2d::CSLoader::getInstance();
+        tolua_pushusertype(L,(void*)ret, "cc.CSLoader");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_studio_CSLoader_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+
+static void extendCSLoader(lua_State* L)
+{
+    lua_pushstring(L, "cc.CSLoader");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "getInstance", lua_cocos2dx_studio_CSLoader_getInstance);
+    }
+    lua_pop(L, 1);
+}
+// before
+/*
 int lua_cocos2dx_studio_NodeReader_getInstance(lua_State* L)
 {
     int argc = 0;
@@ -449,6 +494,8 @@ static void extendNodeReader(lua_State* L)
     }
     lua_pop(L, 1);
 }
+ */
+/**/
 
 int lua_cocos2dx_studio_ActionTimelineCache_getInstance(lua_State* L)
 {
@@ -611,7 +658,11 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
     extendArmatureDataManager(L);
     extendBone(L);
     extendActionTimelineCache(L);
-    extendNodeReader(L);
+    /* peterson */
+    extendCSLoader(L);
+    // before
+//    extendNodeReader(L);
+    /**/
     extendActionTimeline(L);
     
     return 0;

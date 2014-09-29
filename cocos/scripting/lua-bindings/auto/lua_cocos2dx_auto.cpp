@@ -9039,6 +9039,52 @@ int lua_cocos2dx_Scene_getPhysicsWorld(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Scene_render(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Scene* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Scene*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_render'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Renderer* arg0;
+
+        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+        if(!ok)
+            return 0;
+        cobj->render(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Scene:render",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_render'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Scene_createWithSize(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9147,6 +9193,7 @@ int lua_register_cocos2dx_Scene(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Scene");
         tolua_function(tolua_S,"getPhysicsWorld",lua_cocos2dx_Scene_getPhysicsWorld);
+        tolua_function(tolua_S,"render",lua_cocos2dx_Scene_render);
         tolua_function(tolua_S,"createWithSize", lua_cocos2dx_Scene_createWithSize);
         tolua_function(tolua_S,"create", lua_cocos2dx_Scene_create);
         tolua_function(tolua_S,"createWithPhysics", lua_cocos2dx_Scene_createWithPhysics);
@@ -38251,6 +38298,49 @@ int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_requestSystemFontRefresh(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_requestSystemFontRefresh'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->requestSystemFontRefresh();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Label:requestSystemFontRefresh",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_requestSystemFontRefresh'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
 {
     int argc = 0;
@@ -38590,6 +38680,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"getBMFontFilePath",lua_cocos2dx_Label_getBMFontFilePath);
         tolua_function(tolua_S,"setHorizontalAlignment",lua_cocos2dx_Label_setHorizontalAlignment);
         tolua_function(tolua_S,"setAlignment",lua_cocos2dx_Label_setAlignment);
+        tolua_function(tolua_S,"requestSystemFontRefresh",lua_cocos2dx_Label_requestSystemFontRefresh);
         tolua_function(tolua_S,"createWithBMFont", lua_cocos2dx_Label_createWithBMFont);
         tolua_function(tolua_S,"create", lua_cocos2dx_Label_create);
         tolua_function(tolua_S,"createWithCharMap", lua_cocos2dx_Label_createWithCharMap);
