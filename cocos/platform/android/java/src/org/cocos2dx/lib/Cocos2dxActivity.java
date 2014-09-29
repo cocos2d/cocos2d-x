@@ -23,6 +23,10 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import javax.microedition.khronos.egl.EGL10;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLDisplay;
+
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
@@ -30,6 +34,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
+import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -37,6 +43,7 @@ import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.opengl.GLSurfaceView;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
 	// ===========================================================
@@ -214,9 +221,79 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	
     public Cocos2dxGLSurfaceView onCreateView() {
     	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
-
-    	glSurfaceView.setEGLConfigChooser(this.glContextAttrs[0], this.glContextAttrs[1],this.glContextAttrs[2],
-    		this.glContextAttrs[3],this.glContextAttrs[4],this.glContextAttrs[5]);
+    	//this line is need on some device if we specify an alpha bits
+    	if(this.glContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+    	
+    	class cocos2dEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
+    	{
+    		public int[] attribs;
+			@Override
+			public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) 
+			{
+				int[] numConfigs = new int[1];
+				if(egl.eglGetConfigs(display, null, 0, numConfigs))
+				{
+					EGLConfig[] configs = new EGLConfig[numConfigs[0]];
+					int[] EGLattribs = {
+							EGL10.EGL_RED_SIZE, attribs[0], 
+							EGL10.EGL_GREEN_SIZE, attribs[1],
+							EGL10.EGL_BLUE_SIZE, attribs[2],
+							EGL10.EGL_ALPHA_SIZE, attribs[3],
+							EGL10.EGL_DEPTH_SIZE, attribs[4],
+							EGL10.EGL_STENCIL_SIZE,attribs[5],
+							EGL10.EGL_NONE
+										};
+					int[] choosedConfigNum = new int[1];
+					
+					egl.eglChooseConfig(display, EGLattribs, configs, numConfigs[0], choosedConfigNum);
+					if(choosedConfigNum[0]>0)
+					{
+						return configs[0];
+					}
+					else
+					{
+						int[] defaultEGLattribs = {
+								EGL10.EGL_RED_SIZE, 5, 
+								EGL10.EGL_GREEN_SIZE, 6,
+								EGL10.EGL_BLUE_SIZE, 5,
+								EGL10.EGL_ALPHA_SIZE, 0,
+								EGL10.EGL_DEPTH_SIZE, 0,
+								EGL10.EGL_STENCIL_SIZE,0,
+								EGL10.EGL_NONE
+											};
+						int[] defaultEGLattribsAlpha = {
+								EGL10.EGL_RED_SIZE, 4, 
+								EGL10.EGL_GREEN_SIZE, 4,
+								EGL10.EGL_BLUE_SIZE, 4,
+								EGL10.EGL_ALPHA_SIZE, 4,
+								EGL10.EGL_DEPTH_SIZE, 0,
+								EGL10.EGL_STENCIL_SIZE,0,
+								EGL10.EGL_NONE
+											};
+						//choose one can use
+						if(this.attribs[3] == 0)
+							egl.eglChooseConfig(display, defaultEGLattribs, configs, numConfigs[0], choosedConfigNum);
+						else
+							egl.eglChooseConfig(display, defaultEGLattribsAlpha, configs, numConfigs[0], choosedConfigNum);
+						if(choosedConfigNum[0] > 0)
+						{
+							Log.w(DEVICE_POLICY_SERVICE, "The EGLConfig can not be used for rendering, use a default one");
+							return configs[0];
+						}
+						else
+						{
+							Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
+							return null;
+						}
+					}
+				}
+				Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
+				return null;
+			}
+    	}
+    	cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser();
+    	chooser.attribs = this.glContextAttrs;
+    	glSurfaceView.setEGLConfigChooser(chooser);
 
     	return glSurfaceView;
     }
