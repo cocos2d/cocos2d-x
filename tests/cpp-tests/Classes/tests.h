@@ -76,5 +76,6 @@
 #include "BillBoardTest/BillBoardTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
+#include "NetworkUtilsTest/NetworkUtilsTest.h"
 
 #endif

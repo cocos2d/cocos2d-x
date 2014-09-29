@@ -233,6 +233,17 @@ extern bool openURLJNI(const char* url) {
     return ret;
 }
 
+extern bool isNetworkConnectedJNI() {
+    JniMethodInfo t;
+    
+    bool ret = false;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "isNetworkConnected", "()Z")) {
+        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+    return ret;
+}
+
 // functions for UserDefault
 bool getBoolForKeyJNI(const char* key, bool defaultValue)
 {

@@ -104,6 +104,9 @@
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\CCNetworkUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
     <ClCompile Include="CCAction.cpp">
       <Filter>2d</Filter>
     </ClCompile>
