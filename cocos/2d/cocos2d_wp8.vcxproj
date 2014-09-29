@@ -330,6 +330,7 @@
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
+    <ClCompile Include="..\platform\CCNetworkUtils.cpp" />
     <ClCompile Include="..\platform\winrt\CCApplication.cpp" />
     <ClCompile Include="..\platform\winrt\CCCommon.cpp" />
     <ClCompile Include="..\platform\winrt\CCDevice.cpp" />

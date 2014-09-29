@@ -51,7 +51,7 @@ include_directories(
 # cocos2d source files and header files
 #
 # From CMake page:
-# We do not recommend using GLOB to collect a list of source files from your source tree. 
+# We do not recommend using GLOB to collect a list of source files from your source tree.
 # If no CMakeLists.txt file changes when a source is added or removed then the generated
 # build system cannot know when to ask CMake to regenerate.)
 
@@ -287,6 +287,7 @@ set(COCOS2D_BASE_SRC
     platform/CCImage.cpp
     platform/CCSAXParser.cpp
     platform/CCThread.cpp
+    platform/CCNetworkUtils.cpp
 
     storage/local-storage/LocalStorage.cpp
     storage/local-storage/LocalStorage-android.cpp
