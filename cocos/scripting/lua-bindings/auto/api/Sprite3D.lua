@@ -23,12 +23,6 @@
 -- @param self
         
 --------------------------------
--- 
--- @function [parent=#Sprite3D] setBlendFunc 
--- @param self
--- @param #cc.BlendFunc blendFunc
-        
---------------------------------
 -- get mesh
 -- @function [parent=#Sprite3D] getMesh 
 -- @param self
