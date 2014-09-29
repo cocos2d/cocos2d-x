@@ -125,7 +125,7 @@ std::string FileUtilsAndroid::getNewFilename(const std::string &filename) const
     if (change)
     {
         newFileName.clear();
-        for (auto s : v)
+        for (auto &s : v)
         {
             newFileName.append(s);
         }
