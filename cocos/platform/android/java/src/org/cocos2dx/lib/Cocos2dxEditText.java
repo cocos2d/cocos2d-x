@@ -30,61 +30,61 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 
 public class Cocos2dxEditText extends EditText {
-	// ===========================================================
-	// Constants
-	// ===========================================================
+    // ===========================================================
+    // Constants
+    // ===========================================================
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	private Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
+    private Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
+    // ===========================================================
+    // Constructors
+    // ===========================================================
 
-	public Cocos2dxEditText(final Context context) {
-		super(context);
-	}
+    public Cocos2dxEditText(final Context context) {
+        super(context);
+    }
 
-	public Cocos2dxEditText(final Context context, final AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public Cocos2dxEditText(final Context context, final AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public Cocos2dxEditText(final Context context, final AttributeSet attrs, final int defStyle) {
-		super(context, attrs, defStyle);
-	}
+    public Cocos2dxEditText(final Context context, final AttributeSet attrs, final int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	public void setCocos2dxGLSurfaceView(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
-		this.mCocos2dxGLSurfaceView = pCocos2dxGLSurfaceView;
-	}
+    public void setCocos2dxGLSurfaceView(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
+        this.mCocos2dxGLSurfaceView = pCocos2dxGLSurfaceView;
+    }
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
 
-	@Override
-	public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
-		super.onKeyDown(pKeyCode, pKeyEvent);
+    @Override
+    public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
+        super.onKeyDown(pKeyCode, pKeyEvent);
 
-		/* Let GlSurfaceView get focus if back key is input. */
-		if (pKeyCode == KeyEvent.KEYCODE_BACK) {
-			this.mCocos2dxGLSurfaceView.requestFocus();
-		}
+        /* Let GlSurfaceView get focus if back key is input. */
+        if (pKeyCode == KeyEvent.KEYCODE_BACK) {
+            this.mCocos2dxGLSurfaceView.requestFocus();
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	// ===========================================================
-	// Methods
-	// ===========================================================
+    // ===========================================================
+    // Methods
+    // ===========================================================
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
 }
