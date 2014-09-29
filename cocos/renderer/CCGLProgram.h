@@ -114,6 +114,7 @@ public:
         UNIFORM_SAMPLER1,
         UNIFORM_SAMPLER2,
         UNIFORM_SAMPLER3,
+        UNIFORM_ALPHA,
 
         UNIFORM_MAX,
     };
@@ -351,7 +352,8 @@ protected:
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
         unsigned int usesP:1;
-		unsigned int usesRandom:1;
+	unsigned int usesRandom:1;
+        unsigned int usesAlpha:1;
 
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
@@ -359,6 +361,8 @@ protected:
 
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
+
+    float _alphaTestValue;
 };
 
 NS_CC_END

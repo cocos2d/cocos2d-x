@@ -4,7 +4,7 @@
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    11
+#define MAX_LAYER    12
 
 static Layer* createShaderLayer(int nIndex)
 {
@@ -21,6 +21,7 @@ static Layer* createShaderLayer(int nIndex)
         case 8: return new ShaderMonjori();
         case 9: return new ShaderGlow();
         case 10: return new ShaderMultiTexture();
+        case 11: return new ShaderAlphaTest();
     }
     return nullptr;
 }
@@ -823,6 +824,78 @@ void ShaderMultiTexture::changeTexture(Ref*)
     programState->setUniformTexture("u_texture1", right->getTexture());
 }
 
+///---------------------------------------
+//
+// Alpha test shader
+// 
+///---------------------------------------
+
+ShaderAlphaTest::ShaderAlphaTest()
+{
+  init();
+}
+
+std::string ShaderAlphaTest::title() const
+{
+  return "Alpha test shader test";
+}
+
+std::string ShaderAlphaTest::subtitle() const
+{
+  return "Alpha test shader";
+}
+
+bool ShaderAlphaTest::init()
+{
+    if (!ShaderTestDemo::init())
+    {
+      return false;
+    }
+
+    Director::getInstance()->setDepthTest(true);
+
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    auto layer = Layer::create();
+
+    auto cushion = Sprite::create("Images/grossini_dance_01.png");
+    layer->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    layer->setVertexZ(0.25f);
+    layer->setZOrder(-1);
+    cushion->setGLProgram(GLProgramCache::getInstance()->getProgram(
+         GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV));
+    auto state = cushion->getGLProgramState();
+    state->setAlphaTestValue(0.9f);
+    layer->addChild(cushion);
+
+    this->addChild(layer);
+
+    // add "HelloWorld" splash screen"
+    auto sprite2 = Sprite::create("Images/HelloWorld.png");
+
+    // position the sprite on the center of the screen
+    sprite2->setPosition(Vec2(visibleSize.width/2 + origin.x + 50.f, visibleSize.height/2 + origin.y + 50.f));
+    sprite2->setVertexZ(0.35f);
+    sprite2->setZOrder(2);
+    sprite2->setScale(0.5f);
+
+    this->addChild(sprite2);
+    
+    
+    // add "HelloWorld" splash screen"
+    auto sprite = Sprite::create("Images/HelloWorld.png");
+
+    // position the sprite on the center of the screen
+    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    sprite->setVertexZ(0.f);
+    sprite->setZOrder(3);
+
+    // add the sprite as a child to this layer
+    this->addChild(sprite);
+
+    return true;
+}
 
 ///---------------------------------------
 //
@@ -836,3 +909,5 @@ void ShaderTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
+
+

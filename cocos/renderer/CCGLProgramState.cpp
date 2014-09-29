@@ -358,6 +358,7 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
     }
     // set shader
     _glprogram->use();
+    _glprogram->_alphaTestValue = _alphaTestValue;
     _glprogram->setUniformsForBuiltins(modelView);
 }
 void GLProgramState::applyAttributes(bool applyAttribFlags)
@@ -415,6 +416,11 @@ VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
     if( itr != _attributes.end())
         return &itr->second;
     return nullptr;
+}
+
+float GLProgramState::getAlphaTestValue() const
+{
+    return _alphaTestValue;
 }
 
 // VertexAttrib Setters
@@ -627,6 +633,11 @@ void GLProgramState::setUniformTexture(GLint uniformLocation, GLuint textureId)
     {
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
     }
+}
+
+void GLProgramState::setAlphaTestValue(float alpha)
+{
+    _alphaTestValue = alpha;
 }
 
 NS_CC_END

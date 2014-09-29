@@ -501,6 +501,8 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER2] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER2);
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
+    _builtInUniforms[UNIFORM_ALPHA] = glGetUniformLocation(_program, UNIFORM_NAME_ALPHA_TEST_VALUE);
+
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
@@ -510,6 +512,7 @@ void GLProgram::updateUniforms()
                        _builtInUniforms[UNIFORM_COS_TIME] != -1
                        );
     _flags.usesRandom = _builtInUniforms[UNIFORM_RANDOM01] != -1;
+    _flags.usesAlpha = _builtInUniforms[UNIFORM_ALPHA] != -1;
 
     this->use();
     
@@ -857,7 +860,9 @@ void GLProgram::setUniformsForBuiltins()
 
 void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    Mat4 matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Director *director = Director::getInstance();
+  
+    Mat4 matrixP = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
@@ -871,7 +876,6 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     }
 
     if(_flags.usesTime) {
-        Director *director = Director::getInstance();
         // This doesn't give the most accurate global time value.
         // Cocos2D doesn't store a high precision time value, so this will have to do.
         // Getting Mach time per frame per shader using time could be extremely expensive.
@@ -884,6 +888,10 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     
     if(_flags.usesRandom)
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+
+    if(_flags.usesAlpha) {
+        setUniformLocationWith1f(_builtInUniforms[GLProgram::UNIFORM_ALPHA], _alphaTestValue);
+    }
 }
 
 void GLProgram::reset()

@@ -146,6 +146,8 @@ protected:
 class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
+
+    float _alphaTestValue;
 public:
 
     /** returns a new instance of GLProgramState for a given GLProgram */
@@ -198,6 +200,13 @@ public:
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
     void setUniformTexture(GLint uniformLocation, GLuint textureId);
+
+    // setting an alpha test value only is effective if the alpha test shader is used
+    /** sets the alpha value used in the alpha test shader */
+    void setAlphaTestValue(float alpha);
+
+    /** gets the alpha value used in the alpha test shader */
+    float getAlphaTestValue() const;
 
 protected:
     GLProgramState();
