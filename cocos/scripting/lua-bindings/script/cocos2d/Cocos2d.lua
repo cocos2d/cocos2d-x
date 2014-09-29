@@ -362,3 +362,23 @@ end
 function cc.PhysicsMaterial(_density, _restitution, _friction)
 	return { density = _density, restitution = _restitution, friction = _friction }
 end
+
+function cc.vec3(_x, _y, _z)
+    return { x = _x, y = _y, z = _z }
+end
+
+function cc.vec3normalize(vec3)
+    local n = vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z
+    if n == 1.0 then
+        return vec3
+    end
+
+    n = math.sqrt(n)
+
+    if n < 2e-37 then
+        return vec3
+    end
+
+    n = 1.0 / n
+    return {x = vec3.x * n, y = vec3.y * n, z = vec3.z * n}
+end
