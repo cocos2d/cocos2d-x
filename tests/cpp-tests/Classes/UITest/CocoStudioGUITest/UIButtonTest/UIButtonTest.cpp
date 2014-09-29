@@ -41,6 +41,7 @@ bool UIButtonTest::init()
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
         button->setZoomScale(0.4);
         button->setPressedActionEnabled(true);
+        button->setLongPressTime(1.0f);
         _uiLayer->addChild(button);
         button->setOpacity(100);
         // Create the imageview
@@ -89,6 +90,10 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
             break;
             
+        case Widget::TouchEventType::LONGPRESSED:
+            _displayValueLabel->setString(String::createWithFormat("Touch LongPressed")->getCString());
+            break;
+            
         default:
             break;
     }
@@ -133,6 +138,7 @@ bool UIButtonTest_Scale9::init()
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setContentSize(Size(150, 70));
         button->setPressedActionEnabled(true);
+        button->setLongPressTime(1.0f);
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9::touchEvent, this));
         _uiLayer->addChild(button);
         
@@ -174,6 +180,10 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         case Widget::TouchEventType::CANCELED:
             _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        case Widget::TouchEventType::LONGPRESSED:
+            _displayValueLabel->setString(String::createWithFormat("Touch LongPressed")->getCString());
             break;
             
         default:
