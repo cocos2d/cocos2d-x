@@ -1147,6 +1147,11 @@
 
 
 --------------------------------------------------------
+-- the cc Device
+-- @field [parent=#cc] Device#Device Device preloaded module
+
+
+--------------------------------------------------------
 -- the cc Application
 -- @field [parent=#cc] Application#Application Application preloaded module
 

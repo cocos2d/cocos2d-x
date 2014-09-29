@@ -34,6 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Camera;
+class Renderer;
 class EventListenerCustom;
 class EventCustom;
 #if CC_USE_PHYSICS
@@ -72,6 +73,9 @@ public:
     /** get all cameras */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
     
+    /** render the scene */
+    void render(Renderer* renderer);
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
@@ -86,7 +90,6 @@ protected:
     friend class ProtectedNode;
     friend class SpriteBatchNode;
     friend class Camera;
-    friend class Director;
     friend class Renderer;
     
     std::vector<Camera*> _cameras; //weak ref to Camera

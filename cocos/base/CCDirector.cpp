@@ -287,41 +287,8 @@ void Director::drawScene()
         //clear draw stats
         _renderer->clearDrawStats();
         
-        Camera* defaultCamera = nullptr;
-        const auto& cameras = _runningScene->_cameras;
-        //draw with camera
-        for (size_t i = 0; i < cameras.size(); i++)
-        {
-            Camera::_visitingCamera = cameras[i];
-            if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
-            {
-                defaultCamera = Camera::_visitingCamera;
-                continue;
-            }
-            
-            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-            
-            //visit the scene
-            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
-            _renderer->render();
-            
-            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        }
-        //draw with default camera
-        if (defaultCamera)
-        {
-            Camera::_visitingCamera = defaultCamera;
-            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-            
-            //visit the scene
-            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
-            _renderer->render();
-            
-            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        }
-        Camera::_visitingCamera = nullptr;
+        //render the scene
+        _runningScene->render(_renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }

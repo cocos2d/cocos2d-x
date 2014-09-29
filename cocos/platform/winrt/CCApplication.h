@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "platform/CCStdC.h"
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
+#include "platform/winrt/InputEvent.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -62,6 +63,22 @@ public:
      @brief Get target platform
      */
     virtual Platform getTargetPlatform() override;
+    
+    /**
+     @brief Open url in default browser
+     @param String with url to open.
+     @return true if the resource located by the URL was successfully opened; otherwise false.
+     */
+    virtual bool openURL(const std::string &url);
+
+    /**
+    @brief Set the callback responsible for opening a URL.
+    @param del The delegate that will handle opening a URL. We can't pass back a Platform::String due to name clash.
+    */
+    void SetXamlOpenURLDelegate(const std::function<void(::Platform::String^)>& del)
+    {
+        m_openURLDelegate = del;
+    }
 
     /**
      *  Sets the Resource root path.
@@ -86,6 +103,8 @@ protected:
     LARGE_INTEGER       m_nAnimationInterval;
     std::string         m_resourceRootPath;
     std::string         m_startupScriptFilename;
+
+    std::function<void(::Platform::String^)> m_openURLDelegate;
 
     static Application * sm_pSharedApplication;
 };

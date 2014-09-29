@@ -28,13 +28,13 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCScriptSupport.h"
 
-#if CC_USE_MEM_LEAK_DETECTION
+#if CC_REF_LEAK_DETECTION
 #include <algorithm>    // std::find
 #endif
 
 NS_CC_BEGIN
 
-#if CC_USE_MEM_LEAK_DETECTION
+#if CC_REF_LEAK_DETECTION
 static void trackRef(Ref* ref);
 static void untrackRef(Ref* ref);
 #endif
@@ -49,7 +49,7 @@ Ref::Ref()
     _scriptObject = nullptr;
 #endif
     
-#if CC_USE_MEM_LEAK_DETECTION
+#if CC_REF_LEAK_DETECTION
     trackRef(this);
 #endif
 }
@@ -73,7 +73,7 @@ Ref::~Ref()
 #endif
 
 
-#if CC_USE_MEM_LEAK_DETECTION
+#if CC_REF_LEAK_DETECTION
     if (_referenceCount != 0)
         untrackRef(this);
 #endif
@@ -127,7 +127,7 @@ void Ref::release()
         }
 #endif
 
-#if CC_USE_MEM_LEAK_DETECTION
+#if CC_REF_LEAK_DETECTION
         untrackRef(this);
 #endif
         delete this;
@@ -145,7 +145,7 @@ unsigned int Ref::getReferenceCount() const
     return _referenceCount;
 }
 
-#if CC_USE_MEM_LEAK_DETECTION
+#if CC_REF_LEAK_DETECTION
 
 static std::list<Ref*> __refAllocationList;
 

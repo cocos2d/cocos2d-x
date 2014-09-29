@@ -32,9 +32,11 @@ import java.lang.Runnable;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
@@ -169,6 +171,18 @@ public class Cocos2dxHelper {
 	
 	public static void setKeepScreenOn(boolean value) {
 		((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
+	}
+	
+	public static boolean openURL(String url) {	
+	    boolean ret = false;
+	    try {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            sActivity.startActivity(i);
+            ret = true;
+        } catch (Exception e) {
+        }
+		return ret;
 	}
 
 	public static void preloadBackgroundMusic(final String pPath) {

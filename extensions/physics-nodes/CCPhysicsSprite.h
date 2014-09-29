@@ -27,6 +27,8 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
+
 struct cpBody;
 class b2Body;
 
@@ -134,5 +136,7 @@ protected:
 };
 
 NS_CC_EXT_END
+
+#endif // CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
 
 #endif // __PHYSICSNODES_CCPHYSICSSPRITE_H__
