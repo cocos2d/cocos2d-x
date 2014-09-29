@@ -208,6 +208,9 @@ void GLView::setFrameSize(float width, float height)
        auto scene = director->getRunningScene();
        if (scene)
           scene->setContentSize(_designResolutionSize);
+
+       for (auto &rcb : _resizeCallbacks)
+          rcb(_designResolutionSize);
     }
 }
 
@@ -471,6 +474,11 @@ float GLView::getScaleX() const
 float GLView::getScaleY() const
 {
     return _scaleY;
+}
+
+void GLViewProtocol::addResizeCalback(const std::function<void(const Size&)>& callback)
+{
+   _resizeCallbacks.push_back(callback);
 }
 
 NS_CC_END
