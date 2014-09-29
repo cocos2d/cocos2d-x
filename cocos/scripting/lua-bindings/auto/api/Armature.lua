@@ -134,6 +134,12 @@
 -- @return ArmatureAnimation#ArmatureAnimation ret (return value: ccs.ArmatureAnimation)
         
 --------------------------------
+-- 
+-- @function [parent=#Armature] getOffsetPoints 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
 -- Get Armature's bone dictionary<br>
 -- return Armature's bone dictionary
 -- @function [parent=#Armature] getBoneDic 
