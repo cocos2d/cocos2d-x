@@ -197,7 +197,7 @@ void TestActionTimeline::onEnter()
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
     Node* node = CSLoader::createNode("ActionTimeline/boy_1.csb");
-    ActionTimeline* action = ActionTimelineCache::createAction("ActionTimeline/boy_1.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/boy_1.csb");
 
     node->runAction(action);
     action->gotoFrameAndPlay(0, 60, true);
@@ -223,7 +223,7 @@ void TestChangePlaySection::onEnter()
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
     Node* node = CSLoader::createNode("ActionTimeline/boy_1.csb");
-    action = ActionTimelineCache::createAction("ActionTimeline/boy_1.csb");
+    action = CSLoader::createTimeline("ActionTimeline/boy_1.csb");
 
     node->runAction(action);
     action->gotoFrameAndPlay(70, action->getDuration(), true);
@@ -261,7 +261,7 @@ void TestTimelineFrameEvent::onEnter()
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
 
     Node* node = CSLoader::createNode("ActionTimeline/boy_1.csb");
-    ActionTimeline* action = ActionTimelineCache::createAction("ActionTimeline/boy_1.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/boy_1.csb");
 
     node->runAction(action);
     action->gotoFrameAndPlay(0, 60, true);
@@ -307,7 +307,7 @@ void TestTimelinePerformance::onEnter()
     for (int i = 0; i< 100; i++)
     {
         Node* node = CSLoader::createNode("ActionTimeline/boy_1.csb");
-        ActionTimeline* action = ActionTimelineCache::createAction("ActionTimeline/boy_1.csb");
+        ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/boy_1.csb");
 
         node->runAction(action);
         action->gotoFrameAndPlay(70, action->getDuration(), true);

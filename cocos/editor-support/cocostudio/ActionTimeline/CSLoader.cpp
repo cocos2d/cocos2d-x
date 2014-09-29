@@ -135,6 +135,7 @@ CSLoader* CSLoader::getInstance()
 void CSLoader::destroyInstance()
 {
     CC_SAFE_DELETE(_sharedCSLoader);
+    ActionTimelineCache::destroyInstance();
 }
 
 CSLoader::CSLoader()
@@ -198,6 +199,27 @@ Node* CSLoader::createNode(const std::string& filename)
     else if (suffix == "json" || suffix == "ExportJson")
     {
         return load->createNodeFromJson(filename);
+    }
+    
+    return nullptr;
+}
+
+ActionTimeline* CSLoader::createTimeline(const std::string &filename)
+{
+    std::string path = filename;
+    size_t pos = path.find_last_of('.');
+    std::string suffix = path.substr(pos + 1, path.length());
+    CCLOG("suffix = %s", suffix.c_str());
+    
+    ActionTimelineCache* cache = ActionTimelineCache::getInstance();
+    
+    if (suffix == "csb")
+    {
+        return cache->createActionFromProtocolBuffers(filename);
+    }
+    else if (suffix == "json" || suffix == "ExportJson")
+    {
+        return cache->createActionFromJson(filename);
     }
     
     return nullptr;

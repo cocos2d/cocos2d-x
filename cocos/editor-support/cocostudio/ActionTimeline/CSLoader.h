@@ -46,8 +46,17 @@ namespace tinyxml2
     class XMLElement;
 }
 
-namespace cocostudio {
+namespace cocostudio
+{
     class ComAudio;
+}
+
+namespace cocostudio
+{
+    namespace timeline
+    {
+        class ActionTimeline;
+    }
 }
 
 NS_CC_BEGIN
@@ -64,6 +73,7 @@ public:
     void init();
     
     static cocos2d::Node* createNode(const std::string& filename);
+    static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
     
     cocos2d::Node* createNodeFromJson(const std::string& filename);
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);
