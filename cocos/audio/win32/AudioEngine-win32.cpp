@@ -21,21 +21,23 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-#include "AudioEngine-inl.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include "AudioEngine-win32.h"
+#include <condition_variable>
+#include "AL/alc.h"
+#include "AL/alext.h"
 #include "audio/include/AudioEngine.h"
-
-#import <OpenAL/alc.h>
-#include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/ccUtils.h"
+#include "platform/CCFileUtils.h"
+#include "mpg123.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
+static bool MPG123_LAZYINIT = true;
 
 namespace cocos2d {
     namespace experimental {
@@ -72,7 +74,6 @@ namespace cocos2d {
                     _numThread++;
                 }
                 _taskMutex.unlock();
-                
                 _sleepCondition.notify_all();
             }
             
@@ -84,8 +85,7 @@ namespace cocos2d {
                 for (int index = 0; index < _numThread; ++index) {
                     _threads[index].join();
                 }
-            }
-            
+            }           
         private:
             bool _running;
             std::vector<std::thread>  _threads;
@@ -119,7 +119,6 @@ namespace cocos2d {
             std::mutex _taskMutex;
             std::mutex _sleepMutex;
             std::condition_variable _sleepCondition;
-            
         };
     }
 }
@@ -149,24 +148,26 @@ AudioEngineImpl::~AudioEngineImpl()
         _threadPool->destroy();
         delete _threadPool;
     }
+
+    mpg123_exit();
 }
 
 bool AudioEngineImpl::init()
 {
     bool ret = false;
     do{
-        s_ALDevice = alcOpenDevice(nullptr);
+        //auto defName = alcGetString(nullptr, ALC_DEFAULT_DEVICE_SPECIFIER);
+        s_ALDevice = alcOpenDevice(NULL);
         
         if (s_ALDevice) {
             auto alError = alGetError();
-            s_ALContext = alcCreateContext(s_ALDevice, nullptr);
+            s_ALContext = alcCreateContext(s_ALDevice, NULL);
             alcMakeContextCurrent(s_ALContext);
             
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
             alError = alGetError();
-            if(alError != AL_NO_ERROR)
-            {
-                printf("%s:generating sources fail! error = %x\n", __PRETTY_FUNCTION__, alError);
+            if(alError != AL_NO_ERROR){
+                log("%s:generating sources fail! error = %x\n", __FUNCTION__, alError);
                 break;
             }
             
@@ -184,21 +185,16 @@ bool AudioEngineImpl::init()
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
-    if (s_ALDevice == nullptr) {
-        return AudioEngine::INVAILD_AUDIO_ID;
-    }
-    
-    bool sourceFlag = false;
-    ALuint alSource = 0;
+    bool availableSourceExist = false;
+    ALuint alSource;
     for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
         alSource = _alSources[i];
-        
         if ( !_alSourceUsed[alSource]) {
-            sourceFlag = true;
+            availableSourceExist = true;
             break;
         }
     }
-    if(!sourceFlag){
+    if(!availableSourceExist){
         return AudioEngine::INVAILD_AUDIO_ID;
     }
     
@@ -206,8 +202,42 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     auto it = _audioCaches.find(filePath);
     if (it == _audioCaches.end()) {
         audioCache = &_audioCaches[filePath];
-        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
         
+        auto ext = filePath.substr(filePath.rfind('.'));
+        transform(ext.begin(), ext.end(), ext.begin(), tolower);
+
+        bool eraseCache = true;
+        if (ext.compare(".ogg") == 0){
+            audioCache->_fileFormat = AudioCache::FileFormat::OGG;
+            eraseCache = false;
+        }
+        else if (ext.compare(".mp3") == 0){
+            audioCache->_fileFormat = AudioCache::FileFormat::MP3;
+
+            if (MPG123_LAZYINIT){
+                auto error = mpg123_init();
+                if(error == MPG123_OK){
+                    MPG123_LAZYINIT = false;
+                    eraseCache = false;
+                }
+                else{
+                    log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
+                }
+            }
+            else{
+                eraseCache = false;
+            }
+        }
+        else{
+            log("unsupported media type:%s\n",ext.c_str());
+        }
+        
+        if (eraseCache){
+            _audioCaches.erase(filePath);
+            return AudioEngine::INVAILD_AUDIO_ID;
+        }
+
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
         _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
     }
     else {
@@ -265,7 +295,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
         
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
-            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+            log("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
         }
     }
 }
@@ -286,7 +316,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop)
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+                log("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
             }
         }
     }
@@ -303,7 +333,7 @@ bool AudioEngineImpl::pause(int audioID)
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
-        printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+        log("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
     }
     
     return ret;
@@ -317,7 +347,7 @@ bool AudioEngineImpl::resume(int audioID)
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
-        printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+        log("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
     }
     
     return ret;
@@ -333,7 +363,7 @@ bool AudioEngineImpl::stop(int audioID)
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
             ret = false;
-            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+            log("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
         }
     }
     
@@ -379,7 +409,7 @@ float AudioEngineImpl::getCurrentTime(int audioID)
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+                log("%s, audio id:%d,error code:%x", __FUNCTION__,audioID,error);
             }
         }
     }
@@ -402,9 +432,9 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             break;
         }
         else {
-            if (player._audioCache->_bytesOfRead != player._audioCache->_dataSize &&
+            if (player._audioCache->_bytesOfRead != player._audioCache->_pcmDataSize &&
                 (time * player._audioCache->_sampleRate * player._audioCache->_bytesPerFrame) > player._audioCache->_bytesOfRead) {
-                printf("%s: audio id = %d\n", __PRETTY_FUNCTION__,audioID);
+                log("%s: audio id = %d\n", __FUNCTION__,audioID);
                 break;
             }
             
@@ -412,7 +442,7 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+                log("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
             }
             ret = true;
         }

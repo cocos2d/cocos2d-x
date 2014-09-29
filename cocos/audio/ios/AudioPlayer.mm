@@ -81,14 +81,13 @@ bool AudioPlayer::play2d(AudioCache* cache)
         alGenBuffers(3, _bufferIds);
         alError = alGetError();
         if (alError == AL_NO_ERROR) {
+            _timeMtx.lock();
             _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
             
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
                 alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
             }
             alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
-            
-            _timeMtx.lock();
         }
         else {
             printf("%s:alGenBuffers error code:%x", __PRETTY_FUNCTION__,alError);

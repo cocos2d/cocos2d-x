@@ -331,6 +331,9 @@
     <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIWebViewTest">
       <UniqueIdentifier>{a0b90b93-5575-4729-9afc-8a3839b378ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\NewAudioEngineTest">
+      <UniqueIdentifier>{0ebafb87-26f5-4a07-b36f-1e4fa03afbe8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -443,9 +446,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
-      <Filter>Classes\OpenURLTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -873,6 +873,10 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp" />
+    <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -991,9 +995,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
       <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
-      <Filter>Classes\OpenURLTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -1612,6 +1613,10 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h" />
+    <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
+      <Filter>Classes\NewAudioEngineTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
