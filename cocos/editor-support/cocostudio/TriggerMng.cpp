@@ -23,9 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TriggerMng.h"
-#include "json/filestream.h"
-#include "json/prettywriter.h"
-#include "json/stringbuffer.h"
+#include <rapidjson/filestream.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/stringbuffer.h>
 
 using namespace cocos2d;
 
@@ -236,7 +236,8 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                         {
                             if (str2 != nullptr)
                             {
-                                action.AddMember("classname", str2, allocator);
+                                rapidjson::Value value2(str2, allocator);
+                                action.AddMember("classname", value2, allocator);
                             }
                         }
                         else if (key2.compare("dataitems") == 0)
@@ -257,7 +258,8 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                     {
                                         if (str3 != nullptr)
                                         {
-                                            dataitem.AddMember("key", str3, allocator);
+                                            rapidjson::Value value3(str3, allocator);
+                                            dataitem.AddMember("key", value3, allocator);
                                         }
                                     }
                                     else
@@ -265,7 +267,8 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         rapidjson::Type type = pDataItemArray[i5].GetType(pCocoLoader);
                                         if (type == rapidjson::kStringType)
                                         {
-                                            dataitem.AddMember("value", str3, allocator);
+                                            rapidjson::Value value3(str3, allocator);
+                                            dataitem.AddMember("value", value3, allocator);
                                         }
                                         else
                                         {
@@ -273,11 +276,13 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                             float fV = utils::atof(str3);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
-                                                dataitem.AddMember("value", nV, allocator);
+                                                rapidjson::Value value(nV);
+                                                dataitem.AddMember("value", value, allocator);
                                             }
                                             else
                                             {
-                                                dataitem.AddMember("value", fV, allocator);
+                                                rapidjson::Value value(fV);
+                                                dataitem.AddMember("value", value, allocator);
                                             }
                                         }
                                     }
@@ -312,7 +317,8 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                         {
                             if (str4 != nullptr)
                             {
-                                cond.AddMember("classname", str4, allocator);
+                                rapidjson::Value value4(str4, allocator);
+                                cond.AddMember("classname", value4, allocator);
                             }
                         }
                         else if (key4.compare("dataitems") == 0)
@@ -333,7 +339,8 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                     {
                                         if (str5 != nullptr)
                                         {
-                                            dataitem.AddMember("key", str5, allocator);
+                                            rapidjson::Value value5(str5, allocator);
+                                            dataitem.AddMember("key", value5, allocator);
                                         }
                                     }
                                     else
@@ -341,7 +348,8 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                         rapidjson::Type type = pDataItemArray[i9].GetType(pCocoLoader);
                                         if (type == rapidjson::kStringType)
                                         {
-                                            dataitem.AddMember("value", str5, allocator);
+                                            rapidjson::Value value5(str5, allocator);
+                                            dataitem.AddMember("value", value5, allocator);
                                         }
                                         else
                                         {
@@ -349,11 +357,13 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocostudio::CocoLoader
                                             float fV = utils::atof(str5);
                                             if (fabs(nV - fV) < 0.0000001)
                                             {
-                                                dataitem.AddMember("value", nV, allocator);
+                                                rapidjson::Value value(nV);
+                                                dataitem.AddMember("value", value, allocator);
                                             }
                                             else
                                             {
-                                                dataitem.AddMember("value", fV, allocator);
+                                                rapidjson::Value value(fV);
+                                                dataitem.AddMember("value", value, allocator);
                                             }
                                         }
                                     }

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __DICTIONARYHELPER_H__
 #define __DICTIONARYHELPER_H__
 
-#include "json/document.h"
+#include <rapidjson/document.h>
 #include "cocostudio/CocosStudioExport.h"
 
 #define DICTOOL DictionaryHelper::getInstance()

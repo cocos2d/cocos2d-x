@@ -26,7 +26,7 @@
 #define _COCOLOADER_H
 
 #include <stdint.h>
-#include "json/document.h"
+#include <rapidjson/document.h>
 #include "cocostudio/CocosStudioExport.h"
 
 #pragma pack (4)

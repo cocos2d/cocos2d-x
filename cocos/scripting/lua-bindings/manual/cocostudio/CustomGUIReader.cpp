@@ -1,9 +1,9 @@
 #include "CustomGUIReader.h"
 #include "CCLuaEngine.h"
 #include "base/ObjectFactory.h"
-#include "json/document.h"
-#include "json/writer.h"
-#include "json/stringbuffer.h"
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 USING_NS_CC;
 
@@ -80,7 +80,7 @@ namespace cocostudio
             auto stack = LuaEngine::getInstance()->getLuaStack();
             stack->pushString(classType.c_str(), classType.size());
             stack->pushObject(widget, "cc.Ref");
-            stack->pushString(buffer.GetString(), buffer.Size());
+            stack->pushString(buffer.GetString(), buffer.GetSize());
             stack->executeFunctionByHandler(_setPropsFunc, 3);
         }
 	}
