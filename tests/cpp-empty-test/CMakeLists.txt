@@ -52,12 +52,12 @@ if(MSVC)
   #get our dlls
   add_custom_command(TARGET ${APP_NAME} PRE_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../external/win32-specific/gles/prebuilt/glew32.dll 
+                     ${CMAKE_CURRENT_SOURCE_DIR}/../../external/win32-specific/gles/prebuilt/glew32.dll 
 					 ${CMAKE_CURRENT_BINARY_DIR})
 
   add_custom_command(TARGET ${APP_NAME} PRE_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../external/win32-specific/zlib/prebuilt/zlib1.dll 
+                     ${CMAKE_CURRENT_SOURCE_DIR}/../../external/win32-specific/zlib/prebuilt/zlib1.dll 
 					 ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 
   #Visual Studio Defaults to wrong type
