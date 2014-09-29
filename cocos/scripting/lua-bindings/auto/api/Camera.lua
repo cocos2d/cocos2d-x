@@ -55,14 +55,6 @@
 -- @param #int flag
         
 --------------------------------
--- Convert the specified point of viewport from screenspace coordinate into the worldspace coordinate.
--- @function [parent=#Camera] unproject 
--- @param self
--- @param #size_table viewport
--- @param #vec3_table src
--- @param #vec3_table dst
-        
---------------------------------
 --  create default camera, the camera type depends on Director::getProjection 
 -- @function [parent=#Camera] create 
 -- @param self
