@@ -143,6 +143,7 @@ _brightStyle(BrightStyle::NONE),
 _touchBeganPosition(Vec2::ZERO),
 _touchMovePosition(Vec2::ZERO),
 _touchEndPosition(Vec2::ZERO),
+_longPressTime(0.0f),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _actionTag(0),
@@ -680,6 +681,16 @@ bool Widget::isSwallowTouches()const
     return false;
 }
 
+void Widget::setLongPressTime(float time)
+{
+    if (time <= 0.0f )
+    {
+        unschedule(schedule_selector(Widget::checkLongPress));
+    }
+
+    _longPressTime = time;
+}
+
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     _hitted = false;
@@ -706,9 +717,24 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     }
   
     pushDownEvent();
+
+    if (_longPressTime > 0.0f)
+    {
+        scheduleOnce(schedule_selector(Widget::checkLongPress), _longPressTime);
+    }
     return true;
 }
     
+void Widget::checkLongPress(float dt)
+{
+    if (!_hitted)
+    {
+        return;
+    }
+
+    longPressEvent();
+}
+
 void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, cocos2d::ui::Widget *sender, cocos2d::Touch *touch)
 {
     Widget* widgetParent = getWidgetParent();
@@ -722,7 +748,8 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePosition = touch->getLocation();
     
-    setHighlighted(hitTest(_touchMovePosition));
+    _hitted = hitTest(_touchMovePosition);
+    setHighlighted(_hitted);
     
     /*
      * Propagate touch events to its parents
@@ -749,7 +776,10 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     
     bool highlight = _highlight;
     setHighlighted(false);
-    
+ 
+    unschedule(schedule_selector(Widget::checkLongPress));
+    _hitted = false;
+
     if (highlight)
     {
         releaseUpEvent();
@@ -764,6 +794,9 @@ void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     setHighlighted(false);
     cancelUpEvent();
+
+    unschedule(schedule_selector(Widget::checkLongPress));
+    _hitted = false;
 }
 
 void Widget::pushDownEvent()
@@ -792,6 +825,21 @@ void Widget::moveEvent()
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
+    }
+    this->release();
+}
+
+void Widget::longPressEvent()
+{
+    this->retain();
+    if (_touchEventCallback)
+    {
+        _touchEventCallback(this, TouchEventType::LONGPRESSED);
+    }
+    
+    if (_touchEventListener && _touchEventSelector)
+    {
+        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_LONGPRESSED);
     }
     this->release();
 }
