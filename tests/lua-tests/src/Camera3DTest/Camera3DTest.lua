@@ -22,7 +22,7 @@ local CameraType =
 
 local scheduler = cc.Director:getInstance():getScheduler()
 
-local Camera3DTestDemo = class("", function ()
+local Camera3DTestDemo = class("Camera3DTestDemo", function ()
     return cc.Layer:create()
 end)
 
