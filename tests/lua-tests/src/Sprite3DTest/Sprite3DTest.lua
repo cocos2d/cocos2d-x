@@ -74,7 +74,6 @@ function Sprite3DHitTest.addNewSpriteWithCoords(parent,x,y)
     sprite1:setTexture("Sprite3DTest/boss.png")
     sprite1:setPosition(cc.p(x, y))
     sprite1:runAction(cc.RepeatForever:create(cc.RotateBy:create(3, 360)))
-    sprite1:setContentSize(cc.size(20, 20))
     parent:addChild(sprite1)
 
     local sprite2 = cc.Sprite3D:create("Sprite3DTest/boss1.obj")
@@ -83,15 +82,12 @@ function Sprite3DHitTest.addNewSpriteWithCoords(parent,x,y)
     sprite2:setPosition(cc.p(x, y))
     sprite2:setAnchorPoint(cc.p(0.5, 0.5))
     sprite2:runAction(cc.RepeatForever:create(cc.RotateBy:create(3, -360)))
-    sprite2:setContentSize(cc.size(20, 20))
     parent:addChild(sprite2)
 
     local function onTouchBegan(touch, event)
         local target = event:getCurrentTarget()
-        local posInNode = target:convertToNodeSpace(touch:getLocation())
-        local s = target:getContentSize()
-        local rect = cc.rect(-s.width/2, -s.height/2, s.width, s.height)
-        if cc.rectContainsPoint(rect, posInNode) then
+        local rect = target:getBoundingBox()
+        if cc.rectContainsPoint(rect, touch:getLocation()) then
             target:setOpacity(100)
             return true
         end	
