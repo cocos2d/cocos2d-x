@@ -1454,9 +1454,4 @@
       <Filter>renderer\shaders</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\renderer\CMakeLists.txt">
-      <Filter>renderer</Filter>
-    </Text>
-  </ItemGroup>
 </Project>
