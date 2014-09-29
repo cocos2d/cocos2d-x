@@ -407,6 +407,61 @@ static void extendBone(lua_State* L)
     lua_pop(L, 1);
 }
 
+static int lua_cocos2dx_extension_Armature_getOffsetPoints(lua_State* L)
+{
+    int argc = 0;
+    cocostudio::Armature* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(L,1,"ccs.Armature",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::Armature*)tolua_tousertype(L,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(L, "invalid 'cobj' in function 'lua_cocos2dx_extension_Armature_getOffsetPoints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(L)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const cocos2d::Vec2& ret = cobj->getOffsetPoints();
+        vec2_to_luaval(L, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getOffsetPoints", argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_extension_Armature_getOffsetPoints'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static void extendArmature(lua_State* L)
+{
+    lua_pushstring(L, "ccs.Armature");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "getOffsetPoints", lua_cocos2dx_extension_Armature_getOffsetPoints);
+    }
+    lua_pop(L, 1);
+}
 int lua_cocos2dx_studio_NodeReader_getInstance(lua_State* L)
 {
     int argc = 0;
@@ -607,6 +662,7 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
 {
     if (nullptr == L)
         return 0;
+    extendArmature(L);
     extendArmatureAnimation(L);
     extendArmatureDataManager(L);
     extendBone(L);

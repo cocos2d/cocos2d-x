@@ -1,4 +1,5 @@
 #include "lua_cocos2dx_audioengine_auto.hpp"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "AudioEngine.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -907,3 +908,4 @@ TOLUA_API int register_all_cocos2dx_audioengine(lua_State* tolua_S)
 	return 1;
 }
 
+#endif
