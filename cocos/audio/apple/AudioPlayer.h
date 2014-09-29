@@ -21,81 +21,63 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#ifndef __AUDIO_CACHE_H_
-#define __AUDIO_CACHE_H_
+#ifndef __AUDIO_PLAYER_H_
+#define __AUDIO_PLAYER_H_
 
 #import <OpenAL/al.h>
-#import <AudioToolbox/AudioToolbox.h>
-
 #include <string>
 #include <mutex>
-#include <vector>
-
+#include <thread>
 #include "CCPlatformMacros.h"
-
-#define QUEUEBUFFER_NUM 3
-#define QUEUEBUFFER_TIME_STEP 0.1
 
 NS_CC_BEGIN
 namespace experimental{
 
+class AudioCache;
 class AudioEngineImpl;
-class AudioPlayer;
 
-class AudioCache{
+class AudioPlayer
+{
 public:
-    AudioCache();
-    ~AudioCache();
-
-    void addCallbacks(const std::function<void()> &callback);
+    AudioPlayer();
+    ~AudioPlayer();
+    
+    //queue buffer related stuff
+    bool setTime(float time);
+    float getTime() { return _currTime;}
+    bool setLoop(bool loop);
     
 private:
+    void rotateBufferThread(int offsetFrame);
+    bool play2d(AudioCache* cache);
     
-    void readDataTask();
+    AudioCache* _audioCache;
     
-    void invokingCallbacks();
+    float _volume;
+    bool _loop;
+    std::function<void (int, const std::string &)> _finishCallbak;
     
-    //pcm data related stuff
-    ALsizei _dataSize;
-    ALenum _format;
-    ALsizei _sampleRate;
-    float _duration;
-    int _bytesPerFrame;
-    AudioStreamBasicDescription outputFormat;
+    bool _ready;
+    ALuint _alSource;
     
-    /*Cache related stuff;
-     * Cache pcm data when sizeInBytes less than PCMDATA_CACHEMAXSIZE
-     */
-    ALuint _alBufferId;
-    char* _pcmData;
-    SInt64 _bytesOfRead;
-
-    /*Queue buffer related stuff
-     *  Streaming in openal when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
-     */
-    char* _queBuffers[QUEUEBUFFER_NUM];
-    ALsizei _queBufferSize[QUEUEBUFFER_NUM];
-    UInt32 _queBufferFrames;
-    UInt32 _queBufferBytes;
-
-    bool _alBufferReady;
-    std::mutex _callbackMutex;
-    
-    std::vector< std::function<void()> > _callbacks;
-    std::mutex _readDataTaskMutex;
-    
-    bool _exitReadDataTask;
-    std::string _fileFullPath;
+    //play by circular buffer
+    float _currTime;
+    bool _streamingSource;
+    ALuint _bufferIds[3];
+    std::thread _rotateBufferThread;
+    std::timed_mutex _timeMtx;
+    bool _exitThread;
+    bool _timeDirty;
     
     friend class AudioEngineImpl;
-    friend class AudioPlayer;
-} ;
+};
 
 }
 NS_CC_END
-
-#endif // __AUDIO_CACHE_H_
+#endif // __AUDIO_PLAYER_H_
 #endif
 
