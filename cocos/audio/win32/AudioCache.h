@@ -21,65 +21,88 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#ifndef __AUDIO_PLAYER_H_
-#define __AUDIO_PLAYER_H_
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include <condition_variable>
-#include <mutex>
+#ifndef __AUDIO_CACHE_H_
+#define __AUDIO_CACHE_H_
+
 #include <string>
-#include <thread>
-#import <OpenAL/al.h>
+#include <mutex>
+#include <vector>
 #include "CCPlatformMacros.h"
+#include "AL/al.h"
+
+#define QUEUEBUFFER_NUM 3
+#define QUEUEBUFFER_TIME_STEP 0.1f
 
 NS_CC_BEGIN
 namespace experimental{
 
-class AudioCache;
 class AudioEngineImpl;
+class AudioPlayer;
 
-class AudioPlayer
-{
+class CC_DLL AudioCache{
 public:
-    AudioPlayer();
-    ~AudioPlayer();
+    enum class FileFormat
+    {
+        UNKNOWN,
+        OGG,
+        MP3
+    };
+
+    AudioCache();
+    AudioCache(AudioCache&);
+    ~AudioCache();
+
+    void addCallbacks(const std::function<void()> &callback);
+
+protected:
+    void readDataTask();  
+    void invokingCallbacks();
+
+    std::string _fileFullPath;
+    FileFormat _fileFormat;
+    //pcm data related stuff
+    size_t _pcmDataSize;
+    ALenum _alBufferFormat;
+
+    int _channels;
+    ALuint _sampleRate;
+    size_t _bytesPerFrame;
+    float _duration;
     
-    //queue buffer related stuff
-    bool setTime(float time);
-    float getTime() { return _currTime;}
-    bool setLoop(bool loop);
-    
-private:
-    void rotateBufferThread(int offsetFrame);
-    bool play2d(AudioCache* cache);
-    
-    AudioCache* _audioCache;
-    
-    float _volume;
-    bool _loop;
-    std::function<void (int, const std::string &)> _finishCallbak;
-    
-    bool _ready;
-    ALuint _alSource;
-    
-    //play by circular buffer
-    float _currTime;
-    bool _streamingSource;
-    ALuint _bufferIds[3];
-    std::thread _rotateBufferThread;
-    std::condition_variable _sleepCondition;
-    std::mutex _sleepMutex;
-    bool _exitThread;
-    bool _timeDirty;
+    /*Cache related stuff;
+     * Cache pcm data when sizeInBytes less than PCMDATA_CACHEMAXSIZE
+     */
+    ALuint _alBufferId;
+    void* _pcmData;
+    size_t _bytesOfRead;
+
+    /*Queue buffer related stuff
+     *  Streaming in OpenAL when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
+     */
+    char* _queBuffers[QUEUEBUFFER_NUM];
+    ALsizei _queBufferSize[QUEUEBUFFER_NUM];
+    int _queBufferFrames;
+    int _queBufferBytes;
+
+    bool _alBufferReady;
+    std::mutex _callbackMutex; 
+    std::vector< std::function<void()> > _callbacks;
+
+    std::mutex _readDataTaskMutex;    
+
+    int _mp3Encoding;
     
     friend class AudioEngineImpl;
-};
+    friend class AudioPlayer;
+} ;
 
 }
 NS_CC_END
-#endif // __AUDIO_PLAYER_H_
+
+#endif // __AUDIO_CACHE_H_
 #endif
 

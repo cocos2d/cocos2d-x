@@ -21,18 +21,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __AUDIO_PLAYER_H_
 #define __AUDIO_PLAYER_H_
 
-#include <condition_variable>
-#include <mutex>
 #include <string>
+#include <condition_variable>
 #include <thread>
-#import <OpenAL/al.h>
+#include "AL/al.h"
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -41,10 +40,11 @@ namespace experimental{
 class AudioCache;
 class AudioEngineImpl;
 
-class AudioPlayer
+class CC_DLL AudioPlayer
 {
 public:
     AudioPlayer();
+    AudioPlayer(AudioPlayer&);
     ~AudioPlayer();
     
     //queue buffer related stuff
@@ -52,7 +52,7 @@ public:
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
     
-private:
+protected:
     void rotateBufferThread(int offsetFrame);
     bool play2d(AudioCache* cache);
     
@@ -67,13 +67,13 @@ private:
     
     //play by circular buffer
     float _currTime;
+    bool _timeDirty;
     bool _streamingSource;
     ALuint _bufferIds[3];
     std::thread _rotateBufferThread;
-    std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
-    bool _exitThread;
-    bool _timeDirty;
+    std::condition_variable _sleepCondition;
+    bool _exitThread; 
     
     friend class AudioEngineImpl;
 };
@@ -81,5 +81,5 @@ private:
 }
 NS_CC_END
 #endif // __AUDIO_PLAYER_H_
-#endif
+#endif //CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
