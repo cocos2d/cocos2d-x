@@ -337,6 +337,9 @@
     <Filter Include="Classes\NewAudioEngineTest">
       <UniqueIdentifier>{0ebafb87-26f5-4a07-b36f-1e4fa03afbe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\OpenURLTest">
+      <UniqueIdentifier>{fc47533b-f876-4254-b0f8-4af8f5e2837f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -879,9 +882,11 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp" />
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
       <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
+      <Filter>Classes\OpenURLTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1623,9 +1628,11 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h" />
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
       <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
+      <Filter>Classes\OpenURLTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
