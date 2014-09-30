@@ -61,6 +61,8 @@ public:
     void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
     
     void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
+
+    void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
     
     void execute();
     
@@ -84,11 +86,15 @@ protected:
     
     // apply renderstate
     void applyRenderState();
+
+    void setLightUniforms();
     
     //restore to all false
     void restoreRenderState();
     
     void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
+
+    void setLightUniformNames();
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
@@ -120,7 +126,9 @@ protected:
 
     // ModelView transform
     Mat4 _mv;
-    
+
+    unsigned int _lightMask;
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     EventListenerCustom* _rendererRecreatedListener;
 #endif

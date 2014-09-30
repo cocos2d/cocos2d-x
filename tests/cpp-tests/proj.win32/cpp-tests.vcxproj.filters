@@ -325,6 +325,9 @@
     <Filter Include="Classes\Camera3DTest">
       <UniqueIdentifier>{7f85be1c-98c5-4412-afc5-6f39ae1452a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\LightTest">
+      <UniqueIdentifier>{9befe67d-c725-4807-885f-edee45f95951}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\BillBoardTest">
       <UniqueIdentifier>{54a30b92-ddfb-420e-908b-886c23c21cf1}</UniqueIdentifier>
     </Filter>
@@ -869,6 +872,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp">
       <Filter>Classes\BillBoardTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LightTest\LightTest.cpp">
+      <Filter>Classes\LightTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
@@ -1609,6 +1615,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h">
       <Filter>Classes\BillBoardTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LightTest\LightTest.h">
+      <Filter>Classes\LightTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>

@@ -70,6 +70,7 @@ Controller g_aTestNames[] = {
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
 	{ "Node: Label - Old API", [](){return new AtlasTestScene(); } },
 	{ "Node: Layer", [](){return new LayerTestScene();} },
+    { "Node: Light", [](){return new LightTestScene();} },
 	{ "Node: Menu", [](){return new MenuTestScene();} },
 	{ "Node: MotionStreak", [](){return new MotionStreakTestScene();} },
 	{ "Node: Node", [](){return new CocosNodeTestScene();} },

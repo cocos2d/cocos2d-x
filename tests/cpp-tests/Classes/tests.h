@@ -74,6 +74,7 @@
 #include "Sprite3DTest/Sprite3DTest.h"
 #include "Camera3DTest/Camera3DTest.h"
 #include "BillBoardTest/BillBoardTest.h"
+#include "LightTest/LightTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 

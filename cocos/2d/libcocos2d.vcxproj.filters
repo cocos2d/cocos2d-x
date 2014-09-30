@@ -1171,6 +1171,9 @@
     <ClCompile Include="..\ui\UIWebView.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2304,6 +2307,9 @@
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
