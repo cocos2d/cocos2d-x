@@ -24,19 +24,19 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "AudioEngine-inl.h"
 
-#include <unordered_map>
 // for native asset manager
 #include <sys/types.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 
-#include "audio/include/AudioEngine.h"
-#include "base/CCDirector.h"
-#include "platform/android/CCFileUtils-android.h"
-
+#include <unordered_map>
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <jni.h>
+#include "audio/include/AudioEngine.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "platform/android/CCFileUtils-android.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -45,8 +45,8 @@ void PlayOverEvent(SLPlayItf caller, void* context, SLuint32 playEvent)
 {
     if (context && playEvent == SL_PLAYEVENT_HEADATEND)
     {
-        AudioEngineImpl* engineImpl = (AudioEngineImpl*)context;
-        engineImpl->playerFinishCallback(caller,playEvent);
+        AudioPlayer* player = (AudioPlayer*)context;
+        player->_playOver = true;
     }
 }
 
@@ -54,6 +54,7 @@ AudioPlayer::AudioPlayer()
     : _fdPlayerObject(nullptr)
     , _finishCallback(nullptr)
     , _duration(0.0f)
+    , _playOver(false)
 {
 
 }
@@ -64,6 +65,9 @@ AudioPlayer::~AudioPlayer()
     {
         (*_fdPlayerObject)->Destroy(_fdPlayerObject);
         _fdPlayerObject = nullptr;
+        _fdPlayerPlay = nullptr;
+        _fdPlayerVolume = nullptr;
+        _fdPlayerSeek = nullptr;
     }
 }
 
@@ -164,6 +168,7 @@ AudioEngineImpl::AudioEngineImpl()
     , _engineObject(nullptr)
     , _engineEngine(nullptr)
     , _outputMixObject(nullptr)
+    , _lazyInitLoop(true)
 {
 
 }
@@ -232,30 +237,43 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
         audioId = currentAudioID++;
         player._audioID = audioId;
 
-        (*(player._fdPlayerPlay))->RegisterCallback(player._fdPlayerPlay, PlayOverEvent, (void*)this);
+        (*(player._fdPlayerPlay))->RegisterCallback(player._fdPlayerPlay, PlayOverEvent, (void*)&player);
         (*(player._fdPlayerPlay))->SetCallbackEventsMask(player._fdPlayerPlay, SL_PLAYEVENT_HEADATEND);
 
         AudioEngine::_audioIDInfoMap[audioId].state = AudioEngine::AudioState::PLAYING;
+        
+        if (_lazyInitLoop) {
+            _lazyInitLoop = false;
+            
+            auto scheduler = Director::getInstance()->getScheduler();
+            scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.03f, false);
+        }
     } while (0);
 
     return audioId;
 }
 
-void AudioEngineImpl::playerFinishCallback(SLPlayItf caller, SLuint32 playEvent)
+void AudioEngineImpl::update(float dt)
 {
     auto itend = _audioPlayers.end();
     for (auto iter = _audioPlayers.begin(); iter != itend; ++iter)
     {
-        if (iter->second._fdPlayerPlay == caller)
+        if(iter->second._playOver)
         {
             if (iter->second._finishCallback)
-            {
                 iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioIDInfoMap[iter->second._audioID].filePath); 
-            }
+
             AudioEngine::remove(iter->second._audioID);
             _audioPlayers.erase(iter);
             break;
         }
+    }
+    
+    if(_audioPlayers.empty()){
+        _lazyInitLoop = true;
+        
+        auto scheduler = Director::getInstance()->getScheduler();
+        scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     }
 }
 
